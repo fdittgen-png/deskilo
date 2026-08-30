@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -74,6 +75,8 @@ class DocumentsScreen extends ConsumerWidget {
                   decoration: InputDecoration(
                     labelText: l10n?.documentsTitleLabel ?? 'Title',
                     counterText: '',
+                    suffixIcon: HelpDot(l10n?.helpTopicDocumentLibrary ??
+                        'document library'),
                   ),
                 ),
                 TextField(
@@ -82,6 +85,8 @@ class DocumentsScreen extends ConsumerWidget {
                   keyboardType: TextInputType.url,
                   decoration: InputDecoration(
                     labelText: l10n?.documentsUrlLabel ?? 'Link (https://…)',
+                    suffixIcon: HelpDot(l10n?.helpTopicDocumentLibrary ??
+                        'document library'),
                     helperMaxLines: 3,
                     helperText: l10n?.documentsUrlHelper ??
                         'Paste the share link from your drive — access '
@@ -89,65 +94,89 @@ class DocumentsScreen extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                DropdownButtonFormField<String>(
-                  key: const ValueKey('document-provider'),
-                  initialValue: provider,
-                  items: [
-                    for (final p in WorkspaceDocument.providers)
-                      DropdownMenuItem(
-                        value: p,
-                        child: Row(children: [
-                          Icon(providerIcon(p), size: 18),
-                          const SizedBox(width: 8),
-                          Text(providerName(p)),
-                        ]),
+                Row(children: [
+                  Expanded(
+                    child: DropdownButtonFormField<String>(
+                      key: const ValueKey('document-provider'),
+                      initialValue: provider,
+                      items: [
+                        for (final p in WorkspaceDocument.providers)
+                          DropdownMenuItem(
+                            value: p,
+                            child: Row(children: [
+                              Icon(providerIcon(p), size: 18),
+                              const SizedBox(width: 8),
+                              Text(providerName(p)),
+                            ]),
+                          ),
+                      ],
+                      onChanged: (v) =>
+                          setState(() => provider = v ?? provider),
+                      decoration: InputDecoration(
+                        labelText:
+                            l10n?.documentsProviderLabel ?? 'Stored on',
                       ),
-                  ],
-                  onChanged: (v) => setState(() => provider = v ?? provider),
-                  decoration: InputDecoration(
-                    labelText: l10n?.documentsProviderLabel ?? 'Stored on',
+                    ),
                   ),
-                ),
-                DropdownButtonFormField<String>(
-                  key: const ValueKey('document-category'),
-                  initialValue: category,
-                  items: [
-                    for (final c in WorkspaceDocument.categories)
-                      DropdownMenuItem(
-                        value: c,
-                        child: Text(categoryName(l10n, c)),
+                  HelpDot(l10n?.helpTopicDocumentLibrary ??
+                      'document library'),
+                ]),
+                Row(children: [
+                  Expanded(
+                    child: DropdownButtonFormField<String>(
+                      key: const ValueKey('document-category'),
+                      initialValue: category,
+                      items: [
+                        for (final c in WorkspaceDocument.categories)
+                          DropdownMenuItem(
+                            value: c,
+                            child: Text(categoryName(l10n, c)),
+                          ),
+                      ],
+                      onChanged: (v) =>
+                          setState(() => category = v ?? category),
+                      decoration: InputDecoration(
+                        labelText:
+                            l10n?.documentsCategoryLabel ?? 'Category',
                       ),
-                  ],
-                  onChanged: (v) => setState(() => category = v ?? category),
-                  decoration: InputDecoration(
-                    labelText: l10n?.documentsCategoryLabel ?? 'Category',
+                    ),
                   ),
-                ),
-                DropdownButtonFormField<String>(
-                  key: const ValueKey('document-role'),
-                  initialValue: minRole,
-                  items: [
-                    DropdownMenuItem(
-                      value: 'member',
-                      child: Text(
-                          l10n?.documentsRoleMember ?? 'Every member'),
+                  HelpDot(l10n?.helpTopicDocumentLibrary ??
+                      'document library'),
+                ]),
+                Row(children: [
+                  Expanded(
+                    child: DropdownButtonFormField<String>(
+                      key: const ValueKey('document-role'),
+                      initialValue: minRole,
+                      items: [
+                        DropdownMenuItem(
+                          value: 'member',
+                          child: Text(
+                              l10n?.documentsRoleMember ?? 'Every member'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'admin',
+                          child: Text(l10n?.documentsRoleAdmin ??
+                              'Admins and owners'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'owner',
+                          child: Text(
+                              l10n?.documentsRoleOwner ?? 'Owners only'),
+                        ),
+                      ],
+                      onChanged: (v) =>
+                          setState(() => minRole = v ?? minRole),
+                      decoration: InputDecoration(
+                        labelText:
+                            l10n?.documentsRoleLabel ?? 'Visible to',
+                      ),
                     ),
-                    DropdownMenuItem(
-                      value: 'admin',
-                      child: Text(l10n?.documentsRoleAdmin ??
-                          'Admins and owners'),
-                    ),
-                    DropdownMenuItem(
-                      value: 'owner',
-                      child:
-                          Text(l10n?.documentsRoleOwner ?? 'Owners only'),
-                    ),
-                  ],
-                  onChanged: (v) => setState(() => minRole = v ?? minRole),
-                  decoration: InputDecoration(
-                    labelText: l10n?.documentsRoleLabel ?? 'Visible to',
                   ),
-                ),
+                  HelpDot(l10n?.helpTopicDocumentLibrary ??
+                      'document library'),
+                ]),
               ],
             ),
           ),

@@ -1871,7 +1871,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureFormHelpHintsDesc =>
-      'Breves consejos descartables en formularios y pantallas, cada uno enlazado a la sección correspondiente de la guía.';
+      'Un carrusel de consejos descartable en cada pantalla principal, y un pequeño ? junto a cada parámetro y campo — un toque abre la guía en la sección correcta. Restaurable desde Ajustes.';
 
   @override
   String get featureUiAnimationsTitle => 'Animaciones de la interfaz';
@@ -2395,6 +2395,36 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get helpHintMembersTipNegotiationTopic => 'Negociaciones de precios';
+
+  @override
+  String get helpDotTooltip => 'Abrir la guía';
+
+  @override
+  String get helpTopicLegalIdentity => 'Identidad legal';
+
+  @override
+  String get helpTopicEinvoice => 'factura electrónica';
+
+  @override
+  String get helpTopicReportEditor => 'editor de informes';
+
+  @override
+  String get helpTopicDocumentLibrary => 'biblioteca de documentos';
+
+  @override
+  String get helpTopicWorkspaceId => 'ID del espacio';
+
+  @override
+  String get helpTopicVat => 'IVA';
+
+  @override
+  String get helpTopicSettings => 'Ajustes y perfil';
+
+  @override
+  String get helpTopicKiosk => 'Modo quiosco';
+
+  @override
+  String get helpTopicBilling => 'Facturación';
 
   @override
   String get inviteSectionTitle => 'Invitar a alguien';

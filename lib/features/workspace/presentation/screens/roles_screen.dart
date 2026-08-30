@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -182,8 +183,22 @@ class RolesScreen extends ConsumerWidget {
                                   role: role,
                                   permission: permission,
                                   current: granted),
-                          title:
-                              Text(_permissionLabel(l10n, permission)),
+                          // #763 — height-capped: the dot's tap padding
+                          // must not grow the dense matrix row.
+                          title: SizedBox(
+                            height: 24,
+                            child: HelpDotTitle(
+                              _permissionLabel(l10n, permission),
+                              switch (permission) {
+                                WorkspacePermission.viewNegotiations ||
+                                WorkspacePermission.manageNegotiations =>
+                                  l10n?.helpHintMembersTipNegotiationTopic ??
+                                      'Price negotiations',
+                                _ => l10n?.helpHintMembersTip4Topic ??
+                                    'Role management',
+                              },
+                            ),
+                          ),
                         ),
                     ],
                   ),

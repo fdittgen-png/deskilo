@@ -97,7 +97,7 @@
   "featureQrBadgesTitle": "Badges QR",
   "featureQrBadgesDesc": "Cartes badge QR imprimables pour le kiosque, à côté des cartes NFC/RFID.",
   "featureFormHelpHintsTitle": "Astuces d'aide",
-  "featureFormHelpHintsDesc": "Courtes astuces refermables sur les formulaires et écrans, chacune renvoyant à la section correspondante du guide.",
+  "featureFormHelpHintsDesc": "Un carrousel d'astuces masquable sur chaque écran principal, et un petit ? à côté de chaque paramètre et champ de saisie — un geste ouvre le guide à la bonne section. Réactivable dans les réglages.",
   "featureUiAnimationsTitle": "Animations de l'interface",
   "featureUiAnimationsDesc": "Transitions fluides et animations d'état dans toute l'application. Désactivé, chaque changement est instantané ; le réglage « réduire les animations » de l'appareil prime toujours.",
   "featureKioskMemberPhotosTitle": "Photos des membres à la borne",

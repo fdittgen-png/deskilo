@@ -141,3 +141,15 @@ top level, per-case `begin/exception` subtransactions, and a final
 `raise exception 'HARNESS_RESULTS %'` to smuggle the JSON out while aborting everything.
 That harness has caught defects no unit test would have — always run it after applying a
 migration that changes an RPC.
+
+## Help symbols live in BOTH places (#763)
+
+Every parameter and entry field carries a small help symbol in TWO
+places: the app's forms (`HelpDot` / `HelpDotTitle`, lib/core/help/
+help_dot.dart, `/help?topic=` jump, gated by `formHelpHints`) and the
+setup questionnaire (`helpIcon` in web/setup.html, wiki links). Adding,
+renaming or removing a parameter updates BOTH in the same PR — a field
+with a symbol on one surface and none on the other is a bug. Topics are
+localized l10n getters pinned to guide headings by
+test/core/help/help_hint_test.dart.
+

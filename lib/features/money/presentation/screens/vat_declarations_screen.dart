@@ -11,6 +11,7 @@ import 'package:pdf/widgets.dart' as pw;
 
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/format/cents.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -307,6 +308,7 @@ class _VatDeclarationsScreenState
                             () => _periodIndex = value ?? 0),
                       ),
                     ),
+                    HelpDot(l10n?.helpTopicVat ?? 'VAT'),
                     const SizedBox(width: AppSpacing.sm),
                     FilledButton.icon(
                       key: const ValueKey('vat-decl-generate'),

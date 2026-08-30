@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/share/file_sharer.dart';
@@ -58,7 +59,10 @@ class PrivacyScreen extends ConsumerWidget {
         ListTile(
           key: const ValueKey('privacy-who-can-see'),
           leading: const Icon(Icons.shield_outlined),
-          title: Text(l10n?.privacyWhoCanSee ?? 'Who can see my data'),
+          title: HelpDotTitle(
+            l10n?.privacyWhoCanSee ?? 'Who can see my data',
+            l10n?.helpHintPrivacyTopic ?? 'Privacy',
+          ),
           subtitle: Text(l10n?.privacyWhoCanSeeHint ??
               'The rule per category, the people it names today, and who '
                   'actually looked.'),
@@ -68,7 +72,10 @@ class PrivacyScreen extends ConsumerWidget {
           ListTile(
             key: const ValueKey('privacy-export'),
             leading: const Icon(Icons.download_outlined),
-            title: Text(l10n?.privacyExport ?? 'Export my data'),
+            title: HelpDotTitle(
+              l10n?.privacyExport ?? 'Export my data',
+              l10n?.helpHintPrivacyTopic ?? 'Privacy',
+            ),
             subtitle: Text(l10n?.privacyExportHint ??
                 'Everything you are the subject of, as one JSON file (art. 20).'),
             onTap: () => _export(context, ref),
@@ -78,10 +85,18 @@ class PrivacyScreen extends ConsumerWidget {
             key: const ValueKey('privacy-erase'),
             leading: Icon(Icons.person_remove_outlined,
                 color: theme.colorScheme.error),
-            title: Text(
-              l10n?.privacyErase ?? 'Leave this workspace and erase my data',
-              style: TextStyle(color: theme.colorScheme.error),
-            ),
+            // The destructive row keeps its error-colored Text, so the
+            // dot rides in a plain Row instead of HelpDotTitle.
+            title: Row(children: [
+              Flexible(
+                child: Text(
+                  l10n?.privacyErase ??
+                      'Leave this workspace and erase my data',
+                  style: TextStyle(color: theme.colorScheme.error),
+                ),
+              ),
+              HelpDot(l10n?.helpHintPrivacyTopic ?? 'Privacy'),
+            ]),
             subtitle: Text(isOwner
                 ? (l10n?.privacyEraseOwner ??
                     'An owner hands the workspace over first (Members & plans → Co-ownership).')
@@ -95,7 +110,10 @@ class PrivacyScreen extends ConsumerWidget {
         ListTile(
           key: const ValueKey('privacy-consent'),
           leading: const Icon(Icons.fact_check_outlined),
-          title: Text(l10n?.consentTitle ?? 'Your data, your rights'),
+          title: HelpDotTitle(
+            l10n?.consentTitle ?? 'Your data, your rights',
+            l10n?.helpHintPrivacyTopic ?? 'Privacy',
+          ),
           subtitle: Text(l10n?.consentReviewHint ??
               'The text you accepted, with the date — read it again anytime.'),
           trailing: const Icon(Icons.chevron_right),

@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/app_info.dart';
 import '../../../../core/files/file_picker.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint_providers.dart';
 import '../../../../core/push/push_status_tile.dart';
 import '../../../../core/links/link_launcher.dart';
@@ -297,7 +298,10 @@ class SettingsScreen extends ConsumerWidget {
           if (features.contains(WorkspaceFeature.whatsappIntegration))
           ListTile(
             leading: const Icon(Icons.chat_outlined),
-            title: Text(l10n?.whatsappTitle ?? 'WhatsApp'),
+            title: HelpDotTitle(
+              l10n?.whatsappTitle ?? 'WhatsApp',
+              l10n?.helpTopicSettings ?? 'Settings & profile',
+            ),
             subtitle: Text(
               (myProfile?.sharesWhatsapp ?? false)
                   ? myProfile!.whatsapp
@@ -313,7 +317,10 @@ class SettingsScreen extends ConsumerWidget {
           // ungrouped personal area on top.
           ListTile(
             leading: const Icon(Icons.mood_outlined),
-            title: Text(l10n?.profileStatusTitle ?? 'Status'),
+            title: HelpDotTitle(
+              l10n?.profileStatusTitle ?? 'Status',
+              l10n?.helpTopicSettings ?? 'Settings & profile',
+            ),
             subtitle: Text(
               (myProfile?.hasStatus ?? false)
                   ? myProfile!.statusText
@@ -333,8 +340,10 @@ class SettingsScreen extends ConsumerWidget {
             ListTile(
               key: const ValueKey('settings-default-period'),
               leading: const Icon(Icons.schedule_outlined),
-              title: Text(
-                  l10n?.defaultPeriodTitle ?? 'Default booking period'),
+              title: HelpDotTitle(
+                l10n?.defaultPeriodTitle ?? 'Default booking period',
+                l10n?.helpTopicSettings ?? 'Settings & profile',
+              ),
               subtitle: Text(switch (
                   ref.watch(defaultPeriodProvider).value) {
                 DefaultBookingPeriod.morning =>
@@ -349,8 +358,10 @@ class SettingsScreen extends ConsumerWidget {
               onTap: () => showDialog<void>(
                 context: context,
                 builder: (dialogContext) => SimpleDialog(
-                  title: Text(l10n?.defaultPeriodTitle ??
-                      'Default booking period'),
+                  title: HelpDotTitle(
+                    l10n?.defaultPeriodTitle ?? 'Default booking period',
+                    l10n?.helpTopicSettings ?? 'Settings & profile',
+                  ),
                   children: [
                     for (final (period, label) in [
                       (null,
@@ -382,7 +393,10 @@ class SettingsScreen extends ConsumerWidget {
           ListTile(
             key: const ValueKey('settings-address'),
             leading: const Icon(Icons.home_outlined),
-            title: Text(l10n?.addressTitle ?? 'Address'),
+            title: HelpDotTitle(
+              l10n?.addressTitle ?? 'Address',
+              l10n?.helpTopicSettings ?? 'Settings & profile',
+            ),
             subtitle: Text(
               (myProfile?.address.isNotEmpty ?? false)
                   ? myProfile!.address
@@ -411,8 +425,10 @@ class SettingsScreen extends ConsumerWidget {
             ListTile(
               key: const ValueKey('settings-restore-hints'),
               leading: const Icon(Icons.lightbulb_outline),
-              title: Text(l10n?.helpHintRestoreTitle ??
-                  'Show help hints again'),
+              title: HelpDotTitle(
+                l10n?.helpHintRestoreTitle ?? 'Show help hints again',
+                l10n?.helpTopicSettings ?? 'Settings & profile',
+              ),
               onTap: () async {
                 await ref
                     .read(dismissedHelpHintsProvider.notifier)
@@ -442,14 +458,23 @@ class SettingsScreen extends ConsumerWidget {
               ),
               onTap: () => _revertKiosk(context, ref, me.workspaceId),
             ),
-          const MyBadgeTile(),
           // #662 — the member's own half of badge sign-in. Beside My
           // badge, because the card and the PIN are two halves of one
           // credential and a member who has one and not the other
-          // cannot sign in.
+          // cannot sign in. #763 — both tiles live in their own files;
+          // the help dot rides beside them under the tiles' own
+          // visibility rule so it never floats alone.
           if (ref.watch(myMemberProvider).value case final me?
-              when me.status == MemberStatus.active && !me.isKiosk)
-            const BadgePinTile(),
+              when me.status == MemberStatus.active && !me.isKiosk) ...[
+            Row(children: [
+              const Expanded(child: MyBadgeTile()),
+              HelpDot(l10n?.helpHintBadgesTopic ?? 'NFC badges'),
+            ]),
+            Row(children: [
+              const Expanded(child: BadgePinTile()),
+              HelpDot(l10n?.helpHintBadgesTopic ?? 'NFC badges'),
+            ]),
+          ],
           // Linked accounts (0051): attach Google/Microsoft/Apple/
           // Facebook to this account for password-less sign-in.
           ListTile(
@@ -585,7 +610,10 @@ class SettingsScreen extends ConsumerWidget {
           // In-app language override (#147); null follows the system locale.
           ListTile(
             leading: const Icon(Icons.language),
-            title: Text(l10n?.languageTitle ?? 'Language'),
+            title: HelpDotTitle(
+              l10n?.languageTitle ?? 'Language',
+              l10n?.helpTopicSettings ?? 'Settings & profile',
+            ),
             subtitle: Text(
               localeOverride == null
                   ? (l10n?.languageSystemDefault ?? 'System default')
@@ -600,7 +628,10 @@ class SettingsScreen extends ConsumerWidget {
           // In-app theme override (#160); null follows the system.
           ListTile(
             leading: const Icon(Icons.brightness_6_outlined),
-            title: Text(l10n?.themeTitle ?? 'Theme'),
+            title: HelpDotTitle(
+              l10n?.themeTitle ?? 'Theme',
+              l10n?.helpTopicSettings ?? 'Settings & profile',
+            ),
             subtitle: Text(switch (themeOverride) {
               ThemeMode.light => l10n?.themeLight ?? 'Light',
               ThemeMode.dark => l10n?.themeDark ?? 'Dark',
@@ -617,8 +648,9 @@ class SettingsScreen extends ConsumerWidget {
           SwitchListTile(
             key: const ValueKey('settings-front-camera'),
             secondary: const Icon(Icons.camera_front_outlined),
-            title: Text(
+            title: HelpDotTitle(
               l10n?.settingsFrontCamera ?? 'Scan with the front camera',
+              l10n?.helpTopicSettings ?? 'Settings & profile',
             ),
             subtitle: Text(
               l10n?.settingsFrontCameraDesc ??
@@ -804,7 +836,10 @@ class _LanguageDialog extends ConsumerWidget {
         ref.watch(localeControllerProvider).value?.languageCode ??
             _systemDefault;
     return SimpleDialog(
-      title: Text(l10n?.languageTitle ?? 'Language'),
+      title: HelpDotTitle(
+        l10n?.languageTitle ?? 'Language',
+        l10n?.helpTopicSettings ?? 'Settings & profile',
+      ),
       children: [
         RadioGroup<String>(
           groupValue: current,
@@ -909,7 +944,12 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return AlertDialog(
-      title: Text(l10n?.addressTitle ?? 'Address'),
+      // The dot on the title covers the country dropdown too, whose
+      // decoration already carries the dropdown arrow.
+      title: HelpDotTitle(
+        l10n?.addressTitle ?? 'Address',
+        l10n?.helpTopicSettings ?? 'Settings & profile',
+      ),
       content: SingleChildScrollView(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           TextField(
@@ -919,6 +959,8 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
             maxLength: 400,
             decoration: InputDecoration(
               labelText: l10n?.addressTitle ?? 'Address',
+              suffixIcon:
+                  HelpDot(l10n?.helpTopicSettings ?? 'Settings & profile'),
             ),
           ),
           // 0069 — what the e-invoice needs beyond the street: the
@@ -947,6 +989,8 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
             textCapitalization: TextCapitalization.characters,
             decoration: InputDecoration(
               labelText: l10n?.addressVatIdLabel ?? 'VAT number',
+              suffixIcon:
+                  HelpDot(l10n?.helpTopicSettings ?? 'Settings & profile'),
             ),
           ),
         ]),
@@ -1035,6 +1079,8 @@ class _StatusDialogState extends ConsumerState<_StatusDialog> {
               'Optional. Visible to members of your workspaces in the '
                   'member directory. Leave empty to clear it.',
           helperMaxLines: 3,
+          suffixIcon:
+              HelpDot(l10n?.helpTopicSettings ?? 'Settings & profile'),
         ),
       ),
       actions: [
@@ -1065,7 +1111,10 @@ class _ThemeDialog extends ConsumerWidget {
     final current =
         ref.watch(themeControllerProvider).value ?? ThemeMode.system;
     return SimpleDialog(
-      title: Text(l10n?.themeTitle ?? 'Theme'),
+      title: HelpDotTitle(
+        l10n?.themeTitle ?? 'Theme',
+        l10n?.helpTopicSettings ?? 'Settings & profile',
+      ),
       children: [
         RadioGroup<ThemeMode>(
           groupValue: current,

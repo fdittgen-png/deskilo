@@ -7,6 +7,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/share/file_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -512,9 +513,14 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              l10n?.invoiceTemplateTitle ?? 'Invoice PDF template',
-              style: theme.textTheme.titleMedium,
+            Row(
+              children: [
+                Text(
+                  l10n?.invoiceTemplateTitle ?? 'Invoice PDF template',
+                  style: theme.textTheme.titleMedium,
+                ),
+                HelpDot(l10n?.helpTopicReportEditor ?? 'report editor'),
+              ],
             ),
             const SizedBox(height: 4),
             Text(

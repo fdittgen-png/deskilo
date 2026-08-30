@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member.dart';
@@ -29,7 +30,13 @@ class ProfilesScreen extends ConsumerWidget {
     final defaultId = ref.watch(defaultWorkspaceIdProvider).value;
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.profilesTitle ?? 'Profiles')),
+      appBar: AppBar(
+        title: Text(l10n?.profilesTitle ?? 'Profiles'),
+        actions: [
+          // #763 — one dot for the whole switcher, in the app bar.
+          HelpDot(l10n?.helpTopicSettings ?? 'Settings & profile'),
+        ],
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.push('/onboarding'),
         icon: const Icon(Icons.add),

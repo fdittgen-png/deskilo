@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../widgets/validation_scope_picker.dart';
@@ -266,7 +267,10 @@ class _PolicyCard extends StatelessWidget {
         vertical: AppSpacing.xs,
       ),
       child: ListTile(
-        title: Text(label),
+        title: HelpDotTitle(
+          label,
+          l10n?.helpHintValidationTopic ?? 'confirmations',
+        ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -413,8 +417,9 @@ class _PolicyEditorSheetState extends State<_PolicyEditorSheet> {
               const SizedBox(height: 8),
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                title: Text(
+                title: HelpDotTitle(
                   l10n?.validationRequiredCount ?? 'Required validations',
+                  l10n?.helpHintValidationTopic ?? 'confirmations',
                 ),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -446,24 +451,34 @@ class _PolicyEditorSheetState extends State<_PolicyEditorSheet> {
               ),
               // #732 — who validates: the scope, then the persons.
               if (widget.scopesOn)
-                ValidationScopePicker(
-                  scope: _scope,
-                  people: [for (final p in widget.people) (id: p.id, name: p.name)],
-                  selected: _selectedPeople,
-                  onScope: (v) => setState(() {
-                    _scope = v;
-                    _notEnough = false;
-                  }),
-                  onToggle: (id, selected) => setState(() {
-                    selected ? _selectedPeople.add(id) : _selectedPeople.remove(id);
-                    _notEnough = false;
-                  }),
-                ),
+                Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Expanded(
+                    child: ValidationScopePicker(
+                      scope: _scope,
+                      people: [
+                        for (final p in widget.people) (id: p.id, name: p.name)
+                      ],
+                      selected: _selectedPeople,
+                      onScope: (v) => setState(() {
+                        _scope = v;
+                        _notEnough = false;
+                      }),
+                      onToggle: (id, selected) => setState(() {
+                        selected
+                            ? _selectedPeople.add(id)
+                            : _selectedPeople.remove(id);
+                        _notEnough = false;
+                      }),
+                    ),
+                  ),
+                  HelpDot(l10n?.helpHintMembersTip4Topic ?? 'Role management'),
+                ]),
               if (_scope == 'admins')
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
-                title: Text(
+                title: HelpDotTitle(
                   l10n?.validationAdminsMay ?? 'Admins may validate',
+                  l10n?.helpHintValidationTopic ?? 'confirmations',
                 ),
                 subtitle: _adminsMayValidate
                     ? null
@@ -500,14 +515,18 @@ class _PolicyEditorSheetState extends State<_PolicyEditorSheet> {
                             _notEnough = false;
                           }),
                         ),
+                      HelpDot(
+                        l10n?.helpHintValidationTopic ?? 'confirmations',
+                      ),
                     ],
                   ),
                 ),
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
-                title: Text(
+                title: HelpDotTitle(
                   l10n?.validationOwnerRequired ??
                       'Owner must always validate',
+                  l10n?.helpHintValidationTopic ?? 'confirmations',
                 ),
                 value: _ownerRequired,
                 onChanged: (value) =>
@@ -518,9 +537,10 @@ class _PolicyEditorSheetState extends State<_PolicyEditorSheet> {
                 SwitchListTile(
                   key: const Key('auto-validate-owner'),
                   contentPadding: EdgeInsets.zero,
-                  title: Text(
+                  title: HelpDotTitle(
                     l10n?.validationAutoValidateOwner ??
                         'Owners delete without validation',
+                    l10n?.helpHintValidationTopic ?? 'confirmations',
                   ),
                   subtitle: Text(
                     l10n?.validationAutoValidateDesc ??
@@ -534,9 +554,10 @@ class _PolicyEditorSheetState extends State<_PolicyEditorSheet> {
                 SwitchListTile(
                   key: const Key('auto-validate-admin'),
                   contentPadding: EdgeInsets.zero,
-                  title: Text(
+                  title: HelpDotTitle(
                     l10n?.validationAutoValidateAdmin ??
                         'Admins delete without validation',
+                    l10n?.helpHintValidationTopic ?? 'confirmations',
                   ),
                   value: _autoValidateAdmin,
                   onChanged: (value) =>

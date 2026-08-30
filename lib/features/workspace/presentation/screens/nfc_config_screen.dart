@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -99,7 +100,10 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
           Card(
             child: SwitchListTile(
               key: const ValueKey('nfc-feature-switch'),
-              title: Text(l10n?.nfcConfigEnable ?? 'Enable NFC badge check-in'),
+              title: HelpDotTitle(
+                l10n?.nfcConfigEnable ?? 'Enable NFC badge check-in',
+                l10n?.helpHintBadgesTopic ?? 'NFC badges',
+              ),
               subtitle: Text(
                 l10n?.nfcConfigEnableDesc ??
                     'Show the card-tap option on kiosks and in the badge '

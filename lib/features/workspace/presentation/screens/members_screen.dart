@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../money/presentation/widgets/negotiation_card.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -19,6 +20,7 @@ import '../../domain/booking_policies.dart';
 import '../../domain/member.dart';
 import '../../domain/overage_policy.dart';
 import '../../domain/workspace_feature.dart';
+import '../../domain/workspace_permission.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/open_conversation.dart';
 import '../widgets/member_note_dialog.dart';
@@ -73,6 +75,8 @@ class MembersScreen extends ConsumerWidget {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: l10n?.memberSubscriptionCustom ?? 'Custom (1–100)',
+                suffixIcon: HelpDot(
+                    l10n?.helpHintMembersTopic ?? 'Members & plans'),
               ),
             ),
           ],
@@ -139,7 +143,10 @@ class MembersScreen extends ConsumerWidget {
     final chosen = await showDialog<OveragePolicy>(
       context: context,
       builder: (context) => SimpleDialog(
-        title: Text(l10n?.memberOveragePolicyLabel ?? 'When days run out'),
+        title: HelpDotTitle(
+          l10n?.memberOveragePolicyLabel ?? 'When days run out',
+          l10n?.helpHintMembersTopic ?? 'Members & plans',
+        ),
         children: [
           for (final (policy, label) in options)
             SimpleDialogOption(
@@ -252,6 +259,19 @@ class MembersScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final active = member.status == MemberStatus.active;
     final pending = member.status == MemberStatus.pending;
+    // #763 — one guide topic for the management rows.
+    final membersTopic = l10n?.helpHintMembersTopic ?? 'Members & plans';
+    // #763 — mirrors MemberNegotiationTile's own gate (#739/#749): the
+    // dot beside the self-gating tile must never float alone.
+    final perms = ref.read(myPermissionsProvider);
+    final negotiationVisible = !isSelf &&
+        ref.read(myMemberProvider).value != null &&
+        ref
+            .read(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.priceNegotiations) &&
+        (isOwner ||
+            perms.contains(WorkspacePermission.manageNegotiations) ||
+            perms.contains(WorkspacePermission.viewNegotiations));
     final notesOn = ref
         .read(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.memberNotifications);
@@ -316,11 +336,19 @@ class MembersScreen extends ConsumerWidget {
           context,
           icon: Icons.percent,
           label: l10n?.memberSubscriptionLabel ?? 'Subscription',
+          topic: membersTopic,
           onTap: () => _pickSubscription(context, ref, member),
         ),
       if (!member.isKiosk && active)
-        MemberNegotiationTile(
-            memberId: member.id, memberName: name, isOwner: isOwner),
+        Row(children: [
+          Expanded(
+            child: MemberNegotiationTile(
+                memberId: member.id, memberName: name, isOwner: isOwner),
+          ),
+          if (negotiationVisible)
+            HelpDot(l10n?.helpHintMembersTipNegotiationTopic ??
+                'Price negotiations'),
+        ]),
       if (isOwner && !member.isKiosk && active)
         _sheetAction(
           context,
@@ -328,6 +356,7 @@ class MembersScreen extends ConsumerWidget {
               ? Icons.speed_outlined
               : Icons.speed,
           label: l10n?.memberOveragePolicyLabel ?? 'When days run out',
+          topic: membersTopic,
           onTap: () => _pickOveragePolicy(context, ref, member),
         ),
       if (!isSelf && !member.isKiosk && active)
@@ -335,6 +364,7 @@ class MembersScreen extends ConsumerWidget {
           context,
           icon: Icons.stacked_bar_chart_outlined,
           label: l10n?.memberReservationLimitLabel ?? 'Reservation limit',
+          topic: membersTopic,
           onTap: () => _pickReservationLimit(context, ref, member),
         ),
       // #628 — the explicit permission to hold OVERLAPPING bookings;
@@ -345,6 +375,7 @@ class MembersScreen extends ConsumerWidget {
           icon: Icons.splitscreen_outlined,
           label: l10n?.memberSimultaneousLimitLabel ??
               'Simultaneous reservations',
+          topic: membersTopic,
           onTap: () => _pickSimultaneousLimit(context, ref, member),
         ),
       // Whole-level reservations (0050): grant/revoke — owner or admin,
@@ -360,6 +391,7 @@ class MembersScreen extends ConsumerWidget {
                   'May reserve a whole level')
               : (l10n?.levelPermissionDenied ??
                   'May not reserve a whole level'),
+          topic: membersTopic,
           onTap: () => _toggleLevelPermission(context, ref, member),
         ),
       if (!member.isKiosk && !member.isOwner && active)
@@ -367,6 +399,7 @@ class MembersScreen extends ConsumerWidget {
           context,
           icon: Icons.qr_code_2_outlined,
           label: l10n?.memberBadgesTooltip ?? 'Badges',
+          topic: l10n?.helpHintBadgesTopic ?? 'NFC badges',
           onTap: () => _badgesDialog(context, ref, member, name),
         ),
       if (isOwner && !member.isOwner && !member.isKiosk && active)
@@ -397,6 +430,7 @@ class MembersScreen extends ConsumerWidget {
             CoOwnerStatus.none => Icons.badge_outlined,
           },
           label: l10n?.coOwnerAction ?? 'Co-ownership',
+          topic: membersTopic,
           onTap: () => _pickCoOwner(context, ref, member),
         ),
       if (isOwner &&
@@ -421,6 +455,7 @@ class MembersScreen extends ConsumerWidget {
           label: member.isKiosk
               ? (l10n?.memberUnmakeKiosk ?? 'Revert kiosk to member')
               : (l10n?.memberMakeKiosk ?? 'Make kiosk device'),
+          topic: l10n?.helpTopicKiosk ?? 'Kiosk mode',
           onTap: () => _toggleKiosk(context, ref, member),
         ),
       // Kiosk self-revert (0056): the kiosk account manages its OWN row
@@ -444,6 +479,7 @@ class MembersScreen extends ConsumerWidget {
           label: member.status == MemberStatus.paused
               ? (l10n?.memberReactivate ?? 'Reactivate membership')
               : (l10n?.memberPause ?? 'Pause membership'),
+          topic: membersTopic,
           onTap: () => _togglePaused(context, ref, member),
         ),
     ];
@@ -504,13 +540,14 @@ class MembersScreen extends ConsumerWidget {
     required IconData icon,
     required String label,
     required VoidCallback onTap,
+    String? topic,
   }) {
     // Builder: the tile's own context lives under the sheet route, so the
     // pop closes the SHEET — the action then runs on the screen's context.
     return Builder(
       builder: (tileContext) => ListTile(
         leading: Icon(icon),
-        title: Text(label),
+        title: topic == null ? Text(label) : HelpDotTitle(label, topic),
         onTap: () {
           Navigator.of(tileContext).pop();
           onTap();
@@ -543,7 +580,10 @@ class MembersScreen extends ConsumerWidget {
     final chosen = await showDialog<CoOwnerStatus>(
       context: context,
       builder: (context) => SimpleDialog(
-        title: Text(l10n?.coOwnerAction ?? 'Co-ownership'),
+        title: HelpDotTitle(
+          l10n?.coOwnerAction ?? 'Co-ownership',
+          l10n?.helpHintMembersTopic ?? 'Members & plans',
+        ),
         children: [
           for (final (status, label) in options)
             SimpleDialogOption(
@@ -685,6 +725,8 @@ class MembersScreen extends ConsumerWidget {
               decoration: InputDecoration(
                 labelText: l10n?.memberReservationLimitCustom ??
                     'Custom (1\u2013100)',
+                suffixIcon: HelpDot(
+                    l10n?.helpHintMembersTopic ?? 'Members & plans'),
               ),
             ),
           ],
@@ -738,8 +780,9 @@ class MembersScreen extends ConsumerWidget {
     final chosen = await showDialog<int>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(
+        title: HelpDotTitle(
           l10n?.memberSimultaneousLimitLabel ?? 'Simultaneous reservations',
+          l10n?.helpHintMembersTopic ?? 'Members & plans',
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,

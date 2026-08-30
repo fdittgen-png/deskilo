@@ -1870,7 +1870,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureFormHelpHintsDesc =>
-      'Kurze, ausblendbare Hinweise auf Formularen und Bildschirmen, jeweils mit Link zum passenden Abschnitt des Handbuchs.';
+      'Ein ausblendbares Tipp-Karussell auf jedem Hauptbildschirm und ein kleines ? neben jedem Parameter und Eingabefeld — ein Tipp öffnet das Handbuch am richtigen Abschnitt. In den Einstellungen wiederherstellbar.';
 
   @override
   String get featureUiAnimationsTitle => 'Oberflächen-Animationen';
@@ -2391,6 +2391,36 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get helpHintMembersTipNegotiationTopic => 'Preisverhandlungen';
+
+  @override
+  String get helpDotTooltip => 'Handbuch öffnen';
+
+  @override
+  String get helpTopicLegalIdentity => 'Rechtliche Identität';
+
+  @override
+  String get helpTopicEinvoice => 'E-Rechnung';
+
+  @override
+  String get helpTopicReportEditor => 'Report-Editor';
+
+  @override
+  String get helpTopicDocumentLibrary => 'Dokumentbibliothek';
+
+  @override
+  String get helpTopicWorkspaceId => 'Workspace-ID';
+
+  @override
+  String get helpTopicVat => 'MwSt';
+
+  @override
+  String get helpTopicSettings => 'Einstellungen & Profil';
+
+  @override
+  String get helpTopicKiosk => 'Kiosk-Modus';
+
+  @override
+  String get helpTopicBilling => 'Abrechnung';
 
   @override
   String get inviteSectionTitle => 'Jemanden einladen';

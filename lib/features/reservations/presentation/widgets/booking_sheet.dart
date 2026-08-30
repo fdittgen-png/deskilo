@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -178,12 +180,24 @@ class _BookingSheetState extends State<BookingSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              widget.seatName.isEmpty
-                  ? (l10n?.planCheckInTitle ?? 'Check in')
-                  : widget.seatName,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+            Row(children: [
+              Expanded(
+                child: Text(
+                  widget.seatName.isEmpty
+                      ? (l10n?.planCheckInTitle ?? 'Check in')
+                      : widget.seatName,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+              // #763 — ONE dot for the whole sheet, beside its header.
+              // The kiosk never opens this sheet (its wall flow is
+              // SpaceActForm), and pure-widget tests pump it without a
+              // ProviderScope: no scope, no dot.
+              if (_hasProviderScope(context))
+                HelpDot(
+                  l10n?.helpHintReserveTip4Topic ?? 'How booking behaves',
+                ),
+            ]),
             const SizedBox(height: 8),
             Text(
               widget.walkUp
@@ -376,6 +390,18 @@ class _BookingSheetState extends State<BookingSheet> {
         ),
       ),
     );
+  }
+
+  /// Whether a Riverpod scope is above this sheet (#763): the scope's
+  /// inherited widget is private, so probing means asking for the
+  /// container and treating the StateError as "none".
+  bool _hasProviderScope(BuildContext context) {
+    try {
+      ProviderScope.containerOf(context, listen: false);
+      return true;
+    } on StateError {
+      return false;
+    }
   }
 
   /// The longest grid-aligned duration from [_start] (#574): bounded by

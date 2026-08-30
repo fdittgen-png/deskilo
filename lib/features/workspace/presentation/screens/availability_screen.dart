@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -334,9 +335,14 @@ class AvailabilityScreen extends ConsumerWidget {
             children: [
               // #606 — contextual how-to; gated inside the widget.
               const HelpHint(HelpHintId.availability),
-              SectionHeader(
-                l10n?.availabilityOpenWeekdays ?? 'Open weekdays',
-              ),
+              Row(children: [
+                Flexible(
+                  child: SectionHeader(
+                    l10n?.availabilityOpenWeekdays ?? 'Open weekdays',
+                  ),
+                ),
+                HelpDot(l10n?.helpHintAvailabilityTopic ?? 'Availability'),
+              ]),
               Padding(
                 padding: AppSpacing.lgH,
                 child: Wrap(
@@ -362,9 +368,15 @@ class AvailabilityScreen extends ConsumerWidget {
                   ],
                 ),
               ),
-              SectionHeader(
-                l10n?.availabilityGranularityTitle ?? 'Booking granularity',
-              ),
+              Row(children: [
+                Flexible(
+                  child: SectionHeader(
+                    l10n?.availabilityGranularityTitle ??
+                        'Booking granularity',
+                  ),
+                ),
+                HelpDot(l10n?.helpHintAvailabilityTopic ?? 'Availability'),
+              ]),
               Padding(
                 padding: AppSpacing.lgH,
                 child: Text(
@@ -440,9 +452,14 @@ class AvailabilityScreen extends ConsumerWidget {
                 ),
               ),
               if (workingHoursOn) ...[
-                SectionHeader(
-                  l10n?.availabilityWorkHoursTitle ?? 'Working hours',
-                ),
+                Row(children: [
+                  Flexible(
+                    child: SectionHeader(
+                      l10n?.availabilityWorkHoursTitle ?? 'Working hours',
+                    ),
+                  ),
+                  HelpDot(l10n?.helpHintAvailabilityTopic ?? 'Availability'),
+                ]),
                 Padding(
                   padding: AppSpacing.lgH,
                   child: Text(
@@ -518,13 +535,20 @@ class AvailabilityScreen extends ConsumerWidget {
                 ],
               ],
               if (policiesOn) ...[
-                SectionHeader(
-                  l10n?.availabilityPoliciesTitle ?? 'Booking policies',
-                ),
+                Row(children: [
+                  Flexible(
+                    child: SectionHeader(
+                      l10n?.availabilityPoliciesTitle ?? 'Booking policies',
+                    ),
+                  ),
+                  HelpDot(l10n?.helpHintAvailabilityTopic ?? 'Availability'),
+                ]),
                 SwitchListTile(
                   key: const Key('policy-allow-past'),
-                  title: Text(l10n?.policyAllowPastTitle ??
-                      'Allow past bookings'),
+                  title: HelpDotTitle(
+                    l10n?.policyAllowPastTitle ?? 'Allow past bookings',
+                    l10n?.helpHintAvailabilityTopic ?? 'Availability',
+                  ),
                   subtitle: Text(l10n?.policyAllowPastDesc ??
                       'Members may record a booking that already '
                           'ended (backfill).'),
@@ -534,8 +558,11 @@ class AvailabilityScreen extends ConsumerWidget {
                 ),
                 SwitchListTile(
                   key: const Key('policy-admin-checkout'),
-                  title: Text(l10n?.policyAdminCheckoutTitle ??
-                      'Admins may check members out'),
+                  title: HelpDotTitle(
+                    l10n?.policyAdminCheckoutTitle ??
+                        'Admins may check members out',
+                    l10n?.helpHintAvailabilityTopic ?? 'Availability',
+                  ),
                   subtitle: Text(l10n?.policyAdminCheckoutDesc ??
                       "An admin can end a member's running check-in."),
                   value: policies.adminCheckOut,
@@ -547,8 +574,11 @@ class AvailabilityScreen extends ConsumerWidget {
                 // four-way SegmentedButton: four labels do not fit a
                 // 360dp phone.
                 ListTile(
-                  title: Text(l10n?.policyOutsideHoursTitle ??
-                      'Outside the opening hours'),
+                  title: HelpDotTitle(
+                    l10n?.policyOutsideHoursTitle ??
+                        'Outside the opening hours',
+                    l10n?.helpHintAvailabilityTopic ?? 'Availability',
+                  ),
                   subtitle: Text(l10n?.policyOutsideHoursDesc ??
                       'What may happen outside the working day — the '
                           'same answer on every granularity.'),
@@ -611,9 +641,14 @@ class AvailabilityScreen extends ConsumerWidget {
                 // since 0006 but nothing could set. Shown with the values
                 // the server coalesces to, so an untouched workspace
                 // displays what it actually does.
-                SectionHeader(
-                  l10n?.policyLimitsTitle ?? 'Booking limits',
-                ),
+                Row(children: [
+                  Flexible(
+                    child: SectionHeader(
+                      l10n?.policyLimitsTitle ?? 'Booking limits',
+                    ),
+                  ),
+                  HelpDot(l10n?.helpHintAvailabilityTopic ?? 'Availability'),
+                ]),
                 Padding(
                   padding: AppSpacing.lgH,
                   child: Text(
@@ -678,9 +713,14 @@ class AvailabilityScreen extends ConsumerWidget {
                     ),
                   ),
               ],
-              SectionHeader(
-                l10n?.availabilityClosureDays ?? 'Closure days',
-              ),
+              Row(children: [
+                Flexible(
+                  child: SectionHeader(
+                    l10n?.availabilityClosureDays ?? 'Closure days',
+                  ),
+                ),
+                HelpDot(l10n?.helpHintAvailabilityTopic ?? 'Availability'),
+              ]),
               if (closures.isEmpty)
                 Padding(
                   padding: AppSpacing.lgH,

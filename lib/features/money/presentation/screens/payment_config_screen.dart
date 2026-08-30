@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -234,6 +235,9 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
                     style: theme.textTheme.titleMedium,
                   ),
                 ),
+                HelpDot(
+                  l10n?.helpHintMoneyPaymentsTip3Topic ?? 'online payments',
+                ),
                 Chip(
                   label: Text(
                     widget.status.configured
@@ -291,6 +295,10 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
                               ? (l10n?.payConfigSecretSet ??
                                   'Set — leave blank to keep')
                               : null,
+                          suffixIcon: HelpDot(
+                            l10n?.helpHintMoneyPaymentsTip3Topic ??
+                                'online payments',
+                          ),
                         ),
                       ),
               ),

@@ -1876,7 +1876,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureFormHelpHintsDesc =>
-      'Courtes astuces refermables sur les formulaires et écrans, chacune renvoyant à la section correspondante du guide.';
+      'Un carrousel d\'astuces masquable sur chaque écran principal, et un petit ? à côté de chaque paramètre et champ de saisie — un geste ouvre le guide à la bonne section. Réactivable dans les réglages.';
 
   @override
   String get featureUiAnimationsTitle => 'Animations de l\'interface';
@@ -2401,6 +2401,36 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get helpHintMembersTipNegotiationTopic => 'Négociations tarifaires';
+
+  @override
+  String get helpDotTooltip => 'Ouvrir le guide';
+
+  @override
+  String get helpTopicLegalIdentity => 'Identité légale';
+
+  @override
+  String get helpTopicEinvoice => 'facture électronique';
+
+  @override
+  String get helpTopicReportEditor => 'éditeur de rapports';
+
+  @override
+  String get helpTopicDocumentLibrary => 'bibliothèque de documents';
+
+  @override
+  String get helpTopicWorkspaceId => 'ID de l\'espace';
+
+  @override
+  String get helpTopicVat => 'TVA';
+
+  @override
+  String get helpTopicSettings => 'Réglages et profil';
+
+  @override
+  String get helpTopicKiosk => 'Mode borne';
+
+  @override
+  String get helpTopicBilling => 'Facturation';
 
   @override
   String get inviteSectionTitle => 'Inviter quelqu\'un';

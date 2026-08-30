@@ -138,5 +138,15 @@
   "helpHintMoneyStatementTipNegotiation": "Des conditions négociées ? La carte montre vos prix à côté du tarif, depuis quand, et qui peut les voir — les propriétaires et les admins finances, chaque consultation journalisée.",
   "helpHintMoneyStatementTipNegotiationTopic": "Négociations tarifaires",
   "helpHintMembersTipNegotiation": "Les prix propres d'un membre : ouvrez sa fiche → Négociation tarifaire, saisissez l'abonnement, le dépassement ou la remise convenus, et les validateurs de la règle confirment.",
-  "helpHintMembersTipNegotiationTopic": "Négociations tarifaires"
+  "helpHintMembersTipNegotiationTopic": "Négociations tarifaires",
+  "helpDotTooltip": "Ouvrir le guide",
+  "helpTopicLegalIdentity": "Identité légale",
+  "helpTopicEinvoice": "facture électronique",
+  "helpTopicReportEditor": "éditeur de rapports",
+  "helpTopicDocumentLibrary": "bibliothèque de documents",
+  "helpTopicWorkspaceId": "ID de l'espace",
+  "helpTopicVat": "TVA",
+  "helpTopicSettings": "Réglages et profil",
+  "helpTopicKiosk": "Mode borne",
+  "helpTopicBilling": "Facturation"
 }

@@ -138,5 +138,15 @@
   "helpHintMoneyStatementTipNegotiation": "Negotiated a deal? The card shows your prices beside the tariff, since when, and who can see them — the owners and finance admins, every read on the record.",
   "helpHintMoneyStatementTipNegotiationTopic": "Price negotiations",
   "helpHintMembersTipNegotiation": "A member's own prices: open their sheet → Price negotiation, set the fee, overage or discount you agreed, and the rule's validators confirm it.",
-  "helpHintMembersTipNegotiationTopic": "Price negotiations"
+  "helpHintMembersTipNegotiationTopic": "Price negotiations",
+  "helpDotTooltip": "Open the guide",
+  "helpTopicLegalIdentity": "Legal identity",
+  "helpTopicEinvoice": "e-invoice",
+  "helpTopicReportEditor": "report editor",
+  "helpTopicDocumentLibrary": "document library",
+  "helpTopicWorkspaceId": "Workspace ID",
+  "helpTopicVat": "VAT",
+  "helpTopicSettings": "Settings & profile",
+  "helpTopicKiosk": "Kiosk mode",
+  "helpTopicBilling": "Billing"
 }

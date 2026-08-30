@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -329,12 +330,16 @@ class _FeatureTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final child = entry.requires != null;
     return Padding(
       padding: EdgeInsets.only(left: child ? 24 : 0),
       child: SwitchListTile(
         key: ValueKey('feature-${entry.feature.name}'),
-        title: Text(name),
+        title: HelpDotTitle(
+          name,
+          l10n?.helpHintFeaturesTopic ?? 'Features',
+        ),
         subtitle: Text(
           requiresLabel == null
               ? description
