@@ -327,5 +327,6 @@
   "negotiationOccupationHint": "La quota di giorni di apertura inclusa ogni mese; applicata al membro una volta convalidata.",
   "negotiationKeepCurrent": "Mantieni attuale",
   "negotiationItems": "Servizi e pacchetti",
-  "negotiationItemsHint": "Un prezzo unitario per questo membro; vuoto mantiene il catalogo."
+  "negotiationItemsHint": "Un prezzo unitario per questo membro; vuoto mantiene il catalogo.",
+  "negotiationPercent": "{value} %"
 }

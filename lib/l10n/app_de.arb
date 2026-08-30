@@ -2790,6 +2790,7 @@
   "negotiationKeepCurrent": "Aktuelle behalten",
   "negotiationItems": "Leistungen und Pakete",
   "negotiationItemsHint": "Ein Stückpreis für dieses Mitglied; leer behält den Katalog.",
+  "negotiationPercent": "{value} %",
   "planDurationLabel": "Dauer",
   "@planDurationLabel": {
     "description": "Booking sheet: grid duration slider label (#574)"

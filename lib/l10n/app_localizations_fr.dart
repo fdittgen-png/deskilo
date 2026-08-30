@@ -4632,6 +4632,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un prix unitaire pour ce membre ; vide garde le catalogue.';
 
   @override
+  String negotiationPercent(int value) {
+    return '$value %';
+  }
+
+  @override
   String get planDurationLabel => 'Durée';
 
   @override

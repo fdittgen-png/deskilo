@@ -8180,6 +8180,12 @@ abstract class AppLocalizations {
   /// **'A unit price for this member; empty keeps the catalogue.'**
   String get negotiationItemsHint;
 
+  /// No description provided for @negotiationPercent.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} %'**
+  String negotiationPercent(int value);
+
   /// Booking sheet: grid duration slider label (#574)
   ///
   /// In en, this message translates to:

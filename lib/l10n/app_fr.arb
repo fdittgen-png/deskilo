@@ -2790,6 +2790,7 @@
   "negotiationKeepCurrent": "Garder l'actuelle",
   "negotiationItems": "Services et forfaits",
   "negotiationItemsHint": "Un prix unitaire pour ce membre ; vide garde le catalogue.",
+  "negotiationPercent": "{value} %",
   "planDurationLabel": "Durée",
   "@planDurationLabel": {
     "description": "Booking sheet: grid duration slider label (#574)"
