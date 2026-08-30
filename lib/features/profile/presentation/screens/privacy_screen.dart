@@ -93,6 +93,15 @@ class PrivacyScreen extends ConsumerWidget {
             onTap: isOwner ? null : () => _erase(context, ref),
           ),
         ListTile(
+          key: const ValueKey('privacy-consent'),
+          leading: const Icon(Icons.fact_check_outlined),
+          title: Text(l10n?.consentTitle ?? 'Your data, your rights'),
+          subtitle: Text(l10n?.consentReviewHint ??
+              'The text you accepted, with the date — read it again anytime.'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => context.push('/consent?review=1'),
+        ),
+        ListTile(
           key: const ValueKey('privacy-policy'),
           leading: const Icon(Icons.policy_outlined),
           title: Text(l10n?.privacyPolicy ?? 'Privacy policy'),

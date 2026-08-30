@@ -26,6 +26,8 @@ class Profile {
     this.avatarPath,
     this.preferredLocale = '',
     this.formatPrefs = FormatPrefs.defaults,
+    this.privacyAcceptedVersion,
+    this.privacyAcceptedAt,
   });
 
   /// auth.users id (uuid).
@@ -69,6 +71,11 @@ class Profile {
   /// How this member reads numbers, dates, the clock and the zone (#711).
   final FormatPrefs formatPrefs;
 
+  /// #751 — the consent on the account: the policy version accepted and
+  /// when (server clock). Null = never accepted.
+  final String? privacyAcceptedVersion;
+  final DateTime? privacyAcceptedAt;
+
   bool get hasAvatar => avatarPath != null && avatarPath!.isNotEmpty;
 
   bool get sharesWhatsapp => whatsapp.isNotEmpty;
@@ -94,6 +101,10 @@ class Profile {
             : DateTime.parse(db['last_seen_at'] as String).toUtc(),
         avatarPath: db['avatar_path'] as String?,
         preferredLocale: db['preferred_locale'] as String? ?? '',
+        privacyAcceptedVersion: db['privacy_accepted_version'] as String?,
+        privacyAcceptedAt: db['privacy_accepted_at'] == null
+            ? null
+            : DateTime.parse(db['privacy_accepted_at'] as String).toUtc(),
         formatPrefs: FormatPrefs.fromDb(db),
       );
 
@@ -107,6 +118,8 @@ class Profile {
         'vat_id': vatId,
         'last_seen_at': lastSeenAt?.toUtc().toIso8601String(),
         'avatar_path': avatarPath,
+        'privacy_accepted_version': privacyAcceptedVersion,
+        'privacy_accepted_at': privacyAcceptedAt?.toUtc().toIso8601String(),
       };
 
   Profile copyWith({
@@ -120,7 +133,9 @@ class Profile {
     String? avatarPath,
     String? preferredLocale,
     FormatPrefs? formatPrefs,
-  }) =>
+      String? privacyAcceptedVersion,
+    DateTime? privacyAcceptedAt,
+}) =>
       Profile(
         id: id,
         displayName: displayName ?? this.displayName,
@@ -135,6 +150,9 @@ class Profile {
         // document language. Carried now (#711).
         preferredLocale: preferredLocale ?? this.preferredLocale,
         formatPrefs: formatPrefs ?? this.formatPrefs,
+        privacyAcceptedVersion:
+            privacyAcceptedVersion ?? this.privacyAcceptedVersion,
+        privacyAcceptedAt: privacyAcceptedAt ?? this.privacyAcceptedAt,
       );
 }
 

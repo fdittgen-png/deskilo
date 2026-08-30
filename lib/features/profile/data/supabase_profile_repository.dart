@@ -111,6 +111,10 @@ class SupabaseProfileRepository implements ProfileRepository {
   }
 
   @override
+  Future<void> acceptPrivacyPolicy(String version) =>
+      _client.rpc<void>('accept_privacy_policy', params: {'p_version': version});
+
+  @override
   Future<void> touchLastSeen() async {
     await _client.rpc<dynamic>('touch_last_seen');
   }

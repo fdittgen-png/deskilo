@@ -29,7 +29,7 @@
 </head>
 <body>
 <h1>DesKilo Privacy Policy</h1>
-<p><em>Last updated: 2026-08-29 · Contact: fdittgen@gmail.com</em></p>
+<p><em>Last updated: 2026-08-30 · Contact: fdittgen@gmail.com</em></p>
 <p>DesKilo is a booking and community-ledger app for small self-organized coworking spaces, published by Florian Dittgen (Germany). This policy describes what the app processes and why. DesKilo is open source (0BSD): everything below can be verified in the code at <a href="https://github.com/fdittgen-png/deskilo">https://github.com/fdittgen-png/deskilo</a>.</p>
 <h2>Data we process</h2>
 <table><thead><tr><th>Data</th><th>Purpose</th><th>Where</th></tr></thead><tbody><tr><td>E-mail address, display name, password (hashed)</td><td>Your account (sign-in, password reset)</td><td>Supabase (EU region, eu-central-1)</td></tr><tr><td>Social sign-in identity (Google, Microsoft, Apple, or Facebook user id + e-mail), if you choose it</td><td>Alternative sign-in; linked to the same account</td><td>Supabase Auth</td></tr><tr><td>Workspace membership, role, subscription percentage</td><td>Running your coworking community</td><td>Supabase</td></tr><tr><td>Reservations and check-ins (seat/level, time)</td><td>Desk booking — the app's core function</td><td>Supabase</td></tr><tr><td>Ledger entries: subscription fees, usage, payments, expenses, services</td><td>The community's transparent member ledger</td><td>Supabase</td></tr><tr><td>Optional profile fields: photo, status text, WhatsApp number</td><td>Shown to members of YOUR workspaces only, each shareable at your choice</td><td>Supabase</td></tr><tr><td>Presence (last-seen timestamp)</td><td>"Online" dot in the member directory</td><td>Supabase</td></tr><tr><td>Badge credentials (kiosk QR / RFID card)</td><td>Wall-tablet check-in; stored <strong>only as SHA-256 hashes</strong> — the raw badge never persists server-side</td><td>Supabase</td></tr><tr><td>Online payment intents (amount, provider order id)</td><td>Settling a bill you chose to pay online</td><td>Supabase + your workspace's payment provider</td></tr></tbody></table>
@@ -45,6 +45,8 @@
 <p>You have the right to access, rectify, export, and erase your personal data, and to object to processing. Most of it is directly visible and editable in the app (Settings, Profile). For anything else, contact <strong>fdittgen@gmail.com</strong>. You may also lodge a complaint with your supervisory authority.</p>
 <h2>Children</h2>
 <p>DesKilo is a workplace tool intended for adults and is not directed at children under 16.</p>
+<h2>In-app consent</h2>
+<p>Every account accepts this policy inside the app before using it (version <code>2026-08-30</code>; the accepted version and date are stored on the account). A change of the text asks for acceptance again. The same text is readable anytime in <em>Settings → Privacy &amp; data → Your data, your rights</em>, in the in-app help (Privacy) and on the <a href="https://github.com/fdittgen-png/deskilo/wiki/User-Guide#14-privacy">project wiki</a>.</p>
 <h2>Changes</h2>
 <p>Changes to this policy are published here (the file's git history is the change log).</p>
 <p><a href="./">← DesKilo</a></p>

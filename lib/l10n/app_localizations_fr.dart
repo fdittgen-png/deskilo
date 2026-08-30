@@ -5005,6 +5005,87 @@ class AppLocalizationsFr extends AppLocalizations {
   String get privacyPolicy => 'Politique de confidentialité';
 
   @override
+  String get consentTitle => 'Vos données, vos droits';
+
+  @override
+  String get consentIntro =>
+      'Avant d\'utiliser DesKilo, voici ce que l\'app fait de vos données, qui peut les voir et ce que vous pouvez en faire. Deux minutes ; il n\'y a rien de plus.';
+
+  @override
+  String get consentWhatTitle => 'Ce que DesKilo traite';
+
+  @override
+  String get consentWhatBody =>
+      'Votre compte (e-mail, nom affiché, mot de passe haché), votre profil tel que vous le remplissez (photo, statut, adresse, numéro WhatsApp — chacun facultatif), et ce que vous faites dans un espace : réservations et pointages, messages, dépenses et consommations, votre abonnement, factures et paiements. Tout est stocké dans l\'UE (Supabase, eu-central-1).';
+
+  @override
+  String get consentNotTitle => 'Ce que DesKilo ne fait jamais';
+
+  @override
+  String get consentNotBody =>
+      'Ni traçage, ni analytique, ni publicité, ni vente ou partage de données. Les notifications push ne portent aucun contenu — seulement « vous avez un nouveau message » ; l\'app elle-même écrit le texte. La version F-Droid n\'a aucun service Google.';
+
+  @override
+  String get consentWhoTitle => 'Qui peut voir quoi';
+
+  @override
+  String get consentWhoBody =>
+      'L\'accès suit les rôles et est appliqué côté serveur : les réservations sont visibles de l\'espace (le plan montre l\'occupation) ; les messages seulement des personnes de la conversation, quel que soit leur rôle ; vos finances et votre accord commercial seulement de vous, des propriétaires et des admins qui détiennent la permission correspondante. Réglages → Confidentialité et données nomme les personnes et liste qui a réellement consulté.';
+
+  @override
+  String get consentControllerTitle => 'Qui est responsable';
+
+  @override
+  String get consentControllerBody =>
+      'Chaque espace est exploité par son propriétaire — votre communauté — qui décide des membres, des prix et des prestataires de paiement. L\'app est open source (0BSD) et publiée par Florian Dittgen (Allemagne) ; le backend est Supabase dans l\'UE. Les paiements en ligne passent par le prestataire activé par le propriétaire (PayPal, Stripe, Mollie, Wero) selon ses conditions.';
+
+  @override
+  String get consentRetentionTitle => 'Combien de temps';
+
+  @override
+  String get consentRetentionBody =>
+      'Tant que vous êtes membre. Quand vous partez et effacez, votre profil et vos messages disparaissent ; les pièces comptables (factures, paiements) restent la durée légale de conservation, par identifiant et non par nom.';
+
+  @override
+  String get consentRightsTitle => 'Vos droits';
+
+  @override
+  String get consentRightsBody =>
+      'Accès, rectification, export (art. 20), effacement (art. 17) et opposition — chacun est un bouton dans Réglages → Confidentialité et données. Pour le reste : fdittgen@gmail.com. Vous pouvez retirer ce consentement à tout moment en quittant l\'espace et en effaçant vos données.';
+
+  @override
+  String get consentReviewTitle => 'Relisez-le quand vous voulez';
+
+  @override
+  String get consentReviewBody =>
+      'Ce texte reste disponible dans Réglages → Confidentialité et données, dans l\'aide de l\'app (Confidentialité) et dans le wiki du projet. Un changement du texte redemande votre acceptation.';
+
+  @override
+  String get consentCheckbox =>
+      'J\'ai lu ce texte et j\'accepte la façon dont DesKilo traite mes données.';
+
+  @override
+  String get consentAccept => 'Accepter et continuer';
+
+  @override
+  String get consentVersion => 'Version';
+
+  @override
+  String consentAcceptedOn(String date, String version) {
+    return 'Accepté le $date ($version)';
+  }
+
+  @override
+  String get consentReadInHelp => 'Lire dans l\'aide';
+
+  @override
+  String get consentReadOnWiki => 'Lire sur le wiki';
+
+  @override
+  String get consentReviewHint =>
+      'Le texte que vous avez accepté, avec la date — relisez-le quand vous voulez.';
+
+  @override
   String get profilesDefault => 'Profil par défaut au démarrage';
 
   @override
