@@ -328,5 +328,6 @@
   "negotiationKeepCurrent": "Mantieni attuale",
   "negotiationItems": "Servizi e pacchetti",
   "negotiationItemsHint": "Un prezzo unitario per questo membro; vuoto mantiene il catalogo.",
-  "negotiationPercent": "{value} %"
+  "negotiationPercent": "{value} %",
+  "negotiationReadOnly": "Sola lettura"
 }

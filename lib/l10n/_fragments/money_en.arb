@@ -523,5 +523,6 @@
   "negotiationItems": "Services and packages",
   "negotiationItemsHint": "A unit price for this member; empty keeps the catalogue.",
   "negotiationPercent": "{value} %",
-  "@negotiationPercent": {"placeholders": {"value": {"type": "int"}}}
+  "@negotiationPercent": {"placeholders": {"value": {"type": "int"}}},
+  "negotiationReadOnly": "Read only"
 }

@@ -36,12 +36,12 @@ DesKilo hat drei additive Rollen und darüber die Co-Inhaberschaft als Aufsatz, 
 | Rolle | Kann |
 |---|---|
 | **Mitglied** | Ein-/auschecken, reservieren, Ausgaben einreichen, eigene Ereignisse und eigenes Konto sehen und verwalten |
-| **Admin** | Alles wie ein Mitglied, plus: *für jeden* handeln (Buchungen, Zahlungen, Ausgaben — unter Bestätigung, §7), Ausgaben genehmigen, Badges ausstellen |
+| **Admin** | Alles wie ein Mitglied, plus: *für jeden* handeln (Buchungen, Zahlungen, Ausgaben — unter Bestätigung, §7), Ausgaben genehmigen, Geschäftsvereinbarungen einsehen und verwalten, Badges ausstellen |
 | **Inhaber** | Alles wie ein Admin, plus: den physischen Space bearbeiten, Pläne und Preise definieren, Rollen, Kiosk-Geräte und Einstellungen verwalten |
 | **Co-Inhaber** | *Aktiv*: die Inhaber-Berechtigungen sofort, plus automatische Nachfolge. *Passiv*: ein wartender Nachfolger ohne Extra-Berechtigungen heute |
 | **Kiosk** | Ein Wandtablet-Konto (§10) — zeigt nur den Plan; echte Mitglieder handeln per Badge |
 
-Ein Teil davon ist nicht in Stein gemeißelt: die Inhaberin justiert in der Matrix der **Rollenverwaltung** (§8) **neun Administrations-Berechtigungen** nach — Rollen & Berechtigungen verwalten, Mitglieder verwalten, Validierungsregeln konfigurieren, Workspace-Einstellungen bearbeiten, Rechnungen ausstellen & Zahlungen zuordnen, Finanzen einsehen, Dokumentbibliothek verwalten, Services & Pakete verwalten, Ausgaben genehmigen. Was die Matrix *nicht* regiert, ist der Alltag — einchecken, reservieren, für ein anderes Mitglied handeln, den Space bearbeiten: das bleibt, wo die Tabelle oben es hinstellt, und hängt stattdessen an den Funktionen und den Schaltern je Mitglied.
+Ein Teil davon ist nicht in Stein gemeißelt: die Inhaberin justiert in der Matrix der **Rollenverwaltung** (§8) **elf Administrations-Berechtigungen** nach — Rollen & Berechtigungen verwalten, Mitglieder verwalten, Validierungsregeln konfigurieren, Workspace-Einstellungen bearbeiten, Rechnungen ausstellen & Zahlungen zuordnen, Finanzen einsehen, Dokumentbibliothek verwalten, Services & Pakete verwalten, Ausgaben genehmigen, Geschäftsvereinbarungen einsehen und verwalten. Was die Matrix *nicht* regiert, ist der Alltag — einchecken, reservieren, für ein anderes Mitglied handeln, den Space bearbeiten: das bleibt, wo die Tabelle oben es hinstellt, und hängt stattdessen an den Funktionen und den Schaltern je Mitglied.
 
 **Jede Einladung ist an eine Rolle gebunden.** Auf dem Inhaber-Bildschirm *Workspace-ID & QR* tragen zwei Tabs zwei Einladungen, jede mit eigenem QR und Code:
 
@@ -315,7 +315,7 @@ Eine Büro-Reservierung deckt **alle Tische darin**; eine Etagen-Reservierung di
 
 ### Rollenverwaltung
 
-Eine zentrale Matrix entscheidet, **welche Rolle welche Berechtigung hält** — Rollen & Berechtigungen verwalten, Mitglieder verwalten, Validierungsregeln konfigurieren, Workspace-Einstellungen bearbeiten, Rechnungen ausstellen & Zahlungen zuordnen, Finanzen einsehen, Dokumentbibliothek verwalten, Services & Pakete verwalten, Ausgaben genehmigen. Zu finden unter *Einstellungen → Administration → Rollenverwaltung* (Funktion muss aktiv sein):
+Eine zentrale Matrix entscheidet, **welche Rolle welche Berechtigung hält** — Rollen & Berechtigungen verwalten, Mitglieder verwalten, Validierungsregeln konfigurieren, Workspace-Einstellungen bearbeiten, Rechnungen ausstellen & Zahlungen zuordnen, Finanzen einsehen, Dokumentbibliothek verwalten, Services & Pakete verwalten, Ausgaben genehmigen, Geschäftsvereinbarungen einsehen und verwalten. Zu finden unter *Einstellungen → Administration → Rollenverwaltung* (Funktion muss aktiv sein):
 
 - Die **Inhaberin hält immer alle Berechtigungen** — ihre Zeile ist gesperrt (Schloss-Icon).
 - Wer *Rollen & Berechtigungen verwalten* hält, bearbeitet die anderen Zeilen. Ein **Co-Inhaber** startet mit allem („kann weniger haben"); ein **Admin** mit den heutigen Admin-Fähigkeiten; ein **Mitglied** ohne alles.

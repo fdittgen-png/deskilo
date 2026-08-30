@@ -36,12 +36,12 @@ DesKilo tiene tres roles acumulativos y, encima de ellos, una variante de coprop
 | Rol | Puede |
 |---|---|
 | **Miembro** | Registrar entrada/salida, reservar, presentar gastos, ver y gestionar sus propios eventos y su propia cuenta |
-| **Admin** | Todo lo de un miembro, más: actuar *por cualquiera* (reservas, pagos, gastos — sujeto a confirmación, §7), aprobar gastos, emitir credenciales de quiosco |
+| **Admin** | Todo lo de un miembro, más: actuar *por cualquiera* (reservas, pagos, gastos — sujeto a confirmación, §7), aprobar gastos, consultar y gestionar los acuerdos comerciales, emitir credenciales de quiosco |
 | **Propietario** | Todo lo de un admin, más: editar el espacio físico, definir planes y precios, gestionar roles, dispositivos quiosco y ajustes del espacio |
 | **Copropietario** | *Activo*: los permisos del propietario de inmediato, más la sucesión automática. *Pasivo*: un sucesor en espera, sin permisos adicionales hoy |
 | **Quiosco** | Una cuenta de tableta de pared (§10) — solo muestra el plano; los miembros reales actúan a través de ella con una credencial |
 
-Parte de esto no está grabada en piedra: el propietario reajusta **nueve permisos de administración** en la matriz de **Gestión de roles** (§8) — gestionar roles, gestionar miembros, políticas de validación, configuración del espacio, emitir facturas, ver finanzas, documentos, servicios, aprobar gastos. Lo que la matriz *no* gobierna es lo cotidiano — registrarse, reservar, actuar por otro miembro, editar el espacio —, que se queda donde lo pone la tabla de arriba, condicionado en cambio por las funciones y por los interruptores de cada miembro.
+Parte de esto no está grabada en piedra: el propietario reajusta **once permisos de administración** en la matriz de **Gestión de roles** (§8) — gestionar roles, gestionar miembros, políticas de validación, configuración del espacio, emitir facturas, ver finanzas, documentos, servicios, aprobar gastos, consultar y gestionar los acuerdos comerciales. Lo que la matriz *no* gobierna es lo cotidiano — registrarse, reservar, actuar por otro miembro, editar el espacio —, que se queda donde lo pone la tabla de arriba, condicionado en cambio por las funciones y por los interruptores de cada miembro.
 
 **Cada invitación está ligada a un rol.** En la pantalla *ID del espacio y QR* del propietario, dos pestañas guardan dos invitaciones, cada una con su propio código QR y su propio código:
 
@@ -319,7 +319,7 @@ Asegúrate de que la comunidad nunca dependa de una sola cuenta:
 
 ### Gestión de roles
 
-Una matriz central decide **qué rol tiene qué permiso** — gestionar roles, gestionar miembros, políticas de validación, configuración del espacio, emitir facturas y conciliar pagos, ver finanzas, documentos, servicios, aprobar gastos. Ábrela en *Ajustes → Administración → Gestión de roles* (su interruptor de función debe estar activado):
+Una matriz central decide **qué rol tiene qué permiso** — gestionar roles, gestionar miembros, políticas de validación, configuración del espacio, emitir facturas y conciliar pagos, ver finanzas, documentos, servicios, aprobar gastos, consultar y gestionar los acuerdos comerciales. Ábrela en *Ajustes → Administración → Gestión de roles* (su interruptor de función debe estar activado):
 
 - El **propietario tiene siempre todos los permisos** — su fila está bloqueada.
 - Quien tenga *Gestionar roles y permisos* edita las demás filas. Un **copropietario** empieza con todo («un copropietario puede tener menos» — el propietario quita lo que quiera); un **admin** empieza con las capacidades de admin de hoy; un **miembro**, sin ninguna.

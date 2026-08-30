@@ -4637,6 +4637,9 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get negotiationReadOnly => 'Lecture seule';
+
+  @override
   String get planDurationLabel => 'Durée';
 
   @override
@@ -6090,6 +6093,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get countryNameNO => 'Norvège';
+
+  @override
+  String get permViewNegotiations => 'Consulter les accords commerciaux';
+
+  @override
+  String get permManageNegotiations => 'Gérer les accords commerciaux';
 
   @override
   String get workspaceXmlExport => 'Exporter l\'espace (XML)';

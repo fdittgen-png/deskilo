@@ -9,6 +9,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/price_negotiation.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -299,5 +300,69 @@ void main() {
     await tester.pumpAndSettle();
     await openAlertsTab(tester);
     expect(find.textContaining('60 % · 2 items'), findsOneWidget);
+  });
+
+  // ---- #749 — the two permissions
+  Future<FakeMoneyRepository> pumpAsAdmin(WidgetTester tester,
+      List<String> adminPerms) async {
+    final money = FakeMoneyRepository();
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'};
+    workspace.myMember =
+        workspace.myMember.copyWith(isOwner: false, isAdmin: true);
+    workspace.workspaces[0] = workspace.workspaces[0]
+        .copyWith(rolePermissions: {'admin': adminPerms});
+    workspace.otherMembers.add(const Member(
+      id: 'member-2',
+      workspaceId: 'ws-1',
+      userId: 'user-2',
+      isAdmin: false,
+      isOwner: false,
+      status: MemberStatus.active,
+    ));
+    tester.view.physicalSize = const Size(800, 2200);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(ProviderScope(
+      overrides: standardTestOverrides(workspace: workspace, money: money),
+      child: const DeskiloApp(),
+    ));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Members & plans'));
+    await tester.pumpAndSettle();
+    await openSheet(tester, 'Ana');
+    return money;
+  }
+
+  testWidgets('an admin with only "view" opens the deal read-only',
+      (tester) async {
+    final money = await pumpAsAdmin(tester, ['manageMembers', 'viewNegotiations']);
+    final tile = find.byKey(const ValueKey('member-negotiation-member-2'));
+    await tester.ensureVisible(tile);
+    expect(find.descendant(of: tile, matching: find.text('Read only')),
+        findsOneWidget);
+    await tester.tap(tile);
+    await tester.pumpAndSettle();
+    final submit = tester.widget<FilledButton>(
+        find.byKey(const ValueKey('negotiation-submit')));
+    expect(submit.onPressed, isNull);
+    expect(money.proposedNegotiations, isEmpty);
+  });
+
+  testWidgets('an admin with "manage" proposes; one with neither sees nothing',
+      (tester) async {
+    await pumpAsAdmin(tester, ['manageMembers', 'manageNegotiations']);
+    final tile = find.byKey(const ValueKey('member-negotiation-member-2'));
+    await tester.ensureVisible(tile);
+    expect(find.descendant(of: tile, matching: find.text('Read only')),
+        findsNothing);
+  });
+
+  testWidgets('an admin with neither permission has no entry', (tester) async {
+    await pumpAsAdmin(tester, ['manageMembers', 'viewFinances']);
+    expect(find.byKey(const ValueKey('member-negotiation-member-2')),
+        findsNothing);
   });
 }

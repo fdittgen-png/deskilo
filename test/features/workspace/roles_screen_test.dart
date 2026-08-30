@@ -54,6 +54,8 @@ void main() {
           WorkspacePermission.manageServices,
           WorkspacePermission.approveExpenses,
           WorkspacePermission.viewFinances,
+          WorkspacePermission.viewNegotiations,
+          WorkspacePermission.manageNegotiations,
         },
       );
       expect(defaultPermissionsFor(PermissionRole.member), isEmpty);
@@ -154,8 +156,11 @@ void main() {
 
   test('migration 0104 wires the helper, the RPC and the permission '
       'gates', () {
+    // #749 — the two agreement permissions arrive with 0139.
     final sql = File('supabase/migrations/0104_role_permissions.sql')
-        .readAsStringSync();
+            .readAsStringSync() +
+        File('supabase/migrations/0139_negotiation_permissions.sql')
+            .readAsStringSync();
     expect(sql, contains('role_permissions jsonb'));
     expect(sql, contains('has_permission'));
     expect(sql, contains('set_role_permissions'));

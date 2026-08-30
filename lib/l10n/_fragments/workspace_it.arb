@@ -478,5 +478,7 @@
   "countryNameNO": "Norvegia",
   "@countryNameNO": {
     "description": "#713 - region name in the format picker"
-  }
+  },
+  "permViewNegotiations": "Consultare gli accordi commerciali",
+  "permManageNegotiations": "Gestire gli accordi commerciali"
 }

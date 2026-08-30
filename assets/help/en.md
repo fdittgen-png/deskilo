@@ -41,7 +41,7 @@ DesKilo has three additive roles and a co-ownership flavour on top of them, plus
 | **Co-owner** | *Active*: the owner's permissions right now, plus automatic succession. *Passive*: a successor-in-waiting with no extra permissions today |
 | **Kiosk** | A wall-mounted tablet account (§10) — shows the plan only; real members act through it with a badge |
 
-Part of this is not carved in stone: the owner retunes **nine administration permissions** in the **Role management** matrix (§8) — manage roles, manage members, validation policies, workspace settings, issue invoices, view finances, documents, services, approve expenses. What the matrix does *not* govern is the everyday stuff — checking in, reserving, acting for another member, editing the space — which stays where the table above puts it, gated by the features and the per-member switches instead.
+Part of this is not carved in stone: the owner retunes **eleven administration permissions** in the **Role management** matrix (§8) — manage roles, manage members, validation policies, workspace settings, issue invoices, view finances, documents, services, approve expenses, view and manage commercial agreements. What the matrix does *not* govern is the everyday stuff — checking in, reserving, acting for another member, editing the space — which stays where the table above puts it, gated by the features and the per-member switches instead.
 
 **Every invitation is bound to a role.** On the owner's *Workspace ID & QR* screen two tabs hold two invites, each with its own QR code and code:
 
@@ -364,7 +364,7 @@ Make sure the community never depends on one account:
 
 ### Role management
 
-One central matrix decides **which role holds which permission** — manage roles, manage members, validation policies, workspace settings, issue invoices & match payments, view finances, documents, services, approve expenses. Open it under *Settings → Administration → Role management* (its feature flag must be on):
+One central matrix decides **which role holds which permission** — manage roles, manage members, validation policies, workspace settings, issue invoices & match payments, view finances, documents, services, approve expenses, view and manage commercial agreements. Open it under *Settings → Administration → Role management* (its feature flag must be on):
 
 - The **owner always holds every permission** — the row is locked.
 - Whoever holds *Manage roles & permissions* edits the other rows. A **co-owner** starts with everything ("co-owner can have less" — the owner removes what they want); an **admin** starts with today's admin abilities; a **member** with none.
