@@ -4627,6 +4627,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Un prezzo unitario per questo membro; vuoto mantiene il catalogo.';
 
   @override
+  String negotiationPercent(int value) {
+    return '$value %';
+  }
+
+  @override
   String get planDurationLabel => 'Durata';
 
   @override

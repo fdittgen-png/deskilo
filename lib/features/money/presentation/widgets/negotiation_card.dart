@@ -296,7 +296,9 @@ Future<void> showPriceNegotiationSheet(
                 child: Text(l10n?.negotiationKeepCurrent ?? 'Keep current'),
               ),
               for (final v in options)
-                DropdownMenuItem<int?>(value: v, child: Text('$v %')),
+                DropdownMenuItem<int?>(
+                    value: v,
+                    child: Text(l10n?.negotiationPercent(v) ?? '$v %')),
             ],
             onChanged: (v) => setSheetState(() => pct = v),
           ),

@@ -246,8 +246,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
         'p_discount_percent': discountPercent,
         'p_note': note,
         'p_valid_from': validFrom?.toIso8601String().substring(0, 10),
-        'p_subscription_pct': subscriptionPct,
-        'p_items': items,
+        'p_subscription_pct': subscriptionPct, 'p_items': items,
       });
 
   @override

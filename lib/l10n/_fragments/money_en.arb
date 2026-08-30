@@ -521,5 +521,7 @@
   "negotiationOccupationHint": "The share of open days included each month; applied to the member once validated.",
   "negotiationKeepCurrent": "Keep current",
   "negotiationItems": "Services and packages",
-  "negotiationItemsHint": "A unit price for this member; empty keeps the catalogue."
+  "negotiationItemsHint": "A unit price for this member; empty keeps the catalogue.",
+  "negotiationPercent": "{value} %",
+  "@negotiationPercent": {"placeholders": {"value": {"type": "int"}}}
 }

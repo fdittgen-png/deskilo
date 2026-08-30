@@ -5162,6 +5162,14 @@
   "negotiationKeepCurrent": "Keep current",
   "negotiationItems": "Services and packages",
   "negotiationItemsHint": "A unit price for this member; empty keeps the catalogue.",
+  "negotiationPercent": "{value} %",
+  "@negotiationPercent": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
   "planDurationLabel": "Duration",
   "@planDurationLabel": {
     "description": "Booking sheet: grid duration slider label (#574)"
