@@ -2074,6 +2074,7 @@
   "dunningAutomaticHint": "Einmal täglich erhalten offene Rechnungen nach Ablauf der Frist von selbst ihre nächste Mahnstufe — ein Hinweis im Feed des Mitglieds und eine Push-Nachricht. Aus: Sie senden jede Mahnung selbst.",
   "eventTypePriceNegotiation": "Preisverhandlung",
   "eventPriceNegotiationLine": "{actor} schlägt Konditionen für {member} vor: {terms}",
+  "eventPriceNegotiationItems": "{count} Artikel",
   "eventTypeMemberJoin": "Neues Mitglied",
   "memberStatusPending": "Ausstehend",
   "pendingApprovalTitle": "Warten auf Freigabe",
@@ -2784,6 +2785,11 @@
   "negotiationSubmit": "Zur Prüfung vorschlagen",
   "negotiationProposed": "Konditionen vorgeschlagen — warten auf Prüfung.",
   "negotiationPendingBadge": "wartet auf Prüfung",
+  "negotiationOccupation": "Auslastung",
+  "negotiationOccupationHint": "Der Anteil der Öffnungstage, der monatlich enthalten ist; nach Prüfung auf das Mitglied angewendet.",
+  "negotiationKeepCurrent": "Aktuelle behalten",
+  "negotiationItems": "Leistungen und Pakete",
+  "negotiationItemsHint": "Ein Stückpreis für dieses Mitglied; leer behält den Katalog.",
   "planDurationLabel": "Dauer",
   "@planDurationLabel": {
     "description": "Booking sheet: grid duration slider label (#574)"

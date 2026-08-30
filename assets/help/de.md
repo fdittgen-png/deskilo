@@ -491,6 +491,8 @@ Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine
 
 **Der Tarif ist der Standard; Ihre Konditionen sind Ihre.** Ein Inhaber oder Finanz-Admin kann für ein Mitglied eine **Preisverhandlung** vorschlagen — Monatsbeitrag, Überschreitungssatz je halben Tag, Rabatt auf Zuschläge (Zubehör, Ganzraum-Reservierungen) — je optional, sonst der Tarif. Der Vorschlag landet unter Ereignisse bei den Prüfern der Regel (Domäne *Preisverhandlung* oder Standardregel); bestätigt, gilt er ab dem gewählten Monat und ersetzt die vorigen Konditionen. Auf Ihrer Ansicht **Abrechnung** zeigt die Karte *Meine verhandelten Preise* den durchgestrichenen Tarif neben Ihren Preisen, seit wann, und **Wer das sehen kann**: Sie, die Inhaber und die Finanz-Admins — jeder Zugriff durch andere wird protokolliert und dort aufgeführt (§14). Funktion *Preisverhandlungen*.
 
+**Leistungen, Pakete und Auslastung (#744).** Die Konditionen können auch die **Auslastung** festlegen — den Anteil der Öffnungstage, der monatlich enthalten ist, verhandelt mit seinem Preis (nach Prüfung auf das Mitglied angewendet, der vorige Wert daneben) — und einen **Stückpreis je Leistung und je Paket**: ein Verbrauch oder ein Paketkauf wird zum Preis des Mitglieds berechnet, der Katalogpreis durchgestrichen in den Blättern und auf der Karte.
+
 ## 10. Kiosk-Modus (Wandtablet)
 
 Ein Android-Tablet oder iPad an die Tür:

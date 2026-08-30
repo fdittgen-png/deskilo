@@ -8,15 +8,19 @@
 
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 
+// The key of the provider the intent was created with — Wero is offered
+// through Mollie but stores its own credentials (this is what is deployed
+// as v3; the repo had lagged behind it).
 async function apiKey(
   admin: SupabaseClient,
   workspaceId: string,
+  provider: string,
 ): Promise<string> {
   const { data } = await admin
     .from("payment_credentials")
     .select("config")
     .eq("workspace_id", workspaceId)
-    .eq("provider", "mollie")
+    .eq("provider", provider)
     .maybeSingle();
   const stored = (data?.config ?? {}) as Record<string, string>;
   return stored.api_key ?? Deno.env.get("MOLLIE_API_KEY") ?? "";
@@ -51,7 +55,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
     return new Response("ok", { status: 200 });
   }
   const settleProvider = intent.provider as string;
-  const key = await apiKey(admin, intent.workspace_id);
+  const key = await apiKey(admin, intent.workspace_id, settleProvider);
   if (!key) {
     console.log("mollie webhook not configured for workspace", intent.workspace_id);
     return new Response("not_configured", { status: 200 });
@@ -81,7 +85,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
       console.error("mollie settle failed", error.message);
       return new Response("settle_failed", { status: 500 });
     }
-    console.log("mollie payment settled", { paymentId });
+    console.log("mollie payment settled", { paymentId, settleProvider });
   } else if (
     ["failed", "canceled", "expired"].includes(payment.status as string)
   ) {

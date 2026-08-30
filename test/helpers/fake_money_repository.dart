@@ -180,7 +180,7 @@ class FakeMoneyRepository implements MoneyRepository {
 
   /// #739 — per member: the deal the fake serves; proposals recorded.
   final negotiations = <String, PriceNegotiation>{};
-  final proposedNegotiations = <({String memberId, int? feeCents, int? overageFeeCents, double? discountPercent, String note})>[];
+  final proposedNegotiations = <({String memberId, int? feeCents, int? overageFeeCents, double? discountPercent, String note, int? subscriptionPct, Map<String, Map<String, int>> items})>[];
   int negotiationReads = 0;
 
   @override
@@ -201,6 +201,8 @@ class FakeMoneyRepository implements MoneyRepository {
     double? discountPercent,
     String note = '',
     DateTime? validFrom,
+    int? subscriptionPct,
+    Map<String, Map<String, int>> items = const {},
   }) async {
     proposedNegotiations.add((
       memberId: memberId,
@@ -208,6 +210,8 @@ class FakeMoneyRepository implements MoneyRepository {
       overageFeeCents: overageFeeCents,
       discountPercent: discountPercent,
       note: note,
+      subscriptionPct: subscriptionPct,
+      items: items,
     ));
     negotiations[memberId] = (negotiations[memberId] ??
             const PriceNegotiation(defaultFeeCents: 25000, defaultOverageFeeCents: 1200))
@@ -219,6 +223,8 @@ class FakeMoneyRepository implements MoneyRepository {
         note: note,
         validFrom: validFrom ?? kTestNow,
         status: 'pending',
+        subscriptionPct: subscriptionPct,
+        items: items,
       ),
     );
   }

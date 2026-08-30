@@ -761,5 +761,6 @@
   "dunningAutomatic": "Relances automatiques",
   "dunningAutomaticHint": "Une fois par jour, les factures ouvertes au-delà du délai reçoivent d'elles-mêmes leur niveau de relance suivant — une alerte dans le fil du membre et une notification. Désactivé : vous envoyez chaque relance vous-même.",
   "eventTypePriceNegotiation": "Négociation tarifaire",
-  "eventPriceNegotiationLine": "{actor} propose des conditions pour {member} : {terms}"
+  "eventPriceNegotiationLine": "{actor} propose des conditions pour {member} : {terms}",
+  "eventPriceNegotiationItems": "{count} articles"
 }

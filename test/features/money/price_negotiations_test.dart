@@ -186,4 +186,118 @@ void main() {
     expect(find.textContaining('Flo proposes a deal for Ana'), findsOneWidget);
     expect(find.textContaining('€150.00 · −10 %'), findsOneWidget);
   });
+
+  // ---- #744 — services, packages and the occupation
+  testWidgets('the card shows the occupation and the negotiated items '
+      'against the catalogue', (tester) async {
+    final money = FakeMoneyRepository();
+    money.negotiations['member-1'] = PriceNegotiation(
+      defaultFeeCents: 25000,
+      defaultOverageFeeCents: 1200,
+      active: NegotiationDeal(
+        subscriptionPct: 60,
+        previousSubscriptionPct: 50,
+        items: {'services': {'service-coffee': 100}},
+        validFrom: DateTime(2026, 5, 1),
+        status: 'active',
+      ),
+    );
+    await pumpFaces(tester, money: money);
+    final card = find.byKey(const ValueKey('negotiation-card'));
+    await tester.scrollUntilVisible(card, 200,
+        scrollable: find.byType(Scrollable).first);
+    expect(find.descendant(
+        of: find.byKey(const ValueKey('negotiation-row-occupation')),
+        matching: find.text('60 %')), findsOneWidget);
+    expect(find.descendant(
+        of: find.byKey(const ValueKey('negotiation-row-occupation')),
+        matching: find.text('50 %')), findsOneWidget);
+    final coffee = find.byKey(const ValueKey('negotiation-item-service-coffee'));
+    expect(coffee, findsOneWidget);
+    expect(find.descendant(of: coffee, matching: find.text('€1.00')),
+        findsOneWidget);
+    expect(find.descendant(of: coffee, matching: find.text('€1.50')),
+        findsOneWidget);
+  });
+
+  testWidgets('a proposal carries the occupation and an item price',
+      (tester) async {
+    final money = FakeMoneyRepository();
+    await pumpMembers(tester, money: money);
+    await openSheet(tester, 'Ana');
+    final tile = find.byKey(const ValueKey('member-negotiation-member-2'));
+    await tester.ensureVisible(tile);
+    await tester.tap(tile);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('negotiation-occupation')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('75 %').last);
+    await tester.pumpAndSettle();
+    final coffee =
+        find.byKey(const ValueKey('negotiation-item-services-service-coffee'));
+    await tester.ensureVisible(coffee);
+    await tester.enterText(coffee, '1');
+    await tester.ensureVisible(find.byKey(const ValueKey('negotiation-submit')));
+    await tester.tap(find.byKey(const ValueKey('negotiation-submit')));
+    await tester.pumpAndSettle();
+    final p = money.proposedNegotiations.single;
+    expect(p.subscriptionPct, 75);
+    expect(p.items, {'services': {'service-coffee': 100}});
+    expect(p.feeCents, isNull);
+  });
+
+  testWidgets('the consumption sheet prices a service at my deal',
+      (tester) async {
+    final money = FakeMoneyRepository();
+    money.negotiations['member-1'] = PriceNegotiation(
+      defaultFeeCents: 25000,
+      defaultOverageFeeCents: 1200,
+      active: NegotiationDeal(
+        items: {'services': {'service-coffee': 100}},
+        validFrom: DateTime(2026, 5, 1),
+        status: 'active',
+      ),
+    );
+    await pumpFaces(tester, money: money);
+    await tester.tap(find.byKey(const ValueKey('money-face-payments')));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.text('Add consumption'), 200,
+        scrollable: find.byType(Scrollable).first);
+    await tester.tap(find.text('Add consumption'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Coffee — €1.00'), findsOneWidget);
+  });
+
+  testWidgets('the feed line carries the occupation and the item count',
+      (tester) async {
+    final events = FakeEventRepository()
+      ..events.add(WorkspaceEvent(
+        id: 'evt-neg2',
+        workspaceId: 'ws-1',
+        type: EventType.priceNegotiation,
+        action: EventAction.submitted,
+        actorMemberId: 'member-1',
+        subjectMemberId: 'member-2',
+        payload: const {
+          'subscription_pct': 60,
+          'items': {'services': {'a': 100}, 'packages': {'b': 2000}},
+          'item_count': 2,
+        },
+        status: EventStatus.pending,
+        createdAt: kTestNow,
+      ));
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'};
+    await tester.pumpWidget(ProviderScope(
+      overrides: standardTestOverrides(
+        events: events,
+        workspace: workspace,
+        floorPlan: FakeFloorPlanRepository()..seedSmallPlan(),
+      ),
+      child: const DeskiloApp(),
+    ));
+    await tester.pumpAndSettle();
+    await openAlertsTab(tester);
+    expect(find.textContaining('60 % · 2 items'), findsOneWidget);
+  });
 }

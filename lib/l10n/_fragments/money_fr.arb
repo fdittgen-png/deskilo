@@ -322,5 +322,10 @@
   "negotiationValidFrom": "Applicable dès",
   "negotiationSubmit": "Proposer pour validation",
   "negotiationProposed": "Conditions proposées — en attente de validation.",
-  "negotiationPendingBadge": "en attente de validation"
+  "negotiationPendingBadge": "en attente de validation",
+  "negotiationOccupation": "Occupation",
+  "negotiationOccupationHint": "La part des jours d'ouverture incluse chaque mois ; appliquée au membre une fois validée.",
+  "negotiationKeepCurrent": "Garder l'actuelle",
+  "negotiationItems": "Services et forfaits",
+  "negotiationItemsHint": "Un prix unitaire pour ce membre ; vide garde le catalogue."
 }

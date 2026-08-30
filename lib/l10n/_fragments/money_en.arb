@@ -516,5 +516,10 @@
   "negotiationSubmit": "Propose for validation",
   "negotiationProposed": "Deal proposed — waiting for validation.",
   "negotiationPendingBadge": "awaiting validation",
-  "@negotiationActiveSince": {"placeholders": {"month": {"type": "String"}}}
+  "@negotiationActiveSince": {"placeholders": {"month": {"type": "String"}}},
+  "negotiationOccupation": "Occupation",
+  "negotiationOccupationHint": "The share of open days included each month; applied to the member once validated.",
+  "negotiationKeepCurrent": "Keep current",
+  "negotiationItems": "Services and packages",
+  "negotiationItemsHint": "A unit price for this member; empty keeps the catalogue."
 }

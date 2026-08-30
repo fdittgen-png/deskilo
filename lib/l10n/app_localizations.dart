@@ -6224,6 +6224,12 @@ abstract class AppLocalizations {
   /// **'{actor} proposes a deal for {member}: {terms}'**
   String eventPriceNegotiationLine(String actor, String member, String terms);
 
+  /// No description provided for @eventPriceNegotiationItems.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} items'**
+  String eventPriceNegotiationItems(int count);
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:
@@ -8143,6 +8149,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'awaiting validation'**
   String get negotiationPendingBadge;
+
+  /// No description provided for @negotiationOccupation.
+  ///
+  /// In en, this message translates to:
+  /// **'Occupation'**
+  String get negotiationOccupation;
+
+  /// No description provided for @negotiationOccupationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The share of open days included each month; applied to the member once validated.'**
+  String get negotiationOccupationHint;
+
+  /// No description provided for @negotiationKeepCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep current'**
+  String get negotiationKeepCurrent;
+
+  /// No description provided for @negotiationItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Services and packages'**
+  String get negotiationItems;
+
+  /// No description provided for @negotiationItemsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A unit price for this member; empty keeps the catalogue.'**
+  String get negotiationItemsHint;
 
   /// Booking sheet: grid duration slider label (#574)
   ///

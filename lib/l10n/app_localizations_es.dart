@@ -3525,6 +3525,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String eventPriceNegotiationItems(int count) {
+    return '$count artículos';
+  }
+
+  @override
   String get eventTypeMemberJoin => 'Nuevo miembro';
 
   @override
@@ -4594,6 +4599,23 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get negotiationPendingBadge => 'pendiente de validación';
+
+  @override
+  String get negotiationOccupation => 'Ocupación';
+
+  @override
+  String get negotiationOccupationHint =>
+      'La parte de días abiertos incluida cada mes; se aplica al miembro una vez validada.';
+
+  @override
+  String get negotiationKeepCurrent => 'Mantener la actual';
+
+  @override
+  String get negotiationItems => 'Servicios y paquetes';
+
+  @override
+  String get negotiationItemsHint =>
+      'Un precio unitario para este miembro; vacío mantiene el catálogo.';
 
   @override
   String get planDurationLabel => 'Duración';

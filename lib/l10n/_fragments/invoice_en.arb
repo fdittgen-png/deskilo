@@ -1416,5 +1416,7 @@
   "@eventInvoiceReminderLine": {"placeholders": {"number": {"type": "String"}, "level": {"type": "int"}, "amount": {"type": "String"}}},
   "eventTypePriceNegotiation": "Price negotiation",
   "eventPriceNegotiationLine": "{actor} proposes a deal for {member}: {terms}",
-  "@eventPriceNegotiationLine": {"placeholders": {"actor": {"type": "String"}, "member": {"type": "String"}, "terms": {"type": "String"}}}
+  "@eventPriceNegotiationLine": {"placeholders": {"actor": {"type": "String"}, "member": {"type": "String"}, "terms": {"type": "String"}}},
+  "eventPriceNegotiationItems": "{count} items",
+  "@eventPriceNegotiationItems": {"placeholders": {"count": {"type": "int"}}}
 }

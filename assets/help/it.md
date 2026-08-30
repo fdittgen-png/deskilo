@@ -512,6 +512,8 @@ Ogni report dell'app — l'estratto, le fatture, le proforma, le note di credito
 
 **La tariffa è il valore predefinito; le tue condizioni sono tue.** Un proprietario o un admin finanze può proporre una **negoziazione di prezzo** per un membro — quota mensile, eccedenza per mezza giornata, sconto sui supplementi (accessori, prenotazioni di spazi interi) — ciascuno opzionale, la tariffa se assente. La proposta arriva in Eventi ai convalidatori della regola (dominio *Negoziazione di prezzo*, o la regola predefinita); confermata, si applica dal mese scelto e sostituisce le condizioni precedenti. Nella tua vista **Estratto**, la scheda *I miei prezzi negoziati* mostra la tariffa barrata accanto ai tuoi prezzi, da quando, e **Chi può vederlo**: tu, i proprietari e gli admin finanze — ogni lettura da parte di altri è registrata ed elencata lì (§14). Funzionalità *Negoziazioni di prezzo*.
 
+**Servizi, pacchetti e occupazione (#744).** Le condizioni possono fissare anche l'**occupazione** — la quota di giorni di apertura inclusa ogni mese, negoziata con il suo prezzo (applicata al membro una volta convalidata, il valore precedente accanto) — e un **prezzo unitario per servizio e per pacchetto**: un consumo o l'acquisto di un pacchetto è addebitato al prezzo del membro, il prezzo di catalogo barrato nelle schede e sulla carta.
+
 ## 10. Modalità chiosco (tablet a parete)
 
 Monta un tablet Android o un iPad vicino alla porta e lascia che le persone facciano check-in entrando:

@@ -236,6 +236,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
     double? discountPercent,
     String note = '',
     DateTime? validFrom,
+    int? subscriptionPct,
+    Map<String, Map<String, int>> items = const {},
   }) =>
       _client.rpc<void>('propose_price_negotiation', params: {
         'p_member_id': memberId,
@@ -244,6 +246,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
         'p_discount_percent': discountPercent,
         'p_note': note,
         'p_valid_from': validFrom?.toIso8601String().substring(0, 10),
+        'p_subscription_pct': subscriptionPct,
+        'p_items': items,
       });
 
   @override

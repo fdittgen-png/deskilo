@@ -12,6 +12,8 @@ import '../../../calendar/presentation/widgets/access_sheet.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/package.dart';
+import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
 
 /// #739 — the member's own prices against the workspace tariff, on the
@@ -36,6 +38,8 @@ class NegotiationCard extends ConsumerWidget {
     if (value == null) return const SizedBox.shrink();
     final deal = value.active;
     final pending = value.pending;
+    final services = ref.watch(servicesProvider).value ?? const <ServiceItem>[];
+    final packages = ref.watch(packagesProvider).value ?? const <Package>[];
     final monthFormat = DateFormat.yMMMM(
       Localizations.maybeLocaleOf(context)?.toString(),
     );
@@ -128,6 +132,13 @@ class NegotiationCard extends ConsumerWidget {
                     style: theme.textTheme.labelSmall),
               ),
             ]),
+            if (deal?.subscriptionPct != null)
+              row(
+                l10n?.negotiationOccupation ?? 'Occupation',
+                '${deal!.previousSubscriptionPct ?? '—'} %',
+                '${deal.subscriptionPct} %',
+                key: const ValueKey('negotiation-row-occupation'),
+              ),
             row(
               l10n?.negotiationFee ?? 'Monthly fee',
               currency.formatMinor(value.defaultFeeCents),
@@ -152,6 +163,23 @@ class NegotiationCard extends ConsumerWidget {
                   : '${_pct(deal!.discountPercent!)} %',
               key: const ValueKey('negotiation-row-discount'),
             ),
+            // #744 — negotiated items against the catalogue.
+            for (final item in services)
+              if (deal?.itemPrice('services', item.id) != null)
+                row(
+                  item.name,
+                  currency.formatMinor(item.priceCents),
+                  currency.formatMinor(deal!.itemPrice('services', item.id)!),
+                  key: ValueKey('negotiation-item-${item.id}'),
+                ),
+            for (final pkg in packages)
+              if (deal?.itemPrice('packages', pkg.id) != null)
+                row(
+                  pkg.name,
+                  currency.formatMinor(pkg.priceCents),
+                  currency.formatMinor(deal!.itemPrice('packages', pkg.id)!),
+                  key: ValueKey('negotiation-item-${pkg.id}'),
+                ),
             Align(
               alignment: Alignment.centerRight,
               child: TextButton.icon(
@@ -197,11 +225,33 @@ Future<void> showPriceNegotiationSheet(
           ? ''
           : NegotiationCard._pct(current.active!.discountPercent!));
   final note = TextEditingController(text: current.active?.note ?? '');
+  // #744 — the occupation and the items.
+  final levels = await ref.read(subscriptionLevelsProvider.future);
+  final services = await ref.read(servicesProvider.future);
+  final packages = await ref.read(packagesProvider.future);
+  if (!context.mounted) return;
+  int? pct = current.active?.subscriptionPct;
+  final options = {...levels.offeredLevels, ?pct}.toList()..sort();
+  final itemCtl = <String, TextEditingController>{
+    for (final s in services)
+      'services:${s.id}': TextEditingController(
+          text: current.active?.itemPrice('services', s.id) == null
+              ? ''
+              : (current.active!.itemPrice('services', s.id)! / 100)
+                  .toStringAsFixed(2)),
+    for (final p in packages)
+      'packages:${p.id}': TextEditingController(
+          text: current.active?.itemPrice('packages', p.id) == null
+              ? ''
+              : (current.active!.itemPrice('packages', p.id)! / 100)
+                  .toStringAsFixed(2)),
+  };
   final ok = await showModalBottomSheet<bool>(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
-    builder: (sheetContext) => Padding(
+    builder: (sheetContext) => StatefulBuilder(
+      builder: (sheetContext, setSheetState) => SingleChildScrollView(
       padding: EdgeInsets.only(
         left: AppSpacing.lg,
         right: AppSpacing.lg,
@@ -230,6 +280,27 @@ Future<void> showPriceNegotiationSheet(
             ),
           ],
           const SizedBox(height: AppSpacing.md),
+          DropdownButtonFormField<int?>(
+            key: const ValueKey('negotiation-occupation'),
+            initialValue: pct,
+            decoration: InputDecoration(
+              labelText: l10n?.negotiationOccupation ?? 'Occupation',
+              helperText: l10n?.negotiationOccupationHint ??
+                  'The share of open days included each month; applied to '
+                      'the member once validated.',
+              helperMaxLines: 2,
+            ),
+            items: [
+              DropdownMenuItem<int?>(
+                value: null,
+                child: Text(l10n?.negotiationKeepCurrent ?? 'Keep current'),
+              ),
+              for (final v in options)
+                DropdownMenuItem<int?>(value: v, child: Text('$v %')),
+            ],
+            onChanged: (v) => setSheetState(() => pct = v),
+          ),
+          const SizedBox(height: AppSpacing.sm),
           TextField(
             key: const ValueKey('negotiation-fee'),
             controller: fee,
@@ -268,6 +339,40 @@ Future<void> showPriceNegotiationSheet(
             controller: note,
             decoration: InputDecoration(labelText: l10n?.negotiationNote ?? 'Note'),
           ),
+          if (services.isNotEmpty || packages.isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.md),
+            Text(l10n?.negotiationItems ?? 'Services and packages',
+                style: Theme.of(sheetContext).textTheme.titleSmall),
+            Text(
+              l10n?.negotiationItemsHint ??
+                  'A unit price for this member; empty keeps the catalogue.',
+              style: Theme.of(sheetContext).textTheme.bodySmall,
+            ),
+            for (final s in services)
+              TextField(
+                key: ValueKey('negotiation-item-services-${s.id}'),
+                controller: itemCtl['services:${s.id}'],
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                decoration: InputDecoration(
+                  labelText: s.name,
+                  hintText: currency.formatMinor(s.priceCents),
+                  suffixText: currency.currencyName,
+                ),
+              ),
+            for (final p in packages)
+              TextField(
+                key: ValueKey('negotiation-item-packages-${p.id}'),
+                controller: itemCtl['packages:${p.id}'],
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                decoration: InputDecoration(
+                  labelText: p.name,
+                  hintText: currency.formatMinor(p.priceCents),
+                  suffixText: currency.currencyName,
+                ),
+              ),
+          ],
           const SizedBox(height: AppSpacing.lg),
           FilledButton(
             key: const ValueKey('negotiation-submit'),
@@ -278,6 +383,7 @@ Future<void> showPriceNegotiationSheet(
           ),
         ],
       ),
+      ),
     ),
   );
   if (ok != true || !context.mounted) return;
@@ -287,10 +393,24 @@ Future<void> showPriceNegotiationSheet(
     final v = double.tryParse(t);
     return v == null ? null : (v * 100).round();
   }
-  final pct = double.tryParse(discount.text.trim().replaceAll(',', '.'));
+  final discountPct = double.tryParse(discount.text.trim().replaceAll(',', '.'));
   final feeCents = cents(fee.text);
   final overageCents = cents(overage.text);
-  if (feeCents == null && overageCents == null && pct == null) return;
+  final items = <String, Map<String, int>>{};
+  for (final e in itemCtl.entries) {
+    final v = cents(e.value.text);
+    if (v == null) continue;
+    final kind = e.key.split(':').first;
+    final id = e.key.substring(kind.length + 1);
+    (items[kind] ??= {})[id] = v;
+  }
+  if (feeCents == null &&
+      overageCents == null &&
+      pct == null &&
+      discountPct == null &&
+      items.isEmpty) {
+    return;
+  }
   if (!await runGuarded(
     context,
     domain: 'money',
@@ -301,8 +421,10 @@ Future<void> showPriceNegotiationSheet(
           memberId: memberId,
           feeCents: feeCents,
           overageFeeCents: overageCents,
-          discountPercent: pct,
+          discountPercent: discountPct,
           note: note.text.trim(),
+          subscriptionPct: pct,
+          items: items,
         ),
   )) {
     return;
