@@ -75,9 +75,14 @@ Vom Plan aus buchen:
 - **Auf eine Reservierung einchecken**: Einchecken heißt *du bist da*. Bei Halbtagen, ganzen Tagen und echten Uhrzeiten öffnet **jede Ankunft am Tag der Buchung** das Fenster — um 10:00 kannst du schon auf deinen 12:00-Nachmittag einchecken. Auf einem Minutenraster öffnet es 15 Minuten vor deinem Start, oder einen Rasterschritt früher, wenn dieser länger ist (5-, 15- und 30-Minuten-Raster behalten also die 15 Minuten, ein Stundenraster öffnet eine Stunde früher). Es schließt am Ende der Reservierung; außerhalb ist der Knopf deaktiviert und nennt die Öffnungszeit. Admins können ein Mitglied an seinem Platz einchecken (solange *für andere buchen* aktiv ist).
 - **Auschecken**: manuell — und es **kürzt die Buchung auf jetzt**, der Platz wird also sofort für alle anderen frei. Es ist standardmäßig **persönlich**: ein Admin (die Inhaberin eingeschlossen) beendet den Check-in eines anderen erst, wenn *Admins dürfen Mitglieder auschecken* aktiv ist (§8). Mit **Auto-Ein-/Auschecken** schließen sich vergessene Buchungen selbst — der Durchlauf läuft bei jedem Lesen, eine offen gebliebene Vormittagsbuchung wird also ab 12:01 an ihrem eigenen Ende abgeschlossen, nicht erst um Mitternacht.
 - **Ganze Räume**: **Doppeltipp** auf Tisch, Raum oder freien Boden — oder das **Ebenen-Icon** am Rail — für **den ganzen Tisch, das Büro oder die Etage**. **Ein einziges Blatt** trägt alles: den Namen des Raums, den Zeitraum-Picker (z. B. *Do, 6. Aug. 10:13 → 12:00*) mit denselben Wiederholungen wie ein Platz, für Admins den optionalen Wähler **Für das Mitglied** und den Bestätigen-Knopf.
+- **Nicht reservierbar machen**: auf dem Buchungsblatt nehmen Inhaber und Admins (mit *Admins dürfen Sitze sperren*) den Sitz ab jetzt außer Betrieb — er liest sich auf dem Plan als **gesperrt**, bis er im Sitzblatt des Editors wieder freigegeben wird.
 - **Zeit-Scroller**: ein von→bis-Fenster (oder Vormittag / Nachmittag / Ganztag, je nach Granularität) zeigt die Belegung zu jedem künftigen Zeitpunkt.
 - Plätze können **Zubehör** tragen (Monitor, Stehpult…), manches mit Aufpreis je halbem Tag auf deiner Abrechnung.
 - Buchungen zählen auf deine **Monatstage** (§9) — darüber hinaus blockt oder berechnet die App, je nach Konfiguration. Eine Ausnahme: eine Buchung, die **ganz außerhalb der Öffnungszeiten** liegt, kann gratis oder befreit sein — je nachdem, welche Regel für Zeiten außerhalb im Space gilt (§4b).
+
+![](assets/help/images/reserve-plan-closed.jpg)
+
+*Der Plan im Reservieren-Hub an einem Schließtag: das Schließungsbanner, der Ansichtswechsel, das Datum und die Tagesabschnitt-Chips, die Ebenenleiste (1 · 2 · Ebenen) und die Zoomsteuerung.*
 
 ## 4. Reservierungen (Reservieren-Hub)
 
@@ -93,6 +98,22 @@ Vom Plan aus buchen:
 Reservierungen folgen der **Granularität** des Space (§8 Verfügbarkeit) — Halbtage, nur ganze Tage, echte Uhrzeiten (exakt von–bis, Halb-/Ganztag als Kurzwahl) oder freie Zeiten auf dem Raster. Halb- und Ganztage decken die **Arbeitszeiten** ab (Standard 8:00–17:00, Halbtagsgrenze 12:00). Sie respektieren **Öffnungstage**, **Schließtage** und die Buchungsregeln (Buchungshorizont, Mindest- und Maximaldauer). **Eine Buchung endet immer an dem Tag, an dem sie beginnt** — nichts läuft über Mitternacht; ein Aufenthalt, der morgen weitergeht, ist die Buchung von morgen, morgen angelegt (§4b). Wiederkehrender Bedarf? Eine **Serie** buchen (täglich, werktags, wöchentlich) — geschlossene Tage und Konflikte werden übersprungen und gemeldet.
 
 **Eine vergangene oder eingecheckte Buchung zu löschen ist ein Antrag, keine Aktion.** Eine Buchung mit vergangenem Start — oder mit Check-in — lässt sich nicht direkt stornieren: das Blatt bietet **Löschung beantragen**. Inhaber oder Admin entscheiden die eine Abrechnungsfrage: Check-in vergessen (die Buchung bleibt) oder nie genutzt (sie wird entfernt)? Der Antrag erscheint im Ereignis-Feed mit deinem optionalen Grund; künftige unberührte Buchungen behalten das Ein-Tipp-Storno. Der ganze Weg fährt auf der Funktion **Lösch-Anträge für Buchungen**: ist sie aus, hat eine begonnene oder eingecheckte Buchung weder Storno-Knopf noch Antrag — sie bleibt schlicht auf der Zeile stehen.
+
+![](assets/help/images/reserve-day.jpg)
+
+ 
+
+![](assets/help/images/reserve-week.jpg)
+
+ 
+
+![](assets/help/images/reserve-month.jpg)
+
+*Tages-, Wochen- und Monatsansicht für dasselbe Datum — das Wochenraster trägt die Halbtage jedes Tages, der Monat zählt die freien Plätze (8/10).*
+
+![](assets/help/images/reserve-booking-sheet.jpg)
+
+*Das Buchungsblatt: Vormittag / Nachmittag / Ganzer Tag, Buchen für (Admins), Wiederholen — und Nicht reservierbar machen, für Inhaber und Admins.*
 
 ### 4a. Einen Raumcode scannen
 
@@ -189,8 +210,11 @@ Der Monat auf einen Blick, mit zwei Reichweiten und zwei Formen:
 - Die **Etagen-Chips** filtern die **Zeitleiste**.
 - Einen Tag antippen lädt ihn unten. Im Querformat geteilte Ansicht.
 
-## 6. Mitgliederverzeichnis (Mitglieder-Tab)
+![](assets/help/images/calendar-agenda.jpg)
 
+*Der Kalender-Tab: ein Tag oder ein Zeitraum, die Art-Chips, ein Feed nach Tagen gruppiert — jede Zeile öffnet ihre Quelle.*
+
+## 6. Mitgliederverzeichnis (Mitglieder-Tab)
 
 **Tippe ein Mitglied für sein Profil an (#704).** Foto, Rolle und Status; was es gebucht hat und ob es gerade eingecheckt ist; und **Kontakt** — die freiwillig geteilte WhatsApp-Nummer für alle, die **E-Mail-Adresse und der Tarifanteil für Admins**. Wo du die Zahlen sehen darfst — **deine eigenen immer, fremde mit der Berechtigung *Finanzen sehen*** — trägt das Profil außerdem **Finanzen**: die Nettoposition (wer wem was schuldet), die offenen Rechnungen mit dem jeweiligen Rest, die eingegangenen Zahlungen und den gerade laufenden Monat. Dieselbe Karte wie im Finanzen-Tab, damit beide sich nicht widersprechen können.
 
@@ -202,6 +226,14 @@ Sieh, wer zur Community gehört:
 - Das **Nachrichten-Icon** einer Karte schreibt dem Mitglied auf **WhatsApp** (wenn es seine Nummer teilt); der **Gruppen-Knopf** öffnet die WhatsApp-Gruppe der Community.
 - Eigenes Foto, Status und Nummern-Sichtbarkeit in den **Einstellungen** (§12).
 - Admins und Inhaber sehen zusätzlich die **E-Mail** jedes Mitglieds — einfache Mitglieder nicht: Kontakt bleibt die Opt-in-WhatsApp-Nummer.
+
+![](assets/help/images/members-directory.jpg)
+
+ 
+
+![](assets/help/images/member-profile-sheet.jpg)
+
+*Das Verzeichnis — Rollen-Chips, Anwesenheit, nächste Reservierung — und das Profil eines Mitglieds: Reservierungen, Kontakt, Finanzen.*
 
 ## 7. Ereignisse & Bestätigungen (Nachrichten → Ereignisse)
 
@@ -223,9 +255,13 @@ Die Inhaberin justiert das je **Domäne** unter **Einstellungen → Validierungs
 
 ![](assets/help/images/validation-rule-edit.jpg)
 
+![](assets/help/images/messages-events.jpg)
+
+*Die Ereignisse-Seite von Nachrichten: Art-Chips, Ungelesen / Gelesen und Gruppieren nach Typ · Datum · Mitglied.*
+
 ## 8. Für Inhaber: Editor & Einstellungen
 
-Alle Administration wohnt unter **Einstellungen → Administration** — *Workspace* (die Workspace-Einstellungen), *Workspace-ID & QR*, *Mitglieder & Tarife*, *Rollenverwaltung*, *Verfügbarkeit*, *Abrechnung*, *Zahlungshinweise*, *Leistungen*, *Validierungsregeln*, *Abrechnung & Berichte* (der Rechnungs-Hub mit Report-Editor und Mahnregeln in der Kopfzeile), *Funktionen* und die feature-abhängigen Einträge (*Zubehör*, Online-Zahlungen, RFID-/NFC-Badges…). Eine Regel: **der Einstellungs-Eintrag einer Funktion erscheint nur, solange sie aktiviert ist** — *Online-Zahlungen* in **Funktionen** aus, und ihr Konfigurationsbildschirm verschwindet (und kommt beim Reaktivieren zurück). **Funktionen** selbst ist immer da.
+Alle Administration wohnt unter **Einstellungen → Administration** — *Workspace* (die Workspace-Einstellungen), *Mitglieder & Tarife*, *Verfügbarkeit*, *Rollenverwaltung*, *Abrechnung & Berichte* (der Rechnungs-Hub mit Berichtseditor und Mahnregeln in seiner Kopfzeile), *Zahlungshinweise*, *Online-Zahlungen*, *RFID / NFC-Badges*, *Leistungen*, *Zubehör*, *Abrechnung*, *Funktionen*, *Validierungsregeln* und *Workspace-ID & QR*, in der Reihenfolge des Bildschirms (einige hängen an ihrer Funktion: *Zubehör*, *Online-Zahlungen*, *RFID / NFC-Badges*…). Eine Regel: **der Einstellungs-Eintrag einer Funktion erscheint nur, solange sie aktiviert ist** — *Online-Zahlungen* in **Funktionen** aus, und ihr Konfigurationsbildschirm verschwindet (und kommt beim Reaktivieren zurück). **Funktionen** selbst ist immer da.
 
 **Land, Währung, Zeitzone (#711).** Die Länderauswahl deckt jetzt die 32 Länder ab, für die die App Steuern erklären kann (EU-27, Schweiz, Norwegen, Vereinigtes Königreich, USA, Kanada). Die Währung ist eine **Auswahl** der Codes, die die App formatieren kann — jede mit Symbol und der richtigen Zahl Nachkommastellen: der Yen hat keine, der Dinar drei, und jeder Betrag, jede Rechnung und jede Online-Zahlung hält sich daran. Die Zeitzone ist eine **durchsuchbare Liste** der IANA-Zonen, die die Uhr installieren kann; ein Tippfehler lässt sich nicht mehr speichern.
 
@@ -237,9 +273,21 @@ Den **Editor** öffnest du aus der Kopfzeile des Reservieren-Hubs. Der **Space-E
 
 - Ein **Büro** bekommt Namen, *als Ganzes buchbar* und einen **Preis je Halbtag**.
 - Ein **Tisch** bekommt Namen, dieselbe Ganztisch-Option und einen eigenen **Preis je Halbtag**.
-- Ein **Platz** bekommt Namen, **Sitzrichtung** (↑ → ↓ ←), optionalen **Stuhltyp**, sein **Zubehör** (je mit optionalem Halbtags-Aufpreis) und **Gesperrt (Wartung)**.
+- Ein **Platz** bekommt Namen, **Sitzrichtung** (↑ → ↓ ←), optionalen **Stuhltyp**, sein **Zubehör** (je mit optionalem Halbtags-Aufpreis) und **Gesperrt (Wartung)**. Sein Feld **NFC/RFID-Tag** nimmt die UID des Stuhl-Tags in Hex — per Tag-Taste gelesen oder getippt —, damit ein Tipp auf den Stuhl diesen Sitz auflöst (§4a).
 - **Bild** platziert eine skalierbare Illustration; das Foto-Icon setzt das **Hintergrundfoto** der Ebene.
 - Einen Raum mit Historie zu löschen ist Sache der **Inhaberin**, und mit aktivem *Räume mit Historie löschen* (Standard: an) geht es einfach: Buchungen, die den Raum referenzierten, behalten eine Textkopie dessen, was er war, und jede noch reservierte Buchung darauf wird automatisch storniert. Ist die Funktion aus, muss ein Raum mit künftigen Reservierungen erst von Hand geräumt werden.
+
+![](assets/help/images/space-editor-floors.jpg)
+
+ 
+
+![](assets/help/images/space-editor-canvas.jpg)
+
+ 
+
+![](assets/help/images/space-editor-seat.jpg)
+
+*Der Raumeditor: die Etagenliste mit ihren Tipps, eine Etage auf dem Raster (Auswahl · Büro · Tisch …) und das Blatt eines Sitzes — Name, Sitzrichtung, Stuhltyp, Zubehör, NFC/RFID-Tag, gesperrt.*
 
 ### Workspace-ID & QR
 
@@ -458,6 +506,8 @@ Dein Konto beantwortet *was schulde ich, was schuldet man mir* — und *wie viel
 - **Anträge** — **Ausgabe einreichen** (Kaffee für den Space? ein anderer Admin genehmigt — keine Selbst-Genehmigung), **Extra-Halbtage beantragen**, **Konsumation hinzufügen**.
 - **Dokumente** — **Rechnungen** (deine sind hier immer lesbar; für Aussteller der Rechnungs-Hub, §11), **Meine Konditionen** (rendert das Dokument mit dem Titel *Finanzvereinbarung*) und der **monatliche Zahlungsbericht**, Selbstbedienung (§11).
 
+Finanzen hat oben **vier Ansichten** — **Abrechnung · Zahlungen · Rechnungen · Dokumente** (§9c–9f) —, die sich den **‹ Monat ›**-Wähler und die **PDF**-Taste teilen; Schild, Glocke und Zahnrad sitzen wie überall in der App-Leiste.
+
 ### 9a. Sobald der Monat fakturiert ist, entscheidet die Rechnung
 
 - Deine Abrechnung zeigt eine **Rechnungskarte** — Nummer, Status, Betrag, bereits bezahlt, Restbetrag — und der Monat gilt als **beglichen**, sobald die Rechnung bezahlt, ihr Rest erlassen oder ihre Gutschrift erstattet ist — auch wenn die Zahlung erst in einem späteren Monat erfasst wurde. Eine **teilweise bezahlte** Rechnung hält den Monat offen, genau um den **Restbetrag** (den zieht auch *Online zahlen* ein). Ein **Gutschrift**-Monat zeigt, was der Space dir schuldet — du musst nichts zahlen.
@@ -473,19 +523,39 @@ Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine
 
 **Der Monat, wie er steht.** Ihr Konto (die echte monatsübergreifende Position), die Karte **Dieser Monat** (enthaltene, genutzte, verbleibende Tage), die **Abonnement**-Karte, **genutzte Leistungen**, **Zubehör- und Raumzuschläge**, **Tagespakete**, **offene Posten** in Prüfung, **Zahlungen & Gutschriften**, die **Rechnungskarte** des Monats, sobald er fakturiert ist (§9a), und der **Saldo**. Nur lesen: nichts zu drücken außer der **‹ Monat ›**-Auswahl, die alle Ansichten teilen.
 
+![](assets/help/images/finances-statement-full.jpg)
+
+*Die Ansicht Abrechnung von oben nach unten: Ihr Konto, Ihre verhandelten Konditionen (der Tarif neben Ihren, Wer darf sehen), dieser Monat, das Abonnement, die Leistungen, die offenen Posten, Zahlungen & Gutschriften, der Saldo.*
+
 ### 9d. Die Ansicht Zahlungen
 
 **Begleichen und anfragen.** Ein **Überfällig-Streifen**, wenn eine Rechnung die Zahlungsfrist des Workspace überschritten hat (§11e), der **Saldo**, die **Zahlungshinweise** und **Online zahlen**, solange etwas offen ist, dann die Aktionen: **Zahlung erfassen**, **Paket kaufen** (Pakettarife), **Ausgabe einreichen**, **Halbe Tage anfragen**, **Verbrauch hinzufügen**.
 
 **Vorräte (#731).** Kaffeekapseln oder Staubsaugerbeutel für den Raum gekauft? In **Ausgabe einreichen** schalten Sie *Das ist ein Vorrat für den Raum* ein, benennen den Artikel (oder wählen einen bestehenden), die Menge und was ein Verbrauch kosten soll (vorbelegt mit Betrag ÷ Menge). Nach der Genehmigung werden Sie wie gewohnt erstattet **und** der Artikel steht mit diesem Bestand als verbrauchbare Leistung im Regal; wer ihn nutzt, trägt einen Verbrauch ein und zahlt, der Bestand sinkt, und bei null kann der Artikel bis zum nächsten Vorrat nicht verbraucht werden. Funktion *Vorräte aus Ausgaben* (braucht Leistungen).
 
+![](assets/help/images/finances-payments.jpg)
+
+*Die Ansicht Zahlungen: der Saldo mit Status, Zahlung erfassen, dann Ausgabe einreichen, Halbtage anfragen, Verbrauch hinzufügen.*
+
 ### 9e. Die Ansicht Rechnungen
 
 **Was wurde mir in Rechnung gestellt?** Eine Kopfkarte — *nichts offen, Sie sind auf dem Laufenden*, oder *N offen · fälliger Betrag*, mit der Zahl der überfälligen — dann **jede an Sie gestellte Rechnung**, neueste zuerst, je mit Status-Chip, **fällig in N Tagen** oder **überfällig seit N Tagen**, Zahl der Mahnungen und einem **Zahlen**-Knopf, der zur Ansicht Zahlungen springt; Zeile antippen für das Detailblatt mit Schnellansicht, PDF und Teilen. Rechnungssteller finden den Button **Rechnungen** zum Register (§11).
 
+![](assets/help/images/finances-invoices.jpg)
+
+ 
+
+![](assets/help/images/invoice-detail.jpg)
+
+*Die Ansicht Rechnungen — die Kopfkarte und jede an Sie ausgestellte Rechnung — und das Detailblatt einer Rechnung: Positionen, Saldo, Signatur, Schnellansicht / PDF / Teilen.*
+
 ### 9f. Die Ansicht Dokumente
 
 **Der Rest der Unterlagen:** **Meine Konditionen** (Ihre Finanzvereinbarung), der **monatliche Zahlungsbericht**, **die Monatsabrechnung als PDF** und die **Dokumentbibliothek**, wenn der Workspace eine führt (§11d). In Funktionen → *Finanzen in drei Ansichten* lässt sich die einspaltige Ansicht zurückholen.
+
+![](assets/help/images/finances-documents.jpg)
+
+*Die Ansicht Dokumente: Meine Konditionen, der Zahlungsbericht, die Monatsabrechnung als PDF, die Dokumentenbibliothek.*
 
 ### 9g. Preisverhandlungen
 
@@ -539,6 +609,18 @@ Aussteller öffnen **Finanzen → Rechnungen**: ein Drei-Tab-Hub unter einem Liv
 
 **Frankreich: das FEC.** Ein französischer Space bekommt das **FEC** (*Fichier des Écritures Comptables*, art. L47 A-I du LPF): eine tabulierte Flachdatei von **Buchungen**, benannt `<SIREN>FEC<JJJJMMTT>.txt`, mit den 18 vorgeschriebenen Spalten. Kontonummern fragt der Export vorher ab — vorbelegt mit dem *plan comptable général* (411, 706, 512). Jede Rechnung bucht brutto Forderung an Ertrag; Gutschriften und die begleichende Zahlung buchen zu ihren Daten, gelettert mit der Rechnungsnummer. Stornierte fehlen. Mitglieder sehen nur, was sie betrifft.
 
+![](assets/help/images/invoices-admin.jpg)
+
+ 
+
+![](assets/help/images/dunning-rules.jpg)
+
+ 
+
+![](assets/help/images/invoice-register.jpg)
+
+*Der Hub der Aussteller (Zu fakturieren · Offen · Archiv) mit den vier Aktionen einer offenen Rechnung und den Icons der Leiste — Vorlageneditor, Mahnregeln, Register; die Mahnregeln mit dem Schalter Automatische Mahnungen; das Register mit Summe und Export-Taste.*
+
 ### 11a. Rechtliche Identität, MwSt & Pflichtangaben
 
 **Vor dem ersten Export die rechtliche Identität ausfüllen.** Unter *Workspace-Einstellungen → **Rechtliche Identität & E-Rechnung*** erklärt die Inhaberin:
@@ -591,6 +673,18 @@ Die **Rechnungs-PDF-Vorlage** (Stift in der Kopfzeile, oder *Workspace-Einstellu
 
 Variablen (Rechnungsfamilie): `{{ number }}`, `{{ member }}`, `{{ workspace }}`, `{{ workspace_address }}`, `{{ period }}`, `{{ issued }}`, `{{ issued_by }}`, `{{ replaces }}`, `{{ total }}`, `{{ charges }}`, `{{ payments }}`, `{{ voided }}`, `{{ proforma }}`, `{{ copy }}`, `{{ lines }}` (je mit `label`, `unit_price`, `qty`, `net`, `vat_rate`, `amount`), `{{ has_vat }}`, `{{ vat }}`, `{{ net_total }}`, `{{ vat_total }}`, `{{ credit_note }}`, `{{ refund_total }}` — und der Rechts-Satz: `{{ seller_legal_form }}`, `{{ seller_registration }}`, `{{ seller_vat_id }}`, `{{ seller_legal_id }}`, `{{ exemption_reason }}`, `{{ client_address }}`, `{{ client_vat_id }}`, `{{ client_legal_id }}`, `{{ payment_terms }}`, `{{ late_penalty }}`, `{{ recovery_indemnity }}`, `{{ escompte }}`, `{{ insurance }}`, `{{ special_mentions }}`.
 
+![](assets/help/images/report-designer-markup.jpg)
+
+ 
+
+![](assets/help/images/report-designer-design.jpg)
+
+ 
+
+![](assets/help/images/report-designer-preview.jpg)
+
+*Der Berichtseditor: der Markup-Modus mit der Variablenlegende und den Chips pro Sprache / pro Dokument; der visuelle Modus in Entwurf (beschriftete Bänder auf der A4-Seite) und in Vorschau (echte Daten durch die echte Engine).*
+
 ### 11d. Die Report-Suite & die Dokumentbibliothek
 
 - **Finanzvereinbarung** — jeder für ein Mitglied geltende Preis: Abo, Extra-Halbtag, Services, Pakete, Zubehör-Aufpreise und die Ganzraum-Preise, **Tische und Schreibtische eingeschlossen**. Inhaber/Admins senden sie vom Verwaltungsblatt; jedes Mitglied holt seine unter *Finanzen → Dokumente*.
@@ -605,6 +699,10 @@ Mit **Automatische Zahlungserinnerungen** (Funktionen, Kind von *Zahlungserinner
 ## 12. Einstellungen & Profil
 
 Dein persönlicher Bildschirm, von oben nach unten:
+
+![](assets/help/images/settings-full.jpg)
+
+*Der ganze Einstellungsbildschirm in einem Bild: Ihr persönlicher Block, Administration (Inhaber), Einstellungen, Erweitert, Über, Abmelden.*
 
 **Datenschutz & Daten (#719)** — wer deine Daten sehen kann, wer es tat, Export, Löschung, die Richtlinie. Siehe §14.
 
@@ -652,3 +750,15 @@ Der Tab **Nachrichten** ist die Messaging-Zentrale Ihres Bereichs: alle Unterhal
 **Keine Fotos, keine Dateien.** Nachrichten tragen Text, dazu Verweise auf eine Reservierung oder einen Bereich. Das ist Absicht: eine Coworking-App ist kein Dateispeicher.
 
 **Benachrichtigungen.** Eine *empfangene* Nachricht meldet sich und zählt auf dem Tab **Nachrichten**; das Öffnen der Unterhaltung setzt den Zähler zurück. Nachrichten erscheinen nicht mehr in der Glocke — die ist für Bestätigungen und Ereignisse. Einzige Ausnahme: eine **Rundnachricht an alle Admins**, die keine Unterhaltung hat und dort bleibt.
+
+![](assets/help/images/messages-discussions.jpg)
+
+ 
+
+![](assets/help/images/messages-conversation.jpg)
+
+ 
+
+![](assets/help/images/messages-conversation-links.jpg)
+
+*Nachrichten: die Unterhaltungsliste (Personen und Gruppen, der Stift für eine neue), ein privater Chat mit Lesebestätigungen und eine Gruppennachricht mit Reservierungs- und Raum-Link.*

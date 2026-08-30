@@ -25,7 +25,7 @@ Un compte peut appartenir à plusieurs espaces. **Réglages → Profils** les li
 
 ### S'orienter
 
-L'app a jusqu'à cinq destinations en bas : **Plan** (§3), **Calendrier** (§5), le grand bouton central **Réserver** (§4), **Membres** (§6) et **Finances** (§9). Seuls Plan et Réserver sont toujours là — Calendrier, Membres et Finances vont et viennent avec leur fonctionnalité (§8), et la **cloche** qui ouvre le fil des événements et confirmations aussi (§7, avec un compteur de ce qui vous attend). L'**engrenage** qui ouvre les **Réglages** (§12) est, lui, dans chaque en-tête. En paysage et sur tablette, la plupart des écrans passent en **vue scindée** — les commandes dans un panneau latéral, le contenu remplissant le reste.
+L'app a jusqu'à cinq destinations en bas : **Messages** (§16), **Calendrier** (§5), le grand bouton central **Réserver** (§4), **Membres** (§6) et **Finances** (§9). Messages et Réserver sont toujours là ; Calendrier, Membres et Finances vont et viennent avec leur fonctionnalité (§8). **Messages est la boîte de réception** : vos conversations et le fil des événements et confirmations (§7) en sont les deux faces, et la **cloche** de la barre d'app mène directement à la seconde, avec le compteur de ce qui vous attend. L'**engrenage** qui ouvre les **Réglages** (§12) est, lui, dans chaque en-tête. En paysage et sur tablette, la plupart des écrans passent en **vue scindée** — les commandes dans un panneau latéral, le contenu remplissant le reste.
 
 **Tout reste en direct.** Tout changement — une réservation, un nouveau membre, un réglage — est poussé vers chaque appareil connecté en quelques secondes, y compris celui qui l'a fait. Pas de redémarrage, pas de tirer-pour-rafraîchir.
 
@@ -57,7 +57,7 @@ Le QR encode un lien qui nomme le rôle accordé (`deskilo://join?role=…`). Fa
 
 **Inviter par message** (*Inviter quelqu'un*) : chaque envoi WhatsApp/SMS/partage émet son propre code personnel à usage unique et construit un message prêt dans la langue de l'invité. Le destinataire peut copier le message entier et le coller dans le champ de l'app — le code est détecté automatiquement.
 
-## 3. Le plan (onglet Plan)
+## 3. Le plan (dans le hub Réserver)
 
 Le plan montre le niveau actif de votre espace : bureaux, tables et places, codés par couleur — **libre**, **réservé**, **occupé**, **à moi**, **bloqué**. Il s'ouvre **instantanément sur les dernières données connues** et se rafraîchit en arrière-plan — sur un Wi-Fi capricieux vous voyez l'état le plus récent au lieu d'un écran vide. Une place occupée montre qui est là par son **initiale** — ou par sa **photo**, si la personne en a mis une et que le propriétaire a activé *Photos des membres sur le plan* — avec un **badge coche** une fois pointée, et un **point vert** quand elle est en ligne dans l'app. Les prénoms complets apparaissent là où il y a la place : sur la puce cadenas d'une réservation d'espace entier, et dans la vue liste. Quand une **table, un bureau ou un étage entier** est réservé, l'espace le dit lui-même — un voile coloré, une bordure forte, et une **puce cadenas avec le nom de l'occupant** au milieu ; le libellé du bureau lit *Bureau 2 · Florian*. Tout le monde le voit : sur le plan, dans Réserver et sur la borne.
 
@@ -75,13 +75,18 @@ Réserver depuis le plan :
 - **Pointer sur une réservation** : pointer signifie *vous y êtes*. En demi-journées, journées entières et heures réelles, **toute arrivée le jour même de la réservation** ouvre la fenêtre — à 10:00 vous pouvez déjà pointer sur votre après-midi de 12:00. Sur une grille de minutes, la fenêtre s'ouvre 15 minutes avant votre début, ou un pas de grille avant lui si ce pas est plus long (les grilles de 5 et 15 minutes gardent donc les 15 minutes, une grille horaire ouvre une heure avant). Elle se ferme à la fin de la réservation ; en dehors, le bouton est désactivé et dit quand il s'ouvre. Les admins peuvent pointer un membre debout à sa place (tant que *réserver pour d'autres* est actif).
 - **Départ** : manuel — et il **raccourcit la réservation à maintenant**, la place se libère donc immédiatement pour les autres. Il est **personnel par défaut** : un admin (propriétaire compris) ne peut terminer le pointage d'un autre que si *Les admins peuvent faire le check-out des membres* est activé (§8). Avec **arrivée/départ auto**, les réservations oubliées se clôturent seules — le balayage tourne à chaque lecture, une matinée restée ouverte est donc terminée à sa propre fin dès 12:01, pas à minuit.
 - **Espaces entiers** : **double-touchez** une table, un bureau ou un bout de sol vide — ou touchez l'**icône calques** du rail — pour agir sur **toute la table, le bureau ou l'étage**. **Une seule feuille** porte tout : le nom de l'espace, le sélecteur de période (p. ex. *jeu. 6 août 10:13 → 12:00*) avec les mêmes répétitions qu'une place, un sélecteur **Pour le membre** optionnel pour les admins qui réservent au nom de quelqu'un, et le bouton de confirmation.
+- **Rendre non réservable** : sur la feuille de réservation, propriétaires et admins (avec *Les admins peuvent bloquer des places*) mettent la place hors service à partir de maintenant — elle se lit **bloquée** sur le plan jusqu'à être libérée dans la feuille de la place de l'éditeur.
 - **Défileur temporel** : choisissez une fenêtre de→à (ou Matin / Après-midi / Journée selon la granularité) pour voir l'occupation à tout moment futur.
 - Les places peuvent porter des **accessoires** (écran, bureau debout…), certains avec un supplément par demi-journée qui apparaît sur votre relevé.
 - Les réservations comptent sur vos **jours mensuels** (§9) — l'app bloque ou facture au-delà de votre forfait, selon la configuration du propriétaire. Une exception : une réservation située **entièrement hors des heures d'ouverture** peut être gratuite ou exemptée, selon la règle hors horaires de l'espace (§4b).
 
+<p><img src="images/reserve-plan-closed.jpg" width="240"></p>
+
+*Le plan dans le hub Réserver un jour de fermeture : le bandeau de fermeture, le sélecteur de vue, la date et les puces de demi-journée, le rail des niveaux (1 · 2 · calques) et les commandes de zoom.*
+
 ## 4. Réservations (hub Réserver)
 
-Ouvrez le hub **Réserver** (bouton central). En haut : les quatre **boutons de vue**, la **puce de date**, le bouton **scan QR** (dessous, §4a), les **puces de moment** (matin / après-midi / journée) et les **puces d'étage** (*Tous les étages*, ou un par niveau). Puis quatre vues :
+Ouvrez le hub **Réserver** (bouton central). En haut : deux rangées de commandes. La première dit **ce que** vous regardez : les quatre **boutons de vue** et, sur le plan, le sélecteur **plan / liste**. La seconde dit **quand** : la **puce de date**, un bouton **Maintenant** dès que vous avez quitté aujourd'hui, et les **puces de moment** (matin / après-midi / journée). Les **puces d'étage** (*Tous les étages*, ou un par niveau) sont sur le plan lui-même, et le bouton **scan QR** (§4a) est dans la barre d'app, à côté de l'éditeur et de la cloche. Puis quatre vues :
 
 - **Plan** — le plan filtré sur votre fenêtre ; touchez une place libre pour réserver.
 - **Jour** — chaque place en ligne de chronologie pour le jour choisi (08:00 → 17:00 ou vos horaires, la ligne rouge marquant *maintenant*) ; touchez un créneau libre pour réserver, votre propre bloc pour ses détails.
@@ -93,6 +98,14 @@ Ouvrez le hub **Réserver** (bouton central). En haut : les quatre **boutons de 
 Les réservations suivent la **granularité** de l'espace (§8 Disponibilité) — demi-journées, journées entières, heures réelles (de–à exact avec les fenêtres demi/journée en raccourcis) ou horaires libres sur la grille du propriétaire. Demi-journées et journées couvrent les **horaires de travail** configurés (par défaut 8:00–17:00, limite de demi-journée à 12:00). Elles respectent les **jours d'ouverture**, les **jours de fermeture** et les règles de réservation (horizon, durées minimale et maximale). **Une réservation se termine toujours le jour où elle commence** — rien ne franchit minuit ; un séjour qui continue demain est la réservation de demain, faite demain (§4b). Besoin récurrent ? Réservez une **série** (quotidienne, jours ouvrés, hebdomadaire) — jours fermés et conflits sont sautés et signalés.
 
 **Supprimer une réservation passée ou pointée est une demande, pas une action.** Une réservation dont le début est passé — ou déjà pointée — ne s'annule pas directement : la feuille offre **Demander la suppression**. Un propriétaire ou admin tranche la seule question qui compte pour la facturation : pointage oublié (la réservation reste au dossier) ou jamais utilisée (elle est retirée) ? La demande apparaît sur le fil des événements avec votre motif optionnel ; les réservations futures non entamées gardent l'annulation en un geste. Tout ce chemin dépend de la fonctionnalité **Demandes de suppression de réservation** : coupée, une réservation entamée ou pointée n'a ni bouton d'annulation ni demande — elle reste simplement au dossier.
+
+<p><img src="images/reserve-day.jpg" width="240"> <img src="images/reserve-week.jpg" width="240"> <img src="images/reserve-month.jpg" width="240"></p>
+
+*Les vues Jour, Semaine et Mois pour la même date — la grille de la semaine porte les demi-journées de chaque jour, le mois compte les places libres (8/10).*
+
+<p><img src="images/reserve-booking-sheet.jpg" width="240"></p>
+
+*La feuille de réservation : Matin / Après-midi / Journée entière, Réserver pour (admins), Répéter — et Rendre non réservable, pour les propriétaires et admins.*
 
 ### 4a. Scanner un code d'espace
 
@@ -182,29 +195,44 @@ La même action *écrire au détenteur* figure sur l'onglet **Plan** quand vous 
 
 Le mois d'un coup d'œil, avec deux portées et deux formes :
 
+**Le calendrier est un sélecteur, pas une scène (#718).** Choisissez un **jour** ou une **période** ; vous voyez un seul fil de tout ce qui est daté et que vous avez le droit de voir — réservations, pointages et départs, alertes, messages, factures, paiements, consommations, rappels — groupé par jour, filtré par type avec les puces, et **chaque ligne ouvre sa source** (la réservation, la conversation, l'alerte, la facture, le mois dans Finances). Un membre avec la permission finances ou administration des membres peut regarder un autre membre ; les types que le serveur n'autorise pas pour ce membre apparaissent **verrouillés**, jamais comme un jour vide. Le bouclier ouvre *Qui peut voir ceci*, avec le journal des accès.
+
 - **Les miennes / Tout le monde** — vos propres réservations, ou celles de toute la communauté ; chaque membre dispose de cette bascule, puisque le plan et la grille de semaine du hub Réserver montrent déjà l'occupation de tous. Les points sous un jour disent tout d'un coup d'œil : **rouge** = vous avez une réservation, **bleu** = d'autres membres en ont, **les deux points** = les deux. Aujourd'hui est cerclé.
 - La **bascule de forme** à côté commute la moitié basse entre une **vue liste** (chaque réservation en carte : fenêtre horaire, membre, espace) et une **vue chronologique** (les places × les heures du jour choisi). La grille places × *jours* de la semaine, elle, vit dans le hub Réserver (§4), pas ici.
 - Les **puces d'étage** (*Tous les étages* / par niveau) filtrent la **vue chronologique**.
 - Touchez un jour de la grille pour le charger dessous. En paysage, calendrier et détail passent en vue scindée.
 
+<p><img src="images/calendar-agenda.jpg" width="240"></p>
+
+*L'onglet Calendrier : un jour ou une plage, les puces par type, un seul fil groupé par jour — chaque ligne ouvre sa source.*
+
 ## 6. Annuaire des membres (onglet Membres)
+
+
+**Touchez un membre pour son profil (#704).** Sa photo, son rôle et son statut ; ce qu'il a réservé et s'il est pointé en ce moment ; et **Contact** — le numéro WhatsApp partagé volontairement pour tous, l'**adresse e-mail et le forfait pour les admins**. Là où vous avez le droit de voir les chiffres — **les vôtres toujours, ceux d'un autre avec la permission *Voir les finances*** — le profil porte aussi **Finances** : la position nette (qui doit quoi à qui), les factures ouvertes avec ce qu'il reste sur chacune, les paiements déjà rentrés, et le mois en cours de consommation. La même carte que l'onglet Finances, pour que les deux ne puissent pas se contredire.
 
 Voyez qui fait partie de votre communauté :
 
 - Chaque carte montre la **photo** (ou l'initiale), la **puce de rôle** (Admin, Propriétaire), le **statut personnalisé** (« à Berlin jusqu'à vendredi… »), un indicateur **en ligne / vu il y a** (*En ligne*, *10 min*, *2 j*) et une **puce de réservation** : place pointée, *Réservé maintenant*, ou prochaine réservation.
 - Touchez un membre pour sa **feuille de détail** — rôle, présence, ses **réservations à venir**, et **Messages**.
-- **Messages** : un **fil de conversation** par membre (jusqu'à 500 caractères par message) — ouvrez-le depuis la feuille du membre ou son profil dans l'annuaire, lisez tout l'échange en bulles et envoyez depuis le même endroit. Chaque message atteint l'autre bord deux fois : un **push** qui ne porte aucun contenu (*« Vous avez un nouveau message »* — par choix de confidentialité), et, dès que l'app tourne, une notification locale qui affiche, elle, votre nom et votre texte.). Le texte complet reste lisible sous **Événements → Messages**, pour le destinataire et l'expéditeur (le push lui-même ne porte aucun contenu, par choix de confidentialité). Les admins ont un **mégaphone Notifier tous les admins** — dans *Membres et forfaits* (Réglages → Administration), et non sur l'onglet Membres, qui n'a pas de barre d'app à lui — qui atteint chaque admin, propriétaire inclus. Débrayable via la fonctionnalité *Notifications entre membres*. Pendant la rédaction, deux puces permettent de **lier une réservation ou un pointage en cours — les vôtres ou ceux d'un autre membre** — ou **un espace** (siège, table, bureau ou niveau) — la référence apparaît comme un lien touchable des deux côtés : un lien de réservation ouvre cette réservation, un lien d'espace ouvre la feuille de réservation de l'espace, idéal pour discuter d'une réservation future.
+- **Messages** : un **fil de conversation** par membre (jusqu'à 500 caractères par message) — ouvrez-le depuis l'onglet **Messages** (§16), la feuille du membre ou son profil dans l'annuaire, lisez tout l'échange en bulles et envoyez depuis le même endroit. Chaque message atteint l'autre bord deux fois : un **push** qui ne porte aucun contenu (*« Vous avez un nouveau message »* — par choix de confidentialité), et, dès que l'app tourne, une notification locale qui affiche, elle, votre nom et votre texte.). Le texte complet reste lisible dans l'onglet **Messages**, pour le destinataire et l'expéditeur (le push lui-même ne porte aucun contenu, par choix de confidentialité). Les admins ont un **mégaphone Notifier tous les admins** — dans *Membres et forfaits* (Réglages → Administration), et non sur l'onglet Membres, qui n'a pas de barre d'app à lui — qui atteint chaque admin, propriétaire inclus. Débrayable via la fonctionnalité *Notifications entre membres*. Pendant la rédaction, deux puces permettent de **lier une réservation ou un pointage en cours — les vôtres ou ceux d'un autre membre** — ou **un espace** (siège, table, bureau ou niveau) — la référence apparaît comme un lien touchable des deux côtés : un lien de réservation ouvre cette réservation, un lien d'espace ouvre la feuille de réservation de l'espace, idéal pour discuter d'une réservation future.
 - L'**icône message** d'une carte écrit à ce membre sur **WhatsApp** (s'il a partagé son numéro) ; le **bouton groupe** ouvre le groupe WhatsApp de la communauté (défini par le propriétaire).
 - Réglez votre photo, votre statut et la visibilité de votre numéro dans les **Réglages** (§12).
 - Admins et propriétaires voient en plus l'**e-mail** de chaque membre sous son nom — pas les simples membres : le contact membre-à-membre reste le numéro WhatsApp opt-in.
 
-## 7. Événements et confirmations (cloche)
+<p><img src="images/members-directory.jpg" width="240"> <img src="images/member-profile-sheet.jpg" width="240"></p>
+
+*L'annuaire — puces de rôle, présence, prochaine réservation — et le profil d'un membre : réservations, contact, finances.*
+
+## 7. Événements et confirmations (Messages → Alertes)
+
+**Où il se trouve.** Le flux est la deuxième face de l'onglet **Messages**, et la **cloche** de chaque barre d'app y mène directement, avec le compteur de ce qui vous attend. Un seul endroit tient les alertes : en lire une là, c'est l'avoir lue partout.
 
 Le fil des événements est la piste d'audit de votre espace : réservations créées/modifiées/annulées, paiements enregistrés, factures payées, dépenses soumises, demandes de demi-journées, changements de rôle, demandes de suppression. Les membres voient leurs propres événements ; admins et propriétaires voient tout. Les **puces de filtre** (Tous · Réservation · Paiement · Dépense · …) resserrent la liste — votre choix est mémorisé — et un menu **Grouper par** replie le fil en groupes par type, jour ou membre (toucher le symbole du groupe ramène à la liste plate) ; chaque ligne porte son icône d'état — un **sablier** en attente, une **coche verte** une fois confirmé — et les événements d'argent affichent *qui a validé et quand* sur la ligne même.
 
 **En attente de votre confirmation :** dès qu'un admin agit *pour quelqu'un d'autre* — réserve une place pour vous, enregistre votre paiement, rétrograde un admin — cela reste **en attente jusqu'à confirmation**. Les éléments en attente sont épinglés en haut avec un ✕ rouge et un bouton **Accepter** vert, et vous êtes notifié. Vos propres actions sur vous-même ne demandent jamais confirmation.
 
-**Messages :** la cloche collecte aussi vos notifications de membres (§6) — reçues et envoyées, les plus récentes d'abord. La liste n'affiche que les **64 premiers caractères** ; **touchez un message** (ou **balayez à droite**) pour ouvrir la **conversation** avec ce membre — tout l'échange en bulles, émojis et liens de référence actifs (un lien de réservation ouvre cette réservation, un lien d'espace ouvre la feuille de réservation — chacune avec un saut *Voir sur le plan*), avec le composeur juste en dessous ; une diffusion s'ouvre en message unique. **Balayez à gauche** pour supprimer un message (un appui long sur une bulle supprime aussi depuis le fil) — la suppression demande toujours **confirmation** (une diffusion tous-admins reçue ne se supprime pas — elle disparaîtrait pour chaque admin).  **Les messages non lus sont en gras avec un point** ; la puce **Non lus** — ou le bouton à badge en haut de l'écran de la cloche, qui met tout le reste de côté — filtre la liste, et un message compte comme lu quand vous ouvrez sa **conversation** — survoler la boîte de réception n'est pas lire. Vos propres messages portent une petite coche à côté de l'heure : **grise = remis**, **bleue = lu** par le destinataire (une diffusion à tous les admins reste grise — elle a plusieurs lecteurs). Les messages non lus comptent sur la cloche et sur l'icône de l'app jusqu'à ouverture de cet écran.
+**Les messages ont déménagé.** Les messages entre membres vivent désormais dans leur propre onglet **Messages** (§16), plus ici — un message présent à deux endroits est un message qu'on peut marquer lu d'un côté et voir non lu de l'autre. Ce flux garde le seul type qui n'a pas de conversation où vivre : une **diffusion à tous les administrateurs**.
 
 **Quorum de validation :** pour l'argent et les rôles, le propriétaire définit *qui* doit approuver et *combien* d'approbations il faut. **Personne ne valide son propre événement** — seule une autre personne le peut (une exception, configurée par le propriétaire, pour les suppressions de réservation, ci-dessous) ; sans autre validateur, la demande attend. Au bout de 7 jours sans réponse, la suite dépend du sens de la demande. Une demande **que vous avez soumise** pour vous-même — une suppression, des demi-journées supplémentaires, une annulation de solde — **expire** : rien de coûteux n'est accordé en silence. Ce qu'un admin a **fait pour vous** — créer ou modifier une réservation, enregistrer un paiement — se **confirme automatiquement** au contraire, puisque c'est déjà arrivé et que le fil vous demandait seulement d'en prendre acte ; une réservation faite pour vous est alors accordée et consomme votre quota.
 
@@ -214,21 +242,31 @@ Le propriétaire ajuste cela par **domaine** dans **Réglages → Règles de val
 
 *À gauche : une règle par domaine, héritant du défaut. À droite : l'édition — validations requises, validateurs autorisés, signature du propriétaire.*
 
+<p><img src="images/messages-events.jpg" width="240"></p>
+
+*Le volet Événements de Messages : puces par type, Non lus / Lus, et Grouper par Type · Date · Membre.*
+
 ## 8. Pour les propriétaires : l'éditeur et les réglages
 
-Toute l'administration vit sous **Réglages → Administration** — *Espace de coworking* (les réglages de l'espace), *ID de l'espace et QR*, *Membres et forfaits*, *Gestion des rôles*, *Disponibilité*, *Facturation*, *Instructions de paiement*, *Services*, *Règles de validation*, *Facturation & rapports* (le hub de facturation avec l'éditeur de rapports et les règles de relance dans son en-tête), *Fonctionnalités*, et les entrées conditionnées par leur fonctionnalité (*Accessoires*, Paiements en ligne, Badges RFID/NFC…). Une règle à connaître : **l'entrée de réglages d'une fonctionnalité n'apparaît que si la fonctionnalité est activée** — coupez *Paiements en ligne* dans **Fonctionnalités** et son écran disparaît (et revient à la réactivation). L'entrée **Fonctionnalités** reste toujours là.
+Toute l'administration vit sous **Réglages → Administration** — *Espace de coworking* (les réglages de l'espace), *Membres et forfaits*, *Disponibilité*, *Gestion des rôles*, *Facturation & rapports* (le hub de facturation avec l'éditeur de rapports et les règles de relance dans son en-tête), *Instructions de paiement*, *Paiements en ligne*, *Badges RFID / NFC*, *Services*, *Accessoires*, *Facturation*, *Fonctionnalités*, *Règles de validation* et *ID de l'espace et QR*, dans l'ordre où l'écran les liste (certaines conditionnées par leur fonctionnalité : *Accessoires*, *Paiements en ligne*, *Badges RFID / NFC*…). Une règle à connaître : **l'entrée de réglages d'une fonctionnalité n'apparaît que si la fonctionnalité est activée** — coupez *Paiements en ligne* dans **Fonctionnalités** et son écran disparaît (et revient à la réactivation). L'entrée **Fonctionnalités** reste toujours là.
+
+**Pays, devise, fuseau (#711).** Le choix du pays couvre désormais les 32 pays pour lesquels l'app sait déclarer la TVA (UE-27, Suisse, Norvège, Royaume-Uni, États-Unis, Canada). La devise est un **sélecteur** des codes que l'app sait formater — chacun avec son symbole et son bon nombre de décimales : le yen n'en a pas, le dinar en a trois, et chaque montant, facture et paiement en ligne le respecte. Le fuseau est une **liste avec recherche** des zones IANA que l'horloge sait installer ; une faute de frappe ne peut plus être enregistrée.
 
 <p><img src="images/settings-administration.jpg" width="240"></p>
 
 ### L'éditeur d'espace
 
-Ouvrez l'**éditeur** depuis la barre de l'onglet Plan (icône outils croisés). L'écran **Éditeur d'espace** liste vos étages — glissez pour réordonner, l'**icône calques** marque un niveau *Réservable en entier*, le menu **⋮** renomme ou supprime, **+ Ajouter un étage** agrandit le bâtiment. Ouvrez un étage pour le dessiner sur la grille avec la barre d'outils — **Sélection · Bureau · Table · Place · Image · Effacer** :
+Ouvrez l'**éditeur** depuis la barre du hub Réserver (icône outils croisés). L'écran **Éditeur d'espace** liste vos étages — glissez pour réordonner, l'**icône calques** marque un niveau *Réservable en entier*, le menu **⋮** renomme ou supprime, **+ Ajouter un étage** agrandit le bâtiment. Ouvrez un étage pour le dessiner sur la grille avec la barre d'outils — **Sélection · Bureau · Table · Place · Image · Effacer** :
 
 - Un **bureau** reçoit un nom, un interrupteur *Réservable en entier* et un **prix par demi-journée**.
 - Une **table** reçoit un nom, la même option table-entière et son propre **prix par demi-journée**.
-- Une **place** reçoit un nom, un **sens d'assise** (↑ → ↓ ←), un **type de chaise** optionnel, ses **accessoires** (chacun peut porter un supplément par demi-journée) et un interrupteur **Bloquée (maintenance)**.
+- Une **place** reçoit un nom, un **sens d'assise** (↑ → ↓ ←), un **type de chaise** optionnel, ses **accessoires** (chacun peut porter un supplément par demi-journée) et un interrupteur **Bloquée (maintenance)**. Son champ **Tag NFC/RFID** reçoit l'UID du tag de la chaise en hexadécimal — lu avec le bouton tag ou saisi — pour qu'un tap sur la chaise résolve cette place (§4a).
 - **Image** place une illustration redimensionnable ; l'icône photo de la barre définit la **photo de fond** du niveau.
 - Supprimer un espace qui a un historique relève du **propriétaire**, et avec *Supprimer des espaces avec historique* activé (le défaut) cela marche tout simplement : les réservations qui référençaient l'espace gardent un instantané texte de ce qu'il était, et toute réservation encore réservée dessus est annulée automatiquement. Coupez la fonctionnalité, et un espace avec des réservations futures doit être vidé à la main d'abord.
+
+<p><img src="images/space-editor-floors.jpg" width="240"> <img src="images/space-editor-canvas.jpg" width="240"> <img src="images/space-editor-seat.jpg" width="240"></p>
+
+*L'éditeur d'espace : la liste des étages avec ses astuces, un étage sur la grille (Sélection · Bureau · Table …), et la feuille d'une place — nom, sens d'assise, type de chaise, accessoires, tag NFC/RFID, bloquée.*
 
 ### ID de l'espace et QR
 
@@ -262,13 +300,13 @@ Activez ou coupez des modules entiers par espace — chaque interrupteur porte s
 
 La liste est **hiérarchique** : une fonctionnalité qui en nécessite une autre s'indente sous elle avec une note *Nécessite…*, grisée tant que le parent est coupé — *Finances* porte services, suppléments d'accessoires, paiements en ligne et factures ; *Factures* porte la délégation admin, le modèle PDF, les relances, la gestion de la TVA (avec les déclarations en dessous d'elle) et l'envoi de la facture électronique au client ; *Mode borne* porte trois enfants — badges RFID/NFC, badges QR et photos des membres à la borne ; *Réservations de table, bureau et niveau* porte *les admins peuvent attribuer des niveaux* ; *Annuaire* porte l'intégration WhatsApp ; *Onglet Événements* porte le regroupement du fil. Couper un parent retire tout son sous-arbre ; le choix stocké de l'enfant revient intact au retour du parent.
 
-<p><img src="images/workspace-id-qr.jpg" width="220"> <img src="images/availability-granularity.jpg" width="220"> <img src="images/features-toggles-1.jpg" width="220"> <img src="images/features-toggles-2.jpg" width="220"></p>
+<p><img src="images/workspace-id-qr.jpg" width="240"> <img src="images/availability-granularity.jpg" width="240"> <img src="images/features-toggles-1.jpg" width="240"> <img src="images/features-toggles-2.jpg" width="240"></p>
 
 ### Membres et forfaits
 
 Touchez un membre pour sa **feuille de gestion** — chaque action par membre au même endroit : **Envoyer l'accord financier** (§11d), **Messages**, **Ajouter un service** (service, quantité, mois de facturation → *soumettre pour confirmation*), **Abonnement** (son pourcentage), **Quand les jours sont épuisés** (la politique de dépassement, §9), **Limite de réservations** (combien de réservations **ouvertes** le membre peut détenir au total, quelle que soit leur date), **Réservations simultanées** (combien de réservations peuvent **se chevaucher dans le temps** — le quota personnel qui l'emporte sur le nombre de l'espace, §4b ; deux plafonds distincts, lisez donc bien les libellés), **Peut réserver une table, un bureau ou un niveau entier**, **Badges** (§10), **Nommer admin** (validé, §7), **Copropriété**, **Transformer en borne** — ou **Rétablir comme membre** sur un compte d'appareil —, **Approuver l'adhésion** ou **Refuser l'adhésion** pour une demande en attente, et **Mettre l'adhésion en pause**. Chaque ligne montre l'**e-mail** du membre sous son nom.
 
-<p><img src="images/member-management-sheet.jpg" width="220"> <img src="images/member-subscription.jpg" width="220"> <img src="images/member-reservation-limit.jpg" width="220"></p>
+<p><img src="images/member-management-sheet.jpg" width="240"> <img src="images/member-subscription.jpg" width="240"> <img src="images/member-reservation-limit.jpg" width="240"></p>
 
 ### Facturation
 
@@ -280,7 +318,7 @@ Touchez un membre pour sa **feuille de gestion** — chaque action par membre au
 
 Les catalogues derrière le §9 — extras définis par le propriétaire (casiers, impression…, chacun avec un prix et un taux de TVA optionnel) et équipements de place avec suppléments optionnels par demi-journée. Deux listes simples avec un bouton **+**.
 
-<p><img src="images/billing-bands-levels-packages.jpg" width="220"> <img src="images/services-catalog.jpg" width="220"> <img src="images/services-new-service.jpg" width="220"> <img src="images/accessories-catalog.jpg" width="220"></p>
+<p><img src="images/billing-bands-levels-packages.jpg" width="240"> <img src="images/services-catalog.jpg" width="240"> <img src="images/services-new-service.jpg" width="240"> <img src="images/accessories-catalog.jpg" width="240"></p>
 
 **Stock (#731).** Un service issu d'une fourniture affiche *N en stock* / *Épuisé* ; une consommation supérieure au stock est refusée.
 
@@ -426,6 +464,8 @@ Votre compte répond à *que dois-je, que me doit-on* — et *combien puis-je en
 - **Demandes** — **Soumettre une dépense** (du café pour l'espace ? un autre admin approuve — pas d'auto-approbation — et cela crédite votre relevé), **Demander des demi-journées**, **Ajouter une consommation** (les services du propriétaire — casiers, impression… — vous confirmez ce que vous consommez).
 - **Documents** — **Factures** (les vôtres sont toujours lisibles ici : positions, solde, état — et pour les émetteurs le hub de facturation, §11), **Mes conditions** (qui rend le document intitulé *Accord financier*) et le **rapport mensuel des paiements**, en libre-service (§11).
 
+Finances a **quatre volets** en haut — **Relevé · Paiements · Factures · Documents** (§9c–9f) — qui partagent le sélecteur **‹ mois ›** et le bouton **PDF** ; le bouclier, la cloche et la roue dentée sont dans la barre d'app comme partout.
+
 ### 9a. Dès que le mois est facturé, c'est la facture qui décide
 
 - Votre relevé affiche une **carte facture** — numéro, état, total, déjà réglé, restant dû — et le mois passe **réglé** dès que la facture est payée, son solde annulé, ou son avoir remboursé, même si le paiement qui la solde a été enregistré un mois plus tard. Une facture **partiellement payée** laisse le mois à régler pour exactement le **restant dû** (c'est aussi ce montant que *Payer en ligne* prélève). Un mois en **avoir** montre ce que l'espace vous doit — rien à payer de votre côté.
@@ -441,19 +481,35 @@ Chaque rapport de l'application — relevé, factures, proformas, avoirs, vos do
 
 **Le mois tel qu'il est.** Votre compte (la position réelle sur plusieurs mois), la carte **Ce mois-ci** (jours inclus, utilisés, restants), la carte **abonnement**, les **services consommés**, les **suppléments d'accessoires et d'espaces**, les **forfaits de jours**, les **positions ouvertes** en attente de validation, **paiements et avoirs**, la **carte de facture** du mois dès qu'il est facturé (§9a) et le **solde**. En lecture seule : rien à presser ici sauf le sélecteur **‹ mois ›**, commun à tous les volets.
 
+<p><img src="images/finances-statement-full.jpg" width="240"></p>
+
+*Le volet Relevé, de haut en bas : votre compte, vos conditions négociées (le tarif à côté des vôtres, Qui peut voir), ce mois-ci, l'abonnement, les services, les postes en attente, paiements et crédits, le solde.*
+
 ### 9d. Le volet Paiements
 
 **Régler et demander.** Un **bandeau de retard** quand une facture dépasse le délai de paiement de l'espace (§11e), le **solde**, les **instructions de paiement** et **Payer en ligne** tant qu'un montant est dû, puis les actions : **Enregistrer un paiement**, **Acheter un forfait** (formules à forfaits), **Soumettre une dépense**, **Demander des demi-journées**, **Ajouter une consommation**.
 
 **Fournitures (#731).** Vous avez acheté des capsules de café ou des sacs d'aspirateur pour l'espace ? Dans **Soumettre une dépense**, activez *C'est une fourniture pour l'espace*, nommez l'article (ou choisissez-en un existant), la quantité et ce que coûtera une consommation (prérempli avec montant ÷ quantité). Une fois la dépense validée, vous êtes remboursé comme d'habitude **et** l'article va sur l'étagère comme service consommable avec ce stock ; ceux qui l'utilisent ajoutent une consommation et le paient, le stock décroît, et à zéro l'article ne peut plus être consommé jusqu'à la prochaine fourniture. Fonctionnalité *Fournitures via les dépenses* (nécessite Services).
 
+<p><img src="images/finances-payments.jpg" width="240"></p>
+
+*Le volet Paiements : le solde et son état, Enregistrer un paiement, puis Soumettre une dépense, Demander des demi-journées, Ajouter une consommation.*
+
 ### 9e. Le volet Factures
 
 **Qu'est-ce qui m'a été facturé ?** Une carte de tête — *rien d'ouvert, vous êtes à jour*, ou *N ouvertes · montant dû*, avec le nombre en retard — puis **toutes les factures qui vous ont été émises**, de la plus récente à la plus ancienne, chacune avec sa puce d'état, **échéance dans N jours** ou **en retard de N jours**, le nombre de relances, et un bouton **payer** qui saute au volet Paiements ; touchez une ligne pour la fiche détaillée avec aperçu, PDF et partage. Les émetteurs trouvent le bouton **Factures** vers le registre (§11).
 
+<p><img src="images/finances-invoices.jpg" width="240"> <img src="images/invoice-detail.jpg" width="240"></p>
+
+*Le volet Factures — la carte de synthèse et chaque facture qui vous a été émise — et la feuille de détail d'une facture : positions, solde, signature, aperçu rapide / PDF / partage.*
+
 ### 9f. Le volet Documents
 
 **Le reste des papiers :** **Mes conditions** (votre accord financier), le **rapport mensuel des paiements**, **le relevé du mois en PDF**, et la **bibliothèque de documents** quand l'espace en a une (§11d). Désactivez les volets dans Fonctionnalités → *Finances en trois volets* pour retrouver la colonne unique.
+
+<p><img src="images/finances-documents.jpg" width="240"></p>
+
+*Le volet Documents : Mes conditions, le rapport des paiements, le relevé du mois en PDF, la bibliothèque de documents.*
 
 ### 9g. Négociations tarifaires
 
@@ -481,6 +537,8 @@ Votre identité n'existe que le temps de l'opération : le justificatif ne part 
 
 *Les propriétaires émettent les factures ; les admins aussi dès qu'ils détiennent la permission **émettre les factures et rapprocher les paiements** (Gestion des rôles, §8 — ou l'ancienne délégation **Les admins émettent des factures**). La fonctionnalité **Factures** vit sous Finances dans la liste des fonctionnalités.*
 
+**Coordonnées bancaires hors IBAN (#711).** Dans *Instructions de paiement*, à côté de l'IBAN : nom de la banque, numéro de compte, un code de routage nommé comme votre pays le nomme — *sort code* au Royaume-Uni, *routing number* aux États-Unis, *transit · institution* au Canada — et un BIC/SWIFT pour les virements internationaux. Seuls les champs remplis s'impriment sur la carte « comment payer ».
+
 Une facture DesKilo est générée, jamais composée : ses positions sont **dérivées exclusivement des données suivies du mois** — abonnement, dépassement, suppléments, services, forfaits — moins les paiements et crédits du mois, si bien que la dernière ligne **est le solde dû**. Chaque document fige l'adresse postale de l'espace et du membre (la vôtre dans **Réglages → Adresse** ; celle de l'espace dans ses réglages) et est **signé numériquement** à l'émission — il ne change plus jamais. Une **annexe détaillée** (mouvements et présences du mois) s'attache d'un interrupteur à l'émission.
 
 Les émetteurs ouvrent **Finances → Factures** et arrivent sur un hub à trois onglets sous un bandeau de synthèse en direct (*N à facturer · N en cours · X dus · N à rembourser · Y*) :
@@ -504,6 +562,10 @@ Les émetteurs ouvrent **Finances → Factures** et arrivent sur un hub à trois
 **Remettre l'exercice à votre comptable.** Depuis le registre, les émetteurs exportent le **SAF-T** — le *Standard Audit File for Tax* de l'OCDE, le XML que lisent logiciels comptables et administrations. Il couvre exactement ce que montre le registre : l'entreprise telle que vos factures la déclarent, chaque client, chaque facture avec lignes et totaux, et les paiements qui les ont réglées. Les annulées restent dans le fichier marquées *annulées* — un fichier d'audit n'efface pas ce qui s'est passé. Il omet délibérément le **plan de comptes** : DesKilo n'invente pas de numéros de compte. Votre comptable mappe les factures sur ses comptes — c'est son métier, cela lui prend une minute.
 
 **France : le FEC.** Un espace français a un second choix, le **FEC** (*Fichier des Écritures Comptables*) — le fichier qu'un contrôle exige légalement (art. L47 A-I du LPF). Pas du XML : un fichier plat tabulé d'**écritures**, nommé `<SIREN>FEC<AAAAMMJJ>.txt` comme l'arrêté l'exige, avec les 18 colonnes imposées dans l'ordre imposé. Fait d'écritures, il *ne peut pas* éviter les numéros de compte : l'export les demande d'abord — préremplis du *plan comptable général* (411 clients, 706 prestations, 512 banque), à corriger. Chaque facture passe sa créance contre le produit au montant **brut**, les crédits nettés et le paiement qui l'a soldée passent en banque à leurs propres dates, lettrés du numéro de facture. Les annulées sont absentes : annulée avant paiement, jamais comptabilisée, rien à extourner. La colonne *nom* suit le lecteur — un émetteur balaie des noms de membres, un membre ses numéros de facture. Les membres ne voient que ce qui les concerne : émises, jamais une annulée.
+
+<p><img src="images/invoices-admin.jpg" width="240"> <img src="images/dunning-rules.jpg" width="240"> <img src="images/invoice-register.jpg" width="240"></p>
+
+*Le hub des émetteurs (À facturer · En cours · Archives) avec les quatre actions d'une facture ouverte et les icônes de la barre — éditeur de modèle, règles de relance, registre ; les règles de relance avec l'interrupteur Relances automatiques ; le registre avec son total et son bouton d'export.*
 
 ### 11a. Identité légale, TVA et mentions
 
@@ -557,6 +619,10 @@ Le **Modèle de PDF de facture** (crayon dans l'en-tête Factures, ou *Réglages
 
 Variables (famille facture) : `{{ number }}`, `{{ member }}`, `{{ workspace }}`, `{{ workspace_address }}`, `{{ period }}`, `{{ issued }}`, `{{ issued_by }}`, `{{ replaces }}`, `{{ total }}`, `{{ charges }}`, `{{ payments }}`, `{{ voided }}`, `{{ proforma }}`, `{{ copy }}`, `{{ lines }}` (chacune avec `label`, `unit_price`, `qty`, `net`, `vat_rate`, `amount`), `{{ has_vat }}`, `{{ vat }}`, `{{ net_total }}`, `{{ vat_total }}`, `{{ credit_note }}`, `{{ refund_total }}` — et le jeu légal : `{{ seller_legal_form }}`, `{{ seller_registration }}`, `{{ seller_vat_id }}`, `{{ seller_legal_id }}`, `{{ exemption_reason }}`, `{{ client_address }}`, `{{ client_vat_id }}`, `{{ client_legal_id }}`, `{{ payment_terms }}`, `{{ late_penalty }}`, `{{ recovery_indemnity }}`, `{{ escompte }}`, `{{ insurance }}`, `{{ special_mentions }}`.
 
+<p><img src="images/report-designer-markup.jpg" width="240"> <img src="images/report-designer-design.jpg" width="240"> <img src="images/report-designer-preview.jpg" width="240"></p>
+
+*L'éditeur de rapports : le mode Balisage avec la légende des variables et les puces par langue / par document ; le mode Visuel en Conception (bandes étiquetées sur la page A4) et en Aperçu (données réelles via le vrai moteur).*
+
 ### 11d. La suite de rapports et la bibliothèque de documents
 
 - **Accord financier** — chaque prix en vigueur pour un membre : abonnement, demi-journée supplémentaire, services, forfaits, suppléments d'accessoires et les prix des espaces entiers, **tables et bureaux compris**. Propriétaires/admins l'envoient depuis la feuille de gestion d'un membre ; chaque membre consulte/télécharge/partage le sien depuis *Finances → Documents*.
@@ -571,6 +637,14 @@ Avec **Relances de paiement automatiques** activé (Fonctionnalités, enfant de 
 ## 12. Réglages et profil
 
 Votre écran personnel, de haut en bas :
+
+<p><img src="images/settings-full.jpg" width="240"></p>
+
+*Tout l'écran Réglages en une image : votre bloc personnel, Administration (propriétaires), Préférences, Avancé, À propos, Se déconnecter.*
+
+**Confidentialité et données (#719)** — qui peut voir vos données, qui l'a fait, export, effacement, la politique. Voir §14.
+
+**Région et formats (#711).** Comment *vous* lisez ce que l'espace affiche : **nombres et dates** dans la région de votre choix (`fr_CH`, `en_GB`, `de_AT`… indépendante de la langue de l'app), l'**horloge** (24 h, 12 h, ou ce que fait cette région), et si les heures s'affichent dans le **fuseau de l'espace** — celui des réservations, par défaut — ou **celui de votre appareil**, signalé là où les deux diffèrent. Une ligne d'aperçu montre le résultat des trois choix. La devise reste celle de l'espace ; seule son écriture est la vôtre. Enregistré sur votre profil : il vous suit d'un appareil à l'autre.
 
 - **Profils** (§1) et votre **photo** (touchez pour changer — choisir ou supprimer).
 - **Membres** — raccourci vers l'annuaire ; **WhatsApp** — votre numéro, visible des autres membres seulement si vous le renseignez ; **Statut** — une ligne libre (40 caractères) affichée dans l'annuaire ; **Adresse** — votre adresse postale (imprimée sur vos factures), pays et numéro de TVA optionnel.
@@ -597,3 +671,24 @@ Données minimales : nom, e-mail, forfait, réservations, compte. Vous contrôle
 Android (Google Play), iPhone/iPad, bureau — **macOS** (un DMG : glissez DesKilo dans Applications) et **Windows** (un installeur MSI) construits à chaque version — et le **navigateur** : la même app, rien à installer, à l'adresse publiée par votre espace. Vos données suivent votre compte : une table réservée sur téléphone apparaît dans un onglet de navigateur la seconde d'après.
 
 Le navigateur en fait plus qu'on ne croit : le **Web NFC fonctionne** dans les navigateurs Chromium sur Android en HTTPS — c'est une façon de configurer un tag de chaise depuis le navigateur d'un téléphone — les applications **Android et iPhone installées lisent les tags directement**, ce qui est en général plus simple. Ce qu'il ne sait pas faire, c'est scanner un QR avec la caméra à la manière de la borne. Tout le reste — plan, réservations, membres, argent, factures, PDF — est la même app. Au premier lancement du DMG macOS, clic droit → *Ouvrir* : la build n'est pas encore notariée par Apple, un double-clic simple déclenche l'avertissement Gatekeeper.
+
+## 16. Messages
+L'onglet **Messages** est la messagerie de votre espace : toutes les conversations dans une liste, la plus récente en haut, membres et groupes ensemble. Une ligne montre le dernier message, l'heure et le nombre de non-lus. Touchez le **crayon** pour en commencer une.
+
+**Une personne ou un groupe, une seule feuille.** Choisissez une personne pour une discussion privée ; choisissez-en deux ou plus et un **champ de nom apparaît** — c'est un groupe. Ce nom est **unique dans votre espace**, personne n'a donc à deviner à quelle *Équipe* il écrit ; s'il est pris, l'app le dit et vous changez un mot.
+
+**Les distinguer d'un coup d'œil.** Une personne affiche sa photo dans un cercle. Un groupe affiche un **badge carré** avec un symbole de groupe et — tant que personne n'y a écrit — son nombre de membres.
+
+**Dans une conversation.** Les messages se lisent du plus ancien au plus récent en bulles, émojis et **liens de référence** actifs : un lien de réservation ouvre cette réservation, un lien d'espace ouvre sa feuille de réservation, chacun avec un saut *Voir sur le plan*. Le champ de saisie est en bas. **Appui long sur une bulle pour la supprimer**, avec confirmation. Vos messages portent une coche : **grise = remis**, **bleue = lu**.
+
+**Touchez le nom en haut.** Dans une discussion privée, cela ouvre le **profil** de la personne — sa réservation du jour, sa présence sur place, son statut, et comment la joindre. Dans un groupe, cela ouvre la **liste des membres**, où un administrateur du groupe ajoute ou retire des personnes et où chacun peut partir. Un départ ne laisse jamais un groupe sans administrateur.
+
+**La recherche** (la loupe) cherche à trois endroits : les **membres**, les **groupes** et les **mots dans les messages**. Un résultat vous emmène directement à la personne, au groupe ou au message.
+
+**Ni photos ni fichiers.** Les messages portent du texte, plus des liens vers une réservation ou un espace. C'est volontaire : une app de coworking n'est pas un hébergeur de fichiers.
+
+**Notifications.** Un message *reçu* vous alerte et compte sur l'onglet **Messages** ; ouvrir la conversation efface le compteur. Les messages n'apparaissent plus dans la cloche, réservée aux confirmations et aux événements. Seule exception : une **diffusion à tous les administrateurs**, qui n'a pas de conversation où vivre et y reste.
+
+<p><img src="images/messages-discussions.jpg" width="240"> <img src="images/messages-conversation.jpg" width="240"> <img src="images/messages-conversation-links.jpg" width="240"></p>
+
+*Messages : la liste des discussions (personnes et groupes, le crayon pour en créer une), une discussion privée avec accusés de lecture, et un message de groupe portant un lien de réservation et un lien d'espace.*

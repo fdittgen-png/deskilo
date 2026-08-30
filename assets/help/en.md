@@ -75,9 +75,14 @@ Booking from the plan:
 - **Check-in on a reservation**: checking in means *you are there*. Under half-days, full days and real hours **any arrival on the booking's own day** opens the window — at 10:00 you can already check in on your 12:00 afternoon. On a minute grid the window opens 15 minutes before your start, or one grid step before it when that step is longer (so 5- and 15-minute grids keep the 15 minutes, an hourly grid opens an hour early). It closes when the reservation ends; outside it the button is disabled and says when it opens. Admins can check in a member standing at their seat (while *booking for others* is on).
 - **Check-out**: manual — and it **truncates the booking to now**, so the seat frees immediately for everyone else. It is **personal by default**: an admin (the owner included) can only end someone else's check-in once *Admins may check members out* is on (§8). With **auto check-in/out** enabled, forgotten bookings close themselves — the sweep runs on every read, so a morning booking left open is completed at its own end from 12:01 onwards, not at midnight.
 - **Whole spaces**: **double-tap** a desk, a room, or an empty stretch of floor — or tap the **layers icon** on the level rail — to act on the **whole table, office or level**. **One sheet** holds all of it: the space's name, the period picker (e.g. *Thu, Aug 6 10:13 → 12:00*) with the same repetition options as a seat, an optional **For the member** selector for admins booking on someone's behalf, and the confirm button.
+- **Make not reservable**: on the booking sheet, owners and admins (with *Admins may block seats*) take the seat out of service from now on — it reads **blocked** on the plan until it is released again in the editor's seat sheet.
 - **Time scroller**: pick a from→to window (or Morning / Afternoon / Full day, depending on the workspace granularity) to see occupancy at any future moment.
 - Seats can carry **accessories** (monitor, standing desk…), some with a per-half-day supplement that shows up on your statement.
 - Bookings count against your **monthly days** (§9) — the app blocks or bills you past your plan, depending on what the owner configured for you. One exception: a booking lying **wholly outside the working hours** may be free or exempt, depending on the workspace's outside-hours policy (§4b).
+
+![](assets/help/images/reserve-plan-closed.jpg)
+
+*The plan in the Reserve hub on a closed day: the closure banner, the view switch, the date and the day-part chips, the level rail (1 · 2 · layers) and the zoom controls.*
 
 ## 4. Reservations (Reserve hub)
 
@@ -93,6 +98,22 @@ Open the **Reserve** hub (center button). Along the top: two rows of controls. T
 Reservations follow the workspace **granularity rule** (§8 Availability) — half-days, full days, real hours (exact from–to times with the half/full-day windows as shortcuts), or free start/end times on the owner's slot grid. Half and full days cover the workspace's configured **working hours** (default 8:00–17:00 with the half-day boundary at 12:00). They respect the **open weekdays** and **closure days**, and the booking rules (advance horizon, minimum and maximum duration). **A booking always ends on the day it starts** — nothing crosses midnight; a stay that continues tomorrow is tomorrow's booking, made tomorrow (§4b). Repeating needs? Book a **series** (daily, weekdays, weekly) — closed days and conflicts are skipped and reported.
 
 **Deleting a past or checked-in booking is a request, not an action.** A booking whose start has passed — or where you already checked in — cannot be cancelled directly: the sheet offers **Request deletion** instead. An owner or admin decides the one question that matters for billing: was the check-in simply forgotten (the booking stays on the record), or was it never used (it is removed)? The request appears on the Events feed with your optional reason; future untouched bookings keep the normal one-tap cancel. This whole path rides the **Booking deletion requests** feature: with it off, a started or checked-in booking has neither a cancel button nor a request — it simply stays on the record.
+
+![](assets/help/images/reserve-day.jpg)
+
+ 
+
+![](assets/help/images/reserve-week.jpg)
+
+ 
+
+![](assets/help/images/reserve-month.jpg)
+
+*Day, Week and Month views for the same date — the week grid holds each day's half-day slots, the month counts the free desks (8/10).*
+
+![](assets/help/images/reserve-booking-sheet.jpg)
+
+*The booking sheet: Morning / Afternoon / Full day, Book for (admins), Repeat — and Make not reservable, for owners and admins.*
 
 ### 4a. Scan a space code
 
@@ -189,8 +210,11 @@ The month at a glance, with two scopes and two shapes:
 - The **floor chips** (*All floors* / per level) filter the **timeline**.
 - Tap a day in the month grid to load it below. In landscape the calendar and the detail use the split layout.
 
-## 6. Members directory (Members tab)
+![](assets/help/images/calendar-agenda.jpg)
 
+*The Calendar tab: a day or a range, the kind chips, one feed grouped by day — every row opens its source.*
+
+## 6. Members directory (Members tab)
 
 **Tap a member for their profile (#704).** Their photo, role and status; what they have booked and whether they are checked in right now; and **Contact** — the opt-in WhatsApp number for everyone, the **e-mail address and plan share for admins**. Where you may see the figures — **your own always, somebody else's with the *View finances* permission** — the profile also carries **Money**: the net position (who owes whom), the open invoices with what is left on each, the payments already in, and the month being consumed right now. The same card the Money tab shows, so the two can never disagree.
 
@@ -202,6 +226,14 @@ See who's part of your community:
 - The **message icon** on a card messages that member on **WhatsApp** (if they shared their number); the **group button** opens your community's WhatsApp group (set by the owner).
 - Set your own photo, status, and phone visibility in **Settings** (§12).
 - Admins and owners additionally see each member's **email** under the name — plain members don't: member-to-member contact stays the opt-in WhatsApp number.
+
+![](assets/help/images/members-directory.jpg)
+
+ 
+
+![](assets/help/images/member-profile-sheet.jpg)
+
+*The directory — role chips, presence, the next reservation — and a member's profile: reservations, contact, money.*
 
 ## 7. Events & confirmations (Messages → Events)
 
@@ -225,9 +257,13 @@ The owner tunes this per **domain** in **Settings → Validation rules** — thi
 
 *Left: one rule per domain, inheriting from the default. Right: editing a rule — required validations, allowed validators, owner sign-off.*
 
+![](assets/help/images/messages-events.jpg)
+
+*The Events face of Messages: kind chips, Unread / Read, and Group by Type · Date · Member.*
+
 ## 8. For owners: the editor & settings
 
-All administration lives under **Settings → Administration** — *Workspace* (the workspace settings), *Workspace ID & QR*, *Members & plans*, *Role management*, *Availability*, *Billing*, *Payment instructions*, *Services*, *Validation rules*, *Billing & reports* (the invoicing hub with the report editor and reminder rules in its header), *Features*, and the feature-gated entries (*Accessories*, Online payments, RFID/NFC badges…). One rule to know: **a feature's settings entry only appears while that feature is enabled** — switch *Online payments* off in **Features** and its configuration screen disappears with it (and comes back when you re-enable it). The **Features** entry itself is always there, so you can always switch a module back on.
+All administration lives under **Settings → Administration** — *Coworking space* (the workspace settings), *Members & plans*, *Availability*, *Role management*, *Billing & reports* (the invoicing hub with the report editor and reminder rules in its header), *Payment instructions*, *Online payments*, *RFID / NFC badges*, *Services*, *Accessories*, *Billing*, *Features*, *Validation rules* and *Workspace ID & QR*, in the order the screen lists them (some ride their feature: *Accessories*, *Online payments*, *RFID / NFC badges*…). One rule to know: **a feature's settings entry only appears while that feature is enabled** — switch *Online payments* off in **Features** and its configuration screen disappears with it (and comes back when you re-enable it). The **Features** entry itself is always there, so you can always switch a module back on.
 
 **Country, currency, time zone (#711).** The country picker now covers the 32 countries the app can declare tax in (EU-27, Switzerland, Norway, the UK, the US and Canada). Currency is a **picker** of the codes the app can format — each with its symbol, and each with the right number of decimals: a yen has none, a dinar has three, and every amount, invoice and online payment respects that. Time zone is a **searchable list** of the IANA zones the clock can actually install; a typo can no longer save.
 
@@ -239,9 +275,21 @@ Open the **editor** from the Reserve hub's app bar (crossed tools icon). The **S
 
 - An **office** gets a name, an optional *Bookable as a whole* switch and a **price per half-day**.
 - A **table** gets a name, the same whole-table option and its own **price per half-day**.
-- A **seat** gets a name, a **seating direction** (↑ → ↓ ←), an optional **chair type**, its **accessories** (each may carry a per-half-day supplement) and a **Blocked (maintenance)** switch.
+- A **seat** gets a name, a **seating direction** (↑ → ↓ ←), an optional **chair type**, its **accessories** (each may carry a per-half-day supplement) and a **Blocked (maintenance)** switch. Its **NFC/RFID tag** field takes the chair tag's UID in hex — read it with the tag button or type it — so a tap on the chair resolves this seat (§4a).
 - **Image** places a resizable illustration; the photo icon in the app bar sets the level's **background photo**.
 - Deleting a space that has history is the **owner's** call, and with *Delete spaces with history* on (the default) it just works: bookings that referenced the space keep a text snapshot of what it was, and any still-reserved booking on it is cancelled automatically. Switch the feature off and a space with future reservations has to be emptied by hand first.
+
+![](assets/help/images/space-editor-floors.jpg)
+
+ 
+
+![](assets/help/images/space-editor-canvas.jpg)
+
+ 
+
+![](assets/help/images/space-editor-seat.jpg)
+
+*The Space editor: the floors list with its tips, a floor on the grid (Select · Office · Table …), and a seat's sheet — name, seating direction, chair type, accessories, NFC/RFID tag, blocked.*
 
 ### Workspace ID & QR
 
@@ -479,6 +527,8 @@ Your ledger answers *what do I owe, what am I owed* — and *how much can I stil
 - **Requests** — **Submit an expense** (bought coffee for the space? another admin approves it — no self-approval — and it credits your statement), **Request extra half-days**, **Add a consumption** (owner-defined services — lockers, printing… — you confirm what you consumed).
 - **Documents** — **Invoices** (yours are always readable here: positions, balance, status — and for issuers the invoicing hub, §11), **My conditions** (which renders the document titled *Financial agreement*) and the **monthly payments report**, self-service (§11).
 
+Finances has **four faces** along the top — **Statement · Payments · Invoices · Documents** (§9c–9f) — sharing the **‹ month ›** chooser and the **PDF** button; the shield, the bell and the gear sit in the app bar as everywhere else.
+
 ### 9a. Once the month is invoiced, the invoice decides
 
 - Your bill shows an **invoice card** — number, state, total, what's paid, what remains — and the month reads **settled** as soon as the invoice is paid, its remainder cancelled, or its credit note refunded, even when the settling payment was recorded in a later month. A **partially paid** invoice keeps the month outstanding at exactly the **remaining** amount (that's also what *Pay online* charges). A **credit note** month shows what the workspace owes you back — nothing to pay on your side.
@@ -494,19 +544,39 @@ Every report in the app — the bill, invoices, proformas, credit notes, your se
 
 **The month as it stands.** Your account (the real cross-month position), the **This month** card (days included, used, left), the **subscription** card, **consumed services**, **accessory and space supplements**, **day packages**, **open positions** still awaiting validation, **payments & credits**, the month's **invoice card** once invoiced (§9a) and the **balance**. Read-only: nothing to press here except the **‹ month ›** chooser, shared by all faces.
 
+![](assets/help/images/finances-statement-full.jpg)
+
+*The Statement face, top to bottom: your account, your negotiated conditions (the tariff beside yours, Who can see), this month, the subscription, the services, the pending items, payments & credits, the balance.*
+
 ### 9d. The Payments face
 
 **Settle and ask.** An **overdue strip** when an invoice is past the workspace's payment term (§11e), the **balance**, the **payment instructions** and **Pay online** while something is owed, then the actions: **Record a payment**, **Buy a package** (package plans), **Submit an expense**, **Request extra half-days**, **Add a consumption**.
 
 **Supplies (#731).** Bought coffee capsules or vacuum bags for the space? In **Submit an expense**, switch on *This is a supply for the space*, name the item (or pick an existing one), the quantity and what one consumption will cost (prefilled from amount ÷ quantity). Once the expense is validated you are reimbursed as usual **and** the item goes on the shelf as a consumable service with that stock; members who use it add a consumption and pay for it, the stock counts down, and at zero the item cannot be consumed until the next supply. Feature *Supplies from expenses* (needs Services).
 
+![](assets/help/images/finances-payments.jpg)
+
+*The Payments face: the balance and its state, Record a payment, then Submit an expense, Request extra half-days, Add a consumption.*
+
 ### 9e. The Invoices face
 
 **What was I invoiced?** A headline card — *nothing open, you are up to date*, or *N open · amount due*, with overdue count — then **every invoice issued to you**, newest first, each with its status chip, **due in N days** or **overdue by N days**, how often it was reminded, and a **pay** button that jumps to the Payments face; tap a row for the detail sheet with quick view, PDF and share. Issuers find the **Invoices** button to the register (§11).
 
+![](assets/help/images/finances-invoices.jpg)
+
+ 
+
+![](assets/help/images/invoice-detail.jpg)
+
+*The Invoices face — the headline card and every invoice issued to you — and an invoice's detail sheet: positions, balance, signature, quick view / PDF / share.*
+
 ### 9f. The Documents face
 
 **The rest of the paperwork:** **My conditions** (your financial agreement), the **monthly payments report**, **this month's statement as PDF**, and the **document library** when the workspace uses one (§11d). Switch the faces off in Features → *Finance faces* to get the single column back.
+
+![](assets/help/images/finances-documents.jpg)
+
+*The Documents face: My conditions, the payments report, the month's statement as PDF, the document library.*
 
 ### 9g. Price negotiations
 
@@ -560,6 +630,18 @@ Issuers open **Finances → Invoices** and land on a three-tab hub under a live 
 
 **France: the FEC.** A French workspace gets a second choice, the **FEC** (*Fichier des Écritures Comptables*) — the file an audit legally demands (art. L47 A-I du LPF). It is not XML: a tab-separated flat file of accounting **entries**, named `<SIREN>FEC<YYYYMMDD>.txt` as the arrêté requires, with the 18 mandated columns in their mandated order. Because it is made of entries it *cannot* avoid account numbers, so the export asks for them first — pre-filled with the *plan comptable général* (411 clients, 706 prestations, 512 banque) and yours to correct. Each invoice books its receivable against revenue at the **gross** amount, the credits it netted and the payment that settled it book as cash on their own dates, lettered with the invoice number. Cancelled invoices are absent: one voided before payment was never booked, so there is nothing to reverse. The *name* column follows the reader — an issuer scans member names, a member scans their own invoice numbers. Members see only what concerns them: issued, and never a cancelled one.
 
+![](assets/help/images/invoices-admin.jpg)
+
+ 
+
+![](assets/help/images/dunning-rules.jpg)
+
+ 
+
+![](assets/help/images/invoice-register.jpg)
+
+*The issuers' hub (To invoice · Open · Archive) with an open invoice's four actions and the app-bar icons — template editor, reminder rules, register; the reminder rules with the Automatic reminders switch; the register with its total and its export button.*
+
 ### 11a. Legal identity, VAT & mentions
 
 **Before the first export, fill in the legal identity.** In *Workspace settings → **Legal identity & e-invoicing*** the owner declares:
@@ -612,6 +694,18 @@ The **Invoice PDF template** (pencil icon in the Invoices header, or *Workspace 
 
 Template variables (invoice family): `{{ number }}`, `{{ member }}`, `{{ workspace }}`, `{{ workspace_address }}`, `{{ period }}`, `{{ issued }}`, `{{ issued_by }}`, `{{ replaces }}`, `{{ total }}`, `{{ charges }}`, `{{ payments }}`, `{{ voided }}`, `{{ proforma }}`, `{{ copy }}`, `{{ lines }}` (each with `label`, `unit_price`, `qty`, `net`, `vat_rate`, `amount`), `{{ has_vat }}`, `{{ vat }}`, `{{ net_total }}`, `{{ vat_total }}`, `{{ credit_note }}`, `{{ refund_total }}` — and the legal set: `{{ seller_legal_form }}`, `{{ seller_registration }}`, `{{ seller_vat_id }}`, `{{ seller_legal_id }}`, `{{ exemption_reason }}`, `{{ client_address }}`, `{{ client_vat_id }}`, `{{ client_legal_id }}`, `{{ payment_terms }}`, `{{ late_penalty }}`, `{{ recovery_indemnity }}`, `{{ escompte }}`, `{{ insurance }}`, `{{ special_mentions }}`.
 
+![](assets/help/images/report-designer-markup.jpg)
+
+ 
+
+![](assets/help/images/report-designer-design.jpg)
+
+ 
+
+![](assets/help/images/report-designer-preview.jpg)
+
+*The report editor: the Markup mode with the variable legend and the per-language / per-document chips; the Visual mode in Design (labeled bands on the A4 page) and in Preview (live data through the real engine).*
+
 ### 11d. The report suite & the document library
 
 - **Financial agreement** — every standing price that applies to a member: subscription, extra half-day, services, packages, accessory supplements and the whole-space prices, **desks and tables included**. Owners/admins send it from a member's action sheet; every member can quick-view/download/share their own from *Finances → Documents*.
@@ -626,6 +720,10 @@ With **Automatic payment reminders** on (Features, child of *Payment reminders*)
 ## 12. Settings & profile
 
 Your personal screen, top to bottom:
+
+![](assets/help/images/settings-full.jpg)
+
+*The whole Settings screen in one image: your personal block, Administration (owners), Preferences, Advanced, About, Sign out.*
 
 **Privacy & data (#719)** — who can see your data, who did, export, erasure, the policy. See §14.
 
@@ -673,3 +771,15 @@ The **Messages** tab is your workspace's messaging centre: every conversation in
 **No photos or files.** Messages carry text, plus links to a reservation or a space. That is deliberate: a coworking app is not a file host.
 
 **Notifications.** A message you *receive* alerts you and counts on the **Messages** tab; opening the conversation clears it. Messages no longer appear in the bell — that is for confirmations and workspace events. The one exception is an **all-admins broadcast**, which has no conversation to live in and stays there.
+
+![](assets/help/images/messages-discussions.jpg)
+
+ 
+
+![](assets/help/images/messages-conversation.jpg)
+
+ 
+
+![](assets/help/images/messages-conversation-links.jpg)
+
+*Messages: the conversation list (people and groups, the pencil to start one), a private chat with read receipts, and a group message carrying a reservation link and a space link.*
