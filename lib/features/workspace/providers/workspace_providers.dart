@@ -177,19 +177,6 @@ Future<List<MemberNote>> myNotes(Ref ref) async {
   return ref.watch(workspaceRepositoryProvider).fetchMyNotes(workspace.id);
 }
 
-/// Whether the WhatsApp message mirror (0106) can actually deliver —
-/// probes the send-whatsapp function's config. keepAlive: the answer
-/// only changes when the owner sets the secrets.
-@Riverpod(keepAlive: true)
-Future<bool> whatsappMirrorConfigured(Ref ref) async {
-  // #552 — per-workspace: the owner's in-app credentials count, not
-  // just the operator env secrets.
-  final workspace = await ref.watch(currentWorkspaceProvider.future);
-  return ref
-      .watch(workspaceRepositoryProvider)
-      .fetchWhatsappMirrorConfigured(workspaceId: workspace?.id);
-}
-
 /// The ids of my UNREAD received notes (#539): a direct note is unread
 /// until its read receipt lands (0105 — stamped when its CONVERSATION
 /// opens, 0108); a broadcast has no per-reader server state, so it

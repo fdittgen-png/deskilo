@@ -34,7 +34,8 @@ import 'package:flutter_test/flutter_test.dart';
 // 41→42 (2026-08-11): #534 /vat-declarations (owner+feature-gated).
 // 43→44 (2026-08-29): #719 /privacy.
 // 44→45 (2026-08-29): #734 /formats.
-const int _expectedRouteCount = 45;
+// 45→44 (2026-08-29): #737 /msg/:id gone with the WhatsApp mirror.
+const int _expectedRouteCount = 44;
 
 void main() {
   test('router carries exactly $_expectedRouteCount GoRoutes', () {

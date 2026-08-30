@@ -649,51 +649,6 @@ final class MyNotesProvider
 
 String _$myNotesHash() => r'd6e2756b52ed2e4dd8aaf427eb15c34a4162d278';
 
-/// Whether the WhatsApp message mirror (0106) can actually deliver —
-/// probes the send-whatsapp function's config. keepAlive: the answer
-/// only changes when the owner sets the secrets.
-
-@ProviderFor(whatsappMirrorConfigured)
-final whatsappMirrorConfiguredProvider = WhatsappMirrorConfiguredProvider._();
-
-/// Whether the WhatsApp message mirror (0106) can actually deliver —
-/// probes the send-whatsapp function's config. keepAlive: the answer
-/// only changes when the owner sets the secrets.
-
-final class WhatsappMirrorConfiguredProvider
-    extends $FunctionalProvider<AsyncValue<bool>, bool, FutureOr<bool>>
-    with $FutureModifier<bool>, $FutureProvider<bool> {
-  /// Whether the WhatsApp message mirror (0106) can actually deliver —
-  /// probes the send-whatsapp function's config. keepAlive: the answer
-  /// only changes when the owner sets the secrets.
-  WhatsappMirrorConfiguredProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'whatsappMirrorConfiguredProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$whatsappMirrorConfiguredHash();
-
-  @$internal
-  @override
-  $FutureProviderElement<bool> $createElement($ProviderPointer pointer) =>
-      $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<bool> create(Ref ref) {
-    return whatsappMirrorConfigured(ref);
-  }
-}
-
-String _$whatsappMirrorConfiguredHash() =>
-    r'194d098b1e669d644927d33f816473fa64ae42ab';
-
 /// The ids of my UNREAD received notes (#539): a direct note is unread
 /// until its read receipt lands (0105 — stamped when its CONVERSATION
 /// opens, 0108); a broadcast has no per-reader server state, so it

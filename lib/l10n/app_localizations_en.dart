@@ -1731,7 +1731,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureWhatsappIntegrationDesc =>
-      'Message members on WhatsApp and link the community group.';
+      'Members share their WhatsApp number on their profile; one tap on a member opens a chat with it; the community group link in the directory. No server-side WhatsApp integration.';
 
   @override
   String get featureSpaceQrCodes => 'Space QR codes';
@@ -3893,46 +3893,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get conversationEmpty => 'No messages yet — say hello!';
-
-  @override
-  String get whatsappNotesTitle => 'Receive messages on WhatsApp';
-
-  @override
-  String get whatsappNotesSubtitle => 'Member messages arrive on WhatsApp too.';
-
-  @override
-  String get messageLinkGone => 'This message lives in your inbox.';
-
-  @override
-  String get whatsappNotesUnconfigured =>
-      'Channel not configured — messages arrive in-app and by push only.';
-
-  @override
-  String get whatsappChannelTitle => 'WhatsApp channel';
-
-  @override
-  String get whatsappChannelConfigured =>
-      'Channel configured — messages mirror to WhatsApp, with their links; the DesKilo link opens the conversation in the app.';
-
-  @override
-  String get whatsappChannelNotConfigured =>
-      'Not configured — messages arrive in-app and by push only.';
-
-  @override
-  String get whatsappChannelHelp =>
-      '1. Create a (free) app on developers.facebook.com and add the WhatsApp product.\n2. Under WhatsApp → API setup, copy the permanent access token and the phone number ID.\n3. Paste both below — member messages are then sent from that number.\nNote: WhatsApp only delivers within 24 h of the recipient\'s last WhatsApp message to your number (their service window).';
-
-  @override
-  String get whatsappChannelToken => 'Access token';
-
-  @override
-  String get whatsappChannelPhoneId => 'Phone number ID';
-
-  @override
-  String get whatsappChannelKeepHint => 'Leave blank to keep the stored value.';
-
-  @override
-  String get whatsappChannelSaved => 'WhatsApp channel saved.';
 
   @override
   String get notesFilterUnread => 'Unread';

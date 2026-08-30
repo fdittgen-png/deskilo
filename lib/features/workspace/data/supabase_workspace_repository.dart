@@ -754,35 +754,6 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   }
 
   @override
-  Future<bool> fetchWhatsappMirrorConfigured({String? workspaceId}) async {
-    try {
-      final response = await _client.functions.invoke('send-whatsapp',
-          body: {
-            'action': 'config',
-            'workspace_id': ?workspaceId,
-          });
-      final data = response.data;
-      return data is Map && data['configured'] == true;
-    } on FunctionException {
-      // trace-exempt: 404 = not deployed, any error = not configured —
-      // the caller only shows/hides a warning line.
-      return false;
-    }
-  }
-
-  @override
-  Future<void> setWhatsappChannel(
-    String workspaceId, {
-    required String token,
-    required String phoneId,
-  }) async {
-    await _client.rpc<void>('set_whatsapp_channel', params: {
-      'p_workspace_id': workspaceId,
-      'p_config': {'token': token, 'phone_id': phoneId},
-    });
-  }
-
-  @override
   Future<List<ClosureDay>> fetchClosureDays(String workspaceId) async {
     final rows = await _client
         .from('closure_days')

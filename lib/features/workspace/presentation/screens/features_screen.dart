@@ -69,7 +69,7 @@ class FeaturesScreen extends ConsumerWidget {
               'The community tab: who is here, statuses, presence.',
         WorkspaceFeature.whatsappIntegration =>
           l10n?.featureWhatsappIntegrationDesc ??
-              'Message members on WhatsApp and link the community group.',
+              'Members share their WhatsApp number on their profile; one tap on a member opens a chat with it; the community group link in the directory. No server-side WhatsApp integration.',
         WorkspaceFeature.spaceQrCodes =>
           l10n?.featureSpaceQrCodesDesc ??
               'Printable QR cards per seat, desk, office and level — '

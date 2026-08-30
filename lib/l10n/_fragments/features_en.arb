@@ -124,7 +124,7 @@
   "@featureWhatsappIntegration": {
     "description": "Feature toggle: WhatsApp affordances riding the directory"
   },
-  "featureWhatsappIntegrationDesc": "Message members on WhatsApp and link the community group.",
+  "featureWhatsappIntegrationDesc": "Members share their WhatsApp number on their profile; one tap on a member opens a chat with it; the community group link in the directory. No server-side WhatsApp integration.",
   "@featureWhatsappIntegrationDesc": {
     "description": "Subtitle of the WhatsApp feature toggle"
   },
