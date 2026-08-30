@@ -23,6 +23,10 @@ Nach der Anmeldung bietet der Startbildschirm zwei Wege:
 
 Ein Konto kann mehreren Workspaces angehören. **Einstellungen → Profile** listet alle: jede Zeile zeigt den Namen des Space, **deine Rolle dort** (Mitglied, Admin, Inhaber) und die Workspace-ID. Das **Häkchen** markiert das aktive Profil; der **Stern** dein **Standardprofil** — das, mit dem die App öffnet, auf jedem Gerät und selbst nach Neuinstallation (die Wahl ist beim Konto gespeichert). Zeile antippen zum Wechseln, **+ Profil hinzufügen** für einen weiteren Space. Alles in der App ist auf den aktiven Workspace beschränkt.
 
+<p><img src="images/profiles.jpg" width="240"></p>
+
+*Profile: jeder Workspace Ihres Kontos, Ihre Rolle dort, der Stern für das Standardprofil, das Häkchen für das aktive.*
+
 ### Orientierung
 
 Die App hat bis zu fünf Ziele am unteren Rand: **Nachrichten** (§16), **Kalender** (§5), den großen zentralen **Reservieren**-Knopf (§4), **Mitglieder** (§6) und **Finanzen** (§9). Nachrichten und Reservieren sind immer da; Kalender, Mitglieder und Finanzen kommen und gehen mit ihrer Funktion (§8). **Nachrichten ist der Posteingang**: deine Unterhaltungen und der Ereignis- und Bestätigungs-Feed (§7) sind seine zwei Flächen, und die **Glocke** in der Kopfzeile springt direkt zur zweiten, mit dem Zähler dessen, was auf dich wartet. Das **Zahnrad** zu den **Einstellungen** (§12) steht in jeder Kopfzeile. Quer gehalten und auf Tablets wechseln die meisten Bildschirme in eine **geteilte Ansicht** — Bedienelemente im Seitenpanel, Inhalt füllt den Rest.
@@ -250,7 +254,6 @@ Alle Administration wohnt unter **Einstellungen → Administration** — *Worksp
 
 **Land, Währung, Zeitzone (#711).** Die Länderauswahl deckt jetzt die 32 Länder ab, für die die App Steuern erklären kann (EU-27, Schweiz, Norwegen, Vereinigtes Königreich, USA, Kanada). Die Währung ist eine **Auswahl** der Codes, die die App formatieren kann — jede mit Symbol und der richtigen Zahl Nachkommastellen: der Yen hat keine, der Dinar drei, und jeder Betrag, jede Rechnung und jede Online-Zahlung hält sich daran. Die Zeitzone ist eine **durchsuchbare Liste** der IANA-Zonen, die die Uhr installieren kann; ein Tippfehler lässt sich nicht mehr speichern.
 
-<p><img src="images/settings-administration.jpg" width="240"></p>
 
 ### Der Space-Editor
 
@@ -269,6 +272,10 @@ Den **Editor** öffnest du aus der Kopfzeile des Reservieren-Hubs. Der **Space-E
 ### Workspace-ID & QR
 
 Die rollengebundenen Einladungen (§2): Mitglieder-Einladung = die Workspace-ID (ersetzbar, kopierbar, QR als PNG), Admin-Einladung = persönliche Einmal-Codes.
+
+<p><img src="images/workspace-id-qr.jpg" width="240"></p>
+
+*Workspace-ID & QR: die Mitgliedereinladung (QR + ID — kopieren, ändern, als PNG teilen, jemanden einladen) und der Admin-Einladungs-Tab.*
 
 ### Verfügbarkeit
 
@@ -298,13 +305,19 @@ Ganze Module je Workspace ein- oder ausschalten — jeder Schalter trägt seine 
 
 Die Liste ist **hierarchisch**: eine Funktion, die eine andere braucht, sitzt eingerückt darunter mit *Benötigt…*, ausgegraut solange der Elternteil aus ist — *Finanzen* trägt Leistungen, Zubehör-Aufpreise, Online-Zahlungen und Rechnungen; *Rechnungen* die Admin-Delegation, die PDF-Vorlage, das Mahnwesen, die USt-Verwaltung (mit den Voranmeldungen wiederum darunter) und die E-Rechnungszustellung an Kunden; *Kiosk-Modus* gleich drei Kinder — RFID-/NFC-Badges, QR-Badges und Mitgliederfotos am Kiosk; *Tisch-, Büro- & Etagen-Reservierungen* das Zuweisen durch Admins; *Verzeichnis* die WhatsApp-Integration; *Ereignis-Tab* die Feed-Gruppierung. Elternteil aus = ganzer Teilbaum weg; die gespeicherte Wahl des Kindes kehrt unversehrt zurück.
 
-<p><img src="images/workspace-id-qr.jpg" width="240"> <img src="images/availability-granularity.jpg" width="240"> <img src="images/features-toggles-1.jpg" width="240"> <img src="images/features-toggles-2.jpg" width="240"></p>
+<p><img src="images/availability-full.jpg" width="240"> <img src="images/features-full.jpg" width="240"></p>
+
+*Verfügbarkeit in einem Bild — Öffnungstage, Granularität, Arbeitszeiten, Buchungsregeln, der Außerhalb-der-Zeiten-Modus, gleichzeitige Reservierungen, Buchungsgrenzen, Schließtage — und die vollständige Funktionsliste mit ihrer Hierarchie.*
 
 ### Mitglieder & Tarife
 
 Ein Mitglied antippen öffnet sein **Verwaltungsblatt** — jede Mitglieds-Aktion an einem Ort: **Finanzvereinbarung senden** (§11d), **Nachrichten**, **Service hinzufügen** (Service, Menge, Abrechnungsmonat → *zur Bestätigung einreichen*), **Abonnement** (der Prozentsatz), **Wenn die Tage aufgebraucht sind** (die Überziehungs-Politik, §9), **Reservierungslimit** (wie viele **offene** Reservierungen das Mitglied insgesamt halten darf, wann immer sie liegen), **Gleichzeitige Reservierungen** (wie viele Buchungen sich **zeitlich überschneiden** dürfen — das persönliche Kontingent, das die Zahl des Space sticht, §4b; zwei verschiedene Obergrenzen, also die Beschriftungen lesen), **Darf einen ganzen Tisch, ein Büro oder eine Etage reservieren**, **Badges** (§10), **Zum Admin ernennen** (validiert, §7), **Co-Inhaberschaft**, **Zum Kiosk-Gerät machen** — oder **Kiosk zu Mitglied zurücksetzen** auf einem Gerätekonto —, **Mitgliedschaft bestätigen** bzw. **Ablehnen** bei einem ausstehenden Beitritt, und **Mitgliedschaft pausieren**. Jede Zeile zeigt die **E-Mail** unter dem Namen.
 
-<p><img src="images/member-management-sheet.jpg" width="240"> <img src="images/member-subscription.jpg" width="240"> <img src="images/member-reservation-limit.jpg" width="240"></p>
+<p><img src="images/members-plans-list.jpg" width="240"> <img src="images/member-management-sheet.jpg" width="240"> <img src="images/member-management-sheet-self.jpg" width="240"></p>
+
+<p><img src="images/member-subscription.jpg" width="240"> <img src="images/member-reservation-limit.jpg" width="240"></p>
+
+*Mitglieder & Tarife: die Liste (E-Mail, Anteil, Rollen-Chips; Megafon, Hinzufügen und Filter in der Leiste), das vollständige Verwaltungsblatt eines Mitglieds, das kürzere Blatt für Sie selbst — dann die Dialoge Abonnement und Reservierungslimit.*
 
 ### Abrechnung
 
@@ -312,11 +325,15 @@ Ein Mitglied antippen öffnet sein **Verwaltungsblatt** — jede Mitglieds-Aktio
 - **Abo-Stufen** — welche Prozentsätze Mitglieder wählen dürfen (Chips: 25 % · 50 % · 75 % · 100 % plus eigene), und ein Schalter **frei verhandelter Wert**.
 - **Tagespakete** — Tage für einen Preis (Name · Tage · Preis), je mit Aktivierungs-Schalter; Mitglieder mit *Paket*-Politik kaufen sie, wenn ihre Tage ausgehen.
 
+<p><img src="images/billing-full.jpg" width="240"></p>
+
+*Abrechnung: Tarifstufen, Abonnementstufen (mit dem Schalter für den frei verhandelten Wert) und Tagespakete.*
+
 ### Services und Zubehör
 
 Die Kataloge hinter §9 — Extras der Inhaberin (Schließfächer, Druck…, je mit Preis und optionalem MwSt-Satz) und Platz-Ausstattung mit optionalen Halbtags-Aufpreisen. Zwei einfache Listen mit **+**.
 
-<p><img src="images/billing-bands-levels-packages.jpg" width="240"> <img src="images/services-catalog.jpg" width="240"> <img src="images/services-new-service.jpg" width="240"> <img src="images/accessories-catalog.jpg" width="240"></p>
+<p><img src="images/services-catalog.jpg" width="240"> <img src="images/services-new-service.jpg" width="240"> <img src="images/accessories-catalog.jpg" width="240"> <img src="images/accessory-edit-dialog.jpg" width="240"></p>
 
 **Bestand (#731).** Eine Leistung aus einem Vorrat zeigt *N auf Lager* / *Ausverkauft*; ein Verbrauch über den Bestand hinaus wird abgelehnt.
 
@@ -333,6 +350,10 @@ Der Bildschirm des Space, von oben nach unten:
 - **Exporte** — *Space exportieren (XML)* (Einstellungen + Plan, ohne persönliche Daten), *Konfiguration exportieren (PDF)* (Vollschnappschuss: Einstellungen, Mitglieder, Plan), *Space-Bericht* (alles über den Space via Report-Vorlage „Space"), *Raum-QR-Codes (PDF)* (eine Karte je Platz, Tisch, Büro, Etage, zehn je A4), *Daten exportieren (Excel)* (eine Mappe: Buchungen, Zahlungen, Rechnungen, Mitglieder, Plan — je ein Blatt), *Space importieren (XML)* (stellt Einstellungen und Plan wieder her; ersetzt den aktuellen Plan). Jeder Export landet in den **Downloads**.
 - **Der Einrichtungsassistent** (#723) — <https://fdittgen-png.github.io/deskilo/setup.html>: Seit dem 29.08.2026 ein **geführter Assistent**: Schritte in Abhängigkeitsreihenfolge (Identität → Funktionen → Verfügbarkeit → Plan → Abonnements → Rechtliches & USt → Leistungen → Zahlung → Rollen → Mitglieder → Prüfung), jeder fragt nur, was die früheren Antworten möglich machen — keine USt-Sätze ohne Steuerpflicht, keine E-Rechnungsplattform außerhalb der EU, keine Paketoption für Mitglieder ohne Paket, keine Kindfunktion ohne Elternfunktion. Jede Frage sagt, wo sie in der App liegt, und verlinkt den Abschnitt dieses Leitfadens; ein Schritt **Funktionsübersicht** listet jede Funktion, die die App aktivieren wird, mit der Konfiguration aus Ihren Antworten — optionale abwählen, und sie werden deaktiviert exportiert, ihre Konfiguration bleibt weg; dann listet ein Schritt **Prüfung** Vollständiges, zu bestätigende Entscheidungen und Blockierendes, je mit Sprung zur Korrektur; „Alles auf einer Seite“ behält die Expertenansicht. Dann: eine eigenständige Seite (Mac, PC oder Telefon; Antworten speichern sich automatisch im Browser), die neue Inhaberinnen durch **jedes Thema mit vorgegebenen Auswahlen** führt — Identität (Land inkl. Norwegen, Währung, Zeitzone, Sprache des Arbeitsbereichs, Tisch-Transparenz und die Einladungsvorlagen je Sprache), Verfügbarkeit — Granularität, Arbeitszeiten, Schließtage und **alle vier Buchungsregeln** (vergangene Buchungen, Auschecken durch Admins, Modus außerhalb der Öffnungszeiten, gleichzeitige Reservierungen), dazu die Umrechnung Stunden → Halbtage unter *echten Uhrzeiten* —, den Grundriss, **alle 43 Funktionsschalter** mit ihren echten Standardwerten, Beitragsstufen und Abo-Level, Tagespakete, Leistungen und Zubehör, Zahlungshinweise, **rechtliche Identität und USt.** (Organisationsform, Regime, die üblichen Sätze des Landes — die Schweizer 3,8 % für Beherbergung, Norwegen, die kanadischen Provinzen, mit der ehrlichen Notiz zur US-Sales-Tax —, Rechnungsangaben, Mahnregeln, den Meldezeitraum und die E-Rechnungs-Endpunkte samt Zustelldienst des Kunden), die Rolle-→-Berechtigung-Matrix, die Standard-Validierungsregel **mit einer Karte je Domäne und den beiden Auto-Validierungsschaltern**, und die einzuladenden Mitglieder samt ihren Einzeleinstellungen (Überziehungsregel, Recht auf ganze Räume, Überschneidungs-Erlaubnis, Reservierungslimit). **XML exportieren** und die App importiert Einstellungen, Zubehör und Grundriss direkt (*Arbeitsbereich importieren (XML)*); der `<setup>`-Abschnitt der Datei trägt alles Übrige zum Fertigkonfigurieren. Die Seite kann eine früher exportierte Datei auch **neu laden** — auch eine, die vor der Existenz einer Einstellung geschrieben wurde; diese kommt dann schlicht mit ihrem Standardwert zurück. Eine Warnung, die die Seite wiederholt: die exportierte Datei ist Klartext, also tragen Sie ein Plattform-Token nur ein, wenn Sie privat antworten; sonst lassen Sie die Felder leer und tippen sie in der App, wo sie serverseitig landen und nie zurückkommen.
 - **Gefahrenzone** — **Space zurücksetzen**: löscht alle Buchungen, die Buchhaltung und den Plan; behält Einstellungen und Mitglieder. Durch getippte Bestätigung geschützt.
+
+<p><img src="images/workspace-settings-full.jpg" width="240"> <img src="images/payment-instructions.jpg" width="240"></p>
+
+*Der Workspace-Bildschirm in einem Bild — Identität, Zahlungen & Abrechnung, WhatsApp-Gruppe, Einladungstext pro Sprache, Tischtransparenz, die Vorlagen- und Mahn-Verknüpfungen, Exporte, Gefahrenzone — und das Formular der Zahlungshinweise.*
 
 ### Raum-QR-Codes & Ganzraum-Reservierungen
 
@@ -362,6 +383,10 @@ Eine zentrale Matrix entscheidet, **welche Rolle welche Berechtigung hält** —
 
 **Wer prüft (#732).** Eine Regel nennt ihren **Geltungsbereich**: *Admins* (der Inhaber und alle Admins oder die aufgeführten), *Benannte Personen* (der Inhaber und genau die gewählten Personen — auch ein einfaches Mitglied kann prüfen) oder *Alle Mitglieder*. Anzahl und Inhaber-Freigabe behalten ihre Bedeutung, und niemand prüft je das eigene Ereignis. Funktion *Prüfer nach Rolle oder Person*.
 
+<p><img src="images/role-management-full.jpg" width="240"></p>
+
+*Rollenverwaltung: die Inhaberzeile gesperrt, dann Mitinhaber, Admin und Mitglied — die elf Berechtigungen pro Rolle.*
+
 ### Online-Zahlungen einrichten
 
 Jede Community kassiert auf ihr **eigenes** Anbieterkonto; die App behält Geheimschlüssel nie auf einem Gerät — sie leben auf dem Server.
@@ -374,13 +399,13 @@ Jede Community kassiert auf ihr **eigenes** Anbieterkonto; die App behält Gehei
    - **Wero (via Mollie)** — derselbe Mollie-Schlüssel, mit Wero im Mollie-Konto aktiviert.
 3. **Speichern** — ein grüner *Konfiguriert*-Chip erscheint. **Online-Zahlungen** in den Funktionen aktivieren, und Mitglieder sehen **Online zahlen** auf offenen Abrechnungen.
 
-<p><img src="images/payment-config-paypal-stripe.jpg" width="240"> <img src="images/payment-config-mollie-wero.jpg" width="240"></p>
+<p><img src="images/online-payments-full.jpg" width="240"></p>
 
 Ein gespeichertes Geheimnis wird nie wieder angezeigt — Feld leer lassen zum Behalten, tippen zum Ersetzen, **Entfernen** löscht den Anbieter. Gebühren sind Anbietergebühren (~1,5–3 % je Zahlung, keine Grundgebühr); DesKilo schlägt nichts auf, Überweisung/IBAN bleibt gratis.
 
 Startet eine Zahlung nicht: **Einstellungen → Erweitert → Entwicklermodus** an und den **Entwickler**-Bildschirm öffnen — die *payments*-Spur zeigt, welche Anbieter konfiguriert sind und welche Felder fehlen.
 
-<p><img src="images/developer-payment-traces.jpg" width="240"></p>
+<p><img src="images/developer-screen.jpg" width="240"></p>
 
 #### Die Anbieter-Dashboards, Schritt für Schritt
 
@@ -411,7 +436,9 @@ Physische Karten zum Einchecken per Tap — ohne Telefon.
 
 Badges gehören **einem Workspace** — der Dialog nennt welchem. Dieselbe physische Karte kann in mehreren Workspaces dienen. Ein QR-Badge **als PDF** druckt zehn Kartenformat-Kopien auf eine A4-Seite.
 
-<p><img src="images/nfc-config.jpg" width="240"> <img src="images/member-badges-dialog.jpg" width="240"></p>
+<p><img src="images/nfc-config.jpg" width="240"> <img src="images/member-badges-dialog.jpg" width="240"> <img src="images/my-badge-code.jpg" width="240"></p>
+
+*RFID / NFC: der Schalter und der Gerätestatus; der Badge-Dialog (QR-Badge, registrierte Karte, der Schalter „meldet mich an“, widerrufen); Ihr Badge-Code.*
 
 ## 9. Geld (Finanzen-Tab)
 
@@ -546,6 +573,10 @@ Aussteller öffnen **Finanzen → Rechnungen**: ein Drei-Tab-Hub unter einem Liv
 
 *Der Hub der Aussteller (Zu fakturieren · Offen · Archiv) mit den vier Aktionen einer offenen Rechnung und den Icons der Leiste — Vorlageneditor, Mahnregeln, Register; die Mahnregeln mit dem Schalter Automatische Mahnungen; das Register mit Summe und Export-Taste.*
 
+<p><img src="images/invoices-to-invoice.jpg" width="240"> <img src="images/invoice-new-sheet.jpg" width="240"></p>
+
+*Zu fakturieren ohne Rest und der Zusammenfassungs-Chip — und das Blatt Neue Rechnung: Mitglied, Monat, die abgeleiteten Positionen, der Schalter für den ausführlichen Anhang.*
+
 ### 11a. Rechtliche Identität, MwSt & Pflichtangaben
 
 **Vor dem ersten Export die rechtliche Identität ausfüllen.** Unter *Workspace-Einstellungen → **Rechtliche Identität & E-Rechnung*** erklärt die Inhaberin:
@@ -609,6 +640,10 @@ Variablen (Rechnungsfamilie): `{{ number }}`, `{{ member }}`, `{{ workspace }}`,
 - **Space-Bericht** — Identität, Plan-Zählungen, Verfügbarkeit, Funktionen und Preise: *Workspace-Einstellungen → Space-Bericht*.
 - **Dokumentbibliothek** — *Einstellungen → Dokumente*: Satzung, Leitfäden, Abschlüsse, Protokolle — VERLINKT aus dem System, das du schon nutzt: Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud oder jeder https-Link (der Drive verwaltet seine Zugriffe; die App speichert nie fremde Zugangsdaten). Jeder Eintrag hat eine **Sichtbarkeitsrolle**: jedes Mitglied, Admins & Inhaber, nur Inhaber — serverseitig erzwungen. Kuratiert per + ; die Funktion *Dokumentbibliothek* schaltet alles.
 
+<p><img src="images/documents-library.jpg" width="240"> <img src="images/documents-add-dialog.jpg" width="240"></p>
+
+*Die Dokumentenbibliothek und das Hinzufügen eines Dokuments: Titel, Link, Speicherort, Kategorie, sichtbar für.*
+
 ### 11e. Automatische Zahlungserinnerungen
 
 Mit **Automatische Zahlungserinnerungen** (Funktionen, Kind von *Zahlungserinnerungen*) und dem Schalter **Automatische Mahnungen** in den Mahnregeln (Rechnungen → Mahnregeln) wenden sich die Mahnstufen von selbst an: jeden Morgen — und immer, wenn ein Inhaber oder Admin Finanzen öffnet — erhält eine **offene** Rechnung, deren Wartezeit abgelaufen ist (die *Tage bis zur ersten Mahnung* ab Ausstellung, dann die *Tage zwischen Mahnungen* nach der vorigen), ihre nächste Stufe. Das Mitglied sieht einen Hinweis **Zahlungserinnerung** unter Ereignisse („Mahnstufe 2: Rechnung X — Betrag noch offen“) und bekommt eine Push-Nachricht; seine Ansicht Rechnungen liest *überfällig seit N Tagen*. Stufen überschreiten nie die eingestellte Zahl; eine zugeordnete Rechnung wird nie gemahnt; Schalter aus, bleibt Mahnen ein manueller Schritt wie bisher.
@@ -620,6 +655,12 @@ Dein persönlicher Bildschirm, von oben nach unten:
 <p><img src="images/settings-full.jpg" width="240"></p>
 
 *Der ganze Einstellungsbildschirm in einem Bild: Ihr persönlicher Block, Administration (Inhaber), Einstellungen, Erweitert, Über, Abmelden.*
+
+<p><img src="images/profiles.jpg" width="240"> <img src="images/region-formats.jpg" width="240"> <img src="images/linked-accounts.jpg" width="240"> <img src="images/settings-language.jpg" width="240"></p>
+<p><img src="images/settings-whatsapp-dialog.jpg" width="240"> <img src="images/settings-status-dialog.jpg" width="240"> <img src="images/settings-address-dialog.jpg" width="240"> <img src="images/settings-default-period-dialog.jpg" width="240"></p>
+<p><img src="images/settings-theme-dialog.jpg" width="240"> <img src="images/settings-photo-sheet.jpg" width="240"> <img src="images/developer-screen.jpg" width="240"></p>
+
+*Einstellungen, Bildschirm für Bildschirm: Profile, Region & Formate, Verknüpfte Konten, Sprache; die Dialoge WhatsApp, Status, Adresse und Standard-Buchungszeitraum; Design, das Foto-Blatt, der Entwickler-Bildschirm.*
 
 **Datenschutz & Daten (#719)** — wer deine Daten sehen kann, wer es tat, Export, Löschung, die Richtlinie. Siehe §14.
 

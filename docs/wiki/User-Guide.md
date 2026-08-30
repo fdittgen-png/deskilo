@@ -23,6 +23,10 @@ After signing in you land on the welcome screen with two paths:
 
 One account can belong to several workspaces. **Settings → Profiles** lists them all: each row shows the space's name, **your role there** (Member, Admin, Owner) and its workspace ID. The **check mark** marks the profile you are currently in; the **star** marks your **default** — the profile the app opens with, on every device and even after a reinstall (the choice is stored with your account). Tap a row to switch, **+ Add a profile** to join yet another space. Everything in the app is scoped to the active workspace.
 
+<p><img src="images/profiles.jpg" width="240"></p>
+
+*Profiles: every workspace your account belongs to, your role there, the star for the default, the check for the active one.*
+
 ### Finding your way around
 
 The app has up to five destinations along the bottom: **Messages** (§16), **Calendar** (§5), the big central **Reserve** button (§4), **Members** (§6) and **Money** (§9). Messages and Reserve are always there; Calendar, Members and Money come and go with their feature (§8). **Messages is the inbox**: your conversations and the events & confirmations feed (§7) are its two faces, and the **bell** in the app bar jumps straight to the second with a count of what awaits you. The **gear** that opens **Settings** (§12) is in every header. On phones held sideways and on tablets, most screens switch to a **split layout** — controls in a side panel, content filling the rest.
@@ -252,7 +256,6 @@ All administration lives under **Settings → Administration** — *Coworking sp
 
 **Country, currency, time zone (#711).** The country picker now covers the 32 countries the app can declare tax in (EU-27, Switzerland, Norway, the UK, the US and Canada). Currency is a **picker** of the codes the app can format — each with its symbol, and each with the right number of decimals: a yen has none, a dinar has three, and every amount, invoice and online payment respects that. Time zone is a **searchable list** of the IANA zones the clock can actually install; a typo can no longer save.
 
-<p><img src="images/settings-administration.jpg" width="240"></p>
 
 ### The space editor
 
@@ -271,6 +274,10 @@ Open the **editor** from the Reserve hub's app bar (crossed tools icon). The **S
 ### Workspace ID & QR
 
 Your role-bound invites (§2): member invite = the workspace ID (replace it with a memorable one, copy it, share the QR as PNG), admin invite = single-use personal codes.
+
+<p><img src="images/workspace-id-qr.jpg" width="240"></p>
+
+*Workspace ID & QR: the member invite (QR + ID — copy, change, share as PNG, invite someone) and the admin-invite tab.*
 
 ### Availability
 
@@ -300,13 +307,19 @@ Switch whole modules on or off per workspace — each toggle carries its descrip
 
 The list is **hierarchical**: a feature that needs another sits indented under it with a *Requires…* note, and is greyed out while its parent is off — *Money* carries services, accessory supplements, online payments and invoicing; *Invoices* carries the admin delegation, the PDF template, the payment reminders, VAT management (with the declarations beneath it again) and the customer e-invoice delivery; *Kiosk mode* carries three children — RFID/NFC badges, QR badges and kiosk member photos; *Table/desk & level reservations* carries *admins may assign levels*; *Members directory* carries the WhatsApp integration; *Events tab* carries the feed grouping. Switching a parent off takes its whole subtree out of the app; the child's stored choice comes back untouched when the parent returns.
 
-<p><img src="images/workspace-id-qr.jpg" width="240"> <img src="images/availability-granularity.jpg" width="240"> <img src="images/features-toggles-1.jpg" width="240"> <img src="images/features-toggles-2.jpg" width="240"></p>
+<p><img src="images/availability-full.jpg" width="240"> <img src="images/features-full.jpg" width="240"></p>
+
+*Availability in one image — open weekdays, granularity, working hours, booking policies, the outside-hours mode, simultaneous reservations, booking limits, closure days — and the complete Features list with its hierarchy.*
 
 ### Members & plans
 
 Tap a member to open their **management sheet** — every per-member action in one place: **Send the financial agreement** (§11d), **Messages**, **Add a service** (service, quantity, billing month → *submit for confirmation*), **Subscription** (their percentage), **When the days run out** (the over-consumption policy, §9), **Reservation limit** (how many **open** reservations the member may hold in total, whenever they fall), **Simultaneous reservations** (how many bookings may **overlap in time** — the personal allowance that overrides the workspace number, §4b; two different caps, so read the labels), **May reserve a whole desk, office or level**, **Badges** (§10), **Name admin** (validated, §7), **Co-ownership**, **Turn into a kiosk** — or **Revert the kiosk to a member** on a device account — **Approve** or **Reject** a pending membership, and **Pause the membership**. Each row shows the member's **email** under the name.
 
-<p><img src="images/member-management-sheet.jpg" width="240"> <img src="images/member-subscription.jpg" width="240"> <img src="images/member-reservation-limit.jpg" width="240"></p>
+<p><img src="images/members-plans-list.jpg" width="240"> <img src="images/member-management-sheet.jpg" width="240"> <img src="images/member-management-sheet-self.jpg" width="240"></p>
+
+<p><img src="images/member-subscription.jpg" width="240"> <img src="images/member-reservation-limit.jpg" width="240"></p>
+
+*Members & plans: the list (e-mail, share, role chips; megaphone, add and filters in the app bar), a member's full management sheet, the shorter sheet you get on yourself — then the subscription and reservation-limit dialogs.*
 
 ### Billing
 
@@ -314,11 +327,15 @@ Tap a member to open their **management sheet** — every per-member action in o
 - **Subscription levels** — which percentages members may pick (chips: 25 % · 50 % · 75 % · 100 %, plus your own values), and an optional **negotiated free value** switch.
 - **Day packages** — a number of days for a price (name · days · price), each with its own enable toggle; members on the *packages* policy buy them when their days run out.
 
+<p><img src="images/billing-full.jpg" width="240"></p>
+
+*Billing: fee tiers, subscription levels (with the negotiated free value switch) and day packages.*
+
 ### Services and Accessories
 
 The catalogs behind §9 — owner-defined extras (lockers, printing…, each with a price and optional VAT rate) and per-seat equipment with optional per-half-day supplements. Both are plain lists with a **+** button.
 
-<p><img src="images/billing-bands-levels-packages.jpg" width="240"> <img src="images/services-catalog.jpg" width="240"> <img src="images/services-new-service.jpg" width="240"> <img src="images/accessories-catalog.jpg" width="240"></p>
+<p><img src="images/services-catalog.jpg" width="240"> <img src="images/services-new-service.jpg" width="240"> <img src="images/accessories-catalog.jpg" width="240"> <img src="images/accessory-edit-dialog.jpg" width="240"></p>
 
 **Stock (#731).** A service that came from a supply shows *N in stock* / *Out of stock*; a consumption larger than the shelf is refused.
 
@@ -335,6 +352,10 @@ The workspace's own screen, top to bottom:
 - **Exports** — *Export the space (XML)* (settings + floor plan, no personal data — back it up, template it, migrate an instance), *Export the configuration (PDF)* (a full snapshot: settings, members, plan), *Workspace report* (everything about the space through the report engine's « workspace » template), *Space QR codes (PDF)* (one credit-card QR per seat, desk, office and level, ten per A4), *Export the data (Excel)* (one workbook: reservations, payments, invoices, members, plan — one tab each), *Import the space (XML)* (restores settings and floor plan; replaces the current plan). Every export lands in your device's **Downloads** folder.
 - **The setup wizard** (#723) — <https://fdittgen-png.github.io/deskilo/setup.html>: Since 2026-08-29 it is a **guided wizard**: steps in dependency order (identity → features → availability → plan → subscriptions → legal & VAT → services → payment → roles → members → review), each step asking only what your earlier answers make possible — no VAT rates when you are not registered, no e-invoice platform outside the EU, no package option for members while no package exists, no child feature while its parent is off. Every question says where it lives in the app and links to the section of this guide; a **Feature summary** step lists every feature the app will activate with how your answers configure it — untick the optional ones and they are exported disabled, their configuration left out; then a **Review** step lists what is complete, what is a choice to confirm and what blocks, each with a jump to fix it; *Show everything on one page* keeps the expert view. Then: a standalone page (Mac, PC or phone; answers save automatically in the browser) that walks a new owner through **every subject with predefined choices** — identity (country incl. Norway, currency, timezone, workspace language, desk transparency and the per-language invitation templates), availability — granularity, working hours, closure days and **all four booking policies** (past bookings, admin check-out, the outside-hours mode and the simultaneous-reservations number), plus the hour-to-half-day conversion under *real hours* —, the floor plan, **all 43 feature toggles** at their real defaults, billing tiers and subscription levels, day packs, services and accessories, payment instructions, **legal identity and VAT** (organization type, regime, the country's usual rates — Switzerland's 3.8 % accommodation rate, Norway, the Canadian provinces, with the honest US sales-tax note —, invoice mentions, reminder rules, the declaration period, and the e-invoicing endpoints including the customer's own delivery service), the role → permission matrix, the default validation rule **with a card per domain and the two auto-validation switches**, and the members to invite with their per-member settings (over-consumption policy, whole-space right, simultaneous allowance, reservation limit). **Export the XML** and the app imports settings, accessories and floor plan directly (*Import the space (XML)*); the file's `<setup>` section carries everything else to finish the configuration. The page can also **reload** a previously exported file to continue editing — including one written before a setting existed, which simply comes back with that setting at its default. One caution the page repeats: the exported file is plain text, so fill in a platform token only if you are answering privately; otherwise leave those blank and type them in the app, where they go straight to the server and never come back.
 - **Danger zone** — **Reset the workspace**: deletes all reservations, the accounting and the floor plan; keeps settings and members. Guarded by a typed confirmation.
+
+<p><img src="images/workspace-settings-full.jpg" width="240"> <img src="images/payment-instructions.jpg" width="240"></p>
+
+*The workspace's own screen in one image — identity, payments & billing, WhatsApp group, invitation message per language, desk transparency, the template and reminder shortcuts, exports, danger zone — and the payment instructions form.*
 
 ### Space QR codes & whole-space reservations
 
@@ -366,6 +387,10 @@ One central matrix decides **which role holds which permission** — manage role
 
 **Who validates (#732).** A rule names its **scope**: *Admins* (the owner and every admin, or the ones you list), *Listed persons* (the owner and exactly the people you pick — a plain member can be a validator), or *All members*. The count and the owner sign-off keep their meaning, and nobody ever validates their own event. Feature *Validators by role or person*.
 
+<p><img src="images/role-management-full.jpg" width="240"></p>
+
+*Role management: the owner row locked, then co-owner, admin and member — the eleven permissions per role.*
+
 ### Setting up online payments
 
 Each community collects to its **own** provider account; the app never keeps the secret keys on any device — they live on the server.
@@ -378,13 +403,13 @@ Each community collects to its **own** provider account; the app never keeps the
    - **Wero (via Mollie)** — the same Mollie API key, with Wero enabled in your Mollie account.
 3. **Save** — a green *Configured* chip appears. Turn on the **Online payments** feature (Settings → Features), and members see **Pay online** on an outstanding bill. (The *Online payments* settings entry itself only shows while the feature is on.)
 
-<p><img src="images/payment-config-paypal-stripe.jpg" width="240"> <img src="images/payment-config-mollie-wero.jpg" width="240"></p>
+<p><img src="images/online-payments-full.jpg" width="240"></p>
 
 A saved secret is never shown again — leave its field blank to keep it, type to replace it, **Remove** to clear the provider. Fees are the provider's (typically ~1.5–3% per payment, no monthly fee); DesKilo adds nothing, and the manual bank-transfer/IBAN route stays free.
 
 If a payment doesn't start, turn on **Settings → Advanced → Developer mode** and open the **Developer** screen: the *payments* trace shows exactly which providers are configured and which fields are still missing.
 
-<p><img src="images/developer-payment-traces.jpg" width="240"></p>
+<p><img src="images/developer-screen.jpg" width="240"></p>
 
 #### The provider dashboards, step by step
 
@@ -432,7 +457,9 @@ Physical cards let people check in with a tap — no phone needed.
 
 Badges belong to **one workspace** — the dialog names which one you're registering into, so register the card under the workspace whose kiosk will read it. The same physical card can serve you in several workspaces. A badge QR saved **as PDF** prints ten credit-card copies on one A4 page — spares included.
 
-<p><img src="images/nfc-config.jpg" width="240"> <img src="images/member-badges-dialog.jpg" width="240"></p>
+<p><img src="images/nfc-config.jpg" width="240"> <img src="images/member-badges-dialog.jpg" width="240"> <img src="images/my-badge-code.jpg" width="240"></p>
+
+*RFID / NFC: the switch and the device status; the badges dialog (QR badge, registered card, the "signs me in" switch, revoke); your badge code.*
 
 ## 9. Money (Finances tab)
 
@@ -567,6 +594,10 @@ Issuers open **Finances → Invoices** and land on a three-tab hub under a live 
 
 *The issuers' hub (To invoice · Open · Archive) with an open invoice's four actions and the app-bar icons — template editor, reminder rules, register; the reminder rules with the Automatic reminders switch; the register with its total and its export button.*
 
+<p><img src="images/invoices-to-invoice.jpg" width="240"> <img src="images/invoice-new-sheet.jpg" width="240"></p>
+
+*To invoice with nothing left and the summary chip — and the New invoice sheet: member, month, the derived positions, the detailed annex switch.*
+
 ### 11a. Legal identity, VAT & mentions
 
 **Before the first export, fill in the legal identity.** In *Workspace settings → **Legal identity & e-invoicing*** the owner declares:
@@ -630,6 +661,10 @@ Template variables (invoice family): `{{ number }}`, `{{ member }}`, `{{ workspa
 - **Workspace report** — identity, floor-plan counts, availability, features and prices: *Workspace settings → Workspace report*.
 - **Document library** — *Settings → Documents*: the workspace's statutes, user guides, financial statements and meeting minutes, LINKED from whatever system you already use — Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud or any https link (the drive keeps managing its own access; the app never stores foreign credentials). Every entry has a **visibility role**: every member, admins and owners, or owners only — enforced server-side, so a member never even downloads a list containing board documents. Admins and owners curate with the + button; a *Document library* feature toggle gates the whole thing.
 
+<p><img src="images/documents-library.jpg" width="240"> <img src="images/documents-add-dialog.jpg" width="240"></p>
+
+*The document library, and adding a document: title, link, storage, category, visible by.*
+
 ### 11e. Automatic payment reminders
 
 With **Automatic payment reminders** on (Features, child of *Payment reminders*) and the switch **Automatic reminders** in the reminder rules (Invoices → Reminder rules), the dunning levels apply themselves: every morning — and whenever an owner or admin opens Finances — an **open** invoice whose waiting period has run (the *days until the first reminder* from its issue date, then the *days between reminders* after the previous one) gets its next level recorded. The member sees a **Payment reminder** alert in Événements ("Reminder 2: invoice X — amount still due") and receives a push; their Invoices face reads *overdue by N days*. Levels never exceed the configured count; a matched invoice is never reminded; switching the rule off leaves reminders a manual action, one tap per invoice as before.
@@ -641,6 +676,12 @@ Your personal screen, top to bottom:
 <p><img src="images/settings-full.jpg" width="240"></p>
 
 *The whole Settings screen in one image: your personal block, Administration (owners), Preferences, Advanced, About, Sign out.*
+
+<p><img src="images/profiles.jpg" width="240"> <img src="images/region-formats.jpg" width="240"> <img src="images/linked-accounts.jpg" width="240"> <img src="images/settings-language.jpg" width="240"></p>
+<p><img src="images/settings-whatsapp-dialog.jpg" width="240"> <img src="images/settings-status-dialog.jpg" width="240"> <img src="images/settings-address-dialog.jpg" width="240"> <img src="images/settings-default-period-dialog.jpg" width="240"></p>
+<p><img src="images/settings-theme-dialog.jpg" width="240"> <img src="images/settings-photo-sheet.jpg" width="240"> <img src="images/developer-screen.jpg" width="240"></p>
+
+*Settings, screen by screen: Profiles, Region & formats, Linked accounts, Language; the WhatsApp, Status, Address and Default booking period dialogs; Theme, the photo sheet, the Developer screen.*
 
 **Privacy & data (#719)** — who can see your data, who did, export, erasure, the policy. See §14.
 
