@@ -1025,12 +1025,12 @@
   "featureInvoicePdfTemplate": "Modèle de PDF de facture",
   "featureInvoicePdfTemplateDesc": "Introduction et pied de page rédigés par le propriétaire sur le PDF de facture. Ne touche jamais au XML de facture électronique.",
   "featureMemberNotifications": "Notifications entre membres",
-  "featureMemberNotificationsDesc": "Envoyer une courte notification à un autre membre ; les admins peuvent notifier tous les admins, propriétaire inclus.",
+  "featureMemberNotificationsDesc": "Messagerie entre membres : conversations privées et de groupe, accusés de lecture, liens vers une réservation ou un espace ; les admins peuvent notifier tous les admins, propriétaire inclus.",
   "featureDunning": "Relances de paiement (Mahnwesen)",
   "@featureDunning": {
     "description": "Feature-registry completeness (#502)"
   },
-  "featureDunningDesc": "Règles de relance paramétrables et suggestions « Relance due » sur les factures en retard. Rien n'est jamais envoyé automatiquement.",
+  "featureDunningDesc": "Niveaux et délais de relance paramétrables, une lettre de relance par niveau et des suggestions « Relance due » sur les factures en retard. L'envoi reste un geste manuel, sauf avec les Relances de paiement automatiques.",
   "@featureDunningDesc": {
     "description": "Feature-registry completeness (#502)"
   },
@@ -1120,8 +1120,8 @@
   "@featureMemberDataExportDesc": {
     "description": "#718/#719"
   },
-  "featureFinanceFacesTitle": "Finances en trois volets",
-  "featureFinanceFacesDesc": "L'onglet Finances se lit en trois volets — Paiements, Consommation, Factures — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.",
+  "featureFinanceFacesTitle": "Finances en quatre volets",
+  "featureFinanceFacesDesc": "L'onglet Finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.",
   "featurePaymentRemindersTitle": "Relances de paiement automatiques",
   "featurePaymentRemindersDesc": "Les factures ouvertes au-delà du délai configuré reçoivent leurs niveaux de relance automatiquement — une alerte dans le fil du membre et une notification, une fois par jour. Désactivé : la relance reste un geste manuel.",
   "featureSupplyExpensesTitle": "Fournitures via les dépenses",
@@ -1129,7 +1129,7 @@
   "featureValidationScopesTitle": "Validateurs par rôle ou par personne",
   "featureValidationScopesDesc": "Chaque règle de validation nomme qui valide : les admins, des personnes désignées quel que soit leur rôle, ou tous les membres — et combien. Désactivé : propriétaire et admins comme avant.",
   "featurePriceNegotiationsTitle": "Négociations tarifaires",
-  "featurePriceNegotiationsDesc": "Le tarif est la valeur par défaut ; un membre peut avoir ses propres conditions (abonnement, dépassement, remise sur les suppléments), proposées par le propriétaire ou un admin finances et validées selon les règles. Vues par le membre, les propriétaires et les admins finances ; chaque consultation est journalisée.",
+  "featurePriceNegotiationsDesc": "Le tarif est la valeur par défaut ; un membre peut avoir ses propres conditions — abonnement, dépassement, remise sur les suppléments, prix unitaires par service et forfait, pourcentage d'occupation — proposées par qui détient « Gérer les accords commerciaux » et validées selon les règles. Vues par le membre, les propriétaires et les titulaires de « Consulter les accords commerciaux » ; chaque consultation est journalisée.",
   "helpTitle": "Aide",
   "helpContents": "Sommaire",
   "helpHintMessages": "Toutes vos conversations dans une liste, la plus récente en haut. Touchez le crayon pour écrire à quelqu’un ou créer un groupe.",

@@ -84,7 +84,8 @@ footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px sol
 <header>
   <h1>DesKilo — Assistant de configuration</h1>
   <p>Un assistant pas à pas : chaque étape ne pose que les questions que vos réponses précédentes rendent possibles (les fonctionnalités que vous n'activez pas, le régime de TVA que vous n'avez pas, le pays qui ne s'applique pas — rien ne vous est demandé pour rien). Chaque question dit <b>où elle se règle dans l'app</b> et renvoie vers le guide. Vos réponses sont <b>enregistrées automatiquement dans ce navigateur</b>. La dernière étape vérifie la cohérence de l'ensemble, puis <b>Exporter le XML</b> produit le fichier : l'app l'importe (Réglages de l'espace → Importer l'espace) pour créer réglages, accessoires et plan ; la section &lt;setup&gt; du même fichier porte tout le reste.</p>
-  <p style="margin-top:8px"><b>Ne mettez un jeton ou un identifiant ici que si vous remplissez ce document en privé.</b> Le fichier exporté est du texte clair : pour la facturation électronique et les paiements en ligne, vous pouvez laisser les champs vides et saisir les secrets directement dans l'app, où ils partent côté serveur sans jamais en revenir.</p>
+  <p style="margin-top:8px">Le guide utilisateur complet — avec une capture de chaque écran, formulaires longs fusionnés en une image — est <a href="https://github.com/fdittgen-png/deskilo/wiki/User-Guide" target="_blank" rel="noopener">sur le wiki ↗</a> (English · Français · Deutsch · Español · Italiano) et dans l'app (Réglages → Aide).</p>
+<p style="margin-top:8px"><b>Ne mettez un jeton ou un identifiant ici que si vous remplissez ce document en privé.</b> Le fichier exporté est du texte clair : pour la facturation électronique et les paiements en ligne, vous pouvez laisser les champs vides et saisir les secrets directement dans l'app, où ils partent côté serveur sans jamais en revenir.</p>
 </header>
 <main>
   <div class="progress"><div id="bar" style="width:0"></div></div>
@@ -129,9 +130,9 @@ const FEATURES=[
  ['dataExport','Export des données (Excel)','Classeur complet.',1],
  ['workingHours','Horaires de travail','Journée configurable, réservation à l’heure.',1],
  ['invoicePdfTemplate','Modèle de PDF de facture','Éditeur de rapports.',1],
- ['memberNotifications','Notifications entre membres','Courtes notes in-app.',1],
+ ['memberNotifications','Notifications entre membres','Messagerie entre membres : conversations privées et de groupe, accusés de lecture, liens vers une réservation ou un espace ; les admins peuvent notifier tous les admins.',1],
  ['documents','Bibliothèque de documents','Liens Drive/OneDrive/SharePoint… par rôle.',1],
- ['dunning','Relances de paiement (Mahnwesen)','Règles de relance, rien d’automatique.',1],
+ ['dunning','Relances de paiement (Mahnwesen)','Niveaux et délais de relance, une lettre par niveau, suggestions « Relance due » — l\'envoi reste manuel sauf avec les relances automatiques.',1],
  ['memberReports','Rapports des membres','Accord financier, rapport des paiements.',1],
  ['deletionRequests','Demandes de suppression de réservation','Suppression validée des réservations passées.',1],
  ['roleManagement','Gestion des rôles','La matrice rôle → permission.',1],
@@ -151,11 +152,11 @@ const FEATURES=[
  ['calendarHub','Calendrier central','Le calendrier montre tout ce qui est daté (réservations, pointages, alertes, messages, factures, paiements, consommations, rappels) pour un jour ou une période ; chaque ligne ouvre sa source.',1],
  ['dataAccessLog','Journal des accès aux données','Chaque membre voit qui a consulté ses finances et quand.',1],
  ['memberDataExport','Export et effacement','Export des données (RGPD art. 20) et départ avec effacement (art. 17) depuis Réglages → Confidentialité et données.',1],
- ['financeFaces','Finances en trois volets','L\'onglet Finances se lit en trois volets — Paiements, Consommation, Factures — sous un même sélecteur de mois, chacun avec son aide.',1],
+ ['financeFaces','Finances en quatre volets','L\'onglet Finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide.',1],
  ['paymentReminders','Relances de paiement automatiques','Les factures ouvertes au-delà du délai configuré reçoivent leurs niveaux de relance automatiquement — une alerte dans le fil du membre et une notification, une fois par jour. Nécessite « Relances de paiement ».',1],
  ['supplyExpenses','Fournitures via les dépenses','Une dépense peut être une fourniture pour l\'espace (capsules, sacs d\'aspirateur…) : validée, elle réapprovisionne ou crée un service consommable avec un prix unitaire ; les consommations décomptent le stock. Nécessite « Services ».',1],
  ['validationScopes','Validateurs par rôle ou par personne','Chaque règle de validation nomme qui valide : les admins, des personnes désignées quel que soit leur rôle, ou tous les membres — et combien. Désactivé : propriétaire et admins comme avant.',1],
- ['priceNegotiations','Négociations tarifaires','Le tarif est la valeur par défaut ; un membre peut avoir ses propres conditions (abonnement, dépassement, remise sur les suppléments), proposées par le propriétaire ou un admin finances et validées selon les règles. Vues par le membre, les propriétaires et les admins finances ; chaque consultation est journalisée.',1],
+ ['priceNegotiations','Négociations tarifaires','Le tarif est la valeur par défaut ; un membre peut avoir ses propres conditions — abonnement, dépassement, remise sur les suppléments, prix unitaires par service et forfait, pourcentage d\'occupation — proposées par qui détient « Gérer les accords commerciaux » et validées selon les règles. Vues par le membre, les propriétaires et les titulaires de « Consulter les accords commerciaux » ; chaque consultation est journalisée.',1],
  ['uiAnimations','Animations de l\'interface','Transitions et retours animés dans toute l\'app ; désactivé, tout devient instantané. Le réglage d\'accessibilité « animations réduites » du système prime de toute façon.',1],
 ];
 const PERMS=[['manageRoles','Gérer les rôles et permissions'],['manageMembers','Gérer les membres'],['manageValidation','Configurer les règles de validation'],['workspaceSettings',"Modifier les réglages de l'espace"],['issueInvoices','Émettre les factures et rapprocher les paiements'],['viewFinances',"Consulter les finances de l'espace"],['manageDocuments','Gérer la bibliothèque de documents'],['manageServices','Gérer les services et forfaits'],['approveExpenses','Approuver les dépenses'],['viewNegotiations','Consulter les accords commerciaux'],['manageNegotiations','Gérer les accords commerciaux']];
@@ -258,7 +259,7 @@ function set(path,val){const p=path.split('.');let o=S;while(p.length>1)o=o[p.sh
 // The feature tree as the app declares it (featureManifest `requires`):
 // a child is only offered while its parent is on, and switching a parent
 // off switches its children off — exactly what effectiveFeatures does.
-const REQUIRES={services:'moneyTab',accessorySupplements:'moneyTab',onlinePayments:'moneyTab',invoicing:'moneyTab',adminInvoicing:'invoicing',adminLevelAssign:'levelBooking',nfcBadges:'kioskMode',whatsappIntegration:'membersDirectory',invoicePdfTemplate:'invoicing',dunning:'invoicing',vatManagement:'invoicing',vatDeclarations:'vatManagement',einvoiceCustomerDelivery:'invoicing',notificationGrouping:'eventsTab',qrBadges:'kioskMode',kioskMemberPhotos:'kioskMode',badgeSignIn:'nfcBadges'};
+const REQUIRES={services:'moneyTab',accessorySupplements:'moneyTab',onlinePayments:'moneyTab',invoicing:'moneyTab',adminInvoicing:'invoicing',adminLevelAssign:'levelBooking',nfcBadges:'kioskMode',whatsappIntegration:'membersDirectory',invoicePdfTemplate:'invoicing',dunning:'invoicing',vatManagement:'invoicing',vatDeclarations:'vatManagement',einvoiceCustomerDelivery:'invoicing',notificationGrouping:'eventsTab',qrBadges:'kioskMode',kioskMemberPhotos:'kioskMode',badgeSignIn:'nfcBadges',paymentReminders:'dunning',supplyExpenses:'services',priceNegotiations:'moneyTab'};
 const EU=new Set(['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GR','HR','HU','IE','IT','LT','LU','LV','MT','NL','PL','PT','RO','SE','SI','SK']);
 const on=k=>{let f=k;while(f){if(!S.features[f])return false;f=REQUIRES[f]}return true};
 const featureTitle=k=>(FEATURES.find(f=>f[0]===k)||[k,k])[1];
@@ -277,26 +278,46 @@ const HELP={
  availability:['Réglages → Disponibilité','availability'],
  booking:['Réglages → Disponibilité → Règles de réservation','4b-how-booking-behaves'],
  limits:['Réglages → Disponibilité → Limites de réservation','4b-how-booking-behaves'],
- plan:["Onglet Plan → crayon (éditeur de l'espace)",'the-space-editor'],
+ plan:["Hub Réserver → icône outils (éditeur de l'espace)",'the-space-editor'],
  whole:['Éditeur → Codes QR des espaces et réservations d’espaces entiers','space-qr-codes--whole-space-reservations'],
  tags:['Éditeur → une place → Tag NFC/RFID','setting-up-rfid--nfc-badges'],
  billing:['Réglages → Facturation','billing'],
- packages:['Réglages → Facturation → Forfaits de jours','9d-the-consumption-face'],
+ packages:['Réglages → Facturation → Forfaits de jours · Finances → Paiements → Acheter un forfait','9d-the-payments-face'],
  services:['Réglages → Services et accessoires','services-and-accessories'],
- pay:["Réglages de l'espace → Instructions de paiement",'9c-the-payments-face'],
+ pay:["Réglages de l'espace → Instructions de paiement",'9d-the-payments-face'],
  online:['Réglages → Paiements en ligne','setting-up-online-payments'],
  legal:['Factures → Identité légale, TVA et mentions','11a-legal-identity-vat--mentions'],
  vat:['Factures → Identité légale → Taux de TVA · Déclarations de TVA','11a-legal-identity-vat--mentions'],
  einvoice:['Factures → Identité légale → Plateforme de facturation électronique','11b-where-the-e-invoice-has-to-go-eu'],
- dunning:['Factures → Relances','11-invoicing-owners--billing-admins'],
+ dunning:['Factures → Règles de relance','11-invoicing-owners--billing-admins'],
  roles:['Réglages → Gestion des rôles','role-management'],
- validation:['Réglages → Règles de validation','7-events--confirmations-bell-icon'],
- members:['Réglages → Membres & formules','members--plans'],
- invites:['Réglages → Membres & formules → Inviter','2-roles--invitations'],
+ validation:['Réglages → Règles de validation','7-events--confirmations-messages--events'],
+ members:['Réglages → Membres et forfaits','members--plans'],
+ invites:['Réglages → Membres et forfaits → Inviter quelqu\'un','2-roles--invitations'],
  whatsapp:["Réglages → Espace de coworking → Groupe WhatsApp",'6-members-directory-members-tab'],
- kiosk:['Réglages → Mode borne','10-kiosk-mode-wall-tablet'],
+ kiosk:['Membres et forfaits → un membre → Transformer en borne','10-kiosk-mode-wall-tablet'],
  privacy:["Le bouclier en haut de l'écran (Confidentialité et données)",'14-privacy'],
+ consent:["L'écran de consentement RGPD à la première ouverture · Réglages → Confidentialité et données → Vos données, vos droits",'14-privacy'],
+ negotiations:['Membres et forfaits → un membre → Négociation tarifaire · Finances → Relevé → Mes conditions négociées','9g-price-negotiations'],
+ supplies:["Finances → Paiements → Soumettre une dépense → « fourniture pour l'espace »",'9d-the-payments-face'],
+ faces:['Onglet Finances — Relevé · Paiements · Factures · Documents','9-money-finances-tab'],
+ reminders_auto:['Factures → Règles de relance → Relances automatiques','11e-automatic-payment-reminders'],
+ documents:['Réglages → Documents','11d-the-report-suite--the-document-library'],
+ messages:['Onglet Messages','16-messages'],
+ calendar:['Onglet Calendrier','5-calendar-calendar-tab'],
+ scopes:['Réglages → Règles de validation → Qui valide','role-management'],
+ template:['Factures → Modèle de PDF de facture (éditeur de rapports)','11c-the-report-editor--every-document-four-presets-five-languages'],
 };
+// A feature's own guide section, shown right on its row (features step + summary).
+const FEATURE_HELP={calendarTab:'calendar',calendarHub:'calendar',eventsTab:'validation',moneyTab:'faces',financeFaces:'faces',
+ services:'services',accessorySupplements:'services',onlinePayments:'online',invoicing:'dunning',invoicePdfTemplate:'template',
+ dunning:'dunning',paymentReminders:'reminders_auto',supplyExpenses:'supplies',priceNegotiations:'negotiations',
+ validationScopes:'scopes',memberNotifications:'messages',membersDirectory:'whatsapp',whatsappIntegration:'whatsapp',
+ documents:'documents',kioskMode:'kiosk',nfcBadges:'tags',qrBadges:'kiosk',badgeSignIn:'kiosk',kioskMemberPhotos:'kiosk',
+ nfcSeatTags:'tags',spaceQrCodes:'whole',levelBooking:'whole',adminLevelAssign:'whole',bookingPolicies:'booking',
+ workingHours:'availability',roleManagement:'roles',coOwner:'roles',deletionRequests:'validation',
+ vatManagement:'vat',vatDeclarations:'vat',einvoiceCustomerDelivery:'einvoice',memberReports:'faces',
+ regionalFormats:'region',dataAccessLog:'privacy',memberDataExport:'privacy',planMemberPhotos:'plan',planObjectDelete:'plan'};
 function help(key){if(!key||!HELP[key])return null;const[app,anchor]=HELP[key];return h('a',{class:'help',href:WIKI+anchor,target:'_blank',rel:'noopener'},'ⓘ Dans l’app : '+app+' · guide ↗')}
 // "This question is hidden because…" — the guide's way of saying why,
 // with a jump to the step that would change the answer.
@@ -338,6 +359,7 @@ const STEPS=[
  build(){const kids=[h('p',{class:'hint'},'Une fonctionnalité en retrait dépend de celle au-dessus : elle n\'est proposée que si son parent est activé.'),help('features')];
   for(const[k,t,d]of FEATURES){const parent=REQUIRES[k];const avail=!parent||on(parent);
    kids.push(checkbox(t,avail?d:d+' — nécessite « '+featureTitle(parent)+' ».',avail&&S.features[k],v=>{S.features[k]=v;if(!v)for(const[c,p]of Object.entries(REQUIRES))if(!on(c))S.features[c]=false;save()},(parent?'child':'')+(avail?'':' off')));
+   const fh=help(FEATURE_HELP[k]);if(fh)kids[kids.length-1].querySelector('span').append(fh);
    if(!avail)kids[kids.length-1].querySelector('input').disabled=true}
   return kids},
  check(){const f=[];const n=FEATURES.filter(([k])=>on(k)).length;f.push(F.ok(n+' fonctionnalités actives sur '+FEATURES.length+'.'));
@@ -406,7 +428,7 @@ const STEPS=[
   tableRows(['dès %','jusqu’à %','Tarif '+S.currency+'/mois','Dépassement '+S.currency+'/demi-j.'],S.tiers,(t)=>[bind(t,'from','number'),bind(t,'to','number'),bind(t,'fee','number'),bind(t,'over','number')],()=>({from:'',to:'',fee:'',over:''}),'+ Ajouter un palier'),
   h('label',{},"Niveaux d'abonnement proposés (%)"),h('div',{class:'chips'},...['25','50','75','80','100'].map(v=>chip(v+' %',S.subLevels.includes(v),o=>{S.subLevels=o?[...S.subLevels,v]:S.subLevels.filter(x=>x!==v);save()}))),
   checkbox('Autoriser une valeur libre négociée','',S.freeLevel,v=>{S.freeLevel=v;save()}),
-  h('label',{},'Forfaits de jours'),h('p',{class:'hint'},"Des packs de jours à acheter (onglet Finances → Consommation). Sans forfait, l'option « Forfaits » de l'étape Membres n'est pas proposée."),help('packages'),
+  h('label',{},'Forfaits de jours'),h('p',{class:'hint'},"Des packs de jours à acheter (Finances → Paiements → Acheter un forfait). Sans forfait, l'option « Forfaits » de l'étape Membres n'est pas proposée."),help('packages'),
   tableRows(['Nom','Jours','Prix '+S.currency],S.packages,(p)=>[bind(p,'name'),bind(p,'days','number'),bind(p,'price','number')],()=>({name:'',days:'',price:''}),'+ Ajouter un forfait')]},
  check(){const f=[];const tiers=S.tiers.filter(t=>t.fee!=='').map(t=>({from:num(t.from)||0,to:num(t.to)??100,fee:num(t.fee),over:num(t.over)})).sort((a,b)=>a.from-b.from);
   if(!tiers.length)f.push(F.warn('Aucun palier tarifaire : les abonnements seront gratuits jusqu\'à ce que vous en ajoutiez dans l\'app.','billing'));
@@ -433,7 +455,7 @@ const STEPS=[
    h('div',{class:'row'},input('Pénalités de retard','mentions.penalty',''),input('Indemnité de recouvrement','mentions.recovery','')),
    h('div',{class:'row'},input('Escompte','mentions.escompte',''),input('Assurance professionnelle','mentions.insurance','')),input('Mentions particulières','mentions.special',''));
   if(on('dunning')){k.push(h('label',{},'Règles de relance'),help('dunning'),h('p',{class:'hint'},'Le délai avant la première relance est aussi le délai de paiement : passé ce délai, une facture ouverte se lit « en retard » dans l\'app.'),h('div',{class:'row'},input('Niveaux de relance','reminders.levels','','number'),input('Jours avant la 1re relance (délai de paiement)','reminders.firstDays','','number'),input('Jours entre les relances','reminders.betweenDays','','number')));
-   if(on('paymentReminders'))k.push(checkbox('Relances automatiques','Chaque matin — et dès qu\'un propriétaire ou admin ouvre Finances — les factures ouvertes au-delà du délai reçoivent leur niveau de relance suivant : alerte dans le fil du membre et notification. Décoché : la relance reste un geste manuel.',S.reminders.automatic!==false,v=>{S.reminders.automatic=v;save()}));else k.push(needs('paymentReminders'))}
+   if(on('paymentReminders'))k.push(help('reminders_auto'),checkbox('Relances automatiques','Chaque matin — et dès qu\'un propriétaire ou admin ouvre Finances — les factures ouvertes au-delà du délai reçoivent leur niveau de relance suivant : alerte dans le fil du membre et notification. Décoché : la relance reste un geste manuel.',S.reminders.automatic!==false,v=>{S.reminders.automatic=v;save()}));else k.push(needs('paymentReminders'))}
   else k.push(needs('dunning'));
   if(isEU()){k.push(h('label',{},'Plateforme de facturation électronique'),help('einvoice'),h('p',{class:'hint'},"Là où DesKilo dépose vos factures EN 16931 : une plateforme agréée, un point d'accès Peppol, une plateforme nationale. Le jeton est stocké côté serveur et n'en ressort jamais — ne le mettez ici que si vous remplissez ce document en privé."),
     input('URL de dépôt','einvoice.url','','text','https://…'),h('div',{class:'row'},input('Jeton ou identifiant','einvoice.token',''),input("En-tête d'authentification",'einvoice.header','Authorization par défaut.','text','Authorization')),input('Nom du champ fichier','einvoice.field','file par défaut.','text','file'),
@@ -477,7 +499,7 @@ const STEPS=[
 {id:'roles',title:'Rôles et validations',why:"Qui peut faire quoi, et quelles actions attendent une confirmation avant de compter. Le propriétaire détient toujours toutes les permissions.",
  build(){const k=[];
   if(on('roleManagement')){k.push(help('roles'));for(const[role,label]of[['co_owner','Copropriétaire'],['admin','Admin'],['member','Membre']]){if(role==='co_owner'&&!on('coOwner'))continue;
-    k.push(h('div',{class:'card'},h('label',{},label),...PERMS.filter(([p])=>p!=='issueInvoices'||on('invoicing')).filter(([p])=>p!=='manageServices'||on('services')).filter(([p])=>p!=='manageDocuments'||on('documents')).map(([p,t])=>checkbox(t,'',S.perms[role].includes(p),v=>{S.perms[role]=v?[...S.perms[role],p]:S.perms[role].filter(x=>x!==p);save()}))))}}
+    k.push(h('div',{class:'card'},h('label',{},label),...PERMS.filter(([p])=>p!=='issueInvoices'||on('invoicing')).filter(([p])=>p!=='manageServices'||on('services')).filter(([p])=>p!=='manageDocuments'||on('documents')).filter(([p])=>(p!=='viewNegotiations'&&p!=='manageNegotiations')||on('priceNegotiations')).map(([p,t])=>checkbox(t,'',S.perms[role].includes(p),v=>{S.perms[role]=v?[...S.perms[role],p]:S.perms[role].filter(x=>x!==p);save()}))))}}
   else k.push(needs('roleManagement'),h('p',{class:'hint'},'Sans gestion des rôles, la matrice par défaut s\'applique : les admins gèrent membres, documents, services, dépenses et consultent les finances ; les copropriétaires ont tout.'),help('roles'));
   if(on('adminInvoicing'))k.push(dep('« Les admins émettent des factures » est activé : la permission d\'émission est déléguée aux admins par la fonctionnalité elle-même.','features'));
   k.push(h('label',{},'Règle de validation par défaut'),help('validation'),h('p',{class:'hint'},"Elle s'applique à tous les domaines sans règle propre. Personne ne valide son propre événement."),
@@ -488,7 +510,7 @@ const STEPS=[
    const head=checkbox(t,'',d.on,v=>{d.on=v;save()});if(!d.on){k.push(head);continue}
    const req=h('input',{type:'number'});req.value=d.required;req.oninput=()=>{d.required=req.value;save()};
    const row=[h('div',{},h('label',{},'Validations requises'),req),h('div',{},h('label',{},' '),checkbox('Signature du propriétaire','',d.ownerSignOff,v=>{d.ownerSignOff=v;save()}))];
-   if(on('validationScopes')){const sc=h('select');for(const[v,t]of[['admins','Les admins (propriétaire compris)'],['members','Tous les membres']])sc.append(h('option',{value:v},t));sc.value=d.validators||'admins';sc.onchange=()=>{d.validators=sc.value;save()};row.unshift(h('div',{},h('label',{},'Qui valide'),sc,h('p',{class:'hint'},'Les personnes désignées se choisissent dans l\'app, une fois les membres invités (Réglages → Règles de validation).')))}
+   if(on('validationScopes')){const sc=h('select');for(const[v,t]of[['admins','Les admins (propriétaire compris)'],['members','Tous les membres']])sc.append(h('option',{value:v},t));sc.value=d.validators||'admins';sc.onchange=()=>{d.validators=sc.value;save()};row.unshift(h('div',{},h('label',{},'Qui valide'),sc,help('scopes'),h('p',{class:'hint'},'Les personnes désignées se choisissent dans l\'app, une fois les membres invités (Réglages → Règles de validation).')))}
    k.push(h('div',{class:'card'},head,h('div',{class:'row'},...row)))}
   if(on('deletionRequests'))k.push(h('label',{},'Exception : validation automatique des suppressions'),h('p',{class:'hint'},"La seule entorse à « personne ne valide son propre événement », limitée aux suppressions de réservation. Deux interrupteurs indépendants, désactivés par défaut."),
    checkbox('Les propriétaires suppriment sans validation','',S.autoValidate.owner,v=>{S.autoValidate.owner=v;save()}),checkbox('Les admins suppriment sans validation','',S.autoValidate.admin,v=>{S.autoValidate.admin=v;save()}));
@@ -511,9 +533,10 @@ const STEPS=[
     ...(sim?[bind(m,'simultaneous','number')]:[]),bind(m,'limit','number')],
     ()=>({name:'',email:'',role:'member',pct:S.subLevels[0]||'100',overage:'blocked',wholeSpaces:false,simultaneous:'',limit:''}),'+ Ajouter un membre'),
    !pk&&on('moneyTab')?dep('Option « Forfaits » masquée : aucun forfait de jours défini.','billing'):null,
-   h('label',{},"Message d'invitation, par langue"),help('invites'),h('p',{class:'hint'},"Laissez vide pour utiliser le message traduit intégré. Placeholders : {firstName}, {workspaceName}, {inviteLink}, {downloadUrl}, {role}. L'invitation part dans la langue choisie à l'envoi, à défaut dans la langue de l'espace."),
+   h('label',{},"Message d'invitation, par langue"),help('invites'),h('p',{class:'hint'},"Laissez vide pour utiliser le message traduit intégré. Placeholders : {firstName}, {lastName}, {phone}, {workspaceName}, {workspaceId}, {inviteLink}, {downloadUrl}, {role}. L'invitation part dans la langue choisie à l'envoi, à défaut dans la langue de l'espace."),
    ...[['fr','Français'],['en','English'],['de','Deutsch'],['es','Español'],['it','Italiano']].map(([c,t])=>input(t,'invites.'+c,''))];
   if(on('whatsappIntegration'))k.push(input('Lien du groupe WhatsApp','whatsapp','Facultatif — https://chat.whatsapp.com/…','text','','whatsapp'));else k.push(needs('whatsappIntegration'));
+  k.push(dep("À la première ouverture, chaque membre (vous compris) accepte l'écran de consentement RGPD — la version du texte et la date sont enregistrées sur son compte ; rien à configurer ici, mais votre invitation peut l'annoncer. Le texte reste lisible à tout moment dans l'app et le guide."),help('consent'));
   return k},
  check(){const f=[];const ms=S.members.filter(m=>m.email.trim());const seen=new Set();
   ms.forEach(m=>{const e=m.email.trim().toLowerCase();if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e))f.push(F.err('E-mail invalide : '+m.email,'members'));if(seen.has(e))f.push(F.err('E-mail en double : '+m.email,'members'));seen.add(e);
@@ -573,6 +596,7 @@ const STEPS=[
    supplyExpenses:()=>'Une dépense peut être une fourniture : validée, elle réapprovisionne un service consommable.',
    validationScopes:()=>'Portée des règles : '+Object.entries(S.domains).filter(([,d])=>d.on&&d.validators&&d.validators!=='admins').map(([k,d])=>(DOMAINS.find(x=>x[0]===k)||[k,k])[1]+' → '+(d.validators==='members'?'tous les membres':'personnes désignées')).join(', ')+(Object.values(S.domains).some(d=>d.on&&d.validators&&d.validators!=='admins')?'.':'admins partout (personnes désignées dans l\'app).'),
    uiAnimations:()=>'Transitions animées (le réglage système « animations réduites » prime).',
+   priceNegotiations:()=>'Conditions par membre — abonnement, dépassement, remise, prix par service et forfait, occupation — validées par la règle « Négociation tarifaire » ; permissions Consulter/Gérer les accords commerciaux.',
   };
   const active=FEATURES.filter(([k])=>on(k)),inactive=FEATURES.filter(([k])=>!on(k));
   const children=k=>Object.entries(REQUIRES).filter(([,p])=>p===k).map(([c])=>c).filter(c=>on(c));
@@ -581,7 +605,8 @@ const STEPS=[
    const kids=children(key);
    const c=h('input',{type:'checkbox'});c.checked=true;c.onchange=()=>{S.features[key]=false;for(const[ch,pp]of Object.entries(REQUIRES))if(!on(ch))S.features[ch]=false;save();render()};
    k.push(h('div',{class:'card'},h('label',{class:'check',style:'margin:0'},c,h('span',{},h('b',{},t),h('div',{class:'d'},d),conf?h('div',{class:'d',style:'margin-top:4px;color:var(--ink)'},'Configuré : '+conf):null,
-     kids.length?h('div',{class:'d',style:'margin-top:4px'},'Décocher désactive aussi : '+kids.map(featureTitle).join(', ')+'.'):null))))}
+     kids.length?h('div',{class:'d',style:'margin-top:4px'},'Décocher désactive aussi : '+kids.map(featureTitle).join(', ')+'.'):null,
+     help(FEATURE_HELP[key])))))}
   if(inactive.length)k.push(h('details',{},h('summary',{},'Fonctionnalités non activées ('+inactive.length+')'),
    ...inactive.map(([key,t,d])=>{const parent=REQUIRES[key];const avail=!parent||on(parent);
     return checkbox(t,avail?d:d+' — nécessite « '+featureTitle(parent)+' ».',false,v=>{if(avail){S.features[key]=v;save()}},avail?'':'off')})));

@@ -174,12 +174,12 @@
   "featureInvoicePdfTemplate": "Invoice PDF template",
   "featureInvoicePdfTemplateDesc": "Owner-written intro and footer text on the invoice PDF. Never touches the e-invoice XML.",
   "featureMemberNotifications": "Member notifications",
-  "featureMemberNotificationsDesc": "Send a short notification to another member; admins can notify all admins including the owner.",
+  "featureMemberNotificationsDesc": "Messaging between members: private and group conversations, read receipts, links to a reservation or a space; admins can notify all admins, owner included.",
   "featureDunning": "Payment reminders (Mahnwesen)",
   "@featureDunning": {
     "description": "Feature-registry completeness (#502)"
   },
-  "featureDunningDesc": "Configurable reminder rules and \"Reminder due\" suggestions on overdue invoices. Nothing is ever sent automatically.",
+  "featureDunningDesc": "Configurable reminder levels and delays, a reminder letter per level, and “Reminder due” flags on late invoices. Sending stays a manual tap unless Automatic payment reminders is on.",
   "@featureDunningDesc": {
     "description": "Feature-registry completeness (#502)"
   },
@@ -269,8 +269,8 @@
   "@featureMemberDataExportDesc": {
     "description": "#718/#719"
   },
-  "featureFinanceFacesTitle": "Finance faces",
-  "featureFinanceFacesDesc": "The Finances tab shows three faces — Payments, Consumption, Invoices — under one month chooser, each with its own help. Off: one column.",
+  "featureFinanceFacesTitle": "Finances in four faces",
+  "featureFinanceFacesDesc": "The Finances tab reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column.",
   "featurePaymentRemindersTitle": "Automatic payment reminders",
   "featurePaymentRemindersDesc": "Open invoices past the configured term get their reminder levels automatically — an alert in the member's feed and a push, once a day. Off: reminders stay a manual action.",
   "featureSupplyExpensesTitle": "Supplies from expenses",
@@ -278,5 +278,5 @@
   "featureValidationScopesTitle": "Validators by role or person",
   "featureValidationScopesDesc": "Each validation rule names who validates: the admins, listed persons of any role, or every member — plus how many. Off: owner and admins as before.",
   "featurePriceNegotiationsTitle": "Price negotiations",
-  "featurePriceNegotiationsDesc": "The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record."
+  "featurePriceNegotiationsDesc": "The tariff is the default; a member can hold their own conditions — monthly fee, overage rate, discount on supplements, unit prices per service and package, the occupation percentage — proposed by whoever holds Manage commercial agreements and validated by the rules. Seen by the member, the owners and the holders of View commercial agreements; every read is logged."
 }

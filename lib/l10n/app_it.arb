@@ -1025,12 +1025,12 @@
   "featureInvoicePdfTemplate": "Modello PDF della fattura",
   "featureInvoicePdfTemplateDesc": "Introduzione e piè di pagina scritti dal proprietario sul PDF della fattura. Non tocca mai l'XML della fattura elettronica.",
   "featureMemberNotifications": "Notifiche tra membri",
-  "featureMemberNotificationsDesc": "Invia una breve notifica a un altro membro; gli admin possono notificare tutti gli admin, proprietario incluso.",
+  "featureMemberNotificationsDesc": "Messaggistica tra membri: conversazioni private e di gruppo, conferme di lettura, link a una prenotazione o a uno spazio; gli admin possono notificare tutti gli admin, proprietario incluso.",
   "featureDunning": "Solleciti di pagamento (Mahnwesen)",
   "@featureDunning": {
     "description": "Feature-registry completeness (#502)"
   },
-  "featureDunningDesc": "Regole di sollecito configurabili e avvisi «Sollecito dovuto» sulle fatture scadute. Nulla viene mai inviato automaticamente.",
+  "featureDunningDesc": "Livelli e scadenze di sollecito configurabili, una lettera per livello e avvisi «Sollecito dovuto» sulle fatture in ritardo. L'invio resta manuale, salvo con i Solleciti di pagamento automatici.",
   "@featureDunningDesc": {
     "description": "Feature-registry completeness (#502)"
   },
@@ -1120,8 +1120,8 @@
   "@featureMemberDataExportDesc": {
     "description": "#718/#719"
   },
-  "featureFinanceFacesTitle": "Finanze in tre viste",
-  "featureFinanceFacesDesc": "La scheda Finanze mostra tre viste — Pagamenti, Consumo, Fatture — sotto un unico selettore di mese, ciascuna con il proprio aiuto. Disattivata: una sola colonna.",
+  "featureFinanceFacesTitle": "Finanze in quattro viste",
+  "featureFinanceFacesDesc": "La scheda Finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna.",
   "featurePaymentRemindersTitle": "Solleciti di pagamento automatici",
   "featurePaymentRemindersDesc": "Le fatture aperte oltre il termine configurato ricevono i livelli di sollecito automaticamente — un avviso nel feed del membro e una notifica, una volta al giorno. Disattivato: sollecitare resta un gesto manuale.",
   "featureSupplyExpensesTitle": "Scorte dalle spese",
@@ -1129,7 +1129,7 @@
   "featureValidationScopesTitle": "Convalidatori per ruolo o persona",
   "featureValidationScopesDesc": "Ogni regola di convalida indica chi convalida: gli admin, persone designate di qualsiasi ruolo, o tutti i membri — e quanti. Disattivato: proprietario e admin come prima.",
   "featurePriceNegotiationsTitle": "Negoziazioni di prezzo",
-  "featurePriceNegotiationsDesc": "La tariffa è il valore predefinito; un membro può avere condizioni proprie (quota mensile, tariffa di eccedenza, sconto sui supplementi), proposte dal proprietario o da un admin finanze e convalidate secondo le regole. Le vedono il membro, i proprietari e gli admin finanze; ogni lettura è registrata.",
+  "featurePriceNegotiationsDesc": "La tariffa è il valore predefinito; un membro può avere condizioni proprie — canone mensile, tariffa di superamento, sconto sui supplementi, prezzi unitari per servizio e pacchetto, percentuale di occupazione — proposte da chi detiene «Gestire gli accordi commerciali» e validate secondo le regole. Le vedono il membro, i proprietari e chi ha «Consultare gli accordi commerciali»; ogni consultazione è registrata.",
   "helpHintLearnMore": "Scopri di più",
   "helpHintDismiss": "Nascondi suggerimento",
   "helpHintPrevTip": "Suggerimento precedente",

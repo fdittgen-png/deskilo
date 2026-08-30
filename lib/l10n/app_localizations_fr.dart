@@ -1810,14 +1810,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureMemberNotificationsDesc =>
-      'Envoyer une courte notification à un autre membre ; les admins peuvent notifier tous les admins, propriétaire inclus.';
+      'Messagerie entre membres : conversations privées et de groupe, accusés de lecture, liens vers une réservation ou un espace ; les admins peuvent notifier tous les admins, propriétaire inclus.';
 
   @override
   String get featureDunning => 'Relances de paiement (Mahnwesen)';
 
   @override
   String get featureDunningDesc =>
-      'Règles de relance paramétrables et suggestions « Relance due » sur les factures en retard. Rien n\'est jamais envoyé automatiquement.';
+      'Niveaux et délais de relance paramétrables, une lettre de relance par niveau et des suggestions « Relance due » sur les factures en retard. L\'envoi reste un geste manuel, sauf avec les Relances de paiement automatiques.';
 
   @override
   String get featureMemberReports => 'Rapports des membres';
@@ -1935,11 +1935,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Chaque membre peut exporter ses données en un fichier (RGPD art. 20) et quitter l\'espace avec ses données personnelles effacées (art. 17) depuis Réglages → Confidentialité et données.';
 
   @override
-  String get featureFinanceFacesTitle => 'Finances en trois volets';
+  String get featureFinanceFacesTitle => 'Finances en quatre volets';
 
   @override
   String get featureFinanceFacesDesc =>
-      'L\'onglet Finances se lit en trois volets — Paiements, Consommation, Factures — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.';
+      'L\'onglet Finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.';
 
   @override
   String get featurePaymentRemindersTitle =>
@@ -1969,7 +1969,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featurePriceNegotiationsDesc =>
-      'Le tarif est la valeur par défaut ; un membre peut avoir ses propres conditions (abonnement, dépassement, remise sur les suppléments), proposées par le propriétaire ou un admin finances et validées selon les règles. Vues par le membre, les propriétaires et les admins finances ; chaque consultation est journalisée.';
+      'Le tarif est la valeur par défaut ; un membre peut avoir ses propres conditions — abonnement, dépassement, remise sur les suppléments, prix unitaires par service et forfait, pourcentage d\'occupation — proposées par qui détient « Gérer les accords commerciaux » et validées selon les règles. Vues par le membre, les propriétaires et les titulaires de « Consulter les accords commerciaux » ; chaque consultation est journalisée.';
 
   @override
   String get helpTitle => 'Aide';

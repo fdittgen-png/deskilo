@@ -1025,12 +1025,12 @@
   "featureInvoicePdfTemplate": "Rechnungs-PDF-Vorlage",
   "featureInvoicePdfTemplateDesc": "Vom Inhaber verfasste Einleitung und Fußtext auf dem Rechnungs-PDF. Das E-Rechnungs-XML bleibt unberührt.",
   "featureMemberNotifications": "Mitglieder-Benachrichtigungen",
-  "featureMemberNotificationsDesc": "Kurze Benachrichtigung an ein anderes Mitglied senden; Admins können alle Admins inkl. Inhaber benachrichtigen.",
+  "featureMemberNotificationsDesc": "Nachrichten zwischen Mitgliedern: private und Gruppenunterhaltungen, Lesebestätigungen, Links zu einer Reservierung oder einem Raum; Admins können alle Admins benachrichtigen, Inhaber eingeschlossen.",
   "featureDunning": "Mahnwesen",
   "@featureDunning": {
     "description": "Feature-registry completeness (#502)"
   },
-  "featureDunningDesc": "Parametrierbare Mahnregeln und „Mahnung fällig“-Hinweise auf überfälligen Rechnungen. Nichts wird je automatisch versendet.",
+  "featureDunningDesc": "Konfigurierbare Mahnstufen und Fristen, ein Mahnschreiben pro Stufe und „Mahnung fällig“-Hinweise auf verspäteten Rechnungen. Das Senden bleibt ein manueller Tipp, außer mit den Automatischen Zahlungserinnerungen.",
   "@featureDunningDesc": {
     "description": "Feature-registry completeness (#502)"
   },
@@ -1120,8 +1120,8 @@
   "@featureMemberDataExportDesc": {
     "description": "#718/#719"
   },
-  "featureFinanceFacesTitle": "Finanzen in drei Ansichten",
-  "featureFinanceFacesDesc": "Der Finanzen-Tab zeigt drei Ansichten — Zahlungen, Verbrauch, Rechnungen — unter einer Monatsauswahl, jede mit eigener Hilfe. Aus: eine Spalte.",
+  "featureFinanceFacesTitle": "Finanzen in vier Ansichten",
+  "featureFinanceFacesDesc": "Der Finanzen-Tab hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte.",
   "featurePaymentRemindersTitle": "Automatische Zahlungserinnerungen",
   "featurePaymentRemindersDesc": "Offene Rechnungen nach Ablauf der eingestellten Frist erhalten ihre Mahnstufen automatisch — ein Hinweis im Feed des Mitglieds und eine Push-Nachricht, einmal täglich. Aus: Mahnen bleibt ein manueller Schritt.",
   "featureSupplyExpensesTitle": "Vorräte aus Ausgaben",
@@ -1129,7 +1129,7 @@
   "featureValidationScopesTitle": "Prüfer nach Rolle oder Person",
   "featureValidationScopesDesc": "Jede Prüfregel nennt, wer prüft: die Admins, benannte Personen jeder Rolle oder alle Mitglieder — und wie viele. Aus: Inhaber und Admins wie bisher.",
   "featurePriceNegotiationsTitle": "Preisverhandlungen",
-  "featurePriceNegotiationsDesc": "Der Tarif ist der Standard; ein Mitglied kann eigene Konditionen haben (Monatsbeitrag, Überschreitungssatz, Rabatt auf Zuschläge), vom Inhaber oder einem Finanz-Admin vorgeschlagen und nach den Regeln geprüft. Sichtbar für das Mitglied, die Inhaber und Finanz-Admins; jeder Zugriff wird protokolliert.",
+  "featurePriceNegotiationsDesc": "Der Tarif ist der Standard; ein Mitglied kann eigene Konditionen haben — Monatsgebühr, Überschreitungssatz, Rabatt auf Zuschläge, Stückpreise je Leistung und Paket, Belegungsprozentsatz —, vorgeschlagen von wer „Geschäftsvereinbarungen verwalten“ hält, und nach den Regeln validiert. Sichtbar für das Mitglied, die Inhaber und die Träger von „Geschäftsvereinbarungen einsehen“; jeder Zugriff wird protokolliert.",
   "helpTitle": "Hilfe",
   "helpContents": "Inhalt",
   "helpHintMessages": "Alle Unterhaltungen in einer Liste, die neueste oben. Tippen Sie auf den Stift, um jemandem zu schreiben oder eine Gruppe zu erstellen.",
