@@ -117,6 +117,8 @@ abstract class MoneyRepository {
     double? discountPercent,
     String note = '',
     DateTime? validFrom,
+    int? subscriptionPct,
+    Map<String, Map<String, int>> items = const {},
   });
 
   /// #726 — apply the dunning rules now (idempotent: the rules decide).

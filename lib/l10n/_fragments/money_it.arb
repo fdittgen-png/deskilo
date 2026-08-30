@@ -322,5 +322,10 @@
   "negotiationValidFrom": "Si applica da",
   "negotiationSubmit": "Proponi per la convalida",
   "negotiationProposed": "Condizioni proposte — in attesa di convalida.",
-  "negotiationPendingBadge": "in attesa di convalida"
+  "negotiationPendingBadge": "in attesa di convalida",
+  "negotiationOccupation": "Occupazione",
+  "negotiationOccupationHint": "La quota di giorni di apertura inclusa ogni mese; applicata al membro una volta convalidata.",
+  "negotiationKeepCurrent": "Mantieni attuale",
+  "negotiationItems": "Servizi e pacchetti",
+  "negotiationItemsHint": "Un prezzo unitario per questo membro; vuoto mantiene il catalogo."
 }

@@ -761,5 +761,6 @@
   "dunningAutomatic": "Solleciti automatici",
   "dunningAutomaticHint": "Una volta al giorno, le fatture aperte oltre il termine ricevono da sole il livello di sollecito successivo — un avviso nel feed del membro e una notifica. Disattivato: invii ogni sollecito tu stesso.",
   "eventTypePriceNegotiation": "Negoziazione di prezzo",
-  "eventPriceNegotiationLine": "{actor} propone condizioni per {member}: {terms}"
+  "eventPriceNegotiationLine": "{actor} propone condizioni per {member}: {terms}",
+  "eventPriceNegotiationItems": "{count} articoli"
 }

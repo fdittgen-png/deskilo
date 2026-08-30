@@ -564,6 +564,14 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     final packages = await ref.read(packagesProvider.future);
+    // #744 — my negotiated package prices, when I have a deal.
+    final myId = ref.read(myMemberProvider).value?.id;
+    final myDeal = myId != null &&
+            ref
+                .read(enabledFeaturesSyncProvider)
+                .contains(WorkspaceFeature.priceNegotiations)
+        ? ref.read(priceNegotiationProvider(myId)).value?.active
+        : null;
     if (!mounted) return;
     if (packages.isEmpty) {
       AppSnack.info(
@@ -587,7 +595,9 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                     l10n?.buyPackageDays(package.days) ??
                         '${package.days} days',
                   ),
-                  trailing: Text(currency.formatMinor(package.priceCents)),
+                  trailing: Text(currency.formatMinor(
+                      myDeal?.itemPrice('packages', package.id) ??
+                          package.priceCents)),
                   onTap: () => Navigator.of(context).pop(package),
                 ),
               ),

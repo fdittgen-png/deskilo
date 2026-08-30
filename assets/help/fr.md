@@ -512,6 +512,8 @@ Chaque rapport de l'application — relevé, factures, proformas, avoirs, vos do
 
 **Le tarif est la valeur par défaut ; vos conditions sont les vôtres.** Un propriétaire ou un admin finances peut proposer une **négociation tarifaire** pour un membre — abonnement mensuel, dépassement par demi-journée, remise sur les suppléments (accessoires, réservations d'espaces entiers) — chacun optionnel, le tarif à défaut. La proposition arrive dans Événements pour les validateurs de la règle (domaine *Négociation tarifaire*, ou la règle par défaut) ; confirmée, elle s'applique dès le mois choisi et remplace les conditions précédentes. Sur votre volet **Relevé**, la carte *Mes conditions négociées* montre le tarif barré à côté de vos prix, depuis quand, et **Qui peut voir** : vous, les propriétaires et les admins finances — chaque consultation par quelqu'un d'autre est journalisée et listée là (§14). Fonctionnalité *Négociations tarifaires*.
 
+**Services, forfaits et occupation (#744).** Les conditions peuvent aussi fixer l'**occupation** — la part des jours d'ouverture incluse chaque mois, négociée avec son prix (appliquée au membre une fois validée, la valeur précédente affichée à côté) — et un **prix unitaire par service et par forfait** : une consommation ou l'achat d'un forfait est facturé au prix du membre, le prix catalogue barré dans les feuilles et sur la carte.
+
 ## 10. Mode borne (tablette murale)
 
 Montez une tablette Android ou un iPad près de la porte :

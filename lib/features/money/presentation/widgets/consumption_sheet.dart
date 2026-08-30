@@ -12,6 +12,9 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/service_item.dart';
+import '../../../../core/trace/trace_logger.dart';
+import '../../../workspace/domain/workspace_feature.dart';
+import '../../domain/price_negotiation.dart';
 import '../../providers/money_providers.dart';
 
 /// Bottom sheet recording consumed services onto the monthly bill (#129,
@@ -32,6 +35,20 @@ Future<void> showConsumptionSheet(
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
   final services = await ref.read(servicesProvider.future);
+  // #744 — the subject's negotiated unit prices, when they have a deal.
+  final negotiated = ref
+      .read(enabledFeaturesSyncProvider)
+      .contains(WorkspaceFeature.priceNegotiations)
+      ? (await ref
+              .read(priceNegotiationProvider(subjectMemberId).future)
+              .catchError((Object e, StackTrace st) {
+            TraceLogger.instance.warn('money', 'negotiation lookup failed',
+                error: e, stackTrace: st);
+            return const PriceNegotiation(
+                defaultFeeCents: 0, defaultOverageFeeCents: 0);
+          }))
+          .active
+      : null;
   if (!context.mounted) return;
   if (services.isEmpty) {
     AppSnack.info(
@@ -85,7 +102,7 @@ Future<void> showConsumptionSheet(
                     enabled: item.stock != 0,
                     child: Text(
                       '${item.name} — '
-                      '${currency.formatMinor(item.priceCents)}'
+                      '${currency.formatMinor(negotiated?.itemPrice('services', item.id) ?? item.priceCents)}'
                       '${item.stock == null ? '' : item.stock == 0 ? ' · ${l10n?.serviceOutOfStock ?? 'Out of stock'}' : ' · ${l10n?.serviceStockCount(item.stock!) ?? '${item.stock} in stock'}'}',
                       overflow: TextOverflow.ellipsis,
                     ),

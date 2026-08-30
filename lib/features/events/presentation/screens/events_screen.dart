@@ -160,12 +160,17 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
             actor,
             names[event.subjectMemberId] ?? '',
             [
+              if (event.payload['subscription_pct'] != null)
+                '${event.payload['subscription_pct']} %',
               if (event.payload['fee_cents'] != null)
                 currency.formatMinor((event.payload['fee_cents'] as num).toInt()),
               if (event.payload['overage_fee_cents'] != null)
                 '${currency.formatMinor((event.payload['overage_fee_cents'] as num).toInt())}/½',
               if (event.payload['discount_percent'] != null)
                 '−${event.payload['discount_percent']} %',
+              if (((event.payload['item_count'] as num?)?.toInt() ?? 0) > 0)
+                l10n.eventPriceNegotiationItems(
+                    (event.payload['item_count'] as num).toInt()),
             ].join(' · '),
           ) ??
           '$actor proposes a deal for ${names[event.subjectMemberId] ?? ''}',

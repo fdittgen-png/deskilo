@@ -10,6 +10,9 @@ class NegotiationDeal {
     this.note = '',
     required this.validFrom,
     required this.status,
+    this.subscriptionPct,
+    this.previousSubscriptionPct,
+    this.items = const {},
   });
 
   factory NegotiationDeal.fromJson(Map<String, dynamic> json) => NegotiationDeal(
@@ -20,6 +23,16 @@ class NegotiationDeal {
         validFrom: DateTime.tryParse(json['valid_from'] as String? ?? '') ??
             DateTime(1970),
         status: json['status'] as String? ?? 'pending',
+        subscriptionPct: (json['subscription_pct'] as num?)?.toInt(),
+        previousSubscriptionPct:
+            (json['previous_subscription_pct'] as num?)?.toInt(),
+        items: {
+          for (final kind in (json['items'] as Map? ?? const {}).entries)
+            kind.key as String: {
+              for (final e in (kind.value as Map).entries)
+                e.key as String: int.tryParse('${e.value}') ?? 0,
+            },
+        },
       );
 
   final int? feeCents;
@@ -30,6 +43,17 @@ class NegotiationDeal {
 
   /// pending | active | rejected | superseded
   final String status;
+
+  /// #744 — the occupation negotiated with its price, and what it was.
+  final int? subscriptionPct;
+  final int? previousSubscriptionPct;
+
+  /// #744 — negotiated unit prices: {'services': {id: cents}, 'packages': {id: cents}}.
+  final Map<String, Map<String, int>> items;
+
+  int? itemPrice(String kind, String id) => items[kind]?[id];
+  int get itemCount =>
+      items.values.fold(0, (n, m) => n + m.length);
 }
 
 /// The member's deal as the server reports it: the workspace default

@@ -512,6 +512,8 @@ Cada informe de la app — la factura mensual, las facturas, los proformas, las 
 
 **La tarifa es el valor por defecto; tus condiciones son tuyas.** Un propietario o un admin de finanzas puede proponer una **negociación de precios** para un miembro — cuota mensual, exceso por medio día, descuento en suplementos (accesorios, reservas de espacios enteros) — cada uno opcional, la tarifa si falta. La propuesta llega a Eventos para los validadores de la regla (dominio *Negociación de precios*, o la regla por defecto); confirmada, se aplica desde el mes elegido y sustituye las condiciones anteriores. En tu vista **Extracto**, la tarjeta *Mis precios negociados* muestra la tarifa tachada junto a tus precios, desde cuándo, y **Quién puede verlo**: tú, los propietarios y los admins de finanzas — cada lectura por otra persona queda registrada y listada ahí (§14). Función *Negociaciones de precios*.
 
+**Servicios, paquetes y ocupación (#744).** Las condiciones también pueden fijar la **ocupación** — la parte de días abiertos incluida cada mes, negociada con su precio (aplicada al miembro una vez validada, el valor anterior mostrado al lado) — y un **precio unitario por servicio y por paquete**: un consumo o la compra de un paquete se cobra al precio del miembro, el precio de catálogo tachado en las hojas y en la tarjeta.
+
 ## 10. Modo quiosco (tableta de pared)
 
 Monta una tableta Android o un iPad junto a la puerta y deja que la gente se registre al entrar:

@@ -3946,6 +3946,14 @@
       }
     }
   },
+  "eventPriceNegotiationItems": "{count} items",
+  "@eventPriceNegotiationItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",
   "pendingApprovalTitle": "Awaiting approval",
@@ -5149,6 +5157,11 @@
       }
     }
   },
+  "negotiationOccupation": "Occupation",
+  "negotiationOccupationHint": "The share of open days included each month; applied to the member once validated.",
+  "negotiationKeepCurrent": "Keep current",
+  "negotiationItems": "Services and packages",
+  "negotiationItemsHint": "A unit price for this member; empty keeps the catalogue.",
   "planDurationLabel": "Duration",
   "@planDurationLabel": {
     "description": "Booking sheet: grid duration slider label (#574)"
