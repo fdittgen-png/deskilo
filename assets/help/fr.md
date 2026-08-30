@@ -36,12 +36,12 @@ DesKilo a trois rôles additifs, une déclinaison de copropriété par-dessus, p
 | Rôle | Peut |
 |---|---|
 | **Membre** | Pointer, réserver, soumettre des dépenses, voir et gérer ses propres événements et son compte |
-| **Admin** | Tout ce qu'un membre peut, plus : agir *pour n'importe qui* (réservations, paiements, dépenses — sous confirmation, §7), approuver les dépenses, émettre des badges |
+| **Admin** | Tout ce qu'un membre peut, plus : agir *pour n'importe qui* (réservations, paiements, dépenses — sous confirmation, §7), approuver les dépenses, consulter et gérer les accords commerciaux, émettre des badges |
 | **Propriétaire** | Tout ce qu'un admin peut, plus : modifier l'espace physique, définir plans et prix, gérer les rôles, les bornes et les réglages |
 | **Copropriétaire** | *Actif* : les permissions du propriétaire dès maintenant, plus la succession automatique. *Passif* : un successeur en attente, sans permission supplémentaire aujourd'hui |
 | **Borne** | Un compte de tablette murale (§10) — n'affiche que le plan ; les vrais membres agissent au badge |
 
-Une partie de tout cela n'est pas gravée dans le marbre : le propriétaire réajuste **neuf permissions d'administration** dans la matrice de **Gestion des rôles** (§8) — gérer les rôles, gérer les membres, les règles de validation, les réglages de l'espace, émettre les factures, consulter les finances, les documents, les services, approuver les dépenses. Ce que la matrice ne gouverne *pas*, c'est le quotidien — pointer, réserver, agir pour un autre membre, modifier l'espace — qui reste là où le tableau ci-dessus le place, conditionné par les fonctionnalités et les interrupteurs par membre.
+Une partie de tout cela n'est pas gravée dans le marbre : le propriétaire réajuste **onze permissions d'administration** dans la matrice de **Gestion des rôles** (§8) — gérer les rôles, gérer les membres, les règles de validation, les réglages de l'espace, émettre les factures, consulter les finances, les documents, les services, approuver les dépenses, consulter et gérer les accords commerciaux. Ce que la matrice ne gouverne *pas*, c'est le quotidien — pointer, réserver, agir pour un autre membre, modifier l'espace — qui reste là où le tableau ci-dessus le place, conditionné par les fonctionnalités et les interrupteurs par membre.
 
 **Chaque invitation est liée à un rôle.** Sur l'écran *ID de l'espace et QR* du propriétaire, deux onglets portent deux invitations, chacune avec son QR et son code :
 
@@ -364,7 +364,7 @@ Que la communauté ne dépende jamais d'un seul compte :
 
 ### Gestion des rôles
 
-Une matrice centrale décide **quelle permission revient à quel rôle** — gérer les rôles et permissions, gérer les membres, configurer les règles de validation, modifier les réglages de l'espace, émettre les factures et rapprocher les paiements, consulter les finances de l'espace, gérer la bibliothèque de documents, gérer les services et forfaits, approuver les dépenses. Ouvrez-la dans *Réglages → Administration → Gestion des rôles* (sa fonctionnalité doit être activée) :
+Une matrice centrale décide **quelle permission revient à quel rôle** — gérer les rôles et permissions, gérer les membres, configurer les règles de validation, modifier les réglages de l'espace, émettre les factures et rapprocher les paiements, consulter les finances de l'espace, gérer la bibliothèque de documents, gérer les services et forfaits, approuver les dépenses, consulter et gérer les accords commerciaux. Ouvrez-la dans *Réglages → Administration → Gestion des rôles* (sa fonctionnalité doit être activée) :
 
 - Le **propriétaire détient toujours toutes les permissions** — sa ligne est verrouillée (le cadenas le montre).
 - Qui détient *Gérer les rôles et permissions* modifie les autres lignes. Un **copropriétaire** démarre avec tout (« il peut en avoir moins » — le propriétaire retire ce qu'il veut) ; un **admin** avec les capacités d'admin actuelles ; un **membre** sans rien.

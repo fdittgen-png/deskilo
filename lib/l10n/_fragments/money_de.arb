@@ -328,5 +328,6 @@
   "negotiationKeepCurrent": "Aktuelle behalten",
   "negotiationItems": "Leistungen und Pakete",
   "negotiationItemsHint": "Ein Stückpreis für dieses Mitglied; leer behält den Katalog.",
-  "negotiationPercent": "{value} %"
+  "negotiationPercent": "{value} %",
+  "negotiationReadOnly": "Nur lesen"
 }

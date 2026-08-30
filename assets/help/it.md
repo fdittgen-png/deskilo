@@ -36,12 +36,12 @@ DesKilo ha tre ruoli cumulativi e, sopra di essi, una variante di comproprietà,
 | Ruolo | Può |
 |---|---|
 | **Membro** | Fare check-in/out, prenotare, presentare spese, vedere e gestire i propri eventi e il proprio conto |
-| **Admin** | Tutto ciò che può un membro, più: agire *per chiunque* (prenotazioni, pagamenti, spese — soggetto a conferma, §7), approvare le spese, emettere badge per il chiosco |
+| **Admin** | Tutto ciò che può un membro, più: agire *per chiunque* (prenotazioni, pagamenti, spese — soggetto a conferma, §7), approvare le spese, consultare e gestire gli accordi commerciali, emettere badge per il chiosco |
 | **Proprietario** | Tutto ciò che può un admin, più: modificare lo spazio fisico, definire piani e prezzi, gestire ruoli, dispositivi chiosco e impostazioni dello spazio |
 | **Comproprietario** | *Attivo*: i permessi del proprietario da subito, più la successione automatica. *Passivo*: un successore in attesa, oggi senza permessi aggiuntivi |
 | **Chiosco** | Un account per tablet a parete (§10) — mostra solo la piantina; i membri veri agiscono attraverso di esso con un badge |
 
-Una parte di tutto questo non è scolpita nella pietra: il proprietario riregola **nove permessi di amministrazione** nella matrice **Gestione dei ruoli** (§8) — gestire i ruoli, gestire i membri, regole di convalida, impostazioni dello spazio, emettere fatture, consultare le finanze, documenti, servizi, approvare le spese. Ciò che la matrice *non* governa è il quotidiano — fare check-in, prenotare, agire per un altro membro, modificare lo spazio — che resta dove lo mette la tabella qui sopra, retto invece dalle funzionalità e dagli interruttori per singolo membro.
+Una parte di tutto questo non è scolpita nella pietra: il proprietario riregola **undici permessi di amministrazione** nella matrice **Gestione dei ruoli** (§8) — gestire i ruoli, gestire i membri, regole di convalida, impostazioni dello spazio, emettere fatture, consultare le finanze, documenti, servizi, approvare le spese, consultare e gestire gli accordi commerciali. Ciò che la matrice *non* governa è il quotidiano — fare check-in, prenotare, agire per un altro membro, modificare lo spazio — che resta dove lo mette la tabella qui sopra, retto invece dalle funzionalità e dagli interruttori per singolo membro.
 
 **Ogni invito è legato a un ruolo.** Nella schermata *ID spazio & QR* del proprietario due schede contengono due inviti, ciascuno con il proprio QR e il proprio codice:
 
@@ -364,7 +364,7 @@ Fai in modo che la comunità non dipenda mai da un solo account:
 
 ### Gestione dei ruoli
 
-Una matrice centrale decide **quale ruolo detiene quale permesso** — gestire i ruoli, gestire i membri, regole di convalida, impostazioni dello spazio, emettere fatture e riconciliare pagamenti, consultare le finanze, documenti, servizi, approvare le spese. Aprila in *Impostazioni → Amministrazione → Gestione dei ruoli* (il suo interruttore di funzionalità deve essere attivo):
+Una matrice centrale decide **quale ruolo detiene quale permesso** — gestire i ruoli, gestire i membri, regole di convalida, impostazioni dello spazio, emettere fatture e riconciliare pagamenti, consultare le finanze, documenti, servizi, approvare le spese, consultare e gestire gli accordi commerciali. Aprila in *Impostazioni → Amministrazione → Gestione dei ruoli* (il suo interruttore di funzionalità deve essere attivo):
 
 - Il **proprietario detiene sempre tutti i permessi** — la riga è bloccata.
 - Chi detiene *Gestire ruoli e permessi* modifica le altre righe. Un **comproprietario** parte con tutto («un comproprietario può averne meno» — il proprietario toglie ciò che vuole); un **admin** parte con le capacità admin di oggi; un **membro** con nessuna.

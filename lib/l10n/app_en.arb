@@ -5170,6 +5170,7 @@
       }
     }
   },
+  "negotiationReadOnly": "Read only",
   "planDurationLabel": "Duration",
   "@planDurationLabel": {
     "description": "Booking sheet: grid duration slider label (#574)"
@@ -7007,6 +7008,8 @@
   "@countryNameNO": {
     "description": "#713 - region name in the format picker"
   },
+  "permViewNegotiations": "View commercial agreements",
+  "permManageNegotiations": "Manage commercial agreements",
   "workspaceXmlExport": "Export workspace (XML)",
   "@workspaceXmlExport": {
     "description": "Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)"

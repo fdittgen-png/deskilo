@@ -40,6 +40,10 @@ class RolesScreen extends ConsumerWidget {
           l10n?.permManageServices ?? 'Manage services & packages',
         WorkspacePermission.approveExpenses =>
           l10n?.permApproveExpenses ?? 'Approve expenses',
+        WorkspacePermission.viewNegotiations =>
+          l10n?.permViewNegotiations ?? 'View commercial agreements',
+        WorkspacePermission.manageNegotiations =>
+          l10n?.permManageNegotiations ?? 'Manage commercial agreements',
       };
 
   String _roleLabel(AppLocalizations? l10n, PermissionRole role) =>

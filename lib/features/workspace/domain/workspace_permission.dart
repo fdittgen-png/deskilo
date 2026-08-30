@@ -34,7 +34,13 @@ enum WorkspacePermission {
   manageServices,
 
   /// Approve expense submissions.
-  approveExpenses;
+  approveExpenses,
+
+  /// #749 — read a member's commercial agreement (their deal).
+  viewNegotiations,
+
+  /// #749 — propose or change a member's commercial agreement.
+  manageNegotiations;
 
   /// The wire name — identical to the Dart name, pinned by test.
   String get wireName => name;
@@ -68,6 +74,8 @@ Set<WorkspacePermission> defaultPermissionsFor(PermissionRole role) =>
           WorkspacePermission.manageServices,
           WorkspacePermission.approveExpenses,
           WorkspacePermission.viewFinances,
+          WorkspacePermission.viewNegotiations,
+          WorkspacePermission.manageNegotiations,
         },
       PermissionRole.member => <WorkspacePermission>{},
     };

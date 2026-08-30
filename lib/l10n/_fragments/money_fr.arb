@@ -328,5 +328,6 @@
   "negotiationKeepCurrent": "Garder l'actuelle",
   "negotiationItems": "Services et forfaits",
   "negotiationItemsHint": "Un prix unitaire pour ce membre ; vide garde le catalogue.",
-  "negotiationPercent": "{value} %"
+  "negotiationPercent": "{value} %",
+  "negotiationReadOnly": "Lecture seule"
 }

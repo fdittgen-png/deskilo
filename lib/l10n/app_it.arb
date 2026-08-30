@@ -2791,6 +2791,7 @@
   "negotiationItems": "Servizi e pacchetti",
   "negotiationItemsHint": "Un prezzo unitario per questo membro; vuoto mantiene il catalogo.",
   "negotiationPercent": "{value} %",
+  "negotiationReadOnly": "Sola lettura",
   "planDurationLabel": "Durata",
   "@planDurationLabel": {
     "description": "Booking sheet: grid duration slider label (#574)"
@@ -3627,6 +3628,8 @@
   "@countryNameNO": {
     "description": "#713 - region name in the format picker"
   },
+  "permViewNegotiations": "Consultare gli accordi commerciali",
+  "permManageNegotiations": "Gestire gli accordi commerciali",
   "workspaceXmlExport": "Esporta lo spazio (XML)",
   "workspaceXmlExportSubtitle": "Impostazioni e planimetria in un file condivisibile. Senza membri, prenotazioni o dati finanziari.",
   "workspaceXmlImport": "Importa lo spazio (XML)",

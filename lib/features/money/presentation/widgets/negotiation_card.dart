@@ -208,6 +208,7 @@ Future<void> showPriceNegotiationSheet(
   required String memberId,
   required String memberName,
   required MoneyFormat currency,
+  bool readOnly = false,
 }) async {
   final l10n = AppLocalizations.of(context);
   final current = await ref.read(priceNegotiationProvider(memberId).future);
@@ -300,11 +301,12 @@ Future<void> showPriceNegotiationSheet(
                     value: v,
                     child: Text(l10n?.negotiationPercent(v) ?? '$v %')),
             ],
-            onChanged: (v) => setSheetState(() => pct = v),
+            onChanged: readOnly ? null : (v) => setSheetState(() => pct = v),
           ),
           const SizedBox(height: AppSpacing.sm),
           TextField(
             key: const ValueKey('negotiation-fee'),
+            readOnly: readOnly,
             controller: fee,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             decoration: InputDecoration(
@@ -316,6 +318,7 @@ Future<void> showPriceNegotiationSheet(
           const SizedBox(height: AppSpacing.sm),
           TextField(
             key: const ValueKey('negotiation-overage'),
+            readOnly: readOnly,
             controller: overage,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             decoration: InputDecoration(
@@ -327,6 +330,7 @@ Future<void> showPriceNegotiationSheet(
           const SizedBox(height: AppSpacing.sm),
           TextField(
             key: const ValueKey('negotiation-discount'),
+            readOnly: readOnly,
             controller: discount,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             decoration: InputDecoration(
@@ -338,6 +342,7 @@ Future<void> showPriceNegotiationSheet(
           const SizedBox(height: AppSpacing.sm),
           TextField(
             key: const ValueKey('negotiation-note'),
+            readOnly: readOnly,
             controller: note,
             decoration: InputDecoration(labelText: l10n?.negotiationNote ?? 'Note'),
           ),
@@ -353,6 +358,7 @@ Future<void> showPriceNegotiationSheet(
             for (final s in services)
               TextField(
                 key: ValueKey('negotiation-item-services-${s.id}'),
+                readOnly: readOnly,
                 controller: itemCtl['services:${s.id}'],
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
@@ -365,6 +371,7 @@ Future<void> showPriceNegotiationSheet(
             for (final p in packages)
               TextField(
                 key: ValueKey('negotiation-item-packages-${p.id}'),
+                readOnly: readOnly,
                 controller: itemCtl['packages:${p.id}'],
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
@@ -378,7 +385,7 @@ Future<void> showPriceNegotiationSheet(
           const SizedBox(height: AppSpacing.lg),
           FilledButton(
             key: const ValueKey('negotiation-submit'),
-            onPressed: current.pending != null
+            onPressed: readOnly || current.pending != null
                 ? null
                 : () => Navigator.of(sheetContext).pop(true),
             child: Text(l10n?.negotiationSubmit ?? 'Propose for validation'),
@@ -388,7 +395,7 @@ Future<void> showPriceNegotiationSheet(
       ),
     ),
   );
-  if (ok != true || !context.mounted) return;
+  if (ok != true || readOnly || !context.mounted) return;
   int? cents(String raw) {
     final t = raw.trim().replaceAll(',', '.');
     if (t.isEmpty) return null;
@@ -460,15 +467,22 @@ class MemberNegotiationTile extends ConsumerWidget {
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.priceNegotiations);
     final me = ref.watch(myMemberProvider).value;
-    final allowed = isOwner ||
-        ref.watch(myPermissionsProvider).contains(WorkspacePermission.viewFinances);
-    if (!on || !allowed || me == null || me.id == memberId) {
+    // #749 — manage opens the proposal; view alone opens it read-only.
+    final perms = ref.watch(myPermissionsProvider);
+    final canManage =
+        isOwner || perms.contains(WorkspacePermission.manageNegotiations);
+    final canView =
+        canManage || perms.contains(WorkspacePermission.viewNegotiations);
+    if (!on || !canView || me == null || me.id == memberId) {
       return const SizedBox.shrink();
     }
     return ListTile(
       key: ValueKey('member-negotiation-$memberId'),
       leading: const Icon(Icons.handshake_outlined),
       title: Text(l10n?.negotiationProposeTitle ?? 'Price negotiation'),
+      subtitle: canManage
+          ? null
+          : Text(l10n?.negotiationReadOnly ?? 'Read only'),
       onTap: () => showPriceNegotiationSheet(
         context,
         ref,
@@ -477,6 +491,7 @@ class MemberNegotiationTile extends ConsumerWidget {
         currency: moneyFormat(
           ref.read(currentWorkspaceProvider).value?.currencyCode ?? 'EUR',
         ),
+        readOnly: !canManage,
       ),
     );
   }

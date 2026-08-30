@@ -8186,6 +8186,12 @@ abstract class AppLocalizations {
   /// **'{value} %'**
   String negotiationPercent(int value);
 
+  /// No description provided for @negotiationReadOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Read only'**
+  String get negotiationReadOnly;
+
   /// Booking sheet: grid duration slider label (#574)
   ///
   /// In en, this message translates to:
@@ -10801,6 +10807,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Norway'**
   String get countryNameNO;
+
+  /// No description provided for @permViewNegotiations.
+  ///
+  /// In en, this message translates to:
+  /// **'View commercial agreements'**
+  String get permViewNegotiations;
+
+  /// No description provided for @permManageNegotiations.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage commercial agreements'**
+  String get permManageNegotiations;
 
   /// Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)
   ///
