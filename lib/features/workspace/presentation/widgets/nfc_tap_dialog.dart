@@ -2,6 +2,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+import '../../../../core/trace/trace_logger.dart';
+
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../l10n/app_localizations.dart';
 
@@ -22,15 +24,22 @@ class _NfcTapDialogState extends State<NfcTapDialog> {
   @override
   void initState() {
     super.initState();
-    unawaited(
-      widget.reader.startRead(
-        onUid: (uid) {
-          if (_done || !mounted) return;
-          _done = true;
-          Navigator.of(context).pop(uid);
-        },
-      ),
-    );
+    unawaited(() async {
+      try {
+        await widget.reader.startRead(
+          onUid: (uid) {
+            if (_done || !mounted) return;
+            _done = true;
+            Navigator.of(context).pop(uid);
+          },
+        );
+      } catch (e, st) {
+        // The dialog stays open with its hint; the member can still type
+        // the uid — the failure is on the record.
+        TraceLogger.instance.warn('nfc', 'tag read failed',
+            error: e, stackTrace: st);
+      }
+    }());
   }
 
   @override

@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../../core/trace/trace_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../workspace/providers/workspace_providers.dart';
@@ -56,7 +58,14 @@ class SelectedLevelId extends _$SelectedLevelId {
     state = AsyncData(levelId);
     final workspace = await ref.read(currentWorkspaceProvider.future);
     if (workspace == null) return;
-    await ref.read(defaultLevelStoreProvider).write(workspace.id, levelId);
+    try {
+      await ref.read(defaultLevelStoreProvider).write(workspace.id, levelId);
+    } catch (e, st) {
+      // The choice is already shown; only its persistence failed — the
+      // next launch falls back to the first level, and the trace says why.
+      TraceLogger.instance.warn('plan', 'default level write failed',
+          error: e, stackTrace: st);
+    }
   }
 
   /// Shows [levelId] WITHOUT writing the store (#182): the calendar's

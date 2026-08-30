@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/trace/trace_logger.dart';
+
 import 'package:intl/intl.dart';
 
 import '../../core/badge/app_badge.dart';
@@ -104,36 +106,43 @@ class ShellScreen extends ConsumerWidget {
         // AWAIT the caches (#464): at boot the notes can land before
         // the member/name fetches — a sync read then yields a null id
         // (announcing nothing) or a nameless title.
-        final myId = (await ref.read(myMemberProvider.future))?.id;
-        if (myId == null) return;
-        final names = await ref.read(memberNamesProvider.future);
-        final store = ref.read(noteSeenStoreProvider);
-        final notifiedUntil = await store.readNotified();
-        DateTime? newest;
-        // Oldest → newest so multiple catch-up notes read in order.
-        for (final note in notes.reversed) {
-          if (note.fromMemberId == myId) continue;
-          if (notifiedUntil != null &&
-              !note.createdAt.isAfter(notifiedUntil)) {
-            continue;
+        try {
+          final myId = (await ref.read(myMemberProvider.future))?.id;
+          if (myId == null) return;
+          final names = await ref.read(memberNamesProvider.future);
+          final store = ref.read(noteSeenStoreProvider);
+          final notifiedUntil = await store.readNotified();
+          DateTime? newest;
+          // Oldest → newest so multiple catch-up notes read in order.
+          for (final note in notes.reversed) {
+            if (note.fromMemberId == myId) continue;
+            if (notifiedUntil != null &&
+                !note.createdAt.isAfter(notifiedUntil)) {
+              continue;
+            }
+            if (!_sessionNotifiedNoteIds.add(note.id)) continue;
+            // The names cache can lag a fresh boot — a nameless "Message
+            // from" reads broken, so fall back to the app title (#460).
+            final sender = names[note.fromMemberId] ?? '';
+            await ref.read(notificationServiceProvider).showNow(
+                  title: sender.isEmpty
+                      ? (l10n?.pushPendingTitle ?? 'DesKilo')
+                      : (l10n?.memberNoteReceived(sender) ??
+                          'Message from $sender'),
+                  // #523 — reference tokens read as their labels.
+                  body: notePlainText(note.body),
+                );
+            if (newest == null || note.createdAt.isAfter(newest)) {
+              newest = note.createdAt;
+            }
           }
-          if (!_sessionNotifiedNoteIds.add(note.id)) continue;
-          // The names cache can lag a fresh boot — a nameless "Message
-          // from" reads broken, so fall back to the app title (#460).
-          final sender = names[note.fromMemberId] ?? '';
-          await ref.read(notificationServiceProvider).showNow(
-                title: sender.isEmpty
-                    ? (l10n?.pushPendingTitle ?? 'DesKilo')
-                    : (l10n?.memberNoteReceived(sender) ??
-                        'Message from $sender'),
-                // #523 — reference tokens read as their labels.
-                body: notePlainText(note.body),
-              );
-          if (newest == null || note.createdAt.isAfter(newest)) {
-            newest = note.createdAt;
-          }
+          if (newest != null) await store.writeNotified(newest);
+        } catch (e, st) {
+          // A missed local announcement is not worth a crash; the note
+          // is still in the inbox and on the badge.
+          TraceLogger.instance.warn('inbox', 'note announcement failed',
+              error: e, stackTrace: st);
         }
-        if (newest != null) await store.writeNotified(newest);
       }());
     });
 

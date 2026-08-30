@@ -25,7 +25,10 @@ async function apiKey(
 Deno.serve(async (req: Request): Promise<Response> => {
   if (req.method !== "POST") return new Response("method_not_allowed", { status: 405 });
 
-  const form = await req.formData().catch(() => null);
+  const form = await req.formData().catch((error) => {
+    console.warn("mollie-webhook: unreadable form body", error);
+    return null;
+  });
   const paymentId = form?.get("id");
   if (typeof paymentId !== "string" || paymentId.length === 0) {
     return new Response("invalid_request", { status: 400 });
