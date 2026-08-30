@@ -12,6 +12,7 @@ import 'core/notifications/local_notification_service.dart';
 import 'core/notifications/notification_providers.dart';
 import 'core/notifications/notification_service.dart';
 import 'core/trace/trace_hooks.dart';
+import 'core/trace/trace_provider_observer.dart';
 import 'core/trace/trace_logger.dart';
 
 Future<void> main() async {
@@ -64,6 +65,8 @@ Future<void> main() async {
 
   runApp(
     ProviderScope(
+      // #742 — every provider failure lands in the trace.
+      observers: const [TraceProviderObserver()],
       overrides: [
         notificationServiceProvider.overrideWithValue(notifications),
       ],

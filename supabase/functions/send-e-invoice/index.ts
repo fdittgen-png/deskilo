@@ -151,7 +151,8 @@ Deno.serve(async (req) => {
   };
   try {
     payload = await req.json();
-  } catch {
+  } catch (error) {
+    console.warn("send-e-invoice: invalid body", error);
     return json({ error: "invalid body" }, 400);
   }
   const workspaceId = payload.workspace_id ?? "";
@@ -264,6 +265,7 @@ Deno.serve(async (req) => {
         bytes2,
       );
     } catch (error) {
+      console.error("send-e-invoice: VAT declaration transmission failed", error);
       outcome2 = {
         status: "failed",
         externalId: "",
@@ -319,6 +321,7 @@ Deno.serve(async (req) => {
       bytes,
     );
   } catch (error) {
+    console.error("send-e-invoice: transmission failed", error);
     outcome = {
       status: "failed",
       externalId: "",
