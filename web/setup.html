@@ -24,6 +24,8 @@ label{display:block;margin:12px 0 4px;font-weight:600;font-size:.92rem}
 .hint{font-size:.8rem;color:var(--muted);margin:2px 0 0}
 .help{display:inline-block;font-size:.76rem;color:var(--accent);text-decoration:none;margin:3px 0 0;border:1px solid var(--line);border-radius:999px;padding:2px 9px}
 .help:hover{background:var(--line)}
+.helpq{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;border:1px solid var(--line);color:var(--accent);font-size:.72rem;font-weight:700;text-decoration:none;margin-left:6px;vertical-align:2px;line-height:1}
+.helpq:hover{background:var(--line)}
 .dep{font-size:.8rem;color:var(--muted);background:#f3ede7;border-left:3px solid var(--line);padding:8px 10px;border-radius:0 8px 8px 0;margin:10px 0}
 .dep a{color:var(--accent)}
 input[type=text],input[type=email],input[type=number],input[type=time],input[type=date],select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;font-size:.95rem;background:#fff;color:var(--ink)}
@@ -318,6 +320,12 @@ const FEATURE_HELP={calendarTab:'calendar',calendarHub:'calendar',eventsTab:'val
  workingHours:'availability',roleManagement:'roles',coOwner:'roles',deletionRequests:'validation',
  vatManagement:'vat',vatDeclarations:'vat',einvoiceCustomerDelivery:'einvoice',memberReports:'faces',
  regionalFormats:'region',dataAccessLog:'privacy',memberDataExport:'privacy',planMemberPhotos:'plan',planObjectDelete:'plan'};
+let BUILDING='';
+const STEP_HELP={identity:'identity',features:'features',availability:'availability',plan:'plan',billing:'billing',services:'services',pay:'pay',legal:'legal',roles:'validation',members:'members',summary:'features',review:'identity'};
+// The little ? beside every field: straight to the guide section, the app
+// location in the tooltip. Falls back to the step's own section.
+function helpIcon(key){key=key&&HELP[key]?key:STEP_HELP[BUILDING];if(!key||!HELP[key])return null;const[app,anchor]=HELP[key];return h('a',{class:'helpq',href:WIKI+anchor,target:'_blank',rel:'noopener',title:'Aide — dans l\u2019app : '+app+' (ouvre le guide)'},'?')}
+const lbl=(t,hk)=>h('label',{},t,helpIcon(hk));
 function help(key){if(!key||!HELP[key])return null;const[app,anchor]=HELP[key];return h('a',{class:'help',href:WIKI+anchor,target:'_blank',rel:'noopener'},'ⓘ Dans l’app : '+app+' · guide ↗')}
 // "This question is hidden because…" — the guide's way of saying why,
 // with a jump to the step that would change the answer.
@@ -327,10 +335,10 @@ const needs=(k,stepId='features')=>dep('Masqué : nécessite la fonctionnalité 
 // ------------------------------------------------------------------ UI helpers
 const h=(tag,attrs={},...kids)=>{const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==='onclick'||k==='oninput'||k==='onchange')e[k]=v;else if(k==='html')e.innerHTML=v;else e.setAttribute(k,v)}for(const k of kids){if(k!=null)e.append(k)}return e};
 function get(path){const p=path.split('.');let o=S;for(const k of p)o=o[k];return o}
-function input(label,path,hint,type='text',ph='',hk){const i=h('input',{type,placeholder:ph});i.value=get(path)??'';i.oninput=()=>set(path,i.value);const d=h('div',{},h('label',{},label),i);if(hint)d.append(h('p',{class:'hint'},hint));d.append(help(hk));return d}
-function selectEl(label,path,opts,hint,onch,hk){const s=h('select');for(const[v,t]of opts)s.append(h('option',{value:v},t));s.value=get(path);if(s.value!==String(get(path))&&opts.length){s.value=opts[0][0];set(path,opts[0][0])}s.onchange=()=>{set(path,s.value);if(onch)onch(s.value);render()};const d=h('div',{},h('label',{},label),s);if(hint)d.append(h('p',{class:'hint'},hint));d.append(help(hk));return d}
+function input(label,path,hint,type='text',ph='',hk){const i=h('input',{type,placeholder:ph});i.value=get(path)??'';i.oninput=()=>set(path,i.value);const d=h('div',{},h('label',{},label,helpIcon(hk)),i);if(hint)d.append(h('p',{class:'hint'},hint));return d}
+function selectEl(label,path,opts,hint,onch,hk){const s=h('select');for(const[v,t]of opts)s.append(h('option',{value:v},t));s.value=get(path);if(s.value!==String(get(path))&&opts.length){s.value=opts[0][0];set(path,opts[0][0])}s.onchange=()=>{set(path,s.value);if(onch)onch(s.value);render()};const d=h('div',{},h('label',{},label,helpIcon(hk)),s);if(hint)d.append(h('p',{class:'hint'},hint));return d}
 function chip(text,on,cb){const c=h('button',{class:'chip'+(on?' on':''),type:'button'},text);c.onclick=()=>{cb(!on);render()};return c}
-function checkbox(label,desc,checked,onch,cls=''){const c=h('input',{type:'checkbox'});c.checked=!!checked;c.onchange=()=>{onch(c.checked);render()};return h('label',{class:'check '+cls},c,h('span',{},label,desc?h('div',{class:'d'},desc):null))}
+function checkbox(label,desc,checked,onch,cls='',hk){const c=h('input',{type:'checkbox'});c.checked=!!checked;c.onchange=()=>{onch(c.checked);render()};return h('label',{class:'check '+cls},c,h('span',{},label,hk?helpIcon(hk):null,desc?h('div',{class:'d'},desc):null))}
 function section(title,...kids){const s=h('section',{},h('h2',{},title),h('div',{class:'body'},...kids));s.querySelector('h2').onclick=()=>s.classList.toggle('closed');return s}
 function tableRows(cols,rows,make,add,addLabel){const t=h('table',{},h('tr',{},...cols.map(c=>h('th',{},c)),h('th')));rows.forEach((r,i)=>{const tr=h('tr',{},...make(r,i).map(c=>h('td',{},c)),h('td',{},h('button',{class:'del',type:'button',onclick:()=>{rows.splice(i,1);save();render()}},'✕')));t.append(tr)});const w=h('div',{},t,h('button',{class:'add',type:'button',onclick:()=>{rows.push(add());save();render()}},addLabel));return w}
 function cell(path,type='text',ph=''){const i=h('input',{type,placeholder:ph});i.value=get(path)??'';i.oninput=()=>set(path,i.value);return i}
@@ -359,7 +367,7 @@ const STEPS=[
  build(){const kids=[h('p',{class:'hint'},'Une fonctionnalité en retrait dépend de celle au-dessus : elle n\'est proposée que si son parent est activé.'),help('features')];
   for(const[k,t,d]of FEATURES){const parent=REQUIRES[k];const avail=!parent||on(parent);
    kids.push(checkbox(t,avail?d:d+' — nécessite « '+featureTitle(parent)+' ».',avail&&S.features[k],v=>{S.features[k]=v;if(!v)for(const[c,p]of Object.entries(REQUIRES))if(!on(c))S.features[c]=false;save()},(parent?'child':'')+(avail?'':' off')));
-   const fh=help(FEATURE_HELP[k]);if(fh)kids[kids.length-1].querySelector('span').append(fh);
+   const fh=helpIcon(FEATURE_HELP[k]);if(fh)kids[kids.length-1].querySelector('span').insertBefore(fh,kids[kids.length-1].querySelector('span div'));
    if(!avail)kids[kids.length-1].querySelector('input').disabled=true}
   return kids},
  check(){const f=[];const n=FEATURES.filter(([k])=>on(k)).length;f.push(F.ok(n+' fonctionnalités actives sur '+FEATURES.length+'.'));
@@ -372,20 +380,20 @@ const STEPS=[
  build(){const wd=h('div',{class:'chips'},...WD.map(([v,t])=>chip(t,S.weekdays.includes(v),o=>{S.weekdays=o?[...S.weekdays,v]:S.weekdays.filter(x=>x!==v);save()})));
   const gran=on('workingHours')?GRAN:GRAN.filter(([v])=>v==='half_day'||v==='full_day');
   const halfUsed=['half_day','hours','flexible'].includes(S.granularity);
-  const k=[h('label',{},"Jours d'ouverture"),wd,help('availability'),
+  const k=[lbl("Jours d'ouverture",'availability'),wd,help('availability'),
    selectEl('Granularité des réservations','granularity',gran,on('workingHours')?'':'Sans « Horaires de travail », seules les demi-journées et journées entières existent.',null,'availability'),
    on('workingHours')?null:needs('workingHours'),
    h('div',{class:'row'},input('Début de journée','dayStart','','time','','availability'),halfUsed?input('Limite de demi-journée','boundary','Matin avant, après-midi après.','time','','availability'):null,input('Fin de journée','dayEnd','','time','','availability')),
-   ...(S.granularity==='hours'?[h('label',{},'Conversion en demi-journées (granularité « heures réelles »)'),h('p',{class:'hint'},"Le temps réservé est converti en équivalents demi-journée pour le quota et la facture."),
+   ...(S.granularity==='hours'?[lbl('Conversion en demi-journées (granularité « heures réelles »)','availability'),h('p',{class:'hint'},"Le temps réservé est converti en équivalents demi-journée pour le quota et la facture."),
      h('div',{class:'row'},input('Heures valant une demi-journée','halfDayHours','','number','4','availability'),input('Heures valant une journée','fullDayHours','','number','8','availability'))]:[]),
-   h('label',{},'Jours de fermeture'),tableRows(['Date'],S.closures,(r,i)=>[cell(`closures.${i}`,'date')],()=>'','+ Ajouter un jour de fermeture')];
-  if(on('bookingPolicies')){k.push(h('label',{},'Règles de réservation'),help('booking'),
-   checkbox('Autoriser les réservations passées','Enregistrer après coup une réservation déjà terminée (hier et avant). Réserver plus tôt le même jour reste toujours permis.',S.policies.allowPast,v=>{S.policies.allowPast=v;save()}),
-   checkbox('Les admins peuvent faire le check-out des membres',"Un admin peut terminer le pointage en cours d'un membre ; sinon le check-out est strictement personnel.",S.policies.adminCheckout,v=>{S.policies.adminCheckout=v;save()}),
+   lbl('Jours de fermeture','availability'),tableRows(['Date'],S.closures,(r,i)=>[cell(`closures.${i}`,'date')],()=>'','+ Ajouter un jour de fermeture')];
+  if(on('bookingPolicies')){k.push(lbl('Règles de réservation','booking'),help('booking'),
+   checkbox('Autoriser les réservations passées','Enregistrer après coup une réservation déjà terminée (hier et avant). Réserver plus tôt le même jour reste toujours permis.',S.policies.allowPast,v=>{S.policies.allowPast=v;save()},'','booking'),
+   checkbox('Les admins peuvent faire le check-out des membres',"Un admin peut terminer le pointage en cours d'un membre ; sinon le check-out est strictement personnel.",S.policies.adminCheckout,v=>{S.policies.adminCheckout=v;save()},'','booking'),
    selectEl("En dehors des heures d'ouverture",'policies.outsideHours',OUTSIDE,'« Interdit » refuse aussi la fenêtre qui déborde (16–20). « Spontané seulement » laisse passer l\'arrivée impromptue aux deux bords de la journée et refuse la réservation à l\'avance. « Gratuit » autorise sans compter ni facturer. « Facturé » (défaut) compte comme un usage ordinaire, sauf les jours où le membre tient déjà une réservation dans les heures.',null,'booking'),
    input('Réservations simultanées par membre','policies.simultaneous',"Combien de réservations peuvent se chevaucher pour un même membre, pointages compris. 1 par défaut. Une autorisation personnelle plus élevée se donne membre par membre (étape Membres) et prime sur ce nombre.",'number','1','booking'))}
   else k.push(needs('bookingPolicies'),h('p',{class:'hint'},'Sans cette fonctionnalité : pas de réservation passée, check-out personnel, hors heures facturé, une réservation à la fois.'));
-  k.push(h('label',{},'Limites de réservation'),help('limits'),
+  k.push(lbl('Limites de réservation','limits'),help('limits'),
    h('div',{class:'row'},selectEl('Horizon de réservation','horizonDays',HORIZON,'Au-delà, la réservation est refusée.',null,'limits'),selectEl('Durée minimale','minDuration',DURATIONS,'Une arrivée à 11:45 pour la limite de 12:00 est refusée, trop courte.',null,'limits'),selectEl('Durée maximale','maxDuration',DURATIONS,'Une réservation se termine le jour où elle commence.',null,'limits')),
    h('details',{},h('summary',{},'Comment les réservations se comporteront (résumé du serveur)'),
     h('div',{class:'matrix',html:'<table><tr><th>Demande</th><th>Demi-journées</th><th>Journées entières</th><th>Grille de minutes (5/15/30/60)</th><th>Heures réelles / plage libre</th></tr><tr><td>Matin ou après-midi</td><td>✅</td><td>❌ journée entière exigée</td><td>✅ si les bords tombent sur la grille</td><td>✅</td></tr><tr><td>Journée de travail entière</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr><tr><td>Fenêtre atypique (9–15)</td><td>❌</td><td>❌</td><td>✅ si sur la grille</td><td>✅</td></tr><tr><td>Avant l\'ouverture / après les heures</td><td colspan="4">Réponse de « En dehors des heures d\'ouverture » : interdit, spontané seulement, gratuit ou facturé.</td></tr><tr><td>Hors grille (10:02)</td><td>—</td><td>—</td><td>❌ le refus nomme la grille</td><td>—</td></tr><tr><td colspan="5">Sur toutes les granularités : durée minimale et maximale ; rien ne franchit minuit ; hier et avant ❌ sauf « réservations passées » ; un pointage spontané commence aujourd\'hui ; au-delà de l\'horizon, jour fermé, place occupée : refus nommé ; simultanéité selon l\'autorisation.</td></tr></table>'}),
@@ -407,12 +415,12 @@ const STEPS=[
   const whole=on('levelBooking');
   S.levels.forEach((lv,li)=>{const offices=[];
    lv.offices.forEach((of,oi)=>{const desks=tableRows(['Nom de la table','Places','Préfixe des places'],of.desks,(d)=>[bind(d,'name'),bind(d,'seats','number'),bind(d,'prefix')],()=>({name:'Table '+(of.desks.length+1),seats:4,prefix:'Place'}),'+ Ajouter une table');
-    offices.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},h('label',{},'Nom du bureau'),bind(of,'name')),
-     whole?h('div',{},h('label',{},'Réservable en entier'),(()=>{const s=h('select');s.append(h('option',{value:'no'},'Non'),h('option',{value:'yes'},'Oui'));s.value=of.bookable?'yes':'no';s.onchange=()=>{of.bookable=s.value==='yes';save();render()};return s})()):null,
-     whole&&of.bookable?h('div',{},h('label',{},'Prix / demi-journée ('+S.currency+')'),bind(of,'price','number')):h('div')),desks,
+    offices.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},lbl('Nom du bureau','plan'),bind(of,'name')),
+     whole?h('div',{},lbl('Réservable en entier','whole'),(()=>{const s=h('select');s.append(h('option',{value:'no'},'Non'),h('option',{value:'yes'},'Oui'));s.value=of.bookable?'yes':'no';s.onchange=()=>{of.bookable=s.value==='yes';save();render()};return s})()):null,
+     whole&&of.bookable?h('div',{},lbl('Prix / demi-journée ('+S.currency+')','whole'),bind(of,'price','number')):h('div')),desks,
      h('button',{class:'del',type:'button',onclick:()=>{lv.offices.splice(oi,1);save();render()}},'✕ Supprimer ce bureau')))});
-   body.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},h('label',{},"Nom de l'étage"),bind(lv,'name')),
-    whole?h('div',{},h('label',{},'Étage réservable en entier ?'),(()=>{const s=h('select');s.append(h('option',{value:'no'},'Non'),h('option',{value:'yes'},'Oui'));s.value=lv.bookable?'yes':'no';s.onchange=()=>{lv.bookable=s.value==='yes';save()};return s})()):null),
+   body.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},lbl("Nom de l'étage",'plan'),bind(lv,'name')),
+    whole?h('div',{},lbl('Étage réservable en entier ?','whole'),(()=>{const s=h('select');s.append(h('option',{value:'no'},'Non'),h('option',{value:'yes'},'Oui'));s.value=lv.bookable?'yes':'no';s.onchange=()=>{lv.bookable=s.value==='yes';save()};return s})()):null),
     ...offices,h('button',{class:'add',type:'button',onclick:()=>{lv.offices.push({name:'Bureau '+(lv.offices.length+1),bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]});save();render()}},'+ Ajouter un bureau'),
     h('button',{class:'del',type:'button',onclick:()=>{S.levels.splice(li,1);save();render()}},'✕ Supprimer cet étage')))});
   body.push(h('button',{class:'add',type:'button',onclick:()=>{S.levels.push({name:(S.levels.length+1)+'e étage',offices:[{name:'Bureau 1',bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]}]});save();render()}},'+ Ajouter un étage'));
@@ -424,11 +432,11 @@ const STEPS=[
   return f}},
 
 {id:'billing',title:'Abonnements',why:"Ce que coûte un abonnement selon son pourcentage, le tarif d'une demi-journée au-delà, et les forfaits de jours que les membres pourront acheter.",applies(){return on('moneyTab')},
- build(){return[help('billing'),h('label',{},'Paliers tarifaires'),h('p',{class:'hint'},'Le prix mensuel selon le pourcentage d’abonnement, et le tarif d’une demi-journée de dépassement. Les paliers doivent couvrir 0–100 % sans trou.'),
+ build(){return[help('billing'),lbl('Paliers tarifaires','billing'),h('p',{class:'hint'},'Le prix mensuel selon le pourcentage d’abonnement, et le tarif d’une demi-journée de dépassement. Les paliers doivent couvrir 0–100 % sans trou.'),
   tableRows(['dès %','jusqu’à %','Tarif '+S.currency+'/mois','Dépassement '+S.currency+'/demi-j.'],S.tiers,(t)=>[bind(t,'from','number'),bind(t,'to','number'),bind(t,'fee','number'),bind(t,'over','number')],()=>({from:'',to:'',fee:'',over:''}),'+ Ajouter un palier'),
-  h('label',{},"Niveaux d'abonnement proposés (%)"),h('div',{class:'chips'},...['25','50','75','80','100'].map(v=>chip(v+' %',S.subLevels.includes(v),o=>{S.subLevels=o?[...S.subLevels,v]:S.subLevels.filter(x=>x!==v);save()}))),
-  checkbox('Autoriser une valeur libre négociée','',S.freeLevel,v=>{S.freeLevel=v;save()}),
-  h('label',{},'Forfaits de jours'),h('p',{class:'hint'},"Des packs de jours à acheter (Finances → Paiements → Acheter un forfait). Sans forfait, l'option « Forfaits » de l'étape Membres n'est pas proposée."),help('packages'),
+  lbl("Niveaux d'abonnement proposés (%)",'billing'),h('div',{class:'chips'},...['25','50','75','80','100'].map(v=>chip(v+' %',S.subLevels.includes(v),o=>{S.subLevels=o?[...S.subLevels,v]:S.subLevels.filter(x=>x!==v);save()}))),
+  checkbox('Autoriser une valeur libre négociée','',S.freeLevel,v=>{S.freeLevel=v;save()},'','billing'),
+  lbl('Forfaits de jours','packages'),h('p',{class:'hint'},"Des packs de jours à acheter (Finances → Paiements → Acheter un forfait). Sans forfait, l'option « Forfaits » de l'étape Membres n'est pas proposée."),help('packages'),
   tableRows(['Nom','Jours','Prix '+S.currency],S.packages,(p)=>[bind(p,'name'),bind(p,'days','number'),bind(p,'price','number')],()=>({name:'',days:'',price:''}),'+ Ajouter un forfait')]},
  check(){const f=[];const tiers=S.tiers.filter(t=>t.fee!=='').map(t=>({from:num(t.from)||0,to:num(t.to)??100,fee:num(t.fee),over:num(t.over)})).sort((a,b)=>a.from-b.from);
   if(!tiers.length)f.push(F.warn('Aucun palier tarifaire : les abonnements seront gratuits jusqu\'à ce que vous en ajoutiez dans l\'app.','billing'));
@@ -443,24 +451,24 @@ const STEPS=[
   selectEl('Régime de TVA','vatRegime',[['not_subject','Hors du champ de la TVA'],['exempt','Franchise / exonéré (avec n° de TVA)'],['registered','Assujetti à la TVA (taux sur les prix)']],"Décide des questions suivantes : taux, périodicité de déclaration, motif d'exonération.",null,'vat'),
   h('div',{class:'row'},input("Numéro d'immatriculation",'regNumber',S.org==='association'?'RNA W… · SIRET si attribué':'RCS / SIREN','text','','legal'),S.vatRegime!=='not_subject'?input('Numéro de TVA','vatId','','text','','vat'):null),
   !registered()?input('Motif de non-application de la TVA','exemption','Ex. « TVA non applicable, art. 293 B du CGI » ou « Exonération de TVA, art. 261, 7-1° du CGI ». Imprimé sur chaque facture.','text','','vat'):null];
-  if(registered()){if(on('vatManagement')){k.push(h('label',{},'Taux de TVA (le premier devient le taux par défaut)'),h('p',{class:'hint'},'Point de départ, pas un conseil fiscal : dans l’app, chaque service/forfait/accessoire peut porter son propre taux.'),help('vat'),
+  if(registered()){if(on('vatManagement')){k.push(lbl('Taux de TVA (le premier devient le taux par défaut)','vat'),h('p',{class:'hint'},'Point de départ, pas un conseil fiscal : dans l’app, chaque service/forfait/accessoire peut porter son propre taux.'),help('vat'),
     ...(VAT_NOTES[S.country]?[h('p',{class:'hint'},VAT_NOTES[S.country])]:[]),
     tableRows(['Libellé','Taux %'],S.vatRates,(r)=>[bind(r,'label'),bind(r,'percent','number')],()=>({label:'',percent:''}),'+ Ajouter un taux'),
     VAT_RATES[S.country]?(()=>{const b=h('button',{class:'chip',type:'button'},'Proposer les taux usuels : '+country()[1]+' ('+VAT_RATES[S.country].map(r=>r[1]).join(', ')+' %)');b.onclick=()=>{S.vatRates=VAT_RATES[S.country].map(([label,percent])=>({label,percent}));save();render()};return b})():null)}
    else k.push(needs('vatManagement'),h('p',{class:'hint'},'Assujetti sans « Gestion de la TVA » : les factures partiront sans taux. Activez la fonctionnalité pour saisir vos taux.'));
    if(on('vatDeclarations'))k.push(selectEl('Période de déclaration de TVA','vatPeriod',VATPERIOD,'La périodicité que votre régime impose. La déclaration agrège les factures émises de la période, par taux (CA3, UStVA…), et se transmet ou s\'exporte en PDF/XML.',null,'vat'));else k.push(needs('vatDeclarations'))}
-  k.push(h('label',{},'Adresse de facturation'),h('div',{class:'row'},input('Rue','street','','text','','legal'),input('Code postal','postal','','text','','legal'),input('Ville','city','','text','','legal')),
-   h('label',{},'Mentions de facturation (vide = formule légale par défaut)'),help('legal'),
+  k.push(lbl('Adresse de facturation','legal'),h('div',{class:'row'},input('Rue','street','','text','','legal'),input('Code postal','postal','','text','','legal'),input('Ville','city','','text','','legal')),
+   lbl('Mentions de facturation (vide = formule légale par défaut)','legal'),help('legal'),
    input('Forme juridique et capital','mentions.legalForm','Ex. Association loi 1901'),input('Modalités de règlement','mentions.terms','Défaut : Règlement à réception.'),
    h('div',{class:'row'},input('Pénalités de retard','mentions.penalty',''),input('Indemnité de recouvrement','mentions.recovery','')),
    h('div',{class:'row'},input('Escompte','mentions.escompte',''),input('Assurance professionnelle','mentions.insurance','')),input('Mentions particulières','mentions.special',''));
-  if(on('dunning')){k.push(h('label',{},'Règles de relance'),help('dunning'),h('p',{class:'hint'},'Le délai avant la première relance est aussi le délai de paiement : passé ce délai, une facture ouverte se lit « en retard » dans l\'app.'),h('div',{class:'row'},input('Niveaux de relance','reminders.levels','','number'),input('Jours avant la 1re relance (délai de paiement)','reminders.firstDays','','number'),input('Jours entre les relances','reminders.betweenDays','','number')));
-   if(on('paymentReminders'))k.push(help('reminders_auto'),checkbox('Relances automatiques','Chaque matin — et dès qu\'un propriétaire ou admin ouvre Finances — les factures ouvertes au-delà du délai reçoivent leur niveau de relance suivant : alerte dans le fil du membre et notification. Décoché : la relance reste un geste manuel.',S.reminders.automatic!==false,v=>{S.reminders.automatic=v;save()}));else k.push(needs('paymentReminders'))}
+  if(on('dunning')){k.push(lbl('Règles de relance','dunning'),help('dunning'),h('p',{class:'hint'},'Le délai avant la première relance est aussi le délai de paiement : passé ce délai, une facture ouverte se lit « en retard » dans l\'app.'),h('div',{class:'row'},input('Niveaux de relance','reminders.levels','','number'),input('Jours avant la 1re relance (délai de paiement)','reminders.firstDays','','number'),input('Jours entre les relances','reminders.betweenDays','','number')));
+   if(on('paymentReminders'))k.push(help('reminders_auto'),checkbox('Relances automatiques','Chaque matin — et dès qu\'un propriétaire ou admin ouvre Finances — les factures ouvertes au-delà du délai reçoivent leur niveau de relance suivant : alerte dans le fil du membre et notification. Décoché : la relance reste un geste manuel.',S.reminders.automatic!==false,v=>{S.reminders.automatic=v;save()},'','reminders_auto'));else k.push(needs('paymentReminders'))}
   else k.push(needs('dunning'));
-  if(isEU()){k.push(h('label',{},'Plateforme de facturation électronique'),help('einvoice'),h('p',{class:'hint'},"Là où DesKilo dépose vos factures EN 16931 : une plateforme agréée, un point d'accès Peppol, une plateforme nationale. Le jeton est stocké côté serveur et n'en ressort jamais — ne le mettez ici que si vous remplissez ce document en privé."),
+  if(isEU()){k.push(lbl('Plateforme de facturation électronique','einvoice'),help('einvoice'),h('p',{class:'hint'},"Là où DesKilo dépose vos factures EN 16931 : une plateforme agréée, un point d'accès Peppol, une plateforme nationale. Le jeton est stocké côté serveur et n'en ressort jamais — ne le mettez ici que si vous remplissez ce document en privé."),
     input('URL de dépôt','einvoice.url','','text','https://…'),h('div',{class:'row'},input('Jeton ou identifiant','einvoice.token',''),input("En-tête d'authentification",'einvoice.header','Authorization par défaut.','text','Authorization')),input('Nom du champ fichier','einvoice.field','file par défaut.','text','file'),
     h('details',{},h('summary',{},'Environnements de test (UAT / Dev)'),h('p',{class:'hint'},"Points d'accès et jetons distincts pour les répétitions ; le choix n'apparaît à l'envoi que si le mode développeur de l'espace est actif."),h('div',{class:'row'},input('URL UAT','einvoice.uatUrl',''),input('Jeton UAT','einvoice.uatToken','')),h('div',{class:'row'},input('URL Dev','einvoice.devUrl',''),input('Jeton Dev','einvoice.devToken',''))));
-   if(on('einvoiceCustomerDelivery'))k.push(h('label',{},'Service de remise au client (seconde destination)'),h('p',{class:'hint'},"Distinct de la plateforme gouvernementale : le point d'accès Peppol du client, son portail ou l'API convenue."),input('URL du service client','einvoice.customerUrl',''),h('div',{class:'row'},input('Jeton client','einvoice.customerToken',''),input("En-tête d'authentification client",'einvoice.customerHeader','','text','Authorization')),input('Nom du champ fichier client','einvoice.customerField','','text','file'));else k.push(needs('einvoiceCustomerDelivery'))}
+   if(on('einvoiceCustomerDelivery'))k.push(lbl('Service de remise au client (seconde destination)','einvoice'),h('p',{class:'hint'},"Distinct de la plateforme gouvernementale : le point d'accès Peppol du client, son portail ou l'API convenue."),input('URL du service client','einvoice.customerUrl',''),h('div',{class:'row'},input('Jeton client','einvoice.customerToken',''),input("En-tête d'authentification client",'einvoice.customerHeader','','text','Authorization')),input('Nom du champ fichier client','einvoice.customerField','','text','file'));else k.push(needs('einvoiceCustomerDelivery'))}
   else k.push(dep('Hors Union européenne ('+country()[1]+') : pas de facture électronique EN 16931, la facture PDF signée suffit.','identity'),help('einvoice'));
   return k},
  check(){const f=[];if(!S.regNumber.trim())f.push(F.warn("Pas de numéro d'immatriculation : les factures en manqueront.",'legal'));
@@ -476,8 +484,8 @@ const STEPS=[
 
 {id:'services',title:'Services et accessoires',why:"Ce que les membres consomment en plus de leur place : services à l'unité (casiers, impression…) et suppléments d'accessoires par demi-journée.",applies(){return on('services')||on('accessorySupplements')},
  build(){const k=[help('services')];const vatCol=registered()&&on('vatManagement');
-  if(on('services'))k.push(h('label',{},'Services (casiers, impression…)'),tableRows(['Nom','Prix '+S.currency,...(vatCol?['TVA % (vide = défaut)']:[])],S.services,(s)=>[bind(s,'name'),bind(s,'price','number'),...(vatCol?[bind(s,'vat','number')]:[])],()=>({name:'',price:'',vat:''}),'+ Ajouter un service'));else k.push(needs('services'));
-  if(on('accessorySupplements'))k.push(h('label',{},'Accessoires de place (écran, bureau debout…)'),h('p',{class:'hint'},'Le supplément se facture par demi-journée réservée. 0 = gratuit.'),tableRows(['Nom','Supplément '+S.currency+'/demi-j.'],S.accessories,(a)=>[bind(a,'name'),bind(a,'supp','number')],()=>({name:'',supp:'0'}),'+ Ajouter un accessoire'));else k.push(needs('accessorySupplements'));
+  if(on('services'))k.push(lbl('Services (casiers, impression…)','services'),tableRows(['Nom','Prix '+S.currency,...(vatCol?['TVA % (vide = défaut)']:[])],S.services,(s)=>[bind(s,'name'),bind(s,'price','number'),...(vatCol?[bind(s,'vat','number')]:[])],()=>({name:'',price:'',vat:''}),'+ Ajouter un service'));else k.push(needs('services'));
+  if(on('accessorySupplements'))k.push(lbl('Accessoires de place (écran, bureau debout…)','services'),h('p',{class:'hint'},'Le supplément se facture par demi-journée réservée. 0 = gratuit.'),tableRows(['Nom','Supplément '+S.currency+'/demi-j.'],S.accessories,(a)=>[bind(a,'name'),bind(a,'supp','number')],()=>({name:'',supp:'0'}),'+ Ajouter un accessoire'));else k.push(needs('accessorySupplements'));
   if(!vatCol&&on('services'))k.push(dep(registered()?'Colonne TVA masquée : nécessite « Gestion de la TVA ».':'Colonne TVA masquée : l\'espace n\'est pas assujetti.',registered()?'features':'legal'));
   return k},
  check(){const f=[];if(on('services')){const n=S.services.filter(s=>s.name.trim()).length;if(!n)f.push(F.warn('Services activés mais aucun défini.','services'));else f.push(F.ok(n+' service(s).'));S.services.filter(s=>s.name.trim()&&!(num(s.price)>=0)).forEach(s=>f.push(F.err('Service « '+s.name+' » sans prix.','services')))}
@@ -489,7 +497,7 @@ const STEPS=[
   if(sc==='uk')k.push(h('div',{class:'row'},input('Account number','pay.account_number',''),input('Sort code','pay.bank_code','')),input('Nom de la banque','pay.bank_name',''),input('IBAN (international)','pay.iban','Facultatif.'));
   if(sc==='us')k.push(h('div',{class:'row'},input('Account number','pay.account_number',''),input('Routing number (ABA)','pay.bank_code','')),input('Nom de la banque','pay.bank_name',''));
   if(sc==='ca')k.push(h('div',{class:'row'},input('Account number','pay.account_number',''),input('Transit + institution','pay.bank_code','5 chiffres + 3 chiffres.')),input('Nom de la banque','pay.bank_name',''));
-  k.push(h('label',{},'Moyens mobiles'),h('div',{class:'row'},input('Lien ou identifiant PayPal.me','pay.paypal_me',''),isEU()?input('Numéro Wero','pay.wero','Wero fonctionne dans les pays de la zone euro qui l\'ont rejoint.'):null),
+  k.push(lbl('Moyens mobiles','pay'),h('div',{class:'row'},input('Lien ou identifiant PayPal.me','pay.paypal_me',''),isEU()?input('Numéro Wero','pay.wero','Wero fonctionne dans les pays de la zone euro qui l\'ont rejoint.'):null),
    h('div',{class:'row'},S.country==='FR'?input('Numéro ou identifiant Lydia','pay.lydia',''):null,input('Wisetag / lien Wise','pay.wise','')),input('Indication de référence','pay.reference','Ex. « Nom + mois ».'));
   if(on('onlinePayments'))k.push(dep("Paiements en ligne activés : les clés PayPal, Stripe, Mollie ou Wero se configurent dans l'app, côté serveur — jamais dans ce document.",'features'),help('online'));
   return k},
@@ -499,21 +507,21 @@ const STEPS=[
 {id:'roles',title:'Rôles et validations',why:"Qui peut faire quoi, et quelles actions attendent une confirmation avant de compter. Le propriétaire détient toujours toutes les permissions.",
  build(){const k=[];
   if(on('roleManagement')){k.push(help('roles'));for(const[role,label]of[['co_owner','Copropriétaire'],['admin','Admin'],['member','Membre']]){if(role==='co_owner'&&!on('coOwner'))continue;
-    k.push(h('div',{class:'card'},h('label',{},label),...PERMS.filter(([p])=>p!=='issueInvoices'||on('invoicing')).filter(([p])=>p!=='manageServices'||on('services')).filter(([p])=>p!=='manageDocuments'||on('documents')).filter(([p])=>(p!=='viewNegotiations'&&p!=='manageNegotiations')||on('priceNegotiations')).map(([p,t])=>checkbox(t,'',S.perms[role].includes(p),v=>{S.perms[role]=v?[...S.perms[role],p]:S.perms[role].filter(x=>x!==p);save()}))))}}
+    k.push(h('div',{class:'card'},lbl(label,'roles'),...PERMS.filter(([p])=>p!=='issueInvoices'||on('invoicing')).filter(([p])=>p!=='manageServices'||on('services')).filter(([p])=>p!=='manageDocuments'||on('documents')).filter(([p])=>(p!=='viewNegotiations'&&p!=='manageNegotiations')||on('priceNegotiations')).map(([p,t])=>checkbox(t,'',S.perms[role].includes(p),v=>{S.perms[role]=v?[...S.perms[role],p]:S.perms[role].filter(x=>x!==p);save()},'',p.endsWith('Negotiations')?'negotiations':'roles'))))}}
   else k.push(needs('roleManagement'),h('p',{class:'hint'},'Sans gestion des rôles, la matrice par défaut s\'applique : les admins gèrent membres, documents, services, dépenses et consultent les finances ; les copropriétaires ont tout.'),help('roles'));
   if(on('adminInvoicing'))k.push(dep('« Les admins émettent des factures » est activé : la permission d\'émission est déléguée aux admins par la fonctionnalité elle-même.','features'));
-  k.push(h('label',{},'Règle de validation par défaut'),help('validation'),h('p',{class:'hint'},"Elle s'applique à tous les domaines sans règle propre. Personne ne valide son propre événement."),
-   h('div',{class:'row'},input('Validations requises','validation.required','','number'),checkbox('Signature du propriétaire toujours requise','',S.validation.ownerSignOff,v=>{S.validation.ownerSignOff=v;save()})),
-   h('label',{},'Règles par domaine'),h('p',{class:'hint'},"Cochez un domaine pour lui donner sa propre règle ; décoché, il hérite de la règle par défaut. Seuls les domaines de vos fonctionnalités sont proposés."));
+  k.push(lbl('Règle de validation par défaut','validation'),help('validation'),h('p',{class:'hint'},"Elle s'applique à tous les domaines sans règle propre. Personne ne valide son propre événement."),
+   h('div',{class:'row'},input('Validations requises','validation.required','','number'),checkbox('Signature du propriétaire toujours requise','',S.validation.ownerSignOff,v=>{S.validation.ownerSignOff=v;save()},'','validation')),
+   lbl('Règles par domaine','validation'),h('p',{class:'hint'},"Cochez un domaine pour lui donner sa propre règle ; décoché, il hérite de la règle par défaut. Seuls les domaines de vos fonctionnalités sont proposés."));
   const gate={service:'services',reservation_delete:'deletionRequests',space_reservation:'levelBooking',invoice_payment:'invoicing',invoice_writeoff:'invoicing',payment:'moneyTab',expense:'moneyTab',adjustment:'moneyTab'};
   for(const[dk,t]of DOMAINS){const g=gate[dk];if(g&&!on(g)){S.domains[dk].on=false;continue}const d=S.domains[dk];
-   const head=checkbox(t,'',d.on,v=>{d.on=v;save()});if(!d.on){k.push(head);continue}
+   const head=checkbox(t,'',d.on,v=>{d.on=v;save()},'','validation');if(!d.on){k.push(head);continue}
    const req=h('input',{type:'number'});req.value=d.required;req.oninput=()=>{d.required=req.value;save()};
-   const row=[h('div',{},h('label',{},'Validations requises'),req),h('div',{},h('label',{},' '),checkbox('Signature du propriétaire','',d.ownerSignOff,v=>{d.ownerSignOff=v;save()}))];
-   if(on('validationScopes')){const sc=h('select');for(const[v,t]of[['admins','Les admins (propriétaire compris)'],['members','Tous les membres']])sc.append(h('option',{value:v},t));sc.value=d.validators||'admins';sc.onchange=()=>{d.validators=sc.value;save()};row.unshift(h('div',{},h('label',{},'Qui valide'),sc,help('scopes'),h('p',{class:'hint'},'Les personnes désignées se choisissent dans l\'app, une fois les membres invités (Réglages → Règles de validation).')))}
+   const row=[h('div',{},lbl('Validations requises','validation'),req),h('div',{},h('label',{},' '),checkbox('Signature du propriétaire','',d.ownerSignOff,v=>{d.ownerSignOff=v;save()},'','validation'))];
+   if(on('validationScopes')){const sc=h('select');for(const[v,t]of[['admins','Les admins (propriétaire compris)'],['members','Tous les membres']])sc.append(h('option',{value:v},t));sc.value=d.validators||'admins';sc.onchange=()=>{d.validators=sc.value;save()};row.unshift(h('div',{},lbl('Qui valide','scopes'),sc,help('scopes'),h('p',{class:'hint'},'Les personnes désignées se choisissent dans l\'app, une fois les membres invités (Réglages → Règles de validation).')))}
    k.push(h('div',{class:'card'},head,h('div',{class:'row'},...row)))}
-  if(on('deletionRequests'))k.push(h('label',{},'Exception : validation automatique des suppressions'),h('p',{class:'hint'},"La seule entorse à « personne ne valide son propre événement », limitée aux suppressions de réservation. Deux interrupteurs indépendants, désactivés par défaut."),
-   checkbox('Les propriétaires suppriment sans validation','',S.autoValidate.owner,v=>{S.autoValidate.owner=v;save()}),checkbox('Les admins suppriment sans validation','',S.autoValidate.admin,v=>{S.autoValidate.admin=v;save()}));
+  if(on('deletionRequests'))k.push(lbl('Exception : validation automatique des suppressions','validation'),h('p',{class:'hint'},"La seule entorse à « personne ne valide son propre événement », limitée aux suppressions de réservation. Deux interrupteurs indépendants, désactivés par défaut."),
+   checkbox('Les propriétaires suppriment sans validation','',S.autoValidate.owner,v=>{S.autoValidate.owner=v;save()},'','validation'),checkbox('Les admins suppriment sans validation','',S.autoValidate.admin,v=>{S.autoValidate.admin=v;save()},'','validation'));
   else{S.autoValidate={admin:false,owner:false};k.push(needs('deletionRequests'))}
   return k},
  check(){const f=[];if((parseInt(S.validation.required)||0)<1)f.push(F.err('La règle par défaut exige au moins une validation.','roles'));
@@ -529,11 +537,11 @@ const STEPS=[
     (()=>{const s=h('select');s.append(h('option',{value:'member'},'Membre'),h('option',{value:'admin'},'Admin'));s.value=m.role||'member';s.onchange=()=>{m.role=s.value;save()};return s})(),
     (()=>{const s=h('select');(S.freeLevel?['25','50','75','80','100']:S.subLevels.length?S.subLevels:['100']).forEach(v=>s.append(h('option',{value:v},v+' %')));if(S.freeLevel){s.remove();return bind(m,'pct','number')}s.value=m.pct||'100';if(![...s.options].some(o=>o.value===s.value)){s.value=s.options[0].value;m.pct=s.value}s.onchange=()=>{m.pct=s.value;save()};return s})(),
     (()=>{const s=h('select');s.append(h('option',{value:'blocked'},'Bloqué'),h('option',{value:'payg'},"À l'usage"));if(pk)s.append(h('option',{value:'packages'},'Forfaits'));s.value=m.overage||'blocked';if(s.value==='packages'&&!pk){s.value='blocked';m.overage='blocked'}s.onchange=()=>{m.overage=s.value;save()};return s})(),
-    ...(whole?[(()=>{const c=h('input',{type:'checkbox'});c.checked=!!m.wholeSpaces;c.onchange=()=>{m.wholeSpaces=c.checked;save()};return c})()]:[]),
+    ...(whole?[(()=>{const c=h('input',{type:'checkbox'});c.title='Peut réserver une table, un bureau ou un niveau entier';c.checked=!!m.wholeSpaces;c.onchange=()=>{m.wholeSpaces=c.checked;save()};return c})()]:[]),
     ...(sim?[bind(m,'simultaneous','number')]:[]),bind(m,'limit','number')],
     ()=>({name:'',email:'',role:'member',pct:S.subLevels[0]||'100',overage:'blocked',wholeSpaces:false,simultaneous:'',limit:''}),'+ Ajouter un membre'),
    !pk&&on('moneyTab')?dep('Option « Forfaits » masquée : aucun forfait de jours défini.','billing'):null,
-   h('label',{},"Message d'invitation, par langue"),help('invites'),h('p',{class:'hint'},"Laissez vide pour utiliser le message traduit intégré. Placeholders : {firstName}, {lastName}, {phone}, {workspaceName}, {workspaceId}, {inviteLink}, {downloadUrl}, {role}. L'invitation part dans la langue choisie à l'envoi, à défaut dans la langue de l'espace."),
+   lbl("Message d'invitation, par langue",'invites'),help('invites'),h('p',{class:'hint'},"Laissez vide pour utiliser le message traduit intégré. Placeholders : {firstName}, {lastName}, {phone}, {workspaceName}, {workspaceId}, {inviteLink}, {downloadUrl}, {role}. L'invitation part dans la langue choisie à l'envoi, à défaut dans la langue de l'espace."),
    ...[['fr','Français'],['en','English'],['de','Deutsch'],['es','Español'],['it','Italiano']].map(([c,t])=>input(t,'invites.'+c,''))];
   if(on('whatsappIntegration'))k.push(input('Lien du groupe WhatsApp','whatsapp','Facultatif — https://chat.whatsapp.com/…','text','','whatsapp'));else k.push(needs('whatsappIntegration'));
   k.push(dep("À la première ouverture, chaque membre (vous compris) accepte l'écran de consentement RGPD — la version du texte et la date sont enregistrées sur son compte ; rien à configurer ici, mais votre invitation peut l'annoncer. Le texte reste lisible à tout moment dans l'app et le guide."),help('consent'));
@@ -643,7 +651,7 @@ function render(){
  STEPS.forEach((st,i)=>{const s=stepStatus(st);const b=h('button',{class:'step'+(st.id===cur&&mode==='wizard'?' cur':'')+(s==='na'?' na':''),type:'button',onclick:()=>{if(s!=='na')go(st.id)}},h('span',{class:'dot '+s}),(i+1)+' · '+st.title);rail.append(b)});
  document.getElementById('allmode').checked=mode==='all';
  const show=mode==='all'?list:[list[idx]];
- for(const st of show){const n=STEPS.indexOf(st)+1;F_.append(section(n+' · '+st.title,h('p',{class:'why'},st.why),...st.build()))}
+ for(const st of show){const n=STEPS.indexOf(st)+1;BUILDING=st.id;F_.append(section(n+' · '+st.title,h('p',{class:'why'},st.why),...st.build()))}BUILDING='';
  const nav=document.getElementById('nav');nav.textContent='';
  if(mode==='wizard'){const prev=list[idx-1],next=list[idx+1];
   nav.append(h('button',{class:'btn ghost',type:'button',onclick:()=>prev&&go(prev.id)},'‹ '+(prev?prev.title:'Début')),
