@@ -75,9 +75,14 @@ Prenotare dalla piantina:
 - **Check-in su prenotazione**: fare check-in significa *sei qui*. Con mezze giornate, giornate intere e orari reali la finestra si apre a **qualsiasi ora del giorno stesso della prenotazione**: alle 10:00 puoi già fare check-in sul tuo pomeriggio delle 12:00. Su una griglia di minuti si apre 15 minuti prima del tuo inizio, o un passo di griglia prima se quel passo è più lungo (così le griglie da 5 e 15 minuti mantengono i 15 minuti, una griglia oraria apre un'ora prima). Si chiude alla fine della prenotazione; fuori dalla finestra il pulsante è disattivato e dice quando apre. Gli admin possono fare il check-in di un membro presente al suo posto (finché *prenota per altri* è attivo).
 - **Check-out**: manuale — e **accorcia la prenotazione ad adesso**, così il posto si libera subito per tutti gli altri. È **personale per impostazione predefinita**: un admin (proprietario compreso) può chiudere il check-in di qualcun altro solo se *Gli amministratori possono fare il check-out dei membri* è attivo (§8). Con l'**auto check-in/out** attivo, le prenotazioni dimenticate si chiudono da sole — la pulizia gira a ogni lettura, quindi una prenotazione della mattina lasciata aperta viene completata alla sua stessa fine già dalle 12:01, non a mezzanotte.
 - **Spazi interi**: **tocca due volte** un tavolo, una stanza o un tratto libero del pavimento — oppure tocca l'**icona livelli** sulla barra dei livelli — per agire sull'**intero tavolo, ufficio o piano**. **Una sola scheda** contiene tutto: il nome dello spazio, il selettore di periodo (es. *gio 6 ago 10:13 → 12:00*) con le stesse opzioni di ripetizione di una postazione, un selettore facoltativo **Per il membro** per gli admin che prenotano per conto di qualcuno, e il pulsante di conferma.
+- **Rendi non prenotabile**: sulla scheda di prenotazione, proprietari e admin (con *Gli admin possono bloccare posti*) mettono il posto fuori servizio da adesso — si legge **bloccato** sulla planimetria finché non viene liberato nella scheda del posto dell'editor.
 - **Selettore orario**: scegli una finestra da→a (o Mattina / Pomeriggio / Giornata intera, secondo la granularità dello spazio) per vedere l'occupazione in qualsiasi momento futuro.
 - I posti possono avere **accessori** (monitor, scrivania regolabile…), alcuni con supplemento per mezza giornata che compare sul tuo estratto.
 - Le prenotazioni contano sui tuoi **giorni mensili** (§9) — oltre il tuo piano, l'app blocca o addebita, secondo ciò che il proprietario ha configurato per te. Un'eccezione: una prenotazione che sta **interamente fuori dagli orari di lavoro** può essere gratuita o esente, secondo la regola fuori-orario dello spazio (§4b).
+
+![](assets/help/images/reserve-plan-closed.jpg)
+
+*La planimetria nell'hub Prenota in un giorno di chiusura: il banner di chiusura, il selettore di vista, la data e i chip di mezza giornata, la barra dei livelli (1 · 2 · livelli) e i controlli di zoom.*
 
 ## 4. Prenotazioni (hub Prenota)
 
@@ -93,6 +98,22 @@ Apri l'hub **Prenota** (pulsante centrale). In alto: due righe di controlli. La 
 Le prenotazioni seguono la **regola di granularità** dello spazio (§8 Disponibilità) — mezze giornate, giornate intere, orari reali (da–a esatto, con le finestre di mezza/giornata intera come scorciatoie), oppure orari liberi di inizio/fine sulla griglia di minuti del proprietario. Mezze giornate e giornate intere coprono l'**orario di lavoro** configurato dello spazio (predefinito 8:00–17:00, con il limite di mezza giornata alle 12:00). Rispettano i **giorni di apertura** e i **giorni di chiusura**, e le regole di prenotazione (orizzonte di anticipo, durata minima e massima). **Una prenotazione finisce sempre nel giorno in cui inizia** — nulla attraversa la mezzanotte; una permanenza che continua domani è la prenotazione di domani, fatta domani (§4b). Esigenze ricorrenti? Prenota una **serie** (giornaliera, feriale, settimanale) — giorni chiusi e conflitti vengono saltati e segnalati.
 
 **Eliminare una prenotazione passata o con check-in è una richiesta, non un'azione.** Una prenotazione il cui inizio è passato — o dove hai già fatto check-in — non si annulla direttamente: la scheda offre invece **Richiedi eliminazione**. Un proprietario o admin decide l'unica domanda che conta per la fatturazione: il check-in è stato semplicemente dimenticato (la prenotazione resta agli atti), o non è mai stata usata (viene rimossa)? La richiesta appare nel flusso Eventi con il tuo motivo facoltativo; le prenotazioni future mai toccate mantengono il normale annullamento con un tocco. Tutto questo percorso viaggia sulla funzionalità **Richieste di eliminazione prenotazioni**: disattivata, una prenotazione iniziata o con check-in non ha né pulsante di annullamento né richiesta — resta semplicemente agli atti.
+
+![](assets/help/images/reserve-day.jpg)
+
+ 
+
+![](assets/help/images/reserve-week.jpg)
+
+ 
+
+![](assets/help/images/reserve-month.jpg)
+
+*Le viste Giorno, Settimana e Mese per la stessa data — la griglia settimanale porta le mezze giornate di ogni giorno, il mese conta i posti liberi (8/10).*
+
+![](assets/help/images/reserve-booking-sheet.jpg)
+
+*La scheda di prenotazione: Mattina / Pomeriggio / Giornata intera, Prenota per (admin), Ripeti — e Rendi non prenotabile, per proprietari e admin.*
 
 ### 4a. Scansionare un codice spazio
 
@@ -189,8 +210,11 @@ Il mese a colpo d'occhio, con due ambiti e due forme:
 - I **chip di piano** (*Tutti i piani* / per livello) filtrano la **cronologia**.
 - Tocca un giorno nella griglia del mese per caricarlo sotto. In orizzontale, calendario e dettaglio usano il layout diviso.
 
-## 6. Elenco dei membri (scheda Membri)
+![](assets/help/images/calendar-agenda.jpg)
 
+*La scheda Calendario: un giorno o un intervallo, i chip per tipo, un unico feed raggruppato per giorno — ogni riga apre la sua origine.*
+
+## 6. Elenco dei membri (scheda Membri)
 
 **Tocca un membro per il suo profilo (#704).** Foto, ruolo e stato; che cosa ha prenotato e se ha fatto il check-in in questo momento; e **Contatti** — il numero WhatsApp condiviso volontariamente per tutti, l'**indirizzo e-mail e la quota di piano per gli admin**. Dove hai il diritto di vedere le cifre — **le tue sempre, quelle di un altro con il permesso *Vedere le finanze*** — il profilo porta anche **Finanze**: la posizione netta (chi deve che cosa a chi), le fatture aperte con quanto resta su ciascuna, i pagamenti già arrivati e il mese in corso. La stessa scheda della scheda Finanze, così le due non possono contraddirsi.
 
@@ -202,6 +226,14 @@ Guarda chi fa parte della tua comunità:
 - L'**icona messaggio** su una scheda scrive a quel membro su **WhatsApp** (se ha condiviso il numero); il **pulsante gruppo** apre il gruppo WhatsApp della tua comunità (impostato dal proprietario).
 - Imposta la tua foto, il tuo stato e la visibilità del telefono in **Impostazioni** (§12).
 - Gli admin e i proprietari vedono in più l'**email** di ogni membro sotto il nome — i membri normali no: il contatto tra membri resta il numero WhatsApp condiviso volontariamente.
+
+![](assets/help/images/members-directory.jpg)
+
+ 
+
+![](assets/help/images/member-profile-sheet.jpg)
+
+*L'elenco — chip di ruolo, presenza, la prossima prenotazione — e il profilo di un membro: prenotazioni, contatto, finanze.*
 
 ## 7. Eventi e conferme (Messaggi → Eventi)
 
@@ -225,9 +257,13 @@ Il proprietario regola tutto questo per **dominio** in **Impostazioni → Regole
 
 *A sinistra: una regola per dominio, che eredita da quella predefinita. A destra: la modifica di una regola — validazioni richieste, validatori autorizzati, approvazione del proprietario.*
 
+![](assets/help/images/messages-events.jpg)
+
+*Il volto Eventi di Messaggi: chip per tipo, Non letti / Letti, e Raggruppa per Tipo · Data · Membro.*
+
 ## 8. Per i proprietari: editor e impostazioni
 
-Tutta l'amministrazione vive in **Impostazioni → Amministrazione** — *Spazio di coworking* (le impostazioni dello spazio), *ID dello spazio e QR*, *Membri e piani*, *Gestione dei ruoli*, *Disponibilità*, *Fatturazione*, *Istruzioni di pagamento*, *Servizi*, *Regole di validazione*, *Fatturazione e report* (l'hub di fatturazione con l'editor di report e le regole di sollecito nella sua intestazione), *Funzionalità* e le voci legate alle funzionalità (*Accessori*, Pagamenti online, Badge RFID/NFC…). Una sola regola da conoscere: **la voce di impostazioni di una funzionalità appare solo finché quella funzionalità è attiva** — disattiva *Pagamenti online* in **Funzionalità** e la sua schermata di configurazione scompare con essa (e ritorna quando la riattivi). La voce **Funzionalità** è sempre presente, così puoi sempre riattivare un modulo.
+Tutta l'amministrazione vive in **Impostazioni → Amministrazione** — *Spazio di coworking* (le impostazioni dello spazio), *Membri e piani*, *Disponibilità*, *Gestione dei ruoli*, *Fatturazione e report* (l'hub di fatturazione con l'editor di report e le regole di sollecito nella sua intestazione), *Istruzioni di pagamento*, *Pagamenti online*, *Badge RFID / NFC*, *Servizi*, *Accessori*, *Fatturazione*, *Funzionalità*, *Regole di validazione* e *ID dello spazio e QR*, nell'ordine in cui la schermata li elenca (alcune legate alla loro funzionalità: *Accessori*, *Pagamenti online*, *Badge RFID / NFC*…). Una sola regola da conoscere: **la voce di impostazioni di una funzionalità appare solo finché quella funzionalità è attiva** — disattiva *Pagamenti online* in **Funzionalità** e la sua schermata di configurazione scompare con essa (e ritorna quando la riattivi). La voce **Funzionalità** è sempre presente, così puoi sempre riattivare un modulo.
 
 **Paese, valuta, fuso orario (#711).** La scelta del paese copre ora i 32 paesi per cui l'app sa dichiarare le imposte (UE-27, Svizzera, Norvegia, Regno Unito, Stati Uniti e Canada). La valuta è un **selettore** dei codici che l'app sa formattare — ognuno con il simbolo e il giusto numero di decimali: lo yen non ne ha, il dinaro ne ha tre, e ogni importo, fattura e pagamento online lo rispetta. Il fuso è un **elenco con ricerca** delle zone IANA che l'orologio sa installare; un refuso non si salva più.
 
@@ -239,9 +275,21 @@ Apri l'**editor** dalla barra dell'app dell'hub Prenota (icona attrezzi incrocia
 
 - Un **ufficio** riceve un nome, un interruttore facoltativo *Prenotabile per intero* e un **prezzo per mezza giornata**.
 - Un **tavolo** riceve un nome, la stessa opzione tavolo-intero e un proprio **prezzo per mezza giornata**.
-- Un **posto** riceve un nome, un **orientamento di seduta** (↑ → ↓ ←), un **tipo di sedia** facoltativo, i suoi **accessori** (ognuno può avere un supplemento per mezza giornata) e un interruttore **Bloccato (manutenzione)**.
+- Un **posto** riceve un nome, un **orientamento di seduta** (↑ → ↓ ←), un **tipo di sedia** facoltativo, i suoi **accessori** (ognuno può avere un supplemento per mezza giornata) e un interruttore **Bloccato (manutenzione)**. Il suo campo **Tag NFC/RFID** riceve l'UID del tag della sedia in esadecimale — letto con il pulsante tag o digitato — così un tocco sulla sedia risolve questo posto (§4a).
 - **Immagine** piazza un'illustrazione ridimensionabile; l'icona foto nella barra dell'app imposta la **foto di sfondo** del livello.
 - Eliminare uno spazio che ha una storia alle spalle è una decisione del **proprietario**, e con *Eliminare spazi con cronologia* attivo (il predefinito) funziona senz'altro: le prenotazioni che facevano riferimento a quello spazio ne conservano un'istantanea di testo, e ogni prenotazione ancora aperta su di esso viene annullata automaticamente. Disattiva la funzionalità e uno spazio con prenotazioni future va prima svuotato a mano.
+
+![](assets/help/images/space-editor-floors.jpg)
+
+ 
+
+![](assets/help/images/space-editor-canvas.jpg)
+
+ 
+
+![](assets/help/images/space-editor-seat.jpg)
+
+*L'editor dello spazio: l'elenco dei piani con i suoi suggerimenti, un piano sulla griglia (Selezione · Ufficio · Tavolo …) e la scheda di un posto — nome, orientamento, tipo di sedia, accessori, tag NFC/RFID, bloccato.*
 
 ### ID spazio & QR
 
@@ -479,6 +527,8 @@ Il tuo conto risponde a *quanto devo, quanto mi devono* — e *quanto posso anco
 - **Richieste** — **Invia una spesa** (hai comprato il caffè per lo spazio? un altro admin la approva — niente auto-approvazione — e viene accreditata sul tuo estratto), **Richiedi mezze giornate extra**, **Aggiungi un consumo** (servizi definiti dal proprietario — armadietti, stampe… — confermi ciò che hai consumato).
 - **Documenti** — **Fatture** (le tue restano sempre leggibili qui: posizioni, saldo, stato — e per chi emette, l'hub di fatturazione, §11), **Le mie condizioni** (che stampa il documento intitolato *Accordo finanziario*) e il **report mensile dei pagamenti**, self-service (§11).
 
+Finanze ha **quattro viste** in alto — **Estratto · Pagamenti · Fatture · Documenti** (§9c–9f) — che condividono il selettore **‹ mese ›** e il pulsante **PDF**; lo scudo, la campana e l'ingranaggio stanno nella barra dell'app come ovunque.
+
 ### 9a. Una volta fatturato il mese, decide la fattura
 
 - Il tuo estratto mostra una **scheda fattura** — numero, stato, totale, già pagato, residuo — e il mese risulta **saldato** non appena la fattura è pagata, il suo saldo annullato o la sua nota di credito rimborsata, anche se il pagamento che la salda è stato registrato un mese dopo. Una fattura **parzialmente pagata** lascia il mese aperto esattamente per l'**importo residuo** (è anche quanto addebita *Paga online*). Un mese con **nota di credito** mostra ciò che lo spazio ti deve — nulla da pagare da parte tua.
@@ -494,19 +544,39 @@ Ogni report dell'app — l'estratto, le fatture, le proforma, le note di credito
 
 **Il mese così com'è.** Il tuo conto (la posizione reale su più mesi), la scheda **Questo mese** (giorni inclusi, usati, rimasti), la scheda **abbonamento**, **servizi consumati**, **supplementi di accessori e spazi**, **pacchetti di giorni**, **posizioni aperte** in attesa di convalida, **pagamenti e crediti**, la **scheda fattura** del mese appena è fatturato (§9a) e il **saldo**. Sola lettura: nulla da premere tranne il selettore **‹ mese ›**, comune a tutte le viste.
 
+![](assets/help/images/finances-statement-full.jpg)
+
+*La vista Estratto, dall'alto in basso: il tuo conto, le tue condizioni negoziate (la tariffa accanto alle tue, Chi può vedere), questo mese, l'abbonamento, i servizi, le voci in attesa, pagamenti e crediti, il saldo.*
+
 ### 9d. La vista Pagamenti
 
 **Regolare e chiedere.** Una **striscia di scaduto** quando una fattura supera il termine di pagamento dello spazio (§11e), il **saldo**, le **istruzioni di pagamento** e **Paga online** finché qualcosa è dovuto, poi le azioni: **Registra un pagamento**, **Compra un pacchetto** (piani a pacchetti), **Invia una spesa**, **Chiedi mezze giornate extra**, **Aggiungi un consumo**.
 
 **Scorte (#731).** Hai comprato capsule di caffè o sacchetti per aspirapolvere per lo spazio? In **Invia una spesa**, attiva *È una scorta per lo spazio*, indica l'articolo (o scegline uno esistente), la quantità e quanto costerà un consumo (precompilato con importo ÷ quantità). Convalidata la spesa, vieni rimborsato come sempre **e** l'articolo va sullo scaffale come servizio consumabile con quella scorta; chi lo usa aggiunge un consumo e lo paga, la scorta scende, e a zero l'articolo non si può consumare fino alla prossima scorta. Funzionalità *Scorte dalle spese* (richiede Servizi).
 
+![](assets/help/images/finances-payments.jpg)
+
+*La vista Pagamenti: il saldo e il suo stato, Registra un pagamento, poi Invia una spesa, Richiedi mezze giornate, Aggiungi un consumo.*
+
 ### 9e. La vista Fatture
 
 **Cosa mi è stato fatturato?** Una scheda di testa — *niente di aperto, sei in regola*, o *N aperte · importo dovuto*, con il numero delle scadute — poi **ogni fattura emessa a tuo nome**, dalla più recente, ciascuna con il suo chip di stato, **scade tra N giorni** o **scaduta da N giorni**, quante volte è stata sollecitata, e un pulsante **paga** che salta alla vista Pagamenti; tocca una riga per la scheda di dettaglio con anteprima, PDF e condivisione. Chi emette trova il pulsante **Fatture** verso il registro (§11).
 
+![](assets/help/images/finances-invoices.jpg)
+
+ 
+
+![](assets/help/images/invoice-detail.jpg)
+
+*La vista Fatture — la scheda di sintesi e ogni fattura emessa a tuo nome — e la scheda di dettaglio di una fattura: voci, saldo, firma, anteprima rapida / PDF / condivisione.*
+
 ### 9f. La vista Documenti
 
 **Il resto delle carte:** **Le mie condizioni** (il tuo accordo finanziario), il **report mensile dei pagamenti**, **l'estratto del mese in PDF** e la **libreria dei documenti** quando lo spazio ne usa una (§11d). Disattiva le viste in Funzionalità → *Finanze in tre viste* per tornare alla colonna unica.
+
+![](assets/help/images/finances-documents.jpg)
+
+*La vista Documenti: Le mie condizioni, il report dei pagamenti, l'estratto del mese in PDF, la biblioteca di documenti.*
 
 ### 9g. Negoziazioni di prezzo
 
@@ -560,6 +630,18 @@ Chi emette apre **Finanze → Fatture** e trova un hub a tre schede sotto una st
 
 **Francia: il FEC.** Uno spazio francese ha una seconda scelta, il **FEC** (*Fichier des Écritures Comptables*) — il file che una verifica fiscale richiede per legge (art. L47 A-I du LPF). Non è XML: un file piatto separato da tabulazioni fatto di **scritture** contabili, denominato `<SIREN>FEC<YYYYMMDD>.txt` come impone l'arrêté, con le 18 colonne obbligatorie nell'ordine obbligatorio. Essendo fatto di scritture *non può* fare a meno dei numeri di conto, quindi l'esportazione li chiede prima — precompilati con il *plan comptable général* (411 clienti, 706 prestazioni, 512 banca) e correggibili. Ogni fattura iscrive il suo credito a fronte del ricavo per l'importo **lordo**; i crediti che ha compensato e il pagamento che l'ha saldata passano in banca con le proprie date, lettrati con il numero di fattura. Le fatture annullate non ci sono: una annullata prima del pagamento non è mai stata contabilizzata, quindi non c'è nulla da stornare. La colonna del *nome* segue chi legge — chi emette scorre i nomi dei membri, un membro scorre i propri numeri di fattura. I membri vedono solo ciò che li riguarda: le fatture emesse, e mai una annullata.
 
+![](assets/help/images/invoices-admin.jpg)
+
+ 
+
+![](assets/help/images/dunning-rules.jpg)
+
+ 
+
+![](assets/help/images/invoice-register.jpg)
+
+*L'hub degli emittenti (Da fatturare · Aperte · Archivio) con le quattro azioni di una fattura aperta e le icone della barra — editor del modello, regole di sollecito, registro; le regole di sollecito con l'interruttore Solleciti automatici; il registro con il totale e il pulsante di esportazione.*
+
 ### 11a. Identità legale, IVA e menzioni
 
 **Prima della prima esportazione, compila l'identità legale.** In *Impostazioni dello spazio → **Identità legale e fatturazione elettronica*** il proprietario dichiara:
@@ -612,6 +694,18 @@ Il **Modello PDF della fattura** (icona matita nell'intestazione Fatture, o *Imp
 
 Variabili di modello (famiglia fatture): `{{ number }}`, `{{ member }}`, `{{ workspace }}`, `{{ workspace_address }}`, `{{ period }}`, `{{ issued }}`, `{{ issued_by }}`, `{{ replaces }}`, `{{ total }}`, `{{ charges }}`, `{{ payments }}`, `{{ voided }}`, `{{ proforma }}`, `{{ copy }}`, `{{ lines }}` (ognuna con `label`, `unit_price`, `qty`, `net`, `vat_rate`, `amount`), `{{ has_vat }}`, `{{ vat }}`, `{{ net_total }}`, `{{ vat_total }}`, `{{ credit_note }}`, `{{ refund_total }}` — e l'insieme legale: `{{ seller_legal_form }}`, `{{ seller_registration }}`, `{{ seller_vat_id }}`, `{{ seller_legal_id }}`, `{{ exemption_reason }}`, `{{ client_address }}`, `{{ client_vat_id }}`, `{{ client_legal_id }}`, `{{ payment_terms }}`, `{{ late_penalty }}`, `{{ recovery_indemnity }}`, `{{ escompte }}`, `{{ insurance }}`, `{{ special_mentions }}`.
 
+![](assets/help/images/report-designer-markup.jpg)
+
+ 
+
+![](assets/help/images/report-designer-design.jpg)
+
+ 
+
+![](assets/help/images/report-designer-preview.jpg)
+
+*L'editor di report: la modalità Markup con la legenda delle variabili e i chip per lingua / per documento; la modalità Visuale in Progettazione (bande etichettate sulla pagina A4) e in Anteprima (dati reali tramite il vero motore).*
+
 ### 11d. La suite di report e la biblioteca documenti
 
 - **Accordo finanziario** — ogni prezzo in vigore che si applica a un membro: abbonamento, mezza giornata extra, servizi, pacchetti, supplementi accessori e i prezzi degli spazi interi, **tavoli compresi**. Proprietari/admin lo inviano dalla scheda azioni di un membro; ogni membro può vedere in anteprima/scaricare/condividere il proprio da *Finanze → Documenti*.
@@ -626,6 +720,10 @@ Con **Solleciti di pagamento automatici** attivo (Funzionalità, figlio di *Soll
 ## 12. Impostazioni e profilo
 
 La tua schermata personale, dall'alto in basso:
+
+![](assets/help/images/settings-full.jpg)
+
+*Tutta la schermata Impostazioni in un'immagine: il tuo blocco personale, Amministrazione (proprietari), Preferenze, Avanzate, Informazioni, Esci.*
 
 **Privacy e dati (#719)** — chi può vedere i tuoi dati, chi l'ha fatto, esportazione, cancellazione, la politica. Vedi §14.
 
@@ -673,3 +771,15 @@ La scheda **Messaggi** è il centro di messaggistica del tuo spazio: tutte le co
 **Niente foto né file.** I messaggi portano testo, più collegamenti a una prenotazione o a uno spazio. È voluto: un'app di coworking non è un servizio di file.
 
 **Notifiche.** Un messaggio *ricevuto* ti avvisa e conta sulla scheda **Messaggi**; aprire la conversazione azzera il contatore. I messaggi non compaiono più nella campana, riservata a conferme ed eventi. Unica eccezione: una **diffusione a tutti gli amministratori**, che non ha una conversazione in cui stare e resta lì.
+
+![](assets/help/images/messages-discussions.jpg)
+
+ 
+
+![](assets/help/images/messages-conversation.jpg)
+
+ 
+
+![](assets/help/images/messages-conversation-links.jpg)
+
+*Messaggi: l'elenco delle conversazioni (persone e gruppi, la matita per crearne una), una chat privata con conferme di lettura e un messaggio di gruppo con un link di prenotazione e un link di spazio.*
