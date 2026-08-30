@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -133,23 +134,26 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
     TextEditingController controller,
     String label, {
     String? hint,
-  }) =>
-      Padding(
-        padding: const EdgeInsets.only(bottom: AppSpacing.md),
-        child: TextField(
-          key: ValueKey(key),
-          controller: controller,
-          maxLength: InvoiceLegal.maxFieldLength,
-          maxLines: 2,
-          minLines: 1,
-          decoration: InputDecoration(
-            labelText: label,
-            helperText: hint,
-            helperMaxLines: 3,
-            counterText: '',
-          ),
+  }) {
+    final l10n = AppLocalizations.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.md),
+      child: TextField(
+        key: ValueKey(key),
+        controller: controller,
+        maxLength: InvoiceLegal.maxFieldLength,
+        maxLines: 2,
+        minLines: 1,
+        decoration: InputDecoration(
+          labelText: label,
+          helperText: hint,
+          helperMaxLines: 3,
+          counterText: '',
+          suffixIcon: HelpDot(l10n?.helpTopicLegalIdentity ?? 'Legal identity'),
         ),
-      );
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -207,41 +211,46 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 ),
           ),
           const SizedBox(height: AppSpacing.lg),
-          DropdownButtonFormField<VatRegime>(
-            key: const ValueKey('legal-identity-regime'),
-            initialValue: _regime,
-            items: [
-              DropdownMenuItem(
-                value: VatRegime.notSubject,
-                child: Text(
-                  l10n?.legalIdentityRegimeNotSubject ??
-                      'Outside the scope of VAT',
+          Row(children: [
+            Expanded(
+              child: DropdownButtonFormField<VatRegime>(
+                key: const ValueKey('legal-identity-regime'),
+                initialValue: _regime,
+                items: [
+                  DropdownMenuItem(
+                    value: VatRegime.notSubject,
+                    child: Text(
+                      l10n?.legalIdentityRegimeNotSubject ??
+                          'Outside the scope of VAT',
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    value: VatRegime.exempt,
+                    child: Text(
+                      l10n?.legalIdentityRegimeExempt ??
+                          'VAT-exempt (small-business scheme)',
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    value: VatRegime.vatRegistered,
+                    child: Text(
+                      l10n?.legalIdentityRegimeVatRegistered ??
+                          'VAT-registered (charges VAT)',
+                    ),
+                  ),
+                ],
+                onChanged: (value) =>
+                    setState(() => _regime = value ?? _regime),
+                decoration: InputDecoration(
+                  labelText: l10n?.legalIdentityRegime ?? 'VAT regime',
+                  helperMaxLines: 3,
+                  helperText: l10n?.legalIdentityRegimeHint ??
+                      'The regime decides which number the norm requires.',
                 ),
               ),
-              DropdownMenuItem(
-                value: VatRegime.exempt,
-                child: Text(
-                  l10n?.legalIdentityRegimeExempt ??
-                      'VAT-exempt (small-business scheme)',
-                ),
-              ),
-              DropdownMenuItem(
-                value: VatRegime.vatRegistered,
-                child: Text(
-                  l10n?.legalIdentityRegimeVatRegistered ??
-                      'VAT-registered (charges VAT)',
-                ),
-              ),
-            ],
-            onChanged: (value) =>
-                setState(() => _regime = value ?? _regime),
-            decoration: InputDecoration(
-              labelText: l10n?.legalIdentityRegime ?? 'VAT regime',
-              helperMaxLines: 3,
-              helperText: l10n?.legalIdentityRegimeHint ??
-                  'The regime decides which number the norm requires.',
             ),
-          ),
+            HelpDot(l10n?.helpTopicVat ?? 'VAT'),
+          ]),
           // Only a workspace that charges VAT and has no rate to charge
           // it at is in trouble — the rest is a link, not a warning.
           if (_regime == VatRegime.vatRegistered && rates.isEmpty)
@@ -261,7 +270,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             key: const ValueKey('legal-identity-vat-rates'),
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.percent),
-            title: Text(l10n?.vatRatesTile ?? 'VAT rates'),
+            title: HelpDotTitle(
+              l10n?.vatRatesTile ?? 'VAT rates',
+              l10n?.helpTopicVat ?? 'VAT',
+            ),
             subtitle: rates.isEmpty
                 ? Text(l10n?.vatEmpty ?? 'No rate yet — invoices show no VAT.')
                 : Text(rates
@@ -281,6 +293,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 helperText: l10n?.vatAccountHint ??
                     'Where the accounting export books collected VAT. '
                         'Empty = 445710.',
+                suffixIcon: HelpDot(l10n?.helpTopicVat ?? 'VAT'),
               ),
             ),
           const SizedBox(height: AppSpacing.md),
@@ -293,6 +306,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               textCapitalization: TextCapitalization.characters,
               decoration: InputDecoration(
                 labelText: l10n?.legalIdentityVatId ?? 'VAT number',
+                suffixIcon: HelpDot(l10n?.helpTopicVat ?? 'VAT'),
               ),
             )
           else
@@ -302,6 +316,8 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               decoration: InputDecoration(
                 labelText: l10n?.legalIdentityLegalId ??
                     'Company registration number',
+                suffixIcon:
+                    HelpDot(l10n?.helpTopicLegalIdentity ?? 'Legal identity'),
               ),
             ),
           const SizedBox(height: AppSpacing.md),
@@ -319,6 +335,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                           '"Exonération de TVA, art. 261, 7-1° du CGI" '
                           'for services to members')
                   : null,
+              suffixIcon: HelpDot(l10n?.helpTopicVat ?? 'VAT'),
             ),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -327,6 +344,8 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             controller: _street,
             decoration: InputDecoration(
               labelText: l10n?.legalIdentityStreet ?? 'Street',
+              suffixIcon:
+                  HelpDot(l10n?.helpTopicLegalIdentity ?? 'Legal identity'),
             ),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -338,6 +357,9 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 controller: _postalCode,
                 decoration: InputDecoration(
                   labelText: l10n?.legalIdentityPostalCode ?? 'Post code',
+                  suffixIcon: HelpDot(
+                    l10n?.helpTopicLegalIdentity ?? 'Legal identity',
+                  ),
                 ),
               ),
             ),
@@ -348,6 +370,9 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 controller: _city,
                 decoration: InputDecoration(
                   labelText: l10n?.legalIdentityCity ?? 'City',
+                  suffixIcon: HelpDot(
+                    l10n?.helpTopicLegalIdentity ?? 'Legal identity',
+                  ),
                 ),
               ),
             ),
@@ -358,8 +383,9 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             key: const ValueKey('legal-identity-platform'),
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.cloud_upload_outlined),
-            title: Text(
+            title: HelpDotTitle(
               l10n?.einvoiceConfigTitle ?? 'E-invoicing platform',
+              l10n?.helpTopicEinvoice ?? 'e-invoice',
             ),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.push('/einvoice-config'),
@@ -384,24 +410,29 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           // #484 — associations invoice differently: no B2B clause
           // defaults, RNA instead of a trade register, an exemption
           // mention instead of VAT.
-          SegmentedButton<String>(
-            key: const ValueKey('legal-identity-kind'),
-            segments: [
-              ButtonSegment(
-                value: '',
-                label: Text(
-                    l10n?.invoiceLegalKindCompany ?? 'Company / business'),
+          Row(children: [
+            Expanded(
+              child: SegmentedButton<String>(
+                key: const ValueKey('legal-identity-kind'),
+                segments: [
+                  ButtonSegment(
+                    value: '',
+                    label: Text(
+                        l10n?.invoiceLegalKindCompany ?? 'Company / business'),
+                  ),
+                  ButtonSegment(
+                    value: 'association',
+                    label: Text(l10n?.invoiceLegalKindAssociation ??
+                        'Association (non-profit)'),
+                  ),
+                ],
+                selected: {_sellerKind},
+                onSelectionChanged: (selection) =>
+                    setState(() => _sellerKind = selection.first),
               ),
-              ButtonSegment(
-                value: 'association',
-                label: Text(l10n?.invoiceLegalKindAssociation ??
-                    'Association (non-profit)'),
-              ),
-            ],
-            selected: {_sellerKind},
-            onSelectionChanged: (selection) =>
-                setState(() => _sellerKind = selection.first),
-          ),
+            ),
+            HelpDot(l10n?.helpTopicLegalIdentity ?? 'Legal identity'),
+          ]),
           if (_sellerKind == 'association') ...[
             const SizedBox(height: AppSpacing.xs),
             Text(

@@ -138,5 +138,15 @@
   "helpHintMoneyStatementTipNegotiation": "Condizioni negoziate? La scheda mostra i tuoi prezzi accanto alla tariffa, da quando, e chi può vederli — i proprietari e gli admin finanze, ogni lettura registrata.",
   "helpHintMoneyStatementTipNegotiationTopic": "Negoziazioni di prezzo",
   "helpHintMembersTipNegotiation": "I prezzi propri di un membro: apri la sua scheda → Negoziazione di prezzo, indica quota, eccedenza o sconto concordati, e i convalidatori della regola confermano.",
-  "helpHintMembersTipNegotiationTopic": "Negoziazioni di prezzo"
+  "helpHintMembersTipNegotiationTopic": "Negoziazioni di prezzo",
+  "helpDotTooltip": "Apri la guida",
+  "helpTopicLegalIdentity": "Identità legale",
+  "helpTopicEinvoice": "fattura elettronica",
+  "helpTopicReportEditor": "editor di report",
+  "helpTopicDocumentLibrary": "biblioteca documenti",
+  "helpTopicWorkspaceId": "ID spazio",
+  "helpTopicVat": "IVA",
+  "helpTopicSettings": "Impostazioni e profilo",
+  "helpTopicKiosk": "Modalità chiosco",
+  "helpTopicBilling": "Fatturazione"
 }

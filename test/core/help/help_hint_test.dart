@@ -301,6 +301,45 @@ void main() {
     }
   });
 
+  test('every HelpDot topic getter matches a heading of its language\'s '
+      'guide (#763)', () async {
+    const dotTopics = [
+      'helpTopicLegalIdentity', 'helpTopicEinvoice', 'helpTopicVat',
+      'helpTopicReportEditor', 'helpTopicDocumentLibrary',
+      'helpTopicWorkspaceId', 'helpTopicSettings', 'helpTopicKiosk',
+      'helpTopicBilling',
+    ];
+    for (final locale in AppLocalizations.supportedLocales) {
+      final l10n = await AppLocalizations.delegate.load(locale);
+      final headings = File('assets/help/${locale.languageCode}.md')
+          .readAsLinesSync()
+          .where((l) => l.startsWith('#'))
+          .toList();
+      final topics = {
+        'helpTopicLegalIdentity': l10n.helpTopicLegalIdentity,
+        'helpTopicEinvoice': l10n.helpTopicEinvoice,
+        'helpTopicVat': l10n.helpTopicVat,
+        'helpTopicReportEditor': l10n.helpTopicReportEditor,
+        'helpTopicDocumentLibrary': l10n.helpTopicDocumentLibrary,
+        'helpTopicWorkspaceId': l10n.helpTopicWorkspaceId,
+        'helpTopicSettings': l10n.helpTopicSettings,
+        'helpTopicKiosk': l10n.helpTopicKiosk,
+        'helpTopicBilling': l10n.helpTopicBilling,
+      };
+      expect(topics.keys, containsAll(dotTopics));
+      topics.forEach((key, topic) {
+        expect(
+          headings.any(
+            (h) => h.toLowerCase().contains(topic.toLowerCase()),
+          ),
+          isTrue,
+          reason: '$key "$topic" (${locale.languageCode}) matches no '
+              'guide heading — the /help jump would land nowhere',
+        );
+      });
+    }
+  });
+
   test('every localized tip topic matches a heading of its language\'s '
       'guide — each Learn more must land in all five languages', () {
     for (final locale in helpLocales) {

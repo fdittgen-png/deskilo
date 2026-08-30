@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -224,12 +225,13 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                       decoration: InputDecoration(
                         labelText: l10n?.vatRateLabelField ?? 'Name',
                         counterText: '',
+                        suffixIcon: HelpDot(l10n?.helpTopicVat ?? 'VAT'),
                       ),
                     ),
                   ),
                   const SizedBox(width: AppSpacing.sm),
                   SizedBox(
-                    width: 84,
+                    width: 112,
                     child: TextField(
                       key: ValueKey('vat-rate-percent-$index'),
                       controller: draft.percent,
@@ -242,6 +244,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                       ],
                       decoration: InputDecoration(
                         labelText: l10n?.vatRatePercentField ?? 'Rate %',
+                        suffixIcon: HelpDot(l10n?.helpTopicVat ?? 'VAT'),
                       ),
                     ),
                   ),

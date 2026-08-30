@@ -3371,7 +3371,7 @@ abstract class AppLocalizations {
   /// No description provided for @featureFormHelpHintsDesc.
   ///
   /// In en, this message translates to:
-  /// **'Short dismissible how-to hints on forms and screens, each linking into the matching guide section.'**
+  /// **'A dismissible tip carousel on every main screen, and a small ? beside every parameter and entry field — one tap opens the guide at the right section. Restorable from Settings.'**
   String get featureFormHelpHintsDesc;
 
   /// No description provided for @featureUiAnimationsTitle.
@@ -4237,6 +4237,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Price negotiations'**
   String get helpHintMembersTipNegotiationTopic;
+
+  /// No description provided for @helpDotTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the guide'**
+  String get helpDotTooltip;
+
+  /// No description provided for @helpTopicLegalIdentity.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal identity'**
+  String get helpTopicLegalIdentity;
+
+  /// No description provided for @helpTopicEinvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'e-invoice'**
+  String get helpTopicEinvoice;
+
+  /// No description provided for @helpTopicReportEditor.
+  ///
+  /// In en, this message translates to:
+  /// **'report editor'**
+  String get helpTopicReportEditor;
+
+  /// No description provided for @helpTopicDocumentLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'document library'**
+  String get helpTopicDocumentLibrary;
+
+  /// No description provided for @helpTopicWorkspaceId.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace ID'**
+  String get helpTopicWorkspaceId;
+
+  /// No description provided for @helpTopicVat.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get helpTopicVat;
+
+  /// No description provided for @helpTopicSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings & profile'**
+  String get helpTopicSettings;
+
+  /// No description provided for @helpTopicKiosk.
+  ///
+  /// In en, this message translates to:
+  /// **'Kiosk mode'**
+  String get helpTopicKiosk;
+
+  /// No description provided for @helpTopicBilling.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing'**
+  String get helpTopicBilling;
 
   /// No description provided for @inviteSectionTitle.
   ///

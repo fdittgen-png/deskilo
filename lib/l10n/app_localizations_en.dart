@@ -1856,7 +1856,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureFormHelpHintsDesc =>
-      'Short dismissible how-to hints on forms and screens, each linking into the matching guide section.';
+      'A dismissible tip carousel on every main screen, and a small ? beside every parameter and entry field — one tap opens the guide at the right section. Restorable from Settings.';
 
   @override
   String get featureUiAnimationsTitle => 'Interface animations';
@@ -2375,6 +2375,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpHintMembersTipNegotiationTopic => 'Price negotiations';
+
+  @override
+  String get helpDotTooltip => 'Open the guide';
+
+  @override
+  String get helpTopicLegalIdentity => 'Legal identity';
+
+  @override
+  String get helpTopicEinvoice => 'e-invoice';
+
+  @override
+  String get helpTopicReportEditor => 'report editor';
+
+  @override
+  String get helpTopicDocumentLibrary => 'document library';
+
+  @override
+  String get helpTopicWorkspaceId => 'Workspace ID';
+
+  @override
+  String get helpTopicVat => 'VAT';
+
+  @override
+  String get helpTopicSettings => 'Settings & profile';
+
+  @override
+  String get helpTopicKiosk => 'Kiosk mode';
+
+  @override
+  String get helpTopicBilling => 'Billing';
 
   @override
   String get inviteSectionTitle => 'Invite someone';

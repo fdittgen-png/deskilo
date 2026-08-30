@@ -138,5 +138,15 @@
   "helpHintMoneyStatementTipNegotiation": "¿Condiciones negociadas? La tarjeta muestra tus precios junto a la tarifa, desde cuándo, y quién puede verlos — los propietarios y los admins de finanzas, cada lectura registrada.",
   "helpHintMoneyStatementTipNegotiationTopic": "Negociaciones de precios",
   "helpHintMembersTipNegotiation": "Los precios propios de un miembro: abre su ficha → Negociación de precios, indica la cuota, el exceso o el descuento acordados, y los validadores de la regla lo confirman.",
-  "helpHintMembersTipNegotiationTopic": "Negociaciones de precios"
+  "helpHintMembersTipNegotiationTopic": "Negociaciones de precios",
+  "helpDotTooltip": "Abrir la guía",
+  "helpTopicLegalIdentity": "Identidad legal",
+  "helpTopicEinvoice": "factura electrónica",
+  "helpTopicReportEditor": "editor de informes",
+  "helpTopicDocumentLibrary": "biblioteca de documentos",
+  "helpTopicWorkspaceId": "ID del espacio",
+  "helpTopicVat": "IVA",
+  "helpTopicSettings": "Ajustes y perfil",
+  "helpTopicKiosk": "Modo quiosco",
+  "helpTopicBilling": "Facturación"
 }

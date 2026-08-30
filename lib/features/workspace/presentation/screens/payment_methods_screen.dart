@@ -3,6 +3,7 @@ import '../../../../core/country/country_catalog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -126,7 +127,12 @@ class _PaymentMethodsScreenState
             key: Key(key),
             controller: controller,
             enabled: !_busy,
-            decoration: InputDecoration(labelText: label),
+            decoration: InputDecoration(
+              labelText: label,
+              suffixIcon: HelpDot(
+                l10n?.helpHintMoneyPaymentsTopic ?? 'The Payments face',
+              ),
+            ),
           ),
         );
     return Scaffold(

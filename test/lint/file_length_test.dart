@@ -86,7 +86,9 @@ const Map<String, int> _baseline = {
   // 1020→1120 (2026-08-25): #628 the per-member simultaneous-reservations
   // permission — one sheet action, one preset dialog and one row chip,
   // the 0044 reservation-limit shape next to it, same concern.
-  'lib/features/workspace/presentation/screens/members_screen.dart': 1130,
+  // 1130→1180 (2026-08-31): #763 fifteen help dots — rows, dialogs and
+  // the gated negotiation wrap all live beside their existing helpers.
+  'lib/features/workspace/presentation/screens/members_screen.dart': 1180,
   // 900→920 (2026-08-03): #410 admin-visible email line on the member
   // row — the row shares its chip helpers with the detail sheet, so
   // extracting it would drag half the file; 15 feature lines instead.
@@ -136,7 +138,8 @@ const Map<String, int> _baseline = {
   // live data and letter-PDF branches.
   // 700→800 (2026-08-05): #496 the template-language chips + per-language
   // overlay assembly.
-  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 800,
+  // 800→810 (2026-08-31): #763 the report editor's header help dot.
+  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 810,
   'lib/features/workspace/domain/workspace_xml.dart': 800,
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.
@@ -162,7 +165,9 @@ const Map<String, int> _baseline = {
   // the band amount fields (default-rate resolver + helper text).
   // 660→700 (2026-08-11): #542 — the tariff's configurable VAT rate
   // (picker, resolution with inactive-rate fallback, immediate save).
-  'lib/features/money/presentation/screens/billing_screen.dart': 700,
+  // 700→740 (2026-08-31): #763 thirteen help dots across bands, levels
+  // and packages — each beside the field it explains.
+  'lib/features/money/presentation/screens/billing_screen.dart': 740,
   // 750→880 (2026-08-05): #510 the month-invoice card + settlement-
   // driven balance footer (the invoice decides settled/outstanding).
   'lib/features/money/presentation/widgets/bill_view.dart': 880,

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -83,6 +84,8 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
             labelText: l10n?.workspaceCodeLabel ?? 'Workspace ID',
             helperText:
                 l10n?.workspaceCodeHint ?? '4–20 letters or digits, unique',
+            suffixIcon:
+                HelpDot(l10n?.helpTopicWorkspaceId ?? 'Workspace ID'),
           ),
         ),
         actions: [
@@ -187,31 +190,39 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
               // and no owner segment by design.
               if (isOwner) ...[
                 const SizedBox(height: 16),
-                SegmentedButton<InviteRole>(
-                  segments: [
-                    ButtonSegment(
-                      value: InviteRole.user,
-                      icon: const Icon(Icons.person_outline),
-                      label: Text(
-                        l10n?.inviteRoleMember ?? 'Member invite',
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: SegmentedButton<InviteRole>(
+                        segments: [
+                          ButtonSegment(
+                            value: InviteRole.user,
+                            icon: const Icon(Icons.person_outline),
+                            label: Text(
+                              l10n?.inviteRoleMember ?? 'Member invite',
+                            ),
+                          ),
+                          ButtonSegment(
+                            value: InviteRole.admin,
+                            icon: const Icon(Icons.shield_outlined),
+                            label: Text(
+                              l10n?.inviteRoleAdmin ?? 'Admin invite',
+                            ),
+                          ),
+                        ],
+                        selected: {_role},
+                        onSelectionChanged: (selection) {
+                          setState(() => _role = selection.first);
+                          if (selection.first == InviteRole.admin &&
+                              _adminCode == null) {
+                            _mintAdminCode();
+                          }
+                        },
                       ),
                     ),
-                    ButtonSegment(
-                      value: InviteRole.admin,
-                      icon: const Icon(Icons.shield_outlined),
-                      label: Text(
-                        l10n?.inviteRoleAdmin ?? 'Admin invite',
-                      ),
-                    ),
+                    HelpDot(l10n?.helpTopicWorkspaceId ?? 'Workspace ID'),
                   ],
-                  selected: {_role},
-                  onSelectionChanged: (selection) {
-                    setState(() => _role = selection.first);
-                    if (selection.first == InviteRole.admin &&
-                        _adminCode == null) {
-                      _mintAdminCode();
-                    }
-                  },
                 ),
               ],
               const SizedBox(height: 24),

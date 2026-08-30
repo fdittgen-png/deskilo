@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/format/cents.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 
@@ -250,11 +251,19 @@ class _ServiceSheetState extends State<_ServiceSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            widget.service == null
-                ? (l10n?.servicesNew ?? 'New service')
-                : (l10n?.servicesEdit ?? 'Edit service'),
-            style: Theme.of(context).textTheme.titleMedium,
+          Row(
+            children: [
+              Text(
+                widget.service == null
+                    ? (l10n?.servicesNew ?? 'New service')
+                    : (l10n?.servicesEdit ?? 'Edit service'),
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              HelpDot(
+                l10n?.helpHintMoneyPaymentsTipSupplyTopic ??
+                    'Services and Accessories',
+              ),
+            ],
           ),
           const SizedBox(height: 12),
           TextField(
@@ -263,6 +272,10 @@ class _ServiceSheetState extends State<_ServiceSheet> {
             maxLength: 80,
             decoration: InputDecoration(
               labelText: l10n?.servicesName ?? 'Name',
+              suffixIcon: HelpDot(
+                l10n?.helpHintMoneyPaymentsTipSupplyTopic ??
+                    'Services and Accessories',
+              ),
             ),
           ),
           TextField(
@@ -274,6 +287,10 @@ class _ServiceSheetState extends State<_ServiceSheet> {
               // #537 — kill the net-or-gross ambiguity at the input.
               helperText: l10n?.priceGrossHint ??
                   'Gross price — what the member pays; VAT is part of it.',
+              suffixIcon: HelpDot(
+                l10n?.helpHintMoneyPaymentsTipSupplyTopic ??
+                    'Services and Accessories',
+              ),
             ),
           ),
           // The price stays what the member pays; the rate only decides
@@ -286,7 +303,11 @@ class _ServiceSheetState extends State<_ServiceSheet> {
           if (widget.service != null)
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
-              title: Text(l10n?.servicesActive ?? 'Active'),
+              title: HelpDotTitle(
+                l10n?.servicesActive ?? 'Active',
+                l10n?.helpHintMoneyPaymentsTipSupplyTopic ??
+                    'Services and Accessories',
+              ),
               value: _active,
               onChanged: (v) => setState(() => _active = v),
             ),

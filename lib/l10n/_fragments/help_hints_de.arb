@@ -138,5 +138,15 @@
   "helpHintMoneyStatementTipNegotiation": "Konditionen verhandelt? Die Karte zeigt Ihre Preise neben dem Tarif, seit wann, und wer sie sehen kann — die Inhaber und Finanz-Admins, jeder Zugriff protokolliert.",
   "helpHintMoneyStatementTipNegotiationTopic": "Preisverhandlungen",
   "helpHintMembersTipNegotiation": "Die eigenen Preise eines Mitglieds: sein Blatt öffnen → Preisverhandlung, Beitrag, Überschreitung oder Rabatt eintragen, und die Prüfer der Regel bestätigen.",
-  "helpHintMembersTipNegotiationTopic": "Preisverhandlungen"
+  "helpHintMembersTipNegotiationTopic": "Preisverhandlungen",
+  "helpDotTooltip": "Handbuch öffnen",
+  "helpTopicLegalIdentity": "Rechtliche Identität",
+  "helpTopicEinvoice": "E-Rechnung",
+  "helpTopicReportEditor": "Report-Editor",
+  "helpTopicDocumentLibrary": "Dokumentbibliothek",
+  "helpTopicWorkspaceId": "Workspace-ID",
+  "helpTopicVat": "MwSt",
+  "helpTopicSettings": "Einstellungen & Profil",
+  "helpTopicKiosk": "Kiosk-Modus",
+  "helpTopicBilling": "Abrechnung"
 }

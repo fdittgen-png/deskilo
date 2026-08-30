@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/profile/providers/profile_providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../help/help_dot.dart';
 import '../theme/app_spacing.dart';
 import '../time/clock.dart';
 import '../trace/guarded.dart';
@@ -89,7 +90,10 @@ class RegionalFormatsScreen extends ConsumerWidget {
           ListTile(
             key: const ValueKey('regional-locale'),
             leading: const Icon(Icons.language_outlined),
-            title: Text(l10n?.regionalFormatLocale ?? 'Numbers & dates'),
+            title: HelpDotTitle(
+              l10n?.regionalFormatLocale ?? 'Numbers & dates',
+              l10n?.helpTopicSettings ?? 'Settings & profile',
+            ),
             subtitle: Text(localeLabel),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _pickLocale(context, l10n, prefs, save),
@@ -97,7 +101,10 @@ class RegionalFormatsScreen extends ConsumerWidget {
           ListTile(
             key: const ValueKey('regional-clock'),
             leading: const Icon(Icons.schedule_outlined),
-            title: Text(l10n?.regionalClock ?? 'Clock'),
+            title: HelpDotTitle(
+              l10n?.regionalClock ?? 'Clock',
+              l10n?.helpTopicSettings ?? 'Settings & profile',
+            ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(
@@ -129,7 +136,10 @@ class RegionalFormatsScreen extends ConsumerWidget {
           SwitchListTile(
             key: const ValueKey('regional-device-zone'),
             secondary: const Icon(Icons.public_outlined),
-            title: Text(l10n?.regionalDeviceZone ?? 'Show times in my time zone'),
+            title: HelpDotTitle(
+              l10n?.regionalDeviceZone ?? 'Show times in my time zone',
+              l10n?.helpTopicSettings ?? 'Settings & profile',
+            ),
             // Says what the default IS, because "workspace time" only
             // means something once you know the workspace is elsewhere.
             subtitle: Text(

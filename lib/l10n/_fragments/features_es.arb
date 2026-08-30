@@ -97,7 +97,7 @@
   "featureQrBadgesTitle": "Credenciales QR",
   "featureQrBadgesDesc": "Tarjetas de credencial QR imprimibles para el quiosco, junto a las tarjetas NFC/RFID.",
   "featureFormHelpHintsTitle": "Consejos de ayuda",
-  "featureFormHelpHintsDesc": "Breves consejos descartables en formularios y pantallas, cada uno enlazado a la sección correspondiente de la guía.",
+  "featureFormHelpHintsDesc": "Un carrusel de consejos descartable en cada pantalla principal, y un pequeño ? junto a cada parámetro y campo — un toque abre la guía en la sección correcta. Restaurable desde Ajustes.",
   "featureUiAnimationsTitle": "Animaciones de la interfaz",
   "featureUiAnimationsDesc": "Transiciones suaves y animaciones de estado en toda la aplicación. Desactivado, cada cambio es instantáneo; el ajuste de reducción de movimiento del dispositivo siempre prevalece.",
   "featureKioskMemberPhotosTitle": "Fotos de los miembros en el quiosco",

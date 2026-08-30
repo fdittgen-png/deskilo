@@ -13,6 +13,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 import '../../../../core/country/country_catalog.dart';
 import '../../../../core/i18n/workspace_locale_fields.dart';
 import '../../../../core/format/cents.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/files/file_saver.dart';
@@ -833,10 +834,17 @@ class _WorkspaceSettingsScreenState
     }
   }
 
+  /// #763 — a control with no free suffix slot gets the ? at its side.
+  Widget _withDot(Widget field, String topic) => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [Expanded(child: field), HelpDot(topic)],
+      );
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
+    final helpTopic = l10n?.helpHintWorkspaceTopic ?? 'Workspace settings';
     if (workspace != null && !_seeded) {
       _seeded = true;
       _countryCode = workspace.countryCode;
@@ -879,62 +887,71 @@ class _WorkspaceSettingsScreenState
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 16),
-                  DropdownButtonFormField<String>(
-                    key: const Key('workspaceSettingsCountry'),
-                    initialValue: _countryCode,
-                    decoration: InputDecoration(
-                      labelText: l10n?.workspaceCountryLabel ?? 'Country',
+                  _withDot(
+                    DropdownButtonFormField<String>(
+                      key: const Key('workspaceSettingsCountry'),
+                      initialValue: _countryCode,
+                      decoration: InputDecoration(
+                        labelText: l10n?.workspaceCountryLabel ?? 'Country',
+                      ),
+                      items: [
+                        for (final country in CountryCatalog.countries)
+                          DropdownMenuItem(
+                            value: country.code,
+                            child: Text(
+                                localizedCountryName(l10n, country.code)),
+                          ),
+                      ],
+                      onChanged: _busy ? null : _onCountryPicked,
                     ),
-                    items: [
-                      for (final country in CountryCatalog.countries)
-                        DropdownMenuItem(
-                          value: country.code,
-                          child:
-                              Text(localizedCountryName(l10n, country.code)),
-                        ),
-                    ],
-                    onChanged: _busy ? null : _onCountryPicked,
+                    helpTopic,
                   ),
                   const SizedBox(height: 12),
                   // #711 — currency picker and time-zone search, in
                   // core/i18n so the onboarding form can reuse them.
-                  WorkspaceLocaleFields(
-                    currency: _currency,
-                    timezone: _timezone,
-                    enabled: !_busy,
-                    onTimezonePicked: (zone) =>
-                        setState(() => _timezone.text = zone),
+                  _withDot(
+                    WorkspaceLocaleFields(
+                      currency: _currency,
+                      timezone: _timezone,
+                      enabled: !_busy,
+                      onTimezonePicked: (zone) =>
+                          setState(() => _timezone.text = zone),
+                    ),
+                    helpTopic,
                   ),
                   const SizedBox(height: 12),
                   // #486 — the workspace's own language: invitations
                   // default to it.
-                  DropdownButtonFormField<String>(
-                    key: const Key('workspaceSettingsLanguage'),
-                    initialValue: _defaultLocale,
-                    decoration: InputDecoration(
-                      labelText: l10n?.workspaceLanguageLabel ??
-                          'Workspace language',
-                      helperMaxLines: 3,
-                      helperText: l10n?.workspaceLanguageHelper ??
-                          'Invitations are written in this language by '
-                              'default.',
-                    ),
-                    items: [
-                      DropdownMenuItem(
-                        value: '',
-                        child: Text(l10n?.workspaceLanguageUnset ??
-                            "Sender's app language"),
+                  _withDot(
+                    DropdownButtonFormField<String>(
+                      key: const Key('workspaceSettingsLanguage'),
+                      initialValue: _defaultLocale,
+                      decoration: InputDecoration(
+                        labelText: l10n?.workspaceLanguageLabel ??
+                            'Workspace language',
+                        helperMaxLines: 3,
+                        helperText: l10n?.workspaceLanguageHelper ??
+                            'Invitations are written in this language by '
+                                'default.',
                       ),
-                      for (final entry in _languages.entries)
+                      items: [
                         DropdownMenuItem(
-                          value: entry.key,
-                          child: Text(entry.value),
+                          value: '',
+                          child: Text(l10n?.workspaceLanguageUnset ??
+                              "Sender's app language"),
                         ),
-                    ],
-                    onChanged: _busy
-                        ? null
-                        : (value) => setState(
-                            () => _defaultLocale = value ?? ''),
+                        for (final entry in _languages.entries)
+                          DropdownMenuItem(
+                            value: entry.key,
+                            child: Text(entry.value),
+                          ),
+                      ],
+                      onChanged: _busy
+                          ? null
+                          : (value) => setState(
+                              () => _defaultLocale = value ?? ''),
+                    ),
+                    helpTopic,
                   ),
                   const SizedBox(height: 12),
                   // 0060 — the postal address printed as the invoice
@@ -947,6 +964,7 @@ class _WorkspaceSettingsScreenState
                     decoration: InputDecoration(
                       labelText: l10n?.workspaceAddressLabel ??
                           'Workspace address',
+                      suffixIcon: HelpDot(helpTopic),
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -1010,6 +1028,7 @@ class _WorkspaceSettingsScreenState
                     decoration: InputDecoration(
                       labelText: l10n?.workspaceWhatsappGroupLabel ??
                           'WhatsApp group link',
+                      suffixIcon: HelpDot(helpTopic),
                     ),
                     // Same prefix check as the 0029 column constraint
                     // (WhatsappGroupRules cross-pins both); empty is
@@ -1024,10 +1043,13 @@ class _WorkspaceSettingsScreenState
                   // 0049 — the invitation message template. Tags are
                   // listed as selectable chips; empty uses the localized
                   // built-in message (invite sheet on the ID & QR screen).
-                  Text(
-                    l10n?.invitationTemplateTitle ?? 'Invitation message',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
+                  Row(children: [
+                    Text(
+                      l10n?.invitationTemplateTitle ?? 'Invitation message',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    HelpDot(helpTopic),
+                  ]),
                   const SizedBox(height: 4),
                   Text(
                     l10n?.invitationTemplateHelp ??
@@ -1094,14 +1116,19 @@ class _WorkspaceSettingsScreenState
                           'Invitation message',
                       hintText: l10n?.invitationTemplateHint ??
                           'Custom invitation message using the tags above…',
+                      suffixIcon: HelpDot(helpTopic),
                     ),
                   ),
                   const SizedBox(height: 24),
                   // 0040 — desk transparency. Rides the same Save button.
-                  Text(
-                    l10n?.workspaceDeskTransparencyTitle ?? 'Desk transparency',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
+                  Row(children: [
+                    Text(
+                      l10n?.workspaceDeskTransparencyTitle ??
+                          'Desk transparency',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    HelpDot(helpTopic),
+                  ]),
                   const SizedBox(height: 4),
                   Text(
                     l10n?.workspaceDeskTransparencyHelper ??
@@ -1145,8 +1172,9 @@ class _WorkspaceSettingsScreenState
                     key: const Key('workspaceSettingsReportEditor'),
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.edit_note_outlined),
-                    title: Text(
+                    title: HelpDotTitle(
                       l10n?.invoiceTemplateTitle ?? 'Invoice PDF template',
+                      helpTopic,
                     ),
                     subtitle: Text(
                       l10n?.invoiceTemplateHint ??
@@ -1163,8 +1191,9 @@ class _WorkspaceSettingsScreenState
                     key: const Key('workspaceSettingsDunning'),
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.rule_outlined),
-                    title: Text(
+                    title: HelpDotTitle(
                       l10n?.dunningSettingsTitle ?? 'Reminder rules',
+                      helpTopic,
                     ),
                     subtitle: Text(
                       l10n?.dunningLevels ?? 'Number of reminder levels',
@@ -1179,8 +1208,9 @@ class _WorkspaceSettingsScreenState
                     key: const Key('workspaceSettingsExportXml'),
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.upload_file_outlined),
-                    title: Text(
+                    title: HelpDotTitle(
                       l10n?.workspaceXmlExport ?? 'Export workspace (XML)',
+                      helpTopic,
                     ),
                     subtitle: Text(
                       l10n?.workspaceXmlExportSubtitle ??
@@ -1196,9 +1226,10 @@ class _WorkspaceSettingsScreenState
                     key: const Key('workspaceSettingsExportPdf'),
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.picture_as_pdf_outlined),
-                    title: Text(
+                    title: HelpDotTitle(
                       l10n?.workspaceConfigPdfExport ??
                           'Export configuration (PDF)',
+                      helpTopic,
                     ),
                     subtitle: Text(
                       l10n?.workspaceConfigPdfExportSubtitle ??
@@ -1214,8 +1245,10 @@ class _WorkspaceSettingsScreenState
                     key: const Key('workspaceSettingsWorkspaceReport'),
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.summarize_outlined),
-                    title: Text(l10n?.reportDocWorkspace ??
-                        'Workspace report'),
+                    title: HelpDotTitle(
+                      l10n?.reportDocWorkspace ?? 'Workspace report',
+                      helpTopic,
+                    ),
                     subtitle: Text(l10n?.reportDocWorkspaceSubtitle ??
                         'Everything about the space — through the '
                             'report editor\'s workspace template'),
@@ -1232,8 +1265,9 @@ class _WorkspaceSettingsScreenState
                     key: const Key('workspaceSettingsSpaceCodes'),
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.qr_code_2_outlined),
-                    title: Text(
+                    title: HelpDotTitle(
                       l10n?.spaceCodesTitle ?? 'Space QR codes (PDF)',
+                      helpTopic,
                     ),
                     subtitle: Text(
                       l10n?.spaceCodesDesc ??
@@ -1255,8 +1289,9 @@ class _WorkspaceSettingsScreenState
                     key: const Key('workspaceSettingsExportExcel'),
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.table_view_outlined),
-                    title: Text(
+                    title: HelpDotTitle(
                       l10n?.workspaceExcelExport ?? 'Export data (Excel)',
+                      helpTopic,
                     ),
                     subtitle: Text(
                       l10n?.workspaceExcelExportSubtitle ??
@@ -1278,8 +1313,9 @@ class _WorkspaceSettingsScreenState
                     key: const Key('workspaceSettingsImportXml'),
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.file_open_outlined),
-                    title: Text(
+                    title: HelpDotTitle(
                       l10n?.workspaceXmlImport ?? 'Import workspace (XML)',
+                      helpTopic,
                     ),
                     subtitle: Text(
                       l10n?.workspaceXmlImportSubtitle ??
@@ -1402,4 +1438,3 @@ class _ResetConfirmDialogState extends State<_ResetConfirmDialog> {
     );
   }
 }
-
