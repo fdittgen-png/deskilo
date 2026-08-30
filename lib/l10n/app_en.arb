@@ -2133,7 +2133,7 @@
   "@featureWhatsappIntegration": {
     "description": "Feature toggle: WhatsApp affordances riding the directory"
   },
-  "featureWhatsappIntegrationDesc": "Message members on WhatsApp and link the community group.",
+  "featureWhatsappIntegrationDesc": "Members share their WhatsApp number on their profile; one tap on a member opens a chat with it; the community group link in the directory. No server-side WhatsApp integration.",
   "@featureWhatsappIntegrationDesc": {
     "description": "Subtitle of the WhatsApp feature toggle"
   },
@@ -4365,54 +4365,6 @@
   "conversationEmpty": "No messages yet — say hello!",
   "@conversationEmpty": {
     "description": "Empty state of a fresh conversation thread"
-  },
-  "whatsappNotesTitle": "Receive messages on WhatsApp",
-  "@whatsappNotesTitle": {
-    "description": "Settings switch: mirror member messages to WhatsApp (0106)"
-  },
-  "whatsappNotesSubtitle": "Member messages arrive on WhatsApp too.",
-  "@whatsappNotesSubtitle": {
-    "description": "Settings switch subtitle for the WhatsApp message mirror (0106)"
-  },
-  "messageLinkGone": "This message lives in your inbox.",
-  "@messageLinkGone": {
-    "description": "Deep-link landing when a /msg link points at a broadcast or a gone note"
-  },
-  "whatsappNotesUnconfigured": "Channel not configured — messages arrive in-app and by push only.",
-  "@whatsappNotesUnconfigured": {
-    "description": "Warning under the WhatsApp-mirror opt-in switch when the server channel lacks its secrets (#538)"
-  },
-  "whatsappChannelTitle": "WhatsApp channel",
-  "@whatsappChannelTitle": {
-    "description": "Owner tile + sheet title: the workspace WhatsApp channel (#552)"
-  },
-  "whatsappChannelConfigured": "Channel configured — messages mirror to WhatsApp, with their links; the DesKilo link opens the conversation in the app.",
-  "@whatsappChannelConfigured": {
-    "description": "Channel status line when configured (#552)"
-  },
-  "whatsappChannelNotConfigured": "Not configured — messages arrive in-app and by push only.",
-  "@whatsappChannelNotConfigured": {
-    "description": "Channel status line when NOT configured (#552)"
-  },
-  "whatsappChannelHelp": "1. Create a (free) app on developers.facebook.com and add the WhatsApp product.\n2. Under WhatsApp → API setup, copy the permanent access token and the phone number ID.\n3. Paste both below — member messages are then sent from that number.\nNote: WhatsApp only delivers within 24 h of the recipient's last WhatsApp message to your number (their service window).",
-  "@whatsappChannelHelp": {
-    "description": "How-to steps for obtaining WhatsApp Business Cloud API credentials (#552)"
-  },
-  "whatsappChannelToken": "Access token",
-  "@whatsappChannelToken": {
-    "description": "Label of the access-token field (#552)"
-  },
-  "whatsappChannelPhoneId": "Phone number ID",
-  "@whatsappChannelPhoneId": {
-    "description": "Label of the phone-number-ID field (#552)"
-  },
-  "whatsappChannelKeepHint": "Leave blank to keep the stored value.",
-  "@whatsappChannelKeepHint": {
-    "description": "Helper under both credential fields: blank keeps stored (#552)"
-  },
-  "whatsappChannelSaved": "WhatsApp channel saved.",
-  "@whatsappChannelSaved": {
-    "description": "Snack after saving the channel (#552)"
   },
   "notesFilterUnread": "Unread",
   "@notesFilterUnread": {

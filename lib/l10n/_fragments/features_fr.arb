@@ -34,7 +34,7 @@
   "featureMembersDirectory": "Annuaire des membres",
   "featureMembersDirectoryDesc": "L'onglet communauté : qui est là, statuts, présence.",
   "featureWhatsappIntegration": "Intégration WhatsApp",
-  "featureWhatsappIntegrationDesc": "Écrire aux membres sur WhatsApp et lier le groupe de la communauté.",
+  "featureWhatsappIntegrationDesc": "Les membres partagent leur numéro WhatsApp sur leur profil ; un geste sur un membre ouvre la discussion ; le lien du groupe dans l'annuaire. Aucune intégration WhatsApp côté serveur.",
   "featureSpaceQrCodes": "Codes QR des espaces",
   "featureSpaceQrCodesDesc": "Cartes QR imprimables par poste, table, bureau et niveau — scanner pour réserver ou pointer.",
   "featureRequires": "Nécessite {feature}",

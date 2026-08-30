@@ -72,12 +72,6 @@ class FakeProfileRepository implements ProfileRepository {
     _replaceMine(mine.copyWith(whatsapp: whatsapp));
   }
 
-  @override
-  Future<void> updateWhatsappNotes(bool enabled) async {
-    if (failing) throw StateError('updateWhatsappNotes failing (test)');
-    final mine = _mine ?? Profile(id: myUserId);
-    _replaceMine(mine.copyWith(whatsappNotes: enabled));
-  }
 
   @override
   Future<void> updateStatusText(String statusText) async {

@@ -1744,7 +1744,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureWhatsappIntegrationDesc =>
-      'Mitglieder per WhatsApp anschreiben und die Community-Gruppe verlinken.';
+      'Mitglieder teilen ihre WhatsApp-Nummer im Profil; ein Tipp auf ein Mitglied öffnet den Chat; der Gruppenlink im Verzeichnis. Keine serverseitige WhatsApp-Integration.';
 
   @override
   String get featureSpaceQrCodes => 'Raum-QR-Codes';
@@ -3929,48 +3929,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get conversationEmpty => 'Noch keine Nachrichten — sag hallo!';
-
-  @override
-  String get whatsappNotesTitle => 'Nachrichten auf WhatsApp erhalten';
-
-  @override
-  String get whatsappNotesSubtitle =>
-      'Mitglieder-Nachrichten kommen auch auf WhatsApp an.';
-
-  @override
-  String get messageLinkGone => 'Diese Nachricht liegt in deinem Posteingang.';
-
-  @override
-  String get whatsappNotesUnconfigured =>
-      'Kanal nicht konfiguriert — Nachrichten kommen nur in der App und per Push an.';
-
-  @override
-  String get whatsappChannelTitle => 'WhatsApp-Kanal';
-
-  @override
-  String get whatsappChannelConfigured =>
-      'Kanal konfiguriert — Nachrichten kommen auch auf WhatsApp an, mit ihren Links; der DesKilo-Link öffnet die Unterhaltung in der App.';
-
-  @override
-  String get whatsappChannelNotConfigured =>
-      'Nicht konfiguriert — Nachrichten kommen nur in der App und per Push an.';
-
-  @override
-  String get whatsappChannelHelp =>
-      '1. Erstelle eine (kostenlose) App auf developers.facebook.com und füge das Produkt WhatsApp hinzu.\n2. Unter WhatsApp → API-Setup den permanenten Zugriffstoken und die Telefonnummern-ID kopieren.\n3. Beides unten einfügen — Mitglieder-Nachrichten gehen dann von dieser Nummer aus.\nHinweis: WhatsApp stellt nur innerhalb von 24 h nach der letzten WhatsApp-Nachricht des Empfängers an deine Nummer zu (Service-Fenster).';
-
-  @override
-  String get whatsappChannelToken => 'Zugriffstoken';
-
-  @override
-  String get whatsappChannelPhoneId => 'Telefonnummern-ID';
-
-  @override
-  String get whatsappChannelKeepHint =>
-      'Leer lassen, um den gespeicherten Wert zu behalten.';
-
-  @override
-  String get whatsappChannelSaved => 'WhatsApp-Kanal gespeichert.';
 
   @override
   String get notesFilterUnread => 'Ungelesen';

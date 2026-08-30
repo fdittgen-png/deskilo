@@ -51,54 +51,6 @@
   "@conversationEmpty": {
     "description": "Empty state of a fresh conversation thread"
   },
-  "whatsappNotesTitle": "Nachrichten auf WhatsApp erhalten",
-  "@whatsappNotesTitle": {
-    "description": "Settings switch: mirror member messages to WhatsApp (0106)"
-  },
-  "whatsappNotesSubtitle": "Mitglieder-Nachrichten kommen auch auf WhatsApp an.",
-  "@whatsappNotesSubtitle": {
-    "description": "Settings switch subtitle for the WhatsApp message mirror (0106)"
-  },
-  "messageLinkGone": "Diese Nachricht liegt in deinem Posteingang.",
-  "@messageLinkGone": {
-    "description": "Deep-link landing when a /msg link points at a broadcast or a gone note"
-  },
-  "whatsappNotesUnconfigured": "Kanal nicht konfiguriert — Nachrichten kommen nur in der App und per Push an.",
-  "@whatsappNotesUnconfigured": {
-    "description": "Warning under the WhatsApp-mirror opt-in switch when the server channel lacks its secrets (#538)"
-  },
-  "whatsappChannelTitle": "WhatsApp-Kanal",
-  "@whatsappChannelTitle": {
-    "description": "Owner tile + sheet title: the workspace WhatsApp channel (#552)"
-  },
-  "whatsappChannelConfigured": "Kanal konfiguriert — Nachrichten kommen auch auf WhatsApp an, mit ihren Links; der DesKilo-Link öffnet die Unterhaltung in der App.",
-  "@whatsappChannelConfigured": {
-    "description": "Channel status line when configured (#552)"
-  },
-  "whatsappChannelNotConfigured": "Nicht konfiguriert — Nachrichten kommen nur in der App und per Push an.",
-  "@whatsappChannelNotConfigured": {
-    "description": "Channel status line when NOT configured (#552)"
-  },
-  "whatsappChannelHelp": "1. Erstelle eine (kostenlose) App auf developers.facebook.com und füge das Produkt WhatsApp hinzu.\n2. Unter WhatsApp → API-Setup den permanenten Zugriffstoken und die Telefonnummern-ID kopieren.\n3. Beides unten einfügen — Mitglieder-Nachrichten gehen dann von dieser Nummer aus.\nHinweis: WhatsApp stellt nur innerhalb von 24 h nach der letzten WhatsApp-Nachricht des Empfängers an deine Nummer zu (Service-Fenster).",
-  "@whatsappChannelHelp": {
-    "description": "How-to steps for obtaining WhatsApp Business Cloud API credentials (#552)"
-  },
-  "whatsappChannelToken": "Zugriffstoken",
-  "@whatsappChannelToken": {
-    "description": "Label of the access-token field (#552)"
-  },
-  "whatsappChannelPhoneId": "Telefonnummern-ID",
-  "@whatsappChannelPhoneId": {
-    "description": "Label of the phone-number-ID field (#552)"
-  },
-  "whatsappChannelKeepHint": "Leer lassen, um den gespeicherten Wert zu behalten.",
-  "@whatsappChannelKeepHint": {
-    "description": "Helper under both credential fields: blank keeps stored (#552)"
-  },
-  "whatsappChannelSaved": "WhatsApp-Kanal gespeichert.",
-  "@whatsappChannelSaved": {
-    "description": "Snack after saving the channel (#552)"
-  },
   "notesFilterUnread": "Ungelesen",
   "@notesFilterUnread": {
     "description": "Messages-inbox filter chip showing only unread messages (#539)"

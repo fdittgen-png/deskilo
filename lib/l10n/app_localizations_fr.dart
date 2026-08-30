@@ -1748,7 +1748,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureWhatsappIntegrationDesc =>
-      'Écrire aux membres sur WhatsApp et lier le groupe de la communauté.';
+      'Les membres partagent leur numéro WhatsApp sur leur profil ; un geste sur un membre ouvre la discussion ; le lien du groupe dans l\'annuaire. Aucune intégration WhatsApp côté serveur.';
 
   @override
   String get featureSpaceQrCodes => 'Codes QR des espaces';
@@ -3935,49 +3935,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get conversationEmpty => 'Pas encore de messages — dites bonjour !';
-
-  @override
-  String get whatsappNotesTitle => 'Recevoir les messages sur WhatsApp';
-
-  @override
-  String get whatsappNotesSubtitle =>
-      'Les messages des membres arrivent aussi sur WhatsApp.';
-
-  @override
-  String get messageLinkGone =>
-      'Ce message se trouve dans votre boîte de réception.';
-
-  @override
-  String get whatsappNotesUnconfigured =>
-      'Canal non configuré — les messages arrivent dans l\'app et en push seulement.';
-
-  @override
-  String get whatsappChannelTitle => 'Canal WhatsApp';
-
-  @override
-  String get whatsappChannelConfigured =>
-      'Canal configuré — les messages arrivent aussi sur WhatsApp, avec leurs liens ; le lien DesKilo ouvre la conversation dans l\'app.';
-
-  @override
-  String get whatsappChannelNotConfigured =>
-      'Non configuré — les messages arrivent dans l\'app et en push seulement.';
-
-  @override
-  String get whatsappChannelHelp =>
-      '1. Créez une app (gratuite) sur developers.facebook.com et ajoutez le produit WhatsApp.\n2. Sous WhatsApp → Configuration de l\'API, copiez le jeton d\'accès permanent et l\'ID du numéro de téléphone.\n3. Collez les deux ci-dessous — les messages des membres partent alors de ce numéro.\nNote : WhatsApp ne livre que dans les 24 h suivant le dernier message WhatsApp du destinataire vers votre numéro (sa fenêtre de service).';
-
-  @override
-  String get whatsappChannelToken => 'Jeton d\'accès';
-
-  @override
-  String get whatsappChannelPhoneId => 'ID du numéro de téléphone';
-
-  @override
-  String get whatsappChannelKeepHint =>
-      'Laissez vide pour conserver la valeur enregistrée.';
-
-  @override
-  String get whatsappChannelSaved => 'Canal WhatsApp enregistré.';
 
   @override
   String get notesFilterUnread => 'Non lus';

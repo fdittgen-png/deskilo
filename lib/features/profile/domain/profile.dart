@@ -18,7 +18,6 @@ class Profile {
     required this.id,
     this.displayName = '',
     this.whatsapp = '',
-    this.whatsappNotes = false,
     this.statusText = '',
     this.address = '',
     this.countryCode = '',
@@ -38,9 +37,6 @@ class Profile {
   /// (mirrors the display_name not-null-empty convention).
   final String whatsapp;
 
-  /// Receive my member messages on WhatsApp too (0106) — opt-in,
-  /// meaningful only while [whatsapp] is shared.
-  final bool whatsappNotes;
 
   /// Self-set status line shown in the member directory (#231/#232),
   /// e.g. "In a call · back at 14:00"; '' = no status. At most
@@ -89,7 +85,6 @@ class Profile {
         id: db['id'] as String,
         displayName: db['display_name'] as String? ?? '',
         whatsapp: db['whatsapp'] as String? ?? '',
-        whatsappNotes: db['whatsapp_notes'] as bool? ?? false,
         statusText: db['status_text'] as String? ?? '',
         address: db['address'] as String? ?? '',
         countryCode: db['country_code'] as String? ?? '',
@@ -106,7 +101,6 @@ class Profile {
         'id': id,
         'display_name': displayName,
         'whatsapp': whatsapp,
-        'whatsapp_notes': whatsappNotes,
         'status_text': statusText,
         'address': address,
         'country_code': countryCode,
@@ -118,7 +112,6 @@ class Profile {
   Profile copyWith({
     String? displayName,
     String? whatsapp,
-    bool? whatsappNotes,
     String? statusText,
     String? address,
     String? countryCode,
@@ -132,7 +125,6 @@ class Profile {
         id: id,
         displayName: displayName ?? this.displayName,
         whatsapp: whatsapp ?? this.whatsapp,
-        whatsappNotes: whatsappNotes ?? this.whatsappNotes,
         statusText: statusText ?? this.statusText,
         address: address ?? this.address,
         countryCode: countryCode ?? this.countryCode,

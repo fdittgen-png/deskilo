@@ -33,7 +33,6 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/profile.dart';
 import '../../providers/profile_providers.dart';
 import '../widgets/member_avatar.dart';
-import '../widgets/whatsapp_channel_sheet.dart';
 import '../widgets/whatsapp_dialog.dart';
 
 /// Endonyms are proper nouns, identical in every UI language — deliberately
@@ -309,75 +308,6 @@ class SettingsScreen extends ConsumerWidget {
               builder: (_) => const WhatsappDialog(),
             ),
           ),
-          // Messages on WhatsApp (0106): opt-in mirror of the in-app
-          // messenger — needs a shared number AND member notifications.
-          if (features.contains(WorkspaceFeature.whatsappIntegration) &&
-              features.contains(WorkspaceFeature.memberNotifications) &&
-              (myProfile?.sharesWhatsapp ?? false))
-            SwitchListTile(
-              key: const ValueKey('whatsapp-notes-switch'),
-              secondary: const Icon(Icons.forward_to_inbox_outlined),
-              title: Text(l10n?.whatsappNotesTitle ??
-                  'Receive messages on WhatsApp'),
-              // #552 — the switch says ONE thing; the long explanation
-              // and the how-to live in the channel sheet below.
-              subtitle: Builder(builder: (context) {
-                final configured =
-                    ref.watch(whatsappMirrorConfiguredProvider).value;
-                final base = l10n?.whatsappNotesSubtitle ??
-                    'Member messages arrive on WhatsApp too.';
-                if (configured != false) return Text(base);
-                // #538 field report — the switch used to promise a
-                // channel the server cannot deliver on. Say it, short.
-                return Text(
-                  '$base\n${l10n?.whatsappNotesUnconfigured ?? 'Channel not configured — messages arrive in-app and by push only.'}',
-                  key: const ValueKey('whatsapp-notes-unconfigured'),
-                );
-              }),
-              value: myProfile?.whatsappNotes ?? false,
-              onChanged: (enabled) async {
-                try {
-                  await ref
-                      .read(profileRepositoryProvider)
-                      .updateWhatsappNotes(enabled);
-                } catch (e, st) {
-                  TraceLogger.instance.error(
-                      'profile', 'whatsapp notes toggle failed',
-                      error: e, stackTrace: st);
-                  if (!context.mounted) return;
-                  AppSnack.error(
-                    context,
-                    l10n?.workspaceGenericError ??
-                        'Something went wrong. Please try again.',
-                  );
-                  return;
-                }
-                ref.invalidate(myProfileProvider);
-              },
-            ),
-          // #552 — the OWNER configures the workspace's WhatsApp
-          // channel here: the how-to plus the credentials, in-app
-          // (the payment-config pattern), no server secrets needed.
-          if (features.contains(WorkspaceFeature.whatsappIntegration) &&
-              features.contains(WorkspaceFeature.memberNotifications) &&
-              isOwner)
-            ListTile(
-              key: const ValueKey('whatsapp-channel-tile'),
-              leading: const Icon(Icons.settings_suggest_outlined),
-              title: Text(
-                  l10n?.whatsappChannelTitle ?? 'WhatsApp channel'),
-              subtitle: Text(
-                ref.watch(whatsappMirrorConfiguredProvider).value == true
-                    ? (l10n?.whatsappChannelConfigured ??
-                        'Channel configured — messages mirror to '
-                            'WhatsApp.')
-                    : (l10n?.whatsappChannelNotConfigured ??
-                        'Not configured — messages arrive in-app and '
-                            'by push only.'),
-              ),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => showWhatsappChannelSheet(context),
-            ),
           // Self-set status line on my profile (#231): shown next to me
           // in the member directory (#232). Sits with WhatsApp in the
           // ungrouped personal area on top.

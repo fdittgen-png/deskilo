@@ -14,7 +14,6 @@ void main() {
         'id': 'user-1',
         'display_name': 'Ada',
         'whatsapp': '+33612345678',
-        'whatsapp_notes': true,
         'status_text': 'In a call · back at 14:00',
         'address': '12 Rue des Halles, 34120 Pézenas',
         // 0069 — the two facts an e-invoice needs about the customer.
@@ -28,7 +27,6 @@ void main() {
       expect(profile.id, 'user-1');
       expect(profile.displayName, 'Ada');
       expect(profile.whatsapp, '+33612345678');
-      expect(profile.whatsappNotes, isTrue);
       expect(profile.statusText, 'In a call · back at 14:00');
       expect(profile.hasStatus, isTrue);
       expect(profile.address, '12 Rue des Halles, 34120 Pézenas');

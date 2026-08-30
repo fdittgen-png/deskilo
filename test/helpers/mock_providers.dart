@@ -1217,29 +1217,6 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   /// Whether the WhatsApp mirror channel is configured (0106 probe) —
   /// defaults true so the settings switch shows no warning in tests
   /// that don't care.
-  bool whatsappMirrorConfigured = true;
-
-  /// #552 — the owner-saved channel credentials, keyed by workspace.
-  final whatsappChannels = <String, Map<String, String>>{};
-
-  @override
-  Future<bool> fetchWhatsappMirrorConfigured({String? workspaceId}) async =>
-      whatsappMirrorConfigured ||
-      (whatsappChannels[workspaceId]?['token']?.isNotEmpty ?? false) &&
-          (whatsappChannels[workspaceId]?['phone_id']?.isNotEmpty ?? false);
-
-  @override
-  Future<void> setWhatsappChannel(
-    String workspaceId, {
-    required String token,
-    required String phoneId,
-  }) async {
-    // Merge semantics like set_whatsapp_channel: blank keeps stored.
-    final channel = whatsappChannels.putIfAbsent(workspaceId, () => {});
-    if (token.trim().isNotEmpty) channel['token'] = token.trim();
-    if (phoneId.trim().isNotEmpty) channel['phone_id'] = phoneId.trim();
-  }
-
   /// Read receipts (0105): notes addressed to me ('member-1', the
   /// fake's signed-in member) get their read stamp.
   @override

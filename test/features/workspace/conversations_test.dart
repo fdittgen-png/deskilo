@@ -383,18 +383,6 @@ void main() {
       expect(providers, contains('n.fromMemberId != me?.id'));
     });
 
-    test('a message alert opens the CONVERSATION, groups included', () {
-      // Resolving a "partner" has no answer when eight people are in
-      // the thread.
-      final link = File('lib/features/workspace/presentation/screens/'
-              'message_link_screen.dart')
-          .readAsStringSync();
-      expect(link, contains('note?.conversationId'));
-      expect(link, contains('ConversationThread(conversationId:'));
-      // And it lands in the messaging centre, not the events feed.
-      expect(link, contains("context.go('/messages')"));
-      expect(link, isNot(contains("context.go('/events')")));
-    });
   });
 
   group('the first beta build broke here (#692)', () {

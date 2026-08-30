@@ -34,7 +34,7 @@
   "featureMembersDirectory": "Elenco dei membri",
   "featureMembersDirectoryDesc": "La scheda comunità: chi c'è, stati, presenza.",
   "featureWhatsappIntegration": "Integrazione WhatsApp",
-  "featureWhatsappIntegrationDesc": "Scrivere ai membri su WhatsApp e collegare il gruppo della comunità.",
+  "featureWhatsappIntegrationDesc": "I membri condividono il loro numero WhatsApp nel profilo; un tocco su un membro apre la chat; il link del gruppo nella rubrica. Nessuna integrazione WhatsApp lato server.",
   "featureSpaceQrCodes": "Codici QR degli spazi",
   "featureSpaceQrCodesDesc": "Schede QR stampabili per postazione, tavolo, ufficio e piano — scansiona per prenotare o fare check-in.",
   "featureRequires": "Richiede {feature}",
