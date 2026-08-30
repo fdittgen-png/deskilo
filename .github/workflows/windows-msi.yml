@@ -21,7 +21,11 @@ on:
       - .github/workflows/windows-msi.yml
       - windows/**
   push:
-    tags: ["v*"]
+    # Only the release train's tags (v1.0.0+<build>, the '+' is the
+    # mark): they come with a GitHub release to attach to. An F-Droid
+    # tag (v1.0.0-fdroid.1, #716) has no release — F-Droid builds from
+    # source — and a run on it can only end in "release not found".
+    tags: ["v*+*"]
   # #570 — the release train reuses this workflow verbatim.
   workflow_call:
     inputs:
