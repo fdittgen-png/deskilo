@@ -7,6 +7,7 @@ import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/domain/badge_sign_in.dart';
 import 'package:deskilo/features/auth/domain/social_provider.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
+import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/features/workspace/domain/conversation.dart';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
@@ -1331,6 +1332,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 List<Override> standardTestOverrides({
   Clock? clock,
   bool devMode = false,
+  BackendSettingsStore? backendSettings,
   AuthRepository? auth,
   WorkspaceRepository? workspace,
   FloorPlanRepository? floorPlan,
@@ -1413,6 +1415,10 @@ List<Override> standardTestOverrides({
     nfcUidReaderProvider.overrideWithValue(nfc ?? FakeNfcUidReader()),
     frontCameraStoreProvider
         .overrideWithValue(frontCamera ?? InMemoryFrontCameraStore()),
+    // #780 — which Supabase instance the device talks to: in-memory in
+    // tests, so no SharedPreferences channel and no real endpoint.
+    backendSettingsStoreProvider
+        .overrideWithValue(backendSettings ?? InMemoryBackendSettingsStore()),
     // File cache would touch path_provider channels in tests — and boot
     // eviction runs on every app pump.
     cacheStoreProvider.overrideWithValue(InMemoryCacheStore()),
@@ -1457,6 +1463,17 @@ class InMemoryCacheStore implements CacheStore {
 
 /// In-memory [FrontCameraStore] so widget tests never touch
 /// SharedPreferences; front camera by default, like production.
+/// #780 — the device's chosen Supabase endpoint; null = the app's own.
+class InMemoryBackendSettingsStore implements BackendSettingsStore {
+  BackendEndpoint? value;
+
+  @override
+  Future<BackendEndpoint?> read() async => value;
+
+  @override
+  Future<void> write(BackendEndpoint? endpoint) async => value = endpoint;
+}
+
 class InMemoryFrontCameraStore implements FrontCameraStore {
   /// Null = never chosen (#773): the surface's own default applies.
   bool? value;

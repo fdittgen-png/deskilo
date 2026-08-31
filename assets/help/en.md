@@ -920,6 +920,21 @@ Your personal screen, top to bottom:
 - **About** — the app version, the author (Florian DITTGEN), the open-source licence (0BSD) with the source on GitHub, the privacy policy, a bug-report/feature link, and how to **support the project** (PayPal, Revolut).
 - **Sign out**.
 
+### Your own server — point the app at your community's Supabase
+
+By default the app talks to its own server, and nothing here needs your attention. But DesKilo's backend is part of the source code — the schema, the row-level-security policies and the edge functions — so a community can run **its own Supabase project** and keep every byte on it. **Settings → Advanced → Server** switches this device over, with no rebuild:
+
+1. **Create a project** at supabase.com — the free tier is enough to start.
+2. **Install the schema**: run the SQL files in `supabase/migrations` from the source repository, in order.
+3. **Copy the credentials**: in the Supabase dashboard, *Project Settings → API keys* holds the **Project URL** and the **publishable key** (the publishable key is meant to ship in a client; the server's row-level security is what protects the data).
+4. **Enter them** in Settings → Server — paste each field, press **Test the connection**, then **Save**.
+
+The test says which part is wrong rather than just failing: *could not reach that address*, *the key was refused*, or *the tables are missing* — that last one means the project answered but step 2 has not been done yet.
+
+**Members don't type any of this.** Once the owner's device is on the community's server, the **QR button** on that screen shows a code; every member scans it in their own Settings → Server and lands on the same instance.
+
+Switching signs you out and takes effect when the app is next opened — the session belonged to the other server. **Use the app's server** returns to the default at any time.
+
 ## 13. Notifications
 
 Check-in reminders, pending confirmations, expense decisions — and when an admin **removes one of your reservations** (overrule), you and the admins are notified. Delivery is local-first; server pushes arrive out of the box on Android, iPhone/iPad, the browser and macOS (Firebase Cloud Messaging) — *Settings → Advanced* shows whether push is active on this device. The app-icon badge shows your pending-confirmations count **plus your unread messages** — on Android, iPhone/iPad, the macOS Dock, the Windows taskbar, and installed web apps. Member messages are announced **once per device with the sender and the full text** — including anything sent while the app was closed, announced the moment you next open it. That announcement is always raised **locally, by the app itself**: the pushed payload never carries a name, a time or a word of the message (§6), so what travels over the network says only that something arrived.

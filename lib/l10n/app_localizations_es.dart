@@ -2459,6 +2459,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpTopicScheduledExpenses => 'Gastos programados';
 
   @override
+  String get helpTopicServer => 'tu propio servidor';
+
+  @override
   String get inviteSectionTitle => 'Invitar a alguien';
 
   @override
@@ -5281,6 +5284,119 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get consentReviewHint =>
       'El texto que aceptaste, con la fecha — vuelve a leerlo cuando quieras.';
+
+  @override
+  String get backendServerTitle => 'Servidor';
+
+  @override
+  String backendServerDefault(Object host) {
+    return 'El servidor propio de la app ($host)';
+  }
+
+  @override
+  String backendServerCustom(Object host) {
+    return 'Tu propio servidor ($host)';
+  }
+
+  @override
+  String get backendServerHint =>
+      'Por defecto la app usa su propio servidor. Si tu comunidad tiene su propio proyecto de Supabase, introdúcelo aquí — la app guardará todo allí.';
+
+  @override
+  String get backendUrlLabel => 'URL del proyecto';
+
+  @override
+  String get backendKeyLabel => 'Clave publicable';
+
+  @override
+  String get backendServerRestartHint =>
+      'La app cierra tu sesión y aplica el cambio en el próximo inicio.';
+
+  @override
+  String get backendServerReset => 'Usar el servidor de la app';
+
+  @override
+  String get backendServerSaved =>
+      'Guardado. Cierra y vuelve a abrir la app para usar el nuevo servidor.';
+
+  @override
+  String get backendErrorUrlEmpty => 'Introduce la URL del proyecto.';
+
+  @override
+  String get backendErrorUrlNotHttps => 'La URL debe empezar por https://.';
+
+  @override
+  String get backendErrorUrlNoHost => 'Esa no es una dirección completa.';
+
+  @override
+  String get backendErrorKeyEmpty => 'Introduce la clave publicable.';
+
+  @override
+  String get backendErrorKeyNotSupabase =>
+      'Esa no es una clave publicable de Supabase (sb_publishable_…).';
+
+  @override
+  String get backendCurrentTitle => 'Este dispositivo usa';
+
+  @override
+  String get backendHowTitle => 'Usar tu propio servidor';
+
+  @override
+  String get backendStep1 =>
+      'Crea un proyecto en supabase.com (el plan gratuito basta para empezar).';
+
+  @override
+  String get backendStep2 =>
+      'Instala el esquema de la app: ejecuta los archivos SQL de supabase/migrations del repositorio fuente, en orden.';
+
+  @override
+  String get backendStep3 =>
+      'En el panel de Supabase, abre Project Settings → API keys y copia la Project URL y la clave publicable.';
+
+  @override
+  String get backendStep4 =>
+      'Pégalos abajo, prueba la conexión y guarda. Los miembros se unen a la misma instancia escaneando el QR de arriba.';
+
+  @override
+  String get backendScan => 'Escanear un QR de servidor';
+
+  @override
+  String get backendScanNothing =>
+      'Ese QR no es un código de servidor de DesKilo.';
+
+  @override
+  String get backendShare => 'Compartir este servidor';
+
+  @override
+  String get backendShareHint =>
+      'Los miembros lo escanean en Ajustes → Servidor para apuntar su app a la misma instancia.';
+
+  @override
+  String get backendPaste => 'Pegar';
+
+  @override
+  String get backendTest => 'Probar la conexión';
+
+  @override
+  String get backendTesting => 'Probando…';
+
+  @override
+  String get backendTestOk => 'Contactado: el esquema de la app está ahí.';
+
+  @override
+  String get backendTestUnreachable =>
+      'No se pudo contactar esa dirección. Revisa la URL y tu red.';
+
+  @override
+  String get backendTestBadKey =>
+      'Contactado, pero la clave fue rechazada. Copia de nuevo la clave publicable desde Project Settings → API keys.';
+
+  @override
+  String get backendTestSchemaMissing =>
+      'Contactado, pero faltan las tablas de DesKilo: ejecuta antes las migraciones de supabase/migrations en ese proyecto.';
+
+  @override
+  String get backendCopyLink => 'Copiar';
 
   @override
   String get profilesDefault => 'Predeterminado al iniciar';

@@ -8,21 +8,43 @@
 # and packages/deskilo_push_foss (no transport). `prebuild` rewrites the
 # one pubspec line that picks between them. Nothing else differs.
 #
+# WHY AntiFeatures: NonFreeNet (#779). The shipped binary's compiled
+# defaults (lib/core/backend/backend_config.dart) point at the author's
+# hosted reference deployment, so a user who installs and signs in does
+# reach the developer's instance. The SERVER is free software and part
+# of this repository (0BSD: SQL migrations, RLS policies and edge
+# functions under supabase/), and a self-hoster overrides both values at
+# build time with --dart-define — but the default is what F-Droid ships,
+# hence the disclosure. This mirrors what fdroid/fdroiddata!42093 asked
+# of the sibling app; the AntiFeature can be revisited once the libre
+# build ships with no default endpoint at all.
+#
 # pubspec.lock is KEPT: `flutter pub get` re-resolves only the swapped
 # path dependency and leaves every other version pinned — deleting the
 # lock would build against whatever is newest that day.
 #
 # Versions: `--build-number` pins the versionCode F-Droid expects; the
 # store trains use a wall-clock number, so F-Droid's is its own series.
+# AutoUpdateMode is None for the same reason: a new F-Droid release is a
+# deliberate `v<x.y.z>-fdroid.<n>` tag whose build-number is set here by
+# hand, not a copy of the store train's.
+AntiFeatures:
+  NonFreeNet:
+    en-US: |-
+      Out of the box the app connects to the author's hosted deployment
+      of its own backend. That backend is free software and lives in
+      this repository (SQL migrations, row-level-security policies and
+      edge functions, 0BSD): a community can run its own Supabase
+      project and point THIS build at it in Settings → Server — no
+      rebuild — but the default endpoint is the author's.
 Categories:
-  - Office
+  - Schedule
+  - Finance Manager
 License: 0BSD
 AuthorName: Florian DITTGEN
 SourceCode: https://github.com/fdittgen-png/deskilo
 IssueTracker: https://github.com/fdittgen-png/deskilo/issues
 Changelog: https://github.com/fdittgen-png/deskilo/releases
-
-AutoName: DesKilo
 Summary: Coworking space booking, check-in, members and billing
 Description: |-
   Book a seat on the floor plan, check in with a QR or NFC badge, see
@@ -31,21 +53,22 @@ Description: |-
   e-invoicing. Multi-workspace, five languages, and each member reads
   amounts, dates and the clock in their own region.
 
-  The F-Droid build carries no push transport (no Google services):
+  This build carries no push transport and no Google services:
   notifications arrive as local notifications and in the in-app inbox.
 
-  The app talks to the community's own Supabase backend (open source,
-  self-hostable); the workspace owner chooses the instance.
+  The app is a client for its own backend (Supabase; the schema,
+  row-level-security policies and edge functions are in the source
+  repository under the same licence). It connects to the author's
+  hosted instance by default — see the NonFreeNet note — and Settings →
+  Server points it at a community's own Supabase project instead, with
+  a connection test and a QR the owner shares with members.
 
-  GDPR: EU-hosted data, no tracking or analytics, access limited by
-  role and enforced on the server; who-can-see, access log, export and
-  erasure are buttons in Settings → Privacy & data.
-
-AntiFeatures: {}
-
+  Privacy: data is stored in the EU, there is no tracking and no
+  analytics, access is limited by role and enforced on the server, and
+  who-can-see-my-data, the access log, data export and account erasure
+  are buttons in Settings → Privacy & data.
 RepoType: git
 Repo: https://github.com/fdittgen-png/deskilo.git
-
 Builds:
   - versionName: 1.0.0
     versionCode: 100000
@@ -58,7 +81,7 @@ Builds:
     srclibs:
       - flutter@3.44.9
     prebuild:
-      - sed -i 's|    path: packages/deskilo_push$|    path: packages/deskilo_push_foss|' pubspec.yaml
+      - "sed -i 's|    path: packages/deskilo_push$|    path: packages/deskilo_push_foss|' pubspec.yaml"
     build:
       - export PUB_CACHE=$(pwd)/.pub-cache
       - $$flutter$$/bin/flutter config --no-analytics
@@ -68,7 +91,6 @@ Builds:
       - $$flutter$$/bin/flutter build apk --release --build-number=100000
     scandelete:
       - .pub-cache
-
 AutoUpdateMode: None
 UpdateCheckMode: Tags ^v[0-9.]+-fdroid\.[0-9]+$
 CurrentVersion: 1.0.0

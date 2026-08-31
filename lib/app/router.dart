@@ -27,6 +27,7 @@ import '../features/money/presentation/screens/services_screen.dart';
 import '../features/plan/presentation/screens/accessories_screen.dart';
 import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/help/presentation/screens/help_screen.dart';
+import '../features/profile/presentation/screens/backend_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
 import '../features/workspace/presentation/screens/inbox_screen.dart';
 import '../core/i18n/regional_formats_section.dart';
@@ -299,6 +300,13 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/profiles',
         builder: (context, state) => const ProfilesScreen(),
+      ),
+      // #780 — which Supabase instance this device talks to. Outside the
+      // workspace shell on purpose: it must be reachable when no
+      // workspace can be loaded, which is exactly when it is needed.
+      GoRoute(
+        path: '/server',
+        builder: (context, state) => const BackendScreen(),
       ),
       GoRoute(
         // No owner guard (#144): developer mode is local diagnostics,

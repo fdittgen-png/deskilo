@@ -2462,6 +2462,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpTopicScheduledExpenses => 'Spese programmate';
 
   @override
+  String get helpTopicServer => 'il tuo server';
+
+  @override
   String get inviteSectionTitle => 'Invita qualcuno';
 
   @override
@@ -5290,6 +5293,118 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get consentReviewHint =>
       'Il testo che hai accettato, con la data — rileggilo quando vuoi.';
+
+  @override
+  String get backendServerTitle => 'Server';
+
+  @override
+  String backendServerDefault(Object host) {
+    return 'Il server dell\'app ($host)';
+  }
+
+  @override
+  String backendServerCustom(Object host) {
+    return 'Il tuo server ($host)';
+  }
+
+  @override
+  String get backendServerHint =>
+      'Per impostazione predefinita l\'app usa il proprio server. Se la tua comunità gestisce un proprio progetto Supabase, inseriscilo qui — l\'app salverà tutto lì.';
+
+  @override
+  String get backendUrlLabel => 'URL del progetto';
+
+  @override
+  String get backendKeyLabel => 'Chiave pubblicabile';
+
+  @override
+  String get backendServerRestartHint =>
+      'L\'app ti disconnette e applica la modifica al prossimo avvio.';
+
+  @override
+  String get backendServerReset => 'Usa il server dell\'app';
+
+  @override
+  String get backendServerSaved =>
+      'Salvato. Chiudi e riapri l\'app per usare il nuovo server.';
+
+  @override
+  String get backendErrorUrlEmpty => 'Inserisci l\'URL del progetto.';
+
+  @override
+  String get backendErrorUrlNotHttps => 'L\'URL deve iniziare con https://.';
+
+  @override
+  String get backendErrorUrlNoHost => 'Questo non è un indirizzo completo.';
+
+  @override
+  String get backendErrorKeyEmpty => 'Inserisci la chiave pubblicabile.';
+
+  @override
+  String get backendErrorKeyNotSupabase =>
+      'Questa non è una chiave pubblicabile Supabase (sb_publishable_…).';
+
+  @override
+  String get backendCurrentTitle => 'Questo dispositivo usa';
+
+  @override
+  String get backendHowTitle => 'Usare il tuo server';
+
+  @override
+  String get backendStep1 =>
+      'Crea un progetto su supabase.com (il piano gratuito basta per iniziare).';
+
+  @override
+  String get backendStep2 =>
+      'Installa lo schema dell\'app: esegui i file SQL in supabase/migrations del repository sorgente, in ordine.';
+
+  @override
+  String get backendStep3 =>
+      'Nel pannello Supabase apri Project Settings → API keys e copia la Project URL e la chiave pubblicabile.';
+
+  @override
+  String get backendStep4 =>
+      'Incollali qui sotto, prova la connessione e salva. I membri raggiungono la stessa istanza scansionando il QR qui sopra.';
+
+  @override
+  String get backendScan => 'Scansiona un QR del server';
+
+  @override
+  String get backendScanNothing => 'Questo QR non è un codice server DesKilo.';
+
+  @override
+  String get backendShare => 'Condividi questo server';
+
+  @override
+  String get backendShareHint =>
+      'I membri lo scansionano in Impostazioni → Server per puntare la loro app alla stessa istanza.';
+
+  @override
+  String get backendPaste => 'Incolla';
+
+  @override
+  String get backendTest => 'Prova la connessione';
+
+  @override
+  String get backendTesting => 'Prova in corso…';
+
+  @override
+  String get backendTestOk => 'Raggiunto — lo schema dell\'app è presente.';
+
+  @override
+  String get backendTestUnreachable =>
+      'Impossibile raggiungere quell\'indirizzo. Controlla l\'URL e la rete.';
+
+  @override
+  String get backendTestBadKey =>
+      'Raggiunto, ma la chiave è stata rifiutata. Ricopia la chiave pubblicabile da Project Settings → API keys.';
+
+  @override
+  String get backendTestSchemaMissing =>
+      'Raggiunto, ma mancano le tabelle DesKilo — esegui prima le migrazioni di supabase/migrations su quel progetto.';
+
+  @override
+  String get backendCopyLink => 'Copia';
 
   @override
   String get profilesDefault => 'Predefinito all\'avvio';

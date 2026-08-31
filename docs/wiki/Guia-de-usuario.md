@@ -872,6 +872,21 @@ Tu pantalla personal, de arriba abajo:
 - **Acerca de** — la versión de la app, el autor (Florian DITTGEN), la licencia open source (0BSD) con el código en GitHub, la política de privacidad, un enlace para informar de errores, y cómo **apoyar el proyecto** (PayPal, Revolut).
 - **Cerrar sesión**.
 
+### Tu propio servidor — apuntar la app al Supabase de tu comunidad
+
+Por defecto la app habla con su propio servidor, y aquí no hay nada que requiera tu atención. Pero el backend de DesKilo forma parte del código fuente — el esquema, las políticas de seguridad a nivel de fila y las funciones edge — así que una comunidad puede ejecutar **su propio proyecto de Supabase** y guardar en él hasta el último byte. **Ajustes → Avanzado → Servidor** cambia este dispositivo, sin recompilar nada:
+
+1. **Crea un proyecto** en supabase.com — el plan gratuito basta para empezar.
+2. **Instala el esquema**: ejecuta los archivos SQL de `supabase/migrations` del repositorio del código fuente, en orden.
+3. **Copia las credenciales**: en el panel de Supabase, *Project Settings → API keys* contiene la **URL del proyecto** y la **clave publicable** (la clave publicable está pensada para viajar dentro de un cliente; lo que protege los datos es la seguridad a nivel de fila del servidor).
+4. **Introdúcelas** en Ajustes → Servidor — pega cada campo, pulsa **Probar la conexión** y luego **Guardar**.
+
+La prueba dice qué parte está mal en lugar de limitarse a fallar: *no se pudo alcanzar esa dirección*, *la clave fue rechazada* o *faltan las tablas* — esto último significa que el proyecto respondió pero que el paso 2 aún no se ha hecho.
+
+**Los miembros no escriben nada de esto.** En cuanto el dispositivo del propietario está en el servidor de la comunidad, el **botón QR** de esa pantalla muestra un código; cada miembro lo escanea en su propio Ajustes → Servidor y aterriza en la misma instancia.
+
+Cambiar de servidor cierra tu sesión y surte efecto la próxima vez que abras la app — la sesión pertenecía al otro servidor. **Usar el servidor de la app** vuelve al predeterminado en cualquier momento.
+
 ## 13. Notificaciones
 
 Recordatorios de registro, confirmaciones pendientes, decisiones de gastos — y cuando un admin **elimina una de tus reservas** (anulación), tú y los admins recibís aviso. La entrega es local primero; los push del servidor llegan de serie en Android, iPhone/iPad, el navegador y macOS (Firebase Cloud Messaging) — *Ajustes → Avanzado* muestra si el push está activo en este dispositivo. La insignia del icono de la app muestra tus confirmaciones pendientes **más tus mensajes sin leer** — en Android, iPhone/iPad, el Dock de macOS, la barra de tareas de Windows y las web apps instaladas. Los mensajes entre miembros se anuncian **una vez por dispositivo con el remitente y el texto completo** — incluido lo enviado con la app cerrada, anunciado en cuanto la vuelves a abrir. Ese aviso siempre lo genera **la propia app, en local**: el payload push no lleva nunca un nombre, una hora ni una palabra del mensaje (§6), así que lo que viaja por la red solo dice que ha llegado algo.
