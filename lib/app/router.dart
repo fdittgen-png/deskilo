@@ -116,6 +116,11 @@ GoRouter router(Ref ref) {
       // and the privacy screen. Fails CLOSED: once the profile query has
       // settled, anything but a recorded acceptance of the CURRENT
       // version (no row, an error, an older version) is the consent.
+      // #771 — EXCEPT the kiosk: a wall device's account has no personal
+      // consent to give, and its lockdown made the screen unanswerable —
+      // the pad froze over the dialog. The kiosk gate below keeps
+      // owning the device's route.
+      final kioskMember = ref.read(myMemberProvider).value?.isKiosk ?? false;
       final profileAsync = ref.read(myProfileProvider);
       final accepted = profileAsync.value?.privacyAcceptedVersion ==
           kPrivacyPolicyVersion;
@@ -123,7 +128,8 @@ GoRouter router(Ref ref) {
       final consentFree = atConsent ||
           state.matchedLocation == '/help' ||
           state.matchedLocation == '/privacy';
-      if (!profileAsync.isLoading && !accepted && !consentFree) {
+      if (!profileAsync.isLoading && !accepted && !consentFree &&
+          !kioskMember) {
         return '/consent';
       }
       if (atConsent &&
