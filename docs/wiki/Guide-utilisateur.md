@@ -872,6 +872,21 @@ Votre écran personnel, de haut en bas :
 - **À propos** — la version de l'app, l'auteur (Florian DITTGEN), la licence open source (0BSD) avec le code sur GitHub, la politique de confidentialité, un lien pour signaler un bug, et comment **soutenir le projet** (PayPal, Revolut).
 - **Se déconnecter**.
 
+### Votre propre serveur — pointer l'app vers le Supabase de votre communauté
+
+Par défaut, l'app parle à son propre serveur, et rien ici ne réclame votre attention. Mais le backend de DesKilo fait partie du code source — le schéma, les politiques de sécurité au niveau des lignes et les fonctions edge — de sorte qu'une communauté peut faire tourner **son propre projet Supabase** et garder chaque octet dessus. **Réglages → Avancé → Serveur** bascule cet appareil, sans reconstruire l'app :
+
+1. **Créez un projet** sur supabase.com — l'offre gratuite suffit pour démarrer.
+2. **Installez le schéma** : exécutez les fichiers SQL de `supabase/migrations` du dépôt source, dans l'ordre.
+3. **Copiez les identifiants** : dans le tableau de bord Supabase, *Project Settings → API keys* contient l'**URL du projet** et la **clé publiable** (la clé publiable est faite pour être embarquée dans un client ; c'est la sécurité au niveau des lignes, côté serveur, qui protège les données).
+4. **Saisissez-les** dans Réglages → Serveur — collez chaque champ, appuyez sur **Tester la connexion**, puis **Enregistrer**.
+
+Le test dit quelle partie ne va pas au lieu d'échouer simplement : *impossible de joindre cette adresse*, *la clé a été refusée*, ou *les tables sont absentes* — ce dernier cas signifie que le projet a répondu mais que l'étape 2 n'a pas encore été faite.
+
+**Les membres ne saisissent rien de tout cela.** Une fois l'appareil du propriétaire sur le serveur de la communauté, le **bouton QR** de cet écran affiche un code ; chaque membre le scanne depuis son propre Réglages → Serveur et arrive sur la même instance.
+
+Basculer vous déconnecte et prend effet à la prochaine ouverture de l'app — la session appartenait à l'autre serveur. **Utiliser le serveur de l'app** revient au défaut à tout moment.
+
 ## 13. Notifications
 
 Rappels de pointage, confirmations en attente, décisions de dépense — et quand un admin **retire une de vos réservations** (passer outre), vous et les admins êtes notifiés. La livraison est locale d'abord ; les push serveur arrivent d'office sur Android, iPhone/iPad, navigateur et macOS (Firebase Cloud Messaging) — *Réglages → Avancé* montre si le push est actif sur cet appareil. Le badge d'icône montre vos confirmations en attente **plus vos messages non lus** — Android, iPhone/iPad, Dock macOS, barre Windows, web installé. Les messages de membres sont annoncés **une fois par appareil avec l'expéditeur et le texte complet** — y compris ceux envoyés app fermée, annoncés à la prochaine ouverture. Cette annonce est toujours produite **localement, par l'app elle-même** : le push, lui, ne porte ni nom, ni horaire, ni un mot du message (§6) — ce qui circule sur le réseau dit seulement que quelque chose est arrivé.

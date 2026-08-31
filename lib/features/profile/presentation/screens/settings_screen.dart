@@ -33,6 +33,7 @@ import '../../../workspace/presentation/widgets/my_badge_tile.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/profile.dart';
 import '../../providers/profile_providers.dart';
+import '../widgets/backend_settings_tile.dart';
 import '../widgets/member_avatar.dart';
 import '../widgets/whatsapp_dialog.dart';
 
@@ -663,6 +664,10 @@ class SettingsScreen extends ConsumerWidget {
           ),
           const Divider(),
           _SectionHeader(l10n?.settingsSectionAdvanced ?? 'Advanced'),
+          // #780 — which Supabase instance this device talks to: the
+          // app's own by default, a community's own project if they
+          // run one. Device-level, so it sits above the push state.
+          const BackendSettingsTile(),
           // Push pipeline state (#424): a device without a UnifiedPush
           // distributor was silently push-less — say so, with the fix.
           const PushStatusTile(),

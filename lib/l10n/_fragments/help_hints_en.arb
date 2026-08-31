@@ -152,5 +152,6 @@
   "helpTopicWorkingHours": "Working hours",
   "helpTopicBookingPolicies": "Booking policies",
   "helpTopicBookingLimits": "Booking limits",
-  "helpTopicScheduledExpenses": "Scheduled expenses"
+  "helpTopicScheduledExpenses": "Scheduled expenses",
+  "helpTopicServer": "your own server"
 }

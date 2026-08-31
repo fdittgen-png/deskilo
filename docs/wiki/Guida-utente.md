@@ -872,6 +872,21 @@ La tua schermata personale, dall'alto in basso:
 - **Informazioni** — la versione dell'app, l'autore (Florian DITTGEN), la licenza open source (0BSD) con il codice su GitHub, l'informativa sulla privacy, un link per segnalare bug, e come **sostenere il progetto** (PayPal, Revolut).
 - **Esci**.
 
+### Il tuo server — puntare l'app al Supabase della tua comunità
+
+Per impostazione predefinita l'app dialoga con il proprio server, e qui non c'è nulla che richieda la tua attenzione. Ma il backend di DesKilo fa parte del codice sorgente — lo schema, le politiche di sicurezza a livello di riga e le funzioni edge — quindi una comunità può far girare **il proprio progetto Supabase** e tenere su di esso ogni singolo byte. **Impostazioni → Avanzate → Server** fa passare questo dispositivo dall'altra parte, senza ricompilare nulla:
+
+1. **Crea un progetto** su supabase.com — il piano gratuito basta per iniziare.
+2. **Installa lo schema**: esegui nell'ordine i file SQL di `supabase/migrations` presi dal repository del codice sorgente.
+3. **Copia le credenziali**: nella dashboard Supabase, *Project Settings → API keys* contiene l'**URL del progetto** e la **chiave pubblicabile** (la chiave pubblicabile è fatta per stare dentro un client; a proteggere i dati è la sicurezza a livello di riga del server).
+4. **Inseriscile** in Impostazioni → Server — incolla ogni campo, premi **Prova la connessione**, poi **Salva**.
+
+Il test dice quale parte non va invece di limitarsi a fallire: *impossibile raggiungere quell'indirizzo*, *la chiave è stata rifiutata* oppure *le tabelle mancano* — quest'ultimo significa che il progetto ha risposto ma il passo 2 non è ancora stato fatto.
+
+**I membri non digitano nulla di tutto questo.** Una volta che il dispositivo del proprietario è sul server della comunità, il **pulsante QR** di quella schermata mostra un codice; ogni membro lo scansiona nelle proprie Impostazioni → Server e finisce sulla stessa istanza.
+
+Il cambio ti disconnette e ha effetto alla prossima apertura dell'app — la sessione apparteneva all'altro server. **Usa il server dell'app** riporta al predefinito in qualsiasi momento.
+
 ## 13. Notifiche
 
 Promemoria di check-in, conferme in sospeso, decisioni sulle spese — e quando un admin **rimuove una tua prenotazione** (scavalca), tu e gli admin venite avvisati. La consegna è prima locale; i push dal server arrivano senza configurare nulla su Android, iPhone/iPad, browser e macOS (Firebase Cloud Messaging) — *Impostazioni → Avanzate* mostra se il push è attivo su questo dispositivo. Il contatore sull'icona dell'app mostra le tue conferme in attesa **più i tuoi messaggi non letti** — su Android, iPhone/iPad, nel Dock di macOS, nella barra delle applicazioni di Windows e nelle web app installate. I messaggi tra membri vengono annunciati **una volta per dispositivo con il mittente e il testo completo** — compreso ciò che è arrivato ad app chiusa, annunciato alla prossima apertura. Quell'annuncio è sempre generato **in locale, dall'app stessa**: il payload push non trasporta mai un nome, un orario né una parola del messaggio (§6), quindi ciò che viaggia in rete dice soltanto che è arrivato qualcosa.

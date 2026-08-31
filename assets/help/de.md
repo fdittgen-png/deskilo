@@ -899,6 +899,21 @@ Dein persönlicher Bildschirm, von oben nach unten:
 - **Über** — die App-Version, der Autor (Florian DITTGEN), die Open-Source-Lizenz (0BSD) mit dem Code auf GitHub, die Datenschutzerklärung, ein Link zum Fehlermelden, und wie man **das Projekt unterstützt** (PayPal, Revolut).
 - **Abmelden**.
 
+### Dein eigener Server — die App auf das Supabase deiner Community richten
+
+Standardmäßig spricht die App mit ihrem eigenen Server, und hier musst du dich um nichts kümmern. Aber das Backend von DesKilo ist Teil des Quellcodes — das Schema, die Row-Level-Security-Richtlinien und die Edge Functions —, also kann eine Community **ihr eigenes Supabase-Projekt** betreiben und jedes Byte darauf behalten. **Einstellungen → Erweitert → Server** stellt dieses Gerät um, ganz ohne neuen App-Build:
+
+1. **Ein Projekt anlegen** auf supabase.com — die kostenlose Stufe reicht zum Start.
+2. **Das Schema installieren**: führe die SQL-Dateien aus `supabase/migrations` des Quell-Repositorys der Reihe nach aus.
+3. **Die Zugangsdaten kopieren**: im Supabase-Dashboard liegen unter *Project Settings → API keys* die **Project URL** und der **Publishable Key** (der Publishable Key ist dafür gemacht, in einer Client-App mitzureisen; was die Daten schützt, ist die Row-Level Security auf dem Server).
+4. **Eintragen** unter Einstellungen → Server — füge jedes Feld ein, drücke **Verbindung testen**, dann **Speichern**.
+
+Der Test sagt dir, welcher Teil nicht stimmt, statt einfach fehlzuschlagen: *diese Adresse war nicht erreichbar*, *der Key wurde abgelehnt* oder *die Tabellen fehlen* — Letzteres heißt, das Projekt hat geantwortet, aber Schritt 2 ist noch nicht erledigt.
+
+**Mitglieder tippen davon nichts ein.** Sobald das Gerät der Inhaberin auf dem Server der Community läuft, zeigt die **QR-Schaltfläche** auf diesem Bildschirm einen Code; jedes Mitglied scannt ihn in seinen eigenen Einstellungen → Server und landet auf derselben Instanz.
+
+Das Umstellen meldet dich ab und greift beim nächsten Öffnen der App — die Sitzung gehörte zum anderen Server. **Server der App verwenden** kehrt jederzeit zum Standard zurück.
+
 ## 13. Benachrichtigungen
 
 Check-in-Erinnerungen, offene Bestätigungen, Ausgaben-Entscheidungen — und wenn ein Admin **eine deiner Buchungen entfernt** (übersteuern), werden du und die Admins benachrichtigt. Zustellung lokal zuerst; Server-Push kommt fertig auf Android, iPhone/iPad, Browser und macOS (Firebase Cloud Messaging) — *Einstellungen → Erweitert* zeigt den Gerätestatus. Das Icon-Badge zählt offene Bestätigungen **plus ungelesene Nachrichten** — Android, iPhone/iPad, macOS-Dock, Windows-Leiste, installierte Web-Apps. Mitglieder-Nachrichten werden **einmal je Gerät mit Absender und vollem Text** angesagt — auch was bei geschlossener App kam. Diese Ansage erzeugt immer **die App selbst, lokal**: das Push-Payload trägt nie einen Namen, eine Uhrzeit oder ein Wort der Nachricht (§6) — was über das Netz geht, sagt nur, dass etwas angekommen ist.

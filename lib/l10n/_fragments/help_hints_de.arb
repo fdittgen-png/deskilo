@@ -152,5 +152,6 @@
   "helpTopicWorkingHours": "Arbeitszeiten",
   "helpTopicBookingPolicies": "Buchungsregeln",
   "helpTopicBookingLimits": "Buchungsgrenzen",
-  "helpTopicScheduledExpenses": "Geplante Ausgaben"
+  "helpTopicScheduledExpenses": "Geplante Ausgaben",
+  "helpTopicServer": "dein eigener Server"
 }

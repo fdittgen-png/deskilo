@@ -4352,6 +4352,12 @@ abstract class AppLocalizations {
   /// **'Scheduled expenses'**
   String get helpTopicScheduledExpenses;
 
+  /// No description provided for @helpTopicServer.
+  ///
+  /// In en, this message translates to:
+  /// **'your own server'**
+  String get helpTopicServer;
+
   /// No description provided for @inviteSectionTitle.
   ///
   /// In en, this message translates to:
@@ -9337,6 +9343,198 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The text you accepted, with the date — read it again anytime.'**
   String get consentReviewHint;
+
+  /// No description provided for @backendServerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Server'**
+  String get backendServerTitle;
+
+  /// No description provided for @backendServerDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'The app\'s own server ({host})'**
+  String backendServerDefault(Object host);
+
+  /// No description provided for @backendServerCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Your own server ({host})'**
+  String backendServerCustom(Object host);
+
+  /// No description provided for @backendServerHint.
+  ///
+  /// In en, this message translates to:
+  /// **'By default this app uses its own server. If your community runs its own Supabase project, enter it here — the app then stores everything there.'**
+  String get backendServerHint;
+
+  /// No description provided for @backendUrlLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Project URL'**
+  String get backendUrlLabel;
+
+  /// No description provided for @backendKeyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Publishable key'**
+  String get backendKeyLabel;
+
+  /// No description provided for @backendServerRestartHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The app signs you out and applies the change on the next start.'**
+  String get backendServerRestartHint;
+
+  /// No description provided for @backendServerReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the app\'s server'**
+  String get backendServerReset;
+
+  /// No description provided for @backendServerSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved. Close and reopen the app to use the new server.'**
+  String get backendServerSaved;
+
+  /// No description provided for @backendErrorUrlEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the project URL.'**
+  String get backendErrorUrlEmpty;
+
+  /// No description provided for @backendErrorUrlNotHttps.
+  ///
+  /// In en, this message translates to:
+  /// **'The URL must start with https://.'**
+  String get backendErrorUrlNotHttps;
+
+  /// No description provided for @backendErrorUrlNoHost.
+  ///
+  /// In en, this message translates to:
+  /// **'That is not a complete address.'**
+  String get backendErrorUrlNoHost;
+
+  /// No description provided for @backendErrorKeyEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the publishable key.'**
+  String get backendErrorKeyEmpty;
+
+  /// No description provided for @backendErrorKeyNotSupabase.
+  ///
+  /// In en, this message translates to:
+  /// **'That is not a Supabase publishable key (sb_publishable_…).'**
+  String get backendErrorKeyNotSupabase;
+
+  /// No description provided for @backendCurrentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This device uses'**
+  String get backendCurrentTitle;
+
+  /// No description provided for @backendHowTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Use your own server'**
+  String get backendHowTitle;
+
+  /// No description provided for @backendStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a project at supabase.com (the free tier is enough to start).'**
+  String get backendStep1;
+
+  /// No description provided for @backendStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'Install the app\'s schema: run the SQL files in supabase/migrations from the source repository, in order.'**
+  String get backendStep2;
+
+  /// No description provided for @backendStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'In the Supabase dashboard, open Project Settings → API keys and copy the Project URL and the publishable key.'**
+  String get backendStep3;
+
+  /// No description provided for @backendStep4.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste them below, test the connection, and save. Members join the same instance by scanning the QR above.'**
+  String get backendStep4;
+
+  /// No description provided for @backendScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan a server QR'**
+  String get backendScan;
+
+  /// No description provided for @backendScanNothing.
+  ///
+  /// In en, this message translates to:
+  /// **'That QR is not a DesKilo server code.'**
+  String get backendScanNothing;
+
+  /// No description provided for @backendShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share this server'**
+  String get backendShare;
+
+  /// No description provided for @backendShareHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Members scan this in Settings → Server to point their app at the same instance.'**
+  String get backendShareHint;
+
+  /// No description provided for @backendPaste.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste'**
+  String get backendPaste;
+
+  /// No description provided for @backendTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Test the connection'**
+  String get backendTest;
+
+  /// No description provided for @backendTesting.
+  ///
+  /// In en, this message translates to:
+  /// **'Testing…'**
+  String get backendTesting;
+
+  /// No description provided for @backendTestOk.
+  ///
+  /// In en, this message translates to:
+  /// **'Reached it — the app\'s schema is there.'**
+  String get backendTestOk;
+
+  /// No description provided for @backendTestUnreachable.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reach that address. Check the URL and your network.'**
+  String get backendTestUnreachable;
+
+  /// No description provided for @backendTestBadKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Reached it, but the key was refused. Copy the publishable key again from Project Settings → API keys.'**
+  String get backendTestBadKey;
+
+  /// No description provided for @backendTestSchemaMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Reached it, but the DesKilo tables are missing — run the migrations from supabase/migrations on that project first.'**
+  String get backendTestSchemaMissing;
+
+  /// No description provided for @backendCopyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get backendCopyLink;
 
   /// No description provided for @profilesDefault.
   ///
