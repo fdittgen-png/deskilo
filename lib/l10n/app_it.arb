@@ -978,6 +978,7 @@
   "validationPickPersons": "Scegli le persone",
   "eventTypeExpenseSchedule": "Spesa programmata",
   "eventExpenseScheduleLine": "{actor} programma «{title}» — {amount} ricorrente",
+  "eventExpenseDeviation": "validato {scheduled} — {reason}",
   "featuresTitle": "Funzionalità",
   "featureCalendarTab": "Scheda Calendario",
   "featureCalendarTabDesc": "Panoramica mensile di prenotazioni e giorni di chiusura.",

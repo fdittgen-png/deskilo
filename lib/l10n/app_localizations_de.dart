@@ -1644,6 +1644,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String eventExpenseDeviation(Object reason, Object scheduled) {
+    return 'validiert $scheduled — $reason';
+  }
+
+  @override
   String get featuresTitle => 'Funktionen';
 
   @override

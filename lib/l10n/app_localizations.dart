@@ -2978,6 +2978,12 @@ abstract class AppLocalizations {
   /// **'{actor} schedules “{title}” — {amount} recurring'**
   String eventExpenseScheduleLine(Object actor, Object amount, Object title);
 
+  /// No description provided for @eventExpenseDeviation.
+  ///
+  /// In en, this message translates to:
+  /// **'validated {scheduled} — {reason}'**
+  String eventExpenseDeviation(Object reason, Object scheduled);
+
   /// App-bar title of the owner feature-management screen and its settings tile
   ///
   /// In en, this message translates to:

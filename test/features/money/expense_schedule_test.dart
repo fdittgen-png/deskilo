@@ -127,6 +127,32 @@ void main() {
     expect(money.confirmedOccurrences.single.reason, 'as billed');
   });
 
+  testWidgets('the create sheet scrolls its tail above a keyboard (#769)',
+      (tester) async {
+    await pumpMoney(tester);
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('scheduled-expenses-button')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byKey(const ValueKey('scheduled-expenses-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('schedule-new')));
+    await tester.pumpAndSettle();
+    // A software keyboard eats most of the height; before SheetShell
+    // scrolled, the tail of the form (the submit button) was cut off.
+    tester.view.viewInsets = const FakeViewPadding(bottom: 900);
+    addTearDown(() => tester.view.resetViewInsets());
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const ValueKey('schedule-submit')));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+    expect(
+      find.byKey(const ValueKey('schedule-submit')).hitTestable(),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('with the feature off there is no button and no card',
       (tester) async {
     await pumpMoney(

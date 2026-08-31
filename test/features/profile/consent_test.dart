@@ -91,6 +91,36 @@ void main() {
     expect(find.byKey(const ValueKey('consent-text')), findsOneWidget);
   });
 
+  testWidgets('a KIOSK account is never gated — the wall must not freeze '
+      'over a consent it cannot answer (#771)', (tester) async {
+    final profile = FakeProfileRepository(
+      profiles: [
+        const Profile(id: 'user-1', displayName: 'Wall Pad'),
+      ],
+      accepted: false,
+    );
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.myMember = workspace.myMember.copyWith(
+      isAdmin: false,
+      isOwner: false,
+      isKiosk: true,
+    );
+    tester.view.physicalSize = const Size(800, 1600);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(ProviderScope(
+      overrides: standardTestOverrides(
+        profile: profile,
+        workspace: workspace,
+        floorPlan: FakeFloorPlanRepository()..seedSmallPlan(),
+      ),
+      child: const DeskiloApp(),
+    ));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('consent-text')), findsNothing);
+    expect(find.byKey(const ValueKey('kiosk-gate-start')), findsOneWidget);
+  });
+
   testWidgets('an accepted account goes straight in and can review the text '
       'with its date from Privacy & data', (tester) async {
     await pump(tester, accepted: true);

@@ -978,6 +978,7 @@
   "validationPickPersons": "Personen wählen",
   "eventTypeExpenseSchedule": "Geplante Ausgabe",
   "eventExpenseScheduleLine": "{actor} plant „{title}“ — {amount} wiederkehrend",
+  "eventExpenseDeviation": "validiert {scheduled} — {reason}",
   "featuresTitle": "Funktionen",
   "featureCalendarTab": "Kalender-Tab",
   "featureCalendarTabDesc": "Monatsübersicht über Buchungen und Schließtage.",

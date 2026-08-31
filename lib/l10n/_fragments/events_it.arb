@@ -87,5 +87,6 @@
   "validationScopeHint": "Il proprietario può sempre. Admin: tutti gli admin, o quelli elencati. Designate: esattamente queste persone, qualunque sia il ruolo. Tutti i membri: chiunque sia attivo.",
   "validationPickPersons": "Scegli le persone",
   "eventTypeExpenseSchedule": "Spesa programmata",
-  "eventExpenseScheduleLine": "{actor} programma «{title}» — {amount} ricorrente"
+  "eventExpenseScheduleLine": "{actor} programma «{title}» — {amount} ricorrente",
+  "eventExpenseDeviation": "validato {scheduled} — {reason}"
 }

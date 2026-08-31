@@ -17,12 +17,22 @@ class SheetShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    // #769 — a form taller than the sheet must SCROLL, and its last
+    // button must clear the system navigation bar (edge-to-edge Android
+    // draws under it): the whole shell scrolls, padded by the keyboard
+    // (viewInsets) plus the system inset (viewPadding), whichever the
+    // moment brings. Fixes "the submit button is cut off" on every form
+    // sheet at once — all of them ride this shell.
+    final media = MediaQuery.of(context);
+    final bottomInset = media.viewInsets.bottom > 0
+        ? media.viewInsets.bottom
+        : media.viewPadding.bottom;
+    return SingleChildScrollView(
       padding: EdgeInsets.only(
         left: AppSpacing.xl,
         right: AppSpacing.xl,
         top: AppSpacing.xl,
-        bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
+        bottom: bottomInset + AppSpacing.xl,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,

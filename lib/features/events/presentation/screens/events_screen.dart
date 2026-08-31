@@ -106,6 +106,19 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
           (event.payload['supply'] is Map
               ? ' · ${(event.payload['supply'] as Map)['quantity']}× '
                   '${(event.payload['supply'] as Map)['name']}'
+              : '') +
+          // #767 — a deviated scheduled occurrence: the validators judge
+          // the DIFFERENCE, so the line names the validated amount and
+          // the member's explanation.
+          (event.payload['deviation_reason'] is String &&
+                  (event.payload['deviation_reason'] as String).isNotEmpty
+              ? ' · ${l10n?.eventExpenseDeviation(
+                    currency.formatMinor(
+                        (event.payload['scheduled_amount_cents'] as num?)
+                                ?.toInt() ??
+                            0),
+                    event.payload['deviation_reason'] as String,
+                  ) ?? 'validated ${currency.formatMinor((event.payload['scheduled_amount_cents'] as num?)?.toInt() ?? 0)} — ${event.payload['deviation_reason']}'}'
               : ''),
       (EventType.serviceCharge, _) => l10n?.eventServiceChargeTitle(
             event.payload['name'] as String? ?? '',

@@ -200,7 +200,15 @@ const Map<String, int> _baseline = {
   // line, the group headers with the ungroup symbol and their labels.
   // 830→850 (2026-08-25): #636 the feed marks an auto-settled deletion
   // (#629) apart from a peer-reviewed one.
-  'lib/features/events/presentation/screens/events_screen.dart': 850,
+  // 850→873 (2026-08-31): #769 the deviated-occurrence feed line names
+  // 600→615 (2026-08-31): #769 the two missing domain cards (price
+  // negotiation, scheduled expense) joined the pinned card list.
+  'lib/features/events/presentation/screens/validation_settings_screen.dart': 615,
+  // 600→615 (2026-08-31): #771 the kiosk consent exemption and its
+  // rationale live where the gate lives.
+  'lib/app/router.dart': 615,
+  // the validated amount and the member's explanation.
+  'lib/features/events/presentation/screens/events_screen.dart': 873,
   // 680→700 (2026-08-04): #454 owner-template intro/footer blocks.
   // 700→790: #470 the banded report renderer (_reportWidgets) and the
   // header/body/footer band branches.
