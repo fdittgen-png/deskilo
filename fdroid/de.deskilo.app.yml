@@ -71,8 +71,8 @@ RepoType: git
 Repo: https://github.com/fdittgen-png/deskilo.git
 Builds:
   - versionName: 1.0.0
-    versionCode: 100000
-    commit: v1.0.0-fdroid.1
+    versionCode: 100001
+    commit: v1.0.0-fdroid.2
     submodules: true
     sudo:
       - apt-get update
@@ -88,10 +88,10 @@ Builds:
       - $$flutter$$/bin/flutter pub get
       - $$flutter$$/bin/dart run build_runner build --delete-conflicting-outputs
       - $$flutter$$/bin/flutter gen-l10n
-      - $$flutter$$/bin/flutter build apk --release --build-number=100000
+      - $$flutter$$/bin/flutter build apk --release --build-number=100001
     scandelete:
       - .pub-cache
 AutoUpdateMode: None
 UpdateCheckMode: Tags ^v[0-9.]+-fdroid\.[0-9]+$
 CurrentVersion: 1.0.0
-CurrentVersionCode: 100000
+CurrentVersionCode: 100001
