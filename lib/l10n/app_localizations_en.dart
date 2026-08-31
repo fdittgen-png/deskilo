@@ -2407,6 +2407,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpTopicBilling => 'Billing';
 
   @override
+  String get helpTopicWorkingHours => 'Working hours';
+
+  @override
+  String get helpTopicBookingPolicies => 'Booking policies';
+
+  @override
+  String get helpTopicBookingLimits => 'Booking limits';
+
+  @override
   String get inviteSectionTitle => 'Invite someone';
 
   @override

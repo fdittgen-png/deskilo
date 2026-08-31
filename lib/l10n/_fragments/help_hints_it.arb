@@ -148,5 +148,8 @@
   "helpTopicVat": "IVA",
   "helpTopicSettings": "Impostazioni e profilo",
   "helpTopicKiosk": "Modalità chiosco",
-  "helpTopicBilling": "Fatturazione"
+  "helpTopicBilling": "Fatturazione",
+  "helpTopicWorkingHours": "Orari di lavoro",
+  "helpTopicBookingPolicies": "Regole di prenotazione",
+  "helpTopicBookingLimits": "Limiti di prenotazione"
 }

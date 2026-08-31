@@ -45,6 +45,11 @@ final otherLanguages = RegExp(r'\s*\*[^*]*\[[^\]]+\]\(User-Guide\)[^*]*\*|'
 String compile(String source) {
   var text = source;
 
+  // The <details> reference blocks (the giant one-image forms) are a
+  // wiki-only affordance: the in-app renderer has no collapsing, and a
+  // 13000-px image block is exactly what #765 removed from the help.
+  text = text.replaceAll(RegExp(r'<details>[\s\S]*?</details>\n?'), '');
+
   // Drop the languages sentence first (it contains wiki links that would
   // otherwise survive as plain text).
   text = text.replaceAll(otherLanguages, '');

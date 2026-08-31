@@ -4298,6 +4298,24 @@ abstract class AppLocalizations {
   /// **'Billing'**
   String get helpTopicBilling;
 
+  /// No description provided for @helpTopicWorkingHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Working hours'**
+  String get helpTopicWorkingHours;
+
+  /// No description provided for @helpTopicBookingPolicies.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking policies'**
+  String get helpTopicBookingPolicies;
+
+  /// No description provided for @helpTopicBookingLimits.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking limits'**
+  String get helpTopicBookingLimits;
+
   /// No description provided for @inviteSectionTitle.
   ///
   /// In en, this message translates to:

@@ -103,9 +103,17 @@ Reservierungen folgen der **Granularität** des Space (§8 Verfügbarkeit) — H
 
 **Eine vergangene oder eingecheckte Buchung zu löschen ist ein Antrag, keine Aktion.** Eine Buchung mit vergangenem Start — oder mit Check-in — lässt sich nicht direkt stornieren: das Blatt bietet **Löschung beantragen**. Inhaber oder Admin entscheiden die eine Abrechnungsfrage: Check-in vergessen (die Buchung bleibt) oder nie genutzt (sie wird entfernt)? Der Antrag erscheint im Ereignis-Feed mit deinem optionalen Grund; künftige unberührte Buchungen behalten das Ein-Tipp-Storno. Der ganze Weg fährt auf der Funktion **Lösch-Anträge für Buchungen**: ist sie aus, hat eine begonnene oder eingecheckte Buchung weder Storno-Knopf noch Antrag — sie bleibt schlicht auf der Zeile stehen.
 
-<p><img src="images/reserve-day.jpg" width="240"> <img src="images/reserve-week.jpg" width="240"> <img src="images/reserve-month.jpg" width="240"></p>
+<p><img src="images/reserve-day.jpg" width="240"></p>
 
-*Tages-, Wochen- und Monatsansicht für dasselbe Datum — das Wochenraster trägt die Halbtage jedes Tages, der Monat zählt die freien Plätze (8/10).*
+*Die Tagesansicht: jeder Platz als Zeitleisten-Zeile, die rote Linie markiert jetzt — eine freie Strecke antippen zum Buchen.*
+
+<p><img src="images/reserve-week.jpg" width="240"></p>
+
+*Die Wochenansicht: ein Raster Plätze × Tage mit den Halbtagen jedes Tages, die Initiale des Belegers in der Zelle.*
+
+<p><img src="images/reserve-month.jpg" width="240"></p>
+
+*Die Monatsansicht zählt die freien Plätze je Tag (8/10); ein Tag antippen führt in seine Tagesansicht.*
 
 <p><img src="images/reserve-booking-sheet.jpg" width="240"></p>
 
@@ -213,6 +221,10 @@ Der Monat auf einen Blick, mit zwei Reichweiten und zwei Formen:
 ## 6. Mitgliederverzeichnis (Mitglieder-Tab)
 
 
+<p><img src="images/member-profile-sheet.jpg" width="240"></p>
+
+*Das Profil eines Mitglieds: die heutige Buchung, der Kontakt und — wo Sie sie sehen dürfen — seine Finanzposition.*
+
 **Tippe ein Mitglied für sein Profil an (#704).** Foto, Rolle und Status; was es gebucht hat und ob es gerade eingecheckt ist; und **Kontakt** — die freiwillig geteilte WhatsApp-Nummer für alle, die **E-Mail-Adresse und der Tarifanteil für Admins**. Wo du die Zahlen sehen darfst — **deine eigenen immer, fremde mit der Berechtigung *Finanzen sehen*** — trägt das Profil außerdem **Finanzen**: die Nettoposition (wer wem was schuldet), die offenen Rechnungen mit dem jeweiligen Rest, die eingegangenen Zahlungen und den gerade laufenden Monat. Dieselbe Karte wie im Finanzen-Tab, damit beide sich nicht widersprechen können.
 
 Sieh, wer zur Community gehört:
@@ -224,9 +236,9 @@ Sieh, wer zur Community gehört:
 - Eigenes Foto, Status und Nummern-Sichtbarkeit in den **Einstellungen** (§12).
 - Admins und Inhaber sehen zusätzlich die **E-Mail** jedes Mitglieds — einfache Mitglieder nicht: Kontakt bleibt die Opt-in-WhatsApp-Nummer.
 
-<p><img src="images/members-directory.jpg" width="240"> <img src="images/member-profile-sheet.jpg" width="240"></p>
+<p><img src="images/members-directory.jpg" width="240"></p>
 
-*Das Verzeichnis — Rollen-Chips, Anwesenheit, nächste Reservierung — und das Profil eines Mitglieds: Reservierungen, Kontakt, Finanzen.*
+*Das Verzeichnis: Foto oder Initiale, Rollen-Chip, Status, online/zuletzt gesehen und die nächste Reservierung auf jeder Karte.*
 
 ## 7. Ereignisse & Bestätigungen (Nachrichten → Ereignisse)
 
@@ -265,9 +277,17 @@ Den **Editor** öffnest du aus der Kopfzeile des Reservieren-Hubs. Der **Space-E
 - **Bild** platziert eine skalierbare Illustration; das Foto-Icon setzt das **Hintergrundfoto** der Ebene.
 - Einen Raum mit Historie zu löschen ist Sache der **Inhaberin**, und mit aktivem *Räume mit Historie löschen* (Standard: an) geht es einfach: Buchungen, die den Raum referenzierten, behalten eine Textkopie dessen, was er war, und jede noch reservierte Buchung darauf wird automatisch storniert. Ist die Funktion aus, muss ein Raum mit künftigen Reservierungen erst von Hand geräumt werden.
 
-<p><img src="images/space-editor-floors.jpg" width="240"> <img src="images/space-editor-canvas.jpg" width="240"> <img src="images/space-editor-seat.jpg" width="240"></p>
+<p><img src="images/space-editor-floors.jpg" width="240"></p>
 
-*Der Raumeditor: die Etagenliste mit ihren Tipps, eine Etage auf dem Raster (Auswahl · Büro · Tisch …) und das Blatt eines Sitzes — Name, Sitzrichtung, Stuhltyp, Zubehör, NFC/RFID-Tag, gesperrt.*
+*Die Etagenliste des Raumeditors: ziehen zum Umordnen, das Ebenen-Icon markiert eine als Ganzes buchbare Etage.*
+
+<p><img src="images/space-editor-canvas.jpg" width="240"></p>
+
+*Eine Etage auf dem Raster mit der unteren Werkzeugleiste — Auswahl · Büro · Tisch · Platz · Bild · Löschen.*
+
+<p><img src="images/space-editor-seat.jpg" width="240"></p>
+
+*Das Blatt eines Sitzes: Name, Sitzrichtung, Stuhltyp, Zubehör, das NFC/RFID-Tag-Feld und der Gesperrt-Schalter.*
 
 ### Workspace-ID & QR
 
@@ -279,15 +299,37 @@ Die rollengebundenen Einladungen (§2): Mitglieder-Einladung = die Workspace-ID 
 
 ### Verfügbarkeit
 
+#### Öffnungstage und Granularität
+
 - **Öffnungstage** — Chips Mo…So.
 - **Buchungsgranularität** — *freier Zeitraum*, *5/15/30/60-Minuten-Raster*, *Halbtage (Vormittag & Nachmittag)*, *nur ganze Tage* oder *echte Uhrzeiten* (exakt von–bis, Halb-/Ganztag als Kurzwahl).
+
+<p><img src="images/availability-basics.jpg" width="240"></p>
+
+*Öffnungstage und die Wahl der Granularität — wie eine Buchung aussehen darf, beginnt hier.*
+
+#### Arbeitszeiten
+
 - **Arbeitszeiten** — Tagesbeginn, Halbtagsgrenze, Tagesende (Standard 08:00 / 12:00 / 17:00). Halb- und Ganztags-Slots überall — Buchen, Einchecken, Abrechnen — folgen diesen Zeiten; unter *echten Uhrzeiten* legst du auch fest, wie viele Stunden als halber und ganzer Tag abrechnen.
 - **Schließtage** — datierte Ausnahmen, per **+**.
+
+<p><img src="images/availability-hours.jpg" width="240"></p>
+
+*Die Arbeitszeiten: Tagesbeginn, Halbtagsgrenze, Tagesende — jeder Halbtags- und Ganztags-Slot folgt ihnen.*
+
+#### Buchungsregeln
+
 - **Buchungsregeln** — vier Einträge, die die Regeln aus §4b lockern oder straffen (der Abschnitt folgt der Funktion *Buchungsregeln*); die zwei Schalter sind **standardmäßig aus**:
   - **Vergangene Buchungen erlauben** — Mitglieder können eine bereits beendete Buchung nachtragen (gestern und früher). Aus, werden solche Buchungen abgelehnt; ein Fenster früher am *selben Tag* zu buchen bleibt immer erlaubt. Einschalten für Spaces, die Anwesenheit nachträglich erfassen.
   - **Admins dürfen Mitglieder auschecken** — ein Admin kann den laufenden Check-in eines Mitglieds beenden. Aus, ist der Check-out strikt persönlich. Nützlich, wo das Personal abends den Raum schließt.
   - **Außerhalb der Öffnungszeiten** — eine Frage, vier sich gegenseitig ausschließende Antworten, auf jeder Granularität dieselben: *Was ist außerhalb des Arbeitstags möglich?* **Aus** — nichts: keine Vorausbuchung, kein Spontan-Check-in, und eine Buchung über das Tagesende hinaus (oder vor der Öffnung) wird ebenfalls abgelehnt. **Nur spontan** — der Spontan-Check-in bleibt möglich, Abend-Überstunden bis Mitternacht eingeschlossen, während Vorausbuchen außerhalb der Zeiten abgelehnt wird; hierin ist der alte Schalter **Minutenbuchungen innerhalb der Arbeitszeiten** aufgegangen, und Spaces, die ihn anhatten, lesen sich so. **Gratis** — erlaubt, nie gezählt und nie berechnet (reine Anwesenheitsinformation). **Berechnet** (der **Standard**) — wie gewöhnliche Nutzung gezählt, außer an einem Tag, an dem das Mitglied schon eine reguläre Buchung innerhalb der Zeiten hält: der Teil außerhalb fährt dann gratis mit.
   - **Gleichzeitige Reservierungen pro Mitglied** — wie viele sich überschneidende Buchungen ein Mitglied halten darf, Check-ins eingeschlossen. **1** standardmäßig: ein Platz zur Zeit. Eine Inhaberin oder ein Admin kann einem einzelnen Mitglied in *Mitglieder & Tarife* ein höheres Kontingent gewähren (nie sich selbst), und diese persönliche Erlaubnis sticht diese Zahl.
+
+<p><img src="images/availability-outside.jpg" width="240"></p>
+
+*Die Regel für außerhalb der Öffnungszeiten: eine Frage, vier sich gegenseitig ausschließende Antworten — auf jeder Granularität dieselben.*
+
+#### Buchungsgrenzen
 
   Direkt darunter stehen die **Buchungsgrenzen** — drei Zahlen, die der Server immer schon durchgesetzt hat und die die App nun einstellen kann:
 
@@ -297,27 +339,47 @@ Die rollengebundenen Einladungen (§2): Mitglieder-Einladung = die Workspace-ID 
 
   Setzt man das Minimum über das Maximum, sagt der Bildschirm das — der Server prüft jede Grenze für sich und würde schlicht jede Buchung ablehnen, ohne je zu erklären warum.
 
+<p><img src="images/availability-limits.jpg" width="240"></p>
+
+*Die Buchungsgrenzen — Vorausbuchungs-Horizont, Mindest- und Höchstdauer — und die Schließtage darunter.*
+
   Die beiden **Auto-Validierungs**-Schalter — *Admins löschen ohne Validierung*, *Inhaber löschen ohne Validierung* — stehen nicht hier: sie leben bei den Validierungsregeln (§7), standardmäßig aus, und reichen nur an Reservierungslöschungen.
 
 ### Funktionen
+
+<p><img src="images/features-tree.jpg" width="240"></p>
+
+*Der Funktionen-Bildschirm: jedes Modul mit seiner Beschreibung; ein eingerücktes Kind braucht seinen Elternteil.*
 
 Ganze Module je Workspace ein- oder ausschalten — jeder Schalter trägt seine Beschreibung: Kalender-Tab, Ereignis-Tab, Gruppierung der Benachrichtigungen, Finanzen-Tab, Leistungen, Zubehör-Aufpreise, Online-Zahlungen, Rechnungen, Admins stellen Rechnungen aus, Rechnungs-PDF-Vorlage, Mahnwesen, USt-Verwaltung, USt-Voranmeldungen, E-Rechnungszustellung an Kunden, PDF-Export, Serienbuchung, Für andere buchen, Push-Benachrichtigungen, Admins können Plätze sperren, Tisch-, Büro- & Etagen-Reservierungen, Admins können Etagen zuweisen, Kiosk-Modus, RFID-/NFC-Badges, QR-Badges, Mitgliederfotos am Kiosk, Mitgliederverzeichnis, WhatsApp-Integration, Raum-QR-Codes, NFC/RFID-Tags an Stühlen, Mitgliederfotos auf dem Plan, Mit-Inhaberinnen, Auto-Check-in/-out am Tagesende, Datenexport (Excel), Arbeitszeiten, Buchungsregeln, Mitglieder-Benachrichtigungen, Dokumentbibliothek, Mitgliederberichte, Lösch-Anträge für Buchungen, Rollenverwaltung, Räume mit Historie löschen, Hilfe-Hinweise und Oberflächen-Animationen. Ein Modul aus = *alle* seine Bildschirme und Knöpfe verschwinden für jedes Mitglied.
 
 Die Liste ist **hierarchisch**: eine Funktion, die eine andere braucht, sitzt eingerückt darunter mit *Benötigt…*, ausgegraut solange der Elternteil aus ist — *Finanzen* trägt Leistungen, Zubehör-Aufpreise, Online-Zahlungen und Rechnungen; *Rechnungen* die Admin-Delegation, die PDF-Vorlage, das Mahnwesen, die USt-Verwaltung (mit den Voranmeldungen wiederum darunter) und die E-Rechnungszustellung an Kunden; *Kiosk-Modus* gleich drei Kinder — RFID-/NFC-Badges, QR-Badges und Mitgliederfotos am Kiosk; *Tisch-, Büro- & Etagen-Reservierungen* das Zuweisen durch Admins; *Verzeichnis* die WhatsApp-Integration; *Ereignis-Tab* die Feed-Gruppierung. Elternteil aus = ganzer Teilbaum weg; die gespeicherte Wahl des Kindes kehrt unversehrt zurück.
 
+<details><summary>Der vollständige Verfügbarkeits-Bildschirm und die Funktionsliste, je in einem Bild</summary>
+
 <p><img src="images/availability-full.jpg" width="240"> <img src="images/features-full.jpg" width="240"></p>
 
-*Verfügbarkeit in einem Bild — Öffnungstage, Granularität, Arbeitszeiten, Buchungsregeln, der Außerhalb-der-Zeiten-Modus, gleichzeitige Reservierungen, Buchungsgrenzen, Schließtage — und die vollständige Funktionsliste mit ihrer Hierarchie.*
+</details>
 
 ### Mitglieder & Tarife
 
 Ein Mitglied antippen öffnet sein **Verwaltungsblatt** — jede Mitglieds-Aktion an einem Ort: **Finanzvereinbarung senden** (§11d), **Nachrichten**, **Service hinzufügen** (Service, Menge, Abrechnungsmonat → *zur Bestätigung einreichen*), **Abonnement** (der Prozentsatz), **Wenn die Tage aufgebraucht sind** (die Überziehungs-Politik, §9), **Reservierungslimit** (wie viele **offene** Reservierungen das Mitglied insgesamt halten darf, wann immer sie liegen), **Gleichzeitige Reservierungen** (wie viele Buchungen sich **zeitlich überschneiden** dürfen — das persönliche Kontingent, das die Zahl des Space sticht, §4b; zwei verschiedene Obergrenzen, also die Beschriftungen lesen), **Darf einen ganzen Tisch, ein Büro oder eine Etage reservieren**, **Badges** (§10), **Zum Admin ernennen** (validiert, §7), **Co-Inhaberschaft**, **Zum Kiosk-Gerät machen** — oder **Kiosk zu Mitglied zurücksetzen** auf einem Gerätekonto —, **Mitgliedschaft bestätigen** bzw. **Ablehnen** bei einem ausstehenden Beitritt, und **Mitgliedschaft pausieren**. Jede Zeile zeigt die **E-Mail** unter dem Namen.
 
-<p><img src="images/members-plans-list.jpg" width="240"> <img src="images/member-management-sheet.jpg" width="240"> <img src="images/member-management-sheet-self.jpg" width="240"></p>
+<p><img src="images/members-plans-list.jpg" width="240"></p>
+
+*Mitglieder & Tarife: E-Mail, Tarifanteil und Rollen-Chips je Zeile; Megafon, Hinzufügen und Filter in der Leiste.*
+
+<p><img src="images/member-management-sheet.jpg" width="240"></p>
+
+*Das Verwaltungsblatt eines Mitglieds — jede Mitglieds-Aktion an einem Ort.*
+
+<p><img src="images/member-management-sheet-self.jpg" width="240"></p>
+
+*Das eigene Blatt ist kürzer: niemand gewährt sich selbst Rechte (keine Admin-, Ganzraum- oder Überschneidungs-Zeilen auf sich selbst).*
 
 <p><img src="images/member-subscription.jpg" width="240"> <img src="images/member-reservation-limit.jpg" width="240"></p>
 
-*Mitglieder & Tarife: die Liste (E-Mail, Anteil, Rollen-Chips; Megafon, Hinzufügen und Filter in der Leiste), das vollständige Verwaltungsblatt eines Mitglieds, das kürzere Blatt für Sie selbst — dann die Dialoge Abonnement und Reservierungslimit.*
+*Der Abonnement-Dialog (der Prozentsatz des Mitglieds) und der Reservierungslimit-Dialog (die Obergrenze offener Reservierungen).*
 
 ### Abrechnung
 
@@ -325,15 +387,25 @@ Ein Mitglied antippen öffnet sein **Verwaltungsblatt** — jede Mitglieds-Aktio
 - **Abo-Stufen** — welche Prozentsätze Mitglieder wählen dürfen (Chips: 25 % · 50 % · 75 % · 100 % plus eigene), und ein Schalter **frei verhandelter Wert**.
 - **Tagespakete** — Tage für einen Preis (Name · Tage · Preis), je mit Aktivierungs-Schalter; Mitglieder mit *Paket*-Politik kaufen sie, wenn ihre Tage ausgehen.
 
-<p><img src="images/billing-full.jpg" width="240"></p>
+<p><img src="images/billing-tiers.jpg" width="240"></p>
 
-*Abrechnung: Tarifstufen, Abonnementstufen (mit dem Schalter für den frei verhandelten Wert) und Tagespakete.*
+*Tarifstufen (ab % · bis % · Gebühr · Überziehungssatz) und die Abo-Stufen, die Mitglieder wählen dürfen.*
+
+<p><img src="images/billing-packages.jpg" width="240"></p>
+
+*Tagespakete: Tage für einen Preis, je mit eigenem Aktivierungs-Schalter.*
 
 ### Services und Zubehör
 
 Die Kataloge hinter §9 — Extras der Inhaberin (Schließfächer, Druck…, je mit Preis und optionalem MwSt-Satz) und Platz-Ausstattung mit optionalen Halbtags-Aufpreisen. Zwei einfache Listen mit **+**.
 
-<p><img src="images/services-catalog.jpg" width="240"> <img src="images/services-new-service.jpg" width="240"> <img src="images/accessories-catalog.jpg" width="240"> <img src="images/accessory-edit-dialog.jpg" width="240"></p>
+<p><img src="images/services-catalog.jpg" width="240"> <img src="images/services-new-service.jpg" width="240"></p>
+
+*Der Leistungskatalog und eine neue Leistung — Name, Preis, eigener MwSt-Satz, wo das Regime einen erhebt.*
+
+<p><img src="images/accessories-catalog.jpg" width="240"> <img src="images/accessory-edit-dialog.jpg" width="240"></p>
+
+*Der Zubehörkatalog und der Editor eines Zubehörs — der Aufpreis berechnet sich je reserviertem Halbtag.*
 
 **Bestand (#731).** Eine Leistung aus einem Vorrat zeigt *N auf Lager* / *Ausverkauft*; ein Verbrauch über den Bestand hinaus wird abgelehnt.
 
@@ -342,18 +414,36 @@ Die Kataloge hinter §9 — Extras der Inhaberin (Schließfächer, Druck…, je 
 Der Bildschirm des Space, von oben nach unten:
 
 - **Identität** — Name, Land, Währung (aus dem Land vorgeschlagen, änderbar), Zeitzone, **Sprache des Arbeitsbereichs** (Einladungen standardmäßig darin; *App-Sprache des Absenders* ist eine Option) und die **Postadresse** auf den Rechnungen.
+
+<p><img src="images/workspace-identity.jpg" width="240"></p>
+
+*Identität: das Land bestimmt die vorgeschlagene Währung und Zeitzone; die Sprache des Arbeitsbereichs schreibt die Einladungen.*
 - **Zahlungen & Abrechnung** — die **Zahlungshinweise** auf einer offenen Abrechnung (IBAN, PayPal.me, Wero-Nummer, Lydia, Wisetag, Verwendungszweck-Hinweis — leeres Feld = nichts angezeigt), und **Rechtliche Identität & E-Rechnung** (§11a).
+
+<p><img src="images/workspace-billing-links.jpg" width="240"> <img src="images/payment-instructions.jpg" width="240"></p>
+
+*Zahlungen & Abrechnung: die zwei Einträge zu Zahlungshinweisen und rechtlicher Identität — und das Formular der Zahlungshinweise selbst, Feld für Feld.*
 - **WhatsApp-Gruppe** — der Gruppenlink im Verzeichnis.
 - **Einladungsnachricht** — die Vorlagen je Sprache (§2).
+
+<p><img src="images/workspace-invitation.jpg" width="240"></p>
+
+*Die Einladungsnachricht je Sprache, mit ihren Platzhaltern, und der Tisch-Transparenz-Regler darunter.*
 - **Tisch-Transparenz** — der Regler fürs Hintergrundfoto.
 - **Rechnungs-PDF-Vorlage** und **Mahnregeln** — Abkürzungen zum Report-Editor und zur Mahnkonfiguration (§11).
 - **Exporte** — *Space exportieren (XML)* (Einstellungen + Plan, ohne persönliche Daten), *Konfiguration exportieren (PDF)* (Vollschnappschuss: Einstellungen, Mitglieder, Plan), *Space-Bericht* (alles über den Space via Report-Vorlage „Space"), *Raum-QR-Codes (PDF)* (eine Karte je Platz, Tisch, Büro, Etage, zehn je A4), *Daten exportieren (Excel)* (eine Mappe: Buchungen, Zahlungen, Rechnungen, Mitglieder, Plan — je ein Blatt), *Space importieren (XML)* (stellt Einstellungen und Plan wieder her; ersetzt den aktuellen Plan). Jeder Export landet in den **Downloads**.
+
+<p><img src="images/workspace-exports.jpg" width="240"></p>
+
+*Der Exporte-Block — XML, Konfigurations-PDF, Space-Bericht, Raum-QR-Codes, Excel, XML-Import — und die Gefahrenzone.*
 - **Der Einrichtungsassistent** (#723) — <https://fdittgen-png.github.io/deskilo/setup.html>: Seit dem 29.08.2026 ein **geführter Assistent**: Schritte in Abhängigkeitsreihenfolge (Identität → Funktionen → Verfügbarkeit → Plan → Abonnements → Rechtliches & USt → Leistungen → Zahlung → Rollen → Mitglieder → Prüfung), jeder fragt nur, was die früheren Antworten möglich machen — keine USt-Sätze ohne Steuerpflicht, keine E-Rechnungsplattform außerhalb der EU, keine Paketoption für Mitglieder ohne Paket, keine Kindfunktion ohne Elternfunktion. Jede Frage sagt, wo sie in der App liegt, und verlinkt den Abschnitt dieses Leitfadens; ein Schritt **Funktionsübersicht** listet jede Funktion, die die App aktivieren wird, mit der Konfiguration aus Ihren Antworten — optionale abwählen, und sie werden deaktiviert exportiert, ihre Konfiguration bleibt weg; dann listet ein Schritt **Prüfung** Vollständiges, zu bestätigende Entscheidungen und Blockierendes, je mit Sprung zur Korrektur; „Alles auf einer Seite“ behält die Expertenansicht. Dann: eine eigenständige Seite (Mac, PC oder Telefon; Antworten speichern sich automatisch im Browser), die neue Inhaberinnen durch **jedes Thema mit vorgegebenen Auswahlen** führt — Identität (Land inkl. Norwegen, Währung, Zeitzone, Sprache des Arbeitsbereichs, Tisch-Transparenz und die Einladungsvorlagen je Sprache), Verfügbarkeit — Granularität, Arbeitszeiten, Schließtage und **alle vier Buchungsregeln** (vergangene Buchungen, Auschecken durch Admins, Modus außerhalb der Öffnungszeiten, gleichzeitige Reservierungen), dazu die Umrechnung Stunden → Halbtage unter *echten Uhrzeiten* —, den Grundriss, **alle 43 Funktionsschalter** mit ihren echten Standardwerten, Beitragsstufen und Abo-Level, Tagespakete, Leistungen und Zubehör, Zahlungshinweise, **rechtliche Identität und USt.** (Organisationsform, Regime, die üblichen Sätze des Landes — die Schweizer 3,8 % für Beherbergung, Norwegen, die kanadischen Provinzen, mit der ehrlichen Notiz zur US-Sales-Tax —, Rechnungsangaben, Mahnregeln, den Meldezeitraum und die E-Rechnungs-Endpunkte samt Zustelldienst des Kunden), die Rolle-→-Berechtigung-Matrix, die Standard-Validierungsregel **mit einer Karte je Domäne und den beiden Auto-Validierungsschaltern**, und die einzuladenden Mitglieder samt ihren Einzeleinstellungen (Überziehungsregel, Recht auf ganze Räume, Überschneidungs-Erlaubnis, Reservierungslimit). **XML exportieren** und die App importiert Einstellungen, Zubehör und Grundriss direkt (*Arbeitsbereich importieren (XML)*); der `<setup>`-Abschnitt der Datei trägt alles Übrige zum Fertigkonfigurieren. Die Seite kann eine früher exportierte Datei auch **neu laden** — auch eine, die vor der Existenz einer Einstellung geschrieben wurde; diese kommt dann schlicht mit ihrem Standardwert zurück. Eine Warnung, die die Seite wiederholt: die exportierte Datei ist Klartext, also tragen Sie ein Plattform-Token nur ein, wenn Sie privat antworten; sonst lassen Sie die Felder leer und tippen sie in der App, wo sie serverseitig landen und nie zurückkommen.
 - **Gefahrenzone** — **Space zurücksetzen**: löscht alle Buchungen, die Buchhaltung und den Plan; behält Einstellungen und Mitglieder. Durch getippte Bestätigung geschützt.
 
-<p><img src="images/workspace-settings-full.jpg" width="240"> <img src="images/payment-instructions.jpg" width="240"></p>
+<details><summary>Der ganze Workspace-Bildschirm in einem Bild</summary>
 
-*Der Workspace-Bildschirm in einem Bild — Identität, Zahlungen & Abrechnung, WhatsApp-Gruppe, Einladungstext pro Sprache, Tischtransparenz, die Vorlagen- und Mahn-Verknüpfungen, Exporte, Gefahrenzone — und das Formular der Zahlungshinweise.*
+<p><img src="images/workspace-settings-full.jpg" width="240"></p>
+
+</details>
 
 ### Raum-QR-Codes & Ganzraum-Reservierungen
 
@@ -383,9 +473,9 @@ Eine zentrale Matrix entscheidet, **welche Rolle welche Berechtigung hält** —
 
 **Wer prüft (#732).** Eine Regel nennt ihren **Geltungsbereich**: *Admins* (der Inhaber und alle Admins oder die aufgeführten), *Benannte Personen* (der Inhaber und genau die gewählten Personen — auch ein einfaches Mitglied kann prüfen) oder *Alle Mitglieder*. Anzahl und Inhaber-Freigabe behalten ihre Bedeutung, und niemand prüft je das eigene Ereignis. Funktion *Prüfer nach Rolle oder Person*.
 
-<p><img src="images/role-management-full.jpg" width="240"></p>
+<p><img src="images/roles-matrix.jpg" width="240"></p>
 
-*Rollenverwaltung: die Inhaberzeile gesperrt, dann Mitinhaber, Admin und Mitglied — die elf Berechtigungen pro Rolle.*
+*Rollenverwaltung: die Inhaber-Karte gesperrt, die Mitinhaber-Karte standardmäßig voll gewährt — die Admin- und Mitglied-Karten folgen mit denselben elf Berechtigungen.*
 
 ### Online-Zahlungen einrichten
 
@@ -399,7 +489,9 @@ Jede Community kassiert auf ihr **eigenes** Anbieterkonto; die App behält Gehei
    - **Wero (via Mollie)** — derselbe Mollie-Schlüssel, mit Wero im Mollie-Konto aktiviert.
 3. **Speichern** — ein grüner *Konfiguriert*-Chip erscheint. **Online-Zahlungen** in den Funktionen aktivieren, und Mitglieder sehen **Online zahlen** auf offenen Abrechnungen.
 
-<p><img src="images/online-payments-full.jpg" width="240"></p>
+<p><img src="images/online-payments-config.jpg" width="240"></p>
+
+*Eine Karte je Anbieter — PayPal gezeigt; Stripe, Mollie und Wero folgen derselben Form: Schlüssel hinein, ein Konfiguriert-Chip zurück.*
 
 Ein gespeichertes Geheimnis wird nie wieder angezeigt — Feld leer lassen zum Behalten, tippen zum Ersetzen, **Entfernen** löscht den Anbieter. Gebühren sind Anbietergebühren (~1,5–3 % je Zahlung, keine Grundgebühr); DesKilo schlägt nichts auf, Überweisung/IBAN bleibt gratis.
 
@@ -436,9 +528,17 @@ Physische Karten zum Einchecken per Tap — ohne Telefon.
 
 Badges gehören **einem Workspace** — der Dialog nennt welchem. Dieselbe physische Karte kann in mehreren Workspaces dienen. Ein QR-Badge **als PDF** druckt zehn Kartenformat-Kopien auf eine A4-Seite.
 
-<p><img src="images/nfc-config.jpg" width="240"> <img src="images/member-badges-dialog.jpg" width="240"> <img src="images/my-badge-code.jpg" width="240"></p>
+<p><img src="images/nfc-config.jpg" width="240"></p>
 
-*RFID / NFC: der Schalter und der Gerätestatus; der Badge-Dialog (QR-Badge, registrierte Karte, der Schalter „meldet mich an“, widerrufen); Ihr Badge-Code.*
+*Schritt 1 — der NFC-Schalter und die Gerätestatus-Zeile, die sagt, ob dieses Gerät eine Karte lesen kann.*
+
+<p><img src="images/member-badges-dialog.jpg" width="240"></p>
+
+*Schritt 2 — die Badges eines Mitglieds: QR-Badge und registrierte Karte, je mit Widerruf und eigenem Schalter „meldet mich an“.*
+
+<p><img src="images/my-badge-code.jpg" width="240"></p>
+
+*Selbstbedienung: Einstellungen → Mein Badge prägt das druckbare QR-Badge; der Badge-Code gehört Ihnen allein.*
 
 ## 9. Geld (Finanzen-Tab)
 
@@ -487,9 +587,13 @@ Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine
 
 **Der Monat, wie er steht.** Ihr Konto (die echte monatsübergreifende Position), die Karte **Dieser Monat** (enthaltene, genutzte, verbleibende Tage), die **Abonnement**-Karte, **genutzte Leistungen**, **Zubehör- und Raumzuschläge**, **Tagespakete**, **offene Posten** in Prüfung, **Zahlungen & Gutschriften**, die **Rechnungskarte** des Monats, sobald er fakturiert ist (§9a), und der **Saldo**. Nur lesen: nichts zu drücken außer der **‹ Monat ›**-Auswahl, die alle Ansichten teilen.
 
-<p><img src="images/finances-statement-full.jpg" width="240"></p>
+<p><img src="images/statement-account.jpg" width="240"></p>
 
-*Die Ansicht Abrechnung von oben nach unten: Ihr Konto, Ihre verhandelten Konditionen (der Tarif neben Ihren, Wer darf sehen), dieser Monat, das Abonnement, die Leistungen, die offenen Posten, Zahlungen & Gutschriften, der Saldo.*
+*Der obere Teil der Abrechnung: Ihr Konto (die echte monatsübergreifende Position) und Ihre verhandelten Konditionen — der Tarif neben Ihren Preisen, mit Wer darf sehen.*
+
+<p><img src="images/statement-balance.jpg" width="240"></p>
+
+*Der untere Teil der Abrechnung: Leistungen, offene Posten in Prüfung, Zahlungen & Gutschriften und der Saldo.*
 
 ### 9d. Die Ansicht Zahlungen
 
@@ -561,7 +665,15 @@ Aussteller öffnen **Finanzen → Rechnungen**: ein Drei-Tab-Hub unter einem Liv
 
 **Stempel.** Eine stornierte Rechnung trägt ein diagonales **FEHLERHAFT** über jeder Seite. Derselbe Stempel sagt **PROFORMA** auf einem Angebot und **KOPIE** auf jeder Rechnung, die nicht ihr Aussteller rendert.
 
+<p><img src="images/dunning-rules.jpg" width="240"></p>
+
+*Die Mahnregeln: Stufen, Tage bis zur ersten Mahnung, Tage zwischen den Stufen — und der Schalter Automatische Mahnungen.*
+
 **Mahnungen (Mahnwesen).** Die Inhaberin setzt die **Mahnregeln** (Häkchenlisten-Icon in der Kopfzeile, oder *Workspace-Einstellungen → Mahnregeln*): Anzahl Stufen, Tage bis zur ersten, Tage dazwischen. Überfällige Rechnungen tragen **„Mahnung N fällig"**, die Glocke wird rot — nichts geht je automatisch raus. Der Versand erzeugt einen **Mahnbrief** (Stufe 1 freundlich, höhere fester) aus der Vorlage der Stufe — fertig in deiner Sprache, gedruckt in der Sprache des *Mitglieds*, je Stufe editierbar mit `{{ reminder_level }}`, `{{ reminder_date }}`, `{{ days_open }}`.
+
+<p><img src="images/invoice-register.jpg" width="240"></p>
+
+*Das Register: eine Zeile je Rechnung, die Summe am Fuß, der Jahres-Picker und die Buchhaltungs-Export-Taste (SAF-T / FEC).*
 
 **Das Register.** Das Listen-Icon öffnet ein Ein-Zeilen-Register: **Datum · Name · Betrag · Status**, nach Datum sortiert (Kopfzeile antippen dreht die Richtung), Summe am Fuß, **Jahres**-Picker ab zwei Jahren. Sein Export-Knopf öffnet **Buchhaltungs-Export**: **SAF-T (XML, international)** und — für einen französischen Space — **FEC (Frankreich, bei Prüfung verlangt)**.
 
@@ -569,9 +681,9 @@ Aussteller öffnen **Finanzen → Rechnungen**: ein Drei-Tab-Hub unter einem Liv
 
 **Frankreich: das FEC.** Ein französischer Space bekommt das **FEC** (*Fichier des Écritures Comptables*, art. L47 A-I du LPF): eine tabulierte Flachdatei von **Buchungen**, benannt `<SIREN>FEC<JJJJMMTT>.txt`, mit den 18 vorgeschriebenen Spalten. Kontonummern fragt der Export vorher ab — vorbelegt mit dem *plan comptable général* (411, 706, 512). Jede Rechnung bucht brutto Forderung an Ertrag; Gutschriften und die begleichende Zahlung buchen zu ihren Daten, gelettert mit der Rechnungsnummer. Stornierte fehlen. Mitglieder sehen nur, was sie betrifft.
 
-<p><img src="images/invoices-admin.jpg" width="240"> <img src="images/dunning-rules.jpg" width="240"> <img src="images/invoice-register.jpg" width="240"></p>
+<p><img src="images/invoices-admin.jpg" width="240"></p>
 
-*Der Hub der Aussteller (Zu fakturieren · Offen · Archiv) mit den vier Aktionen einer offenen Rechnung und den Icons der Leiste — Vorlageneditor, Mahnregeln, Register; die Mahnregeln mit dem Schalter Automatische Mahnungen; das Register mit Summe und Export-Taste.*
+*Der Hub der Aussteller: Zu fakturieren · Offen · Archiv unter dem Live-Übersichtsstreifen; eine offene Rechnung mit ihren vier Aktionen (stornieren · Proforma · Mahnung · als bezahlt markieren).*
 
 <p><img src="images/invoices-to-invoice.jpg" width="240"> <img src="images/invoice-new-sheet.jpg" width="240"></p>
 
@@ -629,9 +741,13 @@ Die **Rechnungs-PDF-Vorlage** (Stift in der Kopfzeile, oder *Workspace-Einstellu
 
 Variablen (Rechnungsfamilie): `{{ number }}`, `{{ member }}`, `{{ workspace }}`, `{{ workspace_address }}`, `{{ period }}`, `{{ issued }}`, `{{ issued_by }}`, `{{ replaces }}`, `{{ total }}`, `{{ charges }}`, `{{ payments }}`, `{{ voided }}`, `{{ proforma }}`, `{{ copy }}`, `{{ lines }}` (je mit `label`, `unit_price`, `qty`, `net`, `vat_rate`, `amount`), `{{ has_vat }}`, `{{ vat }}`, `{{ net_total }}`, `{{ vat_total }}`, `{{ credit_note }}`, `{{ refund_total }}` — und der Rechts-Satz: `{{ seller_legal_form }}`, `{{ seller_registration }}`, `{{ seller_vat_id }}`, `{{ seller_legal_id }}`, `{{ exemption_reason }}`, `{{ client_address }}`, `{{ client_vat_id }}`, `{{ client_legal_id }}`, `{{ payment_terms }}`, `{{ late_penalty }}`, `{{ recovery_indemnity }}`, `{{ escompte }}`, `{{ insurance }}`, `{{ special_mentions }}`.
 
-<p><img src="images/report-designer-markup.jpg" width="240"> <img src="images/report-designer-design.jpg" width="240"> <img src="images/report-designer-preview.jpg" width="240"></p>
+<p><img src="images/report-designer-markup.jpg" width="240"></p>
 
-*Der Berichtseditor: der Markup-Modus mit der Variablenlegende und den Chips pro Sprache / pro Dokument; der visuelle Modus in Entwurf (beschriftete Bänder auf der A4-Seite) und in Vorschau (echte Daten durch die echte Engine).*
+*Der Markup-Modus: die drei Banden als Text, die Variablenlegende, die Chips pro Dokument und pro Sprache.*
+
+<p><img src="images/report-designer-design.jpg" width="240"> <img src="images/report-designer-preview.jpg" width="240"></p>
+
+*Der visuelle Modus — Entwurf editiert beschriftete Bänder auf der echten A4-Seite; Vorschau mischt die ungespeicherten Bänder mit echten Daten durch die echte Engine.*
 
 ### 11d. Die Report-Suite & die Dokumentbibliothek
 
@@ -652,15 +768,39 @@ Mit **Automatische Zahlungserinnerungen** (Funktionen, Kind von *Zahlungserinner
 
 Dein persönlicher Bildschirm, von oben nach unten:
 
-<p><img src="images/settings-full.jpg" width="240"></p>
+<p><img src="images/settings-personal.jpg" width="240"></p>
 
-*Der ganze Einstellungsbildschirm in einem Bild: Ihr persönlicher Block, Administration (Inhaber), Einstellungen, Erweitert, Über, Abmelden.*
+*Der persönliche Block: Profile, Foto, Region & Formate, WhatsApp, Status, Standard-Buchungszeitraum, Adresse, Hilfe, Badge.*
+
+<p><img src="images/settings-admin.jpg" width="240"></p>
+
+*Für Inhaber folgt der Abschnitt Administration — jeder Admin-Bildschirm aus §8 beginnt hier.*
+
+<p><img src="images/settings-preferences.jpg" width="240"></p>
+
+*Einstellungen und Erweitert: Sprache, Design, Frontkamera-Scan, Push-Status, Entwicklermodus.*
+
+<p><img src="images/settings-about.jpg" width="240"></p>
+
+*Über: Version, Autor, die Open-Source-Lizenz, die Datenschutzerklärung, Fehlermeldungen und wie man das Projekt unterstützt.*
 
 <p><img src="images/profiles.jpg" width="240"> <img src="images/region-formats.jpg" width="240"> <img src="images/linked-accounts.jpg" width="240"> <img src="images/settings-language.jpg" width="240"></p>
+
+*Vier der persönlichen Bildschirme: Profile, Region & Formate, Verknüpfte Konten und die Sprachauswahl.*
+
 <p><img src="images/settings-whatsapp-dialog.jpg" width="240"> <img src="images/settings-status-dialog.jpg" width="240"> <img src="images/settings-address-dialog.jpg" width="240"> <img src="images/settings-default-period-dialog.jpg" width="240"></p>
+
+*Die vier persönlichen Dialoge: WhatsApp-Nummer, Statuszeile, Postadresse, Standard-Buchungszeitraum.*
+
 <p><img src="images/settings-theme-dialog.jpg" width="240"> <img src="images/settings-photo-sheet.jpg" width="240"> <img src="images/developer-screen.jpg" width="240"></p>
 
-*Einstellungen, Bildschirm für Bildschirm: Profile, Region & Formate, Verknüpfte Konten, Sprache; die Dialoge WhatsApp, Status, Adresse und Standard-Buchungszeitraum; Design, das Foto-Blatt, der Entwickler-Bildschirm.*
+*Design, das Foto-Blatt und der Entwickler-Trace-Bildschirm.*
+
+<details><summary>Der ganze Einstellungsbildschirm in einem Bild</summary>
+
+<p><img src="images/settings-full.jpg" width="240"></p>
+
+</details>
 
 **Datenschutz & Daten (#719)** — wer deine Daten sehen kann, wer es tat, Export, Löschung, die Richtlinie. Siehe §14.
 
@@ -709,6 +849,14 @@ Der Tab **Nachrichten** ist die Messaging-Zentrale Ihres Bereichs: alle Unterhal
 
 **Benachrichtigungen.** Eine *empfangene* Nachricht meldet sich und zählt auf dem Tab **Nachrichten**; das Öffnen der Unterhaltung setzt den Zähler zurück. Nachrichten erscheinen nicht mehr in der Glocke — die ist für Bestätigungen und Ereignisse. Einzige Ausnahme: eine **Rundnachricht an alle Admins**, die keine Unterhaltung hat und dort bleibt.
 
-<p><img src="images/messages-discussions.jpg" width="240"> <img src="images/messages-conversation.jpg" width="240"> <img src="images/messages-conversation-links.jpg" width="240"></p>
+<p><img src="images/messages-discussions.jpg" width="240"></p>
 
-*Nachrichten: die Unterhaltungsliste (Personen und Gruppen, der Stift für eine neue), ein privater Chat mit Lesebestätigungen und eine Gruppennachricht mit Reservierungs- und Raum-Link.*
+*Die Unterhaltungsliste: Personen und Gruppen gemeinsam, Ungelesen-Zähler, der Stift für eine neue.*
+
+<p><img src="images/messages-conversation.jpg" width="240"></p>
+
+*Ein privater Chat: Sprechblasen von alt nach neu, die grauen/blauen Lesebestätigungen auf den eigenen Nachrichten.*
+
+<p><img src="images/messages-conversation-links.jpg" width="240"></p>
+
+*Eine Gruppennachricht mit einem Reservierungs- und einem Raum-Link — beide aktiv, beide mit dem Sprung „Auf dem Plan zeigen".*

@@ -105,15 +105,15 @@ Les réservations suivent la **granularité** de l'espace (§8 Disponibilité) �
 
 ![](assets/help/images/reserve-day.jpg)
 
- 
+*La vue Jour : chaque place en ligne de chronologie, la ligne rouge marquant maintenant — touchez une plage libre pour la réserver.*
 
 ![](assets/help/images/reserve-week.jpg)
 
- 
+*La vue Semaine : une grille places × jours portant les demi-journées de chaque jour, l'initiale de l'occupant dans la cellule.*
 
 ![](assets/help/images/reserve-month.jpg)
 
-*Les vues Jour, Semaine et Mois pour la même date — la grille de la semaine porte les demi-journées de chaque jour, le mois compte les places libres (8/10).*
+*La vue Mois compte les places libres par jour (8/10) ; toucher un jour plonge dans sa vue Jour.*
 
 ![](assets/help/images/reserve-booking-sheet.jpg)
 
@@ -220,6 +220,10 @@ Le mois d'un coup d'œil, avec deux portées et deux formes :
 
 ## 6. Annuaire des membres (onglet Membres)
 
+![](assets/help/images/member-profile-sheet.jpg)
+
+*Le profil d'un membre : la réservation du jour, le contact et — là où vous avez le droit de la voir — sa position financière.*
+
 **Touchez un membre pour son profil (#704).** Sa photo, son rôle et son statut ; ce qu'il a réservé et s'il est pointé en ce moment ; et **Contact** — le numéro WhatsApp partagé volontairement pour tous, l'**adresse e-mail et le forfait pour les admins**. Là où vous avez le droit de voir les chiffres — **les vôtres toujours, ceux d'un autre avec la permission *Voir les finances*** — le profil porte aussi **Finances** : la position nette (qui doit quoi à qui), les factures ouvertes avec ce qu'il reste sur chacune, les paiements déjà rentrés, et le mois en cours de consommation. La même carte que l'onglet Finances, pour que les deux ne puissent pas se contredire.
 
 Voyez qui fait partie de votre communauté :
@@ -233,11 +237,7 @@ Voyez qui fait partie de votre communauté :
 
 ![](assets/help/images/members-directory.jpg)
 
- 
-
-![](assets/help/images/member-profile-sheet.jpg)
-
-*L'annuaire — puces de rôle, présence, prochaine réservation — et le profil d'un membre : réservations, contact, finances.*
+*L'annuaire : photo ou initiale, puce de rôle, statut, en ligne / vu il y a, et la prochaine réservation sur chaque carte.*
 
 ## 7. Événements et confirmations (Messages → Alertes)
 
@@ -283,15 +283,15 @@ Ouvrez l'**éditeur** depuis la barre du hub Réserver (icône outils croisés).
 
 ![](assets/help/images/space-editor-floors.jpg)
 
- 
+*La liste des étages de l'éditeur d'espace : glissez pour réordonner, l'icône calques marque un niveau réservable en entier.*
 
 ![](assets/help/images/space-editor-canvas.jpg)
 
- 
+*Un étage sur la grille avec la barre d'outils du bas — Sélection · Bureau · Table · Place · Image · Effacer.*
 
 ![](assets/help/images/space-editor-seat.jpg)
 
-*L'éditeur d'espace : la liste des étages avec ses astuces, un étage sur la grille (Sélection · Bureau · Table …), et la feuille d'une place — nom, sens d'assise, type de chaise, accessoires, tag NFC/RFID, bloquée.*
+*La feuille d'une place : nom, sens d'assise, type de chaise, accessoires, le champ tag NFC/RFID et l'interrupteur bloquée.*
 
 ### ID de l'espace et QR
 
@@ -303,15 +303,37 @@ Vos invitations liées au rôle (§2) : invitation membre = l'ID de l'espace (re
 
 ### Disponibilité
 
+#### Jours d'ouverture et granularité
+
 - **Jours d'ouverture** — puces lun.…dim.
 - **Granularité des réservations** — au choix : *plage horaire libre*, *créneaux de 5 / 15 / 30 / 60 minutes*, *demi-journées (matin et après-midi)*, *journées entières uniquement*, ou *heures réelles* (de–à exact, demi/journées en raccourcis).
+
+![](assets/help/images/availability-basics.jpg)
+
+*Jours d'ouverture et choix de la granularité — la forme possible d'une réservation commence ici.*
+
+#### Horaires de travail
+
 - **Horaires de travail** — début de journée, limite de demi-journée, fin de journée (par défaut 08:00 / 12:00 / 17:00). Les créneaux demi-journée et journée partout — réservations, pointage et facturation — suivent ces horaires ; en *heures réelles* vous fixez aussi combien d'heures se facturent en demi et en pleine journée.
 - **Jours de fermeture** — exceptions datées, ajoutées au **+**.
+
+![](assets/help/images/availability-hours.jpg)
+
+*Les horaires de travail : début de journée, limite de demi-journée, fin de journée — chaque créneau demi-journée et journée les suit.*
+
+#### Règles de réservation
+
 - **Règles de réservation** — quatre entrées qui assouplissent ou resserrent les règles du §4b (la section suit la fonctionnalité *Règles de réservation*) ; les deux interrupteurs sont **coupés par défaut** :
   - **Autoriser les réservations passées** — les membres peuvent enregistrer après coup une réservation déjà terminée (hier et avant). Coupé, ces réservations sont refusées ; réserver une fenêtre plus tôt le *même jour* reste toujours permis. Activez-le pour les espaces qui consignent la présence a posteriori.
   - **Les admins peuvent faire le check-out des membres** — un admin peut terminer le pointage en cours d'un membre. Coupé, le check-out est strictement personnel. Utile là où le personnel ferme la salle le soir.
   - **En dehors des heures d'ouverture** — une question, quatre réponses mutuellement exclusives, les mêmes sur toutes les granularités : *qu'est-ce qui est possible en dehors de la journée de travail ?* **Interdit** — rien : ni réservation à l'avance, ni pointage spontané, et une réservation qui dépasse la fin de journée (ou commence avant l'ouverture) est refusée aussi. **Spontané uniquement** — le pointage spontané reste possible **aux deux bouts de la journée**, l'arrivée matinale avant l'ouverture autant que la prolongation du soir jusqu'à minuit, tandis que réserver à l'avance hors horaires est refusé ; c'est là qu'est passé l'ancien interrupteur **Réservations à la minute dans les heures d'ouverture**, et les espaces qui l'avaient activé lisent cette position (cet interrupteur ne permettait que l'arrivée du soir — la position porte le nom de la spontanéité, pas celui du soir, l'arrivée du matin est donc permise aussi). **Gratuit** — permis, jamais compté ni facturé (pure information de présence). **Facturé** (le **défaut**) — compté comme un usage ordinaire, sauf un jour où le membre tient déjà une réservation normale dans les horaires : la partie hors horaires passe alors gratuitement.
   - **Réservations simultanées par membre** — combien de réservations qui se chevauchent un membre peut tenir, pointages compris. **1** par défaut : une place à la fois. Un propriétaire ou un admin peut accorder à un membre précis un quota supérieur dans *Membres et forfaits* (jamais à lui-même), et cette permission personnelle l'emporte sur ce nombre.
+
+![](assets/help/images/availability-outside.jpg)
+
+*La règle en dehors des heures d'ouverture : une question, quatre réponses mutuellement exclusives — les mêmes sur toutes les granularités.*
+
+#### Limites de réservation
 
   Juste en dessous se trouvent les **Limites de réservation** — trois nombres que le serveur a toujours appliqués et que l'app sait désormais régler :
 
@@ -321,21 +343,21 @@ Vos invitations liées au rôle (§2) : invitation membre = l'ID de l'espace (re
 
   Réglez un minimum supérieur au maximum et l'écran le dit, car le serveur vérifie chaque borne séparément et refuserait simplement toute réservation sans jamais expliquer pourquoi.
 
+![](assets/help/images/availability-limits.jpg)
+
+*Les limites de réservation — horizon, durées minimale et maximale — et les jours de fermeture en dessous.*
+
   Les deux interrupteurs d'**auto-validation** — *les admins suppriment sans validation*, *les propriétaires suppriment sans validation* — ne sont pas ici : ils vivent avec les règles de validation (§7), coupés par défaut, et ne touchent que les suppressions de réservation.
 
 ### Fonctionnalités
 
+![](assets/help/images/features-tree.jpg)
+
+*L'écran Fonctionnalités : chaque module avec sa description ; un enfant indenté nécessite son parent.*
+
 Activez ou coupez des modules entiers par espace — chaque interrupteur porte sa description à l'écran : onglet Calendrier, onglet Événements, regroupement des notifications, onglet Finances, services, suppléments d'accessoires, paiements en ligne, factures, les admins émettent des factures, modèle de PDF de facture, relances de paiement, gestion de la TVA, déclarations de TVA, envoi de la facture électronique au client, export PDF, réservation en série, réserver pour d'autres, notifications push, les admins peuvent bloquer des places, réservations de table, bureau et niveau, les admins peuvent attribuer des niveaux, mode borne, badges RFID/NFC, badges QR, photos des membres à la borne, annuaire des membres, intégration WhatsApp, codes QR des espaces, tags NFC/RFID des chaises, photos des membres sur le plan, copropriétaires, arrivée/départ auto, export des données (Excel), horaires de travail, règles de réservation, notifications entre membres, bibliothèque de documents, rapports des membres, demandes de suppression de réservation, gestion des rôles, supprimer des espaces avec historique, astuces d'aide et animations de l'interface. Couper un module retire *tous* ses écrans et boutons pour chaque membre.
 
 La liste est **hiérarchique** : une fonctionnalité qui en nécessite une autre s'indente sous elle avec une note *Nécessite…*, grisée tant que le parent est coupé — *Finances* porte services, suppléments d'accessoires, paiements en ligne et factures ; *Factures* porte la délégation admin, le modèle PDF, les relances, la gestion de la TVA (avec les déclarations en dessous d'elle) et l'envoi de la facture électronique au client ; *Mode borne* porte trois enfants — badges RFID/NFC, badges QR et photos des membres à la borne ; *Réservations de table, bureau et niveau* porte *les admins peuvent attribuer des niveaux* ; *Annuaire* porte l'intégration WhatsApp ; *Onglet Événements* porte le regroupement du fil. Couper un parent retire tout son sous-arbre ; le choix stocké de l'enfant revient intact au retour du parent.
-
-![](assets/help/images/availability-full.jpg)
-
- 
-
-![](assets/help/images/features-full.jpg)
-
-*Disponibilité en une image — jours d'ouverture, granularité, horaires, règles de réservation, le mode hors horaires, réservations simultanées, limites, jours de fermeture — et la liste complète des Fonctionnalités avec sa hiérarchie.*
 
 ### Membres et forfaits
 
@@ -343,13 +365,15 @@ Touchez un membre pour sa **feuille de gestion** — chaque action par membre au
 
 ![](assets/help/images/members-plans-list.jpg)
 
- 
+*Membres et forfaits : e-mail, pourcentage d'abonnement et puces de rôle par ligne ; mégaphone, ajout et filtres dans la barre.*
 
 ![](assets/help/images/member-management-sheet.jpg)
 
- 
+*La feuille de gestion d'un membre — chaque action par membre au même endroit.*
 
 ![](assets/help/images/member-management-sheet-self.jpg)
+
+*Votre propre feuille est plus courte : personne ne s'accorde de droits à soi-même (pas de lignes admin / espaces entiers / simultanées sur vous-même).*
 
 ![](assets/help/images/member-subscription.jpg)
 
@@ -357,7 +381,7 @@ Touchez un membre pour sa **feuille de gestion** — chaque action par membre au
 
 ![](assets/help/images/member-reservation-limit.jpg)
 
-*Membres et forfaits : la liste (e-mail, pourcentage, puces de rôle ; mégaphone, ajout et filtres dans la barre), la fiche de gestion complète d'un membre, la fiche plus courte sur vous-même — puis les dialogues abonnement et limite de réservations.*
+*Le dialogue abonnement (le pourcentage du membre) et le dialogue limite de réservations (le plafond de réservations ouvertes).*
 
 ### Facturation
 
@@ -365,9 +389,13 @@ Touchez un membre pour sa **feuille de gestion** — chaque action par membre au
 - **Niveaux d'abonnement** — les pourcentages que les membres peuvent choisir (puces : 25 % · 50 % · 75 % · 100 %, plus vos valeurs), et un interrupteur **valeur libre négociée**.
 - **Forfaits de jours** — un nombre de jours pour un prix (nom · jours · prix), chacun avec son interrupteur d'activation ; les membres en politique *forfaits* les achètent quand leurs jours s'épuisent.
 
-![](assets/help/images/billing-full.jpg)
+![](assets/help/images/billing-tiers.jpg)
 
-*Facturation : paliers tarifaires, niveaux d'abonnement (avec l'interrupteur valeur libre négociée) et forfaits de jours.*
+*Paliers tarifaires (dès % · jusqu'à % · tarif · dépassement) et les niveaux d'abonnement que les membres peuvent choisir.*
+
+![](assets/help/images/billing-packages.jpg)
+
+*Forfaits de jours : un nombre de jours pour un prix, chacun avec son interrupteur d'activation.*
 
 ### Services et Accessoires
 
@@ -379,13 +407,15 @@ Les catalogues derrière le §9 — extras définis par le propriétaire (casier
 
 ![](assets/help/images/services-new-service.jpg)
 
- 
+*Le catalogue des services et un nouveau service — nom, prix, son propre taux de TVA là où le régime en applique un.*
 
 ![](assets/help/images/accessories-catalog.jpg)
 
  
 
 ![](assets/help/images/accessory-edit-dialog.jpg)
+
+*Le catalogue des accessoires et l'éditeur d'un accessoire — le supplément se facture par demi-journée réservée.*
 
 **Stock (#731).** Un service issu d'une fourniture affiche *N en stock* / *Épuisé* ; une consommation supérieure au stock est refusée.
 
@@ -394,22 +424,34 @@ Les catalogues derrière le §9 — extras définis par le propriétaire (casier
 L'écran de l'espace, de haut en bas :
 
 - **Identité** — nom, pays, devise (proposée d'après le pays, modifiable), fuseau horaire, **langue de l'espace** (les invitations y sont rédigées par défaut ; *langue de l'app de l'expéditeur* est une option) et l'**adresse** postale imprimée sur les factures.
-- **Paiements et facturation** — les **instructions de paiement** que voient les membres sur un relevé impayé (IBAN, lien PayPal.me, numéro Wero, Lydia, Wisetag, indication de référence — champ vide = rien d'affiché), et **Identité légale et facturation électronique** (§11a).
-- **Groupe WhatsApp** — le lien du groupe communautaire montré dans l'annuaire.
-- **Message d'invitation** — les modèles d'invitation par langue (§2).
-- **Transparence des tables** — le curseur qui laisse une photo de fond transparaître sous les tables.
-- **Modèle de PDF de facture** et **Règles de relance** — raccourcis vers l'éditeur de rapports et la configuration des relances (§11).
-- **Exports** — *Exporter l'espace (XML)* (réglages + plan, sans données personnelles — sauvegarde, modèle, migration), *Exporter la configuration (PDF)* (instantané complet : réglages, membres, plan), *Rapport de l'espace* (tout sur l'espace via le modèle « espace » de l'éditeur de rapports), *Codes QR des espaces (PDF)* (une carte QR par place, table, bureau et niveau, dix par A4), *Exporter les données (Excel)* (un classeur : réservations, paiements, factures, membres, plan — un onglet chacun), *Importer l'espace (XML)* (restaure réglages et plan ; remplace le plan actuel). Chaque export atterrit dans les **Téléchargements** de l'appareil.
-- **L'assistant de configuration** (#723) — <https://fdittgen-png.github.io/deskilo/setup.html> : Depuis le 29/08/2026, c'est un **assistant pas à pas** : des étapes dans l'ordre des dépendances (identité → fonctionnalités → disponibilité → plan → abonnements → identité légale et TVA → services → paiement → rôles → membres → vérification), chacune ne posant que les questions que vos réponses précédentes rendent possibles — pas de taux de TVA sans assujettissement, pas de plateforme de facturation électronique hors UE, pas d'option « forfaits » pour les membres tant qu'aucun forfait n'existe, pas de fonctionnalité enfant sans son parent. Chaque question dit où elle se règle dans l'app et renvoie à la section de ce guide ; une étape **Résumé des fonctionnalités** liste chaque fonctionnalité que l'app activera avec la configuration issue de vos réponses — décochez les optionnelles : elles partent désactivées, leur configuration n'est pas exportée ; puis une étape **Vérification** liste ce qui est complet, ce qui reste un choix à confirmer et ce qui bloque, avec un saut pour corriger ; « Tout afficher sur une page » conserve la vue experte. Ensuite : une page autonome (Mac, PC ou téléphone ; réponses enregistrées automatiquement dans le navigateur) qui guide un nouveau propriétaire à travers **chaque sujet, avec des choix prédéfinis** — identité (pays dont la Norvège, devise, fuseau, langue de l'espace, transparence des tables et les modèles d'invitation par langue), disponibilité — granularité, horaires de travail, jours de fermeture et **les quatre règles de réservation** (réservations passées, check-out par un admin, mode hors heures d'ouverture, réservations simultanées), plus la conversion heures → demi-journées en granularité « heures réelles » —, le plan des locaux, **les 43 fonctionnalités** à leurs valeurs par défaut réelles, paliers de cotisation et niveaux d'abonnement, forfaits de jours, services et accessoires, instructions de paiement, **identité légale et TVA** (type d'organisation, régime, taux usuels du pays — les 3,8 % suisses pour l'hébergement, la Norvège, les provinces canadiennes, avec la note honnête sur la sales tax américaine —, mentions de facturation, règles de relance, périodicité de déclaration, et les points d'accès de facturation électronique dont le service de remise au client), la matrice rôle → permission, la règle de validation par défaut **avec une carte par domaine et les deux interrupteurs d'auto-validation**, et les membres à inviter avec leurs réglages personnels (politique de dépassement, droit sur les espaces entiers, autorisation de chevauchement, limite de réservations). **Exportez le XML** et l'app importe directement réglages, accessoires et plan (*Importer l'espace (XML)*) ; la section `<setup>` du fichier porte tout le reste pour finir la configuration. La page peut aussi **recharger** un fichier exporté auparavant pour continuer — y compris un fichier écrit avant l'existence d'un réglage, qui revient simplement avec ce réglage à sa valeur par défaut. Une mise en garde que la page répète : le fichier exporté est en clair, donc ne saisissez un jeton de plateforme que si vous répondez en privé ; sinon laissez ces champs vides et tapez-les dans l'app, où ils partent côté serveur sans jamais en revenir.
-- **Zone de danger** — **Réinitialiser l'espace** : supprime toutes les réservations, la comptabilité et le plan ; conserve réglages et membres. Gardé par une confirmation tapée.
 
-![](assets/help/images/workspace-settings-full.jpg)
+![](assets/help/images/workspace-identity.jpg)
+
+*Identité : le pays détermine la devise et le fuseau proposés ; la langue de l'espace rédige les invitations.*
+- **Paiements et facturation** — les **instructions de paiement** que voient les membres sur un relevé impayé (IBAN, lien PayPal.me, numéro Wero, Lydia, Wisetag, indication de référence — champ vide = rien d'affiché), et **Identité légale et facturation électronique** (§11a).
+
+![](assets/help/images/workspace-billing-links.jpg)
 
  
 
 ![](assets/help/images/payment-instructions.jpg)
 
-*L'écran de l'espace en une image — identité, paiements et facturation, groupe WhatsApp, message d'invitation par langue, transparence des tables, les raccourcis modèle et relance, exports, zone de danger — et le formulaire des instructions de paiement.*
+*Paiements et facturation : les deux entrées vers les instructions de paiement et l'identité légale — et le formulaire des instructions lui-même, champ par champ.*
+- **Groupe WhatsApp** — le lien du groupe communautaire montré dans l'annuaire.
+- **Message d'invitation** — les modèles d'invitation par langue (§2).
+
+![](assets/help/images/workspace-invitation.jpg)
+
+*Le message d'invitation par langue, avec ses balises, et le curseur de transparence des tables en dessous.*
+- **Transparence des tables** — le curseur qui laisse une photo de fond transparaître sous les tables.
+- **Modèle de PDF de facture** et **Règles de relance** — raccourcis vers l'éditeur de rapports et la configuration des relances (§11).
+- **Exports** — *Exporter l'espace (XML)* (réglages + plan, sans données personnelles — sauvegarde, modèle, migration), *Exporter la configuration (PDF)* (instantané complet : réglages, membres, plan), *Rapport de l'espace* (tout sur l'espace via le modèle « espace » de l'éditeur de rapports), *Codes QR des espaces (PDF)* (une carte QR par place, table, bureau et niveau, dix par A4), *Exporter les données (Excel)* (un classeur : réservations, paiements, factures, membres, plan — un onglet chacun), *Importer l'espace (XML)* (restaure réglages et plan ; remplace le plan actuel). Chaque export atterrit dans les **Téléchargements** de l'appareil.
+
+![](assets/help/images/workspace-exports.jpg)
+
+*Le bloc des exports — XML, PDF de configuration, rapport de l'espace, codes QR des espaces, Excel, import XML — et la zone de danger.*
+- **L'assistant de configuration** (#723) — <https://fdittgen-png.github.io/deskilo/setup.html> : Depuis le 29/08/2026, c'est un **assistant pas à pas** : des étapes dans l'ordre des dépendances (identité → fonctionnalités → disponibilité → plan → abonnements → identité légale et TVA → services → paiement → rôles → membres → vérification), chacune ne posant que les questions que vos réponses précédentes rendent possibles — pas de taux de TVA sans assujettissement, pas de plateforme de facturation électronique hors UE, pas d'option « forfaits » pour les membres tant qu'aucun forfait n'existe, pas de fonctionnalité enfant sans son parent. Chaque question dit où elle se règle dans l'app et renvoie à la section de ce guide ; une étape **Résumé des fonctionnalités** liste chaque fonctionnalité que l'app activera avec la configuration issue de vos réponses — décochez les optionnelles : elles partent désactivées, leur configuration n'est pas exportée ; puis une étape **Vérification** liste ce qui est complet, ce qui reste un choix à confirmer et ce qui bloque, avec un saut pour corriger ; « Tout afficher sur une page » conserve la vue experte. Ensuite : une page autonome (Mac, PC ou téléphone ; réponses enregistrées automatiquement dans le navigateur) qui guide un nouveau propriétaire à travers **chaque sujet, avec des choix prédéfinis** — identité (pays dont la Norvège, devise, fuseau, langue de l'espace, transparence des tables et les modèles d'invitation par langue), disponibilité — granularité, horaires de travail, jours de fermeture et **les quatre règles de réservation** (réservations passées, check-out par un admin, mode hors heures d'ouverture, réservations simultanées), plus la conversion heures → demi-journées en granularité « heures réelles » —, le plan des locaux, **les 43 fonctionnalités** à leurs valeurs par défaut réelles, paliers de cotisation et niveaux d'abonnement, forfaits de jours, services et accessoires, instructions de paiement, **identité légale et TVA** (type d'organisation, régime, taux usuels du pays — les 3,8 % suisses pour l'hébergement, la Norvège, les provinces canadiennes, avec la note honnête sur la sales tax américaine —, mentions de facturation, règles de relance, périodicité de déclaration, et les points d'accès de facturation électronique dont le service de remise au client), la matrice rôle → permission, la règle de validation par défaut **avec une carte par domaine et les deux interrupteurs d'auto-validation**, et les membres à inviter avec leurs réglages personnels (politique de dépassement, droit sur les espaces entiers, autorisation de chevauchement, limite de réservations). **Exportez le XML** et l'app importe directement réglages, accessoires et plan (*Importer l'espace (XML)*) ; la section `<setup>` du fichier porte tout le reste pour finir la configuration. La page peut aussi **recharger** un fichier exporté auparavant pour continuer — y compris un fichier écrit avant l'existence d'un réglage, qui revient simplement avec ce réglage à sa valeur par défaut. Une mise en garde que la page répète : le fichier exporté est en clair, donc ne saisissez un jeton de plateforme que si vous répondez en privé ; sinon laissez ces champs vides et tapez-les dans l'app, où ils partent côté serveur sans jamais en revenir.
+- **Zone de danger** — **Réinitialiser l'espace** : supprime toutes les réservations, la comptabilité et le plan ; conserve réglages et membres. Gardé par une confirmation tapée.
 
 ### Codes QR des espaces et réservations d'espaces entiers
 
@@ -441,9 +483,9 @@ Une matrice centrale décide **quelle permission revient à quel rôle** — gé
 
 **Qui valide (#732).** Une règle nomme sa **portée** : *Les admins* (le propriétaire et tous les admins, ou ceux que vous listez), *Personnes désignées* (le propriétaire et exactement les personnes choisies — un simple membre peut être validateur), ou *Tous les membres*. Le nombre et la signature du propriétaire gardent leur sens, et personne ne valide jamais son propre événement. Fonctionnalité *Validateurs par rôle ou par personne*.
 
-![](assets/help/images/role-management-full.jpg)
+![](assets/help/images/roles-matrix.jpg)
 
-*Gestion des rôles : la ligne propriétaire verrouillée, puis copropriétaire, admin et membre — les onze permissions par rôle.*
+*Gestion des rôles : la carte propriétaire verrouillée, la carte copropriétaire tout accordé par défaut — les cartes admin et membre suivent avec les mêmes onze permissions.*
 
 ### Configurer les paiements en ligne
 
@@ -457,7 +499,9 @@ Chaque communauté encaisse sur son **propre** compte prestataire ; l'app ne gar
    - **Wero (via Mollie)** — la même clé API Mollie, avec Wero activé dans votre compte Mollie.
 3. **Enregistrez** — une puce verte *Configuré* apparaît. Activez la fonctionnalité **Paiements en ligne** (Réglages → Fonctionnalités), et les membres voient **Payer en ligne** sur un relevé impayé. (L'entrée de réglages *Paiements en ligne* n'apparaît elle-même que si la fonctionnalité est active.)
 
-![](assets/help/images/online-payments-full.jpg)
+![](assets/help/images/online-payments-config.jpg)
+
+*Une carte par prestataire — PayPal à l'écran ; Stripe, Mollie et Wero ont la même forme : les clés entrent, une puce Configuré revient.*
 
 Un secret enregistré ne se réaffiche jamais — champ vide pour le garder, tapez pour remplacer, **Supprimer** pour effacer le prestataire. Les frais sont ceux du prestataire (typiquement ~1,5–3 % par paiement, sans abonnement) ; DesKilo n'ajoute rien, et la voie virement/IBAN manuelle reste gratuite.
 
@@ -513,15 +557,15 @@ Les badges appartiennent à **un espace** — le dialogue nomme lequel, enregist
 
 ![](assets/help/images/nfc-config.jpg)
 
- 
+*Étape 1 — l'interrupteur NFC, et la ligne d'état qui dit si cet appareil sait lire une carte.*
 
 ![](assets/help/images/member-badges-dialog.jpg)
 
- 
+*Étape 2 — les badges d'un membre : badge QR et carte enregistrée, chacun avec sa révocation et son propre interrupteur « me connecte ».*
 
 ![](assets/help/images/my-badge-code.jpg)
 
-*RFID / NFC : l'interrupteur et l'état de l'appareil ; le dialogue des badges (badge QR, carte enregistrée, l'interrupteur « me connecte », révoquer) ; votre code de badge.*
+*Libre-service : Réglages → Mon badge émet le badge QR imprimable ; le code de badge n'appartient qu'à vous.*
 
 ## 9. Argent (onglet Finances)
 
@@ -570,9 +614,13 @@ Chaque rapport de l'application — relevé, factures, proformas, avoirs, vos do
 
 **Le mois tel qu'il est.** Votre compte (la position réelle sur plusieurs mois), la carte **Ce mois-ci** (jours inclus, utilisés, restants), la carte **abonnement**, les **services consommés**, les **suppléments d'accessoires et d'espaces**, les **forfaits de jours**, les **positions ouvertes** en attente de validation, **paiements et avoirs**, la **carte de facture** du mois dès qu'il est facturé (§9a) et le **solde**. En lecture seule : rien à presser ici sauf le sélecteur **‹ mois ›**, commun à tous les volets.
 
-![](assets/help/images/finances-statement-full.jpg)
+![](assets/help/images/statement-account.jpg)
 
-*Le volet Relevé, de haut en bas : votre compte, vos conditions négociées (le tarif à côté des vôtres, Qui peut voir), ce mois-ci, l'abonnement, les services, les postes en attente, paiements et crédits, le solde.*
+*Le haut du Relevé : votre compte (la position réelle sur plusieurs mois) et vos conditions négociées — le tarif à côté de vos prix, avec Qui peut voir.*
+
+![](assets/help/images/statement-balance.jpg)
+
+*Le bas du Relevé : les services, les postes encore en attente de validation, paiements et crédits, et le solde.*
 
 ### 9d. Le volet Paiements
 
@@ -648,7 +696,15 @@ Les émetteurs ouvrent **Finances → Factures** et arrivent sur un hub à trois
 
 **Tampons.** Une facture annulée porte un grand **ERRONÉE** en diagonale sur chaque page de son PDF, gris clair par-dessus le contenu : impossible de la confondre avec un document valide. Le même tampon dit **PROFORMA** sur un devis, et **COPIE** sur toute facture rendue par un autre que son émetteur — l'espace détient l'originale.
 
+![](assets/help/images/dunning-rules.jpg)
+
+*Les règles de relance : niveaux, jours avant la première relance, jours entre relances — et l'interrupteur Relances automatiques.*
+
 **Relances (Mahnwesen).** Le propriétaire règle les **règles de relance** (icône liste cochée dans l'en-tête Factures, ou *Réglages de l'espace → Règles de relance*) : combien de niveaux, jours avant la première relance, jours entre relances. Les factures en retard sont marquées **« Relance N due »** et la cloche de la carte passe au rouge — rien ne part jamais automatiquement. L'envoi génère une **lettre de relance** (niveau 1 amical, niveaux supérieurs plus fermes) depuis le modèle de ce niveau — livré prêt dans votre langue, imprimé dans la langue du *membre*, et modifiable par niveau dans l'éditeur avec `{{ reminder_level }}`, `{{ reminder_date }}` et `{{ days_open }}`.
+
+![](assets/help/images/invoice-register.jpg)
+
+*Le registre : une ligne par facture, la somme au pied, le sélecteur d'année et le bouton d'export comptable (SAF-T / FEC).*
 
 **Le registre.** L'icône liste de la barre Factures ouvre un registre une-ligne-par-facture : **date · nom · montant · état**, trié par date (touchez l'en-tête Date pour inverser), avec la somme au pied et un sélecteur d'**année** dès qu'il y en a plus d'une. Son bouton d'export ouvre la feuille **Export comptable** : **SAF-T (XML, international)** et — pour un espace français — **FEC (France, exigé en cas de contrôle)**.
 
@@ -658,15 +714,7 @@ Les émetteurs ouvrent **Finances → Factures** et arrivent sur un hub à trois
 
 ![](assets/help/images/invoices-admin.jpg)
 
- 
-
-![](assets/help/images/dunning-rules.jpg)
-
- 
-
-![](assets/help/images/invoice-register.jpg)
-
-*Le hub des émetteurs (À facturer · En cours · Archives) avec les quatre actions d'une facture ouverte et les icônes de la barre — éditeur de modèle, règles de relance, registre ; les règles de relance avec l'interrupteur Relances automatiques ; le registre avec son total et son bouton d'export.*
+*Le hub des émetteurs : À facturer · En cours · Archives sous le bandeau de synthèse en direct ; une facture ouverte avec ses quatre actions (annuler · proforma · relance · marquer payée).*
 
 ![](assets/help/images/invoices-to-invoice.jpg)
 
@@ -730,7 +778,7 @@ Variables (famille facture) : `{{ number }}`, `{{ member }}`, `{{ workspace }}`,
 
 ![](assets/help/images/report-designer-markup.jpg)
 
- 
+*Le mode Balisage : les trois bandes en texte, la légende des variables, les puces par document et par langue.*
 
 ![](assets/help/images/report-designer-design.jpg)
 
@@ -738,7 +786,7 @@ Variables (famille facture) : `{{ number }}`, `{{ member }}`, `{{ workspace }}`,
 
 ![](assets/help/images/report-designer-preview.jpg)
 
-*L'éditeur de rapports : le mode Balisage avec la légende des variables et les puces par langue / par document ; le mode Visuel en Conception (bandes étiquetées sur la page A4) et en Aperçu (données réelles via le vrai moteur).*
+*Le mode Visuel — Conception édite les bandes étiquetées sur la vraie page A4 ; Aperçu fusionne vos bandes non enregistrées avec des données réelles via le vrai moteur.*
 
 ### 11d. La suite de rapports et la bibliothèque de documents
 
@@ -763,9 +811,21 @@ Avec **Relances de paiement automatiques** activé (Fonctionnalités, enfant de 
 
 Votre écran personnel, de haut en bas :
 
-![](assets/help/images/settings-full.jpg)
+![](assets/help/images/settings-personal.jpg)
 
-*Tout l'écran Réglages en une image : votre bloc personnel, Administration (propriétaires), Préférences, Avancé, À propos, Se déconnecter.*
+*Le bloc personnel : profils, photo, région et formats, WhatsApp, statut, période de réservation par défaut, adresse, aide, badge.*
+
+![](assets/help/images/settings-admin.jpg)
+
+*Pour les propriétaires, la section Administration suit — chaque écran d'administration du §8 commence ici.*
+
+![](assets/help/images/settings-preferences.jpg)
+
+*Préférences et Avancé : langue, thème, scan par la caméra avant, état du push, mode développeur.*
+
+![](assets/help/images/settings-about.jpg)
+
+*À propos : version, auteur, la licence open source, la politique de confidentialité, signaler un bug, et comment soutenir le projet.*
 
 ![](assets/help/images/profiles.jpg)
 
@@ -781,6 +841,8 @@ Votre écran personnel, de haut en bas :
 
 ![](assets/help/images/settings-language.jpg)
 
+*Quatre des écrans personnels : Profils, Région et formats, Comptes liés et le sélecteur de langue.*
+
 ![](assets/help/images/settings-whatsapp-dialog.jpg)
 
  
@@ -795,6 +857,8 @@ Votre écran personnel, de haut en bas :
 
 ![](assets/help/images/settings-default-period-dialog.jpg)
 
+*Les quatre dialogues personnels : numéro WhatsApp, ligne de statut, adresse postale, période de réservation par défaut.*
+
 ![](assets/help/images/settings-theme-dialog.jpg)
 
  
@@ -805,7 +869,7 @@ Votre écran personnel, de haut en bas :
 
 ![](assets/help/images/developer-screen.jpg)
 
-*Réglages, écran par écran : Profils, Région et formats, Comptes liés, Langue ; les dialogues WhatsApp, Statut, Adresse et Période de réservation par défaut ; Thème, la feuille photo, l'écran Développeur.*
+*Thème, la feuille photo, et l'écran de traces Développeur.*
 
 **Confidentialité et données (#719)** — qui peut voir vos données, qui l'a fait, export, effacement, la politique. Voir §14.
 
@@ -856,12 +920,12 @@ L'onglet **Messages** est la messagerie de votre espace : toutes les conversatio
 
 ![](assets/help/images/messages-discussions.jpg)
 
- 
+*La liste des discussions : personnes et groupes ensemble, les compteurs de non-lus, le crayon pour en commencer une.*
 
 ![](assets/help/images/messages-conversation.jpg)
 
- 
+*Une discussion privée : bulles du plus ancien au plus récent, les accusés de lecture gris/bleus sur vos propres messages.*
 
 ![](assets/help/images/messages-conversation-links.jpg)
 
-*Messages : la liste des discussions (personnes et groupes, le crayon pour en créer une), une discussion privée avec accusés de lecture, et un message de groupe portant un lien de réservation et un lien d'espace.*
+*Un message de groupe portant un lien de réservation et un lien d'espace — tous deux actifs, chacun avec un saut Voir sur le plan.*

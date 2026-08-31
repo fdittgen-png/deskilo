@@ -2433,6 +2433,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get helpTopicBilling => 'Facturation';
 
   @override
+  String get helpTopicWorkingHours => 'Horaires de travail';
+
+  @override
+  String get helpTopicBookingPolicies => 'Règles de réservation';
+
+  @override
+  String get helpTopicBookingLimits => 'Limites de réservation';
+
+  @override
   String get inviteSectionTitle => 'Inviter quelqu\'un';
 
   @override
