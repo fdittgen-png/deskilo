@@ -153,3 +153,31 @@ with a symbol on one surface and none on the other is a bug. Topics are
 localized l10n getters pinned to guide headings by
 test/core/help/help_hint_test.dart.
 
+## Guides & illustrations (#765)
+
+The wiki (`docs/wiki/*.md`) is the SOURCE; `dart run tool/build_help.dart`
+regenerates `assets/help/` — never edit the help output directly. Layout
+rules for images:
+
+- **One topic-sized image beside the paragraph it explains, each with its
+  own one-line italic caption.** No rows of 3+ images sharing a caption.
+- **Whole-form stitches** live only inside `<details><summary>…</summary>`
+  at their wiki section's end; `build_help` strips details blocks, so the
+  in-app help never regains giant image blocks.
+- **Every heading a help topic or setup anchor points at is pinned** by
+  `test/core/help/help_hint_test.dart` (topics ×5 must match a guide
+  heading) and the anchor check against `web/setup.html` — rename a
+  heading and the build, not the reader, breaks.
+- The five guides stay structurally parallel: same image names, same
+  heading skeleton. Verify with per-name `<img` counts when editing.
+
+## Validation domains grow in FOUR places (#767/#769)
+
+A new server-side validation domain (`events_type_check` +
+`validation_policies` check) is not finished until the SAME PR carries:
+the client card in `validation_settings_screen.dart` (`_cardTypes` — the
+price-negotiation domain shipped server-side in #739 and stayed
+unconfigurable for weeks because this list lagged), the `DOMAINS` entry
+plus feature gate in `web/setup.html`, and the guides' card count/list
+×5. The events feed line must give validators what they DECIDE on (a
+deviated amount shows the validated amount and the member's reason).
