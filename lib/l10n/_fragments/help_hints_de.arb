@@ -148,5 +148,8 @@
   "helpTopicVat": "MwSt",
   "helpTopicSettings": "Einstellungen & Profil",
   "helpTopicKiosk": "Kiosk-Modus",
-  "helpTopicBilling": "Abrechnung"
+  "helpTopicBilling": "Abrechnung",
+  "helpTopicWorkingHours": "Arbeitszeiten",
+  "helpTopicBookingPolicies": "Buchungsregeln",
+  "helpTopicBookingLimits": "Buchungsgrenzen"
 }

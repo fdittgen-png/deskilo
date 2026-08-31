@@ -2427,6 +2427,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpTopicBilling => 'Facturación';
 
   @override
+  String get helpTopicWorkingHours => 'Horario de trabajo';
+
+  @override
+  String get helpTopicBookingPolicies => 'Políticas de reserva';
+
+  @override
+  String get helpTopicBookingLimits => 'Límites de reserva';
+
+  @override
   String get inviteSectionTitle => 'Invitar a alguien';
 
   @override

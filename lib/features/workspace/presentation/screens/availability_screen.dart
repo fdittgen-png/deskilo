@@ -458,7 +458,7 @@ class AvailabilityScreen extends ConsumerWidget {
                       l10n?.availabilityWorkHoursTitle ?? 'Working hours',
                     ),
                   ),
-                  HelpDot(l10n?.helpHintAvailabilityTopic ?? 'Availability'),
+                  HelpDot(l10n?.helpTopicWorkingHours ?? 'Working hours'),
                 ]),
                 Padding(
                   padding: AppSpacing.lgH,
@@ -541,13 +541,13 @@ class AvailabilityScreen extends ConsumerWidget {
                       l10n?.availabilityPoliciesTitle ?? 'Booking policies',
                     ),
                   ),
-                  HelpDot(l10n?.helpHintAvailabilityTopic ?? 'Availability'),
+                  HelpDot(l10n?.helpTopicBookingPolicies ?? 'Booking policies'),
                 ]),
                 SwitchListTile(
                   key: const Key('policy-allow-past'),
                   title: HelpDotTitle(
                     l10n?.policyAllowPastTitle ?? 'Allow past bookings',
-                    l10n?.helpHintAvailabilityTopic ?? 'Availability',
+                    l10n?.helpTopicBookingPolicies ?? 'Booking policies',
                   ),
                   subtitle: Text(l10n?.policyAllowPastDesc ??
                       'Members may record a booking that already '
@@ -561,7 +561,7 @@ class AvailabilityScreen extends ConsumerWidget {
                   title: HelpDotTitle(
                     l10n?.policyAdminCheckoutTitle ??
                         'Admins may check members out',
-                    l10n?.helpHintAvailabilityTopic ?? 'Availability',
+                    l10n?.helpTopicBookingPolicies ?? 'Booking policies',
                   ),
                   subtitle: Text(l10n?.policyAdminCheckoutDesc ??
                       "An admin can end a member's running check-in."),
@@ -577,7 +577,7 @@ class AvailabilityScreen extends ConsumerWidget {
                   title: HelpDotTitle(
                     l10n?.policyOutsideHoursTitle ??
                         'Outside the opening hours',
-                    l10n?.helpHintAvailabilityTopic ?? 'Availability',
+                    l10n?.helpTopicBookingPolicies ?? 'Booking policies',
                   ),
                   subtitle: Text(l10n?.policyOutsideHoursDesc ??
                       'What may happen outside the working day — the '
@@ -647,7 +647,7 @@ class AvailabilityScreen extends ConsumerWidget {
                       l10n?.policyLimitsTitle ?? 'Booking limits',
                     ),
                   ),
-                  HelpDot(l10n?.helpHintAvailabilityTopic ?? 'Availability'),
+                  HelpDot(l10n?.helpTopicBookingLimits ?? 'Booking limits'),
                 ]),
                 Padding(
                   padding: AppSpacing.lgH,
@@ -719,7 +719,7 @@ class AvailabilityScreen extends ConsumerWidget {
                     l10n?.availabilityClosureDays ?? 'Closure days',
                   ),
                 ),
-                HelpDot(l10n?.helpHintAvailabilityTopic ?? 'Availability'),
+                HelpDot(l10n?.helpTopicWorkingHours ?? 'Working hours'),
               ]),
               if (closures.isEmpty)
                 Padding(
