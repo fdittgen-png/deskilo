@@ -612,7 +612,10 @@ void main() {
     await tester.pumpAndSettle();
     // #519 — the period step sits between action and badge.
 
-    expect(frontCamera.value, isTrue); // front by default
+    // #773 — "never chosen" stays null in the store; the KIOSK surface
+    // still mounts the front lens by default (its ScanCameraBox default).
+    expect(frontCamera.value, isNull);
+    expect(find.byKey(const ValueKey('scan-camera-true')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('scan-flip-camera')));
     await tester.pumpAndSettle();
     expect(frontCamera.value, isFalse);
