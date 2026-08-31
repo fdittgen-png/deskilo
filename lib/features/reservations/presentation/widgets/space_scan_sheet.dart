@@ -135,6 +135,8 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
           ScanCameraBox(
             cameraKey: const ValueKey('space-scan-camera'),
             onCode: _submit,
+            // A member scans the printed card in hand — back lens (#773).
+            defaultFront: false,
           ),
         ],
         const SizedBox(height: 12),

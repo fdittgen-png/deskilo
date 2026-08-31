@@ -1458,10 +1458,11 @@ class InMemoryCacheStore implements CacheStore {
 /// In-memory [FrontCameraStore] so widget tests never touch
 /// SharedPreferences; front camera by default, like production.
 class InMemoryFrontCameraStore implements FrontCameraStore {
-  bool value = true;
+  /// Null = never chosen (#773): the surface's own default applies.
+  bool? value;
 
   @override
-  Future<bool> read() async => value;
+  Future<bool?> read() async => value;
 
   @override
   Future<void> write(bool enabled) async => value = enabled;
@@ -1528,9 +1529,13 @@ class InMemoryDefaultWorkspaceStore implements DefaultWorkspaceStore {
 /// Fake camera QR scanner (K3): [build] renders a keyed placeholder and
 /// captures the sheet's onCode callback; [emit] simulates a decoded QR.
 class FakeQrScanner {
+  /// The lens the last build asked for (#773 surface defaults).
+  bool? lastFront;
+
   ValueChanged<String>? _onCode;
 
-  Widget build({required ValueChanged<String> onCode}) {
+  Widget build({required ValueChanged<String> onCode, bool front = true}) {
+    lastFront = front;
     _onCode = onCode;
     return const ColoredBox(
       color: Color(0xFF222222),

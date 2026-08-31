@@ -68,7 +68,7 @@ final frontCameraScanProvider = FrontCameraScanProvider._();
 /// wall, so the badge is held up to the screen. Off = back camera, for
 /// handheld devices. Local device preference (camera is hardware).
 final class FrontCameraScanProvider
-    extends $AsyncNotifierProvider<FrontCameraScan, bool> {
+    extends $AsyncNotifierProvider<FrontCameraScan, bool?> {
   /// Whether badge scanning uses the FRONT (screen-side) camera — the
   /// default: a wall-mounted kiosk tablet has its back camera against the
   /// wall, so the badge is held up to the screen. Off = back camera, for
@@ -92,24 +92,24 @@ final class FrontCameraScanProvider
   FrontCameraScan create() => FrontCameraScan();
 }
 
-String _$frontCameraScanHash() => r'd5d193925f46e0b2b95562912fad8144ea1d0dba';
+String _$frontCameraScanHash() => r'd969b359955001b078877358ffb3bf327658fedc';
 
 /// Whether badge scanning uses the FRONT (screen-side) camera — the
 /// default: a wall-mounted kiosk tablet has its back camera against the
 /// wall, so the badge is held up to the screen. Off = back camera, for
 /// handheld devices. Local device preference (camera is hardware).
 
-abstract class _$FrontCameraScan extends $AsyncNotifier<bool> {
-  FutureOr<bool> build();
+abstract class _$FrontCameraScan extends $AsyncNotifier<bool?> {
+  FutureOr<bool?> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<bool>, bool>;
+    final ref = this.ref as $Ref<AsyncValue<bool?>, bool?>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<bool>, bool>,
-              AsyncValue<bool>,
+              AnyNotifier<AsyncValue<bool?>, bool?>,
+              AsyncValue<bool?>,
               Object?,
               Object?
             >;

@@ -57,6 +57,9 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
   /// as taken all afternoon.
   bool get isLive;
 
+  /// #772 — the browsed window contains now (workspace wall time).
+  bool get windowIsNow;
+
   BookingGranularity get granularity;
 
   /// The window a booking would take when not walking up.
@@ -381,6 +384,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     FloorPlan? plan,
     bool walkUp = false,
   }) async {
+    final liveWindow = !walkUp && windowIsNow;
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
@@ -457,6 +461,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         // walk-up: on a live view a free-seat tap is "I am sitting here",
         // not a reservation for later.
         walkUp: walkUp,
+        liveWindow: liveWindow,
         fixedEnd: dayBased,
         members: _bookingCandidates,
         myMemberId: myMemberId,
@@ -524,7 +529,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
               // here", so it checks in atomically. Booking without the
               // check-in left someone at a desk the plan showed as
               // merely reserved.
-              checkIn: walkUp,
+              checkIn: walkUp || choice.checkInNow,
             );
         // #663: the Reserve hub reported every refusal and no success at
         // all — a booking simply happened, or appeared to. Say which.
@@ -533,7 +538,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
             // #687 — a LIVE tap is a walk-up: it checks in. Reporting
             // `false` here while the server checked them in is the
             // confirmation lying about what just happened.
-            checkedIn: walkUp,
+            checkedIn: walkUp || choice.checkInNow,
             start: choice.start,
             end: choice.end,
             spaceName: seat.name);

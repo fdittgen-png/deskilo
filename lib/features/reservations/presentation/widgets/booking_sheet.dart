@@ -23,6 +23,7 @@ class BookingChoice {
     this.until,
     this.forMemberId, {
     this.block = false,
+    this.checkInNow = false,
   });
 
   final DateTime start;
@@ -34,6 +35,10 @@ class BookingChoice {
   /// True: block the seat for maintenance instead of booking it (#161).
   /// Every other field is ignored then.
   final bool block;
+
+  /// #772 — reserve AND check in in one gesture (browsed window contains
+  /// now); false for a plain reservation.
+  final bool checkInNow;
 }
 
 /// Bottom-sheet body for booking a seat (#206): walk-up check-in or a
@@ -57,6 +62,7 @@ class BookingSheet extends StatefulWidget {
     required this.capped,
     this.granularity = BookingGranularity.flexible,
     this.walkUp = true,
+    this.liveWindow = false,
     this.fixedEnd = false,
     this.members = const [],
     this.myMemberId,
@@ -80,6 +86,12 @@ class BookingSheet extends StatefulWidget {
   /// True: live walk-up (check in now). False: future punctual reservation.
   final bool walkUp;
 
+  /// #772 — the browsed window CONTAINS this very moment: the plain
+  /// reserve gains a "check in right away" switch (on by default), so
+  /// the Morning chip during the morning can check a member in — the
+  /// map then matches what the seat-QR sheet always could.
+  final bool liveWindow;
+
   /// Day-based granularity (#201): the window covers a canonical day
   /// window, edited via the period chips rather than a free "Until".
   final bool fixedEnd;
@@ -101,6 +113,9 @@ class BookingSheet extends StatefulWidget {
 }
 
 class _BookingSheetState extends State<BookingSheet> {
+  // OFF by default: a live window must stay bookable as a plain
+  // reservation — checking in is the member's explicit extra gesture.
+  bool _checkInNow = false;
   late DateTime _start = widget.start;
   late DateTime _end = widget.initialEnd;
   SeriesPattern? _pattern;
@@ -358,6 +373,7 @@ class _BookingSheetState extends State<BookingSheet> {
             FilledButton(
               onPressed: () => Navigator.of(context).pop(
                 BookingChoice(
+                  checkInNow: widget.liveWindow && _checkInNow,
                   _start,
                   _end,
                   _forOther ? null : _pattern,
@@ -374,6 +390,15 @@ class _BookingSheetState extends State<BookingSheet> {
                         : (l10n?.planReserveButton ?? 'Reserve'),
               ),
             ),
+            if (widget.liveWindow && !widget.walkUp)
+              SwitchListTile(
+                key: const ValueKey('booking-check-in-now'),
+                contentPadding: EdgeInsets.zero,
+                title: Text(
+                    l10n?.kioskCheckInRightAway ?? 'Check in right away'),
+                value: _checkInNow,
+                onChanged: (v) => setState(() => _checkInNow = v),
+              ),
             if (widget.allowBlocking) ...[
               const SizedBox(height: 8),
               TextButton.icon(

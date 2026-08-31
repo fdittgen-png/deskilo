@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_zxing/flutter_zxing.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import 'front_camera.dart';
 
 part 'qr_scan_widget.g.dart';
 
@@ -15,6 +14,7 @@ part 'qr_scan_widget.g.dart';
 /// decoder); tests inject a fake that emits codes on demand.
 typedef QrScanWidgetBuilder = Widget Function({
   required ValueChanged<String> onCode,
+  bool front,
 });
 
 /// Whether this device can host the embedded camera scanner (the kiosk
@@ -27,11 +27,13 @@ bool get qrScanSupported =>
 
 @Riverpod(keepAlive: true)
 QrScanWidgetBuilder qrScanWidgetBuilder(Ref ref) {
-  // Front camera by default: a wall tablet's back lens faces the wall,
-  // so badges are presented to the screen side. Device preference in
-  // Settings flips to the back camera for handheld use.
-  final front = ref.watch(frontCameraScanProvider).value ?? true;
-  return ({required onCode}) => ReaderWidget(
+  // #773 — the LENS is the CALLER's decision: ScanCameraBox resolves the
+  // stored preference against its surface's own default (kiosks front,
+  // handheld scans back) and passes the result down. The builder used to
+  // re-read the provider with `?? true`, silently re-defaulting every
+  // fresh install to the front camera — the invite QR then faced the
+  // joiner instead of the code.
+  return ({required onCode, bool front = true}) => ReaderWidget(
         showFlashlight: false,
         showGallery: false,
         showToggleCamera: false,

@@ -62,7 +62,9 @@ const Map<String, int> _baseline = {
   // eight. The +50 over the original is the focus state and that
   // control, both of which genuinely belong to the screen — the canvas,
   // the level switcher and the day selector all read the focus.
-  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1190,
+  // 1190→1215 (2026-08-31): #772 windowIsNow — the live-window probe in
+  // workspace wall time beside the isLive it refines.
+  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1215,
   // 980→990 (2026-08-03): #419 workspace dev-mode switch — admin gate,
   // workspace hint subtitle and the RPC write helper.
   // 990→1000 (2026-08-05): #478 Billing & reports admin entry.

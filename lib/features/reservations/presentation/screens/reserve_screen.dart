@@ -405,8 +405,29 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
   /// or a reservation for a browsed window. Getting it wrong either
   /// checks someone in for a slot they are not in yet, or refuses to
   /// check in someone who is standing at the desk.
+  ///
   bool get _isLive =>
       _selectedDay.isAtSameMomentAs(_today) && _windowStart == null;
+
+  /// #772 — whether the BROWSED window contains this very moment (in
+  /// workspace wall time): choosing the Morning chip during the morning
+  /// still means "I could be sitting here now", so the booking sheet
+  /// offers to check in right away — without turning the tap into a
+  /// walk-up (a hand-picked window must stay bookable as picked).
+  @override
+  bool get windowIsNow {
+    if (!_selectedDay.isAtSameMomentAs(_today)) return false;
+    final raw = ref.read(clockProvider).now();
+    final now = WorkspaceTime.at(
+      _selectedDay.year,
+      _selectedDay.month,
+      _selectedDay.day,
+      raw.hour,
+      raw.minute,
+    );
+    final window = _effectiveWindow(_granularity);
+    return !now.isBefore(window.start) && now.isBefore(window.end);
+  }
 
   /// Applies a pending "Show on plan" jump (#182/#576).
   ///
