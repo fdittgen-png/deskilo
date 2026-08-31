@@ -33,6 +33,7 @@ import '../invoice_status.dart';
 import '../report_defaults.dart';
 import '../../domain/bill_sections.dart';
 import '../../domain/money_face.dart';
+import '../../domain/expense_schedule.dart';
 import '../../domain/ledger_entry.dart';
 import '../../domain/package.dart';
 import '../../domain/payment_method.dart';
@@ -41,10 +42,12 @@ import '../../domain/statement.dart';
 import '../../providers/money_focus_controller.dart';
 import '../../providers/payment_reminder_sweep.dart';
 import '../../providers/money_providers.dart';
+import '../../providers/expense_schedule_providers.dart';
 import '../payment_method_labels.dart';
 import '../widgets/account_card.dart';
 import '../widgets/bill_view.dart';
 import '../widgets/documents_face.dart';
+import '../widgets/expense_schedule_sheet.dart';
 import '../widgets/expense_sheet.dart';
 import '../widgets/invoice_overview.dart';
 import '../widgets/money_faces_view.dart';
@@ -949,6 +952,18 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       icon: const Icon(Icons.hourglass_top_outlined),
       label: fitted(l10n?.quotaRequestButton ?? 'Request extra half-days'),
     );
+    // #767 — recurring expenses: the schedule list/create door, and the
+    // occurrences presented for confirmation (cards below).
+    final schedOn = features.contains(WorkspaceFeature.scheduledExpenses);
+    final scheduledExpensesButton = schedOn
+        ? OutlinedButton.icon(
+            key: const ValueKey('scheduled-expenses-button'),
+            onPressed: () => showExpenseSchedulesSheet(context, ref, currency),
+            icon: const Icon(Icons.event_repeat_outlined),
+            label: fitted(
+                l10n?.scheduledExpensesTitle ?? 'Scheduled expenses'),
+          )
+        : null;
     // Consumption follows the services feature (#146).
     final addConsumption = features.contains(WorkspaceFeature.services)
         ? OutlinedButton.icon(
@@ -976,10 +991,37 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     Widget grid(List<Widget> buttons) => MoneyActionGrid(buttons);
     final requestButtons = [
       submitExpense,
+      ?scheduledExpensesButton,
       requestQuota,
       ?addConsumption,
     ];
+    // #767 — a due occurrence is PRESENTED, never silently booked: one
+    // card per awaiting/rejected occurrence, on top of the Payments face.
+    final workspaceForSweep = ref.watch(currentWorkspaceProvider).value;
+    if (schedOn && workspaceForSweep != null) {
+      ref.watch(expenseScheduleSweepProvider(workspaceForSweep.id));
+    }
+    final myOccurrences = schedOn && workspaceForSweep != null
+        ? (ref.watch(expenseOccurrencesProvider(workspaceForSweep.id)).value ??
+            const <ExpenseOccurrence>[])
+        : const <ExpenseOccurrence>[];
+    final awaitingOccurrences = [
+      for (final o in myOccurrences)
+        if (o.status == OccurrenceStatus.awaitingMember ||
+            o.status == OccurrenceStatus.rejected)
+          o,
+    ];
+    final occurrenceCards = awaitingOccurrences.isEmpty
+        ? const <Widget>[]
+        : <Widget>[
+            sectionLabel(l10n?.scheduledAwaitingTitle ??
+                'Scheduled expenses awaiting you'),
+            for (final o in awaitingOccurrences)
+              ExpenseOccurrenceCard(o, currency),
+            const SizedBox(height: 8),
+          ];
     final actionChildren = <Widget>[
+      ...occurrenceCards,
       sectionLabel(l10n?.moneySectionPay ?? 'Pay'),
       recordPayment,
       if (buyPackage != null) ...[const SizedBox(height: 8), buyPackage],
@@ -1020,6 +1062,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       ],
       MoneyFace.payments: [
         if (overdueBanner != null) ...[overdueBanner, const SizedBox(height: 8)],
+        ...occurrenceCards,
         if (visibleStatement != null) bill(MoneyFace.payments),
       ],
       MoneyFace.invoices: [

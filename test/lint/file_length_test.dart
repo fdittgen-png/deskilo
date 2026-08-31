@@ -77,7 +77,9 @@ const Map<String, int> _baseline = {
   // + the landscape balance card.
   // 1070→1180 (2026-08-05): #494 the self-service document sheet.
   // 1180→1210 (2026-08-05): #496 the member-language chain on self-service docs.
-  'lib/features/money/presentation/screens/money_screen.dart': 1220,
+  // 1220→1200 (2026-08-31): #767 scheduled expenses — the button, the
+  // sweep watch and the occurrence cards join the other money actions.
+  'lib/features/money/presentation/screens/money_screen.dart': 1200,
   // 1210→1220 (2026-08-06): #512 the account card above the bill.
   // 910→950 (2026-08-04): #456 note tile + admin broadcast button —
   // the dialog itself is its own file.
@@ -158,7 +160,9 @@ const Map<String, int> _baseline = {
   // 600→630 (2026-08-22): #585 seatIdForNfcUid + the nfc_uid column in
   // the seat row mapping.
   'lib/features/plan/data/supabase_floor_plan_repository.dart': 630,
-  'lib/features/money/data/supabase_money_repository.dart': 1040, // 2026-08-30 #739 negotiation RPCs
+  // 1040→1130 (2026-08-31): #767 the six scheduled-expense methods live
+  // beside the other money RPC wrappers they mirror.
+  'lib/features/money/data/supabase_money_repository.dart': 1130, // 2026-08-30 #739 negotiation RPCs
   // 600→630 (2026-08-11): #537 VAT price transparency — the gross-price
   // hint + per-pack VAT/currency subtitles (labeling, no new concern).
   // 630→660 (2026-08-11): #537 follow-up — live VAT-share helpers under

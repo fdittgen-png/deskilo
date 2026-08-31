@@ -278,5 +278,7 @@
   "featureValidationScopesTitle": "Validators by role or person",
   "featureValidationScopesDesc": "Each validation rule names who validates: the admins, listed persons of any role, or every member — plus how many. Off: owner and admins as before.",
   "featurePriceNegotiationsTitle": "Price negotiations",
-  "featurePriceNegotiationsDesc": "The tariff is the default; a member can hold their own conditions — monthly fee, overage rate, discount on supplements, unit prices per service and package, the occupation percentage — proposed by whoever holds Manage commercial agreements and validated by the rules. Seen by the member, the owners and the holders of View commercial agreements; every read is logged."
+  "featurePriceNegotiationsDesc": "The tariff is the default; a member can hold their own conditions — monthly fee, overage rate, discount on supplements, unit prices per service and package, the occupation percentage — proposed by whoever holds Manage commercial agreements and validated by the rules. Seen by the member, the owners and the holders of View commercial agreements; every read is logged.",
+  "featureScheduledExpensesTitle": "Scheduled expenses",
+  "featureScheduledExpensesDesc": "Recurring expenses (internet, phone, electricity): any member schedules one with its rule (every X days/weeks/months/years, X times or until a date); the schedule is validated once, and every due date is presented to the member — the validated amount counts immediately, a different amount explains itself and passes the expense validation."
 }

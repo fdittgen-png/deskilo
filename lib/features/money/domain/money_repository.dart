@@ -15,6 +15,7 @@ import 'package.dart';
 import 'payment_intent.dart';
 import 'payment_method.dart';
 import 'payment_provider.dart';
+import 'expense_schedule.dart';
 import 'service_item.dart';
 import 'statement.dart';
 import 'subscription_levels.dart';
@@ -289,6 +290,44 @@ abstract class MoneyRepository {
     /// #731 — when the expense is a SUPPLY for the space: name (or
     /// service_id of an existing item), quantity, unit_price_cents.
     Map<String, Object?>? supply,
+  });
+
+  /// #767 — my recurring expense schedules (admins with the expense or
+  /// finance permission see the workspace's, per RLS).
+  Future<List<ExpenseSchedule>> fetchExpenseSchedules(String workspaceId);
+
+  /// Schedules a recurring expense; the schedule itself awaits the
+  /// `expense_schedule` validation rules. Returns the schedule id.
+  Future<String> createExpenseSchedule({
+    required String workspaceId,
+    required String title,
+    required int amountCents,
+    required DateTime startsOn,
+    required ScheduleUnit unit,
+    int every,
+    int? repeatCount,
+    DateTime? endsOn,
+    String description,
+  });
+
+  /// Ends a schedule (the member's own, or with approveExpenses).
+  Future<void> cancelExpenseSchedule(String scheduleId);
+
+  /// Materialises every due occurrence (any active member; the morning
+  /// cron is the other clock). Returns how many it created.
+  Future<int> sweepExpenseSchedules(String workspaceId);
+
+  /// My occurrences (awaiting, pending, added, rejected — client sorts).
+  Future<List<ExpenseOccurrence>> fetchExpenseOccurrences(String workspaceId);
+
+  /// Answers a presented occurrence: at the validated amount it lands
+  /// settled; at a different amount [reason] is mandatory and the
+  /// expense validation decides. A rejected one is resent the same way.
+  Future<void> confirmExpenseOccurrence({
+    required String occurrenceId,
+    required int amountCents,
+    String reason,
+    String? note,
   });
 
   /// Owner-defined day packages (migration 0042). Members read the active

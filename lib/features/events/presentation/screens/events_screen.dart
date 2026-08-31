@@ -156,6 +156,12 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
           ) ??
           'Reminder ${event.payload['level']}: invoice '
               '${event.payload['number']} — $amount still due',
+      (EventType.expenseSchedule, _) => l10n?.eventExpenseScheduleLine(
+            actor,
+            event.payload['title'] as String? ?? '',
+            amount,
+          ) ??
+          '$actor schedules "${event.payload['title']}" — $amount recurring',
       (EventType.priceNegotiation, _) => l10n?.eventPriceNegotiationLine(
             actor,
             names[event.subjectMemberId] ?? '',
@@ -279,6 +285,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.invoiceWriteoff => Icons.money_off_csred_outlined,
       EventType.invoiceReminder => Icons.notification_important_outlined,
       EventType.priceNegotiation => Icons.handshake_outlined,
+      EventType.expenseSchedule => Icons.event_repeat_outlined,
     };
   }
 

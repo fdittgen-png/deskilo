@@ -93,7 +93,7 @@ final class SelectedLevelIdProvider
   SelectedLevelId create() => SelectedLevelId();
 }
 
-String _$selectedLevelIdHash() => r'798c78f0c75e7b2ba18e5049bb3bba768b041afb';
+String _$selectedLevelIdHash() => r'32d31fbece63ff202700a3b1eedd707bc60804d6';
 
 /// The level shown on the Plan tab (#159): initially the stored default
 /// of the active workspace when that level still exists, else the first

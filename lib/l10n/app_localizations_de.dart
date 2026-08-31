@@ -1636,6 +1636,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get validationPickPersons => 'Personen wählen';
 
   @override
+  String get eventTypeExpenseSchedule => 'Geplante Ausgabe';
+
+  @override
+  String eventExpenseScheduleLine(Object actor, Object amount, Object title) {
+    return '$actor plant „$title“ — $amount wiederkehrend';
+  }
+
+  @override
   String get featuresTitle => 'Funktionen';
 
   @override
@@ -1963,6 +1971,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featurePriceNegotiationsDesc =>
       'Der Tarif ist der Standard; ein Mitglied kann eigene Konditionen haben — Monatsgebühr, Überschreitungssatz, Rabatt auf Zuschläge, Stückpreise je Leistung und Paket, Belegungsprozentsatz —, vorgeschlagen von wer „Geschäftsvereinbarungen verwalten“ hält, und nach den Regeln validiert. Sichtbar für das Mitglied, die Inhaber und die Träger von „Geschäftsvereinbarungen einsehen“; jeder Zugriff wird protokolliert.';
+
+  @override
+  String get featureScheduledExpensesTitle => 'Geplante Ausgaben';
+
+  @override
+  String get featureScheduledExpensesDesc =>
+      'Wiederkehrende Ausgaben (Internet, Telefon, Strom): jedes Mitglied plant sie mit ihrer Regel (alle X Tage/Wochen/Monate/Jahre, X Mal oder bis zu einem Datum); der Plan wird einmal validiert, und jede Fälligkeit wird dem Mitglied vorgelegt — der validierte Betrag zählt sofort, ein abweichender erklärt sich und durchläuft die Ausgaben-Validierung.';
 
   @override
   String get helpTitle => 'Hilfe';
@@ -2430,6 +2445,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get helpTopicBookingLimits => 'Buchungsgrenzen';
+
+  @override
+  String get helpTopicScheduledExpenses => 'Geplante Ausgaben';
 
   @override
   String get inviteSectionTitle => 'Jemanden einladen';
@@ -4670,6 +4688,155 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get negotiationReadOnly => 'Nur lesen';
+
+  @override
+  String get scheduledExpensesTitle => 'Geplante Ausgaben';
+
+  @override
+  String get scheduledExpensesIntro =>
+      'Abos, die der Space bezahlt — Internet, Telefon, Strom. Der Plan wird einmal validiert; jede Fälligkeit wird Ihnen vorgelegt, bevor sie zählt.';
+
+  @override
+  String get scheduledExpensesEmpty => 'Noch keine geplante Ausgabe.';
+
+  @override
+  String get scheduleNew => 'Wiederkehrende Ausgabe planen';
+
+  @override
+  String get scheduleCancel => 'Diesen Plan beenden';
+
+  @override
+  String get scheduleTitleLabel => 'Was (z. B. Internet)';
+
+  @override
+  String get scheduleStartsOn => 'Erste Fälligkeit';
+
+  @override
+  String get scheduleEveryLabel => 'Alle';
+
+  @override
+  String get scheduleUnitLabel => 'Einheit';
+
+  @override
+  String get scheduleTimesLabel => 'Wiederholungen (leer = bis zum Enddatum)';
+
+  @override
+  String get scheduleEndsOn => 'Bis (optional)';
+
+  @override
+  String get scheduleNoEnd => 'Kein Enddatum';
+
+  @override
+  String get scheduleValidationHint =>
+      'Der Plan geht zuerst an die Validierer. Jede Fälligkeit wird Ihnen dann vorgelegt: zu diesem Betrag bestätigt zählt sie sofort; ein anderer Betrag erklärt sich und wird erneut validiert.';
+
+  @override
+  String get scheduleSubmit => 'Planen';
+
+  @override
+  String get scheduleMissingFields => 'Name und Betrag sind nötig.';
+
+  @override
+  String get schedulePending =>
+      'Geplant — wartet auf die Bestätigung der Validierer.';
+
+  @override
+  String get scheduleStatusPending => 'Wartet auf Validierung';
+
+  @override
+  String get scheduleStatusActive => 'Aktiv';
+
+  @override
+  String get scheduleStatusRejected => 'Abgelehnt';
+
+  @override
+  String get scheduleStatusEnded => 'Beendet';
+
+  @override
+  String get scheduleDaily => 'täglich';
+
+  @override
+  String get scheduleWeekly => 'wöchentlich';
+
+  @override
+  String get scheduleMonthly => 'monatlich';
+
+  @override
+  String get scheduleYearly => 'jährlich';
+
+  @override
+  String scheduleEveryDays(Object count) {
+    return 'alle $count Tage';
+  }
+
+  @override
+  String scheduleEveryWeeks(Object count) {
+    return 'alle $count Wochen';
+  }
+
+  @override
+  String scheduleEveryMonths(Object count) {
+    return 'alle $count Monate';
+  }
+
+  @override
+  String scheduleTimes(Object count) {
+    return '$count Mal';
+  }
+
+  @override
+  String scheduleUntil(Object date) {
+    return 'bis $date';
+  }
+
+  @override
+  String scheduleNextDue(Object date) {
+    return 'nächste: $date';
+  }
+
+  @override
+  String get occurrenceRejected =>
+      'Die Validierer haben sie abgelehnt — Betrag oder Beschreibung anpassen und erneut senden.';
+
+  @override
+  String occurrenceScheduledAmount(Object amount) {
+    return 'Validiert: $amount';
+  }
+
+  @override
+  String get occurrenceReasonLabel => 'Warum es abweicht (Pflicht)';
+
+  @override
+  String get occurrenceConfirm => 'Diese Ausgabe bestätigen';
+
+  @override
+  String get occurrenceResend => 'Erneut zur Validierung senden';
+
+  @override
+  String get occurrenceReasonMissing =>
+      'Ein abweichender Betrag braucht eine Erklärung.';
+
+  @override
+  String get occurrenceSentForValidation =>
+      'An die Validierer gesendet — es zählt nach ihrer Bestätigung.';
+
+  @override
+  String get occurrenceAdded => 'Zu Ihren Ausgaben hinzugefügt.';
+
+  @override
+  String get scheduledAwaitingTitle => 'Geplante Ausgaben zur Bestätigung';
+
+  @override
+  String get scheduleUnitDays => 'Tage';
+
+  @override
+  String get scheduleUnitWeeks => 'Wochen';
+
+  @override
+  String get scheduleUnitMonths => 'Monate';
+
+  @override
+  String get scheduleUnitYears => 'Jahre';
 
   @override
   String get planDurationLabel => 'Dauer';

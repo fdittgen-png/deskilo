@@ -153,5 +153,7 @@
   "featureValidationScopesTitle": "Prüfer nach Rolle oder Person",
   "featureValidationScopesDesc": "Jede Prüfregel nennt, wer prüft: die Admins, benannte Personen jeder Rolle oder alle Mitglieder — und wie viele. Aus: Inhaber und Admins wie bisher.",
   "featurePriceNegotiationsTitle": "Preisverhandlungen",
-  "featurePriceNegotiationsDesc": "Der Tarif ist der Standard; ein Mitglied kann eigene Konditionen haben — Monatsgebühr, Überschreitungssatz, Rabatt auf Zuschläge, Stückpreise je Leistung und Paket, Belegungsprozentsatz —, vorgeschlagen von wer „Geschäftsvereinbarungen verwalten“ hält, und nach den Regeln validiert. Sichtbar für das Mitglied, die Inhaber und die Träger von „Geschäftsvereinbarungen einsehen“; jeder Zugriff wird protokolliert."
+  "featurePriceNegotiationsDesc": "Der Tarif ist der Standard; ein Mitglied kann eigene Konditionen haben — Monatsgebühr, Überschreitungssatz, Rabatt auf Zuschläge, Stückpreise je Leistung und Paket, Belegungsprozentsatz —, vorgeschlagen von wer „Geschäftsvereinbarungen verwalten“ hält, und nach den Regeln validiert. Sichtbar für das Mitglied, die Inhaber und die Träger von „Geschäftsvereinbarungen einsehen“; jeder Zugriff wird protokolliert.",
+  "featureScheduledExpensesTitle": "Geplante Ausgaben",
+  "featureScheduledExpensesDesc": "Wiederkehrende Ausgaben (Internet, Telefon, Strom): jedes Mitglied plant sie mit ihrer Regel (alle X Tage/Wochen/Monate/Jahre, X Mal oder bis zu einem Datum); der Plan wird einmal validiert, und jede Fälligkeit wird dem Mitglied vorgelegt — der validierte Betrag zählt sofort, ein abweichender erklärt sich und durchläuft die Ausgaben-Validierung."
 }
