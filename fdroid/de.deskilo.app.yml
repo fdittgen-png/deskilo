@@ -1,51 +1,15 @@
-# fdroiddata metadata for DesKilo (#716) — the file to submit as
-# metadata/de.deskilo.app.yml in a merge request to
-# https://gitlab.com/fdroid/fdroiddata.
-#
-# HOW THE BUILD STAYS GOOGLE-FREE. The app's push transport is the local
-# package `deskilo_push`, which exists twice in the repo with the same
-# name and API: packages/deskilo_push (Firebase, what the stores ship)
-# and packages/deskilo_push_foss (no transport). `prebuild` rewrites the
-# one pubspec line that picks between them. Nothing else differs.
-#
-# WHY AntiFeatures: NonFreeNet (#779). The shipped binary's compiled
-# defaults (lib/core/backend/backend_config.dart) point at the author's
-# hosted reference deployment, so a user who installs and signs in does
-# reach the developer's instance. The SERVER is free software and part
-# of this repository (0BSD: SQL migrations, RLS policies and edge
-# functions under supabase/), and a self-hoster overrides both values at
-# build time with --dart-define — but the default is what F-Droid ships,
-# hence the disclosure. This mirrors what fdroid/fdroiddata!42093 asked
-# of the sibling app; the AntiFeature can be revisited once the libre
-# build ships with no default endpoint at all.
-#
-# pubspec.lock is KEPT: `flutter pub get` re-resolves only the swapped
-# path dependency and leaves every other version pinned — deleting the
-# lock would build against whatever is newest that day.
-#
-# Versions: `--build-number` pins the versionCode F-Droid expects; the
-# store trains use a wall-clock number, so F-Droid's is its own series.
-# AutoUpdateMode is None for the same reason: a new F-Droid release is a
-# deliberate `v<x.y.z>-fdroid.<n>` tag whose build-number is set here by
-# hand, not a copy of the store train's.
 AntiFeatures:
   NonFreeNet:
-    en-US: |-
-      Out of the box the app connects to the author's hosted deployment
-      of its own backend. That backend is free software and lives in
-      this repository (SQL migrations, row-level-security policies and
-      edge functions, 0BSD): a community can run its own Supabase
-      project and point THIS build at it in Settings → Server — no
-      rebuild — but the default endpoint is the author's.
+    en-US: Defaults to the author's hosted server; changeable in Settings.
 Categories:
-  - Schedule
   - Finance Manager
+  - Schedule
 License: 0BSD
 AuthorName: Florian DITTGEN
 SourceCode: https://github.com/fdittgen-png/deskilo
 IssueTracker: https://github.com/fdittgen-png/deskilo/issues
 Changelog: https://github.com/fdittgen-png/deskilo/releases
-Summary: Coworking space booking, check-in, members and billing
+
 Description: |-
   Book a seat on the floor plan, check in with a QR or NFC badge, see
   who is in today, message members and groups, and — for owners — run
@@ -67,21 +31,22 @@ Description: |-
   analytics, access is limited by role and enforced on the server, and
   who-can-see-my-data, the access log, data export and account erasure
   are buttons in Settings → Privacy & data.
+
 RepoType: git
 Repo: https://github.com/fdittgen-png/deskilo.git
+
 Builds:
   - versionName: 1.0.0
     versionCode: 100001
     commit: v1.0.0-fdroid.2
-    submodules: true
     sudo:
       - apt-get update
       - apt-get install -y --no-install-recommends cmake ninja-build
     output: build/app/outputs/flutter-apk/app-release.apk
     srclibs:
       - flutter@3.44.9
-    prebuild:
-      - "sed -i 's|    path: packages/deskilo_push$|    path: packages/deskilo_push_foss|' pubspec.yaml"
+    prebuild: "sed -i 's|    path: packages/deskilo_push$|    path: packages/deskilo_push_foss|'
+      pubspec.yaml"
     build:
       - export PUB_CACHE=$(pwd)/.pub-cache
       - $$flutter$$/bin/flutter config --no-analytics
@@ -89,9 +54,8 @@ Builds:
       - $$flutter$$/bin/dart run build_runner build --delete-conflicting-outputs
       - $$flutter$$/bin/flutter gen-l10n
       - $$flutter$$/bin/flutter build apk --release --build-number=100001
-    scandelete:
-      - .pub-cache
+
 AutoUpdateMode: None
-UpdateCheckMode: Tags ^v[0-9.]+-fdroid\.[0-9]+$
+UpdateCheckMode: None
 CurrentVersion: 1.0.0
 CurrentVersionCode: 100001
