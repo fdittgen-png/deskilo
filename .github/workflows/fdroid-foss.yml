@@ -5,8 +5,10 @@ name: fdroid-foss
 
 # #716 — the F-Droid flavour stays buildable and Google-free. Does what
 # fdroiddata's recipe does (swap the push package, build a release APK)
-# and then asserts the one thing F-Droid's scanner will check: no
-# Google Play Services and no Firebase class in the dex.
+# and then asserts BOTH things F-Droid's scanner checks: no Google Play
+# Services or Firebase class in the dex, and no extra APK signing block
+# (#787 — AGP's 'Dependency metadata' failed exactly this on !47409,
+# after the dex scan had already come back clean).
 
 on:
   pull_request:
@@ -70,6 +72,50 @@ jobs:
           if [ "$hits" != "0" ]; then
             echo "::error::the FOSS APK still references Google services"; exit 1
           fi
+
+      - name: Assert the APK carries no extra signing block
+        run: |
+          python3 - build/app/outputs/flutter-apk/app-release.apk <<'PY'
+          import struct, sys
+
+          # F-Droid refuses "extra signing blocks": anything in the APK
+          # Signing Block that is not a signature scheme, a source stamp or
+          # padding. AGP's dependency metadata (0x504b4453) is the usual
+          # offender — a Google-signed blob nobody else can read.
+          KNOWN = {
+              0x7109871A: 'APK signature scheme v2',
+              0xF05368C0: 'APK signature scheme v3',
+              0x1B93AD61: 'APK signature scheme v3.1',
+              0x2B09189E: 'source stamp v1',
+              0x6DFF800D: 'source stamp v2',
+              0x42726577: 'padding',
+          }
+          MAGIC = b'APK Sig Block 42'
+
+          blob = open(sys.argv[1], 'rb').read()
+          at = blob.rfind(MAGIC)
+          if at < 0:
+              sys.exit('::error::no APK signing block found — is the APK signed?')
+          # [size (8)] [id-value pairs] [size (8)] [magic (16)]
+          size = struct.unpack_from('<Q', blob, at - 8)[0]
+          pos, end = at + 16 - size, at - 8
+
+          extra = []
+          while pos < end:
+              length = struct.unpack_from('<Q', blob, pos)[0]
+              ident = struct.unpack_from('<I', blob, pos + 8)[0]
+              if ident not in KNOWN:
+                  extra.append(f'0x{ident:08x}')
+              else:
+                  print(f'  block 0x{ident:08x}  {KNOWN[ident]}')
+              pos += 8 + length
+
+          if extra:
+              sys.exit('::error::extra APK signing block(s) ' + ', '.join(extra) +
+                       " — F-Droid's check-apk job refuses these; see "
+                       'android/app/build.gradle.kts dependenciesInfo')
+          print('no extra signing blocks')
+          PY
 
       - uses: actions/upload-artifact@v4
         with:
