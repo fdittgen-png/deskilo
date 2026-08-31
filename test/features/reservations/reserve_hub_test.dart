@@ -1016,4 +1016,43 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(_amChip), findsNothing);
   });
+
+  testWidgets('the Morning chip DURING the morning offers "check in right '
+      'away" — and confirming books checked in (#772)', (tester) async {
+    // kTestNow is 10:00 — inside the default 08:00–12:00 morning. The
+    // day-part chips exist under the half-day granularity.
+    final repo =
+        await pumpHub(tester, granularity: BookingGranularity.halfDay);
+    await tester.tap(find.byKey(_amChip));
+    await tester.pumpAndSettle();
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    // The browsed window contains now: the plain reserve carries the
+    // switch, on by default — the map can do what the seat QR can.
+    final toggle = tester.widget<SwitchListTile>(
+        find.byKey(const ValueKey('booking-check-in-now')));
+    expect(toggle.value, isFalse);
+    await tester.tap(find.byKey(const ValueKey('booking-check-in-now')));
+    await tester.pumpAndSettle();
+    // Two "Reserve" texts exist — the sheet's confirm is the
+    // FilledButton; the bottom-bar hub button is not.
+    await tester.tap(find.widgetWithText(FilledButton, 'Reserve'));
+    await tester.pumpAndSettle();
+    expect(
+      repo.reservations
+          .any((r) => r.status == ReservationStatus.checkedIn),
+      isTrue,
+    );
+  });
+
+  testWidgets('the Afternoon chip during the morning stays a plain '
+      'reserve — no check-in switch (#772)', (tester) async {
+    await pumpHub(tester, granularity: BookingGranularity.halfDay);
+    await tester.tap(find.byKey(_pmChip));
+    await tester.pumpAndSettle();
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    expect(
+        find.byKey(const ValueKey('booking-check-in-now')), findsNothing);
+  });
 }

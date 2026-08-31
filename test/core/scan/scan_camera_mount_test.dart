@@ -61,7 +61,7 @@ class _SlowFrontCameraStore implements FrontCameraStore {
   final completer = Completer<bool>();
 
   @override
-  Future<bool> read() => completer.future;
+  Future<bool?> read() => completer.future;
 
   @override
   Future<void> write(bool enabled) async {}
@@ -79,7 +79,8 @@ Future<void> _pumpBox(
       overrides: [
         frontCameraStoreProvider.overrideWithValue(store),
         qrScanWidgetBuilderProvider.overrideWithValue(
-          ({required onCode}) => _CountingScanner(mounts: mounts),
+          ({required onCode, bool front = true}) =>
+              _CountingScanner(mounts: mounts),
         ),
       ],
       child: MaterialApp(
@@ -139,7 +140,8 @@ void main() {
           frontCameraStoreProvider
               .overrideWithValue(InMemoryFrontCameraStore()),
           qrScanWidgetBuilderProvider.overrideWithValue(
-            ({required onCode}) => _CountingScanner(mounts: mounts),
+            ({required onCode, bool front = true}) =>
+              _CountingScanner(mounts: mounts),
           ),
         ],
         child: MaterialApp(
@@ -161,5 +163,35 @@ void main() {
     expect(mounts.length, 2,
         reason: 'the flip button must reopen the other camera — this '
             'remount is intentional, unlike the one the fix removes');
+  });
+
+  testWidgets('an UNSET preference resolves to the surface default — a '
+      'handheld scan opens the BACK lens (#773)', (tester) async {
+    final mounts = <int>[];
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          frontCameraStoreProvider.overrideWithValue(
+            InMemoryFrontCameraStore(), // value stays null: never chosen
+          ),
+          qrScanWidgetBuilderProvider.overrideWithValue(
+            ({required onCode, bool front = true}) =>
+                _CountingScanner(mounts: mounts),
+          ),
+        ],
+        child: MaterialApp(
+          home: Scaffold(
+            body: ScanCameraBox(
+              cameraKey: const ValueKey('scan-test-camera'),
+              onCode: (_) {},
+              defaultFront: false,
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('scan-camera-false')), findsOneWidget);
+    expect(mounts.length, 1);
   });
 }

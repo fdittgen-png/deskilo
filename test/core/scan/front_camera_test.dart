@@ -25,24 +25,28 @@ void main() {
     addTearDown(container.dispose);
     await container.read(frontCameraScanProvider.future);
 
-    ReaderWidget build() => container.read(qrScanWidgetBuilderProvider)(
+    // #773 — the LENS is the caller's argument now: ScanCameraBox
+    // resolves the stored preference against its surface default and
+    // passes the result down; the builder's own default stays front.
+    ReaderWidget build({bool? front}) =>
+        container.read(qrScanWidgetBuilderProvider)(
           onCode: (_) {},
+          front: front ?? true,
         ) as ReaderWidget;
 
     expect(build().lensDirection, CameraLensDirection.front);
-
-    await container.read(frontCameraScanProvider.notifier).setEnabled(false);
-    expect(build().lensDirection, CameraLensDirection.back);
+    expect(build(front: false).lensDirection, CameraLensDirection.back);
   });
 
-  test('the preference persists through the store', () async {
+  test('the preference persists through the store — and "never chosen" '
+      'stays visible as null (#773)', () async {
     final store = InMemoryFrontCameraStore();
     final container = ProviderContainer(
       overrides: [frontCameraStoreProvider.overrideWithValue(store)],
     );
     addTearDown(container.dispose);
 
-    expect(await container.read(frontCameraScanProvider.future), isTrue);
+    expect(await container.read(frontCameraScanProvider.future), isNull);
     await container.read(frontCameraScanProvider.notifier).setEnabled(false);
     expect(store.value, isFalse);
   });

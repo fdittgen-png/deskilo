@@ -16,12 +16,21 @@ class ScanCameraBox extends ConsumerWidget {
     super.key,
     required this.cameraKey,
     required this.onCode,
+    this.defaultFront = true,
   });
+
+  /// Which lens to open while NO preference is stored (#773): the kiosk
+  /// keeps the historical front default (a wall tablet's back lens faces
+  /// the wall), but a HANDHELD scan — joining by invite QR, scanning a
+  /// seat card — must open the back camera, or a fresh install streams
+  /// the joiner's face and "never identifies the barcode". An explicit
+  /// stored preference always wins; the flip button covers exceptions.
 
   /// The pinned test/find key of the camera area (each sheet keeps its
   /// historical key).
   final Key cameraKey;
   final ValueChanged<String> onCode;
+  final bool defaultFront;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -61,9 +70,9 @@ class ScanCameraBox extends ConsumerWidget {
         ),
       );
     }
-    // An unreadable preference falls back to the front lens, exactly as
-    // PrefsFrontCameraStore does — but now it mounts ONCE.
-    final front = lens.value ?? true;
+    // An unreadable preference falls back to the surface's own default —
+    // and still mounts ONCE.
+    final front = lens.value ?? defaultFront;
     return ClipRRect(
       borderRadius: AppRadius.mdAll,
       child: SizedBox(
@@ -76,7 +85,7 @@ class ScanCameraBox extends ConsumerWidget {
             // remount to open the other camera.
             KeyedSubtree(
               key: ValueKey('scan-camera-$front'),
-              child: builder(onCode: onCode),
+              child: builder(onCode: onCode, front: front),
             ),
             Positioned(
               top: 4,

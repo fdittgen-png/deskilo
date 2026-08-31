@@ -48,6 +48,8 @@ class _ScanJoinScreenState extends ConsumerState<ScanJoinScreen> {
           ScanCameraBox(
             cameraKey: const ValueKey('scan-join-camera'),
             onCode: _onCode,
+            // A joiner holds their phone up to the invite — back lens.
+            defaultFront: false,
           ),
           const SizedBox(height: AppSpacing.md),
           Text(
