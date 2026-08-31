@@ -19,6 +19,34 @@ After signing in you land on the welcome screen with two paths:
 - **Create a workspace** — you become its **owner**. Pick a name, country (drives the default currency), and time zone. You'll then draw your floor plan in the editor (§8).
 - **Join a workspace** — type the **workspace ID** someone shared with you, or tap **Scan QR code** and point the camera at the invite QR pinned to your space's wall. Your request arrives as **pending**: *New member* is one of the validation domains (§7), so a validator lets you in, and you then hold exactly the role the invite carries (§2).
 
+### The setup questionnaire — prepare a new space before you open the app
+
+Creating a workspace means dozens of decisions that live in a dozen different screens: what a booking may look like, what a month costs, what the law wants on an invoice, who validates what. The app lets you make them one at a time, as you meet them. The **setup questionnaire** lets you make them all at once, *before* you start — on a big screen, with your accountant or your board if that helps, without touching anything live:
+
+<https://fdittgen-png.github.io/deskilo/setup.html>
+
+It is a single web page. Nothing to install, no account, nothing sent anywhere: your answers are saved in your own browser, so you can close the tab and come back to them.
+
+![](assets/help/images/setup-wizard.jpg)
+
+*The wizard: twelve steps in dependency order, every question saying where the setting lives in the app, with a **?** that opens this guide at the matching section.*
+
+**How you use it**
+
+1. **Answer the steps in order** — identity, features, availability, floor plan, subscriptions, legal identity & VAT, services, payment instructions, roles & validation, members. Each step asks only what your earlier answers make possible: no VAT rates when you are not VAT-registered, no e-invoicing platform outside the EU, no day-package option for a member while no package exists, no child feature while its parent is off.
+2. **Check the feature summary.** It lists every feature the app will switch on and *how your own answers configure it*. Untick what you do not want: it is exported disabled and its configuration is left out — you can always switch it on later in Settings → Features.
+3. **Read the review step.** It separates what is complete, what is a choice to confirm and what actually blocks, each with a jump straight to the question that fixes it.
+4. **Export the XML**, then open the app: **Settings → Coworking space → Import the space (XML)** creates the settings, the accessories and the floor plan directly. The same file's `<setup>` section carries everything the importer does not — billing, legal identity, roles, members — so you can finish those screens one by one; every question told you where its answer lives.
+5. **Keep the file.** Loading it back into the page continues where you left off — including a file exported before a setting existed, which simply comes back with that setting at its default.
+
+![](assets/help/images/setup-feature-summary.jpg)
+
+*The feature summary: what the app will switch on, configured by your own answers — untick what you do not want.*
+
+**One caution.** The exported file is plain text. Fill in an e-invoicing token or a payment-provider key only if you are answering privately; otherwise leave those fields empty and type the secrets in the app, where they go straight to the server and never come back.
+
+**Skipping it costs nothing.** Every answer it collects is a setting you can also make — and change — in the app later. The questionnaire is a shortcut for the first hour, not a gate.
+
 ### Profiles — one account, several spaces
 
 One account can belong to several workspaces. **Settings → Profiles** lists them all: each row shows the space's name, **your role there** (Member, Admin, Owner) and its workspace ID. The **check mark** marks the profile you are currently in; the **star** marks your **default** — the profile the app opens with, on every device and even after a reinstall (the choice is stored with your account). Tap a row to switch, **+ Add a profile** to join yet another space. Everything in the app is scoped to the active workspace.
@@ -450,7 +478,7 @@ The workspace's own screen, top to bottom:
 ![](assets/help/images/workspace-exports.jpg)
 
 *The exports block — XML, configuration PDF, workspace report, space QR codes, Excel, XML import — and the danger zone.*
-- **The setup wizard** (#723) — <https://fdittgen-png.github.io/deskilo/setup.html>: Since 2026-08-29 it is a **guided wizard**: steps in dependency order (identity → features → availability → plan → subscriptions → legal & VAT → services → payment → roles → members → review), each step asking only what your earlier answers make possible — no VAT rates when you are not registered, no e-invoice platform outside the EU, no package option for members while no package exists, no child feature while its parent is off. Every question says where it lives in the app and links to the section of this guide; a **Feature summary** step lists every feature the app will activate with how your answers configure it — untick the optional ones and they are exported disabled, their configuration left out; then a **Review** step lists what is complete, what is a choice to confirm and what blocks, each with a jump to fix it; *Show everything on one page* keeps the expert view. Then: a standalone page (Mac, PC or phone; answers save automatically in the browser) that walks a new owner through **every subject with predefined choices** — identity (country incl. Norway, currency, timezone, workspace language, desk transparency and the per-language invitation templates), availability — granularity, working hours, closure days and **all four booking policies** (past bookings, admin check-out, the outside-hours mode and the simultaneous-reservations number), plus the hour-to-half-day conversion under *real hours* —, the floor plan, **all 43 feature toggles** at their real defaults, billing tiers and subscription levels, day packs, services and accessories, payment instructions, **legal identity and VAT** (organization type, regime, the country's usual rates — Switzerland's 3.8 % accommodation rate, Norway, the Canadian provinces, with the honest US sales-tax note —, invoice mentions, reminder rules, the declaration period, and the e-invoicing endpoints including the customer's own delivery service), the role → permission matrix, the default validation rule **with a card per domain and the two auto-validation switches**, and the members to invite with their per-member settings (over-consumption policy, whole-space right, simultaneous allowance, reservation limit). **Export the XML** and the app imports settings, accessories and floor plan directly (*Import the space (XML)*); the file's `<setup>` section carries everything else to finish the configuration. The page can also **reload** a previously exported file to continue editing — including one written before a setting existed, which simply comes back with that setting at its default. One caution the page repeats: the exported file is plain text, so fill in a platform token only if you are answering privately; otherwise leave those blank and type them in the app, where they go straight to the server and never come back.
+- **The setup questionnaire** — <https://fdittgen-png.github.io/deskilo/setup.html> (§1 explains it in full): the standalone page that collects a whole configuration *before* the app exists. **Import the space (XML)** above is where its file lands — settings, accessories and floor plan directly; the file's `<setup>` section carries billing, legal identity, roles and members for the screens that own them.
 - **Danger zone** — **Reset the workspace**: deletes all reservations, the accounting and the floor plan; keeps settings and members. Guarded by a typed confirmation.
 
 ### Space QR codes & whole-space reservations
