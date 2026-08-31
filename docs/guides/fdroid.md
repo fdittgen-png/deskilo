@@ -86,7 +86,7 @@ it would build against whatever is newest that day.
 ## Submission state (2026-08-31)
 
 The recipe is `fdroid/de.deskilo.app.yml` and the build it submits is the tag
-**`v1.0.0-fdroid.2`** (versionCode 100001) — the first F-Droid build in which
+**`v1.0.0-fdroid.3`** (versionCode 100001) — the first F-Droid build in which
 the app can be pointed at a community's own Supabase from Settings → Advanced
 → Server (#780), which is what the `NonFreeNet` disclosure describes.
 
@@ -100,6 +100,19 @@ submitting, which caught three things a first review round would have:
    declared with a per-app description.
 3. The `prebuild` sed line was unparseable YAML (`path:` inside an unquoted
    scalar) — quoted now; `fdroid lint` would have rejected it.
+
+### The APK carries no dependency-metadata block
+
+Their `check apk` job scans the *built* binary, and it refuses an "extra
+signing block 'Dependency metadata'" — a Google-signed, encrypted blob of
+the dependency tree that the Android Gradle Plugin embeds by default and
+that nobody outside Google can read. `android/app/build.gradle.kts` turns
+it off for the APK and keeps it in the bundle (#787): the AAB is the copy
+Play reads for its vulnerability warnings, and Play never sees the APK.
+
+The same job's dex scan is the real prize, and it is clean: no
+`com/google/android/gms`, no Firebase. The `deskilo_push_foss` swap is
+doing what this guide claims it does.
 
 **The merge request is filed: fdroid/fdroiddata!47409**, branch
 `de.deskilo.app` on the `fdittgen/fdroiddata` fork. It now waits on an

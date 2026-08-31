@@ -41,6 +41,17 @@ android {
         versionName = flutter.versionName
     }
 
+    // #787 — AGP embeds a Google-signed blob of the dependency tree in the
+    // APK's signing block. F-Droid's `check apk` scanner refuses it ("found
+    // extra signing block 'Dependency metadata'"), and it is unreadable to
+    // anyone but Google, so it has no business in a reproducible APK. The
+    // BUNDLE keeps it: that is the copy Play reads for its vulnerability
+    // warnings, and Play never sees the APK.
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = true
+    }
+
     signingConfigs {
         if (keystorePropertiesFile.exists()) {
             create("release") {
