@@ -978,6 +978,7 @@
   "validationPickPersons": "Elige las personas",
   "eventTypeExpenseSchedule": "Gasto programado",
   "eventExpenseScheduleLine": "{actor} programa «{title}» — {amount} recurrente",
+  "eventExpenseDeviation": "validado {scheduled} — {reason}",
   "featuresTitle": "Funciones",
   "featureCalendarTab": "Pestaña Calendario",
   "featureCalendarTabDesc": "Vista mensual de reservas y días de cierre.",

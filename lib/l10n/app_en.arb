@@ -2020,6 +2020,7 @@
   "validationPickPersons": "Pick the persons",
   "eventTypeExpenseSchedule": "Scheduled expense",
   "eventExpenseScheduleLine": "{actor} schedules “{title}” — {amount} recurring",
+  "eventExpenseDeviation": "validated {scheduled} — {reason}",
   "featuresTitle": "Features",
   "@featuresTitle": {
     "description": "App-bar title of the owner feature-management screen and its settings tile"
