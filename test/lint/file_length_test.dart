@@ -77,7 +77,9 @@ const Map<String, int> _baseline = {
   // + the landscape balance card.
   // 1070→1180 (2026-08-05): #494 the self-service document sheet.
   // 1180→1210 (2026-08-05): #496 the member-language chain on self-service docs.
-  'lib/features/money/presentation/screens/money_screen.dart': 1220,
+  // 1220→1200 (2026-08-31): #767 scheduled expenses — the button, the
+  // sweep watch and the occurrence cards join the other money actions.
+  'lib/features/money/presentation/screens/money_screen.dart': 1200,
   // 1210→1220 (2026-08-06): #512 the account card above the bill.
   // 910→950 (2026-08-04): #456 note tile + admin broadcast button —
   // the dialog itself is its own file.

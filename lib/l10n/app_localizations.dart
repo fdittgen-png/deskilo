@@ -2966,6 +2966,18 @@ abstract class AppLocalizations {
   /// **'Pick the persons'**
   String get validationPickPersons;
 
+  /// No description provided for @eventTypeExpenseSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled expense'**
+  String get eventTypeExpenseSchedule;
+
+  /// No description provided for @eventExpenseScheduleLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} schedules “{title}” — {amount} recurring'**
+  String eventExpenseScheduleLine(Object actor, Object amount, Object title);
+
   /// App-bar title of the owner feature-management screen and its settings tile
   ///
   /// In en, this message translates to:
@@ -3529,6 +3541,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The tariff is the default; a member can hold their own conditions — monthly fee, overage rate, discount on supplements, unit prices per service and package, the occupation percentage — proposed by whoever holds Manage commercial agreements and validated by the rules. Seen by the member, the owners and the holders of View commercial agreements; every read is logged.'**
   String get featurePriceNegotiationsDesc;
+
+  /// No description provided for @featureScheduledExpensesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled expenses'**
+  String get featureScheduledExpensesTitle;
+
+  /// No description provided for @featureScheduledExpensesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Recurring expenses (internet, phone, electricity): any member schedules one with its rule (every X days/weeks/months/years, X times or until a date); the schedule is validated once, and every due date is presented to the member — the validated amount counts immediately, a different amount explains itself and passes the expense validation.'**
+  String get featureScheduledExpensesDesc;
 
   /// No description provided for @helpTitle.
   ///
@@ -4315,6 +4339,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Booking limits'**
   String get helpTopicBookingLimits;
+
+  /// No description provided for @helpTopicScheduledExpenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled expenses'**
+  String get helpTopicScheduledExpenses;
 
   /// No description provided for @inviteSectionTitle.
   ///
@@ -8269,6 +8299,264 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Read only'**
   String get negotiationReadOnly;
+
+  /// No description provided for @scheduledExpensesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled expenses'**
+  String get scheduledExpensesTitle;
+
+  /// No description provided for @scheduledExpensesIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscriptions the space pays for — internet, phone, electricity. The schedule is validated once; every due date is presented to you before it counts.'**
+  String get scheduledExpensesIntro;
+
+  /// No description provided for @scheduledExpensesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No scheduled expense yet.'**
+  String get scheduledExpensesEmpty;
+
+  /// No description provided for @scheduleNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule a recurring expense'**
+  String get scheduleNew;
+
+  /// No description provided for @scheduleCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'End this schedule'**
+  String get scheduleCancel;
+
+  /// No description provided for @scheduleTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'What (e.g. Internet)'**
+  String get scheduleTitleLabel;
+
+  /// No description provided for @scheduleStartsOn.
+  ///
+  /// In en, this message translates to:
+  /// **'First occurrence'**
+  String get scheduleStartsOn;
+
+  /// No description provided for @scheduleEveryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Every'**
+  String get scheduleEveryLabel;
+
+  /// No description provided for @scheduleUnitLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get scheduleUnitLabel;
+
+  /// No description provided for @scheduleTimesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Repetitions (empty = until the end date)'**
+  String get scheduleTimesLabel;
+
+  /// No description provided for @scheduleEndsOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Until (optional)'**
+  String get scheduleEndsOn;
+
+  /// No description provided for @scheduleNoEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'No end date'**
+  String get scheduleNoEnd;
+
+  /// No description provided for @scheduleValidationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The schedule goes to the validators first. Each due date is then presented to you: confirmed at this amount it counts immediately; a different amount explains itself and is validated again.'**
+  String get scheduleValidationHint;
+
+  /// No description provided for @scheduleSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule it'**
+  String get scheduleSubmit;
+
+  /// No description provided for @scheduleMissingFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Name and amount are needed.'**
+  String get scheduleMissingFields;
+
+  /// No description provided for @schedulePending.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled — waiting for the validators to confirm it.'**
+  String get schedulePending;
+
+  /// No description provided for @scheduleStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting validation'**
+  String get scheduleStatusPending;
+
+  /// No description provided for @scheduleStatusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get scheduleStatusActive;
+
+  /// No description provided for @scheduleStatusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get scheduleStatusRejected;
+
+  /// No description provided for @scheduleStatusEnded.
+  ///
+  /// In en, this message translates to:
+  /// **'Ended'**
+  String get scheduleStatusEnded;
+
+  /// No description provided for @scheduleDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'daily'**
+  String get scheduleDaily;
+
+  /// No description provided for @scheduleWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'weekly'**
+  String get scheduleWeekly;
+
+  /// No description provided for @scheduleMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'monthly'**
+  String get scheduleMonthly;
+
+  /// No description provided for @scheduleYearly.
+  ///
+  /// In en, this message translates to:
+  /// **'yearly'**
+  String get scheduleYearly;
+
+  /// No description provided for @scheduleEveryDays.
+  ///
+  /// In en, this message translates to:
+  /// **'every {count} days'**
+  String scheduleEveryDays(Object count);
+
+  /// No description provided for @scheduleEveryWeeks.
+  ///
+  /// In en, this message translates to:
+  /// **'every {count} weeks'**
+  String scheduleEveryWeeks(Object count);
+
+  /// No description provided for @scheduleEveryMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'every {count} months'**
+  String scheduleEveryMonths(Object count);
+
+  /// No description provided for @scheduleTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} times'**
+  String scheduleTimes(Object count);
+
+  /// No description provided for @scheduleUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'until {date}'**
+  String scheduleUntil(Object date);
+
+  /// No description provided for @scheduleNextDue.
+  ///
+  /// In en, this message translates to:
+  /// **'next: {date}'**
+  String scheduleNextDue(Object date);
+
+  /// No description provided for @occurrenceRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'The validators rejected it — adjust the amount or the description and resend.'**
+  String get occurrenceRejected;
+
+  /// No description provided for @occurrenceScheduledAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Validated: {amount}'**
+  String occurrenceScheduledAmount(Object amount);
+
+  /// No description provided for @occurrenceReasonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Why it differs (required)'**
+  String get occurrenceReasonLabel;
+
+  /// No description provided for @occurrenceConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm this expense'**
+  String get occurrenceConfirm;
+
+  /// No description provided for @occurrenceResend.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend for validation'**
+  String get occurrenceResend;
+
+  /// No description provided for @occurrenceReasonMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'A different amount needs an explanation.'**
+  String get occurrenceReasonMissing;
+
+  /// No description provided for @occurrenceSentForValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent to the validators — it counts once they confirm.'**
+  String get occurrenceSentForValidation;
+
+  /// No description provided for @occurrenceAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to your expenses.'**
+  String get occurrenceAdded;
+
+  /// No description provided for @scheduledAwaitingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled expenses awaiting you'**
+  String get scheduledAwaitingTitle;
+
+  /// No description provided for @scheduleUnitDays.
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get scheduleUnitDays;
+
+  /// No description provided for @scheduleUnitWeeks.
+  ///
+  /// In en, this message translates to:
+  /// **'weeks'**
+  String get scheduleUnitWeeks;
+
+  /// No description provided for @scheduleUnitMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'months'**
+  String get scheduleUnitMonths;
+
+  /// No description provided for @scheduleUnitYears.
+  ///
+  /// In en, this message translates to:
+  /// **'years'**
+  String get scheduleUnitYears;
 
   /// Booking sheet: grid duration slider label (#574)
   ///

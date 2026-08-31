@@ -483,11 +483,47 @@
   "moneyDocumentLibrary": "Document library",
   "moneyStatementPdf": "This month's statement (PDF)",
   "moneyRemindedTimes": "Reminded ×{count}",
-  "@moneyOverdueBanner": {"placeholders": {"count": {"type": "int"}, "amount": {"type": "String"}}},
-  "@moneyOpenInvoicesSummary": {"placeholders": {"count": {"type": "int"}, "amount": {"type": "String"}}},
-  "@moneyDueIn": {"placeholders": {"days": {"type": "int"}}},
-  "@moneyOverdueBy": {"placeholders": {"days": {"type": "int"}}},
-  "@moneyRemindedTimes": {"placeholders": {"count": {"type": "int"}}},
+  "@moneyOverdueBanner": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@moneyOpenInvoicesSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@moneyDueIn": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "@moneyOverdueBy": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "@moneyRemindedTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "expenseSupplyToggle": "This is a supply for the space",
   "expenseSupplyHint": "Coffee capsules, vacuum bags… Once validated, the item goes on the shelf as a consumable service: members who use it pay for it.",
   "expenseSupplyItem": "Item",
@@ -498,7 +534,13 @@
   "serviceStockCount": "{count} in stock",
   "serviceOutOfStock": "Out of stock",
   "serviceOutOfStockHint": "Nothing left on the shelf — the next supply restocks it.",
-  "@serviceStockCount": {"placeholders": {"count": {"type": "int"}}},
+  "@serviceStockCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "negotiationCardTitle": "My negotiated prices",
   "negotiationOnTariff": "You are on the workspace tariff.",
   "negotiationPending": "A deal is awaiting validation.",
@@ -516,13 +558,68 @@
   "negotiationSubmit": "Propose for validation",
   "negotiationProposed": "Deal proposed — waiting for validation.",
   "negotiationPendingBadge": "awaiting validation",
-  "@negotiationActiveSince": {"placeholders": {"month": {"type": "String"}}},
+  "@negotiationActiveSince": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
   "negotiationOccupation": "Occupation",
   "negotiationOccupationHint": "The share of open days included each month; applied to the member once validated.",
   "negotiationKeepCurrent": "Keep current",
   "negotiationItems": "Services and packages",
   "negotiationItemsHint": "A unit price for this member; empty keeps the catalogue.",
   "negotiationPercent": "{value} %",
-  "@negotiationPercent": {"placeholders": {"value": {"type": "int"}}},
-  "negotiationReadOnly": "Read only"
+  "@negotiationPercent": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "negotiationReadOnly": "Read only",
+  "scheduledExpensesTitle": "Scheduled expenses",
+  "scheduledExpensesIntro": "Subscriptions the space pays for — internet, phone, electricity. The schedule is validated once; every due date is presented to you before it counts.",
+  "scheduledExpensesEmpty": "No scheduled expense yet.",
+  "scheduleNew": "Schedule a recurring expense",
+  "scheduleCancel": "End this schedule",
+  "scheduleTitleLabel": "What (e.g. Internet)",
+  "scheduleStartsOn": "First occurrence",
+  "scheduleEveryLabel": "Every",
+  "scheduleUnitLabel": "Unit",
+  "scheduleTimesLabel": "Repetitions (empty = until the end date)",
+  "scheduleEndsOn": "Until (optional)",
+  "scheduleNoEnd": "No end date",
+  "scheduleValidationHint": "The schedule goes to the validators first. Each due date is then presented to you: confirmed at this amount it counts immediately; a different amount explains itself and is validated again.",
+  "scheduleSubmit": "Schedule it",
+  "scheduleMissingFields": "Name and amount are needed.",
+  "schedulePending": "Scheduled — waiting for the validators to confirm it.",
+  "scheduleStatusPending": "Awaiting validation",
+  "scheduleStatusActive": "Active",
+  "scheduleStatusRejected": "Rejected",
+  "scheduleStatusEnded": "Ended",
+  "scheduleDaily": "daily",
+  "scheduleWeekly": "weekly",
+  "scheduleMonthly": "monthly",
+  "scheduleYearly": "yearly",
+  "scheduleEveryDays": "every {count} days",
+  "scheduleEveryWeeks": "every {count} weeks",
+  "scheduleEveryMonths": "every {count} months",
+  "scheduleTimes": "{count} times",
+  "scheduleUntil": "until {date}",
+  "scheduleNextDue": "next: {date}",
+  "occurrenceRejected": "The validators rejected it — adjust the amount or the description and resend.",
+  "occurrenceScheduledAmount": "Validated: {amount}",
+  "occurrenceReasonLabel": "Why it differs (required)",
+  "occurrenceConfirm": "Confirm this expense",
+  "occurrenceResend": "Resend for validation",
+  "occurrenceReasonMissing": "A different amount needs an explanation.",
+  "occurrenceSentForValidation": "Sent to the validators — it counts once they confirm.",
+  "occurrenceAdded": "Added to your expenses.",
+  "scheduledAwaitingTitle": "Scheduled expenses awaiting you",
+  "scheduleUnitDays": "days",
+  "scheduleUnitWeeks": "weeks",
+  "scheduleUnitMonths": "months",
+  "scheduleUnitYears": "years"
 }

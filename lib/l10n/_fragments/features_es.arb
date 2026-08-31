@@ -153,5 +153,7 @@
   "featureValidationScopesTitle": "Validadores por rol o persona",
   "featureValidationScopesDesc": "Cada regla de validación nombra quién valida: los admins, personas designadas de cualquier rol, o todos los miembros — y cuántos. Desactivado: propietario y admins como antes.",
   "featurePriceNegotiationsTitle": "Negociaciones de precios",
-  "featurePriceNegotiationsDesc": "La tarifa es el valor por defecto; un miembro puede tener sus propias condiciones — cuota mensual, tarifa de exceso, descuento en suplementos, precios unitarios por servicio y paquete, porcentaje de ocupación — propuestas por quien tiene «Gestionar los acuerdos comerciales» y validadas según las reglas. Las ven el miembro, los propietarios y quienes tienen «Consultar los acuerdos comerciales»; cada consulta queda registrada."
+  "featurePriceNegotiationsDesc": "La tarifa es el valor por defecto; un miembro puede tener sus propias condiciones — cuota mensual, tarifa de exceso, descuento en suplementos, precios unitarios por servicio y paquete, porcentaje de ocupación — propuestas por quien tiene «Gestionar los acuerdos comerciales» y validadas según las reglas. Las ven el miembro, los propietarios y quienes tienen «Consultar los acuerdos comerciales»; cada consulta queda registrada.",
+  "featureScheduledExpensesTitle": "Gastos programados",
+  "featureScheduledExpensesDesc": "Gastos recurrentes (internet, teléfono, electricidad): cualquier miembro programa uno con su regla (cada X días/semanas/meses/años, X veces o hasta una fecha); la programación se valida una vez, y cada vencimiento se presenta al miembro — el importe validado cuenta de inmediato, un importe distinto se explica y pasa la validación de gastos."
 }

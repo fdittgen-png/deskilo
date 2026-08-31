@@ -49,6 +49,11 @@ enum EventType {
   /// rule's validators confirm, then the member's own prices.
   priceNegotiation('price_negotiation'),
 
+  /// #767 — a member's recurring-expense SCHEDULE awaiting validation:
+  /// confirmed → the schedule turns active and the sweep materialises
+  /// its occurrences; rejected → it never runs.
+  expenseSchedule('expense_schedule'),
+
   /// Cancelling the outstanding remainder of a PARTIALLY PAID invoice
   /// (0100, #504): confirm writes the remainder off and archives the
   /// invoice; reject keeps it open and owed. Another person decides.

@@ -210,6 +210,9 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.priceNegotiations =>
           l10n?.featurePriceNegotiationsDesc ??
               'The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record.',
+        WorkspaceFeature.scheduledExpenses =>
+          l10n?.featureScheduledExpensesDesc ??
+              'Recurring expenses (internet, phone, electricity): the schedule is validated once, every due date is confirmed by the member — the validated amount counts immediately, a deviation explains itself and passes the expense validation.',
         WorkspaceFeature.dataAccessLog =>
           l10n?.featureDataAccessLogDesc ??
               'Members see who looked at their finances and when (written by the server, never skippable). Off hides the row; the log is still kept.',

@@ -85,5 +85,7 @@
   "validationScopeListed": "Personnes désignées",
   "validationScopeMembers": "Tous les membres",
   "validationScopeHint": "Le propriétaire peut toujours. Admins : tous les admins, ou ceux que vous listez. Désignées : exactement ces personnes, quel que soit leur rôle. Tous les membres : quiconque est actif.",
-  "validationPickPersons": "Choisissez les personnes"
+  "validationPickPersons": "Choisissez les personnes",
+  "eventTypeExpenseSchedule": "Dépense programmée",
+  "eventExpenseScheduleLine": "{actor} programme « {title} » — {amount} récurrent"
 }

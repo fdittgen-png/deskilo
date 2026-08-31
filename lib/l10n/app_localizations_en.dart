@@ -1624,6 +1624,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get validationPickPersons => 'Pick the persons';
 
   @override
+  String get eventTypeExpenseSchedule => 'Scheduled expense';
+
+  @override
+  String eventExpenseScheduleLine(Object actor, Object amount, Object title) {
+    return '$actor schedules “$title” — $amount recurring';
+  }
+
+  @override
   String get featuresTitle => 'Features';
 
   @override
@@ -1948,6 +1956,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featurePriceNegotiationsDesc =>
       'The tariff is the default; a member can hold their own conditions — monthly fee, overage rate, discount on supplements, unit prices per service and package, the occupation percentage — proposed by whoever holds Manage commercial agreements and validated by the rules. Seen by the member, the owners and the holders of View commercial agreements; every read is logged.';
+
+  @override
+  String get featureScheduledExpensesTitle => 'Scheduled expenses';
+
+  @override
+  String get featureScheduledExpensesDesc =>
+      'Recurring expenses (internet, phone, electricity): any member schedules one with its rule (every X days/weeks/months/years, X times or until a date); the schedule is validated once, and every due date is presented to the member — the validated amount counts immediately, a different amount explains itself and passes the expense validation.';
 
   @override
   String get helpTitle => 'Help';
@@ -2414,6 +2429,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpTopicBookingLimits => 'Booking limits';
+
+  @override
+  String get helpTopicScheduledExpenses => 'Scheduled expenses';
 
   @override
   String get inviteSectionTitle => 'Invite someone';
@@ -4630,6 +4648,155 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get negotiationReadOnly => 'Read only';
+
+  @override
+  String get scheduledExpensesTitle => 'Scheduled expenses';
+
+  @override
+  String get scheduledExpensesIntro =>
+      'Subscriptions the space pays for — internet, phone, electricity. The schedule is validated once; every due date is presented to you before it counts.';
+
+  @override
+  String get scheduledExpensesEmpty => 'No scheduled expense yet.';
+
+  @override
+  String get scheduleNew => 'Schedule a recurring expense';
+
+  @override
+  String get scheduleCancel => 'End this schedule';
+
+  @override
+  String get scheduleTitleLabel => 'What (e.g. Internet)';
+
+  @override
+  String get scheduleStartsOn => 'First occurrence';
+
+  @override
+  String get scheduleEveryLabel => 'Every';
+
+  @override
+  String get scheduleUnitLabel => 'Unit';
+
+  @override
+  String get scheduleTimesLabel => 'Repetitions (empty = until the end date)';
+
+  @override
+  String get scheduleEndsOn => 'Until (optional)';
+
+  @override
+  String get scheduleNoEnd => 'No end date';
+
+  @override
+  String get scheduleValidationHint =>
+      'The schedule goes to the validators first. Each due date is then presented to you: confirmed at this amount it counts immediately; a different amount explains itself and is validated again.';
+
+  @override
+  String get scheduleSubmit => 'Schedule it';
+
+  @override
+  String get scheduleMissingFields => 'Name and amount are needed.';
+
+  @override
+  String get schedulePending =>
+      'Scheduled — waiting for the validators to confirm it.';
+
+  @override
+  String get scheduleStatusPending => 'Awaiting validation';
+
+  @override
+  String get scheduleStatusActive => 'Active';
+
+  @override
+  String get scheduleStatusRejected => 'Rejected';
+
+  @override
+  String get scheduleStatusEnded => 'Ended';
+
+  @override
+  String get scheduleDaily => 'daily';
+
+  @override
+  String get scheduleWeekly => 'weekly';
+
+  @override
+  String get scheduleMonthly => 'monthly';
+
+  @override
+  String get scheduleYearly => 'yearly';
+
+  @override
+  String scheduleEveryDays(Object count) {
+    return 'every $count days';
+  }
+
+  @override
+  String scheduleEveryWeeks(Object count) {
+    return 'every $count weeks';
+  }
+
+  @override
+  String scheduleEveryMonths(Object count) {
+    return 'every $count months';
+  }
+
+  @override
+  String scheduleTimes(Object count) {
+    return '$count times';
+  }
+
+  @override
+  String scheduleUntil(Object date) {
+    return 'until $date';
+  }
+
+  @override
+  String scheduleNextDue(Object date) {
+    return 'next: $date';
+  }
+
+  @override
+  String get occurrenceRejected =>
+      'The validators rejected it — adjust the amount or the description and resend.';
+
+  @override
+  String occurrenceScheduledAmount(Object amount) {
+    return 'Validated: $amount';
+  }
+
+  @override
+  String get occurrenceReasonLabel => 'Why it differs (required)';
+
+  @override
+  String get occurrenceConfirm => 'Confirm this expense';
+
+  @override
+  String get occurrenceResend => 'Resend for validation';
+
+  @override
+  String get occurrenceReasonMissing =>
+      'A different amount needs an explanation.';
+
+  @override
+  String get occurrenceSentForValidation =>
+      'Sent to the validators — it counts once they confirm.';
+
+  @override
+  String get occurrenceAdded => 'Added to your expenses.';
+
+  @override
+  String get scheduledAwaitingTitle => 'Scheduled expenses awaiting you';
+
+  @override
+  String get scheduleUnitDays => 'days';
+
+  @override
+  String get scheduleUnitWeeks => 'weeks';
+
+  @override
+  String get scheduleUnitMonths => 'months';
+
+  @override
+  String get scheduleUnitYears => 'years';
 
   @override
   String get planDurationLabel => 'Duration';

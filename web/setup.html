@@ -158,6 +158,7 @@ const FEATURES=[
  ['paymentReminders','Relances de paiement automatiques','Les factures ouvertes au-delà du délai configuré reçoivent leurs niveaux de relance automatiquement — une alerte dans le fil du membre et une notification, une fois par jour. Nécessite « Relances de paiement ».',1],
  ['supplyExpenses','Fournitures via les dépenses','Une dépense peut être une fourniture pour l\'espace (capsules, sacs d\'aspirateur…) : validée, elle réapprovisionne ou crée un service consommable avec un prix unitaire ; les consommations décomptent le stock. Nécessite « Services ».',1],
  ['validationScopes','Validateurs par rôle ou par personne','Chaque règle de validation nomme qui valide : les admins, des personnes désignées quel que soit leur rôle, ou tous les membres — et combien. Désactivé : propriétaire et admins comme avant.',1],
+ ['scheduledExpenses','Dépenses programmées','Dépenses récurrentes (internet, téléphone, électricité) : chaque membre en programme une avec sa règle (tous les X jours/semaines/mois/ans, X fois ou jusqu\'à une date) ; la programmation est validée une fois, chaque échéance est présentée au membre — le montant validé compte immédiatement, un montant différent s\'explique et repasse la validation des dépenses.',1],
  ['priceNegotiations','Négociations tarifaires','Le tarif est la valeur par défaut ; un membre peut avoir ses propres conditions — abonnement, dépassement, remise sur les suppléments, prix unitaires par service et forfait, pourcentage d\'occupation — proposées par qui détient « Gérer les accords commerciaux » et validées selon les règles. Vues par le membre, les propriétaires et les titulaires de « Consulter les accords commerciaux » ; chaque consultation est journalisée.',1],
  ['uiAnimations','Animations de l\'interface','Transitions et retours animés dans toute l\'app ; désactivé, tout devient instantané. Le réglage d\'accessibilité « animations réduites » du système prime de toute façon.',1],
 ];
@@ -196,7 +197,8 @@ const DOMAINS=[
  ['role_change','Changement de rôle'],['member_join','Nouveau membre'],
  ['reservation','Réservation'],['space_reservation',"Réservations d'espaces entiers"],
  ['invoice_payment','Paiement de facture'],['adjustment','Ajustement'],
- ['invoice_writeoff','Annulation de solde'],['price_negotiation','Négociation tarifaire']];
+ ['invoice_writeoff','Annulation de solde'],['price_negotiation','Négociation tarifaire'],
+ ['expense_schedule','Dépense programmée']];
 const HORIZON=[['7','7 jours'],['14','14 jours'],['30','30 jours'],['60','60 jours'],['90','90 jours (défaut)'],['120','120 jours'],['180','180 jours'],['365','1 an'],['730','2 ans']];
 const DURATIONS=[['5','5 minutes'],['10','10 minutes'],['15','15 minutes'],['30','30 minutes (défaut min.)'],['45','45 minutes'],['60','1 heure'],['90','1 h 30'],['120','2 heures'],['180','3 heures'],['240','4 heures'],['300','5 heures'],['360','6 heures'],['480','8 heures'],['600','10 heures'],['720','12 heures'],['1440','24 heures (défaut max.)']];
 const VATPERIOD=[['month','Mensuelle'],['quarter','Trimestrielle']];
@@ -261,7 +263,7 @@ function set(path,val){const p=path.split('.');let o=S;while(p.length>1)o=o[p.sh
 // The feature tree as the app declares it (featureManifest `requires`):
 // a child is only offered while its parent is on, and switching a parent
 // off switches its children off — exactly what effectiveFeatures does.
-const REQUIRES={services:'moneyTab',accessorySupplements:'moneyTab',onlinePayments:'moneyTab',invoicing:'moneyTab',adminInvoicing:'invoicing',adminLevelAssign:'levelBooking',nfcBadges:'kioskMode',whatsappIntegration:'membersDirectory',invoicePdfTemplate:'invoicing',dunning:'invoicing',vatManagement:'invoicing',vatDeclarations:'vatManagement',einvoiceCustomerDelivery:'invoicing',notificationGrouping:'eventsTab',qrBadges:'kioskMode',kioskMemberPhotos:'kioskMode',badgeSignIn:'nfcBadges',paymentReminders:'dunning',supplyExpenses:'services',priceNegotiations:'moneyTab'};
+const REQUIRES={services:'moneyTab',accessorySupplements:'moneyTab',onlinePayments:'moneyTab',invoicing:'moneyTab',adminInvoicing:'invoicing',adminLevelAssign:'levelBooking',nfcBadges:'kioskMode',whatsappIntegration:'membersDirectory',invoicePdfTemplate:'invoicing',dunning:'invoicing',vatManagement:'invoicing',vatDeclarations:'vatManagement',einvoiceCustomerDelivery:'invoicing',notificationGrouping:'eventsTab',qrBadges:'kioskMode',kioskMemberPhotos:'kioskMode',badgeSignIn:'nfcBadges',paymentReminders:'dunning',supplyExpenses:'services',priceNegotiations:'moneyTab',scheduledExpenses:'moneyTab'};
 const EU=new Set(['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GR','HR','HU','IE','IT','LT','LU','LV','MT','NL','PL','PT','RO','SE','SI','SK']);
 const on=k=>{let f=k;while(f){if(!S.features[f])return false;f=REQUIRES[f]}return true};
 const featureTitle=k=>(FEATURES.find(f=>f[0]===k)||[k,k])[1];
@@ -303,6 +305,7 @@ const HELP={
  consent:["L'écran de consentement RGPD à la première ouverture · Réglages → Confidentialité et données → Vos données, vos droits",'14-privacy'],
  negotiations:['Membres et forfaits → un membre → Négociation tarifaire · Finances → Relevé → Mes conditions négociées','9g-price-negotiations'],
  supplies:["Finances → Paiements → Soumettre une dépense → « fourniture pour l'espace »",'9d-the-payments-face'],
+ scheduled:['Finances → Paiements → Dépenses programmées','9h-scheduled-expenses'],
  faces:['Onglet Finances — Relevé · Paiements · Factures · Documents','9-money-finances-tab'],
  reminders_auto:['Factures → Règles de relance → Relances automatiques','11e-automatic-payment-reminders'],
  documents:['Réglages → Documents','11d-the-report-suite--the-document-library'],
@@ -314,7 +317,7 @@ const HELP={
 // A feature's own guide section, shown right on its row (features step + summary).
 const FEATURE_HELP={calendarTab:'calendar',calendarHub:'calendar',eventsTab:'validation',moneyTab:'faces',financeFaces:'faces',
  services:'services',accessorySupplements:'services',onlinePayments:'online',invoicing:'dunning',invoicePdfTemplate:'template',
- dunning:'dunning',paymentReminders:'reminders_auto',supplyExpenses:'supplies',priceNegotiations:'negotiations',
+ dunning:'dunning',paymentReminders:'reminders_auto',supplyExpenses:'supplies',scheduledExpenses:'scheduled',priceNegotiations:'negotiations',
  validationScopes:'scopes',memberNotifications:'messages',membersDirectory:'whatsapp',whatsappIntegration:'whatsapp',
  documents:'documents',kioskMode:'kiosk',nfcBadges:'tags',qrBadges:'kiosk',badgeSignIn:'kiosk',kioskMemberPhotos:'kiosk',
  nfcSeatTags:'tags',spaceQrCodes:'whole',levelBooking:'whole',adminLevelAssign:'whole',bookingPolicies:'booking',
@@ -514,7 +517,7 @@ const STEPS=[
   k.push(lbl('Règle de validation par défaut','validation'),help('validation'),h('p',{class:'hint'},"Elle s'applique à tous les domaines sans règle propre. Personne ne valide son propre événement."),
    h('div',{class:'row'},input('Validations requises','validation.required','','number'),checkbox('Signature du propriétaire toujours requise','',S.validation.ownerSignOff,v=>{S.validation.ownerSignOff=v;save()},'','validation')),
    lbl('Règles par domaine','validation'),h('p',{class:'hint'},"Cochez un domaine pour lui donner sa propre règle ; décoché, il hérite de la règle par défaut. Seuls les domaines de vos fonctionnalités sont proposés."));
-  const gate={service:'services',reservation_delete:'deletionRequests',space_reservation:'levelBooking',invoice_payment:'invoicing',invoice_writeoff:'invoicing',payment:'moneyTab',expense:'moneyTab',adjustment:'moneyTab'};
+  const gate={expense_schedule:'scheduledExpenses',service:'services',reservation_delete:'deletionRequests',space_reservation:'levelBooking',invoice_payment:'invoicing',invoice_writeoff:'invoicing',payment:'moneyTab',expense:'moneyTab',adjustment:'moneyTab'};
   for(const[dk,t]of DOMAINS){const g=gate[dk];if(g&&!on(g)){S.domains[dk].on=false;continue}const d=S.domains[dk];
    const head=checkbox(t,'',d.on,v=>{d.on=v;save()},'','validation');if(!d.on){k.push(head);continue}
    const req=h('input',{type:'number'});req.value=d.required;req.oninput=()=>{d.required=req.value;save()};
@@ -605,6 +608,7 @@ const STEPS=[
    supplyExpenses:()=>'Une dépense peut être une fourniture : validée, elle réapprovisionne un service consommable.',
    validationScopes:()=>'Portée des règles : '+Object.entries(S.domains).filter(([,d])=>d.on&&d.validators&&d.validators!=='admins').map(([k,d])=>(DOMAINS.find(x=>x[0]===k)||[k,k])[1]+' → '+(d.validators==='members'?'tous les membres':'personnes désignées')).join(', ')+(Object.values(S.domains).some(d=>d.on&&d.validators&&d.validators!=='admins')?'.':'admins partout (personnes désignées dans l\'app).'),
    uiAnimations:()=>'Transitions animées (le réglage système « animations réduites » prime).',
+   scheduledExpenses:()=>'Dépenses récurrentes validées une fois, chaque échéance confirmée par le membre (domaine de validation « Dépense programmée »).',
    priceNegotiations:()=>'Conditions par membre — abonnement, dépassement, remise, prix par service et forfait, occupation — validées par la règle « Négociation tarifaire » ; permissions Consulter/Gérer les accords commerciaux.',
   };
   const active=FEATURES.filter(([k])=>on(k)),inactive=FEATURES.filter(([k])=>!on(k));

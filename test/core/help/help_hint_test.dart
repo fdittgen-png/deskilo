@@ -308,7 +308,7 @@ void main() {
       'helpTopicReportEditor', 'helpTopicDocumentLibrary',
       'helpTopicWorkspaceId', 'helpTopicSettings', 'helpTopicKiosk',
       'helpTopicBilling', 'helpTopicWorkingHours', 'helpTopicBookingPolicies',
-      'helpTopicBookingLimits',
+      'helpTopicBookingLimits', 'helpTopicScheduledExpenses',
     ];
     for (final locale in AppLocalizations.supportedLocales) {
       final l10n = await AppLocalizations.delegate.load(locale);
@@ -329,6 +329,7 @@ void main() {
         'helpTopicWorkingHours': l10n.helpTopicWorkingHours,
         'helpTopicBookingPolicies': l10n.helpTopicBookingPolicies,
         'helpTopicBookingLimits': l10n.helpTopicBookingLimits,
+        'helpTopicScheduledExpenses': l10n.helpTopicScheduledExpenses,
       };
       expect(topics.keys, containsAll(dotTopics));
       topics.forEach((key, topic) {

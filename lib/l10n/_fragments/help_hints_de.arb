@@ -151,5 +151,6 @@
   "helpTopicBilling": "Abrechnung",
   "helpTopicWorkingHours": "Arbeitszeiten",
   "helpTopicBookingPolicies": "Buchungsregeln",
-  "helpTopicBookingLimits": "Buchungsgrenzen"
+  "helpTopicBookingLimits": "Buchungsgrenzen",
+  "helpTopicScheduledExpenses": "Geplante Ausgaben"
 }

@@ -10,6 +10,7 @@ import '../domain/dunning.dart';
 import '../domain/price_negotiation.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/einvoice_gateway.dart';
+import '../domain/expense_schedule.dart';
 import '../domain/fee_band.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/money_repository.dart';
@@ -493,6 +494,83 @@ class SupabaseMoneyRepository implements MoneyRepository {
       'p_period': ?period,
     });
   }
+
+  @override
+  Future<List<ExpenseSchedule>> fetchExpenseSchedules(String workspaceId) async {
+    final rows = await _client
+        .from('expense_schedules')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('created_at', ascending: false);
+    return [
+      for (final r in rows as List) ExpenseSchedule.fromDb(r as Map<String, dynamic>),
+    ];
+  }
+
+  @override
+  Future<String> createExpenseSchedule({
+    required String workspaceId,
+    required String title,
+    required int amountCents,
+    required DateTime startsOn,
+    required ScheduleUnit unit,
+    int every = 1,
+    int? repeatCount,
+    DateTime? endsOn,
+    String description = '',
+  }) async {
+    final id = await _client.rpc('create_expense_schedule', params: {
+      'p_workspace_id': workspaceId,
+      'p_title': title,
+      'p_amount_cents': amountCents,
+      'p_starts_on': startsOn.toIso8601String().substring(0, 10),
+      'p_unit': unit.name,
+      'p_every': every,
+      'p_repeat_count': repeatCount,
+      'p_ends_on': endsOn?.toIso8601String().substring(0, 10),
+      'p_description': description,
+    });
+    return id as String;
+  }
+
+  @override
+  Future<void> cancelExpenseSchedule(String scheduleId) => _client
+      .rpc('cancel_expense_schedule', params: {'p_schedule_id': scheduleId});
+
+  @override
+  Future<int> sweepExpenseSchedules(String workspaceId) async {
+    final n = await _client
+        .rpc('sweep_expense_schedules', params: {'p_workspace_id': workspaceId});
+    return (n as num?)?.toInt() ?? 0;
+  }
+
+  @override
+  Future<List<ExpenseOccurrence>> fetchExpenseOccurrences(
+      String workspaceId) async {
+    final rows = await _client
+        .from('expense_occurrences')
+        .select('*, expense_schedules(title, amount_cents)')
+        .eq('workspace_id', workspaceId)
+        .order('due_on');
+    return [
+      for (final r in rows as List)
+        ExpenseOccurrence.fromDb(r as Map<String, dynamic>),
+    ];
+  }
+
+  @override
+  Future<void> confirmExpenseOccurrence({
+    required String occurrenceId,
+    required int amountCents,
+    String reason = '',
+    String? note,
+  }) =>
+      _client.rpc('confirm_expense_occurrence', params: {
+        'p_occurrence_id': occurrenceId,
+        'p_amount_cents': amountCents,
+        'p_reason': reason,
+        'p_note': note,
+      });
 
   @override
   Future<String> submitExpense({

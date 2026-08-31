@@ -131,6 +131,7 @@ NotificationCategory categoryOfEvent(WorkspaceEvent event) {
     case EventType.quota:
       return NotificationCategory.reservations;
     case EventType.payment:
+    case EventType.expenseSchedule:
     case EventType.expense:
     case EventType.adjustment:
     case EventType.serviceCharge:

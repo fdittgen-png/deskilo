@@ -27,5 +27,7 @@ String eventTypeLabel(AppLocalizations? l10n, EventType type) {
       l10n?.eventTypeInvoiceReminder ?? 'Payment reminder',
     EventType.priceNegotiation =>
       l10n?.eventTypePriceNegotiation ?? 'Price negotiation',
+    EventType.expenseSchedule =>
+      l10n?.eventTypeExpenseSchedule ?? 'Scheduled expense',
   };
 }

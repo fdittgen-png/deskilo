@@ -49,7 +49,8 @@ import 'package:flutter_test/flutter_test.dart';
 // 49→50 (2026-08-29): #726 paymentReminders.
 // 50→52 (2026-08-29): #731 supplyExpenses, #732 validationScopes.
 // 52→53 (2026-08-30): #739 priceNegotiations.
-const int _expectedFeatureCount = 53;
+// 53→54 (2026-08-31): #767 scheduledExpenses.
+const int _expectedFeatureCount = 54;
 
 void main() {
   test('every functionality is registered — the pin', () {

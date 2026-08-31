@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'dart:typed_data';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
+import 'package:deskilo/features/money/domain/expense_schedule.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
@@ -1167,6 +1168,105 @@ class FakeMoneyRepository implements MoneyRepository {
     String description,
     Map<String, Object?>? supply,
   })>[];
+
+  /// #767 — seeded schedules/occurrences; the fake mirrors the server's
+  /// two-lane rule: matching amount → added, deviation → needs a reason
+  /// and goes pending; a rejected one resends the same way.
+  final expenseSchedules = <ExpenseSchedule>[];
+  final expenseOccurrences = <ExpenseOccurrence>[];
+  final createdSchedules =
+      <({String title, int amountCents, ScheduleUnit unit, int every,
+         int? repeatCount, DateTime? endsOn})>[];
+  final confirmedOccurrences =
+      <({String occurrenceId, int amountCents, String reason})>[];
+  int sweptSchedules = 0;
+
+  @override
+  Future<List<ExpenseSchedule>> fetchExpenseSchedules(String workspaceId) async =>
+      List.of(expenseSchedules);
+
+  @override
+  Future<String> createExpenseSchedule({
+    required String workspaceId,
+    required String title,
+    required int amountCents,
+    required DateTime startsOn,
+    required ScheduleUnit unit,
+    int every = 1,
+    int? repeatCount,
+    DateTime? endsOn,
+    String description = '',
+  }) async {
+    createdSchedules.add((title: title, amountCents: amountCents, unit: unit,
+        every: every, repeatCount: repeatCount, endsOn: endsOn));
+    final schedule = ExpenseSchedule(
+      id: 'schedule-${expenseSchedules.length + 1}',
+      workspaceId: workspaceId,
+      memberId: 'member-1',
+      title: title,
+      description: description,
+      amountCents: amountCents,
+      startsOn: startsOn,
+      endsOn: endsOn,
+      unit: unit,
+      every: every,
+      repeatCount: repeatCount,
+    );
+    expenseSchedules.add(schedule);
+    return schedule.id;
+  }
+
+  @override
+  Future<void> cancelExpenseSchedule(String scheduleId) async {
+    final i = expenseSchedules.indexWhere((s) => s.id == scheduleId);
+    if (i < 0) return;
+    final s = expenseSchedules[i];
+    expenseSchedules[i] = ExpenseSchedule(
+      id: s.id, workspaceId: s.workspaceId, memberId: s.memberId,
+      title: s.title, description: s.description, amountCents: s.amountCents,
+      startsOn: s.startsOn, endsOn: s.endsOn, unit: s.unit, every: s.every,
+      repeatCount: s.repeatCount, status: ScheduleStatus.ended,
+      occurrencesDone: s.occurrencesDone, nextDue: null,
+    );
+  }
+
+  @override
+  Future<int> sweepExpenseSchedules(String workspaceId) async {
+    sweptSchedules++;
+    return 0;
+  }
+
+  @override
+  Future<List<ExpenseOccurrence>> fetchExpenseOccurrences(
+          String workspaceId) async =>
+      List.of(expenseOccurrences);
+
+  @override
+  Future<void> confirmExpenseOccurrence({
+    required String occurrenceId,
+    required int amountCents,
+    String reason = '',
+    String? note,
+  }) async {
+    final i = expenseOccurrences.indexWhere((o) => o.id == occurrenceId);
+    if (i < 0) throw StateError('unknown occurrence');
+    final o = expenseOccurrences[i];
+    final matches = amountCents == (o.scheduledAmountCents ?? o.amountCents) &&
+        o.status == OccurrenceStatus.awaitingMember;
+    if (!matches && reason.trim().isEmpty) {
+      throw StateError('a different amount needs an explanation');
+    }
+    confirmedOccurrences.add(
+        (occurrenceId: occurrenceId, amountCents: amountCents, reason: reason));
+    expenseOccurrences[i] = ExpenseOccurrence(
+      id: o.id, scheduleId: o.scheduleId, workspaceId: o.workspaceId,
+      memberId: o.memberId, dueOn: o.dueOn, amountCents: amountCents,
+      note: note ?? o.note, deviationReason: reason,
+      status: matches ? OccurrenceStatus.added : OccurrenceStatus.pendingValidation,
+      scheduleTitle: o.scheduleTitle,
+      scheduledAmountCents: o.scheduledAmountCents,
+    );
+  }
 
   @override
   Future<String> submitExpense({

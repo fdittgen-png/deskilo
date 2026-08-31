@@ -58,7 +58,13 @@ enum WorkspaceFeature {
   paymentReminders,
   supplyExpenses,
   validationScopes,
-  priceNegotiations;
+  priceNegotiations,
+
+  /// #767 — recurring scheduled expenses (internet, phone, electricity):
+  /// the schedule is validated once, each due occurrence is presented to
+  /// the member — matching amount lands settled, a deviation explains
+  /// itself and passes the expense validation.
+  scheduledExpenses;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -322,6 +328,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // proposed by finance admins, validated, seen by the member and them.
   WorkspaceFeature.priceNegotiations: FeatureManifestEntry(
     feature: WorkspaceFeature.priceNegotiations,
+    requires: WorkspaceFeature.moneyTab,
+  ),
+  // #767 — subscriptions the space pays for keep paying themselves:
+  // schedule once, validate once, confirm each occurrence.
+  WorkspaceFeature.scheduledExpenses: FeatureManifestEntry(
+    feature: WorkspaceFeature.scheduledExpenses,
     requires: WorkspaceFeature.moneyTab,
   ),
   // #662 — signing IN by scanning a badge, then a PIN. Under nfcBadges
