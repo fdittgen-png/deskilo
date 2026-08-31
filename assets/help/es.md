@@ -19,6 +19,34 @@ Tras iniciar sesión llegas a la pantalla de bienvenida con dos caminos:
 - **Crear un espacio** — te conviertes en su **propietario**. Elige nombre, país (determina la moneda por defecto) y zona horaria. Después dibujarás tu plano en el editor (§8).
 - **Unirse a un espacio** — escribe el **ID del espacio** que te compartieron, o toca **Escanear código QR** y apunta la cámara al QR de invitación colgado en la pared de tu espacio. Tu solicitud llega como **pendiente**: *Nuevo miembro* es uno de los dominios de validación (§7), así que un validador te da paso, y a partir de ahí tienes exactamente el rol que lleva la invitación (§2).
 
+### El cuestionario de configuración — preparar un espacio antes de abrir la app
+
+Crear un espacio significa docenas de decisiones repartidas por una docena de pantallas distintas: cómo puede ser una reserva, cuánto cuesta un mes, qué exige la ley en una factura, quién valida qué. La app te deja tomarlas de una en una, según te las vas encontrando. El **cuestionario de configuración** te deja tomarlas todas de golpe, *antes* de empezar — en una pantalla grande, con tu contable o tu junta directiva si eso ayuda, sin tocar nada en producción:
+
+<https://fdittgen-png.github.io/deskilo/setup.html>
+
+Es una única página web. Nada que instalar, sin cuenta, nada que se envíe a ninguna parte: tus respuestas se guardan en tu propio navegador, así que puedes cerrar la pestaña y volver a ellas.
+
+![](assets/help/images/setup-wizard.jpg)
+
+*El asistente: doce pasos en orden de dependencia, cada pregunta diciendo dónde se ajusta en la app, con un **?** que abre esta guía en la sección correspondiente.*
+
+**Cómo se usa**
+
+1. **Responde los pasos en orden** — identidad, funciones, disponibilidad, plano, suscripciones, identidad legal e IVA, servicios, instrucciones de pago, roles y validación, miembros. Cada paso pregunta solo lo que tus respuestas anteriores hacen posible: sin tipos de IVA si no estás sujeto al impuesto, sin plataforma de factura electrónica fuera de la UE, sin opción de bono de días para un miembro mientras no exista ningún bono, sin función hija mientras su padre esté desactivado.
+2. **Revisa el resumen de funciones.** Lista cada función que la app va a activar y *cómo la configuran tus propias respuestas*. Desmarca lo que no quieras: se exporta desactivada y su configuración se deja fuera — siempre puedes activarla más tarde en Ajustes → Funciones.
+3. **Lee el paso de revisión.** Separa lo que está completo, lo que es una decisión por confirmar y lo que realmente bloquea, cada cosa con un salto directo a la pregunta que lo corrige.
+4. **Exporta el XML** y luego abre la app: **Ajustes → Espacio de coworking → Importar el espacio (XML)** crea directamente los ajustes, los accesorios y el plano. La sección `<setup>` del mismo archivo lleva todo lo que el importador no cubre — facturación, identidad legal, roles, miembros — para que termines esas pantallas una a una; cada pregunta te dijo dónde vive su respuesta.
+5. **Guarda el archivo.** Volver a cargarlo en la página continúa donde lo dejaste — incluido un archivo exportado antes de que existiera un ajuste, que vuelve sencillamente con ese ajuste en su valor por defecto.
+
+![](assets/help/images/setup-feature-summary.jpg)
+
+*El resumen de funciones: lo que la app va a activar, configurado por tus propias respuestas — desmarca lo que no quieras.*
+
+**Una advertencia.** El archivo exportado es texto plano. Escribe un token de facturación electrónica o una clave de proveedor de pagos solo si respondes en privado; si no, deja esos campos vacíos y teclea los secretos en la app, donde van directos al servidor y nunca vuelven.
+
+**Saltárselo no cuesta nada.** Cada respuesta que recoge es un ajuste que también puedes hacer — y cambiar — más tarde en la app. El cuestionario es un atajo para la primera hora, no una barrera.
+
 ### Perfiles — una cuenta, varios espacios
 
 Una cuenta puede pertenecer a varios espacios. **Ajustes → Perfiles** los lista todos: cada fila muestra el nombre del espacio, **tu rol allí** (Miembro, Admin, Propietario) y su ID de espacio. La **marca de verificación** señala el perfil en el que estás ahora; la **estrella** marca tu perfil **predeterminado** — aquel con el que se abre la app, en cualquier dispositivo e incluso tras reinstalar (la elección se guarda con tu cuenta). Toca una fila para cambiar, **+ Añadir un perfil** para unirte a otro espacio más. Todo en la app se refiere al espacio activo.
@@ -450,7 +478,7 @@ La pantalla propia del espacio, de arriba abajo:
 ![](assets/help/images/workspace-exports.jpg)
 
 *El bloque de exportaciones — XML, PDF de configuración, informe del espacio, códigos QR de espacios, Excel, importación XML — y la zona de peligro.*
-- **El asistente de configuración** (#723) — <https://fdittgen-png.github.io/deskilo/setup.html>: Desde el 29/08/2026 es un **asistente guiado**: pasos en orden de dependencia (identidad → funciones → disponibilidad → plano → suscripciones → identidad legal e IVA → servicios → pago → roles → miembros → revisión), cada uno preguntando solo lo que las respuestas anteriores hacen posible — sin tipos de IVA si no estás sujeto, sin plataforma de factura electrónica fuera de la UE, sin opción de paquetes para los miembros mientras no exista ninguno, sin función hija sin su padre. Cada pregunta dice dónde se ajusta en la app y enlaza la sección de esta guía; un paso **Resumen de funciones** lista cada función que la app activará con la configuración que dan tus respuestas — desmarca las opcionales y se exportan desactivadas, sin su configuración; luego un paso de **Revisión** lista lo completo, lo que es una decisión por confirmar y lo que bloquea, con un salto para corregir; «Mostrar todo en una página» conserva la vista experta. Después: una página independiente (Mac, PC o teléfono; las respuestas se guardan solas en el navegador) que guía a un propietario nuevo por **cada asunto con opciones predefinidas** — identidad (país incl. Noruega, moneda, zona horaria, idioma del espacio, transparencia de mesas y las plantillas de invitación por idioma), disponibilidad — granularidad, horario laboral, días de cierre y **las cuatro reglas de reserva** (reservas pasadas, check-out por un admin, modo fuera de horario, reservas simultáneas), más la conversión horas → medias jornadas en «horas reales» —, el plano, **las 43 funciones** con sus valores por defecto reales, tramos de cuota y niveles de suscripción, bonos de días, servicios y accesorios, instrucciones de pago, **identidad legal e IVA** (tipo de organización, régimen, los tipos habituales del país — el 3,8 % suizo de alojamiento, Noruega, las provincias canadienses, con la nota honesta sobre el sales tax estadounidense —, menciones de factura, reglas de recordatorio, la periodicidad de declaración y los puntos de acceso de facturación electrónica, incluido el servicio de entrega al cliente), la matriz rol → permiso, la regla de validación por defecto **con una tarjeta por dominio y los dos interruptores de validación automática**, y los miembros a invitar con sus ajustes personales (política de exceso, derecho sobre espacios enteros, permiso de solapamiento, límite de reservas). **Exporta el XML** y la app importa directamente ajustes, accesorios y plano (*Importar el espacio (XML)*); la sección `<setup>` del archivo lleva todo lo demás para terminar la configuración. La página también puede **recargar** un archivo exportado antes para seguir editando — incluido uno escrito antes de que existiera un ajuste, que vuelve sencillamente con ese ajuste en su valor por defecto. Una advertencia que la página repite: el archivo exportado es texto plano, así que escribe un token de plataforma solo si respondes en privado; si no, deja esos campos vacíos y tecléalos en la app, donde van al servidor y nunca vuelven.
+- **El cuestionario de configuración** — <https://fdittgen-png.github.io/deskilo/setup.html> (el §1 lo explica por completo): la página independiente que recoge una configuración entera *antes* de que exista la app. **Importar el espacio (XML)** de arriba es donde aterriza su archivo — ajustes, accesorios y plano directamente; la sección `<setup>` del archivo lleva facturación, identidad legal, roles y miembros para las pantallas que los gobiernan.
 - **Zona de peligro** — **Restablecer el espacio**: borra todas las reservas, la contabilidad y el plano; conserva ajustes y miembros. Protegido por una confirmación escrita.
 
 ### Códigos QR de espacios y reservas de espacios enteros

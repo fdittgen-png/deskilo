@@ -19,6 +19,34 @@ Nach der Anmeldung bietet der Startbildschirm zwei Wege:
 - **Workspace anlegen** — du wirst **Inhaber**. Name, Land (bestimmt die Standardwährung) und Zeitzone wählen; danach zeichnest du deinen Grundriss im Editor (§8).
 - **Workspace beitreten** — die geteilte **Workspace-ID** eintippen, oder **QR-Code scannen** und die Kamera auf den Einladungs-QR an der Wand richten. Deine Anfrage landet als **ausstehend**: *Neues Mitglied* ist eine der Validierungs-Domänen (§7), ein Validierer lässt dich ein — und danach hältst du genau die Rolle, die die Einladung trägt (§2).
 
+### Der Einrichtungsfragebogen — einen Space vorbereiten, bevor du die App öffnest
+
+Einen Workspace anzulegen heißt Dutzende Entscheidungen, die in einem Dutzend verschiedener Bildschirme wohnen: wie eine Buchung aussehen darf, was ein Monat kostet, was das Gesetz auf einer Rechnung verlangt, wer was validiert. Die App lässt dich diese eine nach der anderen treffen, sobald du ihnen begegnest. Der **Einrichtungsfragebogen** lässt dich alle auf einmal treffen, *bevor* du beginnst — auf einem großen Bildschirm, wenn es hilft mit deiner Steuerberatung oder deinem Vorstand, ohne irgendetwas Laufendes anzurühren:
+
+<https://fdittgen-png.github.io/deskilo/setup.html>
+
+Es ist eine einzige Webseite. Nichts zu installieren, kein Konto, nichts wird irgendwohin geschickt: Deine Antworten werden in deinem eigenen Browser gespeichert, du kannst den Tab also schließen und später zu ihnen zurückkehren.
+
+![](assets/help/images/setup-wizard.jpg)
+
+*Der Assistent: zwölf Schritte in Abhängigkeitsreihenfolge, jede Frage sagt, wo die Einstellung in der App liegt, mit einem **?**, das diesen Leitfaden am passenden Abschnitt öffnet.*
+
+**So nutzt du ihn**
+
+1. **Beantworte die Schritte der Reihe nach** — Identität, Funktionen, Verfügbarkeit, Grundriss, Abonnements, rechtliche Identität & USt., Leistungen, Zahlungshinweise, Rollen & Validierung, Mitglieder. Jeder Schritt fragt nur, was deine früheren Antworten möglich machen: keine USt-Sätze, wenn du nicht steuerpflichtig bist, keine E-Rechnungsplattform außerhalb der EU, keine Tagespaket-Option für ein Mitglied, solange kein Paket existiert, keine Kindfunktion, solange ihre Elternfunktion aus ist.
+2. **Prüfe die Funktionsübersicht.** Sie listet jede Funktion, die die App einschalten wird, und *wie deine eigenen Antworten sie konfigurieren*. Wähle ab, was du nicht willst: Es wird deaktiviert exportiert und seine Konfiguration bleibt weg — du kannst es später jederzeit unter Einstellungen → Funktionen einschalten.
+3. **Lies den Prüfschritt.** Er trennt, was vollständig ist, was eine zu bestätigende Entscheidung ist und was tatsächlich blockiert, je mit einem Sprung direkt zu der Frage, die es behebt.
+4. **Exportiere das XML**, dann öffne die App: **Einstellungen → Workspace → Space importieren (XML)** legt die Einstellungen, das Zubehör und den Grundriss direkt an. Der `<setup>`-Abschnitt derselben Datei trägt alles, was der Import nicht übernimmt — Abrechnung, rechtliche Identität, Rollen, Mitglieder —, sodass du diese Bildschirme einen nach dem anderen fertigstellen kannst; jede Frage hat dir gesagt, wo ihre Antwort liegt.
+5. **Bewahre die Datei auf.** Sie zurück in die Seite zu laden setzt dort fort, wo du aufgehört hast — auch eine Datei, die vor der Existenz einer Einstellung exportiert wurde; diese kommt dann schlicht mit ihrem Standardwert zurück.
+
+![](assets/help/images/setup-feature-summary.jpg)
+
+*Die Funktionsübersicht: was die App einschalten wird, konfiguriert durch Ihre eigenen Antworten — wählen Sie ab, was Sie nicht wollen.*
+
+**Eine Warnung.** Die exportierte Datei ist Klartext. Trage ein E-Rechnungs-Token oder den Schlüssel eines Zahlungsanbieters nur ein, wenn du privat antwortest; sonst lass diese Felder leer und tippe die Geheimnisse in der App, wo sie direkt zum Server gehen und nie zurückkommen.
+
+**Ihn zu überspringen kostet nichts.** Jede Antwort, die er sammelt, ist eine Einstellung, die du auch später in der App treffen — und ändern — kannst. Der Fragebogen ist eine Abkürzung für die erste Stunde, kein Tor.
+
 ### Profile — ein Konto, mehrere Spaces
 
 Ein Konto kann mehreren Workspaces angehören. **Einstellungen → Profile** listet alle: jede Zeile zeigt den Namen des Space, **deine Rolle dort** (Mitglied, Admin, Inhaber) und die Workspace-ID. Das **Häkchen** markiert das aktive Profil; der **Stern** dein **Standardprofil** — das, mit dem die App öffnet, auf jedem Gerät und selbst nach Neuinstallation (die Wahl ist beim Konto gespeichert). Zeile antippen zum Wechseln, **+ Profil hinzufügen** für einen weiteren Space. Alles in der App ist auf den aktiven Workspace beschränkt.
@@ -448,7 +476,7 @@ Der Bildschirm des Space, von oben nach unten:
 ![](assets/help/images/workspace-exports.jpg)
 
 *Der Exporte-Block — XML, Konfigurations-PDF, Space-Bericht, Raum-QR-Codes, Excel, XML-Import — und die Gefahrenzone.*
-- **Der Einrichtungsassistent** (#723) — <https://fdittgen-png.github.io/deskilo/setup.html>: Seit dem 29.08.2026 ein **geführter Assistent**: Schritte in Abhängigkeitsreihenfolge (Identität → Funktionen → Verfügbarkeit → Plan → Abonnements → Rechtliches & USt → Leistungen → Zahlung → Rollen → Mitglieder → Prüfung), jeder fragt nur, was die früheren Antworten möglich machen — keine USt-Sätze ohne Steuerpflicht, keine E-Rechnungsplattform außerhalb der EU, keine Paketoption für Mitglieder ohne Paket, keine Kindfunktion ohne Elternfunktion. Jede Frage sagt, wo sie in der App liegt, und verlinkt den Abschnitt dieses Leitfadens; ein Schritt **Funktionsübersicht** listet jede Funktion, die die App aktivieren wird, mit der Konfiguration aus Ihren Antworten — optionale abwählen, und sie werden deaktiviert exportiert, ihre Konfiguration bleibt weg; dann listet ein Schritt **Prüfung** Vollständiges, zu bestätigende Entscheidungen und Blockierendes, je mit Sprung zur Korrektur; „Alles auf einer Seite“ behält die Expertenansicht. Dann: eine eigenständige Seite (Mac, PC oder Telefon; Antworten speichern sich automatisch im Browser), die neue Inhaberinnen durch **jedes Thema mit vorgegebenen Auswahlen** führt — Identität (Land inkl. Norwegen, Währung, Zeitzone, Sprache des Arbeitsbereichs, Tisch-Transparenz und die Einladungsvorlagen je Sprache), Verfügbarkeit — Granularität, Arbeitszeiten, Schließtage und **alle vier Buchungsregeln** (vergangene Buchungen, Auschecken durch Admins, Modus außerhalb der Öffnungszeiten, gleichzeitige Reservierungen), dazu die Umrechnung Stunden → Halbtage unter *echten Uhrzeiten* —, den Grundriss, **alle 43 Funktionsschalter** mit ihren echten Standardwerten, Beitragsstufen und Abo-Level, Tagespakete, Leistungen und Zubehör, Zahlungshinweise, **rechtliche Identität und USt.** (Organisationsform, Regime, die üblichen Sätze des Landes — die Schweizer 3,8 % für Beherbergung, Norwegen, die kanadischen Provinzen, mit der ehrlichen Notiz zur US-Sales-Tax —, Rechnungsangaben, Mahnregeln, den Meldezeitraum und die E-Rechnungs-Endpunkte samt Zustelldienst des Kunden), die Rolle-→-Berechtigung-Matrix, die Standard-Validierungsregel **mit einer Karte je Domäne und den beiden Auto-Validierungsschaltern**, und die einzuladenden Mitglieder samt ihren Einzeleinstellungen (Überziehungsregel, Recht auf ganze Räume, Überschneidungs-Erlaubnis, Reservierungslimit). **XML exportieren** und die App importiert Einstellungen, Zubehör und Grundriss direkt (*Arbeitsbereich importieren (XML)*); der `<setup>`-Abschnitt der Datei trägt alles Übrige zum Fertigkonfigurieren. Die Seite kann eine früher exportierte Datei auch **neu laden** — auch eine, die vor der Existenz einer Einstellung geschrieben wurde; diese kommt dann schlicht mit ihrem Standardwert zurück. Eine Warnung, die die Seite wiederholt: die exportierte Datei ist Klartext, also tragen Sie ein Plattform-Token nur ein, wenn Sie privat antworten; sonst lassen Sie die Felder leer und tippen sie in der App, wo sie serverseitig landen und nie zurückkommen.
+- **Der Einrichtungsfragebogen** — <https://fdittgen-png.github.io/deskilo/setup.html> (§1 erklärt ihn vollständig): die eigenständige Seite, die eine ganze Konfiguration sammelt, *bevor* die App existiert. **Space importieren (XML)** oben ist die Stelle, an der ihre Datei landet — Einstellungen, Zubehör und Grundriss direkt; der `<setup>`-Abschnitt der Datei trägt Abrechnung, rechtliche Identität, Rollen und Mitglieder für die Bildschirme, denen sie gehören.
 - **Gefahrenzone** — **Space zurücksetzen**: löscht alle Buchungen, die Buchhaltung und den Plan; behält Einstellungen und Mitglieder. Durch getippte Bestätigung geschützt.
 
 ### Raum-QR-Codes & Ganzraum-Reservierungen
