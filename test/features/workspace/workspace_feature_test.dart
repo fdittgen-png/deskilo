@@ -160,4 +160,92 @@ void main() {
       }
     });
   });
+
+  group('#800 — dependencies activate with the feature that needs them', () {
+    test('the requirement chain reads upwards, nearest parent first', () {
+      // badgeSignIn needs nfcBadges, which needs kioskMode.
+      expect(
+        requirementChain(WorkspaceFeature.badgeSignIn),
+        [WorkspaceFeature.nfcBadges, WorkspaceFeature.kioskMode],
+      );
+      expect(requirementChain(WorkspaceFeature.moneyTab), isEmpty);
+    });
+
+    test('switching a deep child ON brings its whole chain', () {
+      final flags = featureFlagsAfterToggle(
+        raw: const <WorkspaceFeature>{},
+        feature: WorkspaceFeature.badgeSignIn,
+        value: true,
+      );
+      expect(flags[WorkspaceFeature.badgeSignIn], isTrue);
+      expect(flags[WorkspaceFeature.nfcBadges], isTrue);
+      expect(flags[WorkspaceFeature.kioskMode], isTrue);
+      // Nothing ELSE is touched: a cascade goes up, never sideways.
+      expect(flags[WorkspaceFeature.moneyTab], isFalse);
+    });
+
+    test('switching a parent OFF keeps its dependants stored', () {
+      // They are already ineffective; erasing the choices would make the
+      // owner rebuild the subtree by hand after switching the parent on.
+      final flags = featureFlagsAfterToggle(
+        raw: const {
+          WorkspaceFeature.kioskMode,
+          WorkspaceFeature.nfcBadges,
+          WorkspaceFeature.badgeSignIn,
+        },
+        feature: WorkspaceFeature.kioskMode,
+        value: false,
+      );
+      expect(flags[WorkspaceFeature.kioskMode], isFalse);
+      expect(flags[WorkspaceFeature.nfcBadges], isTrue);
+      expect(effectiveFeatures(
+        {for (final e in flags.entries) if (e.value) e.key},
+      ), isNot(contains(WorkspaceFeature.nfcBadges)));
+    });
+
+    test('the UI can name what a switch would bring with it', () {
+      expect(
+        alsoEnabledWith(
+          raw: const {WorkspaceFeature.kioskMode},
+          feature: WorkspaceFeature.badgeSignIn,
+        ),
+        [WorkspaceFeature.nfcBadges],
+      );
+      expect(
+        alsoEnabledWith(
+          raw: const {WorkspaceFeature.kioskMode, WorkspaceFeature.nfcBadges},
+          feature: WorkspaceFeature.badgeSignIn,
+        ),
+        isEmpty,
+      );
+    });
+
+    test('dependants of a feature are its whole subtree', () {
+      final money = dependentFeatures(WorkspaceFeature.moneyTab);
+      expect(money, contains(WorkspaceFeature.invoicing));
+      // Grandchildren too — dunning hangs off invoicing.
+      expect(money, contains(WorkspaceFeature.dunning));
+      expect(money, contains(WorkspaceFeature.paymentReminders));
+    });
+
+    test('the money features hang off the Finances tab, none stranded', () {
+      // #800 — these three read finances and were roots, so an owner
+      // could switch the Finances tab off and leave them "on".
+      for (final feature in [
+        WorkspaceFeature.financeFaces,
+        WorkspaceFeature.memberReports,
+        WorkspaceFeature.dataAccessLog,
+      ]) {
+        expect(requirementChain(feature), contains(WorkspaceFeature.moneyTab),
+            reason: '${feature.name} needs the Finances tab');
+      }
+    });
+
+    test('no feature requires itself, directly or through a cycle', () {
+      for (final feature in WorkspaceFeature.values) {
+        expect(requirementChain(feature), isNot(contains(feature)),
+            reason: feature.name);
+      }
+    });
+  });
 }

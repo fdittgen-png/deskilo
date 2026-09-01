@@ -265,9 +265,12 @@ function set(path,val){const p=path.split('.');let o=S;while(p.length>1)o=o[p.sh
 // The feature tree as the app declares it (featureManifest `requires`):
 // a child is only offered while its parent is on, and switching a parent
 // off switches its children off — exactly what effectiveFeatures does.
-const REQUIRES={services:'moneyTab',accessorySupplements:'moneyTab',onlinePayments:'moneyTab',invoicing:'moneyTab',adminInvoicing:'invoicing',adminLevelAssign:'levelBooking',nfcBadges:'kioskMode',whatsappIntegration:'membersDirectory',invoicePdfTemplate:'invoicing',dunning:'invoicing',vatManagement:'invoicing',vatDeclarations:'vatManagement',einvoiceCustomerDelivery:'invoicing',notificationGrouping:'eventsTab',qrBadges:'kioskMode',kioskMemberPhotos:'kioskMode',badgeSignIn:'nfcBadges',paymentReminders:'dunning',supplyExpenses:'services',priceNegotiations:'moneyTab',scheduledExpenses:'moneyTab'};
+const REQUIRES={services:'moneyTab',accessorySupplements:'moneyTab',onlinePayments:'moneyTab',invoicing:'moneyTab',adminInvoicing:'invoicing',adminLevelAssign:'levelBooking',nfcBadges:'kioskMode',whatsappIntegration:'membersDirectory',invoicePdfTemplate:'invoicing',dunning:'invoicing',vatManagement:'invoicing',vatDeclarations:'vatManagement',einvoiceCustomerDelivery:'invoicing',notificationGrouping:'eventsTab',qrBadges:'kioskMode',kioskMemberPhotos:'kioskMode',badgeSignIn:'nfcBadges',paymentReminders:'dunning',supplyExpenses:'services',priceNegotiations:'moneyTab',scheduledExpenses:'moneyTab',memberReports:'moneyTab',financeFaces:'moneyTab',dataAccessLog:'moneyTab'};
 const EU=new Set(['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GR','HR','HU','IE','IT','LT','LU','LV','MT','NL','PL','PT','RO','SE','SI','SK']);
 const on=k=>{let f=k;while(f){if(!S.features[f])return false;f=REQUIRES[f]}return true};
+// #800 — cocher une fonctionnalité active tout ce dont elle a besoin.
+const enableWith=k=>{S.features[k]=true;let f=REQUIRES[k];while(f){S.features[f]=true;f=REQUIRES[f]}};
+const alsoEnabled=k=>{const r=[];let f=REQUIRES[k];while(f){if(!S.features[f])r.push(featureTitle(f));f=REQUIRES[f]}return r};
 const featureTitle=k=>(FEATURES.find(f=>f[0]===k)||[k,k])[1];
 const country=()=>COUNTRIES.find(c=>c[0]===S.country)||COUNTRIES[0];
 const scheme=()=>country()[4];
@@ -371,8 +374,9 @@ const STEPS=[
 
 {id:'features',title:'Fonctionnalités',why:"Cochez ce que votre espace utilise : les étapes suivantes ne poseront que les questions de ces fonctionnalités. Tout reste modifiable ensuite dans l'app (Réglages → Fonctionnalités), et une fonctionnalité désactivée n'efface rien.",
  build(){const kids=[h('p',{class:'hint'},'Une fonctionnalité en retrait dépend de celle au-dessus : elle n\'est proposée que si son parent est activé.'),help('features')];
-  for(const[k,t,d]of FEATURES){const parent=REQUIRES[k];const avail=!parent||on(parent);
-   kids.push(checkbox(t,avail?d:d+' — nécessite « '+featureTitle(parent)+' ».',avail&&S.features[k],v=>{S.features[k]=v;if(!v)for(const[c,p]of Object.entries(REQUIRES))if(!on(c))S.features[c]=false;save()},(parent?'child':'')+(avail?'':' off')));
+  for(const[k,t,d]of FEATURES){const parent=REQUIRES[k];const also=alsoEnabled(k);
+   const note=(!S.features[k]&&also.length)?d+' — active aussi « '+also.join(' », « ')+' ».':(S.features[k]&&parent&&!on(parent)?d+' — en attente de « '+featureTitle(parent)+' ».':d);
+   kids.push(checkbox(t,note,S.features[k],v=>{if(v)enableWith(k);else S.features[k]=false;save()},(parent?'child':'')));
    const fh=helpIcon(FEATURE_HELP[k]);if(fh)kids[kids.length-1].querySelector('span').insertBefore(fh,kids[kids.length-1].querySelector('span div'));
    if(!avail)kids[kids.length-1].querySelector('input').disabled=true}
   return kids},
@@ -618,12 +622,12 @@ const STEPS=[
   const k=[help('features'),h('p',{class:'hint'},active.length+' fonctionnalité(s) seront activées, '+inactive.length+' resteront désactivées. Tout reste modifiable ensuite dans l\'app.')];
   for(const[key,t,d]of active){let conf='';try{conf=cfg[key]?cfg[key]():''}catch(e){conf=''}
    const kids=children(key);
-   const c=h('input',{type:'checkbox'});c.checked=true;c.onchange=()=>{S.features[key]=false;for(const[ch,pp]of Object.entries(REQUIRES))if(!on(ch))S.features[ch]=false;save();render()};
+   const c=h('input',{type:'checkbox'});c.checked=true;c.onchange=()=>{S.features[key]=false;save();render()};
    k.push(h('div',{class:'card'},h('label',{class:'check',style:'margin:0'},c,h('span',{},h('b',{},t),h('div',{class:'d'},d),conf?h('div',{class:'d',style:'margin-top:4px;color:var(--ink)'},'Configuré : '+conf):null,
      kids.length?h('div',{class:'d',style:'margin-top:4px'},'Décocher désactive aussi : '+kids.map(featureTitle).join(', ')+'.'):null,
      help(FEATURE_HELP[key])))))}
   if(inactive.length)k.push(h('details',{},h('summary',{},'Fonctionnalités non activées ('+inactive.length+')'),
-   ...inactive.map(([key,t,d])=>{const parent=REQUIRES[key];const avail=!parent||on(parent);
+   ...inactive.map(([key,t,d])=>{const parent=REQUIRES[key];const avail=true;
     return checkbox(t,avail?d:d+' — nécessite « '+featureTitle(parent)+' ».',false,v=>{if(avail){S.features[key]=v;save()}},avail?'':'off')})));
   return k},
  check(){const active=FEATURES.filter(([k])=>on(k)).length;return[F.ok(active+' fonctionnalité(s) activées, '+(FEATURES.length-active)+' désactivées — chacune avec sa configuration.')]}},
@@ -648,8 +652,8 @@ function setMode(all){mode=all?'all':'wizard';localStorage.setItem(LS+'-mode',mo
 function go(id){cur=id;localStorage.setItem(LS+'-step',id);render();window.scrollTo({top:0,behavior:'smooth'})}
 function applicable(){return STEPS.filter(s=>!s.applies||s.applies())}
 function render(){
- // keep the tree consistent: a child never outlives its parent
- for(const[c]of Object.entries(REQUIRES))if(!on(c)&&S.features[c])S.features[c]=false;
+ // #800 — le choix d'une sous-fonctionnalité SURVIT à l'extinction de
+ // son parent, comme dans l'app : rallumer le parent la retrouve telle quelle.
  const F_=document.getElementById('form');F_.textContent='';
  const list=applicable();if(!list.some(s=>s.id===cur))cur=list[0].id;
  const idx=list.findIndex(s=>s.id===cur);

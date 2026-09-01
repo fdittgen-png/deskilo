@@ -3566,6 +3566,24 @@ abstract class AppLocalizations {
   /// **'Swipe to quote or take back'**
   String get featureMessageGesturesTitle;
 
+  /// Snack naming the dependencies switched on with a feature (#800)
+  ///
+  /// In en, this message translates to:
+  /// **'Also switched on: {features}'**
+  String featureAlsoEnabled(String features);
+
+  /// Subtitle note: what this switch would also enable (#800)
+  ///
+  /// In en, this message translates to:
+  /// **'Switching this on also enables {features}'**
+  String featureAlsoEnables(String features);
+
+  /// Subtitle note: the feature is on but its parent is off (#800)
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting on the feature above — switch that on and this one works again.'**
+  String get featureHeldBack;
+
   /// No description provided for @featureMessageGesturesDesc.
   ///
   /// In en, this message translates to:

@@ -1972,6 +1972,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureMessageGesturesTitle => 'Swipe to quote or take back';
 
   @override
+  String featureAlsoEnabled(String features) {
+    return 'Also switched on: $features';
+  }
+
+  @override
+  String featureAlsoEnables(String features) {
+    return 'Switching this on also enables $features';
+  }
+
+  @override
+  String get featureHeldBack =>
+      'Waiting on the feature above — switch that on and this one works again.';
+
+  @override
   String get featureMessageGesturesDesc =>
       'Swipe a message right to quote it in your reply; swipe left to take your own message back while nobody has read it yet, after a confirmation. Off: messages are deleted by holding them.';
 

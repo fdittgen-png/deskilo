@@ -1994,6 +1994,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureMessageGesturesTitle => 'Balayer pour citer ou reprendre';
 
   @override
+  String featureAlsoEnabled(String features) {
+    return 'Également activé : $features';
+  }
+
+  @override
+  String featureAlsoEnables(String features) {
+    return 'Activer ceci active aussi $features';
+  }
+
+  @override
+  String get featureHeldBack =>
+      'En attente de la fonction au-dessus — activez-la et celle-ci fonctionne de nouveau.';
+
+  @override
   String get featureMessageGesturesDesc =>
       'Balayez un message vers la droite pour le citer dans votre réponse ; vers la gauche pour reprendre votre propre message tant que personne ne l\'a lu, après confirmation. Désactivé : les messages se suppriment par appui long.';
 
