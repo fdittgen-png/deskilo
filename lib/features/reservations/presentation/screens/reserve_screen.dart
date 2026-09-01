@@ -46,6 +46,7 @@ import '../widgets/booking_sheet.dart';
 import '../widgets/space_scan.dart';
 import '../widgets/reservation_detail_sheet.dart';
 import '../widgets/month_grid.dart';
+import '../widgets/seat_legend.dart';
 import '../widgets/week_grid.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
@@ -565,6 +566,14 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     final dayOpen = openWeekdays == null ||
         closures == null ||
         isWorkspaceOpenOn(_selectedDay, openWeekdays, closures);
+    // #814 — the legend under the controls, and closed days drawn as
+    // closed in every view (not only the plan).
+    final gateOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.bookingGate);
+    // Keep the policies warm: the gate reads them synchronously at tap
+    // time (a cold provider would judge with the defaults).
+    if (gateOn) ref.watch(bookingPoliciesProvider);
 
     // No own AppBar: the hub lives inside the shell (bottom bar always
     // visible); the shell's app bar carries the 'Reserve' title.
@@ -738,6 +747,12 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
           // carries the why and the metrics (#699).
           HeaderControlRow(children: viewControls),
           HeaderControlRow(children: whenControls),
+          if (gateOn)
+            SeatLegend(
+              showClosed: _view == _ReserveView.week ||
+                  _view == _ReserveView.month ||
+                  _view == _ReserveView.day,
+            ),
         ],
       );
     }
@@ -1128,6 +1143,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
       // renders, and tapping a row's free area books the selected
       // window on that seat (no more look-but-can't-book).
       showFreeSeats: true,
+      dayOpen: _dayOpenOn(_selectedDay),
       onFreeSeatTap: (seat) => bookingSheet(
         seat,
         active,
@@ -1135,6 +1151,24 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
       ),
     );
   }
+
+  /// #814 — whether the workspace is open on [day], for the Day, Week
+  /// and Month views (the plan already reads `dayOpen`). Null while the
+  /// feature is off: the views then draw every day as bookable, as they
+  /// always did.
+  bool Function(DateTime day)? get _isDayOpen {
+    if (!ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.bookingGate)) {
+      return null;
+    }
+    final openWeekdays = ref.watch(openWeekdaysProvider).value;
+    final closures = ref.watch(closureDaysProvider).value;
+    if (openWeekdays == null || closures == null) return null;
+    return (day) => isWorkspaceOpenOn(day, openWeekdays, closures);
+  }
+
+  bool _dayOpenOn(DateTime day) => _isDayOpen?.call(day) ?? true;
 
   /// Week view (#236): the whole ISO week around the selected day as a
   /// seat × day grid. Reservations come from the month provider(s)
@@ -1171,6 +1205,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
         setState(() => _view = _ReserveView.day);
       },
       onReservationTap: _detailSheet,
+      isDayOpen: _isDayOpen,
       onFreeSlotTap: (seat, day, {required morning}) {
         final window = weekTapWindow(
           day: day,
@@ -1196,6 +1231,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
       key: const ValueKey('reserve-month-grid'),
       selectedDay: _selectedDay,
       reservations: [for (final r in month) if (r.isActive) r],
+      isDayOpen: _isDayOpen,
       onDaySelected: (day) {
         _selectDay(day);
         setState(() => _view = _ReserveView.day);

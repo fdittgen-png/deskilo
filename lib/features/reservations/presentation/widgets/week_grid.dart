@@ -81,6 +81,7 @@ class WeekGrid extends ConsumerStatefulWidget {
     required this.onDaySelected,
     required this.onReservationTap,
     this.onFreeSlotTap,
+    this.isDayOpen,
   });
 
   /// The hub's selected local day (any instant within it) — the grid
@@ -111,6 +112,15 @@ class WeekGrid extends ConsumerStatefulWidget {
   /// half. Null keeps free cells passive.
   final void Function(Seat seat, DateTime day, {required bool morning})?
       onFreeSlotTap;
+
+  /// #814 — whether the workspace is open on a column's day. Closed
+  /// columns draw muted, say so in their header and take no free-slot
+  /// tap. Null = every day open (the pre-#814 behaviour).
+  final bool Function(DateTime day)? isDayOpen;
+
+  /// Key of a closed day's header marker.
+  static Key closedHeaderKey(DateTime day) =>
+      ValueKey('week-closed-${_dayStamp(day)}');
 
   /// WORKSPACE midnight of the Monday of [day]'s ISO week (#490 — the
   /// week is the workspace's, not the device's).
@@ -391,6 +401,8 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     );
   }
 
+  bool _dayOpen(DateTime day) => widget.isDayOpen?.call(day) ?? true;
+
   /// Tappable "Mon 13" day headers; the selected day's pill highlighted.
   Widget _headerRow(
     BuildContext context,
@@ -420,19 +432,31 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
                     borderRadius: AppRadius.mdAll,
                     onTap: () => widget.onDaySelected(day),
                     child: Center(
-                      child: Text(
-                        '${weekdayFormat.format(day)} '
-                        '${dayFormat.format(day)}',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: DateUtils.isSameDay(day, widget.selectedDay)
-                            ? style?.copyWith(
-                                color: scheme.onPrimaryContainer,
-                                fontWeight: FontWeight.bold,
-                              )
-                            : style?.copyWith(
-                                color: scheme.onSurfaceVariant,
-                              ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            '${weekdayFormat.format(day)} '
+                            '${dayFormat.format(day)}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: DateUtils.isSameDay(day, widget.selectedDay)
+                                ? style?.copyWith(
+                                    color: scheme.onPrimaryContainer,
+                                    fontWeight: FontWeight.bold,
+                                  )
+                                : style?.copyWith(
+                                    color: scheme.onSurfaceVariant,
+                                  ),
+                          ),
+                          if (!_dayOpen(day))
+                            Icon(
+                              Icons.event_busy_outlined,
+                              key: WeekGrid.closedHeaderKey(day),
+                              size: 12,
+                              color: scheme.onSurfaceVariant,
+                            ),
+                        ],
                       ),
                     ),
                   ),
@@ -668,6 +692,9 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     } else if (_blockedDuring(seat, half.start, half.end)) {
       fill = SeatStateColors.of(SeatState.blocked, brightness: brightness)
           .withValues(alpha: 0.3);
+    } else if (!_dayOpen(day)) {
+      // #814 — a closed day is not free: nothing to tap, nothing to book.
+      fill = scheme.surfaceContainerHighest;
     }
     final free = fill == null;
     return Container(

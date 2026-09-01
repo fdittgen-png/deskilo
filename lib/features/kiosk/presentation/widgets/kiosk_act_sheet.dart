@@ -9,6 +9,7 @@ import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../reservations/domain/booking_gate.dart';
 import '../../../reservations/presentation/widgets/space_act_form.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../screens/kiosk_screen.dart' show KioskAction;
@@ -45,6 +46,9 @@ Future<KioskActRequest?> showKioskActSheet(
   required NfcUidReader reader,
   required bool nfcEnabled,
   QrScanWidgetBuilder? scanBuilder,
+  BookingRefusal? Function(SpaceActChoice choice)? refusalOf,
+  String Function(BookingRefusal refusal)? refusalTextOf,
+  bool explainNoCamera = false,
 }) =>
     showModalBottomSheet<KioskActRequest>(
       context: context,
@@ -56,6 +60,9 @@ Future<KioskActRequest?> showKioskActSheet(
         reader: reader,
         nfcEnabled: nfcEnabled,
         scanBuilder: scanBuilder,
+        refusalOf: refusalOf,
+        refusalTextOf: refusalTextOf,
+        explainNoCamera: explainNoCamera,
       ),
     );
 
@@ -67,6 +74,9 @@ class _KioskActSheet extends StatefulWidget {
     required this.reader,
     required this.nfcEnabled,
     required this.scanBuilder,
+    required this.refusalOf,
+    required this.refusalTextOf,
+    required this.explainNoCamera,
   });
 
   final String targetName;
@@ -75,6 +85,14 @@ class _KioskActSheet extends StatefulWidget {
   final NfcUidReader reader;
   final bool nfcEnabled;
   final QrScanWidgetBuilder? scanBuilder;
+
+  /// #814 — the booking gate; a refused window stops the badge.
+  final BookingRefusal? Function(SpaceActChoice choice)? refusalOf;
+  final String Function(BookingRefusal refusal)? refusalTextOf;
+
+  /// #814 — the browser has no camera scanner; say so instead of
+  /// silently dropping the box.
+  final bool explainNoCamera;
 
   @override
   State<_KioskActSheet> createState() => _KioskActSheetState();
@@ -92,6 +110,18 @@ class _KioskActSheetState extends State<_KioskActSheet> {
     if (code.isEmpty) return;
     final choice = _form.currentState?.choice;
     if (choice == null) return;
+    // #814 — a refused window never reaches the server: the sheet already
+    // names the reason under the period; the badge only repeats it.
+    final refusal = _form.currentState?.refusal;
+    if (refusal != null) {
+      final l10n = AppLocalizations.of(context);
+      ScaffoldMessenger.maybeOf(context)?.showSnackBar(SnackBar(
+        key: const ValueKey('kiosk-gate-snack'),
+        content: Text(widget.refusalTextOf?.call(refusal) ??
+            (l10n?.bookingGateBlocked ?? 'Not bookable as chosen')),
+      ));
+      return;
+    }
     Navigator.of(context).pop((
       action: switch (choice.action) {
         SpaceAction.checkIn => KioskAction.checkIn,
@@ -121,6 +151,8 @@ class _KioskActSheetState extends State<_KioskActSheet> {
             keyPrefix: 'kiosk',
             granularity: widget.granularity,
             now: widget.now,
+            refusalOf: widget.refusalOf,
+            refusalTextOf: widget.refusalTextOf,
           ),
           const Divider(height: 24),
           // The badge completes the act DIRECTLY — no continue button,
@@ -129,6 +161,7 @@ class _KioskActSheetState extends State<_KioskActSheet> {
             reader: widget.reader,
             nfcEnabled: widget.nfcEnabled,
             scanBuilder: widget.scanBuilder,
+            explainNoCamera: widget.explainNoCamera,
             l10n: l10n,
             onCode: _onBadge,
           ),
@@ -149,6 +182,7 @@ class _BadgeCapture extends StatefulWidget {
     required this.scanBuilder,
     required this.l10n,
     required this.onCode,
+    this.explainNoCamera = false,
   });
 
   final NfcUidReader reader;
@@ -156,6 +190,9 @@ class _BadgeCapture extends StatefulWidget {
 
   /// Camera scanner embed, or null off-mobile (wedge scanners remain).
   final QrScanWidgetBuilder? scanBuilder;
+
+  /// #814 — the browser build: no camera, and the sheet says so.
+  final bool explainNoCamera;
   final AppLocalizations? l10n;
   final ValueChanged<String> onCode;
 
@@ -291,6 +328,18 @@ class _BadgeCaptureState extends State<_BadgeCapture> {
                   ),
                 ),
               ],
+            ),
+          ),
+        if (widget.scanBuilder == null && widget.explainNoCamera)
+          Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: Text(
+              l10n?.scanCameraWebUnavailable ??
+                  'Camera scanning is not available in the browser — type '
+                      'the code, or hold an NFC tag to the device (Chrome '
+                      'on Android).',
+              key: const ValueKey('kiosk-no-camera'),
+              style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
         if (widget.scanBuilder != null && _cameraReady && !_cameraMode)

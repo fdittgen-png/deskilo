@@ -60,7 +60,10 @@ import 'package:flutter_test/flutter_test.dart';
 // regrouped into one, originals kept and traceable.
 // 59→60 (2026-09-01): #812 invoiceJourney — Issued → Payment →
 // Confirmation → Closed on every invoice surface, with whose move it is.
-const int _expectedFeatureCount = 60;
+// 60→61 (2026-09-01): #814 bookingGate — the availability parameters
+// asked BEFORE a window is offered, on every surface; closed days in
+// every view; the seat legend.
+const int _expectedFeatureCount = 61;
 
 void main() {
   test('every functionality is registered — the pin', () {

@@ -1201,6 +1201,8 @@
   "featureScheduledExpensesDesc": "Wiederkehrende Ausgaben (Internet, Telefon, Strom): jedes Mitglied plant sie mit ihrer Regel (alle X Tage/Wochen/Monate/Jahre, X Mal oder bis zu einem Datum); der Plan wird einmal validiert, und jede Fälligkeit wird dem Mitglied vorgelegt — der validierte Betrag zählt sofort, ein abweichender erklärt sich und durchläuft die Ausgaben-Validierung.",
   "featureInvoiceJourneyTitle": "Der Weg einer Rechnung",
   "featureInvoiceJourneyDesc": "Jede Rechnung zeigt, wo sie steht — Ausgestellt, Zahlung, Bestätigung, Abgeschlossen — und wer am Zug ist: das Mitglied zahlt, ein Admin bestätigt die gemeldete Zahlung, der Aussteller ordnet sie zu, die Prüfer entscheiden. Das Hub der Aussteller erhält eine Stufenleiste mit Zählern und eine Erklärung „So funktioniert es“.",
+  "featureBookingGateTitle": "Buchungsprüfung",
+  "featureBookingGateDesc": "Jede Buchungsfläche — Plan, Tages-, Wochen- und Monatsansicht, Buchungsblatt, Kiosk, QR- oder NFC-Scan — prüft die Verfügbarkeitsparameter, bevor sie ein Zeitfenster anbietet, und nennt den Grund, wenn sie es nicht kann; geschlossene Tage erscheinen in jeder Ansicht geschlossen, eine Legende benennt die Platzzustände, und Admins dürfen Mitglieder auschecken, wo die Regel es erlaubt.",
   "helpTitle": "Hilfe",
   "helpContents": "Inhalt",
   "helpHintMessages": "Alle Unterhaltungen in einer Liste, die neueste oben. Tippen Sie auf den Stift, um jemandem zu schreiben oder eine Gruppe zu erstellen.",
@@ -3469,6 +3471,47 @@
       }
     }
   },
+  "bookingHorizonError": "Zu weit voraus — Buchungen sind {days} Tage im Voraus möglich.",
+  "@bookingHorizonError": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "bookingTooShortError": "Zu kurz — eine Buchung dauert mindestens {minutes} Minuten.",
+  "@bookingTooShortError": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "bookingTooLongError": "Zu lang — eine Buchung dauert höchstens {minutes} Minuten.",
+  "@bookingTooLongError": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "legendFree": "Frei",
+  "legendReserved": "Reserviert",
+  "legendOccupied": "Eingecheckt",
+  "legendMine": "Meine",
+  "legendBlocked": "Gesperrt",
+  "legendClosed": "Geschlossen",
+  "reserveClosedShort": "Zu",
+  "planCheckOutFor": "{name} auschecken",
+  "@planCheckOutFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "scanCameraWebUnavailable": "Kamera-Scan ist im Browser nicht verfügbar — Code eingeben oder ein NFC-Tag ans Gerät halten (Chrome auf Android).",
+  "bookingGateBlocked": "So nicht buchbar",
   "servicesTitle": "Leistungen",
   "servicesEmpty": "Noch keine Leistungen.",
   "servicesNew": "Neue Leistung",

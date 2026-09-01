@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../workspace/domain/booking_granularity.dart';
+import '../../domain/booking_gate.dart';
 import '../../domain/walk_up_window.dart';
 import 'booking_range_text.dart';
 
@@ -38,6 +39,8 @@ class SpaceActForm extends StatefulWidget {
     required this.now,
     this.keyPrefix = 'space-act',
     this.footer,
+    this.refusalOf,
+    this.refusalTextOf,
   });
 
   final BookingGranularity granularity;
@@ -47,6 +50,13 @@ class SpaceActForm extends StatefulWidget {
   /// Rendered under the form with the CURRENT choice — the reactive
   /// seam for blocked-space info and the completion affordance.
   final Widget Function(BuildContext context, SpaceActChoice choice)? footer;
+
+  /// #814 — the booking gate for the CURRENT choice (check-out is never
+  /// gated: leaving needs no window). A refusal is spelled out under the
+  /// period and [SpaceActFormState.refusal] hands it to the completer —
+  /// the kiosk's badge and the scan sheet's confirm both stop on it.
+  final BookingRefusal? Function(SpaceActChoice choice)? refusalOf;
+  final String Function(BookingRefusal refusal)? refusalTextOf;
 
   @override
   State<SpaceActForm> createState() => SpaceActFormState();
@@ -63,6 +73,10 @@ class SpaceActFormState extends State<SpaceActForm> {
   bool _checkInNow = true;
 
   bool get _dayBased => widget.granularity.isDayBased;
+
+  /// Why the gate would refuse the current choice, or null.
+  BookingRefusal? get refusal =>
+      _action == SpaceAction.checkOut ? null : widget.refusalOf?.call(choice);
 
   int get _snap => widget.granularity.stepMinutes ?? 5;
 
@@ -338,6 +352,28 @@ class SpaceActFormState extends State<SpaceActForm> {
               title: Text(l10n?.kioskCheckInRightAway ?? 'Check in right away'),
               value: _checkInNow,
               onChanged: (value) => setState(() => _checkInNow = value),
+            ),
+          if (refusal case final refusal?)
+            Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: Row(
+                key: ValueKey('$prefix-gate-refusal'),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.info_outline,
+                      size: 18, color: theme.colorScheme.error),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      widget.refusalTextOf?.call(refusal) ??
+                          (l10n?.bookingGateBlocked ??
+                              'Not bookable as chosen'),
+                      style: theme.textTheme.bodySmall
+                          ?.copyWith(color: theme.colorScheme.error),
+                    ),
+                  ),
+                ],
+              ),
             ),
           const SizedBox(height: 2),
           // The rule behind the numbers — settings transparency.

@@ -2127,6 +2127,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Jede Rechnung zeigt, wo sie steht — Ausgestellt, Zahlung, Bestätigung, Abgeschlossen — und wer am Zug ist: das Mitglied zahlt, ein Admin bestätigt die gemeldete Zahlung, der Aussteller ordnet sie zu, die Prüfer entscheiden. Das Hub der Aussteller erhält eine Stufenleiste mit Zählern und eine Erklärung „So funktioniert es“.';
 
   @override
+  String get featureBookingGateTitle => 'Buchungsprüfung';
+
+  @override
+  String get featureBookingGateDesc =>
+      'Jede Buchungsfläche — Plan, Tages-, Wochen- und Monatsansicht, Buchungsblatt, Kiosk, QR- oder NFC-Scan — prüft die Verfügbarkeitsparameter, bevor sie ein Zeitfenster anbietet, und nennt den Grund, wenn sie es nicht kann; geschlossene Tage erscheinen in jeder Ansicht geschlossen, eine Legende benennt die Platzzustände, und Admins dürfen Mitglieder auschecken, wo die Regel es erlaubt.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override
@@ -5977,6 +5984,54 @@ class AppLocalizationsDe extends AppLocalizations {
   String bookingReservedSpaceWhen(String space, String when) {
     return '$space reserviert: $when.';
   }
+
+  @override
+  String bookingHorizonError(int days) {
+    return 'Zu weit voraus — Buchungen sind $days Tage im Voraus möglich.';
+  }
+
+  @override
+  String bookingTooShortError(int minutes) {
+    return 'Zu kurz — eine Buchung dauert mindestens $minutes Minuten.';
+  }
+
+  @override
+  String bookingTooLongError(int minutes) {
+    return 'Zu lang — eine Buchung dauert höchstens $minutes Minuten.';
+  }
+
+  @override
+  String get legendFree => 'Frei';
+
+  @override
+  String get legendReserved => 'Reserviert';
+
+  @override
+  String get legendOccupied => 'Eingecheckt';
+
+  @override
+  String get legendMine => 'Meine';
+
+  @override
+  String get legendBlocked => 'Gesperrt';
+
+  @override
+  String get legendClosed => 'Geschlossen';
+
+  @override
+  String get reserveClosedShort => 'Zu';
+
+  @override
+  String planCheckOutFor(String name) {
+    return '$name auschecken';
+  }
+
+  @override
+  String get scanCameraWebUnavailable =>
+      'Kamera-Scan ist im Browser nicht verfügbar — Code eingeben oder ein NFC-Tag ans Gerät halten (Chrome auf Android).';
+
+  @override
+  String get bookingGateBlocked => 'So nicht buchbar';
 
   @override
   String get servicesTitle => 'Leistungen';

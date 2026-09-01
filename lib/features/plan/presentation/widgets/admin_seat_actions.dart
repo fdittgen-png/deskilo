@@ -26,6 +26,7 @@ Future<void> runAdminSeatActions(
   required bool offerCheckIn,
   required int? stepMinutes,
   bool offerMessage = false,
+  bool offerCheckOut = false,
 }) async {
   final l10n = AppLocalizations.of(context);
   final action = await showCheckInOtherSheet(
@@ -35,6 +36,7 @@ Future<void> runAdminSeatActions(
     name: name,
     offerCheckIn: offerCheckIn,
     offerMessage: offerMessage,
+    offerCheckOut: offerCheckOut,
   );
   if (action == null || !context.mounted) return;
   // #622 — the message tile opens the conversation with the holder,
@@ -54,6 +56,9 @@ Future<void> runAdminSeatActions(
     switch (action) {
       case 'checkin':
         await repo.checkIn(other.id);
+      case 'checkout':
+        // #814 — the policy-gated admin check-out (0116 v2 re-checks).
+        await repo.checkOut(other.id);
       case 'remove':
         // Overrule (#412): the cancel event notifies the displaced
         // member and every admin (0007 trigger).

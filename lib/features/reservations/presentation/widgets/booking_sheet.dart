@@ -10,6 +10,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
 import '../../../workspace/domain/booking_granularity.dart';
+import '../../domain/booking_gate.dart';
 import '../../domain/reservation_repository.dart';
 import 'booking_range_text.dart';
 
@@ -68,6 +69,8 @@ class BookingSheet extends StatefulWidget {
     this.myMemberId,
     this.allowSeries = true,
     this.allowBlocking = false,
+    this.refusalOf,
+    this.refusalTextOf,
   });
 
   /// Null for a WHOLE-SPACE booking (0065): the sheet then shows no
@@ -107,6 +110,12 @@ class BookingSheet extends StatefulWidget {
   /// Seat-blocking affordance (#161): true adds "Make not reservable" for
   /// owners and delegated admins.
   final bool allowBlocking;
+
+  /// #814 — the booking gate, asked for every window the member picks:
+  /// a refusal disables the confirm button and names its reason. Null
+  /// (feature off) keeps the server as the only judge.
+  final BookingRefusal? Function(DateTime start, DateTime end)? refusalOf;
+  final String Function(BookingRefusal refusal)? refusalTextOf;
 
   @override
   State<BookingSheet> createState() => _BookingSheetState();
@@ -182,6 +191,9 @@ class _BookingSheetState extends State<BookingSheet> {
         gridStep == null ? 0 : _maxDurationMinutes(gridStep);
     final showDurationSlider =
         gridStep != null && maxDuration >= gridStep && !widget.fixedEnd;
+    // #814 — asked on EVERY build: the window changes with each chip,
+    // picker and slider tick, and the verdict must follow it.
+    final refusal = widget.refusalOf?.call(_start, _end);
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -369,9 +381,35 @@ class _BookingSheetState extends State<BookingSheet> {
                         '${timeFormat.format(WorkspaceTime.display(widget.cap!))}.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
+            if (refusal != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Row(
+                  key: const ValueKey('booking-gate-refusal'),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(Icons.info_outline,
+                        size: 18, color: Theme.of(context).colorScheme.error),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        widget.refusalTextOf?.call(refusal) ??
+                            (l10n?.bookingGateBlocked ??
+                                'Not bookable as chosen'),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             const SizedBox(height: 16),
             FilledButton(
-              onPressed: () => Navigator.of(context).pop(
+              key: const ValueKey('booking-confirm'),
+              onPressed: refusal != null
+                  ? null
+                  : () => Navigator.of(context).pop(
                 BookingChoice(
                   checkInNow: widget.liveWindow && _checkInNow,
                   _start,

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +10,11 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 
 import '../../../../core/realtime/realtime_providers.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/workspace_time.dart';
 import '../../../reservations/domain/booking_error_text.dart';
+import '../../../reservations/presentation/booking_gate_scope.dart';
+import '../../../reservations/presentation/widgets/space_act_form.dart';
+import '../../../workspace/domain/workspace_availability.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -103,15 +108,18 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
   /// Whether the workspace is closed TODAY (open weekdays + closure
   /// days) — surfaced up front on the kiosk instead of letting a full
   /// flow run into a server rejection at the very end (field report).
+  ///
+  /// #814 — ONE predicate: the same `isWorkspaceOpenOn` the plan, the
+  /// hub and the booking gate read (this used to inline its own copy).
   bool _closedToday() {
     final now = ref.read(clockProvider).now();
     final open = ref.read(openWeekdaysProvider).value;
-    if (open != null && !open.contains(now.weekday)) return true;
-    final closures = ref.read(closureDaysProvider).value ?? const [];
-    return closures.any((c) =>
-        c.day.year == now.year &&
-        c.day.month == now.month &&
-        c.day.day == now.day);
+    if (open == null) return false;
+    return !isWorkspaceOpenOn(
+      WorkspaceTime.dateOf(now),
+      open,
+      ref.read(closureDaysProvider).value ?? const [],
+    );
   }
 
   Future<void> _onSeatTap(Seat seat) =>
@@ -146,11 +154,14 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       );
       return;
     }
+    // #814 — the gate the app's surfaces ask, asked at the wall too.
+    final gate = bookingGateOf(ref);
+    final granularity = ref.read(bookingGranularityProvider).value ??
+        BookingGranularity.flexible;
     final request = await showKioskActSheet(
       context,
       targetName: title,
-      granularity: ref.read(bookingGranularityProvider).value ??
-          BookingGranularity.flexible,
+      granularity: granularity,
       now: ref.read(clockProvider).now(),
       reader: ref.read(nfcUidReaderProvider),
       nfcEnabled: ref
@@ -161,6 +172,23 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       // camera-free.
       scanBuilder:
           qrScanSupported ? ref.read(qrScanWidgetBuilderProvider) : null,
+      explainNoCamera: kIsWeb,
+      refusalOf: gate == null
+          ? null
+          : (choice) => gate.refusalFor(
+                start: choice.start,
+                end: choice.end,
+                walkUp: choice.action == SpaceAction.checkIn ||
+                    choice.checkInNow,
+              ),
+      refusalTextOf: gate == null
+          ? null
+          : (refusal) => bookingRefusalText(
+                l10n,
+                refusal,
+                policies: gate.policies,
+                stepMinutes: granularity.stepMinutes,
+              ),
     );
     if (request == null || !mounted) return;
     // The sheet's dispose stopped BOTH readers (NFC session + camera).
@@ -297,6 +325,8 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     // #446: same out-of-shell rule for the ambient working day — the
     // walk-up windows this screen books derive from it.
     WorkHours.install(ref.watch(workHoursProvider).value);
+    // #814 — the gate reads the policies synchronously at badge time.
+    ref.watch(bookingPoliciesProvider);
     // #519 — keep the granularity warm: the period step reads it
     // synchronously when a seat is tapped.
     ref.watch(bookingGranularityProvider);

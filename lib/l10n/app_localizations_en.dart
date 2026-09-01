@@ -2111,6 +2111,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Every invoice shows where it stands — Issued, Payment, Confirmation, Closed — and whose move it is: the member pays, an admin confirms the declared payment, the issuer matches it, the validators decide. The issuers\' hub adds a stage strip with live counts and a How-it-works explainer.';
 
   @override
+  String get featureBookingGateTitle => 'Booking gate';
+
+  @override
+  String get featureBookingGateDesc =>
+      'Every booking surface — plan, day, week and month views, the booking sheet, the kiosk, a QR or NFC scan — checks the availability parameters before offering a window and names the reason when it cannot; closed days draw as closed in every view, a legend names the seat states, and admins may check members out where the policy allows.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override
@@ -5928,6 +5935,54 @@ class AppLocalizationsEn extends AppLocalizations {
   String bookingReservedSpaceWhen(String space, String when) {
     return 'Reserved $space: $when.';
   }
+
+  @override
+  String bookingHorizonError(int days) {
+    return 'Too far ahead — bookings are open $days days in advance.';
+  }
+
+  @override
+  String bookingTooShortError(int minutes) {
+    return 'Too short — a booking lasts at least $minutes minutes.';
+  }
+
+  @override
+  String bookingTooLongError(int minutes) {
+    return 'Too long — a booking lasts at most $minutes minutes.';
+  }
+
+  @override
+  String get legendFree => 'Free';
+
+  @override
+  String get legendReserved => 'Reserved';
+
+  @override
+  String get legendOccupied => 'Checked in';
+
+  @override
+  String get legendMine => 'Mine';
+
+  @override
+  String get legendBlocked => 'Blocked';
+
+  @override
+  String get legendClosed => 'Closed day';
+
+  @override
+  String get reserveClosedShort => 'Closed';
+
+  @override
+  String planCheckOutFor(String name) {
+    return 'Check out $name';
+  }
+
+  @override
+  String get scanCameraWebUnavailable =>
+      'Camera scanning is not available in the browser — type the code, or hold an NFC tag to the device (Chrome on Android).';
+
+  @override
+  String get bookingGateBlocked => 'Not bookable as chosen';
 
   @override
   String get servicesTitle => 'Services';

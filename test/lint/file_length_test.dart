@@ -64,7 +64,8 @@ const Map<String, int> _baseline = {
   // the level switcher and the day selector all read the focus.
   // 1190→1215 (2026-08-31): #772 windowIsNow — the live-window probe in
   // workspace wall time beside the isLive it refines.
-  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1215,
+  // 1215→1240 (2026-09-01): #814 closed days into the Day/Week/Month views + the legend.
+  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1250,
   // 980→990 (2026-08-03): #419 workspace dev-mode switch — admin gate,
   // workspace hint subtitle and the RPC write helper.
   // 990→1000 (2026-08-05): #478 Billing & reports admin entry.
@@ -149,7 +150,8 @@ const Map<String, int> _baseline = {
   'lib/features/workspace/domain/workspace_xml.dart': 800,
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.
-  'lib/features/reservations/presentation/widgets/week_grid.dart': 780,
+  // 780→810 (2026-09-01): #814 closed columns.
+  'lib/features/reservations/presentation/widgets/week_grid.dart': 810,
   // 750→780 (2026-08-02): #395 adds fetchWorkspaceLedger and
   // fetchPaymentIntents — two new repository surfaces, not accretion.
   // 780→800 (2026-08-04): #454 fetch/setInvoicePdfTemplate.
@@ -220,7 +222,8 @@ const Map<String, int> _baseline = {
   // took. The paragraphs explaining WHY each silent branch needs a line
   // were extracted to booking_trace_points.dart; what stayed is eight
   // call sites, on the branches that used to end in nothing at all.
-  'lib/features/reservations/presentation/reserve_seat_actions.dart': 620,
+  // 620→680 (2026-09-01): #814 the booking gate before the sheet, the admin check-out.
+  'lib/features/reservations/presentation/reserve_seat_actions.dart': 680,
   // the validated amount and the member's explanation.
   'lib/features/events/presentation/screens/events_screen.dart': 873,
   // 680→700 (2026-08-04): #454 owner-template intro/footer blocks.

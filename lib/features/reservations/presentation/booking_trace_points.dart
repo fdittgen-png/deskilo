@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../domain/booking_gate.dart';
 import '../../../core/trace/act_trace.dart';
 import '../../plan/domain/seat.dart';
 import '../../workspace/domain/booking_granularity.dart';
@@ -145,4 +146,18 @@ void traceReserveWithoutCheckIn({
       'liveWindow': true,
       'from': start,
       'to': end,
+    });
+
+/// #814 — the gate refused before any sheet opened: WHICH rule, on
+/// which seat, for a walk-up or a booking ahead. Beside the server-side
+/// refusals this is what makes "the app would not let me" answerable.
+void traceGateRefusal({
+  required Seat seat,
+  required BookingRefusal refusal,
+  required bool walkUp,
+}) =>
+    ActTrace.booking.step('gate-refusal', {
+      'seat': seat.id,
+      'refusal': refusal.name,
+      'walkUp': walkUp,
     });

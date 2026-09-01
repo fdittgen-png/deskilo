@@ -2389,6 +2389,8 @@
   "featureScheduledExpensesDesc": "Recurring expenses (internet, phone, electricity): any member schedules one with its rule (every X days/weeks/months/years, X times or until a date); the schedule is validated once, and every due date is presented to the member — the validated amount counts immediately, a different amount explains itself and passes the expense validation.",
   "featureInvoiceJourneyTitle": "The journey of an invoice",
   "featureInvoiceJourneyDesc": "Every invoice shows where it stands — Issued, Payment, Confirmation, Closed — and whose move it is: the member pays, an admin confirms the declared payment, the issuer matches it, the validators decide. The issuers' hub adds a stage strip with live counts and a How-it-works explainer.",
+  "featureBookingGateTitle": "Booking gate",
+  "featureBookingGateDesc": "Every booking surface — plan, day, week and month views, the booking sheet, the kiosk, a QR or NFC scan — checks the availability parameters before offering a window and names the reason when it cannot; closed days draw as closed in every view, a legend names the seat states, and admins may check members out where the policy allows.",
   "helpTitle": "Help",
   "helpContents": "Contents",
   "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",
@@ -6412,6 +6414,47 @@
       }
     }
   },
+  "bookingHorizonError": "Too far ahead — bookings are open {days} days in advance.",
+  "@bookingHorizonError": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "bookingTooShortError": "Too short — a booking lasts at least {minutes} minutes.",
+  "@bookingTooShortError": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "bookingTooLongError": "Too long — a booking lasts at most {minutes} minutes.",
+  "@bookingTooLongError": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "legendFree": "Free",
+  "legendReserved": "Reserved",
+  "legendOccupied": "Checked in",
+  "legendMine": "Mine",
+  "legendBlocked": "Blocked",
+  "legendClosed": "Closed day",
+  "reserveClosedShort": "Closed",
+  "planCheckOutFor": "Check out {name}",
+  "@planCheckOutFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "scanCameraWebUnavailable": "Camera scanning is not available in the browser — type the code, or hold an NFC tag to the device (Chrome on Android).",
+  "bookingGateBlocked": "Not bookable as chosen",
   "servicesTitle": "Services",
   "@servicesTitle": {
     "description": "App-bar title of the owner service-catalog editor and its settings tile"

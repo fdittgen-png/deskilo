@@ -32,6 +32,7 @@ class MonthGrid extends ConsumerWidget {
     required this.selectedDay,
     required this.reservations,
     required this.onDaySelected,
+    this.isDayOpen,
     super.key,
   });
 
@@ -43,6 +44,11 @@ class MonthGrid extends ConsumerWidget {
   final List<Reservation> reservations;
 
   final void Function(DateTime day) onDaySelected;
+
+  /// #814 — whether the workspace is open on a cell's day. A closed day
+  /// shows no free-desk count (there is nothing to book) and reads
+  /// "Closed"; it stays selectable so the Day view can say why.
+  final bool Function(DateTime day)? isDayOpen;
 
   /// Key of one day cell (tests): the cell of [day]'s date.
   static Key cellKey(DateTime day) =>
@@ -149,6 +155,7 @@ class MonthGrid extends ConsumerWidget {
             itemBuilder: (context, index) {
               final day = cells[index];
               final inMonth = day.month == selectedDay.month;
+              final open = isDayOpen?.call(day) ?? true;
               final free = plansReady
                   ? totalSeats - (occupied[day]?.length ?? 0)
                   : null;
@@ -157,12 +164,15 @@ class MonthGrid extends ConsumerWidget {
                 inMonth: inMonth,
                 isToday: DateUtils.isSameDay(day, today),
                 isSelected: DateUtils.isSameDay(day, selectedDay),
-                freeSeats: free,
+                freeSeats: open ? free : null,
                 totalSeats: totalSeats,
-                label: free == null
-                    ? ''
-                    : (l10n?.monthFreeCount(free, totalSeats) ??
-                        '$free/$totalSeats'),
+                closed: !open,
+                label: !open
+                    ? (l10n?.reserveClosedShort ?? 'Closed')
+                    : free == null
+                        ? ''
+                        : (l10n?.monthFreeCount(free, totalSeats) ??
+                            '$free/$totalSeats'),
                 onTap: inMonth ? () => onDaySelected(day) : null,
               );
             },
@@ -219,6 +229,7 @@ class _DayCell extends StatelessWidget {
     required this.totalSeats,
     required this.label,
     required this.onTap,
+    this.closed = false,
   });
 
   final DateTime day;
@@ -230,6 +241,9 @@ class _DayCell extends StatelessWidget {
   final String label;
   final VoidCallback? onTap;
 
+  /// #814 — a closed day: neutral fill, no heat, the "Closed" label.
+  final bool closed;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -238,7 +252,9 @@ class _DayCell extends StatelessWidget {
     // Heat fill: greener the more free, redder the fuller. Neutral when
     // the workspace has no desks yet or the plans are still loading.
     Color fill;
-    if (!inMonth || freeSeats == null || totalSeats == 0) {
+    if (closed && inMonth) {
+      fill = scheme.surfaceContainerHighest;
+    } else if (!inMonth || freeSeats == null || totalSeats == 0) {
       fill = Colors.transparent;
     } else {
       final freeRatio = freeSeats! / totalSeats;
