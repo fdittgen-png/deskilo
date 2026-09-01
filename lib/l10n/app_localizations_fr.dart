@@ -1991,6 +1991,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureUniqueMonogramsTitle => 'Initiales d’avatar distinctes';
 
   @override
+  String get featureMessageGesturesTitle => 'Balayer pour citer ou reprendre';
+
+  @override
+  String get featureMessageGesturesDesc =>
+      'Balayez un message vers la droite pour le citer dans votre réponse ; vers la gauche pour reprendre votre propre message tant que personne ne l\'a lu, après confirmation. Désactivé : les messages se suppriment par appui long.';
+
+  @override
   String get featureUniqueMonogramsDesc =>
       'Un avatar sans photo affiche des initiales propres à un seul membre : initiale du prénom et du nom, une lettre de plus en cas de collision, des chiffres seulement en dernier recours. Désactivé : la première lettre seule, identique pour tous ceux qui la partagent.';
 
@@ -4029,6 +4036,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get memberNoteDeleteConfirm =>
       'Supprimer ce message ? Cette action est irréversible.';
+
+  @override
+  String get memberNoteDeleteRead =>
+      'Déjà lu — ce message ne peut plus être repris.';
+
+  @override
+  String get memberNoteDeleteNotMine =>
+      'Seul l\'expéditeur peut reprendre un message.';
 
   @override
   String get memberNoteReply => 'Répondre';

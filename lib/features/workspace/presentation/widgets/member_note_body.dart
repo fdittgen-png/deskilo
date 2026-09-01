@@ -92,6 +92,11 @@ class MemberNoteBody extends ConsumerWidget {
                 onTap: () =>
                     openSpaceById(context, ref, kind: kind, id: id),
               ),
+            // #798 — a LEADING quote is rendered as a block by the
+            // bubble and never reaches here. One left mid-sentence
+            // still has to read as something: the words it quotes.
+            NoteQuoteRef(:final preview) =>
+              TextSpan(text: '«$preview»', style: base),
           },
       ]),
     );

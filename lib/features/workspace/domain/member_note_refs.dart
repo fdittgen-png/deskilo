@@ -11,6 +11,7 @@ import '../../reservations/domain/space_code.dart';
 /// Grammar, inside the plain ≤500-char body:
 ///   `[res:<id>|<label>]`            — a reservation / check-in
 ///   `[space:<kind>:<id>|<label>]`   — kind ∈ seat|desk|office|level
+///   `[quote:<id>|<preview>]`        — the message being replied to
 ///
 /// Labels may not contain `]` (the composer strips it); everything
 /// else — emojis included — passes through untouched.
@@ -31,6 +32,20 @@ class NoteReservationRef extends NoteSegment {
   final String label;
 }
 
+/// #798 — the message this one replies to, the WhatsApp gesture: swipe a
+/// bubble right and the reply carries a quote of it.
+///
+/// A reference rather than a column, for the same reason the other two
+/// are: the [preview] is BAKED IN, so a quote still reads as what was
+/// said even after the original is deleted — and deleting an unread
+/// message is a gesture away in this same widget. Tapping resolves live
+/// and scrolls to the original when it is still in the thread.
+class NoteQuoteRef extends NoteSegment {
+  const NoteQuoteRef({required this.id, required this.preview});
+  final String id;
+  final String preview;
+}
+
 /// A space reference — the subject of a future booking.
 class NoteSpaceRef extends NoteSegment {
   const NoteSpaceRef({
@@ -44,7 +59,7 @@ class NoteSpaceRef extends NoteSegment {
 }
 
 final _refPattern = RegExp(
-    r'\[(?:res:(?<rid>[A-Za-z0-9-]{4,})|space:(?<kind>seat|desk|office|level):(?<sid>[A-Za-z0-9-]{4,}))\|(?<label>[^\]]+)\]');
+    r'\[(?:res:(?<rid>[A-Za-z0-9-]{4,})|quote:(?<qid>[A-Za-z0-9-]{4,})|space:(?<kind>seat|desk|office|level):(?<sid>[A-Za-z0-9-]{4,}))\|(?<label>[^\]]+)\]');
 
 /// Splits [body] into text and reference segments. A token that does
 /// not parse stays visible as plain text — a message never loses
@@ -58,8 +73,11 @@ List<NoteSegment> parseNoteBody(String body) {
     }
     final label = match.namedGroup('label')!;
     final rid = match.namedGroup('rid');
+    final qid = match.namedGroup('qid');
     if (rid != null) {
       segments.add(NoteReservationRef(id: rid, label: label));
+    } else if (qid != null) {
+      segments.add(NoteQuoteRef(id: qid, preview: label));
     } else {
       segments.add(NoteSpaceRef(
         kind: SpaceKind.values.byName(match.namedGroup('kind')!),
@@ -82,13 +100,31 @@ String notePlainText(String body) => [
           NoteText(:final text) => text,
           NoteReservationRef(:final label) => label,
           NoteSpaceRef(:final label) => label,
+          NoteQuoteRef(:final preview) => preview,
         },
     ].join();
 
 /// The 64-character list preview (field request): the notification
 /// list shows only the beginning; opening the message shows it all.
+///
+/// A LEADING quote is dropped (#798): the inbox row must show what this
+/// message says, not a rerun of the one it answers — which is also what
+/// every chat app shows in its list.
 String notePreview(String body, {int max = 64}) {
-  final plain = notePlainText(body).replaceAll('\n', ' ');
+  final segments = parseNoteBody(body);
+  final withoutQuote =
+      segments.isNotEmpty && segments.first is NoteQuoteRef
+          ? segments.skip(1)
+          : segments;
+  final plain = [
+    for (final segment in withoutQuote)
+      switch (segment) {
+        NoteText(:final text) => text,
+        NoteReservationRef(:final label) => label,
+        NoteSpaceRef(:final label) => label,
+        NoteQuoteRef(:final preview) => preview,
+      },
+  ].join().replaceAll('\n', ' ').trim();
   if (plain.length <= max) return plain;
   // Never split a surrogate pair — emojis are first-class here.
   var cut = max;
@@ -100,6 +136,33 @@ String notePreview(String body, {int max = 64}) {
 /// Builds a reservation token for the composer.
 String reservationToken(String id, String label) =>
     '[res:$id|${_safeLabel(label)}]';
+
+/// Splits a leading `[quote:…]` off [body].
+///
+/// The quote is rendered as a BLOCK above the message rather than inline
+/// with it, so the bubble needs the two halves apart. A quote anywhere
+/// else in the body is left where it is and renders inline.
+({NoteQuoteRef? quote, String rest}) splitLeadingQuote(String body) {
+  final segments = parseNoteBody(body);
+  if (segments.isEmpty || segments.first is! NoteQuoteRef) {
+    return (quote: null, rest: body);
+  }
+  final quote = segments.first as NoteQuoteRef;
+  final token = quoteTokenRaw(quote.id, quote.preview);
+  final rest = body.startsWith(token) ? body.substring(token.length) : body;
+  return (quote: quote, rest: rest.trimLeft());
+}
+
+/// The token exactly as it appears in a body, with no preview trimming —
+/// used to cut a parsed quote back out of the text it came from.
+String quoteTokenRaw(String id, String preview) => '[quote:$id|$preview]';
+
+/// Builds a quote token for the composer. The preview is trimmed to one
+/// line so a quoted paragraph does not swallow the reply.
+String quoteToken(String id, String preview) {
+  final oneLine = _safeLabel(preview.replaceAll('\n', ' '));
+  return '[quote:$id|${oneLine.length <= 80 ? oneLine : '${oneLine.substring(0, 79)}…'}]';
+}
 
 /// Builds a space token for the composer.
 String spaceToken(SpaceKind kind, String id, String label) =>

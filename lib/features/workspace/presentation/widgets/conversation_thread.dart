@@ -7,6 +7,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/member_note.dart';
+import '../../domain/member_note_refs.dart';
 import '../../../members/presentation/member_profile_link.dart';
 import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
@@ -57,7 +58,7 @@ Future<void> showConversationThread(
   );
 }
 
-class ConversationThread extends ConsumerWidget {
+class ConversationThread extends ConsumerStatefulWidget {
   const ConversationThread({
     super.key,
     required this.conversationId,
@@ -71,7 +72,17 @@ class ConversationThread extends ConsumerWidget {
   final String? seedBody;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConversationThread> createState() => _ConversationThreadState();
+}
+
+class _ConversationThreadState extends ConsumerState<ConversationThread> {
+  /// #798 — the message the next send will quote, set by swiping a
+  /// bubble right and cleared by sending or by the chip's close button.
+  ({String id, String preview})? _quoted;
+
+  @override
+  Widget build(BuildContext context) {
+    final conversationId = widget.conversationId;
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final me = ref.watch(myMemberProvider).value;
@@ -206,6 +217,12 @@ class ConversationThread extends ConsumerWidget {
                         return ConversationBubble(
                           note: note,
                           mine: note.fromMemberId == me?.id,
+                          onQuote: (quoted) => setState(() {
+                            _quoted = (
+                              id: quoted.id,
+                              preview: notePreview(quoted.body, max: 80),
+                            );
+                          }),
                           // A GROUP bubble names its sender; a direct one
                           // does not, because there is only one person it
                           // could be and repeating it is noise.
@@ -226,7 +243,9 @@ class ConversationThread extends ConsumerWidget {
               ),
               child: MemberNoteComposer(
                 autofocus: false,
-                seedBody: seedBody,
+                seedBody: widget.seedBody,
+                quoted: _quoted,
+                onCancelQuote: () => setState(() => _quoted = null),
                 onSend: (body) => _send(context, ref, body),
               ),
             ),
@@ -237,6 +256,7 @@ class ConversationThread extends ConsumerWidget {
   }
 
   Future<bool> _send(BuildContext context, WidgetRef ref, String body) async {
+    final conversationId = widget.conversationId;
     final l10n = AppLocalizations.of(context);
     final ok = await runGuarded(
       context,
@@ -249,6 +269,7 @@ class ConversationThread extends ConsumerWidget {
           .sendConversationMessage(conversationId, body),
     );
     if (!ok) return false;
+    if (mounted) setState(() => _quoted = null);
     // The thread shows it land, so no snack — but the LIST behind still
     // holds the old preview and order.
     ref

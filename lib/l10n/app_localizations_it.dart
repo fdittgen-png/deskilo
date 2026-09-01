@@ -1988,6 +1988,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureUniqueMonogramsTitle => 'Iniziali avatar distinte';
 
   @override
+  String get featureMessageGesturesTitle => 'Scorri per citare o ritirare';
+
+  @override
+  String get featureMessageGesturesDesc =>
+      'Scorri un messaggio verso destra per citarlo nella risposta; verso sinistra per ritirare il tuo messaggio finché nessuno l\'ha letto, previa conferma. Disattivato: i messaggi si eliminano tenendoli premuti.';
+
+  @override
   String get featureUniqueMonogramsDesc =>
       'Un avatar senza foto mostra iniziali che appartengono a un solo membro: iniziale del nome e del cognome, una lettera in più in caso di conflitto, numeri solo come ultima risorsa. Disattivato: solo la prima lettera, uguale per tutti quelli che la condividono.';
 
@@ -4023,6 +4030,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get memberNoteDeleteConfirm =>
       'Eliminare questo messaggio? Non si può annullare.';
+
+  @override
+  String get memberNoteDeleteRead =>
+      'Già letto: questo messaggio non può più essere ritirato.';
+
+  @override
+  String get memberNoteDeleteNotMine =>
+      'Solo il mittente può ritirare un messaggio.';
 
   @override
   String get memberNoteReply => 'Rispondi';

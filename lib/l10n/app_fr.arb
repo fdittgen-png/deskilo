@@ -1135,6 +1135,8 @@
   "featurePriceNegotiationsDesc": "Le tarif est la valeur par défaut ; un membre peut avoir ses propres conditions — abonnement, dépassement, remise sur les suppléments, prix unitaires par service et forfait, pourcentage d'occupation — proposées par qui détient « Gérer les accords commerciaux » et validées selon les règles. Vues par le membre, les propriétaires et les titulaires de « Consulter les accords commerciaux » ; chaque consultation est journalisée.",
   "featureScheduledExpensesTitle": "Dépenses programmées",
   "featureUniqueMonogramsTitle": "Initiales d’avatar distinctes",
+  "featureMessageGesturesTitle": "Balayer pour citer ou reprendre",
+  "featureMessageGesturesDesc": "Balayez un message vers la droite pour le citer dans votre réponse ; vers la gauche pour reprendre votre propre message tant que personne ne l'a lu, après confirmation. Désactivé : les messages se suppriment par appui long.",
   "featureUniqueMonogramsDesc": "Un avatar sans photo affiche des initiales propres à un seul membre : initiale du prénom et du nom, une lettre de plus en cas de collision, des chiffres seulement en dernier recours. Désactivé : la première lettre seule, identique pour tous ceux qui la partagent.",
   "featureScheduledExpensesDesc": "Dépenses récurrentes (internet, téléphone, électricité) : chaque membre en programme une avec sa règle (tous les X jours/semaines/mois/ans, X fois ou jusqu'à une date) ; la programmation est validée une fois, et chaque échéance est présentée au membre — le montant validé compte immédiatement, un montant différent s'explique et passe la validation des dépenses.",
   "helpTitle": "Aide",
@@ -2265,6 +2267,8 @@
     "description": "Delete button on a message (sheet + confirm dialog, #523)"
   },
   "memberNoteDeleteConfirm": "Supprimer ce message ? Cette action est irréversible.",
+  "memberNoteDeleteRead": "Déjà lu — ce message ne peut plus être repris.",
+  "memberNoteDeleteNotMine": "Seul l'expéditeur peut reprendre un message.",
   "@memberNoteDeleteConfirm": {
     "description": "Confirmation asked before any message delete — swipe or button (#523)"
   },

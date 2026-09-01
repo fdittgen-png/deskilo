@@ -1984,6 +1984,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureUniqueMonogramsTitle => 'Eindeutige Avatar-Initialen';
 
   @override
+  String get featureMessageGesturesTitle =>
+      'Wischen zum Zitieren oder Zurücknehmen';
+
+  @override
+  String get featureMessageGesturesDesc =>
+      'Wische eine Nachricht nach rechts, um sie in deiner Antwort zu zitieren; nach links, um deine eigene Nachricht zurückzunehmen, solange sie niemand gelesen hat — nach einer Bestätigung. Aus: Nachrichten werden durch langes Drücken gelöscht.';
+
+  @override
   String get featureUniqueMonogramsDesc =>
       'Ein Avatar ohne Foto zeigt Initialen, die zu genau einem Mitglied gehören: Anfangsbuchstabe von Vor- und Nachname, bei einer Kollision ein weiterer Buchstabe, Zahlen erst als letzter Ausweg. Aus: nur der erste Buchstabe, gleich für alle, die ihn teilen.';
 
@@ -4021,6 +4029,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get memberNoteDeleteConfirm =>
       'Diese Nachricht löschen? Das lässt sich nicht rückgängig machen.';
+
+  @override
+  String get memberNoteDeleteRead =>
+      'Schon gelesen — diese Nachricht kann nicht mehr zurückgenommen werden.';
+
+  @override
+  String get memberNoteDeleteNotMine =>
+      'Nur der Absender kann eine Nachricht zurücknehmen.';
 
   @override
   String get memberNoteReply => 'Antworten';

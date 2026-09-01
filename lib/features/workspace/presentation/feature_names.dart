@@ -111,6 +111,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureScheduledExpensesTitle ?? 'Scheduled expenses',
       WorkspaceFeature.uniqueMonograms =>
         l10n?.featureUniqueMonogramsTitle ?? 'Distinct avatar initials',
+      WorkspaceFeature.messageGestures =>
+        l10n?.featureMessageGesturesTitle ?? 'Swipe to quote or take back',
 
 
       WorkspaceFeature.dataAccessLog =>

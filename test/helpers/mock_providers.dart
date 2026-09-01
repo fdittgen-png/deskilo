@@ -1210,9 +1210,19 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   Future<List<MemberNote>> fetchMyNotes(String workspaceId) async =>
       memberNotes.reversed.toList();
 
+  /// Ids passed to [deleteMemberNote], in order (#798).
+  final List<String> deletedNotes = [];
+
   @override
   Future<void> deleteMemberNote(String noteId) async {
+    deletedNotes.add(noteId);
     memberNotes.removeWhere((n) => n.id == noteId);
+    // A deleted note leaves its THREAD too — the server deletes the row,
+    // and a fake that kept it there would let the thread show a message
+    // the database no longer has.
+    for (final thread in conversationMessages.values) {
+      thread.removeWhere((n) => n.id == noteId);
+    }
   }
 
   /// Whether the WhatsApp mirror channel is configured (0106 probe) —

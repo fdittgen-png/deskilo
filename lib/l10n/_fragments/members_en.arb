@@ -53,6 +53,8 @@
     "description": "Delete button on a message (sheet + confirm dialog, #523)"
   },
   "memberNoteDeleteConfirm": "Delete this message? This cannot be undone.",
+  "memberNoteDeleteRead": "Already read — this message can no longer be taken back.",
+  "memberNoteDeleteNotMine": "Only the sender can take a message back.",
   "@memberNoteDeleteConfirm": {
     "description": "Confirmation asked before any message delete — swipe or button (#523)"
   },

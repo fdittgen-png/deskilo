@@ -1969,6 +1969,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureUniqueMonogramsTitle => 'Distinct avatar initials';
 
   @override
+  String get featureMessageGesturesTitle => 'Swipe to quote or take back';
+
+  @override
+  String get featureMessageGesturesDesc =>
+      'Swipe a message right to quote it in your reply; swipe left to take your own message back while nobody has read it yet, after a confirmation. Off: messages are deleted by holding them.';
+
+  @override
   String get featureUniqueMonogramsDesc =>
       'An avatar without a photo shows initials that belong to one member: first and family initial, a further letter when two members would clash, numbers only as a last resort. Off: the first letter alone, repeated across everyone who shares it.';
 
@@ -3986,6 +3993,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get memberNoteDeleteConfirm =>
       'Delete this message? This cannot be undone.';
+
+  @override
+  String get memberNoteDeleteRead =>
+      'Already read — this message can no longer be taken back.';
+
+  @override
+  String get memberNoteDeleteNotMine =>
+      'Only the sender can take a message back.';
 
   @override
   String get memberNoteReply => 'Reply';

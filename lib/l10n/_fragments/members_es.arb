@@ -20,6 +20,8 @@
     "description": "Delete button on a message (sheet + confirm dialog, #523)"
   },
   "memberNoteDeleteConfirm": "¿Eliminar este mensaje? No se puede deshacer.",
+  "memberNoteDeleteRead": "Ya leído: este mensaje ya no se puede retirar.",
+  "memberNoteDeleteNotMine": "Solo quien lo envió puede retirar un mensaje.",
   "@memberNoteDeleteConfirm": {
     "description": "Confirmation asked before any message delete — swipe or button (#523)"
   },

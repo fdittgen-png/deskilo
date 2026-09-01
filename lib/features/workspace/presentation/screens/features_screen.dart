@@ -213,6 +213,9 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.scheduledExpenses =>
           l10n?.featureScheduledExpensesDesc ??
               'Recurring expenses (internet, phone, electricity): the schedule is validated once, every due date is confirmed by the member — the validated amount counts immediately, a deviation explains itself and passes the expense validation.',
+        WorkspaceFeature.messageGestures =>
+          l10n?.featureMessageGesturesDesc ??
+              'Swipe a message right to quote it in your reply; swipe left to take your own message back while nobody has read it yet, after a confirmation. Off: messages are deleted by holding them.',
         WorkspaceFeature.uniqueMonograms =>
           l10n?.featureUniqueMonogramsDesc ??
               'An avatar without a photo shows initials that belong to one member: first and family initial, a further letter when two members would clash, numbers only as a last resort. Off: the first letter alone, repeated across everyone who shares it.',

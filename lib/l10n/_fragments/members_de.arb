@@ -20,6 +20,8 @@
     "description": "Delete button on a message (sheet + confirm dialog, #523)"
   },
   "memberNoteDeleteConfirm": "Diese Nachricht löschen? Das lässt sich nicht rückgängig machen.",
+  "memberNoteDeleteRead": "Schon gelesen — diese Nachricht kann nicht mehr zurückgenommen werden.",
+  "memberNoteDeleteNotMine": "Nur der Absender kann eine Nachricht zurücknehmen.",
   "@memberNoteDeleteConfirm": {
     "description": "Confirmation asked before any message delete — swipe or button (#523)"
   },
