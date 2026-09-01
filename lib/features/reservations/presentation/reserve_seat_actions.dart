@@ -31,6 +31,7 @@ import '../../events/providers/event_providers.dart';
 import '../providers/default_period_controller.dart';
 import '../providers/reservation_providers.dart';
 import 'booking_feedback.dart';
+import 'booking_trace_points.dart';
 import 'widgets/booking_sheet.dart';
 import 'widgets/message_reserver.dart';
 import 'widgets/series_result_dialog.dart';
@@ -130,6 +131,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     // Closed day (#186): no sheet at all — the server would reject any
     // booking touching it (`assert_workspace_open`, migration 0013).
     if (!isWorkspaceOpenAt(window.start)) {
+      traceClosedDay(seat, window.start);
       AppSnack.info(
         context,
         l10n?.planClosedDay ?? 'Closed on this day',
@@ -138,6 +140,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       return;
     }
     final myMemberId = ref.read(myMemberProvider).value?.id;
+    if (myMemberId == null) traceMemberIdentityMissing(seat);
     // #687 — LIVE mode judges the seat at THIS INSTANT, browsing judges
     // it across the window.
     //
@@ -163,6 +166,13 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
             from: window.start,
             to: window.end,
           );
+    traceSeatTap(
+      seat: seat,
+      state: state,
+      live: isLive,
+      granularity: granularity,
+      member: myMemberId,
+    );
     switch (state) {
       case SeatState.blocked:
         // #687 — blocking MANAGEMENT lives here now. It used to say "that
@@ -183,7 +193,12 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         final mine = _coveringReservation(plan, seat, reservations, window);
         // #687 — MANAGEMENT, not just visibility: check in, check out,
         // cancel. The hub used to defer this to the Plan tab.
-        if (mine != null) await _mySeatSheet(seat, mine);
+        if (mine != null) {
+          await _mySeatSheet(seat, mine);
+        } else {
+          traceCoveringReservationMissing(
+              seat: seat, state: state, live: isLive);
+        }
       case SeatState.reserved:
       case SeatState.occupied:
         final other = _coveringReservation(plan, seat, reservations, window);
@@ -195,12 +210,20 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         // (#408 — live only, window open, bookForOthers gate) and
         // overrule, which removes the reservation with a notification
         // (#412 — any admin, any time). The server re-checks both.
-        final offerCheckIn = isLive &&
-            _canCheckInForOthers &&
-            other.checkInWindowOpen(
-              ref.read(clockProvider).now(),
-              granularity: granularity,
-            );
+        final windowOpen = other.checkInWindowOpen(
+          ref.read(clockProvider).now(),
+          granularity: granularity,
+        );
+        final offerCheckIn = isLive && _canCheckInForOthers && windowOpen;
+        if (!offerCheckIn) {
+          traceCheckInNotOffered(
+            seat: seat,
+            other: other,
+            live: isLive,
+            mayCheckInOthers: _canCheckInForOthers,
+            windowOpen: windowOpen,
+          );
+        }
         final canOverrule =
             ref.read(myMemberProvider).value?.canAdminister ?? false;
         if (offerCheckIn || canOverrule) {
@@ -311,13 +334,23 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
   /// clock decides, never the browsed instant.
   Future<void> _mySeatSheet(Seat seat, Reservation mine) async {
     final l10n = AppLocalizations.of(context);
+    final now = ref.read(clockProvider).now();
+    final windowOpen = mine.checkInWindowOpen(now, granularity: granularity);
+    traceMySeatSheet(
+      seat: seat,
+      mine: mine,
+      windowOpen: windowOpen,
+      now: now,
+      granularity: granularity,
+    );
     final action = await showMySeatSheet(
       context,
       seat: seat,
       mine: mine,
-      now: ref.read(clockProvider).now(),
+      now: now,
       granularity: granularity,
     );
+    traceMySeatAction(mine: mine, action: action, windowOpen: windowOpen);
     if (action == null || !mounted) return;
     final repo = ref.read(reservationRepositoryProvider);
     try {
@@ -520,6 +553,10 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
           replace: true,
         );
       } else if (choice.pattern == null) {
+        if (!walkUp && !choice.checkInNow && liveWindow) {
+          traceReserveWithoutCheckIn(
+              seat: seat, start: choice.start, end: choice.end);
+        }
         await ref.read(reservationRepositoryProvider).create(
               workspaceId: workspace.id,
               seatId: seat.id,

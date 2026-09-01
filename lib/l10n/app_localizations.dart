@@ -10634,6 +10634,12 @@ abstract class AppLocalizations {
   /// **'Point the camera at the invitation QR — the code is taken over and joined automatically.'**
   String get scanJoinHelp;
 
+  /// Join-QR scanner: the QR decoded but is not an invitation (#791)
+  ///
+  /// In en, this message translates to:
+  /// **'That QR is not a DesKilo invitation — scan the one from the invitation message.'**
+  String get scanJoinNotAnInvite;
+
   /// Button exporting the workspace QR as a PNG via the share sheet (#112)
   ///
   /// In en, this message translates to:

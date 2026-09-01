@@ -6022,6 +6022,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Richte die Kamera auf den Einladungs-QR — der Code wird übernommen und der Beitritt läuft automatisch.';
 
   @override
+  String get scanJoinNotAnInvite =>
+      'Dieser QR ist keine DesKilo-Einladung — scanne den aus der Einladungsnachricht.';
+
+  @override
   String get workspaceCodeSharePng => 'Als PNG teilen';
 
   @override

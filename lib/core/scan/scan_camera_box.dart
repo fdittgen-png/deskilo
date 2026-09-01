@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../theme/app_radius.dart';
+import '../trace/act_trace.dart';
 import 'front_camera.dart';
 import 'qr_scan_widget.dart';
 
@@ -11,7 +12,7 @@ import 'qr_scan_widget.dart';
 /// the injectable scanner plus a FLIP button (field request) that
 /// switches between the front and back lens on the spot. The flip
 /// writes the same device preference as Settings, so the choice sticks.
-class ScanCameraBox extends ConsumerWidget {
+class ScanCameraBox extends ConsumerStatefulWidget {
   const ScanCameraBox({
     super.key,
     required this.cameraKey,
@@ -33,7 +34,40 @@ class ScanCameraBox extends ConsumerWidget {
   final bool defaultFront;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ScanCameraBox> createState() => _ScanCameraBoxState();
+}
+
+class _ScanCameraBoxState extends ConsumerState<ScanCameraBox> {
+  /// The lens the trace last reported, so a rebuild does not repeat it.
+  bool? _tracedLens;
+
+  /// #791 — which lens actually opened, once per change.
+  ///
+  /// "The scanner does not recognise the barcode" has two very different
+  /// causes: a camera pointed at the wrong thing (the front-lens default
+  /// of #773) and a code that decodes but is refused downstream. The
+  /// first is invisible without this line — nothing else in the trace
+  /// says a camera ever started, let alone which one.
+  void _traceLens(bool front) {
+    if (_tracedLens == front) return;
+    _tracedLens = front;
+    ActTrace.scan.step('camera-open', {
+      'lens': front ? 'front' : 'back',
+      'surface': widget.cameraKey.toString(),
+      'default': widget.defaultFront ? 'front' : 'back',
+    });
+  }
+
+  void _onCode(String payload) {
+    ActTrace.scan.step('decoded', {
+      'shape': ActTrace.payloadShape(payload),
+      'surface': widget.cameraKey.toString(),
+    });
+    widget.onCode(payload);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     // Watched: flipping rebuilds the scanner with the other lens.
     final builder = ref.watch(qrScanWidgetBuilderProvider);
@@ -64,7 +98,7 @@ class ScanCameraBox extends ConsumerWidget {
       return ClipRRect(
         borderRadius: AppRadius.mdAll,
         child: SizedBox(
-          key: cameraKey,
+          key: widget.cameraKey,
           height: 220,
           child: const Center(child: CircularProgressIndicator()),
         ),
@@ -72,11 +106,12 @@ class ScanCameraBox extends ConsumerWidget {
     }
     // An unreadable preference falls back to the surface's own default —
     // and still mounts ONCE.
-    final front = lens.value ?? defaultFront;
+    final front = lens.value ?? widget.defaultFront;
+    _traceLens(front);
     return ClipRRect(
       borderRadius: AppRadius.mdAll,
       child: SizedBox(
-        key: cameraKey,
+        key: widget.cameraKey,
         height: 220,
         child: Stack(
           fit: StackFit.expand,
@@ -85,7 +120,7 @@ class ScanCameraBox extends ConsumerWidget {
             // remount to open the other camera.
             KeyedSubtree(
               key: ValueKey('scan-camera-$front'),
-              child: builder(onCode: onCode, front: front),
+              child: builder(onCode: _onCode, front: front),
             ),
             Positioned(
               top: 4,

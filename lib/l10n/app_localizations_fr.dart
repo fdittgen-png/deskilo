@@ -6034,6 +6034,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Visez le QR d’invitation avec la caméra — le code est repris et l’adhésion se fait automatiquement.';
 
   @override
+  String get scanJoinNotAnInvite =>
+      'Ce QR n’est pas une invitation DesKilo — scannez celui du message d’invitation.';
+
+  @override
   String get workspaceCodeSharePng => 'Partager en PNG';
 
   @override

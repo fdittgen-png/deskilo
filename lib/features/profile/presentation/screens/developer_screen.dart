@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/app_info.dart';
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -50,7 +51,18 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
     final logger = ref.read(traceLoggerProvider);
     final save = ref.read(fileSaverProvider);
     try {
-      final content = await logger.exportContent();
+      // #791 — stamp the export with WHOSE app it is. A trace almost
+      // never gets read on the device that wrote it: the member who could
+      // not check in exports theirs and sends the file on, and an
+      // unlabelled wall of timestamps cannot be matched to the report,
+      // the workspace, or the build it came from.
+      final content = await logger.exportContent(header: [
+        'DesKilo trace',
+        'app: ${ref.read(appVersionProvider).value ?? 'unknown'}',
+        'workspace: ${ref.read(currentWorkspaceProvider).value?.id ?? '-'}',
+        'member: ${ref.read(myMemberProvider).value?.id ?? '-'}',
+        'exported: ${ref.read(clockProvider).now().toIso8601String()}',
+      ]);
       final stamp = DateFormat('yyyyMMdd-HHmm').format(ref.read(clockProvider).now());
       final path = await save(
         bytes: utf8.encode(content),
