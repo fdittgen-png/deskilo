@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.api.ApkVariantOutputImpl
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -78,6 +79,32 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+        }
+    }
+}
+
+// #795 — per-ABI versionCodes for F-Droid's split builds, in the scheme
+// their reviewer prescribed on fdroid/fdroiddata!47409.
+//
+// F-Droid publishes one APK per ABI and always installs the HIGHEST
+// version code a device can take, keeping only the newest codes in the
+// main repo. So the ABI digit has to sit in the LOWEST position and the
+// order must be armeabi-v7a < arm64-v8a < x86_64 — otherwise a phone
+// that could run arm64 is offered the 32-bit build forever, and an
+// older release's x86_64 code could outrank a newer release's arm one.
+//
+// versionCode * 10 + abi, matching `VercodeOperation` in the recipe.
+// Harmless to the store trains: they build a universal APK/AAB, which
+// has no ABI filter and so is never rewritten here.
+val abiCodes = mapOf("armeabi-v7a" to 1, "arm64-v8a" to 2, "x86_64" to 3)
+android.applicationVariants.configureEach {
+    val variant = this
+    variant.outputs.forEach { output ->
+        val abiVersionCode =
+            abiCodes[output.filters.find { it.filterType == "ABI" }?.identifier]
+        if (abiVersionCode != null) {
+            (output as ApkVariantOutputImpl).versionCodeOverride =
+                variant.versionCode * 10 + abiVersionCode
         }
     }
 }
