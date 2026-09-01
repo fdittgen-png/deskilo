@@ -1984,6 +1984,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureScheduledExpensesTitle => 'Gastos programados';
 
   @override
+  String get featureUniqueMonogramsTitle => 'Iniciales de avatar distintas';
+
+  @override
+  String get featureUniqueMonogramsDesc =>
+      'Un avatar sin foto muestra iniciales que pertenecen a un solo miembro: inicial del nombre y del apellido, una letra más si dos coinciden, y números solo como último recurso. Desactivado: solo la primera letra, repetida en todos los que la comparten.';
+
+  @override
   String get featureScheduledExpensesDesc =>
       'Gastos recurrentes (internet, teléfono, electricidad): cualquier miembro programa uno con su regla (cada X días/semanas/meses/años, X veces o hasta una fecha); la programación se valida una vez, y cada vencimiento se presenta al miembro — el importe validado cuenta de inmediato, un importe distinto se explica y pasa la validación de gastos.';
 

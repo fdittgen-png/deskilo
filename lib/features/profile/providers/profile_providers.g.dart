@@ -195,3 +195,79 @@ final class MemberAvatarFamily extends $Family
   @override
   String toString() => r'memberAvatarProvider';
 }
+
+/// #793 — the monogram each member's avatar shows, keyed by auth user id
+/// (what [MemberAvatar] holds) rather than member id.
+///
+/// Computed for the whole workspace at once, because uniqueness is a
+/// property of the SET: no row can pick its own letters without knowing
+/// what the others took. Empty while the feature is off or the member
+/// list has not arrived — the avatar then falls back to the single first
+/// letter it always drew, which is also the right answer for a face the
+/// member list does not cover (a former member on an old message).
+
+@ProviderFor(memberMonograms)
+final memberMonogramsProvider = MemberMonogramsProvider._();
+
+/// #793 — the monogram each member's avatar shows, keyed by auth user id
+/// (what [MemberAvatar] holds) rather than member id.
+///
+/// Computed for the whole workspace at once, because uniqueness is a
+/// property of the SET: no row can pick its own letters without knowing
+/// what the others took. Empty while the feature is off or the member
+/// list has not arrived — the avatar then falls back to the single first
+/// letter it always drew, which is also the right answer for a face the
+/// member list does not cover (a former member on an old message).
+
+final class MemberMonogramsProvider
+    extends
+        $FunctionalProvider<
+          Map<String, String>,
+          Map<String, String>,
+          Map<String, String>
+        >
+    with $Provider<Map<String, String>> {
+  /// #793 — the monogram each member's avatar shows, keyed by auth user id
+  /// (what [MemberAvatar] holds) rather than member id.
+  ///
+  /// Computed for the whole workspace at once, because uniqueness is a
+  /// property of the SET: no row can pick its own letters without knowing
+  /// what the others took. Empty while the feature is off or the member
+  /// list has not arrived — the avatar then falls back to the single first
+  /// letter it always drew, which is also the right answer for a face the
+  /// member list does not cover (a former member on an old message).
+  MemberMonogramsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'memberMonogramsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$memberMonogramsHash();
+
+  @$internal
+  @override
+  $ProviderElement<Map<String, String>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  Map<String, String> create(Ref ref) {
+    return memberMonograms(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Map<String, String> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Map<String, String>>(value),
+    );
+  }
+}
+
+String _$memberMonogramsHash() => r'6a7e79089faf0af2d991eb22468644531318f06a';

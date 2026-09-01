@@ -1981,6 +1981,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureScheduledExpensesTitle => 'Geplante Ausgaben';
 
   @override
+  String get featureUniqueMonogramsTitle => 'Eindeutige Avatar-Initialen';
+
+  @override
+  String get featureUniqueMonogramsDesc =>
+      'Ein Avatar ohne Foto zeigt Initialen, die zu genau einem Mitglied gehören: Anfangsbuchstabe von Vor- und Nachname, bei einer Kollision ein weiterer Buchstabe, Zahlen erst als letzter Ausweg. Aus: nur der erste Buchstabe, gleich für alle, die ihn teilen.';
+
+  @override
   String get featureScheduledExpensesDesc =>
       'Wiederkehrende Ausgaben (Internet, Telefon, Strom): jedes Mitglied plant sie mit ihrer Regel (alle X Tage/Wochen/Monate/Jahre, X Mal oder bis zu einem Datum); der Plan wird einmal validiert, und jede Fälligkeit wird dem Mitglied vorgelegt — der validierte Betrag zählt sofort, ein abweichender erklärt sich und durchläuft die Ausgaben-Validierung.';
 

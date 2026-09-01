@@ -109,6 +109,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featurePriceNegotiationsTitle ?? 'Price negotiations',
       WorkspaceFeature.scheduledExpenses =>
         l10n?.featureScheduledExpensesTitle ?? 'Scheduled expenses',
+      WorkspaceFeature.uniqueMonograms =>
+        l10n?.featureUniqueMonogramsTitle ?? 'Distinct avatar initials',
 
 
       WorkspaceFeature.dataAccessLog =>
