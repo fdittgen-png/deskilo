@@ -916,6 +916,46 @@ class AppLocalizationsIt extends AppLocalizations {
       'Invia un documento a zero, come conferma che l’abbonamento ha coperto tutto il mese.';
 
   @override
+  String get invoiceKindSubscription => 'Abbonamento, in anticipo';
+
+  @override
+  String get invoiceKindUsage => 'Gli extra del mese';
+
+  @override
+  String get invoiceKindSettlement => 'Fatture raggruppate';
+
+  @override
+  String get invoiceKindFull => 'Mese intero';
+
+  @override
+  String get settlementRegroups => 'Questa fattura raggruppa';
+
+  @override
+  String get settlementVatNote =>
+      'L\'IVA resta dichiarata sulle fatture qui sopra; questo documento raggruppa solo il dovuto.';
+
+  @override
+  String get settlementSettledBy =>
+      'Raggruppata in un’altra fattura: è quella a essere dovuta e sollecitata.';
+
+  @override
+  String get settlementAction => 'Raggruppa in una fattura';
+
+  @override
+  String settlementConfirm(int count, String amount) {
+    return 'Raggruppare $count fatture in una da $amount?';
+  }
+
+  @override
+  String settlementDone(String number) {
+    return 'Raggruppate in $number.';
+  }
+
+  @override
+  String get settlementNeedsTwo =>
+      'Scegli almeno due fatture aperte dello stesso membro.';
+
+  @override
   String get reservationExtendButton => 'Restare più a lungo';
 
   @override
@@ -2048,6 +2088,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featureUsageInvoicesDesc =>
       'Finito il mese, quanto è realmente costato oltre l\'abbonamento — eccedenze, supplementi, servizi — è fatturato a parte. Disattivato: resta sulla fattura del mese.';
+
+  @override
+  String get featureInvoiceSettlementTitle => 'Raggruppa le fatture';
+
+  @override
+  String get featureInvoiceSettlementDesc =>
+      'Più fatture aperte di un membro possono essere raggruppate in una sola da pagare. Le originali restano nell\'archivio, tracciabili voce per voce, e non vengono più sollecitate separatamente.';
 
   @override
   String featureAlsoEnabled(String features) {

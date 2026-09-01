@@ -569,6 +569,34 @@
       }
     }
   },
+  "invoiceKindSubscription": "Abbonamento, in anticipo",
+  "invoiceKindUsage": "Gli extra del mese",
+  "invoiceKindSettlement": "Fatture raggruppate",
+  "invoiceKindFull": "Mese intero",
+  "settlementRegroups": "Questa fattura raggruppa",
+  "settlementVatNote": "L'IVA resta dichiarata sulle fatture qui sopra; questo documento raggruppa solo il dovuto.",
+  "settlementSettledBy": "Raggruppata in un’altra fattura: è quella a essere dovuta e sollecitata.",
+  "settlementAction": "Raggruppa in una fattura",
+  "settlementConfirm": "Raggruppare {count} fatture in una da {amount}?",
+  "settlementDone": "Raggruppate in {number}.",
+  "settlementNeedsTwo": "Scegli almeno due fatture aperte dello stesso membro.",
+  "@settlementConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@settlementDone": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "reservationExtendButton": "Restare più a lungo",
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"
@@ -1163,6 +1191,8 @@
   "featureSubscriptionInvoicesDesc": "La quota è fatturata prima del mese che paga, in una data scelta da te. Disattivato: la quota resta sulla fattura del mese.",
   "featureUsageInvoicesTitle": "Fatture di fine mese",
   "featureUsageInvoicesDesc": "Finito il mese, quanto è realmente costato oltre l'abbonamento — eccedenze, supplementi, servizi — è fatturato a parte. Disattivato: resta sulla fattura del mese.",
+  "featureInvoiceSettlementTitle": "Raggruppa le fatture",
+  "featureInvoiceSettlementDesc": "Più fatture aperte di un membro possono essere raggruppate in una sola da pagare. Le originali restano nell'archivio, tracciabili voce per voce, e non vengono più sollecitate separatamente.",
   "featureAlsoEnabled": "Attivato anche: {features}",
   "featureAlsoEnables": "Attivando questa si abilita anche {features}",
   "featureHeldBack": "In attesa della funzione qui sopra: attivala e anche questa torna a funzionare.",

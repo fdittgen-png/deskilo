@@ -67,17 +67,34 @@ List<String> monogramLadder(String name) {
 
 /// Unique monograms for [names], keyed the same way [names] is.
 ///
-/// Assignment walks the entries in a fixed order — name first, key as
-/// the tie-break — so every device computes the same answer for the same
-/// workspace, and the list's own sort order (or a row rebuilding) can
-/// never reshuffle who owns which letters.
+/// Assignment is FIRST COME, FIRST SERVED (#793): [order] gives each key
+/// its join instant, and a member who joined earlier keeps the letters
+/// they were given no matter who arrives later. Without it the sort
+/// falls back to the name, which is deterministic but not stable — a new
+/// member whose name sorted earlier would take an existing member's
+/// monogram and hand them a longer one.
+///
+/// Ties (and members with no recorded join) break on the key, so two
+/// devices always compute the same answer for the same workspace.
 ///
 /// Only names whose ladders actually COLLIDE are affected: `Mathieu`
 /// keeps `M` and `mathieu.bouchard` takes `MB` because those are their
 /// first choices, not because anything was resolved between them.
-Map<String, String> assignMonograms(Map<String, String> names) {
+Map<String, String> assignMonograms(
+  Map<String, String> names, {
+  Map<String, DateTime?> order = const {},
+}) {
   final entries = names.entries.toList()
     ..sort((a, b) {
+      final aJoined = order[a.key];
+      final bJoined = order[b.key];
+      if (aJoined != null && bJoined != null && aJoined != bJoined) {
+        return aJoined.compareTo(bJoined);
+      }
+      // A known join always precedes an unknown one: the member who can
+      // prove they were here first is the one who keeps their letters.
+      if (aJoined != null && bJoined == null) return -1;
+      if (aJoined == null && bJoined != null) return 1;
       final byName =
           a.value.toLowerCase().compareTo(b.value.toLowerCase());
       return byName != 0 ? byName : a.key.compareTo(b.key);

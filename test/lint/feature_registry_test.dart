@@ -56,7 +56,9 @@ import 'package:flutter_test/flutter_test.dart';
 // to take back an unread message.
 // 56→58 (2026-09-01): #802 subscriptionInvoices + usageInvoices — the
 // subscription billed ahead of its month, the extras billed after it.
-const int _expectedFeatureCount = 58;
+// 58→59 (2026-09-01): #804 invoiceSettlement — several open invoices
+// regrouped into one, originals kept and traceable.
+const int _expectedFeatureCount = 59;
 
 void main() {
   test('every functionality is registered — the pin', () {

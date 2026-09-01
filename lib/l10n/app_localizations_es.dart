@@ -914,6 +914,46 @@ class AppLocalizationsEs extends AppLocalizations {
       'Envía un documento a cero, como confirmación de que la suscripción cubrió todo el mes.';
 
   @override
+  String get invoiceKindSubscription => 'Suscripción, por adelantado';
+
+  @override
+  String get invoiceKindUsage => 'Los extras del mes';
+
+  @override
+  String get invoiceKindSettlement => 'Facturas agrupadas';
+
+  @override
+  String get invoiceKindFull => 'Mes completo';
+
+  @override
+  String get settlementRegroups => 'Esta factura agrupa';
+
+  @override
+  String get settlementVatNote =>
+      'El IVA sigue declarado en las facturas anteriores; este documento solo agrupa lo que se debe.';
+
+  @override
+  String get settlementSettledBy =>
+      'Agrupada en otra factura: esa es la que se debe y se reclama.';
+
+  @override
+  String get settlementAction => 'Agrupar en una factura';
+
+  @override
+  String settlementConfirm(int count, String amount) {
+    return '¿Agrupar $count facturas en una de $amount?';
+  }
+
+  @override
+  String settlementDone(String number) {
+    return 'Agrupadas en $number.';
+  }
+
+  @override
+  String get settlementNeedsTwo =>
+      'Elige al menos dos facturas abiertas del mismo miembro.';
+
+  @override
   String get reservationExtendButton => 'Quedarse más tiempo';
 
   @override
@@ -2047,6 +2087,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featureUsageInvoicesDesc =>
       'Cuando el mes termina, lo que realmente costó más allá de la suscripción — excesos, suplementos, servicios — se factura aparte. Desactivado: eso sigue en la factura del mes.';
+
+  @override
+  String get featureInvoiceSettlementTitle => 'Agrupar facturas';
+
+  @override
+  String get featureInvoiceSettlementDesc =>
+      'Varias facturas abiertas de un miembro pueden agruparse en una sola que paga. Las originales siguen en el archivo, trazables posición por posición, y dejan de reclamarse por separado.';
 
   @override
   String featureAlsoEnabled(String features) {

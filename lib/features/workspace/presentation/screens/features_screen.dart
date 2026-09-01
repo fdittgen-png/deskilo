@@ -220,6 +220,9 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.usageInvoices =>
           l10n?.featureUsageInvoicesDesc ??
               'Once a month is over, what it actually cost beyond the subscription — overage, accessories, services — is invoiced separately. Off: those stay on the whole-month invoice.',
+        WorkspaceFeature.invoiceSettlement =>
+          l10n?.featureInvoiceSettlementDesc ??
+              'Several of a member\'s open invoices can be regrouped into one they pay. The originals stay in the archive, traceable position by position, and stop being chased separately.',
         WorkspaceFeature.messageGestures =>
           l10n?.featureMessageGesturesDesc ??
               'Swipe a message right to quote it in your reply; swipe left to take your own message back while nobody has read it yet, after a confirmation. Off: messages are deleted by holding them.',

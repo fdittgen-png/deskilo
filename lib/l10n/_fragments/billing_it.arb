@@ -68,5 +68,22 @@
   "billingUsageWhenZeroHint": "Invia un documento a zero, come conferma che l’abbonamento ha coperto tutto il mese.",
   "@billingSubscriptionWhen": {
     "placeholders": {"day": {"type": "String"}, "month": {"type": "String"}}
+  },
+  "invoiceKindSubscription": "Abbonamento, in anticipo",
+  "invoiceKindUsage": "Gli extra del mese",
+  "invoiceKindSettlement": "Fatture raggruppate",
+  "invoiceKindFull": "Mese intero",
+  "settlementRegroups": "Questa fattura raggruppa",
+  "settlementVatNote": "L'IVA resta dichiarata sulle fatture qui sopra; questo documento raggruppa solo il dovuto.",
+  "settlementSettledBy": "Raggruppata in un’altra fattura: è quella a essere dovuta e sollecitata.",
+  "settlementAction": "Raggruppa in una fattura",
+  "settlementConfirm": "Raggruppare {count} fatture in una da {amount}?",
+  "settlementDone": "Raggruppate in {number}.",
+  "settlementNeedsTwo": "Scegli almeno due fatture aperte dello stesso membro.",
+  "@settlementConfirm": {
+    "placeholders": {"count": {"type": "int"}, "amount": {"type": "String"}}
+  },
+  "@settlementDone": {
+    "placeholders": {"number": {"type": "String"}}
   }
 }

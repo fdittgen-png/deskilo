@@ -915,6 +915,46 @@ class AppLocalizationsFr extends AppLocalizations {
       'Envoie un document à zéro, comme confirmation que l’abonnement a couvert tout le mois.';
 
   @override
+  String get invoiceKindSubscription => 'Abonnement, à l’avance';
+
+  @override
+  String get invoiceKindUsage => 'Les extras du mois';
+
+  @override
+  String get invoiceKindSettlement => 'Factures regroupées';
+
+  @override
+  String get invoiceKindFull => 'Mois entier';
+
+  @override
+  String get settlementRegroups => 'Cette facture regroupe';
+
+  @override
+  String get settlementVatNote =>
+      'La TVA reste déclarée sur les factures ci-dessus ; ce document ne regroupe que ce qui est dû.';
+
+  @override
+  String get settlementSettledBy =>
+      'Regroupée dans une autre facture — c’est celle-là qui est due et relancée.';
+
+  @override
+  String get settlementAction => 'Regrouper en une facture';
+
+  @override
+  String settlementConfirm(int count, String amount) {
+    return 'Regrouper $count factures en une seule de $amount ?';
+  }
+
+  @override
+  String settlementDone(String number) {
+    return 'Regroupées dans $number.';
+  }
+
+  @override
+  String get settlementNeedsTwo =>
+      'Choisissez au moins deux factures ouvertes du même membre.';
+
+  @override
   String get reservationExtendButton => 'Rester plus longtemps';
 
   @override
@@ -2051,6 +2091,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureUsageInvoicesDesc =>
       'Une fois le mois terminé, ce qu\'il a réellement coûté au-delà de l\'abonnement — dépassements, suppléments, services — est facturé à part. Désactivé : cela reste sur la facture du mois.';
+
+  @override
+  String get featureInvoiceSettlementTitle => 'Regrouper les factures';
+
+  @override
+  String get featureInvoiceSettlementDesc =>
+      'Plusieurs factures ouvertes d\'un membre peuvent être regroupées en une seule qu\'il paie. Les originales restent dans l\'archive, traçables poste par poste, et ne sont plus relancées séparément.';
 
   @override
   String featureAlsoEnabled(String features) {

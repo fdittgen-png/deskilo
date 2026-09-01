@@ -76,6 +76,13 @@ sealed class Member with _$Member {
     /// Co-ownership (0058): active = owner permissions now + automatic
     /// succession; passive = successor-in-waiting.
     @Default(CoOwnerStatus.none) CoOwnerStatus coOwner,
+
+    /// When this member joined the workspace (`members.joined_at`).
+    ///
+    /// #793 — it is what lets the avatar monograms be first-come,
+    /// first-served: the letters a member is given never move again
+    /// because someone with an earlier name joined later.
+    DateTime? joinedAt,
   }) = _Member;
 
   /// Admin capability (owners inherit it, spec §2).

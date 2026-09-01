@@ -53,9 +53,14 @@ Map<String, String> memberMonograms(Ref ref) {
   if (!features.contains(WorkspaceFeature.uniqueMonograms)) return const {};
   final members = ref.watch(workspaceMembersProvider).value ?? const <Member>[];
   final names = ref.watch(memberNamesProvider).value ?? const <String, String>{};
-  return assignMonograms({
-    for (final member in members)
-      if ((names[member.id] ?? '').trim().isNotEmpty)
-        member.userId: names[member.id]!,
-  });
+  return assignMonograms(
+    {
+      for (final member in members)
+        if ((names[member.id] ?? '').trim().isNotEmpty)
+          member.userId: names[member.id]!,
+    },
+    // First come, first served: a member's letters never move because
+    // somebody else joined later.
+    order: {for (final member in members) member.userId: member.joinedAt},
+  );
 }

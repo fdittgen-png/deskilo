@@ -569,6 +569,34 @@
       }
     }
   },
+  "invoiceKindSubscription": "Abonnement, à l’avance",
+  "invoiceKindUsage": "Les extras du mois",
+  "invoiceKindSettlement": "Factures regroupées",
+  "invoiceKindFull": "Mois entier",
+  "settlementRegroups": "Cette facture regroupe",
+  "settlementVatNote": "La TVA reste déclarée sur les factures ci-dessus ; ce document ne regroupe que ce qui est dû.",
+  "settlementSettledBy": "Regroupée dans une autre facture — c’est celle-là qui est due et relancée.",
+  "settlementAction": "Regrouper en une facture",
+  "settlementConfirm": "Regrouper {count} factures en une seule de {amount} ?",
+  "settlementDone": "Regroupées dans {number}.",
+  "settlementNeedsTwo": "Choisissez au moins deux factures ouvertes du même membre.",
+  "@settlementConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@settlementDone": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "reservationExtendButton": "Rester plus longtemps",
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"
@@ -1163,6 +1191,8 @@
   "featureSubscriptionInvoicesDesc": "La cotisation est facturée avant le mois qu'elle paie, à une date que vous choisissez. Désactivé : la cotisation reste sur la facture du mois.",
   "featureUsageInvoicesTitle": "Factures de fin de mois",
   "featureUsageInvoicesDesc": "Une fois le mois terminé, ce qu'il a réellement coûté au-delà de l'abonnement — dépassements, suppléments, services — est facturé à part. Désactivé : cela reste sur la facture du mois.",
+  "featureInvoiceSettlementTitle": "Regrouper les factures",
+  "featureInvoiceSettlementDesc": "Plusieurs factures ouvertes d'un membre peuvent être regroupées en une seule qu'il paie. Les originales restent dans l'archive, traçables poste par poste, et ne sont plus relancées séparément.",
   "featureAlsoEnabled": "Également activé : {features}",
   "featureAlsoEnables": "Activer ceci active aussi {features}",
   "featureHeldBack": "En attente de la fonction au-dessus — activez-la et celle-ci fonctionne de nouveau.",

@@ -138,6 +138,41 @@ sealed class InvoiceParty with _$InvoiceParty {
       );
 }
 
+/// One invoice folded into a settlement (#804), snapshotted when it was
+/// regrouped — number, period, kind, total AND its positions, so the
+/// settlement stays readable as a trail back to what it consolidated
+/// even if a source is corrected afterwards.
+@freezed
+sealed class SettledSource with _$SettledSource {
+  const factory SettledSource({
+    required String invoiceId,
+    required String number,
+    String? period,
+    @Default(InvoiceKind.full) InvoiceKind kind,
+    required int totalCents,
+    @Default([]) List<InvoiceLine> lines,
+  }) = _SettledSource;
+
+  factory SettledSource.fromSnapshot(Map<dynamic, dynamic> json) =>
+      SettledSource(
+        invoiceId: json['invoice_id'] as String? ?? '',
+        number: json['number'] as String? ?? '',
+        period: json['period'] as String?,
+        kind: InvoiceKind.fromWire(json['kind'] as String?),
+        totalCents: (json['total_cents'] as num?)?.toInt() ?? 0,
+        lines: [
+          for (final line in (json['lines'] as List? ?? const []))
+            InvoiceLine(
+              kind: (line as Map)['kind'] as String? ?? '',
+              label: line['label'] as String? ?? '',
+              quantity: (line['quantity'] as num?)?.toInt() ?? 1,
+              amountCents: (line['amount_cents'] as num?)?.toInt() ?? 0,
+              vatPercent: (line['vat_percent'] as num?)?.toDouble() ?? 0,
+            ),
+        ],
+      );
+}
+
 /// An IMMUTABLE invoice from the archive (0060): every displayed detail
 /// is a SNAPSHOT taken at issue time — names, addresses and the issuer
 /// can change later without ever rewriting an issued document. The
@@ -191,6 +226,14 @@ sealed class Invoice with _$Invoice {
     /// regrouping of several, or the historical whole month. Every
     /// pre-0142 row reads [InvoiceKind.full], which is what it is.
     @Default(InvoiceKind.full) InvoiceKind kind,
+
+    /// #804 — the settlement that now carries this invoice's balance.
+    /// The document itself is untouched: it stays exactly as issued and
+    /// simply stops being separately owed.
+    String? settledByInvoiceId,
+
+    /// #804 — on a settlement, what it consolidated.
+    @Default([]) List<SettledSource> settles,
   }) = _Invoice;
 
   /// Sum of the positive positions — the gross the invoice charges before
@@ -251,6 +294,11 @@ sealed class Invoice with _$Invoice {
             ),
         ],
         kind: InvoiceKind.fromWire(row['kind'] as String?),
+        settledByInvoiceId: row['settled_by_invoice_id'] as String?,
+        settles: [
+          for (final source in (row['settles'] as List? ?? const []))
+            SettledSource.fromSnapshot(source as Map),
+        ],
         totalCents: (row['total_cents'] as num).toInt(),
         currency: row['currency'] as String,
         memberName: row['member_name'] as String? ?? '',

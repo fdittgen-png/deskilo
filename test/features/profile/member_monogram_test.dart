@@ -115,4 +115,47 @@ void main() {
       expect(after['u-m'], before['u-m']);
     });
   });
+
+  group('#793 — first come, first served', () {
+    test('a later joiner never takes an earlier member\'s letters', () {
+      // "Ana" sorts before "Bob", but Bob was here first. Sorting by name
+      // would have handed Ana the M and pushed Bob to a longer form.
+      const names = {'u-bob': 'Mathieu', 'u-ana': 'Mathieu'};
+      final assigned = assignMonograms(names, order: {
+        'u-bob': DateTime.utc(2024),
+        'u-ana': DateTime.utc(2026),
+      });
+      expect(assigned['u-bob'], 'M');
+      expect(assigned['u-ana'], isNot('M'));
+    });
+
+    test('adding a member does not move anyone already there', () {
+      const before = {'u-1': 'Mathieu'};
+      final order = {
+        'u-1': DateTime.utc(2024) as DateTime?,
+        'u-2': DateTime.utc(2026) as DateTime?,
+      };
+      final first = assignMonograms(before, order: order);
+      final after = assignMonograms(
+        {...before, 'u-2': 'Mathieu'},
+        order: order,
+      );
+      expect(after['u-1'], first['u-1'],
+          reason: 'an existing member keeps the circle they already had');
+    });
+
+    test('a member with a known join beats one without', () {
+      final assigned = assignMonograms(
+        const {'u-known': 'Mathieu', 'u-unknown': 'Mathieu'},
+        order: {'u-known': DateTime.utc(2025), 'u-unknown': null},
+      );
+      expect(assigned['u-known'], 'M');
+    });
+
+    test('with no order at all it still resolves, deterministically', () {
+      const names = {'u-b': 'Mathieu', 'u-a': 'Mathieu'};
+      expect(assignMonograms(names), assignMonograms(names));
+      expect(assignMonograms(names).values.toSet(), hasLength(2));
+    });
+  });
 }

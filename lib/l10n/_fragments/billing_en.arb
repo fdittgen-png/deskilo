@@ -256,5 +256,23 @@
   "@billingSubscriptionWhen": {
     "description": "Invoice schedule: when a subscription invoice goes out and the month it charges (#802)",
     "placeholders": {"day": {"type": "String"}, "month": {"type": "String"}}
+  },
+  "invoiceKindSubscription": "Subscription, in advance",
+  "invoiceKindUsage": "The month's extras",
+  "invoiceKindSettlement": "Regrouped invoices",
+  "invoiceKindFull": "Whole month",
+  "settlementRegroups": "This invoice regroups",
+  "settlementVatNote": "VAT stays declared on the invoices above; this document only regroups what is owed.",
+  "settlementSettledBy": "Regrouped into another invoice — that one is what is owed and chased.",
+  "settlementAction": "Regroup into one invoice",
+  "settlementConfirm": "Regroup {count} invoices into one of {amount}?",
+  "settlementDone": "Regrouped into {number}.",
+  "settlementNeedsTwo": "Pick at least two open invoices of the same member.",
+  "@settlementConfirm": {
+    "description": "Confirm regrouping N invoices into one (#804)",
+    "placeholders": {"count": {"type": "int"}, "amount": {"type": "String"}}
+  },
+  "@settlementDone": {
+    "placeholders": {"number": {"type": "String"}}
   }
 }

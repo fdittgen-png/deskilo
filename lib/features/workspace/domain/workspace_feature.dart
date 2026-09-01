@@ -84,7 +84,11 @@ enum WorkspaceFeature {
   /// #802 — the end-of-month invoice for what the month actually cost
   /// beyond the subscription. Off, the extras stay on the whole-month
   /// invoice.
-  usageInvoices;
+  usageInvoices,
+
+  /// #804 — several open invoices regrouped into one the member pays,
+  /// with the originals kept and traceable.
+  invoiceSettlement;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -310,6 +314,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   ),
   WorkspaceFeature.usageInvoices: FeatureManifestEntry(
     feature: WorkspaceFeature.usageInvoices,
+    requires: WorkspaceFeature.invoicing,
+  ),
+  // #804 — regrouping several open invoices into one demand. Useful with
+  // the two above and independent of them: a workspace that never split
+  // its invoices can still consolidate a member's arrears.
+  WorkspaceFeature.invoiceSettlement: FeatureManifestEntry(
+    feature: WorkspaceFeature.invoiceSettlement,
     requires: WorkspaceFeature.invoicing,
   ),
   // #798 — swipe a message right to quote it, left to take it back

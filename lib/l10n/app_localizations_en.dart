@@ -910,6 +910,46 @@ class AppLocalizationsEn extends AppLocalizations {
       'Sends a document reading zero, as confirmation that the subscription covered the whole month.';
 
   @override
+  String get invoiceKindSubscription => 'Subscription, in advance';
+
+  @override
+  String get invoiceKindUsage => 'The month\'s extras';
+
+  @override
+  String get invoiceKindSettlement => 'Regrouped invoices';
+
+  @override
+  String get invoiceKindFull => 'Whole month';
+
+  @override
+  String get settlementRegroups => 'This invoice regroups';
+
+  @override
+  String get settlementVatNote =>
+      'VAT stays declared on the invoices above; this document only regroups what is owed.';
+
+  @override
+  String get settlementSettledBy =>
+      'Regrouped into another invoice — that one is what is owed and chased.';
+
+  @override
+  String get settlementAction => 'Regroup into one invoice';
+
+  @override
+  String settlementConfirm(int count, String amount) {
+    return 'Regroup $count invoices into one of $amount?';
+  }
+
+  @override
+  String settlementDone(String number) {
+    return 'Regrouped into $number.';
+  }
+
+  @override
+  String get settlementNeedsTwo =>
+      'Pick at least two open invoices of the same member.';
+
+  @override
   String get reservationExtendButton => 'Stay longer';
 
   @override
@@ -2029,6 +2069,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureUsageInvoicesDesc =>
       'Once a month is over, what it actually cost beyond the subscription — overage, accessories, services — is invoiced separately. Off: those stay on the whole-month invoice.';
+
+  @override
+  String get featureInvoiceSettlementTitle => 'Regroup invoices';
+
+  @override
+  String get featureInvoiceSettlementDesc =>
+      'Several of a member\'s open invoices can be regrouped into one they pay. The originals stay in the archive, traceable position by position, and stop being chased separately.';
 
   @override
   String featureAlsoEnabled(String features) {
