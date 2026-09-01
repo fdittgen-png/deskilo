@@ -4,6 +4,7 @@ import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/expense_schedule.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
+import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/domain/price_negotiation.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
@@ -248,6 +249,30 @@ class FakeMoneyRepository implements MoneyRepository {
     DunningRules rules,
   ) async {
     dunningRules = rules;
+  }
+
+  /// #802 — when the two automatic invoice runs happen.
+  BillingRules billingRules = BillingRules.defaults;
+
+  /// Workspaces passed to [sweepBillingInvoices], in order.
+  final List<String> billingSweeps = [];
+
+  @override
+  Future<BillingRules> fetchBillingRules(String workspaceId) async =>
+      billingRules;
+
+  @override
+  Future<void> setBillingRules(
+    String workspaceId,
+    BillingRules rules,
+  ) async {
+    billingRules = rules;
+  }
+
+  @override
+  Future<int> sweepBillingInvoices(String workspaceId) async {
+    billingSweeps.add(workspaceId);
+    return 0;
   }
 
   /// Mirrors invoice_lines_for (0062): positions derive EXCLUSIVELY

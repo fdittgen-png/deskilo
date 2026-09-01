@@ -32,7 +32,9 @@ Future<FakeWorkspaceRepository> pumpFeatures(
   // Ten manifest features no longer fit the default 800×600 surface and
   // the lazy list drops off-screen tiles; keep every switch mounted.
   // #759 lengthened four descriptions, so the list outgrew 5600 px.
-  tester.view.physicalSize = const Size(800, 7200);
+  // #800 gave every tile a second note line, and #802 added two more
+  // features — 7200 px stopped fitting the last two switches.
+  tester.view.physicalSize = const Size(800, 9600);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final workspace =

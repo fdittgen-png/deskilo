@@ -546,6 +546,29 @@
   "payFieldWebhookSecret": "Webhook-Signaturgeheimnis",
   "payFieldApiKey": "API-Schlüssel",
   "paymentProviderWero": "Wero (über Mollie)",
+  "billingRulesTitle": "Rechnungsplan",
+  "billingRulesSubtitle": "Wann Abo- und Monatsabschluss-Rechnungen rausgehen",
+  "billingRulesSaved": "Rechnungsplan gespeichert.",
+  "billingSubscriptionSection": "Abo, im Voraus",
+  "billingSubscriptionAuto": "Automatisch erstellen",
+  "billingSubscriptionOff": "Schalte „Abo-Rechnungen“ unter Funktionen ein, um das zu nutzen.",
+  "billingAdvanceDays": "Tage vor Monatsbeginn",
+  "billingSubscriptionWhen": "Erstellt am {day} für {month}",
+  "billingUsageSection": "Der gerade beendete Monat",
+  "billingUsageAuto": "Automatisch erstellen",
+  "billingUsageOff": "Schalte „Monatsabschluss-Rechnungen“ unter Funktionen ein, um das zu nutzen.",
+  "billingUsageWhenZero": "Auch wenn nichts zu zahlen ist",
+  "billingUsageWhenZeroHint": "Sendet ein Dokument über null — als Bestätigung, dass das Abo den ganzen Monat abgedeckt hat.",
+  "@billingSubscriptionWhen": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
   "reservationExtendButton": "Länger bleiben",
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"
@@ -1136,6 +1159,10 @@
   "featureScheduledExpensesTitle": "Geplante Ausgaben",
   "featureUniqueMonogramsTitle": "Eindeutige Avatar-Initialen",
   "featureMessageGesturesTitle": "Wischen zum Zitieren oder Zurücknehmen",
+  "featureSubscriptionInvoicesTitle": "Abo-Rechnungen",
+  "featureSubscriptionInvoicesDesc": "Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum deiner Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.",
+  "featureUsageInvoicesTitle": "Monatsabschluss-Rechnungen",
+  "featureUsageInvoicesDesc": "Ist ein Monat vorbei, wird getrennt berechnet, was er über das Abo hinaus gekostet hat — Mehrverbrauch, Zubehör, Leistungen. Aus: Das bleibt auf der Monatsrechnung.",
   "featureAlsoEnabled": "Ebenfalls eingeschaltet: {features}",
   "featureAlsoEnables": "Das schaltet außerdem {features} ein",
   "featureHeldBack": "Wartet auf die Funktion darüber — schalte sie ein, dann wirkt auch diese wieder.",

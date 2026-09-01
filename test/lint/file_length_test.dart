@@ -125,7 +125,9 @@ const Map<String, int> _baseline = {
   // credits, baked-credit filter).
   // 1370→1410 (2026-08-05): #494 the engine-based workspace report tile.
   // 1410→1440 (2026-08-05): #496 the language chain on the workspace report.
-  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1440,
+  // 1440→1465 (2026-09-01): #802 the invoice-schedule entry beside the
+  // reminder rules — issuing and chasing are one conversation.
+  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1465,
   // 600→640 (2026-08-05): #492 the request-deletion dialog + flow.
   // 640→760 (2026-08-22): #574 the running-booking extension flow.
   // 760→880 (2026-08-25): #638 the symmetric END-EARLIER flow — the
@@ -164,7 +166,9 @@ const Map<String, int> _baseline = {
   'lib/features/plan/data/supabase_floor_plan_repository.dart': 630,
   // 1040→1130 (2026-08-31): #767 the six scheduled-expense methods live
   // beside the other money RPC wrappers they mirror.
-  'lib/features/money/data/supabase_money_repository.dart': 1130, // 2026-08-30 #739 negotiation RPCs
+  // 1130→1150 (2026-09-01): #802 the billing-rules read/write pair and
+  // the manual sweep trigger.
+  'lib/features/money/data/supabase_money_repository.dart': 1150, // 2026-08-30 #739 negotiation RPCs
   // 600→630 (2026-08-11): #537 VAT price transparency — the gross-price
   // hint + per-pack VAT/currency subtitles (labeling, no new concern).
   // 630→660 (2026-08-11): #537 follow-up — live VAT-share helpers under

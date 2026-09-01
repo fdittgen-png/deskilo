@@ -546,6 +546,29 @@
   "payFieldWebhookSecret": "Secret de signature du webhook",
   "payFieldApiKey": "Clé API",
   "paymentProviderWero": "Wero (via Mollie)",
+  "billingRulesTitle": "Calendrier de facturation",
+  "billingRulesSubtitle": "Quand partent les factures d’abonnement et de fin de mois",
+  "billingRulesSaved": "Calendrier de facturation enregistré.",
+  "billingSubscriptionSection": "Abonnement, à l’avance",
+  "billingSubscriptionAuto": "Émettre automatiquement",
+  "billingSubscriptionOff": "Activez « Factures d’abonnement » dans Fonctionnalités pour l’utiliser.",
+  "billingAdvanceDays": "Jours avant le début du mois",
+  "billingSubscriptionWhen": "Émise le {day} pour {month}",
+  "billingUsageSection": "Le mois qui vient de finir",
+  "billingUsageAuto": "Émettre automatiquement",
+  "billingUsageOff": "Activez « Factures de fin de mois » dans Fonctionnalités pour l’utiliser.",
+  "billingUsageWhenZero": "Même s’il n’y a rien à payer",
+  "billingUsageWhenZeroHint": "Envoie un document à zéro, comme confirmation que l’abonnement a couvert tout le mois.",
+  "@billingSubscriptionWhen": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
   "reservationExtendButton": "Rester plus longtemps",
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"
@@ -1136,6 +1159,10 @@
   "featureScheduledExpensesTitle": "Dépenses programmées",
   "featureUniqueMonogramsTitle": "Initiales d’avatar distinctes",
   "featureMessageGesturesTitle": "Balayer pour citer ou reprendre",
+  "featureSubscriptionInvoicesTitle": "Factures d'abonnement",
+  "featureSubscriptionInvoicesDesc": "La cotisation est facturée avant le mois qu'elle paie, à une date que vous choisissez. Désactivé : la cotisation reste sur la facture du mois.",
+  "featureUsageInvoicesTitle": "Factures de fin de mois",
+  "featureUsageInvoicesDesc": "Une fois le mois terminé, ce qu'il a réellement coûté au-delà de l'abonnement — dépassements, suppléments, services — est facturé à part. Désactivé : cela reste sur la facture du mois.",
   "featureAlsoEnabled": "Également activé : {features}",
   "featureAlsoEnables": "Activer ceci active aussi {features}",
   "featureHeldBack": "En attente de la fonction au-dessus — activez-la et celle-ci fonctionne de nouveau.",

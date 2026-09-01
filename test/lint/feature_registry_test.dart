@@ -54,7 +54,9 @@ import 'package:flutter_test/flutter_test.dart';
 // one member instead of repeating across everyone who shares a letter.
 // 55→56 (2026-09-01): #798 messageGestures — swipe right to quote, left
 // to take back an unread message.
-const int _expectedFeatureCount = 56;
+// 56→58 (2026-09-01): #802 subscriptionInvoices + usageInvoices — the
+// subscription billed ahead of its month, the extras billed after it.
+const int _expectedFeatureCount = 58;
 
 void main() {
   test('every functionality is registered — the pin', () {

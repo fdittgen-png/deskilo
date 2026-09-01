@@ -214,6 +214,12 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.scheduledExpenses =>
           l10n?.featureScheduledExpensesDesc ??
               'Recurring expenses (internet, phone, electricity): the schedule is validated once, every due date is confirmed by the member — the validated amount counts immediately, a deviation explains itself and passes the expense validation.',
+        WorkspaceFeature.subscriptionInvoices =>
+          l10n?.featureSubscriptionInvoicesDesc ??
+              'The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.',
+        WorkspaceFeature.usageInvoices =>
+          l10n?.featureUsageInvoicesDesc ??
+              'Once a month is over, what it actually cost beyond the subscription — overage, accessories, services — is invoiced separately. Off: those stay on the whole-month invoice.',
         WorkspaceFeature.messageGestures =>
           l10n?.featureMessageGesturesDesc ??
               'Swipe a message right to quote it in your reply; swipe left to take your own message back while nobody has read it yet, after a confirmation. Off: messages are deleted by holding them.',

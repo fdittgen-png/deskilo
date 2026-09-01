@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../domain/invoice.dart';
 import '../domain/vat_declaration.dart';
 import '../domain/member_account.dart';
+import '../domain/billing_rules.dart';
 import '../domain/dunning.dart';
 import '../domain/price_negotiation.dart';
 import '../domain/invoice_pdf_template.dart';
@@ -221,6 +222,35 @@ class SupabaseMoneyRepository implements MoneyRepository {
     return DunningRules.fromJson(
       row['dunning_rules'] as Map<String, dynamic>? ?? const {},
     );
+  }
+
+  @override
+  Future<BillingRules> fetchBillingRules(String workspaceId) async {
+    final row = await _client
+        .from('workspaces')
+        .select('billing_rules')
+        .eq('id', workspaceId)
+        .single();
+    return BillingRules.fromJson(
+      row['billing_rules'] as Map<String, dynamic>? ?? const {},
+    );
+  }
+
+  @override
+  Future<void> setBillingRules(String workspaceId, BillingRules rules) async {
+    // Same path as the dunning rules: the workspace row's own RLS decides
+    // who may write it, so there is no RPC to keep in step with it.
+    await _client
+        .from('workspaces')
+        .update({'billing_rules': rules.toJson()}).eq('id', workspaceId);
+  }
+
+  @override
+  Future<int> sweepBillingInvoices(String workspaceId) async {
+    final result = await _client.rpc<dynamic>('sweep_billing_invoices', params: {
+      'p_workspace_id': workspaceId,
+    });
+    return (result as num?)?.toInt() ?? 0;
   }
 
   @override

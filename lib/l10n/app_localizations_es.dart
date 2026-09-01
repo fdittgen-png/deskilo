@@ -869,6 +869,51 @@ class AppLocalizationsEs extends AppLocalizations {
   String get paymentProviderWero => 'Wero (con Mollie)';
 
   @override
+  String get billingRulesTitle => 'Calendario de facturación';
+
+  @override
+  String get billingRulesSubtitle =>
+      'Cuándo salen las facturas de suscripción y de fin de mes';
+
+  @override
+  String get billingRulesSaved => 'Calendario de facturación guardado.';
+
+  @override
+  String get billingSubscriptionSection => 'Suscripción, por adelantado';
+
+  @override
+  String get billingSubscriptionAuto => 'Emitir automáticamente';
+
+  @override
+  String get billingSubscriptionOff =>
+      'Activa «Facturas de suscripción» en Funciones para usarlo.';
+
+  @override
+  String get billingAdvanceDays => 'Días antes de que empiece el mes';
+
+  @override
+  String billingSubscriptionWhen(String day, String month) {
+    return 'Emitida el $day para $month';
+  }
+
+  @override
+  String get billingUsageSection => 'El mes recién terminado';
+
+  @override
+  String get billingUsageAuto => 'Emitir automáticamente';
+
+  @override
+  String get billingUsageOff =>
+      'Activa «Facturas de fin de mes» en Funciones para usarlo.';
+
+  @override
+  String get billingUsageWhenZero => 'También cuando no hay nada que pagar';
+
+  @override
+  String get billingUsageWhenZeroHint =>
+      'Envía un documento a cero, como confirmación de que la suscripción cubrió todo el mes.';
+
+  @override
   String get reservationExtendButton => 'Quedarse más tiempo';
 
   @override
@@ -1988,6 +2033,20 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureMessageGesturesTitle => 'Deslizar para citar o retirar';
+
+  @override
+  String get featureSubscriptionInvoicesTitle => 'Facturas de suscripción';
+
+  @override
+  String get featureSubscriptionInvoicesDesc =>
+      'La cuota se factura antes del mes que paga, en la fecha que elijas. Desactivado: la cuota sigue en la factura del mes.';
+
+  @override
+  String get featureUsageInvoicesTitle => 'Facturas de fin de mes';
+
+  @override
+  String get featureUsageInvoicesDesc =>
+      'Cuando el mes termina, lo que realmente costó más allá de la suscripción — excesos, suplementos, servicios — se factura aparte. Desactivado: eso sigue en la factura del mes.';
 
   @override
   String featureAlsoEnabled(String features) {

@@ -1592,6 +1592,84 @@ abstract class AppLocalizations {
   /// **'Wero (via Mollie)'**
   String get paymentProviderWero;
 
+  /// No description provided for @billingRulesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice schedule'**
+  String get billingRulesTitle;
+
+  /// No description provided for @billingRulesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'When subscription and end-of-month invoices go out'**
+  String get billingRulesSubtitle;
+
+  /// No description provided for @billingRulesSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice schedule saved.'**
+  String get billingRulesSaved;
+
+  /// No description provided for @billingSubscriptionSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription, in advance'**
+  String get billingSubscriptionSection;
+
+  /// No description provided for @billingSubscriptionAuto.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue automatically'**
+  String get billingSubscriptionAuto;
+
+  /// No description provided for @billingSubscriptionOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch on “Subscription invoices” in Features to use this.'**
+  String get billingSubscriptionOff;
+
+  /// No description provided for @billingAdvanceDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Days before the month starts'**
+  String get billingAdvanceDays;
+
+  /// Invoice schedule: when a subscription invoice goes out and the month it charges (#802)
+  ///
+  /// In en, this message translates to:
+  /// **'Issued on {day} for {month}'**
+  String billingSubscriptionWhen(String day, String month);
+
+  /// No description provided for @billingUsageSection.
+  ///
+  /// In en, this message translates to:
+  /// **'The month just finished'**
+  String get billingUsageSection;
+
+  /// No description provided for @billingUsageAuto.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue automatically'**
+  String get billingUsageAuto;
+
+  /// No description provided for @billingUsageOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch on “End-of-month invoices” in Features to use this.'**
+  String get billingUsageOff;
+
+  /// No description provided for @billingUsageWhenZero.
+  ///
+  /// In en, this message translates to:
+  /// **'Also when there is nothing to pay'**
+  String get billingUsageWhenZero;
+
+  /// No description provided for @billingUsageWhenZeroHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Sends a document reading zero, as confirmation that the subscription covered the whole month.'**
+  String get billingUsageWhenZeroHint;
+
   /// Detail sheet: extend a running booking's end (#574)
   ///
   /// In en, this message translates to:
@@ -3565,6 +3643,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Swipe to quote or take back'**
   String get featureMessageGesturesTitle;
+
+  /// No description provided for @featureSubscriptionInvoicesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription invoices'**
+  String get featureSubscriptionInvoicesTitle;
+
+  /// No description provided for @featureSubscriptionInvoicesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.'**
+  String get featureSubscriptionInvoicesDesc;
+
+  /// No description provided for @featureUsageInvoicesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'End-of-month invoices'**
+  String get featureUsageInvoicesTitle;
+
+  /// No description provided for @featureUsageInvoicesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Once a month is over, what it actually cost beyond the subscription — overage, accessories, services — is invoiced separately. Off: those stay on the whole-month invoice.'**
+  String get featureUsageInvoicesDesc;
 
   /// Snack naming the dependencies switched on with a feature (#800)
   ///

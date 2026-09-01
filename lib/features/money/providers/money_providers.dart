@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../core/trace/traced.dart';
 
 import '../domain/invoice.dart';
+import '../domain/billing_rules.dart';
 import '../domain/dunning.dart';
 import '../domain/price_negotiation.dart';
 import '../domain/invoice_pdf_template.dart';
@@ -231,6 +232,15 @@ Future<DunningRules> dunningRules(Ref ref) async {
   return ref
       .watch(moneyRepositoryProvider)
       .fetchDunningRules(workspace.id);
+}
+
+/// #802 — when the two automatic invoice runs happen; defaults while
+/// nothing is stored, which is what every workspace starts with.
+@Riverpod(keepAlive: true)
+Future<BillingRules> billingRules(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return BillingRules.defaults;
+  return ref.watch(moneyRepositoryProvider).fetchBillingRules(workspace.id);
 }
 
 /// The member's REAL cross-month position (#512): credit on account,
