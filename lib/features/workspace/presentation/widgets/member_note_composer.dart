@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -25,6 +26,8 @@ class MemberNoteComposer extends ConsumerStatefulWidget {
     required this.onSend,
     this.autofocus = true,
     this.seedBody,
+    this.quoted,
+    this.onCancelQuote,
   });
 
   /// Called with the trimmed body; returns true when it went out (the
@@ -36,6 +39,14 @@ class MemberNoteComposer extends ConsumerStatefulWidget {
   /// the conversation is about); the caret lands after it so the
   /// member just types around the reference.
   final String? seedBody;
+
+  /// #798 — the message being replied to, shown above the field.
+  ///
+  /// Composer STATE rather than text in the field: the token is built at
+  /// send time, so a quote cannot be half-deleted by a stray backspace
+  /// into something that no longer parses.
+  final ({String id, String preview})? quoted;
+  final VoidCallback? onCancelQuote;
 
   @override
   ConsumerState<MemberNoteComposer> createState() =>
@@ -249,8 +260,14 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
   }
 
   Future<void> _send() async {
-    final body = _body.text.trim();
-    if (body.isEmpty || _sending) return;
+    final typed = _body.text.trim();
+    if (typed.isEmpty || _sending) return;
+    final quoted = widget.quoted;
+    // The quote leads the body: the bubble splits it back off and
+    // renders it as the block above the reply.
+    final body = quoted == null
+        ? typed
+        : '${quoteToken(quoted.id, quoted.preview)}\n$typed';
     setState(() => _sending = true);
     final sent = await widget.onSend(body);
     if (!mounted) return;
@@ -263,10 +280,45 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final quoted = widget.quoted;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        if (quoted != null)
+          Container(
+            key: const ValueKey('composer-quote'),
+            margin: const EdgeInsets.only(bottom: 4),
+            padding: const EdgeInsets.fromLTRB(8, 4, 0, 4),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+              borderRadius: AppRadius.smAll,
+              border: Border(
+                left: BorderSide(
+                  color: Theme.of(context).colorScheme.primary,
+                  width: 3,
+                ),
+              ),
+            ),
+            child: Row(children: [
+              Expanded(
+                child: Text(
+                  quoted.preview,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontStyle: FontStyle.italic,
+                      ),
+                ),
+              ),
+              IconButton(
+                key: const ValueKey('composer-quote-cancel'),
+                icon: const Icon(Icons.close, size: 18),
+                tooltip: l10n?.commonCancel ?? 'Cancel',
+                onPressed: widget.onCancelQuote,
+              ),
+            ]),
+          ),
         TextField(
           key: const ValueKey('member-note-body'),
           controller: _body,

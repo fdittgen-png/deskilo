@@ -20,6 +20,8 @@
     "description": "Delete button on a message (sheet + confirm dialog, #523)"
   },
   "memberNoteDeleteConfirm": "Supprimer ce message ? Cette action est irréversible.",
+  "memberNoteDeleteRead": "Déjà lu — ce message ne peut plus être repris.",
+  "memberNoteDeleteNotMine": "Seul l'expéditeur peut reprendre un message.",
   "@memberNoteDeleteConfirm": {
     "description": "Confirmation asked before any message delete — swipe or button (#523)"
   },

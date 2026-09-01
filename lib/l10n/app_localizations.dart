@@ -3560,6 +3560,18 @@ abstract class AppLocalizations {
   /// **'Distinct avatar initials'**
   String get featureUniqueMonogramsTitle;
 
+  /// No description provided for @featureMessageGesturesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe to quote or take back'**
+  String get featureMessageGesturesTitle;
+
+  /// No description provided for @featureMessageGesturesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe a message right to quote it in your reply; swipe left to take your own message back while nobody has read it yet, after a confirmation. Off: messages are deleted by holding them.'**
+  String get featureMessageGesturesDesc;
+
   /// No description provided for @featureUniqueMonogramsDesc.
   ///
   /// In en, this message translates to:
@@ -7105,6 +7117,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete this message? This cannot be undone.'**
   String get memberNoteDeleteConfirm;
+
+  /// No description provided for @memberNoteDeleteRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Already read — this message can no longer be taken back.'**
+  String get memberNoteDeleteRead;
+
+  /// No description provided for @memberNoteDeleteNotMine.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the sender can take a message back.'**
+  String get memberNoteDeleteNotMine;
 
   /// Reply button on the full-message sheet (#523)
   ///

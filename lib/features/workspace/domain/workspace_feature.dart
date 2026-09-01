@@ -70,7 +70,12 @@ enum WorkspaceFeature {
   /// the first and family name, lengthened on a clash and numbered only
   /// when the letters run out. OFF keeps the single first letter, which
   /// drew three identical `M` circles in a workspace of three Mathieus.
-  uniqueMonograms;
+  uniqueMonograms,
+
+  /// #798 — the two swipes on a message everyone already knows from
+  /// their phone: RIGHT quotes it into the reply, LEFT takes an unread
+  /// message back after confirming. OFF leaves the long-press delete.
+  messageGestures;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -284,6 +289,10 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.kioskMemberPhotos,
     requires: WorkspaceFeature.kioskMode,
   ),
+  // #798 — swipe a message right to quote it, left to take it back
+  // while it is still unread.
+  WorkspaceFeature.messageGestures:
+      FeatureManifestEntry(feature: WorkspaceFeature.messageGestures),
   // #793 — monograms that tell members apart wherever an avatar has no
   // photo to show.
   WorkspaceFeature.uniqueMonograms:

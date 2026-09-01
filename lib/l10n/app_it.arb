@@ -1135,6 +1135,8 @@
   "featurePriceNegotiationsDesc": "La tariffa è il valore predefinito; un membro può avere condizioni proprie — canone mensile, tariffa di superamento, sconto sui supplementi, prezzi unitari per servizio e pacchetto, percentuale di occupazione — proposte da chi detiene «Gestire gli accordi commerciali» e validate secondo le regole. Le vedono il membro, i proprietari e chi ha «Consultare gli accordi commerciali»; ogni consultazione è registrata.",
   "featureScheduledExpensesTitle": "Spese programmate",
   "featureUniqueMonogramsTitle": "Iniziali avatar distinte",
+  "featureMessageGesturesTitle": "Scorri per citare o ritirare",
+  "featureMessageGesturesDesc": "Scorri un messaggio verso destra per citarlo nella risposta; verso sinistra per ritirare il tuo messaggio finché nessuno l'ha letto, previa conferma. Disattivato: i messaggi si eliminano tenendoli premuti.",
   "featureUniqueMonogramsDesc": "Un avatar senza foto mostra iniziali che appartengono a un solo membro: iniziale del nome e del cognome, una lettera in più in caso di conflitto, numeri solo come ultima risorsa. Disattivato: solo la prima lettera, uguale per tutti quelli che la condividono.",
   "featureScheduledExpensesDesc": "Spese ricorrenti (internet, telefono, elettricità): ogni membro ne programma una con la sua regola (ogni X giorni/settimane/mesi/anni, X volte o fino a una data); la programmazione è validata una volta, e ogni scadenza è presentata al membro — l’importo validato conta subito, un importo diverso si spiega e passa la validazione delle spese.",
   "helpHintLearnMore": "Scopri di più",
@@ -2265,6 +2267,8 @@
     "description": "Delete button on a message (sheet + confirm dialog, #523)"
   },
   "memberNoteDeleteConfirm": "Eliminare questo messaggio? Non si può annullare.",
+  "memberNoteDeleteRead": "Già letto: questo messaggio non può più essere ritirato.",
+  "memberNoteDeleteNotMine": "Solo il mittente può ritirare un messaggio.",
   "@memberNoteDeleteConfirm": {
     "description": "Confirmation asked before any message delete — swipe or button (#523)"
   },

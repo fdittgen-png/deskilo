@@ -52,7 +52,9 @@ import 'package:flutter_test/flutter_test.dart';
 // 53→54 (2026-08-31): #767 scheduledExpenses.
 // 54→55 (2026-09-01): #793 uniqueMonograms — avatar initials that name
 // one member instead of repeating across everyone who shares a letter.
-const int _expectedFeatureCount = 55;
+// 55→56 (2026-09-01): #798 messageGestures — swipe right to quote, left
+// to take back an unread message.
+const int _expectedFeatureCount = 56;
 
 void main() {
   test('every functionality is registered — the pin', () {

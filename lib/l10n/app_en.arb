@@ -2302,6 +2302,8 @@
   "featurePriceNegotiationsDesc": "The tariff is the default; a member can hold their own conditions — monthly fee, overage rate, discount on supplements, unit prices per service and package, the occupation percentage — proposed by whoever holds Manage commercial agreements and validated by the rules. Seen by the member, the owners and the holders of View commercial agreements; every read is logged.",
   "featureScheduledExpensesTitle": "Scheduled expenses",
   "featureUniqueMonogramsTitle": "Distinct avatar initials",
+  "featureMessageGesturesTitle": "Swipe to quote or take back",
+  "featureMessageGesturesDesc": "Swipe a message right to quote it in your reply; swipe left to take your own message back while nobody has read it yet, after a confirmation. Off: messages are deleted by holding them.",
   "featureUniqueMonogramsDesc": "An avatar without a photo shows initials that belong to one member: first and family initial, a further letter when two members would clash, numbers only as a last resort. Off: the first letter alone, repeated across everyone who shares it.",
   "featureScheduledExpensesDesc": "Recurring expenses (internet, phone, electricity): any member schedules one with its rule (every X days/weeks/months/years, X times or until a date); the schedule is validated once, and every due date is presented to the member — the validated amount counts immediately, a different amount explains itself and passes the expense validation.",
   "helpTitle": "Help",
@@ -4395,6 +4397,8 @@
     "description": "Delete button on a message (sheet + confirm dialog, #523)"
   },
   "memberNoteDeleteConfirm": "Delete this message? This cannot be undone.",
+  "memberNoteDeleteRead": "Already read — this message can no longer be taken back.",
+  "memberNoteDeleteNotMine": "Only the sender can take a message back.",
   "@memberNoteDeleteConfirm": {
     "description": "Confirmation asked before any message delete — swipe or button (#523)"
   },
