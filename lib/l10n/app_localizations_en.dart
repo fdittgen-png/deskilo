@@ -1966,6 +1966,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureScheduledExpensesTitle => 'Scheduled expenses';
 
   @override
+  String get featureUniqueMonogramsTitle => 'Distinct avatar initials';
+
+  @override
+  String get featureUniqueMonogramsDesc =>
+      'An avatar without a photo shows initials that belong to one member: first and family initial, a further letter when two members would clash, numbers only as a last resort. Off: the first letter alone, repeated across everyone who shares it.';
+
+  @override
   String get featureScheduledExpensesDesc =>
       'Recurring expenses (internet, phone, electricity): any member schedules one with its rule (every X days/weeks/months/years, X times or until a date); the schedule is validated once, and every due date is presented to the member — the validated amount counts immediately, a different amount explains itself and passes the expense validation.';
 

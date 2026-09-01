@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domain/member_monogram.dart';
 import '../../providers/profile_providers.dart';
 
 /// A member's avatar (0038): their uploaded photo when they set one, the
@@ -22,7 +23,9 @@ class MemberAvatar extends ConsumerWidget {
   /// auth.users id — the avatar bucket folder and provider key.
   final String userId;
 
-  /// Display name; its first letter is the fallback glyph.
+  /// Display name. #793 — the fallback glyph is the member's monogram
+  /// when the workspace's member list can supply a unique one, and the
+  /// plain first letter otherwise.
   final String name;
 
   /// Whether the member's profile carries a photo (`Profile.hasAvatar`).
@@ -36,7 +39,11 @@ class MemberAvatar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final initial = name.trim().isEmpty ? '?' : name.trim()[0].toUpperCase();
+    // #793 — one member, one monogram. The map is keyed by user id and
+    // is empty while the feature is off or the member list is still
+    // loading, so an unknown face keeps the historical single letter.
+    final initial =
+        ref.watch(memberMonogramsProvider)[userId] ?? plainInitial(name);
     final bg = backgroundColor ?? theme.colorScheme.primaryContainer;
     final fg = foregroundColor ?? theme.colorScheme.onPrimaryContainer;
 

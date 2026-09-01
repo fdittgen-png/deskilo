@@ -1985,6 +1985,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureScheduledExpensesTitle => 'Spese programmate';
 
   @override
+  String get featureUniqueMonogramsTitle => 'Iniziali avatar distinte';
+
+  @override
+  String get featureUniqueMonogramsDesc =>
+      'Un avatar senza foto mostra iniziali che appartengono a un solo membro: iniziale del nome e del cognome, una lettera in più in caso di conflitto, numeri solo come ultima risorsa. Disattivato: solo la prima lettera, uguale per tutti quelli che la condividono.';
+
+  @override
   String get featureScheduledExpensesDesc =>
       'Spese ricorrenti (internet, telefono, elettricità): ogni membro ne programma una con la sua regola (ogni X giorni/settimane/mesi/anni, X volte o fino a una data); la programmazione è validata una volta, e ogni scadenza è presentata al membro — l’importo validato conta subito, un importo diverso si spiega e passa la validazione delle spese.';
 

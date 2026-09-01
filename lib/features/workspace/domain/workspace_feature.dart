@@ -64,7 +64,13 @@ enum WorkspaceFeature {
   /// the schedule is validated once, each due occurrence is presented to
   /// the member — matching amount lands settled, a deviation explains
   /// itself and passes the expense validation.
-  scheduledExpenses;
+  scheduledExpenses,
+
+  /// #793 — the avatar monogram identifies ONE member: the initials of
+  /// the first and family name, lengthened on a clash and numbered only
+  /// when the letters run out. OFF keeps the single first letter, which
+  /// drew three identical `M` circles in a workspace of three Mathieus.
+  uniqueMonograms;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -278,6 +284,10 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.kioskMemberPhotos,
     requires: WorkspaceFeature.kioskMode,
   ),
+  // #793 — monograms that tell members apart wherever an avatar has no
+  // photo to show.
+  WorkspaceFeature.uniqueMonograms:
+      FeatureManifestEntry(feature: WorkspaceFeature.uniqueMonograms),
   // #620 — occupant profile photos on the Plan tab and Reserve hub
   // maps, kiosk or not.
   WorkspaceFeature.planMemberPhotos:

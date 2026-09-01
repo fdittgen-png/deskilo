@@ -155,5 +155,7 @@
   "featurePriceNegotiationsTitle": "Négociations tarifaires",
   "featurePriceNegotiationsDesc": "Le tarif est la valeur par défaut ; un membre peut avoir ses propres conditions — abonnement, dépassement, remise sur les suppléments, prix unitaires par service et forfait, pourcentage d'occupation — proposées par qui détient « Gérer les accords commerciaux » et validées selon les règles. Vues par le membre, les propriétaires et les titulaires de « Consulter les accords commerciaux » ; chaque consultation est journalisée.",
   "featureScheduledExpensesTitle": "Dépenses programmées",
+  "featureUniqueMonogramsTitle": "Initiales d’avatar distinctes",
+  "featureUniqueMonogramsDesc": "Un avatar sans photo affiche des initiales propres à un seul membre : initiale du prénom et du nom, une lettre de plus en cas de collision, des chiffres seulement en dernier recours. Désactivé : la première lettre seule, identique pour tous ceux qui la partagent.",
   "featureScheduledExpensesDesc": "Dépenses récurrentes (internet, téléphone, électricité) : chaque membre en programme une avec sa règle (tous les X jours/semaines/mois/ans, X fois ou jusqu'à une date) ; la programmation est validée une fois, et chaque échéance est présentée au membre — le montant validé compte immédiatement, un montant différent s'explique et passe la validation des dépenses."
 }

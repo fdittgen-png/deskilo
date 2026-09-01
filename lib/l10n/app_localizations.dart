@@ -3554,6 +3554,18 @@ abstract class AppLocalizations {
   /// **'Scheduled expenses'**
   String get featureScheduledExpensesTitle;
 
+  /// No description provided for @featureUniqueMonogramsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Distinct avatar initials'**
+  String get featureUniqueMonogramsTitle;
+
+  /// No description provided for @featureUniqueMonogramsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'An avatar without a photo shows initials that belong to one member: first and family initial, a further letter when two members would clash, numbers only as a last resort. Off: the first letter alone, repeated across everyone who shares it.'**
+  String get featureUniqueMonogramsDesc;
+
   /// No description provided for @featureScheduledExpensesDesc.
   ///
   /// In en, this message translates to:

@@ -50,7 +50,9 @@ import 'package:flutter_test/flutter_test.dart';
 // 50→52 (2026-08-29): #731 supplyExpenses, #732 validationScopes.
 // 52→53 (2026-08-30): #739 priceNegotiations.
 // 53→54 (2026-08-31): #767 scheduledExpenses.
-const int _expectedFeatureCount = 54;
+// 54→55 (2026-09-01): #793 uniqueMonograms — avatar initials that name
+// one member instead of repeating across everyone who shares a letter.
+const int _expectedFeatureCount = 55;
 
 void main() {
   test('every functionality is registered — the pin', () {
