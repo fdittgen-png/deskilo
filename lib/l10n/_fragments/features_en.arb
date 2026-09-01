@@ -286,6 +286,8 @@
   "featureSubscriptionInvoicesDesc": "The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.",
   "featureUsageInvoicesTitle": "End-of-month invoices",
   "featureUsageInvoicesDesc": "Once a month is over, what it actually cost beyond the subscription — overage, accessories, services — is invoiced separately. Off: those stay on the whole-month invoice.",
+  "featureInvoiceSettlementTitle": "Regroup invoices",
+  "featureInvoiceSettlementDesc": "Several of a member's open invoices can be regrouped into one they pay. The originals stay in the archive, traceable position by position, and stop being chased separately.",
   "featureAlsoEnabled": "Also switched on: {features}",
   "featureAlsoEnables": "Switching this on also enables {features}",
   "featureHeldBack": "Waiting on the feature above — switch that on and this one works again.",

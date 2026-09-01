@@ -106,6 +106,16 @@ abstract class MoneyRepository {
   /// The workspace's dunning policy (#472, 0093); defaults when unset.
   Future<DunningRules> fetchDunningRules(String workspaceId);
 
+  /// #804 — regroups [invoiceIds] into ONE invoice the member pays.
+  /// The sources stay in the archive and stop being separately owed.
+  /// Answers the settlement's id.
+  Future<String> settleInvoices({
+    required String workspaceId,
+    required String memberId,
+    required List<String> invoiceIds,
+    String note = '',
+  });
+
   /// #802 — when the two automatic invoice runs happen.
   Future<BillingRules> fetchBillingRules(String workspaceId);
 

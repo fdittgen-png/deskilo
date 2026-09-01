@@ -168,7 +168,8 @@ const Map<String, int> _baseline = {
   // beside the other money RPC wrappers they mirror.
   // 1130→1150 (2026-09-01): #802 the billing-rules read/write pair and
   // the manual sweep trigger.
-  'lib/features/money/data/supabase_money_repository.dart': 1150, // 2026-08-30 #739 negotiation RPCs
+  // 1150→1165 (2026-09-01): #804 the settle_invoices call.
+  'lib/features/money/data/supabase_money_repository.dart': 1165, // 2026-08-30 #739 negotiation RPCs
   // 600→630 (2026-08-11): #537 VAT price transparency — the gross-price
   // hint + per-pack VAT/currency subtitles (labeling, no new concern).
   // 630→660 (2026-08-11): #537 follow-up — live VAT-share helpers under

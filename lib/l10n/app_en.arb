@@ -1072,6 +1072,35 @@
       }
     }
   },
+  "invoiceKindSubscription": "Subscription, in advance",
+  "invoiceKindUsage": "The month's extras",
+  "invoiceKindSettlement": "Regrouped invoices",
+  "invoiceKindFull": "Whole month",
+  "settlementRegroups": "This invoice regroups",
+  "settlementVatNote": "VAT stays declared on the invoices above; this document only regroups what is owed.",
+  "settlementSettledBy": "Regrouped into another invoice — that one is what is owed and chased.",
+  "settlementAction": "Regroup into one invoice",
+  "settlementConfirm": "Regroup {count} invoices into one of {amount}?",
+  "settlementDone": "Regrouped into {number}.",
+  "settlementNeedsTwo": "Pick at least two open invoices of the same member.",
+  "@settlementConfirm": {
+    "description": "Confirm regrouping N invoices into one (#804)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@settlementDone": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "reservationExtendButton": "Stay longer",
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"
@@ -2331,6 +2360,8 @@
   "featureSubscriptionInvoicesDesc": "The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.",
   "featureUsageInvoicesTitle": "End-of-month invoices",
   "featureUsageInvoicesDesc": "Once a month is over, what it actually cost beyond the subscription — overage, accessories, services — is invoiced separately. Off: those stay on the whole-month invoice.",
+  "featureInvoiceSettlementTitle": "Regroup invoices",
+  "featureInvoiceSettlementDesc": "Several of a member's open invoices can be regrouped into one they pay. The originals stay in the archive, traceable position by position, and stop being chased separately.",
   "featureAlsoEnabled": "Also switched on: {features}",
   "featureAlsoEnables": "Switching this on also enables {features}",
   "featureHeldBack": "Waiting on the feature above — switch that on and this one works again.",

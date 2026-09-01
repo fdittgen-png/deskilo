@@ -161,6 +161,8 @@
   "featureSubscriptionInvoicesDesc": "La quota è fatturata prima del mese che paga, in una data scelta da te. Disattivato: la quota resta sulla fattura del mese.",
   "featureUsageInvoicesTitle": "Fatture di fine mese",
   "featureUsageInvoicesDesc": "Finito il mese, quanto è realmente costato oltre l'abbonamento — eccedenze, supplementi, servizi — è fatturato a parte. Disattivato: resta sulla fattura del mese.",
+  "featureInvoiceSettlementTitle": "Raggruppa le fatture",
+  "featureInvoiceSettlementDesc": "Più fatture aperte di un membro possono essere raggruppate in una sola da pagare. Le originali restano nell'archivio, tracciabili voce per voce, e non vengono più sollecitate separatamente.",
   "featureAlsoEnabled": "Attivato anche: {features}",
   "featureAlsoEnables": "Attivando questa si abilita anche {features}",
   "featureHeldBack": "In attesa della funzione qui sopra: attivala e anche questa torna a funzionare.",

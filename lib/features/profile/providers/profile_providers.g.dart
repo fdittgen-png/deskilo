@@ -270,4 +270,4 @@ final class MemberMonogramsProvider
   }
 }
 
-String _$memberMonogramsHash() => r'6a7e79089faf0af2d991eb22468644531318f06a';
+String _$memberMonogramsHash() => r'8bb0b2fc1c4989ac46c2371d0718f664105b4f5a';

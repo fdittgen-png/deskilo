@@ -161,6 +161,8 @@
   "featureSubscriptionInvoicesDesc": "La cotisation est facturée avant le mois qu'elle paie, à une date que vous choisissez. Désactivé : la cotisation reste sur la facture du mois.",
   "featureUsageInvoicesTitle": "Factures de fin de mois",
   "featureUsageInvoicesDesc": "Une fois le mois terminé, ce qu'il a réellement coûté au-delà de l'abonnement — dépassements, suppléments, services — est facturé à part. Désactivé : cela reste sur la facture du mois.",
+  "featureInvoiceSettlementTitle": "Regrouper les factures",
+  "featureInvoiceSettlementDesc": "Plusieurs factures ouvertes d'un membre peuvent être regroupées en une seule qu'il paie. Les originales restent dans l'archive, traçables poste par poste, et ne sont plus relancées séparément.",
   "featureAlsoEnabled": "Également activé : {features}",
   "featureAlsoEnables": "Activer ceci active aussi {features}",
   "featureHeldBack": "En attente de la fonction au-dessus — activez-la et celle-ci fonctionne de nouveau.",

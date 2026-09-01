@@ -914,6 +914,46 @@ class AppLocalizationsDe extends AppLocalizations {
       'Sendet ein Dokument über null — als Bestätigung, dass das Abo den ganzen Monat abgedeckt hat.';
 
   @override
+  String get invoiceKindSubscription => 'Abo, im Voraus';
+
+  @override
+  String get invoiceKindUsage => 'Zusätze des Monats';
+
+  @override
+  String get invoiceKindSettlement => 'Zusammengefasste Rechnungen';
+
+  @override
+  String get invoiceKindFull => 'Ganzer Monat';
+
+  @override
+  String get settlementRegroups => 'Diese Rechnung fasst zusammen';
+
+  @override
+  String get settlementVatNote =>
+      'Die Umsatzsteuer bleibt auf den obigen Rechnungen ausgewiesen; dieses Dokument fasst nur das Offene zusammen.';
+
+  @override
+  String get settlementSettledBy =>
+      'In eine andere Rechnung zusammengefasst — diese ist das, was geschuldet und angemahnt wird.';
+
+  @override
+  String get settlementAction => 'Zu einer Rechnung zusammenfassen';
+
+  @override
+  String settlementConfirm(int count, String amount) {
+    return '$count Rechnungen zu einer über $amount zusammenfassen?';
+  }
+
+  @override
+  String settlementDone(String number) {
+    return 'Zusammengefasst in $number.';
+  }
+
+  @override
+  String get settlementNeedsTwo =>
+      'Wähle mindestens zwei offene Rechnungen desselben Mitglieds.';
+
+  @override
   String get reservationExtendButton => 'Länger bleiben';
 
   @override
@@ -2045,6 +2085,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureUsageInvoicesDesc =>
       'Ist ein Monat vorbei, wird getrennt berechnet, was er über das Abo hinaus gekostet hat — Mehrverbrauch, Zubehör, Leistungen. Aus: Das bleibt auf der Monatsrechnung.';
+
+  @override
+  String get featureInvoiceSettlementTitle => 'Rechnungen zusammenfassen';
+
+  @override
+  String get featureInvoiceSettlementDesc =>
+      'Mehrere offene Rechnungen eines Mitglieds lassen sich zu einer zusammenfassen, die es bezahlt. Die Originale bleiben im Archiv, Position für Position nachvollziehbar, und werden nicht mehr einzeln angemahnt.';
 
   @override
   String featureAlsoEnabled(String features) {

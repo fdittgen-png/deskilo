@@ -13,6 +13,7 @@ import '../../domain/invoice_ubl.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
 import '../widgets/dunning_rules_dialog.dart';
+import '../widgets/settlement_sheet.dart';
 import '../widgets/invoice_template_sheet.dart';
 import '../widgets/invoice_archive_tab.dart';
 import '../widgets/invoice_detail_sheet.dart';
@@ -90,6 +91,17 @@ class InvoicesScreen extends ConsumerWidget {
           )
         : null;
 
+    // #804 — regrouping a member's open invoices into one they pay.
+    final settlementAction =
+        (canIssue && features.contains(WorkspaceFeature.invoiceSettlement))
+            ? IconButton(
+                key: const ValueKey('invoice-settlement'),
+                tooltip: l10n?.settlementAction ?? 'Regroup into one invoice',
+                icon: const Icon(Icons.merge_outlined),
+                onPressed: () => showSettlementSheet(context, ref),
+              )
+            : null;
+
     if (!canIssue) {
       return Scaffold(
         appBar: AppBar(
@@ -149,7 +161,12 @@ class InvoicesScreen extends ConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n?.invoicesTitle ?? 'Invoices'),
-          actions: [?templateAction, ?dunningAction, registerAction],
+          actions: [
+            ?templateAction,
+            ?settlementAction,
+            ?dunningAction,
+            registerAction,
+          ],
           bottom: TabBar(tabs: [
             Tab(
               key: const ValueKey('invoice-tab-todo'),

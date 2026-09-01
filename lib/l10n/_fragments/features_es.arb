@@ -161,6 +161,8 @@
   "featureSubscriptionInvoicesDesc": "La cuota se factura antes del mes que paga, en la fecha que elijas. Desactivado: la cuota sigue en la factura del mes.",
   "featureUsageInvoicesTitle": "Facturas de fin de mes",
   "featureUsageInvoicesDesc": "Cuando el mes termina, lo que realmente costó más allá de la suscripción — excesos, suplementos, servicios — se factura aparte. Desactivado: eso sigue en la factura del mes.",
+  "featureInvoiceSettlementTitle": "Agrupar facturas",
+  "featureInvoiceSettlementDesc": "Varias facturas abiertas de un miembro pueden agruparse en una sola que paga. Las originales siguen en el archivo, trazables posición por posición, y dejan de reclamarse por separado.",
   "featureAlsoEnabled": "También activado: {features}",
   "featureAlsoEnables": "Activar esto también habilita {features}",
   "featureHeldBack": "Esperando a la función de arriba: actívala y esta vuelve a funcionar.",

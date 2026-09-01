@@ -251,6 +251,26 @@ class FakeMoneyRepository implements MoneyRepository {
     dunningRules = rules;
   }
 
+  /// #804 — settlements requested, in order.
+  final List<({String memberId, List<String> invoiceIds})> settlements = [];
+
+  /// The id [settleInvoices] hands back.
+  String nextSettlementId = 'INV-2026-9999';
+
+  @override
+  Future<String> settleInvoices({
+    required String workspaceId,
+    required String memberId,
+    required List<String> invoiceIds,
+    String note = '',
+  }) async {
+    if (invoiceIds.length < 2) {
+      throw StateError('settle at least two invoices');
+    }
+    settlements.add((memberId: memberId, invoiceIds: invoiceIds));
+    return nextSettlementId;
+  }
+
   /// #802 — when the two automatic invoice runs happen.
   BillingRules billingRules = BillingRules.defaults;
 

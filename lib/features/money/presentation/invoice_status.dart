@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../l10n/app_localizations.dart';
+import '../domain/billing_rules.dart';
 import '../domain/invoice.dart';
 
 /// Where an invoice stands in the 0067 lifecycle. Derived from the
@@ -183,3 +184,19 @@ class InvoiceStatusChip extends StatelessWidget {
     );
   }
 }
+
+/// #802/#804 — what a document CHARGES FOR, in the reader's language.
+///
+/// Shown wherever an invoice is named, because the kind is the thing that
+/// makes an otherwise puzzling document make sense: a subscription
+/// invoice is dated before the month it charges, and a settlement's
+/// amount belongs to invoices that are not this one.
+String invoiceKindLabel(AppLocalizations? l10n, InvoiceKind kind) =>
+    switch (kind) {
+      InvoiceKind.subscription =>
+        l10n?.invoiceKindSubscription ?? 'Subscription, in advance',
+      InvoiceKind.usage => l10n?.invoiceKindUsage ?? 'The month\'s extras',
+      InvoiceKind.settlement =>
+        l10n?.invoiceKindSettlement ?? 'Regrouped invoices',
+      InvoiceKind.full => l10n?.invoiceKindFull ?? 'Whole month',
+    };

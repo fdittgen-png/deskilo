@@ -225,6 +225,22 @@ class SupabaseMoneyRepository implements MoneyRepository {
   }
 
   @override
+  Future<String> settleInvoices({
+    required String workspaceId,
+    required String memberId,
+    required List<String> invoiceIds,
+    String note = '',
+  }) async {
+    final id = await _client.rpc<dynamic>('settle_invoices', params: {
+      'p_workspace_id': workspaceId,
+      'p_member_id': memberId,
+      'p_invoice_ids': invoiceIds,
+      'p_note': note,
+    });
+    return id as String;
+  }
+
+  @override
   Future<BillingRules> fetchBillingRules(String workspaceId) async {
     final row = await _client
         .from('workspaces')

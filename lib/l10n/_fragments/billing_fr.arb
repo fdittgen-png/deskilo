@@ -68,5 +68,22 @@
   "billingUsageWhenZeroHint": "Envoie un document à zéro, comme confirmation que l’abonnement a couvert tout le mois.",
   "@billingSubscriptionWhen": {
     "placeholders": {"day": {"type": "String"}, "month": {"type": "String"}}
+  },
+  "invoiceKindSubscription": "Abonnement, à l’avance",
+  "invoiceKindUsage": "Les extras du mois",
+  "invoiceKindSettlement": "Factures regroupées",
+  "invoiceKindFull": "Mois entier",
+  "settlementRegroups": "Cette facture regroupe",
+  "settlementVatNote": "La TVA reste déclarée sur les factures ci-dessus ; ce document ne regroupe que ce qui est dû.",
+  "settlementSettledBy": "Regroupée dans une autre facture — c’est celle-là qui est due et relancée.",
+  "settlementAction": "Regrouper en une facture",
+  "settlementConfirm": "Regrouper {count} factures en une seule de {amount} ?",
+  "settlementDone": "Regroupées dans {number}.",
+  "settlementNeedsTwo": "Choisissez au moins deux factures ouvertes du même membre.",
+  "@settlementConfirm": {
+    "placeholders": {"count": {"type": "int"}, "amount": {"type": "String"}}
+  },
+  "@settlementDone": {
+    "placeholders": {"number": {"type": "String"}}
   }
 }

@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/einvoice_gateway.dart';
+import '../../domain/billing_rules.dart';
 import '../../domain/invoice.dart';
 import '../invoice_line_text.dart';
 import '../invoice_status.dart';
@@ -143,6 +144,35 @@ class _InvoiceDetailBody extends StatelessWidget {
                 ),
                 InvoiceStatusChip(status: status),
               ]),
+              // #802/#804 — WHAT this document is. A subscription invoice
+              // dated before the month it charges looks like a mistake
+              // unless it says so; a settlement is meaningless without
+              // the list of what it replaced.
+              if (invoice.kind != InvoiceKind.full)
+                Padding(
+                  key: const ValueKey('invoice-detail-kind'),
+                  padding: const EdgeInsets.only(top: AppSpacing.xs),
+                  child: Row(children: [
+                    Icon(
+                      switch (invoice.kind) {
+                        InvoiceKind.subscription => Icons.event_repeat_outlined,
+                        InvoiceKind.usage => Icons.receipt_long_outlined,
+                        InvoiceKind.settlement => Icons.merge_outlined,
+                        InvoiceKind.full => Icons.description_outlined,
+                      },
+                      size: 16,
+                      color: theme.colorScheme.primary,
+                    ),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        invoiceKindLabel(l10n, invoice.kind),
+                        style: theme.textTheme.labelLarge
+                            ?.copyWith(color: theme.colorScheme.primary),
+                      ),
+                    ),
+                  ]),
+                ),
               line([
                 invoicePeriodLabel(context, invoice),
                 if (showMemberName && invoice.memberName.isNotEmpty)
@@ -211,6 +241,68 @@ class _InvoiceDetailBody extends StatelessWidget {
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ]),
+
+              // #804 — the trail, both directions. A settlement names
+              // every invoice inside it AND their positions; a settled
+              // invoice names the document that now carries its balance,
+              // because otherwise it just looks unpaid and unchased.
+              if (invoice.settles.isNotEmpty) ...[
+                const Divider(height: AppSpacing.xl),
+                Text(
+                  l10n?.settlementRegroups ?? 'This invoice regroups',
+                  style: theme.textTheme.titleSmall,
+                ),
+                for (final source in invoice.settles)
+                  Padding(
+                    key: ValueKey('settlement-source-${source.invoiceId}'),
+                    padding: const EdgeInsets.only(top: AppSpacing.xs),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Row(children: [
+                          Expanded(
+                            child: Text(
+                              [
+                                source.number,
+                                if (source.period != null) source.period!,
+                                invoiceKindLabel(l10n, source.kind),
+                              ].join(' · '),
+                              style: theme.textTheme.bodyMedium,
+                            ),
+                          ),
+                          Text(currency.formatMinor(source.totalCents)),
+                        ]),
+                        // The positions of the ORIGINAL, so the trail
+                        // does not stop at a number.
+                        for (final position in source.lines)
+                          Padding(
+                            padding: const EdgeInsets.only(left: AppSpacing.md),
+                            child: Row(children: [
+                              Expanded(
+                                child: Text(
+                                  invoiceLineText(l10n, position),
+                                  style: theme.textTheme.bodySmall
+                                      ?.copyWith(color: muted),
+                                ),
+                              ),
+                              Text(
+                                currency.formatMinor(position.amountCents),
+                                style: theme.textTheme.bodySmall
+                                    ?.copyWith(color: muted),
+                              ),
+                            ]),
+                          ),
+                      ],
+                    ),
+                  ),
+                line(l10n?.settlementVatNote ??
+                    'VAT stays declared on the invoices above; this '
+                        'document only regroups what is owed.'),
+              ],
+              if (invoice.settledByInvoiceId != null)
+                line(l10n?.settlementSettledBy ??
+                    'Regrouped into another invoice — that one is what is '
+                        'owed and chased.'),
 
               // Lifecycle facts: the correction chain, the payment that
               // closed it, the reminders sent, the annex it carries.

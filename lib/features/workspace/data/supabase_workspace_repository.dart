@@ -823,6 +823,9 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         coOwner: CoOwnerStatus.fromWire(row['co_owner'] as String?),
         status: MemberStatus.values.byName(row['status'] as String),
         subscriptionPct: row['subscription_pct'] as int? ?? 100,
+        joinedAt: row['joined_at'] == null
+            ? null
+            : DateTime.parse(row['joined_at'] as String).toUtc(),
         overagePolicy:
             OveragePolicy.fromName(row['overage_policy'] as String?),
         isKiosk: row['is_kiosk'] as bool? ?? false,

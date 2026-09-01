@@ -1670,6 +1670,72 @@ abstract class AppLocalizations {
   /// **'Sends a document reading zero, as confirmation that the subscription covered the whole month.'**
   String get billingUsageWhenZeroHint;
 
+  /// No description provided for @invoiceKindSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription, in advance'**
+  String get invoiceKindSubscription;
+
+  /// No description provided for @invoiceKindUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'The month\'s extras'**
+  String get invoiceKindUsage;
+
+  /// No description provided for @invoiceKindSettlement.
+  ///
+  /// In en, this message translates to:
+  /// **'Regrouped invoices'**
+  String get invoiceKindSettlement;
+
+  /// No description provided for @invoiceKindFull.
+  ///
+  /// In en, this message translates to:
+  /// **'Whole month'**
+  String get invoiceKindFull;
+
+  /// No description provided for @settlementRegroups.
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice regroups'**
+  String get settlementRegroups;
+
+  /// No description provided for @settlementVatNote.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT stays declared on the invoices above; this document only regroups what is owed.'**
+  String get settlementVatNote;
+
+  /// No description provided for @settlementSettledBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Regrouped into another invoice — that one is what is owed and chased.'**
+  String get settlementSettledBy;
+
+  /// No description provided for @settlementAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Regroup into one invoice'**
+  String get settlementAction;
+
+  /// Confirm regrouping N invoices into one (#804)
+  ///
+  /// In en, this message translates to:
+  /// **'Regroup {count} invoices into one of {amount}?'**
+  String settlementConfirm(int count, String amount);
+
+  /// No description provided for @settlementDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Regrouped into {number}.'**
+  String settlementDone(String number);
+
+  /// No description provided for @settlementNeedsTwo.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick at least two open invoices of the same member.'**
+  String get settlementNeedsTwo;
+
   /// Detail sheet: extend a running booking's end (#574)
   ///
   /// In en, this message translates to:
@@ -3667,6 +3733,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Once a month is over, what it actually cost beyond the subscription — overage, accessories, services — is invoiced separately. Off: those stay on the whole-month invoice.'**
   String get featureUsageInvoicesDesc;
+
+  /// No description provided for @featureInvoiceSettlementTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Regroup invoices'**
+  String get featureInvoiceSettlementTitle;
+
+  /// No description provided for @featureInvoiceSettlementDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Several of a member\'s open invoices can be regrouped into one they pay. The originals stay in the archive, traceable position by position, and stop being chased separately.'**
+  String get featureInvoiceSettlementDesc;
 
   /// Snack naming the dependencies switched on with a feature (#800)
   ///

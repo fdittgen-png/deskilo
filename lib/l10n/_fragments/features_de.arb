@@ -161,6 +161,8 @@
   "featureSubscriptionInvoicesDesc": "Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum deiner Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.",
   "featureUsageInvoicesTitle": "Monatsabschluss-Rechnungen",
   "featureUsageInvoicesDesc": "Ist ein Monat vorbei, wird getrennt berechnet, was er über das Abo hinaus gekostet hat — Mehrverbrauch, Zubehör, Leistungen. Aus: Das bleibt auf der Monatsrechnung.",
+  "featureInvoiceSettlementTitle": "Rechnungen zusammenfassen",
+  "featureInvoiceSettlementDesc": "Mehrere offene Rechnungen eines Mitglieds lassen sich zu einer zusammenfassen, die es bezahlt. Die Originale bleiben im Archiv, Position für Position nachvollziehbar, und werden nicht mehr einzeln angemahnt.",
   "featureAlsoEnabled": "Ebenfalls eingeschaltet: {features}",
   "featureAlsoEnables": "Das schaltet außerdem {features} ein",
   "featureHeldBack": "Wartet auf die Funktion darüber — schalte sie ein, dann wirkt auch diese wieder.",
