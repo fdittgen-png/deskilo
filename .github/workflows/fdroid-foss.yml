@@ -26,8 +26,6 @@ on:
       - 'lib/core/push/**'
   workflow_dispatch:
 
-env:
-  FLUTTER_VERSION: "3.44.9"
 
 jobs:
   foss-apk:
@@ -41,17 +39,26 @@ jobs:
           distribution: temurin
           java-version: "17"
 
+      # #809 — the version is pinned in .flutter-version, the same file
+      # fdroiddata's recipe reads, so our gate and F-Droid build with the
+      # same Flutter.
+      - id: flutter_pin
+        run: echo "version=$(cat .flutter-version)" >> "$GITHUB_OUTPUT"
+
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
+          flutter-version: ${{ steps.flutter_pin.outputs.version }}
           channel: stable
           cache: true
 
       - name: Swap in the FOSS push package (what fdroiddata's prebuild does)
         run: |
-          sed -i 's|    path: packages/deskilo_push$|    path: packages/deskilo_push_foss|' pubspec.yaml
+          bash tool/fdroid_foss_swap.sh
           grep -n 'deskilo_push_foss' pubspec.yaml
-          flutter pub get
+          # --enforce-lockfile, exactly as the recipe does: if the patched
+          # lock does not describe this build, the gate says so here
+          # rather than F-Droid's builder saying it a week later.
+          flutter pub get --enforce-lockfile
 
       - name: Analyze and test under the FOSS flavour
         run: |

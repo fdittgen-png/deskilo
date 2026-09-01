@@ -89,11 +89,24 @@ review comment:
   "Non-exist" and as "Unused". Populate it in prebuild and the scanner
   both sees and deletes it — which is also what gets the dart packages
   scanned at all.
-- **No `--enforce-lockfile`**, though `templates/build-flutter.yml`
-  suggests it: `prebuild` rewrites the push dependency's path, so the
-  lockfile no longer matches the manifest and pub exits 65 with "Unable
-  to satisfy `pubspec.yaml` using `pubspec.lock`". Verified, not assumed.
-  `pubspec.lock` is still committed and still pins every other version.
+- **`--enforce-lockfile` IS used**, via `tool/fdroid_foss_swap.sh`. It
+  first failed because swapping the push package changes the dependency
+  GRAPH, not just a path: the libre twin pulls no Firebase, so seven
+  `firebase_*` packages and `_flutterfire_internals` stop being depended
+  on and pub rejects the lock. The script patches the path in both
+  `pubspec.yaml` and `pubspec.lock` and drops exactly those entries, and
+  then the lock describes the libre build with every other version still
+  pinned to the byte. linsui asked for this; it works, verified locally
+  and in our own gate.
+- **The Flutter version is pinned in `.flutter-version`** and the recipe
+  `cat`s it, rather than being written into the `srclibs` line (also
+  linsui's ask). `srclibs` is `flutter@stable` and `prebuild` checks the
+  pinned tag out of it. A lint keeps every workflow's `FLUTTER_VERSION`
+  equal to that file, because a workflow that disagrees is a toolchain we
+  never actually test.
+- **The swap is ONE script**, `tool/fdroid_foss_swap.sh`, called by the
+  recipe and by our `fdroid-foss` gate, so the build we test cannot drift
+  from the build F-Droid makes.
 - **No `Summary`/`Description` in the `.yml`** — fastlane, as above.
   Leaving `Summary` in also trips the "tools check scripts" job, which
   runs `tools/make-summary-translatable.py` and fails if it would move

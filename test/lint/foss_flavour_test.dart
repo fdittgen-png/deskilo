@@ -70,8 +70,16 @@ void main() {
     // swaps before testing); the LINE must be the one the recipe edits.
     expect(pubspec,
         matches(RegExp(r'\n    path: packages/deskilo_push(_foss)?\n')));
+    // #809 — the swap moved into tool/fdroid_foss_swap.sh, which the
+    // recipe and our own gate both call. The rule is unchanged and now
+    // stronger: the SCRIPT must edit the line above, and the recipe must
+    // run that script rather than carrying a second copy of the edit.
+    final swap = File('tool/fdroid_foss_swap.sh').readAsStringSync();
+    expect(swap, contains('packages/deskilo_push_foss'));
     final recipe = File('fdroid/de.deskilo.app.yml').readAsStringSync();
-    expect(recipe, contains('packages/deskilo_push_foss'));
+    expect(recipe, contains('tool/fdroid_foss_swap.sh'));
+    expect(recipe, isNot(contains('sed -i')),
+        reason: 'the swap lives in the script; a copy here can drift');
     expect(recipe, contains('flutter build apk --release'));
     expect(recipe, contains('AntiFeatures'));
   });
