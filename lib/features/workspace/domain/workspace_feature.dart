@@ -75,7 +75,16 @@ enum WorkspaceFeature {
   /// #798 — the two swipes on a message everyone already knows from
   /// their phone: RIGHT quotes it into the reply, LEFT takes an unread
   /// message back after confirming. OFF leaves the long-press delete.
-  messageGestures;
+  messageGestures,
+
+  /// #802 — the subscription invoice, raised BEFORE the month it pays
+  /// for. Off, the fee stays on the whole-month invoice as it always was.
+  subscriptionInvoices,
+
+  /// #802 — the end-of-month invoice for what the month actually cost
+  /// beyond the subscription. Off, the extras stay on the whole-month
+  /// invoice.
+  usageInvoices;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -290,6 +299,18 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.kioskMemberPhotos: FeatureManifestEntry(
     feature: WorkspaceFeature.kioskMemberPhotos,
     requires: WorkspaceFeature.kioskMode,
+  ),
+  // #802 — the subscription is billed ahead of its month; what the month
+  // actually cost is billed after it. Two documents, each switchable on
+  // its own: an owner can bill subscriptions in advance and keep settling
+  // the extras by hand, or the reverse.
+  WorkspaceFeature.subscriptionInvoices: FeatureManifestEntry(
+    feature: WorkspaceFeature.subscriptionInvoices,
+    requires: WorkspaceFeature.invoicing,
+  ),
+  WorkspaceFeature.usageInvoices: FeatureManifestEntry(
+    feature: WorkspaceFeature.usageInvoices,
+    requires: WorkspaceFeature.invoicing,
   ),
   // #798 — swipe a message right to quote it, left to take it back
   // while it is still unread.

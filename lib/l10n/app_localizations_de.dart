@@ -869,6 +869,51 @@ class AppLocalizationsDe extends AppLocalizations {
   String get paymentProviderWero => 'Wero (über Mollie)';
 
   @override
+  String get billingRulesTitle => 'Rechnungsplan';
+
+  @override
+  String get billingRulesSubtitle =>
+      'Wann Abo- und Monatsabschluss-Rechnungen rausgehen';
+
+  @override
+  String get billingRulesSaved => 'Rechnungsplan gespeichert.';
+
+  @override
+  String get billingSubscriptionSection => 'Abo, im Voraus';
+
+  @override
+  String get billingSubscriptionAuto => 'Automatisch erstellen';
+
+  @override
+  String get billingSubscriptionOff =>
+      'Schalte „Abo-Rechnungen“ unter Funktionen ein, um das zu nutzen.';
+
+  @override
+  String get billingAdvanceDays => 'Tage vor Monatsbeginn';
+
+  @override
+  String billingSubscriptionWhen(String day, String month) {
+    return 'Erstellt am $day für $month';
+  }
+
+  @override
+  String get billingUsageSection => 'Der gerade beendete Monat';
+
+  @override
+  String get billingUsageAuto => 'Automatisch erstellen';
+
+  @override
+  String get billingUsageOff =>
+      'Schalte „Monatsabschluss-Rechnungen“ unter Funktionen ein, um das zu nutzen.';
+
+  @override
+  String get billingUsageWhenZero => 'Auch wenn nichts zu zahlen ist';
+
+  @override
+  String get billingUsageWhenZeroHint =>
+      'Sendet ein Dokument über null — als Bestätigung, dass das Abo den ganzen Monat abgedeckt hat.';
+
+  @override
   String get reservationExtendButton => 'Länger bleiben';
 
   @override
@@ -1986,6 +2031,20 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureMessageGesturesTitle =>
       'Wischen zum Zitieren oder Zurücknehmen';
+
+  @override
+  String get featureSubscriptionInvoicesTitle => 'Abo-Rechnungen';
+
+  @override
+  String get featureSubscriptionInvoicesDesc =>
+      'Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum deiner Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.';
+
+  @override
+  String get featureUsageInvoicesTitle => 'Monatsabschluss-Rechnungen';
+
+  @override
+  String get featureUsageInvoicesDesc =>
+      'Ist ein Monat vorbei, wird getrennt berechnet, was er über das Abo hinaus gekostet hat — Mehrverbrauch, Zubehör, Leistungen. Aus: Das bleibt auf der Monatsrechnung.';
 
   @override
   String featureAlsoEnabled(String features) {

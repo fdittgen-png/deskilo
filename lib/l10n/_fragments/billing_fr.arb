@@ -52,5 +52,21 @@
   "payFieldSecretKey": "Clé secrète",
   "payFieldWebhookSecret": "Secret de signature du webhook",
   "payFieldApiKey": "Clé API",
-  "paymentProviderWero": "Wero (via Mollie)"
+  "paymentProviderWero": "Wero (via Mollie)",
+  "billingRulesTitle": "Calendrier de facturation",
+  "billingRulesSubtitle": "Quand partent les factures d’abonnement et de fin de mois",
+  "billingRulesSaved": "Calendrier de facturation enregistré.",
+  "billingSubscriptionSection": "Abonnement, à l’avance",
+  "billingSubscriptionAuto": "Émettre automatiquement",
+  "billingSubscriptionOff": "Activez « Factures d’abonnement » dans Fonctionnalités pour l’utiliser.",
+  "billingAdvanceDays": "Jours avant le début du mois",
+  "billingSubscriptionWhen": "Émise le {day} pour {month}",
+  "billingUsageSection": "Le mois qui vient de finir",
+  "billingUsageAuto": "Émettre automatiquement",
+  "billingUsageOff": "Activez « Factures de fin de mois » dans Fonctionnalités pour l’utiliser.",
+  "billingUsageWhenZero": "Même s’il n’y a rien à payer",
+  "billingUsageWhenZeroHint": "Envoie un document à zéro, comme confirmation que l’abonnement a couvert tout le mois.",
+  "@billingSubscriptionWhen": {
+    "placeholders": {"day": {"type": "String"}, "month": {"type": "String"}}
+  }
 }

@@ -1226,6 +1226,53 @@ final class DunningRulesProvider
 
 String _$dunningRulesHash() => r'90ffaa72da35fcedb5dfd53caec09abec7bd18e5';
 
+/// #802 — when the two automatic invoice runs happen; defaults while
+/// nothing is stored, which is what every workspace starts with.
+
+@ProviderFor(billingRules)
+final billingRulesProvider = BillingRulesProvider._();
+
+/// #802 — when the two automatic invoice runs happen; defaults while
+/// nothing is stored, which is what every workspace starts with.
+
+final class BillingRulesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<BillingRules>,
+          BillingRules,
+          FutureOr<BillingRules>
+        >
+    with $FutureModifier<BillingRules>, $FutureProvider<BillingRules> {
+  /// #802 — when the two automatic invoice runs happen; defaults while
+  /// nothing is stored, which is what every workspace starts with.
+  BillingRulesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'billingRulesProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$billingRulesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<BillingRules> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<BillingRules> create(Ref ref) {
+    return billingRules(ref);
+  }
+}
+
+String _$billingRulesHash() => r'9ca81887417ec8153dae0f42d4e2f134766210bc';
+
 /// The member's REAL cross-month position (#512): credit on account,
 /// open remainders from any month, refunds due, net. Watches the
 /// archive, the matches and the ledger so every settlement action

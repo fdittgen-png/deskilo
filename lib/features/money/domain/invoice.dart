@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'billing_rules.dart';
 import 'vat_rate.dart';
 
 part 'invoice.freezed.dart';
@@ -184,6 +185,12 @@ sealed class Invoice with _$Invoice {
     // 0072 — the VAT breakdown as issued, one entry per rate. Empty on
     // pre-0072 invoices and on workspaces that charge no VAT.
     @Default([]) List<InvoiceVatTotal> vatTotals,
+
+    /// #802 (0142) — what this document charges for: the subscription of
+    /// a month still to come, what a finished month actually cost, a
+    /// regrouping of several, or the historical whole month. Every
+    /// pre-0142 row reads [InvoiceKind.full], which is what it is.
+    @Default(InvoiceKind.full) InvoiceKind kind,
   }) = _Invoice;
 
   /// Sum of the positive positions — the gross the invoice charges before
@@ -243,6 +250,7 @@ sealed class Invoice with _$Invoice {
                   (line['vat_percent'] as num?)?.toDouble() ?? 0,
             ),
         ],
+        kind: InvoiceKind.fromWire(row['kind'] as String?),
         totalCents: (row['total_cents'] as num).toInt(),
         currency: row['currency'] as String,
         memberName: row['member_name'] as String? ?? '',

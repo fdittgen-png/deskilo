@@ -1048,6 +1048,30 @@
   "@paymentProviderWero": {
     "description": "Provider button/label: Wero paid through Mollie's checkout (0048)"
   },
+  "billingRulesTitle": "Invoice schedule",
+  "billingRulesSubtitle": "When subscription and end-of-month invoices go out",
+  "billingRulesSaved": "Invoice schedule saved.",
+  "billingSubscriptionSection": "Subscription, in advance",
+  "billingSubscriptionAuto": "Issue automatically",
+  "billingSubscriptionOff": "Switch on “Subscription invoices” in Features to use this.",
+  "billingAdvanceDays": "Days before the month starts",
+  "billingSubscriptionWhen": "Issued on {day} for {month}",
+  "billingUsageSection": "The month just finished",
+  "billingUsageAuto": "Issue automatically",
+  "billingUsageOff": "Switch on “End-of-month invoices” in Features to use this.",
+  "billingUsageWhenZero": "Also when there is nothing to pay",
+  "billingUsageWhenZeroHint": "Sends a document reading zero, as confirmation that the subscription covered the whole month.",
+  "@billingSubscriptionWhen": {
+    "description": "Invoice schedule: when a subscription invoice goes out and the month it charges (#802)",
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
   "reservationExtendButton": "Stay longer",
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"
@@ -2303,6 +2327,10 @@
   "featureScheduledExpensesTitle": "Scheduled expenses",
   "featureUniqueMonogramsTitle": "Distinct avatar initials",
   "featureMessageGesturesTitle": "Swipe to quote or take back",
+  "featureSubscriptionInvoicesTitle": "Subscription invoices",
+  "featureSubscriptionInvoicesDesc": "The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.",
+  "featureUsageInvoicesTitle": "End-of-month invoices",
+  "featureUsageInvoicesDesc": "Once a month is over, what it actually cost beyond the subscription — overage, accessories, services — is invoiced separately. Off: those stay on the whole-month invoice.",
   "featureAlsoEnabled": "Also switched on: {features}",
   "featureAlsoEnables": "Switching this on also enables {features}",
   "featureHeldBack": "Waiting on the feature above — switch that on and this one works again.",

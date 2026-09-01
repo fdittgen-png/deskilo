@@ -44,6 +44,7 @@ import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_import.dart';
 import '../../domain/workspace_xml.dart';
 import '../../providers/workspace_import_providers.dart';
+import '../../../money/presentation/widgets/billing_rules_dialog.dart';
 import '../../../money/presentation/widgets/dunning_rules_dialog.dart';
 import '../../../money/presentation/widgets/invoice_template_sheet.dart';
 import '../../providers/workspace_providers.dart';
@@ -1202,6 +1203,28 @@ class _WorkspaceSettingsScreenState
                     ),
                     onTap: () => showDunningRulesDialog(context, ref),
                   ),
+                  // #802 — WHEN the two automatic invoice runs happen.
+                  // Beside the reminder rules on purpose: issuing and
+                  // chasing are the same conversation with a member.
+                  if (ref.watch(enabledFeaturesSyncProvider).any((f) =>
+                      f == WorkspaceFeature.subscriptionInvoices ||
+                      f == WorkspaceFeature.usageInvoices))
+                    ListTile(
+                      key: const Key('workspaceSettingsBillingRules'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.event_repeat_outlined),
+                      title: HelpDotTitle(
+                        l10n?.billingRulesTitle ?? 'Invoice schedule',
+                        l10n?.billingRulesTitle ?? 'Invoice schedule',
+                      ),
+                      subtitle: Text(
+                        l10n?.billingRulesSubtitle ??
+                            'When subscription and end-of-month invoices go out',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      onTap: () => showBillingRulesDialog(context, ref),
+                    ),
                   // #164 — versioned XML snapshot of settings + floor
                   // plan; the whole screen is owner-only already.
                   ListTile(

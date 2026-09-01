@@ -546,6 +546,29 @@
   "payFieldWebhookSecret": "Secreto de firma del webhook",
   "payFieldApiKey": "Clave API",
   "paymentProviderWero": "Wero (con Mollie)",
+  "billingRulesTitle": "Calendario de facturación",
+  "billingRulesSubtitle": "Cuándo salen las facturas de suscripción y de fin de mes",
+  "billingRulesSaved": "Calendario de facturación guardado.",
+  "billingSubscriptionSection": "Suscripción, por adelantado",
+  "billingSubscriptionAuto": "Emitir automáticamente",
+  "billingSubscriptionOff": "Activa «Facturas de suscripción» en Funciones para usarlo.",
+  "billingAdvanceDays": "Días antes de que empiece el mes",
+  "billingSubscriptionWhen": "Emitida el {day} para {month}",
+  "billingUsageSection": "El mes recién terminado",
+  "billingUsageAuto": "Emitir automáticamente",
+  "billingUsageOff": "Activa «Facturas de fin de mes» en Funciones para usarlo.",
+  "billingUsageWhenZero": "También cuando no hay nada que pagar",
+  "billingUsageWhenZeroHint": "Envía un documento a cero, como confirmación de que la suscripción cubrió todo el mes.",
+  "@billingSubscriptionWhen": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
   "reservationExtendButton": "Quedarse más tiempo",
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"
@@ -1136,6 +1159,10 @@
   "featureScheduledExpensesTitle": "Gastos programados",
   "featureUniqueMonogramsTitle": "Iniciales de avatar distintas",
   "featureMessageGesturesTitle": "Deslizar para citar o retirar",
+  "featureSubscriptionInvoicesTitle": "Facturas de suscripción",
+  "featureSubscriptionInvoicesDesc": "La cuota se factura antes del mes que paga, en la fecha que elijas. Desactivado: la cuota sigue en la factura del mes.",
+  "featureUsageInvoicesTitle": "Facturas de fin de mes",
+  "featureUsageInvoicesDesc": "Cuando el mes termina, lo que realmente costó más allá de la suscripción — excesos, suplementos, servicios — se factura aparte. Desactivado: eso sigue en la factura del mes.",
   "featureAlsoEnabled": "También activado: {features}",
   "featureAlsoEnables": "Activar esto también habilita {features}",
   "featureHeldBack": "Esperando a la función de arriba: actívala y esta vuelve a funcionar.",

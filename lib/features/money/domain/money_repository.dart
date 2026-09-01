@@ -8,6 +8,7 @@ import 'fee_band.dart';
 import 'invoice.dart';
 import 'vat_declaration.dart';
 import 'member_account.dart';
+import 'billing_rules.dart';
 import 'dunning.dart';
 import 'price_negotiation.dart';
 import 'invoice_pdf_template.dart';import 'ledger_entry.dart';
@@ -104,6 +105,16 @@ abstract class MoneyRepository {
 
   /// The workspace's dunning policy (#472, 0093); defaults when unset.
   Future<DunningRules> fetchDunningRules(String workspaceId);
+
+  /// #802 — when the two automatic invoice runs happen.
+  Future<BillingRules> fetchBillingRules(String workspaceId);
+
+  /// Owner/admin only, server-enforced.
+  Future<void> setBillingRules(String workspaceId, BillingRules rules);
+
+  /// Runs both invoice runs for this workspace NOW instead of waiting for
+  /// the nightly clock, and answers how many documents it raised.
+  Future<int> sweepBillingInvoices(String workspaceId);
 
   /// #739 — a member's deal: default, active, pending. Owner, finance
   /// admins and the member; a read by anyone else than the member is

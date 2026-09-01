@@ -239,5 +239,22 @@
   "paymentProviderWero": "Wero (via Mollie)",
   "@paymentProviderWero": {
     "description": "Provider button/label: Wero paid through Mollie's checkout (0048)"
+  },
+  "billingRulesTitle": "Invoice schedule",
+  "billingRulesSubtitle": "When subscription and end-of-month invoices go out",
+  "billingRulesSaved": "Invoice schedule saved.",
+  "billingSubscriptionSection": "Subscription, in advance",
+  "billingSubscriptionAuto": "Issue automatically",
+  "billingSubscriptionOff": "Switch on “Subscription invoices” in Features to use this.",
+  "billingAdvanceDays": "Days before the month starts",
+  "billingSubscriptionWhen": "Issued on {day} for {month}",
+  "billingUsageSection": "The month just finished",
+  "billingUsageAuto": "Issue automatically",
+  "billingUsageOff": "Switch on “End-of-month invoices” in Features to use this.",
+  "billingUsageWhenZero": "Also when there is nothing to pay",
+  "billingUsageWhenZeroHint": "Sends a document reading zero, as confirmation that the subscription covered the whole month.",
+  "@billingSubscriptionWhen": {
+    "description": "Invoice schedule: when a subscription invoice goes out and the month it charges (#802)",
+    "placeholders": {"day": {"type": "String"}, "month": {"type": "String"}}
   }
 }

@@ -865,6 +865,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paymentProviderWero => 'Wero (via Mollie)';
 
   @override
+  String get billingRulesTitle => 'Invoice schedule';
+
+  @override
+  String get billingRulesSubtitle =>
+      'When subscription and end-of-month invoices go out';
+
+  @override
+  String get billingRulesSaved => 'Invoice schedule saved.';
+
+  @override
+  String get billingSubscriptionSection => 'Subscription, in advance';
+
+  @override
+  String get billingSubscriptionAuto => 'Issue automatically';
+
+  @override
+  String get billingSubscriptionOff =>
+      'Switch on “Subscription invoices” in Features to use this.';
+
+  @override
+  String get billingAdvanceDays => 'Days before the month starts';
+
+  @override
+  String billingSubscriptionWhen(String day, String month) {
+    return 'Issued on $day for $month';
+  }
+
+  @override
+  String get billingUsageSection => 'The month just finished';
+
+  @override
+  String get billingUsageAuto => 'Issue automatically';
+
+  @override
+  String get billingUsageOff =>
+      'Switch on “End-of-month invoices” in Features to use this.';
+
+  @override
+  String get billingUsageWhenZero => 'Also when there is nothing to pay';
+
+  @override
+  String get billingUsageWhenZeroHint =>
+      'Sends a document reading zero, as confirmation that the subscription covered the whole month.';
+
+  @override
   String get reservationExtendButton => 'Stay longer';
 
   @override
@@ -1970,6 +2015,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureMessageGesturesTitle => 'Swipe to quote or take back';
+
+  @override
+  String get featureSubscriptionInvoicesTitle => 'Subscription invoices';
+
+  @override
+  String get featureSubscriptionInvoicesDesc =>
+      'The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.';
+
+  @override
+  String get featureUsageInvoicesTitle => 'End-of-month invoices';
+
+  @override
+  String get featureUsageInvoicesDesc =>
+      'Once a month is over, what it actually cost beyond the subscription — overage, accessories, services — is invoiced separately. Off: those stay on the whole-month invoice.';
 
   @override
   String featureAlsoEnabled(String features) {
