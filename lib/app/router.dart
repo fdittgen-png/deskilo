@@ -48,6 +48,7 @@ import '../features/workspace/presentation/screens/pending_approval_screen.dart'
 import '../features/workspace/presentation/screens/scan_join_screen.dart';
 import '../features/workspace/presentation/screens/workspace_code_screen.dart';
 import '../features/workspace/presentation/screens/workspace_settings_screen.dart';
+import '../features/workspace/domain/workspace_permission.dart';
 import '../features/workspace/providers/workspace_providers.dart';
 import '../features/kiosk/presentation/screens/kiosk_gate_screen.dart';
 import '../features/kiosk/presentation/screens/kiosk_screen.dart';
@@ -563,8 +564,12 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/validation',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner ? null : '/messages';
+          // #816 — the `manageValidation` permission, which the server's
+          // write policy now asks too (0144); owners always hold it.
+          final allowed = ref
+              .read(myPermissionsProvider)
+              .contains(WorkspacePermission.manageValidation);
+          return allowed ? null : '/messages';
         },
         builder: (context, state) => const ValidationSettingsScreen(),
       ),

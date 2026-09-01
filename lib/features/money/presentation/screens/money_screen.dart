@@ -40,6 +40,7 @@ import '../../domain/payment_method.dart';
 import '../../domain/payment_provider.dart';
 import '../../domain/statement.dart';
 import '../../providers/money_focus_controller.dart';
+import '../../providers/billing_invoice_sweep.dart';
 import '../../providers/payment_reminder_sweep.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/expense_schedule_providers.dart';
@@ -87,7 +88,11 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final ws = ref.read(currentWorkspaceProvider).value;
-      if (ws != null) ref.read(paymentReminderSweepProvider(ws.id));
+      if (ws != null) {
+        ref.read(paymentReminderSweepProvider(ws.id));
+        // #816 — the billing cycle (#802) gets the same client clock.
+        ref.read(billingInvoiceSweepProvider(ws.id));
+      }
     });
     final now = ref.read(clockProvider).now();
     _month = DateTime(now.year, now.month);

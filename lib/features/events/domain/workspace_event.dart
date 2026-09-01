@@ -107,6 +107,9 @@ sealed class WorkspaceEvent with _$WorkspaceEvent {
       type == EventType.quota ||
       type == EventType.reservationDelete ||
       type == EventType.invoiceWriteoff ||
+      // #816 — a match, a refund or a settlement is decided by the
+      // validators, never by the billed member (0101 refuses them).
+      type == EventType.invoicePayment ||
       type == EventType.roleChange ||
       type == EventType.memberJoin ||
       ((type == EventType.payment || type == EventType.serviceCharge) &&

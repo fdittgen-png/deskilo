@@ -32,7 +32,8 @@ const _cardTypes = [
   EventType.reservation,
   EventType.spaceReservation,
   EventType.invoicePayment,
-  EventType.adjustment,
+  // #816 — no `adjustment` card: nothing emits that event type and
+  // respond_to_event has no branch for it; a rule on it ruled nothing.
   // #739 — the price-negotiation domain existed on the server from day
   // one but never had its card here: it was only configurable through
   // the default rule. #767 closes that gap alongside its own domain.

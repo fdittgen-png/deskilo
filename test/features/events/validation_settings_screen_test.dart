@@ -65,14 +65,15 @@ void main() {
     expect(find.text('Extra half-days'), findsOneWidget);
     expect(find.text('Role change'), findsOneWidget);
     expect(find.text('Reservation'), findsOneWidget);
-    expect(find.text('Adjustment'), findsOneWidget);
+    // #816 — no Adjustment card: nothing ever emitted that event type.
+    expect(find.text('Adjustment'), findsNothing);
 
     // No stored rows: every card shows the built-in defaults and inherits.
     expect(
       find.text('Required validations: 1 · All admins'),
-      findsNWidgets(15),
+      findsNWidgets(14),
     );
-    expect(find.text('Inherits default'), findsNWidgets(15));
+    expect(find.text('Inherits default'), findsNWidgets(14));
     expect(find.text('Customized'), findsNothing);
   });
 
@@ -241,7 +242,7 @@ void main() {
     );
 
     expect(find.text('Customized'), findsOneWidget);
-    expect(find.text('Inherits default'), findsNWidgets(14));
+    expect(find.text('Inherits default'), findsNWidgets(13));
     expect(
       find.text(
         'Required validations: 2 · All admins · Owner must always validate',
