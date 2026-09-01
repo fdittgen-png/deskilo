@@ -14,6 +14,7 @@ import '../invoice_actions.dart';
 import '../invoice_status.dart';
 import '../period_label.dart';
 import 'invoice_detail_sheet.dart';
+import 'invoice_journey_view.dart';
 
 /// Archive sort orders (field request: sort and filter by member and
 /// period).
@@ -86,6 +87,13 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
       replacedByNumber: replacedByNumber,
       showMemberName: widget.showMemberNames,
       transmission: ref.read(invoiceTransmissionsProvider).value?[invoice.id],
+      journey: readInvoiceJourney(
+        ref,
+        invoice,
+        match: match,
+        reminder: reminder,
+        replacedByNumber: replacedByNumber,
+      ),
     );
     if (action == null || !mounted) return;
     await runInvoiceAction(

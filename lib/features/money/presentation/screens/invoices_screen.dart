@@ -19,6 +19,9 @@ import '../widgets/invoice_archive_tab.dart';
 import '../widgets/invoice_detail_sheet.dart';
 import '../widgets/invoice_form_sheet.dart';
 import '../widgets/invoicing_dashboard.dart';
+import '../widgets/invoice_journey_view.dart';
+import '../widgets/invoice_process_sheet.dart';
+import '../widgets/invoice_stage_strip.dart';
 
 /// The invoicing HUB (field request: "the user sees what to invoice, what
 /// to remind, what has been invoiced") — three tabs over one archive:
@@ -91,6 +94,18 @@ class InvoicesScreen extends ConsumerWidget {
           )
         : null;
 
+    // #812 — the process, explained: the same sheet a member opens from
+    // their Invoices face.
+    final journeyOn = features.contains(WorkspaceFeature.invoiceJourney);
+    final processAction = journeyOn
+        ? IconButton(
+            key: const ValueKey('invoice-process-help'),
+            tooltip: l10n?.journeyHowTitle ?? 'How invoicing works',
+            icon: const Icon(Icons.help_outline),
+            onPressed: () => showInvoiceProcessSheet(context),
+          )
+        : null;
+
     // #804 — regrouping a member's open invoices into one they pay.
     final settlementAction =
         (canIssue && features.contains(WorkspaceFeature.invoiceSettlement))
@@ -106,7 +121,12 @@ class InvoicesScreen extends ConsumerWidget {
       return Scaffold(
         appBar: AppBar(
           title: Text(l10n?.invoicesTitle ?? 'Invoices'),
-          actions: [?templateAction, ?dunningAction, registerAction],
+          actions: [
+            ?templateAction,
+            ?dunningAction,
+            registerAction,
+            ?processAction,
+          ],
         ),
         body: archive,
       );
@@ -145,6 +165,12 @@ class InvoicesScreen extends ConsumerWidget {
         showMemberName: showMemberNames,
         transmission:
             ref.read(invoiceTransmissionsProvider).value?[entry.invoice.id],
+        journey: readInvoiceJourney(
+          ref,
+          entry.invoice,
+          match: entry.pendingMatch,
+          reminder: reminders[entry.invoice.id],
+        ),
       );
       if (action == null || !context.mounted) return;
       await runInvoiceAction(
@@ -166,6 +192,7 @@ class InvoicesScreen extends ConsumerWidget {
             ?settlementAction,
             ?dunningAction,
             registerAction,
+            ?processAction,
           ],
           bottom: TabBar(tabs: [
             Tab(
@@ -189,7 +216,16 @@ class InvoicesScreen extends ConsumerWidget {
           label: Text(l10n?.invoiceCreate ?? 'New invoice'),
         ),
         body: Column(children: [
-          InvoicingSummaryBar(currency: currency),
+          if (journeyOn)
+            Builder(
+              builder: (context) => InvoiceStageStrip(
+                currency: currency,
+                onStage: (tab) =>
+                    DefaultTabController.of(context).animateTo(tab),
+              ),
+            )
+          else
+            InvoicingSummaryBar(currency: currency),
           Expanded(
             child: TabBarView(children: [
               ToInvoiceTab(
@@ -224,6 +260,7 @@ class InvoicesScreen extends ConsumerWidget {
                     voidInvoiceWithConfirm(context, ref, entry.invoice),
                 onProforma: (entry) =>
                     shareProforma(context, ref, entry.invoice),
+                onEvents: (_) => context.go('/events'),
               ),
               archive,
             ]),

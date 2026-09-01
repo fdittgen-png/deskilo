@@ -58,7 +58,9 @@ import 'package:flutter_test/flutter_test.dart';
 // subscription billed ahead of its month, the extras billed after it.
 // 58→59 (2026-09-01): #804 invoiceSettlement — several open invoices
 // regrouped into one, originals kept and traceable.
-const int _expectedFeatureCount = 59;
+// 59→60 (2026-09-01): #812 invoiceJourney — Issued → Payment →
+// Confirmation → Closed on every invoice surface, with whose move it is.
+const int _expectedFeatureCount = 60;
 
 void main() {
   test('every functionality is registered — the pin', () {

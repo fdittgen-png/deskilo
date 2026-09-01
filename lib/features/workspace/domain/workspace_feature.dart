@@ -88,7 +88,12 @@ enum WorkspaceFeature {
 
   /// #804 — several open invoices regrouped into one the member pays,
   /// with the originals kept and traceable.
-  invoiceSettlement;
+  invoiceSettlement,
+
+  /// #812 — the journey of an invoice told as one process on every
+  /// screen: Issued → Payment → Confirmation → Closed, whose move it is
+  /// and what that move is. OFF keeps the plain status chips.
+  invoiceJourney;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -321,6 +326,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // its invoices can still consolidate a member's arrears.
   WorkspaceFeature.invoiceSettlement: FeatureManifestEntry(
     feature: WorkspaceFeature.invoiceSettlement,
+    requires: WorkspaceFeature.invoicing,
+  ),
+  // #812 — the process view: journey bar, next move, stage strip.
+  WorkspaceFeature.invoiceJourney: FeatureManifestEntry(
+    feature: WorkspaceFeature.invoiceJourney,
     requires: WorkspaceFeature.invoicing,
   ),
   // #798 — swipe a message right to quote it, left to take it back

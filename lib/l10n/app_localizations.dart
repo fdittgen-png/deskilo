@@ -3782,6 +3782,18 @@ abstract class AppLocalizations {
   /// **'Recurring expenses (internet, phone, electricity): any member schedules one with its rule (every X days/weeks/months/years, X times or until a date); the schedule is validated once, and every due date is presented to the member — the validated amount counts immediately, a different amount explains itself and passes the expense validation.'**
   String get featureScheduledExpensesDesc;
 
+  /// No description provided for @featureInvoiceJourneyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The journey of an invoice'**
+  String get featureInvoiceJourneyTitle;
+
+  /// No description provided for @featureInvoiceJourneyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Every invoice shows where it stands — Issued, Payment, Confirmation, Closed — and whose move it is: the member pays, an admin confirms the declared payment, the issuer matches it, the validators decide. The issuers\' hub adds a stage strip with live counts and a How-it-works explainer.'**
+  String get featureInvoiceJourneyDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:
@@ -6571,6 +6583,318 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} items'**
   String eventPriceNegotiationItems(int count);
+
+  /// No description provided for @journeyStepIssued.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued'**
+  String get journeyStepIssued;
+
+  /// No description provided for @journeyStepPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get journeyStepPayment;
+
+  /// No description provided for @journeyStepConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmation'**
+  String get journeyStepConfirmation;
+
+  /// No description provided for @journeyStepClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get journeyStepClosed;
+
+  /// No description provided for @journeyIssuerMemberPays.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for {name}\'s payment of {amount} — due {date}'**
+  String journeyIssuerMemberPays(String name, String amount, String date);
+
+  /// No description provided for @journeyIssuerMemberPaysOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} owes {amount} — overdue by {days} days'**
+  String journeyIssuerMemberPaysOverdue(String name, String amount, int days);
+
+  /// No description provided for @journeyIssuerMemberPaysRemainder.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} still owes {amount} after a partial payment'**
+  String journeyIssuerMemberPaysRemainder(String name, String amount);
+
+  /// No description provided for @journeyIssuerAdminConfirms.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} declared a payment of {amount} — another admin confirms it in Events'**
+  String journeyIssuerAdminConfirms(String name, String amount);
+
+  /// No description provided for @journeyIssuerMemberConfirms.
+  ///
+  /// In en, this message translates to:
+  /// **'A payment of {amount} was recorded — {name} confirms it in Events'**
+  String journeyIssuerMemberConfirms(String name, String amount);
+
+  /// No description provided for @journeyIssuerMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'A payment of {amount} is registered — match it to this invoice'**
+  String journeyIssuerMatches(String amount);
+
+  /// No description provided for @journeyValidatorsMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment matched — awaiting the validators\' decision'**
+  String get journeyValidatorsMatch;
+
+  /// No description provided for @journeyValidatorsWriteoff.
+  ///
+  /// In en, this message translates to:
+  /// **'Write-off of the remainder requested — awaiting the validators'**
+  String get journeyValidatorsWriteoff;
+
+  /// No description provided for @journeyIssuerRefunds.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit note — refund {amount} to {name} and record it'**
+  String journeyIssuerRefunds(String name, String amount);
+
+  /// No description provided for @journeyIssuerReplaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled — issue the replacement'**
+  String get journeyIssuerReplaces;
+
+  /// No description provided for @journeyMemberPays.
+  ///
+  /// In en, this message translates to:
+  /// **'Your move: pay {amount} by {date}'**
+  String journeyMemberPays(String amount, String date);
+
+  /// No description provided for @journeyMemberPaysOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Your move: pay {amount} — overdue by {days} days'**
+  String journeyMemberPaysOverdue(String amount, int days);
+
+  /// No description provided for @journeyMemberPaysRemainder.
+  ///
+  /// In en, this message translates to:
+  /// **'Your move: pay the remaining {amount}'**
+  String journeyMemberPaysRemainder(String amount);
+
+  /// No description provided for @journeyMemberDeclared.
+  ///
+  /// In en, this message translates to:
+  /// **'You declared {amount} — the workspace is confirming it'**
+  String journeyMemberDeclared(String amount);
+
+  /// No description provided for @journeyMemberConfirms.
+  ///
+  /// In en, this message translates to:
+  /// **'Your move: confirm the payment of {amount} recorded for you, in Events'**
+  String journeyMemberConfirms(String amount);
+
+  /// No description provided for @journeyMemberRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'Your payment of {amount} is registered — the workspace matches it to this invoice'**
+  String journeyMemberRegistered(String amount);
+
+  /// No description provided for @journeyMemberValidators.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment matched — awaiting validation'**
+  String get journeyMemberValidators;
+
+  /// No description provided for @journeyMemberWriteoff.
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace asked to cancel the remainder — awaiting validation'**
+  String get journeyMemberWriteoff;
+
+  /// No description provided for @journeyMemberRefund.
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace owes you {amount} — nothing to pay'**
+  String journeyMemberRefund(String amount);
+
+  /// No description provided for @journeyMemberReplaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled — a replacement follows'**
+  String get journeyMemberReplaces;
+
+  /// No description provided for @journeyClosedPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid on {date} — closed'**
+  String journeyClosedPaid(String date);
+
+  /// No description provided for @journeyClosedRemainder.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed — remainder cancelled on {date}'**
+  String journeyClosedRemainder(String date);
+
+  /// No description provided for @journeyClosedRefunded.
+  ///
+  /// In en, this message translates to:
+  /// **'Refunded on {date} — closed'**
+  String journeyClosedRefunded(String date);
+
+  /// No description provided for @journeyClosedReplaced.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled — replaced by {number}'**
+  String journeyClosedReplaced(String number);
+
+  /// No description provided for @journeyClosedSettled.
+  ///
+  /// In en, this message translates to:
+  /// **'Regrouped into another invoice — that one is owed and chased'**
+  String get journeyClosedSettled;
+
+  /// No description provided for @journeyStageIssue.
+  ///
+  /// In en, this message translates to:
+  /// **'To issue'**
+  String get journeyStageIssue;
+
+  /// No description provided for @journeyStageCollect.
+  ///
+  /// In en, this message translates to:
+  /// **'To collect'**
+  String get journeyStageCollect;
+
+  /// No description provided for @journeyStageConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'To confirm'**
+  String get journeyStageConfirm;
+
+  /// No description provided for @journeyStageClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get journeyStageClosed;
+
+  /// No description provided for @journeyOverdueCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} overdue'**
+  String journeyOverdueCount(int count);
+
+  /// No description provided for @journeyStageStripLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'The invoicing process: issue, collect, confirm, close'**
+  String get journeyStageStripLabel;
+
+  /// No description provided for @journeyHowButton.
+  ///
+  /// In en, this message translates to:
+  /// **'How it works'**
+  String get journeyHowButton;
+
+  /// No description provided for @journeyHowTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How invoicing works'**
+  String get journeyHowTitle;
+
+  /// No description provided for @journeyHowIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Four steps, the same for every invoice. Each one says whose move it is.'**
+  String get journeyHowIntro;
+
+  /// No description provided for @journeyHowWorkspaceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace'**
+  String get journeyHowWorkspaceLabel;
+
+  /// No description provided for @journeyHowMemberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get journeyHowMemberLabel;
+
+  /// No description provided for @journeyHowIssuedWorkspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Issues the invoice from the month\'s tracked data — numbered, signed, immutable — and shares the PDF or sends the e-invoice.'**
+  String get journeyHowIssuedWorkspace;
+
+  /// No description provided for @journeyHowIssuedMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Finds it on the Invoices face: positions, balance, due date.'**
+  String get journeyHowIssuedMember;
+
+  /// No description provided for @journeyHowPaymentWorkspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Waits for the money. Past the term it sends the reminder levels it configured — by hand or automatically.'**
+  String get journeyHowPaymentWorkspace;
+
+  /// No description provided for @journeyHowPaymentMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Pays online (settled at once) or by transfer, then records the payment so the workspace knows.'**
+  String get journeyHowPaymentMember;
+
+  /// No description provided for @journeyHowConfirmationWorkspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Another admin confirms the declared payment; the issuer then matches the registered payment to the invoice (Mark as paid) — a validation rule may hand the match to the validators. Paid more? A credit note. Paid less? Partially paid, the rest owed until paid or written off.'**
+  String get journeyHowConfirmationWorkspace;
+
+  /// No description provided for @journeyHowConfirmationMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to do — unless the workspace recorded the payment for them: then they confirm it in Events.'**
+  String get journeyHowConfirmationMember;
+
+  /// No description provided for @journeyHowClosedWorkspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid, remainder cancelled or refunded: the invoice moves to the archive. A wrong invoice is marked erroneous and replaced — before payment, never after.'**
+  String get journeyHowClosedWorkspace;
+
+  /// No description provided for @journeyHowClosedMember.
+  ///
+  /// In en, this message translates to:
+  /// **'The month reads settled and the invoice stays readable forever: quick view, PDF, share.'**
+  String get journeyHowClosedMember;
+
+  /// No description provided for @journeyTimelineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Timeline'**
+  String get journeyTimelineTitle;
+
+  /// No description provided for @journeyPrimaryRemind.
+  ///
+  /// In en, this message translates to:
+  /// **'Send reminder {level}'**
+  String journeyPrimaryRemind(int level);
+
+  /// No description provided for @journeyPrimaryConfirmInEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Events'**
+  String get journeyPrimaryConfirmInEvents;
+
+  /// No description provided for @journeyOutstanding.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} outstanding'**
+  String journeyOutstanding(String amount);
 
   /// No description provided for @eventTypeMemberJoin.
   ///

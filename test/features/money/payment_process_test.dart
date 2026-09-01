@@ -231,11 +231,24 @@ void main() {
 
     final remaining =
         '€${((invoice.totalCents - 5000) / 100).toStringAsFixed(2)}';
+    // #812 — the stage strip: To collect carries the REMAINING sum; the
+    // credit note is the issuer's move (refund), so it sits under To
+    // confirm rather than inflating what members owe.
+    expect(find.text('$remaining outstanding'), findsOneWidget);
     expect(
-      find.text('1 open · $remaining outstanding'),
+      find.descendant(
+        of: find.byKey(const ValueKey('invoice-stage-collect')),
+        matching: find.text('1'),
+      ),
       findsOneWidget,
     );
-    expect(find.text('1 to refund · €8.00'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('invoice-stage-confirm')),
+        matching: find.text('1'),
+      ),
+      findsOneWidget,
+    );
   });
 
   group('the account becomes REAL (#512)', () {

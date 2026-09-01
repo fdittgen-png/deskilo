@@ -1199,6 +1199,8 @@
   "featureMessageGesturesDesc": "Balayez un message vers la droite pour le citer dans votre réponse ; vers la gauche pour reprendre votre propre message tant que personne ne l'a lu, après confirmation. Désactivé : les messages se suppriment par appui long.",
   "featureUniqueMonogramsDesc": "Un avatar sans photo affiche des initiales propres à un seul membre : initiale du prénom et du nom, une lettre de plus en cas de collision, des chiffres seulement en dernier recours. Désactivé : la première lettre seule, identique pour tous ceux qui la partagent.",
   "featureScheduledExpensesDesc": "Dépenses récurrentes (internet, téléphone, électricité) : chaque membre en programme une avec sa règle (tous les X jours/semaines/mois/ans, X fois ou jusqu'à une date) ; la programmation est validée une fois, et chaque échéance est présentée au membre — le montant validé compte immédiatement, un montant différent s'explique et passe la validation des dépenses.",
+  "featureInvoiceJourneyTitle": "Le parcours d'une facture",
+  "featureInvoiceJourneyDesc": "Chaque facture montre où elle en est — Émise, Paiement, Confirmation, Close — et à qui est le tour : le membre paie, un admin confirme le paiement déclaré, l'émetteur le rapproche, les valideurs décident. Le hub des émetteurs ajoute un bandeau d'étapes avec les compteurs et une explication « Comment ça marche ».",
   "helpTitle": "Aide",
   "helpContents": "Sommaire",
   "helpHintMessages": "Toutes vos conversations dans une liste, la plus récente en haut. Touchez le crayon pour écrire à quelqu’un ou créer un groupe.",
@@ -2159,6 +2161,235 @@
   "eventTypePriceNegotiation": "Négociation tarifaire",
   "eventPriceNegotiationLine": "{actor} propose des conditions pour {member} : {terms}",
   "eventPriceNegotiationItems": "{count} articles",
+  "journeyStepIssued": "Émise",
+  "journeyStepPayment": "Paiement",
+  "journeyStepConfirmation": "Confirmation",
+  "journeyStepClosed": "Close",
+  "journeyIssuerMemberPays": "En attente du paiement de {name} : {amount} — échéance {date}",
+  "@journeyIssuerMemberPays": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyIssuerMemberPaysOverdue": "{name} doit {amount} — en retard de {days} jours",
+  "@journeyIssuerMemberPaysOverdue": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "journeyIssuerMemberPaysRemainder": "{name} doit encore {amount} après un paiement partiel",
+  "@journeyIssuerMemberPaysRemainder": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyIssuerAdminConfirms": "{name} a déclaré un paiement de {amount} — un autre admin le confirme dans Événements",
+  "@journeyIssuerAdminConfirms": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyIssuerMemberConfirms": "Un paiement de {amount} a été enregistré — {name} le confirme dans Événements",
+  "@journeyIssuerMemberConfirms": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyIssuerMatches": "Un paiement de {amount} est enregistré — rapprochez-le de cette facture",
+  "@journeyIssuerMatches": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyValidatorsMatch": "Paiement rapproché — en attente de la décision des valideurs",
+  "journeyValidatorsWriteoff": "Annulation du reliquat demandée — en attente des valideurs",
+  "journeyIssuerRefunds": "Avoir — remboursez {amount} à {name} et enregistrez-le",
+  "@journeyIssuerRefunds": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyIssuerReplaces": "Annulée — émettez la facture de remplacement",
+  "journeyMemberPays": "À vous : payez {amount} avant le {date}",
+  "@journeyMemberPays": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberPaysOverdue": "À vous : payez {amount} — en retard de {days} jours",
+  "@journeyMemberPaysOverdue": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "journeyMemberPaysRemainder": "À vous : payez le reliquat de {amount}",
+  "@journeyMemberPaysRemainder": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberDeclared": "Vous avez déclaré {amount} — l'espace le confirme",
+  "@journeyMemberDeclared": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberConfirms": "À vous : confirmez dans Événements le paiement de {amount} enregistré pour vous",
+  "@journeyMemberConfirms": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberRegistered": "Votre paiement de {amount} est enregistré — l'espace le rapproche de cette facture",
+  "@journeyMemberRegistered": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberValidators": "Paiement rapproché — en attente de validation",
+  "journeyMemberWriteoff": "L'espace a demandé l'annulation du reliquat — en attente de validation",
+  "journeyMemberRefund": "L'espace vous doit {amount} — rien à payer",
+  "@journeyMemberRefund": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberReplaces": "Annulée — une facture de remplacement suit",
+  "journeyClosedPaid": "Payée le {date} — close",
+  "@journeyClosedPaid": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyClosedRemainder": "Close — reliquat annulé le {date}",
+  "@journeyClosedRemainder": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyClosedRefunded": "Remboursée le {date} — close",
+  "@journeyClosedRefunded": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyClosedReplaced": "Annulée — remplacée par {number}",
+  "@journeyClosedReplaced": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyClosedSettled": "Regroupée dans une autre facture — c'est celle-là qui est due et relancée",
+  "journeyStageIssue": "À émettre",
+  "journeyStageCollect": "À encaisser",
+  "journeyStageConfirm": "À confirmer",
+  "journeyStageClosed": "Closes",
+  "journeyOverdueCount": "{count} en retard",
+  "@journeyOverdueCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "journeyStageStripLabel": "Le processus de facturation : émettre, encaisser, confirmer, clore",
+  "journeyHowButton": "Comment ça marche",
+  "journeyHowTitle": "Comment fonctionne la facturation",
+  "journeyHowIntro": "Quatre étapes, les mêmes pour chaque facture. Chacune dit à qui est le tour.",
+  "journeyHowWorkspaceLabel": "Espace",
+  "journeyHowMemberLabel": "Membre",
+  "journeyHowIssuedWorkspace": "Émet la facture à partir des données suivies du mois — numérotée, signée, immuable — et partage le PDF ou envoie la facture électronique.",
+  "journeyHowIssuedMember": "La trouve sur le volet Factures : positions, solde, échéance.",
+  "journeyHowPaymentWorkspace": "Attend l'argent. Passé le délai, il envoie les niveaux de relance configurés — à la main ou automatiquement.",
+  "journeyHowPaymentMember": "Paie en ligne (réglé aussitôt) ou par virement, puis enregistre le paiement pour que l'espace le sache.",
+  "journeyHowConfirmationWorkspace": "Un autre admin confirme le paiement déclaré ; l'émetteur rapproche ensuite le paiement enregistré de la facture (Marquer payée) — une règle de validation peut confier le rapprochement aux valideurs. Trop payé ? Un avoir. Pas assez ? Partiellement payée, le reste dû jusqu'au paiement ou à l'annulation.",
+  "journeyHowConfirmationMember": "Rien à faire — sauf si l'espace a enregistré le paiement pour lui : il le confirme alors dans Événements.",
+  "journeyHowClosedWorkspace": "Payée, reliquat annulé ou remboursée : la facture passe aux archives. Une facture fausse est marquée erronée et remplacée — avant paiement, jamais après.",
+  "journeyHowClosedMember": "Le mois se lit soldé et la facture reste lisible pour toujours : aperçu, PDF, partage.",
+  "journeyTimelineTitle": "Chronologie",
+  "journeyPrimaryRemind": "Envoyer la relance {level}",
+  "@journeyPrimaryRemind": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "journeyPrimaryConfirmInEvents": "Ouvrir Événements",
+  "journeyOutstanding": "{amount} dus",
+  "@journeyOutstanding": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "eventTypeMemberJoin": "Nouveau membre",
   "memberStatusPending": "En attente",
   "pendingApprovalTitle": "En attente d'approbation",

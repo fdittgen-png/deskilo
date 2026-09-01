@@ -2120,6 +2120,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wiederkehrende Ausgaben (Internet, Telefon, Strom): jedes Mitglied plant sie mit ihrer Regel (alle X Tage/Wochen/Monate/Jahre, X Mal oder bis zu einem Datum); der Plan wird einmal validiert, und jede Fälligkeit wird dem Mitglied vorgelegt — der validierte Betrag zählt sofort, ein abweichender erklärt sich und durchläuft die Ausgaben-Validierung.';
 
   @override
+  String get featureInvoiceJourneyTitle => 'Der Weg einer Rechnung';
+
+  @override
+  String get featureInvoiceJourneyDesc =>
+      'Jede Rechnung zeigt, wo sie steht — Ausgestellt, Zahlung, Bestätigung, Abgeschlossen — und wer am Zug ist: das Mitglied zahlt, ein Admin bestätigt die gemeldete Zahlung, der Aussteller ordnet sie zu, die Prüfer entscheiden. Das Hub der Aussteller erhält eine Stufenleiste mit Zählern und eine Erklärung „So funktioniert es“.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override
@@ -3727,6 +3734,219 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String eventPriceNegotiationItems(int count) {
     return '$count Artikel';
+  }
+
+  @override
+  String get journeyStepIssued => 'Ausgestellt';
+
+  @override
+  String get journeyStepPayment => 'Zahlung';
+
+  @override
+  String get journeyStepConfirmation => 'Bestätigung';
+
+  @override
+  String get journeyStepClosed => 'Abgeschlossen';
+
+  @override
+  String journeyIssuerMemberPays(String name, String amount, String date) {
+    return 'Warten auf die Zahlung von $name: $amount — fällig $date';
+  }
+
+  @override
+  String journeyIssuerMemberPaysOverdue(String name, String amount, int days) {
+    return '$name schuldet $amount — $days Tage überfällig';
+  }
+
+  @override
+  String journeyIssuerMemberPaysRemainder(String name, String amount) {
+    return '$name schuldet nach einer Teilzahlung noch $amount';
+  }
+
+  @override
+  String journeyIssuerAdminConfirms(String name, String amount) {
+    return '$name hat eine Zahlung von $amount gemeldet — ein anderer Admin bestätigt sie unter Ereignisse';
+  }
+
+  @override
+  String journeyIssuerMemberConfirms(String name, String amount) {
+    return 'Eine Zahlung von $amount wurde erfasst — $name bestätigt sie unter Ereignisse';
+  }
+
+  @override
+  String journeyIssuerMatches(String amount) {
+    return 'Eine Zahlung von $amount ist verbucht — ordnen Sie sie dieser Rechnung zu';
+  }
+
+  @override
+  String get journeyValidatorsMatch =>
+      'Zahlung zugeordnet — Entscheidung der Prüfer steht aus';
+
+  @override
+  String get journeyValidatorsWriteoff =>
+      'Ausbuchung des Restbetrags beantragt — Prüfer entscheiden';
+
+  @override
+  String journeyIssuerRefunds(String name, String amount) {
+    return 'Gutschrift — $amount an $name erstatten und erfassen';
+  }
+
+  @override
+  String get journeyIssuerReplaces => 'Storniert — Ersatzrechnung ausstellen';
+
+  @override
+  String journeyMemberPays(String amount, String date) {
+    return 'Sie sind dran: $amount bis $date zahlen';
+  }
+
+  @override
+  String journeyMemberPaysOverdue(String amount, int days) {
+    return 'Sie sind dran: $amount zahlen — $days Tage überfällig';
+  }
+
+  @override
+  String journeyMemberPaysRemainder(String amount) {
+    return 'Sie sind dran: den Restbetrag von $amount zahlen';
+  }
+
+  @override
+  String journeyMemberDeclared(String amount) {
+    return 'Sie haben $amount gemeldet — der Space bestätigt es';
+  }
+
+  @override
+  String journeyMemberConfirms(String amount) {
+    return 'Sie sind dran: die für Sie erfasste Zahlung von $amount unter Ereignisse bestätigen';
+  }
+
+  @override
+  String journeyMemberRegistered(String amount) {
+    return 'Ihre Zahlung von $amount ist verbucht — der Space ordnet sie dieser Rechnung zu';
+  }
+
+  @override
+  String get journeyMemberValidators =>
+      'Zahlung zugeordnet — Validierung steht aus';
+
+  @override
+  String get journeyMemberWriteoff =>
+      'Der Space hat die Ausbuchung des Restbetrags beantragt — Validierung steht aus';
+
+  @override
+  String journeyMemberRefund(String amount) {
+    return 'Der Space schuldet Ihnen $amount — nichts zu zahlen';
+  }
+
+  @override
+  String get journeyMemberReplaces => 'Storniert — eine Ersatzrechnung folgt';
+
+  @override
+  String journeyClosedPaid(String date) {
+    return 'Bezahlt am $date — abgeschlossen';
+  }
+
+  @override
+  String journeyClosedRemainder(String date) {
+    return 'Abgeschlossen — Restbetrag am $date ausgebucht';
+  }
+
+  @override
+  String journeyClosedRefunded(String date) {
+    return 'Erstattet am $date — abgeschlossen';
+  }
+
+  @override
+  String journeyClosedReplaced(String number) {
+    return 'Storniert — ersetzt durch $number';
+  }
+
+  @override
+  String get journeyClosedSettled =>
+      'In eine andere Rechnung zusammengefasst — diese wird geschuldet und angemahnt';
+
+  @override
+  String get journeyStageIssue => 'Auszustellen';
+
+  @override
+  String get journeyStageCollect => 'Einzuziehen';
+
+  @override
+  String get journeyStageConfirm => 'Zu bestätigen';
+
+  @override
+  String get journeyStageClosed => 'Abgeschlossen';
+
+  @override
+  String journeyOverdueCount(int count) {
+    return '$count überfällig';
+  }
+
+  @override
+  String get journeyStageStripLabel =>
+      'Der Fakturierungsprozess: ausstellen, einziehen, bestätigen, abschließen';
+
+  @override
+  String get journeyHowButton => 'So funktioniert es';
+
+  @override
+  String get journeyHowTitle => 'So funktioniert die Fakturierung';
+
+  @override
+  String get journeyHowIntro =>
+      'Vier Schritte, für jede Rechnung dieselben. Jeder sagt, wer am Zug ist.';
+
+  @override
+  String get journeyHowWorkspaceLabel => 'Space';
+
+  @override
+  String get journeyHowMemberLabel => 'Mitglied';
+
+  @override
+  String get journeyHowIssuedWorkspace =>
+      'Stellt die Rechnung aus den erfassten Monatsdaten aus — nummeriert, signiert, unveränderlich — und teilt das PDF oder sendet die E-Rechnung.';
+
+  @override
+  String get journeyHowIssuedMember =>
+      'Findet sie in der Ansicht Rechnungen: Positionen, Saldo, Fälligkeit.';
+
+  @override
+  String get journeyHowPaymentWorkspace =>
+      'Wartet auf das Geld. Nach der Frist sendet er die konfigurierten Mahnstufen — von Hand oder automatisch.';
+
+  @override
+  String get journeyHowPaymentMember =>
+      'Zahlt online (sofort beglichen) oder per Überweisung und erfasst dann die Zahlung, damit der Space Bescheid weiß.';
+
+  @override
+  String get journeyHowConfirmationWorkspace =>
+      'Ein anderer Admin bestätigt die gemeldete Zahlung; der Aussteller ordnet die verbuchte Zahlung dann der Rechnung zu (Als bezahlt markieren) — eine Validierungsregel kann die Zuordnung den Prüfern übergeben. Zu viel gezahlt? Eine Gutschrift. Zu wenig? Teilweise bezahlt, der Rest bleibt geschuldet bis zur Zahlung oder Ausbuchung.';
+
+  @override
+  String get journeyHowConfirmationMember =>
+      'Nichts zu tun — außer der Space hat die Zahlung für das Mitglied erfasst: dann bestätigt es sie unter Ereignisse.';
+
+  @override
+  String get journeyHowClosedWorkspace =>
+      'Bezahlt, Restbetrag ausgebucht oder erstattet: die Rechnung wandert ins Archiv. Eine falsche Rechnung wird als fehlerhaft markiert und ersetzt — vor der Zahlung, nie danach.';
+
+  @override
+  String get journeyHowClosedMember =>
+      'Der Monat gilt als beglichen und die Rechnung bleibt für immer lesbar: Schnellansicht, PDF, Teilen.';
+
+  @override
+  String get journeyTimelineTitle => 'Verlauf';
+
+  @override
+  String journeyPrimaryRemind(int level) {
+    return 'Mahnung $level senden';
+  }
+
+  @override
+  String get journeyPrimaryConfirmInEvents => 'Ereignisse öffnen';
+
+  @override
+  String journeyOutstanding(String amount) {
+    return '$amount offen';
   }
 
   @override

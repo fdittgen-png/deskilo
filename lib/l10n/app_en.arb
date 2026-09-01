@@ -2387,6 +2387,8 @@
   "featureMessageGesturesDesc": "Swipe a message right to quote it in your reply; swipe left to take your own message back while nobody has read it yet, after a confirmation. Off: messages are deleted by holding them.",
   "featureUniqueMonogramsDesc": "An avatar without a photo shows initials that belong to one member: first and family initial, a further letter when two members would clash, numbers only as a last resort. Off: the first letter alone, repeated across everyone who shares it.",
   "featureScheduledExpensesDesc": "Recurring expenses (internet, phone, electricity): any member schedules one with its rule (every X days/weeks/months/years, X times or until a date); the schedule is validated once, and every due date is presented to the member — the validated amount counts immediately, a different amount explains itself and passes the expense validation.",
+  "featureInvoiceJourneyTitle": "The journey of an invoice",
+  "featureInvoiceJourneyDesc": "Every invoice shows where it stands — Issued, Payment, Confirmation, Closed — and whose move it is: the member pays, an admin confirms the declared payment, the issuer matches it, the validators decide. The issuers' hub adds a stage strip with live counts and a How-it-works explainer.",
   "helpTitle": "Help",
   "helpContents": "Contents",
   "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",
@@ -4056,6 +4058,235 @@
     "placeholders": {
       "count": {
         "type": "int"
+      }
+    }
+  },
+  "journeyStepIssued": "Issued",
+  "journeyStepPayment": "Payment",
+  "journeyStepConfirmation": "Confirmation",
+  "journeyStepClosed": "Closed",
+  "journeyIssuerMemberPays": "Waiting for {name}'s payment of {amount} — due {date}",
+  "@journeyIssuerMemberPays": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyIssuerMemberPaysOverdue": "{name} owes {amount} — overdue by {days} days",
+  "@journeyIssuerMemberPaysOverdue": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "journeyIssuerMemberPaysRemainder": "{name} still owes {amount} after a partial payment",
+  "@journeyIssuerMemberPaysRemainder": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyIssuerAdminConfirms": "{name} declared a payment of {amount} — another admin confirms it in Events",
+  "@journeyIssuerAdminConfirms": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyIssuerMemberConfirms": "A payment of {amount} was recorded — {name} confirms it in Events",
+  "@journeyIssuerMemberConfirms": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyIssuerMatches": "A payment of {amount} is registered — match it to this invoice",
+  "@journeyIssuerMatches": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyValidatorsMatch": "Payment matched — awaiting the validators' decision",
+  "journeyValidatorsWriteoff": "Write-off of the remainder requested — awaiting the validators",
+  "journeyIssuerRefunds": "Credit note — refund {amount} to {name} and record it",
+  "@journeyIssuerRefunds": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyIssuerReplaces": "Cancelled — issue the replacement",
+  "journeyMemberPays": "Your move: pay {amount} by {date}",
+  "@journeyMemberPays": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberPaysOverdue": "Your move: pay {amount} — overdue by {days} days",
+  "@journeyMemberPaysOverdue": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "journeyMemberPaysRemainder": "Your move: pay the remaining {amount}",
+  "@journeyMemberPaysRemainder": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberDeclared": "You declared {amount} — the workspace is confirming it",
+  "@journeyMemberDeclared": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberConfirms": "Your move: confirm the payment of {amount} recorded for you, in Events",
+  "@journeyMemberConfirms": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberRegistered": "Your payment of {amount} is registered — the workspace matches it to this invoice",
+  "@journeyMemberRegistered": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberValidators": "Payment matched — awaiting validation",
+  "journeyMemberWriteoff": "The workspace asked to cancel the remainder — awaiting validation",
+  "journeyMemberRefund": "The workspace owes you {amount} — nothing to pay",
+  "@journeyMemberRefund": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberReplaces": "Cancelled — a replacement follows",
+  "journeyClosedPaid": "Paid on {date} — closed",
+  "@journeyClosedPaid": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyClosedRemainder": "Closed — remainder cancelled on {date}",
+  "@journeyClosedRemainder": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyClosedRefunded": "Refunded on {date} — closed",
+  "@journeyClosedRefunded": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyClosedReplaced": "Cancelled — replaced by {number}",
+  "@journeyClosedReplaced": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyClosedSettled": "Regrouped into another invoice — that one is owed and chased",
+  "journeyStageIssue": "To issue",
+  "journeyStageCollect": "To collect",
+  "journeyStageConfirm": "To confirm",
+  "journeyStageClosed": "Closed",
+  "journeyOverdueCount": "{count} overdue",
+  "@journeyOverdueCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "journeyStageStripLabel": "The invoicing process: issue, collect, confirm, close",
+  "journeyHowButton": "How it works",
+  "journeyHowTitle": "How invoicing works",
+  "journeyHowIntro": "Four steps, the same for every invoice. Each one says whose move it is.",
+  "journeyHowWorkspaceLabel": "Workspace",
+  "journeyHowMemberLabel": "Member",
+  "journeyHowIssuedWorkspace": "Issues the invoice from the month's tracked data — numbered, signed, immutable — and shares the PDF or sends the e-invoice.",
+  "journeyHowIssuedMember": "Finds it on the Invoices face: positions, balance, due date.",
+  "journeyHowPaymentWorkspace": "Waits for the money. Past the term it sends the reminder levels it configured — by hand or automatically.",
+  "journeyHowPaymentMember": "Pays online (settled at once) or by transfer, then records the payment so the workspace knows.",
+  "journeyHowConfirmationWorkspace": "Another admin confirms the declared payment; the issuer then matches the registered payment to the invoice (Mark as paid) — a validation rule may hand the match to the validators. Paid more? A credit note. Paid less? Partially paid, the rest owed until paid or written off.",
+  "journeyHowConfirmationMember": "Nothing to do — unless the workspace recorded the payment for them: then they confirm it in Events.",
+  "journeyHowClosedWorkspace": "Paid, remainder cancelled or refunded: the invoice moves to the archive. A wrong invoice is marked erroneous and replaced — before payment, never after.",
+  "journeyHowClosedMember": "The month reads settled and the invoice stays readable forever: quick view, PDF, share.",
+  "journeyTimelineTitle": "Timeline",
+  "journeyPrimaryRemind": "Send reminder {level}",
+  "@journeyPrimaryRemind": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "journeyPrimaryConfirmInEvents": "Open Events",
+  "journeyOutstanding": "{amount} outstanding",
+  "@journeyOutstanding": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
       }
     }
   },

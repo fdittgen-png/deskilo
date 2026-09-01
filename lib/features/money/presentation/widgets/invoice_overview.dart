@@ -12,6 +12,8 @@ import '../../domain/money_face.dart';
 import '../../providers/money_face_controller.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_status.dart';
+import 'invoice_journey_view.dart';
+import 'invoice_process_sheet.dart';
 
 /// #726 — what a member owes across their invoices, judged by the
 /// workspace's own payment term (the dunning rules' first delay): open
@@ -139,6 +141,15 @@ class InvoiceSummaryCard extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final money = moneyFormat(exposure.currency);
+    // #812 — the same explainer the issuers' hub opens.
+    final howItWorks = invoiceJourneyOn(ref)
+        ? TextButton.icon(
+            key: const ValueKey('money-invoice-process'),
+            onPressed: () => showInvoiceProcessSheet(context),
+            icon: const Icon(Icons.help_outline, size: 18),
+            label: Text(l10n?.journeyHowButton ?? 'How it works'),
+          )
+        : null;
     return Card(
       key: const ValueKey('money-invoice-summary'),
       child: Padding(
@@ -152,6 +163,7 @@ class InvoiceSummaryCard extends ConsumerWidget {
                   child: Text(l10n?.moneyNothingOpen ??
                       'Nothing open — you are up to date.'),
                 ),
+                ?howItWorks,
               ])
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,16 +193,21 @@ class InvoiceSummaryCard extends ConsumerWidget {
                     ),
                   ],
                   const SizedBox(height: AppSpacing.sm),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: FilledButton.icon(
-                      key: const ValueKey('money-summary-pay'),
-                      onPressed: () => ref
-                          .read(moneyFaceControllerProvider.notifier)
-                          .show(MoneyFace.payments),
-                      icon: const Icon(Icons.payments_outlined),
-                      label: Text(l10n?.moneyPayNow ?? 'Pay now'),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ?howItWorks,
+                      if (howItWorks != null)
+                        const SizedBox(width: AppSpacing.sm),
+                      FilledButton.icon(
+                        key: const ValueKey('money-summary-pay'),
+                        onPressed: () => ref
+                            .read(moneyFaceControllerProvider.notifier)
+                            .show(MoneyFace.payments),
+                        icon: const Icon(Icons.payments_outlined),
+                        label: Text(l10n?.moneyPayNow ?? 'Pay now'),
+                      ),
+                    ],
                   ),
                 ],
               ),

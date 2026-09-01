@@ -18,6 +18,7 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../events/domain/workspace_event.dart';
+import 'open_invoice_card.dart';
 
 /// How old an open invoice has to be before the hub starts pointing at it.
 const _overdueDays = 30;
@@ -254,9 +255,14 @@ class OpenInvoicesTab extends ConsumerWidget {
     required this.onRefund,
     required this.onVoid,
     required this.onProforma,
+    this.onEvents,
   });
 
   final MoneyFormat currency;
+
+  /// #812 — the move "another admin confirms the declared payment"
+  /// points at the Events tab.
+  final void Function(OpenInvoiceEntry entry)? onEvents;
 
   /// Reading the document: the same detail sheet the archive opens.
   final void Function(OpenInvoiceEntry entry) onOpen;
@@ -305,6 +311,25 @@ class OpenInvoicesTab extends ConsumerWidget {
       return EmptyState(
         icon: Icons.price_check_outlined,
         title: l10n?.invoiceNoOpen ?? 'No open invoices.',
+      );
+    }
+    // #812 — the process view: journey bar, next move, labelled action.
+    if (ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.invoiceJourney)) {
+      return OpenInvoiceJourneyList(
+        entries: overview.open,
+        currency: currency,
+        actions: (
+          onOpen: onOpen,
+          onRemind: onRemind,
+          onMatch: onMatch,
+          onWriteoff: onWriteoff,
+          onRefund: onRefund,
+          onVoid: onVoid,
+          onProforma: onProforma,
+          onEvents: onEvents ?? (_) {},
+        ),
       );
     }
     final dateFormat = DateFormat.yMMMd(
