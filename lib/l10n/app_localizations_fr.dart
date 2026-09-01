@@ -2133,6 +2133,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Chaque facture montre où elle en est — Émise, Paiement, Confirmation, Close — et à qui est le tour : le membre paie, un admin confirme le paiement déclaré, l\'émetteur le rapproche, les valideurs décident. Le hub des émetteurs ajoute un bandeau d\'étapes avec les compteurs et une explication « Comment ça marche ».';
 
   @override
+  String get featureBookingGateTitle => 'Garde-fou de réservation';
+
+  @override
+  String get featureBookingGateDesc =>
+      'Chaque surface de réservation — plan, vues jour, semaine et mois, feuille de réservation, kiosque, scan QR ou NFC — vérifie les paramètres de disponibilité avant de proposer un créneau et nomme la raison quand elle ne peut pas ; les jours fermés s\'affichent fermés dans chaque vue, une légende nomme les états des places, et les admins peuvent faire sortir un membre là où la règle le permet.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override
@@ -5987,6 +5994,54 @@ class AppLocalizationsFr extends AppLocalizations {
   String bookingReservedSpaceWhen(String space, String when) {
     return '$space réservé : $when.';
   }
+
+  @override
+  String bookingHorizonError(int days) {
+    return 'Trop loin — les réservations sont ouvertes $days jours à l\'avance.';
+  }
+
+  @override
+  String bookingTooShortError(int minutes) {
+    return 'Trop court — une réservation dure au moins $minutes minutes.';
+  }
+
+  @override
+  String bookingTooLongError(int minutes) {
+    return 'Trop long — une réservation dure au plus $minutes minutes.';
+  }
+
+  @override
+  String get legendFree => 'Libre';
+
+  @override
+  String get legendReserved => 'Réservée';
+
+  @override
+  String get legendOccupied => 'Présent';
+
+  @override
+  String get legendMine => 'La mienne';
+
+  @override
+  String get legendBlocked => 'Bloquée';
+
+  @override
+  String get legendClosed => 'Jour fermé';
+
+  @override
+  String get reserveClosedShort => 'Fermé';
+
+  @override
+  String planCheckOutFor(String name) {
+    return 'Faire sortir $name';
+  }
+
+  @override
+  String get scanCameraWebUnavailable =>
+      'Le scan par caméra n\'est pas disponible dans le navigateur — saisissez le code, ou approchez un tag NFC de l\'appareil (Chrome sur Android).';
+
+  @override
+  String get bookingGateBlocked => 'Non réservable ainsi';
 
   @override
   String get servicesTitle => 'Services';

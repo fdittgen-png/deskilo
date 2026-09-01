@@ -86,6 +86,7 @@ class DayTimeline extends ConsumerStatefulWidget {
     required this.onReservationTap,
     this.showFreeSeats = false,
     this.onFreeSeatTap,
+    this.dayOpen = true,
   });
 
   /// The selected local day (any instant within it).
@@ -115,6 +116,10 @@ class DayTimeline extends ConsumerStatefulWidget {
   /// Tap on a seat row's free area — the hub books the selected window
   /// on that seat. Null (the calendar) keeps rows passive.
   final void Function(Seat seat)? onFreeSeatTap;
+
+  /// #814 — the workspace is closed on [day]: no free-area tap books
+  /// anything, and every track reads muted like a blocked seat.
+  final bool dayOpen;
 
   static Key blockKey(String reservationId) =>
       ValueKey('timeline-block-$reservationId');
@@ -641,7 +646,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     Brightness brightness,
   ) {
     final scheme = Theme.of(context).colorScheme;
-    final blocked = _blockedDuring(seat);
+    final blocked = _blockedDuring(seat) || !widget.dayOpen;
     final blockedTint = SeatStateColors.of(
       SeatState.blocked,
       brightness: brightness,

@@ -2130,6 +2130,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Ogni fattura mostra dove si trova — Emessa, Pagamento, Conferma, Chiusa — e a chi tocca: il membro paga, un admin conferma il pagamento dichiarato, l\'emittente lo abbina, i validatori decidono. L\'hub degli emittenti aggiunge una barra delle fasi con i contatori e una spiegazione «Come funziona».';
 
   @override
+  String get featureBookingGateTitle => 'Controllo prenotazione';
+
+  @override
+  String get featureBookingGateDesc =>
+      'Ogni superficie di prenotazione — piano, viste giorno, settimana e mese, foglio di prenotazione, chiosco, scansione QR o NFC — verifica i parametri di disponibilità prima di offrire una fascia e nomina il motivo quando non può; i giorni chiusi si mostrano chiusi in ogni vista, una legenda nomina gli stati dei posti, e gli admin possono fare il check-out di un membro dove la regola lo consente.';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override
@@ -5980,6 +5987,54 @@ class AppLocalizationsIt extends AppLocalizations {
   String bookingReservedSpaceWhen(String space, String when) {
     return '$space prenotato: $when.';
   }
+
+  @override
+  String bookingHorizonError(int days) {
+    return 'Troppo lontano — le prenotazioni sono aperte con $days giorni di anticipo.';
+  }
+
+  @override
+  String bookingTooShortError(int minutes) {
+    return 'Troppo breve — una prenotazione dura almeno $minutes minuti.';
+  }
+
+  @override
+  String bookingTooLongError(int minutes) {
+    return 'Troppo lunga — una prenotazione dura al massimo $minutes minuti.';
+  }
+
+  @override
+  String get legendFree => 'Libera';
+
+  @override
+  String get legendReserved => 'Prenotata';
+
+  @override
+  String get legendOccupied => 'Con check-in';
+
+  @override
+  String get legendMine => 'Mia';
+
+  @override
+  String get legendBlocked => 'Bloccata';
+
+  @override
+  String get legendClosed => 'Giorno chiuso';
+
+  @override
+  String get reserveClosedShort => 'Chiuso';
+
+  @override
+  String planCheckOutFor(String name) {
+    return 'Check-out di $name';
+  }
+
+  @override
+  String get scanCameraWebUnavailable =>
+      'La scansione con fotocamera non è disponibile nel browser — digita il codice o avvicina un tag NFC al dispositivo (Chrome su Android).';
+
+  @override
+  String get bookingGateBlocked => 'Non prenotabile così';
 
   @override
   String get servicesTitle => 'Servizi';

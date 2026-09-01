@@ -22,6 +22,7 @@ import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../../plan/domain/seat_block_policy.dart';
 import '../domain/booking_error_text.dart';
+import 'booking_gate_scope.dart';
 import '../../plan/domain/half_day_windows.dart';
 import '../domain/default_booking_period.dart';
 import '../domain/reservation.dart';
@@ -226,6 +227,11 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         }
         final canOverrule =
             ref.read(myMemberProvider).value?.canAdminister ?? false;
+        // #814 — admins may END a running check-in where the owner's
+        // `admin_check_out` policy allows it (gate on).
+        final offerCheckOut = canOverrule &&
+            other.status == ReservationStatus.checkedIn &&
+            (bookingGateOf(ref)?.policies.adminCheckOut ?? false);
         if (offerCheckIn || canOverrule) {
           await runAdminSeatActions(
             context,
@@ -234,6 +240,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
             other: other,
             name: name,
             offerCheckIn: offerCheckIn,
+            offerCheckOut: offerCheckOut,
             stepMinutes: granularity.stepMinutes,
             // #622 — admins get the message affordance ON TOP of their
             // admin actions.
@@ -433,6 +440,33 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     }
     final myMemberId = ref.read(myMemberProvider).value?.id;
     final dayBased = granularity.isDayBased;
+    // #814 — the gate BEFORE the sheet: a Day-row or Week-cell tap on a
+    // closed day, a window in the past, beyond the horizon or outside
+    // the hours under 'off' used to open a full sheet and fail at the
+    // server. Now it says why, here, and opens nothing.
+    final gate = bookingGateOf(ref);
+    if (gate != null) {
+      final refusal = gate.refusalFor(
+        start: window.start,
+        end: window.end,
+        walkUp: walkUp,
+        seat: seat,
+      );
+      if (refusal != null) {
+        traceGateRefusal(seat: seat, refusal: refusal, walkUp: walkUp);
+        AppSnack.info(
+          context,
+          bookingRefusalText(
+            l10n,
+            refusal,
+            policies: gate.policies,
+            stepMinutes: granularity.stepMinutes,
+          ),
+          replace: true,
+        );
+        return;
+      }
+    }
     // Cap by the next reservation on the seat (plan parity): a
     // range-filtered free seat cannot be capped below the window, but a
     // stale plan could.
@@ -507,6 +541,24 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         // the Plan tab's job. The sheet has always offered it; the hub
         // passed false because the Plan tab owned the power.
         allowBlocking: _canManageSeatBlocks,
+        // #814 — the sheet re-asks the gate for every window the member
+        // picks, so the Reserve button never offers a refused window.
+        refusalOf: gate == null
+            ? null
+            : (start, end) => gate.refusalFor(
+                  start: start,
+                  end: end,
+                  walkUp: walkUp,
+                  seat: seat,
+                ),
+        refusalTextOf: gate == null
+            ? null
+            : (refusal) => bookingRefusalText(
+                  l10n,
+                  refusal,
+                  policies: gate.policies,
+                  stepMinutes: granularity.stepMinutes,
+                ),
       ),
     );
     if (choice == null || !mounted) return;

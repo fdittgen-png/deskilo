@@ -16,10 +16,15 @@ class SpaceScanSheet extends StatefulWidget {
     required this.l10n,
     this.nfc,
     this.seatIdForUid,
+    this.explainNoCamera = false,
   });
 
   final String workspaceId;
   final QrScanWidgetBuilder? scanBuilder;
+
+  /// #814 — the browser build has no camera scanner; the sheet says so
+  /// instead of silently showing a typed field alone.
+  final bool explainNoCamera;
   final AppLocalizations? l10n;
 
   /// #585 — when the device can read NFC, a chair-tag tap resolves to
@@ -127,6 +132,18 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
               style: TextStyle(
                 color: Theme.of(context).colorScheme.error,
               ),
+            ),
+          ),
+        if (widget.scanBuilder == null && widget.explainNoCamera)
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              l10n?.scanCameraWebUnavailable ??
+                  'Camera scanning is not available in the browser — type '
+                      'the code, or hold an NFC tag to the device (Chrome '
+                      'on Android).',
+              key: const ValueKey('space-scan-no-camera'),
+              style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
         if (widget.scanBuilder != null) ...[

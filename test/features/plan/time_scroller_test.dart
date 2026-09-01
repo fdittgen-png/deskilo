@@ -218,6 +218,14 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('A1'), findsOneWidget);
-    expect(find.textContaining('Free'), findsOneWidget);
+    // #814 — the legend also says "Free"; the ROW's state text is the
+    // assertion.
+    expect(
+      find.descendant(
+        of: find.byType(ListTile),
+        matching: find.textContaining('Free'),
+      ),
+      findsOneWidget,
+    );
   });
 }

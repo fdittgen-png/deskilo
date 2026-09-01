@@ -6,6 +6,8 @@ import '../../../l10n/app_localizations.dart';
 import '../../money/domain/quota_rules.dart';
 import '../../workspace/domain/workspace_availability.dart';
 import '../../workspace/domain/booking_granularity.dart';
+import '../../workspace/domain/booking_policies.dart';
+import 'booking_gate.dart';
 
 /// THE booking-failure → user-message mapper (maintainability audit:
 /// this switch was pasted, and drifting, across four screens). Maps the
@@ -46,6 +48,27 @@ String bookingErrorText(
     final step = stepMinutes ?? 15;
     return l10n?.planSlotError(step) ??
         'Bookings must start and end on the $step-minute grid.';
+  }
+  // #814 — the kiosk's seat-block refusal (kiosk_act) rendered generic.
+  if (message.contains('seat is blocked')) {
+    return l10n?.planSeatBlocked ?? 'This seat is blocked for maintenance.';
+  }
+  // #649 — the three limits enforce_booking_rules coalesces (#814: they
+  // rendered as "the seat may have just been taken").
+  if (message.contains('beyond the advance-booking horizon')) {
+    return l10n?.bookingHorizonError(_leadingInt(message) ?? 0) ??
+        'Too far ahead — bookings are open ${_leadingInt(message) ?? 0} '
+            'days in advance.';
+  }
+  if (message.contains('below the minimum duration')) {
+    return l10n?.bookingTooShortError(_leadingInt(message) ?? 0) ??
+        'Too short — a booking lasts at least '
+            '${_leadingInt(message) ?? 0} minutes.';
+  }
+  if (message.contains('above the maximum duration')) {
+    return l10n?.bookingTooLongError(_leadingInt(message) ?? 0) ??
+        'Too long — a booking lasts at most '
+            '${_leadingInt(message) ?? 0} minutes.';
   }
   // #644 — a booking ends on the day it starts.
   if (message.contains('must end on the day it starts')) {
@@ -124,6 +147,51 @@ String bookingErrorText(
   }
   return fallback;
 }
+
+/// The number the server put in its message ('... of 90 days').
+int? _leadingInt(String message) =>
+    int.tryParse(RegExp(r'of (\d+) ').firstMatch(message)?.group(1) ?? '');
+
+/// #814 — the SAME sentences, for a refusal the client foresaw. A
+/// surface that asks the gate before acting prints exactly what the
+/// server would have answered, so nobody learns two vocabularies.
+String bookingRefusalText(
+  AppLocalizations? l10n,
+  BookingRefusal refusal, {
+  required BookingPolicies policies,
+  int? stepMinutes,
+}) =>
+    switch (refusal) {
+      BookingRefusal.closedDay =>
+        l10n?.planClosedDayError ?? 'The workspace is closed on that day.',
+      BookingRefusal.seatBlocked =>
+        l10n?.planSeatBlocked ?? 'This seat is blocked for maintenance.',
+      BookingRefusal.beyondHorizon =>
+        l10n?.bookingHorizonError(policies.advanceHorizonDays) ??
+            'Too far ahead — bookings are open '
+                '${policies.advanceHorizonDays} days in advance.',
+      BookingRefusal.tooShort =>
+        l10n?.bookingTooShortError(policies.minDurationMinutes) ??
+            'Too short — a booking lasts at least '
+                '${policies.minDurationMinutes} minutes.',
+      BookingRefusal.tooLong =>
+        l10n?.bookingTooLongError(policies.maxDurationMinutes) ??
+            'Too long — a booking lasts at most '
+                '${policies.maxDurationMinutes} minutes.',
+      BookingRefusal.past =>
+        l10n?.bookingPastError ?? 'This booking lies entirely in the past.',
+      BookingRefusal.walkUpNotToday =>
+        l10n?.bookingWalkUpTodayError ?? 'A walk-up check-in must start today.',
+      BookingRefusal.crossesMidnight => l10n?.bookingSameDayError ??
+          'A booking ends on the day it starts — book the next day '
+              'separately.',
+      BookingRefusal.outsideHoursOff => l10n?.bookingOutsideOffError ??
+          'Bookings outside the opening hours are not allowed.',
+      BookingRefusal.outsideHoursAheadOnly =>
+        l10n?.bookingOutsideWalkUpError ??
+            'Outside the opening hours only a spontaneous check-in is '
+                'possible — booking ahead is not.',
+    };
 
 /// #622 — whether [error] is an occupancy refusal caused by ANOTHER
 /// member's reservation (the pinned others-blocking substrings above;

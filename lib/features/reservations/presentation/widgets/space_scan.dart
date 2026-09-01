@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -29,6 +30,7 @@ import 'booking_sheet.dart';
 import 'space_scan_sheet.dart';
 import 'space_conflict_actions.dart';
 import 'series_result_dialog.dart';
+import '../booking_gate_scope.dart';
 import 'space_act_sheet.dart';
 import '../../domain/space_code.dart';
 import 'reference_open.dart';
@@ -64,6 +66,7 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
       workspaceId: workspace.id,
       scanBuilder:
           qrScanSupported ? ref.read(qrScanWidgetBuilderProvider) : null,
+      explainNoCamera: kIsWeb,
       l10n: l10n,
       nfc: nfcReady ? nfcReader : null,
       seatIdForUid: (uid) => ref
@@ -96,6 +99,20 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
   // straight into the shared one-sheet (action + derived period), the
   // signed-in member confirming instead of a badge.
   if (code.kind == SpaceKind.seat && seat != null) {
+    // #814 — parity with the kiosk: a closed day refuses up front, not
+    // at the end of a full sheet (the guide promised "a scan behaves
+    // like the kiosk"; this is where it did not).
+    final gate = bookingGateOf(ref);
+    if (gate != null && !gate.dayOpen(gate.now)) {
+      AppSnack.info(
+        context,
+        l10n?.kioskClosedToday ??
+            'The workspace is closed today — check-in and reservations '
+                'are not possible.',
+        replace: true,
+      );
+      return;
+    }
     await showSpaceActSheet(
       context,
       seat: seat,

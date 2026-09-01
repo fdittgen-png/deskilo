@@ -95,5 +95,22 @@
         "type": "String"
       }
     }
-  }
+  },
+  "bookingHorizonError": "Too far ahead — bookings are open {days} days in advance.",
+  "@bookingHorizonError": {"placeholders": {"days": {"type": "int"}}},
+  "bookingTooShortError": "Too short — a booking lasts at least {minutes} minutes.",
+  "@bookingTooShortError": {"placeholders": {"minutes": {"type": "int"}}},
+  "bookingTooLongError": "Too long — a booking lasts at most {minutes} minutes.",
+  "@bookingTooLongError": {"placeholders": {"minutes": {"type": "int"}}},
+  "legendFree": "Free",
+  "legendReserved": "Reserved",
+  "legendOccupied": "Checked in",
+  "legendMine": "Mine",
+  "legendBlocked": "Blocked",
+  "legendClosed": "Closed day",
+  "reserveClosedShort": "Closed",
+  "planCheckOutFor": "Check out {name}",
+  "@planCheckOutFor": {"placeholders": {"name": {"type": "String"}}},
+  "scanCameraWebUnavailable": "Camera scanning is not available in the browser — type the code, or hold an NFC tag to the device (Chrome on Android).",
+  "bookingGateBlocked": "Not bookable as chosen"
 }

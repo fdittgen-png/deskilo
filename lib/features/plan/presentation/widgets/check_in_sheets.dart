@@ -114,6 +114,7 @@ Future<String?> showCheckInOtherSheet(
   required String name,
   required bool offerCheckIn,
   bool offerMessage = false,
+  bool offerCheckOut = false,
 }) {
   final l10n = AppLocalizations.of(context);
   final reservedBy = l10n?.planReservedBy(name) ?? 'Reserved by $name';
@@ -139,6 +140,16 @@ Future<String?> showCheckInOtherSheet(
                 leading: const Icon(Icons.login),
                 title: Text(l10n?.planCheckInFor(name) ?? 'Check in $name'),
                 onTap: () => Navigator.of(context).pop('checkin'),
+              ),
+            // #814 — the `admin_check_out` policy (0116) was enforced
+            // server-side and never offered: the tile shows only where
+            // the owner switched it on.
+            if (offerCheckOut)
+              ListTile(
+                key: const ValueKey('admin-check-out'),
+                leading: const Icon(Icons.logout),
+                title: Text(l10n?.planCheckOutFor(name) ?? 'Check out $name'),
+                onTap: () => Navigator.of(context).pop('checkout'),
               ),
             if (offerMessage)
               ListTile(

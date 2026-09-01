@@ -1201,6 +1201,8 @@
   "featureScheduledExpensesDesc": "Gastos recurrentes (internet, teléfono, electricidad): cualquier miembro programa uno con su regla (cada X días/semanas/meses/años, X veces o hasta una fecha); la programación se valida una vez, y cada vencimiento se presenta al miembro — el importe validado cuenta de inmediato, un importe distinto se explica y pasa la validación de gastos.",
   "featureInvoiceJourneyTitle": "El recorrido de una factura",
   "featureInvoiceJourneyDesc": "Cada factura muestra dónde está — Emitida, Pago, Confirmación, Cerrada — y a quién le toca: el miembro paga, un admin confirma el pago declarado, el emisor lo concilia, los validadores deciden. El hub de emisores añade una banda de etapas con contadores y una explicación «Cómo funciona».",
+  "featureBookingGateTitle": "Guarda de reserva",
+  "featureBookingGateDesc": "Cada superficie de reserva — plano, vistas de día, semana y mes, hoja de reserva, quiosco, escaneo QR o NFC — comprueba los parámetros de disponibilidad antes de ofrecer una franja y nombra el motivo cuando no puede; los días cerrados se dibujan cerrados en cada vista, una leyenda nombra los estados de los puestos, y los admins pueden dar salida a un miembro donde la regla lo permite.",
   "helpTitle": "Ayuda",
   "helpContents": "Índice",
   "helpHintMessages": "Todas las conversaciones en una lista, la más reciente arriba. Toque el lápiz para escribir a alguien o crear un grupo.",
@@ -3469,6 +3471,47 @@
       }
     }
   },
+  "bookingHorizonError": "Demasiado lejos — las reservas se abren con {days} días de antelación.",
+  "@bookingHorizonError": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "bookingTooShortError": "Demasiado corta — una reserva dura al menos {minutes} minutos.",
+  "@bookingTooShortError": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "bookingTooLongError": "Demasiado larga — una reserva dura como máximo {minutes} minutos.",
+  "@bookingTooLongError": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "legendFree": "Libre",
+  "legendReserved": "Reservada",
+  "legendOccupied": "Con check-in",
+  "legendMine": "Mía",
+  "legendBlocked": "Bloqueada",
+  "legendClosed": "Día cerrado",
+  "reserveClosedShort": "Cerrado",
+  "planCheckOutFor": "Dar salida a {name}",
+  "@planCheckOutFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "scanCameraWebUnavailable": "El escaneo con cámara no está disponible en el navegador — escriba el código o acerque una etiqueta NFC al dispositivo (Chrome en Android).",
+  "bookingGateBlocked": "No reservable así",
   "servicesTitle": "Servicios",
   "servicesEmpty": "Aún no hay servicios.",
   "servicesNew": "Nuevo servicio",

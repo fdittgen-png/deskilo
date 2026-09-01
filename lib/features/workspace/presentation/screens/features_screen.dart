@@ -223,6 +223,9 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.invoiceSettlement =>
           l10n?.featureInvoiceSettlementDesc ??
               'Several of a member\'s open invoices can be regrouped into one they pay. The originals stay in the archive, traceable position by position, and stop being chased separately.',
+        WorkspaceFeature.bookingGate =>
+          l10n?.featureBookingGateDesc ??
+              'Every booking surface — plan, day, week and month views, the booking sheet, the kiosk, a QR or NFC scan — checks the availability parameters before offering a window and names the reason when it cannot; closed days draw as closed in every view, a legend names the seat states, and admins may check members out where the policy allows.',
         WorkspaceFeature.invoiceJourney =>
           l10n?.featureInvoiceJourneyDesc ??
               'Every invoice shows where it stands — Issued, Payment, Confirmation, Closed — and whose move it is: the member pays, an admin confirms the declared payment, the issuer matches it, the validators decide. The issuers\' hub adds a stage strip with live counts and a How-it-works explainer.',

@@ -93,7 +93,14 @@ enum WorkspaceFeature {
   /// #812 — the journey of an invoice told as one process on every
   /// screen: Issued → Payment → Confirmation → Closed, whose move it is
   /// and what that move is. OFF keeps the plain status chips.
-  invoiceJourney;
+  invoiceJourney,
+
+  /// #814 — the booking gate: every surface asks the availability
+  /// parameters BEFORE offering a window (closed day, past, horizon,
+  /// durations, outside-hours mode, walk-up rules), the calendar views
+  /// draw closed days as closed, and a legend names the seat states.
+  /// OFF keeps the server's after-the-fact refusals.
+  bookingGate;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -294,6 +301,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   ),
   WorkspaceFeature.bookingPolicies:
       FeatureManifestEntry(feature: WorkspaceFeature.bookingPolicies),
+  // #814 — the client-side mirror of the policies, on every surface.
+  WorkspaceFeature.bookingGate: FeatureManifestEntry(
+    feature: WorkspaceFeature.bookingGate,
+    requires: WorkspaceFeature.bookingPolicies,
+  ),
   // #604 — the chair-tag functionality (#585): configuring a tag on a
   // seat and resolving a tapped tag to that seat.
   WorkspaceFeature.nfcSeatTags:

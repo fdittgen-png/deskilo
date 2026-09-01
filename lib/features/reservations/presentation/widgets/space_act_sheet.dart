@@ -17,7 +17,9 @@ import '../../../plan/presentation/seat_occupancy.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/booking_error_text.dart';
+import '../../domain/booking_gate.dart';
 import '../../domain/reservation.dart';
+import '../booking_gate_scope.dart';
 import '../../providers/reservation_providers.dart';
 import 'message_reserver.dart';
 import 'space_act_form.dart';
@@ -237,6 +239,8 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
         : null;
     final blocking = _blocking(reservations, choice, me?.id);
     final name = blocking == null ? '' : (names[blocking.memberId] ?? '');
+    // #814 — the confirm button obeys the gate the form already shows.
+    final refused = _refusalOf(choice) != null;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -270,7 +274,7 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
         const SizedBox(height: 16),
         FilledButton.icon(
           key: const ValueKey('space-act-confirm'),
-          onPressed: _busy ? null : () => _confirm(choice),
+          onPressed: _busy || refused ? null : () => _confirm(choice),
           icon: const Icon(Icons.check),
           label: Text(l10n?.kioskBadgeConfirm ?? 'Confirm'),
         ),
@@ -278,14 +282,41 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
     );
   }
 
+  /// The gate's answer for [choice] (null while the feature is off).
+  BookingRefusal? _refusalOf(SpaceActChoice choice) {
+    if (choice.action == SpaceAction.checkOut) return null;
+    final gate = bookingGateOf(ref);
+    return gate?.refusalFor(
+      start: choice.start,
+      end: choice.end,
+      walkUp: choice.action == SpaceAction.checkIn || choice.checkInNow,
+      seat: widget.seat,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final now = ref.read(clockProvider).now();
+    final gate = bookingGateOf(ref, watch: true);
     return SingleChildScrollView(
       child: SheetShell(
         title: widget.title,
         children: [
-          SpaceActForm(granularity: _granularity, now: now, footer: _footer),
+          SpaceActForm(
+            granularity: _granularity,
+            now: now,
+            footer: _footer,
+            refusalOf: gate == null ? null : _refusalOf,
+            refusalTextOf: gate == null
+                ? null
+                : (refusal) => bookingRefusalText(
+                      l10n,
+                      refusal,
+                      policies: gate.policies,
+                      stepMinutes: _granularity.stepMinutes,
+                    ),
+          ),
         ],
       ),
     );

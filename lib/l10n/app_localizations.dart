@@ -3794,6 +3794,18 @@ abstract class AppLocalizations {
   /// **'Every invoice shows where it stands — Issued, Payment, Confirmation, Closed — and whose move it is: the member pays, an admin confirms the declared payment, the issuer matches it, the validators decide. The issuers\' hub adds a stage strip with live counts and a How-it-works explainer.'**
   String get featureInvoiceJourneyDesc;
 
+  /// No description provided for @featureBookingGateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking gate'**
+  String get featureBookingGateTitle;
+
+  /// No description provided for @featureBookingGateDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Every booking surface — plan, day, week and month views, the booking sheet, the kiosk, a QR or NFC scan — checks the availability parameters before offering a window and names the reason when it cannot; closed days draw as closed in every view, a legend names the seat states, and admins may check members out where the policy allows.'**
+  String get featureBookingGateDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:
@@ -10441,6 +10453,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reserved {space}: {when}.'**
   String bookingReservedSpaceWhen(String space, String when);
+
+  /// No description provided for @bookingHorizonError.
+  ///
+  /// In en, this message translates to:
+  /// **'Too far ahead — bookings are open {days} days in advance.'**
+  String bookingHorizonError(int days);
+
+  /// No description provided for @bookingTooShortError.
+  ///
+  /// In en, this message translates to:
+  /// **'Too short — a booking lasts at least {minutes} minutes.'**
+  String bookingTooShortError(int minutes);
+
+  /// No description provided for @bookingTooLongError.
+  ///
+  /// In en, this message translates to:
+  /// **'Too long — a booking lasts at most {minutes} minutes.'**
+  String bookingTooLongError(int minutes);
+
+  /// No description provided for @legendFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get legendFree;
+
+  /// No description provided for @legendReserved.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved'**
+  String get legendReserved;
+
+  /// No description provided for @legendOccupied.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in'**
+  String get legendOccupied;
+
+  /// No description provided for @legendMine.
+  ///
+  /// In en, this message translates to:
+  /// **'Mine'**
+  String get legendMine;
+
+  /// No description provided for @legendBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked'**
+  String get legendBlocked;
+
+  /// No description provided for @legendClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed day'**
+  String get legendClosed;
+
+  /// No description provided for @reserveClosedShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get reserveClosedShort;
+
+  /// No description provided for @planCheckOutFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Check out {name}'**
+  String planCheckOutFor(String name);
+
+  /// No description provided for @scanCameraWebUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera scanning is not available in the browser — type the code, or hold an NFC tag to the device (Chrome on Android).'**
+  String get scanCameraWebUnavailable;
+
+  /// No description provided for @bookingGateBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Not bookable as chosen'**
+  String get bookingGateBlocked;
 
   /// App-bar title of the owner service-catalog editor and its settings tile
   ///
