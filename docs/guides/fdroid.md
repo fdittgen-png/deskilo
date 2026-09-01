@@ -31,17 +31,41 @@ The CI job `fdroid-foss` does exactly this on every change to
 
 ## Submitting
 
-1. Tag a commit `v1.0.0-fdroid.<n>` (F-Droid builds that exact tag).
-2. Copy this directory into a fork of
-   https://gitlab.com/fdroid/fdroiddata and open a merge request:
+Only the **build recipe** goes to fdroiddata — one file,
+`fdroid/de.deskilo.app.yml` → `metadata/de.deskilo.app.yml`.
 
-   | here | there |
-   |---|---|
-   | `fdroid/de.deskilo.app.yml` | `metadata/de.deskilo.app.yml` |
-   | `fdroid/de.deskilo.app/en-US/summary.txt` | `metadata/de.deskilo.app/en-US/summary.txt` |
+Everything a user reads (title, summary, description, screenshots, icon)
+is pulled from **`fastlane/metadata/android/`** in this repo, which is
+the same folder the Play listing is generated from
+(`.github/workflows/play-listing.yml`). Their reviewer asked for this
+explicitly on !47409: *"Don't add summary and description or other
+metadata files except the build metadata in fdroiddata."* The upside is
+that the listing is maintained here, in one place, in all five languages
+— the downside is that the text has to be true for BOTH stores, so keep
+F-Droid-specific caveats (the hosted default endpoint) in the recipe's
+`AntiFeatures` block, not in the description.
 
-3. `fdroid build -v -l de.deskilo.app` in that checkout reproduces what
-   their builder will do.
+`fdroid build -v -l de.deskilo.app` in an fdroiddata checkout reproduces
+what their builder does.
+
+### One APK per ABI
+
+F-Droid ships a build per architecture, and the version codes carry the
+ABI in their lowest digit — `versionCode * 10 + abi`, with
+`armeabi-v7a` = 1 < `arm64-v8a` = 2 < `x86_64` = 3. The override lives in
+`android/app/build.gradle.kts`; `VercodeOperation` in the recipe repeats
+the same arithmetic so autoupdate can compute future codes.
+
+The ordering is not cosmetic. A client installs the highest code a device
+can take, and fdroidserver archives all but the highest — so putting the
+ABI digit anywhere but last would offer 64-bit phones the 32-bit build
+forever, and let an old release's x86_64 outrank a new release's arm.
+
+The base code comes from `pubspec.yaml` (`version: 1.0.0+1` → 1 → 11/12/13),
+read back by `UpdateCheckData`. **A new F-Droid release is a bumped
+pubspec build number**, not a hand-set `--build-number` as before; the
+store trains keep passing their own wall-clock number at build time and
+never touch the pubspec.
 
 ### The recipe is stored in canonical form — do not "tidy" it
 
@@ -49,25 +73,33 @@ The CI job `fdroid-foss` does exactly this on every change to
 produces, because their CI runs that tool and **fails the pipeline on any
 diff**. That is why the file carries no comment header (this guide holds
 the rationale instead), why `Categories` is alphabetical, why blank lines
-separate the field groups, and why `prebuild` is a folded double-quoted
-scalar rather than the one-item list it reads more naturally as. Change it
-only by re-deriving it: the failing job prints the exact diff to apply.
+separate the field groups, and why long commands are folded double-quoted
+scalars. Change it only by re-deriving it: the failing job prints the
+exact diff to apply.
 
-Four rules the first pipeline taught us, each one a red job:
+Rules their pipeline and their reviewer taught us, each one a red job or a
+review comment:
 
+- **`commit:` is a full 40-character hash**, never a tag or branch name.
 - **No `submodules: true`** unless the repo really has submodules —
   `fdroid build` raises `NoSubmodulesException` when it finds none.
-- **No `scandelete: .pub-cache`.** The source scan runs *before* the build
-  commands, so the pub cache does not exist yet and the path is reported
-  twice, as "Non-exist" and as "Unused".
-- **`Summary` does not live in the `.yml`.** `tools/make-summary-translatable.py`
-  moves it to `<pkg>/en-US/summary.txt`, and the "tools check scripts" job
-  fails if that script would change anything. Ship it already moved.
-- **`UpdateCheckMode: None`.** A `Tags` pattern makes `checkupdates` fail
-  with "Couldn't find any version information", and it would be wrong
-  anyway: each F-Droid release is a deliberate tag whose `--build-number`
-  is set by hand here, on its own versionCode series (the store trains use
-  a wall-clock number). `AutoUpdateMode: None` for the same reason.
+- **`scandelete: .pub-cache` needs `flutter pub get` in `prebuild`.** The
+  source scan runs between prebuild and build, so a cache populated in
+  `build` does not exist yet and the path is reported twice, as
+  "Non-exist" and as "Unused". Populate it in prebuild and the scanner
+  both sees and deletes it — which is also what gets the dart packages
+  scanned at all.
+- **No `--enforce-lockfile`**, though `templates/build-flutter.yml`
+  suggests it: `prebuild` rewrites the push dependency's path, so the
+  lockfile no longer matches the manifest and pub exits 65 with "Unable
+  to satisfy `pubspec.yaml` using `pubspec.lock`". Verified, not assumed.
+  `pubspec.lock` is still committed and still pins every other version.
+- **No `Summary`/`Description` in the `.yml`** — fastlane, as above.
+  Leaving `Summary` in also trips the "tools check scripts" job, which
+  runs `tools/make-summary-translatable.py` and fails if it would move
+  anything.
+- **The APK must carry no extra signing block** (#787), and the dex no
+  Google classes. Both are asserted by our own `fdroid-foss` gate now.
 
 `AntiFeatures: NonFreeNet` is not optional: the shipped binary's compiled
 defaults (`lib/core/backend/backend_config.dart`) point at the author's
@@ -81,14 +113,21 @@ ever ships with no default endpoint at all.
 
 `pubspec.lock` is deliberately **kept**: `flutter pub get` re-resolves only
 the swapped path dependency and leaves every other version pinned. Deleting
-it would build against whatever is newest that day.
+it would build against whatever is newest that day. (It cannot be *enforced*
+though — see `--enforce-lockfile` above.)
 
-## Submission state (2026-08-31)
+## Submission state (2026-09-01)
 
-The recipe is `fdroid/de.deskilo.app.yml` and the build it submits is the tag
-**`v1.0.0-fdroid.3`** (versionCode 100001) — the first F-Droid build in which
-the app can be pointed at a community's own Supabase from Settings → Advanced
-→ Server (#780), which is what the `NonFreeNet` disclosure describes.
+The recipe is `fdroid/de.deskilo.app.yml` and it submits **three builds of
+one commit** (version codes 11/12/13, one per ABI) — the first F-Droid
+build in which the app can be pointed at a community's own Supabase from
+Settings → Advanced → Server (#780), which is what the `NonFreeNet`
+disclosure describes.
+
+Reviewed by **linsui** on 2026-09-01, who asked for the App-inclusion MR
+template, fastlane metadata upstream instead of files in fdroiddata, a
+full commit hash instead of a tag, `templates/build-flutter.yml`, and the
+ABI split. All five are in (#795).
 
 Audited against the sibling app's review (fdroid/fdroiddata!42093) before
 submitting, which caught three things a first review round would have:
