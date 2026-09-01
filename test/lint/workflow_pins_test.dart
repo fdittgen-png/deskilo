@@ -33,13 +33,21 @@ void main() {
       final uses = RegExp(r'flutter-version:\s*(.+)').allMatches(source);
       for (final use in uses) {
         final value = use.group(1)!.trim();
+        // #809 — two ways to say it, and both are indirection. The
+        // workflow's own `env:` block is the historical one; reading
+        // .flutter-version is the stronger one, because that file is
+        // also what fdroiddata's recipe cats. An INLINE version is what
+        // this forbids either way: it is the pin a version bump misses.
         expect(
           value,
-          r'${{ env.FLUTTER_VERSION }}',
-          reason: '${file.path} pins Flutter inline. Declare it once in the '
-              "workflow's `env:` block and read it here, like every other "
-              'workflow does — an inline pin is the one a version bump '
-              'misses.',
+          anyOf(
+            r'${{ env.FLUTTER_VERSION }}',
+            r'${{ steps.flutter_pin.outputs.version }}',
+          ),
+          reason: '${file.path} pins Flutter inline. Read it from the '
+              "workflow's `env:` block or from .flutter-version via a "
+              '`flutter_pin` step — an inline pin is the one a version '
+              'bump misses.',
         );
       }
       final declared =
