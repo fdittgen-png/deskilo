@@ -1988,6 +1988,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wischen zum Zitieren oder Zurücknehmen';
 
   @override
+  String featureAlsoEnabled(String features) {
+    return 'Ebenfalls eingeschaltet: $features';
+  }
+
+  @override
+  String featureAlsoEnables(String features) {
+    return 'Das schaltet außerdem $features ein';
+  }
+
+  @override
+  String get featureHeldBack =>
+      'Wartet auf die Funktion darüber — schalte sie ein, dann wirkt auch diese wieder.';
+
+  @override
   String get featureMessageGesturesDesc =>
       'Wische eine Nachricht nach rechts, um sie in deiner Antwort zu zitieren; nach links, um deine eigene Nachricht zurückzunehmen, solange sie niemand gelesen hat — nach einer Bestätigung. Aus: Nachrichten werden durch langes Drücken gelöscht.';
 

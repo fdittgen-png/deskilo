@@ -2303,6 +2303,28 @@
   "featureScheduledExpensesTitle": "Scheduled expenses",
   "featureUniqueMonogramsTitle": "Distinct avatar initials",
   "featureMessageGesturesTitle": "Swipe to quote or take back",
+  "featureAlsoEnabled": "Also switched on: {features}",
+  "featureAlsoEnables": "Switching this on also enables {features}",
+  "featureHeldBack": "Waiting on the feature above — switch that on and this one works again.",
+  "@featureAlsoEnabled": {
+    "description": "Snack naming the dependencies switched on with a feature (#800)",
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "@featureAlsoEnables": {
+    "description": "Subtitle note: what this switch would also enable (#800)",
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "@featureHeldBack": {
+    "description": "Subtitle note: the feature is on but its parent is off (#800)"
+  },
   "featureMessageGesturesDesc": "Swipe a message right to quote it in your reply; swipe left to take your own message back while nobody has read it yet, after a confirmation. Off: messages are deleted by holding them.",
   "featureUniqueMonogramsDesc": "An avatar without a photo shows initials that belong to one member: first and family initial, a further letter when two members would clash, numbers only as a last resort. Off: the first letter alone, repeated across everyone who shares it.",
   "featureScheduledExpensesDesc": "Recurring expenses (internet, phone, electricity): any member schedules one with its rule (every X days/weeks/months/years, X times or until a date); the schedule is validated once, and every due date is presented to the member — the validated amount counts immediately, a different amount explains itself and passes the expense validation.",

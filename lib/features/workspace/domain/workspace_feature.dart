@@ -228,8 +228,10 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   ),
   // The member report suite (#494/#502): the financial agreement and
   // the monthly payments report, self-service and admin-sent.
-  WorkspaceFeature.memberReports:
-      FeatureManifestEntry(feature: WorkspaceFeature.memberReports),
+  WorkspaceFeature.memberReports: FeatureManifestEntry(
+    feature: WorkspaceFeature.memberReports,
+    requires: WorkspaceFeature.moneyTab,
+  ),
   // Validated deletion requests for past/checked-in bookings
   // (#492/#502). OFF = such bookings simply cannot be deleted.
   WorkspaceFeature.deletionRequests:
@@ -316,16 +318,20 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // #719 — "who accessed my data": the server-written log of reads of
   // another member's finances, shown to the subject. OFF hides the row;
   // the log is still written, because the record is not optional.
-  WorkspaceFeature.dataAccessLog:
-      FeatureManifestEntry(feature: WorkspaceFeature.dataAccessLog),
+  WorkspaceFeature.dataAccessLog: FeatureManifestEntry(
+    feature: WorkspaceFeature.dataAccessLog,
+    requires: WorkspaceFeature.moneyTab,
+  ),
   // #719 — export my data (art. 20) and leave with erasure (art. 17)
   // from Settings → Privacy & data.
   WorkspaceFeature.memberDataExport:
       FeatureManifestEntry(feature: WorkspaceFeature.memberDataExport),
   // #720 — Finances as three faces (Payments · Consumption · Invoices)
   // under one period chooser. OFF keeps the single column.
-  WorkspaceFeature.financeFaces:
-      FeatureManifestEntry(feature: WorkspaceFeature.financeFaces),
+  WorkspaceFeature.financeFaces: FeatureManifestEntry(
+    feature: WorkspaceFeature.financeFaces,
+    requires: WorkspaceFeature.moneyTab,
+  ),
   // #726 — automatic payment reminders: the dunning levels applied by a
   // daily sweep (or by an admin opening Finances), each one an event in
   // the member's feed and a push. Child of dunning.
@@ -417,3 +423,72 @@ Set<WorkspaceFeature> effectiveFeatures(Set<WorkspaceFeature> raw) {
       if (chainOn(feature)) feature,
   };
 }
+
+/// Everything [feature] NEEDS in order to work, nearest parent first
+/// (#800).
+///
+/// The registry has always expressed the hierarchy downwards — a child
+/// is ineffective while its parent is off. Read upwards it answers the
+/// question an owner actually asks at the switch: "what does this one
+/// need?"
+List<WorkspaceFeature> requirementChain(WorkspaceFeature feature) {
+  final chain = <WorkspaceFeature>[];
+  var current = featureManifest[feature]?.requires;
+  // The registry is authored by hand; a cycle would hang the UI rather
+  // than fail a test, so the visited set makes that impossible.
+  final seen = <WorkspaceFeature>{feature};
+  while (current != null && seen.add(current)) {
+    chain.add(current);
+    current = featureManifest[current]?.requires;
+  }
+  return chain;
+}
+
+/// Everything that would stop working if [feature] were switched off —
+/// its whole subtree, not just its direct children.
+List<WorkspaceFeature> dependentFeatures(WorkspaceFeature feature) => [
+      for (final candidate in featureManifest.keys)
+        if (candidate != feature && requirementChain(candidate).contains(feature))
+          candidate,
+    ];
+
+/// The flag map to write when the owner flips [feature] to [value]
+/// (#800), given the currently stored set [raw].
+///
+/// Turning a feature ON turns its whole requirement chain on with it.
+/// Before this, a switch could be flipped on and simply not work,
+/// because something above it was off — the owner saw a green switch and
+/// a feature that was not there.
+///
+/// Turning one OFF leaves its dependants stored exactly as configured.
+/// They are already ineffective ([effectiveFeatures] drops them), and
+/// erasing the choices would mean the owner has to rebuild the subtree
+/// by hand after switching the parent back on.
+Map<WorkspaceFeature, bool> featureFlagsAfterToggle({
+  required Set<WorkspaceFeature> raw,
+  required WorkspaceFeature feature,
+  required bool value,
+}) {
+  final next = {
+    for (final known in featureManifest.keys) known: raw.contains(known),
+  };
+  next[feature] = value;
+  if (value) {
+    for (final required in requirementChain(feature)) {
+      next[required] = true;
+    }
+  }
+  return next;
+}
+
+/// The features [featureFlagsAfterToggle] would switch on ALONGSIDE
+/// [feature] — empty when its chain is already on. The UI names them, so
+/// enabling one thing never silently changes another.
+List<WorkspaceFeature> alsoEnabledWith({
+  required Set<WorkspaceFeature> raw,
+  required WorkspaceFeature feature,
+}) =>
+    [
+      for (final required in requirementChain(feature))
+        if (!raw.contains(required)) required,
+    ];

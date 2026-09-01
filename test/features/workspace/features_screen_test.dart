@@ -169,8 +169,11 @@ void main() {
   });
 
   testWidgets(
-      'HIERARCHY: a child switch is greyed out while its parent is off '
-      'and carries the Requires note', (tester) async {
+      'HIERARCHY: a child switch stays LIVE while its parent is off, and '
+      'says what turning it on would bring with it', (tester) async {
+    // #800 — this used to be greyed out. A switch an owner cannot move
+    // is a dead end: they wanted the feature, and the app answered by
+    // disabling the control and explaining nothing about what to do.
     await pumpFeatures(tester, featureFlags: const {'kioskMode': false});
 
     await tester.scrollUntilVisible(
@@ -181,7 +184,35 @@ void main() {
     final child = tester.widget<SwitchListTile>(
       find.byKey(const ValueKey('feature-nfcBadges')),
     );
-    expect(child.onChanged, isNull);
+    expect(child.onChanged, isNotNull);
     expect(find.textContaining('Requires'), findsWidgets);
+    expect(find.textContaining('also enables'), findsWidgets);
+  });
+
+  testWidgets(
+      'HIERARCHY: switching a child on switches its whole chain on',
+      (tester) async {
+    // badgeSignIn needs nfcBadges, which needs kioskMode. Turning the
+    // deepest one on must bring both — otherwise the owner reads three
+    // switches and gets no feature.
+    final workspace = await pumpFeatures(
+      tester,
+      featureFlags: const {'kioskMode': false, 'nfcBadges': false},
+    );
+
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('feature-badgeSignIn')),
+      80,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byKey(const ValueKey('feature-badgeSignIn')));
+    await tester.pumpAndSettle();
+
+    final written = workspace.workspaces.single.featureFlags;
+    expect(written['badgeSignIn'], isTrue);
+    expect(written['nfcBadges'], isTrue, reason: 'the chain comes with it');
+    expect(written['kioskMode'], isTrue);
+    // And it SAYS so, rather than changing two other settings silently.
+    expect(find.textContaining('Also switched on'), findsOneWidget);
   });
 }

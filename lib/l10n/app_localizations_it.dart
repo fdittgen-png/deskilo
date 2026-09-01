@@ -1991,6 +1991,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureMessageGesturesTitle => 'Scorri per citare o ritirare';
 
   @override
+  String featureAlsoEnabled(String features) {
+    return 'Attivato anche: $features';
+  }
+
+  @override
+  String featureAlsoEnables(String features) {
+    return 'Attivando questa si abilita anche $features';
+  }
+
+  @override
+  String get featureHeldBack =>
+      'In attesa della funzione qui sopra: attivala e anche questa torna a funzionare.';
+
+  @override
   String get featureMessageGesturesDesc =>
       'Scorri un messaggio verso destra per citarlo nella risposta; verso sinistra per ritirare il tuo messaggio finché nessuno l\'ha letto, previa conferma. Disattivato: i messaggi si eliminano tenendoli premuti.';
 

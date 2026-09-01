@@ -6,6 +6,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
@@ -242,11 +243,21 @@ class FeaturesScreen extends ConsumerWidget {
     bool value,
   ) async {
     final l10n = AppLocalizations.of(context);
+    // #800 — switching one ON switches on everything it NEEDS.
+    //
+    // A switch that can be flipped green while the feature stays absent
+    // is the worst kind of setting: the owner has configured the thing
+    // and the app disagrees, with nothing on screen to explain it.
+    final alsoOn = alsoEnabledWith(raw: enabled, feature: feature);
     // Always write the FULL map so the row is self-describing and a later
     // registry-default change never silently flips an owner's choice.
     final flags = {
-      for (final f in featureManifest.keys)
-        f.dbKey: f == feature ? value : enabled.contains(f),
+      for (final entry in featureFlagsAfterToggle(
+        raw: enabled,
+        feature: feature,
+        value: value,
+      ).entries)
+        entry.key.dbKey: entry.value,
     };
     if (!await runGuarded(
       context,
@@ -265,6 +276,19 @@ class FeaturesScreen extends ConsumerWidget {
     // The workspace chain re-derives enabledFeatures from the new row —
     // that applies the gates locally right away.
     ref.invalidate(myWorkspacesProvider);
+    // Naming what else came on: a cascade nobody sees is a surprise the
+    // next time they read the list.
+    if (value && alsoOn.isNotEmpty && context.mounted) {
+      AppSnack.info(
+        context,
+        l10n?.featureAlsoEnabled(
+              alsoOn.map((f) => featureName(l10n, f)).join(', '),
+            ) ??
+            'Also switched on: '
+                '${alsoOn.map((f) => featureName(l10n, f)).join(', ')}',
+        replace: true,
+      );
+    }
   }
 
   @override
@@ -297,10 +321,16 @@ class FeaturesScreen extends ConsumerWidget {
                                 featureName(l10n, entry.requires!)) ??
                             'Requires ${featureName(l10n, entry.requires!)}'),
                     value: raw.contains(entry.feature),
-                    // A child is only editable while its parent chain is
-                    // ON — the hierarchy made visible.
-                    parentOn: entry.requires == null ||
-                        effectiveFeatures(raw).contains(entry.requires),
+                    // #800 — every switch is live. A child no longer
+                    // waits for its parent: turning it on brings the
+                    // parent with it, which is what an owner means by
+                    // "switch this on".
+                    inactive: entry.requires != null &&
+                        !effectiveFeatures(raw).contains(entry.requires),
+                    alsoEnables: alsoEnabledWith(
+                      raw: raw,
+                      feature: entry.feature,
+                    ).map((f) => featureName(l10n, f)).toList(),
                     onChanged: (value) => _toggle(
                       context,
                       ref,
@@ -325,7 +355,8 @@ class _FeatureTile extends StatelessWidget {
     required this.description,
     required this.requiresLabel,
     required this.value,
-    required this.parentOn,
+    required this.inactive,
+    required this.alsoEnables,
     required this.onChanged,
   });
 
@@ -334,13 +365,30 @@ class _FeatureTile extends StatelessWidget {
   final String description;
   final String? requiresLabel;
   final bool value;
-  final bool parentOn;
+
+  /// On, but held back by a parent that is off — the switch still reads
+  /// the owner's choice, and the subtitle says why nothing happens.
+  final bool inactive;
+
+  /// What turning this on would switch on as well, already named.
+  final List<String> alsoEnables;
   final ValueChanged<bool> onChanged;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
     final child = entry.requires != null;
+    final notes = [
+      ?requiresLabel,
+      if (!value && alsoEnables.isNotEmpty)
+        l10n?.featureAlsoEnables(alsoEnables.join(', ')) ??
+            'Switching this on also enables ${alsoEnables.join(', ')}',
+      if (value && inactive)
+        l10n?.featureHeldBack ??
+            'Waiting on the feature above — switch that on and this one '
+                'works again.',
+    ];
     return Padding(
       padding: EdgeInsets.only(left: child ? 24 : 0),
       child: SwitchListTile(
@@ -350,12 +398,13 @@ class _FeatureTile extends StatelessWidget {
           l10n?.helpHintFeaturesTopic ?? 'Features',
         ),
         subtitle: Text(
-          requiresLabel == null
-              ? description
-              : '$description\n$requiresLabel',
+          [description, ...notes].join('\n'),
+          style: value && inactive
+              ? TextStyle(color: theme.colorScheme.error)
+              : null,
         ),
         value: value,
-        onChanged: parentOn ? onChanged : null,
+        onChanged: onChanged,
       ),
     );
   }
