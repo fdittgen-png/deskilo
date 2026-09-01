@@ -254,11 +254,12 @@ class SupabaseMoneyRepository implements MoneyRepository {
 
   @override
   Future<void> setBillingRules(String workspaceId, BillingRules rules) async {
-    // Same path as the dunning rules: the workspace row's own RLS decides
-    // who may write it, so there is no RPC to keep in step with it.
-    await _client
-        .from('workspaces')
-        .update({'billing_rules': rules.toJson()}).eq('id', workspaceId);
+    // #816 — through the RPC gated on the `workspaceSettings` permission
+    // (0144); the row's RLS was owner-only and ignored the matrix.
+    await _client.rpc<void>('set_billing_rules', params: {
+      'p_workspace_id': workspaceId,
+      'p_rules': rules.toJson(),
+    });
   }
 
   @override
@@ -310,9 +311,11 @@ class SupabaseMoneyRepository implements MoneyRepository {
     String workspaceId,
     DunningRules rules,
   ) async {
-    await _client
-        .from('workspaces')
-        .update({'dunning_rules': rules.toJson()}).eq('id', workspaceId);
+    // #816 — see setBillingRules.
+    await _client.rpc<void>('set_dunning_rules', params: {
+      'p_workspace_id': workspaceId,
+      'p_rules': rules.toJson(),
+    });
   }
 
   @override

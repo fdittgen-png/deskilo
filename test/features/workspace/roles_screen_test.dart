@@ -160,13 +160,24 @@ void main() {
     final sql = File('supabase/migrations/0104_role_permissions.sql')
             .readAsStringSync() +
         File('supabase/migrations/0139_negotiation_permissions.sql')
+            .readAsStringSync() +
+        File('supabase/migrations/0144_money_validation_parity.sql')
             .readAsStringSync();
     expect(sql, contains('role_permissions jsonb'));
     expect(sql, contains('has_permission'));
     expect(sql, contains('set_role_permissions'));
-    // The catalog mirrors the Dart enum, name for name.
+    // The catalog mirrors the Dart enum, name for name — the LATEST
+    // set_role_permissions catalog array itself (#816: the 0104 array
+    // lacked the two negotiation permissions while the file text
+    // mentioned them elsewhere, and the RPC refused the client's own
+    // payload with "unknown permission").
+    final latest = File('supabase/migrations/0144_money_validation_parity.sql')
+        .readAsStringSync();
+    final catalog = RegExp(r"v_catalog text\[\] := array\[([^\]]+)\]")
+        .firstMatch(latest)!
+        .group(1)!;
     for (final permission in WorkspacePermission.values) {
-      expect(sql, contains("'${permission.wireName}'"),
+      expect(catalog, contains("'${permission.wireName}'"),
           reason: '${permission.wireName} must be in the SQL catalog');
     }
     // Both invoicing RPCs consult the central permission now.
