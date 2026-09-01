@@ -117,6 +117,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureUsageInvoicesTitle ?? 'End-of-month invoices',
       WorkspaceFeature.invoiceSettlement =>
         l10n?.featureInvoiceSettlementTitle ?? 'Regroup invoices',
+      WorkspaceFeature.invoiceJourney =>
+        l10n?.featureInvoiceJourneyTitle ?? 'The journey of an invoice',
       WorkspaceFeature.messageGestures =>
         l10n?.featureMessageGesturesTitle ?? 'Swipe to quote or take back',
 

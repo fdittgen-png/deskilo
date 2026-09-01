@@ -2126,6 +2126,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Dépenses récurrentes (internet, téléphone, électricité) : chaque membre en programme une avec sa règle (tous les X jours/semaines/mois/ans, X fois ou jusqu\'à une date) ; la programmation est validée une fois, et chaque échéance est présentée au membre — le montant validé compte immédiatement, un montant différent s\'explique et passe la validation des dépenses.';
 
   @override
+  String get featureInvoiceJourneyTitle => 'Le parcours d\'une facture';
+
+  @override
+  String get featureInvoiceJourneyDesc =>
+      'Chaque facture montre où elle en est — Émise, Paiement, Confirmation, Close — et à qui est le tour : le membre paie, un admin confirme le paiement déclaré, l\'émetteur le rapproche, les valideurs décident. Le hub des émetteurs ajoute un bandeau d\'étapes avec les compteurs et une explication « Comment ça marche ».';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override
@@ -3736,6 +3743,221 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String eventPriceNegotiationItems(int count) {
     return '$count articles';
+  }
+
+  @override
+  String get journeyStepIssued => 'Émise';
+
+  @override
+  String get journeyStepPayment => 'Paiement';
+
+  @override
+  String get journeyStepConfirmation => 'Confirmation';
+
+  @override
+  String get journeyStepClosed => 'Close';
+
+  @override
+  String journeyIssuerMemberPays(String name, String amount, String date) {
+    return 'En attente du paiement de $name : $amount — échéance $date';
+  }
+
+  @override
+  String journeyIssuerMemberPaysOverdue(String name, String amount, int days) {
+    return '$name doit $amount — en retard de $days jours';
+  }
+
+  @override
+  String journeyIssuerMemberPaysRemainder(String name, String amount) {
+    return '$name doit encore $amount après un paiement partiel';
+  }
+
+  @override
+  String journeyIssuerAdminConfirms(String name, String amount) {
+    return '$name a déclaré un paiement de $amount — un autre admin le confirme dans Événements';
+  }
+
+  @override
+  String journeyIssuerMemberConfirms(String name, String amount) {
+    return 'Un paiement de $amount a été enregistré — $name le confirme dans Événements';
+  }
+
+  @override
+  String journeyIssuerMatches(String amount) {
+    return 'Un paiement de $amount est enregistré — rapprochez-le de cette facture';
+  }
+
+  @override
+  String get journeyValidatorsMatch =>
+      'Paiement rapproché — en attente de la décision des valideurs';
+
+  @override
+  String get journeyValidatorsWriteoff =>
+      'Annulation du reliquat demandée — en attente des valideurs';
+
+  @override
+  String journeyIssuerRefunds(String name, String amount) {
+    return 'Avoir — remboursez $amount à $name et enregistrez-le';
+  }
+
+  @override
+  String get journeyIssuerReplaces =>
+      'Annulée — émettez la facture de remplacement';
+
+  @override
+  String journeyMemberPays(String amount, String date) {
+    return 'À vous : payez $amount avant le $date';
+  }
+
+  @override
+  String journeyMemberPaysOverdue(String amount, int days) {
+    return 'À vous : payez $amount — en retard de $days jours';
+  }
+
+  @override
+  String journeyMemberPaysRemainder(String amount) {
+    return 'À vous : payez le reliquat de $amount';
+  }
+
+  @override
+  String journeyMemberDeclared(String amount) {
+    return 'Vous avez déclaré $amount — l\'espace le confirme';
+  }
+
+  @override
+  String journeyMemberConfirms(String amount) {
+    return 'À vous : confirmez dans Événements le paiement de $amount enregistré pour vous';
+  }
+
+  @override
+  String journeyMemberRegistered(String amount) {
+    return 'Votre paiement de $amount est enregistré — l\'espace le rapproche de cette facture';
+  }
+
+  @override
+  String get journeyMemberValidators =>
+      'Paiement rapproché — en attente de validation';
+
+  @override
+  String get journeyMemberWriteoff =>
+      'L\'espace a demandé l\'annulation du reliquat — en attente de validation';
+
+  @override
+  String journeyMemberRefund(String amount) {
+    return 'L\'espace vous doit $amount — rien à payer';
+  }
+
+  @override
+  String get journeyMemberReplaces =>
+      'Annulée — une facture de remplacement suit';
+
+  @override
+  String journeyClosedPaid(String date) {
+    return 'Payée le $date — close';
+  }
+
+  @override
+  String journeyClosedRemainder(String date) {
+    return 'Close — reliquat annulé le $date';
+  }
+
+  @override
+  String journeyClosedRefunded(String date) {
+    return 'Remboursée le $date — close';
+  }
+
+  @override
+  String journeyClosedReplaced(String number) {
+    return 'Annulée — remplacée par $number';
+  }
+
+  @override
+  String get journeyClosedSettled =>
+      'Regroupée dans une autre facture — c\'est celle-là qui est due et relancée';
+
+  @override
+  String get journeyStageIssue => 'À émettre';
+
+  @override
+  String get journeyStageCollect => 'À encaisser';
+
+  @override
+  String get journeyStageConfirm => 'À confirmer';
+
+  @override
+  String get journeyStageClosed => 'Closes';
+
+  @override
+  String journeyOverdueCount(int count) {
+    return '$count en retard';
+  }
+
+  @override
+  String get journeyStageStripLabel =>
+      'Le processus de facturation : émettre, encaisser, confirmer, clore';
+
+  @override
+  String get journeyHowButton => 'Comment ça marche';
+
+  @override
+  String get journeyHowTitle => 'Comment fonctionne la facturation';
+
+  @override
+  String get journeyHowIntro =>
+      'Quatre étapes, les mêmes pour chaque facture. Chacune dit à qui est le tour.';
+
+  @override
+  String get journeyHowWorkspaceLabel => 'Espace';
+
+  @override
+  String get journeyHowMemberLabel => 'Membre';
+
+  @override
+  String get journeyHowIssuedWorkspace =>
+      'Émet la facture à partir des données suivies du mois — numérotée, signée, immuable — et partage le PDF ou envoie la facture électronique.';
+
+  @override
+  String get journeyHowIssuedMember =>
+      'La trouve sur le volet Factures : positions, solde, échéance.';
+
+  @override
+  String get journeyHowPaymentWorkspace =>
+      'Attend l\'argent. Passé le délai, il envoie les niveaux de relance configurés — à la main ou automatiquement.';
+
+  @override
+  String get journeyHowPaymentMember =>
+      'Paie en ligne (réglé aussitôt) ou par virement, puis enregistre le paiement pour que l\'espace le sache.';
+
+  @override
+  String get journeyHowConfirmationWorkspace =>
+      'Un autre admin confirme le paiement déclaré ; l\'émetteur rapproche ensuite le paiement enregistré de la facture (Marquer payée) — une règle de validation peut confier le rapprochement aux valideurs. Trop payé ? Un avoir. Pas assez ? Partiellement payée, le reste dû jusqu\'au paiement ou à l\'annulation.';
+
+  @override
+  String get journeyHowConfirmationMember =>
+      'Rien à faire — sauf si l\'espace a enregistré le paiement pour lui : il le confirme alors dans Événements.';
+
+  @override
+  String get journeyHowClosedWorkspace =>
+      'Payée, reliquat annulé ou remboursée : la facture passe aux archives. Une facture fausse est marquée erronée et remplacée — avant paiement, jamais après.';
+
+  @override
+  String get journeyHowClosedMember =>
+      'Le mois se lit soldé et la facture reste lisible pour toujours : aperçu, PDF, partage.';
+
+  @override
+  String get journeyTimelineTitle => 'Chronologie';
+
+  @override
+  String journeyPrimaryRemind(int level) {
+    return 'Envoyer la relance $level';
+  }
+
+  @override
+  String get journeyPrimaryConfirmInEvents => 'Ouvrir Événements';
+
+  @override
+  String journeyOutstanding(String amount) {
+    return '$amount dus';
   }
 
   @override

@@ -762,8 +762,15 @@ void main() {
     // Flo's previous month derives 150.00 + 16.00 → listed.
     expect(find.byKey(const ValueKey('invoice-todo-member-1')),
         findsOneWidget);
-    expect(find.textContaining('1 to invoice'), findsOneWidget,
-        reason: 'the summary strip counts the pending month');
+    // #812 — the stage strip's first tile counts the pending month.
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('invoice-stage-issue')),
+        matching: find.text('1'),
+      ),
+      findsOneWidget,
+      reason: 'the stage strip counts the pending month',
+    );
 
     await tester.tap(find.byKey(const ValueKey('invoice-issue-member-1')));
     await tester.pumpAndSettle();

@@ -8,9 +8,11 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/einvoice_gateway.dart';
 import '../../domain/billing_rules.dart';
 import '../../domain/invoice.dart';
+import '../invoice_journey.dart';
 import '../invoice_line_text.dart';
 import '../invoice_status.dart';
 import '../period_label.dart';
+import 'invoice_journey_view.dart';
 
 /// What the reader asked for after looking at an invoice. The sheet only
 /// DECIDES — the screen runs the action with its own live context, so no
@@ -43,6 +45,7 @@ Future<InvoiceAction?> showInvoiceDetailSheet(
   String replacedByNumber = '',
   bool showMemberName = false,
   InvoiceTransmission? transmission,
+  InvoiceJourney? journey,
 }) =>
     showModalBottomSheet<InvoiceAction>(
       context: context,
@@ -58,6 +61,7 @@ Future<InvoiceAction?> showInvoiceDetailSheet(
         replacedByNumber: replacedByNumber,
         showMemberName: showMemberName,
         transmission: transmission,
+        journey: journey,
       ),
     );
 
@@ -71,6 +75,7 @@ class _InvoiceDetailBody extends StatelessWidget {
     required this.replacedByNumber,
     required this.showMemberName,
     required this.transmission,
+    required this.journey,
   });
 
   final Invoice invoice;
@@ -83,6 +88,10 @@ class _InvoiceDetailBody extends StatelessWidget {
 
   /// The last attempt at posting this invoice to the platform (0073).
   final InvoiceTransmission? transmission;
+
+  /// #812 — where the invoice stands and whose move it is; null while
+  /// the process view is off.
+  final InvoiceJourney? journey;
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +115,19 @@ class _InvoiceDetailBody extends StatelessWidget {
         l10n?.invoiceSendStatusFailed ?? 'not delivered',
       null => '',
     };
+
+    // #812 — the action the journey expects from an issuer, if any.
+    final expected = !canIssue
+        ? InvoiceAction.downloadPdf
+        : switch (journey?.move) {
+            InvoiceMove.issuerMatchesPayment => InvoiceAction.markPaid,
+            InvoiceMove.issuerReplaces => InvoiceAction.replace,
+            InvoiceMove.memberPays ||
+            InvoiceMove.memberPaysRemainder
+                when journey?.reminderDue != null =>
+              InvoiceAction.remind,
+            _ => InvoiceAction.downloadPdf,
+          };
 
     Widget line(String text) => Padding(
           padding: const EdgeInsets.only(top: AppSpacing.xs),
@@ -178,6 +200,18 @@ class _InvoiceDetailBody extends StatelessWidget {
                 if (showMemberName && invoice.memberName.isNotEmpty)
                   invoice.memberName,
               ].join(' · ')),
+              // #812 — the journey first: the four steps, then the move.
+              if (journey case final journey?) ...[
+                const SizedBox(height: AppSpacing.md),
+                InvoiceJourneyBar(journey: journey),
+                const SizedBox(height: AppSpacing.sm),
+                InvoiceMoveLine(
+                  journey: journey,
+                  invoice: invoice,
+                  match: match,
+                  issuer: canIssue,
+                ),
+              ],
               const Divider(height: AppSpacing.xl),
 
               // The SNAPSHOT — what the document itself says, never the
@@ -306,6 +340,20 @@ class _InvoiceDetailBody extends StatelessWidget {
 
               // Lifecycle facts: the correction chain, the payment that
               // closed it, the reminders sent, the annex it carries.
+              if (journey != null &&
+                  (invoice.replacesNumber.isNotEmpty ||
+                      replacedByNumber.isNotEmpty ||
+                      standingMatch != null ||
+                      reminder != null ||
+                      sent != null))
+                Padding(
+                  key: const ValueKey('invoice-detail-timeline'),
+                  padding: const EdgeInsets.only(top: AppSpacing.md),
+                  child: Text(
+                    l10n?.journeyTimelineTitle ?? 'Timeline',
+                    style: theme.textTheme.titleSmall,
+                  ),
+                ),
               if (invoice.replacesNumber.isNotEmpty)
                 line('${l10n?.invoicePdfReplaces ?? 'Replaces'} '
                     '${invoice.replacesNumber}'),
@@ -357,82 +405,128 @@ class _InvoiceDetailBody extends StatelessWidget {
                   )}…'),
               const SizedBox(height: AppSpacing.lg),
 
-              // Every permitted action, spelled out.
-              // #514 — see it on screen before any PDF exists.
-              _action(
-                context,
-                key: 'invoice-quick-${invoice.id}',
-                icon: Icons.bolt_outlined,
-                label: l10n?.reportQuickView ?? 'Quick view',
-                action: InvoiceAction.quickView,
-              ),
-              _action(
-                context,
-                key: 'invoice-download-${invoice.id}',
-                icon: Icons.download_outlined,
-                label: l10n?.invoiceDownload ?? 'Download PDF',
-                action: InvoiceAction.downloadPdf,
-                primary: true,
-              ),
-              _action(
-                context,
-                key: 'invoice-share-${invoice.id}',
-                icon: Icons.share_outlined,
-                label: l10n?.invoiceShare ?? 'Share PDF',
-                action: InvoiceAction.sharePdf,
-              ),
-              // 2014/55/EU: the e-invoice affordance is for EU workspaces.
-              if (isEu)
-                _action(
-                  context,
-                  key: 'invoice-einvoice-action',
-                  icon: Icons.code_outlined,
-                  label: l10n?.invoiceEInvoiceAction ?? 'E-invoice (XML)',
-                  action: InvoiceAction.eInvoice,
-                ),
-              if (canIssue && status == InvoiceLifecycle.open) ...[
-                if (invoice.totalCents > 0)
-                  _action(
-                    context,
-                    key: 'invoice-remind-action',
-                    icon: Icons.notifications_outlined,
-                    label: l10n?.invoiceRemindAction ?? 'Send a reminder',
-                    action: InvoiceAction.remind,
-                  ),
-                _action(
-                  context,
-                  key: 'invoice-match-action',
-                  icon: Icons.price_check_outlined,
-                  label: l10n?.invoiceMatchAction ?? 'Mark as paid',
-                  action: InvoiceAction.markPaid,
-                ),
-                _action(
-                  context,
-                  key: 'invoice-void-action',
-                  icon: Icons.block_outlined,
-                  label: l10n?.invoiceVoidAction ?? 'Mark erroneous',
-                  action: InvoiceAction.markErroneous,
-                  danger: true,
-                ),
+              // Every permitted action, spelled out. #812 — the one the
+              // journey expects from the issuer comes FIRST and filled;
+              // otherwise the PDF keeps its historical place.
+              ...[
+                for (final entry in _actions(context, l10n, status, expected))
+                  if (entry.$1 == expected) entry.$2,
+                for (final entry in _actions(context, l10n, status, expected))
+                  if (entry.$1 != expected) entry.$2,
               ],
-              // A correction chain, never a fork (0061): only an erroneous
-              // invoice that nothing replaces yet can be re-issued.
-              if (canIssue &&
-                  status == InvoiceLifecycle.erroneous &&
-                  replacedByNumber.isEmpty)
-                _action(
-                  context,
-                  key: 'invoice-replace-action',
-                  icon: Icons.published_with_changes_outlined,
-                  label: l10n?.invoiceReplaceAction ?? 'Issue replacement',
-                  action: InvoiceAction.replace,
-                ),
             ],
           ),
         ),
       ),
     );
   }
+
+  /// The permitted actions in their historical order, each tagged so
+  /// the build can pull the expected one to the front.
+  List<(InvoiceAction, Widget)> _actions(
+    BuildContext context,
+    AppLocalizations? l10n,
+    InvoiceLifecycle status,
+    InvoiceAction expected,
+  ) =>
+      [
+        // #514 — see it on screen before any PDF exists.
+        (
+          InvoiceAction.quickView,
+          _action(
+            context,
+            key: 'invoice-quick-${invoice.id}',
+            icon: Icons.bolt_outlined,
+            label: l10n?.reportQuickView ?? 'Quick view',
+            action: InvoiceAction.quickView,
+          ),
+        ),
+        (
+          InvoiceAction.downloadPdf,
+          _action(
+            context,
+            key: 'invoice-download-${invoice.id}',
+            icon: Icons.download_outlined,
+            label: l10n?.invoiceDownload ?? 'Download PDF',
+            action: InvoiceAction.downloadPdf,
+            primary: expected == InvoiceAction.downloadPdf,
+          ),
+        ),
+        (
+          InvoiceAction.sharePdf,
+          _action(
+            context,
+            key: 'invoice-share-${invoice.id}',
+            icon: Icons.share_outlined,
+            label: l10n?.invoiceShare ?? 'Share PDF',
+            action: InvoiceAction.sharePdf,
+          ),
+        ),
+        // 2014/55/EU: the e-invoice affordance is for EU workspaces.
+        if (isEu)
+          (
+            InvoiceAction.eInvoice,
+            _action(
+              context,
+              key: 'invoice-einvoice-action',
+              icon: Icons.code_outlined,
+              label: l10n?.invoiceEInvoiceAction ?? 'E-invoice (XML)',
+              action: InvoiceAction.eInvoice,
+            ),
+          ),
+        if (canIssue && status == InvoiceLifecycle.open) ...[
+          if (invoice.totalCents > 0)
+            (
+              InvoiceAction.remind,
+              _action(
+                context,
+                key: 'invoice-remind-action',
+                icon: Icons.notifications_outlined,
+                label: l10n?.invoiceRemindAction ?? 'Send a reminder',
+                action: InvoiceAction.remind,
+                primary: expected == InvoiceAction.remind,
+              ),
+            ),
+          (
+            InvoiceAction.markPaid,
+            _action(
+              context,
+              key: 'invoice-match-action',
+              icon: Icons.price_check_outlined,
+              label: l10n?.invoiceMatchAction ?? 'Mark as paid',
+              action: InvoiceAction.markPaid,
+              primary: expected == InvoiceAction.markPaid,
+            ),
+          ),
+          (
+            InvoiceAction.markErroneous,
+            _action(
+              context,
+              key: 'invoice-void-action',
+              icon: Icons.block_outlined,
+              label: l10n?.invoiceVoidAction ?? 'Mark erroneous',
+              action: InvoiceAction.markErroneous,
+              danger: true,
+            ),
+          ),
+        ],
+        // A correction chain, never a fork (0061): only an erroneous
+        // invoice that nothing replaces yet can be re-issued.
+        if (canIssue &&
+            status == InvoiceLifecycle.erroneous &&
+            replacedByNumber.isEmpty)
+          (
+            InvoiceAction.replace,
+            _action(
+              context,
+              key: 'invoice-replace-action',
+              icon: Icons.published_with_changes_outlined,
+              label: l10n?.invoiceReplaceAction ?? 'Issue replacement',
+              action: InvoiceAction.replace,
+              primary: expected == InvoiceAction.replace,
+            ),
+          ),
+      ];
 
   Widget _action(
     BuildContext context, {

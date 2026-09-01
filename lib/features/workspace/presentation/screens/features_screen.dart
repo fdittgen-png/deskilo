@@ -223,6 +223,9 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.invoiceSettlement =>
           l10n?.featureInvoiceSettlementDesc ??
               'Several of a member\'s open invoices can be regrouped into one they pay. The originals stay in the archive, traceable position by position, and stop being chased separately.',
+        WorkspaceFeature.invoiceJourney =>
+          l10n?.featureInvoiceJourneyDesc ??
+              'Every invoice shows where it stands — Issued, Payment, Confirmation, Closed — and whose move it is: the member pays, an admin confirms the declared payment, the issuer matches it, the validators decide. The issuers\' hub adds a stage strip with live counts and a How-it-works explainer.',
         WorkspaceFeature.messageGestures =>
           l10n?.featureMessageGesturesDesc ??
               'Swipe a message right to quote it in your reply; swipe left to take your own message back while nobody has read it yet, after a confirmation. Off: messages are deleted by holding them.',

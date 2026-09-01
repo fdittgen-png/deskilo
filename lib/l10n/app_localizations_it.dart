@@ -2123,6 +2123,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Spese ricorrenti (internet, telefono, elettricità): ogni membro ne programma una con la sua regola (ogni X giorni/settimane/mesi/anni, X volte o fino a una data); la programmazione è validata una volta, e ogni scadenza è presentata al membro — l’importo validato conta subito, un importo diverso si spiega e passa la validazione delle spese.';
 
   @override
+  String get featureInvoiceJourneyTitle => 'Il percorso di una fattura';
+
+  @override
+  String get featureInvoiceJourneyDesc =>
+      'Ogni fattura mostra dove si trova — Emessa, Pagamento, Conferma, Chiusa — e a chi tocca: il membro paga, un admin conferma il pagamento dichiarato, l\'emittente lo abbina, i validatori decidono. L\'hub degli emittenti aggiunge una barra delle fasi con i contatori e una spiegazione «Come funziona».';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override
@@ -3731,6 +3738,221 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String eventPriceNegotiationItems(int count) {
     return '$count articoli';
+  }
+
+  @override
+  String get journeyStepIssued => 'Emessa';
+
+  @override
+  String get journeyStepPayment => 'Pagamento';
+
+  @override
+  String get journeyStepConfirmation => 'Conferma';
+
+  @override
+  String get journeyStepClosed => 'Chiusa';
+
+  @override
+  String journeyIssuerMemberPays(String name, String amount, String date) {
+    return 'In attesa del pagamento di $name: $amount — scadenza $date';
+  }
+
+  @override
+  String journeyIssuerMemberPaysOverdue(String name, String amount, int days) {
+    return '$name deve $amount — in ritardo di $days giorni';
+  }
+
+  @override
+  String journeyIssuerMemberPaysRemainder(String name, String amount) {
+    return '$name deve ancora $amount dopo un pagamento parziale';
+  }
+
+  @override
+  String journeyIssuerAdminConfirms(String name, String amount) {
+    return '$name ha dichiarato un pagamento di $amount — un altro admin lo conferma in Eventi';
+  }
+
+  @override
+  String journeyIssuerMemberConfirms(String name, String amount) {
+    return 'È stato registrato un pagamento di $amount — $name lo conferma in Eventi';
+  }
+
+  @override
+  String journeyIssuerMatches(String amount) {
+    return 'Un pagamento di $amount è registrato — abbinalo a questa fattura';
+  }
+
+  @override
+  String get journeyValidatorsMatch =>
+      'Pagamento abbinato — in attesa della decisione dei validatori';
+
+  @override
+  String get journeyValidatorsWriteoff =>
+      'Richiesta cancellazione del residuo — in attesa dei validatori';
+
+  @override
+  String journeyIssuerRefunds(String name, String amount) {
+    return 'Nota di credito — rimborsa $amount a $name e registralo';
+  }
+
+  @override
+  String get journeyIssuerReplaces =>
+      'Annullata — emetti la fattura sostitutiva';
+
+  @override
+  String journeyMemberPays(String amount, String date) {
+    return 'Tocca a te: paga $amount entro il $date';
+  }
+
+  @override
+  String journeyMemberPaysOverdue(String amount, int days) {
+    return 'Tocca a te: paga $amount — in ritardo di $days giorni';
+  }
+
+  @override
+  String journeyMemberPaysRemainder(String amount) {
+    return 'Tocca a te: paga il residuo di $amount';
+  }
+
+  @override
+  String journeyMemberDeclared(String amount) {
+    return 'Hai dichiarato $amount — lo spazio lo sta confermando';
+  }
+
+  @override
+  String journeyMemberConfirms(String amount) {
+    return 'Tocca a te: conferma in Eventi il pagamento di $amount registrato per te';
+  }
+
+  @override
+  String journeyMemberRegistered(String amount) {
+    return 'Il tuo pagamento di $amount è registrato — lo spazio lo abbina a questa fattura';
+  }
+
+  @override
+  String get journeyMemberValidators =>
+      'Pagamento abbinato — in attesa di validazione';
+
+  @override
+  String get journeyMemberWriteoff =>
+      'Lo spazio ha chiesto di cancellare il residuo — in attesa di validazione';
+
+  @override
+  String journeyMemberRefund(String amount) {
+    return 'Lo spazio ti deve $amount — niente da pagare';
+  }
+
+  @override
+  String get journeyMemberReplaces =>
+      'Annullata — segue una fattura sostitutiva';
+
+  @override
+  String journeyClosedPaid(String date) {
+    return 'Pagata il $date — chiusa';
+  }
+
+  @override
+  String journeyClosedRemainder(String date) {
+    return 'Chiusa — residuo cancellato il $date';
+  }
+
+  @override
+  String journeyClosedRefunded(String date) {
+    return 'Rimborsata il $date — chiusa';
+  }
+
+  @override
+  String journeyClosedReplaced(String number) {
+    return 'Annullata — sostituita da $number';
+  }
+
+  @override
+  String get journeyClosedSettled =>
+      'Raggruppata in un\'altra fattura — è quella a essere dovuta e sollecitata';
+
+  @override
+  String get journeyStageIssue => 'Da emettere';
+
+  @override
+  String get journeyStageCollect => 'Da incassare';
+
+  @override
+  String get journeyStageConfirm => 'Da confermare';
+
+  @override
+  String get journeyStageClosed => 'Chiuse';
+
+  @override
+  String journeyOverdueCount(int count) {
+    return '$count in ritardo';
+  }
+
+  @override
+  String get journeyStageStripLabel =>
+      'Il processo di fatturazione: emettere, incassare, confermare, chiudere';
+
+  @override
+  String get journeyHowButton => 'Come funziona';
+
+  @override
+  String get journeyHowTitle => 'Come funziona la fatturazione';
+
+  @override
+  String get journeyHowIntro =>
+      'Quattro passi, gli stessi per ogni fattura. Ognuno dice a chi tocca.';
+
+  @override
+  String get journeyHowWorkspaceLabel => 'Spazio';
+
+  @override
+  String get journeyHowMemberLabel => 'Membro';
+
+  @override
+  String get journeyHowIssuedWorkspace =>
+      'Emette la fattura dai dati tracciati del mese — numerata, firmata, immutabile — e condivide il PDF o invia la fattura elettronica.';
+
+  @override
+  String get journeyHowIssuedMember =>
+      'La trova nella vista Fatture: voci, saldo, scadenza.';
+
+  @override
+  String get journeyHowPaymentWorkspace =>
+      'Aspetta il denaro. Scaduto il termine invia i livelli di sollecito configurati — a mano o automaticamente.';
+
+  @override
+  String get journeyHowPaymentMember =>
+      'Paga online (saldato subito) o con bonifico, poi registra il pagamento perché lo spazio lo sappia.';
+
+  @override
+  String get journeyHowConfirmationWorkspace =>
+      'Un altro admin conferma il pagamento dichiarato; l\'emittente abbina poi il pagamento registrato alla fattura (Segna come pagata) — una regola di validazione può affidare l\'abbinamento ai validatori. Pagato di più? Una nota di credito. Di meno? Parzialmente pagata, il resto dovuto fino al pagamento o alla cancellazione.';
+
+  @override
+  String get journeyHowConfirmationMember =>
+      'Niente da fare — a meno che lo spazio abbia registrato il pagamento per lui: allora lo conferma in Eventi.';
+
+  @override
+  String get journeyHowClosedWorkspace =>
+      'Pagata, residuo cancellato o rimborsata: la fattura passa in archivio. Una fattura sbagliata è segnata come errata e sostituita — prima del pagamento, mai dopo.';
+
+  @override
+  String get journeyHowClosedMember =>
+      'Il mese si legge saldato e la fattura resta leggibile per sempre: anteprima, PDF, condivisione.';
+
+  @override
+  String get journeyTimelineTitle => 'Cronologia';
+
+  @override
+  String journeyPrimaryRemind(int level) {
+    return 'Invia sollecito $level';
+  }
+
+  @override
+  String get journeyPrimaryConfirmInEvents => 'Apri Eventi';
+
+  @override
+  String journeyOutstanding(String amount) {
+    return '$amount in sospeso';
   }
 
   @override

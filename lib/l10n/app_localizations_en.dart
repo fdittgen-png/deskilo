@@ -2104,6 +2104,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Recurring expenses (internet, phone, electricity): any member schedules one with its rule (every X days/weeks/months/years, X times or until a date); the schedule is validated once, and every due date is presented to the member — the validated amount counts immediately, a different amount explains itself and passes the expense validation.';
 
   @override
+  String get featureInvoiceJourneyTitle => 'The journey of an invoice';
+
+  @override
+  String get featureInvoiceJourneyDesc =>
+      'Every invoice shows where it stands — Issued, Payment, Confirmation, Closed — and whose move it is: the member pays, an admin confirms the declared payment, the issuer matches it, the validators decide. The issuers\' hub adds a stage strip with live counts and a How-it-works explainer.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override
@@ -3699,6 +3706,218 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String eventPriceNegotiationItems(int count) {
     return '$count items';
+  }
+
+  @override
+  String get journeyStepIssued => 'Issued';
+
+  @override
+  String get journeyStepPayment => 'Payment';
+
+  @override
+  String get journeyStepConfirmation => 'Confirmation';
+
+  @override
+  String get journeyStepClosed => 'Closed';
+
+  @override
+  String journeyIssuerMemberPays(String name, String amount, String date) {
+    return 'Waiting for $name\'s payment of $amount — due $date';
+  }
+
+  @override
+  String journeyIssuerMemberPaysOverdue(String name, String amount, int days) {
+    return '$name owes $amount — overdue by $days days';
+  }
+
+  @override
+  String journeyIssuerMemberPaysRemainder(String name, String amount) {
+    return '$name still owes $amount after a partial payment';
+  }
+
+  @override
+  String journeyIssuerAdminConfirms(String name, String amount) {
+    return '$name declared a payment of $amount — another admin confirms it in Events';
+  }
+
+  @override
+  String journeyIssuerMemberConfirms(String name, String amount) {
+    return 'A payment of $amount was recorded — $name confirms it in Events';
+  }
+
+  @override
+  String journeyIssuerMatches(String amount) {
+    return 'A payment of $amount is registered — match it to this invoice';
+  }
+
+  @override
+  String get journeyValidatorsMatch =>
+      'Payment matched — awaiting the validators\' decision';
+
+  @override
+  String get journeyValidatorsWriteoff =>
+      'Write-off of the remainder requested — awaiting the validators';
+
+  @override
+  String journeyIssuerRefunds(String name, String amount) {
+    return 'Credit note — refund $amount to $name and record it';
+  }
+
+  @override
+  String get journeyIssuerReplaces => 'Cancelled — issue the replacement';
+
+  @override
+  String journeyMemberPays(String amount, String date) {
+    return 'Your move: pay $amount by $date';
+  }
+
+  @override
+  String journeyMemberPaysOverdue(String amount, int days) {
+    return 'Your move: pay $amount — overdue by $days days';
+  }
+
+  @override
+  String journeyMemberPaysRemainder(String amount) {
+    return 'Your move: pay the remaining $amount';
+  }
+
+  @override
+  String journeyMemberDeclared(String amount) {
+    return 'You declared $amount — the workspace is confirming it';
+  }
+
+  @override
+  String journeyMemberConfirms(String amount) {
+    return 'Your move: confirm the payment of $amount recorded for you, in Events';
+  }
+
+  @override
+  String journeyMemberRegistered(String amount) {
+    return 'Your payment of $amount is registered — the workspace matches it to this invoice';
+  }
+
+  @override
+  String get journeyMemberValidators => 'Payment matched — awaiting validation';
+
+  @override
+  String get journeyMemberWriteoff =>
+      'The workspace asked to cancel the remainder — awaiting validation';
+
+  @override
+  String journeyMemberRefund(String amount) {
+    return 'The workspace owes you $amount — nothing to pay';
+  }
+
+  @override
+  String get journeyMemberReplaces => 'Cancelled — a replacement follows';
+
+  @override
+  String journeyClosedPaid(String date) {
+    return 'Paid on $date — closed';
+  }
+
+  @override
+  String journeyClosedRemainder(String date) {
+    return 'Closed — remainder cancelled on $date';
+  }
+
+  @override
+  String journeyClosedRefunded(String date) {
+    return 'Refunded on $date — closed';
+  }
+
+  @override
+  String journeyClosedReplaced(String number) {
+    return 'Cancelled — replaced by $number';
+  }
+
+  @override
+  String get journeyClosedSettled =>
+      'Regrouped into another invoice — that one is owed and chased';
+
+  @override
+  String get journeyStageIssue => 'To issue';
+
+  @override
+  String get journeyStageCollect => 'To collect';
+
+  @override
+  String get journeyStageConfirm => 'To confirm';
+
+  @override
+  String get journeyStageClosed => 'Closed';
+
+  @override
+  String journeyOverdueCount(int count) {
+    return '$count overdue';
+  }
+
+  @override
+  String get journeyStageStripLabel =>
+      'The invoicing process: issue, collect, confirm, close';
+
+  @override
+  String get journeyHowButton => 'How it works';
+
+  @override
+  String get journeyHowTitle => 'How invoicing works';
+
+  @override
+  String get journeyHowIntro =>
+      'Four steps, the same for every invoice. Each one says whose move it is.';
+
+  @override
+  String get journeyHowWorkspaceLabel => 'Workspace';
+
+  @override
+  String get journeyHowMemberLabel => 'Member';
+
+  @override
+  String get journeyHowIssuedWorkspace =>
+      'Issues the invoice from the month\'s tracked data — numbered, signed, immutable — and shares the PDF or sends the e-invoice.';
+
+  @override
+  String get journeyHowIssuedMember =>
+      'Finds it on the Invoices face: positions, balance, due date.';
+
+  @override
+  String get journeyHowPaymentWorkspace =>
+      'Waits for the money. Past the term it sends the reminder levels it configured — by hand or automatically.';
+
+  @override
+  String get journeyHowPaymentMember =>
+      'Pays online (settled at once) or by transfer, then records the payment so the workspace knows.';
+
+  @override
+  String get journeyHowConfirmationWorkspace =>
+      'Another admin confirms the declared payment; the issuer then matches the registered payment to the invoice (Mark as paid) — a validation rule may hand the match to the validators. Paid more? A credit note. Paid less? Partially paid, the rest owed until paid or written off.';
+
+  @override
+  String get journeyHowConfirmationMember =>
+      'Nothing to do — unless the workspace recorded the payment for them: then they confirm it in Events.';
+
+  @override
+  String get journeyHowClosedWorkspace =>
+      'Paid, remainder cancelled or refunded: the invoice moves to the archive. A wrong invoice is marked erroneous and replaced — before payment, never after.';
+
+  @override
+  String get journeyHowClosedMember =>
+      'The month reads settled and the invoice stays readable forever: quick view, PDF, share.';
+
+  @override
+  String get journeyTimelineTitle => 'Timeline';
+
+  @override
+  String journeyPrimaryRemind(int level) {
+    return 'Send reminder $level';
+  }
+
+  @override
+  String get journeyPrimaryConfirmInEvents => 'Open Events';
+
+  @override
+  String journeyOutstanding(String amount) {
+    return '$amount outstanding';
   }
 
   @override

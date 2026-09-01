@@ -188,7 +188,9 @@ const Map<String, int> _baseline = {
   // 740→790 (2026-08-05): #508 the credit-note card branch (to-refund + record button).
   // 790→820 (2026-08-05): #510 the summary strip splits to-collect
   // (remaining value) from to-refund.
-  'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 820,
+  // 820→840 (2026-09-01): #812 the Open tab hands over to the journey
+  // list (open_invoice_card.dart) while the flag is on.
+  'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 840,
   // 750→770 (2026-08-05): #490 workspace-clock day instants beside the
   // naive axis anchor.
   'lib/features/calendar/presentation/widgets/day_timeline.dart': 770,

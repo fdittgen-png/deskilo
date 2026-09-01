@@ -1199,6 +1199,8 @@
   "featureMessageGesturesDesc": "Scorri un messaggio verso destra per citarlo nella risposta; verso sinistra per ritirare il tuo messaggio finché nessuno l'ha letto, previa conferma. Disattivato: i messaggi si eliminano tenendoli premuti.",
   "featureUniqueMonogramsDesc": "Un avatar senza foto mostra iniziali che appartengono a un solo membro: iniziale del nome e del cognome, una lettera in più in caso di conflitto, numeri solo come ultima risorsa. Disattivato: solo la prima lettera, uguale per tutti quelli che la condividono.",
   "featureScheduledExpensesDesc": "Spese ricorrenti (internet, telefono, elettricità): ogni membro ne programma una con la sua regola (ogni X giorni/settimane/mesi/anni, X volte o fino a una data); la programmazione è validata una volta, e ogni scadenza è presentata al membro — l’importo validato conta subito, un importo diverso si spiega e passa la validazione delle spese.",
+  "featureInvoiceJourneyTitle": "Il percorso di una fattura",
+  "featureInvoiceJourneyDesc": "Ogni fattura mostra dove si trova — Emessa, Pagamento, Conferma, Chiusa — e a chi tocca: il membro paga, un admin conferma il pagamento dichiarato, l'emittente lo abbina, i validatori decidono. L'hub degli emittenti aggiunge una barra delle fasi con i contatori e una spiegazione «Come funziona».",
   "helpHintLearnMore": "Scopri di più",
   "helpHintDismiss": "Nascondi suggerimento",
   "helpHintPrevTip": "Suggerimento precedente",
@@ -2159,6 +2161,235 @@
   "eventTypePriceNegotiation": "Negoziazione di prezzo",
   "eventPriceNegotiationLine": "{actor} propone condizioni per {member}: {terms}",
   "eventPriceNegotiationItems": "{count} articoli",
+  "journeyStepIssued": "Emessa",
+  "journeyStepPayment": "Pagamento",
+  "journeyStepConfirmation": "Conferma",
+  "journeyStepClosed": "Chiusa",
+  "journeyIssuerMemberPays": "In attesa del pagamento di {name}: {amount} — scadenza {date}",
+  "@journeyIssuerMemberPays": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyIssuerMemberPaysOverdue": "{name} deve {amount} — in ritardo di {days} giorni",
+  "@journeyIssuerMemberPaysOverdue": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "journeyIssuerMemberPaysRemainder": "{name} deve ancora {amount} dopo un pagamento parziale",
+  "@journeyIssuerMemberPaysRemainder": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyIssuerAdminConfirms": "{name} ha dichiarato un pagamento di {amount} — un altro admin lo conferma in Eventi",
+  "@journeyIssuerAdminConfirms": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyIssuerMemberConfirms": "È stato registrato un pagamento di {amount} — {name} lo conferma in Eventi",
+  "@journeyIssuerMemberConfirms": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyIssuerMatches": "Un pagamento di {amount} è registrato — abbinalo a questa fattura",
+  "@journeyIssuerMatches": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyValidatorsMatch": "Pagamento abbinato — in attesa della decisione dei validatori",
+  "journeyValidatorsWriteoff": "Richiesta cancellazione del residuo — in attesa dei validatori",
+  "journeyIssuerRefunds": "Nota di credito — rimborsa {amount} a {name} e registralo",
+  "@journeyIssuerRefunds": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyIssuerReplaces": "Annullata — emetti la fattura sostitutiva",
+  "journeyMemberPays": "Tocca a te: paga {amount} entro il {date}",
+  "@journeyMemberPays": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberPaysOverdue": "Tocca a te: paga {amount} — in ritardo di {days} giorni",
+  "@journeyMemberPaysOverdue": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "journeyMemberPaysRemainder": "Tocca a te: paga il residuo di {amount}",
+  "@journeyMemberPaysRemainder": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberDeclared": "Hai dichiarato {amount} — lo spazio lo sta confermando",
+  "@journeyMemberDeclared": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberConfirms": "Tocca a te: conferma in Eventi il pagamento di {amount} registrato per te",
+  "@journeyMemberConfirms": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberRegistered": "Il tuo pagamento di {amount} è registrato — lo spazio lo abbina a questa fattura",
+  "@journeyMemberRegistered": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberValidators": "Pagamento abbinato — in attesa di validazione",
+  "journeyMemberWriteoff": "Lo spazio ha chiesto di cancellare il residuo — in attesa di validazione",
+  "journeyMemberRefund": "Lo spazio ti deve {amount} — niente da pagare",
+  "@journeyMemberRefund": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyMemberReplaces": "Annullata — segue una fattura sostitutiva",
+  "journeyClosedPaid": "Pagata il {date} — chiusa",
+  "@journeyClosedPaid": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyClosedRemainder": "Chiusa — residuo cancellato il {date}",
+  "@journeyClosedRemainder": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyClosedRefunded": "Rimborsata il {date} — chiusa",
+  "@journeyClosedRefunded": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyClosedReplaced": "Annullata — sostituita da {number}",
+  "@journeyClosedReplaced": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyClosedSettled": "Raggruppata in un'altra fattura — è quella a essere dovuta e sollecitata",
+  "journeyStageIssue": "Da emettere",
+  "journeyStageCollect": "Da incassare",
+  "journeyStageConfirm": "Da confermare",
+  "journeyStageClosed": "Chiuse",
+  "journeyOverdueCount": "{count} in ritardo",
+  "@journeyOverdueCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "journeyStageStripLabel": "Il processo di fatturazione: emettere, incassare, confermare, chiudere",
+  "journeyHowButton": "Come funziona",
+  "journeyHowTitle": "Come funziona la fatturazione",
+  "journeyHowIntro": "Quattro passi, gli stessi per ogni fattura. Ognuno dice a chi tocca.",
+  "journeyHowWorkspaceLabel": "Spazio",
+  "journeyHowMemberLabel": "Membro",
+  "journeyHowIssuedWorkspace": "Emette la fattura dai dati tracciati del mese — numerata, firmata, immutabile — e condivide il PDF o invia la fattura elettronica.",
+  "journeyHowIssuedMember": "La trova nella vista Fatture: voci, saldo, scadenza.",
+  "journeyHowPaymentWorkspace": "Aspetta il denaro. Scaduto il termine invia i livelli di sollecito configurati — a mano o automaticamente.",
+  "journeyHowPaymentMember": "Paga online (saldato subito) o con bonifico, poi registra il pagamento perché lo spazio lo sappia.",
+  "journeyHowConfirmationWorkspace": "Un altro admin conferma il pagamento dichiarato; l'emittente abbina poi il pagamento registrato alla fattura (Segna come pagata) — una regola di validazione può affidare l'abbinamento ai validatori. Pagato di più? Una nota di credito. Di meno? Parzialmente pagata, il resto dovuto fino al pagamento o alla cancellazione.",
+  "journeyHowConfirmationMember": "Niente da fare — a meno che lo spazio abbia registrato il pagamento per lui: allora lo conferma in Eventi.",
+  "journeyHowClosedWorkspace": "Pagata, residuo cancellato o rimborsata: la fattura passa in archivio. Una fattura sbagliata è segnata come errata e sostituita — prima del pagamento, mai dopo.",
+  "journeyHowClosedMember": "Il mese si legge saldato e la fattura resta leggibile per sempre: anteprima, PDF, condivisione.",
+  "journeyTimelineTitle": "Cronologia",
+  "journeyPrimaryRemind": "Invia sollecito {level}",
+  "@journeyPrimaryRemind": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "journeyPrimaryConfirmInEvents": "Apri Eventi",
+  "journeyOutstanding": "{amount} in sospeso",
+  "@journeyOutstanding": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "eventTypeMemberJoin": "Nuovo membro",
   "memberStatusPending": "In attesa",
   "pendingApprovalTitle": "In attesa di approvazione",

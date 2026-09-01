@@ -17,6 +17,7 @@ import '../../providers/money_providers.dart';
 import '../invoice_status.dart';
 import '../period_label.dart';
 import 'invoice_detail_sheet.dart';
+import 'invoice_journey_view.dart';
 import 'invoice_overview.dart';
 
 /// #720 — the Invoices face lists MY documents right there, newest
@@ -90,11 +91,30 @@ class MyInvoicesList extends ConsumerWidget {
     final open = status == InvoiceLifecycle.open && invoice.totalCents > 0;
     final days = exposure.daysToTerm(invoice, now);
     final overdue = open && days <= 0;
+    // #812 — the journey: the bar and "your move" on the row itself; the
+    // facts line keeps its due/overdue count (#726) beside them.
+    final journey = watchInvoiceJourney(
+      ref,
+      invoice,
+      match: match,
+      reminder: reminder,
+    );
     final dueLine = !open
         ? null
         : overdue
             ? (l10n?.moneyOverdueBy(-days) ?? 'Overdue by ${-days} days')
             : (l10n?.moneyDueIn(days) ?? 'Due in $days days');
+    final facts = Text(
+      [
+        invoicePeriodLabel(context, invoice),
+        dateFormat.format(invoice.issuedAt),
+        ?dueLine,
+        if (reminder != null)
+          l10n?.moneyRemindedTimes(reminder.count) ??
+              'Reminded ×${reminder.count}',
+      ].join(' · '),
+      style: overdue ? TextStyle(color: theme.colorScheme.error) : null,
+    );
     return Card(
       child: ListTile(
         key: ValueKey('my-invoice-${invoice.id}'),
@@ -112,17 +132,24 @@ class MyInvoicesList extends ConsumerWidget {
             InvoiceStatusChip(status: status),
           ],
         ),
-        subtitle: Text(
-          [
-            invoicePeriodLabel(context, invoice),
-            dateFormat.format(invoice.issuedAt),
-            ?dueLine,
-            if (reminder != null)
-              l10n?.moneyRemindedTimes(reminder.count) ??
-                  'Reminded ×${reminder.count}',
-          ].join(' · '),
-          style: overdue ? TextStyle(color: theme.colorScheme.error) : null,
-        ),
+        subtitle: journey == null
+            ? facts
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: AppSpacing.xs),
+                  InvoiceJourneyBar(journey: journey),
+                  const SizedBox(height: AppSpacing.xs),
+                  facts,
+                  const SizedBox(height: AppSpacing.xs),
+                  InvoiceMoveLine(
+                    journey: journey,
+                    invoice: invoice,
+                    match: match,
+                    issuer: false,
+                  ),
+                ],
+              ),
         trailing: Row(mainAxisSize: MainAxisSize.min, children: [
           Text(
             moneyFormat(invoice.currency).formatMinor(invoice.totalCents),
@@ -151,6 +178,7 @@ class MyInvoicesList extends ConsumerWidget {
     InvoiceMatch? match,
   ) async {
     final country = ref.read(currentWorkspaceProvider).value?.countryCode ?? '';
+    final reminder = ref.read(invoiceRemindersProvider).value?[invoice.id];
     await showInvoiceDetailSheet(
       context,
       invoice: invoice,
@@ -159,6 +187,13 @@ class MyInvoicesList extends ConsumerWidget {
           .read(myPermissionsProvider)
           .contains(WorkspacePermission.issueInvoices),
       isEu: isEuCountry(country),
+      reminder: reminder,
+      journey: readInvoiceJourney(
+        ref,
+        invoice,
+        match: match,
+        reminder: reminder,
+      ),
     );
   }
 }
