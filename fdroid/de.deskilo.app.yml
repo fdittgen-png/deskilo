@@ -10,6 +10,8 @@ SourceCode: https://github.com/fdittgen-png/deskilo
 IssueTracker: https://github.com/fdittgen-png/deskilo/issues
 Changelog: https://github.com/fdittgen-png/deskilo/releases
 
+AutoName: DesKilo
+
 RepoType: git
 Repo: https://github.com/fdittgen-png/deskilo.git
 
@@ -25,7 +27,6 @@ Builds:
       - flutter@3.44.9
     rm:
       - ios
-      - linux
       - macos
       - web
       - windows
@@ -54,7 +55,6 @@ Builds:
       - flutter@3.44.9
     rm:
       - ios
-      - linux
       - macos
       - web
       - windows
@@ -83,7 +83,6 @@ Builds:
       - flutter@3.44.9
     rm:
       - ios
-      - linux
       - macos
       - web
       - windows
