@@ -6019,6 +6019,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Apunta la cámara al QR de invitación — el código se toma y la unión se hace automáticamente.';
 
   @override
+  String get scanJoinNotAnInvite =>
+      'Ese QR no es una invitación de DesKilo: escanea el del mensaje de invitación.';
+
+  @override
   String get workspaceCodeSharePng => 'Compartir como PNG';
 
   @override

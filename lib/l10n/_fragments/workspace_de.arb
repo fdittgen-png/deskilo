@@ -38,6 +38,7 @@
   "inviteOwnerNote": "Es gibt keine Eigentümer-Einladung — nur ein Eigentümer kann Eigentum vergeben, unter Mitglieder & Tarife.",
   "scanJoinTitle": "Workspace-QR scannen",
   "scanJoinHelp": "Richte die Kamera auf den Einladungs-QR — der Code wird übernommen und der Beitritt läuft automatisch.",
+  "scanJoinNotAnInvite": "Dieser QR ist keine DesKilo-Einladung — scanne den aus der Einladungsnachricht.",
   "@scanJoinHelp": {
     "description": "Join-QR scanner: helper line under the camera (#572)"
   },

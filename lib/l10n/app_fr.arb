@@ -3305,6 +3305,7 @@
   "inviteOwnerNote": "Il n'existe pas d'invitation propriétaire — seul un propriétaire peut accorder la propriété, dans Membres & forfaits.",
   "scanJoinTitle": "Scanner le QR de l'espace",
   "scanJoinHelp": "Visez le QR d’invitation avec la caméra — le code est repris et l’adhésion se fait automatiquement.",
+  "scanJoinNotAnInvite": "Ce QR n’est pas une invitation DesKilo — scannez celui du message d’invitation.",
   "@scanJoinHelp": {
     "description": "Join-QR scanner: helper line under the camera (#572)"
   },

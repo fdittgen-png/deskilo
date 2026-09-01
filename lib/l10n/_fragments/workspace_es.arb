@@ -38,6 +38,7 @@
   "inviteOwnerNote": "No existe invitación de propietario — solo un propietario puede conceder la propiedad, en Miembros y planes.",
   "scanJoinTitle": "Escanear QR del espacio",
   "scanJoinHelp": "Apunta la cámara al QR de invitación — el código se toma y la unión se hace automáticamente.",
+  "scanJoinNotAnInvite": "Ese QR no es una invitación de DesKilo: escanea el del mensaje de invitación.",
   "@scanJoinHelp": {
     "description": "Join-QR scanner: helper line under the camera (#572)"
   },

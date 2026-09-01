@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/act_trace.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invite_uri.dart';
 
@@ -27,9 +29,35 @@ class _ScanJoinScreenState extends ConsumerState<ScanJoinScreen> {
   void _onCode(String payload) {
     if (_done) return;
     // Role-scoped invite URLs and legacy raw-code QRs both resolve to
-    // their code; unrelated QRs resolve to '' and are ignored.
-    final code = InviteUriCodec.decodeCode(payload);
-    if (code.isEmpty) return;
+    // their code. #791 — anything else used to `return` here, which is
+    // why "the app could not recognise the barcode" was reported for a
+    // scanner that was decoding perfectly well: a decoded-but-unusable QR
+    // and a QR that never decoded at all looked identical from the
+    // outside, and neither left a trace.
+    //
+    // The decode is now recorded by SHAPE (never the code itself — an
+    // invite code is a secret and traces get exported), and a QR we
+    // cannot use says so instead of being swallowed.
+    final code = InviteUriCodec.extractCode(payload);
+    ActTrace.scan.step('join-qr decoded', {
+      'shape': ActTrace.payloadShape(payload),
+      'usable': code.isNotEmpty,
+    });
+    if (code.isEmpty) {
+      ActTrace.scan.refused('join-qr', {
+        'shape': ActTrace.payloadShape(payload),
+        'reason': 'not-an-invite',
+      });
+      final l10n = AppLocalizations.of(context);
+      AppSnack.info(
+        context,
+        l10n?.scanJoinNotAnInvite ??
+            'That QR is not a DesKilo invitation — scan the one from the '
+                'invitation message.',
+        replace: true,
+      );
+      return;
+    }
     _done = true;
     Navigator.of(context).pop(code);
   }

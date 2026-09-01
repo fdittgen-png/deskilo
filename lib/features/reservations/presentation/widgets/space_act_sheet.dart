@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/trace/act_trace.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
@@ -133,6 +134,18 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
           // (check_in_reservation); free → the walk-up create books
           // implicitly (#573 snap + walk-up-today rule server-side).
           final mine = _myCheckInTarget(reservations, now, me?.id);
+          // #791 — the scan path resolves its target on the DEVICE too,
+          // from the same day slice and the same window rule as the map.
+          // Recording which branch it took is what makes "the QR worked
+          // and the map did not" a comparison instead of a mystery.
+          ActTrace.booking.step('scan-check-in', {
+            'seat': widget.seat.id,
+            'target': mine?.id,
+            'route': mine != null ? 'existing-reservation' : 'walk-up',
+            'member': me?.id,
+            'dayReservations': reservations.length,
+            'granularity': _granularity.name,
+          });
           if (mine != null) {
             await ref.read(reservationRepositoryProvider).checkIn(mine.id);
           } else {

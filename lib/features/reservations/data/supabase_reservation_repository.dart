@@ -6,6 +6,7 @@ import '../../../core/cache/cached_fetch.dart';
 
 import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
+import '../../../core/trace/act_trace.dart';
 import '../../../core/trace/trace_logger.dart';
 
 class SupabaseReservationRepository implements ReservationRepository {
@@ -21,6 +22,30 @@ class SupabaseReservationRepository implements ReservationRepository {
   /// Every mutation drops the cached windows: an offline fallback must
   /// never resurrect a pre-mutation view.
   Future<void> _bust() => _cache.invalidatePrefix('resv:');
+
+  /// #791 — every booking mutation leaves three possible lines in the
+  /// trace: requested, accepted, or failed with its exception.
+  ///
+  /// The pair matters more than either half. A report of "check-in did
+  /// nothing" is answered completely differently depending on whether the
+  /// log holds `check-in requested` (the app asked and the server refused
+  /// or hung) or holds nothing at all (the app never asked — the decision
+  /// was made on the device, and the decision traces upstream say why).
+  Future<T> _traced<T>(
+    String act,
+    Map<String, Object?> fields,
+    Future<T> Function() body,
+  ) async {
+    ActTrace.booking.step('$act requested', fields);
+    try {
+      final result = await body();
+      ActTrace.booking.step('$act accepted', fields);
+      return result;
+    } catch (e, st) {
+      ActTrace.booking.failed('$act failed', e, st, fields);
+      rethrow;
+    }
+  }
 
   @override
   Future<List<Reservation>> fetchWindow(
@@ -88,16 +113,31 @@ class SupabaseReservationRepository implements ReservationRepository {
     required DateTime endsAt,
     bool checkIn = false,
   }) async {
-    final result = await _client.rpc<dynamic>('create_reservation', params: {
-      'p_workspace_id': workspaceId,
-      'p_seat_id': seatId,
-      'p_desk_id': deskId,
-      'p_office_id': officeId,
-      'p_level_id': levelId,
-      'p_starts_at': startsAt.toUtc().toIso8601String(),
-      'p_ends_at': endsAt.toUtc().toIso8601String(),
-      'p_check_in': checkIn,
-    });
+    // `checkIn` is the field that answers "they booked but were never
+    // checked in" (#772) without guessing: it says whether the walk-up
+    // was atomic or whether the app only reserved.
+    final result = await _traced(
+      'reserve',
+      {
+        'seat': seatId,
+        'desk': deskId,
+        'office': officeId,
+        'level': levelId,
+        'from': startsAt.toUtc(),
+        'to': endsAt.toUtc(),
+        'checkIn': checkIn,
+      },
+      () => _client.rpc<dynamic>('create_reservation', params: {
+        'p_workspace_id': workspaceId,
+        'p_seat_id': seatId,
+        'p_desk_id': deskId,
+        'p_office_id': officeId,
+        'p_level_id': levelId,
+        'p_starts_at': startsAt.toUtc().toIso8601String(),
+        'p_ends_at': endsAt.toUtc().toIso8601String(),
+        'p_check_in': checkIn,
+      }),
+    );
     await _bust();
     return result as String;
   }
@@ -111,23 +151,34 @@ class SupabaseReservationRepository implements ReservationRepository {
     required DateTime startsAt,
     required DateTime endsAt,
   }) async {
-    final result =
-        await _client.rpc<dynamic>('admin_create_reservation_for', params: {
-      'p_workspace_id': workspaceId,
-      'p_subject_member_id': subjectMemberId,
-      'p_seat_id': seatId,
-      'p_level_id': levelId,
-      'p_starts_at': startsAt.toUtc().toIso8601String(),
-      'p_ends_at': endsAt.toUtc().toIso8601String(),
-    });
+    final result = await _traced(
+      'reserve-for',
+      {
+        'subject': subjectMemberId,
+        'seat': seatId,
+        'level': levelId,
+        'from': startsAt.toUtc(),
+        'to': endsAt.toUtc(),
+      },
+      () => _client.rpc<dynamic>('admin_create_reservation_for', params: {
+        'p_workspace_id': workspaceId,
+        'p_subject_member_id': subjectMemberId,
+        'p_seat_id': seatId,
+        'p_level_id': levelId,
+        'p_starts_at': startsAt.toUtc().toIso8601String(),
+        'p_ends_at': endsAt.toUtc().toIso8601String(),
+      }),
+    );
     await _bust();
     return result as String;
   }
 
   @override
   Future<void> checkIn(String reservationId) async {
-    await _client.rpc<dynamic>('check_in_reservation', params: {
-      'p_reservation_id': reservationId,
+    await _traced('check-in', {'reservation': reservationId}, () async {
+      await _client.rpc<dynamic>('check_in_reservation', params: {
+        'p_reservation_id': reservationId,
+      });
     });
     await _bust();
   }
@@ -175,16 +226,20 @@ class SupabaseReservationRepository implements ReservationRepository {
 
   @override
   Future<void> checkOut(String reservationId) async {
-    await _client.rpc<dynamic>('check_out_reservation', params: {
-      'p_reservation_id': reservationId,
+    await _traced('check-out', {'reservation': reservationId}, () async {
+      await _client.rpc<dynamic>('check_out_reservation', params: {
+        'p_reservation_id': reservationId,
+      });
     });
     await _bust();
   }
 
   @override
   Future<void> cancel(String reservationId) async {
-    await _client.rpc<dynamic>('cancel_reservation', params: {
-      'p_reservation_id': reservationId,
+    await _traced('cancel', {'reservation': reservationId}, () async {
+      await _client.rpc<dynamic>('cancel_reservation', params: {
+        'p_reservation_id': reservationId,
+      });
     });
     await _bust();
   }
@@ -215,17 +270,29 @@ class SupabaseReservationRepository implements ReservationRepository {
     required SeriesPattern pattern,
     required DateTime until,
   }) async {
-    final result = await _client.rpc<dynamic>('create_series', params: {
-      'p_workspace_id': workspaceId,
-      'p_seat_id': seatId,
-      'p_desk_id': deskId,
-      'p_office_id': officeId,
-      'p_level_id': levelId,
-      'p_first_start': firstStart.toUtc().toIso8601String(),
-      'p_first_end': firstEnd.toUtc().toIso8601String(),
-      'p_pattern': pattern.name,
-      'p_until': until.toUtc().toIso8601String(),
-    }) as Map<String, dynamic>;
+    final result = await _traced(
+      'reserve-series',
+      {
+        'seat': seatId,
+        'desk': deskId,
+        'office': officeId,
+        'level': levelId,
+        'from': firstStart.toUtc(),
+        'pattern': pattern.name,
+        'until': until.toUtc(),
+      },
+      () => _client.rpc<dynamic>('create_series', params: {
+        'p_workspace_id': workspaceId,
+        'p_seat_id': seatId,
+        'p_desk_id': deskId,
+        'p_office_id': officeId,
+        'p_level_id': levelId,
+        'p_first_start': firstStart.toUtc().toIso8601String(),
+        'p_first_end': firstEnd.toUtc().toIso8601String(),
+        'p_pattern': pattern.name,
+        'p_until': until.toUtc().toIso8601String(),
+      }),
+    ) as Map<String, dynamic>;
     List<DateTime> dates(String key) => (result[key] as List<dynamic>)
         .map((v) => DateTime.parse(v as String))
         .toList();
@@ -239,10 +306,14 @@ class SupabaseReservationRepository implements ReservationRepository {
 
   @override
   Future<int> cancelSeries(String seriesId, {DateTime? from}) async {
-    final result = await _client.rpc<dynamic>('cancel_series', params: {
-      'p_series_id': seriesId,
-      'p_from': from?.toUtc().toIso8601String(),
-    });
+    final result = await _traced(
+      'cancel-series',
+      {'series': seriesId, 'from': from?.toUtc()},
+      () => _client.rpc<dynamic>('cancel_series', params: {
+        'p_series_id': seriesId,
+        'p_from': from?.toUtc().toIso8601String(),
+      }),
+    );
     await _bust();
     return result as int;
   }

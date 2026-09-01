@@ -129,17 +129,26 @@ class TraceLogger {
 
   /// Full log content for export: the persisted file when present,
   /// otherwise the formatted in-memory buffer (oldest first).
-  Future<String> exportContent() async {
+  ///
+  /// [header] lines are written first, each commented with `#`. The trace
+  /// is per-DEVICE (#791): the log that matters for "a member could not
+  /// check in" lives on that member's phone, and reaches whoever is
+  /// debugging as a detached file. Without a stamp saying which app
+  /// version and which workspace it came from, an exported trace is a
+  /// wall of timestamps that cannot be tied to the report it answers.
+  Future<String> exportContent({List<String> header = const []}) async {
     await flush();
+    final prefix =
+        header.isEmpty ? '' : '${header.map((l) => '# $l').join('\n')}\n';
     if (!_fileDisabled && _directoryProvider != null) {
       try {
         final file = await _file();
-        if (file.existsSync()) return file.readAsString();
+        if (file.existsSync()) return prefix + await file.readAsString();
       } catch (e, st) {
         _disableFile(e, st);
       }
     }
-    return _buffer.map(formatEntry).map((l) => '$l\n').join();
+    return prefix + _buffer.map(formatEntry).map((l) => '$l\n').join();
   }
 
   /// Empties the ring buffer and deletes the persisted file.
