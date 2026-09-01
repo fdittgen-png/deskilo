@@ -10,13 +10,15 @@ SourceCode: https://github.com/fdittgen-png/deskilo
 IssueTracker: https://github.com/fdittgen-png/deskilo/issues
 Changelog: https://github.com/fdittgen-png/deskilo/releases
 
+AutoName: DesKilo
+
 RepoType: git
 Repo: https://github.com/fdittgen-png/deskilo.git
 
 Builds:
   - versionName: 1.0.0
     versionCode: 11
-    commit: COMMIT_HASH_PLACEHOLDER
+    commit: 65a15781ad3bfbc876baa8a36c0f861edb56c37e
     sudo:
       - apt-get update
       - apt-get install -y --no-install-recommends cmake ninja-build
@@ -25,7 +27,6 @@ Builds:
       - flutter@3.44.9
     rm:
       - ios
-      - linux
       - macos
       - web
       - windows
@@ -45,7 +46,7 @@ Builds:
 
   - versionName: 1.0.0
     versionCode: 12
-    commit: COMMIT_HASH_PLACEHOLDER
+    commit: 65a15781ad3bfbc876baa8a36c0f861edb56c37e
     sudo:
       - apt-get update
       - apt-get install -y --no-install-recommends cmake ninja-build
@@ -54,7 +55,6 @@ Builds:
       - flutter@3.44.9
     rm:
       - ios
-      - linux
       - macos
       - web
       - windows
@@ -74,7 +74,7 @@ Builds:
 
   - versionName: 1.0.0
     versionCode: 13
-    commit: COMMIT_HASH_PLACEHOLDER
+    commit: 65a15781ad3bfbc876baa8a36c0f861edb56c37e
     sudo:
       - apt-get update
       - apt-get install -y --no-install-recommends cmake ninja-build
@@ -83,7 +83,6 @@ Builds:
       - flutter@3.44.9
     rm:
       - ios
-      - linux
       - macos
       - web
       - windows
