@@ -20,7 +20,6 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
-import '../../helpers/test_clock.dart';
 
 Invoice _invoice({
   String id = 'inv-1',
