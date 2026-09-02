@@ -2457,6 +2457,8 @@
   "featureCalendarViewsDesc": "The Calendar tab as agenda, week and month: per-day markers by kind, closed days drawn as closed, Today / Tomorrow headers, payment due dates and scheduled expenses in the feed. Off: the plain day-or-range selector over the feed.",
   "featureMessagesHubTitle": "Messages, reworked",
   "featureMessagesHubDesc": "One inbox bar (All / Unread / Archived and search), pin, mute, archive and mark-unread on a thread, the conversation as a full page with date separators, an attach menu and a kept draft in the composer, a person opened with one tap. Off: the two-bar inbox and the sheet thread.",
+  "featureReportDesignerTitle": "Report designer",
+  "featureReportDesignerDesc": "The report editor as a full-screen designer: elements edited in place in their real typography, drag to reorder, an insert palette, a searchable field picker, undo and redo, image size and alignment, a discard guard, presets and reset behind a confirmation, the template error spelled out, design and preview side by side on a wide screen. Off: the editor sheet.",
   "helpTitle": "Help",
   "helpContents": "Contents",
   "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",
@@ -4358,8 +4360,57 @@
       }
     }
   },
-  "moneyInvoicesArchiveButton": "All my invoices · archive & PDFs",
-  "moneyInvoicingHubButton": "Issue, remind, collect · invoicing",
+  "reportEditorTitle": "Report editor",
+  "reportDesignerUndo": "Undo",
+  "reportDesignerRedo": "Redo",
+  "reportDesignerDiscardTitle": "Leave without saving?",
+  "reportDesignerDiscardBody": "Your changes to the templates are not saved.",
+  "reportDesignerDiscard": "Discard",
+  "reportDesignerKeepEditing": "Keep editing",
+  "reportDesignerReplaceTitle": "Replace the current layout?",
+  "reportDesignerReplaceBody": "The bands of this document are replaced. Undo brings them back.",
+  "reportDesignerReplace": "Replace",
+  "reportDesignerPages": "{count, plural, =1{1 page} other{{count} pages}}",
+  "@reportDesignerPages": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reportDesignerError": "The template does not render — {message}",
+  "@reportDesignerError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "reportDesignerInsert": "Insert element",
+  "reportDesignerFields": "Fields",
+  "reportDesignerFieldsSearch": "Search a field",
+  "reportDesignerMoveTo": "Move to band",
+  "reportDesignerDrag": "Drag to reorder",
+  "reportImageSize": "Size",
+  "reportImageSizeSmall": "Small",
+  "reportImageSizeMedium": "Medium",
+  "reportImageSizeLarge": "Large",
+  "reportImageAlign": "Alignment",
+  "reportImageAlignLeft": "Left",
+  "reportImageAlignCenter": "Centre",
+  "reportImageAlignRight": "Right",
+  "reportTemplateLangOverridden": "Own template",
+  "reportTemplateLangInherits": "Inherits the default",
+  "reportTemplateClearOverlay": "Use the default for this language",
+  "reportDocCoa": "Chart of accounts",
+  "reportDocBadges": "Member badges",
+  "reportDocSpaceCodes": "Space QR cards",
+  "reportFieldGroupDocument": "Document",
+  "reportFieldGroupMember": "Member & workspace",
+  "reportFieldGroupMoney": "Amounts",
+  "reportFieldGroupLegal": "Legal mentions",
+  "reportFieldGroupLoops": "Lines & VAT loops",
+  "reportDesignerSideBySide": "Design and preview side by side",
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",
   "pendingApprovalTitle": "Awaiting approval",

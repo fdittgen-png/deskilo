@@ -3950,6 +3950,18 @@ abstract class AppLocalizations {
   /// **'One inbox bar (All / Unread / Archived and search), pin, mute, archive and mark-unread on a thread, the conversation as a full page with date separators, an attach menu and a kept draft in the composer, a person opened with one tap. Off: the two-bar inbox and the sheet thread.'**
   String get featureMessagesHubDesc;
 
+  /// No description provided for @featureReportDesignerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Report designer'**
+  String get featureReportDesignerTitle;
+
+  /// No description provided for @featureReportDesignerDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'The report editor as a full-screen designer: elements edited in place in their real typography, drag to reorder, an insert palette, a searchable field picker, undo and redo, image size and alignment, a discard guard, presets and reset behind a confirmation, the template error spelled out, design and preview side by side on a wide screen. Off: the editor sheet.'**
+  String get featureReportDesignerDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:
@@ -7052,17 +7064,227 @@ abstract class AppLocalizations {
   /// **'{amount} outstanding'**
   String journeyOutstanding(String amount);
 
-  /// No description provided for @moneyInvoicesArchiveButton.
+  /// No description provided for @reportEditorTitle.
   ///
   /// In en, this message translates to:
-  /// **'All my invoices · archive & PDFs'**
-  String get moneyInvoicesArchiveButton;
+  /// **'Report editor'**
+  String get reportEditorTitle;
 
-  /// No description provided for @moneyInvoicingHubButton.
+  /// No description provided for @reportDesignerUndo.
   ///
   /// In en, this message translates to:
-  /// **'Issue, remind, collect · invoicing'**
-  String get moneyInvoicingHubButton;
+  /// **'Undo'**
+  String get reportDesignerUndo;
+
+  /// No description provided for @reportDesignerRedo.
+  ///
+  /// In en, this message translates to:
+  /// **'Redo'**
+  String get reportDesignerRedo;
+
+  /// No description provided for @reportDesignerDiscardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave without saving?'**
+  String get reportDesignerDiscardTitle;
+
+  /// No description provided for @reportDesignerDiscardBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your changes to the templates are not saved.'**
+  String get reportDesignerDiscardBody;
+
+  /// No description provided for @reportDesignerDiscard.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get reportDesignerDiscard;
+
+  /// No description provided for @reportDesignerKeepEditing.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep editing'**
+  String get reportDesignerKeepEditing;
+
+  /// No description provided for @reportDesignerReplaceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace the current layout?'**
+  String get reportDesignerReplaceTitle;
+
+  /// No description provided for @reportDesignerReplaceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The bands of this document are replaced. Undo brings them back.'**
+  String get reportDesignerReplaceBody;
+
+  /// No description provided for @reportDesignerReplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace'**
+  String get reportDesignerReplace;
+
+  /// No description provided for @reportDesignerPages.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 page} other{{count} pages}}'**
+  String reportDesignerPages(int count);
+
+  /// No description provided for @reportDesignerError.
+  ///
+  /// In en, this message translates to:
+  /// **'The template does not render — {message}'**
+  String reportDesignerError(String message);
+
+  /// No description provided for @reportDesignerInsert.
+  ///
+  /// In en, this message translates to:
+  /// **'Insert element'**
+  String get reportDesignerInsert;
+
+  /// No description provided for @reportDesignerFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Fields'**
+  String get reportDesignerFields;
+
+  /// No description provided for @reportDesignerFieldsSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search a field'**
+  String get reportDesignerFieldsSearch;
+
+  /// No description provided for @reportDesignerMoveTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Move to band'**
+  String get reportDesignerMoveTo;
+
+  /// No description provided for @reportDesignerDrag.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag to reorder'**
+  String get reportDesignerDrag;
+
+  /// No description provided for @reportImageSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Size'**
+  String get reportImageSize;
+
+  /// No description provided for @reportImageSizeSmall.
+  ///
+  /// In en, this message translates to:
+  /// **'Small'**
+  String get reportImageSizeSmall;
+
+  /// No description provided for @reportImageSizeMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get reportImageSizeMedium;
+
+  /// No description provided for @reportImageSizeLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'Large'**
+  String get reportImageSizeLarge;
+
+  /// No description provided for @reportImageAlign.
+  ///
+  /// In en, this message translates to:
+  /// **'Alignment'**
+  String get reportImageAlign;
+
+  /// No description provided for @reportImageAlignLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Left'**
+  String get reportImageAlignLeft;
+
+  /// No description provided for @reportImageAlignCenter.
+  ///
+  /// In en, this message translates to:
+  /// **'Centre'**
+  String get reportImageAlignCenter;
+
+  /// No description provided for @reportImageAlignRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Right'**
+  String get reportImageAlignRight;
+
+  /// No description provided for @reportTemplateLangOverridden.
+  ///
+  /// In en, this message translates to:
+  /// **'Own template'**
+  String get reportTemplateLangOverridden;
+
+  /// No description provided for @reportTemplateLangInherits.
+  ///
+  /// In en, this message translates to:
+  /// **'Inherits the default'**
+  String get reportTemplateLangInherits;
+
+  /// No description provided for @reportTemplateClearOverlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the default for this language'**
+  String get reportTemplateClearOverlay;
+
+  /// No description provided for @reportDocCoa.
+  ///
+  /// In en, this message translates to:
+  /// **'Chart of accounts'**
+  String get reportDocCoa;
+
+  /// No description provided for @reportDocBadges.
+  ///
+  /// In en, this message translates to:
+  /// **'Member badges'**
+  String get reportDocBadges;
+
+  /// No description provided for @reportDocSpaceCodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Space QR cards'**
+  String get reportDocSpaceCodes;
+
+  /// No description provided for @reportFieldGroupDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'Document'**
+  String get reportFieldGroupDocument;
+
+  /// No description provided for @reportFieldGroupMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Member & workspace'**
+  String get reportFieldGroupMember;
+
+  /// No description provided for @reportFieldGroupMoney.
+  ///
+  /// In en, this message translates to:
+  /// **'Amounts'**
+  String get reportFieldGroupMoney;
+
+  /// No description provided for @reportFieldGroupLegal.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal mentions'**
+  String get reportFieldGroupLegal;
+
+  /// No description provided for @reportFieldGroupLoops.
+  ///
+  /// In en, this message translates to:
+  /// **'Lines & VAT loops'**
+  String get reportFieldGroupLoops;
+
+  /// No description provided for @reportDesignerSideBySide.
+  ///
+  /// In en, this message translates to:
+  /// **'Design and preview side by side'**
+  String get reportDesignerSideBySide;
 
   /// No description provided for @eventTypeMemberJoin.
   ///

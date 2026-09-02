@@ -2226,6 +2226,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Une seule barre de boîte de réception (Tous / Non lus / Archivés et recherche), épingler, couper le son, archiver et marquer non lu sur un fil, la conversation en page entière avec séparateurs de date, un menu joindre et un brouillon conservé dans le composeur, une personne ouverte d\'un seul geste. Désactivé : la boîte à deux barres et le fil en feuille.';
 
   @override
+  String get featureReportDesignerTitle => 'Concepteur de rapports';
+
+  @override
+  String get featureReportDesignerDesc =>
+      'L\'éditeur de rapports en plein écran : éléments modifiés sur place dans leur vraie typographie, glisser pour réordonner, palette d\'insertion, sélecteur de champs avec recherche, annuler et rétablir, taille et alignement des images, garde-fou avant d\'abandonner, modèles et réinitialisation derrière une confirmation, l\'erreur du modèle expliquée, conception et aperçu côte à côte sur grand écran. Désactivé : l\'éditeur en feuille.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override
@@ -4054,12 +4061,129 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get moneyInvoicesArchiveButton =>
-      'Toutes mes factures · archives et PDF';
+  String get reportEditorTitle => 'Éditeur de rapports';
 
   @override
-  String get moneyInvoicingHubButton =>
-      'Émettre, relancer, encaisser · facturation';
+  String get reportDesignerUndo => 'Annuler';
+
+  @override
+  String get reportDesignerRedo => 'Rétablir';
+
+  @override
+  String get reportDesignerDiscardTitle => 'Quitter sans enregistrer ?';
+
+  @override
+  String get reportDesignerDiscardBody =>
+      'Vos modifications des modèles ne sont pas enregistrées.';
+
+  @override
+  String get reportDesignerDiscard => 'Abandonner';
+
+  @override
+  String get reportDesignerKeepEditing => 'Continuer';
+
+  @override
+  String get reportDesignerReplaceTitle =>
+      'Remplacer la mise en page actuelle ?';
+
+  @override
+  String get reportDesignerReplaceBody =>
+      'Les bandes de ce document sont remplacées. Annuler les restaure.';
+
+  @override
+  String get reportDesignerReplace => 'Remplacer';
+
+  @override
+  String reportDesignerPages(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pages',
+      one: '1 page',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String reportDesignerError(String message) {
+    return 'Le modèle ne se génère pas — $message';
+  }
+
+  @override
+  String get reportDesignerInsert => 'Insérer un élément';
+
+  @override
+  String get reportDesignerFields => 'Champs';
+
+  @override
+  String get reportDesignerFieldsSearch => 'Rechercher un champ';
+
+  @override
+  String get reportDesignerMoveTo => 'Déplacer vers la bande';
+
+  @override
+  String get reportDesignerDrag => 'Glisser pour réordonner';
+
+  @override
+  String get reportImageSize => 'Taille';
+
+  @override
+  String get reportImageSizeSmall => 'Petite';
+
+  @override
+  String get reportImageSizeMedium => 'Moyenne';
+
+  @override
+  String get reportImageSizeLarge => 'Grande';
+
+  @override
+  String get reportImageAlign => 'Alignement';
+
+  @override
+  String get reportImageAlignLeft => 'Gauche';
+
+  @override
+  String get reportImageAlignCenter => 'Centre';
+
+  @override
+  String get reportImageAlignRight => 'Droite';
+
+  @override
+  String get reportTemplateLangOverridden => 'Modèle propre';
+
+  @override
+  String get reportTemplateLangInherits => 'Hérite du défaut';
+
+  @override
+  String get reportTemplateClearOverlay =>
+      'Utiliser le défaut pour cette langue';
+
+  @override
+  String get reportDocCoa => 'Plan comptable';
+
+  @override
+  String get reportDocBadges => 'Badges des membres';
+
+  @override
+  String get reportDocSpaceCodes => 'Cartes QR des espaces';
+
+  @override
+  String get reportFieldGroupDocument => 'Document';
+
+  @override
+  String get reportFieldGroupMember => 'Membre et espace';
+
+  @override
+  String get reportFieldGroupMoney => 'Montants';
+
+  @override
+  String get reportFieldGroupLegal => 'Mentions légales';
+
+  @override
+  String get reportFieldGroupLoops => 'Boucles lignes et TVA';
+
+  @override
+  String get reportDesignerSideBySide => 'Conception et aperçu côte à côte';
 
   @override
   String get eventTypeMemberJoin => 'Nouveau membre';

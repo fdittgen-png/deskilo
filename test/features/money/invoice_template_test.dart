@@ -161,6 +161,9 @@ void main() {
     // Reset hands a WORKING example…
     await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
     await tester.pump();
+    // #822 — the designer opens visual; the raw bands live in Markup.
+    await tester.tap(find.text('Markup'));
+    await tester.pumpAndSettle();
     // …which the owner then customizes.
     await tester.enterText(
       find.byKey(const ValueKey('invoice-template-footer')),
@@ -211,6 +214,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester
         .tap(find.byKey(const ValueKey('invoice-template-preset-simple')));
+    await tester.pumpAndSettle();
+    // #822 — read the bands in Markup.
+    await tester.tap(find.text('Markup'));
     await tester.pumpAndSettle();
 
     final header = tester

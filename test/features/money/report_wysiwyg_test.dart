@@ -168,6 +168,10 @@ void main() {
     await tester
         .tap(find.byKey(const ValueKey('report-image-logo.png')));
     await tester.pumpAndSettle();
+    // #822 — the image landed in the designer's header band; Markup
+    // shows the line it wrote.
+    await tester.tap(find.text('Markup'));
+    await tester.pumpAndSettle();
 
     final headerText = tester
         .widget<TextField>(

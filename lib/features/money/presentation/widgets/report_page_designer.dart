@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../l10n/app_localizations.dart';
@@ -21,6 +22,10 @@ import 'report_visual_editor.dart';
 /// live or sample data through the real report engine. Everything the
 /// page shows draws through [ReportPage], the shared mirror of the PDF
 /// renderer — the surface is the generated report.
+///
+/// #822 — on a wide screen the two sit SIDE BY SIDE ([sideBySide]);
+/// the page counts its pages; a template that does not render says
+/// why; an element can be sent to another band.
 class ReportPageDesigner extends ConsumerStatefulWidget {
   const ReportPageDesigner({
     super.key,
@@ -32,6 +37,7 @@ class ReportPageDesigner extends ConsumerStatefulWidget {
     required this.footerLabel,
     required this.editorKeyPrefix,
     required this.previewData,
+    this.sideBySide = false,
   });
 
   final TextEditingController header;
@@ -49,16 +55,28 @@ class ReportPageDesigner extends ConsumerStatefulWidget {
   /// sample set.
   final Map<String, Object?> Function() previewData;
 
+  /// #822 — design and preview as two pages next to each other; the
+  /// toggle disappears.
+  final bool sideBySide;
+
   @override
   ConsumerState<ReportPageDesigner> createState() =>
-      _ReportPageDesignerState();
+      ReportPageDesignerState();
 }
 
-class _ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
+class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
   bool _preview = false;
 
   /// Page scale: null = fit the available width.
   double? _zoom;
+
+  /// #822 — the pages the designed content spans, measured after layout.
+  int _pages = 1;
+  final _contentKey = GlobalKey();
+
+  final _headerKey = GlobalKey<ReportVisualEditorState>();
+  final _bodyKey = GlobalKey<ReportVisualEditorState>();
+  final _footerKey = GlobalKey<ReportVisualEditorState>();
 
   /// '100 %' — a number, not a translatable phrase.
   String _zoomLabel(double zoom) => '${(zoom * 100).round()} %';
@@ -69,9 +87,31 @@ class _ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
         footer: widget.footer.text,
       );
 
+  GlobalKey<ReportVisualEditorState> _keyOf(String band) => switch (band) {
+        'body' => _bodyKey,
+        'footer' => _footerKey,
+        _ => _headerKey,
+      };
+
+  /// #822 — an image lands after the selection of the band that has
+  /// one, else at the end of the header (a logo's natural home).
+  void insertImage(String name) {
+    final target = [_headerKey, _bodyKey, _footerKey]
+            .map((k) => k.currentState)
+            .where((s) => s?.hasSelection ?? false)
+            .firstOrNull ??
+        _headerKey.currentState;
+    target?.insertLine(ReportVisualLine(ReportLineKind.image, name));
+  }
+
+  void _moveToBand(ReportVisualLine line, String band) {
+    _keyOf(band).currentState?.insertLine(line);
+  }
+
   /// The white page: margins, guides, and [content] on the printable
   /// area. Print colors — never the app theme.
-  Widget _page(Widget content) => Container(
+  Widget _page(Widget content, {Key? key}) => Container(
+        key: key,
         width: ReportPage.width,
         constraints:
             const BoxConstraints(minHeight: ReportPage.height),
@@ -134,40 +174,56 @@ class _ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
     );
   }
 
-  Widget _designContent() => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ReportVisualEditor(
-            key: ValueKey('${widget.editorKeyPrefix}-header'),
-            controller: widget.header,
-            label: widget.headerLabel,
-            bandKey: 'visual-header',
-          ),
-          ReportVisualEditor(
-            key: ValueKey('${widget.editorKeyPrefix}-body'),
-            controller: widget.body,
-            label: widget.bodyLabel,
-            bandKey: 'visual-body',
-          ),
-          ReportVisualEditor(
-            key: ValueKey('${widget.editorKeyPrefix}-footer'),
-            controller: widget.footer,
-            label: widget.footerLabel,
-            bandKey: 'visual-footer',
-          ),
-        ],
-      );
+  Widget _designContent() {
+    final bands = {
+      'header': widget.headerLabel,
+      'body': widget.bodyLabel,
+      'footer': widget.footerLabel,
+    };
+    Map<String, String> others(String band) =>
+        {for (final e in bands.entries) if (e.key != band) e.key: e.value};
+    return Column(
+      key: _contentKey,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ReportVisualEditor(
+          key: _headerKey,
+          controller: widget.header,
+          label: widget.headerLabel,
+          bandKey: 'visual-header',
+          bandChoices: others('header'),
+          onMoveToBand: _moveToBand,
+        ),
+        ReportVisualEditor(
+          key: _bodyKey,
+          controller: widget.body,
+          label: widget.bodyLabel,
+          bandKey: 'visual-body',
+          bandChoices: others('body'),
+          onMoveToBand: _moveToBand,
+        ),
+        ReportVisualEditor(
+          key: _footerKey,
+          controller: widget.footer,
+          label: widget.footerLabel,
+          bandKey: 'visual-footer',
+          bandChoices: others('footer'),
+          onMoveToBand: _moveToBand,
+        ),
+      ],
+    );
+  }
 
   Widget _previewContent(AppLocalizations? l10n) {
-    final report = renderReportBands(
-      bands: _bands,
-      data: widget.previewData(),
-    );
+    final data = widget.previewData();
+    final report = renderReportBands(bands: _bands, data: data);
     if (report == null) {
+      // #822 — say WHAT is wrong, not that something is.
+      final why = reportBandsError(bands: _bands, data: data) ?? '';
       return Text(
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        l10n?.reportDesignerError(why) ??
+            'The template does not render — $why',
         key: const ValueKey('report-designer-preview-error'),
         style: const TextStyle(fontSize: 10, color: ReportPage.accent),
       );
@@ -183,37 +239,63 @@ class _ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
     );
   }
 
+  /// #822 — count the pages the designed content spans, once laid out.
+  void _measurePages() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final height = _contentKey.currentContext?.size?.height;
+      if (height == null) return;
+      final pages = (height / ReportPage.contentHeight).ceil().clamp(1, 999);
+      if (pages != _pages) setState(() => _pages = pages);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final showDesign = widget.sideBySide || !_preview;
+    final showPreview = widget.sideBySide || _preview;
+    if (showDesign) _measurePages();
+    final design = _page(_designContent(),
+        key: const ValueKey('report-designer-page'));
+    final preview = _page(_previewContent(l10n));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
           children: [
             // Design ↔ Preview: the Docentric loop — same page, fields
-            // or merged data.
-            SegmentedButton<bool>(
-              key: const ValueKey('report-designer-mode'),
-              showSelectedIcon: false,
-              style: const ButtonStyle(
-                  visualDensity: VisualDensity.compact),
-              segments: [
-                ButtonSegment(
-                  value: false,
-                  icon: const Icon(Icons.design_services_outlined,
-                      size: 18),
-                  label: Text(l10n?.reportDesignerDesign ?? 'Design'),
-                ),
-                ButtonSegment(
-                  value: true,
-                  icon: const Icon(Icons.visibility_outlined, size: 18),
-                  label: Text(l10n?.reportDesignerPreview ?? 'Preview'),
-                ),
-              ],
-              selected: {_preview},
-              onSelectionChanged: (selection) =>
-                  setState(() => _preview = selection.first),
+            // or merged data. Side by side, both are always there.
+            if (!widget.sideBySide)
+              SegmentedButton<bool>(
+                key: const ValueKey('report-designer-mode'),
+                showSelectedIcon: false,
+                style: const ButtonStyle(
+                    visualDensity: VisualDensity.compact),
+                segments: [
+                  ButtonSegment(
+                    value: false,
+                    icon: const Icon(Icons.design_services_outlined,
+                        size: 18),
+                    label: Text(l10n?.reportDesignerDesign ?? 'Design'),
+                  ),
+                  ButtonSegment(
+                    value: true,
+                    icon: const Icon(Icons.visibility_outlined, size: 18),
+                    label: Text(l10n?.reportDesignerPreview ?? 'Preview'),
+                  ),
+                ],
+                selected: {_preview},
+                onSelectionChanged: (selection) =>
+                    setState(() => _preview = selection.first),
+              ),
+            const SizedBox(width: 8),
+            Text(
+              l10n?.reportDesignerPages(_pages) ??
+                  (_pages == 1 ? '1 page' : '$_pages pages'),
+              key: const ValueKey('report-designer-pages'),
+              style: theme.textTheme.labelSmall,
             ),
             const Spacer(),
             // A null-valued PopupMenuItem never reaches onSelected —
@@ -244,7 +326,7 @@ class _ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
                     _zoom == null
                         ? (l10n?.reportDesignerZoomFit ?? 'Fit width')
                         : _zoomLabel(_zoom!),
-                    style: Theme.of(context).textTheme.labelSmall,
+                    style: theme.textTheme.labelSmall,
                   ),
                 ]),
               ),
@@ -255,9 +337,17 @@ class _ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
         Container(
           color: ReportPage.backdrop,
           padding: const EdgeInsets.all(12),
-          child: _zoomed(
-            _page(_preview ? _previewContent(l10n) : _designContent()),
-          ),
+          child: widget.sideBySide
+              ? Row(
+                  key: const ValueKey('report-designer-side-by-side'),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: _zoomed(design)),
+                    const SizedBox(width: 12),
+                    Expanded(child: _zoomed(preview)),
+                  ],
+                )
+              : _zoomed(showPreview ? preview : design),
         ),
       ],
     );

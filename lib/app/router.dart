@@ -11,6 +11,7 @@ import '../features/members/presentation/screens/directory_screen.dart';
 import '../features/editor/presentation/screens/level_canvas_screen.dart';
 import '../features/events/presentation/screens/validation_settings_screen.dart';
 import '../features/money/presentation/screens/billing_screen.dart';
+import '../features/money/presentation/screens/report_editor_screen.dart';
 import '../features/money/presentation/screens/money_screen.dart';
 import '../features/money/presentation/screens/invoices_screen.dart';
 import '../features/money/presentation/screens/einvoice_config_screen.dart';
@@ -477,6 +478,13 @@ GoRouter router(Ref ref) {
       // #513 — the central role→permission matrix. Anyone with a role
       // can READ it; editing needs manageRoles (enforced in-screen and
       // by the RPC).
+      // #822 — the report editor as a full-screen designer.
+      GoRoute(
+        path: '/report-editor',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.reportDesigner) ? null : '/money',
+        builder: (context, state) => const ReportEditorScreen(),
+      ),
       GoRoute(
         path: '/roles',
         redirect: (context, state) =>

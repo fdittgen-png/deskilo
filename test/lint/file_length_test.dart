@@ -140,13 +140,13 @@ const Map<String, int> _baseline = {
   // flow; the visual editor itself is its own file.
   // new→840 (2026-08-05): #498 the WYSIWYG design surface — styled
   // band rendering, column groups, token palette, in-place editor.
-  'lib/features/money/presentation/widgets/report_visual_editor.dart': 840,
+  'lib/features/money/presentation/widgets/report_visual_editor.dart': 1000, // 2026-09-02 #822 drag, insert palette, image controls, move-to-band
   // 660→700 (2026-08-05): #494 the three further document chips + their
   // live data and letter-PDF branches.
   // 700→800 (2026-08-05): #496 the template-language chips + per-language
   // overlay assembly.
   // 800→810 (2026-08-31): #763 the report editor's header help dot.
-  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 810,
+  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 1040, // 2026-09-02 #822 the page, undo/redo, guards
   'lib/features/workspace/domain/workspace_xml.dart': 800,
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.
@@ -218,7 +218,7 @@ const Map<String, int> _baseline = {
   'lib/features/events/presentation/screens/validation_settings_screen.dart': 615,
   // 600→615 (2026-08-31): #771 the kiosk consent exemption and its
   // rationale live where the gate lives.
-  'lib/app/router.dart': 635, // 2026-09-02 #821 the conversation page route
+  'lib/app/router.dart': 650, // 2026-09-02 #821/#822 the conversation and report-editor routes
   // 600→620 (2026-09-01): #791 the tap dispatcher records the branch it
   // took. The paragraphs explaining WHY each silent branch needs a line
   // were extracted to booking_trace_points.dart; what stayed is eight
@@ -233,7 +233,7 @@ const Map<String, int> _baseline = {
   // 790→820 (2026-08-04): #472 the banded LETTER builder.
   // 820→840 (2026-08-05): #482 the side-by-side ReportColumns renderer.
   // 840→860 (2026-08-05): #488 the ReportImage renderer branch.
-  'lib/features/money/domain/invoice_pdf.dart': 860,
+  'lib/features/money/domain/invoice_pdf.dart': 875, // 2026-09-02 #822 image size/alignment
   // 670→680 (2026-08-04): #446 out-of-shell WorkHours install — the
   // kiosk arms the ambient working day itself, like realtime (#430).
   // 680→690: #462 whole-space overlays on the wall display.

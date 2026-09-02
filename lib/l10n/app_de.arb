@@ -1269,6 +1269,8 @@
   "featureCalendarViewsDesc": "Der Kalender-Tab als Agenda, Woche und Monat: Tagesmarker nach Art, geschlossene Tage als geschlossen, Kopfzeilen Heute / Morgen, Zahlungsfälligkeiten und geplante Ausgaben im Feed. Aus: der schlichte Tag-oder-Zeitraum-Wähler über dem Feed.",
   "featureMessagesHubTitle": "Nachrichten, überarbeitet",
   "featureMessagesHubDesc": "Eine Posteingangsleiste (Alle / Ungelesen / Archiviert und Suche), anheften, stumm, archivieren und als ungelesen markieren auf einem Thread, die Unterhaltung als ganze Seite mit Datumstrennern, ein Anhängen-Menü und ein behaltener Entwurf im Editor, eine Person mit einem Tipp geöffnet. Aus: der Posteingang mit zwei Leisten und der Thread als Blatt.",
+  "featureReportDesignerTitle": "Berichtsdesigner",
+  "featureReportDesignerDesc": "Der Berichtseditor als Vollbild-Designer: Elemente an Ort und Stelle in ihrer echten Typografie bearbeitet, Ziehen zum Umsortieren, eine Einfügepalette, eine durchsuchbare Feldauswahl, Rückgängig und Wiederholen, Bildgröße und -ausrichtung, ein Schutz vor dem Verwerfen, Vorlagen und Zurücksetzen hinter einer Bestätigung, der Vorlagenfehler im Klartext, Entwurf und Vorschau nebeneinander auf breitem Bildschirm. Aus: der Editor als Blatt.",
   "helpTitle": "Hilfe",
   "helpContents": "Inhalt",
   "helpHintMessages": "Alle Unterhaltungen in einer Liste, die neueste oben. Tippen Sie auf den Stift, um jemandem zu schreiben oder eine Gruppe zu erstellen.",
@@ -2458,8 +2460,57 @@
       }
     }
   },
-  "moneyInvoicesArchiveButton": "Alle meine Rechnungen · Archiv & PDFs",
-  "moneyInvoicingHubButton": "Ausstellen, mahnen, einziehen · Fakturierung",
+  "reportEditorTitle": "Berichtseditor",
+  "reportDesignerUndo": "Rückgängig",
+  "reportDesignerRedo": "Wiederholen",
+  "reportDesignerDiscardTitle": "Ohne Speichern verlassen?",
+  "reportDesignerDiscardBody": "Ihre Änderungen an den Vorlagen sind nicht gespeichert.",
+  "reportDesignerDiscard": "Verwerfen",
+  "reportDesignerKeepEditing": "Weiter bearbeiten",
+  "reportDesignerReplaceTitle": "Aktuelles Layout ersetzen?",
+  "reportDesignerReplaceBody": "Die Bänder dieses Dokuments werden ersetzt. Rückgängig holt sie zurück.",
+  "reportDesignerReplace": "Ersetzen",
+  "reportDesignerPages": "{count, plural, =1{1 Seite} other{{count} Seiten}}",
+  "@reportDesignerPages": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reportDesignerError": "Die Vorlage lässt sich nicht erzeugen — {message}",
+  "@reportDesignerError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "reportDesignerInsert": "Element einfügen",
+  "reportDesignerFields": "Felder",
+  "reportDesignerFieldsSearch": "Feld suchen",
+  "reportDesignerMoveTo": "In Band verschieben",
+  "reportDesignerDrag": "Ziehen zum Umsortieren",
+  "reportImageSize": "Größe",
+  "reportImageSizeSmall": "Klein",
+  "reportImageSizeMedium": "Mittel",
+  "reportImageSizeLarge": "Groß",
+  "reportImageAlign": "Ausrichtung",
+  "reportImageAlignLeft": "Links",
+  "reportImageAlignCenter": "Mitte",
+  "reportImageAlignRight": "Rechts",
+  "reportTemplateLangOverridden": "Eigene Vorlage",
+  "reportTemplateLangInherits": "Erbt den Standard",
+  "reportTemplateClearOverlay": "Für diese Sprache den Standard verwenden",
+  "reportDocCoa": "Kontenrahmen",
+  "reportDocBadges": "Mitgliedsausweise",
+  "reportDocSpaceCodes": "QR-Karten der Plätze",
+  "reportFieldGroupDocument": "Dokument",
+  "reportFieldGroupMember": "Mitglied & Workspace",
+  "reportFieldGroupMoney": "Beträge",
+  "reportFieldGroupLegal": "Pflichtangaben",
+  "reportFieldGroupLoops": "Schleifen Positionen & MwSt.",
+  "reportDesignerSideBySide": "Entwurf und Vorschau nebeneinander",
   "eventTypeMemberJoin": "Neues Mitglied",
   "memberStatusPending": "Ausstehend",
   "pendingApprovalTitle": "Warten auf Freigabe",

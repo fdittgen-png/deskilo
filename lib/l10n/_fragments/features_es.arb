@@ -176,5 +176,7 @@
   "featureCalendarViewsTitle": "Vistas del calendario",
   "featureCalendarViewsDesc": "La pestaña Calendario como agenda, semana y mes: marcadores por día según el tipo, días cerrados dibujados cerrados, cabeceras Hoy / Mañana, vencimientos de pago y gastos programados en el feed. Desactivado: el simple selector de día o rango sobre el feed.",
   "featureMessagesHubTitle": "Mensajes, renovados",
-  "featureMessagesHubDesc": "Una sola barra de bandeja (Todos / No leídos / Archivados y búsqueda), fijar, silenciar, archivar y marcar como no leído en un hilo, la conversación como página completa con separadores de fecha, un menú adjuntar y un borrador guardado en el compositor, una persona abierta con un toque. Desactivado: la bandeja de dos barras y el hilo en hoja."
+  "featureMessagesHubDesc": "Una sola barra de bandeja (Todos / No leídos / Archivados y búsqueda), fijar, silenciar, archivar y marcar como no leído en un hilo, la conversación como página completa con separadores de fecha, un menú adjuntar y un borrador guardado en el compositor, una persona abierta con un toque. Desactivado: la bandeja de dos barras y el hilo en hoja.",
+  "featureReportDesignerTitle": "Diseñador de informes",
+  "featureReportDesignerDesc": "El editor de informes a pantalla completa: elementos editados en su sitio con su tipografía real, arrastrar para reordenar, una paleta de inserción, un selector de campos con búsqueda, deshacer y rehacer, tamaño y alineación de imágenes, una salvaguarda antes de descartar, plantillas y restablecer tras una confirmación, el error de la plantilla explicado, diseño y vista previa lado a lado en pantalla ancha. Desactivado: el editor en hoja."
 }

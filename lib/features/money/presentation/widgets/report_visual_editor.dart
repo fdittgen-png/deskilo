@@ -1,15 +1,12 @@
 // SPDX-License-Identifier: 0BSD
-import 'package:file_selector/file_selector.dart' show XTypeGroup;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/files/file_names.dart';
-import '../../../../core/files/file_picker.dart';
-import '../../../workspace/providers/workspace_providers.dart';
-import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_pdf_template.dart';
+import '../../domain/invoice_report.dart';
 import '../../providers/money_providers.dart';
+import 'report_field_picker.dart';
 import 'report_page_style.dart';
 
 /// The kinds a visual line can be (#488) — one per markup prefix. The
@@ -105,6 +102,9 @@ class ReportVisualLine {
           false,
         _ => true,
       };
+
+  /// #822 — an image line's `name|size|align` read as a block.
+  ReportImage get image => ReportImage.parse(content);
 }
 
 IconData reportLineIcon(ReportLineKind kind) => switch (kind) {
@@ -140,31 +140,57 @@ String reportLineName(ReportLineKind kind, AppLocalizations? l10n) =>
       ReportLineKind.logic => l10n?.reportLineLogic ?? 'Logic',
     };
 
+/// #822 — the text style an element is EDITED in: the same one it
+/// prints in, so the in-place field is the element, not a form about
+/// it. Logic keeps the designer's monospace — it never prints.
+TextStyle reportLineEditStyle(ReportLineKind kind) => switch (kind) {
+      ReportLineKind.title => ReportPage.heading,
+      ReportLineKind.section => ReportPage.subheading,
+      ReportLineKind.small => ReportPage.small,
+      ReportLineKind.boldRow => ReportPage.row(bold: true),
+      ReportLineKind.row => ReportPage.row(bold: false),
+      ReportLineKind.logic => const TextStyle(
+          fontFamily: 'monospace', fontSize: 10, color: ReportPage.ink),
+      _ => ReportPage.body,
+    };
+
 /// The DESIGN band editor (#498) — a real WYSIWYG surface in the
 /// FastReport tradition: the band renders STYLED, exactly as the
 /// document lays it out (title typography, small print, real
 /// side-by-side columns, table rows, images), with `{{ field }}` and
 /// `{% logic %}` shown as highlighted tokens the way report designers
-/// show data fields. Tap any element to edit it in place; the toolbar
-/// under the active element changes its type, moves it, inserts a
-/// data field at the cursor, adds a line below, or deletes it. Every
-/// change serializes straight back into [controller], so the markup
-/// mode, save, preview and PDF always see the same bands.
+/// show data fields. Tap any element to edit it in place — in its own
+/// typography (#822) — and the toolbar under the active element changes
+/// its type, inserts a typed element below, moves it (or drags it —
+/// #822), sends it to another band, inserts a data field at the
+/// cursor, or deletes it. Every change serializes straight back into
+/// [controller], so the markup mode, save, preview and PDF always see
+/// the same bands.
 class ReportVisualEditor extends ConsumerStatefulWidget {
   const ReportVisualEditor({
     super.key,
     required this.controller,
     required this.label,
     required this.bandKey,
+    this.bandChoices = const {},
+    this.onMoveToBand,
   });
 
   final TextEditingController controller;
   final String label;
   final String bandKey;
 
+  /// #822 — the OTHER bands (key → label) an element can be sent to.
+  final Map<String, String> bandChoices;
+
+  /// #822 — called when an element leaves for [bandChoices]' band; the
+  /// host appends it there.
+  final void Function(ReportVisualLine line, String targetBand)?
+      onMoveToBand;
+
   @override
   ConsumerState<ReportVisualEditor> createState() =>
-      _ReportVisualEditorState();
+      ReportVisualEditorState();
 }
 
 /// One render segment: a plain line, or a `:::` column group.
@@ -189,7 +215,7 @@ class _GroupSegment extends _Segment {
   final int? closeIndex;
 }
 
-class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
+class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
   late List<ReportVisualLine> _lines;
   int? _editing;
   final _editController = TextEditingController();
@@ -209,6 +235,20 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
   void dispose() {
     _editController.dispose();
     super.dispose();
+  }
+
+  /// #822 — whether an element is selected here (the host inserts an
+  /// image after the selection of the band that has one).
+  bool get hasSelection => _editing != null;
+
+  /// #822 — inserts [line] after the selection, or at the end.
+  void insertLine(ReportVisualLine line) {
+    _mutate(() {
+      final at = _editing == null ? _lines.length : _editing! + 1;
+      _lines.insert(at, line);
+      _editing = at;
+      _editController.text = line.content;
+    });
   }
 
   void _sync() {
@@ -257,10 +297,22 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
     });
   }
 
-  void _insertBelow(int index) {
+  /// #822 — a drag: the element at [from] lands BEFORE the element at
+  /// [before] (the drop target).
+  void _moveBefore(int from, int before) {
+    if (from == before) return;
     _mutate(() {
-      _lines.insert(
-          index + 1, ReportVisualLine(ReportLineKind.text, ''));
+      final line = _lines.removeAt(from);
+      final to = before > from ? before - 1 : before;
+      _lines.insert(to, line);
+      _editing = to;
+      _editController.text = line.content;
+    });
+  }
+
+  void _insertBelow(int index, ReportLineKind kind) {
+    _mutate(() {
+      _lines.insert(index + 1, ReportVisualLine(kind, ''));
       _editing = index + 1;
       _editController.text = '';
     });
@@ -271,6 +323,15 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
       _lines.removeAt(index);
       _editing = null;
     });
+  }
+
+  void _sendTo(int index, String band) {
+    final line = _lines[index];
+    _mutate(() {
+      _lines.removeAt(index);
+      _editing = null;
+    });
+    widget.onMoveToBand?.call(line, band);
   }
 
   /// Inserts [token] at the cursor of the active editor.
@@ -284,6 +345,12 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
         TextSelection.collapsed(offset: at + token.length);
     _commitEditing();
     setState(() {});
+  }
+
+  Future<void> _pickField() async {
+    final markup = await showReportFieldPicker(context);
+    if (markup == null || !mounted) return;
+    _insertToken(markup);
   }
 
   /// Groups the flat line list into render segments; a `:::` fence
@@ -379,11 +446,13 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
                     ? Expanded(
                         child:
                             Text.rich(_tokenized(cells[c].trim(), style)))
-                    : Padding(
-                        padding: const EdgeInsets.only(left: 12),
-                        child: Text.rich(
-                            _tokenized(cells[c].trim(), style),
-                            textAlign: TextAlign.right),
+                    : Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 12),
+                          child: Text.rich(
+                              _tokenized(cells[c].trim(), style),
+                              textAlign: TextAlign.right),
+                        ),
                       ),
             ],
           ),
@@ -403,21 +472,23 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
               color: ReportPage.backdrop),
         );
       case ReportLineKind.image:
+        final image = line.image;
         final bytes =
-            ref.watch(reportImageBytesProvider(line.content)).value;
+            ref.watch(reportImageBytesProvider(image.name)).value;
         return bytes == null
             ? Row(mainAxisSize: MainAxisSize.min, children: [
                 const Icon(Icons.image_outlined,
                     size: 18, color: ReportPage.chrome),
                 const SizedBox(width: 4),
-                Text(line.content, style: ReportPage.small),
+                Text(image.name, style: ReportPage.small),
               ])
             : Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: Align(
-                  alignment: Alignment.centerLeft,
-                  child:
-                      Image.memory(bytes, height: 64, fit: BoxFit.contain),
+                  // #822 — size and alignment as the PDF draws them.
+                  alignment: reportImageAlignment(image.align),
+                  child: Image.memory(bytes,
+                      height: image.size.height, fit: BoxFit.contain),
                 ),
               );
       case ReportLineKind.logic:
@@ -448,6 +519,102 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
     }
   }
 
+  /// #822 — the image element's own controls: size and alignment,
+  /// written back as `name|size|align`.
+  Widget _imageControls(int index, ReportVisualLine line) {
+    final l10n = AppLocalizations.of(context);
+    final image = line.image;
+    void set({ReportImageSize? size, ReportImageAlign? align}) {
+      final next = ReportImage(image.name,
+          size: size ?? image.size, align: align ?? image.align);
+      _editController.text = next.markup;
+      _mutate(() => line.content = next.markup);
+    }
+
+    return Wrap(
+      spacing: 8,
+      runSpacing: 4,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        Text(image.name,
+            style: const TextStyle(fontSize: 11, color: ReportPage.ink)),
+        SegmentedButton<ReportImageSize>(
+          key: ValueKey('${widget.bandKey}-image-size-$index'),
+          showSelectedIcon: false,
+          style: const ButtonStyle(visualDensity: VisualDensity.compact),
+          segments: [
+            ButtonSegment(
+              value: ReportImageSize.small,
+              label: Text(l10n?.reportImageSizeSmall ?? 'Small'),
+            ),
+            ButtonSegment(
+              value: ReportImageSize.medium,
+              label: Text(l10n?.reportImageSizeMedium ?? 'Medium'),
+            ),
+            ButtonSegment(
+              value: ReportImageSize.large,
+              label: Text(l10n?.reportImageSizeLarge ?? 'Large'),
+            ),
+          ],
+          selected: {image.size},
+          onSelectionChanged: (s) => set(size: s.first),
+        ),
+        SegmentedButton<ReportImageAlign>(
+          key: ValueKey('${widget.bandKey}-image-align-$index'),
+          showSelectedIcon: false,
+          style: const ButtonStyle(visualDensity: VisualDensity.compact),
+          segments: const [
+            ButtonSegment(
+              value: ReportImageAlign.left,
+              icon: Icon(Icons.format_align_left, size: 16),
+            ),
+            ButtonSegment(
+              value: ReportImageAlign.center,
+              icon: Icon(Icons.format_align_center, size: 16),
+            ),
+            ButtonSegment(
+              value: ReportImageAlign.right,
+              icon: Icon(Icons.format_align_right, size: 16),
+            ),
+          ],
+          selected: {image.align},
+          onSelectionChanged: (s) => set(align: s.first),
+        ),
+      ],
+    );
+  }
+
+  /// A menu of element kinds — the insert palette (#822).
+  Widget _kindMenu({
+    required Key key,
+    required Widget child,
+    required ValueChanged<ReportLineKind> onSelected,
+    String? tooltip,
+  }) {
+    final l10n = AppLocalizations.of(context);
+    return PopupMenuButton<ReportLineKind>(
+      key: key,
+      tooltip: tooltip,
+      onSelected: onSelected,
+      itemBuilder: (context) => [
+        for (final kind in ReportLineKind.values)
+          PopupMenuItem(
+            key: ValueKey('${(key as ValueKey).value}-${kind.name}'),
+            value: kind,
+            child: Row(mainAxisSize: MainAxisSize.min, children: [
+              Icon(reportLineIcon(kind), size: 18),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text(reportLineName(kind, l10n),
+                    overflow: TextOverflow.ellipsis),
+              ),
+            ]),
+          ),
+      ],
+      child: child,
+    );
+  }
+
   /// The active element: the in-place editor + its toolbar. Designer
   /// CHROME on the paper — deliberately styled as tooling, so the
   /// document content around it keeps reading like the document.
@@ -465,17 +632,17 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (line.hasContent)
+          if (line.kind == ReportLineKind.image)
+            _imageControls(index, line)
+          else if (line.hasContent)
             TextField(
               key: ValueKey('${widget.bandKey}-field-$index'),
               controller: _editController,
               autofocus: true,
               maxLines: null,
               onChanged: (_) => _commitEditing(),
-              style: const TextStyle(
-                  fontFamily: 'monospace',
-                  fontSize: 12,
-                  color: ReportPage.ink),
+              // #822 — edited in the element's OWN typography.
+              style: reportLineEditStyle(line.kind),
               decoration: const InputDecoration(
                   isDense: true, border: InputBorder.none),
             )
@@ -483,22 +650,13 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
             Text(reportLineName(line.kind, l10n),
                 style: const TextStyle(
                     fontSize: 11, color: ReportPage.chrome)),
-          Row(children: [
-            PopupMenuButton<ReportLineKind>(
+          // A Wrap, not a Row: inside a column the toolbar is narrower
+          // than its buttons, and a clipped Done button is no button.
+          Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
+            _kindMenu(
               key: ValueKey('${widget.bandKey}-type-$index'),
               tooltip: reportLineName(line.kind, l10n),
               onSelected: (kind) => _mutate(() => line.kind = kind),
-              itemBuilder: (context) => [
-                for (final kind in ReportLineKind.values)
-                  PopupMenuItem(
-                    value: kind,
-                    child: Row(children: [
-                      Icon(reportLineIcon(kind), size: 18),
-                      const SizedBox(width: 8),
-                      Text(reportLineName(kind, l10n)),
-                    ]),
-                  ),
-              ],
               child: Icon(reportLineIcon(line.kind),
                   size: 20, color: theme.colorScheme.primary),
             ),
@@ -514,20 +672,49 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
               visualDensity: VisualDensity.compact,
               onPressed: () => _move(index, 1),
             ),
-            IconButton(
+            // #822 — insert a TYPED element below.
+            _kindMenu(
               key: ValueKey('${widget.bandKey}-insert-$index'),
-              icon: const Icon(Icons.add, size: 16),
-              tooltip: l10n?.reportVisualAddLine ?? 'Add line',
-              visualDensity: VisualDensity.compact,
-              onPressed: () => _insertBelow(index),
+              tooltip: l10n?.reportDesignerInsert ?? 'Insert element',
+              onSelected: (kind) => _insertBelow(index, kind),
+              child: const Padding(
+                padding: EdgeInsets.all(6),
+                child: Icon(Icons.add, size: 16),
+              ),
             ),
+            if (line.hasContent && line.kind != ReportLineKind.image)
+              IconButton(
+                key: ValueKey('${widget.bandKey}-fields-$index'),
+                icon: const Icon(Icons.data_object, size: 16),
+                tooltip: l10n?.reportDesignerFields ?? 'Fields',
+                visualDensity: VisualDensity.compact,
+                onPressed: _pickField,
+              ),
+            if (widget.bandChoices.isNotEmpty)
+              PopupMenuButton<String>(
+                key: ValueKey('${widget.bandKey}-moveto-$index'),
+                tooltip: l10n?.reportDesignerMoveTo ?? 'Move to band',
+                onSelected: (band) => _sendTo(index, band),
+                itemBuilder: (context) => [
+                  for (final entry in widget.bandChoices.entries)
+                    PopupMenuItem(
+                      key: ValueKey(
+                          '${widget.bandKey}-moveto-$index-${entry.key}'),
+                      value: entry.key,
+                      child: Text(entry.value),
+                    ),
+                ],
+                child: const Padding(
+                  padding: EdgeInsets.all(6),
+                  child: Icon(Icons.drive_file_move_outline, size: 16),
+                ),
+              ),
             IconButton(
               key: ValueKey('${widget.bandKey}-delete-$index'),
               icon: const Icon(Icons.delete_outline, size: 16),
               visualDensity: VisualDensity.compact,
               onPressed: () => _delete(index),
             ),
-            const Spacer(),
             IconButton(
               key: ValueKey('${widget.bandKey}-done-$index'),
               icon: const Icon(Icons.check, size: 16),
@@ -540,15 +727,64 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
     );
   }
 
+  /// #822 — a line is a DRAG SOURCE (long-press) and a DROP TARGET: the
+  /// dragged element lands before the one it is dropped on. A thin
+  /// primary line above the target shows where.
+  Widget _draggable(int index, Widget child) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    return DragTarget<int>(
+      key: ValueKey('${widget.bandKey}-drop-$index'),
+      onWillAcceptWithDetails: (d) => d.data != index,
+      onAcceptWithDetails: (d) => _moveBefore(d.data, index),
+      builder: (context, candidates, _) => Container(
+        decoration: candidates.isEmpty
+            ? null
+            : BoxDecoration(
+                border: Border(
+                    top: BorderSide(
+                        color: theme.colorScheme.primary, width: 2))),
+        child: LongPressDraggable<int>(
+          data: index,
+          axis: Axis.vertical,
+          feedback: Material(
+            color: Colors.transparent,
+            child: Opacity(
+              opacity: .85,
+              child: Container(
+                width: ReportPage.width - ReportPage.margins.horizontal,
+                color: ReportPage.paper,
+                padding: const EdgeInsets.all(2),
+                child: _styledContent(_lines[index]),
+              ),
+            ),
+          ),
+          childWhenDragging: Opacity(opacity: .3, child: child),
+          child: Tooltip(
+            message: l10n?.reportDesignerDrag ?? 'Drag to reorder',
+            waitDuration: const Duration(seconds: 1),
+            // Hover only: a long-press tooltip would win the long press
+            // the drag needs.
+            triggerMode: TooltipTriggerMode.manual,
+            child: child,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _lineWidget(int index) {
     if (index == _editing) return _editor(index);
     final line = _lines[index];
-    return InkWell(
-      key: ValueKey('${widget.bandKey}-line-$index'),
-      onTap: () => _select(index),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 1),
-        child: _styledContent(line),
+    return _draggable(
+      index,
+      InkWell(
+        key: ValueKey('${widget.bandKey}-line-$index'),
+        onTap: () => _select(index),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 1),
+          child: _styledContent(line),
+        ),
       ),
     );
   }
@@ -608,7 +844,9 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
         ),
         // #498 — the data-field palette: tap to insert at the cursor
         // of the active element (the designer idiom).
-        if (_editing != null)
+        if (_editing != null &&
+            _lines[_editing!].hasContent &&
+            _lines[_editing!].kind != ReportLineKind.image)
           SizedBox(
             height: 34,
             child: ListView(
@@ -674,19 +912,26 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
           },
         Align(
           alignment: Alignment.centerLeft,
-          child: TextButton.icon(
+          // #822 — the band's own insert palette: a TYPED element at
+          // the end, not always a text line to retype.
+          child: _kindMenu(
             key: ValueKey('${widget.bandKey}-add'),
-            icon: const Icon(Icons.add, size: 18),
-            label: Text(l10n?.reportVisualAddLine ?? 'Add line'),
-            style: TextButton.styleFrom(
-              foregroundColor: ReportPage.chrome,
-              visualDensity: VisualDensity.compact,
-            ),
-            onPressed: () => _mutate(() {
-              _lines.add(ReportVisualLine(ReportLineKind.text, ''));
+            tooltip: l10n?.reportDesignerInsert ?? 'Insert element',
+            onSelected: (kind) => _mutate(() {
+              _lines.add(ReportVisualLine(kind, ''));
               _editing = _lines.length - 1;
               _editController.text = '';
             }),
+            child: TextButton.icon(
+              icon: const Icon(Icons.add, size: 18),
+              label: Text(l10n?.reportVisualAddLine ?? 'Add line'),
+              style: TextButton.styleFrom(
+                foregroundColor: ReportPage.chrome,
+                visualDensity: VisualDensity.compact,
+              ),
+              // The menu opens from the surrounding button.
+              onPressed: null,
+            ),
           ),
         ),
       ],
@@ -718,106 +963,6 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
           color: ReportPage.chrome.withValues(alpha: .5),
         ),
       ),
-    );
-  }
-}
-
-/// The report-image LIBRARY picker (#488): the workspace's uploaded
-/// images with an upload button. Pops with the chosen image's name, or
-/// null when dismissed.
-Future<String?> showReportImagePicker(
-  BuildContext context,
-  WidgetRef ref,
-) =>
-    showDialog<String>(
-      context: context,
-      builder: (context) => const _ReportImageDialog(),
-    );
-
-class _ReportImageDialog extends ConsumerWidget {
-  const _ReportImageDialog();
-
-  Future<void> _upload(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
-    final pick = ref.read(filePickerProvider);
-    final file = await pick(XTypeGroup(
-      label: l10n?.profilePhotoFileType ?? 'Image',
-      extensions: const ['jpg', 'jpeg', 'png', 'webp'],
-      mimeTypes: const ['image/jpeg', 'image/png', 'image/webp'],
-    ));
-    if (file == null || !context.mounted) return;
-    final bytes = await file.readAsBytes();
-    if (!context.mounted) return;
-    await runGuarded(
-      context,
-      domain: 'money',
-      message: 'report image upload failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () => ref.read(moneyRepositoryProvider).uploadReportImage(
-            workspace.id,
-            name: safeFileSlug(file.name),
-            bytes: bytes,
-            contentType: file.mimeType ?? 'image/png',
-          ),
-    );
-    ref.invalidate(reportImagesProvider);
-  }
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
-    final images = ref.watch(reportImagesProvider).value ?? const [];
-    return AlertDialog(
-      title: Text(l10n?.reportImagesTitle ?? 'Report images'),
-      content: SizedBox(
-        width: 360,
-        child: images.isEmpty
-            ? Text(l10n?.reportImagesEmpty ??
-                'No image yet — upload your logo, a stamp or a '
-                    'signature and reference it with ![name].')
-            : ListView(
-                shrinkWrap: true,
-                children: [
-                  for (final name in images)
-                    ListTile(
-                      key: ValueKey('report-image-$name'),
-                      leading: SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: ref
-                                    .watch(reportImageBytesProvider(name))
-                                    .value ==
-                                null
-                            ? const Icon(Icons.image_outlined)
-                            : Image.memory(
-                                ref
-                                    .watch(reportImageBytesProvider(name))
-                                    .value!,
-                                fit: BoxFit.contain,
-                              ),
-                      ),
-                      title: Text(name,
-                          maxLines: 1, overflow: TextOverflow.ellipsis),
-                      onTap: () => Navigator.of(context).pop(name),
-                    ),
-                ],
-              ),
-      ),
-      actions: [
-        TextButton.icon(
-          key: const ValueKey('report-image-upload'),
-          icon: const Icon(Icons.upload_outlined),
-          label: Text(l10n?.reportImageUpload ?? 'Upload image'),
-          onPressed: () => _upload(context, ref),
-        ),
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
-        ),
-      ],
     );
   }
 }
