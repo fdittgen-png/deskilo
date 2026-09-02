@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -116,11 +117,16 @@ class ReportBlocksView extends StatelessWidget {
 /// Opens the quick preview as a PAGE (#548): white A4-wide paper at the
 /// document's own margins, panning sideways on narrow screens instead
 /// of reflowing — the preview never lies about the layout.
+/// #837 — a document shown after the main one as reference, wearing the
+/// stamp its PDF page wears.
+typedef QuickPreviewAnnex = ({InvoiceReport report, String stamp});
+
 Future<void> showReportQuickPreview(
   BuildContext context, {
   required InvoiceReport report,
   required bool simulated,
   Map<String, Uint8List> images = const {},
+  List<QuickPreviewAnnex> annexes = const [],
 }) =>
     showDialog<void>(
       context: context,
@@ -153,12 +159,23 @@ Future<void> showReportQuickPreview(
                       padding: AppSpacing.mdAll,
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
-                        child: Container(
-                          width: ReportPage.width,
-                          color: ReportPage.paper,
-                          padding: ReportPage.margins,
-                          child: ReportBlocksView(
-                              report: report, images: images),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _PreviewSheet(report: report, images: images),
+                            // #837 — each regrouped invoice on its own
+                            // sheet below, never running into the one
+                            // above it, stamped as the PDF stamps it.
+                            for (final annex in annexes) ...[
+                              const SizedBox(height: AppSpacing.lg),
+                              _PreviewSheet(
+                                key: ValueKey('preview-annex-${annex.stamp}'),
+                                report: annex.report,
+                                images: images,
+                                stamp: annex.stamp,
+                              ),
+                            ],
+                          ],
                         ),
                       ),
                     ),
@@ -182,3 +199,56 @@ Future<void> showReportQuickPreview(
         );
       },
     );
+
+/// #837 — one sheet of the quick preview: the paper, and behind the
+/// content the same diagonal stamp the PDF prints.
+class _PreviewSheet extends StatelessWidget {
+  const _PreviewSheet({
+    super.key,
+    required this.report,
+    required this.images,
+    this.stamp = '',
+  });
+
+  final InvoiceReport report;
+  final Map<String, Uint8List> images;
+  final String stamp;
+
+  @override
+  Widget build(BuildContext context) {
+    final sheet = Container(
+      width: ReportPage.width,
+      color: ReportPage.paper,
+      padding: ReportPage.margins,
+      child: ReportBlocksView(report: report, images: images),
+    );
+    if (stamp.isEmpty) return sheet;
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        sheet,
+        Positioned.fill(
+          child: IgnorePointer(
+            child: Center(
+              child: Transform.rotate(
+                angle: -math.pi / 4,
+                child: Opacity(
+                  opacity: 0.5,
+                  child: Text(
+                    stamp.toUpperCase(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 34,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFBDBDBD),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

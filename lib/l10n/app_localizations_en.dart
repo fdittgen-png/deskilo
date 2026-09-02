@@ -977,6 +977,28 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get settlementAnnexTitle => 'Attach the regrouped invoices?';
+
+  @override
+  String get settlementAnnexAlone => 'This invoice only';
+
+  @override
+  String get settlementAnnexWith => 'Attach them';
+
+  @override
+  String settlementAnnexBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'The $count invoices this one replaces can follow it, each on its own pages and stamped as regrouped.',
+      one:
+          'The invoice this one replaces can follow it, on its own pages and stamped as regrouped.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get reservationExtendButton => 'Stay longer';
 
   @override

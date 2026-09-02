@@ -137,5 +137,16 @@
         "type": "String"
       }
     }
+  },
+  "settlementAnnexTitle": "¿Adjuntar las facturas reagrupadas?",
+  "settlementAnnexAlone": "Solo esta factura",
+  "settlementAnnexWith": "Adjuntarlas",
+  "settlementAnnexBody": "{count, plural, =1{La factura que esta sustituye puede seguirla, en sus propias páginas y sellada como reagrupada.} other{Las {count} facturas que esta sustituye pueden seguirla, cada una en sus propias páginas y sellada como reagrupada.}}",
+  "@settlementAnnexBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

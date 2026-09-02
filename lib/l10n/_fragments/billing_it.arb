@@ -137,5 +137,16 @@
         "type": "String"
       }
     }
+  },
+  "settlementAnnexTitle": "Allegare le fatture raggruppate?",
+  "settlementAnnexAlone": "Solo questa fattura",
+  "settlementAnnexWith": "Allegale",
+  "settlementAnnexBody": "{count, plural, =1{La fattura che questa sostituisce può seguirla, su pagine proprie e timbrata come raggruppata.} other{Le {count} fatture che questa sostituisce possono seguirla, ognuna su pagine proprie e timbrata come raggruppata.}}",
+  "@settlementAnnexBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

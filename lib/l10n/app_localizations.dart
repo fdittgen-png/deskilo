@@ -1772,6 +1772,30 @@ abstract class AppLocalizations {
   /// **'Paid through {number}'**
   String settlementPaidThrough(String number);
 
+  /// No description provided for @settlementAnnexTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Attach the regrouped invoices?'**
+  String get settlementAnnexTitle;
+
+  /// No description provided for @settlementAnnexAlone.
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice only'**
+  String get settlementAnnexAlone;
+
+  /// No description provided for @settlementAnnexWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Attach them'**
+  String get settlementAnnexWith;
+
+  /// No description provided for @settlementAnnexBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{The invoice this one replaces can follow it, on its own pages and stamped as regrouped.} other{The {count} invoices this one replaces can follow it, each on its own pages and stamped as regrouped.}}'**
+  String settlementAnnexBody(int count);
+
   /// Detail sheet: extend a running booking's end (#574)
   ///
   /// In en, this message translates to:

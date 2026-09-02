@@ -1135,6 +1135,17 @@
       }
     }
   },
+  "settlementAnnexTitle": "Attach the regrouped invoices?",
+  "settlementAnnexAlone": "This invoice only",
+  "settlementAnnexWith": "Attach them",
+  "settlementAnnexBody": "{count, plural, =1{The invoice this one replaces can follow it, on its own pages and stamped as regrouped.} other{The {count} invoices this one replaces can follow it, each on its own pages and stamped as regrouped.}}",
+  "@settlementAnnexBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "reservationExtendButton": "Stay longer",
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"

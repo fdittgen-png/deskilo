@@ -944,6 +944,10 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   // #831 — the stamp of a regrouped source ('' otherwise); the callers
   // with a ref build it with [settledStampOf].
   String settledIn = '',
+  /// #837 — the invoices this one regrouped, appended after its own
+  /// pages as documentation. The caller resolves them, because only it
+  /// holds the archive; each is stamped with this document's number.
+  List<Invoice> annexInvoices = const [],
 }) async {
   final l10n = AppLocalizations.of(context);
   final currency = moneyFormat(invoice.currency);
@@ -952,6 +956,18 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   );
   final dateLabel = dateFormat.format(invoice.issuedAt);
   final periodLabel = invoicePeriodLabel(context, invoice);
+  // #837 — every appended invoice keeps its OWN issue date and period;
+  // only the stamp is about where it went.
+  final annexes = [
+    for (final source in annexInvoices)
+      (
+        invoice: source,
+        dateLabel: dateFormat.format(source.issuedAt),
+        periodLabel: invoicePeriodLabel(context, source),
+        watermark: l10n?.invoicePdfSettledIn(invoice.number) ??
+            'Regrouped in ${invoice.number}',
+      ),
+  ];
   final voidedAt = invoice.voidedAt;
   final voidedLabel = voidedAt == null
       ? ''
@@ -1018,6 +1034,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     // The stored title is the raw period ('2026-07'); the document reads
     // the month like a human would.
     periodLabel: periodLabel,
+    annexes: annexes,
     proforma: proforma,
     copy: copy,
     facturXml: facturXml,
@@ -1282,6 +1299,8 @@ Future<void> downloadInvoicePdf(
   Invoice invoice,
 ) async {
   final l10n = AppLocalizations.of(context);
+  final annexes = await askRegroupedAnnexes(context, ref, invoice);
+  if (annexes == null || !context.mounted) return;
   await runGuarded(
     context,
     domain: 'money',
@@ -1294,6 +1313,7 @@ Future<void> downloadInvoicePdf(
         invoice,
         copy: _rendersCopy(ref),
         settledIn: settledStampOf(context, ref, invoice),
+        annexInvoices: annexes,
         template: invoicePdfTemplateFor(ref),
         workspace: ref.read(currentWorkspaceProvider).value,
     reportImage: (name) => ref.read(reportImageBytesProvider(name).future),
@@ -1319,6 +1339,8 @@ Future<void> quickViewInvoice(
   bool proforma = false,
 }) async {
   final l10n = AppLocalizations.of(context);
+  final annexes = await askRegroupedAnnexes(context, ref, invoice);
+  if (annexes == null || !context.mounted) return;
   final template = invoicePdfTemplateFor(ref);
   final data = invoiceReportData(
     context,
@@ -1340,9 +1362,30 @@ Future<void> quickViewInvoice(
     );
     return;
   }
+  // #837 — the regrouped invoices as further sheets, same stamp as the
+  // PDF, each below the one before it.
+  final stamp = l10n?.invoicePdfSettledIn(invoice.number) ??
+      'Regrouped in ${invoice.number}';
+  final annexReports = <QuickPreviewAnnex>[];
+  for (final source in annexes) {
+    final sourceReport = renderReportBands(
+      bands: bands,
+      data: invoiceReportData(
+        context,
+        source,
+        proforma: false,
+        copy: _rendersCopy(ref),
+        workspace: ref.read(currentWorkspaceProvider).value,
+      ),
+    );
+    if (sourceReport != null) {
+      annexReports.add((report: sourceReport, stamp: stamp));
+    }
+  }
   final images = await resolveReportImages(ref, report);
   if (!context.mounted) return;
   await showReportQuickPreview(context,
+      annexes: annexReports,
       report: report, simulated: false, images: images);
 }
 
@@ -1352,6 +1395,8 @@ Future<void> shareInvoicePdf(
   Invoice invoice,
 ) async {
   final l10n = AppLocalizations.of(context);
+  final annexes = await askRegroupedAnnexes(context, ref, invoice);
+  if (annexes == null || !context.mounted) return;
   await runGuarded(
     context,
     domain: 'money',
@@ -1364,6 +1409,7 @@ Future<void> shareInvoicePdf(
         invoice,
         copy: _rendersCopy(ref),
         settledIn: settledStampOf(context, ref, invoice),
+        annexInvoices: annexes,
         template: invoicePdfTemplateFor(ref),
         workspace: ref.read(currentWorkspaceProvider).value,
     reportImage: (name) => ref.read(reportImageBytesProvider(name).future),
@@ -1911,4 +1957,57 @@ String settledStampOf(BuildContext context, WidgetRef ref, Invoice invoice) {
   final number =
       settledByNumberOf(invoice, ref.read(invoicesProvider).value ?? const []);
   return l10n?.invoicePdfSettledIn(number) ?? 'Regrouped in $number';
+}
+
+/// #837 — the invoices [invoice] regrouped, resolved from the archive in
+/// the order its own snapshot lists them. Empty when it regroups
+/// nothing, or when the archive has not loaded them.
+List<Invoice> regroupedSourcesOf(WidgetRef ref, Invoice invoice) {
+  if (invoice.settles.isEmpty) return const [];
+  final all = ref.read(invoicesProvider).value ?? const <Invoice>[];
+  return [
+    for (final source in invoice.settles)
+      ...all.where((i) => i.id == source.invoiceId),
+  ];
+}
+
+/// #837 — a regrouping invoice goes out either on its own or with the
+/// invoices it replaced appended behind it, each stamped with where its
+/// balance went. Asked at export time rather than settled once in a
+/// setting, because the answer depends on who receives the document: a
+/// member wants the detail, an accountant already has the originals.
+///
+/// Returns the invoices to append, empty for "this one alone", and null
+/// when the question was dismissed — nothing should be exported then.
+Future<List<Invoice>?> askRegroupedAnnexes(
+  BuildContext context,
+  WidgetRef ref,
+  Invoice invoice,
+) async {
+  final sources = regroupedSourcesOf(ref, invoice);
+  if (sources.isEmpty) return const [];
+  final l10n = AppLocalizations.of(context);
+  final include = await showDialog<bool>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text(l10n?.settlementAnnexTitle ?? 'Attach the regrouped invoices?'),
+      content: Text(l10n?.settlementAnnexBody(sources.length) ??
+          'The ${sources.length} invoices this one replaces can follow it, '
+              'each on its own pages and stamped as regrouped.'),
+      actions: [
+        TextButton(
+          key: const ValueKey('invoice-annex-alone'),
+          onPressed: () => Navigator.of(context).pop(false),
+          child: Text(l10n?.settlementAnnexAlone ?? 'This invoice only'),
+        ),
+        FilledButton(
+          key: const ValueKey('invoice-annex-with'),
+          onPressed: () => Navigator.of(context).pop(true),
+          child: Text(l10n?.settlementAnnexWith ?? 'Attach them'),
+        ),
+      ],
+    ),
+  );
+  if (include == null) return null;
+  return include ? sources : const [];
 }

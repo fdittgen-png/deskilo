@@ -9,6 +9,7 @@ import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice.dart';
+import 'open_invoice_card.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../providers/money_providers.dart';
@@ -233,7 +234,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                 itemCount: visible.length,
                 itemBuilder: (context, index) {
                   final invoice = visible[index];
-                  return _row(
+                  final row = _row(
                     context,
                     l10n,
                     invoice,
@@ -241,6 +242,29 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                     reminder: reminders[invoice.id],
                     replacedByNumber: replacedBy[invoice.id] ?? '',
                     dateFormat: dateFormat,
+                  );
+                  // #837 — the archive keeps the regrouping invoice AND
+                  // the invoices behind it: they are the documentation
+                  // of what was owed, reachable only from here.
+                  if (!fold || invoice.settles.isEmpty) return row;
+                  final all =
+                      ref.read(invoicesProvider).value ?? const <Invoice>[];
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      row,
+                      for (final source in invoice.settles)
+                        FoldedSourceRow(
+                          key: ValueKey('archive-folded-${source.invoiceId}'),
+                          keyPrefix: 'archive-folded',
+                          source: source,
+                          settlement: invoice,
+                          full: all
+                              .where((i) => i.id == source.invoiceId)
+                              .firstOrNull,
+                          currency: moneyFormat(invoice.currency),
+                        ),
+                    ],
                   );
                 },
               ),
