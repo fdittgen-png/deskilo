@@ -623,6 +623,14 @@
       }
     }
   },
+  "settlementPaidThrough": "Payée via {number}",
+  "@settlementPaidThrough": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "reservationExtendButton": "Rester plus longtemps",
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"

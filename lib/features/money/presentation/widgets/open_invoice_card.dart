@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/accounting_view.dart';
 import '../../domain/billing_rules.dart';
 import '../../domain/invoice.dart';
 import '../invoice_actions.dart';
@@ -129,6 +130,11 @@ class FoldedSourceRow extends ConsumerWidget {
     final theme = Theme.of(context);
     final muted = theme.textTheme.bodySmall
         ?.copyWith(color: theme.colorScheme.onSurfaceVariant);
+    // How it stands THROUGH the settlement: paid once that one is.
+    final settlementMatch =
+        ref.watch(invoiceMatchesProvider).value?[settlement.id];
+    final paid = full != null &&
+        effectiveMatchOf(full!, settlement, settlementMatch) != null;
     return Padding(
       padding: const EdgeInsets.only(left: AppSpacing.xl),
       child: Card(
@@ -143,8 +149,12 @@ class FoldedSourceRow extends ConsumerWidget {
             currency.formatMinor(source.totalCents),
           ].join(' · ')),
           subtitle: Text(
-            l10n?.settlementFoldedIn(settlement.number) ??
-                'Regrouped in ${settlement.number}',
+            paid
+                ? (l10n?.settlementPaidThrough(settlement.number) ??
+                    'Paid through ${settlement.number}')
+                : (l10n?.settlementFoldedIn(settlement.number) ??
+                    'Regrouped in ${settlement.number}'),
+            key: ValueKey('$keyPrefix-status-${source.invoiceId}'),
             style: muted,
           ),
           trailing: full == null

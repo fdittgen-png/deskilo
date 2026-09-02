@@ -978,6 +978,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String settlementPaidThrough(String number) {
+    return 'Pagata tramite $number';
+  }
+
+  @override
   String get reservationExtendButton => 'Restare più a lungo';
 
   @override

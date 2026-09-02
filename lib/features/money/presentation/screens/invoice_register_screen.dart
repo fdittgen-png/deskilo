@@ -10,6 +10,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/accounting_view.dart';
 import '../../domain/invoice.dart';
 import '../../domain/invoice_ubl.dart';
 import '../../providers/money_providers.dart';
@@ -51,7 +52,15 @@ class _InvoiceRegisterScreenState
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final invoicesAsync = ref.watch(invoicesProvider);
-    final matches = ref.watch(invoiceMatchesProvider).value ?? const {};
+    final rawMatches = ref.watch(invoiceMatchesProvider).value ?? const {};
+    // #831 — a regrouped invoice reads paid through its settlement; the
+    // settlement row keeps its own status.
+    final matches = {
+      ...rawMatches,
+      ...accountingView(
+              ref.watch(invoicesProvider).value ?? const [], rawMatches)
+          .matches,
+    };
     final reminders = ref.watch(invoiceRemindersProvider).value ?? const {};
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final me = ref.watch(myMemberProvider).value;

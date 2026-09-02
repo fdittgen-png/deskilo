@@ -13,6 +13,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accountant_csv.dart';
 import '../domain/accounting_format.dart';
+import '../domain/accounting_view.dart';
 import '../domain/audit_trail.dart';
 import '../domain/datev.dart';
 import '../domain/fec.dart';
@@ -59,7 +60,12 @@ Future<void> exportAccountingFile(
     );
     return;
   }
-  final matches = ref.read(invoiceMatchesProvider).value ?? const {};
+  // #831 — the accountant's view: settlements are transparent, their
+  // payment allocated to the invoices they regroup.
+  final view = accountingView(
+      invoices, ref.read(invoiceMatchesProvider).value ?? const {});
+  final exported = view.invoices;
+  final matches = view.matches;
   final company = sellerOf(invoices.last, workspace);
   final country = workspace.countryCode.toUpperCase();
 
@@ -118,7 +124,7 @@ Future<void> exportAccountingFile(
             'Something went wrong. Please try again.',
         action: () => save(
           buildFecFile(
-            invoices: invoices,
+            invoices: exported,
             matches: matches,
             company: company,
             accounts: accounts,
@@ -147,7 +153,7 @@ Future<void> exportAccountingFile(
             'Something went wrong. Please try again.',
         action: () => save(
           buildDatevFile(
-            invoices: invoices,
+            invoices: exported,
             matches: matches,
             accounts: datev.accounts,
             from: DateTime(year, 1, 1),
@@ -173,7 +179,7 @@ Future<void> exportAccountingFile(
             'Something went wrong. Please try again.',
         action: () => save(
           buildSageFile(
-            invoices: invoices,
+            invoices: exported,
             matches: matches,
             accounts: sage,
             // Sage keys a transaction to a customer by its Account
@@ -230,7 +236,7 @@ Future<void> exportAccountingFile(
             'Something went wrong. Please try again.',
         action: () => save(
           buildSafTFile(
-            invoices: invoices,
+            invoices: exported,
             matches: matches,
             company: company,
             currency: workspace.currencyCode,
@@ -255,7 +261,7 @@ Future<void> exportAccountingFile(
             'Something went wrong. Please try again.',
         action: () => save(
           buildAccountantCsv(
-            invoices: invoices,
+            invoices: exported,
             matches: matches,
             generatedAt: now,
             workspaceName: workspace.name,
@@ -283,7 +289,7 @@ Future<void> exportAccountingFile(
           await save(
             buildAuditTrailCsv(
               events: buildAuditEvents(
-                invoices: invoices,
+                invoices: exported,
                 matches: matches,
                 ledger: ledger,
               ),

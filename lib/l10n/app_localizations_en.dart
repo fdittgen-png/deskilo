@@ -972,6 +972,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String settlementPaidThrough(String number) {
+    return 'Paid through $number';
+  }
+
+  @override
   String get reservationExtendButton => 'Stay longer';
 
   @override
