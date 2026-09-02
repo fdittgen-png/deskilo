@@ -25,6 +25,7 @@ import '../../domain/einvoice_gateway.dart';
 import '../../domain/vat_declaration.dart';
 import '../../domain/vat_declaration_pdf.dart';
 import '../../domain/vat_regime.dart';
+import '../../domain/accounting_view.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/vat_declaration_providers.dart';
 import '../report_actions.dart';
@@ -71,7 +72,11 @@ class _VatDeclarationsScreenState
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
       action: () async {
-        final invoices = await ref.read(invoicesProvider.future);
+        // #831 — declared from the accountant's view: no settlement.
+        final invoices = accountingView(
+          await ref.read(invoicesProvider.future),
+          ref.read(invoiceMatchesProvider).value ?? const {},
+        ).invoices;
         final lines =
             computeVatDeclarationLines(invoices, period.start, period.end);
         var net = 0;

@@ -129,5 +129,13 @@
         "type": "String"
       }
     }
+  },
+  "settlementPaidThrough": "Payée via {number}",
+  "@settlementPaidThrough": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -1766,6 +1766,12 @@ abstract class AppLocalizations {
   /// **'Regrouped in {number}'**
   String invoicePdfSettledIn(String number);
 
+  /// No description provided for @settlementPaidThrough.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid through {number}'**
+  String settlementPaidThrough(String number);
+
   /// Detail sheet: extend a running booking's end (#574)
   ///
   /// In en, this message translates to:

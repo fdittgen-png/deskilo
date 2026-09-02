@@ -1127,6 +1127,14 @@
       }
     }
   },
+  "settlementPaidThrough": "Paid through {number}",
+  "@settlementPaidThrough": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "reservationExtendButton": "Stay longer",
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"
