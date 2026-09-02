@@ -25,7 +25,8 @@ Builds:
       - mkdir -p /home/runner/work/deskilo
       - chown -R vagrant /home/runner
     output: build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
-    binary: https://github.com/fdittgen-png/deskilo/releases/download/v%v/deskilo-%v-armeabi-v7a.apk
+    binary: 
+      https://github.com/fdittgen-png/deskilo/releases/download/v%v/deskilo-%v-armeabi-v7a.apk
     srclibs:
       - flutter@stable
     rm:
@@ -70,7 +71,8 @@ Builds:
       - mkdir -p /home/runner/work/deskilo
       - chown -R vagrant /home/runner
     output: build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
-    binary: https://github.com/fdittgen-png/deskilo/releases/download/v%v/deskilo-%v-arm64-v8a.apk
+    binary: 
+      https://github.com/fdittgen-png/deskilo/releases/download/v%v/deskilo-%v-arm64-v8a.apk
     srclibs:
       - flutter@stable
     rm:
@@ -115,7 +117,8 @@ Builds:
       - mkdir -p /home/runner/work/deskilo
       - chown -R vagrant /home/runner
     output: build/app/outputs/flutter-apk/app-x86_64-release.apk
-    binary: https://github.com/fdittgen-png/deskilo/releases/download/v%v/deskilo-%v-x86_64.apk
+    binary: 
+      https://github.com/fdittgen-png/deskilo/releases/download/v%v/deskilo-%v-x86_64.apk
     srclibs:
       - flutter@stable
     rm:
