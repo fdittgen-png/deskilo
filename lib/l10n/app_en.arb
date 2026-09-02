@@ -1077,7 +1077,7 @@
   "invoiceKindSettlement": "Regrouped invoices",
   "invoiceKindFull": "Whole month",
   "settlementRegroups": "This invoice regroups",
-  "settlementVatNote": "VAT stays declared on the invoices above; this document only regroups what is owed.",
+  "settlementVatNote": "The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.",
   "settlementSettledBy": "Regrouped into another invoice — that one is what is owed and chased.",
   "settlementAction": "Regroup into one invoice",
   "settlementConfirm": "Regroup {count} invoices into one of {amount}?",
@@ -1095,6 +1095,32 @@
     }
   },
   "@settlementDone": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementFoldedIn": "Regrouped in {number}",
+  "@settlementFoldedIn": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementDocumentationOnly": "Documentation only — every operation happens on the regrouping invoice.",
+  "settlementSourcePdf": "PDF (regrouped)",
+  "settlementRegroupsNumbers": "Regroups {numbers}",
+  "@settlementRegroupsNumbers": {
+    "placeholders": {
+      "numbers": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePdfSettledIn": "Regrouped in {number}",
+  "@invoicePdfSettledIn": {
     "placeholders": {
       "number": {
         "type": "String"
@@ -2549,6 +2575,8 @@
   "featureInvoicingWizardDesc": "One guided month-close process for the finance person: a start-of-month run for the subscriptions paid ahead and an end-of-month run for usage and extra charges — review, issue in one batch, send, remind what is due, register and validate payments, match them to invoices, regroup, write off or refund, and a summary with whose move is left. Off: the separate screens.",
   "featureExpenseRepartitionTitle": "Shared expenses",
   "featureExpenseRepartitionDesc": "A shared expense (a cleaning bill, an internet upgrade, a broken chair) split over the members — equal shares, pro rata of the subscription, pro rata of usage, or a key per member — with every share previewed before it is booked. The shares land as charge lines on the next usage invoice; a reversal books credit notes. Through the validation rules. Off: no distribution.",
+  "featureSettlementFoldTitle": "Regrouped invoices fold",
+  "featureSettlementFoldDesc": "Invoices regrouped into one disappear from the lists as peers and nest under the regrouping invoice, which carries all their lines. On a regrouped invoice every operation is off; the one thing left is its PDF, stamped with the number it was regrouped in. Off: the regrouped invoices stay listed beside the regrouping one.",
   "helpTitle": "Help",
   "helpContents": "Contents",
   "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",

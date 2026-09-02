@@ -26,6 +26,10 @@ sealed class InvoiceLine with _$InvoiceLine {
     /// from it with `vatSplit`. 0 = no VAT (every pre-0072 line, and every
     /// credit — money moving is not a supply).
     @Default(0.0) double vatPercent,
+
+    /// #831 — on a settlement, the number of the source invoice this
+    /// position was carried over from; '' on every other document.
+    @Default('') String sourceNumber,
   }) = _InvoiceLine;
 }
 
@@ -168,6 +172,7 @@ sealed class SettledSource with _$SettledSource {
               quantity: (line['quantity'] as num?)?.toInt() ?? 1,
               amountCents: (line['amount_cents'] as num?)?.toInt() ?? 0,
               vatPercent: (line['vat_percent'] as num?)?.toDouble() ?? 0,
+              sourceNumber: line['source_number'] as String? ?? '',
             ),
         ],
       );
@@ -257,6 +262,10 @@ sealed class Invoice with _$Invoice {
 
   bool get isVoided => voidedAt != null;
 
+  /// #831 — regrouped into a settlement and not voided: documentation
+  /// only, every operation happens on the settlement.
+  bool get isFolded => settledByInvoiceId != null && !isVoided;
+
   /// The breakdown the documents render, one entry per rate.
   ///
   /// The SNAPSHOT wins whenever there is one: it is what the signature
@@ -291,6 +300,7 @@ sealed class Invoice with _$Invoice {
               amountCents: (line['amount_cents'] as num).toInt(),
               vatPercent:
                   (line['vat_percent'] as num?)?.toDouble() ?? 0,
+              sourceNumber: line['source_number'] as String? ?? '',
             ),
         ],
         kind: InvoiceKind.fromWire(row['kind'] as String?),

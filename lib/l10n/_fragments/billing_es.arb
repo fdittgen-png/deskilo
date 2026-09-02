@@ -67,23 +67,67 @@
   "billingUsageWhenZero": "También cuando no hay nada que pagar",
   "billingUsageWhenZeroHint": "Envía un documento a cero, como confirmación de que la suscripción cubrió todo el mes.",
   "@billingSubscriptionWhen": {
-    "placeholders": {"day": {"type": "String"}, "month": {"type": "String"}}
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
   },
   "invoiceKindSubscription": "Suscripción, por adelantado",
   "invoiceKindUsage": "Los extras del mes",
   "invoiceKindSettlement": "Facturas agrupadas",
   "invoiceKindFull": "Mes completo",
   "settlementRegroups": "Esta factura agrupa",
-  "settlementVatNote": "El IVA sigue declarado en las facturas anteriores; este documento solo agrupa lo que se debe.",
+  "settlementVatNote": "Las líneas y su IVA se toman de las facturas reagrupadas; la declaración de IVA cuenta las originales una sola vez.",
   "settlementSettledBy": "Agrupada en otra factura: esa es la que se debe y se reclama.",
   "settlementAction": "Agrupar en una factura",
   "settlementConfirm": "¿Agrupar {count} facturas en una de {amount}?",
   "settlementDone": "Agrupadas en {number}.",
   "settlementNeedsTwo": "Elige al menos dos facturas abiertas del mismo miembro.",
   "@settlementConfirm": {
-    "placeholders": {"count": {"type": "int"}, "amount": {"type": "String"}}
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "@settlementDone": {
-    "placeholders": {"number": {"type": "String"}}
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementFoldedIn": "Reagrupada en {number}",
+  "@settlementFoldedIn": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementDocumentationOnly": "Solo documentación: toda operación se hace en la factura de reagrupación.",
+  "settlementSourcePdf": "PDF (reagrupada)",
+  "settlementRegroupsNumbers": "Reagrupa {numbers}",
+  "@settlementRegroupsNumbers": {
+    "placeholders": {
+      "numbers": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePdfSettledIn": "Reagrupada en {number}",
+  "@invoicePdfSettledIn": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
   }
 }

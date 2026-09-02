@@ -67,23 +67,67 @@
   "billingUsageWhenZero": "Auch wenn nichts zu zahlen ist",
   "billingUsageWhenZeroHint": "Sendet ein Dokument über null — als Bestätigung, dass das Abo den ganzen Monat abgedeckt hat.",
   "@billingSubscriptionWhen": {
-    "placeholders": {"day": {"type": "String"}, "month": {"type": "String"}}
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
   },
   "invoiceKindSubscription": "Abo, im Voraus",
   "invoiceKindUsage": "Zusätze des Monats",
   "invoiceKindSettlement": "Zusammengefasste Rechnungen",
   "invoiceKindFull": "Ganzer Monat",
   "settlementRegroups": "Diese Rechnung fasst zusammen",
-  "settlementVatNote": "Die Umsatzsteuer bleibt auf den obigen Rechnungen ausgewiesen; dieses Dokument fasst nur das Offene zusammen.",
+  "settlementVatNote": "Die Positionen und ihre MwSt. sind aus den zusammengefassten Rechnungen übernommen; die Umsatzsteuererklärung zählt die Originale einmal.",
   "settlementSettledBy": "In eine andere Rechnung zusammengefasst — diese ist das, was geschuldet und angemahnt wird.",
   "settlementAction": "Zu einer Rechnung zusammenfassen",
   "settlementConfirm": "{count} Rechnungen zu einer über {amount} zusammenfassen?",
   "settlementDone": "Zusammengefasst in {number}.",
   "settlementNeedsTwo": "Wähle mindestens zwei offene Rechnungen desselben Mitglieds.",
   "@settlementConfirm": {
-    "placeholders": {"count": {"type": "int"}, "amount": {"type": "String"}}
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "@settlementDone": {
-    "placeholders": {"number": {"type": "String"}}
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementFoldedIn": "Zusammengefasst in {number}",
+  "@settlementFoldedIn": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementDocumentationOnly": "Nur Dokumentation — jede Aktion erfolgt auf der Sammelrechnung.",
+  "settlementSourcePdf": "PDF (zusammengefasst)",
+  "settlementRegroupsNumbers": "Fasst {numbers} zusammen",
+  "@settlementRegroupsNumbers": {
+    "placeholders": {
+      "numbers": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePdfSettledIn": "Zusammengefasst in {number}",
+  "@invoicePdfSettledIn": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
   }
 }

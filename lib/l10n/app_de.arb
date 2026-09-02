@@ -574,7 +574,7 @@
   "invoiceKindSettlement": "Zusammengefasste Rechnungen",
   "invoiceKindFull": "Ganzer Monat",
   "settlementRegroups": "Diese Rechnung fasst zusammen",
-  "settlementVatNote": "Die Umsatzsteuer bleibt auf den obigen Rechnungen ausgewiesen; dieses Dokument fasst nur das Offene zusammen.",
+  "settlementVatNote": "Die Positionen und ihre MwSt. sind aus den zusammengefassten Rechnungen übernommen; die Umsatzsteuererklärung zählt die Originale einmal.",
   "settlementSettledBy": "In eine andere Rechnung zusammengefasst — diese ist das, was geschuldet und angemahnt wird.",
   "settlementAction": "Zu einer Rechnung zusammenfassen",
   "settlementConfirm": "{count} Rechnungen zu einer über {amount} zusammenfassen?",
@@ -591,6 +591,32 @@
     }
   },
   "@settlementDone": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementFoldedIn": "Zusammengefasst in {number}",
+  "@settlementFoldedIn": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementDocumentationOnly": "Nur Dokumentation — jede Aktion erfolgt auf der Sammelrechnung.",
+  "settlementSourcePdf": "PDF (zusammengefasst)",
+  "settlementRegroupsNumbers": "Fasst {numbers} zusammen",
+  "@settlementRegroupsNumbers": {
+    "placeholders": {
+      "numbers": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePdfSettledIn": "Zusammengefasst in {number}",
+  "@invoicePdfSettledIn": {
     "placeholders": {
       "number": {
         "type": "String"
@@ -1361,6 +1387,8 @@
   "featureInvoicingWizardDesc": "Ein geführter Monatsabschluss für die Finanzperson: ein Monatsanfangslauf für die im Voraus bezahlten Abonnements und ein Monatsendlauf für Nutzung und Zusatzkosten — Prüfung, Ausstellung im Stapel, Versand, fällige Mahnungen, Erfassen und Bestätigen von Zahlungen, Zuordnen zu Rechnungen, Zusammenfassen, Abschreiben oder Erstatten, und eine Zusammenfassung mit dem, was offen bleibt und wer am Zug ist. Aus: die einzelnen Bildschirme.",
   "featureExpenseRepartitionTitle": "Gemeinsame Ausgaben",
   "featureExpenseRepartitionDesc": "Eine gemeinsame Ausgabe (Reinigung, schnelleres Internet, ein kaputter Stuhl) auf die Mitglieder verteilt — gleiche Anteile, anteilig zum Abonnement, anteilig zur Nutzung oder ein Schlüssel je Mitglied — jeder Anteil vor der Buchung in der Vorschau. Die Anteile werden Positionen der nächsten Nutzungsrechnung; eine Umkehrung bucht Gutschriften. Läuft über die Bestätigungsregeln. Aus: keine Verteilung.",
+  "featureSettlementFoldTitle": "Zusammengefasste Rechnungen eingeklappt",
+  "featureSettlementFoldDesc": "Zu einer zusammengefasste Rechnungen verschwinden als eigene Zeilen aus den Listen und ordnen sich unter der Sammelrechnung ein, die alle ihre Positionen trägt. Auf einer zusammengefassten Rechnung ist jede Aktion aus; es bleibt nur ihr PDF, gestempelt mit der Nummer, in der sie aufging. Aus: die zusammengefassten Rechnungen bleiben neben der Sammelrechnung gelistet.",
   "helpTitle": "Hilfe",
   "helpContents": "Inhalt",
   "helpHintMessages": "Alle Unterhaltungen in einer Liste, die neueste oben. Tippen Sie auf den Stift, um jemandem zu schreiben oder eine Gruppe zu erstellen.",

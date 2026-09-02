@@ -932,7 +932,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settlementVatNote =>
-      'L\'IVA resta dichiarata sulle fatture qui sopra; questo documento raggruppa solo il dovuto.';
+      'Le righe e la loro IVA sono riprese dalle fatture raggruppate; la dichiarazione IVA conta gli originali una sola volta.';
 
   @override
   String get settlementSettledBy =>
@@ -954,6 +954,28 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settlementNeedsTwo =>
       'Scegli almeno due fatture aperte dello stesso membro.';
+
+  @override
+  String settlementFoldedIn(String number) {
+    return 'Raggruppata in $number';
+  }
+
+  @override
+  String get settlementDocumentationOnly =>
+      'Solo documentazione: ogni operazione avviene sulla fattura di raggruppamento.';
+
+  @override
+  String get settlementSourcePdf => 'PDF (raggruppata)';
+
+  @override
+  String settlementRegroupsNumbers(String numbers) {
+    return 'Raggruppa $numbers';
+  }
+
+  @override
+  String invoicePdfSettledIn(String number) {
+    return 'Raggruppata in $number';
+  }
 
   @override
   String get reservationExtendButton => 'Restare più a lungo';
@@ -2328,6 +2350,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featureExpenseRepartitionDesc =>
       'Una spesa comune (pulizie, potenziamento internet, una sedia rotta) ripartita tra i membri — quote uguali, in proporzione all\'abbonamento, in proporzione all\'utilizzo o una chiave per membro — con ogni quota in anteprima prima della registrazione. Le quote diventano righe della prossima fattura di utilizzo; uno storno genera note di credito. Passa dalle regole di convalida. Disattivato: nessuna ripartizione.';
+
+  @override
+  String get featureSettlementFoldTitle => 'Fatture raggruppate ripiegate';
+
+  @override
+  String get featureSettlementFoldDesc =>
+      'Le fatture raggruppate in una scompaiono dalle liste come pari e si annidano sotto la fattura di raggruppamento, che porta tutte le loro righe. Su una fattura raggruppata ogni operazione è disattivata; resta solo il suo PDF, timbrato con il numero in cui è stata raggruppata. Disattivato: le fatture raggruppate restano elencate accanto a quella di raggruppamento.';
 
   @override
   String get helpTitle => 'Aiuto';

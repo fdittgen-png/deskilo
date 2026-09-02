@@ -574,7 +574,7 @@
   "invoiceKindSettlement": "Facturas agrupadas",
   "invoiceKindFull": "Mes completo",
   "settlementRegroups": "Esta factura agrupa",
-  "settlementVatNote": "El IVA sigue declarado en las facturas anteriores; este documento solo agrupa lo que se debe.",
+  "settlementVatNote": "Las líneas y su IVA se toman de las facturas reagrupadas; la declaración de IVA cuenta las originales una sola vez.",
   "settlementSettledBy": "Agrupada en otra factura: esa es la que se debe y se reclama.",
   "settlementAction": "Agrupar en una factura",
   "settlementConfirm": "¿Agrupar {count} facturas en una de {amount}?",
@@ -591,6 +591,32 @@
     }
   },
   "@settlementDone": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementFoldedIn": "Reagrupada en {number}",
+  "@settlementFoldedIn": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementDocumentationOnly": "Solo documentación: toda operación se hace en la factura de reagrupación.",
+  "settlementSourcePdf": "PDF (reagrupada)",
+  "settlementRegroupsNumbers": "Reagrupa {numbers}",
+  "@settlementRegroupsNumbers": {
+    "placeholders": {
+      "numbers": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePdfSettledIn": "Reagrupada en {number}",
+  "@invoicePdfSettledIn": {
     "placeholders": {
       "number": {
         "type": "String"
@@ -1361,6 +1387,8 @@
   "featureInvoicingWizardDesc": "Un proceso guiado de cierre mensual para la persona de finanzas: una pasada de inicio de mes para las suscripciones pagadas por adelantado y otra de fin de mes para el uso y los cargos adicionales — revisión, emisión en lote, envío, recordatorios vencidos, registro y validación de pagos, conciliación con facturas, reagrupación, anulación o reembolso, y un resumen con lo que queda y a quién le toca. Desactivado: las pantallas separadas.",
   "featureExpenseRepartitionTitle": "Gastos compartidos",
   "featureExpenseRepartitionDesc": "Un gasto común (limpieza, mejora de internet, una silla rota) repartido entre los socios — partes iguales, prorrata de la suscripción, prorrata del uso o una clave por socio — con cada parte previsualizada antes de contabilizarse. Las partes se convierten en líneas de la próxima factura de uso; una reversión genera notas de crédito. Pasa por las reglas de validación. Desactivado: sin reparto.",
+  "featureSettlementFoldTitle": "Facturas reagrupadas plegadas",
+  "featureSettlementFoldDesc": "Las facturas reagrupadas en una desaparecen de las listas como iguales y se anidan bajo la factura de reagrupación, que lleva todas sus líneas. En una factura reagrupada toda operación está desactivada; solo queda su PDF, sellado con el número en que se reagrupó. Desactivado: las facturas reagrupadas siguen listadas junto a la de reagrupación.",
   "helpTitle": "Ayuda",
   "helpContents": "Índice",
   "helpHintMessages": "Todas las conversaciones en una lista, la más reciente arriba. Toque el lápiz para escribir a alguien o crear un grupo.",

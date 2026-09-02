@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'billing_rules.dart';
 import 'invoice.dart';
 
 /// Sage 50's **audit-trail CSV** (#669) — the import shape the British
@@ -114,6 +115,8 @@ String buildSageFile({
     // It is not silently dropped either — the audit trail export carries
     // it, which is the file that is supposed to show what happened.
     if (invoice.isVoided) continue;
+    // #831 — a settlement regroups booked revenue.
+    if (invoice.kind == InvoiceKind.settlement) continue;
 
     final customer = customerRef(invoice);
     // The tax split comes from the invoice's own 0072 snapshot, which is

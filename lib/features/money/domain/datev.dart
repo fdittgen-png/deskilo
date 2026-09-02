@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'billing_rules.dart';
 import 'invoice.dart';
 
 /// DATEV-Format **EXTF Buchungsstapel** (#669) — the file a German or
@@ -159,6 +160,8 @@ String buildDatevFile({
 
   for (final invoice in invoices) {
     if (invoice.isVoided) continue; // a cancelled invoice was never booked
+    // #831 — a settlement regroups booked revenue; booking it again doubles it.
+    if (invoice.kind == InvoiceKind.settlement) continue;
     // Receivable against revenue, at the GROSS amount — DATEV derives
     // the tax split from the BU-Schlüssel/Steuersatz on the revenue
     // account, which is the accountant's configuration, not ours.

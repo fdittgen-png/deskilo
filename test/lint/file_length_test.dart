@@ -238,7 +238,8 @@ const Map<String, int> _baseline = {
   // 790→820 (2026-08-04): #472 the banded LETTER builder.
   // 820→840 (2026-08-05): #482 the side-by-side ReportColumns renderer.
   // 840→860 (2026-08-05): #488 the ReportImage renderer branch.
-  'lib/features/money/domain/invoice_pdf.dart': 875, // 2026-09-02 #822 image size/alignment
+  'lib/features/money/domain/invoice_pdf.dart': 920, // 2026-09-02 #831 source groups + watermark helper
+  'lib/features/money/presentation/widgets/invoice_detail_sheet.dart': 640, // 2026-09-02 #831 folded banner // 2026-09-02 #822 image size/alignment
   // 670→680 (2026-08-04): #446 out-of-shell WorkHours install — the
   // kiosk arms the ambient working day itself, like realtime (#430).
   // 680→690: #462 whole-space overlays on the wall display.

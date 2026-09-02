@@ -18,7 +18,9 @@ mixin _$InvoiceLine {
 /// INCLUSIVE, so [amountCents] is the gross and the tax is extracted
 /// from it with `vatSplit`. 0 = no VAT (every pre-0072 line, and every
 /// credit — money moving is not a supply).
- double get vatPercent;
+ double get vatPercent;/// #831 — on a settlement, the number of the source invoice this
+/// position was carried over from; '' on every other document.
+ String get sourceNumber;
 /// Create a copy of InvoiceLine
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +31,16 @@ $InvoiceLineCopyWith<InvoiceLine> get copyWith => _$InvoiceLineCopyWithImpl<Invo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is InvoiceLine&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.label, label) || other.label == label)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents)&&(identical(other.vatPercent, vatPercent) || other.vatPercent == vatPercent));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is InvoiceLine&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.label, label) || other.label == label)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents)&&(identical(other.vatPercent, vatPercent) || other.vatPercent == vatPercent)&&(identical(other.sourceNumber, sourceNumber) || other.sourceNumber == sourceNumber));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,kind,label,quantity,amountCents,vatPercent);
+int get hashCode => Object.hash(runtimeType,kind,label,quantity,amountCents,vatPercent,sourceNumber);
 
 @override
 String toString() {
-  return 'InvoiceLine(kind: $kind, label: $label, quantity: $quantity, amountCents: $amountCents, vatPercent: $vatPercent)';
+  return 'InvoiceLine(kind: $kind, label: $label, quantity: $quantity, amountCents: $amountCents, vatPercent: $vatPercent, sourceNumber: $sourceNumber)';
 }
 
 
@@ -49,7 +51,7 @@ abstract mixin class $InvoiceLineCopyWith<$Res>  {
   factory $InvoiceLineCopyWith(InvoiceLine value, $Res Function(InvoiceLine) _then) = _$InvoiceLineCopyWithImpl;
 @useResult
 $Res call({
- String kind, String label, int quantity, int amountCents, double vatPercent
+ String kind, String label, int quantity, int amountCents, double vatPercent, String sourceNumber
 });
 
 
@@ -66,14 +68,15 @@ class _$InvoiceLineCopyWithImpl<$Res>
 
 /// Create a copy of InvoiceLine
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? kind = null,Object? label = null,Object? quantity = null,Object? amountCents = null,Object? vatPercent = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? kind = null,Object? label = null,Object? quantity = null,Object? amountCents = null,Object? vatPercent = null,Object? sourceNumber = null,}) {
   return _then(_self.copyWith(
 kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
 as String,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
 as String,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
 as int,amountCents: null == amountCents ? _self.amountCents : amountCents // ignore: cast_nullable_to_non_nullable
 as int,vatPercent: null == vatPercent ? _self.vatPercent : vatPercent // ignore: cast_nullable_to_non_nullable
-as double,
+as double,sourceNumber: null == sourceNumber ? _self.sourceNumber : sourceNumber // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -155,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String kind,  String label,  int quantity,  int amountCents,  double vatPercent)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String kind,  String label,  int quantity,  int amountCents,  double vatPercent,  String sourceNumber)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _InvoiceLine() when $default != null:
-return $default(_that.kind,_that.label,_that.quantity,_that.amountCents,_that.vatPercent);case _:
+return $default(_that.kind,_that.label,_that.quantity,_that.amountCents,_that.vatPercent,_that.sourceNumber);case _:
   return orElse();
 
 }
@@ -176,10 +179,10 @@ return $default(_that.kind,_that.label,_that.quantity,_that.amountCents,_that.va
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String kind,  String label,  int quantity,  int amountCents,  double vatPercent)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String kind,  String label,  int quantity,  int amountCents,  double vatPercent,  String sourceNumber)  $default,) {final _that = this;
 switch (_that) {
 case _InvoiceLine():
-return $default(_that.kind,_that.label,_that.quantity,_that.amountCents,_that.vatPercent);}
+return $default(_that.kind,_that.label,_that.quantity,_that.amountCents,_that.vatPercent,_that.sourceNumber);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -193,10 +196,10 @@ return $default(_that.kind,_that.label,_that.quantity,_that.amountCents,_that.va
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String kind,  String label,  int quantity,  int amountCents,  double vatPercent)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String kind,  String label,  int quantity,  int amountCents,  double vatPercent,  String sourceNumber)?  $default,) {final _that = this;
 switch (_that) {
 case _InvoiceLine() when $default != null:
-return $default(_that.kind,_that.label,_that.quantity,_that.amountCents,_that.vatPercent);case _:
+return $default(_that.kind,_that.label,_that.quantity,_that.amountCents,_that.vatPercent,_that.sourceNumber);case _:
   return null;
 
 }
@@ -208,7 +211,7 @@ return $default(_that.kind,_that.label,_that.quantity,_that.amountCents,_that.va
 
 
 class _InvoiceLine implements InvoiceLine {
-  const _InvoiceLine({this.kind = '', required this.label, this.quantity = 1, required this.amountCents, this.vatPercent = 0.0});
+  const _InvoiceLine({this.kind = '', required this.label, this.quantity = 1, required this.amountCents, this.vatPercent = 0.0, this.sourceNumber = ''});
   
 
 @override@JsonKey() final  String kind;
@@ -220,6 +223,9 @@ class _InvoiceLine implements InvoiceLine {
 /// from it with `vatSplit`. 0 = no VAT (every pre-0072 line, and every
 /// credit — money moving is not a supply).
 @override@JsonKey() final  double vatPercent;
+/// #831 — on a settlement, the number of the source invoice this
+/// position was carried over from; '' on every other document.
+@override@JsonKey() final  String sourceNumber;
 
 /// Create a copy of InvoiceLine
 /// with the given fields replaced by the non-null parameter values.
@@ -231,16 +237,16 @@ _$InvoiceLineCopyWith<_InvoiceLine> get copyWith => __$InvoiceLineCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InvoiceLine&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.label, label) || other.label == label)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents)&&(identical(other.vatPercent, vatPercent) || other.vatPercent == vatPercent));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InvoiceLine&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.label, label) || other.label == label)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents)&&(identical(other.vatPercent, vatPercent) || other.vatPercent == vatPercent)&&(identical(other.sourceNumber, sourceNumber) || other.sourceNumber == sourceNumber));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,kind,label,quantity,amountCents,vatPercent);
+int get hashCode => Object.hash(runtimeType,kind,label,quantity,amountCents,vatPercent,sourceNumber);
 
 @override
 String toString() {
-  return 'InvoiceLine(kind: $kind, label: $label, quantity: $quantity, amountCents: $amountCents, vatPercent: $vatPercent)';
+  return 'InvoiceLine(kind: $kind, label: $label, quantity: $quantity, amountCents: $amountCents, vatPercent: $vatPercent, sourceNumber: $sourceNumber)';
 }
 
 
@@ -251,7 +257,7 @@ abstract mixin class _$InvoiceLineCopyWith<$Res> implements $InvoiceLineCopyWith
   factory _$InvoiceLineCopyWith(_InvoiceLine value, $Res Function(_InvoiceLine) _then) = __$InvoiceLineCopyWithImpl;
 @override @useResult
 $Res call({
- String kind, String label, int quantity, int amountCents, double vatPercent
+ String kind, String label, int quantity, int amountCents, double vatPercent, String sourceNumber
 });
 
 
@@ -268,14 +274,15 @@ class __$InvoiceLineCopyWithImpl<$Res>
 
 /// Create a copy of InvoiceLine
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? kind = null,Object? label = null,Object? quantity = null,Object? amountCents = null,Object? vatPercent = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? kind = null,Object? label = null,Object? quantity = null,Object? amountCents = null,Object? vatPercent = null,Object? sourceNumber = null,}) {
   return _then(_InvoiceLine(
 kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
 as String,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
 as String,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
 as int,amountCents: null == amountCents ? _self.amountCents : amountCents // ignore: cast_nullable_to_non_nullable
 as int,vatPercent: null == vatPercent ? _self.vatPercent : vatPercent // ignore: cast_nullable_to_non_nullable
-as double,
+as double,sourceNumber: null == sourceNumber ? _self.sourceNumber : sourceNumber // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

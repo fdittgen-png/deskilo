@@ -127,7 +127,11 @@ enum WorkspaceFeature {
 
   /// #828 — shared expenses distributed over the members, reversals as
   /// credit notes.
-  expenseRepartition;
+  expenseRepartition,
+
+  /// #831 — settled sources fold under their settlement: documentation
+  /// only, a stamped PDF the one affordance left.
+  settlementFold;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -424,6 +428,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.expenseRepartition: FeatureManifestEntry(
     feature: WorkspaceFeature.expenseRepartition,
     requires: WorkspaceFeature.invoicing,
+  ),
+  // #831 — the fold of settled sources under their settlement.
+  WorkspaceFeature.settlementFold: FeatureManifestEntry(
+    feature: WorkspaceFeature.settlementFold,
+    requires: WorkspaceFeature.invoiceSettlement,
   ),
   // #719 — "who accessed my data": the server-written log of reads of
   // another member's finances, shown to the subject. OFF hides the row;

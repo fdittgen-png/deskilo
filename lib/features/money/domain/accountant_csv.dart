@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'billing_rules.dart';
 import 'invoice.dart';
 
 /// A plain, self-describing CSV of the period's invoices and settlements
@@ -85,6 +86,8 @@ String buildAccountantCsv({
     // number that will otherwise look like a gap in the sequence, and a
     // gap is the first thing an inspector asks about. Their value is
     // shown as issued and their voided_on says what became of them.
+    // #831 — a settlement regroups invoices already on this list.
+    if (invoice.kind == InvoiceKind.settlement) continue;
     buffer.writeln([
       q(invoice.number),
       day(invoice.issuedAt),

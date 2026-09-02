@@ -574,7 +574,7 @@
   "invoiceKindSettlement": "Fatture raggruppate",
   "invoiceKindFull": "Mese intero",
   "settlementRegroups": "Questa fattura raggruppa",
-  "settlementVatNote": "L'IVA resta dichiarata sulle fatture qui sopra; questo documento raggruppa solo il dovuto.",
+  "settlementVatNote": "Le righe e la loro IVA sono riprese dalle fatture raggruppate; la dichiarazione IVA conta gli originali una sola volta.",
   "settlementSettledBy": "Raggruppata in un’altra fattura: è quella a essere dovuta e sollecitata.",
   "settlementAction": "Raggruppa in una fattura",
   "settlementConfirm": "Raggruppare {count} fatture in una da {amount}?",
@@ -591,6 +591,32 @@
     }
   },
   "@settlementDone": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementFoldedIn": "Raggruppata in {number}",
+  "@settlementFoldedIn": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementDocumentationOnly": "Solo documentazione: ogni operazione avviene sulla fattura di raggruppamento.",
+  "settlementSourcePdf": "PDF (raggruppata)",
+  "settlementRegroupsNumbers": "Raggruppa {numbers}",
+  "@settlementRegroupsNumbers": {
+    "placeholders": {
+      "numbers": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePdfSettledIn": "Raggruppata in {number}",
+  "@invoicePdfSettledIn": {
     "placeholders": {
       "number": {
         "type": "String"
@@ -1361,6 +1387,8 @@
   "featureInvoicingWizardDesc": "Un processo guidato di chiusura mensile per chi cura le finanze: un giro di inizio mese per gli abbonamenti pagati in anticipo e uno di fine mese per consumi e costi aggiuntivi — revisione, emissione in blocco, invio, solleciti dovuti, registrazione e convalida dei pagamenti, abbinamento alle fatture, raggruppamento, stralcio o rimborso, e un riepilogo con ciò che resta aperto e a chi tocca. Disattivato: le schermate separate.",
   "featureExpenseRepartitionTitle": "Spese condivise",
   "featureExpenseRepartitionDesc": "Una spesa comune (pulizie, potenziamento internet, una sedia rotta) ripartita tra i membri — quote uguali, in proporzione all'abbonamento, in proporzione all'utilizzo o una chiave per membro — con ogni quota in anteprima prima della registrazione. Le quote diventano righe della prossima fattura di utilizzo; uno storno genera note di credito. Passa dalle regole di convalida. Disattivato: nessuna ripartizione.",
+  "featureSettlementFoldTitle": "Fatture raggruppate ripiegate",
+  "featureSettlementFoldDesc": "Le fatture raggruppate in una scompaiono dalle liste come pari e si annidano sotto la fattura di raggruppamento, che porta tutte le loro righe. Su una fattura raggruppata ogni operazione è disattivata; resta solo il suo PDF, timbrato con il numero in cui è stata raggruppata. Disattivato: le fatture raggruppate restano elencate accanto a quella di raggruppamento.",
   "helpHintLearnMore": "Scopri di più",
   "helpHintDismiss": "Nascondi suggerimento",
   "helpHintPrevTip": "Suggerimento precedente",
