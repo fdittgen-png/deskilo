@@ -308,5 +308,7 @@
   "featureInvoiceJourneyTitle": "The journey of an invoice",
   "featureInvoiceJourneyDesc": "Every invoice shows where it stands — Issued, Payment, Confirmation, Closed — and whose move it is: the member pays, an admin confirms the declared payment, the issuer matches it, the validators decide. The issuers' hub adds a stage strip with live counts and a How-it-works explainer.",
   "featureBookingGateTitle": "Booking gate",
-  "featureBookingGateDesc": "Every booking surface — plan, day, week and month views, the booking sheet, the kiosk, a QR or NFC scan — checks the availability parameters before offering a window and names the reason when it cannot; closed days draw as closed in every view, a legend names the seat states, and admins may check members out where the policy allows."
+  "featureBookingGateDesc": "Every booking surface — plan, day, week and month views, the booking sheet, the kiosk, a QR or NFC scan — checks the availability parameters before offering a window and names the reason when it cannot; closed days draw as closed in every view, a legend names the seat states, and admins may check members out where the policy allows.",
+  "featureCalendarViewsTitle": "Calendar views",
+  "featureCalendarViewsDesc": "The Calendar tab as agenda, week and month: per-day markers by kind, closed days drawn as closed, Today / Tomorrow headers, payment due dates and scheduled expenses in the feed. Off: the plain day-or-range selector over the feed."
 }

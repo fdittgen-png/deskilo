@@ -2084,6 +2084,126 @@ abstract class AppLocalizations {
   /// **'You, the owners and the finance admins: {people}. Every read by someone else is on the record below.'**
   String accessRuleNegotiations(String people);
 
+  /// No description provided for @calendarViewAgenda.
+  ///
+  /// In en, this message translates to:
+  /// **'Agenda'**
+  String get calendarViewAgenda;
+
+  /// No description provided for @calendarViewWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get calendarViewWeek;
+
+  /// No description provided for @calendarViewMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get calendarViewMonth;
+
+  /// No description provided for @calendarToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get calendarToday;
+
+  /// No description provided for @calendarTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get calendarTomorrow;
+
+  /// No description provided for @calendarYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get calendarYesterday;
+
+  /// No description provided for @calendarKindDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments due'**
+  String get calendarKindDue;
+
+  /// No description provided for @calendarKindScheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled expenses'**
+  String get calendarKindScheduled;
+
+  /// No description provided for @calendarDueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment due · {number}'**
+  String calendarDueTitle(String number);
+
+  /// No description provided for @calendarScheduledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled expense · {name}'**
+  String calendarScheduledTitle(String name);
+
+  /// No description provided for @calendarClosedDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get calendarClosedDay;
+
+  /// No description provided for @calendarClosedDayReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed — {reason}'**
+  String calendarClosedDayReason(String reason);
+
+  /// No description provided for @calendarGroupBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings & presence'**
+  String get calendarGroupBookings;
+
+  /// No description provided for @calendarGroupActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Alerts & messages'**
+  String get calendarGroupActivity;
+
+  /// No description provided for @calendarGroupMoney.
+  ///
+  /// In en, this message translates to:
+  /// **'Money'**
+  String get calendarGroupMoney;
+
+  /// No description provided for @calendarAgendaEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing planned in the next {days} days.'**
+  String calendarAgendaEmpty(int days);
+
+  /// No description provided for @calendarAgendaRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Next {days} days'**
+  String calendarAgendaRange(int days);
+
+  /// No description provided for @calendarWeekEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing this week.'**
+  String get calendarWeekEmpty;
+
+  /// No description provided for @calendarDayEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing on this day.'**
+  String get calendarDayEmpty;
+
+  /// No description provided for @calendarItemCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} items'**
+  String calendarItemCount(int count);
+
   /// Application name shown in the task switcher and app bar. Brand name — identical in all locales.
   ///
   /// In en, this message translates to:
@@ -3805,6 +3925,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Every booking surface — plan, day, week and month views, the booking sheet, the kiosk, a QR or NFC scan — checks the availability parameters before offering a window and names the reason when it cannot; closed days draw as closed in every view, a legend names the seat states, and admins may check members out where the policy allows.'**
   String get featureBookingGateDesc;
+
+  /// No description provided for @featureCalendarViewsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar views'**
+  String get featureCalendarViewsTitle;
+
+  /// No description provided for @featureCalendarViewsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'The Calendar tab as agenda, week and month: per-day markers by kind, closed days drawn as closed, Today / Tomorrow headers, payment due dates and scheduled expenses in the feed. Off: the plain day-or-range selector over the feed.'**
+  String get featureCalendarViewsDesc;
 
   /// No description provided for @helpTitle.
   ///

@@ -223,6 +223,9 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.invoiceSettlement =>
           l10n?.featureInvoiceSettlementDesc ??
               'Several of a member\'s open invoices can be regrouped into one they pay. The originals stay in the archive, traceable position by position, and stop being chased separately.',
+        WorkspaceFeature.calendarViews =>
+          l10n?.featureCalendarViewsDesc ??
+              'The Calendar tab as agenda, week and month: per-day markers by kind, closed days drawn as closed, Today / Tomorrow headers, payment due dates and scheduled expenses in the feed. Off: the plain day-or-range selector over the feed.',
         WorkspaceFeature.bookingGate =>
           l10n?.featureBookingGateDesc ??
               'Every booking surface — plan, day, week and month views, the booking sheet, the kiosk, a QR or NFC scan — checks the availability parameters before offering a window and names the reason when it cannot; closed days draw as closed in every view, a legend names the seat states, and admins may check members out where the policy allows.',

@@ -1151,6 +1151,78 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get calendarViewAgenda => 'Agenda';
+
+  @override
+  String get calendarViewWeek => 'Settimana';
+
+  @override
+  String get calendarViewMonth => 'Mese';
+
+  @override
+  String get calendarToday => 'Oggi';
+
+  @override
+  String get calendarTomorrow => 'Domani';
+
+  @override
+  String get calendarYesterday => 'Ieri';
+
+  @override
+  String get calendarKindDue => 'Scadenze';
+
+  @override
+  String get calendarKindScheduled => 'Spese programmate';
+
+  @override
+  String calendarDueTitle(String number) {
+    return 'Scadenza · $number';
+  }
+
+  @override
+  String calendarScheduledTitle(String name) {
+    return 'Spesa programmata · $name';
+  }
+
+  @override
+  String get calendarClosedDay => 'Chiuso';
+
+  @override
+  String calendarClosedDayReason(String reason) {
+    return 'Chiuso — $reason';
+  }
+
+  @override
+  String get calendarGroupBookings => 'Prenotazioni e presenza';
+
+  @override
+  String get calendarGroupActivity => 'Avvisi e messaggi';
+
+  @override
+  String get calendarGroupMoney => 'Finanze';
+
+  @override
+  String calendarAgendaEmpty(int days) {
+    return 'Niente in programma nei prossimi $days giorni.';
+  }
+
+  @override
+  String calendarAgendaRange(int days) {
+    return 'Prossimi $days giorni';
+  }
+
+  @override
+  String get calendarWeekEmpty => 'Niente questa settimana.';
+
+  @override
+  String get calendarDayEmpty => 'Niente in questo giorno.';
+
+  @override
+  String calendarItemCount(int count) {
+    return '$count elementi';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -2135,6 +2207,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featureBookingGateDesc =>
       'Ogni superficie di prenotazione — piano, viste giorno, settimana e mese, foglio di prenotazione, chiosco, scansione QR o NFC — verifica i parametri di disponibilità prima di offrire una fascia e nomina il motivo quando non può; i giorni chiusi si mostrano chiusi in ogni vista, una legenda nomina gli stati dei posti, e gli admin possono fare il check-out di un membro dove la regola lo consente.';
+
+  @override
+  String get featureCalendarViewsTitle => 'Viste del calendario';
+
+  @override
+  String get featureCalendarViewsDesc =>
+      'La scheda Calendario come agenda, settimana e mese: indicatori per giorno secondo il tipo, giorni chiusi mostrati chiusi, intestazioni Oggi / Domani, scadenze di pagamento e spese programmate nel feed. Disattivato: il semplice selettore giorno o intervallo sopra il feed.';
 
   @override
   String get helpTitle => 'Aiuto';

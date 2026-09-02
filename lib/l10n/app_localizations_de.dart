@@ -1149,6 +1149,78 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get calendarViewAgenda => 'Agenda';
+
+  @override
+  String get calendarViewWeek => 'Woche';
+
+  @override
+  String get calendarViewMonth => 'Monat';
+
+  @override
+  String get calendarToday => 'Heute';
+
+  @override
+  String get calendarTomorrow => 'Morgen';
+
+  @override
+  String get calendarYesterday => 'Gestern';
+
+  @override
+  String get calendarKindDue => 'Fällige Zahlungen';
+
+  @override
+  String get calendarKindScheduled => 'Geplante Ausgaben';
+
+  @override
+  String calendarDueTitle(String number) {
+    return 'Zahlung fällig · $number';
+  }
+
+  @override
+  String calendarScheduledTitle(String name) {
+    return 'Geplante Ausgabe · $name';
+  }
+
+  @override
+  String get calendarClosedDay => 'Geschlossen';
+
+  @override
+  String calendarClosedDayReason(String reason) {
+    return 'Geschlossen — $reason';
+  }
+
+  @override
+  String get calendarGroupBookings => 'Buchungen & Anwesenheit';
+
+  @override
+  String get calendarGroupActivity => 'Hinweise & Nachrichten';
+
+  @override
+  String get calendarGroupMoney => 'Finanzen';
+
+  @override
+  String calendarAgendaEmpty(int days) {
+    return 'Nichts geplant in den nächsten $days Tagen.';
+  }
+
+  @override
+  String calendarAgendaRange(int days) {
+    return 'Nächste $days Tage';
+  }
+
+  @override
+  String get calendarWeekEmpty => 'Nichts in dieser Woche.';
+
+  @override
+  String get calendarDayEmpty => 'Nichts an diesem Tag.';
+
+  @override
+  String calendarItemCount(int count) {
+    return '$count Einträge';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -2132,6 +2204,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureBookingGateDesc =>
       'Jede Buchungsfläche — Plan, Tages-, Wochen- und Monatsansicht, Buchungsblatt, Kiosk, QR- oder NFC-Scan — prüft die Verfügbarkeitsparameter, bevor sie ein Zeitfenster anbietet, und nennt den Grund, wenn sie es nicht kann; geschlossene Tage erscheinen in jeder Ansicht geschlossen, eine Legende benennt die Platzzustände, und Admins dürfen Mitglieder auschecken, wo die Regel es erlaubt.';
+
+  @override
+  String get featureCalendarViewsTitle => 'Kalenderansichten';
+
+  @override
+  String get featureCalendarViewsDesc =>
+      'Der Kalender-Tab als Agenda, Woche und Monat: Tagesmarker nach Art, geschlossene Tage als geschlossen, Kopfzeilen Heute / Morgen, Zahlungsfälligkeiten und geplante Ausgaben im Feed. Aus: der schlichte Tag-oder-Zeitraum-Wähler über dem Feed.';
 
   @override
   String get helpTitle => 'Hilfe';

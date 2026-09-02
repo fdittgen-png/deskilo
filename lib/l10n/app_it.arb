@@ -768,6 +768,68 @@
   "calendarEventStatusExpired": "scaduto",
   "accessKindNegotiations": "Negoziazioni di prezzo",
   "accessRuleNegotiations": "Tu, i proprietari e gli admin finanze: {people}. Ogni lettura da parte di altri è registrata qui sotto.",
+  "calendarViewAgenda": "Agenda",
+  "calendarViewWeek": "Settimana",
+  "calendarViewMonth": "Mese",
+  "calendarToday": "Oggi",
+  "calendarTomorrow": "Domani",
+  "calendarYesterday": "Ieri",
+  "calendarKindDue": "Scadenze",
+  "calendarKindScheduled": "Spese programmate",
+  "calendarDueTitle": "Scadenza · {number}",
+  "@calendarDueTitle": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarScheduledTitle": "Spesa programmata · {name}",
+  "@calendarScheduledTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarClosedDay": "Chiuso",
+  "calendarClosedDayReason": "Chiuso — {reason}",
+  "@calendarClosedDayReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarGroupBookings": "Prenotazioni e presenza",
+  "calendarGroupActivity": "Avvisi e messaggi",
+  "calendarGroupMoney": "Finanze",
+  "calendarAgendaEmpty": "Niente in programma nei prossimi {days} giorni.",
+  "@calendarAgendaEmpty": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "calendarAgendaRange": "Prossimi {days} giorni",
+  "@calendarAgendaRange": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "calendarWeekEmpty": "Niente questa settimana.",
+  "calendarDayEmpty": "Niente in questo giorno.",
+  "calendarItemCount": "{count} elementi",
+  "@calendarItemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "appTitle": "DesKilo",
   "tabPlan": "Piantina",
   "tabCalendar": "Calendario",
@@ -1203,6 +1265,8 @@
   "featureInvoiceJourneyDesc": "Ogni fattura mostra dove si trova — Emessa, Pagamento, Conferma, Chiusa — e a chi tocca: il membro paga, un admin conferma il pagamento dichiarato, l'emittente lo abbina, i validatori decidono. L'hub degli emittenti aggiunge una barra delle fasi con i contatori e una spiegazione «Come funziona».",
   "featureBookingGateTitle": "Controllo prenotazione",
   "featureBookingGateDesc": "Ogni superficie di prenotazione — piano, viste giorno, settimana e mese, foglio di prenotazione, chiosco, scansione QR o NFC — verifica i parametri di disponibilità prima di offrire una fascia e nomina il motivo quando non può; i giorni chiusi si mostrano chiusi in ogni vista, una legenda nomina gli stati dei posti, e gli admin possono fare il check-out di un membro dove la regola lo consente.",
+  "featureCalendarViewsTitle": "Viste del calendario",
+  "featureCalendarViewsDesc": "La scheda Calendario come agenda, settimana e mese: indicatori per giorno secondo il tipo, giorni chiusi mostrati chiusi, intestazioni Oggi / Domani, scadenze di pagamento e spese programmate nel feed. Disattivato: il semplice selettore giorno o intervallo sopra il feed.",
   "helpHintLearnMore": "Scopri di più",
   "helpHintDismiss": "Nascondi suggerimento",
   "helpHintPrevTip": "Suggerimento precedente",

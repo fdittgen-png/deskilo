@@ -20,6 +20,25 @@ IconData calendarKindIcon(CalendarKind kind) => switch (kind) {
       CalendarKind.payment => Icons.payments_outlined,
       CalendarKind.consumption => Icons.local_cafe_outlined,
       CalendarKind.reminder => Icons.alarm_outlined,
+      CalendarKind.due => Icons.event_available_outlined,
+      CalendarKind.scheduled => Icons.event_repeat_outlined,
+    };
+
+/// #818 — the group's colour, the same on the grid marker and the row.
+Color calendarGroupColor(ColorScheme scheme, CalendarGroup group) =>
+    switch (group) {
+      CalendarGroup.bookings => scheme.primary,
+      CalendarGroup.activity => scheme.tertiary,
+      CalendarGroup.money => scheme.secondary,
+    };
+
+String calendarGroupLabel(AppLocalizations? l10n, CalendarGroup group) =>
+    switch (group) {
+      CalendarGroup.bookings =>
+        l10n?.calendarGroupBookings ?? 'Bookings & presence',
+      CalendarGroup.activity =>
+        l10n?.calendarGroupActivity ?? 'Alerts & messages',
+      CalendarGroup.money => l10n?.calendarGroupMoney ?? 'Money',
     };
 
 String calendarKindLabel(AppLocalizations? l10n, CalendarKind kind) =>
@@ -33,6 +52,9 @@ String calendarKindLabel(AppLocalizations? l10n, CalendarKind kind) =>
       CalendarKind.payment => l10n?.calendarKindPayment ?? 'Payments',
       CalendarKind.consumption => l10n?.calendarKindConsumption ?? 'Consumption',
       CalendarKind.reminder => l10n?.calendarKindReminder ?? 'Reminders',
+      CalendarKind.due => l10n?.calendarKindDue ?? 'Payments due',
+      CalendarKind.scheduled =>
+        l10n?.calendarKindScheduled ?? 'Scheduled expenses',
     };
 
 /// One row of the hub's feed (#718): kind icon, what, who, when, and a
@@ -43,11 +65,16 @@ class CalendarItemRow extends ConsumerWidget {
     required this.item,
     required this.memberName,
     required this.onTap,
+    this.coloured = false,
   });
 
   final CalendarItem item;
   final String memberName;
   final VoidCallback onTap;
+
+  /// #818 — the leading icon in its group's colour (the views), else
+  /// the plain icon the hub always drew.
+  final bool coloured;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -62,6 +89,11 @@ class CalendarItemRow extends ConsumerWidget {
           ? item.title
           : notePlainText(item.body),
       CalendarKind.event => _eventTitle(l10n, item),
+      // #818 — the two due kinds say WHAT is due, not just the number.
+      CalendarKind.due =>
+        l10n?.calendarDueTitle(item.title) ?? 'Payment due · ${item.title}',
+      CalendarKind.scheduled => l10n?.calendarScheduledTitle(item.title) ??
+          'Scheduled expense · ${item.title}',
       _ => item.title.isEmpty ? calendarKindLabel(l10n, item.kind) : item.title,
     };
     final money = item.amountCents == null
@@ -75,9 +107,17 @@ class CalendarItemRow extends ConsumerWidget {
         : item.amountCents! >= 0
             ? AppStatusColors.successTextOf(brightness)
             : theme.colorScheme.error;
+    final groupColor = calendarGroupColor(theme.colorScheme, item.kind.group);
     return ListTile(
       key: ValueKey('calendar-item-${item.id}'),
-      leading: Icon(calendarKindIcon(item.kind)),
+      leading: coloured
+          ? CircleAvatar(
+              radius: 18,
+              backgroundColor: groupColor.withValues(alpha: 0.15),
+              foregroundColor: groupColor,
+              child: Icon(calendarKindIcon(item.kind), size: 20),
+            )
+          : Icon(calendarKindIcon(item.kind)),
       title: Text(title, maxLines: 2, overflow: TextOverflow.ellipsis),
       subtitle: Text(
         [

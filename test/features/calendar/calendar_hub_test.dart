@@ -96,7 +96,8 @@ void main() {
     expect(find.byKey(const ValueKey('calendar-item-i-old')), findsNothing);
     // The query the server got was a half-open day, for ME, all kinds.
     final q = r.calendar.queries.last;
-    expect(q.to.difference(q.from), const Duration(days: 1));
+    // #818 — the hub opens on the AGENDA: thirty days from today.
+    expect(q.to.difference(q.from), const Duration(days: 30));
     expect(q.kinds, isNull);
     expect(q.memberId, isNull);
   });

@@ -768,6 +768,68 @@
   "calendarEventStatusExpired": "abgelaufen",
   "accessKindNegotiations": "Preisverhandlungen",
   "accessRuleNegotiations": "Sie, die Inhaber und die Finanz-Admins: {people}. Jeder Zugriff durch jemand anderen steht unten im Protokoll.",
+  "calendarViewAgenda": "Agenda",
+  "calendarViewWeek": "Woche",
+  "calendarViewMonth": "Monat",
+  "calendarToday": "Heute",
+  "calendarTomorrow": "Morgen",
+  "calendarYesterday": "Gestern",
+  "calendarKindDue": "Fällige Zahlungen",
+  "calendarKindScheduled": "Geplante Ausgaben",
+  "calendarDueTitle": "Zahlung fällig · {number}",
+  "@calendarDueTitle": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarScheduledTitle": "Geplante Ausgabe · {name}",
+  "@calendarScheduledTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarClosedDay": "Geschlossen",
+  "calendarClosedDayReason": "Geschlossen — {reason}",
+  "@calendarClosedDayReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarGroupBookings": "Buchungen & Anwesenheit",
+  "calendarGroupActivity": "Hinweise & Nachrichten",
+  "calendarGroupMoney": "Finanzen",
+  "calendarAgendaEmpty": "Nichts geplant in den nächsten {days} Tagen.",
+  "@calendarAgendaEmpty": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "calendarAgendaRange": "Nächste {days} Tage",
+  "@calendarAgendaRange": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "calendarWeekEmpty": "Nichts in dieser Woche.",
+  "calendarDayEmpty": "Nichts an diesem Tag.",
+  "calendarItemCount": "{count} Einträge",
+  "@calendarItemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "appTitle": "DesKilo",
   "tabPlan": "Plan",
   "tabCalendar": "Kalender",
@@ -1203,6 +1265,8 @@
   "featureInvoiceJourneyDesc": "Jede Rechnung zeigt, wo sie steht — Ausgestellt, Zahlung, Bestätigung, Abgeschlossen — und wer am Zug ist: das Mitglied zahlt, ein Admin bestätigt die gemeldete Zahlung, der Aussteller ordnet sie zu, die Prüfer entscheiden. Das Hub der Aussteller erhält eine Stufenleiste mit Zählern und eine Erklärung „So funktioniert es“.",
   "featureBookingGateTitle": "Buchungsprüfung",
   "featureBookingGateDesc": "Jede Buchungsfläche — Plan, Tages-, Wochen- und Monatsansicht, Buchungsblatt, Kiosk, QR- oder NFC-Scan — prüft die Verfügbarkeitsparameter, bevor sie ein Zeitfenster anbietet, und nennt den Grund, wenn sie es nicht kann; geschlossene Tage erscheinen in jeder Ansicht geschlossen, eine Legende benennt die Platzzustände, und Admins dürfen Mitglieder auschecken, wo die Regel es erlaubt.",
+  "featureCalendarViewsTitle": "Kalenderansichten",
+  "featureCalendarViewsDesc": "Der Kalender-Tab als Agenda, Woche und Monat: Tagesmarker nach Art, geschlossene Tage als geschlossen, Kopfzeilen Heute / Morgen, Zahlungsfälligkeiten und geplante Ausgaben im Feed. Aus: der schlichte Tag-oder-Zeitraum-Wähler über dem Feed.",
   "helpTitle": "Hilfe",
   "helpContents": "Inhalt",
   "helpHintMessages": "Alle Unterhaltungen in einer Liste, die neueste oben. Tippen Sie auf den Stift, um jemandem zu schreiben oder eine Gruppe zu erstellen.",

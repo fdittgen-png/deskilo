@@ -172,5 +172,7 @@
   "featureInvoiceJourneyTitle": "Der Weg einer Rechnung",
   "featureInvoiceJourneyDesc": "Jede Rechnung zeigt, wo sie steht — Ausgestellt, Zahlung, Bestätigung, Abgeschlossen — und wer am Zug ist: das Mitglied zahlt, ein Admin bestätigt die gemeldete Zahlung, der Aussteller ordnet sie zu, die Prüfer entscheiden. Das Hub der Aussteller erhält eine Stufenleiste mit Zählern und eine Erklärung „So funktioniert es“.",
   "featureBookingGateTitle": "Buchungsprüfung",
-  "featureBookingGateDesc": "Jede Buchungsfläche — Plan, Tages-, Wochen- und Monatsansicht, Buchungsblatt, Kiosk, QR- oder NFC-Scan — prüft die Verfügbarkeitsparameter, bevor sie ein Zeitfenster anbietet, und nennt den Grund, wenn sie es nicht kann; geschlossene Tage erscheinen in jeder Ansicht geschlossen, eine Legende benennt die Platzzustände, und Admins dürfen Mitglieder auschecken, wo die Regel es erlaubt."
+  "featureBookingGateDesc": "Jede Buchungsfläche — Plan, Tages-, Wochen- und Monatsansicht, Buchungsblatt, Kiosk, QR- oder NFC-Scan — prüft die Verfügbarkeitsparameter, bevor sie ein Zeitfenster anbietet, und nennt den Grund, wenn sie es nicht kann; geschlossene Tage erscheinen in jeder Ansicht geschlossen, eine Legende benennt die Platzzustände, und Admins dürfen Mitglieder auschecken, wo die Regel es erlaubt.",
+  "featureCalendarViewsTitle": "Kalenderansichten",
+  "featureCalendarViewsDesc": "Der Kalender-Tab als Agenda, Woche und Monat: Tagesmarker nach Art, geschlossene Tage als geschlossen, Kopfzeilen Heute / Morgen, Zahlungsfälligkeiten und geplante Ausgaben im Feed. Aus: der schlichte Tag-oder-Zeitraum-Wähler über dem Feed."
 }

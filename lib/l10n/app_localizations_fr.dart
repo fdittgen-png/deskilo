@@ -1150,6 +1150,78 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get calendarViewAgenda => 'Agenda';
+
+  @override
+  String get calendarViewWeek => 'Semaine';
+
+  @override
+  String get calendarViewMonth => 'Mois';
+
+  @override
+  String get calendarToday => 'Aujourd\'hui';
+
+  @override
+  String get calendarTomorrow => 'Demain';
+
+  @override
+  String get calendarYesterday => 'Hier';
+
+  @override
+  String get calendarKindDue => 'Échéances';
+
+  @override
+  String get calendarKindScheduled => 'Dépenses programmées';
+
+  @override
+  String calendarDueTitle(String number) {
+    return 'Échéance · $number';
+  }
+
+  @override
+  String calendarScheduledTitle(String name) {
+    return 'Dépense programmée · $name';
+  }
+
+  @override
+  String get calendarClosedDay => 'Fermé';
+
+  @override
+  String calendarClosedDayReason(String reason) {
+    return 'Fermé — $reason';
+  }
+
+  @override
+  String get calendarGroupBookings => 'Réservations et présence';
+
+  @override
+  String get calendarGroupActivity => 'Alertes et messages';
+
+  @override
+  String get calendarGroupMoney => 'Finances';
+
+  @override
+  String calendarAgendaEmpty(int days) {
+    return 'Rien de prévu dans les $days prochains jours.';
+  }
+
+  @override
+  String calendarAgendaRange(int days) {
+    return '$days prochains jours';
+  }
+
+  @override
+  String get calendarWeekEmpty => 'Rien cette semaine.';
+
+  @override
+  String get calendarDayEmpty => 'Rien ce jour-là.';
+
+  @override
+  String calendarItemCount(int count) {
+    return '$count éléments';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -2138,6 +2210,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureBookingGateDesc =>
       'Chaque surface de réservation — plan, vues jour, semaine et mois, feuille de réservation, kiosque, scan QR ou NFC — vérifie les paramètres de disponibilité avant de proposer un créneau et nomme la raison quand elle ne peut pas ; les jours fermés s\'affichent fermés dans chaque vue, une légende nomme les états des places, et les admins peuvent faire sortir un membre là où la règle le permet.';
+
+  @override
+  String get featureCalendarViewsTitle => 'Vues du calendrier';
+
+  @override
+  String get featureCalendarViewsDesc =>
+      'L\'onglet Calendrier en agenda, semaine et mois : repères par jour selon le type, jours fermés affichés fermés, en-têtes Aujourd\'hui / Demain, échéances de paiement et dépenses programmées dans le fil. Désactivé : le simple sélecteur jour ou plage au-dessus du fil.';
 
   @override
   String get helpTitle => 'Aide';
