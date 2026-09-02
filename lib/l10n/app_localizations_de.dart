@@ -3957,6 +3957,14 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get moneyInvoicesArchiveButton =>
+      'Alle meine Rechnungen · Archiv & PDFs';
+
+  @override
+  String get moneyInvoicingHubButton =>
+      'Ausstellen, mahnen, einziehen · Fakturierung';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override

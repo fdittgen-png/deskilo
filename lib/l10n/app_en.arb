@@ -4292,6 +4292,8 @@
       }
     }
   },
+  "moneyInvoicesArchiveButton": "All my invoices · archive & PDFs",
+  "moneyInvoicingHubButton": "Issue, remind, collect · invoicing",
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",
   "pendingApprovalTitle": "Awaiting approval",

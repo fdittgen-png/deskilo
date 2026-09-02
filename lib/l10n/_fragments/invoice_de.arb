@@ -835,5 +835,7 @@
   "@journeyPrimaryRemind": {"placeholders": {"level": {"type": "int"}}},
   "journeyPrimaryConfirmInEvents": "Ereignisse öffnen",
   "journeyOutstanding": "{amount} offen",
-  "@journeyOutstanding": {"placeholders": {"amount": {"type": "String"}}}
+  "@journeyOutstanding": {"placeholders": {"amount": {"type": "String"}}},
+  "moneyInvoicesArchiveButton": "Alle meine Rechnungen · Archiv & PDFs",
+  "moneyInvoicingHubButton": "Ausstellen, mahnen, einziehen · Fakturierung"
 }

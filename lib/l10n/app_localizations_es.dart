@@ -3957,6 +3957,13 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get moneyInvoicesArchiveButton => 'Todas mis facturas · archivo y PDF';
+
+  @override
+  String get moneyInvoicingHubButton =>
+      'Emitir, recordar, cobrar · facturación';
+
+  @override
   String get eventTypeMemberJoin => 'Nuevo miembro';
 
   @override

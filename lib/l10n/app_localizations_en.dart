@@ -3928,6 +3928,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get moneyInvoicesArchiveButton => 'All my invoices · archive & PDFs';
+
+  @override
+  String get moneyInvoicingHubButton => 'Issue, remind, collect · invoicing';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

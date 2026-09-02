@@ -2392,6 +2392,8 @@
       }
     }
   },
+  "moneyInvoicesArchiveButton": "Tutte le mie fatture · archivio e PDF",
+  "moneyInvoicingHubButton": "Emettere, sollecitare, incassare · fatturazione",
   "eventTypeMemberJoin": "Nuovo membro",
   "memberStatusPending": "In attesa",
   "pendingApprovalTitle": "In attesa di approvazione",
