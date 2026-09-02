@@ -293,11 +293,19 @@
   "featureHeldBack": "Waiting on the feature above — switch that on and this one works again.",
   "@featureAlsoEnabled": {
     "description": "Snack naming the dependencies switched on with a feature (#800)",
-    "placeholders": {"features": {"type": "String"}}
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
   },
   "@featureAlsoEnables": {
     "description": "Subtitle note: what this switch would also enable (#800)",
-    "placeholders": {"features": {"type": "String"}}
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
   },
   "@featureHeldBack": {
     "description": "Subtitle note: the feature is on but its parent is off (#800)"
@@ -312,5 +320,7 @@
   "featureCalendarViewsTitle": "Calendar views",
   "featureCalendarViewsDesc": "The Calendar tab as agenda, week and month: per-day markers by kind, closed days drawn as closed, Today / Tomorrow headers, payment due dates and scheduled expenses in the feed. Off: the plain day-or-range selector over the feed.",
   "featureMessagesHubTitle": "Messages, reworked",
-  "featureMessagesHubDesc": "One inbox bar (All / Unread / Archived and search), pin, mute, archive and mark-unread on a thread, the conversation as a full page with date separators, an attach menu and a kept draft in the composer, a person opened with one tap. Off: the two-bar inbox and the sheet thread."
+  "featureMessagesHubDesc": "One inbox bar (All / Unread / Archived and search), pin, mute, archive and mark-unread on a thread, the conversation as a full page with date separators, an attach menu and a kept draft in the composer, a person opened with one tap. Off: the two-bar inbox and the sheet thread.",
+  "featureReportDesignerTitle": "Report designer",
+  "featureReportDesignerDesc": "The report editor as a full-screen designer: elements edited in place in their real typography, drag to reorder, an insert palette, a searchable field picker, undo and redo, image size and alignment, a discard guard, presets and reset behind a confirmation, the template error spelled out, design and preview side by side on a wide screen. Off: the editor sheet."
 }

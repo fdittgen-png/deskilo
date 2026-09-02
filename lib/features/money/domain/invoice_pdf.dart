@@ -843,15 +843,21 @@ pw.Widget _reportWidget(
               ],
             ),
           // #488 — a library image (the logo…); unresolved → nothing.
-          ReportImage(:final name) => images[name] == null
-              ? pw.SizedBox()
-              : pw.Padding(
-                  padding: const pw.EdgeInsets.symmetric(vertical: 4),
-                  child: pw.Image(
-                    pw.MemoryImage(images[name]!),
-                    height: 64,
-                    fit: pw.BoxFit.contain,
-                    alignment: pw.Alignment.centerLeft,
+          ReportImage(:final name, :final size, :final align) =>
+            images[name] == null
+                ? pw.SizedBox()
+                : pw.Padding(
+                    padding: const pw.EdgeInsets.symmetric(vertical: 4),
+                    child: pw.Image(
+                      pw.MemoryImage(images[name]!),
+                      // #822 — `![name|size|align]`.
+                      height: size.height,
+                      fit: pw.BoxFit.contain,
+                      alignment: switch (align) {
+                        ReportImageAlign.left => pw.Alignment.centerLeft,
+                        ReportImageAlign.center => pw.Alignment.center,
+                        ReportImageAlign.right => pw.Alignment.centerRight,
+                      },
+                    ),
                   ),
-                ),
         };

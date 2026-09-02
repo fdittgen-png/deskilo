@@ -112,7 +112,11 @@ enum WorkspaceFeature {
   /// thread, the thread as a full-screen page with date separators, the
   /// composer's attach menu and draft. OFF keeps the two-bar inbox and
   /// the sheet thread.
-  messagesHub;
+  messagesHub,
+
+  /// #822 — the report editor as a full-screen designer: direct
+  /// manipulation, undo, side-by-side preview, image size/alignment.
+  reportDesigner;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -389,6 +393,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // #821 — the reworked Messages tab.
   WorkspaceFeature.messagesHub:
       FeatureManifestEntry(feature: WorkspaceFeature.messagesHub),
+  // #822 — the full-screen report designer over the template editor.
+  WorkspaceFeature.reportDesigner: FeatureManifestEntry(
+    feature: WorkspaceFeature.reportDesigner,
+    requires: WorkspaceFeature.invoicePdfTemplate,
+  ),
   // #719 — "who accessed my data": the server-written log of reads of
   // another member's finances, shown to the subject. OFF hides the row;
   // the log is still written, because the record is not optional.

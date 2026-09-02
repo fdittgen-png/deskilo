@@ -2220,6 +2220,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine Posteingangsleiste (Alle / Ungelesen / Archiviert und Suche), anheften, stumm, archivieren und als ungelesen markieren auf einem Thread, die Unterhaltung als ganze Seite mit Datumstrennern, ein Anhängen-Menü und ein behaltener Entwurf im Editor, eine Person mit einem Tipp geöffnet. Aus: der Posteingang mit zwei Leisten und der Thread als Blatt.';
 
   @override
+  String get featureReportDesignerTitle => 'Berichtsdesigner';
+
+  @override
+  String get featureReportDesignerDesc =>
+      'Der Berichtseditor als Vollbild-Designer: Elemente an Ort und Stelle in ihrer echten Typografie bearbeitet, Ziehen zum Umsortieren, eine Einfügepalette, eine durchsuchbare Feldauswahl, Rückgängig und Wiederholen, Bildgröße und -ausrichtung, ein Schutz vor dem Verwerfen, Vorlagen und Zurücksetzen hinter einer Bestätigung, der Vorlagenfehler im Klartext, Entwurf und Vorschau nebeneinander auf breitem Bildschirm. Aus: der Editor als Blatt.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override
@@ -4043,12 +4050,128 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get moneyInvoicesArchiveButton =>
-      'Alle meine Rechnungen · Archiv & PDFs';
+  String get reportEditorTitle => 'Berichtseditor';
 
   @override
-  String get moneyInvoicingHubButton =>
-      'Ausstellen, mahnen, einziehen · Fakturierung';
+  String get reportDesignerUndo => 'Rückgängig';
+
+  @override
+  String get reportDesignerRedo => 'Wiederholen';
+
+  @override
+  String get reportDesignerDiscardTitle => 'Ohne Speichern verlassen?';
+
+  @override
+  String get reportDesignerDiscardBody =>
+      'Ihre Änderungen an den Vorlagen sind nicht gespeichert.';
+
+  @override
+  String get reportDesignerDiscard => 'Verwerfen';
+
+  @override
+  String get reportDesignerKeepEditing => 'Weiter bearbeiten';
+
+  @override
+  String get reportDesignerReplaceTitle => 'Aktuelles Layout ersetzen?';
+
+  @override
+  String get reportDesignerReplaceBody =>
+      'Die Bänder dieses Dokuments werden ersetzt. Rückgängig holt sie zurück.';
+
+  @override
+  String get reportDesignerReplace => 'Ersetzen';
+
+  @override
+  String reportDesignerPages(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Seiten',
+      one: '1 Seite',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String reportDesignerError(String message) {
+    return 'Die Vorlage lässt sich nicht erzeugen — $message';
+  }
+
+  @override
+  String get reportDesignerInsert => 'Element einfügen';
+
+  @override
+  String get reportDesignerFields => 'Felder';
+
+  @override
+  String get reportDesignerFieldsSearch => 'Feld suchen';
+
+  @override
+  String get reportDesignerMoveTo => 'In Band verschieben';
+
+  @override
+  String get reportDesignerDrag => 'Ziehen zum Umsortieren';
+
+  @override
+  String get reportImageSize => 'Größe';
+
+  @override
+  String get reportImageSizeSmall => 'Klein';
+
+  @override
+  String get reportImageSizeMedium => 'Mittel';
+
+  @override
+  String get reportImageSizeLarge => 'Groß';
+
+  @override
+  String get reportImageAlign => 'Ausrichtung';
+
+  @override
+  String get reportImageAlignLeft => 'Links';
+
+  @override
+  String get reportImageAlignCenter => 'Mitte';
+
+  @override
+  String get reportImageAlignRight => 'Rechts';
+
+  @override
+  String get reportTemplateLangOverridden => 'Eigene Vorlage';
+
+  @override
+  String get reportTemplateLangInherits => 'Erbt den Standard';
+
+  @override
+  String get reportTemplateClearOverlay =>
+      'Für diese Sprache den Standard verwenden';
+
+  @override
+  String get reportDocCoa => 'Kontenrahmen';
+
+  @override
+  String get reportDocBadges => 'Mitgliedsausweise';
+
+  @override
+  String get reportDocSpaceCodes => 'QR-Karten der Plätze';
+
+  @override
+  String get reportFieldGroupDocument => 'Dokument';
+
+  @override
+  String get reportFieldGroupMember => 'Mitglied & Workspace';
+
+  @override
+  String get reportFieldGroupMoney => 'Beträge';
+
+  @override
+  String get reportFieldGroupLegal => 'Pflichtangaben';
+
+  @override
+  String get reportFieldGroupLoops => 'Schleifen Positionen & MwSt.';
+
+  @override
+  String get reportDesignerSideBySide => 'Entwurf und Vorschau nebeneinander';
 
   @override
   String get eventTypeMemberJoin => 'Neues Mitglied';

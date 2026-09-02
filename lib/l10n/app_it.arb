@@ -1269,6 +1269,8 @@
   "featureCalendarViewsDesc": "La scheda Calendario come agenda, settimana e mese: indicatori per giorno secondo il tipo, giorni chiusi mostrati chiusi, intestazioni Oggi / Domani, scadenze di pagamento e spese programmate nel feed. Disattivato: il semplice selettore giorno o intervallo sopra il feed.",
   "featureMessagesHubTitle": "Messaggi, rinnovati",
   "featureMessagesHubDesc": "Una sola barra della posta (Tutti / Non letti / Archiviati e ricerca), fissare, silenziare, archiviare e segnare come non letto un thread, la conversazione a pagina intera con separatori di data, un menu allega e una bozza conservata nel compositore, una persona aperta con un tocco. Disattivato: la posta a due barre e il thread in foglio.",
+  "featureReportDesignerTitle": "Designer di report",
+  "featureReportDesignerDesc": "L'editor dei report a schermo intero: elementi modificati sul posto nella loro vera tipografia, trascinare per riordinare, una tavolozza di inserimento, un selettore di campi con ricerca, annulla e ripeti, dimensione e allineamento delle immagini, una protezione prima di scartare, modelli e ripristino dietro una conferma, l'errore del modello spiegato, progettazione e anteprima affiancate su schermo largo. Disattivato: l'editor in foglio.",
   "helpHintLearnMore": "Scopri di più",
   "helpHintDismiss": "Nascondi suggerimento",
   "helpHintPrevTip": "Suggerimento precedente",
@@ -2458,8 +2460,57 @@
       }
     }
   },
-  "moneyInvoicesArchiveButton": "Tutte le mie fatture · archivio e PDF",
-  "moneyInvoicingHubButton": "Emettere, sollecitare, incassare · fatturazione",
+  "reportEditorTitle": "Editor dei report",
+  "reportDesignerUndo": "Annulla",
+  "reportDesignerRedo": "Ripeti",
+  "reportDesignerDiscardTitle": "Uscire senza salvare?",
+  "reportDesignerDiscardBody": "Le modifiche ai modelli non sono salvate.",
+  "reportDesignerDiscard": "Scarta",
+  "reportDesignerKeepEditing": "Continua a modificare",
+  "reportDesignerReplaceTitle": "Sostituire il layout attuale?",
+  "reportDesignerReplaceBody": "Le bande di questo documento vengono sostituite. Annulla le riporta.",
+  "reportDesignerReplace": "Sostituisci",
+  "reportDesignerPages": "{count, plural, =1{1 pagina} other{{count} pagine}}",
+  "@reportDesignerPages": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reportDesignerError": "Il modello non si genera — {message}",
+  "@reportDesignerError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "reportDesignerInsert": "Inserisci elemento",
+  "reportDesignerFields": "Campi",
+  "reportDesignerFieldsSearch": "Cerca un campo",
+  "reportDesignerMoveTo": "Sposta nella banda",
+  "reportDesignerDrag": "Trascina per riordinare",
+  "reportImageSize": "Dimensione",
+  "reportImageSizeSmall": "Piccola",
+  "reportImageSizeMedium": "Media",
+  "reportImageSizeLarge": "Grande",
+  "reportImageAlign": "Allineamento",
+  "reportImageAlignLeft": "Sinistra",
+  "reportImageAlignCenter": "Centro",
+  "reportImageAlignRight": "Destra",
+  "reportTemplateLangOverridden": "Modello proprio",
+  "reportTemplateLangInherits": "Eredita il predefinito",
+  "reportTemplateClearOverlay": "Usa il predefinito per questa lingua",
+  "reportDocCoa": "Piano dei conti",
+  "reportDocBadges": "Badge dei membri",
+  "reportDocSpaceCodes": "Schede QR degli spazi",
+  "reportFieldGroupDocument": "Documento",
+  "reportFieldGroupMember": "Membro e spazio",
+  "reportFieldGroupMoney": "Importi",
+  "reportFieldGroupLegal": "Menzioni legali",
+  "reportFieldGroupLoops": "Cicli righe e IVA",
+  "reportDesignerSideBySide": "Progettazione e anteprima affiancate",
   "eventTypeMemberJoin": "Nuovo membro",
   "memberStatusPending": "In attesa",
   "pendingApprovalTitle": "In attesa di approvazione",

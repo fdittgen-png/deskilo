@@ -1413,65 +1413,239 @@
   "eventInvoiceReminderLine": "Reminder {level}: invoice {number} — {amount} still due",
   "dunningAutomatic": "Automatic reminders",
   "dunningAutomaticHint": "Once a day, open invoices past the term get their next reminder level by themselves — an alert in the member's feed and a push. Off: you send each reminder yourself.",
-  "@eventInvoiceReminderLine": {"placeholders": {"number": {"type": "String"}, "level": {"type": "int"}, "amount": {"type": "String"}}},
+  "@eventInvoiceReminderLine": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "level": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "eventTypePriceNegotiation": "Price negotiation",
   "eventPriceNegotiationLine": "{actor} proposes a deal for {member}: {terms}",
-  "@eventPriceNegotiationLine": {"placeholders": {"actor": {"type": "String"}, "member": {"type": "String"}, "terms": {"type": "String"}}},
+  "@eventPriceNegotiationLine": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      },
+      "terms": {
+        "type": "String"
+      }
+    }
+  },
   "eventPriceNegotiationItems": "{count} items",
-  "@eventPriceNegotiationItems": {"placeholders": {"count": {"type": "int"}}},
+  "@eventPriceNegotiationItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "journeyStepIssued": "Issued",
   "journeyStepPayment": "Payment",
   "journeyStepConfirmation": "Confirmation",
   "journeyStepClosed": "Closed",
   "journeyIssuerMemberPays": "Waiting for {name}'s payment of {amount} — due {date}",
-  "@journeyIssuerMemberPays": {"placeholders": {"name": {"type": "String"}, "amount": {"type": "String"}, "date": {"type": "String"}}},
+  "@journeyIssuerMemberPays": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "journeyIssuerMemberPaysOverdue": "{name} owes {amount} — overdue by {days} days",
-  "@journeyIssuerMemberPaysOverdue": {"placeholders": {"name": {"type": "String"}, "amount": {"type": "String"}, "days": {"type": "int"}}},
+  "@journeyIssuerMemberPaysOverdue": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "journeyIssuerMemberPaysRemainder": "{name} still owes {amount} after a partial payment",
-  "@journeyIssuerMemberPaysRemainder": {"placeholders": {"name": {"type": "String"}, "amount": {"type": "String"}}},
+  "@journeyIssuerMemberPaysRemainder": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyIssuerAdminConfirms": "{name} declared a payment of {amount} — another admin confirms it in Events",
-  "@journeyIssuerAdminConfirms": {"placeholders": {"name": {"type": "String"}, "amount": {"type": "String"}}},
+  "@journeyIssuerAdminConfirms": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyIssuerMemberConfirms": "A payment of {amount} was recorded — {name} confirms it in Events",
-  "@journeyIssuerMemberConfirms": {"placeholders": {"name": {"type": "String"}, "amount": {"type": "String"}}},
+  "@journeyIssuerMemberConfirms": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyIssuerMatches": "A payment of {amount} is registered — match it to this invoice",
-  "@journeyIssuerMatches": {"placeholders": {"amount": {"type": "String"}}},
+  "@journeyIssuerMatches": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyValidatorsMatch": "Payment matched — awaiting the validators' decision",
   "journeyValidatorsWriteoff": "Write-off of the remainder requested — awaiting the validators",
   "journeyIssuerRefunds": "Credit note — refund {amount} to {name} and record it",
-  "@journeyIssuerRefunds": {"placeholders": {"name": {"type": "String"}, "amount": {"type": "String"}}},
+  "@journeyIssuerRefunds": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyIssuerReplaces": "Cancelled — issue the replacement",
   "journeyMemberPays": "Your move: pay {amount} by {date}",
-  "@journeyMemberPays": {"placeholders": {"amount": {"type": "String"}, "date": {"type": "String"}}},
+  "@journeyMemberPays": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "journeyMemberPaysOverdue": "Your move: pay {amount} — overdue by {days} days",
-  "@journeyMemberPaysOverdue": {"placeholders": {"amount": {"type": "String"}, "days": {"type": "int"}}},
+  "@journeyMemberPaysOverdue": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "journeyMemberPaysRemainder": "Your move: pay the remaining {amount}",
-  "@journeyMemberPaysRemainder": {"placeholders": {"amount": {"type": "String"}}},
+  "@journeyMemberPaysRemainder": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyMemberDeclared": "You declared {amount} — the workspace is confirming it",
-  "@journeyMemberDeclared": {"placeholders": {"amount": {"type": "String"}}},
+  "@journeyMemberDeclared": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyMemberConfirms": "Your move: confirm the payment of {amount} recorded for you, in Events",
-  "@journeyMemberConfirms": {"placeholders": {"amount": {"type": "String"}}},
+  "@journeyMemberConfirms": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyMemberRegistered": "Your payment of {amount} is registered — the workspace matches it to this invoice",
-  "@journeyMemberRegistered": {"placeholders": {"amount": {"type": "String"}}},
+  "@journeyMemberRegistered": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyMemberValidators": "Payment matched — awaiting validation",
   "journeyMemberWriteoff": "The workspace asked to cancel the remainder — awaiting validation",
   "journeyMemberRefund": "The workspace owes you {amount} — nothing to pay",
-  "@journeyMemberRefund": {"placeholders": {"amount": {"type": "String"}}},
+  "@journeyMemberRefund": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyMemberReplaces": "Cancelled — a replacement follows",
   "journeyClosedPaid": "Paid on {date} — closed",
-  "@journeyClosedPaid": {"placeholders": {"date": {"type": "String"}}},
+  "@journeyClosedPaid": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "journeyClosedRemainder": "Closed — remainder cancelled on {date}",
-  "@journeyClosedRemainder": {"placeholders": {"date": {"type": "String"}}},
+  "@journeyClosedRemainder": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "journeyClosedRefunded": "Refunded on {date} — closed",
-  "@journeyClosedRefunded": {"placeholders": {"date": {"type": "String"}}},
+  "@journeyClosedRefunded": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "journeyClosedReplaced": "Cancelled — replaced by {number}",
-  "@journeyClosedReplaced": {"placeholders": {"number": {"type": "String"}}},
+  "@journeyClosedReplaced": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "journeyClosedSettled": "Regrouped into another invoice — that one is owed and chased",
   "journeyStageIssue": "To issue",
   "journeyStageCollect": "To collect",
   "journeyStageConfirm": "To confirm",
   "journeyStageClosed": "Closed",
   "journeyOverdueCount": "{count} overdue",
-  "@journeyOverdueCount": {"placeholders": {"count": {"type": "int"}}},
+  "@journeyOverdueCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "journeyStageStripLabel": "The invoicing process: issue, collect, confirm, close",
   "journeyHowButton": "How it works",
   "journeyHowTitle": "How invoicing works",
@@ -1488,10 +1662,71 @@
   "journeyHowClosedMember": "The month reads settled and the invoice stays readable forever: quick view, PDF, share.",
   "journeyTimelineTitle": "Timeline",
   "journeyPrimaryRemind": "Send reminder {level}",
-  "@journeyPrimaryRemind": {"placeholders": {"level": {"type": "int"}}},
+  "@journeyPrimaryRemind": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "journeyPrimaryConfirmInEvents": "Open Events",
   "journeyOutstanding": "{amount} outstanding",
-  "@journeyOutstanding": {"placeholders": {"amount": {"type": "String"}}},
-  "moneyInvoicesArchiveButton": "All my invoices · archive & PDFs",
-  "moneyInvoicingHubButton": "Issue, remind, collect · invoicing"
+  "@journeyOutstanding": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "reportEditorTitle": "Report editor",
+  "reportDesignerUndo": "Undo",
+  "reportDesignerRedo": "Redo",
+  "reportDesignerDiscardTitle": "Leave without saving?",
+  "reportDesignerDiscardBody": "Your changes to the templates are not saved.",
+  "reportDesignerDiscard": "Discard",
+  "reportDesignerKeepEditing": "Keep editing",
+  "reportDesignerReplaceTitle": "Replace the current layout?",
+  "reportDesignerReplaceBody": "The bands of this document are replaced. Undo brings them back.",
+  "reportDesignerReplace": "Replace",
+  "reportDesignerPages": "{count, plural, =1{1 page} other{{count} pages}}",
+  "@reportDesignerPages": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reportDesignerError": "The template does not render — {message}",
+  "@reportDesignerError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "reportDesignerInsert": "Insert element",
+  "reportDesignerFields": "Fields",
+  "reportDesignerFieldsSearch": "Search a field",
+  "reportDesignerMoveTo": "Move to band",
+  "reportDesignerDrag": "Drag to reorder",
+  "reportImageSize": "Size",
+  "reportImageSizeSmall": "Small",
+  "reportImageSizeMedium": "Medium",
+  "reportImageSizeLarge": "Large",
+  "reportImageAlign": "Alignment",
+  "reportImageAlignLeft": "Left",
+  "reportImageAlignCenter": "Centre",
+  "reportImageAlignRight": "Right",
+  "reportTemplateLangOverridden": "Own template",
+  "reportTemplateLangInherits": "Inherits the default",
+  "reportTemplateClearOverlay": "Use the default for this language",
+  "reportDocCoa": "Chart of accounts",
+  "reportDocBadges": "Member badges",
+  "reportDocSpaceCodes": "Space QR cards",
+  "reportFieldGroupDocument": "Document",
+  "reportFieldGroupMember": "Member & workspace",
+  "reportFieldGroupMoney": "Amounts",
+  "reportFieldGroupLegal": "Legal mentions",
+  "reportFieldGroupLoops": "Lines & VAT loops",
+  "reportDesignerSideBySide": "Design and preview side by side"
 }

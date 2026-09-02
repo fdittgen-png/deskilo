@@ -1269,6 +1269,8 @@
   "featureCalendarViewsDesc": "L'onglet Calendrier en agenda, semaine et mois : repères par jour selon le type, jours fermés affichés fermés, en-têtes Aujourd'hui / Demain, échéances de paiement et dépenses programmées dans le fil. Désactivé : le simple sélecteur jour ou plage au-dessus du fil.",
   "featureMessagesHubTitle": "Messages repensés",
   "featureMessagesHubDesc": "Une seule barre de boîte de réception (Tous / Non lus / Archivés et recherche), épingler, couper le son, archiver et marquer non lu sur un fil, la conversation en page entière avec séparateurs de date, un menu joindre et un brouillon conservé dans le composeur, une personne ouverte d'un seul geste. Désactivé : la boîte à deux barres et le fil en feuille.",
+  "featureReportDesignerTitle": "Concepteur de rapports",
+  "featureReportDesignerDesc": "L'éditeur de rapports en plein écran : éléments modifiés sur place dans leur vraie typographie, glisser pour réordonner, palette d'insertion, sélecteur de champs avec recherche, annuler et rétablir, taille et alignement des images, garde-fou avant d'abandonner, modèles et réinitialisation derrière une confirmation, l'erreur du modèle expliquée, conception et aperçu côte à côte sur grand écran. Désactivé : l'éditeur en feuille.",
   "helpTitle": "Aide",
   "helpContents": "Sommaire",
   "helpHintMessages": "Toutes vos conversations dans une liste, la plus récente en haut. Touchez le crayon pour écrire à quelqu’un ou créer un groupe.",
@@ -2458,8 +2460,57 @@
       }
     }
   },
-  "moneyInvoicesArchiveButton": "Toutes mes factures · archives et PDF",
-  "moneyInvoicingHubButton": "Émettre, relancer, encaisser · facturation",
+  "reportEditorTitle": "Éditeur de rapports",
+  "reportDesignerUndo": "Annuler",
+  "reportDesignerRedo": "Rétablir",
+  "reportDesignerDiscardTitle": "Quitter sans enregistrer ?",
+  "reportDesignerDiscardBody": "Vos modifications des modèles ne sont pas enregistrées.",
+  "reportDesignerDiscard": "Abandonner",
+  "reportDesignerKeepEditing": "Continuer",
+  "reportDesignerReplaceTitle": "Remplacer la mise en page actuelle ?",
+  "reportDesignerReplaceBody": "Les bandes de ce document sont remplacées. Annuler les restaure.",
+  "reportDesignerReplace": "Remplacer",
+  "reportDesignerPages": "{count, plural, =1{1 page} other{{count} pages}}",
+  "@reportDesignerPages": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reportDesignerError": "Le modèle ne se génère pas — {message}",
+  "@reportDesignerError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "reportDesignerInsert": "Insérer un élément",
+  "reportDesignerFields": "Champs",
+  "reportDesignerFieldsSearch": "Rechercher un champ",
+  "reportDesignerMoveTo": "Déplacer vers la bande",
+  "reportDesignerDrag": "Glisser pour réordonner",
+  "reportImageSize": "Taille",
+  "reportImageSizeSmall": "Petite",
+  "reportImageSizeMedium": "Moyenne",
+  "reportImageSizeLarge": "Grande",
+  "reportImageAlign": "Alignement",
+  "reportImageAlignLeft": "Gauche",
+  "reportImageAlignCenter": "Centre",
+  "reportImageAlignRight": "Droite",
+  "reportTemplateLangOverridden": "Modèle propre",
+  "reportTemplateLangInherits": "Hérite du défaut",
+  "reportTemplateClearOverlay": "Utiliser le défaut pour cette langue",
+  "reportDocCoa": "Plan comptable",
+  "reportDocBadges": "Badges des membres",
+  "reportDocSpaceCodes": "Cartes QR des espaces",
+  "reportFieldGroupDocument": "Document",
+  "reportFieldGroupMember": "Membre et espace",
+  "reportFieldGroupMoney": "Montants",
+  "reportFieldGroupLegal": "Mentions légales",
+  "reportFieldGroupLoops": "Boucles lignes et TVA",
+  "reportDesignerSideBySide": "Conception et aperçu côte à côte",
   "eventTypeMemberJoin": "Nouveau membre",
   "memberStatusPending": "En attente",
   "pendingApprovalTitle": "En attente d'approbation",

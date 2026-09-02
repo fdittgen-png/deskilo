@@ -2204,6 +2204,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'One inbox bar (All / Unread / Archived and search), pin, mute, archive and mark-unread on a thread, the conversation as a full page with date separators, an attach menu and a kept draft in the composer, a person opened with one tap. Off: the two-bar inbox and the sheet thread.';
 
   @override
+  String get featureReportDesignerTitle => 'Report designer';
+
+  @override
+  String get featureReportDesignerDesc =>
+      'The report editor as a full-screen designer: elements edited in place in their real typography, drag to reorder, an insert palette, a searchable field picker, undo and redo, image size and alignment, a discard guard, presets and reset behind a confirmation, the template error spelled out, design and preview side by side on a wide screen. Off: the editor sheet.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override
@@ -4014,10 +4021,127 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get moneyInvoicesArchiveButton => 'All my invoices · archive & PDFs';
+  String get reportEditorTitle => 'Report editor';
 
   @override
-  String get moneyInvoicingHubButton => 'Issue, remind, collect · invoicing';
+  String get reportDesignerUndo => 'Undo';
+
+  @override
+  String get reportDesignerRedo => 'Redo';
+
+  @override
+  String get reportDesignerDiscardTitle => 'Leave without saving?';
+
+  @override
+  String get reportDesignerDiscardBody =>
+      'Your changes to the templates are not saved.';
+
+  @override
+  String get reportDesignerDiscard => 'Discard';
+
+  @override
+  String get reportDesignerKeepEditing => 'Keep editing';
+
+  @override
+  String get reportDesignerReplaceTitle => 'Replace the current layout?';
+
+  @override
+  String get reportDesignerReplaceBody =>
+      'The bands of this document are replaced. Undo brings them back.';
+
+  @override
+  String get reportDesignerReplace => 'Replace';
+
+  @override
+  String reportDesignerPages(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pages',
+      one: '1 page',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String reportDesignerError(String message) {
+    return 'The template does not render — $message';
+  }
+
+  @override
+  String get reportDesignerInsert => 'Insert element';
+
+  @override
+  String get reportDesignerFields => 'Fields';
+
+  @override
+  String get reportDesignerFieldsSearch => 'Search a field';
+
+  @override
+  String get reportDesignerMoveTo => 'Move to band';
+
+  @override
+  String get reportDesignerDrag => 'Drag to reorder';
+
+  @override
+  String get reportImageSize => 'Size';
+
+  @override
+  String get reportImageSizeSmall => 'Small';
+
+  @override
+  String get reportImageSizeMedium => 'Medium';
+
+  @override
+  String get reportImageSizeLarge => 'Large';
+
+  @override
+  String get reportImageAlign => 'Alignment';
+
+  @override
+  String get reportImageAlignLeft => 'Left';
+
+  @override
+  String get reportImageAlignCenter => 'Centre';
+
+  @override
+  String get reportImageAlignRight => 'Right';
+
+  @override
+  String get reportTemplateLangOverridden => 'Own template';
+
+  @override
+  String get reportTemplateLangInherits => 'Inherits the default';
+
+  @override
+  String get reportTemplateClearOverlay => 'Use the default for this language';
+
+  @override
+  String get reportDocCoa => 'Chart of accounts';
+
+  @override
+  String get reportDocBadges => 'Member badges';
+
+  @override
+  String get reportDocSpaceCodes => 'Space QR cards';
+
+  @override
+  String get reportFieldGroupDocument => 'Document';
+
+  @override
+  String get reportFieldGroupMember => 'Member & workspace';
+
+  @override
+  String get reportFieldGroupMoney => 'Amounts';
+
+  @override
+  String get reportFieldGroupLegal => 'Legal mentions';
+
+  @override
+  String get reportFieldGroupLoops => 'Lines & VAT loops';
+
+  @override
+  String get reportDesignerSideBySide => 'Design and preview side by side';
 
   @override
   String get eventTypeMemberJoin => 'New member';

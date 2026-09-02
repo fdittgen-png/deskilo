@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 
+import '../../domain/invoice_report.dart';
+
 /// The PRINT-FIDELITY contract (#548) — one shared source for every
 /// on-screen rendering of a report band, mirroring `invoice_pdf.dart`
 /// POINT FOR POINT: same page metrics (A4, the same margins), same
@@ -68,6 +70,14 @@ abstract final class ReportPage {
         fontWeight: bold ? FontWeight.bold : FontWeight.normal,
       );
 }
+
+/// #822 — the on-screen alignment of a `![name|size|align]` image,
+/// mirroring the PDF's.
+Alignment reportImageAlignment(ReportImageAlign align) => switch (align) {
+      ReportImageAlign.left => Alignment.centerLeft,
+      ReportImageAlign.center => Alignment.center,
+      ReportImageAlign.right => Alignment.centerRight,
+    };
 
 /// Dashed page-break guides (#548): a designer-chrome line every
 /// printable-page-height, so the owner SEES where the generated PDF

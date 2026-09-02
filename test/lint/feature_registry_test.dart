@@ -66,7 +66,9 @@ import 'package:flutter_test/flutter_test.dart';
 // 61→62 (2026-09-02): #818 calendarViews — agenda / week / month over
 // the hub's feed, markers, closed days, due dates.
 // 62→63 (2026-09-02): #821 messagesHub — the Messages tab reworked.
-const int _expectedFeatureCount = 63;
+// 63→64 (2026-09-02): #822 reportDesigner — the full-screen report
+// designer: direct manipulation, undo, side-by-side preview.
+const int _expectedFeatureCount = 64;
 
 void main() {
   test('every functionality is registered — the pin', () {

@@ -1269,6 +1269,8 @@
   "featureCalendarViewsDesc": "La pestaña Calendario como agenda, semana y mes: marcadores por día según el tipo, días cerrados dibujados cerrados, cabeceras Hoy / Mañana, vencimientos de pago y gastos programados en el feed. Desactivado: el simple selector de día o rango sobre el feed.",
   "featureMessagesHubTitle": "Mensajes, renovados",
   "featureMessagesHubDesc": "Una sola barra de bandeja (Todos / No leídos / Archivados y búsqueda), fijar, silenciar, archivar y marcar como no leído en un hilo, la conversación como página completa con separadores de fecha, un menú adjuntar y un borrador guardado en el compositor, una persona abierta con un toque. Desactivado: la bandeja de dos barras y el hilo en hoja.",
+  "featureReportDesignerTitle": "Diseñador de informes",
+  "featureReportDesignerDesc": "El editor de informes a pantalla completa: elementos editados en su sitio con su tipografía real, arrastrar para reordenar, una paleta de inserción, un selector de campos con búsqueda, deshacer y rehacer, tamaño y alineación de imágenes, una salvaguarda antes de descartar, plantillas y restablecer tras una confirmación, el error de la plantilla explicado, diseño y vista previa lado a lado en pantalla ancha. Desactivado: el editor en hoja.",
   "helpTitle": "Ayuda",
   "helpContents": "Índice",
   "helpHintMessages": "Todas las conversaciones en una lista, la más reciente arriba. Toque el lápiz para escribir a alguien o crear un grupo.",
@@ -2458,8 +2460,57 @@
       }
     }
   },
-  "moneyInvoicesArchiveButton": "Todas mis facturas · archivo y PDF",
-  "moneyInvoicingHubButton": "Emitir, recordar, cobrar · facturación",
+  "reportEditorTitle": "Editor de informes",
+  "reportDesignerUndo": "Deshacer",
+  "reportDesignerRedo": "Rehacer",
+  "reportDesignerDiscardTitle": "¿Salir sin guardar?",
+  "reportDesignerDiscardBody": "Sus cambios en las plantillas no están guardados.",
+  "reportDesignerDiscard": "Descartar",
+  "reportDesignerKeepEditing": "Seguir editando",
+  "reportDesignerReplaceTitle": "¿Reemplazar el diseño actual?",
+  "reportDesignerReplaceBody": "Las bandas de este documento se reemplazan. Deshacer las recupera.",
+  "reportDesignerReplace": "Reemplazar",
+  "reportDesignerPages": "{count, plural, =1{1 página} other{{count} páginas}}",
+  "@reportDesignerPages": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reportDesignerError": "La plantilla no se genera — {message}",
+  "@reportDesignerError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "reportDesignerInsert": "Insertar elemento",
+  "reportDesignerFields": "Campos",
+  "reportDesignerFieldsSearch": "Buscar un campo",
+  "reportDesignerMoveTo": "Mover a la banda",
+  "reportDesignerDrag": "Arrastrar para reordenar",
+  "reportImageSize": "Tamaño",
+  "reportImageSizeSmall": "Pequeña",
+  "reportImageSizeMedium": "Mediana",
+  "reportImageSizeLarge": "Grande",
+  "reportImageAlign": "Alineación",
+  "reportImageAlignLeft": "Izquierda",
+  "reportImageAlignCenter": "Centro",
+  "reportImageAlignRight": "Derecha",
+  "reportTemplateLangOverridden": "Plantilla propia",
+  "reportTemplateLangInherits": "Hereda la predeterminada",
+  "reportTemplateClearOverlay": "Usar la predeterminada para este idioma",
+  "reportDocCoa": "Plan de cuentas",
+  "reportDocBadges": "Tarjetas de socios",
+  "reportDocSpaceCodes": "Tarjetas QR de espacios",
+  "reportFieldGroupDocument": "Documento",
+  "reportFieldGroupMember": "Socio y espacio",
+  "reportFieldGroupMoney": "Importes",
+  "reportFieldGroupLegal": "Menciones legales",
+  "reportFieldGroupLoops": "Bucles de líneas e IVA",
+  "reportDesignerSideBySide": "Diseño y vista previa lado a lado",
   "eventTypeMemberJoin": "Nuevo miembro",
   "memberStatusPending": "Pendiente",
   "pendingApprovalTitle": "Esperando aprobación",

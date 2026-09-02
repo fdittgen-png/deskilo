@@ -15,7 +15,8 @@
 //   blank line → vertical spacing      anything else → body text
 //   `![name]` → an image from the workspace's report-image library
 //   (#488) — the logo, a stamp, a signature scan; unresolved names
-//   render as nothing.
+//   render as nothing. `![name|size|align]` (#822) sizes it S/M/L and
+//   aligns it left/center/right; a bare `![name]` stays medium, left.
 //   `:::` … `|||` … `:::` → side-by-side columns (#482): the fenced
 //   region is split at `|||` into equal-width columns, each parsed with
 //   the same markup. An empty first column pushes the second to the
@@ -73,9 +74,57 @@ class ReportTableRow extends ReportBlock {
 /// name renders as nothing — a template must never break on a deleted
 /// image.
 class ReportImage extends ReportBlock {
-  const ReportImage(this.name);
+  const ReportImage(
+    this.name, {
+    this.size = ReportImageSize.medium,
+    this.align = ReportImageAlign.left,
+  });
+
+  /// `![name|size|align]` (#822) — the size and alignment are optional
+  /// and order-free after the name; unknown words are ignored.
+  factory ReportImage.parse(String inner) {
+    final parts = inner.split('|').map((p) => p.trim()).toList();
+    var size = ReportImageSize.medium;
+    var align = ReportImageAlign.left;
+    for (final part in parts.skip(1)) {
+      size = ReportImageSize.values
+              .where((v) => v.code == part.toLowerCase())
+              .firstOrNull ??
+          size;
+      align = ReportImageAlign.values
+              .where((v) => v.name == part.toLowerCase())
+              .firstOrNull ??
+          align;
+    }
+    return ReportImage(parts.first, size: size, align: align);
+  }
+
   final String name;
+  final ReportImageSize size;
+  final ReportImageAlign align;
+
+  /// The inner markup (`name|size|align`), the defaults left out so a
+  /// plain `![logo]` round-trips as itself.
+  String get markup => [
+        name,
+        if (size != ReportImageSize.medium) size.code,
+        if (align != ReportImageAlign.left) align.name,
+      ].join('|');
 }
+
+/// The image sizes a band can ask for (#822) — heights in points.
+enum ReportImageSize {
+  small('s', 40),
+  medium('m', 64),
+  large('l', 96);
+
+  const ReportImageSize(this.code, this.height);
+  final String code;
+  final double height;
+}
+
+/// Where an image sits on its line (#822).
+enum ReportImageAlign { left, center, right }
 
 /// Side-by-side columns (#482) — each an independently parsed block
 /// list, rendered equal-width. Nesting is not supported: an inner `:::`
@@ -130,6 +179,30 @@ InvoiceReport? renderReportBands({
         error: e, stackTrace: st);
     return null;
   }
+}
+
+/// #822 — WHY a band set fails, for the designer to show: the band
+/// and the template engine's own message. Null when every band renders.
+/// The renderers keep their null-on-failure contract; this is the
+/// diagnosis beside it.
+String? reportBandsError({
+  required ReportBands bands,
+  required Map<String, Object?> data,
+}) {
+  for (final (name, source) in [
+    ('header', bands.header),
+    ('body', bands.body),
+    ('footer', bands.footer),
+  ]) {
+    try {
+      Template.parse(source, data: Map.of(data)).render();
+    } catch (e, st) {
+      TraceLogger.instance.warn('money', 'report band $name failed',
+          error: e, stackTrace: st);
+      return '$name: $e';
+    }
+  }
+  return null;
 }
 
 /// Every image name a rendered report references (#488) — what the
@@ -188,7 +261,7 @@ List<ReportBlock> _parseLines(List<String> lines) {
       continue;
     }
     if (trimmed.startsWith('![') && trimmed.endsWith(']')) {
-      blocks.add(ReportImage(
+      blocks.add(ReportImage.parse(
           trimmed.substring(2, trimmed.length - 1).trim()));
       continue;
     }

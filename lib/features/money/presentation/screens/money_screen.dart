@@ -23,7 +23,6 @@ import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/overage_policy.dart';
 import '../../../workspace/domain/payment_instructions.dart';
 import '../../../workspace/domain/workspace_feature.dart';
-import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/bill_pdf.dart';
 import '../../domain/invoice_pdf.dart';
@@ -982,24 +981,12 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             label: fitted(l10n?.consumptionAdd ?? 'Add consumption'),
           )
         : null;
-    // The button says what is BEHIND it, not the face's own name (field
-    // report: "Invoices" under the Invoices face named nothing): the
-    // archive for a member, the invoicing hub for an issuer.
-    final canIssue = ref
-        .watch(myPermissionsProvider)
-        .contains(WorkspacePermission.issueInvoices);
     final invoicesButton = features.contains(WorkspaceFeature.invoicing)
         ? OutlinedButton.icon(
             key: const ValueKey('invoices-button'),
             onPressed: () => context.push('/invoices'),
-            icon: Icon(canIssue
-                ? Icons.point_of_sale_outlined
-                : Icons.receipt_long_outlined),
-            label: fitted(canIssue
-                ? (l10n?.moneyInvoicingHubButton ??
-                    'Issue, remind, collect · invoicing')
-                : (l10n?.moneyInvoicesArchiveButton ??
-                    'All my invoices · archive & PDFs')),
+            icon: const Icon(Icons.receipt_long_outlined),
+            label: Text(l10n?.invoicesTitle ?? 'Invoices'),
           )
         : null;
     // #494 — member self-service reports: the standing financial

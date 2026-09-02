@@ -164,12 +164,13 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
     await tester.pumpAndSettle();
+    // #822 — the editor is a page; the document row scrolls sideways.
     await tester.scrollUntilVisible(
       find.byKey(const ValueKey('invoice-template-doc-r1')),
       120,
       scrollable: find
           .descendant(
-              of: find.byType(BottomSheet),
+              of: find.byKey(const ValueKey('invoice-template-docs')),
               matching: find.byType(Scrollable))
           .first,
     );

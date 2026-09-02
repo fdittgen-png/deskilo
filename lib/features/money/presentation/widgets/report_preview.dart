@@ -45,19 +45,21 @@ class ReportBlocksView extends StatelessWidget {
               color: ReportPage.accent),
           ReportSpacer() => const SizedBox(height: 8),
           // #488 — a library image; unresolved names render nothing.
-          ReportImage(:final name) => images[name] == null
-              ? const SizedBox.shrink()
-              : Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Image.memory(
-                      images[name]!,
-                      height: 64,
-                      fit: BoxFit.contain,
+          ReportImage(:final name, :final size, :final align) =>
+            images[name] == null
+                ? const SizedBox.shrink()
+                : Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Align(
+                      // #822 — `![name|size|align]`, as the PDF draws it.
+                      alignment: reportImageAlignment(align),
+                      child: Image.memory(
+                        images[name]!,
+                        height: size.height,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
-                ),
           // #482 — side-by-side columns; an empty first column pushes
           // the second (totals, the client box) to the right. 16pt
           // gutter, like the PDF.

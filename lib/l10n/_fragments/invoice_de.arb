@@ -768,54 +768,198 @@
   "journeyStepConfirmation": "Bestätigung",
   "journeyStepClosed": "Abgeschlossen",
   "journeyIssuerMemberPays": "Warten auf die Zahlung von {name}: {amount} — fällig {date}",
-  "@journeyIssuerMemberPays": {"placeholders": {"name": {"type": "String"}, "amount": {"type": "String"}, "date": {"type": "String"}}},
+  "@journeyIssuerMemberPays": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "journeyIssuerMemberPaysOverdue": "{name} schuldet {amount} — {days} Tage überfällig",
-  "@journeyIssuerMemberPaysOverdue": {"placeholders": {"name": {"type": "String"}, "amount": {"type": "String"}, "days": {"type": "int"}}},
+  "@journeyIssuerMemberPaysOverdue": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "journeyIssuerMemberPaysRemainder": "{name} schuldet nach einer Teilzahlung noch {amount}",
-  "@journeyIssuerMemberPaysRemainder": {"placeholders": {"name": {"type": "String"}, "amount": {"type": "String"}}},
+  "@journeyIssuerMemberPaysRemainder": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyIssuerAdminConfirms": "{name} hat eine Zahlung von {amount} gemeldet — ein anderer Admin bestätigt sie unter Ereignisse",
-  "@journeyIssuerAdminConfirms": {"placeholders": {"name": {"type": "String"}, "amount": {"type": "String"}}},
+  "@journeyIssuerAdminConfirms": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyIssuerMemberConfirms": "Eine Zahlung von {amount} wurde erfasst — {name} bestätigt sie unter Ereignisse",
-  "@journeyIssuerMemberConfirms": {"placeholders": {"name": {"type": "String"}, "amount": {"type": "String"}}},
+  "@journeyIssuerMemberConfirms": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyIssuerMatches": "Eine Zahlung von {amount} ist verbucht — ordnen Sie sie dieser Rechnung zu",
-  "@journeyIssuerMatches": {"placeholders": {"amount": {"type": "String"}}},
+  "@journeyIssuerMatches": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyValidatorsMatch": "Zahlung zugeordnet — Entscheidung der Prüfer steht aus",
   "journeyValidatorsWriteoff": "Ausbuchung des Restbetrags beantragt — Prüfer entscheiden",
   "journeyIssuerRefunds": "Gutschrift — {amount} an {name} erstatten und erfassen",
-  "@journeyIssuerRefunds": {"placeholders": {"name": {"type": "String"}, "amount": {"type": "String"}}},
+  "@journeyIssuerRefunds": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyIssuerReplaces": "Storniert — Ersatzrechnung ausstellen",
   "journeyMemberPays": "Sie sind dran: {amount} bis {date} zahlen",
-  "@journeyMemberPays": {"placeholders": {"amount": {"type": "String"}, "date": {"type": "String"}}},
+  "@journeyMemberPays": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "journeyMemberPaysOverdue": "Sie sind dran: {amount} zahlen — {days} Tage überfällig",
-  "@journeyMemberPaysOverdue": {"placeholders": {"amount": {"type": "String"}, "days": {"type": "int"}}},
+  "@journeyMemberPaysOverdue": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "journeyMemberPaysRemainder": "Sie sind dran: den Restbetrag von {amount} zahlen",
-  "@journeyMemberPaysRemainder": {"placeholders": {"amount": {"type": "String"}}},
+  "@journeyMemberPaysRemainder": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyMemberDeclared": "Sie haben {amount} gemeldet — der Space bestätigt es",
-  "@journeyMemberDeclared": {"placeholders": {"amount": {"type": "String"}}},
+  "@journeyMemberDeclared": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyMemberConfirms": "Sie sind dran: die für Sie erfasste Zahlung von {amount} unter Ereignisse bestätigen",
-  "@journeyMemberConfirms": {"placeholders": {"amount": {"type": "String"}}},
+  "@journeyMemberConfirms": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyMemberRegistered": "Ihre Zahlung von {amount} ist verbucht — der Space ordnet sie dieser Rechnung zu",
-  "@journeyMemberRegistered": {"placeholders": {"amount": {"type": "String"}}},
+  "@journeyMemberRegistered": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyMemberValidators": "Zahlung zugeordnet — Validierung steht aus",
   "journeyMemberWriteoff": "Der Space hat die Ausbuchung des Restbetrags beantragt — Validierung steht aus",
   "journeyMemberRefund": "Der Space schuldet Ihnen {amount} — nichts zu zahlen",
-  "@journeyMemberRefund": {"placeholders": {"amount": {"type": "String"}}},
+  "@journeyMemberRefund": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "journeyMemberReplaces": "Storniert — eine Ersatzrechnung folgt",
   "journeyClosedPaid": "Bezahlt am {date} — abgeschlossen",
-  "@journeyClosedPaid": {"placeholders": {"date": {"type": "String"}}},
+  "@journeyClosedPaid": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "journeyClosedRemainder": "Abgeschlossen — Restbetrag am {date} ausgebucht",
-  "@journeyClosedRemainder": {"placeholders": {"date": {"type": "String"}}},
+  "@journeyClosedRemainder": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "journeyClosedRefunded": "Erstattet am {date} — abgeschlossen",
-  "@journeyClosedRefunded": {"placeholders": {"date": {"type": "String"}}},
+  "@journeyClosedRefunded": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "journeyClosedReplaced": "Storniert — ersetzt durch {number}",
-  "@journeyClosedReplaced": {"placeholders": {"number": {"type": "String"}}},
+  "@journeyClosedReplaced": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "journeyClosedSettled": "In eine andere Rechnung zusammengefasst — diese wird geschuldet und angemahnt",
   "journeyStageIssue": "Auszustellen",
   "journeyStageCollect": "Einzuziehen",
   "journeyStageConfirm": "Zu bestätigen",
   "journeyStageClosed": "Abgeschlossen",
   "journeyOverdueCount": "{count} überfällig",
-  "@journeyOverdueCount": {"placeholders": {"count": {"type": "int"}}},
+  "@journeyOverdueCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "journeyStageStripLabel": "Der Fakturierungsprozess: ausstellen, einziehen, bestätigen, abschließen",
   "journeyHowButton": "So funktioniert es",
   "journeyHowTitle": "So funktioniert die Fakturierung",
@@ -832,10 +976,71 @@
   "journeyHowClosedMember": "Der Monat gilt als beglichen und die Rechnung bleibt für immer lesbar: Schnellansicht, PDF, Teilen.",
   "journeyTimelineTitle": "Verlauf",
   "journeyPrimaryRemind": "Mahnung {level} senden",
-  "@journeyPrimaryRemind": {"placeholders": {"level": {"type": "int"}}},
+  "@journeyPrimaryRemind": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "journeyPrimaryConfirmInEvents": "Ereignisse öffnen",
   "journeyOutstanding": "{amount} offen",
-  "@journeyOutstanding": {"placeholders": {"amount": {"type": "String"}}},
-  "moneyInvoicesArchiveButton": "Alle meine Rechnungen · Archiv & PDFs",
-  "moneyInvoicingHubButton": "Ausstellen, mahnen, einziehen · Fakturierung"
+  "@journeyOutstanding": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "reportEditorTitle": "Berichtseditor",
+  "reportDesignerUndo": "Rückgängig",
+  "reportDesignerRedo": "Wiederholen",
+  "reportDesignerDiscardTitle": "Ohne Speichern verlassen?",
+  "reportDesignerDiscardBody": "Ihre Änderungen an den Vorlagen sind nicht gespeichert.",
+  "reportDesignerDiscard": "Verwerfen",
+  "reportDesignerKeepEditing": "Weiter bearbeiten",
+  "reportDesignerReplaceTitle": "Aktuelles Layout ersetzen?",
+  "reportDesignerReplaceBody": "Die Bänder dieses Dokuments werden ersetzt. Rückgängig holt sie zurück.",
+  "reportDesignerReplace": "Ersetzen",
+  "reportDesignerPages": "{count, plural, =1{1 Seite} other{{count} Seiten}}",
+  "@reportDesignerPages": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reportDesignerError": "Die Vorlage lässt sich nicht erzeugen — {message}",
+  "@reportDesignerError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "reportDesignerInsert": "Element einfügen",
+  "reportDesignerFields": "Felder",
+  "reportDesignerFieldsSearch": "Feld suchen",
+  "reportDesignerMoveTo": "In Band verschieben",
+  "reportDesignerDrag": "Ziehen zum Umsortieren",
+  "reportImageSize": "Größe",
+  "reportImageSizeSmall": "Klein",
+  "reportImageSizeMedium": "Mittel",
+  "reportImageSizeLarge": "Groß",
+  "reportImageAlign": "Ausrichtung",
+  "reportImageAlignLeft": "Links",
+  "reportImageAlignCenter": "Mitte",
+  "reportImageAlignRight": "Rechts",
+  "reportTemplateLangOverridden": "Eigene Vorlage",
+  "reportTemplateLangInherits": "Erbt den Standard",
+  "reportTemplateClearOverlay": "Für diese Sprache den Standard verwenden",
+  "reportDocCoa": "Kontenrahmen",
+  "reportDocBadges": "Mitgliedsausweise",
+  "reportDocSpaceCodes": "QR-Karten der Plätze",
+  "reportFieldGroupDocument": "Dokument",
+  "reportFieldGroupMember": "Mitglied & Workspace",
+  "reportFieldGroupMoney": "Beträge",
+  "reportFieldGroupLegal": "Pflichtangaben",
+  "reportFieldGroupLoops": "Schleifen Positionen & MwSt.",
+  "reportDesignerSideBySide": "Entwurf und Vorschau nebeneinander"
 }
