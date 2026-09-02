@@ -68,7 +68,8 @@ import 'package:flutter_test/flutter_test.dart';
 // 62→63 (2026-09-02): #821 messagesHub — the Messages tab reworked.
 // 63→64 (2026-09-02): #822 reportDesigner — the full-screen report
 // designer: direct manipulation, undo, side-by-side preview.
-const int _expectedFeatureCount = 64;
+// 64→65 (2026-09-02): #825 memberPage — one page per member.
+const int _expectedFeatureCount = 65;
 
 void main() {
   test('every functionality is registered — the pin', () {

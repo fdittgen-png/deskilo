@@ -1431,17 +1431,17 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String directoryLastSeenMinutes(int minutes) {
-    return '$minutes min';
+    return 'Visto $minutes min fa';
   }
 
   @override
   String directoryLastSeenHours(int hours) {
-    return '$hours h';
+    return 'Visto $hours h fa';
   }
 
   @override
   String directoryLastSeenDays(int days) {
-    return '$days g';
+    return 'Visto $days g fa';
   }
 
   @override
@@ -1466,6 +1466,72 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get directoryNoUpcoming => 'Nessuna prenotazione in arrivo';
+
+  @override
+  String get memberPageEmailAction => 'E-mail';
+
+  @override
+  String get memberPageAddService => 'Aggiungi un servizio';
+
+  @override
+  String get memberPageNone => 'Nessuno';
+
+  @override
+  String memberPageWorkspaceDefaultValue(int count) {
+    return 'Predefinito dello spazio ($count)';
+  }
+
+  @override
+  String get memberPageLevelTitle => 'Prenotazioni di un piano intero';
+
+  @override
+  String get memberPageGroupMembership => 'Iscrizione';
+
+  @override
+  String get memberPageGroupBooking => 'Regole di prenotazione';
+
+  @override
+  String get memberPageGroupBilling => 'Fatturazione';
+
+  @override
+  String get memberPageGroupAccess => 'Badge e accesso';
+
+  @override
+  String get memberPageManageHeading => 'Gestisci';
+
+  @override
+  String get memberPageStatusActive => 'Attivo';
+
+  @override
+  String get memberPageNeverSeen => 'Mai visto';
+
+  @override
+  String memberPageYou(String name) {
+    return '$name (tu)';
+  }
+
+  @override
+  String memberPageSince(String date) {
+    return 'Membro dal $date';
+  }
+
+  @override
+  String memberPageCheckedIn(String seat, String time) {
+    return 'Check-in · $seat · dalle $time';
+  }
+
+  @override
+  String memberPageReservedNow(String seat, String time) {
+    return 'Prenotato ora · $seat · fino alle $time';
+  }
+
+  @override
+  String memberPageNext(String label) {
+    return 'Prossima: $label';
+  }
+
+  @override
+  String get memberPageNowHeading => 'In questo momento';
 
   @override
   String get editorBackgroundImage => 'Immagine di sfondo';
@@ -2228,6 +2294,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featureReportDesignerDesc =>
       'L\'editor dei report a schermo intero: elementi modificati sul posto nella loro vera tipografia, trascinare per riordinare, una tavolozza di inserimento, un selettore di campi con ricerca, annulla e ripeti, dimensione e allineamento delle immagini, una protezione prima di scartare, modelli e ripristino dietro una conferma, l\'errore del modello spiegato, progettazione e anteprima affiancate su schermo largo. Disattivato: l\'editor in foglio.';
+
+  @override
+  String get featureMemberPageTitle => 'Scheda membro';
+
+  @override
+  String get featureMemberPageDesc =>
+      'Una pagina per membro: foto e presenza, ultimo accesso, prenotazioni in corso e prossime, azioni rapide (messaggio, WhatsApp, e-mail), schede contatto e finanze e, per gli admin, ogni impostazione raggruppata per tema con il valore attuale. Disattivato: il foglio profilo e il foglio azioni di Membri e piani.';
 
   @override
   String get helpTitle => 'Aiuto';

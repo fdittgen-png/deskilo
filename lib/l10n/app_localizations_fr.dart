@@ -1431,17 +1431,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String directoryLastSeenMinutes(int minutes) {
-    return '$minutes min';
+    return 'Vu il y a $minutes min';
   }
 
   @override
   String directoryLastSeenHours(int hours) {
-    return '$hours h';
+    return 'Vu il y a $hours h';
   }
 
   @override
   String directoryLastSeenDays(int days) {
-    return '$days j';
+    return 'Vu il y a $days j';
   }
 
   @override
@@ -1466,6 +1466,72 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get directoryNoUpcoming => 'Aucune réservation à venir';
+
+  @override
+  String get memberPageEmailAction => 'E-mail';
+
+  @override
+  String get memberPageAddService => 'Ajouter un service';
+
+  @override
+  String get memberPageNone => 'Aucun';
+
+  @override
+  String memberPageWorkspaceDefaultValue(int count) {
+    return 'Défaut de l\'espace ($count)';
+  }
+
+  @override
+  String get memberPageLevelTitle => 'Réservations d\'un étage entier';
+
+  @override
+  String get memberPageGroupMembership => 'Adhésion';
+
+  @override
+  String get memberPageGroupBooking => 'Règles de réservation';
+
+  @override
+  String get memberPageGroupBilling => 'Facturation';
+
+  @override
+  String get memberPageGroupAccess => 'Badges et accès';
+
+  @override
+  String get memberPageManageHeading => 'Gérer';
+
+  @override
+  String get memberPageStatusActive => 'Actif';
+
+  @override
+  String get memberPageNeverSeen => 'Jamais vu';
+
+  @override
+  String memberPageYou(String name) {
+    return '$name (vous)';
+  }
+
+  @override
+  String memberPageSince(String date) {
+    return 'Membre depuis le $date';
+  }
+
+  @override
+  String memberPageCheckedIn(String seat, String time) {
+    return 'Pointé · $seat · depuis $time';
+  }
+
+  @override
+  String memberPageReservedNow(String seat, String time) {
+    return 'Réservé maintenant · $seat · jusqu\'à $time';
+  }
+
+  @override
+  String memberPageNext(String label) {
+    return 'Prochaine : $label';
+  }
+
+  @override
+  String get memberPageNowHeading => 'En ce moment';
 
   @override
   String get editorBackgroundImage => 'Image de fond';
@@ -2231,6 +2297,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureReportDesignerDesc =>
       'L\'éditeur de rapports en plein écran : éléments modifiés sur place dans leur vraie typographie, glisser pour réordonner, palette d\'insertion, sélecteur de champs avec recherche, annuler et rétablir, taille et alignement des images, garde-fou avant d\'abandonner, modèles et réinitialisation derrière une confirmation, l\'erreur du modèle expliquée, conception et aperçu côte à côte sur grand écran. Désactivé : l\'éditeur en feuille.';
+
+  @override
+  String get featureMemberPageTitle => 'Fiche membre';
+
+  @override
+  String get featureMemberPageDesc =>
+      'Une page par membre : photo et présence, dernière connexion, réservations en cours et à venir, actions rapides (message, WhatsApp, e-mail), cartes contact et finances, et pour les admins chaque réglage regroupé par thème avec sa valeur actuelle. Désactivé : la feuille de profil et la feuille d\'actions de Membres & forfaits.';
 
   @override
   String get helpTitle => 'Aide';

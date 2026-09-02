@@ -6,14 +6,80 @@
   "directoryCheckedInSeat": "Presente · {seat}",
   "directoryOnline": "En línea",
   "directoryReservedToday": "Reservado hoy",
-  "directoryLastSeenMinutes": "{minutes} min",
-  "directoryLastSeenHours": "{hours} h",
-  "directoryLastSeenDays": "{days} d",
+  "directoryLastSeenMinutes": "Visto hace {minutes} min",
+  "directoryLastSeenHours": "Visto hace {hours} h",
+  "directoryLastSeenDays": "Visto hace {days} d",
   "directoryWhatsapp": "Chatear por WhatsApp",
   "directoryOpenGroup": "Abrir el grupo de WhatsApp",
   "directoryClose": "Cerrar",
   "directoryReservedNow": "Reservado ahora",
   "directoryReservedNowSeat": "Reservado ahora · {seat}",
   "directoryReservationsHeading": "Reservas",
-  "directoryNoUpcoming": "Sin reservas próximas"
+  "directoryNoUpcoming": "Sin reservas próximas",
+  "memberPageEmailAction": "Correo",
+  "memberPageAddService": "Añadir un servicio",
+  "memberPageNone": "Ninguno",
+  "memberPageWorkspaceDefaultValue": "Predeterminado del espacio ({count})",
+  "@memberPageWorkspaceDefaultValue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "memberPageLevelTitle": "Reservas de una planta entera",
+  "memberPageGroupMembership": "Membresía",
+  "memberPageGroupBooking": "Reglas de reserva",
+  "memberPageGroupBilling": "Facturación",
+  "memberPageGroupAccess": "Tarjetas y acceso",
+  "memberPageManageHeading": "Gestionar",
+  "memberPageStatusActive": "Activo",
+  "memberPageNeverSeen": "Nunca visto",
+  "memberPageYou": "{name} (tú)",
+  "@memberPageYou": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageSince": "Socio desde el {date}",
+  "@memberPageSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageCheckedIn": "Registrado · {seat} · desde las {time}",
+  "@memberPageCheckedIn": {
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageReservedNow": "Reservado ahora · {seat} · hasta las {time}",
+  "@memberPageReservedNow": {
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageNext": "Próxima: {label}",
+  "@memberPageNext": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageNowHeading": "Ahora mismo"
 }

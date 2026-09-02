@@ -116,7 +116,11 @@ enum WorkspaceFeature {
 
   /// #822 — the report editor as a full-screen designer: direct
   /// manipulation, undo, side-by-side preview, image size/alignment.
-  reportDesigner;
+  reportDesigner,
+
+  /// #825 — one page per member: identity, presence, bookings, contact,
+  /// money, and the admin controls grouped with their current values.
+  memberPage;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -397,6 +401,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.reportDesigner: FeatureManifestEntry(
     feature: WorkspaceFeature.reportDesigner,
     requires: WorkspaceFeature.invoicePdfTemplate,
+  ),
+  // #825 — the member page over the directory's profile sheet.
+  WorkspaceFeature.memberPage: FeatureManifestEntry(
+    feature: WorkspaceFeature.memberPage,
+    requires: WorkspaceFeature.membersDirectory,
   ),
   // #719 — "who accessed my data": the server-written log of reads of
   // another member's finances, shown to the subject. OFF hides the row;

@@ -81,7 +81,9 @@ Member _member(
     1,
     15,
   );
-  final workspace = FakeWorkspaceRepository.withWorkspace()
+  final workspace = FakeWorkspaceRepository.withWorkspace(
+      // #825 — these tests drive the legacy sheets; the page has its own.
+      featureFlags: const {'memberPage': false})
     ..myMember = _member(1)
     ..otherMembers.addAll([
       _member(2, isOwner: true),
@@ -273,7 +275,7 @@ void main() {
       '${DateFormat.E().format(start)} ${DateFormat.d().format(start)}'
       ' · ${DateFormat.Hm().format(start)} · A1',
     );
-    expect(_chipText(tester, 'member-5'), '2 h');
+    expect(_chipText(tester, 'member-5'), 'Seen 2 h ago');
 
     // Eve: never seen and her only booking starts 15 days out — outside
     // the 14-day window, no chip of either kind.
@@ -390,7 +392,9 @@ void main() {
   });
 
   testWidgets('no active members renders the EmptyState', (tester) async {
-    final workspace = FakeWorkspaceRepository.withWorkspace()
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+      // #825 — these tests drive the legacy sheets; the page has its own.
+      featureFlags: const {'memberPage': false})
       ..myMember = _member(1, status: MemberStatus.paused)
       ..memberNames = {'member-1': 'Flo'};
     await pumpDirectory(tester, workspace: workspace);

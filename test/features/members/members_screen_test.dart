@@ -31,7 +31,9 @@ Future<FakeWorkspaceRepository> pumpMembers(
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final workspace =
-      FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags)
+      FakeWorkspaceRepository.withWorkspace(
+          // #825 — these tests drive the legacy sheet; the page has its own.
+          featureFlags: {'memberPage': false, ...featureFlags})
     ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
     ..otherMembers.add(
       const Member(
@@ -102,7 +104,9 @@ void main() {
       'an ADMIN tapping a kiosk row gets an explaining sheet — never a '
       'silent nothing (field report: "sur Flo s\'affiche rien")',
       (tester) async {
-    final workspace = FakeWorkspaceRepository.withWorkspace()
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+      // #825 — these tests drive the legacy sheets; the page has its own.
+      featureFlags: const {'memberPage': false})
       ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
       ..otherMembers.add(
         const Member(
@@ -131,7 +135,9 @@ void main() {
   testWidgets(
       'a kiosk account reverts ITSELF from its own member row (0056) — '
       'the admin kiosk at the pad has a way back', (tester) async {
-    final workspace = FakeWorkspaceRepository.withWorkspace()
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+      // #825 — these tests drive the legacy sheets; the page has its own.
+      featureFlags: const {'memberPage': false})
       ..memberNames = {'member-1': 'Flo'};
     // The real field shape: the kiosk account is also an admin, so
     // Members & plans is reachable after rejecting the gate.
@@ -439,7 +445,9 @@ void main() {
 
   testWidgets('an admin reaches Members & plans but sees no owner-only '
       'actions (0044 widened access)', (tester) async {
-    final workspace = FakeWorkspaceRepository.withWorkspace()
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+      // #825 — these tests drive the legacy sheets; the page has its own.
+      featureFlags: const {'memberPage': false})
       ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
       ..myMember = const Member(
         id: 'member-1',
@@ -520,7 +528,9 @@ void main() {
   });
 
   testWidgets('workers have no members entry in settings', (tester) async {
-    final workspace = FakeWorkspaceRepository.withWorkspace()
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+      // #825 — these tests drive the legacy sheets; the page has its own.
+      featureFlags: const {'memberPage': false})
       ..myMember = const Member(
         id: 'member-1',
         workspaceId: 'ws-1',
@@ -559,7 +569,9 @@ void main() {
 
   testWidgets('an admin can be demoted; the owner sheet has no role toggle',
       (tester) async {
-    final workspace = FakeWorkspaceRepository.withWorkspace()
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+      // #825 — these tests drive the legacy sheets; the page has its own.
+      featureFlags: const {'memberPage': false})
       ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
       ..otherMembers.add(
         const Member(

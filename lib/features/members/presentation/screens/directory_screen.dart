@@ -16,7 +16,9 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../member_profile_link.dart';
 import '../widgets/member_contact_card.dart';
+import 'member_page.dart';
 import '../widgets/member_money_card.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../profile/domain/profile.dart';
@@ -156,6 +158,9 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.whatsappIntegration);
     // Member notes (#456) — the send affordance on rows and sheets.
+    final pageOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.memberPage);
     final notesOn = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.memberNotifications);
@@ -227,6 +232,10 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
                       onWhatsapp: (uri) => _openLink(context, ref, uri),
                       onOpenReservation: (reservation) =>
                           _openReservation(context, reservation),
+                      // #825 — the member page when its flag is on.
+                      onOpenPage: pageOn
+                          ? () => openMemberPage(context, member.id)
+                          : null,
                       // Messaging refactor: the profile opens the same
                       // conversation thread as everywhere else — read
                       // AND send in one place.
@@ -273,23 +282,6 @@ List<Reservation> _upcomingFor(
   return upcoming;
 }
 
-/// Compact relative last-seen label for the offline chip.
-String _relativeLastSeen(
-  AppLocalizations? l10n,
-  DateTime now,
-  DateTime lastSeenAt,
-) {
-  final diff = now.difference(lastSeenAt);
-  if (diff.inMinutes < 60) {
-    final minutes = diff.inMinutes < 1 ? 1 : diff.inMinutes;
-    return l10n?.directoryLastSeenMinutes(minutes) ?? '$minutes min';
-  }
-  if (diff.inHours < 24) {
-    return l10n?.directoryLastSeenHours(diff.inHours) ?? '${diff.inHours} h';
-  }
-  return l10n?.directoryLastSeenDays(diff.inDays) ?? '${diff.inDays} d';
-}
-
 /// The presence chip for [presence] — unchanged rendering from #224 —
 /// or null when the member was never seen (offline without a heartbeat
 /// renders no presence chip at all). Shared by the row and the detail
@@ -316,7 +308,7 @@ Widget? _presenceChip(
           ? null
           : _StatusChip(
               chipKey: ValueKey('$keyPrefix-$memberId'),
-              label: _relativeLastSeen(l10n, now, presence.lastSeenAt!),
+              label: relativeLastSeen(l10n, now, presence.lastSeenAt!),
               foreground: theme.colorScheme.onSurfaceVariant,
             ),
   };
@@ -647,10 +639,14 @@ class _MemberRow extends StatelessWidget {
     required this.onWhatsapp,
     required this.onOpenReservation,
     this.onNotify,
+    this.onOpenPage,
   });
 
   final Member member;
   final String name;
+
+  /// #825 — set when the member page is on: the tap goes there.
+  final VoidCallback? onOpenPage;
 
   /// The member's email — non-empty only for admin/owner viewers
   /// (#410, member_emails RPC); '' renders nothing.
@@ -780,21 +776,24 @@ class _MemberRow extends StatelessWidget {
               tooltip: l10n?.directoryWhatsapp ?? 'Chat on WhatsApp',
               onPressed: () => onWhatsapp(whatsappUri),
             ),
-      onTap: () => showMemberProfileSheet(
-        context,
-        member: member,
-        name: name,
-        isSelf: isSelf,
-        profile: profile,
-        presence: presence,
-        reservationInfo: reservationInfo,
-        memberReservations: memberReservations,
-        targetNames: targetNames,
-        now: now,
-        onWhatsapp: onWhatsapp,
-        onOpenReservation: onOpenReservation,
-        onNotify: onNotify,
-      ),
+      // #825 — the member page when its flag is on; the sheet otherwise.
+      onTap: () => onOpenPage != null
+          ? onOpenPage!()
+          : showMemberProfileSheet(
+              context,
+              member: member,
+              name: name,
+              isSelf: isSelf,
+              profile: profile,
+              presence: presence,
+              reservationInfo: reservationInfo,
+              memberReservations: memberReservations,
+              targetNames: targetNames,
+              now: now,
+              onWhatsapp: onWhatsapp,
+              onOpenReservation: onOpenReservation,
+              onNotify: onNotify,
+            ),
     );
 
     // Presence-forward card: soft elevation for every member, a warm

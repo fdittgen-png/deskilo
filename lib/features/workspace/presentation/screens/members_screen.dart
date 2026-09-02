@@ -8,241 +8,25 @@ import '../../../money/presentation/widgets/negotiation_card.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/form_sheet.dart';
-import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../money/presentation/widgets/consumption_sheet.dart';
-import '../../../money/providers/money_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/booking_policies.dart';
 import '../../domain/member.dart';
 import '../../domain/overage_policy.dart';
+import '../member_admin_actions.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/open_conversation.dart';
 import '../widgets/member_note_dialog.dart';
-import '../widgets/badge_manager_dialog.dart';
-import '../../../events/providers/event_providers.dart';
-import '../../../../core/share/file_sharer.dart';
-import '../../../money/presentation/invoice_actions.dart';
-import '../../../members/providers/directory_providers.dart';
-import '../../../../core/locale/report_language.dart';
 
 /// Owner-only member management: role overview, subscription percentage
 /// assignment (#128, ADR 0008), pause/reactivate (spec §7.2).
 class MembersScreen extends ConsumerWidget {
   const MembersScreen({super.key});
-
-  Future<void> _pickSubscription(
-    BuildContext context,
-    WidgetRef ref,
-    Member member,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    final offered =
-        (await ref.read(subscriptionLevelsProvider.future)).offeredLevels;
-    if (!context.mounted) return;
-
-    final custom = TextEditingController();
-    final pct = await showDialog<int>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n?.memberSubscriptionLabel ?? 'Subscription'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Wrap(
-              spacing: 8,
-              runSpacing: 4,
-              children: [
-                for (final level in offered)
-                  ChoiceChip(
-                    label: Text(l10n?.percentValue(level) ?? '$level%'),
-                    selected: member.subscriptionPct == level,
-                    onSelected: (_) => Navigator.of(context).pop(level),
-                  ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            // The owner may always negotiate a free value, even when
-            // allow_custom hides it from member-facing pickers.
-            TextField(
-              controller: custom,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: l10n?.memberSubscriptionCustom ?? 'Custom (1–100)',
-                suffixIcon: HelpDot(
-                    l10n?.helpHintMembersTopic ?? 'Members & plans'),
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
-          ),
-          FilledButton(
-            onPressed: () {
-              final value = int.tryParse(custom.text.trim());
-              if (value == null || value < 1 || value > 100) return;
-              Navigator.of(context).pop(value);
-            },
-            child: Text(l10n?.commonSave ?? 'Save'),
-          ),
-        ],
-      ),
-    );
-    if (pct == null || pct == member.subscriptionPct) return;
-    if (!context.mounted) return;
-
-    if (!await runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'member subscription update failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () async {
-          await ref
-              .read(workspaceRepositoryProvider)
-              .updateMemberSubscription(member.id, pct);
-      },
-    )) {
-      return;
-    }
-    ref.invalidate(workspaceMembersProvider);
-  }
-
-  /// Sets how the member is treated once they have used their whole
-  /// monthly entitlement (migration 0041): block, pay-as-you-go, or buy a
-  /// pre-defined day package (0042).
-  Future<void> _pickOveragePolicy(
-    BuildContext context,
-    WidgetRef ref,
-    Member member,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    final options = <(OveragePolicy, String)>[
-      (
-        OveragePolicy.blocked,
-        l10n?.overagePolicyBlocked ?? 'Block further booking'
-      ),
-      (
-        OveragePolicy.payg,
-        l10n?.overagePolicyPayg ?? 'Charge overage (pay-as-you-go)'
-      ),
-      (
-        OveragePolicy.package,
-        l10n?.overagePolicyPackage ?? 'Require buying a package'
-      ),
-    ];
-    final chosen = await showDialog<OveragePolicy>(
-      context: context,
-      builder: (context) => SimpleDialog(
-        title: HelpDotTitle(
-          l10n?.memberOveragePolicyLabel ?? 'When days run out',
-          l10n?.helpHintMembersTopic ?? 'Members & plans',
-        ),
-        children: [
-          for (final (policy, label) in options)
-            SimpleDialogOption(
-              onPressed: () => Navigator.of(context).pop(policy),
-              child: Row(
-                children: [
-                  Icon(
-                    member.overagePolicy == policy
-                        ? Icons.radio_button_checked
-                        : Icons.radio_button_unchecked,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(child: Text(label)),
-                ],
-              ),
-            ),
-        ],
-      ),
-    );
-    if (chosen == null || chosen == member.overagePolicy) return;
-    if (!context.mounted) return;
-
-    if (!await runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'member overage policy update failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () async {
-          await ref
-              .read(workspaceRepositoryProvider)
-              .updateMemberOveragePolicy(member.id, chosen);
-      },
-    )) {
-      return;
-    }
-    ref.invalidate(workspaceMembersProvider);
-  }
-
-  /// The one management surface of a member (UX pass): every action as a
-  /// labeled tile, gated by the same rules the old icon buttons carried —
-  /// owner-only knobs, no self reservation-limit, no billing for kiosks.
-  /// #494 — builds THIS member's financial agreement through the report
-  /// engine and hands the PDF to the share sheet.
-  Future<void> _sendAgreement(
-    BuildContext context,
-    WidgetRef ref,
-    Member member,
-    String name,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    await runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'agreement share failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () async {
-        await warmLetterDocProviders(ref, 'agreement');
-        if (!context.mounted) return;
-        // #496 — the agreement prints in the MEMBER's language.
-        final profile =
-            ref.read(memberProfilesProvider).value?[member.userId];
-        final String language;
-        try {
-          language = resolveMemberReportLanguage(ref,
-              memberLocale: profile?.preferredLocale ?? '');
-        } on AmbiguousReportLanguage {
-          AppSnack.error(
-            context,
-            l10n?.reportLanguageAmbiguous ??
-                'This country has several languages — set the '
-                    'workspace language in Workspace settings first.',
-          );
-          return;
-        }
-        final docL10n = l10nForLanguage(language);
-        final data = agreementReportData(context, ref,
-            memberName: name,
-            subscriptionPct: member.subscriptionPct,
-            l10nOverride: docL10n,
-            localeName: language);
-        final report = renderLetterDoc(context, ref,
-            docId: 'agreement', data: data, language: language);
-        final pdf = await letterDocPdf(context, ref,
-            report: report,
-            title: '${docL10n.reportDocAgreement} $name');
-        await ref.read(fileSharerProvider)(
-          bytes: pdf.bytes,
-          fileName: pdf.fileName,
-          mimeType: 'application/pdf',
-        );
-      },
-    );
-  }
 
   Future<void> _memberSheet(
     BuildContext context,
@@ -286,7 +70,7 @@ class MembersScreen extends ConsumerWidget {
           icon: Icons.handshake_outlined,
           label: l10n?.memberSendAgreement ??
               'Send the financial agreement',
-          onTap: () => _sendAgreement(context, ref, member, name),
+          onTap: () => sendMemberAgreement(context, ref, member, name),
         ),
       // Messaging (#456, refactor): the member's CONVERSATION — read
       // the whole exchange and send from the same thread every other
@@ -310,14 +94,14 @@ class MembersScreen extends ConsumerWidget {
           context,
           icon: Icons.how_to_reg_outlined,
           label: l10n?.memberApprove ?? 'Approve membership',
-          onTap: () => _decideJoin(context, ref, member, approve: true),
+          onTap: () => decideMemberJoin(context, ref, member, approve: true),
         ),
       if (pending && !isSelf)
         _sheetAction(
           context,
           icon: Icons.person_off_outlined,
           label: l10n?.memberRejectJoin ?? 'Reject membership',
-          onTap: () => _decideJoin(context, ref, member, approve: false),
+          onTap: () => decideMemberJoin(context, ref, member, approve: false),
         ),
       if (servicesOn && !member.isKiosk && active)
         _sheetAction(
@@ -337,7 +121,7 @@ class MembersScreen extends ConsumerWidget {
           icon: Icons.percent,
           label: l10n?.memberSubscriptionLabel ?? 'Subscription',
           topic: membersTopic,
-          onTap: () => _pickSubscription(context, ref, member),
+          onTap: () => pickMemberSubscription(context, ref, member),
         ),
       if (!member.isKiosk && active)
         Row(children: [
@@ -357,7 +141,7 @@ class MembersScreen extends ConsumerWidget {
               : Icons.speed,
           label: l10n?.memberOveragePolicyLabel ?? 'When days run out',
           topic: membersTopic,
-          onTap: () => _pickOveragePolicy(context, ref, member),
+          onTap: () => pickMemberOveragePolicy(context, ref, member),
         ),
       if (!isSelf && !member.isKiosk && active)
         _sheetAction(
@@ -365,7 +149,7 @@ class MembersScreen extends ConsumerWidget {
           icon: Icons.stacked_bar_chart_outlined,
           label: l10n?.memberReservationLimitLabel ?? 'Reservation limit',
           topic: membersTopic,
-          onTap: () => _pickReservationLimit(context, ref, member),
+          onTap: () => pickMemberReservationLimit(context, ref, member),
         ),
       // #628 — the explicit permission to hold OVERLAPPING bookings;
       // same authorization as the cap above, never for themselves.
@@ -376,7 +160,7 @@ class MembersScreen extends ConsumerWidget {
           label: l10n?.memberSimultaneousLimitLabel ??
               'Simultaneous reservations',
           topic: membersTopic,
-          onTap: () => _pickSimultaneousLimit(context, ref, member),
+          onTap: () => pickMemberSimultaneousLimit(context, ref, member),
         ),
       // Whole-level reservations (0050): grant/revoke — owner or admin,
       // never self (the reservation-limit rule), feature-gated.
@@ -392,7 +176,7 @@ class MembersScreen extends ConsumerWidget {
               : (l10n?.levelPermissionDenied ??
                   'May not reserve a whole level'),
           topic: membersTopic,
-          onTap: () => _toggleLevelPermission(context, ref, member),
+          onTap: () => toggleMemberLevelPermission(context, ref, member),
         ),
       if (!member.isKiosk && !member.isOwner && active)
         _sheetAction(
@@ -400,7 +184,7 @@ class MembersScreen extends ConsumerWidget {
           icon: Icons.qr_code_2_outlined,
           label: l10n?.memberBadgesTooltip ?? 'Badges',
           topic: l10n?.helpHintBadgesTopic ?? 'NFC badges',
-          onTap: () => _badgesDialog(context, ref, member, name),
+          onTap: () => showMemberBadgesDialog(context, ref, member, name),
         ),
       if (isOwner && !member.isOwner && !member.isKiosk && active)
         _sheetAction(
@@ -411,7 +195,7 @@ class MembersScreen extends ConsumerWidget {
           label: member.isAdmin
               ? (l10n?.memberMakeMember ?? 'Make regular member')
               : (l10n?.memberMakeAdmin ?? 'Make admin'),
-          onTap: () => _changeRole(context, ref, member),
+          onTap: () => requestMemberRoleChange(context, ref, member),
         ),
       // Co-ownership (0058): owner-level callers appoint active/passive
       // co-owners; a co-owner can be promoted to FULL owner on the
@@ -431,7 +215,7 @@ class MembersScreen extends ConsumerWidget {
           },
           label: l10n?.coOwnerAction ?? 'Co-ownership',
           topic: membersTopic,
-          onTap: () => _pickCoOwner(context, ref, member),
+          onTap: () => pickMemberCoOwner(context, ref, member),
         ),
       if (isOwner &&
           coOwnerOn &&
@@ -441,7 +225,7 @@ class MembersScreen extends ConsumerWidget {
           context,
           icon: Icons.military_tech_outlined,
           label: l10n?.coOwnerActivate ?? 'Promote to owner now',
-          onTap: () => _activateCoOwner(context, ref, member),
+          onTap: () => activateMemberCoOwner(context, ref, member),
         ),
       if (isOwner &&
           !member.isOwner &&
@@ -456,7 +240,7 @@ class MembersScreen extends ConsumerWidget {
               ? (l10n?.memberUnmakeKiosk ?? 'Revert kiosk to member')
               : (l10n?.memberMakeKiosk ?? 'Make kiosk device'),
           topic: l10n?.helpTopicKiosk ?? 'Kiosk mode',
-          onTap: () => _toggleKiosk(context, ref, member),
+          onTap: () => toggleMemberKiosk(context, ref, member),
         ),
       // Kiosk self-revert (0056): the kiosk account manages its OWN row
       // here too, not only in Settings — without this, an admin kiosk
@@ -466,7 +250,7 @@ class MembersScreen extends ConsumerWidget {
           context,
           icon: Icons.tablet_mac,
           label: l10n?.memberUnmakeKiosk ?? 'Revert kiosk to member',
-          onTap: () => _revertMyKiosk(context, ref, member),
+          onTap: () => revertMyKiosk(context, ref, member),
         ),
       // Pause/reactivate was a hidden long-press before — now a visible,
       // named action.
@@ -480,7 +264,7 @@ class MembersScreen extends ConsumerWidget {
               ? (l10n?.memberReactivate ?? 'Reactivate membership')
               : (l10n?.memberPause ?? 'Pause membership'),
           topic: membersTopic,
-          onTap: () => _togglePaused(context, ref, member),
+          onTap: () => toggleMemberPaused(context, ref, member),
         ),
     ];
     // NEVER a silent no-op (field report: tapping the kiosk row as a
@@ -508,31 +292,6 @@ class MembersScreen extends ConsumerWidget {
     );
   }
 
-  /// The kiosk account reverting ITSELF (0056) from its own member row —
-  /// the same self RPC the Settings tile uses.
-  Future<void> _revertMyKiosk(
-    BuildContext context,
-    WidgetRef ref,
-    Member member,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    if (!await runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'kiosk self-revert failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () => ref
-          .read(workspaceRepositoryProvider)
-          .unsetMyKiosk(member.workspaceId),
-    )) {
-      return;
-    }
-    ref
-      ..invalidate(workspaceMembersProvider)
-      ..invalidate(myMemberProvider);
-  }
-
   /// One labeled sheet action: closes the sheet, then runs [onTap] with
   /// the SCREEN's context (the sheet's dies with the pop).
   Widget _sheetAction(
@@ -553,446 +312,6 @@ class MembersScreen extends ConsumerWidget {
           onTap();
         },
       ),
-    );
-  }
-
-  /// Picks the member's co-ownership flavor (0058).
-  Future<void> _pickCoOwner(
-    BuildContext context,
-    WidgetRef ref,
-    Member member,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    final options = <(CoOwnerStatus, String)>[
-      (CoOwnerStatus.none, l10n?.coOwnerNone ?? 'No co-owner role'),
-      (
-        CoOwnerStatus.active,
-        l10n?.coOwnerActive ??
-            'Active co-owner — owner permissions now, automatic succession'
-      ),
-      (
-        CoOwnerStatus.passive,
-        l10n?.coOwnerPassive ??
-            'Passive co-owner — becomes owner when activated or when the '
-                'owner leaves'
-      ),
-    ];
-    final chosen = await showDialog<CoOwnerStatus>(
-      context: context,
-      builder: (context) => SimpleDialog(
-        title: HelpDotTitle(
-          l10n?.coOwnerAction ?? 'Co-ownership',
-          l10n?.helpHintMembersTopic ?? 'Members & plans',
-        ),
-        children: [
-          for (final (status, label) in options)
-            SimpleDialogOption(
-              key: ValueKey('co-owner-${status.name}'),
-              onPressed: () => Navigator.of(context).pop(status),
-              child: Row(
-                children: [
-                  Icon(
-                    member.coOwner == status
-                        ? Icons.radio_button_checked
-                        : Icons.radio_button_unchecked,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(child: Text(label)),
-                ],
-              ),
-            ),
-        ],
-      ),
-    );
-    if (chosen == null || chosen == member.coOwner) return;
-    if (!context.mounted) return;
-    if (!await runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'co-owner update failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () =>
-          ref.read(workspaceRepositoryProvider).setCoOwner(member.id, chosen),
-    )) {
-      return;
-    }
-    ref
-      ..invalidate(workspaceMembersProvider)
-      ..invalidate(myMemberProvider);
-  }
-
-  /// Promotes a co-owner to FULL owner right now (0058).
-  Future<void> _activateCoOwner(
-    BuildContext context,
-    WidgetRef ref,
-    Member member,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    if (!await runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'co-owner activation failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () =>
-          ref.read(workspaceRepositoryProvider).activateCoOwner(member.id),
-    )) {
-      return;
-    }
-    ref
-      ..invalidate(workspaceMembersProvider)
-      ..invalidate(myMemberProvider);
-  }
-
-  Future<void> _togglePaused(
-    BuildContext context,
-    WidgetRef ref,
-    Member member,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    final paused = member.status == MemberStatus.paused;
-    if (!await runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'member status update failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () => ref.read(workspaceRepositoryProvider).updateMemberStatus(
-            member.id,
-            paused ? MemberStatus.active : MemberStatus.paused,
-          ),
-    )) {
-      return;
-    }
-    ref.invalidate(workspaceMembersProvider);
-  }
-
-  /// Caps [member]'s simultaneous open reservations (0044). Presets plus
-  /// a custom count and a no-limit reset; the server refuses self-setting
-  /// (the UI hides the button on the own row anyway).
-  Future<void> _pickReservationLimit(
-    BuildContext context,
-    WidgetRef ref,
-    Member member,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    const presets = [1, 2, 3, 5, 10];
-    const noLimitSentinel = -1;
-    final custom = TextEditingController();
-    final chosen = await showDialog<int>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          l10n?.memberReservationLimitLabel ?? 'Reservation limit',
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              l10n?.memberReservationLimitExplainer ??
-                  'How many open reservations this member may hold at '
-                      'the same time.',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-            const SizedBox(height: 12),
-            Wrap(
-              spacing: 8,
-              runSpacing: 4,
-              children: [
-                ChoiceChip(
-                  label: Text(
-                    l10n?.memberReservationLimitNone ?? 'No limit',
-                  ),
-                  selected: member.maxActiveReservations == null,
-                  onSelected: (_) =>
-                      Navigator.of(context).pop(noLimitSentinel),
-                ),
-                for (final preset in presets)
-                  ChoiceChip(
-                    label: Text(preset.toString()),
-                    selected: member.maxActiveReservations == preset,
-                    onSelected: (_) => Navigator.of(context).pop(preset),
-                  ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: custom,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: l10n?.memberReservationLimitCustom ??
-                    'Custom (1\u2013100)',
-                suffixIcon: HelpDot(
-                    l10n?.helpHintMembersTopic ?? 'Members & plans'),
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
-          ),
-          FilledButton(
-            onPressed: () {
-              final value = int.tryParse(custom.text.trim());
-              if (value == null || value < 1 || value > 100) return;
-              Navigator.of(context).pop(value);
-            },
-            child: Text(l10n?.commonSave ?? 'Save'),
-          ),
-        ],
-      ),
-    );
-    if (chosen == null || !context.mounted) return;
-    final limit = chosen == noLimitSentinel ? null : chosen;
-    if (limit == member.maxActiveReservations) return;
-
-    if (!await runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'reservation limit update failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () => ref
-          .read(workspaceRepositoryProvider)
-          .setMemberReservationLimit(member.id, limit),
-    )) {
-      return;
-    }
-    ref.invalidate(workspaceMembersProvider);
-  }
-
-  /// #628 (migration 0119) — how many OVERLAPPING bookings [member] may
-  /// hold. Presets plus a workspace-default reset; the server refuses
-  /// self-setting exactly like the 0044 cap above.
-  Future<void> _pickSimultaneousLimit(
-    BuildContext context,
-    WidgetRef ref,
-    Member member,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    const presets = [1, 2, 3, 5];
-    const defaultSentinel = -1;
-    final chosen = await showDialog<int>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: HelpDotTitle(
-          l10n?.memberSimultaneousLimitLabel ?? 'Simultaneous reservations',
-          l10n?.helpHintMembersTopic ?? 'Members & plans',
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              l10n?.memberSimultaneousLimitExplainer ??
-                  'How many bookings this member may hold over the same '
-                      'period. Unset follows the workspace default.',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-            const SizedBox(height: 12),
-            Wrap(
-              spacing: 8,
-              runSpacing: 4,
-              children: [
-                ChoiceChip(
-                  key: const Key('simultaneous-default'),
-                  label: Text(
-                    l10n?.memberSimultaneousLimitDefault ??
-                        'Workspace default',
-                  ),
-                  selected: member.maxSimultaneousReservations == null,
-                  onSelected: (_) =>
-                      Navigator.of(context).pop(defaultSentinel),
-                ),
-                for (final preset in presets)
-                  ChoiceChip(
-                    key: Key('simultaneous-$preset'),
-                    label: Text(preset.toString()),
-                    selected: member.maxSimultaneousReservations == preset,
-                    onSelected: (_) => Navigator.of(context).pop(preset),
-                  ),
-              ],
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
-          ),
-        ],
-      ),
-    );
-    if (chosen == null || !context.mounted) return;
-    final limit = chosen == defaultSentinel ? null : chosen;
-    if (limit == member.maxSimultaneousReservations) return;
-
-    if (!await runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'simultaneous limit update failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () => ref
-          .read(workspaceRepositoryProvider)
-          .setMemberSimultaneousLimit(member.id, limit),
-    )) {
-      return;
-    }
-    ref.invalidate(workspaceMembersProvider);
-  }
-
-  /// Flags [member] as a wall-mounted kiosk device — or reverts it
-  /// (0043, owner-only server-side). Kiosks lock to the plan view and act
-  /// only through member badges.
-  Future<void> _toggleKiosk(
-    BuildContext context,
-    WidgetRef ref,
-    Member member,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    if (!await runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'kiosk toggle failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () => ref
-          .read(workspaceRepositoryProvider)
-          .setMemberKiosk(member.id, isKiosk: !member.isKiosk),
-    )) {
-      return;
-    }
-    ref.invalidate(workspaceMembersProvider);
-  }
-
-  /// Whole-level grant (0050): flips can_reserve_level through the
-  /// admin/owner RPC (server refuses self-setting).
-  Future<void> _toggleLevelPermission(
-    BuildContext context,
-    WidgetRef ref,
-    Member member,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    if (!await runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'level permission toggle failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () => ref
-          .read(workspaceRepositoryProvider)
-          .setMemberLevelPermission(
-            member.id,
-            allowed: !member.canReserveLevel,
-          ),
-    )) {
-      return;
-    }
-    ref.invalidate(workspaceMembersProvider);
-  }
-
-  /// New-member decision (0052): activates or exits a pending
-  /// membership through the admin/owner RPC.
-  Future<void> _decideJoin(
-    BuildContext context,
-    WidgetRef ref,
-    Member member, {
-    required bool approve,
-  }) async {
-    final l10n = AppLocalizations.of(context);
-    if (!await runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'member join decision failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () => ref
-          .read(workspaceRepositoryProvider)
-          .decideMemberJoin(member.id, approve: approve),
-    )) {
-      return;
-    }
-    ref.invalidate(workspaceMembersProvider);
-  }
-
-  /// Badge manager of one member (0043): the active/revoked badge list
-  /// with revoke buttons, and "New badge" which mints one and swaps the
-  /// dialog to the ONE-TIME QR of the raw token.
-  Future<void> _badgesDialog(
-    BuildContext context,
-    WidgetRef ref,
-    Member member,
-    String name,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
-    await showDialog<void>(
-      context: context,
-      builder: (context) => BadgeManagerDialog(
-        workspaceId: workspace.id,
-        memberId: member.id,
-        name: name,
-        l10n: l10n,
-        // Admin operations (0043/0046) — the member's Settings entry
-        // injects the self-service RPCs instead (0053).
-        issue: () => ref
-            .read(workspaceRepositoryProvider)
-            .issueMemberBadge(workspace.id, member.id),
-        registerNfc: (uid) => ref
-            .read(workspaceRepositoryProvider)
-            .registerNfcBadge(workspace.id, member.id, uid: uid),
-        revoke: (badgeId) => ref
-            .read(workspaceRepositoryProvider)
-            .revokeMemberBadge(badgeId),
-        // Deletion is one shared RPC: the server allows the badge's own
-        // member or an admin (0055).
-        delete: (badgeId) => ref
-            .read(workspaceRepositoryProvider)
-            .deleteRevokedBadge(badgeId),
-      ),
-    );
-  }
-
-  /// Requests promoting/demotoggle the member's admin flag through the
-  /// validation quorum (0035): the change is pending until the
-  /// workspace's validators confirm it.
-  Future<void> _changeRole(
-    BuildContext context,
-    WidgetRef ref,
-    Member member,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
-    final makeAdmin = !member.isAdmin;
-    if (!await runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'role change request failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () async {
-          await ref.read(workspaceRepositoryProvider).requestRoleChange(
-                workspace.id,
-                memberId: member.id,
-                makeAdmin: makeAdmin,
-              );
-      },
-    )) {
-      return;
-    }
-    ref.invalidate(eventsProvider);
-    if (!context.mounted) return;
-    AppSnack.success(
-      context,
-      l10n?.memberRoleChangeRequested ?? 'Role change sent for validation.',
     );
   }
 
@@ -1138,7 +457,12 @@ class MembersScreen extends ConsumerWidget {
                   // pile of cryptic icon buttons (which overflowed on
                   // phones) and a hidden long-press.
                   trailing: const Icon(Icons.chevron_right),
-                  onTap: () => _memberSheet(
+                  // #825 — the member PAGE holds the same actions, grouped
+                  // and with their current values; the sheet stays for
+                  // the flag off.
+                  onTap: () => features.contains(WorkspaceFeature.memberPage)
+                      ? context.push('/member/${member.id}')
+                      : _memberSheet(
                     context,
                     ref,
                     member,
