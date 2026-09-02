@@ -129,6 +129,39 @@ the swapped path dependency and leaves every other version pinned. Deleting
 it would build against whatever is newest that day. (It cannot be *enforced*
 though — see `--enforce-lockfile` above.)
 
+### Verified (reproducible) builds — the two things that must line up
+
+F-Droid does not sign DesKilo. It rebuilds the commit the recipe pins and,
+if its output matches the APK we published, it ships **our** binary with
+**our** signature. Two conditions carry that, and breaking either one
+turns every future release red on their builder rather than here:
+
+**1. The same absolute path on both sides.** Dart's AOT output embeds the
+directory it was compiled in. F-Droid checks a project out to
+`build/de.deskilo.app`, which can never match a GitHub Actions build under
+`/home/runner/work/deskilo/deskilo`. So the recipe moves the tree to that
+exact path before `prebuild` and `build`, and moves it back afterwards —
+the same trick every reproducible Flutter app in fdroiddata uses. If the
+repository is ever renamed, or the publishing job stops running on
+`ubuntu-latest` with the default checkout path, the recipe's `export repo=`
+line has to change with it.
+
+**2. The same signing key, forever.** `AllowedAPKSigningKeys` in the recipe
+pins the certificate F-Droid will accept. The keystore lives outside this
+repository, in OneDrive under `Documents/DesKilo`, and reaches CI as the
+`FDROID_KEYSTORE_BASE64` and `FDROID_KEYSTORE_PASSWORD` secrets. There is
+no rotation: a different key means every F-Droid user must uninstall and
+reinstall, losing local data. The password is deliberately not stored
+beside the keystore.
+
+`fdroid-release.yml` publishes the binaries: it builds each ABI from a
+clean `build/`, builds arm64 a second time and refuses to publish if the
+two disagree outside `META-INF`, checks the signer against the fingerprint
+the recipe allows, and attaches `deskilo-<version>-<abi>.apk` to the
+release the `binary:` fields point at. Run it before pushing a recipe that
+names a new version, because F-Droid downloads that binary during the
+build: no asset, no release.
+
 ## Submission state (2026-09-01)
 
 The recipe is `fdroid/de.deskilo.app.yml` and it submits **three builds of
