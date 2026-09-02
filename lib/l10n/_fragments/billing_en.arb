@@ -255,14 +255,21 @@
   "billingUsageWhenZeroHint": "Sends a document reading zero, as confirmation that the subscription covered the whole month.",
   "@billingSubscriptionWhen": {
     "description": "Invoice schedule: when a subscription invoice goes out and the month it charges (#802)",
-    "placeholders": {"day": {"type": "String"}, "month": {"type": "String"}}
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
   },
   "invoiceKindSubscription": "Subscription, in advance",
   "invoiceKindUsage": "The month's extras",
   "invoiceKindSettlement": "Regrouped invoices",
   "invoiceKindFull": "Whole month",
   "settlementRegroups": "This invoice regroups",
-  "settlementVatNote": "VAT stays declared on the invoices above; this document only regroups what is owed.",
+  "settlementVatNote": "The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.",
   "settlementSettledBy": "Regrouped into another invoice — that one is what is owed and chased.",
   "settlementAction": "Regroup into one invoice",
   "settlementConfirm": "Regroup {count} invoices into one of {amount}?",
@@ -270,9 +277,46 @@
   "settlementNeedsTwo": "Pick at least two open invoices of the same member.",
   "@settlementConfirm": {
     "description": "Confirm regrouping N invoices into one (#804)",
-    "placeholders": {"count": {"type": "int"}, "amount": {"type": "String"}}
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "@settlementDone": {
-    "placeholders": {"number": {"type": "String"}}
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementFoldedIn": "Regrouped in {number}",
+  "@settlementFoldedIn": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementDocumentationOnly": "Documentation only — every operation happens on the regrouping invoice.",
+  "settlementSourcePdf": "PDF (regrouped)",
+  "settlementRegroupsNumbers": "Regroups {numbers}",
+  "@settlementRegroupsNumbers": {
+    "placeholders": {
+      "numbers": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePdfSettledIn": "Regrouped in {number}",
+  "@invoicePdfSettledIn": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -100,7 +100,9 @@ class _SettlementSheetState extends ConsumerState<_SettlementSheet> {
             memberId: memberId,
             invoiceIds: chosen.map((i) => i.id).toList(),
           );
-      number = id;
+      // The document's number, not its id (#831).
+      final fresh = await ref.read(moneyRepositoryProvider).fetchInvoices(workspace.id);
+      number = fresh.where((i) => i.id == id).firstOrNull?.number ?? id;
     } catch (e, st) {
       TraceLogger.instance
           .error('money', 'settle invoices failed', error: e, stackTrace: st);

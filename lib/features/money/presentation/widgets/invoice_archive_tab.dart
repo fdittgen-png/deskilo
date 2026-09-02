@@ -9,6 +9,8 @@ import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice.dart';
+import '../../../workspace/providers/workspace_providers.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
 import '../invoice_status.dart';
@@ -81,6 +83,8 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
       context,
       invoice: invoice,
       match: match,
+      settledByNumber: settledByNumberOf(
+          invoice, ref.read(invoicesProvider).value ?? const []),
       canIssue: widget.canIssue,
       isEu: widget.isEu,
       reminder: reminder,
@@ -178,9 +182,14 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
     // #452: cancelled invoices are filtered out by default for
     // EVERYONE; the chip (issuers only — a member's cancelled invoice
     // stays hidden, field decision 0072) shows them again on demand.
+    // #831 — a regrouped source is reached from its settlement.
+    final fold = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.settlementFold);
     final visible = [
       for (final invoice in invoices)
-        if ((widget.canIssue
+        if (!(fold && invoice.isFolded) &&
+            (widget.canIssue
                 ? closed(invoice) &&
                     !(_hideVoided && invoice.isVoided)
                 : !invoice.isVoided) &&

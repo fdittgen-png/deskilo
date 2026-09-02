@@ -49,6 +49,8 @@ class InvoiceExposure {
     final open = <Invoice>[];
     for (final i in invoices) {
       if (i.totalCents <= 0) continue;
+      // #831 — a settled source is owed through its settlement, once.
+      if (i.isFolded) continue;
       if (invoiceLifecycleOf(i, matches[i.id]) != InvoiceLifecycle.open) {
         continue;
       }

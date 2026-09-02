@@ -200,3 +200,11 @@ String invoiceKindLabel(AppLocalizations? l10n, InvoiceKind kind) =>
         l10n?.invoiceKindSettlement ?? 'Regrouped invoices',
       InvoiceKind.full => l10n?.invoiceKindFull ?? 'Whole month',
     };
+
+/// #831 — the number of the settlement [invoice] was regrouped into,
+/// or '' when it was not (or the settlement is not in [all]).
+String settledByNumberOf(Invoice invoice, Iterable<Invoice> all) {
+  final id = invoice.settledByInvoiceId;
+  if (id == null) return '';
+  return all.where((i) => i.id == id).firstOrNull?.number ?? '';
+}

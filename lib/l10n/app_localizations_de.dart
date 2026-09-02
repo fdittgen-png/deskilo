@@ -930,7 +930,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settlementVatNote =>
-      'Die Umsatzsteuer bleibt auf den obigen Rechnungen ausgewiesen; dieses Dokument fasst nur das Offene zusammen.';
+      'Die Positionen und ihre MwSt. sind aus den zusammengefassten Rechnungen übernommen; die Umsatzsteuererklärung zählt die Originale einmal.';
 
   @override
   String get settlementSettledBy =>
@@ -952,6 +952,28 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settlementNeedsTwo =>
       'Wähle mindestens zwei offene Rechnungen desselben Mitglieds.';
+
+  @override
+  String settlementFoldedIn(String number) {
+    return 'Zusammengefasst in $number';
+  }
+
+  @override
+  String get settlementDocumentationOnly =>
+      'Nur Dokumentation — jede Aktion erfolgt auf der Sammelrechnung.';
+
+  @override
+  String get settlementSourcePdf => 'PDF (zusammengefasst)';
+
+  @override
+  String settlementRegroupsNumbers(String numbers) {
+    return 'Fasst $numbers zusammen';
+  }
+
+  @override
+  String invoicePdfSettledIn(String number) {
+    return 'Zusammengefasst in $number';
+  }
 
   @override
   String get reservationExtendButton => 'Länger bleiben';
@@ -2325,6 +2347,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureExpenseRepartitionDesc =>
       'Eine gemeinsame Ausgabe (Reinigung, schnelleres Internet, ein kaputter Stuhl) auf die Mitglieder verteilt — gleiche Anteile, anteilig zum Abonnement, anteilig zur Nutzung oder ein Schlüssel je Mitglied — jeder Anteil vor der Buchung in der Vorschau. Die Anteile werden Positionen der nächsten Nutzungsrechnung; eine Umkehrung bucht Gutschriften. Läuft über die Bestätigungsregeln. Aus: keine Verteilung.';
+
+  @override
+  String get featureSettlementFoldTitle =>
+      'Zusammengefasste Rechnungen eingeklappt';
+
+  @override
+  String get featureSettlementFoldDesc =>
+      'Zu einer zusammengefasste Rechnungen verschwinden als eigene Zeilen aus den Listen und ordnen sich unter der Sammelrechnung ein, die alle ihre Positionen trägt. Auf einer zusammengefassten Rechnung ist jede Aktion aus; es bleibt nur ihr PDF, gestempelt mit der Nummer, in der sie aufging. Aus: die zusammengefassten Rechnungen bleiben neben der Sammelrechnung gelistet.';
 
   @override
   String get helpTitle => 'Hilfe';

@@ -1703,7 +1703,7 @@ abstract class AppLocalizations {
   /// No description provided for @settlementVatNote.
   ///
   /// In en, this message translates to:
-  /// **'VAT stays declared on the invoices above; this document only regroups what is owed.'**
+  /// **'The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.'**
   String get settlementVatNote;
 
   /// No description provided for @settlementSettledBy.
@@ -1735,6 +1735,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pick at least two open invoices of the same member.'**
   String get settlementNeedsTwo;
+
+  /// No description provided for @settlementFoldedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Regrouped in {number}'**
+  String settlementFoldedIn(String number);
+
+  /// No description provided for @settlementDocumentationOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Documentation only — every operation happens on the regrouping invoice.'**
+  String get settlementDocumentationOnly;
+
+  /// No description provided for @settlementSourcePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF (regrouped)'**
+  String get settlementSourcePdf;
+
+  /// No description provided for @settlementRegroupsNumbers.
+  ///
+  /// In en, this message translates to:
+  /// **'Regroups {numbers}'**
+  String settlementRegroupsNumbers(String numbers);
+
+  /// No description provided for @invoicePdfSettledIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Regrouped in {number}'**
+  String invoicePdfSettledIn(String number);
 
   /// Detail sheet: extend a running booking's end (#574)
   ///
@@ -4122,6 +4152,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A shared expense (a cleaning bill, an internet upgrade, a broken chair) split over the members — equal shares, pro rata of the subscription, pro rata of usage, or a key per member — with every share previewed before it is booked. The shares land as charge lines on the next usage invoice; a reversal books credit notes. Through the validation rules. Off: no distribution.'**
   String get featureExpenseRepartitionDesc;
+
+  /// No description provided for @featureSettlementFoldTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Regrouped invoices fold'**
+  String get featureSettlementFoldTitle;
+
+  /// No description provided for @featureSettlementFoldDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices regrouped into one disappear from the lists as peers and nest under the regrouping invoice, which carries all their lines. On a regrouped invoice every operation is off; the one thing left is its PDF, stamped with the number it was regrouped in. Off: the regrouped invoices stay listed beside the regrouping one.'**
+  String get featureSettlementFoldDesc;
 
   /// No description provided for @helpTitle.
   ///

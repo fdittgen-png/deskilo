@@ -133,6 +133,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureInvoicingWizardTitle ?? 'Invoicing wizard',
       WorkspaceFeature.expenseRepartition =>
         l10n?.featureExpenseRepartitionTitle ?? 'Shared expenses',
+      WorkspaceFeature.settlementFold =>
+        l10n?.featureSettlementFoldTitle ?? 'Regrouped invoices fold',
       WorkspaceFeature.messageGestures =>
         l10n?.featureMessageGesturesTitle ?? 'Swipe to quote or take back',
 

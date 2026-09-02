@@ -926,7 +926,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settlementVatNote =>
-      'VAT stays declared on the invoices above; this document only regroups what is owed.';
+      'The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.';
 
   @override
   String get settlementSettledBy =>
@@ -948,6 +948,28 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settlementNeedsTwo =>
       'Pick at least two open invoices of the same member.';
+
+  @override
+  String settlementFoldedIn(String number) {
+    return 'Regrouped in $number';
+  }
+
+  @override
+  String get settlementDocumentationOnly =>
+      'Documentation only — every operation happens on the regrouping invoice.';
+
+  @override
+  String get settlementSourcePdf => 'PDF (regrouped)';
+
+  @override
+  String settlementRegroupsNumbers(String numbers) {
+    return 'Regroups $numbers';
+  }
+
+  @override
+  String invoicePdfSettledIn(String number) {
+    return 'Regrouped in $number';
+  }
 
   @override
   String get reservationExtendButton => 'Stay longer';
@@ -2309,6 +2331,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureExpenseRepartitionDesc =>
       'A shared expense (a cleaning bill, an internet upgrade, a broken chair) split over the members — equal shares, pro rata of the subscription, pro rata of usage, or a key per member — with every share previewed before it is booked. The shares land as charge lines on the next usage invoice; a reversal books credit notes. Through the validation rules. Off: no distribution.';
+
+  @override
+  String get featureSettlementFoldTitle => 'Regrouped invoices fold';
+
+  @override
+  String get featureSettlementFoldDesc =>
+      'Invoices regrouped into one disappear from the lists as peers and nest under the regrouping invoice, which carries all their lines. On a regrouped invoice every operation is off; the one thing left is its PDF, stamped with the number it was regrouped in. Off: the regrouped invoices stay listed beside the regrouping one.';
 
   @override
   String get helpTitle => 'Help';

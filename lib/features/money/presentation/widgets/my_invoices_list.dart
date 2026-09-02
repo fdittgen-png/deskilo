@@ -10,6 +10,8 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice.dart';
+import 'open_invoice_card.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../domain/invoice_ubl.dart';
 import '../../domain/money_face.dart';
 import '../../providers/money_face_controller.dart';
@@ -43,8 +45,13 @@ class MyInvoicesList extends ConsumerWidget {
     // Erroneous (voided) invoices stay out of a member's face, as they
     // do in the register's member view (0072): the replacement is the
     // document that counts.
-    final invoices = (ref.watch(invoicesProvider).value ?? const [])
-        .where((i) => i.memberId == memberId && !i.isVoided)
+    // #831 — a regrouped source nests under its settlement.
+    final fold = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.settlementFold);
+    final all = ref.watch(invoicesProvider).value ?? const <Invoice>[];
+    final invoices = all
+        .where((i) => i.memberId == memberId && !i.isVoided && !(fold && i.isFolded))
         .toList()
       ..sort((a, b) => b.issuedAt.compareTo(a.issuedAt));
     final matches = ref.watch(invoiceMatchesProvider).value ?? const {};
@@ -115,7 +122,7 @@ class MyInvoicesList extends ConsumerWidget {
       ].join(' · '),
       style: overdue ? TextStyle(color: theme.colorScheme.error) : null,
     );
-    return Card(
+    final card = Card(
       child: ListTile(
         key: ValueKey('my-invoice-${invoice.id}'),
         onTap: () => _open(context, ref, invoice, match),
@@ -169,6 +176,25 @@ class MyInvoicesList extends ConsumerWidget {
         ]),
       ),
     );
+    // #831 — the regrouped sources under their settlement, PDF only.
+    if (invoice.settles.isEmpty) return card;
+    final all = ref.read(invoicesProvider).value ?? const <Invoice>[];
+    final currency = moneyFormat(invoice.currency);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        card,
+        for (final source in invoice.settles)
+          FoldedSourceRow(
+            key: ValueKey('my-invoice-folded-${source.invoiceId}'),
+            keyPrefix: 'my-invoice-folded',
+            source: source,
+            settlement: invoice,
+            full: all.where((i) => i.id == source.invoiceId).firstOrNull,
+            currency: currency,
+          ),
+      ],
+    );
   }
 
   Future<void> _open(
@@ -183,6 +209,8 @@ class MyInvoicesList extends ConsumerWidget {
       context,
       invoice: invoice,
       match: match,
+      settledByNumber: settledByNumberOf(
+          invoice, ref.read(invoicesProvider).value ?? const []),
       canIssue: ref
           .read(myPermissionsProvider)
           .contains(WorkspacePermission.issueInvoices),

@@ -39,6 +39,7 @@ import '../domain/invoice_report.dart';
 import '../domain/statement.dart';
 import '../providers/money_providers.dart';
 import 'report_actions.dart';
+import 'invoice_status.dart';
 import 'report_defaults.dart';
 import 'widgets/report_preview.dart';
 import 'e_invoice_identity.dart';
@@ -940,6 +941,9 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   Workspace? workspace,
   // #488 — resolves ![name] references; null renders without images.
   Future<Uint8List?> Function(String name)? reportImage,
+  // #831 — the stamp of a regrouped source ('' otherwise); the callers
+  // with a ref build it with [settledStampOf].
+  String settledIn = '',
 }) async {
   final l10n = AppLocalizations.of(context);
   final currency = moneyFormat(invoice.currency);
@@ -995,6 +999,8 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
       voidedWatermark: l10n?.invoiceVoidedChip ?? 'Erroneous',
       proforma: l10n?.invoicePdfProforma ?? 'Proforma',
       copy: l10n?.invoicePdfCopy ?? 'Copy',
+      // #831 — a regrouped source says where it went.
+      settledIn: settledIn,
       replaces: l10n?.invoicePdfReplaces ?? 'Replaces',
       description: l10n?.invoicePdfDescription ?? 'Description',
       charges: l10n?.invoicePdfCharges ?? 'Charges',
@@ -1058,6 +1064,7 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
     context,
     invoice,
     copy: _rendersCopy(ref),
+    settledIn: settledStampOf(context, ref, invoice),
     facturXml: xml,
     colorProfile: icc.buffer.asUint8List(),
     template: invoicePdfTemplateFor(ref),
@@ -1286,6 +1293,7 @@ Future<void> downloadInvoicePdf(
         context,
         invoice,
         copy: _rendersCopy(ref),
+        settledIn: settledStampOf(context, ref, invoice),
         template: invoicePdfTemplateFor(ref),
         workspace: ref.read(currentWorkspaceProvider).value,
     reportImage: (name) => ref.read(reportImageBytesProvider(name).future),
@@ -1355,6 +1363,7 @@ Future<void> shareInvoicePdf(
         context,
         invoice,
         copy: _rendersCopy(ref),
+        settledIn: settledStampOf(context, ref, invoice),
         template: invoicePdfTemplateFor(ref),
         workspace: ref.read(currentWorkspaceProvider).value,
     reportImage: (name) => ref.read(reportImageBytesProvider(name).future),
@@ -1863,8 +1872,23 @@ Future<void> runInvoiceAction(
   InvoiceAction action,
   Invoice invoice, {
   required String countryCode,
-}) =>
-    switch (action) {
+}) {
+  // #831 — a regrouped source is documentation: reading and the
+  // stamped PDF stay, every operation happens on the settlement.
+  if (invoice.isFolded &&
+      action != InvoiceAction.quickView &&
+      action != InvoiceAction.downloadPdf &&
+      action != InvoiceAction.sharePdf) {
+    final l10n = AppLocalizations.of(context);
+    AppSnack.info(
+      context,
+      l10n?.settlementDocumentationOnly ??
+          'Documentation only — every operation happens on the regrouping invoice.',
+      replace: true,
+    );
+    return Future.value();
+  }
+  return switch (action) {
       InvoiceAction.quickView => quickViewInvoice(context, ref, invoice),
       InvoiceAction.downloadPdf => downloadInvoicePdf(context, ref, invoice),
       InvoiceAction.sharePdf => shareInvoicePdf(context, ref, invoice),
@@ -1877,3 +1901,14 @@ Future<void> runInvoiceAction(
       InvoiceAction.replace =>
         showInvoiceIssueSheet(context, ref, replaces: invoice),
     };
+}
+
+/// #831 — the watermark of a regrouped source: "Regrouped in INV-…", or
+/// '' for every other document.
+String settledStampOf(BuildContext context, WidgetRef ref, Invoice invoice) {
+  if (!invoice.isFolded) return '';
+  final l10n = AppLocalizations.of(context);
+  final number =
+      settledByNumberOf(invoice, ref.read(invoicesProvider).value ?? const []);
+  return l10n?.invoicePdfSettledIn(number) ?? 'Regrouped in $number';
+}

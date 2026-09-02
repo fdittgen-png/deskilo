@@ -931,7 +931,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settlementVatNote =>
-      'La TVA reste déclarée sur les factures ci-dessus ; ce document ne regroupe que ce qui est dû.';
+      'Les lignes et leur TVA sont reprises des factures regroupées ; la déclaration de TVA compte les originales une seule fois.';
 
   @override
   String get settlementSettledBy =>
@@ -953,6 +953,28 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settlementNeedsTwo =>
       'Choisissez au moins deux factures ouvertes du même membre.';
+
+  @override
+  String settlementFoldedIn(String number) {
+    return 'Regroupée dans $number';
+  }
+
+  @override
+  String get settlementDocumentationOnly =>
+      'Documentation uniquement — toute opération se fait sur la facture de regroupement.';
+
+  @override
+  String get settlementSourcePdf => 'PDF (regroupée)';
+
+  @override
+  String settlementRegroupsNumbers(String numbers) {
+    return 'Regroupe $numbers';
+  }
+
+  @override
+  String invoicePdfSettledIn(String number) {
+    return 'Regroupée dans $number';
+  }
 
   @override
   String get reservationExtendButton => 'Rester plus longtemps';
@@ -2331,6 +2353,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureExpenseRepartitionDesc =>
       'Une dépense commune (ménage, montée en débit internet, chaise cassée) répartie entre les membres — parts égales, au prorata de l\'abonnement, au prorata de l\'usage, ou une clé par membre — chaque part prévisualisée avant d\'être comptabilisée. Les parts deviennent des lignes de la prochaine facture de consommation ; une annulation produit des avoirs. Passe par les règles de validation. Désactivé : pas de répartition.';
+
+  @override
+  String get featureSettlementFoldTitle => 'Factures regroupées repliées';
+
+  @override
+  String get featureSettlementFoldDesc =>
+      'Les factures regroupées en une seule disparaissent des listes et se rangent sous la facture de regroupement, qui porte toutes leurs lignes. Sur une facture regroupée, toute opération est désactivée ; il ne reste que son PDF, tamponné du numéro dans lequel elle a été regroupée. Désactivé : les factures regroupées restent listées à côté de la facture de regroupement.';
 
   @override
   String get helpTitle => 'Aide';

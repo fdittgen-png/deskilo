@@ -930,7 +930,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settlementVatNote =>
-      'El IVA sigue declarado en las facturas anteriores; este documento solo agrupa lo que se debe.';
+      'Las líneas y su IVA se toman de las facturas reagrupadas; la declaración de IVA cuenta las originales una sola vez.';
 
   @override
   String get settlementSettledBy =>
@@ -952,6 +952,28 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settlementNeedsTwo =>
       'Elige al menos dos facturas abiertas del mismo miembro.';
+
+  @override
+  String settlementFoldedIn(String number) {
+    return 'Reagrupada en $number';
+  }
+
+  @override
+  String get settlementDocumentationOnly =>
+      'Solo documentación: toda operación se hace en la factura de reagrupación.';
+
+  @override
+  String get settlementSourcePdf => 'PDF (reagrupada)';
+
+  @override
+  String settlementRegroupsNumbers(String numbers) {
+    return 'Reagrupa $numbers';
+  }
+
+  @override
+  String invoicePdfSettledIn(String number) {
+    return 'Reagrupada en $number';
+  }
 
   @override
   String get reservationExtendButton => 'Quedarse más tiempo';
@@ -2327,6 +2349,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featureExpenseRepartitionDesc =>
       'Un gasto común (limpieza, mejora de internet, una silla rota) repartido entre los socios — partes iguales, prorrata de la suscripción, prorrata del uso o una clave por socio — con cada parte previsualizada antes de contabilizarse. Las partes se convierten en líneas de la próxima factura de uso; una reversión genera notas de crédito. Pasa por las reglas de validación. Desactivado: sin reparto.';
+
+  @override
+  String get featureSettlementFoldTitle => 'Facturas reagrupadas plegadas';
+
+  @override
+  String get featureSettlementFoldDesc =>
+      'Las facturas reagrupadas en una desaparecen de las listas como iguales y se anidan bajo la factura de reagrupación, que lleva todas sus líneas. En una factura reagrupada toda operación está desactivada; solo queda su PDF, sellado con el número en que se reagrupó. Desactivado: las facturas reagrupadas siguen listadas junto a la de reagrupación.';
 
   @override
   String get helpTitle => 'Ayuda';

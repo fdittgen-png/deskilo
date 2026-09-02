@@ -12,6 +12,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice_ubl.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
+import '../invoice_status.dart';
 import '../widgets/dunning_rules_dialog.dart';
 import '../widgets/settlement_sheet.dart';
 import '../widgets/expense_repartition_sheet.dart';
@@ -181,6 +182,8 @@ class InvoicesScreen extends ConsumerWidget {
         context,
         invoice: entry.invoice,
         match: entry.pendingMatch,
+        settledByNumber: settledByNumberOf(
+            entry.invoice, ref.read(invoicesProvider).value ?? const []),
         canIssue: true,
         isEu: isEu,
         reminder: reminders[entry.invoice.id],

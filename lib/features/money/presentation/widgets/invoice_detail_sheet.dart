@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/i18n/money_format.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/einvoice_gateway.dart';
@@ -46,6 +47,8 @@ Future<InvoiceAction?> showInvoiceDetailSheet(
   bool showMemberName = false,
   InvoiceTransmission? transmission,
   InvoiceJourney? journey,
+  // #831 — the settlement a regrouped source went into.
+  String settledByNumber = '',
 }) =>
     showModalBottomSheet<InvoiceAction>(
       context: context,
@@ -53,6 +56,7 @@ Future<InvoiceAction?> showInvoiceDetailSheet(
       showDragHandle: true,
       useSafeArea: true,
       builder: (context) => _InvoiceDetailBody(
+        settledByNumber: settledByNumber,
         invoice: invoice,
         match: match,
         canIssue: canIssue,
@@ -67,6 +71,7 @@ Future<InvoiceAction?> showInvoiceDetailSheet(
 
 class _InvoiceDetailBody extends StatelessWidget {
   const _InvoiceDetailBody({
+    this.settledByNumber = '',
     required this.invoice,
     required this.match,
     required this.canIssue,
@@ -78,6 +83,7 @@ class _InvoiceDetailBody extends StatelessWidget {
     required this.journey,
   });
 
+  final String settledByNumber;
   final Invoice invoice;
   final InvoiceMatch? match;
   final bool canIssue;
@@ -334,9 +340,28 @@ class _InvoiceDetailBody extends StatelessWidget {
                         'document only regroups what is owed.'),
               ],
               if (invoice.settledByInvoiceId != null)
-                line(l10n?.settlementSettledBy ??
-                    'Regrouped into another invoice — that one is what is '
-                        'owed and chased.'),
+                Container(
+                  key: const ValueKey('invoice-detail-folded'),
+                  margin: const EdgeInsets.only(top: AppSpacing.sm),
+                  padding: AppSpacing.mdAll,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.surfaceContainerHighest,
+                    borderRadius: AppRadius.mdAll,
+                  ),
+                  child: Text(
+                    [
+                      if (settledByNumber.isNotEmpty)
+                        l10n?.settlementFoldedIn(settledByNumber) ??
+                            'Regrouped in $settledByNumber'
+                      else
+                        l10n?.settlementSettledBy ??
+                            'Regrouped into another invoice — that one is what is owed and chased.',
+                      l10n?.settlementDocumentationOnly ??
+                          'Documentation only — every operation happens on the regrouping invoice.',
+                    ].join(' '),
+                    style: theme.textTheme.bodySmall,
+                  ),
+                ),
 
               // Lifecycle facts: the correction chain, the payment that
               // closed it, the reminders sent, the annex it carries.
@@ -410,9 +435,9 @@ class _InvoiceDetailBody extends StatelessWidget {
               // otherwise the PDF keeps its historical place.
               ...[
                 for (final entry in _actions(context, l10n, status, expected))
-                  if (entry.$1 == expected) entry.$2,
+                  if (entry.$1 == expected && _allowed(entry.$1)) entry.$2,
                 for (final entry in _actions(context, l10n, status, expected))
-                  if (entry.$1 != expected) entry.$2,
+                  if (entry.$1 != expected && _allowed(entry.$1)) entry.$2,
               ],
             ],
           ),
@@ -420,6 +445,13 @@ class _InvoiceDetailBody extends StatelessWidget {
       ),
     );
   }
+
+  /// #831 — a regrouped source keeps reading and the stamped PDF only.
+  bool _allowed(InvoiceAction action) =>
+      !invoice.isFolded ||
+      action == InvoiceAction.quickView ||
+      action == InvoiceAction.downloadPdf ||
+      action == InvoiceAction.sharePdf;
 
   /// The permitted actions in their historical order, each tagged so
   /// the build can pull the expected one to the front.

@@ -21,6 +21,7 @@ class InvoicePdfStrings {
     this.voidedWatermark = '',
     this.proforma = '',
     this.copy = '',
+    this.settledIn = '',
     required this.replaces,
     required this.description,
     required this.charges,
@@ -58,6 +59,10 @@ class InvoicePdfStrings {
   /// The word stamped across a COPY — what a member renders of an invoice
   /// they did not issue. Only read when [buildInvoicePdf] is asked for one.
   final String copy;
+
+  /// #831 — the whole watermark of a settled source ("REGROUPED IN
+  /// INV-…"); '' on every other document.
+  final String settledIn;
 
   /// Label before the replaced invoice's number on a replacement (0061).
   final String replaces;
@@ -233,13 +238,12 @@ Future<Uint8List> buildInvoicePdf({
   // photocopied, or seen upside down on someone's desk (0071): the word
   // runs across the whole sheet, diagonally, BEHIND the content — every
   // page of it, annex included.
-  final watermark = proforma
-      ? strings.proforma.toUpperCase()
-      : invoice.isVoided && strings.voidedWatermark.isNotEmpty
-          ? strings.voidedWatermark.toUpperCase()
-          : copy
-              ? strings.copy.toUpperCase()
-              : '';
+  final watermark = invoiceWatermark(
+    strings,
+    proforma: proforma,
+    voided: invoice.isVoided,
+    copy: copy,
+  );
   // Its size follows its LENGTH: 'ERRATA' and 'FEHLERHAFT' must both land
   // inside the sheet. (The package's own Watermark scales to the rotated
   // bounding box it computes, which runs the ends off the corners.)
@@ -452,7 +456,28 @@ Future<Uint8List> buildInvoicePdf({
                 ),
               ],
             ),
-            for (final (i, line) in invoice.lines.indexed)
+            for (final (i, line) in invoice.lines.indexed) ...[
+              // #831 — a settlement groups its lines under the source
+              // invoice they came from.
+              if (line.sourceNumber.isNotEmpty &&
+                  (i == 0 ||
+                      invoice.lines[i - 1].sourceNumber != line.sourceNumber))
+                pw.TableRow(
+                  decoration: const pw.BoxDecoration(color: _zebra),
+                  children: [
+                    pw.Padding(
+                      padding: const pw.EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 8),
+                      child: pw.Text(line.sourceNumber,
+                          style: pw.TextStyle(
+                              fontSize: 9,
+                              color: _muted,
+                              fontWeight: pw.FontWeight.bold)),
+                    ),
+                    if (showVat) pw.SizedBox(),
+                    pw.SizedBox(),
+                  ],
+                ),
               pw.TableRow(
                 decoration: pw.BoxDecoration(
                     color: i.isOdd ? _zebra : PdfColors.white),
@@ -481,6 +506,7 @@ Future<Uint8List> buildInvoicePdf({
                   amountCell(line.amountCents),
                 ],
               ),
+            ],
           ],
         ),
         pw.SizedBox(height: 10),
@@ -861,3 +887,20 @@ pw.Widget _reportWidget(
                     ),
                   ),
         };
+
+/// #831 — which stamp a document wears, by priority: a proforma says so
+/// first; a source regrouped into a settlement says WHERE it went; a
+/// voided one says so; a copy says it is one. One string, or none.
+String invoiceWatermark(
+  InvoicePdfStrings strings, {
+  required bool proforma,
+  required bool voided,
+  required bool copy,
+}) {
+  if (proforma) return strings.proforma.toUpperCase();
+  if (strings.settledIn.isNotEmpty) return strings.settledIn.toUpperCase();
+  if (voided && strings.voidedWatermark.isNotEmpty) {
+    return strings.voidedWatermark.toUpperCase();
+  }
+  return copy ? strings.copy.toUpperCase() : '';
+}

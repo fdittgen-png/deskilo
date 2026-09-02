@@ -13,6 +13,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../reservations/providers/reservation_providers.dart';
 import '../../workspace/domain/member.dart';
+import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_money_repository.dart';
 export '../domain/bill_sections.dart' show currentPeriod;
@@ -410,9 +411,14 @@ Future<InvoicingOverview> invoicingOverview(Ref ref) async {
       match == null ||
       match.pending ||
       (match.resolution == 'under_accepted' && match.writeoffAt == null);
+  // #831 — a settled source is documentation under its settlement.
+  final fold = ref
+      .watch(enabledFeaturesSyncProvider)
+      .contains(WorkspaceFeature.settlementFold);
   final open = [
     for (final invoice in invoices)
       if (!invoice.isVoided &&
+          !(fold && invoice.isFolded) &&
           !replacedIds.contains(invoice.id) &&
           stillOpen(matches[invoice.id]))
         (invoice: invoice, pendingMatch: matches[invoice.id]),

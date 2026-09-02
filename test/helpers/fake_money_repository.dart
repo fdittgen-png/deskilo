@@ -270,7 +270,57 @@ class FakeMoneyRepository implements MoneyRepository {
       throw StateError('settle at least two invoices');
     }
     settlements.add((memberId: memberId, invoiceIds: invoiceIds));
-    return nextSettlementId;
+    // #831 — build the document the server builds: the sources' lines
+    // tagged with their number, the snapshot, the back-pointers.
+    final sources = [
+      for (final id in invoiceIds)
+        ...invoices.where((i) => i.id == id),
+    ];
+    // Older tests settle ids the fake never issued: they only observe
+    // the call, so build nothing for them.
+    if (sources.length != invoiceIds.length) return nextSettlementId;
+    final settlementId = 'inv-settle-${settlements.length}';
+    final settlement = Invoice(
+      id: settlementId,
+      workspaceId: workspaceId,
+      memberId: memberId,
+      number: nextSettlementId,
+      issuedAt: kTestNow,
+      title: nextSettlementId,
+      lines: [
+        for (final s in sources)
+          for (final l in s.lines) l.copyWith(sourceNumber: s.number),
+      ],
+      totalCents: sources.fold(0, (t, s) => t + s.totalCents),
+      currency: sources.first.currency,
+      memberName: sources.first.memberName,
+      memberAddress: sources.first.memberAddress,
+      workspaceName: sources.first.workspaceName,
+      workspaceAddress: sources.first.workspaceAddress,
+      issuerName: 'Flo',
+      signature: 's' * 64,
+      kind: InvoiceKind.settlement,
+      settles: [
+        for (final s in sources)
+          SettledSource(
+            invoiceId: s.id,
+            number: s.number,
+            period: s.period,
+            kind: s.kind,
+            totalCents: s.totalCents,
+            lines: s.lines,
+          ),
+      ],
+    );
+    for (var i = 0; i < invoices.length; i++) {
+      if (invoiceIds.contains(invoices[i].id)) {
+        invoices[i] = invoices[i].copyWith(settledByInvoiceId: settlementId);
+      }
+    }
+    invoices.insert(0, settlement);
+    // The server returns the new document's id; the sheet looks its
+    // number up from there (#831).
+    return settlementId;
   }
 
   /// #802 — when the two automatic invoice runs happen.

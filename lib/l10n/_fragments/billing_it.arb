@@ -67,23 +67,67 @@
   "billingUsageWhenZero": "Anche quando non c’è nulla da pagare",
   "billingUsageWhenZeroHint": "Invia un documento a zero, come conferma che l’abbonamento ha coperto tutto il mese.",
   "@billingSubscriptionWhen": {
-    "placeholders": {"day": {"type": "String"}, "month": {"type": "String"}}
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
   },
   "invoiceKindSubscription": "Abbonamento, in anticipo",
   "invoiceKindUsage": "Gli extra del mese",
   "invoiceKindSettlement": "Fatture raggruppate",
   "invoiceKindFull": "Mese intero",
   "settlementRegroups": "Questa fattura raggruppa",
-  "settlementVatNote": "L'IVA resta dichiarata sulle fatture qui sopra; questo documento raggruppa solo il dovuto.",
+  "settlementVatNote": "Le righe e la loro IVA sono riprese dalle fatture raggruppate; la dichiarazione IVA conta gli originali una sola volta.",
   "settlementSettledBy": "Raggruppata in un’altra fattura: è quella a essere dovuta e sollecitata.",
   "settlementAction": "Raggruppa in una fattura",
   "settlementConfirm": "Raggruppare {count} fatture in una da {amount}?",
   "settlementDone": "Raggruppate in {number}.",
   "settlementNeedsTwo": "Scegli almeno due fatture aperte dello stesso membro.",
   "@settlementConfirm": {
-    "placeholders": {"count": {"type": "int"}, "amount": {"type": "String"}}
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "@settlementDone": {
-    "placeholders": {"number": {"type": "String"}}
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementFoldedIn": "Raggruppata in {number}",
+  "@settlementFoldedIn": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementDocumentationOnly": "Solo documentazione: ogni operazione avviene sulla fattura di raggruppamento.",
+  "settlementSourcePdf": "PDF (raggruppata)",
+  "settlementRegroupsNumbers": "Raggruppa {numbers}",
+  "@settlementRegroupsNumbers": {
+    "placeholders": {
+      "numbers": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePdfSettledIn": "Raggruppata in {number}",
+  "@invoicePdfSettledIn": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
   }
 }

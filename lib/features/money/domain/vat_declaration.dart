@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:xml/xml.dart';
 
+import 'billing_rules.dart';
 import 'invoice.dart';
 import 'vat_rate.dart';
 
@@ -123,6 +124,8 @@ List<VatDeclarationLine> computeVatDeclarationLines(
   final count = <double, Set<String>>{};
   for (final invoice in invoices) {
     if (invoice.voidedAt != null) continue;
+    // #831 — a settlement carries its sources' lines; they are declared once.
+    if (invoice.kind == InvoiceKind.settlement) continue;
     final day = DateTime(
         invoice.issuedAt.year, invoice.issuedAt.month, invoice.issuedAt.day);
     if (day.isBefore(periodStart) || day.isAfter(periodEnd)) continue;
