@@ -1144,6 +1144,78 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get calendarViewAgenda => 'Agenda';
+
+  @override
+  String get calendarViewWeek => 'Week';
+
+  @override
+  String get calendarViewMonth => 'Month';
+
+  @override
+  String get calendarToday => 'Today';
+
+  @override
+  String get calendarTomorrow => 'Tomorrow';
+
+  @override
+  String get calendarYesterday => 'Yesterday';
+
+  @override
+  String get calendarKindDue => 'Payments due';
+
+  @override
+  String get calendarKindScheduled => 'Scheduled expenses';
+
+  @override
+  String calendarDueTitle(String number) {
+    return 'Payment due · $number';
+  }
+
+  @override
+  String calendarScheduledTitle(String name) {
+    return 'Scheduled expense · $name';
+  }
+
+  @override
+  String get calendarClosedDay => 'Closed';
+
+  @override
+  String calendarClosedDayReason(String reason) {
+    return 'Closed — $reason';
+  }
+
+  @override
+  String get calendarGroupBookings => 'Bookings & presence';
+
+  @override
+  String get calendarGroupActivity => 'Alerts & messages';
+
+  @override
+  String get calendarGroupMoney => 'Money';
+
+  @override
+  String calendarAgendaEmpty(int days) {
+    return 'Nothing planned in the next $days days.';
+  }
+
+  @override
+  String calendarAgendaRange(int days) {
+    return 'Next $days days';
+  }
+
+  @override
+  String get calendarWeekEmpty => 'Nothing this week.';
+
+  @override
+  String get calendarDayEmpty => 'Nothing on this day.';
+
+  @override
+  String calendarItemCount(int count) {
+    return '$count items';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -2116,6 +2188,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureBookingGateDesc =>
       'Every booking surface — plan, day, week and month views, the booking sheet, the kiosk, a QR or NFC scan — checks the availability parameters before offering a window and names the reason when it cannot; closed days draw as closed in every view, a legend names the seat states, and admins may check members out where the policy allows.';
+
+  @override
+  String get featureCalendarViewsTitle => 'Calendar views';
+
+  @override
+  String get featureCalendarViewsDesc =>
+      'The Calendar tab as agenda, week and month: per-day markers by kind, closed days drawn as closed, Today / Tomorrow headers, payment due dates and scheduled expenses in the feed. Off: the plain day-or-range selector over the feed.';
 
   @override
   String get helpTitle => 'Help';

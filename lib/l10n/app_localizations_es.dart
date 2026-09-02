@@ -1148,6 +1148,78 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get calendarViewAgenda => 'Agenda';
+
+  @override
+  String get calendarViewWeek => 'Semana';
+
+  @override
+  String get calendarViewMonth => 'Mes';
+
+  @override
+  String get calendarToday => 'Hoy';
+
+  @override
+  String get calendarTomorrow => 'Mañana';
+
+  @override
+  String get calendarYesterday => 'Ayer';
+
+  @override
+  String get calendarKindDue => 'Pagos por vencer';
+
+  @override
+  String get calendarKindScheduled => 'Gastos programados';
+
+  @override
+  String calendarDueTitle(String number) {
+    return 'Pago vence · $number';
+  }
+
+  @override
+  String calendarScheduledTitle(String name) {
+    return 'Gasto programado · $name';
+  }
+
+  @override
+  String get calendarClosedDay => 'Cerrado';
+
+  @override
+  String calendarClosedDayReason(String reason) {
+    return 'Cerrado — $reason';
+  }
+
+  @override
+  String get calendarGroupBookings => 'Reservas y presencia';
+
+  @override
+  String get calendarGroupActivity => 'Alertas y mensajes';
+
+  @override
+  String get calendarGroupMoney => 'Finanzas';
+
+  @override
+  String calendarAgendaEmpty(int days) {
+    return 'Nada previsto en los próximos $days días.';
+  }
+
+  @override
+  String calendarAgendaRange(int days) {
+    return 'Próximos $days días';
+  }
+
+  @override
+  String get calendarWeekEmpty => 'Nada esta semana.';
+
+  @override
+  String get calendarDayEmpty => 'Nada ese día.';
+
+  @override
+  String calendarItemCount(int count) {
+    return '$count elementos';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -2134,6 +2206,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featureBookingGateDesc =>
       'Cada superficie de reserva — plano, vistas de día, semana y mes, hoja de reserva, quiosco, escaneo QR o NFC — comprueba los parámetros de disponibilidad antes de ofrecer una franja y nombra el motivo cuando no puede; los días cerrados se dibujan cerrados en cada vista, una leyenda nombra los estados de los puestos, y los admins pueden dar salida a un miembro donde la regla lo permite.';
+
+  @override
+  String get featureCalendarViewsTitle => 'Vistas del calendario';
+
+  @override
+  String get featureCalendarViewsDesc =>
+      'La pestaña Calendario como agenda, semana y mes: marcadores por día según el tipo, días cerrados dibujados cerrados, cabeceras Hoy / Mañana, vencimientos de pago y gastos programados en el feed. Desactivado: el simple selector de día o rango sobre el feed.';
 
   @override
   String get helpTitle => 'Ayuda';

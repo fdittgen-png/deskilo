@@ -121,6 +121,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureInvoiceJourneyTitle ?? 'The journey of an invoice',
       WorkspaceFeature.bookingGate =>
         l10n?.featureBookingGateTitle ?? 'Booking gate',
+      WorkspaceFeature.calendarViews =>
+        l10n?.featureCalendarViewsTitle ?? 'Calendar views',
       WorkspaceFeature.messageGestures =>
         l10n?.featureMessageGesturesTitle ?? 'Swipe to quote or take back',
 

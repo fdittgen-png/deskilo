@@ -11,7 +11,14 @@ enum CalendarKind {
   invoice('invoice'),
   payment('payment'),
   consumption('consumption'),
-  reminder('reminder');
+  reminder('reminder'),
+
+  /// #818 — the payment term of an OPEN invoice (issue date + the
+  /// reminder rules' first delay): the day the money is expected.
+  due('due'),
+
+  /// #818 — a scheduled expense's occurrence falling due (#767).
+  scheduled('scheduled');
 
   const CalendarKind(this.wire);
   final String wire;
@@ -22,8 +29,25 @@ enum CalendarKind {
   /// The kinds that are somebody's MONEY — gated together by
   /// `may_view_member_finances()` and logged when read about others.
   bool get isMoney =>
-      this == invoice || this == payment || this == consumption;
+      this == invoice ||
+      this == payment ||
+      this == consumption ||
+      this == due ||
+      this == scheduled;
+
+  /// #818 — the three families the views colour and the legend names.
+  CalendarGroup get group => switch (this) {
+        reservation || checkIn || checkOut || reminder =>
+          CalendarGroup.bookings,
+        event || message => CalendarGroup.activity,
+        invoice || payment || consumption || due || scheduled =>
+          CalendarGroup.money,
+      };
 }
+
+/// #818 — what a marker on a day means at a glance: a booking or a
+/// presence, an alert or a message, money.
+enum CalendarGroup { bookings, activity, money }
 
 /// Where a row leads when tapped. The hub never renders a dead end: a
 /// fact you can see is a fact you can open (#718).

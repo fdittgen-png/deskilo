@@ -100,7 +100,12 @@ enum WorkspaceFeature {
   /// durations, outside-hours mode, walk-up rules), the calendar views
   /// draw closed days as closed, and a legend names the seat states.
   /// OFF keeps the server's after-the-fact refusals.
-  bookingGate;
+  bookingGate,
+
+  /// #818 — the Calendar tab as three views (agenda, week, month) with
+  /// per-day markers, closed days, relative day headers and the due
+  /// dates. OFF keeps the plain day/range selector over the feed.
+  calendarViews;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -369,6 +374,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // shows reservations only, as it did before.
   WorkspaceFeature.calendarHub:
       FeatureManifestEntry(feature: WorkspaceFeature.calendarHub),
+  // #818 — the views over the hub's feed.
+  WorkspaceFeature.calendarViews: FeatureManifestEntry(
+    feature: WorkspaceFeature.calendarViews,
+    requires: WorkspaceFeature.calendarHub,
+  ),
   // #719 — "who accessed my data": the server-written log of reads of
   // another member's finances, shown to the subject. OFF hides the row;
   // the log is still written, because the record is not optional.

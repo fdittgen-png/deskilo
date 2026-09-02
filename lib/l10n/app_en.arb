@@ -1343,6 +1343,68 @@
       }
     }
   },
+  "calendarViewAgenda": "Agenda",
+  "calendarViewWeek": "Week",
+  "calendarViewMonth": "Month",
+  "calendarToday": "Today",
+  "calendarTomorrow": "Tomorrow",
+  "calendarYesterday": "Yesterday",
+  "calendarKindDue": "Payments due",
+  "calendarKindScheduled": "Scheduled expenses",
+  "calendarDueTitle": "Payment due · {number}",
+  "@calendarDueTitle": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarScheduledTitle": "Scheduled expense · {name}",
+  "@calendarScheduledTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarClosedDay": "Closed",
+  "calendarClosedDayReason": "Closed — {reason}",
+  "@calendarClosedDayReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarGroupBookings": "Bookings & presence",
+  "calendarGroupActivity": "Alerts & messages",
+  "calendarGroupMoney": "Money",
+  "calendarAgendaEmpty": "Nothing planned in the next {days} days.",
+  "@calendarAgendaEmpty": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "calendarAgendaRange": "Next {days} days",
+  "@calendarAgendaRange": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "calendarWeekEmpty": "Nothing this week.",
+  "calendarDayEmpty": "Nothing on this day.",
+  "calendarItemCount": "{count} items",
+  "@calendarItemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "appTitle": "DesKilo",
   "@appTitle": {
     "description": "Application name shown in the task switcher and app bar. Brand name — identical in all locales."
@@ -2391,6 +2453,8 @@
   "featureInvoiceJourneyDesc": "Every invoice shows where it stands — Issued, Payment, Confirmation, Closed — and whose move it is: the member pays, an admin confirms the declared payment, the issuer matches it, the validators decide. The issuers' hub adds a stage strip with live counts and a How-it-works explainer.",
   "featureBookingGateTitle": "Booking gate",
   "featureBookingGateDesc": "Every booking surface — plan, day, week and month views, the booking sheet, the kiosk, a QR or NFC scan — checks the availability parameters before offering a window and names the reason when it cannot; closed days draw as closed in every view, a legend names the seat states, and admins may check members out where the policy allows.",
+  "featureCalendarViewsTitle": "Calendar views",
+  "featureCalendarViewsDesc": "The Calendar tab as agenda, week and month: per-day markers by kind, closed days drawn as closed, Today / Tomorrow headers, payment due dates and scheduled expenses in the feed. Off: the plain day-or-range selector over the feed.",
   "helpTitle": "Help",
   "helpContents": "Contents",
   "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",

@@ -172,5 +172,7 @@
   "featureInvoiceJourneyTitle": "Il percorso di una fattura",
   "featureInvoiceJourneyDesc": "Ogni fattura mostra dove si trova — Emessa, Pagamento, Conferma, Chiusa — e a chi tocca: il membro paga, un admin conferma il pagamento dichiarato, l'emittente lo abbina, i validatori decidono. L'hub degli emittenti aggiunge una barra delle fasi con i contatori e una spiegazione «Come funziona».",
   "featureBookingGateTitle": "Controllo prenotazione",
-  "featureBookingGateDesc": "Ogni superficie di prenotazione — piano, viste giorno, settimana e mese, foglio di prenotazione, chiosco, scansione QR o NFC — verifica i parametri di disponibilità prima di offrire una fascia e nomina il motivo quando non può; i giorni chiusi si mostrano chiusi in ogni vista, una legenda nomina gli stati dei posti, e gli admin possono fare il check-out di un membro dove la regola lo consente."
+  "featureBookingGateDesc": "Ogni superficie di prenotazione — piano, viste giorno, settimana e mese, foglio di prenotazione, chiosco, scansione QR o NFC — verifica i parametri di disponibilità prima di offrire una fascia e nomina il motivo quando non può; i giorni chiusi si mostrano chiusi in ogni vista, una legenda nomina gli stati dei posti, e gli admin possono fare il check-out di un membro dove la regola lo consente.",
+  "featureCalendarViewsTitle": "Viste del calendario",
+  "featureCalendarViewsDesc": "La scheda Calendario come agenda, settimana e mese: indicatori per giorno secondo il tipo, giorni chiusi mostrati chiusi, intestazioni Oggi / Domani, scadenze di pagamento e spese programmate nel feed. Disattivato: il semplice selettore giorno o intervallo sopra il feed."
 }

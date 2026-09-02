@@ -63,7 +63,9 @@ import 'package:flutter_test/flutter_test.dart';
 // 60→61 (2026-09-01): #814 bookingGate — the availability parameters
 // asked BEFORE a window is offered, on every surface; closed days in
 // every view; the seat legend.
-const int _expectedFeatureCount = 61;
+// 61→62 (2026-09-02): #818 calendarViews — agenda / week / month over
+// the hub's feed, markers, closed days, due dates.
+const int _expectedFeatureCount = 62;
 
 void main() {
   test('every functionality is registered — the pin', () {
