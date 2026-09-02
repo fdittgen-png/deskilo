@@ -39,6 +39,8 @@ const _cardTypes = [
   // the default rule. #767 closes that gap alongside its own domain.
   EventType.priceNegotiation,
   EventType.expenseSchedule,
+  // #828 — a shared expense split over the members.
+  EventType.expenseRepartition,
 ];
 
 /// A pickable validator: an active non-owner admin (owners always may
@@ -71,6 +73,8 @@ class ValidationSettingsScreen extends ConsumerWidget {
         l10n?.eventTypePriceNegotiation ?? 'Price negotiation',
       EventType.expenseSchedule =>
         l10n?.eventTypeExpenseSchedule ?? 'Scheduled expense',
+      EventType.expenseRepartition =>
+        l10n?.eventTypeExpenseRepartition ?? 'Shared expense',
       EventType.roleChange => l10n?.eventTypeRoleChange ?? 'Role change',
       EventType.memberJoin => l10n?.eventTypeMemberJoin ?? 'New member',
       EventType.spaceReservation =>

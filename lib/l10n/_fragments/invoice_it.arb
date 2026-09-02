@@ -1175,5 +1175,40 @@
   "registerPaymentDate": "Pagato il",
   "registerPaymentNote": "Nota",
   "registerPaymentSubmit": "Registra",
-  "registerPaymentDone": "Pagamento registrato: il membro lo conferma dalla sua parte."
+  "registerPaymentDone": "Pagamento registrato: il membro lo conferma dalla sua parte.",
+  "repartitionAction": "Ripartisci una spesa",
+  "repartitionTitle": "Ripartisci una spesa",
+  "repartitionHint": "Ripartisci un costo comune tra i membri. Le quote diventano righe della prossima fattura di utilizzo di ciascuno; uno storno restituisce il denaro come note di credito.",
+  "repartitionTitleField": "Causale",
+  "repartitionAmount": "Importo totale",
+  "repartitionReverse": "Storno — restituire come note di credito",
+  "repartitionMethod": "Ripartire per",
+  "repartitionMethodEqual": "Quote uguali",
+  "repartitionMethodSubscription": "Abbonamento",
+  "repartitionMethodUsage": "Utilizzo",
+  "repartitionMethodCustom": "Chiave personalizzata",
+  "repartitionPeriod": "Imputato a",
+  "repartitionWeight": "Chiave",
+  "repartitionPreview": "Quote",
+  "repartitionNoShares": "Nessuno porta una quota: controlla la chiave.",
+  "repartitionSum": "{count, plural, =1{1 membro · {amount}} other{{count} membri · {amount}}}",
+  "@repartitionSum": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "repartitionSubmit": "Registra le quote",
+  "repartitionFiled": "Quote registrate: compariranno sulla prossima fattura di utilizzo.",
+  "repartitionFiledPending": "Quote depositate: saranno registrate dopo la convalida.",
+  "repartitionHistory": "Ripartizioni",
+  "repartitionHistoryEmpty": "Nessuna ripartizione per ora.",
+  "repartitionStatusPending": "In attesa di convalida",
+  "repartitionStatusConfirmed": "Registrata",
+  "repartitionStatusRejected": "Rifiutata",
+  "repartitionStatusExpired": "Scaduta"
 }

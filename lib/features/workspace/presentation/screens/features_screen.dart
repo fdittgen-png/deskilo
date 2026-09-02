@@ -223,6 +223,9 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.invoiceSettlement =>
           l10n?.featureInvoiceSettlementDesc ??
               'Several of a member\'s open invoices can be regrouped into one they pay. The originals stay in the archive, traceable position by position, and stop being chased separately.',
+        WorkspaceFeature.expenseRepartition =>
+          l10n?.featureExpenseRepartitionDesc ??
+              'A shared expense (a cleaning bill, an internet upgrade, a broken chair) split over the members — equal shares, pro rata of the subscription, pro rata of usage, or a key per member — with every share previewed before it is booked. The shares land as charge lines on the next usage invoice; a reversal books credit notes. Through the validation rules. Off: no distribution.',
         WorkspaceFeature.invoicingWizard =>
           l10n?.featureInvoicingWizardDesc ??
               'One guided month-close process for the finance person: a start-of-month run for the subscriptions paid ahead and an end-of-month run for usage and extra charges — review, issue in one batch, send, remind what is due, register and validate payments, match them to invoices, regroup, write off or refund, and a summary with whose move is left. Off: the separate screens.',

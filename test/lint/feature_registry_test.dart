@@ -70,7 +70,8 @@ import 'package:flutter_test/flutter_test.dart';
 // designer: direct manipulation, undo, side-by-side preview.
 // 64→65 (2026-09-02): #825 memberPage — one page per member.
 // 65→66 (2026-09-02): #827 invoicingWizard — the guided month-close.
-const int _expectedFeatureCount = 66;
+// 66→67 (2026-09-02): #828 expenseRepartition — shared expenses split.
+const int _expectedFeatureCount = 67;
 
 void main() {
   test('every functionality is registered — the pin', () {

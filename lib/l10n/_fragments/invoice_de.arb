@@ -1175,5 +1175,40 @@
   "registerPaymentDate": "Bezahlt am",
   "registerPaymentNote": "Notiz",
   "registerPaymentSubmit": "Erfassen",
-  "registerPaymentDone": "Zahlung erfasst — das Mitglied bestätigt sie von seiner Seite."
+  "registerPaymentDone": "Zahlung erfasst — das Mitglied bestätigt sie von seiner Seite.",
+  "repartitionAction": "Ausgabe verteilen",
+  "repartitionTitle": "Ausgabe verteilen",
+  "repartitionHint": "Verteilen Sie gemeinsame Kosten auf die Mitglieder. Die Anteile werden Positionen der nächsten Nutzungsrechnung jedes Mitglieds; eine Umkehrung gibt das Geld als Gutschriften zurück.",
+  "repartitionTitleField": "Wofür",
+  "repartitionAmount": "Gesamtbetrag",
+  "repartitionReverse": "Umkehrung — als Gutschriften zurückgeben",
+  "repartitionMethod": "Verteilen nach",
+  "repartitionMethodEqual": "Gleich",
+  "repartitionMethodSubscription": "Abonnement",
+  "repartitionMethodUsage": "Nutzung",
+  "repartitionMethodCustom": "Eigener Schlüssel",
+  "repartitionPeriod": "Gebucht auf",
+  "repartitionWeight": "Schlüssel",
+  "repartitionPreview": "Anteile",
+  "repartitionNoShares": "Niemand trägt einen Anteil — prüfen Sie den Schlüssel.",
+  "repartitionSum": "{count, plural, =1{1 Mitglied · {amount}} other{{count} Mitglieder · {amount}}}",
+  "@repartitionSum": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "repartitionSubmit": "Anteile buchen",
+  "repartitionFiled": "Anteile gebucht — sie erscheinen auf der nächsten Nutzungsrechnung.",
+  "repartitionFiledPending": "Anteile eingereicht — sie werden nach der Bestätigung gebucht.",
+  "repartitionHistory": "Verteilungen",
+  "repartitionHistoryEmpty": "Noch keine Verteilung.",
+  "repartitionStatusPending": "Wartet auf Bestätigung",
+  "repartitionStatusConfirmed": "Gebucht",
+  "repartitionStatusRejected": "Abgelehnt",
+  "repartitionStatusExpired": "Abgelaufen"
 }

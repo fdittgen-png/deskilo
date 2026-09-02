@@ -1158,6 +1158,24 @@
   "eventTypeExpenseSchedule": "Spesa programmata",
   "eventExpenseScheduleLine": "{actor} programma «{title}» — {amount} ricorrente",
   "eventExpenseDeviation": "validato {scheduled} — {reason}",
+  "eventExpenseRepartitionLine": "{actor} ripartisce «{title}»: {amount} tra {count} membri",
+  "@eventExpenseRepartitionLine": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "eventTypeExpenseRepartition": "Spesa condivisa",
   "featuresTitle": "Funzionalità",
   "featureCalendarTab": "Scheda Calendario",
   "featureCalendarTabDesc": "Panoramica mensile di prenotazioni e giorni di chiusura.",
@@ -1341,6 +1359,8 @@
   "featureMemberPageDesc": "Una pagina per membro: foto e presenza, ultimo accesso, prenotazioni in corso e prossime, azioni rapide (messaggio, WhatsApp, e-mail), schede contatto e finanze e, per gli admin, ogni impostazione raggruppata per tema con il valore attuale. Disattivato: il foglio profilo e il foglio azioni di Membri e piani.",
   "featureInvoicingWizardTitle": "Assistente di fatturazione",
   "featureInvoicingWizardDesc": "Un processo guidato di chiusura mensile per chi cura le finanze: un giro di inizio mese per gli abbonamenti pagati in anticipo e uno di fine mese per consumi e costi aggiuntivi — revisione, emissione in blocco, invio, solleciti dovuti, registrazione e convalida dei pagamenti, abbinamento alle fatture, raggruppamento, stralcio o rimborso, e un riepilogo con ciò che resta aperto e a chi tocca. Disattivato: le schermate separate.",
+  "featureExpenseRepartitionTitle": "Spese condivise",
+  "featureExpenseRepartitionDesc": "Una spesa comune (pulizie, potenziamento internet, una sedia rotta) ripartita tra i membri — quote uguali, in proporzione all'abbonamento, in proporzione all'utilizzo o una chiave per membro — con ogni quota in anteprima prima della registrazione. Le quote diventano righe della prossima fattura di utilizzo; uno storno genera note di credito. Passa dalle regole di convalida. Disattivato: nessuna ripartizione.",
   "helpHintLearnMore": "Scopri di più",
   "helpHintDismiss": "Nascondi suggerimento",
   "helpHintPrevTip": "Suggerimento precedente",
@@ -2714,6 +2734,41 @@
   "registerPaymentNote": "Nota",
   "registerPaymentSubmit": "Registra",
   "registerPaymentDone": "Pagamento registrato: il membro lo conferma dalla sua parte.",
+  "repartitionAction": "Ripartisci una spesa",
+  "repartitionTitle": "Ripartisci una spesa",
+  "repartitionHint": "Ripartisci un costo comune tra i membri. Le quote diventano righe della prossima fattura di utilizzo di ciascuno; uno storno restituisce il denaro come note di credito.",
+  "repartitionTitleField": "Causale",
+  "repartitionAmount": "Importo totale",
+  "repartitionReverse": "Storno — restituire come note di credito",
+  "repartitionMethod": "Ripartire per",
+  "repartitionMethodEqual": "Quote uguali",
+  "repartitionMethodSubscription": "Abbonamento",
+  "repartitionMethodUsage": "Utilizzo",
+  "repartitionMethodCustom": "Chiave personalizzata",
+  "repartitionPeriod": "Imputato a",
+  "repartitionWeight": "Chiave",
+  "repartitionPreview": "Quote",
+  "repartitionNoShares": "Nessuno porta una quota: controlla la chiave.",
+  "repartitionSum": "{count, plural, =1{1 membro · {amount}} other{{count} membri · {amount}}}",
+  "@repartitionSum": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "repartitionSubmit": "Registra le quote",
+  "repartitionFiled": "Quote registrate: compariranno sulla prossima fattura di utilizzo.",
+  "repartitionFiledPending": "Quote depositate: saranno registrate dopo la convalida.",
+  "repartitionHistory": "Ripartizioni",
+  "repartitionHistoryEmpty": "Nessuna ripartizione per ora.",
+  "repartitionStatusPending": "In attesa di convalida",
+  "repartitionStatusConfirmed": "Registrata",
+  "repartitionStatusRejected": "Rifiutata",
+  "repartitionStatusExpired": "Scaduta",
   "eventTypeMemberJoin": "Nuovo membro",
   "memberStatusPending": "In attesa",
   "pendingApprovalTitle": "In attesa di approvazione",

@@ -1860,6 +1860,19 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String eventExpenseRepartitionLine(
+    String actor,
+    String title,
+    String amount,
+    int count,
+  ) {
+    return '$actor distributes “$title” — $amount over $count members';
+  }
+
+  @override
+  String get eventTypeExpenseRepartition => 'Shared expense';
+
+  @override
   String get featuresTitle => 'Features';
 
   @override
@@ -2289,6 +2302,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureInvoicingWizardDesc =>
       'One guided month-close process for the finance person: a start-of-month run for the subscriptions paid ahead and an end-of-month run for usage and extra charges — review, issue in one batch, send, remind what is due, register and validate payments, match them to invoices, regroup, write off or refund, and a summary with whose move is left. Off: the separate screens.';
+
+  @override
+  String get featureExpenseRepartitionTitle => 'Shared expenses';
+
+  @override
+  String get featureExpenseRepartitionDesc =>
+      'A shared expense (a cleaning bill, an internet upgrade, a broken chair) split over the members — equal shares, pro rata of the subscription, pro rata of usage, or a key per member — with every share previewed before it is booked. The shares land as charge lines on the next usage invoice; a reversal books credit notes. Through the validation rules. Off: no distribution.';
 
   @override
   String get helpTitle => 'Help';
@@ -4492,6 +4512,92 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get registerPaymentDone =>
       'Payment registered — the member confirms it from their side.';
+
+  @override
+  String get repartitionAction => 'Distribute an expense';
+
+  @override
+  String get repartitionTitle => 'Distribute an expense';
+
+  @override
+  String get repartitionHint =>
+      'Split a shared cost over the members. The shares land as lines on each member\'s next usage invoice; a reversal gives the money back as credit notes.';
+
+  @override
+  String get repartitionTitleField => 'What for';
+
+  @override
+  String get repartitionAmount => 'Total amount';
+
+  @override
+  String get repartitionReverse => 'Reversal — give back as credit notes';
+
+  @override
+  String get repartitionMethod => 'Split by';
+
+  @override
+  String get repartitionMethodEqual => 'Equal';
+
+  @override
+  String get repartitionMethodSubscription => 'Subscription';
+
+  @override
+  String get repartitionMethodUsage => 'Usage';
+
+  @override
+  String get repartitionMethodCustom => 'Custom key';
+
+  @override
+  String get repartitionPeriod => 'Lands on';
+
+  @override
+  String get repartitionWeight => 'Key';
+
+  @override
+  String get repartitionPreview => 'Shares';
+
+  @override
+  String get repartitionNoShares => 'Nobody carries a share — check the key.';
+
+  @override
+  String repartitionSum(int count, String amount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count members · $amount',
+      one: '1 member · $amount',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get repartitionSubmit => 'Book the shares';
+
+  @override
+  String get repartitionFiled =>
+      'Shares booked — they appear on the next usage invoice.';
+
+  @override
+  String get repartitionFiledPending =>
+      'Shares filed — they book once validated.';
+
+  @override
+  String get repartitionHistory => 'Distributions';
+
+  @override
+  String get repartitionHistoryEmpty => 'No distribution yet.';
+
+  @override
+  String get repartitionStatusPending => 'Awaiting validation';
+
+  @override
+  String get repartitionStatusConfirmed => 'Booked';
+
+  @override
+  String get repartitionStatusRejected => 'Rejected';
+
+  @override
+  String get repartitionStatusExpired => 'Expired';
 
   @override
   String get eventTypeMemberJoin => 'New member';

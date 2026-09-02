@@ -1873,6 +1873,19 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String eventExpenseRepartitionLine(
+    String actor,
+    String title,
+    String amount,
+    int count,
+  ) {
+    return '$actor ripartisce «$title»: $amount tra $count membri';
+  }
+
+  @override
+  String get eventTypeExpenseRepartition => 'Spesa condivisa';
+
+  @override
   String get featuresTitle => 'Funzionalità';
 
   @override
@@ -2308,6 +2321,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featureInvoicingWizardDesc =>
       'Un processo guidato di chiusura mensile per chi cura le finanze: un giro di inizio mese per gli abbonamenti pagati in anticipo e uno di fine mese per consumi e costi aggiuntivi — revisione, emissione in blocco, invio, solleciti dovuti, registrazione e convalida dei pagamenti, abbinamento alle fatture, raggruppamento, stralcio o rimborso, e un riepilogo con ciò che resta aperto e a chi tocca. Disattivato: le schermate separate.';
+
+  @override
+  String get featureExpenseRepartitionTitle => 'Spese condivise';
+
+  @override
+  String get featureExpenseRepartitionDesc =>
+      'Una spesa comune (pulizie, potenziamento internet, una sedia rotta) ripartita tra i membri — quote uguali, in proporzione all\'abbonamento, in proporzione all\'utilizzo o una chiave per membro — con ogni quota in anteprima prima della registrazione. Le quote diventano righe della prossima fattura di utilizzo; uno storno genera note di credito. Passa dalle regole di convalida. Disattivato: nessuna ripartizione.';
 
   @override
   String get helpTitle => 'Aiuto';
@@ -4532,6 +4552,93 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get registerPaymentDone =>
       'Pagamento registrato: il membro lo conferma dalla sua parte.';
+
+  @override
+  String get repartitionAction => 'Ripartisci una spesa';
+
+  @override
+  String get repartitionTitle => 'Ripartisci una spesa';
+
+  @override
+  String get repartitionHint =>
+      'Ripartisci un costo comune tra i membri. Le quote diventano righe della prossima fattura di utilizzo di ciascuno; uno storno restituisce il denaro come note di credito.';
+
+  @override
+  String get repartitionTitleField => 'Causale';
+
+  @override
+  String get repartitionAmount => 'Importo totale';
+
+  @override
+  String get repartitionReverse => 'Storno — restituire come note di credito';
+
+  @override
+  String get repartitionMethod => 'Ripartire per';
+
+  @override
+  String get repartitionMethodEqual => 'Quote uguali';
+
+  @override
+  String get repartitionMethodSubscription => 'Abbonamento';
+
+  @override
+  String get repartitionMethodUsage => 'Utilizzo';
+
+  @override
+  String get repartitionMethodCustom => 'Chiave personalizzata';
+
+  @override
+  String get repartitionPeriod => 'Imputato a';
+
+  @override
+  String get repartitionWeight => 'Chiave';
+
+  @override
+  String get repartitionPreview => 'Quote';
+
+  @override
+  String get repartitionNoShares =>
+      'Nessuno porta una quota: controlla la chiave.';
+
+  @override
+  String repartitionSum(int count, String amount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count membri · $amount',
+      one: '1 membro · $amount',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get repartitionSubmit => 'Registra le quote';
+
+  @override
+  String get repartitionFiled =>
+      'Quote registrate: compariranno sulla prossima fattura di utilizzo.';
+
+  @override
+  String get repartitionFiledPending =>
+      'Quote depositate: saranno registrate dopo la convalida.';
+
+  @override
+  String get repartitionHistory => 'Ripartizioni';
+
+  @override
+  String get repartitionHistoryEmpty => 'Nessuna ripartizione per ora.';
+
+  @override
+  String get repartitionStatusPending => 'In attesa di convalida';
+
+  @override
+  String get repartitionStatusConfirmed => 'Registrata';
+
+  @override
+  String get repartitionStatusRejected => 'Rifiutata';
+
+  @override
+  String get repartitionStatusExpired => 'Scaduta';
 
   @override
   String get eventTypeMemberJoin => 'Nuovo membro';

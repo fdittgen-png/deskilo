@@ -190,6 +190,14 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
           ) ??
           'Reminder ${event.payload['level']}: invoice '
               '${event.payload['number']} — $amount still due',
+      // #828 — a shared expense distributed.
+      (EventType.expenseRepartition, _) => l10n?.eventExpenseRepartitionLine(
+            actor,
+            event.payload['title'] as String? ?? '',
+            amount,
+            (event.payload['member_count'] as num?)?.toInt() ?? 0,
+          ) ??
+          '$actor distributes "${event.payload['title']}" — $amount over ${event.payload['member_count']} members',
       (EventType.expenseSchedule, _) => l10n?.eventExpenseScheduleLine(
             actor,
             event.payload['title'] as String? ?? '',
@@ -320,6 +328,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.invoiceReminder => Icons.notification_important_outlined,
       EventType.priceNegotiation => Icons.handshake_outlined,
       EventType.expenseSchedule => Icons.event_repeat_outlined,
+      EventType.expenseRepartition => Icons.call_split,
     };
   }
 

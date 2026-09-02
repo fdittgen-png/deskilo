@@ -1861,5 +1861,40 @@
   "registerPaymentDate": "Paid on",
   "registerPaymentNote": "Note",
   "registerPaymentSubmit": "Register",
-  "registerPaymentDone": "Payment registered — the member confirms it from their side."
+  "registerPaymentDone": "Payment registered — the member confirms it from their side.",
+  "repartitionAction": "Distribute an expense",
+  "repartitionTitle": "Distribute an expense",
+  "repartitionHint": "Split a shared cost over the members. The shares land as lines on each member's next usage invoice; a reversal gives the money back as credit notes.",
+  "repartitionTitleField": "What for",
+  "repartitionAmount": "Total amount",
+  "repartitionReverse": "Reversal — give back as credit notes",
+  "repartitionMethod": "Split by",
+  "repartitionMethodEqual": "Equal",
+  "repartitionMethodSubscription": "Subscription",
+  "repartitionMethodUsage": "Usage",
+  "repartitionMethodCustom": "Custom key",
+  "repartitionPeriod": "Lands on",
+  "repartitionWeight": "Key",
+  "repartitionPreview": "Shares",
+  "repartitionNoShares": "Nobody carries a share — check the key.",
+  "repartitionSum": "{count, plural, =1{1 member · {amount}} other{{count} members · {amount}}}",
+  "@repartitionSum": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "repartitionSubmit": "Book the shares",
+  "repartitionFiled": "Shares booked — they appear on the next usage invoice.",
+  "repartitionFiledPending": "Shares filed — they book once validated.",
+  "repartitionHistory": "Distributions",
+  "repartitionHistoryEmpty": "No distribution yet.",
+  "repartitionStatusPending": "Awaiting validation",
+  "repartitionStatusConfirmed": "Booked",
+  "repartitionStatusRejected": "Rejected",
+  "repartitionStatusExpired": "Expired"
 }

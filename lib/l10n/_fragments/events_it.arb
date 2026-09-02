@@ -88,5 +88,23 @@
   "validationPickPersons": "Scegli le persone",
   "eventTypeExpenseSchedule": "Spesa programmata",
   "eventExpenseScheduleLine": "{actor} programma «{title}» — {amount} ricorrente",
-  "eventExpenseDeviation": "validato {scheduled} — {reason}"
+  "eventExpenseDeviation": "validato {scheduled} — {reason}",
+  "eventExpenseRepartitionLine": "{actor} ripartisce «{title}»: {amount} tra {count} membri",
+  "@eventExpenseRepartitionLine": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "eventTypeExpenseRepartition": "Spesa condivisa"
 }

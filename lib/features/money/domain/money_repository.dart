@@ -9,6 +9,7 @@ import 'invoice.dart';
 import 'vat_declaration.dart';
 import 'member_account.dart';
 import 'billing_rules.dart';
+import 'expense_repartition.dart';
 import 'dunning.dart';
 import 'price_negotiation.dart';
 import 'invoice_pdf_template.dart';import 'ledger_entry.dart';
@@ -158,6 +159,24 @@ abstract class MoneyRepository {
   /// server voids that one in the same transaction.
   /// [detailed] (0064) snapshots the annex — the period's full ledger
   /// and attendance — into the immutable document.
+  /// #828 — distributes [amountCents] (negative = a reversal) over the
+  /// members in [shares], as adjustment ledger rows on [period] that the
+  /// period's usage invoice picks up — through the validation framework
+  /// (RPC `distribute_expense`, 0147). Returns the repartition id.
+  Future<String> distributeExpense({
+    required String workspaceId,
+    required String title,
+    required int amountCents,
+    required RepartitionMethod method,
+    required String period,
+    required List<RepartitionShare> shares,
+    String? sourceEventId,
+  });
+
+  /// The workspace's distributions, newest first (0147).
+  Future<List<ExpenseRepartition>> fetchExpenseRepartitions(
+      String workspaceId);
+
   /// #827 — [kind] narrows the document to the subscription (ahead of
   /// the month) or the usage (after it); [InvoiceKind.full] is the
   /// historical whole-month invoice.
