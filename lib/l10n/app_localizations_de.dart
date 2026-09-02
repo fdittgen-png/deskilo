@@ -2213,6 +2213,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Kalender-Tab als Agenda, Woche und Monat: Tagesmarker nach Art, geschlossene Tage als geschlossen, Kopfzeilen Heute / Morgen, Zahlungsfälligkeiten und geplante Ausgaben im Feed. Aus: der schlichte Tag-oder-Zeitraum-Wähler über dem Feed.';
 
   @override
+  String get featureMessagesHubTitle => 'Nachrichten, überarbeitet';
+
+  @override
+  String get featureMessagesHubDesc =>
+      'Eine Posteingangsleiste (Alle / Ungelesen / Archiviert und Suche), anheften, stumm, archivieren und als ungelesen markieren auf einem Thread, die Unterhaltung als ganze Seite mit Datumstrennern, ein Anhängen-Menü und ein behaltener Entwurf im Editor, eine Person mit einem Tipp geöffnet. Aus: der Posteingang mit zwei Leisten und der Thread als Blatt.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override
@@ -4457,14 +4464,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Nachricht löschen? Das lässt sich nicht rückgängig machen.';
 
   @override
-  String get memberNoteDeleteRead =>
-      'Schon gelesen — diese Nachricht kann nicht mehr zurückgenommen werden.';
-
-  @override
-  String get memberNoteDeleteNotMine =>
-      'Nur der Absender kann eine Nachricht zurücknehmen.';
-
-  @override
   String get memberNoteReply => 'Antworten';
 
   @override
@@ -4630,6 +4629,86 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get memberMoneyUnavailable =>
       'Finanzen konnten nicht geladen werden. Zum Aktualisieren ziehen.';
+
+  @override
+  String get inboxAlertsTab => 'Hinweise';
+
+  @override
+  String get inboxFilterAll => 'Alle';
+
+  @override
+  String get inboxFilterUnread => 'Ungelesen';
+
+  @override
+  String get inboxFilterArchived => 'Archiviert';
+
+  @override
+  String get inboxNoUnread => 'Nichts Ungelesenes — du bist auf dem Laufenden.';
+
+  @override
+  String get inboxNoArchived => 'Keine archivierten Unterhaltungen.';
+
+  @override
+  String get conversationPin => 'Oben anheften';
+
+  @override
+  String get conversationUnpin => 'Loslösen';
+
+  @override
+  String get conversationMute => 'Benachrichtigungen stumm';
+
+  @override
+  String get conversationUnmute => 'Stummschaltung aufheben';
+
+  @override
+  String get conversationMarkUnread => 'Als ungelesen markieren';
+
+  @override
+  String get conversationArchive => 'Archivieren';
+
+  @override
+  String get conversationUnarchive => 'Aus dem Archiv holen';
+
+  @override
+  String get conversationArchived => 'Unterhaltung archiviert.';
+
+  @override
+  String get conversationMutedBadge => 'Stumm';
+
+  @override
+  String get conversationLoadEarlier => 'Frühere Nachrichten laden';
+
+  @override
+  String get conversationToday => 'Heute';
+
+  @override
+  String get composerAttach => 'Verweis anhängen';
+
+  @override
+  String composerCharsLeft(int count) {
+    return '$count Zeichen übrig';
+  }
+
+  @override
+  String get composerDraftKept => 'Entwurf behalten';
+
+  @override
+  String get newConversationTapToOpen =>
+      'Tippe auf eine Person, um den Chat zu öffnen; schalte Gruppe ein, um mehrere zu wählen.';
+
+  @override
+  String get newConversationGroupSwitch => 'Gruppe';
+
+  @override
+  String get inboxRetry => 'Erneut versuchen';
+
+  @override
+  String get memberNoteDeleteRead =>
+      'Schon gelesen — diese Nachricht kann nicht mehr zurückgenommen werden.';
+
+  @override
+  String get memberNoteDeleteNotMine =>
+      'Nur der Absender kann eine Nachricht zurücknehmen.';
 
   @override
   String get moneyBaseFee => 'Basis-Abo';

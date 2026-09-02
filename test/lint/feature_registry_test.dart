@@ -65,7 +65,8 @@ import 'package:flutter_test/flutter_test.dart';
 // every view; the seat legend.
 // 61→62 (2026-09-02): #818 calendarViews — agenda / week / month over
 // the hub's feed, markers, closed days, due dates.
-const int _expectedFeatureCount = 62;
+// 62→63 (2026-09-02): #821 messagesHub — the Messages tab reworked.
+const int _expectedFeatureCount = 63;
 
 void main() {
   test('every functionality is registered — the pin', () {

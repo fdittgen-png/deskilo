@@ -2219,6 +2219,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'onglet Calendrier en agenda, semaine et mois : repères par jour selon le type, jours fermés affichés fermés, en-têtes Aujourd\'hui / Demain, échéances de paiement et dépenses programmées dans le fil. Désactivé : le simple sélecteur jour ou plage au-dessus du fil.';
 
   @override
+  String get featureMessagesHubTitle => 'Messages repensés';
+
+  @override
+  String get featureMessagesHubDesc =>
+      'Une seule barre de boîte de réception (Tous / Non lus / Archivés et recherche), épingler, couper le son, archiver et marquer non lu sur un fil, la conversation en page entière avec séparateurs de date, un menu joindre et un brouillon conservé dans le composeur, une personne ouverte d\'un seul geste. Désactivé : la boîte à deux barres et le fil en feuille.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override
@@ -4466,14 +4473,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Supprimer ce message ? Cette action est irréversible.';
 
   @override
-  String get memberNoteDeleteRead =>
-      'Déjà lu — ce message ne peut plus être repris.';
-
-  @override
-  String get memberNoteDeleteNotMine =>
-      'Seul l\'expéditeur peut reprendre un message.';
-
-  @override
   String get memberNoteReply => 'Répondre';
 
   @override
@@ -4637,6 +4636,86 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get memberMoneyUnavailable =>
       'Impossible de charger les finances. Tirez pour actualiser.';
+
+  @override
+  String get inboxAlertsTab => 'Alertes';
+
+  @override
+  String get inboxFilterAll => 'Tous';
+
+  @override
+  String get inboxFilterUnread => 'Non lus';
+
+  @override
+  String get inboxFilterArchived => 'Archivés';
+
+  @override
+  String get inboxNoUnread => 'Rien de non lu — vous êtes à jour.';
+
+  @override
+  String get inboxNoArchived => 'Aucune conversation archivée.';
+
+  @override
+  String get conversationPin => 'Épingler en haut';
+
+  @override
+  String get conversationUnpin => 'Désépingler';
+
+  @override
+  String get conversationMute => 'Couper les notifications';
+
+  @override
+  String get conversationUnmute => 'Réactiver les notifications';
+
+  @override
+  String get conversationMarkUnread => 'Marquer comme non lu';
+
+  @override
+  String get conversationArchive => 'Archiver';
+
+  @override
+  String get conversationUnarchive => 'Sortir des archives';
+
+  @override
+  String get conversationArchived => 'Conversation archivée.';
+
+  @override
+  String get conversationMutedBadge => 'Silencieuse';
+
+  @override
+  String get conversationLoadEarlier => 'Charger les messages plus anciens';
+
+  @override
+  String get conversationToday => 'Aujourd\'hui';
+
+  @override
+  String get composerAttach => 'Joindre une référence';
+
+  @override
+  String composerCharsLeft(int count) {
+    return '$count caractères restants';
+  }
+
+  @override
+  String get composerDraftKept => 'Brouillon conservé';
+
+  @override
+  String get newConversationTapToOpen =>
+      'Touchez une personne pour ouvrir la discussion ; activez Groupe pour en choisir plusieurs.';
+
+  @override
+  String get newConversationGroupSwitch => 'Groupe';
+
+  @override
+  String get inboxRetry => 'Réessayer';
+
+  @override
+  String get memberNoteDeleteRead =>
+      'Déjà lu — ce message ne peut plus être repris.';
+
+  @override
+  String get memberNoteDeleteNotMine =>
+      'Seul l\'expéditeur peut reprendre un message.';
 
   @override
   String get moneyBaseFee => 'Abonnement de base';

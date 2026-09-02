@@ -2197,6 +2197,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'The Calendar tab as agenda, week and month: per-day markers by kind, closed days drawn as closed, Today / Tomorrow headers, payment due dates and scheduled expenses in the feed. Off: the plain day-or-range selector over the feed.';
 
   @override
+  String get featureMessagesHubTitle => 'Messages, reworked';
+
+  @override
+  String get featureMessagesHubDesc =>
+      'One inbox bar (All / Unread / Archived and search), pin, mute, archive and mark-unread on a thread, the conversation as a full page with date separators, an attach menu and a kept draft in the composer, a person opened with one tap. Off: the two-bar inbox and the sheet thread.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override
@@ -4420,14 +4427,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Delete this message? This cannot be undone.';
 
   @override
-  String get memberNoteDeleteRead =>
-      'Already read — this message can no longer be taken back.';
-
-  @override
-  String get memberNoteDeleteNotMine =>
-      'Only the sender can take a message back.';
-
-  @override
   String get memberNoteReply => 'Reply';
 
   @override
@@ -4590,6 +4589,86 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get memberMoneyUnavailable =>
       'Money could not be loaded. Pull to refresh.';
+
+  @override
+  String get inboxAlertsTab => 'Alerts';
+
+  @override
+  String get inboxFilterAll => 'All';
+
+  @override
+  String get inboxFilterUnread => 'Unread';
+
+  @override
+  String get inboxFilterArchived => 'Archived';
+
+  @override
+  String get inboxNoUnread => 'Nothing unread — you are up to date.';
+
+  @override
+  String get inboxNoArchived => 'No archived conversations.';
+
+  @override
+  String get conversationPin => 'Pin to top';
+
+  @override
+  String get conversationUnpin => 'Unpin';
+
+  @override
+  String get conversationMute => 'Mute notifications';
+
+  @override
+  String get conversationUnmute => 'Unmute';
+
+  @override
+  String get conversationMarkUnread => 'Mark as unread';
+
+  @override
+  String get conversationArchive => 'Archive';
+
+  @override
+  String get conversationUnarchive => 'Restore from archive';
+
+  @override
+  String get conversationArchived => 'Conversation archived.';
+
+  @override
+  String get conversationMutedBadge => 'Muted';
+
+  @override
+  String get conversationLoadEarlier => 'Load earlier messages';
+
+  @override
+  String get conversationToday => 'Today';
+
+  @override
+  String get composerAttach => 'Attach a reference';
+
+  @override
+  String composerCharsLeft(int count) {
+    return '$count characters left';
+  }
+
+  @override
+  String get composerDraftKept => 'Draft kept';
+
+  @override
+  String get newConversationTapToOpen =>
+      'Tap a person to open the chat; switch on Group to pick several.';
+
+  @override
+  String get newConversationGroupSwitch => 'Group';
+
+  @override
+  String get inboxRetry => 'Try again';
+
+  @override
+  String get memberNoteDeleteRead =>
+      'Already read — this message can no longer be taken back.';
+
+  @override
+  String get memberNoteDeleteNotMine =>
+      'Only the sender can take a message back.';
 
   @override
   String get moneyBaseFee => 'Base subscription';

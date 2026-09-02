@@ -174,5 +174,7 @@
   "featureBookingGateTitle": "Buchungsprüfung",
   "featureBookingGateDesc": "Jede Buchungsfläche — Plan, Tages-, Wochen- und Monatsansicht, Buchungsblatt, Kiosk, QR- oder NFC-Scan — prüft die Verfügbarkeitsparameter, bevor sie ein Zeitfenster anbietet, und nennt den Grund, wenn sie es nicht kann; geschlossene Tage erscheinen in jeder Ansicht geschlossen, eine Legende benennt die Platzzustände, und Admins dürfen Mitglieder auschecken, wo die Regel es erlaubt.",
   "featureCalendarViewsTitle": "Kalenderansichten",
-  "featureCalendarViewsDesc": "Der Kalender-Tab als Agenda, Woche und Monat: Tagesmarker nach Art, geschlossene Tage als geschlossen, Kopfzeilen Heute / Morgen, Zahlungsfälligkeiten und geplante Ausgaben im Feed. Aus: der schlichte Tag-oder-Zeitraum-Wähler über dem Feed."
+  "featureCalendarViewsDesc": "Der Kalender-Tab als Agenda, Woche und Monat: Tagesmarker nach Art, geschlossene Tage als geschlossen, Kopfzeilen Heute / Morgen, Zahlungsfälligkeiten und geplante Ausgaben im Feed. Aus: der schlichte Tag-oder-Zeitraum-Wähler über dem Feed.",
+  "featureMessagesHubTitle": "Nachrichten, überarbeitet",
+  "featureMessagesHubDesc": "Eine Posteingangsleiste (Alle / Ungelesen / Archiviert und Suche), anheften, stumm, archivieren und als ungelesen markieren auf einem Thread, die Unterhaltung als ganze Seite mit Datumstrennern, ein Anhängen-Menü und ein behaltener Entwurf im Editor, eine Person mit einem Tipp geöffnet. Aus: der Posteingang mit zwei Leisten und der Thread als Blatt."
 }

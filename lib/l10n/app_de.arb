@@ -1267,6 +1267,8 @@
   "featureBookingGateDesc": "Jede Buchungsfläche — Plan, Tages-, Wochen- und Monatsansicht, Buchungsblatt, Kiosk, QR- oder NFC-Scan — prüft die Verfügbarkeitsparameter, bevor sie ein Zeitfenster anbietet, und nennt den Grund, wenn sie es nicht kann; geschlossene Tage erscheinen in jeder Ansicht geschlossen, eine Legende benennt die Platzzustände, und Admins dürfen Mitglieder auschecken, wo die Regel es erlaubt.",
   "featureCalendarViewsTitle": "Kalenderansichten",
   "featureCalendarViewsDesc": "Der Kalender-Tab als Agenda, Woche und Monat: Tagesmarker nach Art, geschlossene Tage als geschlossen, Kopfzeilen Heute / Morgen, Zahlungsfälligkeiten und geplante Ausgaben im Feed. Aus: der schlichte Tag-oder-Zeitraum-Wähler über dem Feed.",
+  "featureMessagesHubTitle": "Nachrichten, überarbeitet",
+  "featureMessagesHubDesc": "Eine Posteingangsleiste (Alle / Ungelesen / Archiviert und Suche), anheften, stumm, archivieren und als ungelesen markieren auf einem Thread, die Unterhaltung als ganze Seite mit Datumstrennern, ein Anhängen-Menü und ein behaltener Entwurf im Editor, eine Person mit einem Tipp geöffnet. Aus: der Posteingang mit zwei Leisten und der Thread als Blatt.",
   "helpTitle": "Hilfe",
   "helpContents": "Inhalt",
   "helpHintMessages": "Alle Unterhaltungen in einer Liste, die neueste oben. Tippen Sie auf den Stift, um jemandem zu schreiben oder eine Gruppe zu erstellen.",
@@ -2624,8 +2626,6 @@
     "description": "Delete button on a message (sheet + confirm dialog, #523)"
   },
   "memberNoteDeleteConfirm": "Diese Nachricht löschen? Das lässt sich nicht rückgängig machen.",
-  "memberNoteDeleteRead": "Schon gelesen — diese Nachricht kann nicht mehr zurückgenommen werden.",
-  "memberNoteDeleteNotMine": "Nur der Absender kann eine Nachricht zurücknehmen.",
   "@memberNoteDeleteConfirm": {
     "description": "Confirmation asked before any message delete — swipe or button (#523)"
   },
@@ -2845,6 +2845,38 @@
   "@memberMoneyUnavailable": {
     "description": "#709 - the money section of a profile could not be read"
   },
+  "inboxAlertsTab": "Hinweise",
+  "inboxFilterAll": "Alle",
+  "inboxFilterUnread": "Ungelesen",
+  "inboxFilterArchived": "Archiviert",
+  "inboxNoUnread": "Nichts Ungelesenes — du bist auf dem Laufenden.",
+  "inboxNoArchived": "Keine archivierten Unterhaltungen.",
+  "conversationPin": "Oben anheften",
+  "conversationUnpin": "Loslösen",
+  "conversationMute": "Benachrichtigungen stumm",
+  "conversationUnmute": "Stummschaltung aufheben",
+  "conversationMarkUnread": "Als ungelesen markieren",
+  "conversationArchive": "Archivieren",
+  "conversationUnarchive": "Aus dem Archiv holen",
+  "conversationArchived": "Unterhaltung archiviert.",
+  "conversationMutedBadge": "Stumm",
+  "conversationLoadEarlier": "Frühere Nachrichten laden",
+  "conversationToday": "Heute",
+  "composerAttach": "Verweis anhängen",
+  "composerCharsLeft": "{count} Zeichen übrig",
+  "@composerCharsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "composerDraftKept": "Entwurf behalten",
+  "newConversationTapToOpen": "Tippe auf eine Person, um den Chat zu öffnen; schalte Gruppe ein, um mehrere zu wählen.",
+  "newConversationGroupSwitch": "Gruppe",
+  "inboxRetry": "Erneut versuchen",
+  "memberNoteDeleteRead": "Schon gelesen — diese Nachricht kann nicht mehr zurückgenommen werden.",
+  "memberNoteDeleteNotMine": "Nur der Absender kann eine Nachricht zurücknehmen.",
   "moneyBaseFee": "Basis-Abo",
   "moneyUsage": "{used} von {included} halben Tagen genutzt",
   "moneyUsageUnlimited": "{used} halbe Tage genutzt",

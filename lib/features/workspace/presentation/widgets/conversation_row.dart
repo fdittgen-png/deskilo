@@ -26,7 +26,11 @@ class ConversationRow extends ConsumerWidget {
     required this.names,
     required this.now,
     required this.onTap,
+    this.onLongPress,
   });
+
+  /// #821 — the row's menu (pin, mute, mark unread, archive).
+  final VoidCallback? onLongPress;
 
   final Conversation conversation;
   final String? myMemberId;
@@ -82,14 +86,35 @@ class ConversationRow extends ConsumerWidget {
               memberId: conversation.otherMemberId,
               name: title,
             ),
-      title: Text(
-        title,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: unread > 0
-            ? const TextStyle(fontWeight: FontWeight.w600)
-            : null,
-      ),
+      title: Row(children: [
+        Flexible(
+          child: Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: unread > 0
+                ? const TextStyle(fontWeight: FontWeight.w600)
+                : null,
+          ),
+        ),
+        // #821 — my pin and my mute, on the row.
+        if (conversation.isPinned)
+          Padding(
+            padding: const EdgeInsets.only(left: 4),
+            child: Icon(Icons.push_pin,
+                key: ValueKey('conversation-pinned-${conversation.id}'),
+                size: 14,
+                color: theme.colorScheme.primary),
+          ),
+        if (conversation.muted)
+          Padding(
+            padding: const EdgeInsets.only(left: 4),
+            child: Icon(Icons.notifications_off_outlined,
+                key: ValueKey('conversation-muted-${conversation.id}'),
+                size: 14,
+                color: theme.colorScheme.onSurfaceVariant),
+          ),
+      ]),
       subtitle: Row(children: [
         // #694 — a group with NOTHING said in it has no preview to
         // distinguish it, so the row says what it is. "3 members" is
@@ -138,6 +163,7 @@ class ConversationRow extends ConsumerWidget {
         ],
       ),
       onTap: onTap,
+      onLongPress: onLongPress,
     );
   }
 }

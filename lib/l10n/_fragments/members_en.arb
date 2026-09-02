@@ -53,8 +53,6 @@
     "description": "Delete button on a message (sheet + confirm dialog, #523)"
   },
   "memberNoteDeleteConfirm": "Delete this message? This cannot be undone.",
-  "memberNoteDeleteRead": "Already read — this message can no longer be taken back.",
-  "memberNoteDeleteNotMine": "Only the sender can take a message back.",
   "@memberNoteDeleteConfirm": {
     "description": "Confirmation asked before any message delete — swipe or button (#523)"
   },
@@ -273,5 +271,37 @@
   "memberMoneyUnavailable": "Money could not be loaded. Pull to refresh.",
   "@memberMoneyUnavailable": {
     "description": "#709 - the money section of a profile could not be read"
-  }
+  },
+  "inboxAlertsTab": "Alerts",
+  "inboxFilterAll": "All",
+  "inboxFilterUnread": "Unread",
+  "inboxFilterArchived": "Archived",
+  "inboxNoUnread": "Nothing unread — you are up to date.",
+  "inboxNoArchived": "No archived conversations.",
+  "conversationPin": "Pin to top",
+  "conversationUnpin": "Unpin",
+  "conversationMute": "Mute notifications",
+  "conversationUnmute": "Unmute",
+  "conversationMarkUnread": "Mark as unread",
+  "conversationArchive": "Archive",
+  "conversationUnarchive": "Restore from archive",
+  "conversationArchived": "Conversation archived.",
+  "conversationMutedBadge": "Muted",
+  "conversationLoadEarlier": "Load earlier messages",
+  "conversationToday": "Today",
+  "composerAttach": "Attach a reference",
+  "composerCharsLeft": "{count} characters left",
+  "@composerCharsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "composerDraftKept": "Draft kept",
+  "newConversationTapToOpen": "Tap a person to open the chat; switch on Group to pick several.",
+  "newConversationGroupSwitch": "Group",
+  "inboxRetry": "Try again",
+  "memberNoteDeleteRead": "Already read — this message can no longer be taken back.",
+  "memberNoteDeleteNotMine": "Only the sender can take a message back."
 }

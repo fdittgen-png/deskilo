@@ -139,7 +139,12 @@ class _InboxScreenState extends ConsumerState<InboxScreen>
                         label: switch (tab) {
                           InboxTab.chats =>
                             l10n?.inboxChatsTab ?? 'Chats',
-                          InboxTab.alerts => l10n?.tabEvents ?? 'Events',
+                          // #821 — "Alerts": what the face holds, in
+                          // the word the guide and the bell use too.
+                          InboxTab.alerts => features
+                                  .contains(WorkspaceFeature.messagesHub)
+                              ? (l10n?.inboxAlertsTab ?? 'Alerts')
+                              : (l10n?.tabEvents ?? 'Events'),
                         },
                         // The count each face is responsible for, on the
                         // face itself: an inbox that only badges its

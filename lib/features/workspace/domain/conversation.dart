@@ -35,6 +35,9 @@ class Conversation {
     this.lastFromMemberId,
     this.unread = 0,
     this.participantCount = 0,
+    this.pinnedAt,
+    this.muted = false,
+    this.archivedAt,
   });
 
   factory Conversation.fromRow(Map<String, dynamic> row) => Conversation(
@@ -56,7 +59,14 @@ class Conversation {
         lastFromMemberId: row['last_from_member_id'] as String?,
         unread: (row['unread'] as num?)?.toInt() ?? 0,
         participantCount: (row['participant_count'] as num?)?.toInt() ?? 0,
+        // #821 — my view of the thread (0146); absent on older servers.
+        pinnedAt: _parseNullableAt(row['pinned_at']),
+        muted: row['muted'] == true,
+        archivedAt: _parseNullableAt(row['archived_at']),
       );
+
+  static DateTime? _parseNullableAt(Object? value) =>
+      value == null ? null : _parseAt(value);
 
   final String id;
   final ConversationKind kind;
@@ -82,6 +92,14 @@ class Conversation {
 
   /// Live participants — shown as "N members" under a group's name.
   final int participantCount;
+
+  /// #821 — MY pin, mute and archive on this thread (per participant).
+  final DateTime? pinnedAt;
+  final bool muted;
+  final DateTime? archivedAt;
+
+  bool get isPinned => pinnedAt != null;
+  bool get isArchived => archivedAt != null;
 
   bool get isGroup => kind == ConversationKind.group;
   bool get hasUnread => unread > 0;

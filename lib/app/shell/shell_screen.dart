@@ -32,6 +32,19 @@ import '../router.dart';
 import 'shell_bottom_bar.dart';
 import '../../core/time/clock.dart';
 
+/// #821 — the conversations I muted; empty when the list cannot be
+/// read, so a failing fetch silences nothing by accident.
+Future<Set<String>> _mutedConversationIds(WidgetRef ref) async {
+  try {
+    final list = await ref.read(conversationsProvider.future);
+    return {for (final c in list) if (c.muted) c.id};
+  } catch (e, st) {
+    TraceLogger.instance.warn('inbox', 'muted conversations unavailable',
+        error: e, stackTrace: st);
+    return const {};
+  }
+}
+
 /// Note ids already announced THIS SESSION — belt to the persisted
 /// NOTIFIED stamp's braces: two racing provider refreshes must not
 /// announce the same note twice before the stamp lands.
@@ -112,6 +125,11 @@ class ShellScreen extends ConsumerWidget {
           final names = await ref.read(memberNamesProvider.future);
           final store = ref.read(noteSeenStoreProvider);
           final notifiedUntil = await store.readNotified();
+          // #821 — a MUTED conversation is announced by nobody: its
+          // notes still count on the row and the badge, they just stay
+          // quiet. The stamp still advances past them, so unmuting later
+          // never replays what was muted.
+          final muted = await _mutedConversationIds(ref);
           DateTime? newest;
           // Oldest → newest so multiple catch-up notes read in order.
           for (final note in notes.reversed) {
@@ -121,6 +139,12 @@ class ShellScreen extends ConsumerWidget {
               continue;
             }
             if (!_sessionNotifiedNoteIds.add(note.id)) continue;
+            if (muted.contains(note.conversationId)) {
+              if (newest == null || note.createdAt.isAfter(newest)) {
+                newest = note.createdAt;
+              }
+              continue;
+            }
             // The names cache can lag a fresh boot — a nameless "Message
             // from" reads broken, so fall back to the app title (#460).
             final sender = names[note.fromMemberId] ?? '';

@@ -174,5 +174,7 @@
   "featureBookingGateTitle": "Controllo prenotazione",
   "featureBookingGateDesc": "Ogni superficie di prenotazione — piano, viste giorno, settimana e mese, foglio di prenotazione, chiosco, scansione QR o NFC — verifica i parametri di disponibilità prima di offrire una fascia e nomina il motivo quando non può; i giorni chiusi si mostrano chiusi in ogni vista, una legenda nomina gli stati dei posti, e gli admin possono fare il check-out di un membro dove la regola lo consente.",
   "featureCalendarViewsTitle": "Viste del calendario",
-  "featureCalendarViewsDesc": "La scheda Calendario come agenda, settimana e mese: indicatori per giorno secondo il tipo, giorni chiusi mostrati chiusi, intestazioni Oggi / Domani, scadenze di pagamento e spese programmate nel feed. Disattivato: il semplice selettore giorno o intervallo sopra il feed."
+  "featureCalendarViewsDesc": "La scheda Calendario come agenda, settimana e mese: indicatori per giorno secondo il tipo, giorni chiusi mostrati chiusi, intestazioni Oggi / Domani, scadenze di pagamento e spese programmate nel feed. Disattivato: il semplice selettore giorno o intervallo sopra il feed.",
+  "featureMessagesHubTitle": "Messaggi, rinnovati",
+  "featureMessagesHubDesc": "Una sola barra della posta (Tutti / Non letti / Archiviati e ricerca), fissare, silenziare, archiviare e segnare come non letto un thread, la conversazione a pagina intera con separatori di data, un menu allega e una bozza conservata nel compositore, una persona aperta con un tocco. Disattivato: la posta a due barre e il thread in foglio."
 }

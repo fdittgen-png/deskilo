@@ -190,7 +190,9 @@ void main() {
       final sheet = File('lib/features/workspace/presentation/widgets/'
               'new_conversation_sheet.dart')
           .readAsStringSync();
-      expect(sheet, contains('bool get _isGroup => _selected.length > 1;'));
+      // #821 — with the hub on, a switch says "group"; off, two picks do.
+      expect(sheet,
+          contains('bool get _isGroup => _hub ? _groupMode : _selected.length > 1;'));
       expect(sheet, contains("if (_isGroup)"),
           reason: 'the name field appears only once it means something');
     });
@@ -466,7 +468,8 @@ void main() {
       final screen = File('lib/features/workspace/presentation/screens/'
               'messages_screen.dart')
           .readAsStringSync();
-      final appBar = screen.substring(screen.indexOf('appBar: AppBar('));
+      // #821 — the hub shows no second bar at all; off, the bare one.
+      final appBar = screen.substring(screen.indexOf(': AppBar('));
       expect(appBar.substring(0, 200), isNot(contains('messagesTitle')));
     });
   });

@@ -11,6 +11,7 @@ import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/conversation.dart';
 import '../../domain/member.dart';
 import '../../domain/member_note.dart';
+import '../../domain/member_note_refs.dart';
 import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/conversation_avatar.dart';
@@ -168,7 +169,8 @@ class _MessageSearchScreenState extends ConsumerState<MessageSearchScreen> {
                         key: ValueKey('search-message-${note.id}'),
                         leading: const Icon(Icons.chat_bubble_outline),
                         title: Text(
-                          note.body,
+                          // #821 — labels, never raw reference tokens.
+                          notePlainText(note.body),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),

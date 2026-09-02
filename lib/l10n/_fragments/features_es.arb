@@ -174,5 +174,7 @@
   "featureBookingGateTitle": "Guarda de reserva",
   "featureBookingGateDesc": "Cada superficie de reserva — plano, vistas de día, semana y mes, hoja de reserva, quiosco, escaneo QR o NFC — comprueba los parámetros de disponibilidad antes de ofrecer una franja y nombra el motivo cuando no puede; los días cerrados se dibujan cerrados en cada vista, una leyenda nombra los estados de los puestos, y los admins pueden dar salida a un miembro donde la regla lo permite.",
   "featureCalendarViewsTitle": "Vistas del calendario",
-  "featureCalendarViewsDesc": "La pestaña Calendario como agenda, semana y mes: marcadores por día según el tipo, días cerrados dibujados cerrados, cabeceras Hoy / Mañana, vencimientos de pago y gastos programados en el feed. Desactivado: el simple selector de día o rango sobre el feed."
+  "featureCalendarViewsDesc": "La pestaña Calendario como agenda, semana y mes: marcadores por día según el tipo, días cerrados dibujados cerrados, cabeceras Hoy / Mañana, vencimientos de pago y gastos programados en el feed. Desactivado: el simple selector de día o rango sobre el feed.",
+  "featureMessagesHubTitle": "Mensajes, renovados",
+  "featureMessagesHubDesc": "Una sola barra de bandeja (Todos / No leídos / Archivados y búsqueda), fijar, silenciar, archivar y marcar como no leído en un hilo, la conversación como página completa con separadores de fecha, un menú adjuntar y un borrador guardado en el compositor, una persona abierta con un toque. Desactivado: la bandeja de dos barras y el hilo en hoja."
 }

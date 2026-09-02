@@ -2455,6 +2455,8 @@
   "featureBookingGateDesc": "Every booking surface — plan, day, week and month views, the booking sheet, the kiosk, a QR or NFC scan — checks the availability parameters before offering a window and names the reason when it cannot; closed days draw as closed in every view, a legend names the seat states, and admins may check members out where the policy allows.",
   "featureCalendarViewsTitle": "Calendar views",
   "featureCalendarViewsDesc": "The Calendar tab as agenda, week and month: per-day markers by kind, closed days drawn as closed, Today / Tomorrow headers, payment due dates and scheduled expenses in the feed. Off: the plain day-or-range selector over the feed.",
+  "featureMessagesHubTitle": "Messages, reworked",
+  "featureMessagesHubDesc": "One inbox bar (All / Unread / Archived and search), pin, mute, archive and mark-unread on a thread, the conversation as a full page with date separators, an attach menu and a kept draft in the composer, a person opened with one tap. Off: the two-bar inbox and the sheet thread.",
   "helpTitle": "Help",
   "helpContents": "Contents",
   "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",
@@ -4775,8 +4777,6 @@
     "description": "Delete button on a message (sheet + confirm dialog, #523)"
   },
   "memberNoteDeleteConfirm": "Delete this message? This cannot be undone.",
-  "memberNoteDeleteRead": "Already read — this message can no longer be taken back.",
-  "memberNoteDeleteNotMine": "Only the sender can take a message back.",
   "@memberNoteDeleteConfirm": {
     "description": "Confirmation asked before any message delete — swipe or button (#523)"
   },
@@ -4996,6 +4996,38 @@
   "@memberMoneyUnavailable": {
     "description": "#709 - the money section of a profile could not be read"
   },
+  "inboxAlertsTab": "Alerts",
+  "inboxFilterAll": "All",
+  "inboxFilterUnread": "Unread",
+  "inboxFilterArchived": "Archived",
+  "inboxNoUnread": "Nothing unread — you are up to date.",
+  "inboxNoArchived": "No archived conversations.",
+  "conversationPin": "Pin to top",
+  "conversationUnpin": "Unpin",
+  "conversationMute": "Mute notifications",
+  "conversationUnmute": "Unmute",
+  "conversationMarkUnread": "Mark as unread",
+  "conversationArchive": "Archive",
+  "conversationUnarchive": "Restore from archive",
+  "conversationArchived": "Conversation archived.",
+  "conversationMutedBadge": "Muted",
+  "conversationLoadEarlier": "Load earlier messages",
+  "conversationToday": "Today",
+  "composerAttach": "Attach a reference",
+  "composerCharsLeft": "{count} characters left",
+  "@composerCharsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "composerDraftKept": "Draft kept",
+  "newConversationTapToOpen": "Tap a person to open the chat; switch on Group to pick several.",
+  "newConversationGroupSwitch": "Group",
+  "inboxRetry": "Try again",
+  "memberNoteDeleteRead": "Already read — this message can no longer be taken back.",
+  "memberNoteDeleteNotMine": "Only the sender can take a message back.",
   "moneyBaseFee": "Base subscription",
   "@moneyBaseFee": {
     "description": "Statement line for the plan's monthly fee"

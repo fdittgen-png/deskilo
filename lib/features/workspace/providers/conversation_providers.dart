@@ -27,6 +27,37 @@ Future<List<Conversation>> conversations(Ref ref) async {
   );
 }
 
+/// #821 — the archived threads, on demand (the Archived filter).
+@riverpod
+Future<List<Conversation>> archivedConversations(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  final all = await ref.watch(workspaceRepositoryProvider).fetchConversations(
+        workspace.id,
+        includeArchived: true,
+      );
+  return [for (final c in all) if (c.isArchived) c];
+}
+
+/// #821 — the composer's unsent text per conversation, kept for the
+/// session so a thread closed mid-sentence reopens on that sentence.
+@Riverpod(keepAlive: true)
+class ConversationDrafts extends _$ConversationDrafts {
+  @override
+  Map<String, String> build() => const {};
+
+  String? of(String conversationId) => state[conversationId];
+
+  void set(String conversationId, String text) {
+    if (text.trim().isEmpty) {
+      if (!state.containsKey(conversationId)) return;
+      state = {...state}..remove(conversationId);
+    } else {
+      state = {...state, conversationId: text};
+    }
+  }
+}
+
 /// Total unread across every conversation — the badge on the Messages
 /// destination.
 ///
@@ -115,6 +146,7 @@ Future<List<MemberNote>> messageSearch(Ref ref, String query) async {
 /// message inside and a stale preview outside.
 void invalidateConversations(Ref ref, {String? conversationId}) {
   ref.invalidate(conversationsProvider);
+  ref.invalidate(archivedConversationsProvider);
   if (conversationId != null) {
     ref.invalidate(conversationMessagesProvider(conversationId));
   }

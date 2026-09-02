@@ -218,7 +218,7 @@ const Map<String, int> _baseline = {
   'lib/features/events/presentation/screens/validation_settings_screen.dart': 615,
   // 600→615 (2026-08-31): #771 the kiosk consent exemption and its
   // rationale live where the gate lives.
-  'lib/app/router.dart': 615,
+  'lib/app/router.dart': 635, // 2026-09-02 #821 the conversation page route
   // 600→620 (2026-09-01): #791 the tap dispatcher records the branch it
   // took. The paragraphs explaining WHY each silent branch needs a line
   // were extracted to booking_trace_points.dart; what stayed is eight
@@ -226,7 +226,7 @@ const Map<String, int> _baseline = {
   // 620→680 (2026-09-01): #814 the booking gate before the sheet, the admin check-out.
   'lib/features/reservations/presentation/reserve_seat_actions.dart': 680,
   // the validated amount and the member's explanation.
-  'lib/features/events/presentation/screens/events_screen.dart': 873,
+  'lib/features/events/presentation/screens/events_screen.dart': 895, // 2026-09-02 #821 mark seen only when showing
   // 680→700 (2026-08-04): #454 owner-template intro/footer blocks.
   // 700→790: #470 the banded report renderer (_reportWidgets) and the
   // header/body/footer band branches.

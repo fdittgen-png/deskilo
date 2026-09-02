@@ -20,8 +20,6 @@
     "description": "Delete button on a message (sheet + confirm dialog, #523)"
   },
   "memberNoteDeleteConfirm": "Eliminare questo messaggio? Non si può annullare.",
-  "memberNoteDeleteRead": "Già letto: questo messaggio non può più essere ritirato.",
-  "memberNoteDeleteNotMine": "Solo il mittente può ritirare un messaggio.",
   "@memberNoteDeleteConfirm": {
     "description": "Confirmation asked before any message delete — swipe or button (#523)"
   },
@@ -240,5 +238,37 @@
   "memberMoneyUnavailable": "Impossibile caricare le finanze. Trascina per aggiornare.",
   "@memberMoneyUnavailable": {
     "description": "#709 - the money section of a profile could not be read"
-  }
+  },
+  "inboxAlertsTab": "Avvisi",
+  "inboxFilterAll": "Tutti",
+  "inboxFilterUnread": "Non letti",
+  "inboxFilterArchived": "Archiviati",
+  "inboxNoUnread": "Niente da leggere — sei aggiornato.",
+  "inboxNoArchived": "Nessuna conversazione archiviata.",
+  "conversationPin": "Fissa in alto",
+  "conversationUnpin": "Sblocca",
+  "conversationMute": "Silenzia le notifiche",
+  "conversationUnmute": "Riattiva le notifiche",
+  "conversationMarkUnread": "Segna come non letto",
+  "conversationArchive": "Archivia",
+  "conversationUnarchive": "Ripristina dall'archivio",
+  "conversationArchived": "Conversazione archiviata.",
+  "conversationMutedBadge": "Silenziosa",
+  "conversationLoadEarlier": "Carica messaggi precedenti",
+  "conversationToday": "Oggi",
+  "composerAttach": "Allega un riferimento",
+  "composerCharsLeft": "{count} caratteri rimasti",
+  "@composerCharsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "composerDraftKept": "Bozza conservata",
+  "newConversationTapToOpen": "Tocca una persona per aprire la chat; attiva Gruppo per sceglierne più di una.",
+  "newConversationGroupSwitch": "Gruppo",
+  "inboxRetry": "Riprova",
+  "memberNoteDeleteRead": "Già letto: questo messaggio non può più essere ritirato.",
+  "memberNoteDeleteNotMine": "Solo il mittente può ritirare un messaggio."
 }

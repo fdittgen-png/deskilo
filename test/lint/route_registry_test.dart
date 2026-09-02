@@ -37,7 +37,8 @@ import 'package:flutter_test/flutter_test.dart';
 // 45→44 (2026-08-29): #737 /msg/:id gone with the WhatsApp mirror.
 // 44→45 (2026-08-30): #751 /consent.
 // 45→46 (2026-08-31): #780 /server — choose the Supabase instance.
-const int _expectedRouteCount = 46;
+// 46→47 (2026-09-02): #821 /conversation/:conversationId — a thread as a page.
+const int _expectedRouteCount = 47;
 
 void main() {
   test('router carries exactly $_expectedRouteCount GoRoutes', () {

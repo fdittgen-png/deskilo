@@ -274,7 +274,7 @@ Sieh, wer zur Community gehört:
 
 ## 7. Ereignisse & Bestätigungen (Nachrichten → Ereignisse)
 
-**Wo es liegt.** Der Feed ist die zweite Fläche des Tabs **Nachrichten**, und die **Glocke** in jeder Kopfzeile führt direkt dorthin, mit dem Zähler dessen, was auf dich wartet. Ein Ort hält die Meldungen — dort eine lesen heißt, sie überall gelesen zu haben.
+**Wo es liegt.** Der Feed ist die zweite Fläche des Tabs **Nachrichten**, und die **Glocke** in jeder Kopfzeile führt direkt dorthin, mit dem Zähler dessen, was auf dich wartet. Ein Ort hält die Meldungen — dort eine lesen heißt, sie überall gelesen zu haben. Mit den überarbeiteten Nachrichten heißt der Tab **Hinweise** und markiert sich nur als gelesen, solange er die sichtbare Fläche ist — hinüberzuwechseln ist Lesen, ihn hinter den Chats zu haben nicht.
 
 Der Ereignis-Feed ist die Prüfspur deines Space: Buchungen erstellt/geändert/storniert, Zahlungen erfasst, Rechnungen bezahlt, Ausgaben eingereicht, Extratage-Anträge, Rollenwechsel, Löschanträge. Mitglieder sehen ihre eigenen Ereignisse; Admins und Inhaber alles. **Filter-Chips** (Alle · Reservierung · Zahlung · Ausgabe · …) engen die Liste ein — deine Wahl wird gemerkt — und ein **Gruppieren nach**-Menü faltet den Feed in Gruppen nach Typ, Tag oder Mitglied (das Gruppensymbol antippen führt zur flachen Liste zurück); jede Zeile trägt ihr Status-Icon — **Sanduhr** wartend, **grünes Häkchen** bestätigt — und Geld-Ereignisse zeigen *wer wann validierte* direkt auf der Zeile.
 
@@ -882,7 +882,7 @@ Das Umstellen meldet dich ab und greift beim nächsten Öffnen der App — die S
 
 ## 13. Benachrichtigungen
 
-Check-in-Erinnerungen, offene Bestätigungen, Ausgaben-Entscheidungen — und wenn ein Admin **eine deiner Buchungen entfernt** (übersteuern), werden du und die Admins benachrichtigt. Zustellung lokal zuerst; Server-Push kommt fertig auf Android, iPhone/iPad, Browser und macOS (Firebase Cloud Messaging) — *Einstellungen → Erweitert* zeigt den Gerätestatus. Das Icon-Badge zählt offene Bestätigungen **plus ungelesene Nachrichten** — Android, iPhone/iPad, macOS-Dock, Windows-Leiste, installierte Web-Apps. Mitglieder-Nachrichten werden **einmal je Gerät mit Absender und vollem Text** angesagt — auch was bei geschlossener App kam. Diese Ansage erzeugt immer **die App selbst, lokal**: das Push-Payload trägt nie einen Namen, eine Uhrzeit oder ein Wort der Nachricht (§6) — was über das Netz geht, sagt nur, dass etwas angekommen ist.
+Check-in-Erinnerungen, offene Bestätigungen, Ausgaben-Entscheidungen — und wenn ein Admin **eine deiner Buchungen entfernt** (übersteuern), werden du und die Admins benachrichtigt. Zustellung lokal zuerst; Server-Push kommt fertig auf Android, iPhone/iPad, Browser und macOS (Firebase Cloud Messaging) — *Einstellungen → Erweitert* zeigt den Gerätestatus. Das Icon-Badge zählt offene Bestätigungen **plus ungelesene Nachrichten** — Android, iPhone/iPad, macOS-Dock, Windows-Leiste, installierte Web-Apps. Mitglieder-Nachrichten werden **einmal je Gerät mit Absender und vollem Text** angesagt — auch was bei geschlossener App kam. Diese Ansage erzeugt immer **die App selbst, lokal**: das Push-Payload trägt nie einen Namen, eine Uhrzeit oder ein Wort der Nachricht (§6) — was über das Netz geht, sagt nur, dass etwas angekommen ist. Eine **stummgeschaltete** Unterhaltung (§16) bleibt still: Für sie wird nichts angekündigt, sie zählt aber weiterhin auf ihrer Zeile und auf dem Badge.
 
 ## 14. Datenschutz
 
@@ -906,6 +906,12 @@ Der Tab **Nachrichten** ist die Messaging-Zentrale Ihres Bereichs: alle Unterhal
 **Auf einen Blick unterscheidbar.** Eine Person zeigt ihr Foto im Kreis. Eine Gruppe zeigt ein **eckiges Abzeichen** mit Gruppensymbol und — solange niemand geschrieben hat — ihre Mitgliederzahl.
 
 **In einer Unterhaltung.** Nachrichten stehen von alt nach neu als Sprechblasen, mit Emojis und aktiven **Verweisen**: ein Reservierungslink öffnet die Reservierung, ein Bereichslink dessen Buchungsblatt, jeweils mit *Auf dem Plan zeigen*. Das Eingabefeld sitzt darunter. **Lange auf eine Blase tippen, um sie zu löschen**, mit Rückfrage. Ihre eigenen Nachrichten tragen einen Haken: **grau = zugestellt**, **blau = gelesen**.
+
+**Die Liste in Ordnung halten.** Chips über der Liste engen sie auf **Alle**, **Ungelesen** oder **Archiviert** ein. **Lange auf eine Zeile drücken**, um sie oben **anzuheften**, **stummzuschalten**, als **ungelesen zu markieren**, um später darauf zurückzukommen, oder zu **archivieren** — eine archivierte Unterhaltung verlässt die Liste, behält ihren Verlauf und kehrt von selbst zurück, sobald jemand darin schreibt. Eine Nadel und eine durchgestrichene Glocke auf der Zeile zeigen, was was ist.
+
+**Eine Unterhaltung ist eine Seite.** Sie öffnet sich in voller Höhe mit einem Zurück-Pfeil, und ihre Adresse lässt sich teilen oder als Lesezeichen sichern. Nachrichten stehen unter **Tagestrennern**, eine Blase zeigt also nur die Uhrzeit; **Frühere Nachrichten laden** oben holt älteren Verlauf. Was Sie tippen und nicht senden, bleibt als **Entwurf** für diese Unterhaltung. **Nach rechts wischen** zitiert eine Nachricht, und ein Tipp auf den zitierten Block in einer Antwort springt zum Original; **nach links wischen** nimmt eine eigene, noch ungelesene Nachricht zurück. Die **Büroklammer** hängt eine Reservierung oder einen Platz an, und ein Zähler erscheint, wenn Sie sich der Längengrenze nähern.
+
+**Eine beginnen.** Tippen Sie auf den Stift, dann auf eine Person — der Chat öffnet sich sofort. Der Schalter **Gruppe** lässt Sie mehrere Personen wählen und der Gruppe ihren Namen geben.
 
 **Tippen Sie oben auf den Namen.** In einem privaten Chat öffnet das **Profil** der Person — die heutige Buchung, ob sie eingecheckt ist, ihr Status und wie man sie erreicht. In einer Gruppe öffnet es die **Mitgliederliste**, in der ein Gruppen-Admin Personen hinzufügt oder entfernt und jeder austreten kann. Ein Austritt lässt eine Gruppe nie ohne Admin zurück.
 

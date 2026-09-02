@@ -20,8 +20,6 @@
     "description": "Delete button on a message (sheet + confirm dialog, #523)"
   },
   "memberNoteDeleteConfirm": "Supprimer ce message ? Cette action est irréversible.",
-  "memberNoteDeleteRead": "Déjà lu — ce message ne peut plus être repris.",
-  "memberNoteDeleteNotMine": "Seul l'expéditeur peut reprendre un message.",
   "@memberNoteDeleteConfirm": {
     "description": "Confirmation asked before any message delete — swipe or button (#523)"
   },
@@ -240,5 +238,37 @@
   "memberMoneyUnavailable": "Impossible de charger les finances. Tirez pour actualiser.",
   "@memberMoneyUnavailable": {
     "description": "#709 - the money section of a profile could not be read"
-  }
+  },
+  "inboxAlertsTab": "Alertes",
+  "inboxFilterAll": "Tous",
+  "inboxFilterUnread": "Non lus",
+  "inboxFilterArchived": "Archivés",
+  "inboxNoUnread": "Rien de non lu — vous êtes à jour.",
+  "inboxNoArchived": "Aucune conversation archivée.",
+  "conversationPin": "Épingler en haut",
+  "conversationUnpin": "Désépingler",
+  "conversationMute": "Couper les notifications",
+  "conversationUnmute": "Réactiver les notifications",
+  "conversationMarkUnread": "Marquer comme non lu",
+  "conversationArchive": "Archiver",
+  "conversationUnarchive": "Sortir des archives",
+  "conversationArchived": "Conversation archivée.",
+  "conversationMutedBadge": "Silencieuse",
+  "conversationLoadEarlier": "Charger les messages plus anciens",
+  "conversationToday": "Aujourd'hui",
+  "composerAttach": "Joindre une référence",
+  "composerCharsLeft": "{count} caractères restants",
+  "@composerCharsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "composerDraftKept": "Brouillon conservé",
+  "newConversationTapToOpen": "Touchez une personne pour ouvrir la discussion ; activez Groupe pour en choisir plusieurs.",
+  "newConversationGroupSwitch": "Groupe",
+  "inboxRetry": "Réessayer",
+  "memberNoteDeleteRead": "Déjà lu — ce message ne peut plus être repris.",
+  "memberNoteDeleteNotMine": "Seul l'expéditeur peut reprendre un message."
 }

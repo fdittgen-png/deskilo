@@ -30,6 +30,7 @@ import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/backend_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
 import '../features/workspace/presentation/screens/inbox_screen.dart';
+import '../features/workspace/presentation/widgets/conversation_thread.dart';
 import '../core/i18n/regional_formats_section.dart';
 import '../core/privacy/privacy_policy.dart';
 import '../features/profile/presentation/screens/consent_screen.dart';
@@ -377,6 +378,15 @@ GoRouter router(Ref ref) {
       // Deep links from WhatsApp-mirrored messages (0106): the message
       // itself, a referenced reservation, a referenced space. All ride
       // the memberNotifications gate the messenger rides.
+      // #821 — a conversation as a page, deep-linkable; a ROOT route like
+      // /res/:id, so it covers the bottom bar and never collides with the
+      // shell branch's own page key.
+      GoRoute(
+        path: '/conversation/:conversationId',
+        builder: (context, state) => ConversationThreadPage(
+          conversationId: state.pathParameters['conversationId'] ?? '',
+        ),
+      ),
       GoRoute(
         path: '/res/:id',
         builder: (context, state) => ReferenceLinkScreen.reservation(
