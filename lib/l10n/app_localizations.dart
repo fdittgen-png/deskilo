@@ -4082,6 +4082,18 @@ abstract class AppLocalizations {
   /// **'One page per member: photo and presence, when they were last seen, what they have booked and what comes next, quick actions to message, WhatsApp or e-mail them, contact and money cards, and for admins every setting grouped by topic with its current value. Off: the profile sheet and the Members & plans action sheet.'**
   String get featureMemberPageDesc;
 
+  /// No description provided for @featureInvoicingWizardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoicing wizard'**
+  String get featureInvoicingWizardTitle;
+
+  /// No description provided for @featureInvoicingWizardDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'One guided month-close process for the finance person: a start-of-month run for the subscriptions paid ahead and an end-of-month run for usage and extra charges — review, issue in one batch, send, remind what is due, register and validate payments, match them to invoices, regroup, write off or refund, and a summary with whose move is left. Off: the separate screens.'**
+  String get featureInvoicingWizardDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:
@@ -7405,6 +7417,468 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Design and preview side by side'**
   String get reportDesignerSideBySide;
+
+  /// No description provided for @wizardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoicing wizard'**
+  String get wizardTitle;
+
+  /// No description provided for @invoiceWizardAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Month-close wizard'**
+  String get invoiceWizardAction;
+
+  /// No description provided for @wizardCardHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue, send, remind, register and validate payments, match and close — one guided process.'**
+  String get wizardCardHint;
+
+  /// No description provided for @wizardRunStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start of month'**
+  String get wizardRunStart;
+
+  /// No description provided for @wizardRunEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'End of month'**
+  String get wizardRunEnd;
+
+  /// No description provided for @wizardRunStartHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The subscriptions members pay ahead: issue them for the coming month, send them, plan the reminders — then the payment side.'**
+  String get wizardRunStartHint;
+
+  /// No description provided for @wizardRunEndHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What the month that just ended cost: usage, consumption and extra charges. Issue, send, remind — then register, validate and match the payments, and close.'**
+  String get wizardRunEndHint;
+
+  /// No description provided for @wizardStepReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get wizardStepReview;
+
+  /// No description provided for @wizardStepIssue.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue'**
+  String get wizardStepIssue;
+
+  /// No description provided for @wizardStepSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get wizardStepSend;
+
+  /// No description provided for @wizardStepRemind.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind'**
+  String get wizardStepRemind;
+
+  /// No description provided for @wizardStepPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get wizardStepPayments;
+
+  /// No description provided for @wizardStepMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Match'**
+  String get wizardStepMatch;
+
+  /// No description provided for @wizardStepClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get wizardStepClose;
+
+  /// No description provided for @wizardStepSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get wizardStepSummary;
+
+  /// No description provided for @wizardNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get wizardNext;
+
+  /// No description provided for @wizardBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get wizardBack;
+
+  /// No description provided for @wizardFinish.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get wizardFinish;
+
+  /// No description provided for @wizardReviewToIssue.
+  ///
+  /// In en, this message translates to:
+  /// **'To issue'**
+  String get wizardReviewToIssue;
+
+  /// No description provided for @wizardReviewIssued.
+  ///
+  /// In en, this message translates to:
+  /// **'Already issued'**
+  String get wizardReviewIssued;
+
+  /// No description provided for @wizardReviewOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open invoices'**
+  String get wizardReviewOpen;
+
+  /// No description provided for @wizardReviewOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders due'**
+  String get wizardReviewOverdue;
+
+  /// No description provided for @wizardReviewPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments to validate'**
+  String get wizardReviewPending;
+
+  /// No description provided for @wizardPeriodLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Period: {period}'**
+  String wizardPeriodLabel(String period);
+
+  /// No description provided for @wizardIssueHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Untick a member to leave them out of this batch. Members already covered are shown as done.'**
+  String get wizardIssueHint;
+
+  /// No description provided for @wizardIssueNothing.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to issue for this period.'**
+  String get wizardIssueNothing;
+
+  /// No description provided for @wizardIssuedChip.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued {number}'**
+  String wizardIssuedChip(String number);
+
+  /// No description provided for @wizardIssueAll.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Issue 1 invoice} other{Issue {count} invoices}}'**
+  String wizardIssueAll(int count);
+
+  /// No description provided for @wizardIssueFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not issue for {name}.'**
+  String wizardIssueFailed(String name);
+
+  /// No description provided for @wizardSendHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Hand each invoice to its member — share the PDF, or download it to send it your own way.'**
+  String get wizardSendHint;
+
+  /// No description provided for @wizardSendNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No invoice of this run to send yet.'**
+  String get wizardSendNone;
+
+  /// No description provided for @wizardSendShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share the PDF'**
+  String get wizardSendShare;
+
+  /// No description provided for @wizardSendDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Download the PDF'**
+  String get wizardSendDownload;
+
+  /// No description provided for @wizardRemindHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue by your reminder rules. One tap records every reminder and notifies the members; the letter opens per row.'**
+  String get wizardRemindHint;
+
+  /// No description provided for @wizardRemindNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No reminder is due by your rules.'**
+  String get wizardRemindNone;
+
+  /// No description provided for @wizardRemindLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'reminder {level}'**
+  String wizardRemindLevel(int level);
+
+  /// No description provided for @wizardRemindAll.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Send 1 reminder} other{Send {count} reminders}}'**
+  String wizardRemindAll(int count);
+
+  /// No description provided for @wizardRemindOne.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder letter'**
+  String get wizardRemindOne;
+
+  /// No description provided for @wizardPaymentsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What members declared waits for your confirmation below. A payment that reached the account without a declaration is registered here — the member then confirms it.'**
+  String get wizardPaymentsHint;
+
+  /// No description provided for @wizardPaymentsNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No declared payment waits for you.'**
+  String get wizardPaymentsNone;
+
+  /// No description provided for @wizardPaymentAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get wizardPaymentAccept;
+
+  /// No description provided for @wizardPaymentReject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get wizardPaymentReject;
+
+  /// No description provided for @wizardMatchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'An invoice is paid once a real payment is matched to it. Rows with credit on the member\'s account are ready.'**
+  String get wizardMatchHint;
+
+  /// No description provided for @wizardMatchNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Every invoice is paid or closed.'**
+  String get wizardMatchNone;
+
+  /// No description provided for @wizardMatchPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting validation'**
+  String get wizardMatchPending;
+
+  /// No description provided for @wizardMatchCredit.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit available: {amount}'**
+  String wizardMatchCredit(String amount);
+
+  /// No description provided for @wizardMatchNoCredit.
+  ///
+  /// In en, this message translates to:
+  /// **'No payment on the account yet'**
+  String get wizardMatchNoCredit;
+
+  /// No description provided for @wizardMatchAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Match'**
+  String get wizardMatchAction;
+
+  /// No description provided for @wizardCloseHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A member with several open invoices can pay ONE; a partly paid invoice can have its remainder written off; a credit note is refunded. Each goes through validation.'**
+  String get wizardCloseHint;
+
+  /// No description provided for @wizardCloseNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to regroup, write off or refund.'**
+  String get wizardCloseNone;
+
+  /// No description provided for @wizardSettle.
+  ///
+  /// In en, this message translates to:
+  /// **'Regroup {count}'**
+  String wizardSettle(int count);
+
+  /// No description provided for @wizardWriteoff.
+  ///
+  /// In en, this message translates to:
+  /// **'Write off'**
+  String get wizardWriteoff;
+
+  /// No description provided for @wizardRefund.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund'**
+  String get wizardRefund;
+
+  /// No description provided for @wizardSummaryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What this run did'**
+  String get wizardSummaryHint;
+
+  /// No description provided for @wizardTallyIssued.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices issued'**
+  String get wizardTallyIssued;
+
+  /// No description provided for @wizardTallyShared.
+  ///
+  /// In en, this message translates to:
+  /// **'PDFs shared or downloaded'**
+  String get wizardTallyShared;
+
+  /// No description provided for @wizardTallyReminded.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders sent'**
+  String get wizardTallyReminded;
+
+  /// No description provided for @wizardTallyDecided.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments confirmed or rejected'**
+  String get wizardTallyDecided;
+
+  /// No description provided for @wizardTallyRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments registered'**
+  String get wizardTallyRegistered;
+
+  /// No description provided for @wizardTallyMatched.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices matched'**
+  String get wizardTallyMatched;
+
+  /// No description provided for @wizardTallySettled.
+  ///
+  /// In en, this message translates to:
+  /// **'Regroupings'**
+  String get wizardTallySettled;
+
+  /// No description provided for @wizardTallyWriteoffs.
+  ///
+  /// In en, this message translates to:
+  /// **'Write-offs requested'**
+  String get wizardTallyWriteoffs;
+
+  /// No description provided for @wizardTallyRefunds.
+  ///
+  /// In en, this message translates to:
+  /// **'Refunds'**
+  String get wizardTallyRefunds;
+
+  /// No description provided for @wizardTallyNothing.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was changed.'**
+  String get wizardTallyNothing;
+
+  /// No description provided for @wizardTodoHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Still open — whose move'**
+  String get wizardTodoHeading;
+
+  /// No description provided for @wizardTodoNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing left open.'**
+  String get wizardTodoNone;
+
+  /// No description provided for @wizardWhoYou.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get wizardWhoYou;
+
+  /// No description provided for @wizardWhoValidators.
+  ///
+  /// In en, this message translates to:
+  /// **'Validators'**
+  String get wizardWhoValidators;
+
+  /// No description provided for @registerPaymentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Register a payment'**
+  String get registerPaymentTitle;
+
+  /// No description provided for @registerPaymentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A payment that reached the workspace — the member confirms it, then it can be matched to an invoice.'**
+  String get registerPaymentHint;
+
+  /// No description provided for @registerPaymentMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get registerPaymentMember;
+
+  /// No description provided for @registerPaymentAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get registerPaymentAmount;
+
+  /// No description provided for @registerPaymentMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Method'**
+  String get registerPaymentMethod;
+
+  /// No description provided for @registerPaymentDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid on'**
+  String get registerPaymentDate;
+
+  /// No description provided for @registerPaymentNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get registerPaymentNote;
+
+  /// No description provided for @registerPaymentSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get registerPaymentSubmit;
+
+  /// No description provided for @registerPaymentDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment registered — the member confirms it from their side.'**
+  String get registerPaymentDone;
 
   /// No description provided for @eventTypeMemberJoin.
   ///

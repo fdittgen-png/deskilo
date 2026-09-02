@@ -839,6 +839,10 @@ With **Automatic payment reminders** on (Features, child of *Payment reminders*)
 
 **Validated like any payment.** A settlement is an *invoice payment* event: where the owner put a rule on that domain (§7) it waits for the validators; a **reject** — or an expiry — cancels the settlement document and releases its sources, which are owed separately again. **Cancelling** a settlement (*Mark erroneous*) releases its sources the same way.
 
+### 11g. The month-close wizard
+
+The **month-close wizard** (flag *Invoicing wizard*; the wand in the Invoices header, or the card on top of *To invoice*) strings the whole invoicing work into **one guided process** with a step rail: **Review** (which run, which period, what is pending), **Issue** (the run's invoices in one batch — members already covered show as done, untick anyone to leave them out), **Send** (share or download each PDF), **Remind** (everything overdue by your reminder rules, recorded and pushed in one tap, the letter one tap per row), **Payments** (confirm or reject what members declared; **register** a bank or cash payment for a member — they confirm it from their side), **Match** (every open invoice against the member's credit; rows with credit are ready), **Close** (regroup a member's several invoices into one, write off a remainder, refund a credit note — each through validation) and **Summary** (what the run did, and what is still open with whose move it is). Two runs: **Start of month** for the subscriptions paid ahead (the wizard suggests it from your advance window), **End of month** for the usage, consumption and extra charges of the month that just closed.
+
 ## 12. Settings & profile
 
 Your personal screen, top to bottom:

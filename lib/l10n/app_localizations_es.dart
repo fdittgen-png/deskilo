@@ -2302,6 +2302,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Una página por socio: foto y presencia, última conexión, reservas actuales y próximas, acciones rápidas (mensaje, WhatsApp, correo), tarjetas de contacto y finanzas y, para los admins, cada ajuste agrupado por tema con su valor actual. Desactivado: la hoja de perfil y la hoja de acciones de Socios y planes.';
 
   @override
+  String get featureInvoicingWizardTitle => 'Asistente de facturación';
+
+  @override
+  String get featureInvoicingWizardDesc =>
+      'Un proceso guiado de cierre mensual para la persona de finanzas: una pasada de inicio de mes para las suscripciones pagadas por adelantado y otra de fin de mes para el uso y los cargos adicionales — revisión, emisión en lote, envío, recordatorios vencidos, registro y validación de pagos, conciliación con facturas, reagrupación, anulación o reembolso, y un resumen con lo que queda y a quién le toca. Desactivado: las pantallas separadas.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override
@@ -4245,6 +4252,277 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reportDesignerSideBySide => 'Diseño y vista previa lado a lado';
+
+  @override
+  String get wizardTitle => 'Asistente de facturación';
+
+  @override
+  String get invoiceWizardAction => 'Asistente de cierre mensual';
+
+  @override
+  String get wizardCardHint =>
+      'Emitir, enviar, recordar, registrar y validar pagos, conciliar y cerrar: un solo proceso guiado.';
+
+  @override
+  String get wizardRunStart => 'Inicio de mes';
+
+  @override
+  String get wizardRunEnd => 'Fin de mes';
+
+  @override
+  String get wizardRunStartHint =>
+      'Las suscripciones pagadas por adelantado: emitirlas para el mes que viene, enviarlas, planificar los recordatorios; luego, la parte de pagos.';
+
+  @override
+  String get wizardRunEndHint =>
+      'Lo que costó el mes que acaba de terminar: uso, consumo y cargos adicionales. Emitir, enviar, recordar; luego registrar, validar y conciliar los pagos, y cerrar.';
+
+  @override
+  String get wizardStepReview => 'Revisión';
+
+  @override
+  String get wizardStepIssue => 'Emitir';
+
+  @override
+  String get wizardStepSend => 'Enviar';
+
+  @override
+  String get wizardStepRemind => 'Recordar';
+
+  @override
+  String get wizardStepPayments => 'Pagos';
+
+  @override
+  String get wizardStepMatch => 'Conciliar';
+
+  @override
+  String get wizardStepClose => 'Cerrar';
+
+  @override
+  String get wizardStepSummary => 'Resumen';
+
+  @override
+  String get wizardNext => 'Siguiente';
+
+  @override
+  String get wizardBack => 'Atrás';
+
+  @override
+  String get wizardFinish => 'Terminar';
+
+  @override
+  String get wizardReviewToIssue => 'Por emitir';
+
+  @override
+  String get wizardReviewIssued => 'Ya emitidas';
+
+  @override
+  String get wizardReviewOpen => 'Facturas abiertas';
+
+  @override
+  String get wizardReviewOverdue => 'Recordatorios vencidos';
+
+  @override
+  String get wizardReviewPending => 'Pagos por validar';
+
+  @override
+  String wizardPeriodLabel(String period) {
+    return 'Periodo: $period';
+  }
+
+  @override
+  String get wizardIssueHint =>
+      'Desmarque a un socio para dejarlo fuera de este lote. Los socios ya cubiertos aparecen como hechos.';
+
+  @override
+  String get wizardIssueNothing => 'Nada que emitir para este periodo.';
+
+  @override
+  String wizardIssuedChip(String number) {
+    return 'Emitida $number';
+  }
+
+  @override
+  String wizardIssueAll(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Emitir $count facturas',
+      one: 'Emitir 1 factura',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String wizardIssueFailed(String name) {
+    return 'No se pudo emitir para $name.';
+  }
+
+  @override
+  String get wizardSendHint =>
+      'Entregue cada factura a su socio: comparta el PDF o descárguelo para enviarlo a su manera.';
+
+  @override
+  String get wizardSendNone =>
+      'Todavía no hay factura de esta pasada que enviar.';
+
+  @override
+  String get wizardSendShare => 'Compartir el PDF';
+
+  @override
+  String get wizardSendDownload => 'Descargar el PDF';
+
+  @override
+  String get wizardRemindHint =>
+      'Vencidas según sus reglas de recordatorio. Un toque registra cada recordatorio y avisa a los socios; la carta se abre por fila.';
+
+  @override
+  String get wizardRemindNone => 'Ningún recordatorio vence según sus reglas.';
+
+  @override
+  String wizardRemindLevel(int level) {
+    return 'recordatorio $level';
+  }
+
+  @override
+  String wizardRemindAll(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Enviar $count recordatorios',
+      one: 'Enviar 1 recordatorio',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get wizardRemindOne => 'Carta de recordatorio';
+
+  @override
+  String get wizardPaymentsHint =>
+      'Lo que los socios declararon espera su confirmación abajo. Un pago que llegó a la cuenta sin declaración se registra aquí; el socio lo confirma después.';
+
+  @override
+  String get wizardPaymentsNone => 'Ningún pago declarado espera su decisión.';
+
+  @override
+  String get wizardPaymentAccept => 'Confirmar';
+
+  @override
+  String get wizardPaymentReject => 'Rechazar';
+
+  @override
+  String get wizardMatchHint =>
+      'Una factura está pagada cuando se le concilia un pago real. Las filas con crédito en la cuenta del socio están listas.';
+
+  @override
+  String get wizardMatchNone => 'Todas las facturas están pagadas o cerradas.';
+
+  @override
+  String get wizardMatchPending => 'Pendiente de validación';
+
+  @override
+  String wizardMatchCredit(String amount) {
+    return 'Crédito disponible: $amount';
+  }
+
+  @override
+  String get wizardMatchNoCredit => 'Aún no hay pago en la cuenta';
+
+  @override
+  String get wizardMatchAction => 'Conciliar';
+
+  @override
+  String get wizardCloseHint =>
+      'Un socio con varias facturas abiertas puede pagar UNA; a una factura pagada en parte se le puede anular el resto; una nota de crédito se reembolsa. Cada una pasa por la validación.';
+
+  @override
+  String get wizardCloseNone => 'Nada que reagrupar, anular o reembolsar.';
+
+  @override
+  String wizardSettle(int count) {
+    return 'Reagrupar $count';
+  }
+
+  @override
+  String get wizardWriteoff => 'Anular';
+
+  @override
+  String get wizardRefund => 'Reembolsar';
+
+  @override
+  String get wizardSummaryHint => 'Lo que hizo esta pasada';
+
+  @override
+  String get wizardTallyIssued => 'Facturas emitidas';
+
+  @override
+  String get wizardTallyShared => 'PDF compartidos o descargados';
+
+  @override
+  String get wizardTallyReminded => 'Recordatorios enviados';
+
+  @override
+  String get wizardTallyDecided => 'Pagos confirmados o rechazados';
+
+  @override
+  String get wizardTallyRegistered => 'Pagos registrados';
+
+  @override
+  String get wizardTallyMatched => 'Facturas conciliadas';
+
+  @override
+  String get wizardTallySettled => 'Reagrupaciones';
+
+  @override
+  String get wizardTallyWriteoffs => 'Anulaciones solicitadas';
+
+  @override
+  String get wizardTallyRefunds => 'Reembolsos';
+
+  @override
+  String get wizardTallyNothing => 'No se cambió nada.';
+
+  @override
+  String get wizardTodoHeading => 'Aún abierto: a quién le toca';
+
+  @override
+  String get wizardTodoNone => 'No queda nada abierto.';
+
+  @override
+  String get wizardWhoYou => 'Usted';
+
+  @override
+  String get wizardWhoValidators => 'Validadores';
+
+  @override
+  String get registerPaymentTitle => 'Registrar un pago';
+
+  @override
+  String get registerPaymentHint =>
+      'Un pago que llegó al espacio: el socio lo confirma y luego puede conciliarse con una factura.';
+
+  @override
+  String get registerPaymentMember => 'Socio';
+
+  @override
+  String get registerPaymentAmount => 'Importe';
+
+  @override
+  String get registerPaymentMethod => 'Medio';
+
+  @override
+  String get registerPaymentDate => 'Pagado el';
+
+  @override
+  String get registerPaymentNote => 'Nota';
+
+  @override
+  String get registerPaymentSubmit => 'Registrar';
+
+  @override
+  String get registerPaymentDone =>
+      'Pago registrado: el socio lo confirma por su parte.';
 
   @override
   String get eventTypeMemberJoin => 'Nuevo miembro';

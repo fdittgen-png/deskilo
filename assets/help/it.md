@@ -861,6 +861,10 @@ Con **Solleciti di pagamento automatici** attivo (Funzionalità, figlio di *Soll
 
 **Validato come ogni pagamento.** Un saldo è un evento *pagamento fattura*: dove il proprietario ha messo una regola su quel dominio (§7), attende i validatori; un **rifiuto** — o una scadenza — annulla il documento di saldo e libera le sue fonti, di nuovo dovute separatamente. **Annullare** un saldo (*Segna come errata*) libera le sue fonti allo stesso modo.
 
+### 11g. L'assistente di chiusura mensile
+
+L'**assistente di chiusura** (opzione *Assistente di fatturazione*; la bacchetta nell'intestazione Fatture o la scheda in cima a *Da fatturare*) mette in fila tutto il lavoro di fatturazione in **un solo processo guidato** con una barra di passi: **Revisione** (quale giro, quale periodo, cosa è in sospeso), **Emetti** (le fatture del giro in un blocco: i membri già coperti compaiono fatti, deseleziona per escludere), **Invia** (condividi o scarica ogni PDF), **Sollecita** (tutto ciò che è in ritardo secondo le tue regole, registrato e notificato con un tocco, la lettera per riga), **Pagamenti** (conferma o rifiuta ciò che i membri hanno dichiarato; **registra** un bonifico o un contante per un membro, che lo conferma dalla sua parte), **Abbina** (ogni fattura aperta contro il credito del membro; le righe con credito sono pronte), **Chiudi** (raggruppa più fatture di un membro in una, stralcia un resto, rimborsa una nota di credito, ognuna con convalida) e **Riepilogo** (cosa ha fatto il giro e cosa resta aperto con a chi tocca). Due giri: **Inizio mese** per gli abbonamenti pagati in anticipo (suggerito dalla tua finestra di anticipo), **Fine mese** per utilizzo, consumi e costi aggiuntivi del mese chiuso.
+
 ## 12. Impostazioni e profilo
 
 La tua schermata personale, dall'alto in basso:

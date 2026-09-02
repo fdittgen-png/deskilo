@@ -1339,6 +1339,8 @@
   "featureReportDesignerDesc": "L'éditeur de rapports en plein écran : éléments modifiés sur place dans leur vraie typographie, glisser pour réordonner, palette d'insertion, sélecteur de champs avec recherche, annuler et rétablir, taille et alignement des images, garde-fou avant d'abandonner, modèles et réinitialisation derrière une confirmation, l'erreur du modèle expliquée, conception et aperçu côte à côte sur grand écran. Désactivé : l'éditeur en feuille.",
   "featureMemberPageTitle": "Fiche membre",
   "featureMemberPageDesc": "Une page par membre : photo et présence, dernière connexion, réservations en cours et à venir, actions rapides (message, WhatsApp, e-mail), cartes contact et finances, et pour les admins chaque réglage regroupé par thème avec sa valeur actuelle. Désactivé : la feuille de profil et la feuille d'actions de Membres & forfaits.",
+  "featureInvoicingWizardTitle": "Assistant de facturation",
+  "featureInvoicingWizardDesc": "Un processus guidé de clôture mensuelle pour le responsable financier : une passe de début de mois pour les abonnements payés d'avance et une passe de fin de mois pour la consommation et les frais supplémentaires — revue, émission en lot, envoi, relances dues, enregistrement et validation des paiements, rapprochement avec les factures, regroupement, abandon de créance ou remboursement, et un récapitulatif avec ce qui reste à faire et par qui. Désactivé : les écrans séparés.",
   "helpTitle": "Aide",
   "helpContents": "Sommaire",
   "helpHintMessages": "Toutes vos conversations dans une liste, la plus récente en haut. Touchez le crayon pour écrire à quelqu’un ou créer un groupe.",
@@ -2579,6 +2581,139 @@
   "reportFieldGroupLegal": "Mentions légales",
   "reportFieldGroupLoops": "Boucles lignes et TVA",
   "reportDesignerSideBySide": "Conception et aperçu côte à côte",
+  "wizardTitle": "Assistant de facturation",
+  "invoiceWizardAction": "Assistant de clôture",
+  "wizardCardHint": "Émettre, envoyer, relancer, enregistrer et valider les paiements, rapprocher et clôturer — un seul processus guidé.",
+  "wizardRunStart": "Début de mois",
+  "wizardRunEnd": "Fin de mois",
+  "wizardRunStartHint": "Les abonnements payés d'avance : les émettre pour le mois à venir, les envoyer, prévoir les relances — puis le volet paiements.",
+  "wizardRunEndHint": "Ce que le mois écoulé a coûté : consommation et frais supplémentaires. Émettre, envoyer, relancer — puis enregistrer, valider et rapprocher les paiements, et clôturer.",
+  "wizardStepReview": "Revue",
+  "wizardStepIssue": "Émettre",
+  "wizardStepSend": "Envoyer",
+  "wizardStepRemind": "Relancer",
+  "wizardStepPayments": "Paiements",
+  "wizardStepMatch": "Rapprocher",
+  "wizardStepClose": "Clôturer",
+  "wizardStepSummary": "Récapitulatif",
+  "wizardNext": "Suivant",
+  "wizardBack": "Retour",
+  "wizardFinish": "Terminer",
+  "wizardReviewToIssue": "À émettre",
+  "wizardReviewIssued": "Déjà émises",
+  "wizardReviewOpen": "Factures ouvertes",
+  "wizardReviewOverdue": "Relances dues",
+  "wizardReviewPending": "Paiements à valider",
+  "wizardPeriodLabel": "Période : {period}",
+  "@wizardPeriodLabel": {
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardIssueHint": "Décochez un membre pour l'exclure de ce lot. Les membres déjà couverts apparaissent comme faits.",
+  "wizardIssueNothing": "Rien à émettre pour cette période.",
+  "wizardIssuedChip": "Émise {number}",
+  "@wizardIssuedChip": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardIssueAll": "{count, plural, =1{Émettre 1 facture} other{Émettre {count} factures}}",
+  "@wizardIssueAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardIssueFailed": "Émission impossible pour {name}.",
+  "@wizardIssueFailed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardSendHint": "Remettez chaque facture à son membre — partagez le PDF, ou téléchargez-le pour l'envoyer à votre manière.",
+  "wizardSendNone": "Aucune facture de cette passe à envoyer pour l'instant.",
+  "wizardSendShare": "Partager le PDF",
+  "wizardSendDownload": "Télécharger le PDF",
+  "wizardRemindHint": "En retard selon vos règles de relance. Un appui enregistre chaque relance et prévient les membres ; la lettre s'ouvre par ligne.",
+  "wizardRemindNone": "Aucune relance due selon vos règles.",
+  "wizardRemindLevel": "relance {level}",
+  "@wizardRemindLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardRemindAll": "{count, plural, =1{Envoyer 1 relance} other{Envoyer {count} relances}}",
+  "@wizardRemindAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardRemindOne": "Lettre de relance",
+  "wizardPaymentsHint": "Ce que les membres ont déclaré attend votre confirmation ci-dessous. Un paiement arrivé sur le compte sans déclaration s'enregistre ici — le membre le confirme ensuite.",
+  "wizardPaymentsNone": "Aucun paiement déclaré n'attend votre décision.",
+  "wizardPaymentAccept": "Confirmer",
+  "wizardPaymentReject": "Refuser",
+  "wizardMatchHint": "Une facture est payée lorsqu'un paiement réel lui est rapproché. Les lignes avec un crédit sur le compte du membre sont prêtes.",
+  "wizardMatchNone": "Toutes les factures sont payées ou clôturées.",
+  "wizardMatchPending": "En attente de validation",
+  "wizardMatchCredit": "Crédit disponible : {amount}",
+  "@wizardMatchCredit": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardMatchNoCredit": "Aucun paiement sur le compte pour l'instant",
+  "wizardMatchAction": "Rapprocher",
+  "wizardCloseHint": "Un membre avec plusieurs factures ouvertes peut n'en payer QU'UNE ; le reste d'une facture partiellement payée peut être abandonné ; un avoir est remboursé. Chacun passe par la validation.",
+  "wizardCloseNone": "Rien à regrouper, abandonner ou rembourser.",
+  "wizardSettle": "Regrouper {count}",
+  "@wizardSettle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardWriteoff": "Abandonner",
+  "wizardRefund": "Rembourser",
+  "wizardSummaryHint": "Ce que cette passe a fait",
+  "wizardTallyIssued": "Factures émises",
+  "wizardTallyShared": "PDF partagés ou téléchargés",
+  "wizardTallyReminded": "Relances envoyées",
+  "wizardTallyDecided": "Paiements confirmés ou refusés",
+  "wizardTallyRegistered": "Paiements enregistrés",
+  "wizardTallyMatched": "Factures rapprochées",
+  "wizardTallySettled": "Regroupements",
+  "wizardTallyWriteoffs": "Abandons demandés",
+  "wizardTallyRefunds": "Remboursements",
+  "wizardTallyNothing": "Rien n'a été modifié.",
+  "wizardTodoHeading": "Encore ouvert — à qui de jouer",
+  "wizardTodoNone": "Plus rien d'ouvert.",
+  "wizardWhoYou": "Vous",
+  "wizardWhoValidators": "Validateurs",
+  "registerPaymentTitle": "Enregistrer un paiement",
+  "registerPaymentHint": "Un paiement arrivé à l'espace — le membre le confirme, puis il peut être rapproché d'une facture.",
+  "registerPaymentMember": "Membre",
+  "registerPaymentAmount": "Montant",
+  "registerPaymentMethod": "Moyen",
+  "registerPaymentDate": "Payé le",
+  "registerPaymentNote": "Note",
+  "registerPaymentSubmit": "Enregistrer",
+  "registerPaymentDone": "Paiement enregistré — le membre le confirme de son côté.",
   "eventTypeMemberJoin": "Nouveau membre",
   "memberStatusPending": "En attente",
   "pendingApprovalTitle": "En attente d'approbation",

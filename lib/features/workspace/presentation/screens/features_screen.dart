@@ -223,6 +223,9 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.invoiceSettlement =>
           l10n?.featureInvoiceSettlementDesc ??
               'Several of a member\'s open invoices can be regrouped into one they pay. The originals stay in the archive, traceable position by position, and stop being chased separately.',
+        WorkspaceFeature.invoicingWizard =>
+          l10n?.featureInvoicingWizardDesc ??
+              'One guided month-close process for the finance person: a start-of-month run for the subscriptions paid ahead and an end-of-month run for usage and extra charges — review, issue in one batch, send, remind what is due, register and validate payments, match them to invoices, regroup, write off or refund, and a summary with whose move is left. Off: the separate screens.',
         WorkspaceFeature.memberPage =>
           l10n?.featureMemberPageDesc ??
               'One page per member: photo and presence, when they were last seen, what they have booked and what comes next, quick actions to message, WhatsApp or e-mail them, contact and money cards, and for admins every setting grouped by topic with its current value. Off: the profile sheet and the Members & plans action sheet.',

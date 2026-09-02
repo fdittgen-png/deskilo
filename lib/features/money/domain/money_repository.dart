@@ -158,12 +158,16 @@ abstract class MoneyRepository {
   /// server voids that one in the same transaction.
   /// [detailed] (0064) snapshots the annex — the period's full ledger
   /// and attendance — into the immutable document.
+  /// #827 — [kind] narrows the document to the subscription (ahead of
+  /// the month) or the usage (after it); [InvoiceKind.full] is the
+  /// historical whole-month invoice.
   Future<String> createInvoice({
     required String workspaceId,
     required String memberId,
     required String period,
     String? replacesId,
     bool detailed = false,
+    InvoiceKind kind = InvoiceKind.full,
   });
 
   /// What [createInvoice] would issue for [period], without issuing

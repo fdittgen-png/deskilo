@@ -1339,6 +1339,8 @@
   "featureReportDesignerDesc": "L'editor dei report a schermo intero: elementi modificati sul posto nella loro vera tipografia, trascinare per riordinare, una tavolozza di inserimento, un selettore di campi con ricerca, annulla e ripeti, dimensione e allineamento delle immagini, una protezione prima di scartare, modelli e ripristino dietro una conferma, l'errore del modello spiegato, progettazione e anteprima affiancate su schermo largo. Disattivato: l'editor in foglio.",
   "featureMemberPageTitle": "Scheda membro",
   "featureMemberPageDesc": "Una pagina per membro: foto e presenza, ultimo accesso, prenotazioni in corso e prossime, azioni rapide (messaggio, WhatsApp, e-mail), schede contatto e finanze e, per gli admin, ogni impostazione raggruppata per tema con il valore attuale. Disattivato: il foglio profilo e il foglio azioni di Membri e piani.",
+  "featureInvoicingWizardTitle": "Assistente di fatturazione",
+  "featureInvoicingWizardDesc": "Un processo guidato di chiusura mensile per chi cura le finanze: un giro di inizio mese per gli abbonamenti pagati in anticipo e uno di fine mese per consumi e costi aggiuntivi — revisione, emissione in blocco, invio, solleciti dovuti, registrazione e convalida dei pagamenti, abbinamento alle fatture, raggruppamento, stralcio o rimborso, e un riepilogo con ciò che resta aperto e a chi tocca. Disattivato: le schermate separate.",
   "helpHintLearnMore": "Scopri di più",
   "helpHintDismiss": "Nascondi suggerimento",
   "helpHintPrevTip": "Suggerimento precedente",
@@ -2579,6 +2581,139 @@
   "reportFieldGroupLegal": "Menzioni legali",
   "reportFieldGroupLoops": "Cicli righe e IVA",
   "reportDesignerSideBySide": "Progettazione e anteprima affiancate",
+  "wizardTitle": "Assistente di fatturazione",
+  "invoiceWizardAction": "Assistente di chiusura mensile",
+  "wizardCardHint": "Emettere, inviare, sollecitare, registrare e convalidare i pagamenti, abbinare e chiudere: un solo processo guidato.",
+  "wizardRunStart": "Inizio mese",
+  "wizardRunEnd": "Fine mese",
+  "wizardRunStartHint": "Gli abbonamenti pagati in anticipo: emetterli per il mese prossimo, inviarli, pianificare i solleciti; poi la parte pagamenti.",
+  "wizardRunEndHint": "Ciò che è costato il mese appena finito: utilizzo, consumi e costi aggiuntivi. Emettere, inviare, sollecitare; poi registrare, convalidare e abbinare i pagamenti, e chiudere.",
+  "wizardStepReview": "Revisione",
+  "wizardStepIssue": "Emetti",
+  "wizardStepSend": "Invia",
+  "wizardStepRemind": "Sollecita",
+  "wizardStepPayments": "Pagamenti",
+  "wizardStepMatch": "Abbina",
+  "wizardStepClose": "Chiudi",
+  "wizardStepSummary": "Riepilogo",
+  "wizardNext": "Avanti",
+  "wizardBack": "Indietro",
+  "wizardFinish": "Fine",
+  "wizardReviewToIssue": "Da emettere",
+  "wizardReviewIssued": "Già emesse",
+  "wizardReviewOpen": "Fatture aperte",
+  "wizardReviewOverdue": "Solleciti dovuti",
+  "wizardReviewPending": "Pagamenti da convalidare",
+  "wizardPeriodLabel": "Periodo: {period}",
+  "@wizardPeriodLabel": {
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardIssueHint": "Deseleziona un membro per escluderlo da questo blocco. I membri già coperti compaiono come fatti.",
+  "wizardIssueNothing": "Niente da emettere per questo periodo.",
+  "wizardIssuedChip": "Emessa {number}",
+  "@wizardIssuedChip": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardIssueAll": "{count, plural, =1{Emetti 1 fattura} other{Emetti {count} fatture}}",
+  "@wizardIssueAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardIssueFailed": "Emissione impossibile per {name}.",
+  "@wizardIssueFailed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardSendHint": "Consegna ogni fattura al suo membro: condividi il PDF o scaricalo per inviarlo a modo tuo.",
+  "wizardSendNone": "Ancora nessuna fattura di questo giro da inviare.",
+  "wizardSendShare": "Condividi il PDF",
+  "wizardSendDownload": "Scarica il PDF",
+  "wizardRemindHint": "In ritardo secondo le tue regole di sollecito. Un tocco registra ogni sollecito e avvisa i membri; la lettera si apre per riga.",
+  "wizardRemindNone": "Nessun sollecito dovuto secondo le tue regole.",
+  "wizardRemindLevel": "sollecito {level}",
+  "@wizardRemindLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardRemindAll": "{count, plural, =1{Invia 1 sollecito} other{Invia {count} solleciti}}",
+  "@wizardRemindAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardRemindOne": "Lettera di sollecito",
+  "wizardPaymentsHint": "Ciò che i membri hanno dichiarato attende la tua conferma qui sotto. Un pagamento arrivato sul conto senza dichiarazione si registra qui; il membro lo conferma poi.",
+  "wizardPaymentsNone": "Nessun pagamento dichiarato attende la tua decisione.",
+  "wizardPaymentAccept": "Conferma",
+  "wizardPaymentReject": "Rifiuta",
+  "wizardMatchHint": "Una fattura è pagata quando le viene abbinato un pagamento reale. Le righe con credito sul conto del membro sono pronte.",
+  "wizardMatchNone": "Tutte le fatture sono pagate o chiuse.",
+  "wizardMatchPending": "In attesa di convalida",
+  "wizardMatchCredit": "Credito disponibile: {amount}",
+  "@wizardMatchCredit": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardMatchNoCredit": "Nessun pagamento sul conto per ora",
+  "wizardMatchAction": "Abbina",
+  "wizardCloseHint": "Un membro con più fatture aperte può pagarne UNA; a una fattura pagata in parte si può stralciare il resto; una nota di credito viene rimborsata. Ognuna passa dalla convalida.",
+  "wizardCloseNone": "Niente da raggruppare, stralciare o rimborsare.",
+  "wizardSettle": "Raggruppa {count}",
+  "@wizardSettle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardWriteoff": "Stralcia",
+  "wizardRefund": "Rimborsa",
+  "wizardSummaryHint": "Cosa ha fatto questo giro",
+  "wizardTallyIssued": "Fatture emesse",
+  "wizardTallyShared": "PDF condivisi o scaricati",
+  "wizardTallyReminded": "Solleciti inviati",
+  "wizardTallyDecided": "Pagamenti confermati o rifiutati",
+  "wizardTallyRegistered": "Pagamenti registrati",
+  "wizardTallyMatched": "Fatture abbinate",
+  "wizardTallySettled": "Raggruppamenti",
+  "wizardTallyWriteoffs": "Stralci richiesti",
+  "wizardTallyRefunds": "Rimborsi",
+  "wizardTallyNothing": "Non è stato cambiato nulla.",
+  "wizardTodoHeading": "Ancora aperto: a chi tocca",
+  "wizardTodoNone": "Non resta nulla di aperto.",
+  "wizardWhoYou": "Tu",
+  "wizardWhoValidators": "Convalidatori",
+  "registerPaymentTitle": "Registra un pagamento",
+  "registerPaymentHint": "Un pagamento arrivato allo spazio: il membro lo conferma, poi può essere abbinato a una fattura.",
+  "registerPaymentMember": "Membro",
+  "registerPaymentAmount": "Importo",
+  "registerPaymentMethod": "Metodo",
+  "registerPaymentDate": "Pagato il",
+  "registerPaymentNote": "Nota",
+  "registerPaymentSubmit": "Registra",
+  "registerPaymentDone": "Pagamento registrato: il membro lo conferma dalla sua parte.",
   "eventTypeMemberJoin": "Nuovo membro",
   "memberStatusPending": "In attesa",
   "pendingApprovalTitle": "In attesa di approvazione",

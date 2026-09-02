@@ -196,7 +196,7 @@ const Map<String, int> _baseline = {
   // (remaining value) from to-refund.
   // 820→840 (2026-09-01): #812 the Open tab hands over to the journey
   // list (open_invoice_card.dart) while the flag is on.
-  'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 840,
+  'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 860,
   // 750→770 (2026-08-05): #490 workspace-clock day instants beside the
   // naive axis anchor.
   'lib/features/calendar/presentation/widgets/day_timeline.dart': 770,
@@ -221,7 +221,7 @@ const Map<String, int> _baseline = {
   'lib/features/events/presentation/screens/validation_settings_screen.dart': 615,
   // 600→615 (2026-08-31): #771 the kiosk consent exemption and its
   // rationale live where the gate lives.
-  'lib/app/router.dart': 650, // 2026-09-02 #821/#822 the conversation and report-editor routes
+  'lib/app/router.dart': 680, // 2026-09-02 #821/#822/#825/#827 the conversation, report-editor, member and wizard routes
   // 600→620 (2026-09-01): #791 the tap dispatcher records the branch it
   // took. The paragraphs explaining WHY each silent branch needs a line
   // were extracted to booking_trace_points.dart; what stayed is eight

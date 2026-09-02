@@ -129,6 +129,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureReportDesignerTitle ?? 'Report designer',
       WorkspaceFeature.memberPage =>
         l10n?.featureMemberPageTitle ?? 'Member page',
+      WorkspaceFeature.invoicingWizard =>
+        l10n?.featureInvoicingWizardTitle ?? 'Invoicing wizard',
       WorkspaceFeature.messageGestures =>
         l10n?.featureMessageGesturesTitle ?? 'Swipe to quote or take back',
 

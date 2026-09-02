@@ -818,6 +818,10 @@ Mit **Automatische Zahlungserinnerungen** (Funktionen, Kind von *Zahlungserinner
 
 **Validiert wie jede Zahlung.** Eine Abrechnung ist ein Ereignis *Rechnungszahlung*: wo die Inhaberin eine Regel auf diese Domäne gelegt hat (§7), wartet sie auf die Prüfer; eine **Ablehnung** — oder ein Verfall — storniert das Abrechnungsdokument und gibt seine Quellen frei, die wieder einzeln geschuldet sind. **Stornieren** einer Abrechnung (*Als fehlerhaft markieren*) gibt ihre Quellen ebenso frei.
 
+### 11g. Der Monatsabschluss-Assistent
+
+Der **Monatsabschluss-Assistent** (Option *Rechnungsassistent*; der Zauberstab in der Rechnungskopfzeile oder die Karte oben in *Auszustellen*) reiht die ganze Rechnungsarbeit zu **einem geführten Prozess** mit Schrittleiste: **Prüfen** (welcher Lauf, welcher Zeitraum, was ansteht), **Ausstellen** (die Rechnungen des Laufs in einem Stapel — bereits abgedeckte Mitglieder erscheinen erledigt, abwählen schließt aus), **Versenden** (jedes PDF teilen oder herunterladen), **Mahnen** (alles nach Ihren Mahnregeln Überfällige, mit einem Tipp erfasst und benachrichtigt, der Brief je Zeile), **Zahlungen** (bestätigen oder ablehnen, was Mitglieder gemeldet haben; eine Überweisung oder Barzahlung für ein Mitglied **erfassen** — es bestätigt sie von seiner Seite), **Zuordnen** (jede offene Rechnung gegen das Guthaben des Mitglieds; Zeilen mit Guthaben sind bereit), **Abschließen** (mehrere Rechnungen eines Mitglieds zu einer zusammenfassen, einen Rest abschreiben, eine Gutschrift erstatten — jeweils über die Bestätigung) und **Zusammenfassung** (was der Lauf getan hat und was offen bleibt, mit wer am Zug ist). Zwei Läufe: **Monatsanfang** für die im Voraus bezahlten Abonnements (aus Ihrem Vorlauffenster vorgeschlagen), **Monatsende** für Nutzung, Verbrauch und Zusatzkosten des abgelaufenen Monats.
+
 ## 12. Einstellungen & Profil
 
 Dein persönlicher Bildschirm, von oben nach unten:

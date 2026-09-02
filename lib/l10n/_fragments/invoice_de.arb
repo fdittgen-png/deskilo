@@ -1042,5 +1042,138 @@
   "reportFieldGroupMoney": "Beträge",
   "reportFieldGroupLegal": "Pflichtangaben",
   "reportFieldGroupLoops": "Schleifen Positionen & MwSt.",
-  "reportDesignerSideBySide": "Entwurf und Vorschau nebeneinander"
+  "reportDesignerSideBySide": "Entwurf und Vorschau nebeneinander",
+  "wizardTitle": "Rechnungsassistent",
+  "invoiceWizardAction": "Monatsabschluss-Assistent",
+  "wizardCardHint": "Ausstellen, versenden, mahnen, Zahlungen erfassen und bestätigen, zuordnen und abschließen — ein geführter Prozess.",
+  "wizardRunStart": "Monatsanfang",
+  "wizardRunEnd": "Monatsende",
+  "wizardRunStartHint": "Die im Voraus bezahlten Abonnements: für den kommenden Monat ausstellen, versenden, Mahnungen planen — dann die Zahlungsseite.",
+  "wizardRunEndHint": "Was der abgelaufene Monat gekostet hat: Nutzung, Verbrauch und Zusatzkosten. Ausstellen, versenden, mahnen — dann Zahlungen erfassen, bestätigen und zuordnen, und abschließen.",
+  "wizardStepReview": "Prüfen",
+  "wizardStepIssue": "Ausstellen",
+  "wizardStepSend": "Versenden",
+  "wizardStepRemind": "Mahnen",
+  "wizardStepPayments": "Zahlungen",
+  "wizardStepMatch": "Zuordnen",
+  "wizardStepClose": "Abschließen",
+  "wizardStepSummary": "Zusammenfassung",
+  "wizardNext": "Weiter",
+  "wizardBack": "Zurück",
+  "wizardFinish": "Fertig",
+  "wizardReviewToIssue": "Auszustellen",
+  "wizardReviewIssued": "Bereits ausgestellt",
+  "wizardReviewOpen": "Offene Rechnungen",
+  "wizardReviewOverdue": "Fällige Mahnungen",
+  "wizardReviewPending": "Zu bestätigende Zahlungen",
+  "wizardPeriodLabel": "Zeitraum: {period}",
+  "@wizardPeriodLabel": {
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardIssueHint": "Ein abgewähltes Mitglied bleibt in diesem Stapel außen vor. Bereits abgedeckte Mitglieder erscheinen als erledigt.",
+  "wizardIssueNothing": "Für diesen Zeitraum ist nichts auszustellen.",
+  "wizardIssuedChip": "Ausgestellt {number}",
+  "@wizardIssuedChip": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardIssueAll": "{count, plural, =1{1 Rechnung ausstellen} other{{count} Rechnungen ausstellen}}",
+  "@wizardIssueAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardIssueFailed": "Ausstellung für {name} nicht möglich.",
+  "@wizardIssueFailed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardSendHint": "Jede Rechnung an ihr Mitglied übergeben — das PDF teilen oder herunterladen und auf eigenem Weg senden.",
+  "wizardSendNone": "Noch keine Rechnung dieses Laufs zu versenden.",
+  "wizardSendShare": "PDF teilen",
+  "wizardSendDownload": "PDF herunterladen",
+  "wizardRemindHint": "Überfällig nach Ihren Mahnregeln. Ein Tipp erfasst jede Mahnung und benachrichtigt die Mitglieder; der Brief öffnet sich je Zeile.",
+  "wizardRemindNone": "Nach Ihren Regeln ist keine Mahnung fällig.",
+  "wizardRemindLevel": "Mahnung {level}",
+  "@wizardRemindLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardRemindAll": "{count, plural, =1{1 Mahnung senden} other{{count} Mahnungen senden}}",
+  "@wizardRemindAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardRemindOne": "Mahnbrief",
+  "wizardPaymentsHint": "Was Mitglieder gemeldet haben, wartet unten auf Ihre Bestätigung. Eine Zahlung, die ohne Meldung auf dem Konto eintraf, wird hier erfasst — das Mitglied bestätigt sie dann.",
+  "wizardPaymentsNone": "Keine gemeldete Zahlung wartet auf Sie.",
+  "wizardPaymentAccept": "Bestätigen",
+  "wizardPaymentReject": "Ablehnen",
+  "wizardMatchHint": "Eine Rechnung ist bezahlt, sobald eine echte Zahlung zugeordnet ist. Zeilen mit Guthaben auf dem Mitgliedskonto sind bereit.",
+  "wizardMatchNone": "Jede Rechnung ist bezahlt oder abgeschlossen.",
+  "wizardMatchPending": "Wartet auf Bestätigung",
+  "wizardMatchCredit": "Verfügbares Guthaben: {amount}",
+  "@wizardMatchCredit": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardMatchNoCredit": "Noch keine Zahlung auf dem Konto",
+  "wizardMatchAction": "Zuordnen",
+  "wizardCloseHint": "Ein Mitglied mit mehreren offenen Rechnungen kann EINE bezahlen; bei einer teilweise bezahlten kann der Rest abgeschrieben werden; eine Gutschrift wird erstattet. Jedes läuft über die Bestätigung.",
+  "wizardCloseNone": "Nichts zusammenzufassen, abzuschreiben oder zu erstatten.",
+  "wizardSettle": "{count} zusammenfassen",
+  "@wizardSettle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardWriteoff": "Abschreiben",
+  "wizardRefund": "Erstatten",
+  "wizardSummaryHint": "Was dieser Lauf getan hat",
+  "wizardTallyIssued": "Ausgestellte Rechnungen",
+  "wizardTallyShared": "Geteilte oder heruntergeladene PDFs",
+  "wizardTallyReminded": "Gesendete Mahnungen",
+  "wizardTallyDecided": "Bestätigte oder abgelehnte Zahlungen",
+  "wizardTallyRegistered": "Erfasste Zahlungen",
+  "wizardTallyMatched": "Zugeordnete Rechnungen",
+  "wizardTallySettled": "Zusammenfassungen",
+  "wizardTallyWriteoffs": "Beantragte Abschreibungen",
+  "wizardTallyRefunds": "Erstattungen",
+  "wizardTallyNothing": "Nichts wurde geändert.",
+  "wizardTodoHeading": "Noch offen — wer ist am Zug",
+  "wizardTodoNone": "Nichts mehr offen.",
+  "wizardWhoYou": "Sie",
+  "wizardWhoValidators": "Prüfer",
+  "registerPaymentTitle": "Zahlung erfassen",
+  "registerPaymentHint": "Eine Zahlung, die beim Workspace eingegangen ist — das Mitglied bestätigt sie, dann kann sie einer Rechnung zugeordnet werden.",
+  "registerPaymentMember": "Mitglied",
+  "registerPaymentAmount": "Betrag",
+  "registerPaymentMethod": "Zahlungsart",
+  "registerPaymentDate": "Bezahlt am",
+  "registerPaymentNote": "Notiz",
+  "registerPaymentSubmit": "Erfassen",
+  "registerPaymentDone": "Zahlung erfasst — das Mitglied bestätigt sie von seiner Seite."
 }

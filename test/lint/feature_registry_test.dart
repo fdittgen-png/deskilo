@@ -69,7 +69,8 @@ import 'package:flutter_test/flutter_test.dart';
 // 63→64 (2026-09-02): #822 reportDesigner — the full-screen report
 // designer: direct manipulation, undo, side-by-side preview.
 // 64→65 (2026-09-02): #825 memberPage — one page per member.
-const int _expectedFeatureCount = 65;
+// 65→66 (2026-09-02): #827 invoicingWizard — the guided month-close.
+const int _expectedFeatureCount = 66;
 
 void main() {
   test('every functionality is registered — the pin', () {

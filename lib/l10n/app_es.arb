@@ -1339,6 +1339,8 @@
   "featureReportDesignerDesc": "El editor de informes a pantalla completa: elementos editados en su sitio con su tipografía real, arrastrar para reordenar, una paleta de inserción, un selector de campos con búsqueda, deshacer y rehacer, tamaño y alineación de imágenes, una salvaguarda antes de descartar, plantillas y restablecer tras una confirmación, el error de la plantilla explicado, diseño y vista previa lado a lado en pantalla ancha. Desactivado: el editor en hoja.",
   "featureMemberPageTitle": "Ficha de socio",
   "featureMemberPageDesc": "Una página por socio: foto y presencia, última conexión, reservas actuales y próximas, acciones rápidas (mensaje, WhatsApp, correo), tarjetas de contacto y finanzas y, para los admins, cada ajuste agrupado por tema con su valor actual. Desactivado: la hoja de perfil y la hoja de acciones de Socios y planes.",
+  "featureInvoicingWizardTitle": "Asistente de facturación",
+  "featureInvoicingWizardDesc": "Un proceso guiado de cierre mensual para la persona de finanzas: una pasada de inicio de mes para las suscripciones pagadas por adelantado y otra de fin de mes para el uso y los cargos adicionales — revisión, emisión en lote, envío, recordatorios vencidos, registro y validación de pagos, conciliación con facturas, reagrupación, anulación o reembolso, y un resumen con lo que queda y a quién le toca. Desactivado: las pantallas separadas.",
   "helpTitle": "Ayuda",
   "helpContents": "Índice",
   "helpHintMessages": "Todas las conversaciones en una lista, la más reciente arriba. Toque el lápiz para escribir a alguien o crear un grupo.",
@@ -2579,6 +2581,139 @@
   "reportFieldGroupLegal": "Menciones legales",
   "reportFieldGroupLoops": "Bucles de líneas e IVA",
   "reportDesignerSideBySide": "Diseño y vista previa lado a lado",
+  "wizardTitle": "Asistente de facturación",
+  "invoiceWizardAction": "Asistente de cierre mensual",
+  "wizardCardHint": "Emitir, enviar, recordar, registrar y validar pagos, conciliar y cerrar: un solo proceso guiado.",
+  "wizardRunStart": "Inicio de mes",
+  "wizardRunEnd": "Fin de mes",
+  "wizardRunStartHint": "Las suscripciones pagadas por adelantado: emitirlas para el mes que viene, enviarlas, planificar los recordatorios; luego, la parte de pagos.",
+  "wizardRunEndHint": "Lo que costó el mes que acaba de terminar: uso, consumo y cargos adicionales. Emitir, enviar, recordar; luego registrar, validar y conciliar los pagos, y cerrar.",
+  "wizardStepReview": "Revisión",
+  "wizardStepIssue": "Emitir",
+  "wizardStepSend": "Enviar",
+  "wizardStepRemind": "Recordar",
+  "wizardStepPayments": "Pagos",
+  "wizardStepMatch": "Conciliar",
+  "wizardStepClose": "Cerrar",
+  "wizardStepSummary": "Resumen",
+  "wizardNext": "Siguiente",
+  "wizardBack": "Atrás",
+  "wizardFinish": "Terminar",
+  "wizardReviewToIssue": "Por emitir",
+  "wizardReviewIssued": "Ya emitidas",
+  "wizardReviewOpen": "Facturas abiertas",
+  "wizardReviewOverdue": "Recordatorios vencidos",
+  "wizardReviewPending": "Pagos por validar",
+  "wizardPeriodLabel": "Periodo: {period}",
+  "@wizardPeriodLabel": {
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardIssueHint": "Desmarque a un socio para dejarlo fuera de este lote. Los socios ya cubiertos aparecen como hechos.",
+  "wizardIssueNothing": "Nada que emitir para este periodo.",
+  "wizardIssuedChip": "Emitida {number}",
+  "@wizardIssuedChip": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardIssueAll": "{count, plural, =1{Emitir 1 factura} other{Emitir {count} facturas}}",
+  "@wizardIssueAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardIssueFailed": "No se pudo emitir para {name}.",
+  "@wizardIssueFailed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardSendHint": "Entregue cada factura a su socio: comparta el PDF o descárguelo para enviarlo a su manera.",
+  "wizardSendNone": "Todavía no hay factura de esta pasada que enviar.",
+  "wizardSendShare": "Compartir el PDF",
+  "wizardSendDownload": "Descargar el PDF",
+  "wizardRemindHint": "Vencidas según sus reglas de recordatorio. Un toque registra cada recordatorio y avisa a los socios; la carta se abre por fila.",
+  "wizardRemindNone": "Ningún recordatorio vence según sus reglas.",
+  "wizardRemindLevel": "recordatorio {level}",
+  "@wizardRemindLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardRemindAll": "{count, plural, =1{Enviar 1 recordatorio} other{Enviar {count} recordatorios}}",
+  "@wizardRemindAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardRemindOne": "Carta de recordatorio",
+  "wizardPaymentsHint": "Lo que los socios declararon espera su confirmación abajo. Un pago que llegó a la cuenta sin declaración se registra aquí; el socio lo confirma después.",
+  "wizardPaymentsNone": "Ningún pago declarado espera su decisión.",
+  "wizardPaymentAccept": "Confirmar",
+  "wizardPaymentReject": "Rechazar",
+  "wizardMatchHint": "Una factura está pagada cuando se le concilia un pago real. Las filas con crédito en la cuenta del socio están listas.",
+  "wizardMatchNone": "Todas las facturas están pagadas o cerradas.",
+  "wizardMatchPending": "Pendiente de validación",
+  "wizardMatchCredit": "Crédito disponible: {amount}",
+  "@wizardMatchCredit": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardMatchNoCredit": "Aún no hay pago en la cuenta",
+  "wizardMatchAction": "Conciliar",
+  "wizardCloseHint": "Un socio con varias facturas abiertas puede pagar UNA; a una factura pagada en parte se le puede anular el resto; una nota de crédito se reembolsa. Cada una pasa por la validación.",
+  "wizardCloseNone": "Nada que reagrupar, anular o reembolsar.",
+  "wizardSettle": "Reagrupar {count}",
+  "@wizardSettle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardWriteoff": "Anular",
+  "wizardRefund": "Reembolsar",
+  "wizardSummaryHint": "Lo que hizo esta pasada",
+  "wizardTallyIssued": "Facturas emitidas",
+  "wizardTallyShared": "PDF compartidos o descargados",
+  "wizardTallyReminded": "Recordatorios enviados",
+  "wizardTallyDecided": "Pagos confirmados o rechazados",
+  "wizardTallyRegistered": "Pagos registrados",
+  "wizardTallyMatched": "Facturas conciliadas",
+  "wizardTallySettled": "Reagrupaciones",
+  "wizardTallyWriteoffs": "Anulaciones solicitadas",
+  "wizardTallyRefunds": "Reembolsos",
+  "wizardTallyNothing": "No se cambió nada.",
+  "wizardTodoHeading": "Aún abierto: a quién le toca",
+  "wizardTodoNone": "No queda nada abierto.",
+  "wizardWhoYou": "Usted",
+  "wizardWhoValidators": "Validadores",
+  "registerPaymentTitle": "Registrar un pago",
+  "registerPaymentHint": "Un pago que llegó al espacio: el socio lo confirma y luego puede conciliarse con una factura.",
+  "registerPaymentMember": "Socio",
+  "registerPaymentAmount": "Importe",
+  "registerPaymentMethod": "Medio",
+  "registerPaymentDate": "Pagado el",
+  "registerPaymentNote": "Nota",
+  "registerPaymentSubmit": "Registrar",
+  "registerPaymentDone": "Pago registrado: el socio lo confirma por su parte.",
   "eventTypeMemberJoin": "Nuevo miembro",
   "memberStatusPending": "Pendiente",
   "pendingApprovalTitle": "Esperando aprobación",
