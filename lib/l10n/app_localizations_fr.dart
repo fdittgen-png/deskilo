@@ -982,6 +982,28 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get settlementAnnexTitle => 'Joindre les factures regroupées ?';
+
+  @override
+  String get settlementAnnexAlone => 'Cette facture seule';
+
+  @override
+  String get settlementAnnexWith => 'Les joindre';
+
+  @override
+  String settlementAnnexBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Les $count factures que celle-ci remplace peuvent la suivre, chacune sur ses propres pages et tamponnée comme regroupée.',
+      one:
+          'La facture que celle-ci remplace peut la suivre, sur ses propres pages et tamponnée comme regroupée.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get reservationExtendButton => 'Rester plus longtemps';
 
   @override

@@ -981,6 +981,28 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get settlementAnnexTitle => '¿Adjuntar las facturas reagrupadas?';
+
+  @override
+  String get settlementAnnexAlone => 'Solo esta factura';
+
+  @override
+  String get settlementAnnexWith => 'Adjuntarlas';
+
+  @override
+  String settlementAnnexBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Las $count facturas que esta sustituye pueden seguirla, cada una en sus propias páginas y sellada como reagrupada.',
+      one:
+          'La factura que esta sustituye puede seguirla, en sus propias páginas y sellada como reagrupada.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get reservationExtendButton => 'Quedarse más tiempo';
 
   @override

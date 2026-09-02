@@ -120,7 +120,7 @@ const Map<String, int> _baseline = {
   // 1740→1820 (2026-08-05): #504 the write-off request dialog.
   // 1820→1910 (2026-08-05): #508 the credit-note refund dialog.
   // 1960→2000 (2026-08-14): #568 the customer-delivery send leg.
-  'lib/features/money/presentation/invoice_actions.dart': 2000,
+  'lib/features/money/presentation/invoice_actions.dart': 2060, // 2026-09-02 #837 the annex question
   // 1920→1960 (2026-08-06): #514 quickViewInvoice + the proforma triad.
   // 1910→1920 (2026-08-06): #512 imputation candidates (adjustment
   // credits, baked-credit filter).
@@ -238,7 +238,7 @@ const Map<String, int> _baseline = {
   // 790→820 (2026-08-04): #472 the banded LETTER builder.
   // 820→840 (2026-08-05): #482 the side-by-side ReportColumns renderer.
   // 840→860 (2026-08-05): #488 the ReportImage renderer branch.
-  'lib/features/money/domain/invoice_pdf.dart': 920, // 2026-09-02 #831 source groups + watermark helper
+  'lib/features/money/domain/invoice_pdf.dart': 980, // 2026-09-02 #837 per-invoice sheets + annexes // 2026-09-02 #831 source groups + watermark helper
   'lib/features/money/presentation/widgets/invoice_detail_sheet.dart': 640, // 2026-09-02 #831 folded banner // 2026-09-02 #822 image size/alignment
   // 670→680 (2026-08-04): #446 out-of-shell WorkHours install — the
   // kiosk arms the ambient working day itself, like realtime (#430).

@@ -631,6 +631,17 @@
       }
     }
   },
+  "settlementAnnexTitle": "Die zusammengefassten Rechnungen anhängen?",
+  "settlementAnnexAlone": "Nur diese Rechnung",
+  "settlementAnnexWith": "Anhängen",
+  "settlementAnnexBody": "{count, plural, =1{Die Rechnung, die diese ersetzt, kann ihr folgen, auf eigenen Seiten und als zusammengefasst gestempelt.} other{Die {count} Rechnungen, die diese ersetzt, können ihr folgen, jede auf eigenen Seiten und als zusammengefasst gestempelt.}}",
+  "@settlementAnnexBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "reservationExtendButton": "Länger bleiben",
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"

@@ -981,6 +981,29 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get settlementAnnexTitle =>
+      'Die zusammengefassten Rechnungen anhängen?';
+
+  @override
+  String get settlementAnnexAlone => 'Nur diese Rechnung';
+
+  @override
+  String get settlementAnnexWith => 'Anhängen';
+
+  @override
+  String settlementAnnexBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Die $count Rechnungen, die diese ersetzt, können ihr folgen, jede auf eigenen Seiten und als zusammengefasst gestempelt.',
+      one:
+          'Die Rechnung, die diese ersetzt, kann ihr folgen, auf eigenen Seiten und als zusammengefasst gestempelt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get reservationExtendButton => 'Länger bleiben';
 
   @override

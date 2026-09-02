@@ -983,6 +983,28 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get settlementAnnexTitle => 'Allegare le fatture raggruppate?';
+
+  @override
+  String get settlementAnnexAlone => 'Solo questa fattura';
+
+  @override
+  String get settlementAnnexWith => 'Allegale';
+
+  @override
+  String settlementAnnexBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Le $count fatture che questa sostituisce possono seguirla, ognuna su pagine proprie e timbrata come raggruppata.',
+      one:
+          'La fattura che questa sostituisce può seguirla, su pagine proprie e timbrata come raggruppata.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get reservationExtendButton => 'Restare più a lungo';
 
   @override
