@@ -933,9 +933,9 @@
   "directoryCheckedInSeat": "Presente · {seat}",
   "directoryOnline": "Online",
   "directoryReservedToday": "Prenotato oggi",
-  "directoryLastSeenMinutes": "{minutes} min",
-  "directoryLastSeenHours": "{hours} h",
-  "directoryLastSeenDays": "{days} g",
+  "directoryLastSeenMinutes": "Visto {minutes} min fa",
+  "directoryLastSeenHours": "Visto {hours} h fa",
+  "directoryLastSeenDays": "Visto {days} g fa",
   "directoryWhatsapp": "Chatta su WhatsApp",
   "directoryOpenGroup": "Apri il gruppo WhatsApp",
   "directoryClose": "Chiudi",
@@ -943,6 +943,72 @@
   "directoryReservedNowSeat": "Prenotato ora · {seat}",
   "directoryReservationsHeading": "Prenotazioni",
   "directoryNoUpcoming": "Nessuna prenotazione in arrivo",
+  "memberPageEmailAction": "E-mail",
+  "memberPageAddService": "Aggiungi un servizio",
+  "memberPageNone": "Nessuno",
+  "memberPageWorkspaceDefaultValue": "Predefinito dello spazio ({count})",
+  "@memberPageWorkspaceDefaultValue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "memberPageLevelTitle": "Prenotazioni di un piano intero",
+  "memberPageGroupMembership": "Iscrizione",
+  "memberPageGroupBooking": "Regole di prenotazione",
+  "memberPageGroupBilling": "Fatturazione",
+  "memberPageGroupAccess": "Badge e accesso",
+  "memberPageManageHeading": "Gestisci",
+  "memberPageStatusActive": "Attivo",
+  "memberPageNeverSeen": "Mai visto",
+  "memberPageYou": "{name} (tu)",
+  "@memberPageYou": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageSince": "Membro dal {date}",
+  "@memberPageSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageCheckedIn": "Check-in · {seat} · dalle {time}",
+  "@memberPageCheckedIn": {
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageReservedNow": "Prenotato ora · {seat} · fino alle {time}",
+  "@memberPageReservedNow": {
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageNext": "Prossima: {label}",
+  "@memberPageNext": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageNowHeading": "In questo momento",
   "editorBackgroundImage": "Immagine di sfondo",
   "editorBackgroundSet": "Imposta immagine di sfondo",
   "editorBackgroundReplace": "Sostituisci immagine di sfondo",
@@ -1271,6 +1337,8 @@
   "featureMessagesHubDesc": "Una sola barra della posta (Tutti / Non letti / Archiviati e ricerca), fissare, silenziare, archiviare e segnare come non letto un thread, la conversazione a pagina intera con separatori di data, un menu allega e una bozza conservata nel compositore, una persona aperta con un tocco. Disattivato: la posta a due barre e il thread in foglio.",
   "featureReportDesignerTitle": "Designer di report",
   "featureReportDesignerDesc": "L'editor dei report a schermo intero: elementi modificati sul posto nella loro vera tipografia, trascinare per riordinare, una tavolozza di inserimento, un selettore di campi con ricerca, annulla e ripeti, dimensione e allineamento delle immagini, una protezione prima di scartare, modelli e ripristino dietro una conferma, l'errore del modello spiegato, progettazione e anteprima affiancate su schermo largo. Disattivato: l'editor in foglio.",
+  "featureMemberPageTitle": "Scheda membro",
+  "featureMemberPageDesc": "Una pagina per membro: foto e presenza, ultimo accesso, prenotazioni in corso e prossime, azioni rapide (messaggio, WhatsApp, e-mail), schede contatto e finanze e, per gli admin, ogni impostazione raggruppata per tema con il valore attuale. Disattivato: il foglio profilo e il foglio azioni di Membri e piani.",
   "helpHintLearnMore": "Scopri di più",
   "helpHintDismiss": "Nascondi suggerimento",
   "helpHintPrevTip": "Suggerimento precedente",

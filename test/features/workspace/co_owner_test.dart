@@ -25,7 +25,9 @@ Future<FakeWorkspaceRepository> pumpMembersWithAna(
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final workspace =
-      FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags)
+      FakeWorkspaceRepository.withWorkspace(
+          // #825 — these tests drive the legacy sheet; the page has its own.
+          featureFlags: {'memberPage': false, ...featureFlags})
         ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
         ..otherMembers.add(
           Member(

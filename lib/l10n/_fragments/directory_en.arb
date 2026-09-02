@@ -29,7 +29,7 @@
   "@directoryReservedToday": {
     "description": "Directory status chip: member has an active reservation later today"
   },
-  "directoryLastSeenMinutes": "{minutes} min",
+  "directoryLastSeenMinutes": "Seen {minutes} min ago",
   "@directoryLastSeenMinutes": {
     "description": "Directory offline chip: compact relative last-seen, under an hour",
     "placeholders": {
@@ -38,7 +38,7 @@
       }
     }
   },
-  "directoryLastSeenHours": "{hours} h",
+  "directoryLastSeenHours": "Seen {hours} h ago",
   "@directoryLastSeenHours": {
     "description": "Directory offline chip: compact relative last-seen, under a day",
     "placeholders": {
@@ -47,7 +47,7 @@
       }
     }
   },
-  "directoryLastSeenDays": "{days} d",
+  "directoryLastSeenDays": "Seen {days} d ago",
   "@directoryLastSeenDays": {
     "description": "Directory offline chip: compact relative last-seen, a day or more",
     "placeholders": {
@@ -88,5 +88,71 @@
   "directoryNoUpcoming": "No upcoming reservations",
   "@directoryNoUpcoming": {
     "description": "Shown under the Reservations heading in the member detail sheet when the member has no active booking ahead"
-  }
+  },
+  "memberPageEmailAction": "E-mail",
+  "memberPageAddService": "Add a service",
+  "memberPageNone": "None",
+  "memberPageWorkspaceDefaultValue": "Workspace default ({count})",
+  "@memberPageWorkspaceDefaultValue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "memberPageLevelTitle": "Whole-level bookings",
+  "memberPageGroupMembership": "Membership",
+  "memberPageGroupBooking": "Booking rules",
+  "memberPageGroupBilling": "Billing",
+  "memberPageGroupAccess": "Badges & access",
+  "memberPageManageHeading": "Manage",
+  "memberPageStatusActive": "Active",
+  "memberPageNeverSeen": "Not seen yet",
+  "memberPageYou": "{name} (you)",
+  "@memberPageYou": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageSince": "Member since {date}",
+  "@memberPageSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageCheckedIn": "Checked in · {seat} · since {time}",
+  "@memberPageCheckedIn": {
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageReservedNow": "Reserved now · {seat} · until {time}",
+  "@memberPageReservedNow": {
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageNext": "Next: {label}",
+  "@memberPageNext": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageNowHeading": "Right now"
 }

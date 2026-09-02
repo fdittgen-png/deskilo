@@ -933,9 +933,9 @@
   "directoryCheckedInSeat": "Sur place · {seat}",
   "directoryOnline": "En ligne",
   "directoryReservedToday": "Réservé aujourd'hui",
-  "directoryLastSeenMinutes": "{minutes} min",
-  "directoryLastSeenHours": "{hours} h",
-  "directoryLastSeenDays": "{days} j",
+  "directoryLastSeenMinutes": "Vu il y a {minutes} min",
+  "directoryLastSeenHours": "Vu il y a {hours} h",
+  "directoryLastSeenDays": "Vu il y a {days} j",
   "directoryWhatsapp": "Discuter sur WhatsApp",
   "directoryOpenGroup": "Ouvrir le groupe WhatsApp",
   "directoryClose": "Fermer",
@@ -943,6 +943,72 @@
   "directoryReservedNowSeat": "Réservé maintenant · {seat}",
   "directoryReservationsHeading": "Réservations",
   "directoryNoUpcoming": "Aucune réservation à venir",
+  "memberPageEmailAction": "E-mail",
+  "memberPageAddService": "Ajouter un service",
+  "memberPageNone": "Aucun",
+  "memberPageWorkspaceDefaultValue": "Défaut de l'espace ({count})",
+  "@memberPageWorkspaceDefaultValue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "memberPageLevelTitle": "Réservations d'un étage entier",
+  "memberPageGroupMembership": "Adhésion",
+  "memberPageGroupBooking": "Règles de réservation",
+  "memberPageGroupBilling": "Facturation",
+  "memberPageGroupAccess": "Badges et accès",
+  "memberPageManageHeading": "Gérer",
+  "memberPageStatusActive": "Actif",
+  "memberPageNeverSeen": "Jamais vu",
+  "memberPageYou": "{name} (vous)",
+  "@memberPageYou": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageSince": "Membre depuis le {date}",
+  "@memberPageSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageCheckedIn": "Pointé · {seat} · depuis {time}",
+  "@memberPageCheckedIn": {
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageReservedNow": "Réservé maintenant · {seat} · jusqu'à {time}",
+  "@memberPageReservedNow": {
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageNext": "Prochaine : {label}",
+  "@memberPageNext": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageNowHeading": "En ce moment",
   "editorBackgroundImage": "Image de fond",
   "editorBackgroundSet": "Définir l'image de fond",
   "editorBackgroundReplace": "Remplacer l'image de fond",
@@ -1271,6 +1337,8 @@
   "featureMessagesHubDesc": "Une seule barre de boîte de réception (Tous / Non lus / Archivés et recherche), épingler, couper le son, archiver et marquer non lu sur un fil, la conversation en page entière avec séparateurs de date, un menu joindre et un brouillon conservé dans le composeur, une personne ouverte d'un seul geste. Désactivé : la boîte à deux barres et le fil en feuille.",
   "featureReportDesignerTitle": "Concepteur de rapports",
   "featureReportDesignerDesc": "L'éditeur de rapports en plein écran : éléments modifiés sur place dans leur vraie typographie, glisser pour réordonner, palette d'insertion, sélecteur de champs avec recherche, annuler et rétablir, taille et alignement des images, garde-fou avant d'abandonner, modèles et réinitialisation derrière une confirmation, l'erreur du modèle expliquée, conception et aperçu côte à côte sur grand écran. Désactivé : l'éditeur en feuille.",
+  "featureMemberPageTitle": "Fiche membre",
+  "featureMemberPageDesc": "Une page par membre : photo et présence, dernière connexion, réservations en cours et à venir, actions rapides (message, WhatsApp, e-mail), cartes contact et finances, et pour les admins chaque réglage regroupé par thème avec sa valeur actuelle. Désactivé : la feuille de profil et la feuille d'actions de Membres & forfaits.",
   "helpTitle": "Aide",
   "helpContents": "Sommaire",
   "helpHintMessages": "Toutes vos conversations dans une liste, la plus récente en haut. Touchez le crayon pour écrire à quelqu’un ou créer un groupe.",

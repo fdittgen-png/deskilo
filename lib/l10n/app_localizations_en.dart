@@ -1423,17 +1423,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String directoryLastSeenMinutes(int minutes) {
-    return '$minutes min';
+    return 'Seen $minutes min ago';
   }
 
   @override
   String directoryLastSeenHours(int hours) {
-    return '$hours h';
+    return 'Seen $hours h ago';
   }
 
   @override
   String directoryLastSeenDays(int days) {
-    return '$days d';
+    return 'Seen $days d ago';
   }
 
   @override
@@ -1458,6 +1458,72 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get directoryNoUpcoming => 'No upcoming reservations';
+
+  @override
+  String get memberPageEmailAction => 'E-mail';
+
+  @override
+  String get memberPageAddService => 'Add a service';
+
+  @override
+  String get memberPageNone => 'None';
+
+  @override
+  String memberPageWorkspaceDefaultValue(int count) {
+    return 'Workspace default ($count)';
+  }
+
+  @override
+  String get memberPageLevelTitle => 'Whole-level bookings';
+
+  @override
+  String get memberPageGroupMembership => 'Membership';
+
+  @override
+  String get memberPageGroupBooking => 'Booking rules';
+
+  @override
+  String get memberPageGroupBilling => 'Billing';
+
+  @override
+  String get memberPageGroupAccess => 'Badges & access';
+
+  @override
+  String get memberPageManageHeading => 'Manage';
+
+  @override
+  String get memberPageStatusActive => 'Active';
+
+  @override
+  String get memberPageNeverSeen => 'Not seen yet';
+
+  @override
+  String memberPageYou(String name) {
+    return '$name (you)';
+  }
+
+  @override
+  String memberPageSince(String date) {
+    return 'Member since $date';
+  }
+
+  @override
+  String memberPageCheckedIn(String seat, String time) {
+    return 'Checked in · $seat · since $time';
+  }
+
+  @override
+  String memberPageReservedNow(String seat, String time) {
+    return 'Reserved now · $seat · until $time';
+  }
+
+  @override
+  String memberPageNext(String label) {
+    return 'Next: $label';
+  }
+
+  @override
+  String get memberPageNowHeading => 'Right now';
 
   @override
   String get editorBackgroundImage => 'Background image';
@@ -2209,6 +2275,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureReportDesignerDesc =>
       'The report editor as a full-screen designer: elements edited in place in their real typography, drag to reorder, an insert palette, a searchable field picker, undo and redo, image size and alignment, a discard guard, presets and reset behind a confirmation, the template error spelled out, design and preview side by side on a wide screen. Off: the editor sheet.';
+
+  @override
+  String get featureMemberPageTitle => 'Member page';
+
+  @override
+  String get featureMemberPageDesc =>
+      'One page per member: photo and presence, when they were last seen, what they have booked and what comes next, quick actions to message, WhatsApp or e-mail them, contact and money cards, and for admins every setting grouped by topic with its current value. Off: the profile sheet and the Members & plans action sheet.';
 
   @override
   String get helpTitle => 'Help';

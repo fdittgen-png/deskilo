@@ -140,6 +140,9 @@ const Map<String, int> _baseline = {
   // flow; the visual editor itself is its own file.
   // new→840 (2026-08-05): #498 the WYSIWYG design surface — styled
   // band rendering, column groups, token palette, in-place editor.
+  // #825 (2026-09-02): the member page and the shared admin actions.
+  'lib/features/members/presentation/screens/member_page.dart': 840,
+  'lib/features/workspace/presentation/member_admin_actions.dart': 720,
   'lib/features/money/presentation/widgets/report_visual_editor.dart': 1000, // 2026-09-02 #822 drag, insert palette, image controls, move-to-band
   // 660→700 (2026-08-05): #494 the three further document chips + their
   // live data and letter-PDF branches.

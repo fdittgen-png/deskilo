@@ -2579,19 +2579,19 @@ abstract class AppLocalizations {
   /// Directory offline chip: compact relative last-seen, under an hour
   ///
   /// In en, this message translates to:
-  /// **'{minutes} min'**
+  /// **'Seen {minutes} min ago'**
   String directoryLastSeenMinutes(int minutes);
 
   /// Directory offline chip: compact relative last-seen, under a day
   ///
   /// In en, this message translates to:
-  /// **'{hours} h'**
+  /// **'Seen {hours} h ago'**
   String directoryLastSeenHours(int hours);
 
   /// Directory offline chip: compact relative last-seen, a day or more
   ///
   /// In en, this message translates to:
-  /// **'{days} d'**
+  /// **'Seen {days} d ago'**
   String directoryLastSeenDays(int days);
 
   /// Tooltip of the wa.me contact button on a directory row (#223 opt-in); also the swipe-right background label and the contact button in the member detail sheet (#232)
@@ -2635,6 +2635,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No upcoming reservations'**
   String get directoryNoUpcoming;
+
+  /// No description provided for @memberPageEmailAction.
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail'**
+  String get memberPageEmailAction;
+
+  /// No description provided for @memberPageAddService.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a service'**
+  String get memberPageAddService;
+
+  /// No description provided for @memberPageNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get memberPageNone;
+
+  /// No description provided for @memberPageWorkspaceDefaultValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace default ({count})'**
+  String memberPageWorkspaceDefaultValue(int count);
+
+  /// No description provided for @memberPageLevelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Whole-level bookings'**
+  String get memberPageLevelTitle;
+
+  /// No description provided for @memberPageGroupMembership.
+  ///
+  /// In en, this message translates to:
+  /// **'Membership'**
+  String get memberPageGroupMembership;
+
+  /// No description provided for @memberPageGroupBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking rules'**
+  String get memberPageGroupBooking;
+
+  /// No description provided for @memberPageGroupBilling.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing'**
+  String get memberPageGroupBilling;
+
+  /// No description provided for @memberPageGroupAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Badges & access'**
+  String get memberPageGroupAccess;
+
+  /// No description provided for @memberPageManageHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage'**
+  String get memberPageManageHeading;
+
+  /// No description provided for @memberPageStatusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get memberPageStatusActive;
+
+  /// No description provided for @memberPageNeverSeen.
+  ///
+  /// In en, this message translates to:
+  /// **'Not seen yet'**
+  String get memberPageNeverSeen;
+
+  /// No description provided for @memberPageYou.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} (you)'**
+  String memberPageYou(String name);
+
+  /// No description provided for @memberPageSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Member since {date}'**
+  String memberPageSince(String date);
+
+  /// No description provided for @memberPageCheckedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in · {seat} · since {time}'**
+  String memberPageCheckedIn(String seat, String time);
+
+  /// No description provided for @memberPageReservedNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved now · {seat} · until {time}'**
+  String memberPageReservedNow(String seat, String time);
+
+  /// No description provided for @memberPageNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {label}'**
+  String memberPageNext(String label);
+
+  /// No description provided for @memberPageNowHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Right now'**
+  String get memberPageNowHeading;
 
   /// Editor app-bar action opening the level background-image menu (0036)
   ///
@@ -3961,6 +4069,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The report editor as a full-screen designer: elements edited in place in their real typography, drag to reorder, an insert palette, a searchable field picker, undo and redo, image size and alignment, a discard guard, presets and reset behind a confirmation, the template error spelled out, design and preview side by side on a wide screen. Off: the editor sheet.'**
   String get featureReportDesignerDesc;
+
+  /// No description provided for @featureMemberPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Member page'**
+  String get featureMemberPageTitle;
+
+  /// No description provided for @featureMemberPageDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'One page per member: photo and presence, when they were last seen, what they have booked and what comes next, quick actions to message, WhatsApp or e-mail them, contact and money cards, and for admins every setting grouped by topic with its current value. Off: the profile sheet and the Members & plans action sheet.'**
+  String get featureMemberPageDesc;
 
   /// No description provided for @helpTitle.
   ///

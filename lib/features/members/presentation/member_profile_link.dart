@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -8,6 +9,8 @@ import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../reservations/presentation/widgets/reservation_detail_sheet.dart';
 import '../../workspace/domain/member.dart';
+import '../../workspace/domain/workspace_feature.dart';
+import 'screens/member_page.dart';
 import '../../../core/links/link_launcher.dart';
 import '../../plan/providers/floor_plan_providers.dart';
 import '../../reservations/domain/reservation.dart';
@@ -33,6 +36,13 @@ Future<void> openMemberProfile(
   final members = ref.read(workspaceMembersProvider).value ?? const <Member>[];
   final member = members.where((m) => m.id == memberId).firstOrNull;
   if (member == null) return;
+  // #825 — one page per person when its flag is on.
+  if (ref
+      .read(enabledFeaturesSyncProvider)
+      .contains(WorkspaceFeature.memberPage)) {
+    await openMemberPage(context, memberId);
+    return;
+  }
   final names = ref.read(memberNamesProvider).value ?? const {};
   final profiles = ref.read(memberProfilesProvider).value ?? const {};
   final reservations =
@@ -70,6 +80,18 @@ Future<void> openMemberProfile(
     // nothing.
     onOpenReservation: (r) => showReservationDetail(context, ref, r),
   );
+}
+
+/// #825 — pushes the member page: the route when a router hosts the
+/// caller (deep-linkable), a plain page push otherwise.
+Future<void> openMemberPage(BuildContext context, String memberId) async {
+  if (GoRouter.maybeOf(context) != null) {
+    await context.push('/member/$memberId');
+  } else {
+    await Navigator.of(context).push(MaterialPageRoute<void>(
+      builder: (_) => MemberPage(memberId: memberId),
+    ));
+  }
 }
 
 /// Opens [uri], reporting a failure rather than dying quietly.

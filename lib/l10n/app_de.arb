@@ -933,9 +933,9 @@
   "directoryCheckedInSeat": "Eingecheckt · {seat}",
   "directoryOnline": "Online",
   "directoryReservedToday": "Heute reserviert",
-  "directoryLastSeenMinutes": "{minutes} Min.",
-  "directoryLastSeenHours": "{hours} Std.",
-  "directoryLastSeenDays": "{days} T.",
+  "directoryLastSeenMinutes": "Vor {minutes} Min. gesehen",
+  "directoryLastSeenHours": "Vor {hours} Std. gesehen",
+  "directoryLastSeenDays": "Vor {days} Tagen gesehen",
   "directoryWhatsapp": "Auf WhatsApp schreiben",
   "directoryOpenGroup": "WhatsApp-Gruppe öffnen",
   "directoryClose": "Schließen",
@@ -943,6 +943,72 @@
   "directoryReservedNowSeat": "Jetzt reserviert · {seat}",
   "directoryReservationsHeading": "Reservierungen",
   "directoryNoUpcoming": "Keine anstehenden Reservierungen",
+  "memberPageEmailAction": "E-Mail",
+  "memberPageAddService": "Leistung hinzufügen",
+  "memberPageNone": "Keine",
+  "memberPageWorkspaceDefaultValue": "Workspace-Standard ({count})",
+  "@memberPageWorkspaceDefaultValue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "memberPageLevelTitle": "Buchungen ganzer Ebenen",
+  "memberPageGroupMembership": "Mitgliedschaft",
+  "memberPageGroupBooking": "Buchungsregeln",
+  "memberPageGroupBilling": "Abrechnung",
+  "memberPageGroupAccess": "Ausweise & Zugang",
+  "memberPageManageHeading": "Verwalten",
+  "memberPageStatusActive": "Aktiv",
+  "memberPageNeverSeen": "Noch nie gesehen",
+  "memberPageYou": "{name} (Sie)",
+  "@memberPageYou": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageSince": "Mitglied seit {date}",
+  "@memberPageSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageCheckedIn": "Eingecheckt · {seat} · seit {time}",
+  "@memberPageCheckedIn": {
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageReservedNow": "Jetzt reserviert · {seat} · bis {time}",
+  "@memberPageReservedNow": {
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageNext": "Nächste: {label}",
+  "@memberPageNext": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPageNowHeading": "Gerade jetzt",
   "editorBackgroundImage": "Hintergrundbild",
   "editorBackgroundSet": "Hintergrundbild festlegen",
   "editorBackgroundReplace": "Hintergrundbild ersetzen",
@@ -1271,6 +1337,8 @@
   "featureMessagesHubDesc": "Eine Posteingangsleiste (Alle / Ungelesen / Archiviert und Suche), anheften, stumm, archivieren und als ungelesen markieren auf einem Thread, die Unterhaltung als ganze Seite mit Datumstrennern, ein Anhängen-Menü und ein behaltener Entwurf im Editor, eine Person mit einem Tipp geöffnet. Aus: der Posteingang mit zwei Leisten und der Thread als Blatt.",
   "featureReportDesignerTitle": "Berichtsdesigner",
   "featureReportDesignerDesc": "Der Berichtseditor als Vollbild-Designer: Elemente an Ort und Stelle in ihrer echten Typografie bearbeitet, Ziehen zum Umsortieren, eine Einfügepalette, eine durchsuchbare Feldauswahl, Rückgängig und Wiederholen, Bildgröße und -ausrichtung, ein Schutz vor dem Verwerfen, Vorlagen und Zurücksetzen hinter einer Bestätigung, der Vorlagenfehler im Klartext, Entwurf und Vorschau nebeneinander auf breitem Bildschirm. Aus: der Editor als Blatt.",
+  "featureMemberPageTitle": "Mitgliedsseite",
+  "featureMemberPageDesc": "Eine Seite pro Mitglied: Foto und Präsenz, zuletzt gesehen, aktuelle und kommende Buchungen, Schnellaktionen (Nachricht, WhatsApp, E-Mail), Kontakt- und Finanzkarten und für Admins jede Einstellung nach Thema gruppiert mit ihrem aktuellen Wert. Aus: das Profilblatt und das Aktionsblatt von Mitglieder & Tarife.",
   "helpTitle": "Hilfe",
   "helpContents": "Inhalt",
   "helpHintMessages": "Alle Unterhaltungen in einer Liste, die neueste oben. Tippen Sie auf den Stift, um jemandem zu schreiben oder eine Gruppe zu erstellen.",
