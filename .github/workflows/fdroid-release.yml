@@ -1,0 +1,197 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: 0BSD
+
+name: fdroid-release
+
+# #835 — publishes the LIBRE APKs that F-Droid verifies against.
+#
+# F-Droid's reproducible-build path ships OUR signed binary, but only
+# once their own build of the same commit reproduces it byte for byte.
+# Two things have to line up for that, and both are load-bearing:
+#
+#   1. The build must be the recipe's build — same commit, same pinned
+#      Flutter, same FOSS swap, --enforce-lockfile, one APK per ABI with
+#      --target-platform.
+#   2. It must run at the SAME ABSOLUTE PATH on both sides. Dart's AOT
+#      output embeds the path it was compiled in, so a build under
+#      /build/de.deskilo.app can never match one under /home/runner/...
+#      The recipe therefore moves the source to this runner's checkout
+#      path, /home/runner/work/deskilo/deskilo, before building. Do not
+#      "simplify" either side without changing the other.
+#
+# Before publishing, arm64 is built a second time at that same path and
+# every entry outside META-INF is compared. That catches the other
+# family of drift — anything that embeds a clock or a hash-map order —
+# early, instead of on F-Droid's builder a week after the tag.
+#
+# The signing key lives outside this repository, in OneDrive under
+# Documents/DesKilo, and reaches CI as FDROID_KEYSTORE_BASE64 and
+# FDROID_KEYSTORE_PASSWORD. It cannot be rotated: a different key means
+# every F-Droid user has to uninstall and reinstall.
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Commit or tag to build — the one the fdroiddata recipe pins
+        required: true
+      tag:
+        description: Release tag to publish the APKs under (e.g. v1.0.0)
+        required: true
+      expect_cert_sha256:
+        description: Signing certificate the recipe allows
+        required: true
+        default: bd1ec20edb6d8daf42a3186829e08dd1ee2273d73c2b0581a8a4d1a6286072aa
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      # No path juggling here on purpose: the default checkout path IS
+      # the path the recipe reproduces at.
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - id: flutter_pin
+        run: echo "version=$(cat .flutter-version)" >> "$GITHUB_OUTPUT"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ steps.flutter_pin.outputs.version }}
+          channel: stable
+          cache: true
+
+      - name: Restore the F-Droid signing key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.FDROID_KEYSTORE_BASE64 }}
+          KS_PW: ${{ secrets.FDROID_KEYSTORE_PASSWORD }}
+        run: |
+          set -euo pipefail
+          if [ -z "$KEYSTORE_BASE64" ] || [ -z "$KS_PW" ]; then
+            echo "the F-Droid signing secrets are not set — nothing can be signed" >&2
+            exit 1
+          fi
+          echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/fdroid.p12"
+          cat > android/key.properties <<PROPS
+          storeFile=$RUNNER_TEMP/fdroid.p12
+          storePassword=$KS_PW
+          keyAlias=deskilo-fdroid
+          keyPassword=$KS_PW
+          storeType=PKCS12
+          PROPS
+
+      - name: Prepare the libre flavour, exactly as the recipe's prebuild does
+        run: |
+          set -euo pipefail
+          echo "building in $GITHUB_WORKSPACE"
+          bash tool/fdroid_foss_swap.sh
+          export PUB_CACHE="$PWD/.pub-cache"
+          flutter config --no-analytics >/dev/null 2>&1 || true
+          flutter pub get --enforce-lockfile
+          dart run build_runner build --delete-conflicting-outputs
+          flutter gen-l10n
+
+      - name: Build every ABI
+        run: |
+          set -euo pipefail
+          export PUB_CACHE="$PWD/.pub-cache"
+          mkdir -p "$RUNNER_TEMP/first"
+          # One ABI per fresh build/, because F-Droid builds each
+          # versionCode in its own checkout: leftover Gradle state is a
+          # difference their builder would not have.
+          for p in android-arm android-arm64 android-x64; do
+            rm -rf build
+            flutter build apk --release --split-per-abi --target-platform="$p"
+            cp build/app/outputs/flutter-apk/app-*-release.apk "$RUNNER_TEMP/first/"
+          done
+          ls -l "$RUNNER_TEMP/first"
+
+      - name: Build arm64 again and refuse to publish what we cannot repeat
+        run: |
+          set -euo pipefail
+          export PUB_CACHE="$PWD/.pub-cache"
+          rm -rf build
+          flutter build apk --release --split-per-abi --target-platform=android-arm64
+          python3 - "$RUNNER_TEMP/first/app-arm64-v8a-release.apk" \
+                    build/app/outputs/flutter-apk/app-arm64-v8a-release.apk <<'PY'
+          import sys, zipfile, hashlib
+          def digest(path):
+              with zipfile.ZipFile(path) as z:
+                  return {n: hashlib.sha256(z.read(n)).hexdigest()
+                          for n in z.namelist() if not n.startswith('META-INF/')}
+          a, b = digest(sys.argv[1]), digest(sys.argv[2])
+          only_a, only_b = sorted(set(a) - set(b)), sorted(set(b) - set(a))
+          diff = sorted(n for n in set(a) & set(b) if a[n] != b[n])
+          print(f'{len(a)} entries compared, signatures ignored')
+          for n in only_a: print('  only in the first build :', n)
+          for n in only_b: print('  only in the second build:', n)
+          for n in diff:   print('  differs between builds  :', n)
+          if only_a or only_b or diff:
+              print('NOT REPRODUCIBLE — two builds of one commit, at one path, disagree.')
+              sys.exit(1)
+          print('Reproducible across repeated builds.')
+          PY
+
+      - name: Name the APKs the way the recipe asks for them
+        id: assets
+        run: |
+          set -euo pipefail
+          NAME=$(sed -n 's/^version: //p' pubspec.yaml | tr -d ' ' | cut -d+ -f1)
+          OUT="$RUNNER_TEMP/assets"; mkdir -p "$OUT"
+          for abi in armeabi-v7a arm64-v8a x86_64; do
+            cp "$RUNNER_TEMP/first/app-$abi-release.apk" "$OUT/deskilo-$NAME-$abi.apk"
+          done
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+          ls -l "$OUT"
+
+      - name: Check every APK carries the key the recipe allows
+        run: |
+          set -euo pipefail
+          APKSIGNER=$(ls "$ANDROID_SDK_ROOT"/build-tools/*/apksigner | sort -V | tail -1)
+          for apk in "$RUNNER_TEMP"/assets/*.apk; do
+            GOT=$("$APKSIGNER" verify --print-certs "$apk" \
+                  | sed -n 's/.*SHA-256 digest: *//p' | head -1)
+            echo "$(basename "$apk") -> $GOT"
+            if [ "$GOT" != "${{ inputs.expect_cert_sha256 }}" ]; then
+              echo "signed with a key the recipe does not allow" >&2
+              exit 1
+            fi
+          done
+
+      - name: Publish them on the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+          VERSION: ${{ steps.assets.outputs.name }}
+          CERT: ${{ inputs.expect_cert_sha256 }}
+        run: |
+          set -euo pipefail
+          SHA=$(git rev-parse HEAD)
+          NOTES=$(cat <<TEXT
+          Libre build of DesKilo $VERSION, one APK per ABI.
+
+          Built from $SHA with the push transport swapped for its FOSS twin: no
+          Firebase, no Google Play Services. This is the binary F-Droid rebuilds
+          and verifies before publishing it. The Play build is a different
+          artifact and carries a different signature.
+
+          Signing certificate SHA-256: $CERT
+          TEXT
+          )
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$RUNNER_TEMP"/assets/*.apk --clobber
+          else
+            gh release create "$TAG" --target "$SHA" \
+              --title "DesKilo $VERSION (libre)" \
+              --notes "$NOTES" "$RUNNER_TEMP"/assets/*.apk
+          fi
