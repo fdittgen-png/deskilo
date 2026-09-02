@@ -2456,6 +2456,8 @@
       }
     }
   },
+  "moneyInvoicesArchiveButton": "Toutes mes factures · archives et PDF",
+  "moneyInvoicingHubButton": "Émettre, relancer, encaisser · facturation",
   "eventTypeMemberJoin": "Nouveau membre",
   "memberStatusPending": "En attente",
   "pendingApprovalTitle": "En attente d'approbation",

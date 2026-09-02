@@ -7040,6 +7040,18 @@ abstract class AppLocalizations {
   /// **'{amount} outstanding'**
   String journeyOutstanding(String amount);
 
+  /// No description provided for @moneyInvoicesArchiveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'All my invoices · archive & PDFs'**
+  String get moneyInvoicesArchiveButton;
+
+  /// No description provided for @moneyInvoicingHubButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue, remind, collect · invoicing'**
+  String get moneyInvoicingHubButton;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

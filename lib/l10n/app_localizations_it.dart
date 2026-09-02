@@ -4042,6 +4042,14 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get moneyInvoicesArchiveButton =>
+      'Tutte le mie fatture · archivio e PDF';
+
+  @override
+  String get moneyInvoicingHubButton =>
+      'Emettere, sollecitare, incassare · fatturazione';
+
+  @override
   String get eventTypeMemberJoin => 'Nuovo membro';
 
   @override

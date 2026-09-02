@@ -1491,5 +1491,7 @@
   "@journeyPrimaryRemind": {"placeholders": {"level": {"type": "int"}}},
   "journeyPrimaryConfirmInEvents": "Open Events",
   "journeyOutstanding": "{amount} outstanding",
-  "@journeyOutstanding": {"placeholders": {"amount": {"type": "String"}}}
+  "@journeyOutstanding": {"placeholders": {"amount": {"type": "String"}}},
+  "moneyInvoicesArchiveButton": "All my invoices · archive & PDFs",
+  "moneyInvoicingHubButton": "Issue, remind, collect · invoicing"
 }

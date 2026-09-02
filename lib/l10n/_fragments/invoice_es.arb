@@ -835,5 +835,7 @@
   "@journeyPrimaryRemind": {"placeholders": {"level": {"type": "int"}}},
   "journeyPrimaryConfirmInEvents": "Abrir Eventos",
   "journeyOutstanding": "{amount} pendientes",
-  "@journeyOutstanding": {"placeholders": {"amount": {"type": "String"}}}
+  "@journeyOutstanding": {"placeholders": {"amount": {"type": "String"}}},
+  "moneyInvoicesArchiveButton": "Todas mis facturas · archivo y PDF",
+  "moneyInvoicingHubButton": "Emitir, recordar, cobrar · facturación"
 }

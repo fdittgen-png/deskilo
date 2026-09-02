@@ -2456,6 +2456,8 @@
       }
     }
   },
+  "moneyInvoicesArchiveButton": "Alle meine Rechnungen · Archiv & PDFs",
+  "moneyInvoicingHubButton": "Ausstellen, mahnen, einziehen · Fakturierung",
   "eventTypeMemberJoin": "Neues Mitglied",
   "memberStatusPending": "Ausstehend",
   "pendingApprovalTitle": "Warten auf Freigabe",
