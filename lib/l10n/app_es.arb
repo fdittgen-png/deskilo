@@ -1158,6 +1158,24 @@
   "eventTypeExpenseSchedule": "Gasto programado",
   "eventExpenseScheduleLine": "{actor} programa «{title}» — {amount} recurrente",
   "eventExpenseDeviation": "validado {scheduled} — {reason}",
+  "eventExpenseRepartitionLine": "{actor} reparte «{title}»: {amount} entre {count} socios",
+  "@eventExpenseRepartitionLine": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "eventTypeExpenseRepartition": "Gasto compartido",
   "featuresTitle": "Funciones",
   "featureCalendarTab": "Pestaña Calendario",
   "featureCalendarTabDesc": "Vista mensual de reservas y días de cierre.",
@@ -1341,6 +1359,8 @@
   "featureMemberPageDesc": "Una página por socio: foto y presencia, última conexión, reservas actuales y próximas, acciones rápidas (mensaje, WhatsApp, correo), tarjetas de contacto y finanzas y, para los admins, cada ajuste agrupado por tema con su valor actual. Desactivado: la hoja de perfil y la hoja de acciones de Socios y planes.",
   "featureInvoicingWizardTitle": "Asistente de facturación",
   "featureInvoicingWizardDesc": "Un proceso guiado de cierre mensual para la persona de finanzas: una pasada de inicio de mes para las suscripciones pagadas por adelantado y otra de fin de mes para el uso y los cargos adicionales — revisión, emisión en lote, envío, recordatorios vencidos, registro y validación de pagos, conciliación con facturas, reagrupación, anulación o reembolso, y un resumen con lo que queda y a quién le toca. Desactivado: las pantallas separadas.",
+  "featureExpenseRepartitionTitle": "Gastos compartidos",
+  "featureExpenseRepartitionDesc": "Un gasto común (limpieza, mejora de internet, una silla rota) repartido entre los socios — partes iguales, prorrata de la suscripción, prorrata del uso o una clave por socio — con cada parte previsualizada antes de contabilizarse. Las partes se convierten en líneas de la próxima factura de uso; una reversión genera notas de crédito. Pasa por las reglas de validación. Desactivado: sin reparto.",
   "helpTitle": "Ayuda",
   "helpContents": "Índice",
   "helpHintMessages": "Todas las conversaciones en una lista, la más reciente arriba. Toque el lápiz para escribir a alguien o crear un grupo.",
@@ -2714,6 +2734,41 @@
   "registerPaymentNote": "Nota",
   "registerPaymentSubmit": "Registrar",
   "registerPaymentDone": "Pago registrado: el socio lo confirma por su parte.",
+  "repartitionAction": "Repartir un gasto",
+  "repartitionTitle": "Repartir un gasto",
+  "repartitionHint": "Reparta un coste común entre los socios. Las partes se convierten en líneas de la próxima factura de uso de cada uno; una reversión devuelve el dinero como notas de crédito.",
+  "repartitionTitleField": "Concepto",
+  "repartitionAmount": "Importe total",
+  "repartitionReverse": "Reversión — devolver como notas de crédito",
+  "repartitionMethod": "Repartir por",
+  "repartitionMethodEqual": "Partes iguales",
+  "repartitionMethodSubscription": "Suscripción",
+  "repartitionMethodUsage": "Uso",
+  "repartitionMethodCustom": "Clave propia",
+  "repartitionPeriod": "Se imputa a",
+  "repartitionWeight": "Clave",
+  "repartitionPreview": "Partes",
+  "repartitionNoShares": "Nadie lleva una parte: revise la clave.",
+  "repartitionSum": "{count, plural, =1{1 socio · {amount}} other{{count} socios · {amount}}}",
+  "@repartitionSum": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "repartitionSubmit": "Contabilizar las partes",
+  "repartitionFiled": "Partes contabilizadas: aparecerán en la próxima factura de uso.",
+  "repartitionFiledPending": "Partes presentadas: se contabilizan tras la validación.",
+  "repartitionHistory": "Repartos",
+  "repartitionHistoryEmpty": "Ningún reparto todavía.",
+  "repartitionStatusPending": "Pendiente de validación",
+  "repartitionStatusConfirmed": "Contabilizado",
+  "repartitionStatusRejected": "Rechazado",
+  "repartitionStatusExpired": "Caducado",
   "eventTypeMemberJoin": "Nuevo miembro",
   "memberStatusPending": "Pendiente",
   "pendingApprovalTitle": "Esperando aprobación",

@@ -1158,6 +1158,24 @@
   "eventTypeExpenseSchedule": "Dépense programmée",
   "eventExpenseScheduleLine": "{actor} programme « {title} » — {amount} récurrent",
   "eventExpenseDeviation": "validé {scheduled} — {reason}",
+  "eventExpenseRepartitionLine": "{actor} répartit « {title} » — {amount} entre {count} membres",
+  "@eventExpenseRepartitionLine": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "eventTypeExpenseRepartition": "Dépense partagée",
   "featuresTitle": "Fonctionnalités",
   "featureCalendarTab": "Onglet Calendrier",
   "featureCalendarTabDesc": "Vue mensuelle des réservations et jours de fermeture.",
@@ -1341,6 +1359,8 @@
   "featureMemberPageDesc": "Une page par membre : photo et présence, dernière connexion, réservations en cours et à venir, actions rapides (message, WhatsApp, e-mail), cartes contact et finances, et pour les admins chaque réglage regroupé par thème avec sa valeur actuelle. Désactivé : la feuille de profil et la feuille d'actions de Membres & forfaits.",
   "featureInvoicingWizardTitle": "Assistant de facturation",
   "featureInvoicingWizardDesc": "Un processus guidé de clôture mensuelle pour le responsable financier : une passe de début de mois pour les abonnements payés d'avance et une passe de fin de mois pour la consommation et les frais supplémentaires — revue, émission en lot, envoi, relances dues, enregistrement et validation des paiements, rapprochement avec les factures, regroupement, abandon de créance ou remboursement, et un récapitulatif avec ce qui reste à faire et par qui. Désactivé : les écrans séparés.",
+  "featureExpenseRepartitionTitle": "Dépenses partagées",
+  "featureExpenseRepartitionDesc": "Une dépense commune (ménage, montée en débit internet, chaise cassée) répartie entre les membres — parts égales, au prorata de l'abonnement, au prorata de l'usage, ou une clé par membre — chaque part prévisualisée avant d'être comptabilisée. Les parts deviennent des lignes de la prochaine facture de consommation ; une annulation produit des avoirs. Passe par les règles de validation. Désactivé : pas de répartition.",
   "helpTitle": "Aide",
   "helpContents": "Sommaire",
   "helpHintMessages": "Toutes vos conversations dans une liste, la plus récente en haut. Touchez le crayon pour écrire à quelqu’un ou créer un groupe.",
@@ -2714,6 +2734,41 @@
   "registerPaymentNote": "Note",
   "registerPaymentSubmit": "Enregistrer",
   "registerPaymentDone": "Paiement enregistré — le membre le confirme de son côté.",
+  "repartitionAction": "Répartir une dépense",
+  "repartitionTitle": "Répartir une dépense",
+  "repartitionHint": "Répartissez un coût commun entre les membres. Les parts deviennent des lignes de la prochaine facture de consommation de chacun ; une annulation rend l'argent sous forme d'avoirs.",
+  "repartitionTitleField": "Objet",
+  "repartitionAmount": "Montant total",
+  "repartitionReverse": "Annulation — rendre sous forme d'avoirs",
+  "repartitionMethod": "Répartir selon",
+  "repartitionMethodEqual": "Parts égales",
+  "repartitionMethodSubscription": "Abonnement",
+  "repartitionMethodUsage": "Usage",
+  "repartitionMethodCustom": "Clé personnalisée",
+  "repartitionPeriod": "Imputé sur",
+  "repartitionWeight": "Clé",
+  "repartitionPreview": "Parts",
+  "repartitionNoShares": "Personne ne porte de part — vérifiez la clé.",
+  "repartitionSum": "{count, plural, =1{1 membre · {amount}} other{{count} membres · {amount}}}",
+  "@repartitionSum": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "repartitionSubmit": "Comptabiliser les parts",
+  "repartitionFiled": "Parts comptabilisées — elles apparaîtront sur la prochaine facture de consommation.",
+  "repartitionFiledPending": "Parts déposées — elles seront comptabilisées après validation.",
+  "repartitionHistory": "Répartitions",
+  "repartitionHistoryEmpty": "Aucune répartition pour l'instant.",
+  "repartitionStatusPending": "En attente de validation",
+  "repartitionStatusConfirmed": "Comptabilisée",
+  "repartitionStatusRejected": "Refusée",
+  "repartitionStatusExpired": "Expirée",
   "eventTypeMemberJoin": "Nouveau membre",
   "memberStatusPending": "En attente",
   "pendingApprovalTitle": "En attente d'approbation",

@@ -29,5 +29,7 @@ String eventTypeLabel(AppLocalizations? l10n, EventType type) {
       l10n?.eventTypePriceNegotiation ?? 'Price negotiation',
     EventType.expenseSchedule =>
       l10n?.eventTypeExpenseSchedule ?? 'Scheduled expense',
+    EventType.expenseRepartition =>
+      l10n?.eventTypeExpenseRepartition ?? 'Shared expense',
   };
 }

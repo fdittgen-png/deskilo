@@ -88,5 +88,23 @@
   "validationPickPersons": "Personen wählen",
   "eventTypeExpenseSchedule": "Geplante Ausgabe",
   "eventExpenseScheduleLine": "{actor} plant „{title}“ — {amount} wiederkehrend",
-  "eventExpenseDeviation": "validiert {scheduled} — {reason}"
+  "eventExpenseDeviation": "validiert {scheduled} — {reason}",
+  "eventExpenseRepartitionLine": "{actor} verteilt „{title}“ — {amount} auf {count} Mitglieder",
+  "@eventExpenseRepartitionLine": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "eventTypeExpenseRepartition": "Gemeinsame Ausgabe"
 }

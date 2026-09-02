@@ -14,6 +14,7 @@ import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
 import '../widgets/dunning_rules_dialog.dart';
 import '../widgets/settlement_sheet.dart';
+import '../widgets/expense_repartition_sheet.dart';
 import '../widgets/wizard_context.dart';
 import '../widgets/invoice_template_sheet.dart';
 import '../widgets/invoice_archive_tab.dart';
@@ -107,6 +108,16 @@ class InvoicesScreen extends ConsumerWidget {
           )
         : null;
 
+    // #828 — a shared expense split over the members.
+    final repartitionAction =
+        (canIssue && features.contains(WorkspaceFeature.expenseRepartition))
+            ? IconButton(
+                key: const ValueKey('invoice-distribute-button'),
+                tooltip: l10n?.repartitionAction ?? 'Distribute an expense',
+                icon: const Icon(Icons.call_split),
+                onPressed: () => showExpenseRepartitionSheet(context, ref),
+              )
+            : null;
     // #827 — the guided month-close process.
     final wizardAction =
         (canIssue && features.contains(WorkspaceFeature.invoicingWizard))
@@ -200,6 +211,7 @@ class InvoicesScreen extends ConsumerWidget {
           title: Text(l10n?.invoicesTitle ?? 'Invoices'),
           actions: [
             ?templateAction,
+            ?repartitionAction,
             ?wizardAction,
             ?settlementAction,
             ?dunningAction,

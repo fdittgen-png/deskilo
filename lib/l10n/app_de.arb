@@ -1158,6 +1158,24 @@
   "eventTypeExpenseSchedule": "Geplante Ausgabe",
   "eventExpenseScheduleLine": "{actor} plant „{title}“ — {amount} wiederkehrend",
   "eventExpenseDeviation": "validiert {scheduled} — {reason}",
+  "eventExpenseRepartitionLine": "{actor} verteilt „{title}“ — {amount} auf {count} Mitglieder",
+  "@eventExpenseRepartitionLine": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "eventTypeExpenseRepartition": "Gemeinsame Ausgabe",
   "featuresTitle": "Funktionen",
   "featureCalendarTab": "Kalender-Tab",
   "featureCalendarTabDesc": "Monatsübersicht über Buchungen und Schließtage.",
@@ -1341,6 +1359,8 @@
   "featureMemberPageDesc": "Eine Seite pro Mitglied: Foto und Präsenz, zuletzt gesehen, aktuelle und kommende Buchungen, Schnellaktionen (Nachricht, WhatsApp, E-Mail), Kontakt- und Finanzkarten und für Admins jede Einstellung nach Thema gruppiert mit ihrem aktuellen Wert. Aus: das Profilblatt und das Aktionsblatt von Mitglieder & Tarife.",
   "featureInvoicingWizardTitle": "Rechnungsassistent",
   "featureInvoicingWizardDesc": "Ein geführter Monatsabschluss für die Finanzperson: ein Monatsanfangslauf für die im Voraus bezahlten Abonnements und ein Monatsendlauf für Nutzung und Zusatzkosten — Prüfung, Ausstellung im Stapel, Versand, fällige Mahnungen, Erfassen und Bestätigen von Zahlungen, Zuordnen zu Rechnungen, Zusammenfassen, Abschreiben oder Erstatten, und eine Zusammenfassung mit dem, was offen bleibt und wer am Zug ist. Aus: die einzelnen Bildschirme.",
+  "featureExpenseRepartitionTitle": "Gemeinsame Ausgaben",
+  "featureExpenseRepartitionDesc": "Eine gemeinsame Ausgabe (Reinigung, schnelleres Internet, ein kaputter Stuhl) auf die Mitglieder verteilt — gleiche Anteile, anteilig zum Abonnement, anteilig zur Nutzung oder ein Schlüssel je Mitglied — jeder Anteil vor der Buchung in der Vorschau. Die Anteile werden Positionen der nächsten Nutzungsrechnung; eine Umkehrung bucht Gutschriften. Läuft über die Bestätigungsregeln. Aus: keine Verteilung.",
   "helpTitle": "Hilfe",
   "helpContents": "Inhalt",
   "helpHintMessages": "Alle Unterhaltungen in einer Liste, die neueste oben. Tippen Sie auf den Stift, um jemandem zu schreiben oder eine Gruppe zu erstellen.",
@@ -2714,6 +2734,41 @@
   "registerPaymentNote": "Notiz",
   "registerPaymentSubmit": "Erfassen",
   "registerPaymentDone": "Zahlung erfasst — das Mitglied bestätigt sie von seiner Seite.",
+  "repartitionAction": "Ausgabe verteilen",
+  "repartitionTitle": "Ausgabe verteilen",
+  "repartitionHint": "Verteilen Sie gemeinsame Kosten auf die Mitglieder. Die Anteile werden Positionen der nächsten Nutzungsrechnung jedes Mitglieds; eine Umkehrung gibt das Geld als Gutschriften zurück.",
+  "repartitionTitleField": "Wofür",
+  "repartitionAmount": "Gesamtbetrag",
+  "repartitionReverse": "Umkehrung — als Gutschriften zurückgeben",
+  "repartitionMethod": "Verteilen nach",
+  "repartitionMethodEqual": "Gleich",
+  "repartitionMethodSubscription": "Abonnement",
+  "repartitionMethodUsage": "Nutzung",
+  "repartitionMethodCustom": "Eigener Schlüssel",
+  "repartitionPeriod": "Gebucht auf",
+  "repartitionWeight": "Schlüssel",
+  "repartitionPreview": "Anteile",
+  "repartitionNoShares": "Niemand trägt einen Anteil — prüfen Sie den Schlüssel.",
+  "repartitionSum": "{count, plural, =1{1 Mitglied · {amount}} other{{count} Mitglieder · {amount}}}",
+  "@repartitionSum": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "repartitionSubmit": "Anteile buchen",
+  "repartitionFiled": "Anteile gebucht — sie erscheinen auf der nächsten Nutzungsrechnung.",
+  "repartitionFiledPending": "Anteile eingereicht — sie werden nach der Bestätigung gebucht.",
+  "repartitionHistory": "Verteilungen",
+  "repartitionHistoryEmpty": "Noch keine Verteilung.",
+  "repartitionStatusPending": "Wartet auf Bestätigung",
+  "repartitionStatusConfirmed": "Gebucht",
+  "repartitionStatusRejected": "Abgelehnt",
+  "repartitionStatusExpired": "Abgelaufen",
   "eventTypeMemberJoin": "Neues Mitglied",
   "memberStatusPending": "Ausstehend",
   "pendingApprovalTitle": "Warten auf Freigabe",

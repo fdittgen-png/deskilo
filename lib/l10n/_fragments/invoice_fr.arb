@@ -1175,5 +1175,40 @@
   "registerPaymentDate": "Payé le",
   "registerPaymentNote": "Note",
   "registerPaymentSubmit": "Enregistrer",
-  "registerPaymentDone": "Paiement enregistré — le membre le confirme de son côté."
+  "registerPaymentDone": "Paiement enregistré — le membre le confirme de son côté.",
+  "repartitionAction": "Répartir une dépense",
+  "repartitionTitle": "Répartir une dépense",
+  "repartitionHint": "Répartissez un coût commun entre les membres. Les parts deviennent des lignes de la prochaine facture de consommation de chacun ; une annulation rend l'argent sous forme d'avoirs.",
+  "repartitionTitleField": "Objet",
+  "repartitionAmount": "Montant total",
+  "repartitionReverse": "Annulation — rendre sous forme d'avoirs",
+  "repartitionMethod": "Répartir selon",
+  "repartitionMethodEqual": "Parts égales",
+  "repartitionMethodSubscription": "Abonnement",
+  "repartitionMethodUsage": "Usage",
+  "repartitionMethodCustom": "Clé personnalisée",
+  "repartitionPeriod": "Imputé sur",
+  "repartitionWeight": "Clé",
+  "repartitionPreview": "Parts",
+  "repartitionNoShares": "Personne ne porte de part — vérifiez la clé.",
+  "repartitionSum": "{count, plural, =1{1 membre · {amount}} other{{count} membres · {amount}}}",
+  "@repartitionSum": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "repartitionSubmit": "Comptabiliser les parts",
+  "repartitionFiled": "Parts comptabilisées — elles apparaîtront sur la prochaine facture de consommation.",
+  "repartitionFiledPending": "Parts déposées — elles seront comptabilisées après validation.",
+  "repartitionHistory": "Répartitions",
+  "repartitionHistoryEmpty": "Aucune répartition pour l'instant.",
+  "repartitionStatusPending": "En attente de validation",
+  "repartitionStatusConfirmed": "Comptabilisée",
+  "repartitionStatusRejected": "Refusée",
+  "repartitionStatusExpired": "Expirée"
 }

@@ -1872,6 +1872,19 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String eventExpenseRepartitionLine(
+    String actor,
+    String title,
+    String amount,
+    int count,
+  ) {
+    return '$actor répartit « $title » — $amount entre $count membres';
+  }
+
+  @override
+  String get eventTypeExpenseRepartition => 'Dépense partagée';
+
+  @override
   String get featuresTitle => 'Fonctionnalités';
 
   @override
@@ -2311,6 +2324,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureInvoicingWizardDesc =>
       'Un processus guidé de clôture mensuelle pour le responsable financier : une passe de début de mois pour les abonnements payés d\'avance et une passe de fin de mois pour la consommation et les frais supplémentaires — revue, émission en lot, envoi, relances dues, enregistrement et validation des paiements, rapprochement avec les factures, regroupement, abandon de créance ou remboursement, et un récapitulatif avec ce qui reste à faire et par qui. Désactivé : les écrans séparés.';
+
+  @override
+  String get featureExpenseRepartitionTitle => 'Dépenses partagées';
+
+  @override
+  String get featureExpenseRepartitionDesc =>
+      'Une dépense commune (ménage, montée en débit internet, chaise cassée) répartie entre les membres — parts égales, au prorata de l\'abonnement, au prorata de l\'usage, ou une clé par membre — chaque part prévisualisée avant d\'être comptabilisée. Les parts deviennent des lignes de la prochaine facture de consommation ; une annulation produit des avoirs. Passe par les règles de validation. Désactivé : pas de répartition.';
 
   @override
   String get helpTitle => 'Aide';
@@ -4537,6 +4557,93 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get registerPaymentDone =>
       'Paiement enregistré — le membre le confirme de son côté.';
+
+  @override
+  String get repartitionAction => 'Répartir une dépense';
+
+  @override
+  String get repartitionTitle => 'Répartir une dépense';
+
+  @override
+  String get repartitionHint =>
+      'Répartissez un coût commun entre les membres. Les parts deviennent des lignes de la prochaine facture de consommation de chacun ; une annulation rend l\'argent sous forme d\'avoirs.';
+
+  @override
+  String get repartitionTitleField => 'Objet';
+
+  @override
+  String get repartitionAmount => 'Montant total';
+
+  @override
+  String get repartitionReverse => 'Annulation — rendre sous forme d\'avoirs';
+
+  @override
+  String get repartitionMethod => 'Répartir selon';
+
+  @override
+  String get repartitionMethodEqual => 'Parts égales';
+
+  @override
+  String get repartitionMethodSubscription => 'Abonnement';
+
+  @override
+  String get repartitionMethodUsage => 'Usage';
+
+  @override
+  String get repartitionMethodCustom => 'Clé personnalisée';
+
+  @override
+  String get repartitionPeriod => 'Imputé sur';
+
+  @override
+  String get repartitionWeight => 'Clé';
+
+  @override
+  String get repartitionPreview => 'Parts';
+
+  @override
+  String get repartitionNoShares =>
+      'Personne ne porte de part — vérifiez la clé.';
+
+  @override
+  String repartitionSum(int count, String amount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count membres · $amount',
+      one: '1 membre · $amount',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get repartitionSubmit => 'Comptabiliser les parts';
+
+  @override
+  String get repartitionFiled =>
+      'Parts comptabilisées — elles apparaîtront sur la prochaine facture de consommation.';
+
+  @override
+  String get repartitionFiledPending =>
+      'Parts déposées — elles seront comptabilisées après validation.';
+
+  @override
+  String get repartitionHistory => 'Répartitions';
+
+  @override
+  String get repartitionHistoryEmpty => 'Aucune répartition pour l\'instant.';
+
+  @override
+  String get repartitionStatusPending => 'En attente de validation';
+
+  @override
+  String get repartitionStatusConfirmed => 'Comptabilisée';
+
+  @override
+  String get repartitionStatusRejected => 'Refusée';
+
+  @override
+  String get repartitionStatusExpired => 'Expirée';
 
   @override
   String get eventTypeMemberJoin => 'Nouveau membre';

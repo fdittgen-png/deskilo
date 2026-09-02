@@ -123,7 +123,11 @@ enum WorkspaceFeature {
   memberPage,
 
   /// #827 — the invoicing wizard: one guided month-close process.
-  invoicingWizard;
+  invoicingWizard,
+
+  /// #828 — shared expenses distributed over the members, reversals as
+  /// credit notes.
+  expenseRepartition;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -413,6 +417,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // #827 — the guided month-close process over the invoicing hub.
   WorkspaceFeature.invoicingWizard: FeatureManifestEntry(
     feature: WorkspaceFeature.invoicingWizard,
+    requires: WorkspaceFeature.invoicing,
+  ),
+  // #828 — a shared expense split over the members onto their next
+  // usage invoice; the reverse as credit notes.
+  WorkspaceFeature.expenseRepartition: FeatureManifestEntry(
+    feature: WorkspaceFeature.expenseRepartition,
     requires: WorkspaceFeature.invoicing,
   ),
   // #719 — "who accessed my data": the server-written log of reads of

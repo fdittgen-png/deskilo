@@ -7,6 +7,7 @@ import '../domain/invoice.dart';
 import '../domain/vat_declaration.dart';
 import '../domain/member_account.dart';
 import '../domain/billing_rules.dart';
+import '../domain/expense_repartition.dart';
 import '../domain/dunning.dart';
 import '../domain/price_negotiation.dart';
 import '../domain/invoice_pdf_template.dart';
@@ -316,6 +317,42 @@ class SupabaseMoneyRepository implements MoneyRepository {
       'p_workspace_id': workspaceId,
       'p_rules': rules.toJson(),
     });
+  }
+
+  @override
+  Future<String> distributeExpense({
+    required String workspaceId,
+    required String title,
+    required int amountCents,
+    required RepartitionMethod method,
+    required String period,
+    required List<RepartitionShare> shares,
+    String? sourceEventId,
+  }) async {
+    final id = await _client.rpc<dynamic>('distribute_expense', params: {
+      'p_workspace_id': workspaceId,
+      'p_title': title,
+      'p_amount_cents': amountCents,
+      'p_method': method.name,
+      'p_period': period,
+      'p_shares': [for (final s in shares) s.toJson()],
+      'p_source_event_id': sourceEventId,
+    });
+    return id as String;
+  }
+
+  @override
+  Future<List<ExpenseRepartition>> fetchExpenseRepartitions(
+      String workspaceId) async {
+    final rows = await _client
+        .from('expense_repartitions')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('created_at', ascending: false);
+    return [
+      for (final row in rows)
+        ExpenseRepartition.fromJson(Map<String, dynamic>.from(row as Map)),
+    ];
   }
 
   @override

@@ -143,6 +143,8 @@ const Map<String, int> _baseline = {
   // #825 (2026-09-02): the member page and the shared admin actions.
   'lib/features/members/presentation/screens/member_page.dart': 840,
   'lib/features/workspace/presentation/member_admin_actions.dart': 720,
+  // #828 (2026-09-02): the expense_repartition flag and repository methods.
+  'lib/features/workspace/domain/workspace_feature.dart': 640,
   'lib/features/money/presentation/widgets/report_visual_editor.dart': 1000, // 2026-09-02 #822 drag, insert palette, image controls, move-to-band
   // 660→700 (2026-08-05): #494 the three further document chips + their
   // live data and letter-PDF branches.
@@ -175,7 +177,7 @@ const Map<String, int> _baseline = {
   // the manual sweep trigger.
   // 1150→1165 (2026-09-01): #804 the settle_invoices call.
   // 1165→1180 (2026-09-01): #816 the rules writers go through gated RPCs.
-  'lib/features/money/data/supabase_money_repository.dart': 1180, // 2026-08-30 #739 negotiation RPCs
+  'lib/features/money/data/supabase_money_repository.dart': 1220, // 2026-08-30 #739 negotiation RPCs
   // 600→630 (2026-08-11): #537 VAT price transparency — the gross-price
   // hint + per-pack VAT/currency subtitles (labeling, no new concern).
   // 630→660 (2026-08-11): #537 follow-up — live VAT-share helpers under

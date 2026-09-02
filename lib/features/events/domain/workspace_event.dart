@@ -54,6 +54,9 @@ enum EventType {
   /// its occurrences; rejected → it never runs.
   expenseSchedule('expense_schedule'),
 
+  /// #828 — a shared expense distributed over the members (0147).
+  expenseRepartition('expense_repartition'),
+
   /// Cancelling the outstanding remainder of a PARTIALLY PAID invoice
   /// (0100, #504): confirm writes the remainder off and archives the
   /// invoice; reject keeps it open and owed. Another person decides.

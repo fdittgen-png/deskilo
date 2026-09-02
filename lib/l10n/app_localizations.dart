@@ -3356,6 +3356,23 @@ abstract class AppLocalizations {
   /// **'validated {scheduled} — {reason}'**
   String eventExpenseDeviation(Object reason, Object scheduled);
 
+  /// No description provided for @eventExpenseRepartitionLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} distributes “{title}” — {amount} over {count} members'**
+  String eventExpenseRepartitionLine(
+    String actor,
+    String title,
+    String amount,
+    int count,
+  );
+
+  /// No description provided for @eventTypeExpenseRepartition.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared expense'**
+  String get eventTypeExpenseRepartition;
+
   /// App-bar title of the owner feature-management screen and its settings tile
   ///
   /// In en, this message translates to:
@@ -4093,6 +4110,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'One guided month-close process for the finance person: a start-of-month run for the subscriptions paid ahead and an end-of-month run for usage and extra charges — review, issue in one batch, send, remind what is due, register and validate payments, match them to invoices, regroup, write off or refund, and a summary with whose move is left. Off: the separate screens.'**
   String get featureInvoicingWizardDesc;
+
+  /// No description provided for @featureExpenseRepartitionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared expenses'**
+  String get featureExpenseRepartitionTitle;
+
+  /// No description provided for @featureExpenseRepartitionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'A shared expense (a cleaning bill, an internet upgrade, a broken chair) split over the members — equal shares, pro rata of the subscription, pro rata of usage, or a key per member — with every share previewed before it is booked. The shares land as charge lines on the next usage invoice; a reversal books credit notes. Through the validation rules. Off: no distribution.'**
+  String get featureExpenseRepartitionDesc;
 
   /// No description provided for @helpTitle.
   ///
@@ -7879,6 +7908,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payment registered — the member confirms it from their side.'**
   String get registerPaymentDone;
+
+  /// No description provided for @repartitionAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Distribute an expense'**
+  String get repartitionAction;
+
+  /// No description provided for @repartitionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Distribute an expense'**
+  String get repartitionTitle;
+
+  /// No description provided for @repartitionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Split a shared cost over the members. The shares land as lines on each member\'s next usage invoice; a reversal gives the money back as credit notes.'**
+  String get repartitionHint;
+
+  /// No description provided for @repartitionTitleField.
+  ///
+  /// In en, this message translates to:
+  /// **'What for'**
+  String get repartitionTitleField;
+
+  /// No description provided for @repartitionAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Total amount'**
+  String get repartitionAmount;
+
+  /// No description provided for @repartitionReverse.
+  ///
+  /// In en, this message translates to:
+  /// **'Reversal — give back as credit notes'**
+  String get repartitionReverse;
+
+  /// No description provided for @repartitionMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Split by'**
+  String get repartitionMethod;
+
+  /// No description provided for @repartitionMethodEqual.
+  ///
+  /// In en, this message translates to:
+  /// **'Equal'**
+  String get repartitionMethodEqual;
+
+  /// No description provided for @repartitionMethodSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription'**
+  String get repartitionMethodSubscription;
+
+  /// No description provided for @repartitionMethodUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage'**
+  String get repartitionMethodUsage;
+
+  /// No description provided for @repartitionMethodCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom key'**
+  String get repartitionMethodCustom;
+
+  /// No description provided for @repartitionPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Lands on'**
+  String get repartitionPeriod;
+
+  /// No description provided for @repartitionWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Key'**
+  String get repartitionWeight;
+
+  /// No description provided for @repartitionPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Shares'**
+  String get repartitionPreview;
+
+  /// No description provided for @repartitionNoShares.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody carries a share — check the key.'**
+  String get repartitionNoShares;
+
+  /// No description provided for @repartitionSum.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 member · {amount}} other{{count} members · {amount}}}'**
+  String repartitionSum(int count, String amount);
+
+  /// No description provided for @repartitionSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Book the shares'**
+  String get repartitionSubmit;
+
+  /// No description provided for @repartitionFiled.
+  ///
+  /// In en, this message translates to:
+  /// **'Shares booked — they appear on the next usage invoice.'**
+  String get repartitionFiled;
+
+  /// No description provided for @repartitionFiledPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Shares filed — they book once validated.'**
+  String get repartitionFiledPending;
+
+  /// No description provided for @repartitionHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Distributions'**
+  String get repartitionHistory;
+
+  /// No description provided for @repartitionHistoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No distribution yet.'**
+  String get repartitionHistoryEmpty;
+
+  /// No description provided for @repartitionStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting validation'**
+  String get repartitionStatusPending;
+
+  /// No description provided for @repartitionStatusConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Booked'**
+  String get repartitionStatusConfirmed;
+
+  /// No description provided for @repartitionStatusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get repartitionStatusRejected;
+
+  /// No description provided for @repartitionStatusExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get repartitionStatusExpired;
 
   /// No description provided for @eventTypeMemberJoin.
   ///

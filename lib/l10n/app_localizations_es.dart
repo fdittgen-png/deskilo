@@ -1871,6 +1871,19 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String eventExpenseRepartitionLine(
+    String actor,
+    String title,
+    String amount,
+    int count,
+  ) {
+    return '$actor reparte «$title»: $amount entre $count socios';
+  }
+
+  @override
+  String get eventTypeExpenseRepartition => 'Gasto compartido';
+
+  @override
   String get featuresTitle => 'Funciones';
 
   @override
@@ -2307,6 +2320,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featureInvoicingWizardDesc =>
       'Un proceso guiado de cierre mensual para la persona de finanzas: una pasada de inicio de mes para las suscripciones pagadas por adelantado y otra de fin de mes para el uso y los cargos adicionales — revisión, emisión en lote, envío, recordatorios vencidos, registro y validación de pagos, conciliación con facturas, reagrupación, anulación o reembolso, y un resumen con lo que queda y a quién le toca. Desactivado: las pantallas separadas.';
+
+  @override
+  String get featureExpenseRepartitionTitle => 'Gastos compartidos';
+
+  @override
+  String get featureExpenseRepartitionDesc =>
+      'Un gasto común (limpieza, mejora de internet, una silla rota) repartido entre los socios — partes iguales, prorrata de la suscripción, prorrata del uso o una clave por socio — con cada parte previsualizada antes de contabilizarse. Las partes se convierten en líneas de la próxima factura de uso; una reversión genera notas de crédito. Pasa por las reglas de validación. Desactivado: sin reparto.';
 
   @override
   String get helpTitle => 'Ayuda';
@@ -4523,6 +4543,92 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get registerPaymentDone =>
       'Pago registrado: el socio lo confirma por su parte.';
+
+  @override
+  String get repartitionAction => 'Repartir un gasto';
+
+  @override
+  String get repartitionTitle => 'Repartir un gasto';
+
+  @override
+  String get repartitionHint =>
+      'Reparta un coste común entre los socios. Las partes se convierten en líneas de la próxima factura de uso de cada uno; una reversión devuelve el dinero como notas de crédito.';
+
+  @override
+  String get repartitionTitleField => 'Concepto';
+
+  @override
+  String get repartitionAmount => 'Importe total';
+
+  @override
+  String get repartitionReverse => 'Reversión — devolver como notas de crédito';
+
+  @override
+  String get repartitionMethod => 'Repartir por';
+
+  @override
+  String get repartitionMethodEqual => 'Partes iguales';
+
+  @override
+  String get repartitionMethodSubscription => 'Suscripción';
+
+  @override
+  String get repartitionMethodUsage => 'Uso';
+
+  @override
+  String get repartitionMethodCustom => 'Clave propia';
+
+  @override
+  String get repartitionPeriod => 'Se imputa a';
+
+  @override
+  String get repartitionWeight => 'Clave';
+
+  @override
+  String get repartitionPreview => 'Partes';
+
+  @override
+  String get repartitionNoShares => 'Nadie lleva una parte: revise la clave.';
+
+  @override
+  String repartitionSum(int count, String amount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count socios · $amount',
+      one: '1 socio · $amount',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get repartitionSubmit => 'Contabilizar las partes';
+
+  @override
+  String get repartitionFiled =>
+      'Partes contabilizadas: aparecerán en la próxima factura de uso.';
+
+  @override
+  String get repartitionFiledPending =>
+      'Partes presentadas: se contabilizan tras la validación.';
+
+  @override
+  String get repartitionHistory => 'Repartos';
+
+  @override
+  String get repartitionHistoryEmpty => 'Ningún reparto todavía.';
+
+  @override
+  String get repartitionStatusPending => 'Pendiente de validación';
+
+  @override
+  String get repartitionStatusConfirmed => 'Contabilizado';
+
+  @override
+  String get repartitionStatusRejected => 'Rechazado';
+
+  @override
+  String get repartitionStatusExpired => 'Caducado';
 
   @override
   String get eventTypeMemberJoin => 'Nuevo miembro';

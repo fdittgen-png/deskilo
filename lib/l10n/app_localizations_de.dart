@@ -1872,6 +1872,19 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String eventExpenseRepartitionLine(
+    String actor,
+    String title,
+    String amount,
+    int count,
+  ) {
+    return '$actor verteilt „$title“ — $amount auf $count Mitglieder';
+  }
+
+  @override
+  String get eventTypeExpenseRepartition => 'Gemeinsame Ausgabe';
+
+  @override
   String get featuresTitle => 'Funktionen';
 
   @override
@@ -2305,6 +2318,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureInvoicingWizardDesc =>
       'Ein geführter Monatsabschluss für die Finanzperson: ein Monatsanfangslauf für die im Voraus bezahlten Abonnements und ein Monatsendlauf für Nutzung und Zusatzkosten — Prüfung, Ausstellung im Stapel, Versand, fällige Mahnungen, Erfassen und Bestätigen von Zahlungen, Zuordnen zu Rechnungen, Zusammenfassen, Abschreiben oder Erstatten, und eine Zusammenfassung mit dem, was offen bleibt und wer am Zug ist. Aus: die einzelnen Bildschirme.';
+
+  @override
+  String get featureExpenseRepartitionTitle => 'Gemeinsame Ausgaben';
+
+  @override
+  String get featureExpenseRepartitionDesc =>
+      'Eine gemeinsame Ausgabe (Reinigung, schnelleres Internet, ein kaputter Stuhl) auf die Mitglieder verteilt — gleiche Anteile, anteilig zum Abonnement, anteilig zur Nutzung oder ein Schlüssel je Mitglied — jeder Anteil vor der Buchung in der Vorschau. Die Anteile werden Positionen der nächsten Nutzungsrechnung; eine Umkehrung bucht Gutschriften. Läuft über die Bestätigungsregeln. Aus: keine Verteilung.';
 
   @override
   String get helpTitle => 'Hilfe';
@@ -4524,6 +4544,93 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get registerPaymentDone =>
       'Zahlung erfasst — das Mitglied bestätigt sie von seiner Seite.';
+
+  @override
+  String get repartitionAction => 'Ausgabe verteilen';
+
+  @override
+  String get repartitionTitle => 'Ausgabe verteilen';
+
+  @override
+  String get repartitionHint =>
+      'Verteilen Sie gemeinsame Kosten auf die Mitglieder. Die Anteile werden Positionen der nächsten Nutzungsrechnung jedes Mitglieds; eine Umkehrung gibt das Geld als Gutschriften zurück.';
+
+  @override
+  String get repartitionTitleField => 'Wofür';
+
+  @override
+  String get repartitionAmount => 'Gesamtbetrag';
+
+  @override
+  String get repartitionReverse => 'Umkehrung — als Gutschriften zurückgeben';
+
+  @override
+  String get repartitionMethod => 'Verteilen nach';
+
+  @override
+  String get repartitionMethodEqual => 'Gleich';
+
+  @override
+  String get repartitionMethodSubscription => 'Abonnement';
+
+  @override
+  String get repartitionMethodUsage => 'Nutzung';
+
+  @override
+  String get repartitionMethodCustom => 'Eigener Schlüssel';
+
+  @override
+  String get repartitionPeriod => 'Gebucht auf';
+
+  @override
+  String get repartitionWeight => 'Schlüssel';
+
+  @override
+  String get repartitionPreview => 'Anteile';
+
+  @override
+  String get repartitionNoShares =>
+      'Niemand trägt einen Anteil — prüfen Sie den Schlüssel.';
+
+  @override
+  String repartitionSum(int count, String amount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Mitglieder · $amount',
+      one: '1 Mitglied · $amount',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get repartitionSubmit => 'Anteile buchen';
+
+  @override
+  String get repartitionFiled =>
+      'Anteile gebucht — sie erscheinen auf der nächsten Nutzungsrechnung.';
+
+  @override
+  String get repartitionFiledPending =>
+      'Anteile eingereicht — sie werden nach der Bestätigung gebucht.';
+
+  @override
+  String get repartitionHistory => 'Verteilungen';
+
+  @override
+  String get repartitionHistoryEmpty => 'Noch keine Verteilung.';
+
+  @override
+  String get repartitionStatusPending => 'Wartet auf Bestätigung';
+
+  @override
+  String get repartitionStatusConfirmed => 'Gebucht';
+
+  @override
+  String get repartitionStatusRejected => 'Abgelehnt';
+
+  @override
+  String get repartitionStatusExpired => 'Abgelaufen';
 
   @override
   String get eventTypeMemberJoin => 'Neues Mitglied';

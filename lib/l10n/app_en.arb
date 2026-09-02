@@ -2202,6 +2202,24 @@
   "eventTypeExpenseSchedule": "Scheduled expense",
   "eventExpenseScheduleLine": "{actor} schedules “{title}” — {amount} recurring",
   "eventExpenseDeviation": "validated {scheduled} — {reason}",
+  "eventExpenseRepartitionLine": "{actor} distributes “{title}” — {amount} over {count} members",
+  "@eventExpenseRepartitionLine": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "eventTypeExpenseRepartition": "Shared expense",
   "featuresTitle": "Features",
   "@featuresTitle": {
     "description": "App-bar title of the owner feature-management screen and its settings tile"
@@ -2529,6 +2547,8 @@
   "featureMemberPageDesc": "One page per member: photo and presence, when they were last seen, what they have booked and what comes next, quick actions to message, WhatsApp or e-mail them, contact and money cards, and for admins every setting grouped by topic with its current value. Off: the profile sheet and the Members & plans action sheet.",
   "featureInvoicingWizardTitle": "Invoicing wizard",
   "featureInvoicingWizardDesc": "One guided month-close process for the finance person: a start-of-month run for the subscriptions paid ahead and an end-of-month run for usage and extra charges — review, issue in one batch, send, remind what is due, register and validate payments, match them to invoices, regroup, write off or refund, and a summary with whose move is left. Off: the separate screens.",
+  "featureExpenseRepartitionTitle": "Shared expenses",
+  "featureExpenseRepartitionDesc": "A shared expense (a cleaning bill, an internet upgrade, a broken chair) split over the members — equal shares, pro rata of the subscription, pro rata of usage, or a key per member — with every share previewed before it is booked. The shares land as charge lines on the next usage invoice; a reversal books credit notes. Through the validation rules. Off: no distribution.",
   "helpTitle": "Help",
   "helpContents": "Contents",
   "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",
@@ -4614,6 +4634,41 @@
   "registerPaymentNote": "Note",
   "registerPaymentSubmit": "Register",
   "registerPaymentDone": "Payment registered — the member confirms it from their side.",
+  "repartitionAction": "Distribute an expense",
+  "repartitionTitle": "Distribute an expense",
+  "repartitionHint": "Split a shared cost over the members. The shares land as lines on each member's next usage invoice; a reversal gives the money back as credit notes.",
+  "repartitionTitleField": "What for",
+  "repartitionAmount": "Total amount",
+  "repartitionReverse": "Reversal — give back as credit notes",
+  "repartitionMethod": "Split by",
+  "repartitionMethodEqual": "Equal",
+  "repartitionMethodSubscription": "Subscription",
+  "repartitionMethodUsage": "Usage",
+  "repartitionMethodCustom": "Custom key",
+  "repartitionPeriod": "Lands on",
+  "repartitionWeight": "Key",
+  "repartitionPreview": "Shares",
+  "repartitionNoShares": "Nobody carries a share — check the key.",
+  "repartitionSum": "{count, plural, =1{1 member · {amount}} other{{count} members · {amount}}}",
+  "@repartitionSum": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "repartitionSubmit": "Book the shares",
+  "repartitionFiled": "Shares booked — they appear on the next usage invoice.",
+  "repartitionFiledPending": "Shares filed — they book once validated.",
+  "repartitionHistory": "Distributions",
+  "repartitionHistoryEmpty": "No distribution yet.",
+  "repartitionStatusPending": "Awaiting validation",
+  "repartitionStatusConfirmed": "Booked",
+  "repartitionStatusRejected": "Rejected",
+  "repartitionStatusExpired": "Expired",
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",
   "pendingApprovalTitle": "Awaiting approval",

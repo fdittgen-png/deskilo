@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/expense_schedule.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/invoicing_wizard.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
@@ -832,6 +833,66 @@ class FakeMoneyRepository implements MoneyRepository {
 
   /// Online-payment attempts the fake reports for the export (#395).
   final paymentIntents = <PaymentIntent>[];
+
+  /// #828 — the distributions filed; [repartitionPolicyConfigured] makes
+  /// them land pending (no ledger rows until a decision), else the
+  /// shares book at once as adjustment rows the derived lines pick up.
+  final repartitions = <ExpenseRepartition>[];
+  bool repartitionPolicyConfigured = false;
+  int _nextRepartition = 1;
+
+  @override
+  Future<String> distributeExpense({
+    required String workspaceId,
+    required String title,
+    required int amountCents,
+    required RepartitionMethod method,
+    required String period,
+    required List<RepartitionShare> shares,
+    String? sourceEventId,
+  }) async {
+    if (amountCents == 0) throw StateError('amount must not be zero');
+    if (shares.isEmpty) throw StateError('no shares');
+    if (shares.fold(0, (s, x) => s + x.amountCents) != amountCents) {
+      throw StateError('shares must add up to the amount');
+    }
+    final id = 'rep-${_nextRepartition++}';
+    final pending = repartitionPolicyConfigured;
+    if (!pending) {
+      for (final share in shares) {
+        ledger.add(LedgerEntry(
+          id: 'ledger-rep-$id-${share.memberId}',
+          memberId: share.memberId,
+          kind: amountCents > 0 ? LedgerKind.charge : LedgerKind.credit,
+          category: LedgerCategory.adjustment,
+          amountCents: share.amountCents.abs(),
+          description: title,
+          period: period,
+          createdAt: kTestNow,
+        ));
+      }
+    }
+    repartitions.insert(
+      0,
+      ExpenseRepartition(
+        id: id,
+        title: title,
+        amountCents: amountCents,
+        method: method,
+        period: period,
+        shares: shares,
+        status: pending ? 'pending' : 'confirmed',
+        createdAt: kTestNow,
+        appliedAt: pending ? null : kTestNow,
+      ),
+    );
+    return id;
+  }
+
+  @override
+  Future<List<ExpenseRepartition>> fetchExpenseRepartitions(
+          String workspaceId) async =>
+      List.of(repartitions);
 
   @override
   Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId) async =>

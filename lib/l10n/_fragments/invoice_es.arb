@@ -1175,5 +1175,40 @@
   "registerPaymentDate": "Pagado el",
   "registerPaymentNote": "Nota",
   "registerPaymentSubmit": "Registrar",
-  "registerPaymentDone": "Pago registrado: el socio lo confirma por su parte."
+  "registerPaymentDone": "Pago registrado: el socio lo confirma por su parte.",
+  "repartitionAction": "Repartir un gasto",
+  "repartitionTitle": "Repartir un gasto",
+  "repartitionHint": "Reparta un coste común entre los socios. Las partes se convierten en líneas de la próxima factura de uso de cada uno; una reversión devuelve el dinero como notas de crédito.",
+  "repartitionTitleField": "Concepto",
+  "repartitionAmount": "Importe total",
+  "repartitionReverse": "Reversión — devolver como notas de crédito",
+  "repartitionMethod": "Repartir por",
+  "repartitionMethodEqual": "Partes iguales",
+  "repartitionMethodSubscription": "Suscripción",
+  "repartitionMethodUsage": "Uso",
+  "repartitionMethodCustom": "Clave propia",
+  "repartitionPeriod": "Se imputa a",
+  "repartitionWeight": "Clave",
+  "repartitionPreview": "Partes",
+  "repartitionNoShares": "Nadie lleva una parte: revise la clave.",
+  "repartitionSum": "{count, plural, =1{1 socio · {amount}} other{{count} socios · {amount}}}",
+  "@repartitionSum": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "repartitionSubmit": "Contabilizar las partes",
+  "repartitionFiled": "Partes contabilizadas: aparecerán en la próxima factura de uso.",
+  "repartitionFiledPending": "Partes presentadas: se contabilizan tras la validación.",
+  "repartitionHistory": "Repartos",
+  "repartitionHistoryEmpty": "Ningún reparto todavía.",
+  "repartitionStatusPending": "Pendiente de validación",
+  "repartitionStatusConfirmed": "Contabilizado",
+  "repartitionStatusRejected": "Rechazado",
+  "repartitionStatusExpired": "Caducado"
 }
