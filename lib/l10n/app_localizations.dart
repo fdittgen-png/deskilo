@@ -3938,6 +3938,18 @@ abstract class AppLocalizations {
   /// **'The Calendar tab as agenda, week and month: per-day markers by kind, closed days drawn as closed, Today / Tomorrow headers, payment due dates and scheduled expenses in the feed. Off: the plain day-or-range selector over the feed.'**
   String get featureCalendarViewsDesc;
 
+  /// No description provided for @featureMessagesHubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages, reworked'**
+  String get featureMessagesHubTitle;
+
+  /// No description provided for @featureMessagesHubDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'One inbox bar (All / Unread / Archived and search), pin, mute, archive and mark-unread on a thread, the conversation as a full page with date separators, an attach menu and a kept draft in the composer, a person opened with one tap. Off: the two-bar inbox and the sheet thread.'**
+  String get featureMessagesHubDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:
@@ -7796,18 +7808,6 @@ abstract class AppLocalizations {
   /// **'Delete this message? This cannot be undone.'**
   String get memberNoteDeleteConfirm;
 
-  /// No description provided for @memberNoteDeleteRead.
-  ///
-  /// In en, this message translates to:
-  /// **'Already read — this message can no longer be taken back.'**
-  String get memberNoteDeleteRead;
-
-  /// No description provided for @memberNoteDeleteNotMine.
-  ///
-  /// In en, this message translates to:
-  /// **'Only the sender can take a message back.'**
-  String get memberNoteDeleteNotMine;
-
   /// Reply button on the full-message sheet (#523)
   ///
   /// In en, this message translates to:
@@ -8101,6 +8101,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Money could not be loaded. Pull to refresh.'**
   String get memberMoneyUnavailable;
+
+  /// No description provided for @inboxAlertsTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Alerts'**
+  String get inboxAlertsTab;
+
+  /// No description provided for @inboxFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get inboxFilterAll;
+
+  /// No description provided for @inboxFilterUnread.
+  ///
+  /// In en, this message translates to:
+  /// **'Unread'**
+  String get inboxFilterUnread;
+
+  /// No description provided for @inboxFilterArchived.
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get inboxFilterArchived;
+
+  /// No description provided for @inboxNoUnread.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing unread — you are up to date.'**
+  String get inboxNoUnread;
+
+  /// No description provided for @inboxNoArchived.
+  ///
+  /// In en, this message translates to:
+  /// **'No archived conversations.'**
+  String get inboxNoArchived;
+
+  /// No description provided for @conversationPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Pin to top'**
+  String get conversationPin;
+
+  /// No description provided for @conversationUnpin.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpin'**
+  String get conversationUnpin;
+
+  /// No description provided for @conversationMute.
+  ///
+  /// In en, this message translates to:
+  /// **'Mute notifications'**
+  String get conversationMute;
+
+  /// No description provided for @conversationUnmute.
+  ///
+  /// In en, this message translates to:
+  /// **'Unmute'**
+  String get conversationUnmute;
+
+  /// No description provided for @conversationMarkUnread.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as unread'**
+  String get conversationMarkUnread;
+
+  /// No description provided for @conversationArchive.
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get conversationArchive;
+
+  /// No description provided for @conversationUnarchive.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore from archive'**
+  String get conversationUnarchive;
+
+  /// No description provided for @conversationArchived.
+  ///
+  /// In en, this message translates to:
+  /// **'Conversation archived.'**
+  String get conversationArchived;
+
+  /// No description provided for @conversationMutedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Muted'**
+  String get conversationMutedBadge;
+
+  /// No description provided for @conversationLoadEarlier.
+  ///
+  /// In en, this message translates to:
+  /// **'Load earlier messages'**
+  String get conversationLoadEarlier;
+
+  /// No description provided for @conversationToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get conversationToday;
+
+  /// No description provided for @composerAttach.
+  ///
+  /// In en, this message translates to:
+  /// **'Attach a reference'**
+  String get composerAttach;
+
+  /// No description provided for @composerCharsLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} characters left'**
+  String composerCharsLeft(int count);
+
+  /// No description provided for @composerDraftKept.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft kept'**
+  String get composerDraftKept;
+
+  /// No description provided for @newConversationTapToOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a person to open the chat; switch on Group to pick several.'**
+  String get newConversationTapToOpen;
+
+  /// No description provided for @newConversationGroupSwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get newConversationGroupSwitch;
+
+  /// No description provided for @inboxRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get inboxRetry;
+
+  /// No description provided for @memberNoteDeleteRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Already read — this message can no longer be taken back.'**
+  String get memberNoteDeleteRead;
+
+  /// No description provided for @memberNoteDeleteNotMine.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the sender can take a message back.'**
+  String get memberNoteDeleteNotMine;
 
   /// Statement line for the plan's monthly fee
   ///

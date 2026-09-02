@@ -105,7 +105,14 @@ enum WorkspaceFeature {
   /// #818 — the Calendar tab as three views (agenda, week, month) with
   /// per-day markers, closed days, relative day headers and the due
   /// dates. OFF keeps the plain day/range selector over the feed.
-  calendarViews;
+  calendarViews,
+
+  /// #821 — the Messages tab reworked: one inbox bar with All / Unread /
+  /// Archived and search, pin / mute / archive / mark unread on a
+  /// thread, the thread as a full-screen page with date separators, the
+  /// composer's attach menu and draft. OFF keeps the two-bar inbox and
+  /// the sheet thread.
+  messagesHub;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -379,6 +386,9 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.calendarViews,
     requires: WorkspaceFeature.calendarHub,
   ),
+  // #821 — the reworked Messages tab.
+  WorkspaceFeature.messagesHub:
+      FeatureManifestEntry(feature: WorkspaceFeature.messagesHub),
   // #719 — "who accessed my data": the server-written log of reads of
   // another member's finances, shown to the subject. OFF hides the row;
   // the log is still written, because the record is not optional.

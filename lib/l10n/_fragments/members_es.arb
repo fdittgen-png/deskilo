@@ -20,8 +20,6 @@
     "description": "Delete button on a message (sheet + confirm dialog, #523)"
   },
   "memberNoteDeleteConfirm": "¿Eliminar este mensaje? No se puede deshacer.",
-  "memberNoteDeleteRead": "Ya leído: este mensaje ya no se puede retirar.",
-  "memberNoteDeleteNotMine": "Solo quien lo envió puede retirar un mensaje.",
   "@memberNoteDeleteConfirm": {
     "description": "Confirmation asked before any message delete — swipe or button (#523)"
   },
@@ -240,5 +238,37 @@
   "memberMoneyUnavailable": "No se pudieron cargar las finanzas. Tire para actualizar.",
   "@memberMoneyUnavailable": {
     "description": "#709 - the money section of a profile could not be read"
-  }
+  },
+  "inboxAlertsTab": "Alertas",
+  "inboxFilterAll": "Todos",
+  "inboxFilterUnread": "No leídos",
+  "inboxFilterArchived": "Archivados",
+  "inboxNoUnread": "Nada sin leer — estás al día.",
+  "inboxNoArchived": "Ninguna conversación archivada.",
+  "conversationPin": "Fijar arriba",
+  "conversationUnpin": "Desfijar",
+  "conversationMute": "Silenciar notificaciones",
+  "conversationUnmute": "Reactivar notificaciones",
+  "conversationMarkUnread": "Marcar como no leído",
+  "conversationArchive": "Archivar",
+  "conversationUnarchive": "Sacar del archivo",
+  "conversationArchived": "Conversación archivada.",
+  "conversationMutedBadge": "Silenciada",
+  "conversationLoadEarlier": "Cargar mensajes anteriores",
+  "conversationToday": "Hoy",
+  "composerAttach": "Adjuntar una referencia",
+  "composerCharsLeft": "{count} caracteres restantes",
+  "@composerCharsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "composerDraftKept": "Borrador guardado",
+  "newConversationTapToOpen": "Toca a una persona para abrir el chat; activa Grupo para elegir varias.",
+  "newConversationGroupSwitch": "Grupo",
+  "inboxRetry": "Reintentar",
+  "memberNoteDeleteRead": "Ya leído: este mensaje ya no se puede retirar.",
+  "memberNoteDeleteNotMine": "Solo quien lo envió puede retirar un mensaje."
 }

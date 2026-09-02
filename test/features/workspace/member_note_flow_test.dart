@@ -205,13 +205,12 @@ void main() {
     await tester.pumpAndSettle();
     // My own upcoming reservation → its detail sheet with Cancel.
     expect(find.byKey(const ValueKey('reservation-cancel')), findsOneWidget);
-    // Dismissing by tapping the barrier closes the THREAD underneath
-    // too — one tap, two modal routes. Re-open it rather than hunting
-    // for a pixel that is over one sheet and not the other.
+    // #821 — the thread is a PAGE under the sheet, so dismissing the
+    // sheet by its barrier leaves the conversation where it was.
     await tester.tapAt(const Offset(400, 50));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('conversation-conv-ana')));
-    await tester.pumpAndSettle();
+    expect(
+        find.byKey(const ValueKey('conversation-thread')), findsOneWidget);
 
     await tester.tap(find.text('A1'));
     await tester.pumpAndSettle();
@@ -447,12 +446,17 @@ void main() {
     await tester.enterText(
         find.byKey(const ValueKey('member-note-body')), 'About tomorrow:');
 
+    // #821 — the references live behind ONE attach button.
+    await tester.tap(find.byKey(const ValueKey('composer-attach')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('member-note-ref-space')));
     await tester.pumpAndSettle();
     await tester
         .tap(find.byKey(const ValueKey('note-ref-space-seat-seat-4')));
     await tester.pumpAndSettle();
 
+    await tester.tap(find.byKey(const ValueKey('composer-attach')));
+    await tester.pumpAndSettle();
     await tester
         .tap(find.byKey(const ValueKey('member-note-ref-reservation')));
     await tester.pumpAndSettle();

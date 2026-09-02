@@ -273,7 +273,7 @@ See who's part of your community:
 
 ## 7. Events & confirmations (Messages → Events)
 
-**Where it lives.** The feed is the second face of the **Messages** tab, and the **bell** in every app bar is a shortcut straight onto it, carrying the count of what awaits you. One place holds the alerts, so reading one there is reading it everywhere.
+**Where it lives.** The feed is the second face of the **Messages** tab, and the **bell** in every app bar is a shortcut straight onto it, carrying the count of what awaits you. One place holds the alerts, so reading one there is reading it everywhere. With the reworked messaging the tab is labelled **Alerts**, and it marks itself read only while it is the face on screen — switching to it is reading it, having it behind the chats is not.
 
 The events feed is the audit trail of your workspace: reservations created/changed/cancelled, payments recorded, invoices paid, expenses submitted, extra-days requests, role changes, deletion requests. Members see their own events; admins and owners see everyone's. **Filter chips** (All · Reservation · Payment · Expense · …) narrow the list — your choice is remembered — and a **Group by** menu folds the feed into groups by type, day or member (tap the group symbol to return to the flat list); each row carries its status icon — an **hourglass** while pending, a **green check** once confirmed — and money events show *who validated them and when* right on the row.
 
@@ -951,7 +951,7 @@ Switching signs you out and takes effect when the app is next opened — the ses
 
 ## 13. Notifications
 
-Check-in reminders, pending confirmations, expense decisions — and when an admin **removes one of your reservations** (overrule), you and the admins are notified. Delivery is local-first; server pushes arrive out of the box on Android, iPhone/iPad, the browser and macOS (Firebase Cloud Messaging) — *Settings → Advanced* shows whether push is active on this device. The app-icon badge shows your pending-confirmations count **plus your unread messages** — on Android, iPhone/iPad, the macOS Dock, the Windows taskbar, and installed web apps. Member messages are announced **once per device with the sender and the full text** — including anything sent while the app was closed, announced the moment you next open it. That announcement is always raised **locally, by the app itself**: the pushed payload never carries a name, a time or a word of the message (§6), so what travels over the network says only that something arrived.
+Check-in reminders, pending confirmations, expense decisions — and when an admin **removes one of your reservations** (overrule), you and the admins are notified. Delivery is local-first; server pushes arrive out of the box on Android, iPhone/iPad, the browser and macOS (Firebase Cloud Messaging) — *Settings → Advanced* shows whether push is active on this device. The app-icon badge shows your pending-confirmations count **plus your unread messages** — on Android, iPhone/iPad, the macOS Dock, the Windows taskbar, and installed web apps. Member messages are announced **once per device with the sender and the full text** — including anything sent while the app was closed, announced the moment you next open it. That announcement is always raised **locally, by the app itself**: the pushed payload never carries a name, a time or a word of the message (§6), so what travels over the network says only that something arrived. A conversation you **muted** (§16) stays silent: nothing is announced for it, though it still counts on its row and on the badge.
 
 ## 14. Privacy
 
@@ -975,6 +975,12 @@ The **Messages** tab is your workspace's messaging centre: every conversation in
 **Telling them apart at a glance.** A person shows their photo in a circle. A group shows a **square badge** with a group symbol, and — until someone writes in it — how many members it has.
 
 **Inside a conversation.** Messages read oldest to newest as chat bubbles, with emojis and **reference links** live: a reservation link opens that reservation, a space link opens its booking sheet, each with a *Show on plan* jump. The composer sits below. **Long-press a bubble to delete** it, confirmed first. Your own messages carry a check next to the time: **grey = delivered**, **blue = read**.
+
+**Keeping the list in order.** Chips above the list narrow it to **All**, **Unread** or **Archived**. **Long-press a row** to **pin** it to the top, **mute** it, **mark it unread** to come back to it later, or **archive** it — an archived conversation leaves the list, keeps its history and comes back by itself when someone writes in it. A pin and a crossed bell on the row say which is which.
+
+**A conversation is a page.** It opens full height with a back arrow, and its address can be shared or bookmarked. Messages sit under **day separators**, so a bubble shows the time alone; **Load earlier messages** at the top fetches older history. What you type but do not send stays as a **draft** for that conversation. **Swipe right** to quote a message and tap the quoted block in a reply to jump to the original; **swipe left** to take back a message of yours that nobody has read yet. The **paperclip** attaches a reservation or a space, and a counter appears as you near the length limit.
+
+**Starting one.** Tap the pencil, then tap a person — the chat opens at once. Flip the **Group** switch to pick several people and give the group its name.
 
 **Tap the name at the top.** In a private chat it opens the other person's **profile** — today's booking, whether they are checked in right now, their status, and how to reach them. In a group it opens the **member list**, where a group admin can add or remove people, and anyone can leave. Leaving never strands a group without an admin.
 

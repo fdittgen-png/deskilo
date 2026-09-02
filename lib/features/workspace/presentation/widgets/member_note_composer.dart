@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -28,7 +29,16 @@ class MemberNoteComposer extends ConsumerStatefulWidget {
     this.seedBody,
     this.quoted,
     this.onCancelQuote,
+    this.onChanged,
+    this.compact = false,
   });
+
+  /// #821 — every keystroke, for the draft store.
+  final ValueChanged<String>? onChanged;
+
+  /// #821 — the two reference chips folded into ONE attach menu beside
+  /// the field, a counter as the limit nears, a spinner while sending.
+  final bool compact;
 
   /// Called with the trimmed body; returns true when it went out (the
   /// field then clears).
@@ -56,6 +66,9 @@ class MemberNoteComposer extends ConsumerStatefulWidget {
 class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
   final _body = TextEditingController();
   bool _sending = false;
+
+  /// How close to the limit the counter appears (#821).
+  static const int _counterFrom = 100;
 
   @override
   void initState() {
@@ -326,13 +339,74 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
           minLines: 1,
           maxLines: 5,
           maxLength: MemberNoteRules.maxLength,
+          onChanged: (text) {
+            widget.onChanged?.call(text);
+            if (widget.compact) setState(() {});
+          },
           decoration: InputDecoration(
             labelText: l10n?.memberNoteHint ?? 'Your message',
             border: const OutlineInputBorder(),
-            counterText: '',
+            // #821 — silent until the limit is near, then it says how
+            // much room is left instead of just stopping the keys.
+            counterText: widget.compact &&
+                    MemberNoteRules.maxLength - _body.text.length <=
+                        _counterFrom
+                ? (l10n?.composerCharsLeft(
+                        MemberNoteRules.maxLength - _body.text.length) ??
+                    '${MemberNoteRules.maxLength - _body.text.length} characters left')
+                : '',
           ),
           onSubmitted: (_) => _send(),
         ),
+        if (widget.compact)
+          Row(children: [
+            PopupMenuButton<String>(
+              key: const ValueKey('composer-attach'),
+              tooltip: l10n?.composerAttach ?? 'Attach a reference',
+              icon: const Icon(Icons.add_circle_outline),
+              onSelected: (value) => value == 'reservation'
+                  ? _pickReservation()
+                  : _pickSpace(),
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  key: const ValueKey('member-note-ref-reservation'),
+                  value: 'reservation',
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.event_available_outlined),
+                    title: Text(
+                        l10n?.noteRefReservation ?? 'Link a reservation'),
+                  ),
+                ),
+                PopupMenuItem(
+                  key: const ValueKey('member-note-ref-space'),
+                  value: 'space',
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.chair_outlined),
+                    title: Text(l10n?.noteRefSpace ?? 'Link a space'),
+                  ),
+                ),
+              ],
+            ),
+            const Spacer(),
+            _sending
+                ? const Padding(
+                    padding: EdgeInsets.all(AppSpacing.sm),
+                    child: SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  )
+                : IconButton.filled(
+                    key: const ValueKey('member-note-send'),
+                    icon: const Icon(Icons.send),
+                    tooltip: l10n?.memberNoteSend ?? 'Send',
+                    onPressed: _send,
+                  ),
+          ])
+        else
         // #523 — attach references: they read as links on the other
         // side and open the reservation / the space's booking sheet.
         Row(

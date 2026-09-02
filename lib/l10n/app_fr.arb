@@ -1267,6 +1267,8 @@
   "featureBookingGateDesc": "Chaque surface de réservation — plan, vues jour, semaine et mois, feuille de réservation, kiosque, scan QR ou NFC — vérifie les paramètres de disponibilité avant de proposer un créneau et nomme la raison quand elle ne peut pas ; les jours fermés s'affichent fermés dans chaque vue, une légende nomme les états des places, et les admins peuvent faire sortir un membre là où la règle le permet.",
   "featureCalendarViewsTitle": "Vues du calendrier",
   "featureCalendarViewsDesc": "L'onglet Calendrier en agenda, semaine et mois : repères par jour selon le type, jours fermés affichés fermés, en-têtes Aujourd'hui / Demain, échéances de paiement et dépenses programmées dans le fil. Désactivé : le simple sélecteur jour ou plage au-dessus du fil.",
+  "featureMessagesHubTitle": "Messages repensés",
+  "featureMessagesHubDesc": "Une seule barre de boîte de réception (Tous / Non lus / Archivés et recherche), épingler, couper le son, archiver et marquer non lu sur un fil, la conversation en page entière avec séparateurs de date, un menu joindre et un brouillon conservé dans le composeur, une personne ouverte d'un seul geste. Désactivé : la boîte à deux barres et le fil en feuille.",
   "helpTitle": "Aide",
   "helpContents": "Sommaire",
   "helpHintMessages": "Toutes vos conversations dans une liste, la plus récente en haut. Touchez le crayon pour écrire à quelqu’un ou créer un groupe.",
@@ -2626,8 +2628,6 @@
     "description": "Delete button on a message (sheet + confirm dialog, #523)"
   },
   "memberNoteDeleteConfirm": "Supprimer ce message ? Cette action est irréversible.",
-  "memberNoteDeleteRead": "Déjà lu — ce message ne peut plus être repris.",
-  "memberNoteDeleteNotMine": "Seul l'expéditeur peut reprendre un message.",
   "@memberNoteDeleteConfirm": {
     "description": "Confirmation asked before any message delete — swipe or button (#523)"
   },
@@ -2847,6 +2847,38 @@
   "@memberMoneyUnavailable": {
     "description": "#709 - the money section of a profile could not be read"
   },
+  "inboxAlertsTab": "Alertes",
+  "inboxFilterAll": "Tous",
+  "inboxFilterUnread": "Non lus",
+  "inboxFilterArchived": "Archivés",
+  "inboxNoUnread": "Rien de non lu — vous êtes à jour.",
+  "inboxNoArchived": "Aucune conversation archivée.",
+  "conversationPin": "Épingler en haut",
+  "conversationUnpin": "Désépingler",
+  "conversationMute": "Couper les notifications",
+  "conversationUnmute": "Réactiver les notifications",
+  "conversationMarkUnread": "Marquer comme non lu",
+  "conversationArchive": "Archiver",
+  "conversationUnarchive": "Sortir des archives",
+  "conversationArchived": "Conversation archivée.",
+  "conversationMutedBadge": "Silencieuse",
+  "conversationLoadEarlier": "Charger les messages plus anciens",
+  "conversationToday": "Aujourd'hui",
+  "composerAttach": "Joindre une référence",
+  "composerCharsLeft": "{count} caractères restants",
+  "@composerCharsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "composerDraftKept": "Brouillon conservé",
+  "newConversationTapToOpen": "Touchez une personne pour ouvrir la discussion ; activez Groupe pour en choisir plusieurs.",
+  "newConversationGroupSwitch": "Groupe",
+  "inboxRetry": "Réessayer",
+  "memberNoteDeleteRead": "Déjà lu — ce message ne peut plus être repris.",
+  "memberNoteDeleteNotMine": "Seul l'expéditeur peut reprendre un message.",
   "moneyBaseFee": "Abonnement de base",
   "moneyUsage": "{used} demi-journées utilisées sur {included}",
   "moneyUsageUnlimited": "{used} demi-journées utilisées",

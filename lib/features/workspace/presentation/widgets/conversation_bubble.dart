@@ -32,10 +32,19 @@ class ConversationBubble extends ConsumerWidget {
     required this.mine,
     this.senderName,
     this.onQuote,
+    this.timeOnly = false,
+    this.onQuoteTap,
   });
 
   final MemberNote note;
   final bool mine;
+
+  /// #821 — the stamp shows the TIME alone; the thread's day separators
+  /// carry the date.
+  final bool timeOnly;
+
+  /// #821 — tapping the quoted block scrolls to the original.
+  final ValueChanged<String>? onQuoteTap;
 
   /// Named above the bubble in a GROUP, where "ok" from nobody in
   /// particular is unreadable. Null in a direct thread: there is only
@@ -54,6 +63,7 @@ class ConversationBubble extends ConsumerWidget {
   /// one side of a conversation the other still remembers. The server
   /// re-checks; this decides what the gesture OFFERS.
   bool get _deletableUnread => mine && note.readAt == null;
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -133,7 +143,9 @@ class ConversationBubble extends ConsumerWidget {
       );
 
   Widget _bubble(BuildContext context, WidgetRef ref, ThemeData theme) {
-    final when = DateFormat.MMMd().add_Hm().format(note.createdAt.toLocal());
+    final when = timeOnly
+        ? DateFormat.Hm().format(note.createdAt.toLocal())
+        : DateFormat.MMMd().add_Hm().format(note.createdAt.toLocal());
     final split = splitLeadingQuote(note.body);
     return Align(
       alignment: mine ? Alignment.centerRight : Alignment.centerLeft,
@@ -172,7 +184,13 @@ class ConversationBubble extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   if (split.quote != null)
-                    _QuotedBlock(quote: split.quote!, foreground: fg),
+                    _QuotedBlock(
+                      quote: split.quote!,
+                      foreground: fg,
+                      onTap: onQuoteTap == null
+                          ? null
+                          : () => onQuoteTap!(split.quote!.id),
+                    ),
                   MemberNoteBody(
                     body: split.rest,
                     style: theme.textTheme.bodyMedium?.copyWith(color: fg),
@@ -207,15 +225,22 @@ class ConversationBubble extends ConsumerWidget {
 /// The quoted message above a reply — a tinted block with the accent bar
 /// every chat app uses, so a reply reads as a reply at a glance.
 class _QuotedBlock extends StatelessWidget {
-  const _QuotedBlock({required this.quote, required this.foreground});
+  const _QuotedBlock({
+    required this.quote,
+    required this.foreground,
+    this.onTap,
+  });
 
   final NoteQuoteRef quote;
   final Color foreground;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
       key: ValueKey('quote-${quote.id}'),
       margin: const EdgeInsets.only(bottom: AppSpacing.xs),
       padding: const EdgeInsets.symmetric(
@@ -238,6 +263,7 @@ class _QuotedBlock extends StatelessWidget {
           fontStyle: FontStyle.italic,
         ),
       ),
+    ),
     );
   }
 }

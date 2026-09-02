@@ -24,6 +24,7 @@ import '../../domain/event_decision.dart';
 import '../../domain/notification_feed.dart';
 import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
+import '../../../workspace/presentation/screens/inbox_screen.dart';
 import '../../providers/event_providers.dart';
 import '../../providers/notification_filter_providers.dart';
 import '../event_labels.dart';
@@ -52,11 +53,31 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     // unread counters on the bell and the app icon clear here. The
     // events-seen stamp advances too (#581) — but the PREVIOUS stamp
     // keeps serving this visit, so "new" rows do not vanish mid-look.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      ref.read(unreadNoteCountProvider.notifier).markAllSeen();
-      ref.read(eventsSeenCutoffProvider.notifier).markOpened();
-    });
+    // #821 — only when this face is actually SHOWING. The inbox keeps
+    // every face alive in an IndexedStack, so this state is built the
+    // moment the inbox opens on Chats — marking seen here unconditionally
+    // cleared the alerts badge for alerts nobody had looked at.
+    WidgetsBinding.instance.addPostFrameCallback((_) => _markSeenIfShowing());
+  }
+
+  bool _seenThisShowing = false;
+
+  /// Called from build: the face marks seen the first frame it SHOWS.
+  void _followTab() => ref.listen(inboxTabControllerProvider, (_, _) {
+        WidgetsBinding.instance
+            .addPostFrameCallback((_) => _markSeenIfShowing());
+      });
+
+  void _markSeenIfShowing() {
+    if (!mounted) return;
+    if (ref.read(inboxTabControllerProvider) != InboxTab.alerts) {
+      _seenThisShowing = false;
+      return;
+    }
+    if (_seenThisShowing) return;
+    _seenThisShowing = true;
+    ref.read(unreadNoteCountProvider.notifier).markAllSeen();
+    ref.read(eventsSeenCutoffProvider.notifier).markOpened();
   }
 
   String _categoryLabel(
@@ -379,6 +400,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _followTab();
     final l10n = AppLocalizations.of(context);
     final eventsAsync = ref.watch(eventsProvider);
     final names = ref.watch(memberNamesProvider).value ?? const {};

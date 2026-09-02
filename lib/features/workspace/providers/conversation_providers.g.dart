@@ -66,6 +66,116 @@ final class ConversationsProvider
 
 String _$conversationsHash() => r'4f5affdd222338a94218d44caadc5a104dbf398b';
 
+/// #821 — the archived threads, on demand (the Archived filter).
+
+@ProviderFor(archivedConversations)
+final archivedConversationsProvider = ArchivedConversationsProvider._();
+
+/// #821 — the archived threads, on demand (the Archived filter).
+
+final class ArchivedConversationsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Conversation>>,
+          List<Conversation>,
+          FutureOr<List<Conversation>>
+        >
+    with
+        $FutureModifier<List<Conversation>>,
+        $FutureProvider<List<Conversation>> {
+  /// #821 — the archived threads, on demand (the Archived filter).
+  ArchivedConversationsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'archivedConversationsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$archivedConversationsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Conversation>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Conversation>> create(Ref ref) {
+    return archivedConversations(ref);
+  }
+}
+
+String _$archivedConversationsHash() =>
+    r'87a51664276ce4e1d65f3adec8a33eadc780fa8a';
+
+/// #821 — the composer's unsent text per conversation, kept for the
+/// session so a thread closed mid-sentence reopens on that sentence.
+
+@ProviderFor(ConversationDrafts)
+final conversationDraftsProvider = ConversationDraftsProvider._();
+
+/// #821 — the composer's unsent text per conversation, kept for the
+/// session so a thread closed mid-sentence reopens on that sentence.
+final class ConversationDraftsProvider
+    extends $NotifierProvider<ConversationDrafts, Map<String, String>> {
+  /// #821 — the composer's unsent text per conversation, kept for the
+  /// session so a thread closed mid-sentence reopens on that sentence.
+  ConversationDraftsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'conversationDraftsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$conversationDraftsHash();
+
+  @$internal
+  @override
+  ConversationDrafts create() => ConversationDrafts();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Map<String, String> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Map<String, String>>(value),
+    );
+  }
+}
+
+String _$conversationDraftsHash() =>
+    r'970666571f4951206f262fefaeedd733cc29841b';
+
+/// #821 — the composer's unsent text per conversation, kept for the
+/// session so a thread closed mid-sentence reopens on that sentence.
+
+abstract class _$ConversationDrafts extends $Notifier<Map<String, String>> {
+  Map<String, String> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<Map<String, String>, Map<String, String>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<Map<String, String>, Map<String, String>>,
+              Map<String, String>,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}
+
 /// Total unread across every conversation — the badge on the Messages
 /// destination.
 ///

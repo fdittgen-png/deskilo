@@ -360,7 +360,23 @@ abstract class WorkspaceRepository {
   /// `my_conversations`). One call, not one per thread: the last message
   /// and the unread count are per-viewer, and assembling them in Dart
   /// means a query per row.
-  Future<List<Conversation>> fetchConversations(String workspaceId);
+  Future<List<Conversation>> fetchConversations(
+    String workspaceId, {
+    bool includeArchived = false,
+  });
+
+  /// #821 — my pin / mute / archive on a thread; null leaves a flag as
+  /// it is. Per participant, server-enforced (0146).
+  Future<void> setConversationPrefs(
+    String conversationId, {
+    bool? pinned,
+    bool? muted,
+    bool? archived,
+  });
+
+  /// #821 — reads the thread as unread again: my watermark moves back to
+  /// just before the last message from someone else (0146).
+  Future<void> markConversationUnread(String conversationId);
 
   /// The direct thread with [otherMemberId], created if it does not
   /// exist. Idempotent server-side, so two people opening each other at
@@ -408,7 +424,11 @@ abstract class WorkspaceRepository {
   Future<void> sendConversationMessage(String conversationId, String body);
 
   /// The messages of one conversation, oldest first.
-  Future<List<MemberNote>> fetchConversationMessages(String conversationId);
+  Future<List<MemberNote>> fetchConversationMessages(
+    String conversationId, {
+    int limit = 200,
+    DateTime? before,
+  });
 
   /// Opening a conversation: moves my read watermark AND stamps the
   /// direct read receipts, so a 1:1 sender still sees their check turn

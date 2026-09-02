@@ -274,7 +274,7 @@ Mira quién forma tu comunidad:
 
 ## 7. Eventos y confirmaciones (Mensajes → Eventos)
 
-**Dónde vive.** El flujo es la segunda cara de la pestaña **Mensajes**, y la **campana** de cada barra superior lleva directamente a ella, con el recuento de lo que le espera. Un solo sitio guarda los avisos: leer uno allí es haberlo leído en todas partes.
+**Dónde vive.** El flujo es la segunda cara de la pestaña **Mensajes**, y la **campana** de cada barra superior lleva directamente a ella, con el recuento de lo que le espera. Un solo sitio guarda los avisos: leer uno allí es haberlo leído en todas partes. Con la mensajería renovada la pestaña se llama **Alertas** y solo se marca como leída mientras es la cara en pantalla: pasar a ella es leerla; tenerla detrás de los chats, no.
 
 El hilo de eventos es la pista de auditoría de tu espacio: reservas creadas/cambiadas/canceladas, pagos registrados, facturas pagadas, gastos presentados, solicitudes de días extra, cambios de rol, solicitudes de eliminación. Los miembros ven sus propios eventos; los admins y propietarios ven los de todos. Los **chips de filtro** (Todo · Reserva · Pago · Gasto · …) acotan la lista — tu elección se recuerda — y un menú **Agrupar por** pliega el hilo en grupos por tipo, día o miembro (tocar el símbolo del grupo vuelve a la lista plana); cada fila lleva su icono de estado — un **reloj de arena** mientras está pendiente, una **marca verde** una vez confirmado — y los eventos de dinero muestran *quién los validó y cuándo* directamente en la fila.
 
@@ -903,7 +903,7 @@ Cambiar de servidor cierra tu sesión y surte efecto la próxima vez que abras l
 
 ## 13. Notificaciones
 
-Recordatorios de registro, confirmaciones pendientes, decisiones de gastos — y cuando un admin **elimina una de tus reservas** (anulación), tú y los admins recibís aviso. La entrega es local primero; los push del servidor llegan de serie en Android, iPhone/iPad, el navegador y macOS (Firebase Cloud Messaging) — *Ajustes → Avanzado* muestra si el push está activo en este dispositivo. La insignia del icono de la app muestra tus confirmaciones pendientes **más tus mensajes sin leer** — en Android, iPhone/iPad, el Dock de macOS, la barra de tareas de Windows y las web apps instaladas. Los mensajes entre miembros se anuncian **una vez por dispositivo con el remitente y el texto completo** — incluido lo enviado con la app cerrada, anunciado en cuanto la vuelves a abrir. Ese aviso siempre lo genera **la propia app, en local**: el payload push no lleva nunca un nombre, una hora ni una palabra del mensaje (§6), así que lo que viaja por la red solo dice que ha llegado algo.
+Recordatorios de registro, confirmaciones pendientes, decisiones de gastos — y cuando un admin **elimina una de tus reservas** (anulación), tú y los admins recibís aviso. La entrega es local primero; los push del servidor llegan de serie en Android, iPhone/iPad, el navegador y macOS (Firebase Cloud Messaging) — *Ajustes → Avanzado* muestra si el push está activo en este dispositivo. La insignia del icono de la app muestra tus confirmaciones pendientes **más tus mensajes sin leer** — en Android, iPhone/iPad, el Dock de macOS, la barra de tareas de Windows y las web apps instaladas. Los mensajes entre miembros se anuncian **una vez por dispositivo con el remitente y el texto completo** — incluido lo enviado con la app cerrada, anunciado en cuanto la vuelves a abrir. Ese aviso siempre lo genera **la propia app, en local**: el payload push no lleva nunca un nombre, una hora ni una palabra del mensaje (§6), así que lo que viaja por la red solo dice que ha llegado algo. Una conversación **silenciada** (§16) permanece en silencio: no se anuncia nada de ella, aunque sigue contando en su fila y en la insignia.
 
 ## 14. Privacidad
 
@@ -927,6 +927,12 @@ La pestaña **Mensajes** es el centro de mensajería de su espacio: todas las co
 **Distinguirlos de un vistazo.** Una persona muestra su foto en un círculo. Un grupo muestra una **insignia cuadrada** con un símbolo de grupo y — mientras nadie haya escrito — cuántos miembros tiene.
 
 **Dentro de una conversación.** Los mensajes se leen de antiguo a reciente en burbujas, con emojis y **enlaces de referencia** activos: un enlace de reserva abre esa reserva, uno de espacio abre su hoja de reserva, cada uno con *Ver en el plano*. El campo de escritura está debajo. **Mantenga pulsada una burbuja para eliminarla**, con confirmación. Sus mensajes llevan una marca: **gris = entregado**, **azul = leído**.
+
+**Mantener la lista en orden.** Unos chips sobre la lista la reducen a **Todos**, **No leídos** o **Archivados**. **Mantenga pulsada una fila** para **fijarla** arriba, **silenciarla**, **marcarla como no leída** para volver más tarde, o **archivarla** — una conversación archivada sale de la lista, conserva su historial y vuelve sola en cuanto alguien escribe en ella. Una chincheta y una campana tachada en la fila dicen cuál es cuál.
+
+**Una conversación es una página.** Se abre a toda altura con una flecha de retorno, y su dirección se puede compartir o guardar en favoritos. Los mensajes se agrupan bajo **separadores de día**, así que una burbuja muestra solo la hora; **Cargar mensajes anteriores** arriba recupera el historial más antiguo. Lo que escribe sin enviar queda como **borrador** para esa conversación. **Deslice a la derecha** para citar un mensaje y toque el bloque citado en una respuesta para saltar al original; **deslice a la izquierda** para retirar un mensaje suyo que nadie ha leído aún. El **clip** adjunta una reserva o un espacio, y aparece un contador al acercarse al límite de longitud.
+
+**Empezar una.** Toque el lápiz y luego a una persona: el chat se abre al instante. Active el interruptor **Grupo** para elegir a varias personas y dar nombre al grupo.
 
 **Toque el nombre de arriba.** En un chat privado abre el **perfil** de la persona — la reserva de hoy, si ha registrado su entrada, su estado y cómo contactarla. En un grupo abre la **lista de miembros**, donde un administrador del grupo añade o quita personas y cualquiera puede salir. Salir nunca deja un grupo sin administrador.
 

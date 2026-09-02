@@ -20,8 +20,6 @@
     "description": "Delete button on a message (sheet + confirm dialog, #523)"
   },
   "memberNoteDeleteConfirm": "Diese Nachricht löschen? Das lässt sich nicht rückgängig machen.",
-  "memberNoteDeleteRead": "Schon gelesen — diese Nachricht kann nicht mehr zurückgenommen werden.",
-  "memberNoteDeleteNotMine": "Nur der Absender kann eine Nachricht zurücknehmen.",
   "@memberNoteDeleteConfirm": {
     "description": "Confirmation asked before any message delete — swipe or button (#523)"
   },
@@ -240,5 +238,37 @@
   "memberMoneyUnavailable": "Finanzen konnten nicht geladen werden. Zum Aktualisieren ziehen.",
   "@memberMoneyUnavailable": {
     "description": "#709 - the money section of a profile could not be read"
-  }
+  },
+  "inboxAlertsTab": "Hinweise",
+  "inboxFilterAll": "Alle",
+  "inboxFilterUnread": "Ungelesen",
+  "inboxFilterArchived": "Archiviert",
+  "inboxNoUnread": "Nichts Ungelesenes — du bist auf dem Laufenden.",
+  "inboxNoArchived": "Keine archivierten Unterhaltungen.",
+  "conversationPin": "Oben anheften",
+  "conversationUnpin": "Loslösen",
+  "conversationMute": "Benachrichtigungen stumm",
+  "conversationUnmute": "Stummschaltung aufheben",
+  "conversationMarkUnread": "Als ungelesen markieren",
+  "conversationArchive": "Archivieren",
+  "conversationUnarchive": "Aus dem Archiv holen",
+  "conversationArchived": "Unterhaltung archiviert.",
+  "conversationMutedBadge": "Stumm",
+  "conversationLoadEarlier": "Frühere Nachrichten laden",
+  "conversationToday": "Heute",
+  "composerAttach": "Verweis anhängen",
+  "composerCharsLeft": "{count} Zeichen übrig",
+  "@composerCharsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "composerDraftKept": "Entwurf behalten",
+  "newConversationTapToOpen": "Tippe auf eine Person, um den Chat zu öffnen; schalte Gruppe ein, um mehrere zu wählen.",
+  "newConversationGroupSwitch": "Gruppe",
+  "inboxRetry": "Erneut versuchen",
+  "memberNoteDeleteRead": "Schon gelesen — diese Nachricht kann nicht mehr zurückgenommen werden.",
+  "memberNoteDeleteNotMine": "Nur der Absender kann eine Nachricht zurücknehmen."
 }

@@ -21,10 +21,16 @@ mixin ConversationApi {
   /// it would only pass straight through.
   SupabaseClient get conversationClient;
 
-    Future<List<Conversation>> fetchConversations(String workspaceId) async {
+    Future<List<Conversation>> fetchConversations(
+    String workspaceId, {
+    bool includeArchived = false,
+  }) async {
     final rows = await conversationClient.rpc<dynamic>(
       'my_conversations',
-      params: {'p_workspace_id': workspaceId},
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_include_archived': includeArchived,
+      },
     );
     return [
       for (final row in (rows as List? ?? const []))
@@ -103,20 +109,46 @@ mixin ConversationApi {
       });
 
     Future<List<MemberNote>> fetchConversationMessages(
-    String conversationId,
-  ) async {
-    final rows = await conversationClient
+    String conversationId, {
+    int limit = 200,
+    DateTime? before,
+  }) async {
+    // #821 — the NEWEST page, not the whole history: a thread of a
+    // thousand messages used to be fetched on every rebuild. Older
+    // pages come through [before]; the caller keeps them.
+    var query = conversationClient
         .from('member_notes')
         .select()
-        .eq('conversation_id', conversationId)
-        // Oldest first: a thread reads downwards, and reversing it in
-        // Dart on every rebuild is work the index already did.
-        .order('created_at');
+        .eq('conversation_id', conversationId);
+    if (before != null) {
+      query = query.lt('created_at', before.toUtc().toIso8601String());
+    }
+    final rows = await query
+        .order('created_at', ascending: false)
+        .limit(limit);
     return [
-      for (final row in rows)
+      for (final row in rows.reversed)
         MemberNote.fromRow(Map<String, dynamic>.from(row)),
     ];
   }
+
+    Future<void> setConversationPrefs(
+    String conversationId, {
+    bool? pinned,
+    bool? muted,
+    bool? archived,
+  }) =>
+      conversationClient.rpc<void>('set_conversation_prefs', params: {
+        'p_conversation_id': conversationId,
+        'p_pinned': pinned,
+        'p_muted': muted,
+        'p_archived': archived,
+      });
+
+    Future<void> markConversationUnread(String conversationId) =>
+      conversationClient.rpc<void>('mark_conversation_unread', params: {
+        'p_conversation_id': conversationId,
+      });
 
     Future<void> markConversationRead(String conversationId) =>
       conversationClient.rpc<void>('mark_conversation_read', params: {

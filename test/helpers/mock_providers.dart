@@ -1010,9 +1010,80 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   /// it need to know it in advance.
   String nextGroupId = 'conv-group';
 
+  /// #821 — prefs writes and unread marks, in order.
+  final List<({String id, bool? pinned, bool? muted, bool? archived})>
+      prefsWrites = [];
+  final List<String> unreadMarks = [];
+
   @override
-  Future<List<Conversation>> fetchConversations(String workspaceId) async =>
-      [...conversations]..sort((a, b) => b.lastAt.compareTo(a.lastAt));
+  Future<List<Conversation>> fetchConversations(
+    String workspaceId, {
+    bool includeArchived = false,
+  }) async =>
+      [
+        for (final c in conversations)
+          if (includeArchived || !c.isArchived) c,
+      ]..sort((a, b) {
+          // Pinned first, then newest — my_conversations v3 (0146).
+          if (a.isPinned != b.isPinned) return a.isPinned ? -1 : 1;
+          return b.lastAt.compareTo(a.lastAt);
+        });
+
+  @override
+  Future<void> setConversationPrefs(
+    String conversationId, {
+    bool? pinned,
+    bool? muted,
+    bool? archived,
+  }) async {
+    prefsWrites.add(
+        (id: conversationId, pinned: pinned, muted: muted, archived: archived));
+    final i = conversations.indexWhere((c) => c.id == conversationId);
+    if (i < 0) return;
+    final c = conversations[i];
+    conversations[i] = Conversation(
+      id: c.id,
+      kind: c.kind,
+      lastAt: c.lastAt,
+      title: c.title,
+      avatarPath: c.avatarPath,
+      otherMemberId: c.otherMemberId,
+      lastBody: c.lastBody,
+      lastFromMemberId: c.lastFromMemberId,
+      unread: c.unread,
+      participantCount: c.participantCount,
+      pinnedAt: pinned == null
+          ? c.pinnedAt
+          : (pinned ? (c.pinnedAt ?? DateTime.utc(2026, 9, 2)) : null),
+      muted: muted ?? c.muted,
+      archivedAt: archived == null
+          ? c.archivedAt
+          : (archived ? (c.archivedAt ?? DateTime.utc(2026, 9, 2)) : null),
+    );
+  }
+
+  @override
+  Future<void> markConversationUnread(String conversationId) async {
+    unreadMarks.add(conversationId);
+    final i = conversations.indexWhere((c) => c.id == conversationId);
+    if (i < 0) return;
+    final c = conversations[i];
+    conversations[i] = Conversation(
+      id: c.id,
+      kind: c.kind,
+      lastAt: c.lastAt,
+      title: c.title,
+      avatarPath: c.avatarPath,
+      otherMemberId: c.otherMemberId,
+      lastBody: c.lastBody,
+      lastFromMemberId: c.lastFromMemberId,
+      unread: c.unread == 0 ? 1 : c.unread,
+      participantCount: c.participantCount,
+      pinnedAt: c.pinnedAt,
+      muted: c.muted,
+      archivedAt: c.archivedAt,
+    );
+  }
 
   @override
   Future<String> openDirectConversation(
@@ -1146,9 +1217,19 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   @override
   Future<List<MemberNote>> fetchConversationMessages(
-    String conversationId,
-  ) async =>
-      conversationMessages[conversationId] ?? const [];
+    String conversationId, {
+    int limit = 200,
+    DateTime? before,
+  }) async {
+    final all = conversationMessages[conversationId] ?? const <MemberNote>[];
+    final older = before == null
+        ? all
+        : [for (final n in all) if (n.createdAt.isBefore(before)) n];
+    // The newest [limit], oldest first — like the paged query.
+    return older.length <= limit
+        ? List.of(older)
+        : older.sublist(older.length - limit);
+  }
 
   @override
   Future<void> markConversationRead(String conversationId) async {

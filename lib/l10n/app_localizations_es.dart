@@ -2215,6 +2215,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'La pestaña Calendario como agenda, semana y mes: marcadores por día según el tipo, días cerrados dibujados cerrados, cabeceras Hoy / Mañana, vencimientos de pago y gastos programados en el feed. Desactivado: el simple selector de día o rango sobre el feed.';
 
   @override
+  String get featureMessagesHubTitle => 'Mensajes, renovados';
+
+  @override
+  String get featureMessagesHubDesc =>
+      'Una sola barra de bandeja (Todos / No leídos / Archivados y búsqueda), fijar, silenciar, archivar y marcar como no leído en un hilo, la conversación como página completa con separadores de fecha, un menú adjuntar y un borrador guardado en el compositor, una persona abierta con un toque. Desactivado: la bandeja de dos barras y el hilo en hoja.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override
@@ -4461,14 +4468,6 @@ class AppLocalizationsEs extends AppLocalizations {
       '¿Eliminar este mensaje? No se puede deshacer.';
 
   @override
-  String get memberNoteDeleteRead =>
-      'Ya leído: este mensaje ya no se puede retirar.';
-
-  @override
-  String get memberNoteDeleteNotMine =>
-      'Solo quien lo envió puede retirar un mensaje.';
-
-  @override
   String get memberNoteReply => 'Responder';
 
   @override
@@ -4631,6 +4630,86 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get memberMoneyUnavailable =>
       'No se pudieron cargar las finanzas. Tire para actualizar.';
+
+  @override
+  String get inboxAlertsTab => 'Alertas';
+
+  @override
+  String get inboxFilterAll => 'Todos';
+
+  @override
+  String get inboxFilterUnread => 'No leídos';
+
+  @override
+  String get inboxFilterArchived => 'Archivados';
+
+  @override
+  String get inboxNoUnread => 'Nada sin leer — estás al día.';
+
+  @override
+  String get inboxNoArchived => 'Ninguna conversación archivada.';
+
+  @override
+  String get conversationPin => 'Fijar arriba';
+
+  @override
+  String get conversationUnpin => 'Desfijar';
+
+  @override
+  String get conversationMute => 'Silenciar notificaciones';
+
+  @override
+  String get conversationUnmute => 'Reactivar notificaciones';
+
+  @override
+  String get conversationMarkUnread => 'Marcar como no leído';
+
+  @override
+  String get conversationArchive => 'Archivar';
+
+  @override
+  String get conversationUnarchive => 'Sacar del archivo';
+
+  @override
+  String get conversationArchived => 'Conversación archivada.';
+
+  @override
+  String get conversationMutedBadge => 'Silenciada';
+
+  @override
+  String get conversationLoadEarlier => 'Cargar mensajes anteriores';
+
+  @override
+  String get conversationToday => 'Hoy';
+
+  @override
+  String get composerAttach => 'Adjuntar una referencia';
+
+  @override
+  String composerCharsLeft(int count) {
+    return '$count caracteres restantes';
+  }
+
+  @override
+  String get composerDraftKept => 'Borrador guardado';
+
+  @override
+  String get newConversationTapToOpen =>
+      'Toca a una persona para abrir el chat; activa Grupo para elegir varias.';
+
+  @override
+  String get newConversationGroupSwitch => 'Grupo';
+
+  @override
+  String get inboxRetry => 'Reintentar';
+
+  @override
+  String get memberNoteDeleteRead =>
+      'Ya leído: este mensaje ya no se puede retirar.';
+
+  @override
+  String get memberNoteDeleteNotMine =>
+      'Solo quien lo envió puede retirar un mensaje.';
 
   @override
   String get moneyBaseFee => 'Suscripción base';

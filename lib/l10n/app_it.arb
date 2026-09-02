@@ -1267,6 +1267,8 @@
   "featureBookingGateDesc": "Ogni superficie di prenotazione — piano, viste giorno, settimana e mese, foglio di prenotazione, chiosco, scansione QR o NFC — verifica i parametri di disponibilità prima di offrire una fascia e nomina il motivo quando non può; i giorni chiusi si mostrano chiusi in ogni vista, una legenda nomina gli stati dei posti, e gli admin possono fare il check-out di un membro dove la regola lo consente.",
   "featureCalendarViewsTitle": "Viste del calendario",
   "featureCalendarViewsDesc": "La scheda Calendario come agenda, settimana e mese: indicatori per giorno secondo il tipo, giorni chiusi mostrati chiusi, intestazioni Oggi / Domani, scadenze di pagamento e spese programmate nel feed. Disattivato: il semplice selettore giorno o intervallo sopra il feed.",
+  "featureMessagesHubTitle": "Messaggi, rinnovati",
+  "featureMessagesHubDesc": "Una sola barra della posta (Tutti / Non letti / Archiviati e ricerca), fissare, silenziare, archiviare e segnare come non letto un thread, la conversazione a pagina intera con separatori di data, un menu allega e una bozza conservata nel compositore, una persona aperta con un tocco. Disattivato: la posta a due barre e il thread in foglio.",
   "helpHintLearnMore": "Scopri di più",
   "helpHintDismiss": "Nascondi suggerimento",
   "helpHintPrevTip": "Suggerimento precedente",
@@ -2626,8 +2628,6 @@
     "description": "Delete button on a message (sheet + confirm dialog, #523)"
   },
   "memberNoteDeleteConfirm": "Eliminare questo messaggio? Non si può annullare.",
-  "memberNoteDeleteRead": "Già letto: questo messaggio non può più essere ritirato.",
-  "memberNoteDeleteNotMine": "Solo il mittente può ritirare un messaggio.",
   "@memberNoteDeleteConfirm": {
     "description": "Confirmation asked before any message delete — swipe or button (#523)"
   },
@@ -2847,6 +2847,38 @@
   "@memberMoneyUnavailable": {
     "description": "#709 - the money section of a profile could not be read"
   },
+  "inboxAlertsTab": "Avvisi",
+  "inboxFilterAll": "Tutti",
+  "inboxFilterUnread": "Non letti",
+  "inboxFilterArchived": "Archiviati",
+  "inboxNoUnread": "Niente da leggere — sei aggiornato.",
+  "inboxNoArchived": "Nessuna conversazione archiviata.",
+  "conversationPin": "Fissa in alto",
+  "conversationUnpin": "Sblocca",
+  "conversationMute": "Silenzia le notifiche",
+  "conversationUnmute": "Riattiva le notifiche",
+  "conversationMarkUnread": "Segna come non letto",
+  "conversationArchive": "Archivia",
+  "conversationUnarchive": "Ripristina dall'archivio",
+  "conversationArchived": "Conversazione archiviata.",
+  "conversationMutedBadge": "Silenziosa",
+  "conversationLoadEarlier": "Carica messaggi precedenti",
+  "conversationToday": "Oggi",
+  "composerAttach": "Allega un riferimento",
+  "composerCharsLeft": "{count} caratteri rimasti",
+  "@composerCharsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "composerDraftKept": "Bozza conservata",
+  "newConversationTapToOpen": "Tocca una persona per aprire la chat; attiva Gruppo per sceglierne più di una.",
+  "newConversationGroupSwitch": "Gruppo",
+  "inboxRetry": "Riprova",
+  "memberNoteDeleteRead": "Già letto: questo messaggio non può più essere ritirato.",
+  "memberNoteDeleteNotMine": "Solo il mittente può ritirare un messaggio.",
   "moneyBaseFee": "Abbonamento base",
   "moneyUsage": "{used} mezze giornate usate su {included}",
   "moneyUsageUnlimited": "{used} mezze giornate usate",

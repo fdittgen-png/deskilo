@@ -9,6 +9,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/conversation.dart';
 import '../../domain/member.dart';
+import '../../domain/workspace_feature.dart';
 import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'conversation_avatar.dart';
@@ -55,6 +56,10 @@ class _NewConversationSheetState
   final _groupName = TextEditingController();
   bool _busy = false;
 
+  /// #821 — Group mode turns rows into checkboxes; off, a tap on a
+  /// person opens the chat at once.
+  bool _groupMode = false;
+
   @override
   void dispose() {
     _search.dispose();
@@ -63,7 +68,11 @@ class _NewConversationSheetState
   }
 
   /// A group needs a name; a one-to-one thread is titled by the person.
-  bool get _isGroup => _selected.length > 1;
+  bool get _isGroup => _hub ? _groupMode : _selected.length > 1;
+
+  bool get _hub => ref
+      .read(enabledFeaturesSyncProvider)
+      .contains(WorkspaceFeature.messagesHub);
 
   @override
   Widget build(BuildContext context) {
@@ -123,6 +132,25 @@ class _NewConversationSheetState
                 ),
               ),
             ),
+            if (_hub)
+              SwitchListTile(
+                key: const ValueKey('new-conversation-group-switch'),
+                dense: true,
+                title: Text(l10n?.newConversationGroupSwitch ?? 'Group'),
+                subtitle: Text(
+                  l10n?.newConversationTapToOpen ??
+                      'Tap a person to open the chat; switch on Group to '
+                          'pick several.',
+                  style: theme.textTheme.bodySmall,
+                ),
+                value: _groupMode,
+                onChanged: _busy
+                    ? null
+                    : (on) => setState(() {
+                          _groupMode = on;
+                          if (!on) _selected.clear();
+                        }),
+              ),
             // The name field appears only once it is needed. Asking for a
             // group name before anyone has picked two people is a field
             // that means nothing yet.
@@ -161,6 +189,25 @@ class _NewConversationSheetState
                       itemBuilder: (context, index) {
                         final m = members[index];
                         final name = names[m.id] ?? '';
+                        // #821 — one tap opens the chat unless a group
+                        // is being assembled.
+                        if (_hub && !_groupMode) {
+                          return ListTile(
+                            key: ValueKey('new-conversation-${m.id}'),
+                            leading: MemberAvatarByMember(
+                                memberId: m.id, name: name),
+                            title: Text(name),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: _busy
+                                ? null
+                                : () {
+                                    _selected
+                                      ..clear()
+                                      ..add(m.id);
+                                    _start();
+                                  },
+                          );
+                        }
                         return CheckboxListTile(
                           key: ValueKey('new-conversation-${m.id}'),
                           value: _selected.contains(m.id),
@@ -180,6 +227,7 @@ class _NewConversationSheetState
                       },
                     ),
             ),
+            if (!_hub || _groupMode)
             Padding(
               padding: AppSpacing.lgAll,
               child: FilledButton(
