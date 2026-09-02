@@ -120,7 +120,10 @@ enum WorkspaceFeature {
 
   /// #825 — one page per member: identity, presence, bookings, contact,
   /// money, and the admin controls grouped with their current values.
-  memberPage;
+  memberPage,
+
+  /// #827 — the invoicing wizard: one guided month-close process.
+  invoicingWizard;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -406,6 +409,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.memberPage: FeatureManifestEntry(
     feature: WorkspaceFeature.memberPage,
     requires: WorkspaceFeature.membersDirectory,
+  ),
+  // #827 — the guided month-close process over the invoicing hub.
+  WorkspaceFeature.invoicingWizard: FeatureManifestEntry(
+    feature: WorkspaceFeature.invoicingWizard,
+    requires: WorkspaceFeature.invoicing,
   ),
   // #719 — "who accessed my data": the server-written log of reads of
   // another member's finances, shown to the subject. OFF hides the row;

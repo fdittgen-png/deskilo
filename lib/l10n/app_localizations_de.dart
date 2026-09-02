@@ -2300,6 +2300,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine Seite pro Mitglied: Foto und Präsenz, zuletzt gesehen, aktuelle und kommende Buchungen, Schnellaktionen (Nachricht, WhatsApp, E-Mail), Kontakt- und Finanzkarten und für Admins jede Einstellung nach Thema gruppiert mit ihrem aktuellen Wert. Aus: das Profilblatt und das Aktionsblatt von Mitglieder & Tarife.';
 
   @override
+  String get featureInvoicingWizardTitle => 'Rechnungsassistent';
+
+  @override
+  String get featureInvoicingWizardDesc =>
+      'Ein geführter Monatsabschluss für die Finanzperson: ein Monatsanfangslauf für die im Voraus bezahlten Abonnements und ein Monatsendlauf für Nutzung und Zusatzkosten — Prüfung, Ausstellung im Stapel, Versand, fällige Mahnungen, Erfassen und Bestätigen von Zahlungen, Zuordnen zu Rechnungen, Zusammenfassen, Abschreiben oder Erstatten, und eine Zusammenfassung mit dem, was offen bleibt und wer am Zug ist. Aus: die einzelnen Bildschirme.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override
@@ -4245,6 +4252,278 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reportDesignerSideBySide => 'Entwurf und Vorschau nebeneinander';
+
+  @override
+  String get wizardTitle => 'Rechnungsassistent';
+
+  @override
+  String get invoiceWizardAction => 'Monatsabschluss-Assistent';
+
+  @override
+  String get wizardCardHint =>
+      'Ausstellen, versenden, mahnen, Zahlungen erfassen und bestätigen, zuordnen und abschließen — ein geführter Prozess.';
+
+  @override
+  String get wizardRunStart => 'Monatsanfang';
+
+  @override
+  String get wizardRunEnd => 'Monatsende';
+
+  @override
+  String get wizardRunStartHint =>
+      'Die im Voraus bezahlten Abonnements: für den kommenden Monat ausstellen, versenden, Mahnungen planen — dann die Zahlungsseite.';
+
+  @override
+  String get wizardRunEndHint =>
+      'Was der abgelaufene Monat gekostet hat: Nutzung, Verbrauch und Zusatzkosten. Ausstellen, versenden, mahnen — dann Zahlungen erfassen, bestätigen und zuordnen, und abschließen.';
+
+  @override
+  String get wizardStepReview => 'Prüfen';
+
+  @override
+  String get wizardStepIssue => 'Ausstellen';
+
+  @override
+  String get wizardStepSend => 'Versenden';
+
+  @override
+  String get wizardStepRemind => 'Mahnen';
+
+  @override
+  String get wizardStepPayments => 'Zahlungen';
+
+  @override
+  String get wizardStepMatch => 'Zuordnen';
+
+  @override
+  String get wizardStepClose => 'Abschließen';
+
+  @override
+  String get wizardStepSummary => 'Zusammenfassung';
+
+  @override
+  String get wizardNext => 'Weiter';
+
+  @override
+  String get wizardBack => 'Zurück';
+
+  @override
+  String get wizardFinish => 'Fertig';
+
+  @override
+  String get wizardReviewToIssue => 'Auszustellen';
+
+  @override
+  String get wizardReviewIssued => 'Bereits ausgestellt';
+
+  @override
+  String get wizardReviewOpen => 'Offene Rechnungen';
+
+  @override
+  String get wizardReviewOverdue => 'Fällige Mahnungen';
+
+  @override
+  String get wizardReviewPending => 'Zu bestätigende Zahlungen';
+
+  @override
+  String wizardPeriodLabel(String period) {
+    return 'Zeitraum: $period';
+  }
+
+  @override
+  String get wizardIssueHint =>
+      'Ein abgewähltes Mitglied bleibt in diesem Stapel außen vor. Bereits abgedeckte Mitglieder erscheinen als erledigt.';
+
+  @override
+  String get wizardIssueNothing =>
+      'Für diesen Zeitraum ist nichts auszustellen.';
+
+  @override
+  String wizardIssuedChip(String number) {
+    return 'Ausgestellt $number';
+  }
+
+  @override
+  String wizardIssueAll(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Rechnungen ausstellen',
+      one: '1 Rechnung ausstellen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String wizardIssueFailed(String name) {
+    return 'Ausstellung für $name nicht möglich.';
+  }
+
+  @override
+  String get wizardSendHint =>
+      'Jede Rechnung an ihr Mitglied übergeben — das PDF teilen oder herunterladen und auf eigenem Weg senden.';
+
+  @override
+  String get wizardSendNone => 'Noch keine Rechnung dieses Laufs zu versenden.';
+
+  @override
+  String get wizardSendShare => 'PDF teilen';
+
+  @override
+  String get wizardSendDownload => 'PDF herunterladen';
+
+  @override
+  String get wizardRemindHint =>
+      'Überfällig nach Ihren Mahnregeln. Ein Tipp erfasst jede Mahnung und benachrichtigt die Mitglieder; der Brief öffnet sich je Zeile.';
+
+  @override
+  String get wizardRemindNone => 'Nach Ihren Regeln ist keine Mahnung fällig.';
+
+  @override
+  String wizardRemindLevel(int level) {
+    return 'Mahnung $level';
+  }
+
+  @override
+  String wizardRemindAll(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Mahnungen senden',
+      one: '1 Mahnung senden',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get wizardRemindOne => 'Mahnbrief';
+
+  @override
+  String get wizardPaymentsHint =>
+      'Was Mitglieder gemeldet haben, wartet unten auf Ihre Bestätigung. Eine Zahlung, die ohne Meldung auf dem Konto eintraf, wird hier erfasst — das Mitglied bestätigt sie dann.';
+
+  @override
+  String get wizardPaymentsNone => 'Keine gemeldete Zahlung wartet auf Sie.';
+
+  @override
+  String get wizardPaymentAccept => 'Bestätigen';
+
+  @override
+  String get wizardPaymentReject => 'Ablehnen';
+
+  @override
+  String get wizardMatchHint =>
+      'Eine Rechnung ist bezahlt, sobald eine echte Zahlung zugeordnet ist. Zeilen mit Guthaben auf dem Mitgliedskonto sind bereit.';
+
+  @override
+  String get wizardMatchNone => 'Jede Rechnung ist bezahlt oder abgeschlossen.';
+
+  @override
+  String get wizardMatchPending => 'Wartet auf Bestätigung';
+
+  @override
+  String wizardMatchCredit(String amount) {
+    return 'Verfügbares Guthaben: $amount';
+  }
+
+  @override
+  String get wizardMatchNoCredit => 'Noch keine Zahlung auf dem Konto';
+
+  @override
+  String get wizardMatchAction => 'Zuordnen';
+
+  @override
+  String get wizardCloseHint =>
+      'Ein Mitglied mit mehreren offenen Rechnungen kann EINE bezahlen; bei einer teilweise bezahlten kann der Rest abgeschrieben werden; eine Gutschrift wird erstattet. Jedes läuft über die Bestätigung.';
+
+  @override
+  String get wizardCloseNone =>
+      'Nichts zusammenzufassen, abzuschreiben oder zu erstatten.';
+
+  @override
+  String wizardSettle(int count) {
+    return '$count zusammenfassen';
+  }
+
+  @override
+  String get wizardWriteoff => 'Abschreiben';
+
+  @override
+  String get wizardRefund => 'Erstatten';
+
+  @override
+  String get wizardSummaryHint => 'Was dieser Lauf getan hat';
+
+  @override
+  String get wizardTallyIssued => 'Ausgestellte Rechnungen';
+
+  @override
+  String get wizardTallyShared => 'Geteilte oder heruntergeladene PDFs';
+
+  @override
+  String get wizardTallyReminded => 'Gesendete Mahnungen';
+
+  @override
+  String get wizardTallyDecided => 'Bestätigte oder abgelehnte Zahlungen';
+
+  @override
+  String get wizardTallyRegistered => 'Erfasste Zahlungen';
+
+  @override
+  String get wizardTallyMatched => 'Zugeordnete Rechnungen';
+
+  @override
+  String get wizardTallySettled => 'Zusammenfassungen';
+
+  @override
+  String get wizardTallyWriteoffs => 'Beantragte Abschreibungen';
+
+  @override
+  String get wizardTallyRefunds => 'Erstattungen';
+
+  @override
+  String get wizardTallyNothing => 'Nichts wurde geändert.';
+
+  @override
+  String get wizardTodoHeading => 'Noch offen — wer ist am Zug';
+
+  @override
+  String get wizardTodoNone => 'Nichts mehr offen.';
+
+  @override
+  String get wizardWhoYou => 'Sie';
+
+  @override
+  String get wizardWhoValidators => 'Prüfer';
+
+  @override
+  String get registerPaymentTitle => 'Zahlung erfassen';
+
+  @override
+  String get registerPaymentHint =>
+      'Eine Zahlung, die beim Workspace eingegangen ist — das Mitglied bestätigt sie, dann kann sie einer Rechnung zugeordnet werden.';
+
+  @override
+  String get registerPaymentMember => 'Mitglied';
+
+  @override
+  String get registerPaymentAmount => 'Betrag';
+
+  @override
+  String get registerPaymentMethod => 'Zahlungsart';
+
+  @override
+  String get registerPaymentDate => 'Bezahlt am';
+
+  @override
+  String get registerPaymentNote => 'Notiz';
+
+  @override
+  String get registerPaymentSubmit => 'Erfassen';
+
+  @override
+  String get registerPaymentDone =>
+      'Zahlung erfasst — das Mitglied bestätigt sie von seiner Seite.';
 
   @override
   String get eventTypeMemberJoin => 'Neues Mitglied';

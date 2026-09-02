@@ -861,6 +861,10 @@ Con **Recordatorios de pago automáticos** activado (Funciones, hijo de *Recorda
 
 **Validada como cualquier pago.** Una liquidación es un evento *pago de factura*: donde el propietario puso una regla en ese dominio (§7), espera a los validadores; un **rechazo** — o una caducidad — anula el documento de liquidación y libera sus fuentes, que vuelven a deberse por separado. **Anular** una liquidación (*Marcar errónea*) libera sus fuentes del mismo modo.
 
+### 11g. El asistente de cierre mensual
+
+El **asistente de cierre** (opción *Asistente de facturación*; la varita en la cabecera de Facturas o la tarjeta sobre *Por facturar*) encadena todo el trabajo de facturación en **un solo proceso guiado** con un carril de pasos: **Revisión** (qué pasada, qué periodo, qué está pendiente), **Emitir** (las facturas de la pasada en un lote: los socios ya cubiertos aparecen hechos, desmarque para excluir), **Enviar** (compartir o descargar cada PDF), **Recordar** (todo lo vencido según sus reglas, registrado y notificado con un toque, la carta por fila), **Pagos** (confirmar o rechazar lo que declararon los socios; **registrar** una transferencia o un pago en efectivo para un socio, que lo confirma por su parte), **Conciliar** (cada factura abierta frente al crédito del socio; las filas con crédito están listas), **Cerrar** (reagrupar varias facturas de un socio en una, anular un resto, reembolsar una nota de crédito, cada una con validación) y **Resumen** (lo que hizo la pasada y lo que sigue abierto con a quién le toca). Dos pasadas: **Inicio de mes** para las suscripciones pagadas por adelantado (sugerida desde su ventana de anticipación), **Fin de mes** para el uso, el consumo y los cargos adicionales del mes cerrado.
+
 ## 12. Ajustes y perfil
 
 Tu pantalla personal, de arriba abajo:

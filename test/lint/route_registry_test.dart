@@ -40,7 +40,8 @@ import 'package:flutter_test/flutter_test.dart';
 // 46→47 (2026-09-02): #821 /conversation/:conversationId — a thread as a page.
 // 47→48 (2026-09-02): #822 /report-editor — the full-screen report designer.
 // 48→49 (2026-09-02): #825 /member/:memberId — one page per member.
-const int _expectedRouteCount = 49;
+// 49→50 (2026-09-02): #827 /invoicing/wizard — the guided month-close.
+const int _expectedRouteCount = 50;
 
 void main() {
   test('router carries exactly $_expectedRouteCount GoRoutes', () {

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/expense_schedule.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/invoicing_wizard.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
@@ -372,16 +373,25 @@ class FakeMoneyRepository implements MoneyRepository {
     required String period,
     String? replacesId,
     bool detailed = false,
+    InvoiceKind kind = InvoiceKind.full,
   }) async {
-    // Server contract (0067): one ACTIVE invoice per member+month.
+    // Server contract (0067/0142): one ACTIVE invoice per member, month
+    // and KIND — a full invoice blocks both kinds.
     if (invoices.any((i) =>
         i.memberId == memberId &&
         i.period == period &&
         !i.isVoided &&
-        i.id != replacesId)) {
+        i.id != replacesId &&
+        (i.kind == kind ||
+            i.kind == InvoiceKind.full ||
+            kind == InvoiceKind.full))) {
       throw StateError('period already invoiced for this member');
     }
-    final lines = derivedLines(memberId, period);
+    // #827 — the kind narrows the lines the way invoice_lines_for does.
+    final lines = [
+      for (final l in derivedLines(memberId, period))
+        if (lineBelongsTo(l, kind)) l,
+    ];
     if (lines.isEmpty) throw StateError('nothing to invoice for this period');
     var replacesNumber = '';
     if (replacesId != null) {
@@ -420,6 +430,7 @@ class FakeMoneyRepository implements MoneyRepository {
       replacesInvoiceId: replacesId,
       replacesNumber: replacesNumber,
       detailed: detailed,
+      kind: kind,
       detailLedger: detailed
           ? [
               for (final entry in ledger)

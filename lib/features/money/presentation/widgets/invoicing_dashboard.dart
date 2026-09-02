@@ -19,6 +19,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../events/domain/workspace_event.dart';
 import 'open_invoice_card.dart';
+import 'wizard_context.dart';
 
 /// How old an open invoice has to be before the hub starts pointing at it.
 const _overdueDays = 30;
@@ -171,7 +172,13 @@ class ToInvoiceTab extends ConsumerWidget {
       onIssueAll;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) => Column(children: [
+        // #827 — the guided process, when its flag is on.
+        const WizardEntryCard(),
+        Expanded(child: _list(context, ref)),
+      ]);
+
+  Widget _list(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final overviewAsync = ref.watch(invoicingOverviewProvider);
     final overview = overviewAsync.value;
@@ -188,6 +195,7 @@ class ToInvoiceTab extends ConsumerWidget {
     return ListView(
       padding: AppSpacing.mdAll,
       children: [
+
         Row(children: [
           Expanded(
             child: Column(

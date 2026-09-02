@@ -13,6 +13,8 @@ import '../features/events/presentation/screens/validation_settings_screen.dart'
 import '../features/money/presentation/screens/billing_screen.dart';
 import '../features/money/presentation/screens/report_editor_screen.dart';
 import '../features/members/presentation/screens/member_page.dart';
+import '../features/money/domain/invoicing_wizard.dart';
+import '../features/money/presentation/screens/invoicing_wizard_screen.dart';
 import '../features/money/presentation/screens/money_screen.dart';
 import '../features/money/presentation/screens/invoices_screen.dart';
 import '../features/money/presentation/screens/einvoice_config_screen.dart';
@@ -479,6 +481,16 @@ GoRouter router(Ref ref) {
       // #513 — the central role→permission matrix. Anyone with a role
       // can READ it; editing needs manageRoles (enforced in-screen and
       // by the RPC).
+      // #827 — the invoicing wizard.
+      GoRoute(
+        path: '/invoicing/wizard',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.invoicingWizard) ? null : '/money',
+        builder: (context, state) => InvoicingWizardScreen(
+          initialRun: WizardRun.values
+              .asNameMap()[state.uri.queryParameters['run'] ?? ''],
+        ),
+      ),
       // #825 — one page per member.
       GoRoute(
         path: '/member/:memberId',

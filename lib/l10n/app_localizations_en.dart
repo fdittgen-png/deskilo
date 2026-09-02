@@ -2284,6 +2284,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'One page per member: photo and presence, when they were last seen, what they have booked and what comes next, quick actions to message, WhatsApp or e-mail them, contact and money cards, and for admins every setting grouped by topic with its current value. Off: the profile sheet and the Members & plans action sheet.';
 
   @override
+  String get featureInvoicingWizardTitle => 'Invoicing wizard';
+
+  @override
+  String get featureInvoicingWizardDesc =>
+      'One guided month-close process for the finance person: a start-of-month run for the subscriptions paid ahead and an end-of-month run for usage and extra charges — review, issue in one batch, send, remind what is due, register and validate payments, match them to invoices, regroup, write off or refund, and a summary with whose move is left. Off: the separate screens.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override
@@ -4215,6 +4222,276 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportDesignerSideBySide => 'Design and preview side by side';
+
+  @override
+  String get wizardTitle => 'Invoicing wizard';
+
+  @override
+  String get invoiceWizardAction => 'Month-close wizard';
+
+  @override
+  String get wizardCardHint =>
+      'Issue, send, remind, register and validate payments, match and close — one guided process.';
+
+  @override
+  String get wizardRunStart => 'Start of month';
+
+  @override
+  String get wizardRunEnd => 'End of month';
+
+  @override
+  String get wizardRunStartHint =>
+      'The subscriptions members pay ahead: issue them for the coming month, send them, plan the reminders — then the payment side.';
+
+  @override
+  String get wizardRunEndHint =>
+      'What the month that just ended cost: usage, consumption and extra charges. Issue, send, remind — then register, validate and match the payments, and close.';
+
+  @override
+  String get wizardStepReview => 'Review';
+
+  @override
+  String get wizardStepIssue => 'Issue';
+
+  @override
+  String get wizardStepSend => 'Send';
+
+  @override
+  String get wizardStepRemind => 'Remind';
+
+  @override
+  String get wizardStepPayments => 'Payments';
+
+  @override
+  String get wizardStepMatch => 'Match';
+
+  @override
+  String get wizardStepClose => 'Close';
+
+  @override
+  String get wizardStepSummary => 'Summary';
+
+  @override
+  String get wizardNext => 'Next';
+
+  @override
+  String get wizardBack => 'Back';
+
+  @override
+  String get wizardFinish => 'Finish';
+
+  @override
+  String get wizardReviewToIssue => 'To issue';
+
+  @override
+  String get wizardReviewIssued => 'Already issued';
+
+  @override
+  String get wizardReviewOpen => 'Open invoices';
+
+  @override
+  String get wizardReviewOverdue => 'Reminders due';
+
+  @override
+  String get wizardReviewPending => 'Payments to validate';
+
+  @override
+  String wizardPeriodLabel(String period) {
+    return 'Period: $period';
+  }
+
+  @override
+  String get wizardIssueHint =>
+      'Untick a member to leave them out of this batch. Members already covered are shown as done.';
+
+  @override
+  String get wizardIssueNothing => 'Nothing to issue for this period.';
+
+  @override
+  String wizardIssuedChip(String number) {
+    return 'Issued $number';
+  }
+
+  @override
+  String wizardIssueAll(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Issue $count invoices',
+      one: 'Issue 1 invoice',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String wizardIssueFailed(String name) {
+    return 'Could not issue for $name.';
+  }
+
+  @override
+  String get wizardSendHint =>
+      'Hand each invoice to its member — share the PDF, or download it to send it your own way.';
+
+  @override
+  String get wizardSendNone => 'No invoice of this run to send yet.';
+
+  @override
+  String get wizardSendShare => 'Share the PDF';
+
+  @override
+  String get wizardSendDownload => 'Download the PDF';
+
+  @override
+  String get wizardRemindHint =>
+      'Overdue by your reminder rules. One tap records every reminder and notifies the members; the letter opens per row.';
+
+  @override
+  String get wizardRemindNone => 'No reminder is due by your rules.';
+
+  @override
+  String wizardRemindLevel(int level) {
+    return 'reminder $level';
+  }
+
+  @override
+  String wizardRemindAll(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Send $count reminders',
+      one: 'Send 1 reminder',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get wizardRemindOne => 'Reminder letter';
+
+  @override
+  String get wizardPaymentsHint =>
+      'What members declared waits for your confirmation below. A payment that reached the account without a declaration is registered here — the member then confirms it.';
+
+  @override
+  String get wizardPaymentsNone => 'No declared payment waits for you.';
+
+  @override
+  String get wizardPaymentAccept => 'Confirm';
+
+  @override
+  String get wizardPaymentReject => 'Reject';
+
+  @override
+  String get wizardMatchHint =>
+      'An invoice is paid once a real payment is matched to it. Rows with credit on the member\'s account are ready.';
+
+  @override
+  String get wizardMatchNone => 'Every invoice is paid or closed.';
+
+  @override
+  String get wizardMatchPending => 'Awaiting validation';
+
+  @override
+  String wizardMatchCredit(String amount) {
+    return 'Credit available: $amount';
+  }
+
+  @override
+  String get wizardMatchNoCredit => 'No payment on the account yet';
+
+  @override
+  String get wizardMatchAction => 'Match';
+
+  @override
+  String get wizardCloseHint =>
+      'A member with several open invoices can pay ONE; a partly paid invoice can have its remainder written off; a credit note is refunded. Each goes through validation.';
+
+  @override
+  String get wizardCloseNone => 'Nothing to regroup, write off or refund.';
+
+  @override
+  String wizardSettle(int count) {
+    return 'Regroup $count';
+  }
+
+  @override
+  String get wizardWriteoff => 'Write off';
+
+  @override
+  String get wizardRefund => 'Refund';
+
+  @override
+  String get wizardSummaryHint => 'What this run did';
+
+  @override
+  String get wizardTallyIssued => 'Invoices issued';
+
+  @override
+  String get wizardTallyShared => 'PDFs shared or downloaded';
+
+  @override
+  String get wizardTallyReminded => 'Reminders sent';
+
+  @override
+  String get wizardTallyDecided => 'Payments confirmed or rejected';
+
+  @override
+  String get wizardTallyRegistered => 'Payments registered';
+
+  @override
+  String get wizardTallyMatched => 'Invoices matched';
+
+  @override
+  String get wizardTallySettled => 'Regroupings';
+
+  @override
+  String get wizardTallyWriteoffs => 'Write-offs requested';
+
+  @override
+  String get wizardTallyRefunds => 'Refunds';
+
+  @override
+  String get wizardTallyNothing => 'Nothing was changed.';
+
+  @override
+  String get wizardTodoHeading => 'Still open — whose move';
+
+  @override
+  String get wizardTodoNone => 'Nothing left open.';
+
+  @override
+  String get wizardWhoYou => 'You';
+
+  @override
+  String get wizardWhoValidators => 'Validators';
+
+  @override
+  String get registerPaymentTitle => 'Register a payment';
+
+  @override
+  String get registerPaymentHint =>
+      'A payment that reached the workspace — the member confirms it, then it can be matched to an invoice.';
+
+  @override
+  String get registerPaymentMember => 'Member';
+
+  @override
+  String get registerPaymentAmount => 'Amount';
+
+  @override
+  String get registerPaymentMethod => 'Method';
+
+  @override
+  String get registerPaymentDate => 'Paid on';
+
+  @override
+  String get registerPaymentNote => 'Note';
+
+  @override
+  String get registerPaymentSubmit => 'Register';
+
+  @override
+  String get registerPaymentDone =>
+      'Payment registered — the member confirms it from their side.';
 
   @override
   String get eventTypeMemberJoin => 'New member';

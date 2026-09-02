@@ -1728,5 +1728,138 @@
   "reportFieldGroupMoney": "Amounts",
   "reportFieldGroupLegal": "Legal mentions",
   "reportFieldGroupLoops": "Lines & VAT loops",
-  "reportDesignerSideBySide": "Design and preview side by side"
+  "reportDesignerSideBySide": "Design and preview side by side",
+  "wizardTitle": "Invoicing wizard",
+  "invoiceWizardAction": "Month-close wizard",
+  "wizardCardHint": "Issue, send, remind, register and validate payments, match and close — one guided process.",
+  "wizardRunStart": "Start of month",
+  "wizardRunEnd": "End of month",
+  "wizardRunStartHint": "The subscriptions members pay ahead: issue them for the coming month, send them, plan the reminders — then the payment side.",
+  "wizardRunEndHint": "What the month that just ended cost: usage, consumption and extra charges. Issue, send, remind — then register, validate and match the payments, and close.",
+  "wizardStepReview": "Review",
+  "wizardStepIssue": "Issue",
+  "wizardStepSend": "Send",
+  "wizardStepRemind": "Remind",
+  "wizardStepPayments": "Payments",
+  "wizardStepMatch": "Match",
+  "wizardStepClose": "Close",
+  "wizardStepSummary": "Summary",
+  "wizardNext": "Next",
+  "wizardBack": "Back",
+  "wizardFinish": "Finish",
+  "wizardReviewToIssue": "To issue",
+  "wizardReviewIssued": "Already issued",
+  "wizardReviewOpen": "Open invoices",
+  "wizardReviewOverdue": "Reminders due",
+  "wizardReviewPending": "Payments to validate",
+  "wizardPeriodLabel": "Period: {period}",
+  "@wizardPeriodLabel": {
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardIssueHint": "Untick a member to leave them out of this batch. Members already covered are shown as done.",
+  "wizardIssueNothing": "Nothing to issue for this period.",
+  "wizardIssuedChip": "Issued {number}",
+  "@wizardIssuedChip": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardIssueAll": "{count, plural, =1{Issue 1 invoice} other{Issue {count} invoices}}",
+  "@wizardIssueAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardIssueFailed": "Could not issue for {name}.",
+  "@wizardIssueFailed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardSendHint": "Hand each invoice to its member — share the PDF, or download it to send it your own way.",
+  "wizardSendNone": "No invoice of this run to send yet.",
+  "wizardSendShare": "Share the PDF",
+  "wizardSendDownload": "Download the PDF",
+  "wizardRemindHint": "Overdue by your reminder rules. One tap records every reminder and notifies the members; the letter opens per row.",
+  "wizardRemindNone": "No reminder is due by your rules.",
+  "wizardRemindLevel": "reminder {level}",
+  "@wizardRemindLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardRemindAll": "{count, plural, =1{Send 1 reminder} other{Send {count} reminders}}",
+  "@wizardRemindAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardRemindOne": "Reminder letter",
+  "wizardPaymentsHint": "What members declared waits for your confirmation below. A payment that reached the account without a declaration is registered here — the member then confirms it.",
+  "wizardPaymentsNone": "No declared payment waits for you.",
+  "wizardPaymentAccept": "Confirm",
+  "wizardPaymentReject": "Reject",
+  "wizardMatchHint": "An invoice is paid once a real payment is matched to it. Rows with credit on the member's account are ready.",
+  "wizardMatchNone": "Every invoice is paid or closed.",
+  "wizardMatchPending": "Awaiting validation",
+  "wizardMatchCredit": "Credit available: {amount}",
+  "@wizardMatchCredit": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "wizardMatchNoCredit": "No payment on the account yet",
+  "wizardMatchAction": "Match",
+  "wizardCloseHint": "A member with several open invoices can pay ONE; a partly paid invoice can have its remainder written off; a credit note is refunded. Each goes through validation.",
+  "wizardCloseNone": "Nothing to regroup, write off or refund.",
+  "wizardSettle": "Regroup {count}",
+  "@wizardSettle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardWriteoff": "Write off",
+  "wizardRefund": "Refund",
+  "wizardSummaryHint": "What this run did",
+  "wizardTallyIssued": "Invoices issued",
+  "wizardTallyShared": "PDFs shared or downloaded",
+  "wizardTallyReminded": "Reminders sent",
+  "wizardTallyDecided": "Payments confirmed or rejected",
+  "wizardTallyRegistered": "Payments registered",
+  "wizardTallyMatched": "Invoices matched",
+  "wizardTallySettled": "Regroupings",
+  "wizardTallyWriteoffs": "Write-offs requested",
+  "wizardTallyRefunds": "Refunds",
+  "wizardTallyNothing": "Nothing was changed.",
+  "wizardTodoHeading": "Still open — whose move",
+  "wizardTodoNone": "Nothing left open.",
+  "wizardWhoYou": "You",
+  "wizardWhoValidators": "Validators",
+  "registerPaymentTitle": "Register a payment",
+  "registerPaymentHint": "A payment that reached the workspace — the member confirms it, then it can be matched to an invoice.",
+  "registerPaymentMember": "Member",
+  "registerPaymentAmount": "Amount",
+  "registerPaymentMethod": "Method",
+  "registerPaymentDate": "Paid on",
+  "registerPaymentNote": "Note",
+  "registerPaymentSubmit": "Register",
+  "registerPaymentDone": "Payment registered — the member confirms it from their side."
 }
