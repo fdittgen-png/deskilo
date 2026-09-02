@@ -79,6 +79,7 @@ void main() {
       money: r.money,
       saver: ({required bytes, required fileName}) async {
         captured = Uint8List.fromList(bytes);
+        return 'Download/$fileName';
       },
     );
     await _openArchiveOn(tester);
@@ -114,6 +115,7 @@ void main() {
       money: r.money,
       saver: ({required bytes, required fileName}) async {
         captured = Uint8List.fromList(bytes);
+        return 'Download/$fileName';
       },
     );
     await _openArchiveOn(tester);
