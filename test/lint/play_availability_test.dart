@@ -98,6 +98,15 @@ void main() {
     expect(tool, contains('there is no store page to show'));
   });
 
+  test('the track is not restricted to the four well-known names', () {
+    // Play names extra closed tracks itself (alpha1, alpha2, …) and a
+    // workspace can add one at any time. A fixed choices list is how a
+    // second closed track ends up holding testers and no build.
+    expect(tool, isNot(contains(
+        'choices=["internal", "alpha", "beta", "production"]')));
+    expect(workflow, isNot(contains('--track internal --track')));
+  });
+
   test('the workflow reads by default and only writes when asked', () {
     expect(workflow, contains('--status'));
     expect(workflow, contains('--set-countries'));

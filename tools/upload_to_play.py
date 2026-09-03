@@ -540,8 +540,14 @@ def _report_status(edits, package: str) -> int:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--package", default=DEFAULT_PACKAGE, help=f"App package name (default: {DEFAULT_PACKAGE})")
-    parser.add_argument("--track", default=DEFAULT_TRACK, choices=["internal", "alpha", "beta", "production"],
-                        help=f"Play Store track (default: {DEFAULT_TRACK} = open testing)")
+    # Not a fixed list: Play names extra closed tracks itself (alpha1,
+    # alpha2, …) and a workspace can create them in the Console at any
+    # time. Restricting this to the four well-known names is how a second
+    # closed track ends up with testers and no build.
+    parser.add_argument("--track", default=DEFAULT_TRACK,
+                        help=f"Play Store track (default: {DEFAULT_TRACK}). The four "
+                             f"well-known names are internal, alpha, beta and production; "
+                             f"extra closed tracks (alpha1, alpha2, …) are valid too.")
     parser.add_argument("--aab", default=DEFAULT_AAB, help=f"Path to AAB (default: {DEFAULT_AAB})")
     parser.add_argument("--key", default=DEFAULT_KEY, help=f"Service-account JSON key path (default: {DEFAULT_KEY})")
     parser.add_argument("--changelog-dir", default=DEFAULT_CHANGELOG_DIR,
