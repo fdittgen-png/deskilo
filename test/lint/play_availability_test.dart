@@ -92,6 +92,10 @@ void main() {
     expect(tool, contains('edits.countryavailability().get('));
     expect(tool, contains('NO COUNTRY'));
     expect(tool, contains('the TRACK is available in no country'));
+    // And the store page itself: a closed test still renders one,
+    // and without it the store answers "item not found" too.
+    expect(tool, contains('edits.listings().list('));
+    expect(tool, contains('there is no store page to show'));
   });
 
   test('the workflow reads by default and only writes when asked', () {
