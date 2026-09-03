@@ -1,29 +1,44 @@
 # Copyright (c) 2026 Florian DITTGEN
 # SPDX-License-Identifier: 0BSD
 
-name: play-status
+name: play-availability
 
-# What Google Play actually serves, right now, per track.
+# What Google Play actually serves, per track — and, on request, which
+# markets it serves it in.
 #
 # A tester who is on the list and still gets "item not found" is the one
 # store failure the phone cannot explain: the opt-in page says "you are a
 # tester" whether or not there is anything to install. Three things look
 # identical from there and none of them is a build failure — the release
 # is a DRAFT, the track targets NO COUNTRY, or the newest release is not
-# the build you think it is.
+# the build anyone thinks it is.
 #
-# This reads the tracks and says which. It builds nothing, uploads
-# nothing and changes nothing: an edit is opened to read through and
-# never committed.
+# With `set_countries` off this reads and changes nothing: an edit is
+# opened to read through and never committed. With it on, the newest
+# release on the chosen track is given the market list and the edit IS
+# committed — that changes what the store serves, so it is opt-in and
+# never the default.
 
 on:
   workflow_dispatch:
+    inputs:
+      track:
+        description: Track to inspect (and to set countries on)
+        type: choice
+        options: [alpha, beta, internal, production]
+        default: alpha
+      set_countries:
+        description: >-
+          Give the newest release on that track the market list
+          (EU 27 + US, CA, JP, KR). Leave off to only read.
+        type: boolean
+        default: false
 
 permissions:
   contents: read
 
 jobs:
-  status:
+  availability:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -49,6 +64,19 @@ jobs:
         run: |
           echo "$SA_JSON" > "$RUNNER_TEMP/play-key.json"
           echo "PLAY_KEY_PATH=$RUNNER_TEMP/play-key.json" >> "$GITHUB_ENV"
+
+      - name: Set the markets
+        if: ${{ inputs.set_countries }}
+        run: |
+          python tools/upload_to_play.py --set-countries \
+            --track "${{ inputs.track }}" --key "$PLAY_KEY_PATH" \
+            | tee "$RUNNER_TEMP/countries.txt"
+          {
+            echo '## Markets set on `${{ inputs.track }}`'
+            echo '```'
+            cat "$RUNNER_TEMP/countries.txt"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: What every track serves
         run: |

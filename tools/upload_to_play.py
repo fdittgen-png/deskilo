@@ -187,6 +187,104 @@ def load_release_notes(
 
 
 
+# The markets DesKilo is offered in. A testing track that targets no
+# country serves nobody — the opt-in page still says "you are a tester",
+# and the store still says the app does not exist. EU 27, then the four
+# named non-EU markets.
+EU_27 = [
+    "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE",
+    "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT",
+    "RO", "SK", "SI", "ES", "SE",
+]
+DEFAULT_COUNTRIES = EU_27 + ["US", "CA", "JP", "KR"]
+
+
+def _set_countries(edits, package: str, track_name: str,
+                   countries: list[str]) -> int:
+    """Give the newest release on [track_name] a country list.
+
+    The API has no "set the track's countries" call: availability lives
+    on the RELEASE, so the newest one is read back and re-sent with the
+    targeting added and everything else — versionCodes, status, release
+    notes — carried over untouched. Anything less would silently roll
+    back the build that is live.
+    """
+    try:
+        edit = _execute_with_retry(
+            lambda: edits.insert(packageName=package, body={}),
+            label="edits.insert",
+        )
+    except HttpError as e:
+        print(f"ERROR: edits.insert failed: {e}", file=sys.stderr)
+        _gh_annotate("error", f"edits.insert failed: {e}")
+        return 4
+    edit_id = edit["id"]
+
+    try:
+        current = _execute_with_retry(
+            lambda: edits.tracks().get(
+                packageName=package, editId=edit_id, track=track_name),
+            label="tracks.get",
+        )
+    except HttpError as e:
+        print(f"ERROR: tracks.get failed: {e}", file=sys.stderr)
+        _gh_annotate("error", f"tracks.get failed: {e}")
+        return 4
+
+    releases = current.get("releases", [])
+    if not releases:
+        print(f"ERROR: track '{track_name}' has no release to target. "
+              f"Upload a build first.", file=sys.stderr)
+        _gh_annotate("error", f"track '{track_name}' has no release")
+        return 6
+
+    # Newest first is not guaranteed, so pick by version code.
+    def _newest(release):
+        codes = [int(c) for c in release.get("versionCodes", []) if c.isdigit()]
+        return max(codes) if codes else -1
+
+    target = max(releases, key=_newest)
+    before = target.get("countryTargeting", {}).get("countries")
+    print(f"track '{track_name}': newest release is versionCodes "
+          f"{target.get('versionCodes')} status={target.get('status')}")
+    print(f"  countries before: "
+          f"{'ALL' if before is None else (', '.join(before) or 'NONE')}")
+
+    updated = dict(target)
+    updated["countryTargeting"] = {
+        "countries": countries,
+        # Explicitly NOT the rest of the world: the named markets only.
+        "includeRestOfWorld": False,
+    }
+    body = {
+        "track": track_name,
+        "releases": [
+            updated if r is target else r for r in releases
+        ],
+    }
+    try:
+        _execute_with_retry(
+            lambda: edits.tracks().update(
+                packageName=package, editId=edit_id,
+                track=track_name, body=body),
+            label="tracks.update (countries)",
+        )
+        _execute_with_retry(
+            lambda: edits.commit(packageName=package, editId=edit_id),
+            label="edits.commit (countries)",
+        )
+    except HttpError as e:
+        print(f"ERROR: setting countries failed: {e}", file=sys.stderr)
+        _gh_annotate("error", f"setting countries on '{track_name}' failed: {e}")
+        return 7
+
+    print(f"  countries after:  {', '.join(countries)} "
+          f"({len(countries)} markets, rest of world excluded)")
+    _gh_annotate("notice",
+                 f"track '{track_name}' now serves {len(countries)} markets")
+    return 0
+
+
 def _report_status(edits, package: str) -> int:
     """Print what every track actually serves, and why a tester might see
     nothing.
@@ -272,6 +370,10 @@ def main() -> int:
                              "Defaults to 'Daily build YYYY-MM-DD'.")
     parser.add_argument("--dry-run", action="store_true",
                         help="Validate the edit without committing (no testers receive the build)")
+    parser.add_argument("--set-countries", nargs="*", default=None, metavar="CC",
+                        help="Give the newest release on --track a country list, then exit. "
+                             "No argument means the default markets (EU 27 plus US, CA, JP, KR). "
+                             "Needs no AAB. This CHANGES what the store serves.")
     parser.add_argument("--status", action="store_true",
                         help="Read-only: report every track's releases, their status and their "
                              "country targeting, then exit. Needs no AAB. Use it when a tester "
@@ -284,7 +386,8 @@ def main() -> int:
     key = Path(args.key).resolve()
     changelog_dir = Path(args.changelog_dir).resolve()
 
-    if not args.status and not aab.is_file():
+    read_only = args.status or args.set_countries is not None
+    if not read_only and not aab.is_file():
         print(f"ERROR: AAB not found at {aab}", file=sys.stderr)
         _gh_annotate("error", f"AAB not found at {aab}")
         print("       Run `flutter build appbundle --release` first.", file=sys.stderr)
@@ -309,6 +412,10 @@ def main() -> int:
 
     if args.status:
         return _report_status(edits, args.package)
+
+    if args.set_countries is not None:
+        return _set_countries(edits, args.package, args.track,
+                              args.set_countries or DEFAULT_COUNTRIES)
 
     # All Android-Publisher edit calls below route through
     # `_execute_with_retry` so each layered failure mode has the same
