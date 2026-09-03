@@ -1,0 +1,94 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: 0BSD
+
+name: play-availability
+
+# What Google Play actually serves, per track — and, on request, which
+# markets it serves it in.
+#
+# A tester who is on the list and still gets "item not found" is the one
+# store failure the phone cannot explain: the opt-in page says "you are a
+# tester" whether or not there is anything to install. Three things look
+# identical from there and none of them is a build failure — the release
+# is a DRAFT, the track targets NO COUNTRY, or the newest release is not
+# the build anyone thinks it is.
+#
+# With `set_countries` off this reads and changes nothing: an edit is
+# opened to read through and never committed. With it on, the newest
+# release on the chosen track is given the market list and the edit IS
+# committed — that changes what the store serves, so it is opt-in and
+# never the default.
+
+on:
+  workflow_dispatch:
+    inputs:
+      track:
+        description: Track to inspect (and to set countries on)
+        type: choice
+        options: [alpha, beta, internal, production]
+        default: alpha
+      set_countries:
+        description: >-
+          Give the newest release on that track the market list
+          (EU 27 + US, CA, JP, KR). Leave off to only read.
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  availability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      HAS_PLAY_SA: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Refuse to pretend without the key
+        if: ${{ env.HAS_PLAY_SA != 'true' }}
+        run: |
+          echo "::error::PLAY_STORE_SERVICE_ACCOUNT_JSON is not set — nothing to read."
+          exit 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install --quiet google-api-python-client google-auth google-auth-httplib2
+
+      - name: Decode service-account key
+        env:
+          SA_JSON: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          echo "$SA_JSON" > "$RUNNER_TEMP/play-key.json"
+          echo "PLAY_KEY_PATH=$RUNNER_TEMP/play-key.json" >> "$GITHUB_ENV"
+
+      - name: Set the markets
+        if: ${{ inputs.set_countries }}
+        run: |
+          python tools/upload_to_play.py --set-countries \
+            --track "${{ inputs.track }}" --key "$PLAY_KEY_PATH" \
+            | tee "$RUNNER_TEMP/countries.txt"
+          {
+            echo '## Markets set on `${{ inputs.track }}`'
+            echo '```'
+            cat "$RUNNER_TEMP/countries.txt"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: What every track serves
+        run: |
+          python tools/upload_to_play.py --status --key "$PLAY_KEY_PATH" \
+            | tee "$RUNNER_TEMP/status.txt"
+          {
+            echo '## Play tracks'
+            echo '```'
+            cat "$RUNNER_TEMP/status.txt"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Clean up service-account key
+        if: always()
+        run: rm -f "$PLAY_KEY_PATH"

@@ -186,6 +186,186 @@ def load_release_notes(
     return notes
 
 
+
+# The markets DesKilo is offered in. A testing track that targets no
+# country serves nobody — the opt-in page still says "you are a tester",
+# and the store still says the app does not exist. EU 27, then the four
+# named non-EU markets.
+EU_27 = [
+    "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE",
+    "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT",
+    "RO", "SK", "SI", "ES", "SE",
+]
+DEFAULT_COUNTRIES = EU_27 + ["US", "CA", "JP", "KR"]
+
+
+def _set_countries(edits, package: str, track_name: str,
+                   countries: list[str]) -> int:
+    """Give the newest release on [track_name] a country list.
+
+    The API has no "set the track's countries" call: availability lives
+    on the RELEASE, so the newest one is read back and re-sent with the
+    targeting added and everything else — versionCodes, status, release
+    notes — carried over untouched. Anything less would silently roll
+    back the build that is live.
+    """
+    try:
+        edit = _execute_with_retry(
+            lambda: edits.insert(packageName=package, body={}),
+            label="edits.insert",
+        )
+    except HttpError as e:
+        print(f"ERROR: edits.insert failed: {e}", file=sys.stderr)
+        _gh_annotate("error", f"edits.insert failed: {e}")
+        return 4
+    edit_id = edit["id"]
+
+    try:
+        current = _execute_with_retry(
+            lambda: edits.tracks().get(
+                packageName=package, editId=edit_id, track=track_name),
+            label="tracks.get",
+        )
+    except HttpError as e:
+        print(f"ERROR: tracks.get failed: {e}", file=sys.stderr)
+        _gh_annotate("error", f"tracks.get failed: {e}")
+        return 4
+
+    releases = current.get("releases", [])
+    if not releases:
+        print(f"ERROR: track '{track_name}' has no release to target. "
+              f"Upload a build first.", file=sys.stderr)
+        _gh_annotate("error", f"track '{track_name}' has no release")
+        return 6
+
+    # Newest first is not guaranteed, so pick by version code.
+    def _newest(release):
+        codes = [int(c) for c in release.get("versionCodes", []) if c.isdigit()]
+        return max(codes) if codes else -1
+
+    target = max(releases, key=_newest)
+    before = target.get("countryTargeting", {}).get("countries")
+    print(f"track '{track_name}': newest release is versionCodes "
+          f"{target.get('versionCodes')} status={target.get('status')}")
+    print(f"  countries before: "
+          f"{'ALL' if before is None else (', '.join(before) or 'NONE')}")
+
+    updated = dict(target)
+    updated["countryTargeting"] = {
+        "countries": countries,
+        # Explicitly NOT the rest of the world: the named markets only.
+        "includeRestOfWorld": False,
+    }
+    body = {
+        "track": track_name,
+        "releases": [
+            updated if r is target else r for r in releases
+        ],
+    }
+    try:
+        _execute_with_retry(
+            lambda: edits.tracks().update(
+                packageName=package, editId=edit_id,
+                track=track_name, body=body),
+            label="tracks.update (countries)",
+        )
+        _execute_with_retry(
+            lambda: edits.commit(packageName=package, editId=edit_id),
+            label="edits.commit (countries)",
+        )
+    except HttpError as e:
+        # Play refuses country targeting on some releases (a rolled-out
+        # 'completed' one, notably). That is a real answer, not a crash:
+        # say which release it refused and where the same setting lives
+        # in the Console, so the next step is obvious.
+        detail = str(e)
+        print(f"ERROR: setting countries failed: {detail}", file=sys.stderr)
+        if "countryTargeting" in detail or "country" in detail.lower():
+            print(f"       Play will not take country targeting on this "
+                  f"release (versionCodes {target.get('versionCodes')}, "
+                  f"status {target.get('status')}). Set it in the Console: "
+                  f"Testing -> {track_name} -> Countries / regions, or "
+                  f"re-run after the next upload so the targeting rides "
+                  f"the new release.", file=sys.stderr)
+        _gh_annotate("error", f"setting countries on '{track_name}' failed: {detail}")
+        return 7
+
+    print(f"  countries after:  {', '.join(countries)} "
+          f"({len(countries)} markets, rest of world excluded)")
+    _gh_annotate("notice",
+                 f"track '{track_name}' now serves {len(countries)} markets")
+    return 0
+
+
+def _report_status(edits, package: str) -> int:
+    """Print what every track actually serves, and why a tester might see
+    nothing.
+
+    Three things make an app invisible to somebody who IS on the tester
+    list, and none of them is visible from the phone: the release is a
+    DRAFT (uploaded, never rolled out), the track targets NO COUNTRY, or
+    the newest release is not the build you think it is. This says which.
+    """
+    try:
+        edit = _execute_with_retry(
+            lambda: edits.insert(packageName=package, body={}),
+            label="edits.insert",
+        )
+    except HttpError as e:
+        print(f"ERROR: edits.insert failed: {e}", file=sys.stderr)
+        return 4
+    edit_id = edit["id"]
+    try:
+        listing = _execute_with_retry(
+            lambda: edits.tracks().list(packageName=package, editId=edit_id),
+            label="tracks.list",
+        )
+    except HttpError as e:
+        print(f"ERROR: tracks.list failed: {e}", file=sys.stderr)
+        return 4
+
+    problems = []
+    for track in listing.get("tracks", []):
+        name = track.get("track", "?")
+        releases = track.get("releases", [])
+        print(f"\ntrack {name}: {len(releases)} release(s)")
+        if not releases:
+            print("  (nothing here — testers of this track can install nothing)")
+            problems.append(f"{name}: no release")
+            continue
+        for release in releases:
+            status = release.get("status", "?")
+            codes = ", ".join(release.get("versionCodes", []) or ["-"])
+            fraction = release.get("userFraction")
+            countries = release.get("countryTargeting", {}).get("countries")
+            print(f"  versionCodes [{codes}] status={status}"
+                  + (f" userFraction={fraction}" if fraction else "")
+                  + f" countries={'ALL' if countries is None else (', '.join(countries) or 'NONE')}")
+            if status == "draft":
+                problems.append(
+                    f"{name}: versionCode {codes} is a DRAFT — uploaded but never "
+                    f"rolled out, so no tester can install it")
+            if countries is not None and not countries:
+                problems.append(
+                    f"{name}: versionCode {codes} targets NO COUNTRY — nobody, "
+                    f"anywhere, can install it")
+
+    print("\n" + ("-" * 60))
+    if problems:
+        print("What would make a tester see \"item not found\":")
+        for problem in problems:
+            print(f"  - {problem}")
+            _gh_annotate("warning", problem)
+    else:
+        print("Every track has a rolled-out release. If a tester still cannot "
+              "install, the cause is on their side or in the Console's app "
+              "content tasks, not in the track: check that the Play Store app "
+              "is signed in with the SAME Google account that opted in, and "
+              "that Play Console shows no unfinished app-content declaration "
+              "holding the release.")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--package", default=DEFAULT_PACKAGE, help=f"App package name (default: {DEFAULT_PACKAGE})")
@@ -202,13 +382,24 @@ def main() -> int:
                              "Defaults to 'Daily build YYYY-MM-DD'.")
     parser.add_argument("--dry-run", action="store_true",
                         help="Validate the edit without committing (no testers receive the build)")
+    parser.add_argument("--set-countries", nargs="*", default=None, metavar="CC",
+                        help="Give the newest release on --track a country list, then exit. "
+                             "No argument means the default markets (EU 27 plus US, CA, JP, KR). "
+                             "Needs no AAB. This CHANGES what the store serves.")
+    parser.add_argument("--status", action="store_true",
+                        help="Read-only: report every track's releases, their status and their "
+                             "country targeting, then exit. Needs no AAB. Use it when a tester "
+                             "is on the list and the store still says the app does not exist: "
+                             "a release that is a draft, or a track that targets no country, "
+                             "looks exactly like that from the phone.")
     args = parser.parse_args()
 
     aab = Path(args.aab).resolve()
     key = Path(args.key).resolve()
     changelog_dir = Path(args.changelog_dir).resolve()
 
-    if not aab.is_file():
+    read_only = args.status or args.set_countries is not None
+    if not read_only and not aab.is_file():
         print(f"ERROR: AAB not found at {aab}", file=sys.stderr)
         _gh_annotate("error", f"AAB not found at {aab}")
         print("       Run `flutter build appbundle --release` first.", file=sys.stderr)
@@ -230,6 +421,13 @@ def main() -> int:
     authed_http = AuthorizedHttp(creds, http=httplib2.Http(timeout=HTTP_SOCKET_TIMEOUT_S))
     service = build("androidpublisher", "v3", http=authed_http, cache_discovery=False)
     edits = service.edits()
+
+    if args.status:
+        return _report_status(edits, args.package)
+
+    if args.set_countries is not None:
+        return _set_countries(edits, args.package, args.track,
+                              args.set_countries or DEFAULT_COUNTRIES)
 
     # All Android-Publisher edit calls below route through
     # `_execute_with_retry` so each layered failure mode has the same
