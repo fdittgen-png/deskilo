@@ -390,6 +390,35 @@ def _move_testers(edits, package: str, source: str, target: str) -> int:
     return 0
 
 
+
+def _track_countries(edits, package: str, edit_id: str, track_name: str) -> str:
+    """What countries the TRACK itself is available in.
+
+    Not the same thing as a release's countryTargeting, which is what
+    `--status` reported before and why it read "ALL" while a tester on
+    that very track saw nothing: availability is configured per track and
+    lives on its own resource.
+    """
+    try:
+        result = _execute_with_retry(
+            lambda: edits.countryavailability().get(
+                packageName=package, editId=edit_id, track=track_name),
+            label=f"countryavailability({track_name})",
+        )
+    except HttpError as e:
+        return f"unreadable ({str(e)[:60]}…)"
+    except Exception:  # noqa: BLE001 - an absent resource is an answer
+        return "unreadable"
+    if result.get("restOfWorld"):
+        return "REST OF WORLD (everywhere)"
+    countries = [c.get("countryCode") for c in result.get("countries", [])]
+    if not countries:
+        return "NO COUNTRY"
+    shown = ", ".join(countries[:12])
+    more = "" if len(countries) <= 12 else f" (+{len(countries) - 12} more)"
+    return f"{len(countries)} countries: {shown}{more}"
+
+
 def _report_status(edits, package: str) -> int:
     """Print what every track actually serves, and why a tester might see
     nothing.
@@ -422,10 +451,16 @@ def _report_status(edits, package: str) -> int:
         name = track.get("track", "?")
         releases = track.get("releases", [])
         groups = _tester_groups(edits, package, edit_id, name)
+        reach = _track_countries(edits, package, edit_id, name)
         who = (", ".join(groups) if groups
                else "no Google group (Console e-mail lists are not "
                     "visible to this API)")
         print(f"\ntrack {name}: {len(releases)} release(s) — testers: {who}")
+        print(f"  track availability: {reach}")
+        if reach == 'NO COUNTRY':
+            problems.append(
+                f"{name}: the TRACK is available in no country — a release "
+                f"on it reaches nobody, whatever the release itself says")
         if not releases:
             print("  (nothing here — testers of this track can install nothing)")
             problems.append(f"{name}: no release")

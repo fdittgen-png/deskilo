@@ -84,6 +84,16 @@ void main() {
     expect(tool, contains('Console e-mail LIST'));
   });
 
+  test('the report reads the TRACK\'s availability, not just the '
+      'release\'s targeting', () {
+    // The two are different resources, and reading the wrong one is why
+    // a status said "countries=ALL" while a tester on that very track
+    // could not find the app at all.
+    expect(tool, contains('edits.countryavailability().get('));
+    expect(tool, contains('NO COUNTRY'));
+    expect(tool, contains('the TRACK is available in no country'));
+  });
+
   test('the workflow reads by default and only writes when asked', () {
     expect(workflow, contains('--status'));
     expect(workflow, contains('--set-countries'));
