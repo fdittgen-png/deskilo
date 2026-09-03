@@ -297,6 +297,99 @@ def _set_countries(edits, package: str, track_name: str,
     return 0
 
 
+def _tester_groups(edits, package: str, edit_id: str, track_name: str):
+    """The Google groups testing [track_name], or [] when there are none.
+
+    Play Console e-mail LISTS are a different thing and this API cannot
+    see them, so an empty answer means "no groups", never "no testers".
+    """
+    try:
+        testers = _execute_with_retry(
+            lambda: edits.testers().get(
+                packageName=package, editId=edit_id, track=track_name),
+            label=f"testers.get({track_name})",
+        )
+    except HttpError:
+        return []
+    return testers.get("googleGroups", []) or []
+
+
+def _move_testers(edits, package: str, source: str, target: str) -> int:
+    """Move every Google group testing [source] onto [target].
+
+    A second closed track that never receives a build is the cruellest
+    shape this store can take: its testers are told "you are a tester"
+    and then handed an empty shelf. Emptying it is the fix — the track
+    itself cannot be deleted through this API, only in the Console, but
+    a track nobody tests is harmless.
+    """
+    try:
+        edit = _execute_with_retry(
+            lambda: edits.insert(packageName=package, body={}),
+            label="edits.insert",
+        )
+    except HttpError as e:
+        print(f"ERROR: edits.insert failed: {e}", file=sys.stderr)
+        _gh_annotate("error", f"edits.insert failed: {e}")
+        return 4
+    edit_id = edit["id"]
+
+    from_groups = _tester_groups(edits, package, edit_id, source)
+    to_groups = _tester_groups(edits, package, edit_id, target)
+    print(f"{source}: {from_groups or 'no Google group'}")
+    print(f"{target}: {to_groups or 'no Google group'}")
+
+    if not from_groups:
+        print(f"\nNothing to move: '{source}' has no Google group. Its "
+              f"testers are a Play Console e-mail LIST, which this API "
+              f"cannot read or change — move them in the Console:")
+        print(f"  Testing -> Closed testing -> {source} -> Testers, note "
+              f"the list, remove it, add it to '{target}'.")
+        _gh_annotate("notice",
+                     f"'{source}' has no Google group; its testers are a "
+                     f"Console e-mail list and must be moved there")
+        return 0
+
+    # Union, order preserved, no duplicates — a group already testing the
+    # target must not be added twice.
+    merged = list(to_groups)
+    for group in from_groups:
+        if group not in merged:
+            merged.append(group)
+
+    try:
+        _execute_with_retry(
+            lambda: edits.testers().update(
+                packageName=package, editId=edit_id, track=target,
+                body={"googleGroups": merged}),
+            label=f"testers.update({target})",
+        )
+        _execute_with_retry(
+            lambda: edits.testers().update(
+                packageName=package, editId=edit_id, track=source,
+                body={"googleGroups": []}),
+            label=f"testers.update({source})",
+        )
+        _execute_with_retry(
+            lambda: edits.commit(packageName=package, editId=edit_id),
+            label="edits.commit (testers)",
+        )
+    except HttpError as e:
+        print(f"ERROR: moving testers failed: {e}", file=sys.stderr)
+        _gh_annotate("error", f"moving testers {source} -> {target}: {e}")
+        return 8
+
+    print(f"\nMoved {len(from_groups)} group(s) from '{source}' to "
+          f"'{target}'. '{source}' now has no testers.")
+    print(f"Delete the empty track in the Console: Testing -> Closed "
+          f"testing -> {source} -> Delete track. The API has no call for "
+          f"it, and an untested track is harmless until then.")
+    _gh_annotate("notice",
+                 f"moved {len(from_groups)} tester group(s) from "
+                 f"'{source}' to '{target}'")
+    return 0
+
+
 def _report_status(edits, package: str) -> int:
     """Print what every track actually serves, and why a tester might see
     nothing.
@@ -328,7 +421,11 @@ def _report_status(edits, package: str) -> int:
     for track in listing.get("tracks", []):
         name = track.get("track", "?")
         releases = track.get("releases", [])
-        print(f"\ntrack {name}: {len(releases)} release(s)")
+        groups = _tester_groups(edits, package, edit_id, name)
+        who = (", ".join(groups) if groups
+               else "no Google group (Console e-mail lists are not "
+                    "visible to this API)")
+        print(f"\ntrack {name}: {len(releases)} release(s) — testers: {who}")
         if not releases:
             print("  (nothing here — testers of this track can install nothing)")
             problems.append(f"{name}: no release")
@@ -386,6 +483,12 @@ def main() -> int:
                         help="Give the newest release on --track a country list, then exit. "
                              "No argument means the default markets (EU 27 plus US, CA, JP, KR). "
                              "Needs no AAB. This CHANGES what the store serves.")
+    parser.add_argument("--move-testers", nargs=2, default=None,
+                        metavar=("FROM", "TO"),
+                        help="Move every Google group testing FROM onto TO, then exit. "
+                             "Use it when a second closed track holds testers and no "
+                             "build. Needs no AAB. Console e-mail lists are invisible "
+                             "to this API and must be moved in the Console.")
     parser.add_argument("--status", action="store_true",
                         help="Read-only: report every track's releases, their status and their "
                              "country targeting, then exit. Needs no AAB. Use it when a tester "
@@ -398,7 +501,8 @@ def main() -> int:
     key = Path(args.key).resolve()
     changelog_dir = Path(args.changelog_dir).resolve()
 
-    read_only = args.status or args.set_countries is not None
+    read_only = (args.status or args.set_countries is not None
+                 or args.move_testers is not None)
     if not read_only and not aab.is_file():
         print(f"ERROR: AAB not found at {aab}", file=sys.stderr)
         _gh_annotate("error", f"AAB not found at {aab}")
@@ -428,6 +532,9 @@ def main() -> int:
     if args.set_countries is not None:
         return _set_countries(edits, args.package, args.track,
                               args.set_countries or DEFAULT_COUNTRIES)
+
+    if args.move_testers is not None:
+        return _move_testers(edits, args.package, *args.move_testers)
 
     # All Android-Publisher edit calls below route through
     # `_execute_with_retry` so each layered failure mode has the same
