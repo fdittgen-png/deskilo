@@ -186,5 +186,7 @@
   "featureExpenseRepartitionTitle": "Gastos compartidos",
   "featureExpenseRepartitionDesc": "Un gasto común (limpieza, mejora de internet, una silla rota) repartido entre los socios — partes iguales, prorrata de la suscripción, prorrata del uso o una clave por socio — con cada parte previsualizada antes de contabilizarse. Las partes se convierten en líneas de la próxima factura de uso; una reversión genera notas de crédito. Pasa por las reglas de validación. Desactivado: sin reparto.",
   "featureSettlementFoldTitle": "Facturas reagrupadas plegadas",
-  "featureSettlementFoldDesc": "Las facturas reagrupadas en una desaparecen de las listas como iguales y se anidan bajo la factura de reagrupación, que lleva todas sus líneas. En una factura reagrupada toda operación está desactivada; solo queda su PDF, sellado con el número en que se reagrupó. Desactivado: las facturas reagrupadas siguen listadas junto a la de reagrupación."
+  "featureSettlementFoldDesc": "Las facturas reagrupadas en una desaparecen de las listas como iguales y se anidan bajo la factura de reagrupación, que lleva todas sus líneas. En una factura reagrupada toda operación está desactivada; solo queda su PDF, sellado con el número en que se reagrupó. Desactivado: las facturas reagrupadas siguen listadas junto a la de reagrupación.",
+  "featureValidationChainTitle": "Validaciones encadenadas",
+  "featureValidationChainDesc": "Una regla de validación puede pedir sus validaciones una tras otra, cada paso solicitado cuando el anterior ha pasado, y puede permitir que la propiedad —nunca un admin— valide su propio acto. Desactivado: todo se pide a la vez y nadie valida su propio evento."
 }

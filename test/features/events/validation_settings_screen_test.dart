@@ -28,6 +28,7 @@ Future<FakeEventRepository> pumpValidationSettings(
   WidgetTester tester, {
   List<ValidationPolicy> policies = const [],
   List<Member>? otherMembers,
+  Map<String, dynamic> featureFlags = const {},
 }) async {
   final events = FakeEventRepository()..policies.addAll(policies);
   // Policy cards (0097 added Booking deletion) outgrow the default
@@ -35,7 +36,8 @@ Future<FakeEventRepository> pumpValidationSettings(
   tester.view.physicalSize = const Size(1200, 3100);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
-  final workspace = FakeWorkspaceRepository.withWorkspace()
+  final workspace = FakeWorkspaceRepository.withWorkspace(
+      featureFlags: featureFlags)
     ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana', 'member-3': 'Bo'}
     ..otherMembers
         .addAll(otherMembers ?? [admin('member-2'), admin('member-3')]);
@@ -70,7 +72,7 @@ void main() {
 
     // No stored rows: every card shows the built-in defaults and inherits.
     expect(
-      find.text('Required validations: 1 · All admins'),
+      find.text("Required validations: 1 · All admins · Never one's own"),
       findsNWidgets(15),
     );
     expect(find.text('Inherits default'), findsNWidgets(15));
@@ -245,7 +247,8 @@ void main() {
     expect(find.text('Inherits default'), findsNWidgets(14));
     expect(
       find.text(
-        'Required validations: 2 · All admins · Owner must always validate',
+        'Required validations: 2 · All admins · Owner must always '
+        "validate · Never one's own",
       ),
       findsOneWidget,
     );

@@ -149,9 +149,13 @@ sealed class WorkspaceEvent with _$WorkspaceEvent {
     // The subject never validates what someone else did to them (their
     // say is rule (a) above, when they have one).
     if (me.id == subjectMemberId && me.id != actorMemberId) return false;
-    // No self-approval, ever (#434) — one's own event is validated only
-    // by another person, or expires unvalidated.
-    if (me.id == actorMemberId) return false;
+    // No self-approval (#434) — one's own event is validated by another
+    // person, or expires unvalidated. #840 leaves exactly one door open,
+    // and only the owner has the key: a rule that says so explicitly.
+    if (me.id == actorMemberId &&
+        !(me.isOwner && policy.ownerMaySelfValidate)) {
+      return false;
+    }
     return true;
   }
 

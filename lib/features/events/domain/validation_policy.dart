@@ -35,6 +35,16 @@ sealed class ValidationPolicy with _$ValidationPolicy {
     /// listed subset), 'listed' (owner + exactly the listed persons, any
     /// role) or 'members' (owner + every active member).
     @Default('admins') String validatorScope,
+
+    /// #840 — the ONE exception to "nobody validates their own event",
+    /// and it is the owner's alone: an admin never gets it. Off by
+    /// default, so a fresh rule keeps the 0086 protocol intact.
+    @Default(false) bool ownerMaySelfValidate,
+
+    /// #840 — ask for the validations one after another instead of as
+    /// one open quorum: the second is requested once the first passed,
+    /// and the trail numbers the step each decision answered.
+    @Default(false) bool sequential,
   }) = _ValidationPolicy;
 
   /// Pre-quorum behavior for workspaces/types without a stored row:

@@ -4195,6 +4195,18 @@ abstract class AppLocalizations {
   /// **'Invoices regrouped into one disappear from the lists as peers and nest under the regrouping invoice, which carries all their lines. On a regrouped invoice every operation is off; the one thing left is its PDF, stamped with the number it was regrouped in. Off: the regrouped invoices stay listed beside the regrouping one.'**
   String get featureSettlementFoldDesc;
 
+  /// #840 - feature title
+  ///
+  /// In en, this message translates to:
+  /// **'Chained validations'**
+  String get featureValidationChainTitle;
+
+  /// #840 - feature description
+  ///
+  /// In en, this message translates to:
+  /// **'A validation rule can ask for its validations one after another, each step requested once the previous passed, and can let the owner — never an admin — validate their own act. Off: every validation is asked at once and nobody validates their own event.'**
+  String get featureValidationChainDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:
@@ -12276,6 +12288,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Their own deletion request settles itself and stays marked as auto-validated.'**
   String get validationAutoValidateDesc;
+
+  /// #840 - banner title on the validation rules screen
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody validates their own'**
+  String get validationNoSelfTitle;
+
+  /// #840 - the invariant, stated where the rules are set
+  ///
+  /// In en, this message translates to:
+  /// **'Whoever creates an event never validates it. It waits for someone else, or expires undecided.'**
+  String get validationNoSelfDesc;
+
+  /// #840 - summary chip when the owner exception is off
+  ///
+  /// In en, this message translates to:
+  /// **'Never one\'s own'**
+  String get validationNoSelfShort;
+
+  /// #840 - switch: the owner may validate their own event
+  ///
+  /// In en, this message translates to:
+  /// **'The owner may validate their own'**
+  String get validationOwnerSelf;
+
+  /// #840 - subtitle under that switch
+  ///
+  /// In en, this message translates to:
+  /// **'The single exception, and the owner\'s alone: an admin never validates their own act.'**
+  String get validationOwnerSelfDesc;
+
+  /// #840 - summary chip when the owner exception is on
+  ///
+  /// In en, this message translates to:
+  /// **'Owner may validate their own'**
+  String get validationOwnerSelfShort;
+
+  /// #840 - switch: ask for the validations one at a time
+  ///
+  /// In en, this message translates to:
+  /// **'One after another'**
+  String get validationSequential;
+
+  /// #840 - subtitle under that switch
+  ///
+  /// In en, this message translates to:
+  /// **'The next validation is asked for once the previous one passed, and the trail numbers each step.'**
+  String get validationSequentialDesc;
 
   /// VAT settings screen title
   ///

@@ -14,5 +14,13 @@
   "validationSaved": "Règle de validation enregistrée.",
   "validationAutoValidateOwner": "Les propriétaires suppriment sans validation",
   "validationAutoValidateAdmin": "Les admins suppriment sans validation",
-  "validationAutoValidateDesc": "Leur propre demande de suppression se règle d'elle-même et reste marquée comme auto-validée."
+  "validationAutoValidateDesc": "Leur propre demande de suppression se règle d'elle-même et reste marquée comme auto-validée.",
+  "validationNoSelfTitle": "Personne ne valide le sien",
+  "validationNoSelfDesc": "Celui qui crée un événement ne le valide jamais. Il attend quelqu'un d'autre, ou expire sans décision.",
+  "validationNoSelfShort": "Jamais le sien",
+  "validationOwnerSelf": "Le propriétaire peut valider le sien",
+  "validationOwnerSelfDesc": "La seule exception, et elle est au propriétaire seul : un admin ne valide jamais son propre acte.",
+  "validationOwnerSelfShort": "Le propriétaire peut valider le sien",
+  "validationSequential": "L'une après l'autre",
+  "validationSequentialDesc": "La validation suivante est demandée une fois la précédente passée, et l'historique numérote chaque étape."
 }

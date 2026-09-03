@@ -58,6 +58,7 @@ enum WorkspaceFeature {
   paymentReminders,
   supplyExpenses,
   validationScopes,
+  validationChain,
   priceNegotiations,
 
   /// #767 — recurring scheduled expenses (internet, phone, electricity):
@@ -468,6 +469,10 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // any role, or every member. Off: owner + admins as before.
   WorkspaceFeature.validationScopes:
       FeatureManifestEntry(feature: WorkspaceFeature.validationScopes),
+  // #840 — a rule may ask for its validations one after another, and may
+  // let the owner (never an admin) sign off on their own act.
+  WorkspaceFeature.validationChain:
+      FeatureManifestEntry(feature: WorkspaceFeature.validationChain),
   // #739 — the tariff is the default; a member may have their own deal,
   // proposed by finance admins, validated, seen by the member and them.
   WorkspaceFeature.priceNegotiations: FeatureManifestEntry(
