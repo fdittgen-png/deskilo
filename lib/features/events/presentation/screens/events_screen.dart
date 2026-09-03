@@ -333,18 +333,38 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     };
   }
 
-  /// Quorum progress ("1/2 validations") for pending events whose policy
-  /// wants more than one accept; null otherwise.
+  /// Quorum progress for pending events whose policy wants more than one
+  /// accept; null otherwise.
+  ///
+  /// An open quorum counts what it has: "1/2 validations". A CHAINED rule
+  /// (#840) is asking for one particular step, so #848 says which one:
+  /// "Validation 2 of 3 requested". The step is the number the server
+  /// wrote when the previous accept landed; a rule switched to chained
+  /// mid-flight has events that never got the marker, and those fall
+  /// back to the accepts already in hand.
   String? _quorumProgress(
     AppLocalizations? l10n,
     WorkspaceEvent event,
     List<EventDecision> decisions,
     List<ValidationPolicy> policies,
   ) {
+    // Only while pending: the accept that confirms an event leaves the
+    // stage one past the end, where it means nothing.
     if (!event.isPending) return null;
-    final required = policyFor(event.type.dbName, policies).requiredCount;
+    final policy = policyFor(event.type.dbName, policies);
+    final required = policy.requiredCount;
     if (required < 2) return null;
     final accepts = decisions.where((d) => d.accept).length;
+    if (policy.sequential) {
+      final stage = switch (event.payload['validation_stage']) {
+        final int value => value,
+        final String value => int.tryParse(value) ?? accepts + 1,
+        _ => accepts + 1,
+      }
+          .clamp(1, required);
+      return l10n?.eventValidationStage(stage, required) ??
+          'Validation $stage of $required requested';
+    }
     return l10n?.eventValidations(accepts, required) ??
         '$accepts/$required validations';
   }

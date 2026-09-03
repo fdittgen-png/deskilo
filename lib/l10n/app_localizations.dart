@@ -12355,6 +12355,12 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{Awaiting 1 more validation.} other{Awaiting {count} more validations.}}'**
   String validationTrailAwaiting(int count);
 
+  /// #848 - which step of a chained rule is open
+  ///
+  /// In en, this message translates to:
+  /// **'Validation {stage} of {required} requested'**
+  String eventValidationStage(int stage, int required);
+
   /// App-bar title of the owner validation-policy editor and its settings tile (#131)
   ///
   /// In en, this message translates to:

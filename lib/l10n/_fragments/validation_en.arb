@@ -65,5 +65,17 @@
         "type": "int"
       }
     }
+  },
+  "eventValidationStage": "Validation {stage} of {required} requested",
+  "@eventValidationStage": {
+    "description": "#848 - which step of a chained rule is open",
+    "placeholders": {
+      "stage": {
+        "type": "int"
+      },
+      "required": {
+        "type": "int"
+      }
+    }
   }
 }

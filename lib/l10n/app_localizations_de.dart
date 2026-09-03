@@ -7107,6 +7107,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String eventValidationStage(int stage, int required) {
+    return 'Freigabe $stage von $required angefragt';
+  }
+
+  @override
   String get validationTitle => 'Validierungsregeln';
 
   @override
