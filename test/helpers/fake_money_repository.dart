@@ -722,6 +722,28 @@ class FakeMoneyRepository implements MoneyRepository {
       );
       return;
     }
+    // #841 — a governed match carries the event that has to be
+    // validated, exactly as invoice_matches.event_id does on the server,
+    // so the document can show who released it.
+    String? eventId;
+    if (matchPolicyConfigured && _events != null) {
+      eventId = 'invpay-${_events.events.length + 1}';
+      _events.events.add(WorkspaceEvent(
+        id: eventId,
+        workspaceId: invoice.workspaceId,
+        type: EventType.invoicePayment,
+        action: EventAction.created,
+        actorMemberId: 'member-1',
+        subjectMemberId: invoice.memberId,
+        payload: {
+          'invoice_id': invoiceId,
+          'paid_cents': paidCents,
+          'resolution': resolution,
+        },
+        status: EventStatus.pending,
+        createdAt: kTestNow,
+      ));
+    }
     invoiceMatchesStore[invoiceId] = InvoiceMatch(
       invoiceId: invoiceId,
       paidCents: paidCents,
@@ -731,6 +753,7 @@ class FakeMoneyRepository implements MoneyRepository {
       paymentLedgerId: paymentLedgerId,
       matchedAt: kTestNow,
       byName: 'Flo',
+      eventId: eventId,
     );
   }
 

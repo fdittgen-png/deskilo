@@ -2,6 +2,8 @@
 import '../../../../core/i18n/money_format.dart';
 import 'how_to_pay_tiles.dart';
 import 'package:flutter/material.dart';
+
+import '../../../events/presentation/widgets/event_validation_trail.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -692,13 +694,21 @@ class _OpenPositionsCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 4),
-            for (final position in positions)
+            for (final position in positions) ...[
               _BillLine(
                 label: _label(l10n, position.event),
                 value: position.isCredit
                     ? '+${money(position.amountCents)}'
                     : '−${money(position.amountCents)}',
               ),
+              // #841 — a member waiting on their own payment can see who
+              // has already decided and how many are still owed, instead
+              // of only that it is "pending".
+              EventValidationTrail(
+                eventId: position.event.id,
+                showTitle: false,
+              ),
+            ],
           ],
         ),
       ),

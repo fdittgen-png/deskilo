@@ -80,6 +80,11 @@ sealed class InvoiceMatch with _$InvoiceMatch {
     /// written off through the validation framework. Null = the
     /// invoice is STILL OPEN and owed.
     DateTime? writeoffAt,
+
+    /// #841 — the event that had to be validated before this match
+    /// stood. Null on matches recorded before the column was read, and
+    /// on the ones no rule ever governed.
+    String? eventId,
   }) = _InvoiceMatch;
 
   const InvoiceMatch._();

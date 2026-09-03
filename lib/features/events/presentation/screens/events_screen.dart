@@ -29,6 +29,7 @@ import '../../providers/event_providers.dart';
 import '../../providers/notification_filter_providers.dart';
 import '../event_labels.dart';
 import '../feed_notes.dart';
+import '../widgets/validation_trail.dart';
 import '../widgets/note_row.dart';
 
 /// The Events space (spec §8.1): pending confirmations pinned on top,
@@ -552,13 +553,19 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                                         .textTheme
                                         .bodySmall,
                                   ),
-                                  for (final decision
-                                      in decisions[event.id] ??
-                                          const <EventDecision>[])
-                                    _DecisionRow(
-                                      decision: decision,
-                                      names: names,
-                                    ),
+                                  // #841 — one ordered, numbered trail
+                                  // everywhere the question is asked.
+                                  // The quorum line still says how many
+                                  // are owed, so the trail does not
+                                  // repeat it here.
+                                  ValidationTrail(
+                                    decisions:
+                                        decisions[event.id] ?? const [],
+                                    names: names,
+                                    sequential: policyFor(
+                                            event.type.dbName, policies)
+                                        .sequential,
+                                  ),
                                 ],
                               ),
                             ),
@@ -760,12 +767,13 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                             if (_methodLine(l10n, event)
                                 case final method?)
                               Text(method),
-                            for (final decision in decisions[event.id] ??
-                                const <EventDecision>[])
-                              _DecisionRow(
-                                decision: decision,
-                                names: names,
-                              ),
+                            ValidationTrail(
+                              decisions: decisions[event.id] ?? const [],
+                              names: names,
+                              sequential:
+                                  policyFor(event.type.dbName, policies)
+                                      .sequential,
+                            ),
                             // Quorum progress stays neutral: it only
                             // renders while the event is pending, i.e.
                             // before the quorum is satisfied (#196).
@@ -843,52 +851,5 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       const HelpHint(HelpHintId.events),
       Expanded(child: body),
     ]);
-  }
-}
-
-/// One audit-trail row: check/cross + "who · when" (#130, colored #196).
-/// Accepts show a green check (the [AppStatusColors] success token so the
-/// hue reads on both light and dark surfaces), refusals a red cross
-/// (`colorScheme.error`). Sweep rows carry no member and are attributed to
-/// the system.
-class _DecisionRow extends StatelessWidget {
-  const _DecisionRow({required this.decision, required this.names});
-
-  final EventDecision decision;
-  final Map<String, String> names;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
-    final name = decision.memberId == null || decision.decidedBySystem
-        ? (l10n?.eventSystemDecider ?? 'System')
-        : (names[decision.memberId] ?? '');
-    final when =
-        DateFormat.MMMd().add_Hm().format(decision.decidedAt.toLocal());
-    final color = decision.accept
-        ? AppStatusColors.successOf(theme.brightness)
-        : theme.colorScheme.error;
-    final text = decision.accept
-        ? (l10n?.eventValidatedBy(name, when) ??
-            'Validated by $name · $when')
-        : (l10n?.eventRejectedBy(name, when) ??
-            'Declined by $name · $when');
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(
-          decision.accept
-              ? Icons.check_circle_outline
-              : Icons.cancel_outlined,
-          size: 14,
-          color: color,
-        ),
-        const SizedBox(width: 4),
-        Flexible(
-          child: Text(text, style: theme.textTheme.bodySmall),
-        ),
-      ],
-    );
   }
 }

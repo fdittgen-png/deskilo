@@ -7014,6 +7014,28 @@ class AppLocalizationsIt extends AppLocalizations {
   String get eventSystemDecider => 'Sistema';
 
   @override
+  String get validationTrailTitle => 'Cronologia delle convalide';
+
+  @override
+  String get validationTrailNone => 'Nessuna decisione finora.';
+
+  @override
+  String validationTrailStep(int order) {
+    return 'Passo $order';
+  }
+
+  @override
+  String validationTrailAwaiting(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Mancano $count convalide.',
+      one: 'Manca 1 convalida.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get validationTitle => 'Regole di validazione';
 
   @override

@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+
+import '../../../events/presentation/widgets/event_validation_trail.dart';
 import '../../../../core/i18n/money_format.dart';
 import 'package:intl/intl.dart';
 
@@ -428,6 +430,10 @@ class _InvoiceDetailBody extends StatelessWidget {
                         ? invoice.signature.length
                         : 12,
                   )}…'),
+              // #841 — who released this document, in what order, and
+              // when. Silent when no rule ever governed the match.
+              if (match?.eventId case final eventId?)
+                EventValidationTrail(eventId: eventId),
               const SizedBox(height: AppSpacing.lg),
 
               // Every permitted action, spelled out. #812 — the one the

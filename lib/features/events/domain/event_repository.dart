@@ -20,6 +20,11 @@ abstract class EventRepository {
     List<String> eventIds,
   );
 
+  /// One event by id, whatever its age (#841). [fetchEvents] returns the
+  /// newest hundred, so a document older than that could never show who
+  /// released it; this reads the governing event directly.
+  Future<WorkspaceEvent?> fetchEvent(String eventId);
+
   Future<List<ValidationPolicy>> fetchValidationPolicies(String workspaceId);
 
   /// Request cancelling the outstanding remainder of a partially paid

@@ -146,6 +146,104 @@ final class EventDecisionsProvider
 
 String _$eventDecisionsHash() => r'34eef19c105c108c78b08f21fd487d0f3464fb9a';
 
+/// #841 — the ordered decision trail of ONE event, by id, for the
+/// document that raised it. The feed only carries the newest hundred
+/// events, so an invoice released last quarter is not in it; this reads
+/// the event and its decisions directly instead.
+
+@ProviderFor(eventTrail)
+final eventTrailProvider = EventTrailFamily._();
+
+/// #841 — the ordered decision trail of ONE event, by id, for the
+/// document that raised it. The feed only carries the newest hundred
+/// events, so an invoice released last quarter is not in it; this reads
+/// the event and its decisions directly instead.
+
+final class EventTrailProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<EventTrail>,
+          EventTrail,
+          FutureOr<EventTrail>
+        >
+    with $FutureModifier<EventTrail>, $FutureProvider<EventTrail> {
+  /// #841 — the ordered decision trail of ONE event, by id, for the
+  /// document that raised it. The feed only carries the newest hundred
+  /// events, so an invoice released last quarter is not in it; this reads
+  /// the event and its decisions directly instead.
+  EventTrailProvider._({
+    required EventTrailFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'eventTrailProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$eventTrailHash();
+
+  @override
+  String toString() {
+    return r'eventTrailProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<EventTrail> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<EventTrail> create(Ref ref) {
+    final argument = this.argument as String;
+    return eventTrail(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is EventTrailProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$eventTrailHash() => r'5bfa869022139f200dfa2222048fb0f87c2a8199';
+
+/// #841 — the ordered decision trail of ONE event, by id, for the
+/// document that raised it. The feed only carries the newest hundred
+/// events, so an invoice released last quarter is not in it; this reads
+/// the event and its decisions directly instead.
+
+final class EventTrailFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<EventTrail>, String> {
+  EventTrailFamily._()
+    : super(
+        retry: null,
+        name: r'eventTrailProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #841 — the ordered decision trail of ONE event, by id, for the
+  /// document that raised it. The feed only carries the newest hundred
+  /// events, so an invoice released last quarter is not in it; this reads
+  /// the event and its decisions directly instead.
+
+  EventTrailProvider call(String eventId) =>
+      EventTrailProvider._(argument: eventId, from: this);
+
+  @override
+  String toString() => r'eventTrailProvider';
+}
+
 /// The workspace's quorum rules (#130); empty = pre-quorum behavior.
 
 @ProviderFor(validationPolicies)
