@@ -1269,6 +1269,25 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get calendarKindValidation => 'Validaciones';
+
+  @override
+  String calendarValidationValidated(String what) {
+    return 'Validado: $what';
+  }
+
+  @override
+  String calendarValidationRefused(String what) {
+    return 'Rechazado: $what';
+  }
+
+  @override
+  String get calendarEventActionValidated => 'validado';
+
+  @override
+  String get calendarEventActionRefused => 'rechazado';
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -2397,6 +2416,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featureRichMessageRefsDesc =>
       'Un mensaje puede apuntar a un aviso, al historial de validación que hay detrás y a una factura, un pago o un reembolso: cada referencia es un enlace que abre lo que nombra. Cada selector filtra mientras escribes. Desactivado: solo se pueden referenciar reservas y espacios.';
+
+  @override
+  String get featureCalendarValidationsTitle => 'Validaciones en el calendario';
+
+  @override
+  String get featureCalendarValidationsDesc =>
+      'Cada decisión tomada sobre un evento aparece en el calendario en el momento en que se tomó, no en el del evento: quién validó o rechazó qué, y cuándo. Al tocarla se abre su historial. Desactivado: el calendario no lleva decisiones.';
 
   @override
   String get helpTitle => 'Ayuda';

@@ -875,6 +875,11 @@
       }
     }
   },
+  "calendarKindValidation": "Validations",
+  "calendarValidationValidated": "Validé : {what}",
+  "calendarValidationRefused": "Refusé : {what}",
+  "calendarEventActionValidated": "validé",
+  "calendarEventActionRefused": "refusé",
   "appTitle": "DesKilo",
   "tabPlan": "Plan",
   "tabCalendar": "Calendrier",
@@ -1412,6 +1417,8 @@
   "featureValidationChainDesc": "Une règle de validation peut demander ses validations l'une après l'autre, chaque étape sollicitée une fois la précédente passée, et peut autoriser le propriétaire — jamais un admin — à valider son propre acte. Désactivé : tout est demandé d'un coup et personne ne valide son propre événement.",
   "featureRichMessageRefsTitle": "Références dans les messages",
   "featureRichMessageRefsDesc": "Un message peut pointer vers une alerte, vers l'historique de validation derrière une alerte, et vers une facture, un paiement ou un remboursement — chaque référence est un lien qui ouvre ce qu'elle nomme. Chaque sélecteur de référence se filtre à la frappe. Désactivé : seules les réservations et les espaces sont référençables.",
+  "featureCalendarValidationsTitle": "Validations dans le calendrier",
+  "featureCalendarValidationsDesc": "Chaque décision prise sur un événement apparaît dans le calendrier au moment où elle a été prise, et non au moment de l'événement : qui a validé ou refusé quoi, et quand. Un appui ouvre son historique. Désactivé : le calendrier ne porte aucune décision.",
   "helpTitle": "Aide",
   "helpContents": "Sommaire",
   "helpHintMessages": "Toutes vos conversations dans une liste, la plus récente en haut. Touchez le crayon pour écrire à quelqu’un ou créer un groupe.",

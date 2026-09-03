@@ -21,6 +21,7 @@ IconData calendarKindIcon(CalendarKind kind) => switch (kind) {
       CalendarKind.consumption => Icons.local_cafe_outlined,
       CalendarKind.reminder => Icons.alarm_outlined,
       CalendarKind.due => Icons.event_available_outlined,
+      CalendarKind.validation => Icons.how_to_reg_outlined,
       CalendarKind.scheduled => Icons.event_repeat_outlined,
     };
 
@@ -55,6 +56,8 @@ String calendarKindLabel(AppLocalizations? l10n, CalendarKind kind) =>
       CalendarKind.due => l10n?.calendarKindDue ?? 'Payments due',
       CalendarKind.scheduled =>
         l10n?.calendarKindScheduled ?? 'Scheduled expenses',
+      CalendarKind.validation =>
+        l10n?.calendarKindValidation ?? 'Validations',
     };
 
 /// One row of the hub's feed (#718): kind icon, what, who, when, and a
@@ -89,6 +92,9 @@ class CalendarItemRow extends ConsumerWidget {
           ? item.title
           : notePlainText(item.body),
       CalendarKind.event => _eventTitle(l10n, item),
+      // #843 — the same `type.action` shape, so a decision reads like
+      // the alert it decided: "Expense · validated".
+      CalendarKind.validation => _validationTitle(l10n, item),
       // #818 — the two due kinds say WHAT is due, not just the number.
       CalendarKind.due =>
         l10n?.calendarDueTitle(item.title) ?? 'Payment due · ${item.title}',
@@ -152,10 +158,30 @@ class CalendarItemRow extends ConsumerWidget {
       'submitted' => l10n?.calendarEventActionSubmitted ?? 'submitted',
       'approved' => l10n?.calendarEventActionApproved ?? 'approved',
       'rejected' => l10n?.calendarEventActionRejected ?? 'rejected',
+      // #843 — the two verbs a decision can carry.
+      'validated' => l10n?.calendarEventActionValidated ?? 'validated',
+      'refused' => l10n?.calendarEventActionRefused ?? 'refused',
       _ => action,
     };
     final label = actionLabel.isEmpty ? typeLabel : '$typeLabel · $actionLabel';
     return l10n?.calendarEventTitle(label) ?? 'Alert: $label';
+  }
+
+  /// #843 — a decision names what was decided, and the row's own
+  /// person line names who decided it.
+  String _validationTitle(AppLocalizations? l10n, CalendarItem item) {
+    final parts = item.title.split('.');
+    final type = EventType.values
+        .where((t) => t.dbName == parts.first)
+        .firstOrNull;
+    final typeLabel =
+        type == null ? parts.first : eventTypeLabel(l10n, type);
+    final accepted = item.status == 'accept';
+    return accepted
+        ? (l10n?.calendarValidationValidated(typeLabel) ??
+            'Validated: $typeLabel')
+        : (l10n?.calendarValidationRefused(typeLabel) ??
+            'Refused: $typeLabel');
   }
 
   /// A status worth a word: what still waits or was refused. "applied"

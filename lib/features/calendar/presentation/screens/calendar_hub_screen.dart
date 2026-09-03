@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+
+import '../../../workspace/presentation/widgets/note_record_open.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -28,7 +30,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/calendar_providers.dart';
 import '../calendar_view.dart';
 import '../widgets/calendar_feed.dart';
-import '../widgets/calendar_item_row.dart';
+import '../widgets/calendar_kind_chips.dart';
 import '../widgets/calendar_month_grid.dart';
 import '../widgets/calendar_week_strip.dart';
 
@@ -83,12 +85,26 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
       .watch(enabledFeaturesSyncProvider)
       .contains(WorkspaceFeature.calendarViews);
 
+  /// #843 — decisions on the timeline. Off, the chip is gone and the
+  /// query never asks for the kind, so the server sends none.
+  bool get _validationsOn => ref
+      .watch(enabledFeaturesSyncProvider)
+      .contains(WorkspaceFeature.calendarValidations);
+
+  /// The kinds to ask for: null means "everything the workspace offers",
+  /// which is not the same as everything the server knows.
+  Set<CalendarKind>? get _askedKinds {
+    if (_kinds != null) return _kinds;
+    if (_validationsOn) return null;
+    return CalendarKind.values.toSet()..remove(CalendarKind.validation);
+  }
+
   /// Half-open UTC bounds of the plain selection, anchored in the
   /// workspace clock like every booking window (#490).
   CalendarQuery get _plainQuery => CalendarQuery(
         from: WorkspaceTime.at(_from.year, _from.month, _from.day).toUtc(),
         to: WorkspaceTime.at(_to.year, _to.month, _to.day + 1).toUtc(),
-        kinds: _kinds,
+        kinds: _askedKinds,
         memberId: _memberId,
       );
 
@@ -102,7 +118,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     return CalendarQuery(
       from: bounds.from,
       to: bounds.to,
-      kinds: _kinds,
+      kinds: _askedKinds,
       memberId: _memberId,
     );
   }
@@ -159,7 +175,13 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         context.push('/res/$id');
       case ConversationLink(:final id):
         await showConversationThread(context, ref, conversationId: id);
-      case EventLink():
+      case EventLink(:final id):
+        // #843 — a validation row promised a decision, so it opens the
+        // trail, not the feed the alert lives in.
+        if (item.kind == CalendarKind.validation) {
+          await showValidationTrailSheet(context, eventId: id);
+          return;
+        }
         openInbox(ref, InboxTab.alerts);
         context.go('/messages');
       case LedgerLink(:final period):
@@ -202,7 +224,22 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     final viewsOn = _viewsOn;
     final page = ref.watch(calendarItemsProvider(viewsOn ? _viewQuery : _plainQuery));
 
-    final chips = _chips(l10n, names, me?.id, mayPickMember);
+    final chips = CalendarKindChips(
+      kinds: _kinds,
+      // #843 — a workspace that does not want decisions on its timeline
+      // is not offered the chip either.
+      offered: [
+        for (final kind in CalendarKind.values)
+          if (kind != CalendarKind.validation || _validationsOn) kind,
+      ],
+      onKinds: (next) => setState(() => _kinds = next),
+      memberLabel: !mayPickMember
+          ? null
+          : _memberId == null
+              ? (l10n?.calendarMemberMe ?? 'Me')
+              : (names[_memberId] ?? ''),
+      onPickMember: () => _pickMember(names, me?.id),
+    );
     final feed = switch (page) {
       AsyncData(:final value) => viewsOn
           ? _viewFeed(context, value, names)
@@ -519,54 +556,6 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
   }
 
   // ── the filters ────────────────────────────────────────────────────
-  Widget _chips(
-    AppLocalizations? l10n,
-    Map<String, String> names,
-    String? myId,
-    bool mayPickMember,
-  ) =>
-      SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-        child: Row(children: [
-          FilterChip(
-            key: const ValueKey('calendar-kind-all'),
-            label: Text(l10n?.eventsFilterAll ?? 'All'),
-            selected: _kinds == null,
-            onSelected: (_) => setState(() => _kinds = null),
-          ),
-          for (final kind in CalendarKind.values) ...[
-            const SizedBox(width: AppSpacing.xs),
-            FilterChip(
-              key: ValueKey('calendar-kind-${kind.wire}'),
-              avatar: Icon(calendarKindIcon(kind), size: 18),
-              label: Text(calendarKindLabel(l10n, kind)),
-              selected: _kinds?.contains(kind) ?? false,
-              onSelected: (on) => setState(() {
-                final next = {...?_kinds};
-                on ? next.add(kind) : next.remove(kind);
-                _kinds = next.isEmpty ? null : next;
-              }),
-            ),
-          ],
-          if (mayPickMember) ...[
-            const SizedBox(width: AppSpacing.sm),
-            // Another member's dated facts — as far as the server lets
-            // THIS viewer see them.
-            ActionChip(
-              key: const ValueKey('calendar-member-chip'),
-              avatar: const Icon(Icons.person_search_outlined, size: 18),
-              label: Text(
-                _memberId == null
-                    ? (l10n?.calendarMemberMe ?? 'Me')
-                    : (names[_memberId] ?? ''),
-              ),
-              onPressed: () => _pickMember(names, myId),
-            ),
-          ],
-        ]),
-      );
-
   Future<void> _pickMember(Map<String, String> names, String? myId) async {
     final l10n = AppLocalizations.of(context);
     final entries = names.entries.toList()

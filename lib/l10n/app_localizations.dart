@@ -2264,6 +2264,36 @@ abstract class AppLocalizations {
   /// **'{count} items'**
   String calendarItemCount(int count);
 
+  /// #843 - calendar kind chip: decisions taken on events
+  ///
+  /// In en, this message translates to:
+  /// **'Validations'**
+  String get calendarKindValidation;
+
+  /// #843 - a calendar row for an accepted decision
+  ///
+  /// In en, this message translates to:
+  /// **'Validated: {what}'**
+  String calendarValidationValidated(String what);
+
+  /// #843 - a calendar row for a refused decision
+  ///
+  /// In en, this message translates to:
+  /// **'Refused: {what}'**
+  String calendarValidationRefused(String what);
+
+  /// #843 - verb of an accepted decision
+  ///
+  /// In en, this message translates to:
+  /// **'validated'**
+  String get calendarEventActionValidated;
+
+  /// #843 - verb of a refused decision
+  ///
+  /// In en, this message translates to:
+  /// **'refused'**
+  String get calendarEventActionRefused;
+
   /// Application name shown in the task switcher and app bar. Brand name — identical in all locales.
   ///
   /// In en, this message translates to:
@@ -4218,6 +4248,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A message can point at an alert, at the validation trail behind one, and at an invoice, a payment or a refund — each one a link that opens what it names. Every reference picker filters as you type. Off: only reservations and spaces can be referenced.'**
   String get featureRichMessageRefsDesc;
+
+  /// #843 - feature title
+  ///
+  /// In en, this message translates to:
+  /// **'Validations on the calendar'**
+  String get featureCalendarValidationsTitle;
+
+  /// #843 - feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Every decision taken on an event appears on the calendar at the moment it was taken, not at the moment of the event: who validated or refused what, and when. Tapping one opens its trail. Off: the calendar carries no decisions.'**
+  String get featureCalendarValidationsDesc;
 
   /// No description provided for @helpTitle.
   ///

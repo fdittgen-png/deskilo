@@ -875,6 +875,11 @@
       }
     }
   },
+  "calendarKindValidation": "Convalide",
+  "calendarValidationValidated": "Convalidato: {what}",
+  "calendarValidationRefused": "Rifiutato: {what}",
+  "calendarEventActionValidated": "convalidato",
+  "calendarEventActionRefused": "rifiutato",
   "appTitle": "DesKilo",
   "tabPlan": "Piantina",
   "tabCalendar": "Calendario",
@@ -1412,6 +1417,8 @@
   "featureValidationChainDesc": "Una regola di convalida può chiedere le sue convalide una dopo l'altra, ogni passo richiesto quando il precedente è passato, e può consentire alla proprietà — mai a un admin — di convalidare il proprio atto. Disattivato: tutto è chiesto in una volta e nessuno convalida il proprio evento.",
   "featureRichMessageRefsTitle": "Riferimenti nei messaggi",
   "featureRichMessageRefsDesc": "Un messaggio può puntare a un avviso, alla cronologia delle convalide dietro di esso e a una fattura, un pagamento o un rimborso: ogni riferimento è un link che apre ciò che nomina. Ogni selettore filtra mentre scrivi. Disattivato: si possono referenziare solo prenotazioni e spazi.",
+  "featureCalendarValidationsTitle": "Convalide nel calendario",
+  "featureCalendarValidationsDesc": "Ogni decisione presa su un evento compare nel calendario nel momento in cui è stata presa, non in quello dell’evento: chi ha convalidato o rifiutato che cosa, e quando. Toccandola si apre la cronologia. Disattivato: il calendario non porta decisioni.",
   "helpHintLearnMore": "Scopri di più",
   "helpHintDismiss": "Nascondi suggerimento",
   "helpHintPrevTip": "Suggerimento precedente",

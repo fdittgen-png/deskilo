@@ -1265,6 +1265,25 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get calendarKindValidation => 'Validations';
+
+  @override
+  String calendarValidationValidated(String what) {
+    return 'Validated: $what';
+  }
+
+  @override
+  String calendarValidationRefused(String what) {
+    return 'Refused: $what';
+  }
+
+  @override
+  String get calendarEventActionValidated => 'validated';
+
+  @override
+  String get calendarEventActionRefused => 'refused';
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -2379,6 +2398,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureRichMessageRefsDesc =>
       'A message can point at an alert, at the validation trail behind one, and at an invoice, a payment or a refund — each one a link that opens what it names. Every reference picker filters as you type. Off: only reservations and spaces can be referenced.';
+
+  @override
+  String get featureCalendarValidationsTitle => 'Validations on the calendar';
+
+  @override
+  String get featureCalendarValidationsDesc =>
+      'Every decision taken on an event appears on the calendar at the moment it was taken, not at the moment of the event: who validated or refused what, and when. Tapping one opens its trail. Off: the calendar carries no decisions.';
 
   @override
   String get helpTitle => 'Help';
