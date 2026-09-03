@@ -274,8 +274,20 @@ def _set_countries(edits, package: str, track_name: str,
             label="edits.commit (countries)",
         )
     except HttpError as e:
-        print(f"ERROR: setting countries failed: {e}", file=sys.stderr)
-        _gh_annotate("error", f"setting countries on '{track_name}' failed: {e}")
+        # Play refuses country targeting on some releases (a rolled-out
+        # 'completed' one, notably). That is a real answer, not a crash:
+        # say which release it refused and where the same setting lives
+        # in the Console, so the next step is obvious.
+        detail = str(e)
+        print(f"ERROR: setting countries failed: {detail}", file=sys.stderr)
+        if "countryTargeting" in detail or "country" in detail.lower():
+            print(f"       Play will not take country targeting on this "
+                  f"release (versionCodes {target.get('versionCodes')}, "
+                  f"status {target.get('status')}). Set it in the Console: "
+                  f"Testing -> {track_name} -> Countries / regions, or "
+                  f"re-run after the next upload so the targeting rides "
+                  f"the new release.", file=sys.stderr)
+        _gh_annotate("error", f"setting countries on '{track_name}' failed: {detail}")
         return 7
 
     print(f"  countries after:  {', '.join(countries)} "
