@@ -372,5 +372,6 @@
   "scheduleUnitDays": "jours",
   "scheduleUnitWeeks": "semaines",
   "scheduleUnitMonths": "mois",
-  "scheduleUnitYears": "ans"
+  "scheduleUnitYears": "ans",
+  "moneyFaceUsage": "Usage"
 }

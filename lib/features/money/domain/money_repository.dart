@@ -10,6 +10,7 @@ import 'vat_declaration.dart';
 import 'member_account.dart';
 import 'billing_rules.dart';
 import 'expense_repartition.dart';
+import 'usage_record.dart';
 import 'dunning.dart';
 import 'price_negotiation.dart';
 import 'invoice_pdf_template.dart';import 'ledger_entry.dart';
@@ -176,6 +177,25 @@ abstract class MoneyRepository {
   /// The workspace's distributions, newest first (0147).
   Future<List<ExpenseRepartition>> fetchExpenseRepartitions(
       String workspaceId);
+
+  /// #833 — one month's usage records (RPC `usage_records_for`, 0151).
+  /// The server backfills the month's no-shows before answering, so
+  /// reading a month is what makes its uncounted bookings appear.
+  /// [memberId] null = everyone the caller may see.
+  Future<List<UsageRecord>> fetchUsageRecords({
+    required String workspaceId,
+    required String period,
+    String? memberId,
+  });
+
+  /// #833 — "I left before the booking ended; bill the time I was
+  /// actually here." Only the member concerned may ask, and never
+  /// decides it themselves. Returns the event id.
+  Future<String> requestUsageCorrection(String recordId, {String reason});
+
+  /// #833 — an admin removing a record; the member concerned validates
+  /// it when a rule says so. Returns the event id.
+  Future<String> requestUsageRecordDelete(String recordId, {String reason});
 
   /// #827 — [kind] narrows the document to the subscription (ahead of
   /// the month) or the usage (after it); [InvoiceKind.full] is the

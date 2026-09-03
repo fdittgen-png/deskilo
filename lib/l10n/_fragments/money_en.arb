@@ -621,5 +621,9 @@
   "scheduleUnitDays": "days",
   "scheduleUnitWeeks": "weeks",
   "scheduleUnitMonths": "months",
-  "scheduleUnitYears": "years"
+  "scheduleUnitYears": "years",
+  "moneyFaceUsage": "Usage",
+  "@moneyFaceUsage": {
+    "description": "#833 - the Money tab face showing usage records"
+  }
 }

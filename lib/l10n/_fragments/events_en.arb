@@ -208,5 +208,40 @@
       }
     }
   },
-  "eventTypeExpenseRepartition": "Shared expense"
+  "eventTypeExpenseRepartition": "Shared expense",
+  "eventTypeUsageCorrection": "Early departure",
+  "@eventTypeUsageCorrection": {
+    "description": "#833 - event type: an accepted early departure"
+  },
+  "eventTypeUsageRecordDelete": "Usage record removal",
+  "@eventTypeUsageRecordDelete": {
+    "description": "#833 - event type: removing a usage record"
+  },
+  "eventUsageCorrectionLine": "{actor} asks to be billed {to} instead of {from}",
+  "@eventUsageCorrectionLine": {
+    "description": "#833 - feed line for an early-departure request",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "eventUsageRecordDeleteLine": "{actor} asks to remove a usage record ({space})",
+  "@eventUsageRecordDeleteLine": {
+    "description": "#833 - feed line for a record removal",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "space": {
+        "type": "String"
+      }
+    }
+  }
 }

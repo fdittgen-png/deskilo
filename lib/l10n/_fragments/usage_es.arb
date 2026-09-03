@@ -1,0 +1,21 @@
+{
+  "@@locale": "es",
+  "usageTitle": "Uso",
+  "usageEmpty": "Sin uso este mes.",
+  "usageBooked": "Reservado",
+  "usagePresent": "Presente",
+  "usageBilled": "Facturado",
+  "usageNoShow": "Nadie llegó: la reserva se factura entera",
+  "usageLeftEarly": "Salió antes",
+  "usageCorrected": "Corregido",
+  "usageWas": "era {before}",
+  "usageAsk": "Facturar el tiempo que estuve",
+  "usageAskExplain": "Reservaste {booked} y estuviste {present}. Pide que las {saved} no usadas dejen de facturarse. Lo decide otra persona, nunca tú.",
+  "usageReasonLabel": "Por qué (opcional)",
+  "usageAskSubmit": "Pedir",
+  "usageAskSubmitted": "Pedido. Lo decide otra persona.",
+  "usageDelete": "Eliminar este registro",
+  "usageDeleteSubmitted": "Eliminación solicitada.",
+  "usageMember": "Miembro",
+  "usageMemberAll": "Todos"
+}

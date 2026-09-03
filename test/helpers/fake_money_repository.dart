@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/expense_schedule.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/usage_record.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/invoicing_wizard.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
@@ -755,6 +756,110 @@ class FakeMoneyRepository implements MoneyRepository {
       byName: 'Flo',
       eventId: eventId,
     );
+  }
+
+  /// #833 — the month's usage records, keyed by reservation like the
+  /// server's table. The fake mirrors the server's rules: a correction
+  /// may only be asked for by the member concerned, only once, and only
+  /// when there is something to reduce.
+  final usageRecords = <UsageRecord>[];
+  bool usagePolicyConfigured = false;
+  String usageMemberId = 'member-1';
+  var _nextUsage = 1;
+
+  /// Seeds one record the way a check-out would leave it.
+  UsageRecord seedUsage({
+    required int reservedMinutes,
+    int? actualMinutes,
+    String memberId = 'member-1',
+    String period = '2026-08',
+    String space = 'Desk A1',
+  }) {
+    final from = DateTime.utc(2026, 8, 12, 9);
+    final record = UsageRecord(
+      id: 'usage-${_nextUsage++}',
+      memberId: memberId,
+      reservationId: 'res-$_nextUsage',
+      period: period,
+      reservedFrom: from,
+      reservedTo: from.add(Duration(minutes: reservedMinutes)),
+      checkedInAt: actualMinutes == null ? null : from,
+      checkedOutAt: actualMinutes == null
+          ? null
+          : from.add(Duration(minutes: actualMinutes)),
+      countedMinutes: reservedMinutes,
+      reservedMinutes: reservedMinutes,
+      actualMinutes: actualMinutes,
+      spaceLabel: space,
+    );
+    usageRecords.add(record);
+    return record;
+  }
+
+  @override
+  Future<List<UsageRecord>> fetchUsageRecords({
+    required String workspaceId,
+    required String period,
+    String? memberId,
+  }) async =>
+      [
+        for (final record in usageRecords)
+          if (record.period == period &&
+              (memberId == null || record.memberId == memberId))
+            record,
+      ];
+
+  @override
+  Future<String> requestUsageCorrection(
+    String recordId, {
+    String reason = '',
+  }) async {
+    final index = usageRecords.indexWhere((r) => r.id == recordId);
+    if (index < 0) throw StateError('unknown usage record');
+    final record = usageRecords[index];
+    if (record.memberId != usageMemberId) {
+      throw StateError('only the member concerned may ask for this');
+    }
+    if (record.isCorrected) throw StateError('already corrected');
+    if (record.actualMinutes == null || record.checkedOutAt == null) {
+      throw StateError('no check-out to correct to');
+    }
+    if (record.actualMinutes! >= record.reservedMinutes) {
+      throw StateError('nothing to reduce');
+    }
+    // With a rule the correction waits for somebody else; without one it
+    // stands at once, exactly as the RPC does.
+    if (!usagePolicyConfigured) {
+      usageRecords[index] = UsageRecord(
+        id: record.id,
+        memberId: record.memberId,
+        reservationId: record.reservationId,
+        period: record.period,
+        reservedFrom: record.reservedFrom,
+        reservedTo: record.reservedTo,
+        checkedInAt: record.checkedInAt,
+        checkedOutAt: record.checkedOutAt,
+        countedMinutes: record.actualMinutes!,
+        reservedMinutes: record.reservedMinutes,
+        actualMinutes: record.actualMinutes,
+        basis: UsageBasis.corrected,
+        correctedFromMinutes: record.countedMinutes,
+        correctedAt: kTestNow,
+        spaceLabel: record.spaceLabel,
+      );
+    }
+    return 'usage-event-${usageRecords.length}';
+  }
+
+  @override
+  Future<String> requestUsageRecordDelete(
+    String recordId, {
+    String reason = '',
+  }) async {
+    if (!usagePolicyConfigured) {
+      usageRecords.removeWhere((r) => r.id == recordId);
+    }
+    return 'usage-delete-event';
   }
 
   @override

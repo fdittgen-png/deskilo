@@ -47,6 +47,7 @@ import '../../providers/expense_schedule_providers.dart';
 import '../payment_method_labels.dart';
 import '../widgets/account_card.dart';
 import '../widgets/bill_view.dart';
+import '../widgets/usage_face.dart';
 import '../widgets/documents_face.dart';
 import '../widgets/expense_schedule_sheet.dart';
 import '../widgets/expense_sheet.dart';
@@ -1078,6 +1079,13 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
           MyInvoicesList(memberId: member?.id ?? '', exposure: exposure),
         ],
       ],
+      // #833 — the month's bookings and what each of them costs. The
+      // face is always in the tab strip; the flag decides whether it has
+      // anything to say, so turning it off never leaves a dead tab.
+      MoneyFace.usage: [
+        if (features.contains(WorkspaceFeature.usageRecords))
+          UsageFace(period: _period),
+      ],
       MoneyFace.documents: const [],
     };
     final documentsOn = features.contains(WorkspaceFeature.documents);
@@ -1093,6 +1101,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       MoneyFace.invoices: [
         if (invoicesButton != null) ...[const SizedBox(height: 8), invoicesButton],
       ],
+      MoneyFace.usage: const [],
       MoneyFace.documents: [
         DocumentsFaceActions(
           onAgreement: reportsOn ? () => _memberDoc('agreement') : null,

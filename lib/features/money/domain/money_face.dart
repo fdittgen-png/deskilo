@@ -19,6 +19,10 @@ enum MoneyFace {
   /// the register for issuers.
   invoices,
 
+  /// #833 — what the month's bookings actually were: the window booked,
+  /// the time present, and what of it bills. Read, and one ask.
+  usage,
+
   /// The rest of the paperwork: my conditions, the payments report, the
   /// month's statement as PDF, the document library.
   documents;

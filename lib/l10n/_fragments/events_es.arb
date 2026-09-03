@@ -106,5 +106,9 @@
       }
     }
   },
-  "eventTypeExpenseRepartition": "Gasto compartido"
+  "eventTypeExpenseRepartition": "Gasto compartido",
+  "eventTypeUsageCorrection": "Salida anticipada",
+  "eventTypeUsageRecordDelete": "Eliminar registro de uso",
+  "eventUsageCorrectionLine": "{actor} pide que se facture {to} en lugar de {from}",
+  "eventUsageRecordDeleteLine": "{actor} pide eliminar un registro de uso ({space})"
 }

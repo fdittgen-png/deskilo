@@ -177,7 +177,11 @@ const Map<String, int> _baseline = {
   // the manual sweep trigger.
   // 1150→1165 (2026-09-01): #804 the settle_invoices call.
   // 1165→1180 (2026-09-01): #816 the rules writers go through gated RPCs.
-  'lib/features/money/data/supabase_money_repository.dart': 1220, // 2026-08-30 #739 negotiation RPCs
+  // 2026-09-03 #833: three more RPC wrappers (usage records, the
+  // early-departure correction, the record removal). This file is one
+  // class of thin `_client.rpc` calls; splitting it would put one
+  // repository implementation in two places for no gain.
+  'lib/features/money/data/supabase_money_repository.dart': 1260,
   // 600→630 (2026-08-11): #537 VAT price transparency — the gross-price
   // hint + per-pack VAT/currency subtitles (labeling, no new concern).
   // 630→660 (2026-08-11): #537 follow-up — live VAT-share helpers under

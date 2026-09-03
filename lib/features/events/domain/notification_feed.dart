@@ -131,6 +131,10 @@ NotificationCategory categoryOfEvent(WorkspaceEvent event) {
     case EventType.quota:
       return NotificationCategory.reservations;
     case EventType.payment:
+    // #833 — both change what a month bills, so they belong with the
+    // money the member is being asked about.
+    case EventType.usageCorrection:
+    case EventType.usageRecordDelete:
     case EventType.expenseRepartition:
     case EventType.expenseSchedule:
     case EventType.expense:

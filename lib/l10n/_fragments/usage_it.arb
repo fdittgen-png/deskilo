@@ -1,0 +1,21 @@
+{
+  "@@locale": "it",
+  "usageTitle": "Utilizzo",
+  "usageEmpty": "Nessun utilizzo questo mese.",
+  "usageBooked": "Prenotato",
+  "usagePresent": "Presente",
+  "usageBilled": "Fatturato",
+  "usageNoShow": "Non è venuto nessuno: la prenotazione è fatturata per intero",
+  "usageLeftEarly": "Uscito prima",
+  "usageCorrected": "Corretto",
+  "usageWas": "era {before}",
+  "usageAsk": "Fattura il tempo in cui c’ero",
+  "usageAskExplain": "Hai prenotato {booked} e sei stato {present}. Chiedi che le {saved} non usate non siano fatturate. Decide qualcun altro, mai tu.",
+  "usageReasonLabel": "Perché (facoltativo)",
+  "usageAskSubmit": "Chiedi",
+  "usageAskSubmitted": "Richiesto. Decide qualcun altro.",
+  "usageDelete": "Rimuovi questo rilevamento",
+  "usageDeleteSubmitted": "Rimozione richiesta.",
+  "usageMember": "Membro",
+  "usageMemberAll": "Tutti"
+}

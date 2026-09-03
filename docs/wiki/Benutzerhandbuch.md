@@ -828,6 +828,14 @@ Der **Monatsabschluss-Assistent** (Option *Rechnungsassistent*; der Zauberstab i
 
 **Ausgabe verteilen** (Option *Gemeinsame Ausgaben*; das Verteilen-Symbol in der Rechnungskopfzeile) nimmt gemeinsame Kosten — Reinigung, schnelleres Internet, ein kaputter Stuhl — und verteilt sie auf die Mitglieder: **gleiche** Anteile, **anteilig zum Abonnement**, **anteilig zur Nutzung** (genutzte Halbtage im Zeitraum) oder ein **eigener Schlüssel** je Mitglied. Jeder Anteil wird vorab gezeigt, die Cents gehen genau auf, und nichts wird gebucht, bevor Sie bestätigen. Die Anteile werden als Anpassungspositionen auf den gewählten Zeitraum gebucht und erscheinen so auf der **nächsten Nutzungsrechnung** jedes Mitglieds (der Monatsendlauf des Assistenten, §11g). Schalten Sie **Umkehrung** ein, um Geld zurückzugeben: dieselbe Verteilung bucht **Gutschriften**, die mit den Kosten des Monats verrechnet werden und, wenn sie sie übersteigen, eine **Gutschrift** ergeben, die der Workspace erstattet (§11). Eine Verteilung ist ein eigener Ereignistyp: mit einer Bestätigungsregel für *Gemeinsame Ausgabe* wartet sie auf das Quorum und bucht nach der Bestätigung; ohne Regel gilt die Entscheidung des Ausstellers. Der Verlauf unter dem Formular zeigt jede Verteilung und ihren Stand.
 
+### 11i. Nutzung: was jede Buchung wirklich gekostet hat
+
+**Nutzung** (Funktion *Nutzungssätze*; eine Ansicht des Finanzen-Tabs) zeigt die gezählten Buchungen des Monats, je eine Karte, mit drei bewusst getrennten Zahlen: das **gebuchte** Fenster, die Zeit, in der Sie tatsächlich **anwesend** waren, und was davon **berechnet** wird. Die Buchung ist die Zusage; die Anwesenheit ist die Tatsache.
+
+Daraus folgen zwei Regeln, und die Karten sagen beide deutlich. Eine Buchung, **zu der niemand kam, wird voll berechnet** — nicht zu erscheinen ist kein Rabatt. Und eine Buchung, die Sie **früher verlassen** haben, wird ebenfalls voll berechnet, bis jemand anderes zustimmt: die Karte bietet **Die Zeit berechnen, in der ich da war**. Über diese Bitte entscheiden Sie nie selbst; sie geht an die Personen, die Ihre Freigaberegel *Früher gegangen* benennt, und ohne Regel gilt sie sofort. Angenommen, verschiebt sich das Ende der Buchung selbst auf den Zeitpunkt des Auscheckens, sodass Abrechnung, Halbtages-Obergrenze und Rechnung folgen — und die Karte sagt weiterhin, was die berechnete Zeit **war**.
+
+Sie sehen Ihre eigenen Sätze; wer das Geld des Space sehen darf, sieht alle. Admins und Inhaberschaft können einen Satz **entfernen**, und wo eine Regel *Nutzungssatz entfernen* konfiguriert ist, gibt das betroffene Mitglied sie frei.
+
 ## 12. Einstellungen & Profil
 
 Dein persönlicher Bildschirm, von oben nach unten:

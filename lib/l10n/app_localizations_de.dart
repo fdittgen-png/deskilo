@@ -1954,6 +1954,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get eventTypeExpenseRepartition => 'Gemeinsame Ausgabe';
 
   @override
+  String get eventTypeUsageCorrection => 'Früher gegangen';
+
+  @override
+  String get eventTypeUsageRecordDelete => 'Nutzungssatz entfernen';
+
+  @override
+  String eventUsageCorrectionLine(String actor, String from, String to) {
+    return '$actor bittet um $to statt $from';
+  }
+
+  @override
+  String eventUsageRecordDeleteLine(String actor, String space) {
+    return '$actor möchte einen Nutzungssatz entfernen ($space)';
+  }
+
+  @override
   String get featuresTitle => 'Funktionen';
 
   @override
@@ -2423,6 +2439,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureCalendarValidationsDesc =>
       'Jede Entscheidung zu einem Ereignis erscheint im Kalender zum Zeitpunkt der Entscheidung, nicht des Ereignisses: wer was freigegeben oder abgelehnt hat, und wann. Ein Tippen öffnet den Verlauf. Aus: der Kalender trägt keine Entscheidungen.';
+
+  @override
+  String get featureUsageRecordsTitle => 'Nutzungssätze';
+
+  @override
+  String get featureUsageRecordsDesc =>
+      'Jede gezählte Buchung hinterlässt einen Satz: das gebuchte Fenster, die tatsächliche Anwesenheit und was davon berechnet wird. Eine Buchung, zu der niemand kam, wird voll berechnet. Wer früher geht, kann darum bitten, die ungenutzte Zeit nicht zu berechnen — entschieden wird das von jemand anderem. Aus: keine Sätze, keine Korrektur.';
 
   @override
   String get helpTitle => 'Hilfe';
@@ -6104,6 +6127,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get scheduleUnitYears => 'Jahre';
 
   @override
+  String get moneyFaceUsage => 'Nutzung';
+
+  @override
   String get planDurationLabel => 'Dauer';
 
   @override
@@ -7065,6 +7091,64 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get themeDark => 'Dunkel';
+
+  @override
+  String get usageTitle => 'Nutzung';
+
+  @override
+  String get usageEmpty => 'Keine Nutzung in diesem Monat.';
+
+  @override
+  String get usageBooked => 'Gebucht';
+
+  @override
+  String get usagePresent => 'Anwesend';
+
+  @override
+  String get usageBilled => 'Berechnet';
+
+  @override
+  String get usageNoShow => 'Niemand kam — die Buchung wird voll berechnet';
+
+  @override
+  String get usageLeftEarly => 'Früher gegangen';
+
+  @override
+  String get usageCorrected => 'Korrigiert';
+
+  @override
+  String usageWas(String before) {
+    return 'war $before';
+  }
+
+  @override
+  String get usageAsk => 'Die Zeit berechnen, in der ich da war';
+
+  @override
+  String usageAskExplain(String booked, String present, String saved) {
+    return 'Sie haben $booked gebucht und waren $present da. Bitten Sie darum, die nicht genutzten $saved nicht zu berechnen. Jemand anderes entscheidet — nie Sie.';
+  }
+
+  @override
+  String get usageReasonLabel => 'Warum (optional)';
+
+  @override
+  String get usageAskSubmit => 'Anfragen';
+
+  @override
+  String get usageAskSubmitted => 'Angefragt. Jemand anderes entscheidet.';
+
+  @override
+  String get usageDelete => 'Diesen Satz entfernen';
+
+  @override
+  String get usageDeleteSubmitted => 'Entfernung angefragt.';
+
+  @override
+  String get usageMember => 'Mitglied';
+
+  @override
+  String get usageMemberAll => 'Alle';
 
   @override
   String eventValidations(int current, int required) {

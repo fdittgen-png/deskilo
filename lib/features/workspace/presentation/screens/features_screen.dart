@@ -217,6 +217,9 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.calendarValidations =>
           l10n?.featureCalendarValidationsDesc ??
               'Every decision taken on an event appears on the calendar at the moment it was taken, not at the moment of the event: who validated or refused what, and when. Tapping one opens its trail. Off: the calendar carries no decisions.',
+        WorkspaceFeature.usageRecords =>
+          l10n?.featureUsageRecordsDesc ??
+              'Every counted booking leaves a record: the window booked, the time actually present, and what of it bills. A booking nobody checked into bills in full. A member who left early can ask for the unused time to stop billing, and somebody else decides it — never them. Off: no records and no correction.',
         WorkspaceFeature.priceNegotiations =>
           l10n?.featurePriceNegotiationsDesc ??
               'The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record.',

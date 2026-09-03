@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: 0BSD
 //
-// Card counts: default + 15 domains (#828 added shared expenses; #767 added price negotiation and
-// scheduled expense to the card list).
+// Card counts: default + 17 domains (#828 added shared expenses; #767 added price
+// negotiation and scheduled expense; #833 added the early-departure correction and
+// the usage-record removal).
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/validation_policy.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -73,9 +74,9 @@ void main() {
     // No stored rows: every card shows the built-in defaults and inherits.
     expect(
       find.text("Required validations: 1 · All admins · Never one's own"),
-      findsNWidgets(15),
+      findsNWidgets(17),
     );
-    expect(find.text('Inherits default'), findsNWidgets(15));
+    expect(find.text('Inherits default'), findsNWidgets(17));
     expect(find.text('Customized'), findsNothing);
   });
 
@@ -244,7 +245,7 @@ void main() {
     );
 
     expect(find.text('Customized'), findsOneWidget);
-    expect(find.text('Inherits default'), findsNWidgets(14));
+    expect(find.text('Inherits default'), findsNWidgets(16));
     expect(
       find.text(
         'Required validations: 2 · All admins · Owner must always '

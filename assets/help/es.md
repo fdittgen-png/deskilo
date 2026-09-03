@@ -871,6 +871,14 @@ El **asistente de cierre** (opción *Asistente de facturación*; la varita en la
 
 **Repartir un gasto** (opción *Gastos compartidos*; el icono de reparto en la cabecera de Facturas) toma un coste común — limpieza, mejora de internet, una silla rota — y lo reparte entre los socios: partes **iguales**, **prorrata de la suscripción**, **prorrata del uso** (medias jornadas usadas en el periodo) o una **clave propia** por socio. Cada parte se previsualiza, los céntimos cuadran exactamente y nada se contabiliza hasta que confirme. Las partes se contabilizan como líneas de ajuste en el periodo elegido y aparecen así en la **próxima factura de uso** de cada socio (la pasada de fin de mes del asistente, §11g). Active **Reversión** para devolver dinero: el mismo reparto contabiliza **créditos**, que se compensan con los cargos del mes y, si los superan, generan una **nota de crédito** que el espacio reembolsa (§11). Un reparto es un evento propio: con una regla de validación sobre *Gasto compartido* espera el quórum y se contabiliza al confirmarse; sin regla, decide quien emite. El historial bajo el formulario muestra cada reparto y su estado.
 
+### 11i. Uso: lo que costó realmente cada reserva
+
+**Uso** (función *Registros de uso*; una cara de la pestaña Finanzas) muestra las reservas contadas del mes, una tarjeta cada una, con tres números deliberadamente separados: la ventana **reservada**, el tiempo que estuviste realmente **presente** y lo que de ello se **factura**. La reserva es el compromiso; la presencia es el hecho.
+
+De ahí salen dos reglas, y las tarjetas dicen ambas con claridad. Una reserva **a la que nadie llegó se factura entera** — no aparecer no es un descuento. Y una reserva que **dejaste antes** también se factura entera, hasta que otra persona acepte lo contrario: la tarjeta ofrece **Facturar el tiempo que estuve**, que pide que el tiempo no usado deje de contar. Nunca decides tú esa petición; va a quien nombre tu regla de validación *Salida anticipada*, y si no hay regla se aplica de inmediato. Aceptada, el final de la propia reserva se mueve al momento de tu salida, así que el extracto, el tope de medias jornadas y la factura siguen — y la tarjeta sigue diciendo lo que el tiempo facturado **era**.
+
+Ves tus propios registros; quien pueda ver el dinero del espacio los ve todos. Un admin o la propiedad puede **eliminar** un registro, y donde haya una regla *Eliminar registro de uso*, quien la valida es el miembro afectado.
+
 ## 12. Ajustes y perfil
 
 Tu pantalla personal, de arriba abajo:

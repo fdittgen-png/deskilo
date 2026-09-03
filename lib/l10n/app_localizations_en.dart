@@ -1941,6 +1941,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventTypeExpenseRepartition => 'Shared expense';
 
   @override
+  String get eventTypeUsageCorrection => 'Early departure';
+
+  @override
+  String get eventTypeUsageRecordDelete => 'Usage record removal';
+
+  @override
+  String eventUsageCorrectionLine(String actor, String from, String to) {
+    return '$actor asks to be billed $to instead of $from';
+  }
+
+  @override
+  String eventUsageRecordDeleteLine(String actor, String space) {
+    return '$actor asks to remove a usage record ($space)';
+  }
+
+  @override
   String get featuresTitle => 'Features';
 
   @override
@@ -2405,6 +2421,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureCalendarValidationsDesc =>
       'Every decision taken on an event appears on the calendar at the moment it was taken, not at the moment of the event: who validated or refused what, and when. Tapping one opens its trail. Off: the calendar carries no decisions.';
+
+  @override
+  String get featureUsageRecordsTitle => 'Usage records';
+
+  @override
+  String get featureUsageRecordsDesc =>
+      'Every counted booking leaves a record: the window booked, the time actually present, and what of it bills. A booking nobody checked into bills in full. A member who left early can ask for the unused time to stop billing, and somebody else decides it — never them. Off: no records and no correction.';
 
   @override
   String get helpTitle => 'Help';
@@ -6056,6 +6079,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scheduleUnitYears => 'years';
 
   @override
+  String get moneyFaceUsage => 'Usage';
+
+  @override
   String get planDurationLabel => 'Duration';
 
   @override
@@ -7010,6 +7036,64 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get themeDark => 'Dark';
+
+  @override
+  String get usageTitle => 'Usage';
+
+  @override
+  String get usageEmpty => 'No usage this month.';
+
+  @override
+  String get usageBooked => 'Booked';
+
+  @override
+  String get usagePresent => 'Present';
+
+  @override
+  String get usageBilled => 'Billed';
+
+  @override
+  String get usageNoShow => 'Nobody checked in — the booking bills in full';
+
+  @override
+  String get usageLeftEarly => 'Left early';
+
+  @override
+  String get usageCorrected => 'Corrected';
+
+  @override
+  String usageWas(String before) {
+    return 'was $before';
+  }
+
+  @override
+  String get usageAsk => 'Bill the time I was here';
+
+  @override
+  String usageAskExplain(String booked, String present, String saved) {
+    return 'You booked $booked and were here $present. Ask for the $saved you did not use to stop billing. Somebody else decides it — never you.';
+  }
+
+  @override
+  String get usageReasonLabel => 'Why (optional)';
+
+  @override
+  String get usageAskSubmit => 'Ask';
+
+  @override
+  String get usageAskSubmitted => 'Asked. Somebody else decides it.';
+
+  @override
+  String get usageDelete => 'Remove this record';
+
+  @override
+  String get usageDeleteSubmitted => 'Removal requested.';
+
+  @override
+  String get usageMember => 'Member';
+
+  @override
+  String get usageMemberAll => 'Everyone';
 
   @override
   String eventValidations(int current, int required) {

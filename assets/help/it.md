@@ -871,6 +871,14 @@ L'**assistente di chiusura** (opzione *Assistente di fatturazione*; la bacchetta
 
 **Ripartisci una spesa** (opzione *Spese condivise*; l'icona di ripartizione nell'intestazione Fatture) prende un costo comune — pulizie, potenziamento internet, una sedia rotta — e lo ripartisce tra i membri: quote **uguali**, **in proporzione all'abbonamento**, **in proporzione all'utilizzo** (mezze giornate usate nel periodo) o una **chiave personalizzata** per membro. Ogni quota è in anteprima, i centesimi tornano esatti e nulla viene registrato prima della conferma. Le quote sono registrate come righe di rettifica sul periodo scelto e compaiono così sulla **prossima fattura di utilizzo** di ogni membro (il giro di fine mese dell'assistente, §11g). Attiva **Storno** per restituire denaro: la stessa ripartizione registra **crediti**, che si compensano con gli addebiti del mese e, se li superano, producono una **nota di credito** che lo spazio rimborsa (§11). Una ripartizione è un evento a sé: con una regola di convalida su *Spesa condivisa* attende il quorum e si registra una volta confermata; senza regola vale la decisione di chi emette. La cronologia sotto il modulo mostra ogni ripartizione e il suo stato.
 
+### 11i. Utilizzo: quanto è costata davvero ogni prenotazione
+
+**Utilizzo** (funzione *Rilevamenti di utilizzo*; una faccia della scheda Finanze) mostra le prenotazioni conteggiate del mese, una scheda ciascuna, con tre numeri volutamente distinti: la finestra **prenotata**, il tempo in cui eri davvero **presente** e quanto di esso viene **fatturato**. La prenotazione è l'impegno; la presenza è il fatto.
+
+Ne discendono due regole, e le schede le dicono entrambe apertamente. Una prenotazione **a cui non è venuto nessuno è fatturata per intero** — non presentarsi non è uno sconto. E anche una prenotazione lasciata **in anticipo** è fatturata per intero, finché qualcun altro non accetta il contrario: la scheda propone **Fattura il tempo in cui c'ero**. Quella richiesta non la decidi mai tu; va a chi la regola di convalida *Uscita anticipata* indica, e senza regola vale subito. Accettata, la fine della prenotazione stessa si sposta al momento dell'uscita, così estratto conto, tetto delle mezze giornate e fattura seguono — e la scheda continua a dire quanto il tempo fatturato **era**.
+
+Vedi i tuoi rilevamenti; chi può vedere il denaro dello spazio li vede tutti. Un admin o la proprietà può **rimuovere** un rilevamento, e dove è configurata una regola *Rimozione del rilevamento*, a convalidarla è il membro interessato.
+
 ## 12. Impostazioni e profilo
 
 La tua schermata personale, dall'alto in basso:

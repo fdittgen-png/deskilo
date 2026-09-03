@@ -8,6 +8,7 @@ import '../domain/vat_declaration.dart';
 import '../domain/member_account.dart';
 import '../domain/billing_rules.dart';
 import '../domain/expense_repartition.dart';
+import '../domain/usage_record.dart';
 import '../domain/dunning.dart';
 import '../domain/price_negotiation.dart';
 import '../domain/invoice_pdf_template.dart';
@@ -337,6 +338,49 @@ class SupabaseMoneyRepository implements MoneyRepository {
       'p_period': period,
       'p_shares': [for (final s in shares) s.toJson()],
       'p_source_event_id': sourceEventId,
+    });
+    return id as String;
+  }
+
+  @override
+  Future<List<UsageRecord>> fetchUsageRecords({
+    required String workspaceId,
+    required String period,
+    String? memberId,
+  }) async {
+    final data = await _client.rpc<dynamic>('usage_records_for', params: {
+      'p_workspace_id': workspaceId,
+      'p_period': period,
+      'p_member_id': memberId,
+    });
+    final rows = (data as Map)['records'] as List? ?? const [];
+    return [
+      for (final row in rows)
+        UsageRecord.fromJson((row as Map).cast<String, dynamic>()),
+    ];
+  }
+
+  @override
+  Future<String> requestUsageCorrection(
+    String recordId, {
+    String reason = '',
+  }) async {
+    final id = await _client.rpc<dynamic>('request_usage_correction', params: {
+      'p_record_id': recordId,
+      'p_reason': reason,
+    });
+    return id as String;
+  }
+
+  @override
+  Future<String> requestUsageRecordDelete(
+    String recordId, {
+    String reason = '',
+  }) async {
+    final id =
+        await _client.rpc<dynamic>('request_usage_record_delete', params: {
+      'p_record_id': recordId,
+      'p_reason': reason,
     });
     return id as String;
   }

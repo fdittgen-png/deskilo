@@ -106,5 +106,9 @@
       }
     }
   },
-  "eventTypeExpenseRepartition": "Spesa condivisa"
+  "eventTypeExpenseRepartition": "Spesa condivisa",
+  "eventTypeUsageCorrection": "Uscita anticipata",
+  "eventTypeUsageRecordDelete": "Rimozione del rilevamento",
+  "eventUsageCorrectionLine": "{actor} chiede di essere fatturato {to} invece di {from}",
+  "eventUsageRecordDeleteLine": "{actor} chiede di rimuovere un rilevamento ({space})"
 }

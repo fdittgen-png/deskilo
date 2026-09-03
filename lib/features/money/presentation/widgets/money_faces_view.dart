@@ -14,6 +14,7 @@ String moneyFaceLabel(AppLocalizations? l10n, MoneyFace face) => switch (face) {
       MoneyFace.statement => l10n?.moneyFaceStatement ?? 'Statement',
       MoneyFace.payments => l10n?.moneyFacePayments ?? 'Payments',
       MoneyFace.invoices => l10n?.moneyFaceInvoices ?? 'Invoices',
+      MoneyFace.usage => l10n?.moneyFaceUsage ?? 'Usage',
       MoneyFace.documents => l10n?.moneyFaceDocuments ?? 'Documents',
     };
 
@@ -97,6 +98,10 @@ HelpHintId moneyFaceHint(MoneyFace face) => switch (face) {
       MoneyFace.statement => HelpHintId.moneyStatement,
       MoneyFace.payments => HelpHintId.moneyPayments,
       MoneyFace.invoices => HelpHintId.moneyInvoices,
+      // The usage face answers the same question the statement does —
+      // what this month costs — from the booking end, so it shares its
+      // hint rather than inventing a second explanation of one thing.
+      MoneyFace.usage => HelpHintId.moneyStatement,
       MoneyFace.documents => HelpHintId.moneyDocuments,
     };
 
