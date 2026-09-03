@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -9,6 +10,7 @@ import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../events/presentation/widgets/event_validation_trail.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/domain/half_day_windows.dart';
@@ -263,6 +265,12 @@ class ReservationDetailSheet extends ConsumerWidget {
                     'Request deletion'),
               ),
             ],
+            // #841 — the booking says who decided about it. A deletion
+            // request travels in the payload, not on events.reservation_id
+            // (0097 keeps that column free so a reject does not cancel
+            // the booking), so both links are followed.
+            if (reservationEventId(ref, reservation.id) case final eventId?)
+              EventValidationTrail(eventId: eventId),
           ],
         ),
       ),

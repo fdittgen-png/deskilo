@@ -99,6 +99,16 @@ class SupabaseEventRepository implements EventRepository {
   }
 
   @override
+  Future<WorkspaceEvent?> fetchEvent(String eventId) async {
+    final rows = await _client
+        .from('events')
+        .select()
+        .eq('id', eventId)
+        .limit(1);
+    return rows.isEmpty ? null : _fromRow(rows.first);
+  }
+
+  @override
   Future<List<ValidationPolicy>> fetchValidationPolicies(
     String workspaceId,
   ) async {

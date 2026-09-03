@@ -13,6 +13,15 @@ import '../domain/workspace_event.dart';
 
 part 'event_providers.g.dart';
 
+/// One event and the decisions taken on it, in the order they happened.
+class EventTrail {
+  const EventTrail({this.event, this.decisions = const []});
+
+  final WorkspaceEvent? event;
+  final List<EventDecision> decisions;
+}
+
+
 @Riverpod(keepAlive: true)
 EventRepository eventRepository(Ref ref) =>
     SupabaseEventRepository(Supabase.instance.client);
@@ -36,6 +45,21 @@ Future<Map<String, List<EventDecision>>> eventDecisions(Ref ref) async {
   return ref
       .watch(eventRepositoryProvider)
       .fetchDecisions(workspace.id, [for (final e in all) e.id]);
+}
+
+/// #841 — the ordered decision trail of ONE event, by id, for the
+/// document that raised it. The feed only carries the newest hundred
+/// events, so an invoice released last quarter is not in it; this reads
+/// the event and its decisions directly instead.
+@riverpod
+Future<EventTrail> eventTrail(Ref ref, String eventId) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null || eventId.isEmpty) return const EventTrail();
+  final repository = ref.watch(eventRepositoryProvider);
+  final event = await repository.fetchEvent(eventId);
+  if (event == null) return const EventTrail();
+  final decisions = await repository.fetchDecisions(workspace.id, [eventId]);
+  return EventTrail(event: event, decisions: decisions[eventId] ?? const []);
 }
 
 /// The workspace's quorum rules (#130); empty = pre-quorum behavior.

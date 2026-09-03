@@ -12199,6 +12199,30 @@ abstract class AppLocalizations {
   /// **'System'**
   String get eventSystemDecider;
 
+  /// #841 - heading of the ordered decision trail on a document
+  ///
+  /// In en, this message translates to:
+  /// **'Validation trail'**
+  String get validationTrailTitle;
+
+  /// #841 - the trail when nothing has been decided yet
+  ///
+  /// In en, this message translates to:
+  /// **'No decision yet.'**
+  String get validationTrailNone;
+
+  /// #841 - leader of one entry when the rule asks one validation at a time
+  ///
+  /// In en, this message translates to:
+  /// **'Step {order}'**
+  String validationTrailStep(int order);
+
+  /// #841 - how many validations the event still owes
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Awaiting 1 more validation.} other{Awaiting {count} more validations.}}'**
+  String validationTrailAwaiting(int count);
+
   /// App-bar title of the owner validation-policy editor and its settings tile (#131)
   ///
   /// In en, this message translates to:

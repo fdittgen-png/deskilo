@@ -7022,6 +7022,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eventSystemDecider => 'Système';
 
   @override
+  String get validationTrailTitle => 'Historique de validation';
+
+  @override
+  String get validationTrailNone => 'Aucune décision pour le moment.';
+
+  @override
+  String validationTrailStep(int order) {
+    return 'Étape $order';
+  }
+
+  @override
+  String validationTrailAwaiting(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'En attente de $count validations de plus.',
+      one: 'En attente d’une validation de plus.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get validationTitle => 'Règles de validation';
 
   @override

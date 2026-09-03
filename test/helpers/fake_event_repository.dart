@@ -69,6 +69,10 @@ class FakeEventRepository implements EventRepository {
   }
 
   @override
+  Future<WorkspaceEvent?> fetchEvent(String eventId) async =>
+      events.where((e) => e.id == eventId).firstOrNull;
+
+  @override
   Future<Map<String, List<EventDecision>>> fetchDecisions(
     String workspaceId,
     List<String> eventIds,

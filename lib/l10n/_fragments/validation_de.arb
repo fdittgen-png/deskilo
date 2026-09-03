@@ -3,5 +3,9 @@
   "eventValidations": "{current}/{required} Bestätigungen",
   "eventValidatedBy": "Bestätigt von {name} · {when}",
   "eventRejectedBy": "Abgelehnt von {name} · {when}",
-  "eventSystemDecider": "System"
+  "eventSystemDecider": "System",
+  "validationTrailTitle": "Freigabeverlauf",
+  "validationTrailNone": "Noch keine Entscheidung.",
+  "validationTrailStep": "Stufe {order}",
+  "validationTrailAwaiting": "{count, plural, =1{Noch eine Freigabe ausstehend.} other{Noch {count} Freigaben ausstehend.}}"
 }

@@ -17,13 +17,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/fake_event_repository.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 
 /// A fake archive seeded with one derived invoice for the current month
 /// (the default fake statement: 150.00 subscription + 16.00 overage).
-Future<FakeMoneyRepository> seededMoney({bool matched = true}) async {
-  final money = FakeMoneyRepository();
+Future<FakeMoneyRepository> seededMoney({
+  bool matched = true,
+  FakeEventRepository? events,
+}) async {
+  final money = FakeMoneyRepository(events: events);
   final id = await money.createInvoice(
     workspaceId: 'ws-1',
     memberId: 'member-1',
@@ -48,6 +52,7 @@ Future<FakeMoneyRepository> pumpInvoices(
   WidgetTester tester, {
   FakeMoneyRepository? money,
   FakeWorkspaceRepository? workspace,
+  FakeEventRepository? events,
   FileSaver? saver,
   FileSharer? sharer,
 }) async {
@@ -61,6 +66,7 @@ Future<FakeMoneyRepository> pumpInvoices(
         ...standardTestOverrides(
           money: money,
           workspace: workspace,
+          events: events,
           fileSharer: sharer,
         ),
         if (saver != null) fileSaverProvider.overrideWithValue(saver),

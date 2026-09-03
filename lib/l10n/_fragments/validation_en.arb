@@ -39,5 +39,31 @@
   "eventSystemDecider": "System",
   "@eventSystemDecider": {
     "description": "Validator name shown when the timeout sweep decided, not a member"
+  },
+  "validationTrailTitle": "Validation trail",
+  "@validationTrailTitle": {
+    "description": "#841 - heading of the ordered decision trail on a document"
+  },
+  "validationTrailNone": "No decision yet.",
+  "@validationTrailNone": {
+    "description": "#841 - the trail when nothing has been decided yet"
+  },
+  "validationTrailStep": "Step {order}",
+  "@validationTrailStep": {
+    "description": "#841 - leader of one entry when the rule asks one validation at a time",
+    "placeholders": {
+      "order": {
+        "type": "int"
+      }
+    }
+  },
+  "validationTrailAwaiting": "{count, plural, =1{Awaiting 1 more validation.} other{Awaiting {count} more validations.}}",
+  "@validationTrailAwaiting": {
+    "description": "#841 - how many validations the event still owes",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }
