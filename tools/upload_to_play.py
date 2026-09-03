@@ -390,6 +390,66 @@ def _move_testers(edits, package: str, source: str, target: str) -> int:
     return 0
 
 
+
+def _track_countries(edits, package: str, edit_id: str, track_name: str) -> str:
+    """What countries the TRACK itself is available in.
+
+    Not the same thing as a release's countryTargeting, which is what
+    `--status` reported before and why it read "ALL" while a tester on
+    that very track saw nothing: availability is configured per track and
+    lives on its own resource.
+    """
+    try:
+        result = _execute_with_retry(
+            lambda: edits.countryavailability().get(
+                packageName=package, editId=edit_id, track=track_name),
+            label=f"countryavailability({track_name})",
+        )
+    except HttpError as e:
+        return f"unreadable ({str(e)[:60]}…)"
+    except Exception:  # noqa: BLE001 - an absent resource is an answer
+        return "unreadable"
+    if result.get("restOfWorld"):
+        return "REST OF WORLD (everywhere)"
+    countries = [c.get("countryCode") for c in result.get("countries", [])]
+    if not countries:
+        return "NO COUNTRY"
+    shown = ", ".join(countries[:12])
+    more = "" if len(countries) <= 12 else f" (+{len(countries) - 12} more)"
+    return f"{len(countries)} countries: {shown}{more}"
+
+
+
+def _listing_summary(edits, package: str, edit_id: str) -> str:
+    """Which languages the store page exists in.
+
+    A closed test still renders a STORE PAGE. Without a listing there is
+    no page to render, and the store answers "item not found" — which
+    looks exactly like a missing release or a missing tester.
+    """
+    try:
+        result = _execute_with_retry(
+            lambda: edits.listings().list(
+                packageName=package, editId=edit_id),
+            label="listings.list",
+        )
+    except HttpError as e:
+        return f"unreadable ({str(e)[:60]}…)"
+    listings = result.get("listings", []) or []
+    if not listings:
+        return "NONE — there is no store page to show"
+    described = [
+        l.get("language") for l in listings
+        if (l.get("title") or "").strip()
+        and (l.get("shortDescription") or "").strip()
+        and (l.get("fullDescription") or "").strip()
+    ]
+    langs = ", ".join(sorted(l.get("language", "?") for l in listings))
+    if not described:
+        return f"{len(listings)} present ({langs}) but NONE complete"
+    return f"{len(listings)}: {langs}"
+
+
 def _report_status(edits, package: str) -> int:
     """Print what every track actually serves, and why a tester might see
     nothing.
@@ -418,14 +478,28 @@ def _report_status(edits, package: str) -> int:
         return 4
 
     problems = []
+    store = _listing_summary(edits, package, edit_id)
+    print(f"store listing languages: {store}")
+    if "NONE" in store:
+        problems.append(
+            "the store page itself: " + store + " — a closed test still "
+            "renders a listing, and without one the store says the item "
+            "does not exist")
+
     for track in listing.get("tracks", []):
         name = track.get("track", "?")
         releases = track.get("releases", [])
         groups = _tester_groups(edits, package, edit_id, name)
+        reach = _track_countries(edits, package, edit_id, name)
         who = (", ".join(groups) if groups
                else "no Google group (Console e-mail lists are not "
                     "visible to this API)")
         print(f"\ntrack {name}: {len(releases)} release(s) — testers: {who}")
+        print(f"  track availability: {reach}")
+        if reach == 'NO COUNTRY':
+            problems.append(
+                f"{name}: the TRACK is available in no country — a release "
+                f"on it reaches nobody, whatever the release itself says")
         if not releases:
             print("  (nothing here — testers of this track can install nothing)")
             problems.append(f"{name}: no release")
