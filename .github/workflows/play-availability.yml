@@ -30,9 +30,16 @@ on:
       set_countries:
         description: >-
           Give the newest release on that track the market list
-          (EU 27 + US, CA, JP, KR). Leave off to only read.
+          (EU 27 + US, CA, JP, KR). Play takes this on STAGED
+          releases only. Leave off to only read.
         type: boolean
         default: false
+      move_testers_from:
+        description: >-
+          Move every Google group testing THIS track onto the track
+          chosen above, leaving it with no testers. Blank to skip.
+        type: string
+        default: ''
 
 permissions:
   contents: read
@@ -64,6 +71,19 @@ jobs:
         run: |
           echo "$SA_JSON" > "$RUNNER_TEMP/play-key.json"
           echo "PLAY_KEY_PATH=$RUNNER_TEMP/play-key.json" >> "$GITHUB_ENV"
+
+      - name: Move the testers
+        if: ${{ inputs.move_testers_from != '' }}
+        run: |
+          python tools/upload_to_play.py \
+            --move-testers "${{ inputs.move_testers_from }}" "${{ inputs.track }}" \
+            --key "$PLAY_KEY_PATH" | tee "$RUNNER_TEMP/testers.txt"
+          {
+            echo '## Testers moved onto `${{ inputs.track }}`'
+            echo '```'
+            cat "$RUNNER_TEMP/testers.txt"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Set the markets
         if: ${{ inputs.set_countries }}

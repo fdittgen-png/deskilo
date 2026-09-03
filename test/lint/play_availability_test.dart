@@ -38,9 +38,10 @@ void main() {
     expect(tool, contains('_set_countries(edits'));
   });
 
-  test('neither mode needs a build — they inspect the store, they do not '
-      'produce anything for it', () {
-    expect(tool, contains('read_only = args.status or args.set_countries'));
+  test('no inspecting mode needs a build — they read the store, they do '
+      'not produce anything for it', () {
+    expect(tool, contains('read_only = (args.status or args.set_countries'));
+    expect(tool, contains('or args.move_testers is not None)'));
     expect(tool, contains('if not read_only and not aab.is_file():'),
         reason: 'the AAB guard must not fire for a read-only run');
   });
@@ -70,11 +71,26 @@ void main() {
     expect(tool, contains('updated = dict(target)'));
   });
 
+  test('moving testers reads both sides, unions them, and never writes '
+      'a group twice', () {
+    expect(tool, contains('parser.add_argument("--move-testers"'));
+    expect(tool, contains('if args.move_testers is not None:'));
+    expect(tool, contains('_move_testers(edits'));
+    expect(tool, contains('if group not in merged:'),
+        reason: 'a group already testing the target must not be added twice');
+    // An empty answer from this API means "no Google group", never "no
+    // testers": Console e-mail lists are invisible to it, and saying so
+    // is the difference between a fix and a silent no-op.
+    expect(tool, contains('Console e-mail LIST'));
+  });
+
   test('the workflow reads by default and only writes when asked', () {
     expect(workflow, contains('--status'));
     expect(workflow, contains('--set-countries'));
     expect(workflow, contains(r'if: ${{ inputs.set_countries }}'),
         reason: 'writing must be gated on the input, never unconditional');
+    expect(workflow, contains(r"if: ${{ inputs.move_testers_from != '' }}"),
+        reason: 'and so must moving testers');
     expect(workflow, contains('default: false'),
         reason: 'and it must be off unless somebody ticks it');
     expect(workflow, contains(r'rm -f "$PLAY_KEY_PATH"'),
