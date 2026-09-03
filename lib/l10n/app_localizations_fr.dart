@@ -2389,6 +2389,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les factures regroupées en une seule disparaissent des listes et se rangent sous la facture de regroupement, qui porte toutes leurs lignes. Sur une facture regroupée, toute opération est désactivée ; il ne reste que son PDF, tamponné du numéro dans lequel elle a été regroupée. Désactivé : les factures regroupées restent listées à côté de la facture de regroupement.';
 
   @override
+  String get featureValidationChainTitle => 'Validations enchaînées';
+
+  @override
+  String get featureValidationChainDesc =>
+      'Une règle de validation peut demander ses validations l\'une après l\'autre, chaque étape sollicitée une fois la précédente passée, et peut autoriser le propriétaire — jamais un admin — à valider son propre acte. Désactivé : tout est demandé d\'un coup et personne ne valide son propre événement.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override
@@ -7061,6 +7068,33 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get validationAutoValidateDesc =>
       'Leur propre demande de suppression se règle d\'elle-même et reste marquée comme auto-validée.';
+
+  @override
+  String get validationNoSelfTitle => 'Personne ne valide le sien';
+
+  @override
+  String get validationNoSelfDesc =>
+      'Celui qui crée un événement ne le valide jamais. Il attend quelqu\'un d\'autre, ou expire sans décision.';
+
+  @override
+  String get validationNoSelfShort => 'Jamais le sien';
+
+  @override
+  String get validationOwnerSelf => 'Le propriétaire peut valider le sien';
+
+  @override
+  String get validationOwnerSelfDesc =>
+      'La seule exception, et elle est au propriétaire seul : un admin ne valide jamais son propre acte.';
+
+  @override
+  String get validationOwnerSelfShort => 'Le propriétaire peut valider le sien';
+
+  @override
+  String get validationSequential => 'L\'une après l\'autre';
+
+  @override
+  String get validationSequentialDesc =>
+      'La validation suivante est demandée une fois la précédente passée, et l\'historique numérote chaque étape.';
 
   @override
   String get vatTitle => 'TVA';

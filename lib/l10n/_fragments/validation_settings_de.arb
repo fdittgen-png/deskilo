@@ -14,5 +14,13 @@
   "validationSaved": "Validierungsregel gespeichert.",
   "validationAutoValidateOwner": "Inhaber löschen ohne Validierung",
   "validationAutoValidateAdmin": "Admins löschen ohne Validierung",
-  "validationAutoValidateDesc": "Ihr eigener Löschantrag erledigt sich selbst und bleibt als automatisch validiert markiert."
+  "validationAutoValidateDesc": "Ihr eigener Löschantrag erledigt sich selbst und bleibt als automatisch validiert markiert.",
+  "validationNoSelfTitle": "Niemand gibt das Eigene frei",
+  "validationNoSelfDesc": "Wer ein Ereignis auslöst, gibt es nie selbst frei. Es wartet auf jemand anderen oder verfällt unentschieden.",
+  "validationNoSelfShort": "Nie das Eigene",
+  "validationOwnerSelf": "Die Inhaberschaft darf das Eigene freigeben",
+  "validationOwnerSelfDesc": "Die einzige Ausnahme, und sie gehört der Inhaberschaft allein: ein Admin gibt die eigene Handlung nie frei.",
+  "validationOwnerSelfShort": "Inhaberschaft darf das Eigene freigeben",
+  "validationSequential": "Nacheinander",
+  "validationSequentialDesc": "Die nächste Freigabe wird erst angefragt, wenn die vorige durch ist, und der Verlauf nummeriert jede Stufe."
 }

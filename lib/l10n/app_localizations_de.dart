@@ -2385,6 +2385,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Zu einer zusammengefasste Rechnungen verschwinden als eigene Zeilen aus den Listen und ordnen sich unter der Sammelrechnung ein, die alle ihre Positionen trägt. Auf einer zusammengefassten Rechnung ist jede Aktion aus; es bleibt nur ihr PDF, gestempelt mit der Nummer, in der sie aufging. Aus: die zusammengefassten Rechnungen bleiben neben der Sammelrechnung gelistet.';
 
   @override
+  String get featureValidationChainTitle => 'Verkettete Freigaben';
+
+  @override
+  String get featureValidationChainDesc =>
+      'Eine Freigaberegel kann ihre Freigaben nacheinander einholen — jede Stufe erst, wenn die vorige durch ist — und kann der Inhaberin oder dem Inhaber, nie einem Admin, die Freigabe der eigenen Handlung erlauben. Aus: alles wird auf einmal angefragt, und niemand gibt das Eigene frei.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override
@@ -7048,6 +7055,35 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get validationAutoValidateDesc =>
       'Ihr eigener Löschantrag erledigt sich selbst und bleibt als automatisch validiert markiert.';
+
+  @override
+  String get validationNoSelfTitle => 'Niemand gibt das Eigene frei';
+
+  @override
+  String get validationNoSelfDesc =>
+      'Wer ein Ereignis auslöst, gibt es nie selbst frei. Es wartet auf jemand anderen oder verfällt unentschieden.';
+
+  @override
+  String get validationNoSelfShort => 'Nie das Eigene';
+
+  @override
+  String get validationOwnerSelf =>
+      'Die Inhaberschaft darf das Eigene freigeben';
+
+  @override
+  String get validationOwnerSelfDesc =>
+      'Die einzige Ausnahme, und sie gehört der Inhaberschaft allein: ein Admin gibt die eigene Handlung nie frei.';
+
+  @override
+  String get validationOwnerSelfShort =>
+      'Inhaberschaft darf das Eigene freigeben';
+
+  @override
+  String get validationSequential => 'Nacheinander';
+
+  @override
+  String get validationSequentialDesc =>
+      'Die nächste Freigabe wird erst angefragt, wenn die vorige durch ist, und der Verlauf nummeriert jede Stufe.';
 
   @override
   String get vatTitle => 'Mehrwertsteuer';

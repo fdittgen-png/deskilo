@@ -27,7 +27,13 @@ mixin _$ValidationPolicy {
  bool get autoValidateAdmin; bool get autoValidateOwner;/// #732 — who validates: 'admins' (owner + admins, optionally the
 /// listed subset), 'listed' (owner + exactly the listed persons, any
 /// role) or 'members' (owner + every active member).
- String get validatorScope;
+ String get validatorScope;/// #840 — the ONE exception to "nobody validates their own event",
+/// and it is the owner's alone: an admin never gets it. Off by
+/// default, so a fresh rule keeps the 0086 protocol intact.
+ bool get ownerMaySelfValidate;/// #840 — ask for the validations one after another instead of as
+/// one open quorum: the second is requested once the first passed,
+/// and the trail numbers the step each decision answered.
+ bool get sequential;
 /// Create a copy of ValidationPolicy
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -38,16 +44,16 @@ $ValidationPolicyCopyWith<ValidationPolicy> get copyWith => _$ValidationPolicyCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ValidationPolicy&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.eventType, eventType) || other.eventType == eventType)&&(identical(other.requiredCount, requiredCount) || other.requiredCount == requiredCount)&&(identical(other.adminsMayValidate, adminsMayValidate) || other.adminsMayValidate == adminsMayValidate)&&const DeepCollectionEquality().equals(other.eligibleAdminIds, eligibleAdminIds)&&(identical(other.ownerRequired, ownerRequired) || other.ownerRequired == ownerRequired)&&(identical(other.autoValidateAdmin, autoValidateAdmin) || other.autoValidateAdmin == autoValidateAdmin)&&(identical(other.autoValidateOwner, autoValidateOwner) || other.autoValidateOwner == autoValidateOwner)&&(identical(other.validatorScope, validatorScope) || other.validatorScope == validatorScope));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ValidationPolicy&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.eventType, eventType) || other.eventType == eventType)&&(identical(other.requiredCount, requiredCount) || other.requiredCount == requiredCount)&&(identical(other.adminsMayValidate, adminsMayValidate) || other.adminsMayValidate == adminsMayValidate)&&const DeepCollectionEquality().equals(other.eligibleAdminIds, eligibleAdminIds)&&(identical(other.ownerRequired, ownerRequired) || other.ownerRequired == ownerRequired)&&(identical(other.autoValidateAdmin, autoValidateAdmin) || other.autoValidateAdmin == autoValidateAdmin)&&(identical(other.autoValidateOwner, autoValidateOwner) || other.autoValidateOwner == autoValidateOwner)&&(identical(other.validatorScope, validatorScope) || other.validatorScope == validatorScope)&&(identical(other.ownerMaySelfValidate, ownerMaySelfValidate) || other.ownerMaySelfValidate == ownerMaySelfValidate)&&(identical(other.sequential, sequential) || other.sequential == sequential));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,eventType,requiredCount,adminsMayValidate,const DeepCollectionEquality().hash(eligibleAdminIds),ownerRequired,autoValidateAdmin,autoValidateOwner,validatorScope);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,eventType,requiredCount,adminsMayValidate,const DeepCollectionEquality().hash(eligibleAdminIds),ownerRequired,autoValidateAdmin,autoValidateOwner,validatorScope,ownerMaySelfValidate,sequential);
 
 @override
 String toString() {
-  return 'ValidationPolicy(id: $id, workspaceId: $workspaceId, eventType: $eventType, requiredCount: $requiredCount, adminsMayValidate: $adminsMayValidate, eligibleAdminIds: $eligibleAdminIds, ownerRequired: $ownerRequired, autoValidateAdmin: $autoValidateAdmin, autoValidateOwner: $autoValidateOwner, validatorScope: $validatorScope)';
+  return 'ValidationPolicy(id: $id, workspaceId: $workspaceId, eventType: $eventType, requiredCount: $requiredCount, adminsMayValidate: $adminsMayValidate, eligibleAdminIds: $eligibleAdminIds, ownerRequired: $ownerRequired, autoValidateAdmin: $autoValidateAdmin, autoValidateOwner: $autoValidateOwner, validatorScope: $validatorScope, ownerMaySelfValidate: $ownerMaySelfValidate, sequential: $sequential)';
 }
 
 
@@ -58,7 +64,7 @@ abstract mixin class $ValidationPolicyCopyWith<$Res>  {
   factory $ValidationPolicyCopyWith(ValidationPolicy value, $Res Function(ValidationPolicy) _then) = _$ValidationPolicyCopyWithImpl;
 @useResult
 $Res call({
- String? id, String workspaceId, String? eventType, int requiredCount, bool adminsMayValidate, List<String> eligibleAdminIds, bool ownerRequired, bool autoValidateAdmin, bool autoValidateOwner, String validatorScope
+ String? id, String workspaceId, String? eventType, int requiredCount, bool adminsMayValidate, List<String> eligibleAdminIds, bool ownerRequired, bool autoValidateAdmin, bool autoValidateOwner, String validatorScope, bool ownerMaySelfValidate, bool sequential
 });
 
 
@@ -75,7 +81,7 @@ class _$ValidationPolicyCopyWithImpl<$Res>
 
 /// Create a copy of ValidationPolicy
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? workspaceId = null,Object? eventType = freezed,Object? requiredCount = null,Object? adminsMayValidate = null,Object? eligibleAdminIds = null,Object? ownerRequired = null,Object? autoValidateAdmin = null,Object? autoValidateOwner = null,Object? validatorScope = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? workspaceId = null,Object? eventType = freezed,Object? requiredCount = null,Object? adminsMayValidate = null,Object? eligibleAdminIds = null,Object? ownerRequired = null,Object? autoValidateAdmin = null,Object? autoValidateOwner = null,Object? validatorScope = null,Object? ownerMaySelfValidate = null,Object? sequential = null,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -87,7 +93,9 @@ as List<String>,ownerRequired: null == ownerRequired ? _self.ownerRequired : own
 as bool,autoValidateAdmin: null == autoValidateAdmin ? _self.autoValidateAdmin : autoValidateAdmin // ignore: cast_nullable_to_non_nullable
 as bool,autoValidateOwner: null == autoValidateOwner ? _self.autoValidateOwner : autoValidateOwner // ignore: cast_nullable_to_non_nullable
 as bool,validatorScope: null == validatorScope ? _self.validatorScope : validatorScope // ignore: cast_nullable_to_non_nullable
-as String,
+as String,ownerMaySelfValidate: null == ownerMaySelfValidate ? _self.ownerMaySelfValidate : ownerMaySelfValidate // ignore: cast_nullable_to_non_nullable
+as bool,sequential: null == sequential ? _self.sequential : sequential // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -169,10 +177,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  String workspaceId,  String? eventType,  int requiredCount,  bool adminsMayValidate,  List<String> eligibleAdminIds,  bool ownerRequired,  bool autoValidateAdmin,  bool autoValidateOwner,  String validatorScope)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  String workspaceId,  String? eventType,  int requiredCount,  bool adminsMayValidate,  List<String> eligibleAdminIds,  bool ownerRequired,  bool autoValidateAdmin,  bool autoValidateOwner,  String validatorScope,  bool ownerMaySelfValidate,  bool sequential)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ValidationPolicy() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_that.adminsMayValidate,_that.eligibleAdminIds,_that.ownerRequired,_that.autoValidateAdmin,_that.autoValidateOwner,_that.validatorScope);case _:
+return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_that.adminsMayValidate,_that.eligibleAdminIds,_that.ownerRequired,_that.autoValidateAdmin,_that.autoValidateOwner,_that.validatorScope,_that.ownerMaySelfValidate,_that.sequential);case _:
   return orElse();
 
 }
@@ -190,10 +198,10 @@ return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  String workspaceId,  String? eventType,  int requiredCount,  bool adminsMayValidate,  List<String> eligibleAdminIds,  bool ownerRequired,  bool autoValidateAdmin,  bool autoValidateOwner,  String validatorScope)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  String workspaceId,  String? eventType,  int requiredCount,  bool adminsMayValidate,  List<String> eligibleAdminIds,  bool ownerRequired,  bool autoValidateAdmin,  bool autoValidateOwner,  String validatorScope,  bool ownerMaySelfValidate,  bool sequential)  $default,) {final _that = this;
 switch (_that) {
 case _ValidationPolicy():
-return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_that.adminsMayValidate,_that.eligibleAdminIds,_that.ownerRequired,_that.autoValidateAdmin,_that.autoValidateOwner,_that.validatorScope);}
+return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_that.adminsMayValidate,_that.eligibleAdminIds,_that.ownerRequired,_that.autoValidateAdmin,_that.autoValidateOwner,_that.validatorScope,_that.ownerMaySelfValidate,_that.sequential);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -207,10 +215,10 @@ return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  String workspaceId,  String? eventType,  int requiredCount,  bool adminsMayValidate,  List<String> eligibleAdminIds,  bool ownerRequired,  bool autoValidateAdmin,  bool autoValidateOwner,  String validatorScope)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  String workspaceId,  String? eventType,  int requiredCount,  bool adminsMayValidate,  List<String> eligibleAdminIds,  bool ownerRequired,  bool autoValidateAdmin,  bool autoValidateOwner,  String validatorScope,  bool ownerMaySelfValidate,  bool sequential)?  $default,) {final _that = this;
 switch (_that) {
 case _ValidationPolicy() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_that.adminsMayValidate,_that.eligibleAdminIds,_that.ownerRequired,_that.autoValidateAdmin,_that.autoValidateOwner,_that.validatorScope);case _:
+return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_that.adminsMayValidate,_that.eligibleAdminIds,_that.ownerRequired,_that.autoValidateAdmin,_that.autoValidateOwner,_that.validatorScope,_that.ownerMaySelfValidate,_that.sequential);case _:
   return null;
 
 }
@@ -222,7 +230,7 @@ return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_
 
 
 class _ValidationPolicy extends ValidationPolicy {
-  const _ValidationPolicy({this.id, required this.workspaceId, this.eventType, required this.requiredCount, required this.adminsMayValidate, required final  List<String> eligibleAdminIds, required this.ownerRequired, this.autoValidateAdmin = false, this.autoValidateOwner = false, this.validatorScope = 'admins'}): _eligibleAdminIds = eligibleAdminIds,super._();
+  const _ValidationPolicy({this.id, required this.workspaceId, this.eventType, required this.requiredCount, required this.adminsMayValidate, required final  List<String> eligibleAdminIds, required this.ownerRequired, this.autoValidateAdmin = false, this.autoValidateOwner = false, this.validatorScope = 'admins', this.ownerMaySelfValidate = false, this.sequential = false}): _eligibleAdminIds = eligibleAdminIds,super._();
   
 
 /// Null until persisted (defaults are never stored).
@@ -255,6 +263,14 @@ class _ValidationPolicy extends ValidationPolicy {
 /// listed subset), 'listed' (owner + exactly the listed persons, any
 /// role) or 'members' (owner + every active member).
 @override@JsonKey() final  String validatorScope;
+/// #840 — the ONE exception to "nobody validates their own event",
+/// and it is the owner's alone: an admin never gets it. Off by
+/// default, so a fresh rule keeps the 0086 protocol intact.
+@override@JsonKey() final  bool ownerMaySelfValidate;
+/// #840 — ask for the validations one after another instead of as
+/// one open quorum: the second is requested once the first passed,
+/// and the trail numbers the step each decision answered.
+@override@JsonKey() final  bool sequential;
 
 /// Create a copy of ValidationPolicy
 /// with the given fields replaced by the non-null parameter values.
@@ -266,16 +282,16 @@ _$ValidationPolicyCopyWith<_ValidationPolicy> get copyWith => __$ValidationPolic
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ValidationPolicy&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.eventType, eventType) || other.eventType == eventType)&&(identical(other.requiredCount, requiredCount) || other.requiredCount == requiredCount)&&(identical(other.adminsMayValidate, adminsMayValidate) || other.adminsMayValidate == adminsMayValidate)&&const DeepCollectionEquality().equals(other._eligibleAdminIds, _eligibleAdminIds)&&(identical(other.ownerRequired, ownerRequired) || other.ownerRequired == ownerRequired)&&(identical(other.autoValidateAdmin, autoValidateAdmin) || other.autoValidateAdmin == autoValidateAdmin)&&(identical(other.autoValidateOwner, autoValidateOwner) || other.autoValidateOwner == autoValidateOwner)&&(identical(other.validatorScope, validatorScope) || other.validatorScope == validatorScope));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ValidationPolicy&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.eventType, eventType) || other.eventType == eventType)&&(identical(other.requiredCount, requiredCount) || other.requiredCount == requiredCount)&&(identical(other.adminsMayValidate, adminsMayValidate) || other.adminsMayValidate == adminsMayValidate)&&const DeepCollectionEquality().equals(other._eligibleAdminIds, _eligibleAdminIds)&&(identical(other.ownerRequired, ownerRequired) || other.ownerRequired == ownerRequired)&&(identical(other.autoValidateAdmin, autoValidateAdmin) || other.autoValidateAdmin == autoValidateAdmin)&&(identical(other.autoValidateOwner, autoValidateOwner) || other.autoValidateOwner == autoValidateOwner)&&(identical(other.validatorScope, validatorScope) || other.validatorScope == validatorScope)&&(identical(other.ownerMaySelfValidate, ownerMaySelfValidate) || other.ownerMaySelfValidate == ownerMaySelfValidate)&&(identical(other.sequential, sequential) || other.sequential == sequential));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,eventType,requiredCount,adminsMayValidate,const DeepCollectionEquality().hash(_eligibleAdminIds),ownerRequired,autoValidateAdmin,autoValidateOwner,validatorScope);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,eventType,requiredCount,adminsMayValidate,const DeepCollectionEquality().hash(_eligibleAdminIds),ownerRequired,autoValidateAdmin,autoValidateOwner,validatorScope,ownerMaySelfValidate,sequential);
 
 @override
 String toString() {
-  return 'ValidationPolicy(id: $id, workspaceId: $workspaceId, eventType: $eventType, requiredCount: $requiredCount, adminsMayValidate: $adminsMayValidate, eligibleAdminIds: $eligibleAdminIds, ownerRequired: $ownerRequired, autoValidateAdmin: $autoValidateAdmin, autoValidateOwner: $autoValidateOwner, validatorScope: $validatorScope)';
+  return 'ValidationPolicy(id: $id, workspaceId: $workspaceId, eventType: $eventType, requiredCount: $requiredCount, adminsMayValidate: $adminsMayValidate, eligibleAdminIds: $eligibleAdminIds, ownerRequired: $ownerRequired, autoValidateAdmin: $autoValidateAdmin, autoValidateOwner: $autoValidateOwner, validatorScope: $validatorScope, ownerMaySelfValidate: $ownerMaySelfValidate, sequential: $sequential)';
 }
 
 
@@ -286,7 +302,7 @@ abstract mixin class _$ValidationPolicyCopyWith<$Res> implements $ValidationPoli
   factory _$ValidationPolicyCopyWith(_ValidationPolicy value, $Res Function(_ValidationPolicy) _then) = __$ValidationPolicyCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, String workspaceId, String? eventType, int requiredCount, bool adminsMayValidate, List<String> eligibleAdminIds, bool ownerRequired, bool autoValidateAdmin, bool autoValidateOwner, String validatorScope
+ String? id, String workspaceId, String? eventType, int requiredCount, bool adminsMayValidate, List<String> eligibleAdminIds, bool ownerRequired, bool autoValidateAdmin, bool autoValidateOwner, String validatorScope, bool ownerMaySelfValidate, bool sequential
 });
 
 
@@ -303,7 +319,7 @@ class __$ValidationPolicyCopyWithImpl<$Res>
 
 /// Create a copy of ValidationPolicy
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? workspaceId = null,Object? eventType = freezed,Object? requiredCount = null,Object? adminsMayValidate = null,Object? eligibleAdminIds = null,Object? ownerRequired = null,Object? autoValidateAdmin = null,Object? autoValidateOwner = null,Object? validatorScope = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? workspaceId = null,Object? eventType = freezed,Object? requiredCount = null,Object? adminsMayValidate = null,Object? eligibleAdminIds = null,Object? ownerRequired = null,Object? autoValidateAdmin = null,Object? autoValidateOwner = null,Object? validatorScope = null,Object? ownerMaySelfValidate = null,Object? sequential = null,}) {
   return _then(_ValidationPolicy(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -315,7 +331,9 @@ as List<String>,ownerRequired: null == ownerRequired ? _self.ownerRequired : own
 as bool,autoValidateAdmin: null == autoValidateAdmin ? _self.autoValidateAdmin : autoValidateAdmin // ignore: cast_nullable_to_non_nullable
 as bool,autoValidateOwner: null == autoValidateOwner ? _self.autoValidateOwner : autoValidateOwner // ignore: cast_nullable_to_non_nullable
 as bool,validatorScope: null == validatorScope ? _self.validatorScope : validatorScope // ignore: cast_nullable_to_non_nullable
-as String,
+as String,ownerMaySelfValidate: null == ownerMaySelfValidate ? _self.ownerMaySelfValidate : ownerMaySelfValidate // ignore: cast_nullable_to_non_nullable
+as bool,sequential: null == sequential ? _self.sequential : sequential // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

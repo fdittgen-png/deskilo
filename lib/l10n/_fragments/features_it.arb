@@ -186,5 +186,7 @@
   "featureExpenseRepartitionTitle": "Spese condivise",
   "featureExpenseRepartitionDesc": "Una spesa comune (pulizie, potenziamento internet, una sedia rotta) ripartita tra i membri — quote uguali, in proporzione all'abbonamento, in proporzione all'utilizzo o una chiave per membro — con ogni quota in anteprima prima della registrazione. Le quote diventano righe della prossima fattura di utilizzo; uno storno genera note di credito. Passa dalle regole di convalida. Disattivato: nessuna ripartizione.",
   "featureSettlementFoldTitle": "Fatture raggruppate ripiegate",
-  "featureSettlementFoldDesc": "Le fatture raggruppate in una scompaiono dalle liste come pari e si annidano sotto la fattura di raggruppamento, che porta tutte le loro righe. Su una fattura raggruppata ogni operazione è disattivata; resta solo il suo PDF, timbrato con il numero in cui è stata raggruppata. Disattivato: le fatture raggruppate restano elencate accanto a quella di raggruppamento."
+  "featureSettlementFoldDesc": "Le fatture raggruppate in una scompaiono dalle liste come pari e si annidano sotto la fattura di raggruppamento, che porta tutte le loro righe. Su una fattura raggruppata ogni operazione è disattivata; resta solo il suo PDF, timbrato con il numero in cui è stata raggruppata. Disattivato: le fatture raggruppate restano elencate accanto a quella di raggruppamento.",
+  "featureValidationChainTitle": "Convalide concatenate",
+  "featureValidationChainDesc": "Una regola di convalida può chiedere le sue convalide una dopo l'altra, ogni passo richiesto quando il precedente è passato, e può consentire alla proprietà — mai a un admin — di convalidare il proprio atto. Disattivato: tutto è chiesto in una volta e nessuno convalida il proprio evento."
 }

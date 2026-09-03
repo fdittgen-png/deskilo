@@ -186,5 +186,7 @@
   "featureExpenseRepartitionTitle": "Dépenses partagées",
   "featureExpenseRepartitionDesc": "Une dépense commune (ménage, montée en débit internet, chaise cassée) répartie entre les membres — parts égales, au prorata de l'abonnement, au prorata de l'usage, ou une clé par membre — chaque part prévisualisée avant d'être comptabilisée. Les parts deviennent des lignes de la prochaine facture de consommation ; une annulation produit des avoirs. Passe par les règles de validation. Désactivé : pas de répartition.",
   "featureSettlementFoldTitle": "Factures regroupées repliées",
-  "featureSettlementFoldDesc": "Les factures regroupées en une seule disparaissent des listes et se rangent sous la facture de regroupement, qui porte toutes leurs lignes. Sur une facture regroupée, toute opération est désactivée ; il ne reste que son PDF, tamponné du numéro dans lequel elle a été regroupée. Désactivé : les factures regroupées restent listées à côté de la facture de regroupement."
+  "featureSettlementFoldDesc": "Les factures regroupées en une seule disparaissent des listes et se rangent sous la facture de regroupement, qui porte toutes leurs lignes. Sur une facture regroupée, toute opération est désactivée ; il ne reste que son PDF, tamponné du numéro dans lequel elle a été regroupée. Désactivé : les factures regroupées restent listées à côté de la facture de regroupement.",
+  "featureValidationChainTitle": "Validations enchaînées",
+  "featureValidationChainDesc": "Une règle de validation peut demander ses validations l'une après l'autre, chaque étape sollicitée une fois la précédente passée, et peut autoriser le propriétaire — jamais un admin — à valider son propre acte. Désactivé : tout est demandé d'un coup et personne ne valide son propre événement."
 }

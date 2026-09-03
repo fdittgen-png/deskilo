@@ -2386,6 +2386,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le fatture raggruppate in una scompaiono dalle liste come pari e si annidano sotto la fattura di raggruppamento, che porta tutte le loro righe. Su una fattura raggruppata ogni operazione è disattivata; resta solo il suo PDF, timbrato con il numero in cui è stata raggruppata. Disattivato: le fatture raggruppate restano elencate accanto a quella di raggruppamento.';
 
   @override
+  String get featureValidationChainTitle => 'Convalide concatenate';
+
+  @override
+  String get featureValidationChainDesc =>
+      'Una regola di convalida può chiedere le sue convalide una dopo l\'altra, ogni passo richiesto quando il precedente è passato, e può consentire alla proprietà — mai a un admin — di convalidare il proprio atto. Disattivato: tutto è chiesto in una volta e nessuno convalida il proprio evento.';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override
@@ -7053,6 +7060,34 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get validationAutoValidateDesc =>
       'La loro richiesta di eliminazione si risolve da sola e resta segnata come auto-validata.';
+
+  @override
+  String get validationNoSelfTitle => 'Nessuno convalida il proprio';
+
+  @override
+  String get validationNoSelfDesc =>
+      'Chi crea un evento non lo convalida mai. Attende qualcun altro, oppure scade senza decisione.';
+
+  @override
+  String get validationNoSelfShort => 'Mai il proprio';
+
+  @override
+  String get validationOwnerSelf => 'La proprietà può convalidare il proprio';
+
+  @override
+  String get validationOwnerSelfDesc =>
+      'L’unica eccezione, ed è della sola proprietà: un admin non convalida mai il proprio atto.';
+
+  @override
+  String get validationOwnerSelfShort =>
+      'La proprietà può convalidare il proprio';
+
+  @override
+  String get validationSequential => 'Una dopo l’altra';
+
+  @override
+  String get validationSequentialDesc =>
+      'La convalida successiva è chiesta quando la precedente è passata, e la cronologia numera ogni passo.';
 
   @override
   String get vatTitle => 'IVA';

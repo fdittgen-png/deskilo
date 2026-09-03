@@ -2367,6 +2367,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Invoices regrouped into one disappear from the lists as peers and nest under the regrouping invoice, which carries all their lines. On a regrouped invoice every operation is off; the one thing left is its PDF, stamped with the number it was regrouped in. Off: the regrouped invoices stay listed beside the regrouping one.';
 
   @override
+  String get featureValidationChainTitle => 'Chained validations';
+
+  @override
+  String get featureValidationChainDesc =>
+      'A validation rule can ask for its validations one after another, each step requested once the previous passed, and can let the owner — never an admin — validate their own act. Off: every validation is asked at once and nobody validates their own event.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override
@@ -6993,6 +7000,33 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get validationAutoValidateDesc =>
       'Their own deletion request settles itself and stays marked as auto-validated.';
+
+  @override
+  String get validationNoSelfTitle => 'Nobody validates their own';
+
+  @override
+  String get validationNoSelfDesc =>
+      'Whoever creates an event never validates it. It waits for someone else, or expires undecided.';
+
+  @override
+  String get validationNoSelfShort => 'Never one\'s own';
+
+  @override
+  String get validationOwnerSelf => 'The owner may validate their own';
+
+  @override
+  String get validationOwnerSelfDesc =>
+      'The single exception, and the owner\'s alone: an admin never validates their own act.';
+
+  @override
+  String get validationOwnerSelfShort => 'Owner may validate their own';
+
+  @override
+  String get validationSequential => 'One after another';
+
+  @override
+  String get validationSequentialDesc =>
+      'The next validation is asked for once the previous one passed, and the trail numbers each step.';
 
   @override
   String get vatTitle => 'VAT';

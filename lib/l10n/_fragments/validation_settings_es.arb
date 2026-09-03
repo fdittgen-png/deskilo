@@ -14,5 +14,13 @@
   "validationSaved": "Regla de validación guardada.",
   "validationAutoValidateOwner": "Los propietarios eliminan sin validación",
   "validationAutoValidateAdmin": "Los admins eliminan sin validación",
-  "validationAutoValidateDesc": "Su propia solicitud de eliminación se resuelve sola y queda marcada como autovalidada."
+  "validationAutoValidateDesc": "Su propia solicitud de eliminación se resuelve sola y queda marcada como autovalidada.",
+  "validationNoSelfTitle": "Nadie valida lo propio",
+  "validationNoSelfDesc": "Quien crea un evento nunca lo valida. Espera a otra persona, o caduca sin decisión.",
+  "validationNoSelfShort": "Nunca lo propio",
+  "validationOwnerSelf": "La propiedad puede validar lo propio",
+  "validationOwnerSelfDesc": "La única excepción, y es solo de la propiedad: un admin nunca valida su propio acto.",
+  "validationOwnerSelfShort": "La propiedad puede validar lo propio",
+  "validationSequential": "Una tras otra",
+  "validationSequentialDesc": "La siguiente validación se pide cuando la anterior ha pasado, y el historial numera cada paso."
 }

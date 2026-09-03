@@ -105,6 +105,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureSupplyExpensesTitle ?? 'Supplies from expenses',
       WorkspaceFeature.validationScopes =>
         l10n?.featureValidationScopesTitle ?? 'Validators by role or person',
+      WorkspaceFeature.validationChain =>
+        l10n?.featureValidationChainTitle ?? 'Chained validations',
       WorkspaceFeature.priceNegotiations =>
         l10n?.featurePriceNegotiationsTitle ?? 'Price negotiations',
       WorkspaceFeature.scheduledExpenses =>

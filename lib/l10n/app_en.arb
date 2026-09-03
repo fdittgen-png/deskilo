@@ -2596,6 +2596,14 @@
   "featureExpenseRepartitionDesc": "A shared expense (a cleaning bill, an internet upgrade, a broken chair) split over the members — equal shares, pro rata of the subscription, pro rata of usage, or a key per member — with every share previewed before it is booked. The shares land as charge lines on the next usage invoice; a reversal books credit notes. Through the validation rules. Off: no distribution.",
   "featureSettlementFoldTitle": "Regrouped invoices fold",
   "featureSettlementFoldDesc": "Invoices regrouped into one disappear from the lists as peers and nest under the regrouping invoice, which carries all their lines. On a regrouped invoice every operation is off; the one thing left is its PDF, stamped with the number it was regrouped in. Off: the regrouped invoices stay listed beside the regrouping one.",
+  "featureValidationChainTitle": "Chained validations",
+  "@featureValidationChainTitle": {
+    "description": "#840 - feature title"
+  },
+  "featureValidationChainDesc": "A validation rule can ask for its validations one after another, each step requested once the previous passed, and can let the owner — never an admin — validate their own act. Off: every validation is asked at once and nobody validates their own event.",
+  "@featureValidationChainDesc": {
+    "description": "#840 - feature description"
+  },
   "helpTitle": "Help",
   "helpContents": "Contents",
   "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",
@@ -7155,6 +7163,38 @@
   "validationAutoValidateDesc": "Their own deletion request settles itself and stays marked as auto-validated.",
   "@validationAutoValidateDesc": {
     "description": "#629 - subtitle under the auto-validation switches"
+  },
+  "validationNoSelfTitle": "Nobody validates their own",
+  "@validationNoSelfTitle": {
+    "description": "#840 - banner title on the validation rules screen"
+  },
+  "validationNoSelfDesc": "Whoever creates an event never validates it. It waits for someone else, or expires undecided.",
+  "@validationNoSelfDesc": {
+    "description": "#840 - the invariant, stated where the rules are set"
+  },
+  "validationNoSelfShort": "Never one's own",
+  "@validationNoSelfShort": {
+    "description": "#840 - summary chip when the owner exception is off"
+  },
+  "validationOwnerSelf": "The owner may validate their own",
+  "@validationOwnerSelf": {
+    "description": "#840 - switch: the owner may validate their own event"
+  },
+  "validationOwnerSelfDesc": "The single exception, and the owner's alone: an admin never validates their own act.",
+  "@validationOwnerSelfDesc": {
+    "description": "#840 - subtitle under that switch"
+  },
+  "validationOwnerSelfShort": "Owner may validate their own",
+  "@validationOwnerSelfShort": {
+    "description": "#840 - summary chip when the owner exception is on"
+  },
+  "validationSequential": "One after another",
+  "@validationSequential": {
+    "description": "#840 - switch: ask for the validations one at a time"
+  },
+  "validationSequentialDesc": "The next validation is asked for once the previous one passed, and the trail numbers each step.",
+  "@validationSequentialDesc": {
+    "description": "#840 - subtitle under that switch"
   },
   "vatTitle": "VAT",
   "@vatTitle": {

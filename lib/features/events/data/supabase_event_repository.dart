@@ -124,6 +124,9 @@ class SupabaseEventRepository implements EventRepository {
         'auto_validate_admin': policy.autoValidateAdmin,
         'auto_validate_owner': policy.autoValidateOwner,
         'validator_scope': policy.validatorScope,
+        // #840 — the owner's own-act exception, and one-at-a-time asking.
+        'owner_may_self_validate': policy.ownerMaySelfValidate,
+        'sequential': policy.sequential,
       },
       onConflict: 'workspace_id,event_type',
     );
@@ -167,5 +170,8 @@ class SupabaseEventRepository implements EventRepository {
         autoValidateAdmin: row['auto_validate_admin'] as bool? ?? false,
         autoValidateOwner: row['auto_validate_owner'] as bool? ?? false,
         validatorScope: row['validator_scope'] as String? ?? 'admins',
+        ownerMaySelfValidate:
+            row['owner_may_self_validate'] as bool? ?? false,
+        sequential: row['sequential'] as bool? ?? false,
       );
 }

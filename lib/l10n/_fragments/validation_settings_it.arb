@@ -14,5 +14,13 @@
   "validationSaved": "Regola di validazione salvata.",
   "validationAutoValidateOwner": "I proprietari eliminano senza validazione",
   "validationAutoValidateAdmin": "Gli admin eliminano senza validazione",
-  "validationAutoValidateDesc": "La loro richiesta di eliminazione si risolve da sola e resta segnata come auto-validata."
+  "validationAutoValidateDesc": "La loro richiesta di eliminazione si risolve da sola e resta segnata come auto-validata.",
+  "validationNoSelfTitle": "Nessuno convalida il proprio",
+  "validationNoSelfDesc": "Chi crea un evento non lo convalida mai. Attende qualcun altro, oppure scade senza decisione.",
+  "validationNoSelfShort": "Mai il proprio",
+  "validationOwnerSelf": "La proprietà può convalidare il proprio",
+  "validationOwnerSelfDesc": "L’unica eccezione, ed è della sola proprietà: un admin non convalida mai il proprio atto.",
+  "validationOwnerSelfShort": "La proprietà può convalidare il proprio",
+  "validationSequential": "Una dopo l’altra",
+  "validationSequentialDesc": "La convalida successiva è chiesta quando la precedente è passata, e la cronologia numera ogni passo."
 }

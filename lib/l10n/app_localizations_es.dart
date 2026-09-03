@@ -2385,6 +2385,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las facturas reagrupadas en una desaparecen de las listas como iguales y se anidan bajo la factura de reagrupación, que lleva todas sus líneas. En una factura reagrupada toda operación está desactivada; solo queda su PDF, sellado con el número en que se reagrupó. Desactivado: las facturas reagrupadas siguen listadas junto a la de reagrupación.';
 
   @override
+  String get featureValidationChainTitle => 'Validaciones encadenadas';
+
+  @override
+  String get featureValidationChainDesc =>
+      'Una regla de validación puede pedir sus validaciones una tras otra, cada paso solicitado cuando el anterior ha pasado, y puede permitir que la propiedad —nunca un admin— valide su propio acto. Desactivado: todo se pide a la vez y nadie valida su propio evento.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override
@@ -7041,6 +7048,33 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get validationAutoValidateDesc =>
       'Su propia solicitud de eliminación se resuelve sola y queda marcada como autovalidada.';
+
+  @override
+  String get validationNoSelfTitle => 'Nadie valida lo propio';
+
+  @override
+  String get validationNoSelfDesc =>
+      'Quien crea un evento nunca lo valida. Espera a otra persona, o caduca sin decisión.';
+
+  @override
+  String get validationNoSelfShort => 'Nunca lo propio';
+
+  @override
+  String get validationOwnerSelf => 'La propiedad puede validar lo propio';
+
+  @override
+  String get validationOwnerSelfDesc =>
+      'La única excepción, y es solo de la propiedad: un admin nunca valida su propio acto.';
+
+  @override
+  String get validationOwnerSelfShort => 'La propiedad puede validar lo propio';
+
+  @override
+  String get validationSequential => 'Una tras otra';
+
+  @override
+  String get validationSequentialDesc =>
+      'La siguiente validación se pide cuando la anterior ha pasado, y el historial numera cada paso.';
 
   @override
   String get vatTitle => 'IVA';
