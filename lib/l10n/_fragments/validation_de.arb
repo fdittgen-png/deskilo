@@ -7,5 +7,6 @@
   "validationTrailTitle": "Freigabeverlauf",
   "validationTrailNone": "Noch keine Entscheidung.",
   "validationTrailStep": "Stufe {order}",
-  "validationTrailAwaiting": "{count, plural, =1{Noch eine Freigabe ausstehend.} other{Noch {count} Freigaben ausstehend.}}"
+  "validationTrailAwaiting": "{count, plural, =1{Noch eine Freigabe ausstehend.} other{Noch {count} Freigaben ausstehend.}}",
+  "eventValidationStage": "Freigabe {stage} von {required} angefragt"
 }

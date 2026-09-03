@@ -4052,6 +4052,7 @@
   "validationTrailNone": "Nessuna decisione finora.",
   "validationTrailStep": "Passo {order}",
   "validationTrailAwaiting": "{count, plural, =1{Manca 1 convalida.} other{Mancano {count} convalide.}}",
+  "eventValidationStage": "Convalida {stage} su {required} richiesta",
   "validationTitle": "Regole di validazione",
   "validationDefaultPolicy": "Regola predefinita",
   "validationInherited": "Eredita la predefinita",

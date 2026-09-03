@@ -7236,6 +7236,18 @@
       }
     }
   },
+  "eventValidationStage": "Validation {stage} of {required} requested",
+  "@eventValidationStage": {
+    "description": "#848 - which step of a chained rule is open",
+    "placeholders": {
+      "stage": {
+        "type": "int"
+      },
+      "required": {
+        "type": "int"
+      }
+    }
+  },
   "validationTitle": "Validation rules",
   "@validationTitle": {
     "description": "App-bar title of the owner validation-policy editor and its settings tile (#131)"
