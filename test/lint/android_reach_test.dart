@@ -12,7 +12,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 /// Permissions whose mere presence implies `required="true"` hardware.
 const _implied = {
+  // `.any` is the one the camera plugin injects, and the one that was
+  // actually shipping as required=true. The plain and autofocus variants
+  // are declared beside it because a plugin bump can start injecting
+  // either at any time.
   'android.permission.CAMERA': [
+    'android.hardware.camera.any',
     'android.hardware.camera',
     'android.hardware.camera.autofocus',
   ],
@@ -28,13 +33,21 @@ void main() {
     for (final entry in _implied.entries) {
       if (!manifest.contains('android:name="${entry.key}"')) continue;
       for (final feature in entry.value) {
-        expect(
-          manifest,
-          contains('<uses-feature android:name="$feature" '
-              'android:required="false" />'),
-          reason: '${entry.key} makes Play require $feature. Declare it '
-              'optional or the app disappears for devices without it.',
+        final declared = RegExp(
+          '<uses-feature\\s+android:name="${RegExp.escape(feature)}"'
+          '\\s+android:required="false"',
         );
+        expect(declared.hasMatch(manifest), isTrue,
+            reason: '${entry.key} makes Play require $feature. Declare it '
+                'optional or the app disappears for devices without it.');
+        // The merger ORs android:required, so a library declaring it true
+        // beats an app declaring it false. Only tools:replace wins.
+        final block = manifest.substring(
+            manifest.indexOf('android:name="$feature"'));
+        expect(block.substring(0, block.indexOf('/>')),
+            contains('tools:replace="android:required"'),
+            reason: 'without tools:replace the plugin\'s required="true" '
+                'survives the merge and $feature still filters devices');
       }
     }
   });

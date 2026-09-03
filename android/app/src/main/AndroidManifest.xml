@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- #436: without this, Android 13+ silently suppresses EVERY
          notification — reminders, the badge mirror, push banners — and
@@ -11,12 +12,32 @@
          app's own track targets Chrome OS. Declare both as optional and
          let the scanner hide itself instead. -->
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
-    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+    <!-- android.hardware.camera.any is the one the camera plugin actually
+         injects, and it injects it WITHOUT android:required, which means
+         required="true". Naming the other two was not enough: the merger
+         ORs this attribute, so a library's true beats an app's false
+         unless the app replaces it outright. Verified by decoding the
+         shipped v1.0.0 manifest, which carried
+         `android.hardware.camera.any required=true`. -->
+    <uses-feature
+        android:name="android.hardware.camera.any"
+        android:required="false"
+        tools:replace="android:required" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false"
+        tools:replace="android:required" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false"
+        tools:replace="android:required" />
     <!-- Kiosk RFID badges (0046): read NFC tag UIDs. Optional hardware —
          phones without NFC still install; the kiosk hides the tap path. -->
     <uses-permission android:name="android.permission.NFC" />
-    <uses-feature android:name="android.hardware.nfc" android:required="false" />
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="false"
+        tools:replace="android:required" />
     <application
         android:label="DesKilo"
         android:name="${applicationName}"

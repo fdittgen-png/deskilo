@@ -142,6 +142,28 @@ jobs:
           print('Reproducible across repeated builds.')
           PY
 
+      # A required feature is a silent store filter, and the app manifest
+      # is not the last word: the merger ORs android:required, so a
+      # plugin can reinstate one. The only honest check is the BUILT
+      # artifact. v1.0.0 shipped android.hardware.camera.any as required
+      # and nobody noticed until a tester could not install.
+      - name: Refuse to publish an APK that filters devices
+        run: |
+          set -euo pipefail
+          AAPT=$(ls "$ANDROID_SDK_ROOT"/build-tools/*/aapt2 | sort -V | tail -1)
+          APK="$RUNNER_TEMP/first/app-arm64-v8a-release.apk"
+          "$AAPT" dump badging "$APK" | grep -E "^uses-feature" > "$RUNNER_TEMP/feat.txt" || true
+          echo "--- features in the built APK"
+          cat "$RUNNER_TEMP/feat.txt"
+          # aapt2 prints optional ones as `uses-feature-not-required`.
+          if grep -qE "^uses-feature:" "$RUNNER_TEMP/feat.txt"; then
+            echo "::error::the built APK REQUIRES hardware, which removes it"
+            echo "::error::from the store for every device without that hardware."
+            grep -E "^uses-feature:" "$RUNNER_TEMP/feat.txt" >&2
+            exit 1
+          fi
+          echo "No required hardware feature: the listing reaches every device."
+
       - name: Name the APKs the way the recipe asks for them
         id: assets
         run: |
