@@ -192,5 +192,7 @@
   "featureRichMessageRefsTitle": "Referencias en los mensajes",
   "featureRichMessageRefsDesc": "Un mensaje puede apuntar a un aviso, al historial de validación que hay detrás y a una factura, un pago o un reembolso: cada referencia es un enlace que abre lo que nombra. Cada selector filtra mientras escribes. Desactivado: solo se pueden referenciar reservas y espacios.",
   "featureCalendarValidationsTitle": "Validaciones en el calendario",
-  "featureCalendarValidationsDesc": "Cada decisión tomada sobre un evento aparece en el calendario en el momento en que se tomó, no en el del evento: quién validó o rechazó qué, y cuándo. Al tocarla se abre su historial. Desactivado: el calendario no lleva decisiones."
+  "featureCalendarValidationsDesc": "Cada decisión tomada sobre un evento aparece en el calendario en el momento en que se tomó, no en el del evento: quién validó o rechazó qué, y cuándo. Al tocarla se abre su historial. Desactivado: el calendario no lleva decisiones.",
+  "featureUsageRecordsTitle": "Registros de uso",
+  "featureUsageRecordsDesc": "Cada reserva contada deja un registro: la ventana reservada, el tiempo realmente presente y lo que se factura. Una reserva a la que nadie llegó se factura entera. Quien sale antes puede pedir que el tiempo no usado deje de facturarse, y lo decide otra persona, nunca quien lo pide. Desactivado: sin registros ni corrección."
 }

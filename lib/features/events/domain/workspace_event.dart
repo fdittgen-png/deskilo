@@ -60,7 +60,13 @@ enum EventType {
   /// Cancelling the outstanding remainder of a PARTIALLY PAID invoice
   /// (0100, #504): confirm writes the remainder off and archives the
   /// invoice; reject keeps it open and owed. Another person decides.
-  invoiceWriteoff('invoice_writeoff');
+  invoiceWriteoff('invoice_writeoff'),
+
+  /// #833 — the member asking for an early departure to stop billing,
+  /// and an admin removing a usage record. Both are decided by somebody
+  /// other than the person who asked.
+  usageCorrection('usage_correction'),
+  usageRecordDelete('usage_record_delete');
 
   const EventType([String? dbName]) : _dbName = dbName;
 

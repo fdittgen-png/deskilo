@@ -106,5 +106,9 @@
       }
     }
   },
-  "eventTypeExpenseRepartition": "Gemeinsame Ausgabe"
+  "eventTypeExpenseRepartition": "Gemeinsame Ausgabe",
+  "eventTypeUsageCorrection": "Früher gegangen",
+  "eventTypeUsageRecordDelete": "Nutzungssatz entfernen",
+  "eventUsageCorrectionLine": "{actor} bittet um {to} statt {from}",
+  "eventUsageRecordDeleteLine": "{actor} möchte einen Nutzungssatz entfernen ({space})"
 }

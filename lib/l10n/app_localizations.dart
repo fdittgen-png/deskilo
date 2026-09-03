@@ -3463,6 +3463,30 @@ abstract class AppLocalizations {
   /// **'Shared expense'**
   String get eventTypeExpenseRepartition;
 
+  /// #833 - event type: an accepted early departure
+  ///
+  /// In en, this message translates to:
+  /// **'Early departure'**
+  String get eventTypeUsageCorrection;
+
+  /// #833 - event type: removing a usage record
+  ///
+  /// In en, this message translates to:
+  /// **'Usage record removal'**
+  String get eventTypeUsageRecordDelete;
+
+  /// #833 - feed line for an early-departure request
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} asks to be billed {to} instead of {from}'**
+  String eventUsageCorrectionLine(String actor, String from, String to);
+
+  /// #833 - feed line for a record removal
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} asks to remove a usage record ({space})'**
+  String eventUsageRecordDeleteLine(String actor, String space);
+
   /// App-bar title of the owner feature-management screen and its settings tile
   ///
   /// In en, this message translates to:
@@ -4260,6 +4284,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Every decision taken on an event appears on the calendar at the moment it was taken, not at the moment of the event: who validated or refused what, and when. Tapping one opens its trail. Off: the calendar carries no decisions.'**
   String get featureCalendarValidationsDesc;
+
+  /// #833 - feature title
+  ///
+  /// In en, this message translates to:
+  /// **'Usage records'**
+  String get featureUsageRecordsTitle;
+
+  /// #833 - feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Every counted booking leaves a record: the window booked, the time actually present, and what of it bills. A booking nobody checked into bills in full. A member who left early can ask for the unused time to stop billing, and somebody else decides it — never them. Off: no records and no correction.'**
+  String get featureUsageRecordsDesc;
 
   /// No description provided for @helpTitle.
   ///
@@ -10645,6 +10681,12 @@ abstract class AppLocalizations {
   /// **'years'**
   String get scheduleUnitYears;
 
+  /// #833 - the Money tab face showing usage records
+  ///
+  /// In en, this message translates to:
+  /// **'Usage'**
+  String get moneyFaceUsage;
+
   /// Booking sheet: grid duration slider label (#574)
   ///
   /// In en, this message translates to:
@@ -12306,6 +12348,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dark'**
   String get themeDark;
+
+  /// #833 - title of the usage face
+  ///
+  /// In en, this message translates to:
+  /// **'Usage'**
+  String get usageTitle;
+
+  /// #833 - no usage records this month
+  ///
+  /// In en, this message translates to:
+  /// **'No usage this month.'**
+  String get usageEmpty;
+
+  /// #833 - the reserved window
+  ///
+  /// In en, this message translates to:
+  /// **'Booked'**
+  String get usageBooked;
+
+  /// #833 - time actually checked in
+  ///
+  /// In en, this message translates to:
+  /// **'Present'**
+  String get usagePresent;
+
+  /// #833 - the time that bills
+  ///
+  /// In en, this message translates to:
+  /// **'Billed'**
+  String get usageBilled;
+
+  /// #833 - nobody checked in
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody checked in — the booking bills in full'**
+  String get usageNoShow;
+
+  /// #833 - checked out before the booking ended
+  ///
+  /// In en, this message translates to:
+  /// **'Left early'**
+  String get usageLeftEarly;
+
+  /// #833 - an accepted early-departure correction
+  ///
+  /// In en, this message translates to:
+  /// **'Corrected'**
+  String get usageCorrected;
+
+  /// #833 - what the billed time was before a correction
+  ///
+  /// In en, this message translates to:
+  /// **'was {before}'**
+  String usageWas(String before);
+
+  /// #833 - action asking for the actual time to bill
+  ///
+  /// In en, this message translates to:
+  /// **'Bill the time I was here'**
+  String get usageAsk;
+
+  /// #833 - what asking does and who decides
+  ///
+  /// In en, this message translates to:
+  /// **'You booked {booked} and were here {present}. Ask for the {saved} you did not use to stop billing. Somebody else decides it — never you.'**
+  String usageAskExplain(String booked, String present, String saved);
+
+  /// #833 - optional reason on the request
+  ///
+  /// In en, this message translates to:
+  /// **'Why (optional)'**
+  String get usageReasonLabel;
+
+  /// #833 - submit the request
+  ///
+  /// In en, this message translates to:
+  /// **'Ask'**
+  String get usageAskSubmit;
+
+  /// #833 - confirmation snack
+  ///
+  /// In en, this message translates to:
+  /// **'Asked. Somebody else decides it.'**
+  String get usageAskSubmitted;
+
+  /// #833 - admin action removing a record
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this record'**
+  String get usageDelete;
+
+  /// #833 - confirmation snack for a removal
+  ///
+  /// In en, this message translates to:
+  /// **'Removal requested.'**
+  String get usageDeleteSubmitted;
+
+  /// #833 - member filter label
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get usageMember;
+
+  /// #833 - member filter: no narrowing
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone'**
+  String get usageMemberAll;
 
   /// Quorum progress on a pending event (#130): accepts so far / accepts required
   ///

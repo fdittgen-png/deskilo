@@ -106,5 +106,9 @@
       }
     }
   },
-  "eventTypeExpenseRepartition": "Dépense partagée"
+  "eventTypeExpenseRepartition": "Dépense partagée",
+  "eventTypeUsageCorrection": "Départ anticipé",
+  "eventTypeUsageRecordDelete": "Suppression d'un relevé d'usage",
+  "eventUsageCorrectionLine": "{actor} demande à être facturé {to} au lieu de {from}",
+  "eventUsageRecordDeleteLine": "{actor} demande la suppression d'un relevé d'usage ({space})"
 }

@@ -1953,6 +1953,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eventTypeExpenseRepartition => 'Dépense partagée';
 
   @override
+  String get eventTypeUsageCorrection => 'Départ anticipé';
+
+  @override
+  String get eventTypeUsageRecordDelete => 'Suppression d\'un relevé d\'usage';
+
+  @override
+  String eventUsageCorrectionLine(String actor, String from, String to) {
+    return '$actor demande à être facturé $to au lieu de $from';
+  }
+
+  @override
+  String eventUsageRecordDeleteLine(String actor, String space) {
+    return '$actor demande la suppression d\'un relevé d\'usage ($space)';
+  }
+
+  @override
   String get featuresTitle => 'Fonctionnalités';
 
   @override
@@ -2428,6 +2444,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureCalendarValidationsDesc =>
       'Chaque décision prise sur un événement apparaît dans le calendrier au moment où elle a été prise, et non au moment de l\'événement : qui a validé ou refusé quoi, et quand. Un appui ouvre son historique. Désactivé : le calendrier ne porte aucune décision.';
+
+  @override
+  String get featureUsageRecordsTitle => 'Relevés d\'usage';
+
+  @override
+  String get featureUsageRecordsDesc =>
+      'Chaque réservation comptée laisse un relevé : la fenêtre réservée, le temps réellement passé, et ce qui est facturé. Une réservation où personne n\'est venu est facturée en entier. Un membre parti plus tôt peut demander que le temps non utilisé cesse d\'être facturé, et quelqu\'un d\'autre décide — jamais lui. Désactivé : aucun relevé, aucune correction.';
 
   @override
   String get helpTitle => 'Aide';
@@ -6115,6 +6138,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get scheduleUnitYears => 'ans';
 
   @override
+  String get moneyFaceUsage => 'Usage';
+
+  @override
   String get planDurationLabel => 'Durée';
 
   @override
@@ -7077,6 +7103,65 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get themeDark => 'Sombre';
+
+  @override
+  String get usageTitle => 'Usage';
+
+  @override
+  String get usageEmpty => 'Aucun usage ce mois-ci.';
+
+  @override
+  String get usageBooked => 'Réservé';
+
+  @override
+  String get usagePresent => 'Présent';
+
+  @override
+  String get usageBilled => 'Facturé';
+
+  @override
+  String get usageNoShow =>
+      'Personne n\'est arrivé — la réservation est facturée en entier';
+
+  @override
+  String get usageLeftEarly => 'Parti plus tôt';
+
+  @override
+  String get usageCorrected => 'Corrigé';
+
+  @override
+  String usageWas(String before) {
+    return 'était $before';
+  }
+
+  @override
+  String get usageAsk => 'Facturer le temps où j\'étais là';
+
+  @override
+  String usageAskExplain(String booked, String present, String saved) {
+    return 'Vous avez réservé $booked et vous êtes resté $present. Demandez que les $saved non utilisées cessent d\'être facturées. Quelqu\'un d\'autre décide — jamais vous.';
+  }
+
+  @override
+  String get usageReasonLabel => 'Pourquoi (facultatif)';
+
+  @override
+  String get usageAskSubmit => 'Demander';
+
+  @override
+  String get usageAskSubmitted => 'Demandé. Quelqu\'un d\'autre décide.';
+
+  @override
+  String get usageDelete => 'Supprimer ce relevé';
+
+  @override
+  String get usageDeleteSubmitted => 'Suppression demandée.';
+
+  @override
+  String get usageMember => 'Membre';
+
+  @override
+  String get usageMemberAll => 'Tout le monde';
 
   @override
   String eventValidations(int current, int required) {

@@ -849,6 +849,14 @@ L'**assistant de clôture** (option *Assistant de facturation* ; la baguette dan
 
 **Répartir une dépense** (option *Dépenses partagées* ; l'icône de partage dans l'en-tête Factures) prend un coût commun — ménage, montée en débit internet, chaise cassée — et le répartit entre les membres : parts **égales**, **au prorata de l'abonnement**, **au prorata de l'usage** (demi-journées utilisées sur la période) ou une **clé personnalisée** saisie par membre. Chaque part est prévisualisée, les centimes tombent juste, et rien n'est comptabilisé avant votre confirmation. Les parts sont comptabilisées comme lignes d'ajustement sur la période choisie et apparaissent donc sur la **prochaine facture de consommation** de chaque membre (la passe de fin de mois de l'assistant, §11g). Basculez **Annulation** pour rendre de l'argent : la même répartition comptabilise des **crédits**, qui se compensent avec les charges du mois et, s'ils les dépassent, produisent un **avoir** que l'espace rembourse (§11). Une répartition est un événement à part entière : avec une règle de validation sur *Dépense partagée* elle attend le quorum et se comptabilise une fois confirmée ; sans règle, la décision de l'émetteur vaut. L'historique sous le formulaire montre chaque répartition et son état.
 
+### 11i. Usage : ce que chaque réservation a réellement coûté
+
+**Usage** (option *Relevés d'usage* ; une face de l'onglet Finances) montre les réservations comptées du mois, une carte chacune, avec trois nombres délibérément distincts : la fenêtre **réservée**, le temps où vous étiez réellement **présent**, et ce qui est **facturé**. La réservation est l'engagement ; la présence est le fait.
+
+Deux règles en découlent, et les cartes les disent clairement. Une réservation **où personne n'est venu est facturée en entier** — ne pas venir n'est pas une remise. Et une réservation que vous avez **quittée plus tôt** est facturée en entier elle aussi, jusqu'à ce que quelqu'un d'autre en décide autrement : la carte propose **Facturer le temps où j'étais là**, qui demande que le temps non utilisé cesse de compter. Vous ne décidez jamais vous-même de cette demande ; elle part vers qui votre règle de validation *Départ anticipé* désigne, et s'il n'y a pas de règle elle s'applique aussitôt. Acceptée, la fin de la réservation elle-même se déplace au moment de votre départ : le relevé, le plafond de demi-journées et la facture suivent — et la carte continue d'indiquer ce que le temps facturé **était**, pour que les deux nombres restent lisibles côte à côte.
+
+Vous voyez vos propres relevés ; qui peut voir l'argent de l'espace les voit tous. Un admin ou le propriétaire peut **supprimer** un relevé, et lorsqu'une règle *Suppression d'un relevé d'usage* est configurée, c'est le membre concerné qui la valide.
+
 ## 12. Réglages et profil
 
 Votre écran personnel, de haut en bas :

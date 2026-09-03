@@ -6,6 +6,7 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../event_labels.dart';
 import '../widgets/policy_editor_sheet.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -41,6 +42,10 @@ const _cardTypes = [
   EventType.expenseSchedule,
   // #828 — a shared expense split over the members.
   EventType.expenseRepartition,
+  // #833 — an early departure the member asks to stop paying for,
+  // and an admin clearing somebody's usage record.
+  EventType.usageCorrection,
+  EventType.usageRecordDelete,
 ];
 
 /// A pickable validator: an active non-owner admin (owners always may
@@ -54,34 +59,6 @@ const _cardTypes = [
 class ValidationSettingsScreen extends ConsumerWidget {
   const ValidationSettingsScreen({super.key});
 
-  String _typeLabel(AppLocalizations? l10n, EventType type) {
-    return switch (type) {
-      EventType.reservation => l10n?.eventTypeReservation ?? 'Reservation',
-      EventType.payment => l10n?.eventTypePayment ?? 'Payment',
-      EventType.expense => l10n?.eventTypeExpense ?? 'Expense',
-      EventType.adjustment => l10n?.eventTypeAdjustment ?? 'Adjustment',
-      EventType.serviceCharge => l10n?.eventTypeServiceCharge ?? 'Service',
-      EventType.quota => l10n?.eventTypeQuota ?? 'Extra half-days',
-      EventType.reservationDelete =>
-        l10n?.eventTypeReservationDelete ?? 'Booking deletion',
-      EventType.invoiceWriteoff =>
-        l10n?.eventTypeInvoiceWriteoff ?? 'Outstanding write-off',
-      EventType.invoiceReminder =>
-        l10n?.eventTypeInvoiceReminder ?? 'Payment reminder',
-      EventType.priceNegotiation =>
-        l10n?.eventTypePriceNegotiation ?? 'Price negotiation',
-      EventType.expenseSchedule =>
-        l10n?.eventTypeExpenseSchedule ?? 'Scheduled expense',
-      EventType.expenseRepartition =>
-        l10n?.eventTypeExpenseRepartition ?? 'Shared expense',
-      EventType.roleChange => l10n?.eventTypeRoleChange ?? 'Role change',
-      EventType.memberJoin => l10n?.eventTypeMemberJoin ?? 'New member',
-      EventType.spaceReservation =>
-        l10n?.eventTypeSpaceReservation ?? 'Whole-space reservations',
-      EventType.invoicePayment =>
-        l10n?.eventTypeInvoicePayment ?? 'Invoice payment',
-    };
-  }
 
   /// "2 required · All admins · Owner must always validate" — the
   /// effective rule at a glance.
@@ -255,7 +232,7 @@ class ValidationSettingsScreen extends ConsumerWidget {
               ),
               for (final type in _cardTypes)
                 _PolicyCard(
-                  label: _typeLabel(l10n, type),
+                  label: eventTypeLabel(l10n, type),
                   effective: policies.isEmpty
                       ? ValidationPolicy.defaults(workspaceId, type.dbName)
                       : policyFor(type.dbName, policies),
@@ -266,7 +243,7 @@ class ValidationSettingsScreen extends ConsumerWidget {
                     context,
                     ref,
                     eventType: type.dbName,
-                    label: _typeLabel(l10n, type),
+                    label: eventTypeLabel(l10n, type),
                   ),
                 ),
             ],

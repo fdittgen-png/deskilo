@@ -2295,6 +2295,41 @@
     }
   },
   "eventTypeExpenseRepartition": "Shared expense",
+  "eventTypeUsageCorrection": "Early departure",
+  "@eventTypeUsageCorrection": {
+    "description": "#833 - event type: an accepted early departure"
+  },
+  "eventTypeUsageRecordDelete": "Usage record removal",
+  "@eventTypeUsageRecordDelete": {
+    "description": "#833 - event type: removing a usage record"
+  },
+  "eventUsageCorrectionLine": "{actor} asks to be billed {to} instead of {from}",
+  "@eventUsageCorrectionLine": {
+    "description": "#833 - feed line for an early-departure request",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "eventUsageRecordDeleteLine": "{actor} asks to remove a usage record ({space})",
+  "@eventUsageRecordDeleteLine": {
+    "description": "#833 - feed line for a record removal",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "space": {
+        "type": "String"
+      }
+    }
+  },
   "featuresTitle": "Features",
   "@featuresTitle": {
     "description": "App-bar title of the owner feature-management screen and its settings tile"
@@ -2649,6 +2684,14 @@
   },
   "@featureCalendarValidationsDesc": {
     "description": "#843 - feature description"
+  },
+  "featureUsageRecordsTitle": "Usage records",
+  "@featureUsageRecordsTitle": {
+    "description": "#833 - feature title"
+  },
+  "featureUsageRecordsDesc": "Every counted booking leaves a record: the window booked, the time actually present, and what of it bills. A booking nobody checked into bills in full. A member who left early can ask for the unused time to stop billing, and somebody else decides it — never them. Off: no records and no correction.",
+  "@featureUsageRecordsDesc": {
+    "description": "#833 - feature description"
   },
   "helpTitle": "Help",
   "helpContents": "Contents",
@@ -6122,6 +6165,10 @@
   "scheduleUnitWeeks": "weeks",
   "scheduleUnitMonths": "months",
   "scheduleUnitYears": "years",
+  "moneyFaceUsage": "Usage",
+  "@moneyFaceUsage": {
+    "description": "#833 - the Money tab face showing usage records"
+  },
   "planDurationLabel": "Duration",
   "@planDurationLabel": {
     "description": "Booking sheet: grid duration slider label (#574)"
@@ -7169,6 +7216,94 @@
   "themeDark": "Dark",
   "@themeDark": {
     "description": "Theme option forcing the dark appearance"
+  },
+  "usageTitle": "Usage",
+  "@usageTitle": {
+    "description": "#833 - title of the usage face"
+  },
+  "usageEmpty": "No usage this month.",
+  "@usageEmpty": {
+    "description": "#833 - no usage records this month"
+  },
+  "usageBooked": "Booked",
+  "@usageBooked": {
+    "description": "#833 - the reserved window"
+  },
+  "usagePresent": "Present",
+  "@usagePresent": {
+    "description": "#833 - time actually checked in"
+  },
+  "usageBilled": "Billed",
+  "@usageBilled": {
+    "description": "#833 - the time that bills"
+  },
+  "usageNoShow": "Nobody checked in — the booking bills in full",
+  "@usageNoShow": {
+    "description": "#833 - nobody checked in"
+  },
+  "usageLeftEarly": "Left early",
+  "@usageLeftEarly": {
+    "description": "#833 - checked out before the booking ended"
+  },
+  "usageCorrected": "Corrected",
+  "@usageCorrected": {
+    "description": "#833 - an accepted early-departure correction"
+  },
+  "usageWas": "was {before}",
+  "@usageWas": {
+    "description": "#833 - what the billed time was before a correction",
+    "placeholders": {
+      "before": {
+        "type": "String"
+      }
+    }
+  },
+  "usageAsk": "Bill the time I was here",
+  "@usageAsk": {
+    "description": "#833 - action asking for the actual time to bill"
+  },
+  "usageAskExplain": "You booked {booked} and were here {present}. Ask for the {saved} you did not use to stop billing. Somebody else decides it — never you.",
+  "@usageAskExplain": {
+    "description": "#833 - what asking does and who decides",
+    "placeholders": {
+      "booked": {
+        "type": "String"
+      },
+      "present": {
+        "type": "String"
+      },
+      "saved": {
+        "type": "String"
+      }
+    }
+  },
+  "usageReasonLabel": "Why (optional)",
+  "@usageReasonLabel": {
+    "description": "#833 - optional reason on the request"
+  },
+  "usageAskSubmit": "Ask",
+  "@usageAskSubmit": {
+    "description": "#833 - submit the request"
+  },
+  "usageAskSubmitted": "Asked. Somebody else decides it.",
+  "@usageAskSubmitted": {
+    "description": "#833 - confirmation snack"
+  },
+  "usageDelete": "Remove this record",
+  "@usageDelete": {
+    "description": "#833 - admin action removing a record"
+  },
+  "usageDeleteSubmitted": "Removal requested.",
+  "@usageDeleteSubmitted": {
+    "description": "#833 - confirmation snack for a removal"
+  },
+  "usageMember": "Member",
+  "@usageMember": {
+    "description": "#833 - member filter label"
+  },
+  "usageMemberAll": "Everyone",
+  "@usageMemberAll": {
+    "description": "#833 - member filter: no narrowing"
   },
   "eventValidations": "{current}/{required} validations",
   "@eventValidations": {

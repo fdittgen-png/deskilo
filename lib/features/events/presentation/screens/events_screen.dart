@@ -29,6 +29,7 @@ import '../../providers/event_providers.dart';
 import '../../providers/notification_filter_providers.dart';
 import '../event_labels.dart';
 import '../feed_notes.dart';
+import '../../../money/domain/usage_record.dart';
 import '../widgets/validation_trail.dart';
 import '../widgets/note_row.dart';
 
@@ -223,6 +224,21 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
             ].join(' · '),
           ) ??
           '$actor proposes a deal for ${names[event.subjectMemberId] ?? ''}',
+      // #833 — an early departure asked for, and an admin clearing a
+      // record. Both name the numbers, because the numbers are the ask.
+      (EventType.usageCorrection, _) => l10n?.eventUsageCorrectionLine(
+            actor,
+            usageDuration(
+                (event.payload['from_minutes'] as num?)?.toInt() ?? 0),
+            usageDuration(
+                (event.payload['to_minutes'] as num?)?.toInt() ?? 0),
+          ) ??
+          '$actor asks to be billed less',
+      (EventType.usageRecordDelete, _) => l10n?.eventUsageRecordDeleteLine(
+            actor,
+            event.payload['space_label'] as String? ?? '',
+          ) ??
+          '$actor asks to remove a usage record',
       _ => '${_typeLabel(l10n, event.type)} · ${event.action.name}',
     };
     // Service charges name no actor in the title, so always say whose bill
@@ -330,6 +346,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.priceNegotiation => Icons.handshake_outlined,
       EventType.expenseSchedule => Icons.event_repeat_outlined,
       EventType.expenseRepartition => Icons.call_split,
+    EventType.usageCorrection => Icons.timelapse_outlined,
+    EventType.usageRecordDelete => Icons.playlist_remove_outlined,
     };
   }
 

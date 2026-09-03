@@ -354,5 +354,13 @@
   },
   "@featureCalendarValidationsDesc": {
     "description": "#843 - feature description"
+  },
+  "featureUsageRecordsTitle": "Usage records",
+  "@featureUsageRecordsTitle": {
+    "description": "#833 - feature title"
+  },
+  "featureUsageRecordsDesc": "Every counted booking leaves a record: the window booked, the time actually present, and what of it bills. A booking nobody checked into bills in full. A member who left early can ask for the unused time to stop billing, and somebody else decides it — never them. Off: no records and no correction.",
+  "@featureUsageRecordsDesc": {
+    "description": "#833 - feature description"
   }
 }

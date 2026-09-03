@@ -1,0 +1,91 @@
+{
+  "@@locale": "en",
+  "usageTitle": "Usage",
+  "@usageTitle": {
+    "description": "#833 - title of the usage face"
+  },
+  "usageEmpty": "No usage this month.",
+  "@usageEmpty": {
+    "description": "#833 - no usage records this month"
+  },
+  "usageBooked": "Booked",
+  "@usageBooked": {
+    "description": "#833 - the reserved window"
+  },
+  "usagePresent": "Present",
+  "@usagePresent": {
+    "description": "#833 - time actually checked in"
+  },
+  "usageBilled": "Billed",
+  "@usageBilled": {
+    "description": "#833 - the time that bills"
+  },
+  "usageNoShow": "Nobody checked in — the booking bills in full",
+  "@usageNoShow": {
+    "description": "#833 - nobody checked in"
+  },
+  "usageLeftEarly": "Left early",
+  "@usageLeftEarly": {
+    "description": "#833 - checked out before the booking ended"
+  },
+  "usageCorrected": "Corrected",
+  "@usageCorrected": {
+    "description": "#833 - an accepted early-departure correction"
+  },
+  "usageWas": "was {before}",
+  "@usageWas": {
+    "description": "#833 - what the billed time was before a correction",
+    "placeholders": {
+      "before": {
+        "type": "String"
+      }
+    }
+  },
+  "usageAsk": "Bill the time I was here",
+  "@usageAsk": {
+    "description": "#833 - action asking for the actual time to bill"
+  },
+  "usageAskExplain": "You booked {booked} and were here {present}. Ask for the {saved} you did not use to stop billing. Somebody else decides it — never you.",
+  "@usageAskExplain": {
+    "description": "#833 - what asking does and who decides",
+    "placeholders": {
+      "booked": {
+        "type": "String"
+      },
+      "present": {
+        "type": "String"
+      },
+      "saved": {
+        "type": "String"
+      }
+    }
+  },
+  "usageReasonLabel": "Why (optional)",
+  "@usageReasonLabel": {
+    "description": "#833 - optional reason on the request"
+  },
+  "usageAskSubmit": "Ask",
+  "@usageAskSubmit": {
+    "description": "#833 - submit the request"
+  },
+  "usageAskSubmitted": "Asked. Somebody else decides it.",
+  "@usageAskSubmitted": {
+    "description": "#833 - confirmation snack"
+  },
+  "usageDelete": "Remove this record",
+  "@usageDelete": {
+    "description": "#833 - admin action removing a record"
+  },
+  "usageDeleteSubmitted": "Removal requested.",
+  "@usageDeleteSubmitted": {
+    "description": "#833 - confirmation snack for a removal"
+  },
+  "usageMember": "Member",
+  "@usageMember": {
+    "description": "#833 - member filter label"
+  },
+  "usageMemberAll": "Everyone",
+  "@usageMemberAll": {
+    "description": "#833 - member filter: no narrowing"
+  }
+}

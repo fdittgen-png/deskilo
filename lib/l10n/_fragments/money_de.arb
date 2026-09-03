@@ -372,5 +372,6 @@
   "scheduleUnitDays": "Tage",
   "scheduleUnitWeeks": "Wochen",
   "scheduleUnitMonths": "Monate",
-  "scheduleUnitYears": "Jahre"
+  "scheduleUnitYears": "Jahre",
+  "moneyFaceUsage": "Nutzung"
 }

@@ -372,5 +372,6 @@
   "scheduleUnitDays": "giorni",
   "scheduleUnitWeeks": "settimane",
   "scheduleUnitMonths": "mesi",
-  "scheduleUnitYears": "anni"
+  "scheduleUnitYears": "anni",
+  "moneyFaceUsage": "Utilizzo"
 }

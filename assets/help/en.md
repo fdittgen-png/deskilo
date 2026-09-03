@@ -871,6 +871,14 @@ The **month-close wizard** (flag *Invoicing wizard*; the wand in the Invoices he
 
 **Distribute an expense** (flag *Shared expenses*; the split icon in the Invoices header) takes one shared cost — a cleaning bill, an internet upgrade, a broken chair — and splits it over the members: **equal** shares, **pro rata of the subscription** percentage, **pro rata of usage** (half-days used in the period), or a **custom key** typed per member. Every share is previewed, the cents add up exactly, and nothing is booked until you confirm. The shares are booked as adjustment lines on the period you choose, so they appear on each member's **next usage invoice** (the end-of-month run of the wizard, §11g). Flip **Reversal** to give money back instead: the same split books **credits**, which net against the month's charges and, when they exceed them, derive a **credit note** the workspace refunds (§11). A distribution is an event of its own kind: with a validation rule on *Shared expense* it waits for the quorum and books once confirmed; without one the issuer's decision stands. The history under the form shows every distribution and where it stands.
 
+### 11i. Usage: what each booking actually cost
+
+**Usage** (flag *Usage records*; a face of the Finances tab) shows the month's counted bookings, one card each, with three numbers kept deliberately apart: the window **booked**, the time you were actually **present**, and what of it is **billed**. Booking is the commitment; presence is the fact.
+
+Two rules follow from that, and the cards say both out loud. A booking **nobody checked into bills in full** — not turning up is not a discount. And a booking you **left early** bills in full too, until somebody else agrees otherwise: the card offers **Bill the time I was here**, which asks for the unused time to stop counting. You never decide that request yourself; it goes to whoever your *Early departure* validation rule names, and if there is no rule it stands at once. Accepted, the booking's own end moves to the moment you checked out, so the statement, the half-day cap and the invoice all follow — and the card keeps saying what the billed time **was**, so both numbers stay readable side by side.
+
+You see your own records; whoever may see the workspace's money sees everyone's. An admin or owner can **remove** a record, and where a *Usage record removal* rule is configured the member concerned is the one who validates it.
+
 ## 12. Settings & profile
 
 Your personal screen, top to bottom:
