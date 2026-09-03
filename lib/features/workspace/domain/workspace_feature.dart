@@ -60,6 +60,7 @@ enum WorkspaceFeature {
   validationScopes,
   validationChain,
   richMessageRefs,
+  calendarValidations,
   priceNegotiations,
 
   /// #767 — recurring scheduled expenses (internet, phone, electricity):
@@ -479,6 +480,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.richMessageRefs: FeatureManifestEntry(
     feature: WorkspaceFeature.richMessageRefs,
     requires: WorkspaceFeature.memberNotifications,
+  ),
+  // #843 — decisions on the timeline, at the moment they were taken.
+  WorkspaceFeature.calendarValidations: FeatureManifestEntry(
+    feature: WorkspaceFeature.calendarValidations,
+    requires: WorkspaceFeature.calendarHub,
   ),
   // #739 — the tariff is the default; a member may have their own deal,
   // proposed by finance admins, validated, seen by the member and them.

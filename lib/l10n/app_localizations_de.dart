@@ -1271,6 +1271,25 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get calendarKindValidation => 'Freigaben';
+
+  @override
+  String calendarValidationValidated(String what) {
+    return 'Freigegeben: $what';
+  }
+
+  @override
+  String calendarValidationRefused(String what) {
+    return 'Abgelehnt: $what';
+  }
+
+  @override
+  String get calendarEventActionValidated => 'freigegeben';
+
+  @override
+  String get calendarEventActionRefused => 'abgelehnt';
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -2397,6 +2416,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureRichMessageRefsDesc =>
       'Eine Nachricht kann auf einen Hinweis zeigen, auf den Freigabeverlauf dahinter und auf eine Rechnung, eine Zahlung oder eine Erstattung — jeder Verweis ist ein Link, der öffnet, was er nennt. Jede Auswahl filtert beim Tippen. Aus: nur Buchungen und Plätze sind verweisbar.';
+
+  @override
+  String get featureCalendarValidationsTitle => 'Freigaben im Kalender';
+
+  @override
+  String get featureCalendarValidationsDesc =>
+      'Jede Entscheidung zu einem Ereignis erscheint im Kalender zum Zeitpunkt der Entscheidung, nicht des Ereignisses: wer was freigegeben oder abgelehnt hat, und wann. Ein Tippen öffnet den Verlauf. Aus: der Kalender trägt keine Entscheidungen.';
 
   @override
   String get helpTitle => 'Hilfe';

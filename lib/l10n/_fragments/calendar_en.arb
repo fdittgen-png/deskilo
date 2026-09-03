@@ -235,7 +235,13 @@
   "calendarEventStatusExpired": "expired",
   "accessKindNegotiations": "Price negotiations",
   "accessRuleNegotiations": "You, the owners and the finance admins: {people}. Every read by someone else is on the record below.",
-  "@accessRuleNegotiations": {"placeholders": {"people": {"type": "String"}}},
+  "@accessRuleNegotiations": {
+    "placeholders": {
+      "people": {
+        "type": "String"
+      }
+    }
+  },
   "calendarViewAgenda": "Agenda",
   "calendarViewWeek": "Week",
   "calendarViewMonth": "Month",
@@ -245,21 +251,87 @@
   "calendarKindDue": "Payments due",
   "calendarKindScheduled": "Scheduled expenses",
   "calendarDueTitle": "Payment due · {number}",
-  "@calendarDueTitle": {"placeholders": {"number": {"type": "String"}}},
+  "@calendarDueTitle": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "calendarScheduledTitle": "Scheduled expense · {name}",
-  "@calendarScheduledTitle": {"placeholders": {"name": {"type": "String"}}},
+  "@calendarScheduledTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "calendarClosedDay": "Closed",
   "calendarClosedDayReason": "Closed — {reason}",
-  "@calendarClosedDayReason": {"placeholders": {"reason": {"type": "String"}}},
+  "@calendarClosedDayReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
   "calendarGroupBookings": "Bookings & presence",
   "calendarGroupActivity": "Alerts & messages",
   "calendarGroupMoney": "Money",
   "calendarAgendaEmpty": "Nothing planned in the next {days} days.",
-  "@calendarAgendaEmpty": {"placeholders": {"days": {"type": "int"}}},
+  "@calendarAgendaEmpty": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "calendarAgendaRange": "Next {days} days",
-  "@calendarAgendaRange": {"placeholders": {"days": {"type": "int"}}},
+  "@calendarAgendaRange": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "calendarWeekEmpty": "Nothing this week.",
   "calendarDayEmpty": "Nothing on this day.",
   "calendarItemCount": "{count} items",
-  "@calendarItemCount": {"placeholders": {"count": {"type": "int"}}}
+  "@calendarItemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calendarKindValidation": "Validations",
+  "@calendarKindValidation": {
+    "description": "#843 - calendar kind chip: decisions taken on events"
+  },
+  "calendarValidationValidated": "Validated: {what}",
+  "@calendarValidationValidated": {
+    "description": "#843 - a calendar row for an accepted decision",
+    "placeholders": {
+      "what": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarValidationRefused": "Refused: {what}",
+  "@calendarValidationRefused": {
+    "description": "#843 - a calendar row for a refused decision",
+    "placeholders": {
+      "what": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarEventActionValidated": "validated",
+  "@calendarEventActionValidated": {
+    "description": "#843 - verb of an accepted decision"
+  },
+  "calendarEventActionRefused": "refused",
+  "@calendarEventActionRefused": {
+    "description": "#843 - verb of a refused decision"
+  }
 }

@@ -875,6 +875,11 @@
       }
     }
   },
+  "calendarKindValidation": "Freigaben",
+  "calendarValidationValidated": "Freigegeben: {what}",
+  "calendarValidationRefused": "Abgelehnt: {what}",
+  "calendarEventActionValidated": "freigegeben",
+  "calendarEventActionRefused": "abgelehnt",
   "appTitle": "DesKilo",
   "tabPlan": "Plan",
   "tabCalendar": "Kalender",
@@ -1412,6 +1417,8 @@
   "featureValidationChainDesc": "Eine Freigaberegel kann ihre Freigaben nacheinander einholen — jede Stufe erst, wenn die vorige durch ist — und kann der Inhaberin oder dem Inhaber, nie einem Admin, die Freigabe der eigenen Handlung erlauben. Aus: alles wird auf einmal angefragt, und niemand gibt das Eigene frei.",
   "featureRichMessageRefsTitle": "Verweise in Nachrichten",
   "featureRichMessageRefsDesc": "Eine Nachricht kann auf einen Hinweis zeigen, auf den Freigabeverlauf dahinter und auf eine Rechnung, eine Zahlung oder eine Erstattung — jeder Verweis ist ein Link, der öffnet, was er nennt. Jede Auswahl filtert beim Tippen. Aus: nur Buchungen und Plätze sind verweisbar.",
+  "featureCalendarValidationsTitle": "Freigaben im Kalender",
+  "featureCalendarValidationsDesc": "Jede Entscheidung zu einem Ereignis erscheint im Kalender zum Zeitpunkt der Entscheidung, nicht des Ereignisses: wer was freigegeben oder abgelehnt hat, und wann. Ein Tippen öffnet den Verlauf. Aus: der Kalender trägt keine Entscheidungen.",
   "helpTitle": "Hilfe",
   "helpContents": "Inhalt",
   "helpHintMessages": "Alle Unterhaltungen in einer Liste, die neueste oben. Tippen Sie auf den Stift, um jemandem zu schreiben oder eine Gruppe zu erstellen.",

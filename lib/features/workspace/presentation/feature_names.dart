@@ -109,6 +109,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureValidationChainTitle ?? 'Chained validations',
       WorkspaceFeature.richMessageRefs =>
         l10n?.featureRichMessageRefsTitle ?? 'References in messages',
+      WorkspaceFeature.calendarValidations =>
+        l10n?.featureCalendarValidationsTitle ?? 'Validations on the calendar',
       WorkspaceFeature.priceNegotiations =>
         l10n?.featurePriceNegotiationsTitle ?? 'Price negotiations',
       WorkspaceFeature.scheduledExpenses =>

@@ -18,7 +18,13 @@ enum CalendarKind {
   due('due'),
 
   /// #818 — a scheduled expense's occurrence falling due (#767).
-  scheduled('scheduled');
+  scheduled('scheduled'),
+
+  /// #843 — somebody decided about an event: validated or refused. It
+  /// sits at the moment of the DECISION, not of the event, because the
+  /// two are often days apart and "when was this released" is the
+  /// question the timeline is being asked.
+  validation('validation');
 
   const CalendarKind(this.wire);
   final String wire;
@@ -39,7 +45,7 @@ enum CalendarKind {
   CalendarGroup get group => switch (this) {
         reservation || checkIn || checkOut || reminder =>
           CalendarGroup.bookings,
-        event || message => CalendarGroup.activity,
+        event || message || validation => CalendarGroup.activity,
         invoice || payment || consumption || due || scheduled =>
           CalendarGroup.money,
       };

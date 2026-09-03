@@ -214,6 +214,9 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.richMessageRefs =>
           l10n?.featureRichMessageRefsDesc ??
               'A message can point at an alert, at the validation trail behind one, and at an invoice, a payment or a refund — each one a link that opens what it names. Every reference picker filters as you type. Off: only reservations and spaces can be referenced.',
+        WorkspaceFeature.calendarValidations =>
+          l10n?.featureCalendarValidationsDesc ??
+              'Every decision taken on an event appears on the calendar at the moment it was taken, not at the moment of the event: who validated or refused what, and when. Tapping one opens its trail. Off: the calendar carries no decisions.',
         WorkspaceFeature.priceNegotiations =>
           l10n?.featurePriceNegotiationsDesc ??
               'The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record.',

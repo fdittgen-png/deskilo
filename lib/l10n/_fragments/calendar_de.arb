@@ -180,21 +180,62 @@
   "calendarKindDue": "Fällige Zahlungen",
   "calendarKindScheduled": "Geplante Ausgaben",
   "calendarDueTitle": "Zahlung fällig · {number}",
-  "@calendarDueTitle": {"placeholders": {"number": {"type": "String"}}},
+  "@calendarDueTitle": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "calendarScheduledTitle": "Geplante Ausgabe · {name}",
-  "@calendarScheduledTitle": {"placeholders": {"name": {"type": "String"}}},
+  "@calendarScheduledTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "calendarClosedDay": "Geschlossen",
   "calendarClosedDayReason": "Geschlossen — {reason}",
-  "@calendarClosedDayReason": {"placeholders": {"reason": {"type": "String"}}},
+  "@calendarClosedDayReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
   "calendarGroupBookings": "Buchungen & Anwesenheit",
   "calendarGroupActivity": "Hinweise & Nachrichten",
   "calendarGroupMoney": "Finanzen",
   "calendarAgendaEmpty": "Nichts geplant in den nächsten {days} Tagen.",
-  "@calendarAgendaEmpty": {"placeholders": {"days": {"type": "int"}}},
+  "@calendarAgendaEmpty": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "calendarAgendaRange": "Nächste {days} Tage",
-  "@calendarAgendaRange": {"placeholders": {"days": {"type": "int"}}},
+  "@calendarAgendaRange": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "calendarWeekEmpty": "Nichts in dieser Woche.",
   "calendarDayEmpty": "Nichts an diesem Tag.",
   "calendarItemCount": "{count} Einträge",
-  "@calendarItemCount": {"placeholders": {"count": {"type": "int"}}}
+  "@calendarItemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calendarKindValidation": "Freigaben",
+  "calendarValidationValidated": "Freigegeben: {what}",
+  "calendarValidationRefused": "Abgelehnt: {what}",
+  "calendarEventActionValidated": "freigegeben",
+  "calendarEventActionRefused": "abgelehnt"
 }

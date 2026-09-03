@@ -1272,6 +1272,25 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get calendarKindValidation => 'Convalide';
+
+  @override
+  String calendarValidationValidated(String what) {
+    return 'Convalidato: $what';
+  }
+
+  @override
+  String calendarValidationRefused(String what) {
+    return 'Rifiutato: $what';
+  }
+
+  @override
+  String get calendarEventActionValidated => 'convalidato';
+
+  @override
+  String get calendarEventActionRefused => 'rifiutato';
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -2398,6 +2417,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featureRichMessageRefsDesc =>
       'Un messaggio può puntare a un avviso, alla cronologia delle convalide dietro di esso e a una fattura, un pagamento o un rimborso: ogni riferimento è un link che apre ciò che nomina. Ogni selettore filtra mentre scrivi. Disattivato: si possono referenziare solo prenotazioni e spazi.';
+
+  @override
+  String get featureCalendarValidationsTitle => 'Convalide nel calendario';
+
+  @override
+  String get featureCalendarValidationsDesc =>
+      'Ogni decisione presa su un evento compare nel calendario nel momento in cui è stata presa, non in quello dell’evento: chi ha convalidato o rifiutato che cosa, e quando. Toccandola si apre la cronologia. Disattivato: il calendario non porta decisioni.';
 
   @override
   String get helpTitle => 'Aiuto';

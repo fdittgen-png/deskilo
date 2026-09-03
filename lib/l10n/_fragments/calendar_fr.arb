@@ -180,21 +180,62 @@
   "calendarKindDue": "Échéances",
   "calendarKindScheduled": "Dépenses programmées",
   "calendarDueTitle": "Échéance · {number}",
-  "@calendarDueTitle": {"placeholders": {"number": {"type": "String"}}},
+  "@calendarDueTitle": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "calendarScheduledTitle": "Dépense programmée · {name}",
-  "@calendarScheduledTitle": {"placeholders": {"name": {"type": "String"}}},
+  "@calendarScheduledTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "calendarClosedDay": "Fermé",
   "calendarClosedDayReason": "Fermé — {reason}",
-  "@calendarClosedDayReason": {"placeholders": {"reason": {"type": "String"}}},
+  "@calendarClosedDayReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
   "calendarGroupBookings": "Réservations et présence",
   "calendarGroupActivity": "Alertes et messages",
   "calendarGroupMoney": "Finances",
   "calendarAgendaEmpty": "Rien de prévu dans les {days} prochains jours.",
-  "@calendarAgendaEmpty": {"placeholders": {"days": {"type": "int"}}},
+  "@calendarAgendaEmpty": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "calendarAgendaRange": "{days} prochains jours",
-  "@calendarAgendaRange": {"placeholders": {"days": {"type": "int"}}},
+  "@calendarAgendaRange": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "calendarWeekEmpty": "Rien cette semaine.",
   "calendarDayEmpty": "Rien ce jour-là.",
   "calendarItemCount": "{count} éléments",
-  "@calendarItemCount": {"placeholders": {"count": {"type": "int"}}}
+  "@calendarItemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calendarKindValidation": "Validations",
+  "calendarValidationValidated": "Validé : {what}",
+  "calendarValidationRefused": "Refusé : {what}",
+  "calendarEventActionValidated": "validé",
+  "calendarEventActionRefused": "refusé"
 }
