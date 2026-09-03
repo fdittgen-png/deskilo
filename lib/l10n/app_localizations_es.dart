@@ -2392,6 +2392,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Una regla de validación puede pedir sus validaciones una tras otra, cada paso solicitado cuando el anterior ha pasado, y puede permitir que la propiedad —nunca un admin— valide su propio acto. Desactivado: todo se pide a la vez y nadie valida su propio evento.';
 
   @override
+  String get featureRichMessageRefsTitle => 'Referencias en los mensajes';
+
+  @override
+  String get featureRichMessageRefsDesc =>
+      'Un mensaje puede apuntar a un aviso, al historial de validación que hay detrás y a una factura, un pago o un reembolso: cada referencia es un enlace que abre lo que nombra. Cada selector filtra mientras escribes. Desactivado: solo se pueden referenciar reservas y espacios.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override
@@ -5354,6 +5361,47 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get memberNoteDeleteNotMine =>
       'Solo quien lo envió puede retirar un mensaje.';
+
+  @override
+  String get noteRefFilterLabel => 'Filtrar';
+
+  @override
+  String noteRefFilterCount(int shown, int total) {
+    return '$shown de $total';
+  }
+
+  @override
+  String get noteRefFilterEmpty => 'Sin resultados.';
+
+  @override
+  String get noteRefAlert => 'Aviso';
+
+  @override
+  String get noteRefValidation => 'Validación';
+
+  @override
+  String get noteRefInvoice => 'Factura';
+
+  @override
+  String get noteRefPayment => 'Pago';
+
+  @override
+  String get noteRefRefund => 'Reembolso';
+
+  @override
+  String get noteRefPickAlert => '¿Qué aviso?';
+
+  @override
+  String get noteRefPickValidation => '¿Qué validación?';
+
+  @override
+  String get noteRefPickInvoice => '¿Qué factura?';
+
+  @override
+  String get noteRefPickPayment => '¿Qué pago?';
+
+  @override
+  String get noteRefNone => 'Nada que referenciar todavía.';
 
   @override
   String get moneyBaseFee => 'Suscripción base';

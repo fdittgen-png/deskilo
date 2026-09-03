@@ -4207,6 +4207,18 @@ abstract class AppLocalizations {
   /// **'A validation rule can ask for its validations one after another, each step requested once the previous passed, and can let the owner — never an admin — validate their own act. Off: every validation is asked at once and nobody validates their own event.'**
   String get featureValidationChainDesc;
 
+  /// #842 - feature title
+  ///
+  /// In en, this message translates to:
+  /// **'References in messages'**
+  String get featureRichMessageRefsTitle;
+
+  /// #842 - feature description
+  ///
+  /// In en, this message translates to:
+  /// **'A message can point at an alert, at the validation trail behind one, and at an invoice, a payment or a refund — each one a link that opens what it names. Every reference picker filters as you type. Off: only reservations and spaces can be referenced.'**
+  String get featureRichMessageRefsDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:
@@ -9330,6 +9342,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Only the sender can take a message back.'**
   String get memberNoteDeleteNotMine;
+
+  /// #842 - label of the filter field in a reference picker
+  ///
+  /// In en, this message translates to:
+  /// **'Filter'**
+  String get noteRefFilterLabel;
+
+  /// #842 - how many candidates the filter is showing
+  ///
+  /// In en, this message translates to:
+  /// **'{shown} of {total}'**
+  String noteRefFilterCount(int shown, int total);
+
+  /// #842 - the filter matched nothing
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches.'**
+  String get noteRefFilterEmpty;
+
+  /// #842 - attach-menu entry: reference an alert
+  ///
+  /// In en, this message translates to:
+  /// **'Alert'**
+  String get noteRefAlert;
+
+  /// #842 - attach-menu entry: reference a validation
+  ///
+  /// In en, this message translates to:
+  /// **'Validation'**
+  String get noteRefValidation;
+
+  /// #842 - attach-menu entry: reference an invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice'**
+  String get noteRefInvoice;
+
+  /// #842 - attach-menu entry: reference a payment
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get noteRefPayment;
+
+  /// #842 - label of a refund reference
+  ///
+  /// In en, this message translates to:
+  /// **'Refund'**
+  String get noteRefRefund;
+
+  /// #842 - title of the alert picker
+  ///
+  /// In en, this message translates to:
+  /// **'Which alert?'**
+  String get noteRefPickAlert;
+
+  /// #842 - title of the validation picker
+  ///
+  /// In en, this message translates to:
+  /// **'Which validation?'**
+  String get noteRefPickValidation;
+
+  /// #842 - title of the invoice picker
+  ///
+  /// In en, this message translates to:
+  /// **'Which invoice?'**
+  String get noteRefPickInvoice;
+
+  /// #842 - title of the payment picker
+  ///
+  /// In en, this message translates to:
+  /// **'Which payment?'**
+  String get noteRefPickPayment;
+
+  /// #842 - there is nothing of that kind to reference
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to reference yet.'**
+  String get noteRefNone;
 
   /// Statement line for the plan's monthly fee
   ///

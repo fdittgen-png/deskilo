@@ -188,5 +188,7 @@
   "featureSettlementFoldTitle": "Factures regroupées repliées",
   "featureSettlementFoldDesc": "Les factures regroupées en une seule disparaissent des listes et se rangent sous la facture de regroupement, qui porte toutes leurs lignes. Sur une facture regroupée, toute opération est désactivée ; il ne reste que son PDF, tamponné du numéro dans lequel elle a été regroupée. Désactivé : les factures regroupées restent listées à côté de la facture de regroupement.",
   "featureValidationChainTitle": "Validations enchaînées",
-  "featureValidationChainDesc": "Une règle de validation peut demander ses validations l'une après l'autre, chaque étape sollicitée une fois la précédente passée, et peut autoriser le propriétaire — jamais un admin — à valider son propre acte. Désactivé : tout est demandé d'un coup et personne ne valide son propre événement."
+  "featureValidationChainDesc": "Une règle de validation peut demander ses validations l'une après l'autre, chaque étape sollicitée une fois la précédente passée, et peut autoriser le propriétaire — jamais un admin — à valider son propre acte. Désactivé : tout est demandé d'un coup et personne ne valide son propre événement.",
+  "featureRichMessageRefsTitle": "Références dans les messages",
+  "featureRichMessageRefsDesc": "Un message peut pointer vers une alerte, vers l'historique de validation derrière une alerte, et vers une facture, un paiement ou un remboursement — chaque référence est un lien qui ouvre ce qu'elle nomme. Chaque sélecteur de référence se filtre à la frappe. Désactivé : seules les réservations et les espaces sont référençables."
 }

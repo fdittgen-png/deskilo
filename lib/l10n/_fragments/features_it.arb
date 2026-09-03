@@ -188,5 +188,7 @@
   "featureSettlementFoldTitle": "Fatture raggruppate ripiegate",
   "featureSettlementFoldDesc": "Le fatture raggruppate in una scompaiono dalle liste come pari e si annidano sotto la fattura di raggruppamento, che porta tutte le loro righe. Su una fattura raggruppata ogni operazione è disattivata; resta solo il suo PDF, timbrato con il numero in cui è stata raggruppata. Disattivato: le fatture raggruppate restano elencate accanto a quella di raggruppamento.",
   "featureValidationChainTitle": "Convalide concatenate",
-  "featureValidationChainDesc": "Una regola di convalida può chiedere le sue convalide una dopo l'altra, ogni passo richiesto quando il precedente è passato, e può consentire alla proprietà — mai a un admin — di convalidare il proprio atto. Disattivato: tutto è chiesto in una volta e nessuno convalida il proprio evento."
+  "featureValidationChainDesc": "Una regola di convalida può chiedere le sue convalide una dopo l'altra, ogni passo richiesto quando il precedente è passato, e può consentire alla proprietà — mai a un admin — di convalidare il proprio atto. Disattivato: tutto è chiesto in una volta e nessuno convalida il proprio evento.",
+  "featureRichMessageRefsTitle": "Riferimenti nei messaggi",
+  "featureRichMessageRefsDesc": "Un messaggio può puntare a un avviso, alla cronologia delle convalide dietro di esso e a una fattura, un pagamento o un rimborso: ogni riferimento è un link che apre ciò che nomina. Ogni selettore filtra mentre scrivi. Disattivato: si possono referenziare solo prenotazioni e spazi."
 }

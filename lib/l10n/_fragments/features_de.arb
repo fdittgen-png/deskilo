@@ -188,5 +188,7 @@
   "featureSettlementFoldTitle": "Zusammengefasste Rechnungen eingeklappt",
   "featureSettlementFoldDesc": "Zu einer zusammengefasste Rechnungen verschwinden als eigene Zeilen aus den Listen und ordnen sich unter der Sammelrechnung ein, die alle ihre Positionen trägt. Auf einer zusammengefassten Rechnung ist jede Aktion aus; es bleibt nur ihr PDF, gestempelt mit der Nummer, in der sie aufging. Aus: die zusammengefassten Rechnungen bleiben neben der Sammelrechnung gelistet.",
   "featureValidationChainTitle": "Verkettete Freigaben",
-  "featureValidationChainDesc": "Eine Freigaberegel kann ihre Freigaben nacheinander einholen — jede Stufe erst, wenn die vorige durch ist — und kann der Inhaberin oder dem Inhaber, nie einem Admin, die Freigabe der eigenen Handlung erlauben. Aus: alles wird auf einmal angefragt, und niemand gibt das Eigene frei."
+  "featureValidationChainDesc": "Eine Freigaberegel kann ihre Freigaben nacheinander einholen — jede Stufe erst, wenn die vorige durch ist — und kann der Inhaberin oder dem Inhaber, nie einem Admin, die Freigabe der eigenen Handlung erlauben. Aus: alles wird auf einmal angefragt, und niemand gibt das Eigene frei.",
+  "featureRichMessageRefsTitle": "Verweise in Nachrichten",
+  "featureRichMessageRefsDesc": "Eine Nachricht kann auf einen Hinweis zeigen, auf den Freigabeverlauf dahinter und auf eine Rechnung, eine Zahlung oder eine Erstattung — jeder Verweis ist ein Link, der öffnet, was er nennt. Jede Auswahl filtert beim Tippen. Aus: nur Buchungen und Plätze sind verweisbar."
 }

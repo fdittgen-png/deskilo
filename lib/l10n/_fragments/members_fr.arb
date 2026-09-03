@@ -270,5 +270,18 @@
   "newConversationGroupSwitch": "Groupe",
   "inboxRetry": "Réessayer",
   "memberNoteDeleteRead": "Déjà lu — ce message ne peut plus être repris.",
-  "memberNoteDeleteNotMine": "Seul l'expéditeur peut reprendre un message."
+  "memberNoteDeleteNotMine": "Seul l'expéditeur peut reprendre un message.",
+  "noteRefFilterLabel": "Filtrer",
+  "noteRefFilterCount": "{shown} sur {total}",
+  "noteRefFilterEmpty": "Aucun résultat.",
+  "noteRefAlert": "Alerte",
+  "noteRefValidation": "Validation",
+  "noteRefInvoice": "Facture",
+  "noteRefPayment": "Paiement",
+  "noteRefRefund": "Remboursement",
+  "noteRefPickAlert": "Quelle alerte ?",
+  "noteRefPickValidation": "Quelle validation ?",
+  "noteRefPickInvoice": "Quelle facture ?",
+  "noteRefPickPayment": "Quel paiement ?",
+  "noteRefNone": "Rien à référencer pour le moment."
 }

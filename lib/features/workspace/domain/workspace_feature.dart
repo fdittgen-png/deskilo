@@ -59,6 +59,7 @@ enum WorkspaceFeature {
   supplyExpenses,
   validationScopes,
   validationChain,
+  richMessageRefs,
   priceNegotiations,
 
   /// #767 — recurring scheduled expenses (internet, phone, electricity):
@@ -473,6 +474,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // let the owner (never an admin) sign off on their own act.
   WorkspaceFeature.validationChain:
       FeatureManifestEntry(feature: WorkspaceFeature.validationChain),
+  // #842 — a message can point at an alert, at the validation behind
+  // one, and at the financial documents people argue about.
+  WorkspaceFeature.richMessageRefs: FeatureManifestEntry(
+    feature: WorkspaceFeature.richMessageRefs,
+    requires: WorkspaceFeature.memberNotifications,
+  ),
   // #739 — the tariff is the default; a member may have their own deal,
   // proposed by finance admins, validated, seen by the member and them.
   WorkspaceFeature.priceNegotiations: FeatureManifestEntry(
