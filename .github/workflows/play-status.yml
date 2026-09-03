@@ -1,0 +1,66 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: 0BSD
+
+name: play-status
+
+# What Google Play actually serves, right now, per track.
+#
+# A tester who is on the list and still gets "item not found" is the one
+# store failure the phone cannot explain: the opt-in page says "you are a
+# tester" whether or not there is anything to install. Three things look
+# identical from there and none of them is a build failure — the release
+# is a DRAFT, the track targets NO COUNTRY, or the newest release is not
+# the build you think it is.
+#
+# This reads the tracks and says which. It builds nothing, uploads
+# nothing and changes nothing: an edit is opened to read through and
+# never committed.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      HAS_PLAY_SA: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Refuse to pretend without the key
+        if: ${{ env.HAS_PLAY_SA != 'true' }}
+        run: |
+          echo "::error::PLAY_STORE_SERVICE_ACCOUNT_JSON is not set — nothing to read."
+          exit 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install --quiet google-api-python-client google-auth google-auth-httplib2
+
+      - name: Decode service-account key
+        env:
+          SA_JSON: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          echo "$SA_JSON" > "$RUNNER_TEMP/play-key.json"
+          echo "PLAY_KEY_PATH=$RUNNER_TEMP/play-key.json" >> "$GITHUB_ENV"
+
+      - name: What every track serves
+        run: |
+          python tools/upload_to_play.py --status --key "$PLAY_KEY_PATH" \
+            | tee "$RUNNER_TEMP/status.txt"
+          {
+            echo '## Play tracks'
+            echo '```'
+            cat "$RUNNER_TEMP/status.txt"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Clean up service-account key
+        if: always()
+        run: rm -f "$PLAY_KEY_PATH"

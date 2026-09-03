@@ -186,6 +186,76 @@ def load_release_notes(
     return notes
 
 
+
+def _report_status(edits, package: str) -> int:
+    """Print what every track actually serves, and why a tester might see
+    nothing.
+
+    Three things make an app invisible to somebody who IS on the tester
+    list, and none of them is visible from the phone: the release is a
+    DRAFT (uploaded, never rolled out), the track targets NO COUNTRY, or
+    the newest release is not the build you think it is. This says which.
+    """
+    try:
+        edit = _execute_with_retry(
+            lambda: edits.insert(packageName=package, body={}),
+            label="edits.insert",
+        )
+    except HttpError as e:
+        print(f"ERROR: edits.insert failed: {e}", file=sys.stderr)
+        return 4
+    edit_id = edit["id"]
+    try:
+        listing = _execute_with_retry(
+            lambda: edits.tracks().list(packageName=package, editId=edit_id),
+            label="tracks.list",
+        )
+    except HttpError as e:
+        print(f"ERROR: tracks.list failed: {e}", file=sys.stderr)
+        return 4
+
+    problems = []
+    for track in listing.get("tracks", []):
+        name = track.get("track", "?")
+        releases = track.get("releases", [])
+        print(f"\ntrack {name}: {len(releases)} release(s)")
+        if not releases:
+            print("  (nothing here — testers of this track can install nothing)")
+            problems.append(f"{name}: no release")
+            continue
+        for release in releases:
+            status = release.get("status", "?")
+            codes = ", ".join(release.get("versionCodes", []) or ["-"])
+            fraction = release.get("userFraction")
+            countries = release.get("countryTargeting", {}).get("countries")
+            print(f"  versionCodes [{codes}] status={status}"
+                  + (f" userFraction={fraction}" if fraction else "")
+                  + f" countries={'ALL' if countries is None else (', '.join(countries) or 'NONE')}")
+            if status == "draft":
+                problems.append(
+                    f"{name}: versionCode {codes} is a DRAFT — uploaded but never "
+                    f"rolled out, so no tester can install it")
+            if countries is not None and not countries:
+                problems.append(
+                    f"{name}: versionCode {codes} targets NO COUNTRY — nobody, "
+                    f"anywhere, can install it")
+
+    print("\n" + ("-" * 60))
+    if problems:
+        print("What would make a tester see \"item not found\":")
+        for problem in problems:
+            print(f"  - {problem}")
+            _gh_annotate("warning", problem)
+    else:
+        print("Every track has a rolled-out release. If a tester still cannot "
+              "install, the cause is on their side or in the Console's app "
+              "content tasks, not in the track: check that the Play Store app "
+              "is signed in with the SAME Google account that opted in, and "
+              "that Play Console shows no unfinished app-content declaration "
+              "holding the release.")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--package", default=DEFAULT_PACKAGE, help=f"App package name (default: {DEFAULT_PACKAGE})")
@@ -202,13 +272,19 @@ def main() -> int:
                              "Defaults to 'Daily build YYYY-MM-DD'.")
     parser.add_argument("--dry-run", action="store_true",
                         help="Validate the edit without committing (no testers receive the build)")
+    parser.add_argument("--status", action="store_true",
+                        help="Read-only: report every track's releases, their status and their "
+                             "country targeting, then exit. Needs no AAB. Use it when a tester "
+                             "is on the list and the store still says the app does not exist: "
+                             "a release that is a draft, or a track that targets no country, "
+                             "looks exactly like that from the phone.")
     args = parser.parse_args()
 
     aab = Path(args.aab).resolve()
     key = Path(args.key).resolve()
     changelog_dir = Path(args.changelog_dir).resolve()
 
-    if not aab.is_file():
+    if not args.status and not aab.is_file():
         print(f"ERROR: AAB not found at {aab}", file=sys.stderr)
         _gh_annotate("error", f"AAB not found at {aab}")
         print("       Run `flutter build appbundle --release` first.", file=sys.stderr)
@@ -230,6 +306,9 @@ def main() -> int:
     authed_http = AuthorizedHttp(creds, http=httplib2.Http(timeout=HTTP_SOCKET_TIMEOUT_S))
     service = build("androidpublisher", "v3", http=authed_http, cache_discovery=False)
     edits = service.edits()
+
+    if args.status:
+        return _report_status(edits, args.package)
 
     # All Android-Publisher edit calls below route through
     # `_execute_with_retry` so each layered failure mode has the same
