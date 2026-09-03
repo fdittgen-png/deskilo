@@ -270,5 +270,18 @@
   "newConversationGroupSwitch": "Gruppo",
   "inboxRetry": "Riprova",
   "memberNoteDeleteRead": "Già letto: questo messaggio non può più essere ritirato.",
-  "memberNoteDeleteNotMine": "Solo il mittente può ritirare un messaggio."
+  "memberNoteDeleteNotMine": "Solo il mittente può ritirare un messaggio.",
+  "noteRefFilterLabel": "Filtra",
+  "noteRefFilterCount": "{shown} su {total}",
+  "noteRefFilterEmpty": "Nessun risultato.",
+  "noteRefAlert": "Avviso",
+  "noteRefValidation": "Convalida",
+  "noteRefInvoice": "Fattura",
+  "noteRefPayment": "Pagamento",
+  "noteRefRefund": "Rimborso",
+  "noteRefPickAlert": "Quale avviso?",
+  "noteRefPickValidation": "Quale convalida?",
+  "noteRefPickInvoice": "Quale fattura?",
+  "noteRefPickPayment": "Quale pagamento?",
+  "noteRefNone": "Niente da referenziare per ora."
 }

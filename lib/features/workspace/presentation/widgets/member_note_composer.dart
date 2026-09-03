@@ -1,5 +1,14 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+
+import 'ref_picker_sheet.dart';
+import 'note_record_open.dart';
+import '../../domain/workspace_feature.dart';
+import '../../../events/presentation/event_labels.dart';
+import '../../../events/providers/event_providers.dart';
+import '../../../money/domain/ledger_entry.dart';
+import '../../../../core/i18n/money_format.dart';
+import '../../../money/providers/money_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -164,28 +173,28 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
       );
       return;
     }
-    final picked = await showModalBottomSheet<Reservation>(
-      context: context,
-      builder: (sheetContext) => SafeArea(
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            for (final reservation in reservations)
-              ListTile(
-                key: ValueKey('note-ref-res-${reservation.id}'),
-                leading: Icon(
-                  reservation.status == ReservationStatus.checkedIn
-                      ? Icons.login_outlined
-                      : Icons.event_available_outlined,
-                ),
-                title: Text(_reservationLabel(
-                    reservation, spaceNames, memberNames, localeName)),
-                onTap: () => Navigator.of(sheetContext).pop(reservation),
-              ),
-          ],
-        ),
-      ),
+    // #842 — the same filterable sheet every reference uses. A busy
+    // workspace has dozens of live bookings in a week; a flat list of
+    // them is a list you scroll past, not one you choose from.
+    final pickedId = await showRefPicker(
+      context,
+      title: l10n?.noteRefReservation ?? 'Reservation',
+      keyPrefix: 'note-ref-res',
+      candidates: [
+        for (final reservation in reservations)
+          refCandidate(
+            id: reservation.id,
+            label: _reservationLabel(
+                reservation, spaceNames, memberNames, localeName),
+            icon: reservation.status == ReservationStatus.checkedIn
+                ? Icons.login_outlined
+                : Icons.event_available_outlined,
+          ),
+      ],
     );
+    if (pickedId == null || !mounted) return;
+    final picked =
+        reservations.where((r) => r.id == pickedId).firstOrNull;
     if (picked == null || !mounted) return;
     _insert(reservationToken(
         picked.id,
@@ -198,79 +207,198 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
     if (!mounted || levels.isEmpty) return;
     // Step 1: the level. Step 2: the level itself, or one of its rooms,
     // tables and seats — every kind a future booking can be about.
-    final level = levels.length == 1
-        ? levels.single
-        : await showModalBottomSheet<dynamic>(
-            context: context,
-            builder: (sheetContext) => SafeArea(
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  for (final candidate in levels)
-                    ListTile(
-                      key: ValueKey('note-ref-level-${candidate.id}'),
-                      leading: const Icon(Icons.layers_outlined),
-                      title: Text(candidate.name),
-                      onTap: () =>
-                          Navigator.of(sheetContext).pop(candidate),
-                    ),
-                ],
-              ),
-            ),
+    final levelId = levels.length == 1
+        ? levels.single.id
+        : await showRefPicker(
+            context,
+            title: l10n?.noteRefSpace ?? 'Space',
+            keyPrefix: 'note-ref-level',
+            candidates: [
+              for (final candidate in levels)
+                refCandidate(
+                  id: candidate.id,
+                  label: candidate.name,
+                  icon: Icons.layers_outlined,
+                ),
+            ],
           );
+    if (levelId == null || !mounted) return;
+    final level = levels.where((l) => l.id == levelId).firstOrNull;
     if (level == null || !mounted) return;
     final plan = await ref.read(floorPlanProvider(level.id).future);
     if (!mounted) return;
-    final picked =
-        await showModalBottomSheet<({SpaceKind kind, String id, String label})>(
-      context: context,
-      isScrollControlled: true,
-      builder: (sheetContext) => SafeArea(
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            ListTile(
-              key: ValueKey('note-ref-space-level-${level.id}'),
-              leading: const Icon(Icons.layers_outlined),
-              title: Text(
-                  '${level.name} — ${l10n?.noteRefWholeLevel ?? 'whole level'}'),
-              onTap: () => Navigator.of(sheetContext).pop(
-                  (kind: SpaceKind.level, id: level.id, label: level.name)),
-            ),
-            for (final office in plan.offices)
-              ListTile(
-                key: ValueKey('note-ref-space-office-${office.id}'),
-                leading: const Icon(Icons.meeting_room_outlined),
-                title: Text(office.name),
-                onTap: () => Navigator.of(sheetContext).pop((
-                  kind: SpaceKind.office,
-                  id: office.id,
-                  label: office.name
-                )),
-              ),
-            for (final desk in plan.desks)
-              ListTile(
-                key: ValueKey('note-ref-space-desk-${desk.id}'),
-                leading: const Icon(Icons.table_restaurant_outlined),
-                title: Text(desk.name),
-                onTap: () => Navigator.of(sheetContext).pop(
-                    (kind: SpaceKind.desk, id: desk.id, label: desk.name)),
-              ),
-            for (final seat in plan.seats)
-              ListTile(
-                key: ValueKey('note-ref-space-seat-${seat.id}'),
-                leading: const Icon(Icons.chair_outlined),
-                title: Text(seat.name),
-                onTap: () => Navigator.of(sheetContext).pop(
-                    (kind: SpaceKind.seat, id: seat.id, label: seat.name)),
-              ),
-          ],
-        ),
-      ),
+    // Every bookable thing on the level, in one searchable list: a
+    // level with sixty seats was sixty rows to scroll before #842.
+    final spaces = <({SpaceKind kind, String id, String label})>[
+      (kind: SpaceKind.level, id: level.id, label: level.name),
+      for (final office in plan.offices)
+        (kind: SpaceKind.office, id: office.id, label: office.name),
+      for (final desk in plan.desks)
+        (kind: SpaceKind.desk, id: desk.id, label: desk.name),
+      for (final seat in plan.seats)
+        (kind: SpaceKind.seat, id: seat.id, label: seat.name),
+    ];
+    final pickedKey = await showRefPicker(
+      context,
+      title: l10n?.noteRefSpace ?? 'Space',
+      keyPrefix: 'note-ref-space',
+      candidates: [
+        for (final space in spaces)
+          refCandidate(
+            // The key stays `note-ref-space-<kind>-<id>`: one sheet now,
+            // same address as the four lists it replaced.
+            id: '${space.kind.name}-${space.id}',
+            label: space.kind == SpaceKind.level
+                ? '${level.name} — '
+                    '${l10n?.noteRefWholeLevel ?? 'whole level'}'
+                : space.label,
+            icon: switch (space.kind) {
+              SpaceKind.level => Icons.layers_outlined,
+              SpaceKind.office => Icons.meeting_room_outlined,
+              SpaceKind.desk => Icons.table_restaurant_outlined,
+              SpaceKind.seat => Icons.chair_outlined,
+            },
+          ),
+      ],
     );
+    if (pickedKey == null || !mounted) return;
+    final picked = spaces
+        .where((s) => '${s.kind.name}-${s.id}' == pickedKey)
+        .firstOrNull;
     if (picked == null || !mounted) return;
     _insert(spaceToken(picked.kind, picked.id, picked.label));
   }
+
+  /// #842 — an alert, the validation trail behind one, an invoice or a
+  /// month's payments. Every list goes through the same filterable
+  /// sheet, because every one of them is long in a real workspace.
+  Future<void> _pickRecord(NoteRecordKind kind) async {
+    final l10n = AppLocalizations.of(context);
+    final localeName = Localizations.maybeLocaleOf(context)?.toString();
+    final candidates = <RefCandidate>[];
+    final labels = <String, String>{};
+
+    switch (kind) {
+      case NoteRecordKind.alert:
+      case NoteRecordKind.validation:
+        final events = await ref.read(eventsProvider.future);
+        if (!mounted) return;
+        final names = ref.read(memberNamesProvider).value ?? const {};
+        final decisions =
+            ref.read(eventDecisionsProvider).value ?? const {};
+        for (final event in events) {
+          // A validation reference is about a decision: an event nobody
+          // was ever asked about has no trail to point at.
+          if (kind == NoteRecordKind.validation &&
+              !event.isPending &&
+              (decisions[event.id] ?? const []).isEmpty) {
+            continue;
+          }
+          final when = DateFormat.MMMd(localeName)
+              .add_Hm()
+              .format(event.createdAt.toLocal());
+          final who = names[event.subjectMemberId] ?? '';
+          final label = [eventTypeLabel(l10n, event.type), who, when]
+              .where((p) => p.isNotEmpty)
+              .join(' · ');
+          labels[event.id] = label;
+          candidates.add(refCandidate(
+            id: event.id,
+            label: label,
+            icon: noteRecordIcon(kind),
+            extraKeywords: event.status.name,
+          ));
+        }
+      case NoteRecordKind.invoice:
+      case NoteRecordKind.refund:
+        final invoices = await ref.read(invoicesProvider.future);
+        if (!mounted) return;
+        final names = ref.read(memberNamesProvider).value ?? const {};
+        for (final invoice in invoices) {
+          final label = <String>[
+            invoice.number,
+            names[invoice.memberId] ?? invoice.memberName,
+            invoice.period ?? '',
+          ].where((p) => p.isNotEmpty).join(' · ');
+          labels[invoice.id] = label;
+          candidates.add(refCandidate(
+            id: invoice.id,
+            label: label,
+            detail: invoice.title.isEmpty ? null : invoice.title,
+            icon: noteRecordIcon(kind),
+          ));
+        }
+      case NoteRecordKind.payment:
+        final ledger = await ref.read(myLedgerProvider.future);
+        if (!mounted) return;
+        final money = moneyFormat(
+            ref.read(currentWorkspaceProvider).value?.currencyCode ?? 'EUR');
+        final seen = <String>{};
+        for (final entry in ledger) {
+          if (entry.kind != LedgerKind.credit ||
+              entry.category != LedgerCategory.payment) {
+            continue;
+          }
+          // The reference names the MONTH: that is the page a payment
+          // opens on, and two payments in one month share it.
+          if (!seen.add(entry.period)) continue;
+          final label = '${l10n?.noteRefPayment ?? 'Payment'} · '
+              '${entry.period} · ${money.formatMinor(entry.amountCents)}';
+          labels[entry.period] = label;
+          candidates.add(refCandidate(
+            id: entry.period,
+            label: label,
+            detail:
+                entry.description.isEmpty ? null : entry.description,
+            icon: noteRecordIcon(kind),
+          ));
+        }
+    }
+
+    if (!mounted) return;
+    if (candidates.isEmpty) {
+      AppSnack.info(
+          context, l10n?.noteRefNone ?? 'Nothing to reference yet.');
+      return;
+    }
+    final picked = await showRefPicker(
+      context,
+      title: switch (kind) {
+        NoteRecordKind.alert => l10n?.noteRefPickAlert ?? 'Which alert?',
+        NoteRecordKind.validation =>
+          l10n?.noteRefPickValidation ?? 'Which validation?',
+        NoteRecordKind.payment =>
+          l10n?.noteRefPickPayment ?? 'Which payment?',
+        _ => l10n?.noteRefPickInvoice ?? 'Which invoice?',
+      },
+      keyPrefix: 'note-ref-${kind.name}',
+      candidates: candidates,
+    );
+    if (picked == null || !mounted) return;
+    _insert(recordToken(kind, picked, labels[picked] ?? picked));
+  }
+
+  /// #842 — the reference kinds this workspace offers. A refund opens
+  /// as the credit note it is, so it needs no entry of its own.
+  List<NoteRecordKind> get _recordKinds =>
+      ref.read(enabledFeaturesSyncProvider)
+              .contains(WorkspaceFeature.richMessageRefs)
+          ? const [
+              NoteRecordKind.alert,
+              NoteRecordKind.validation,
+              NoteRecordKind.invoice,
+              NoteRecordKind.payment,
+            ]
+          : const [];
+
+  String _recordLabel(AppLocalizations? l10n, NoteRecordKind kind) =>
+      switch (kind) {
+        NoteRecordKind.alert => l10n?.noteRefAlert ?? 'Alert',
+        NoteRecordKind.validation => l10n?.noteRefValidation ?? 'Validation',
+        NoteRecordKind.invoice => l10n?.noteRefInvoice ?? 'Invoice',
+        NoteRecordKind.payment => l10n?.noteRefPayment ?? 'Payment',
+        NoteRecordKind.refund => l10n?.noteRefRefund ?? 'Refund',
+      };
 
   Future<void> _send() async {
     final typed = _body.text.trim();
@@ -364,9 +492,12 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
               key: const ValueKey('composer-attach'),
               tooltip: l10n?.composerAttach ?? 'Attach a reference',
               icon: const Icon(Icons.add_circle_outline),
-              onSelected: (value) => value == 'reservation'
-                  ? _pickReservation()
-                  : _pickSpace(),
+              onSelected: (value) => switch (value) {
+                'reservation' => _pickReservation(),
+                'space' => _pickSpace(),
+                // #842 — the four new kinds share one picker.
+                _ => _pickRecord(NoteRecordKind.values.byName(value)),
+              },
               itemBuilder: (context) => [
                 PopupMenuItem(
                   key: const ValueKey('member-note-ref-reservation'),
@@ -387,6 +518,16 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
                     title: Text(l10n?.noteRefSpace ?? 'Link a space'),
                   ),
                 ),
+                for (final kind in _recordKinds)
+                  PopupMenuItem(
+                    key: ValueKey('member-note-ref-${kind.name}'),
+                    value: kind.name,
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: Icon(noteRecordIcon(kind)),
+                      title: Text(_recordLabel(l10n, kind)),
+                    ),
+                  ),
               ],
             ),
             const Spacer(),
@@ -429,6 +570,13 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
                     label: Text(l10n?.noteRefSpace ?? 'Link a space'),
                     onPressed: _pickSpace,
                   ),
+                  for (final kind in _recordKinds)
+                    ActionChip(
+                      key: ValueKey('member-note-ref-${kind.name}'),
+                      avatar: Icon(noteRecordIcon(kind), size: 18),
+                      label: Text(_recordLabel(l10n, kind)),
+                      onPressed: () => _pickRecord(kind),
+                    ),
                 ],
               ),
             ),

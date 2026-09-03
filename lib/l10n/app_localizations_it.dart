@@ -2393,6 +2393,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Una regola di convalida può chiedere le sue convalide una dopo l\'altra, ogni passo richiesto quando il precedente è passato, e può consentire alla proprietà — mai a un admin — di convalidare il proprio atto. Disattivato: tutto è chiesto in una volta e nessuno convalida il proprio evento.';
 
   @override
+  String get featureRichMessageRefsTitle => 'Riferimenti nei messaggi';
+
+  @override
+  String get featureRichMessageRefsDesc =>
+      'Un messaggio può puntare a un avviso, alla cronologia delle convalide dietro di esso e a una fattura, un pagamento o un rimborso: ogni riferimento è un link che apre ciò che nomina. Ogni selettore filtra mentre scrivi. Disattivato: si possono referenziare solo prenotazioni e spazi.';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override
@@ -5366,6 +5373,47 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get memberNoteDeleteNotMine =>
       'Solo il mittente può ritirare un messaggio.';
+
+  @override
+  String get noteRefFilterLabel => 'Filtra';
+
+  @override
+  String noteRefFilterCount(int shown, int total) {
+    return '$shown su $total';
+  }
+
+  @override
+  String get noteRefFilterEmpty => 'Nessun risultato.';
+
+  @override
+  String get noteRefAlert => 'Avviso';
+
+  @override
+  String get noteRefValidation => 'Convalida';
+
+  @override
+  String get noteRefInvoice => 'Fattura';
+
+  @override
+  String get noteRefPayment => 'Pagamento';
+
+  @override
+  String get noteRefRefund => 'Rimborso';
+
+  @override
+  String get noteRefPickAlert => 'Quale avviso?';
+
+  @override
+  String get noteRefPickValidation => 'Quale convalida?';
+
+  @override
+  String get noteRefPickInvoice => 'Quale fattura?';
+
+  @override
+  String get noteRefPickPayment => 'Quale pagamento?';
+
+  @override
+  String get noteRefNone => 'Niente da referenziare per ora.';
 
   @override
   String get moneyBaseFee => 'Abbonamento base';

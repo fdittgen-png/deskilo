@@ -2392,6 +2392,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine Freigaberegel kann ihre Freigaben nacheinander einholen — jede Stufe erst, wenn die vorige durch ist — und kann der Inhaberin oder dem Inhaber, nie einem Admin, die Freigabe der eigenen Handlung erlauben. Aus: alles wird auf einmal angefragt, und niemand gibt das Eigene frei.';
 
   @override
+  String get featureRichMessageRefsTitle => 'Verweise in Nachrichten';
+
+  @override
+  String get featureRichMessageRefsDesc =>
+      'Eine Nachricht kann auf einen Hinweis zeigen, auf den Freigabeverlauf dahinter und auf eine Rechnung, eine Zahlung oder eine Erstattung — jeder Verweis ist ein Link, der öffnet, was er nennt. Jede Auswahl filtert beim Tippen. Aus: nur Buchungen und Plätze sind verweisbar.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override
@@ -5364,6 +5371,47 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get memberNoteDeleteNotMine =>
       'Nur der Absender kann eine Nachricht zurücknehmen.';
+
+  @override
+  String get noteRefFilterLabel => 'Filtern';
+
+  @override
+  String noteRefFilterCount(int shown, int total) {
+    return '$shown von $total';
+  }
+
+  @override
+  String get noteRefFilterEmpty => 'Keine Treffer.';
+
+  @override
+  String get noteRefAlert => 'Hinweis';
+
+  @override
+  String get noteRefValidation => 'Freigabe';
+
+  @override
+  String get noteRefInvoice => 'Rechnung';
+
+  @override
+  String get noteRefPayment => 'Zahlung';
+
+  @override
+  String get noteRefRefund => 'Erstattung';
+
+  @override
+  String get noteRefPickAlert => 'Welcher Hinweis?';
+
+  @override
+  String get noteRefPickValidation => 'Welche Freigabe?';
+
+  @override
+  String get noteRefPickInvoice => 'Welche Rechnung?';
+
+  @override
+  String get noteRefPickPayment => 'Welche Zahlung?';
+
+  @override
+  String get noteRefNone => 'Noch nichts zum Verweisen.';
 
   @override
   String get moneyBaseFee => 'Basis-Abo';

@@ -12,6 +12,8 @@ import '../../reservations/domain/space_code.dart';
 ///   `[res:<id>|<label>]`            — a reservation / check-in
 ///   `[space:<kind>:<id>|<label>]`   — kind ∈ seat|desk|office|level
 ///   `[quote:<id>|<preview>]`        — the message being replied to
+///   `[ref:<kind>:<id>|<label>]`     — #842, kind ∈ alert|validation|
+///                                     invoice|payment|refund
 ///
 /// Labels may not contain `]` (the composer strips it); everything
 /// else — emojis included — passes through untouched.
@@ -46,6 +48,37 @@ class NoteQuoteRef extends NoteSegment {
   final String preview;
 }
 
+/// #842 — what else a message can point at: an alert, the validation
+/// trail of one, and the financial documents people actually argue
+/// about. Every one of them opens the thing it names.
+enum NoteRecordKind {
+  /// An event in the alerts feed.
+  alert,
+
+  /// The same event, opened on its decision trail (#841) instead.
+  validation,
+  invoice,
+  payment,
+
+  /// A credit note — a refund is one, so it opens as an invoice does.
+  refund;
+
+  static NoteRecordKind? fromWire(String wire) =>
+      NoteRecordKind.values.where((k) => k.name == wire).firstOrNull;
+}
+
+/// A reference to an alert, a validation or a financial document.
+class NoteRecordRef extends NoteSegment {
+  const NoteRecordRef({
+    required this.kind,
+    required this.id,
+    required this.label,
+  });
+  final NoteRecordKind kind;
+  final String id;
+  final String label;
+}
+
 /// A space reference — the subject of a future booking.
 class NoteSpaceRef extends NoteSegment {
   const NoteSpaceRef({
@@ -59,7 +92,12 @@ class NoteSpaceRef extends NoteSegment {
 }
 
 final _refPattern = RegExp(
-    r'\[(?:res:(?<rid>[A-Za-z0-9-]{4,})|quote:(?<qid>[A-Za-z0-9-]{4,})|space:(?<kind>seat|desk|office|level):(?<sid>[A-Za-z0-9-]{4,}))\|(?<label>[^\]]+)\]');
+    r'\[(?:res:(?<rid>[A-Za-z0-9-]{4,})'
+    r'|quote:(?<qid>[A-Za-z0-9-]{4,})'
+    r'|space:(?<kind>seat|desk|office|level):(?<sid>[A-Za-z0-9-]{4,})'
+    r'|ref:(?<rkind>alert|validation|invoice|payment|refund)'
+    r':(?<recid>[A-Za-z0-9-]{4,}))'
+    r'\|(?<label>[^\]]+)\]');
 
 /// Splits [body] into text and reference segments. A token that does
 /// not parse stays visible as plain text — a message never loses
@@ -74,10 +112,17 @@ List<NoteSegment> parseNoteBody(String body) {
     final label = match.namedGroup('label')!;
     final rid = match.namedGroup('rid');
     final qid = match.namedGroup('qid');
+    final rkind = match.namedGroup('rkind');
     if (rid != null) {
       segments.add(NoteReservationRef(id: rid, label: label));
     } else if (qid != null) {
       segments.add(NoteQuoteRef(id: qid, preview: label));
+    } else if (rkind != null) {
+      segments.add(NoteRecordRef(
+        kind: NoteRecordKind.fromWire(rkind)!,
+        id: match.namedGroup('recid')!,
+        label: label,
+      ));
     } else {
       segments.add(NoteSpaceRef(
         kind: SpaceKind.values.byName(match.namedGroup('kind')!),
@@ -100,6 +145,7 @@ String notePlainText(String body) => [
           NoteText(:final text) => text,
           NoteReservationRef(:final label) => label,
           NoteSpaceRef(:final label) => label,
+          NoteRecordRef(:final label) => label,
           NoteQuoteRef(:final preview) => preview,
         },
     ].join();
@@ -122,6 +168,7 @@ String notePreview(String body, {int max = 64}) {
         NoteText(:final text) => text,
         NoteReservationRef(:final label) => label,
         NoteSpaceRef(:final label) => label,
+        NoteRecordRef(:final label) => label,
         NoteQuoteRef(:final preview) => preview,
       },
   ].join().replaceAll('\n', ' ').trim();
@@ -167,5 +214,9 @@ String quoteToken(String id, String preview) {
 /// Builds a space token for the composer.
 String spaceToken(SpaceKind kind, String id, String label) =>
     '[space:${kind.name}:$id|${_safeLabel(label)}]';
+
+/// Builds an alert / validation / financial-document token (#842).
+String recordToken(NoteRecordKind kind, String id, String label) =>
+    '[ref:${kind.name}:$id|${_safeLabel(label)}]';
 
 String _safeLabel(String label) => label.replaceAll(']', ')').trim();

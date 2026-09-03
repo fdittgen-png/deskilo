@@ -270,5 +270,18 @@
   "newConversationGroupSwitch": "Gruppe",
   "inboxRetry": "Erneut versuchen",
   "memberNoteDeleteRead": "Schon gelesen — diese Nachricht kann nicht mehr zurückgenommen werden.",
-  "memberNoteDeleteNotMine": "Nur der Absender kann eine Nachricht zurücknehmen."
+  "memberNoteDeleteNotMine": "Nur der Absender kann eine Nachricht zurücknehmen.",
+  "noteRefFilterLabel": "Filtern",
+  "noteRefFilterCount": "{shown} von {total}",
+  "noteRefFilterEmpty": "Keine Treffer.",
+  "noteRefAlert": "Hinweis",
+  "noteRefValidation": "Freigabe",
+  "noteRefInvoice": "Rechnung",
+  "noteRefPayment": "Zahlung",
+  "noteRefRefund": "Erstattung",
+  "noteRefPickAlert": "Welcher Hinweis?",
+  "noteRefPickValidation": "Welche Freigabe?",
+  "noteRefPickInvoice": "Welche Rechnung?",
+  "noteRefPickPayment": "Welche Zahlung?",
+  "noteRefNone": "Noch nichts zum Verweisen."
 }

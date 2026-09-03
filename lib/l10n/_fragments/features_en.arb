@@ -338,5 +338,13 @@
   "featureValidationChainDesc": "A validation rule can ask for its validations one after another, each step requested once the previous passed, and can let the owner — never an admin — validate their own act. Off: every validation is asked at once and nobody validates their own event.",
   "@featureValidationChainDesc": {
     "description": "#840 - feature description"
+  },
+  "featureRichMessageRefsTitle": "References in messages",
+  "featureRichMessageRefsDesc": "A message can point at an alert, at the validation trail behind one, and at an invoice, a payment or a refund — each one a link that opens what it names. Every reference picker filters as you type. Off: only reservations and spaces can be referenced.",
+  "@featureRichMessageRefsTitle": {
+    "description": "#842 - feature title"
+  },
+  "@featureRichMessageRefsDesc": {
+    "description": "#842 - feature description"
   }
 }

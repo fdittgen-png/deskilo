@@ -2374,6 +2374,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'A validation rule can ask for its validations one after another, each step requested once the previous passed, and can let the owner — never an admin — validate their own act. Off: every validation is asked at once and nobody validates their own event.';
 
   @override
+  String get featureRichMessageRefsTitle => 'References in messages';
+
+  @override
+  String get featureRichMessageRefsDesc =>
+      'A message can point at an alert, at the validation trail behind one, and at an invoice, a payment or a refund — each one a link that opens what it names. Every reference picker filters as you type. Off: only reservations and spaces can be referenced.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override
@@ -5318,6 +5325,47 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get memberNoteDeleteNotMine =>
       'Only the sender can take a message back.';
+
+  @override
+  String get noteRefFilterLabel => 'Filter';
+
+  @override
+  String noteRefFilterCount(int shown, int total) {
+    return '$shown of $total';
+  }
+
+  @override
+  String get noteRefFilterEmpty => 'Nothing matches.';
+
+  @override
+  String get noteRefAlert => 'Alert';
+
+  @override
+  String get noteRefValidation => 'Validation';
+
+  @override
+  String get noteRefInvoice => 'Invoice';
+
+  @override
+  String get noteRefPayment => 'Payment';
+
+  @override
+  String get noteRefRefund => 'Refund';
+
+  @override
+  String get noteRefPickAlert => 'Which alert?';
+
+  @override
+  String get noteRefPickValidation => 'Which validation?';
+
+  @override
+  String get noteRefPickInvoice => 'Which invoice?';
+
+  @override
+  String get noteRefPickPayment => 'Which payment?';
+
+  @override
+  String get noteRefNone => 'Nothing to reference yet.';
 
   @override
   String get moneyBaseFee => 'Base subscription';

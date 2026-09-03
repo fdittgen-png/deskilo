@@ -2604,6 +2604,14 @@
   "@featureValidationChainDesc": {
     "description": "#840 - feature description"
   },
+  "featureRichMessageRefsTitle": "References in messages",
+  "featureRichMessageRefsDesc": "A message can point at an alert, at the validation trail behind one, and at an invoice, a payment or a refund — each one a link that opens what it names. Every reference picker filters as you type. Off: only reservations and spaces can be referenced.",
+  "@featureRichMessageRefsTitle": {
+    "description": "#842 - feature title"
+  },
+  "@featureRichMessageRefsDesc": {
+    "description": "#842 - feature description"
+  },
   "helpTitle": "Help",
   "helpContents": "Contents",
   "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",
@@ -5394,6 +5402,66 @@
   "inboxRetry": "Try again",
   "memberNoteDeleteRead": "Already read — this message can no longer be taken back.",
   "memberNoteDeleteNotMine": "Only the sender can take a message back.",
+  "noteRefFilterLabel": "Filter",
+  "@noteRefFilterLabel": {
+    "description": "#842 - label of the filter field in a reference picker"
+  },
+  "noteRefFilterCount": "{shown} of {total}",
+  "@noteRefFilterCount": {
+    "description": "#842 - how many candidates the filter is showing",
+    "placeholders": {
+      "shown": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "noteRefFilterEmpty": "Nothing matches.",
+  "@noteRefFilterEmpty": {
+    "description": "#842 - the filter matched nothing"
+  },
+  "noteRefAlert": "Alert",
+  "@noteRefAlert": {
+    "description": "#842 - attach-menu entry: reference an alert"
+  },
+  "noteRefValidation": "Validation",
+  "@noteRefValidation": {
+    "description": "#842 - attach-menu entry: reference a validation"
+  },
+  "noteRefInvoice": "Invoice",
+  "@noteRefInvoice": {
+    "description": "#842 - attach-menu entry: reference an invoice"
+  },
+  "noteRefPayment": "Payment",
+  "@noteRefPayment": {
+    "description": "#842 - attach-menu entry: reference a payment"
+  },
+  "noteRefRefund": "Refund",
+  "@noteRefRefund": {
+    "description": "#842 - label of a refund reference"
+  },
+  "noteRefPickAlert": "Which alert?",
+  "@noteRefPickAlert": {
+    "description": "#842 - title of the alert picker"
+  },
+  "noteRefPickValidation": "Which validation?",
+  "@noteRefPickValidation": {
+    "description": "#842 - title of the validation picker"
+  },
+  "noteRefPickInvoice": "Which invoice?",
+  "@noteRefPickInvoice": {
+    "description": "#842 - title of the invoice picker"
+  },
+  "noteRefPickPayment": "Which payment?",
+  "@noteRefPickPayment": {
+    "description": "#842 - title of the payment picker"
+  },
+  "noteRefNone": "Nothing to reference yet.",
+  "@noteRefNone": {
+    "description": "#842 - there is nothing of that kind to reference"
+  },
   "moneyBaseFee": "Base subscription",
   "@moneyBaseFee": {
     "description": "Statement line for the plan's monthly fee"

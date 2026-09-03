@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+
+import 'note_record_open.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_radius.dart';
@@ -91,6 +93,14 @@ class MemberNoteBody extends ConsumerWidget {
                 label: label,
                 onTap: () =>
                     openSpaceById(context, ref, kind: kind, id: id),
+              ),
+            // #842 — an alert, a validation trail, or the financial
+            // document the message is about.
+            NoteRecordRef(:final kind, :final id, :final label) => link(
+                icon: noteRecordIcon(kind),
+                label: label,
+                onTap: () =>
+                    openRecordById(context, ref, kind: kind, id: id),
               ),
             // #798 — a LEADING quote is rendered as a block by the
             // bubble and never reaches here. One left mid-sentence

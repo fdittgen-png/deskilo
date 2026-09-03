@@ -211,6 +211,9 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.validationChain =>
           l10n?.featureValidationChainDesc ??
               'A validation rule can ask for its validations one after another, each step requested once the previous passed, and can let the owner — never an admin — validate their own act. Off: every validation is asked at once and nobody validates their own event.',
+        WorkspaceFeature.richMessageRefs =>
+          l10n?.featureRichMessageRefsDesc ??
+              'A message can point at an alert, at the validation trail behind one, and at an invoice, a payment or a refund — each one a link that opens what it names. Every reference picker filters as you type. Off: only reservations and spaces can be referenced.',
         WorkspaceFeature.priceNegotiations =>
           l10n?.featurePriceNegotiationsDesc ??
               'The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record.',

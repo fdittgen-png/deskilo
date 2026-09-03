@@ -188,5 +188,7 @@
   "featureSettlementFoldTitle": "Facturas reagrupadas plegadas",
   "featureSettlementFoldDesc": "Las facturas reagrupadas en una desaparecen de las listas como iguales y se anidan bajo la factura de reagrupación, que lleva todas sus líneas. En una factura reagrupada toda operación está desactivada; solo queda su PDF, sellado con el número en que se reagrupó. Desactivado: las facturas reagrupadas siguen listadas junto a la de reagrupación.",
   "featureValidationChainTitle": "Validaciones encadenadas",
-  "featureValidationChainDesc": "Una regla de validación puede pedir sus validaciones una tras otra, cada paso solicitado cuando el anterior ha pasado, y puede permitir que la propiedad —nunca un admin— valide su propio acto. Desactivado: todo se pide a la vez y nadie valida su propio evento."
+  "featureValidationChainDesc": "Una regla de validación puede pedir sus validaciones una tras otra, cada paso solicitado cuando el anterior ha pasado, y puede permitir que la propiedad —nunca un admin— valide su propio acto. Desactivado: todo se pide a la vez y nadie valida su propio evento.",
+  "featureRichMessageRefsTitle": "Referencias en los mensajes",
+  "featureRichMessageRefsDesc": "Un mensaje puede apuntar a un aviso, al historial de validación que hay detrás y a una factura, un pago o un reembolso: cada referencia es un enlace que abre lo que nombra. Cada selector filtra mientras escribes. Desactivado: solo se pueden referenciar reservas y espacios."
 }

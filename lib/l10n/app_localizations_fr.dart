@@ -2396,6 +2396,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Une règle de validation peut demander ses validations l\'une après l\'autre, chaque étape sollicitée une fois la précédente passée, et peut autoriser le propriétaire — jamais un admin — à valider son propre acte. Désactivé : tout est demandé d\'un coup et personne ne valide son propre événement.';
 
   @override
+  String get featureRichMessageRefsTitle => 'Références dans les messages';
+
+  @override
+  String get featureRichMessageRefsDesc =>
+      'Un message peut pointer vers une alerte, vers l\'historique de validation derrière une alerte, et vers une facture, un paiement ou un remboursement — chaque référence est un lien qui ouvre ce qu\'elle nomme. Chaque sélecteur de référence se filtre à la frappe. Désactivé : seules les réservations et les espaces sont référençables.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override
@@ -5371,6 +5378,47 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get memberNoteDeleteNotMine =>
       'Seul l\'expéditeur peut reprendre un message.';
+
+  @override
+  String get noteRefFilterLabel => 'Filtrer';
+
+  @override
+  String noteRefFilterCount(int shown, int total) {
+    return '$shown sur $total';
+  }
+
+  @override
+  String get noteRefFilterEmpty => 'Aucun résultat.';
+
+  @override
+  String get noteRefAlert => 'Alerte';
+
+  @override
+  String get noteRefValidation => 'Validation';
+
+  @override
+  String get noteRefInvoice => 'Facture';
+
+  @override
+  String get noteRefPayment => 'Paiement';
+
+  @override
+  String get noteRefRefund => 'Remboursement';
+
+  @override
+  String get noteRefPickAlert => 'Quelle alerte ?';
+
+  @override
+  String get noteRefPickValidation => 'Quelle validation ?';
+
+  @override
+  String get noteRefPickInvoice => 'Quelle facture ?';
+
+  @override
+  String get noteRefPickPayment => 'Quel paiement ?';
+
+  @override
+  String get noteRefNone => 'Rien à référencer pour le moment.';
 
   @override
   String get moneyBaseFee => 'Abonnement de base';
