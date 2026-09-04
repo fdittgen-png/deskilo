@@ -270,7 +270,8 @@ def _set_countries(edits, package: str, track_name: str,
             label="tracks.update (countries)",
         )
         _execute_with_retry(
-            lambda: edits.commit(packageName=package, editId=edit_id),
+            lambda: edits.commit(packageName=package, editId=edit_id,
+                         changesNotSentForReview=False),
             label="edits.commit (countries)",
         )
     except HttpError as e:
@@ -371,7 +372,8 @@ def _move_testers(edits, package: str, source: str, target: str) -> int:
             label=f"testers.update({source})",
         )
         _execute_with_retry(
-            lambda: edits.commit(packageName=package, editId=edit_id),
+            lambda: edits.commit(packageName=package, editId=edit_id,
+                         changesNotSentForReview=False),
             label="edits.commit (testers)",
         )
     except HttpError as e:
@@ -786,6 +788,12 @@ def main() -> int:
         _execute_with_retry(
             lambda: edits.commit(
                 packageName=args.package, editId=edit_id,
+                # #855 — WITHOUT THIS the commit can land as "changes not
+                # sent for review": the Console shows a pending
+                # modification, the API reports success, and nothing ever
+                # reaches a device. Every upload in this app's history sat
+                # there until somebody pressed the button by hand.
+                changesNotSentForReview=False,
             ),
             label="edits.commit",
         )
@@ -831,6 +839,7 @@ def main() -> int:
                 _execute_with_retry(
                     lambda: edits.commit(
                         packageName=args.package, editId=edit_id,
+                        changesNotSentForReview=False,
                     ),
                     label="edits.commit (draft retry)",
                 )
