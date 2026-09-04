@@ -270,7 +270,8 @@ def _set_countries(edits, package: str, track_name: str,
             label="tracks.update (countries)",
         )
         _execute_with_retry(
-            lambda: edits.commit(packageName=package, editId=edit_id),
+            lambda: edits.commit(packageName=package, editId=edit_id,
+                         changesNotSentForReview=False),
             label="edits.commit (countries)",
         )
     except HttpError as e:
@@ -371,7 +372,8 @@ def _move_testers(edits, package: str, source: str, target: str) -> int:
             label=f"testers.update({source})",
         )
         _execute_with_retry(
-            lambda: edits.commit(packageName=package, editId=edit_id),
+            lambda: edits.commit(packageName=package, editId=edit_id,
+                         changesNotSentForReview=False),
             label="edits.commit (testers)",
         )
     except HttpError as e:
@@ -409,11 +411,23 @@ def _track_countries(edits, package: str, edit_id: str, track_name: str) -> str:
         return f"unreadable ({str(e)[:60]}…)"
     except Exception:  # noqa: BLE001 - an absent resource is an answer
         return "unreadable"
-    if result.get("restOfWorld"):
-        return "REST OF WORLD (everywhere)"
     countries = [c.get("countryCode") for c in result.get("countries", [])]
+    sync = result.get("syncWithProduction")
+    rest = result.get("restOfWorld")
+    # syncWithProduction is the field that decides. When it is true the
+    # track does not have an availability of its own — it INHERITS
+    # production's, and an app that has never been published to
+    # production is available in no country at all. The other two fields
+    # are still populated, which is how a track can read "rest of world"
+    # and serve nobody.
+    detail = (f"syncWithProduction={sync} restOfWorld={rest} "
+              f"countries={len(countries)}")
+    if sync:
+        return f"INHERITS PRODUCTION ({detail})"
+    if rest:
+        return f"rest of world ({detail})"
     if not countries:
-        return "NO COUNTRY"
+        return f"NO COUNTRY ({detail})"
     shown = ", ".join(countries[:12])
     more = "" if len(countries) <= 12 else f" (+{len(countries) - 12} more)"
     return f"{len(countries)} countries: {shown}{more}"
@@ -496,7 +510,13 @@ def _report_status(edits, package: str) -> int:
                     "visible to this API)")
         print(f"\ntrack {name}: {len(releases)} release(s) — testers: {who}")
         print(f"  track availability: {reach}")
-        if reach == 'NO COUNTRY':
+        if reach.startswith('INHERITS PRODUCTION'):
+            problems.append(
+                f"{name}: the track INHERITS production's availability, and "
+                f"production is published in no country — so a tester on "
+                f"this track is told they are a tester and then finds "
+                f"nothing, however healthy the release is")
+        if reach.startswith('NO COUNTRY'):
             problems.append(
                 f"{name}: the TRACK is available in no country — a release "
                 f"on it reaches nobody, whatever the release itself says")
@@ -768,6 +788,12 @@ def main() -> int:
         _execute_with_retry(
             lambda: edits.commit(
                 packageName=args.package, editId=edit_id,
+                # #855 — WITHOUT THIS the commit can land as "changes not
+                # sent for review": the Console shows a pending
+                # modification, the API reports success, and nothing ever
+                # reaches a device. Every upload in this app's history sat
+                # there until somebody pressed the button by hand.
+                changesNotSentForReview=False,
             ),
             label="edits.commit",
         )
@@ -813,6 +839,7 @@ def main() -> int:
                 _execute_with_retry(
                     lambda: edits.commit(
                         packageName=args.package, editId=edit_id,
+                        changesNotSentForReview=False,
                     ),
                     label="edits.commit (draft retry)",
                 )

@@ -107,6 +107,18 @@ void main() {
     expect(workflow, isNot(contains('--track internal --track')));
   });
 
+  test('every commit is sent for review', () {
+    // A commit that lands as "changes not sent for review" shows up in
+    // the Console as a pending modification, reports success through the
+    // API, and never reaches a device. Every upload this app made sat
+    // there until somebody pressed the button by hand.
+    final commits = 'edits.commit('.allMatches(tool).length;
+    final reviewed =
+        'changesNotSentForReview=False'.allMatches(tool).length;
+    expect(reviewed, commits,
+        reason: 'all $commits commits must send for review, $reviewed do');
+  });
+
   test('the workflow reads by default and only writes when asked', () {
     expect(workflow, contains('--status'));
     expect(workflow, contains('--set-countries'));
