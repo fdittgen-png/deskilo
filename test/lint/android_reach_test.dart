@@ -52,6 +52,25 @@ void main() {
     }
   });
 
+  test('a permission the app does not use is removed from the merge', () {
+    // Every one of these is injected by the camera stack that
+    // flutter_zxing pulls in, and none of them is used. They are not
+    // free: Play wants a prominent disclosure and a Data safety entry
+    // for the microphone, and looks hard at broad storage.
+    for (final permission in const [
+      'android.permission.RECORD_AUDIO',
+      'android.permission.WRITE_EXTERNAL_STORAGE',
+      'android.permission.READ_EXTERNAL_STORAGE',
+    ]) {
+      final block = manifest.substring(
+          manifest.indexOf('android:name="$permission"'));
+      expect(block.substring(0, block.indexOf('/>')),
+          contains('tools:node="remove"'),
+          reason: '$permission is declared by a dependency and unused '
+              'here; leaving it in the merge invites a policy rejection');
+    }
+  });
+
   test('no feature is ever declared required', () {
     expect(manifest, isNot(contains('android:required="true"')),
         reason: 'a required feature is a store-wide filter, never a '

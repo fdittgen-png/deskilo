@@ -34,6 +34,25 @@
     <!-- Kiosk RFID badges (0046): read NFC tag UIDs. Optional hardware —
          phones without NFC still install; the kiosk hides the tap path. -->
     <uses-permission android:name="android.permission.NFC" />
+
+    <!-- #855 — PERMISSIONS THIS APP DOES NOT USE, removed from the merge.
+         flutter_zxing pulls in the camera stack, which declares the
+         microphone (for video) and legacy broad storage. DesKilo records
+         no audio, and its only external writes go to the app-specific
+         directory, which has needed no permission since API 19 (minSdk
+         here is 24).
+
+         Shipping a permission you do not use is not free: Play requires a
+         prominent disclosure and a Data safety entry for the microphone,
+         and reviews broad storage access closely. An undeclared,
+         unexplained RECORD_AUDIO is exactly the kind of thing that gets a
+         release rejected. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"
+        tools:node="remove" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:node="remove" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        tools:node="remove" />
     <uses-feature
         android:name="android.hardware.nfc"
         android:required="false"
