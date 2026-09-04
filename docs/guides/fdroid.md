@@ -2,6 +2,23 @@
 
 DesKilo can be built for F-Droid without Google services (ADR 0012).
 
+> **The submission is FROZEN.** While
+> [MR !47409](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/47409) is
+> under review, `fdroid/de.deskilo.app.yml` and everything supporting the
+> submission change **only** for something F-Droid asks for — a reviewer
+> comment, or a specific edit one of their jobs demands. Not a version bump,
+> not tidying, not a drive-by. The recipe is worked on again once DesKilo is
+> actually published there.
+>
+> This is enforced, not remembered: `test/lint/fdroid_frozen_test.dart` pins the
+> file, so any edit turns the suite red. To make a change F-Droid *has* asked
+> for, move the pin in the same commit and name the request in the message —
+> the pin moving in review is what makes the exception visible.
+>
+> Why: a reviewer reads a moving target as an unfinished one, every push
+> restarts a quarter-hour pipeline, and this MR spent four days red over two
+> bytes of a linker note nothing reads. It verifies now.
+
 ## What differs
 
 Only the push transport. `pubspec.yaml` depends on the local package
