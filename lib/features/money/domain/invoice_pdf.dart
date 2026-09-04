@@ -109,9 +109,6 @@ const PdfColor _hairline = PdfColors.blueGrey200;
 /// at the same light grey; over a figure it only greys the stroke, so
 /// every amount stays readable.
 const PdfColor _watermark = PdfColors.grey400;
-/// The page's own top margin — the address window is measured from
-/// the PAGE edge, so the flow maths has to subtract exactly this.
-const double _pageMarginTop = 44;
 
 const double _watermarkOpacity = 0.5;
 const PdfColor _zebra = PdfColor.fromInt(0xFFF6F7F9);
@@ -283,6 +280,12 @@ Future<Uint8List> buildInvoicePdf({
                   ],
                 ),
               ),
+              // #873 — with a window envelope the identification block
+              // does NOT sit up here: the spec puts it under the sender
+              // at 90 mm, so it is the first thing in the flow instead.
+              if (windowOn)
+                pw.SizedBox()
+              else
               pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.end,
                 children: [
@@ -386,8 +389,9 @@ Future<Uint8List> buildInvoicePdf({
         pageTheme: pw.PageTheme(
           pageFormat: PdfPageFormat.a4,
           theme: theme,
-          margin: const pw.EdgeInsets.fromLTRB(
-              48, _pageMarginTop, 48, _pageMarginTop),
+          // #873 — 20 mm all round: the sender block sits at 20 mm
+          // from the top and left edges, which the spec fixes.
+          margin: const pw.EdgeInsets.all(pageMargin),
           buildBackground: !windowOn
               ? null
               : (context) => addressWindowBackground(
@@ -426,8 +430,11 @@ Future<Uint8List> buildInvoicePdf({
                 crossAxisAlignment: pw.CrossAxisAlignment.stretch,
                 children: [
                   if (windowOn)
+                    // The sender block owns 20 mm → 45 mm, and the flow
+                    // resumes at 90 mm: below the 85 × 40 mm aperture
+                    // AND below the tolerance band under it.
                     pw.SizedBox(
-                      height: addressWindowTop - _pageMarginTop,
+                      height: addressWindowTop - pageMargin,
                       child: pw.Column(
                         crossAxisAlignment: pw.CrossAxisAlignment.stretch,
                         children: headerWidgets,
@@ -435,7 +442,9 @@ Future<Uint8List> buildInvoicePdf({
                     )
                   else
                     ...headerWidgets,
-                  if (windowOn) pw.SizedBox(height: addressWindowHeight),
+                  if (windowOn)
+                    pw.SizedBox(
+                        height: addressWindowFlowResume - addressWindowTop),
                 ],
               )
             : continuationHeader,
@@ -458,6 +467,24 @@ Future<Uint8List> buildInvoicePdf({
           ],
         ),
         build: (context) => [
+          // #873 — "Facture", its number and the dates, at 90 mm: the
+          // first thing under the address field, as the spec requires.
+          if (windowOn && report == null) ...[
+            pw.Text(numberLine,
+                style: pw.TextStyle(
+                    fontSize: 14,
+                    fontWeight: pw.FontWeight.bold,
+                    color: _accent)),
+            pw.SizedBox(height: 3),
+            pw.Text(issuedOnLine,
+                style: const pw.TextStyle(fontSize: 9, color: _muted)),
+            pw.Text(issuedByLine,
+                style: const pw.TextStyle(fontSize: 9, color: _muted)),
+            if (invoice.replacesNumber.isNotEmpty)
+              pw.Text(replacesLine,
+                  style: const pw.TextStyle(fontSize: 9, color: _muted)),
+            pw.SizedBox(height: 12),
+          ],
           // ── Erroneous banner (0061) ───────────────────────────────
           if (invoice.isVoided && !proforma)
             pw.Container(
