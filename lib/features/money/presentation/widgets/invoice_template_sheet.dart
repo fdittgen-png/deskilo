@@ -562,6 +562,8 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
                   header: _currentBands.header,
                   body: _currentBands.body,
                   footer: _currentBands.footer,
+                  // #872 — or the preview drops the page-2 strip.
+                  continuation: _currentBands.continuation,
                 ),
           workspace: ref.read(currentWorkspaceProvider).value,
           reportImage: (name) =>
