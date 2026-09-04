@@ -3954,6 +3954,14 @@
   "memberSimultaneousLimitExplainer": "Wie viele Buchungen dieses Mitglied im selben Zeitraum halten darf. Ohne Angabe gilt die Vorgabe des Arbeitsraums.",
   "memberSimultaneousLimitDefault": "Vorgabe des Arbeitsraums",
   "memberSimultaneousLimitChip": "{n} gleichzeitig",
+  "featureReportLayouts": "Positionierte Berichtslayouts",
+  "@featureReportLayouts": {
+    "description": "Features screen name for the #875 positioned report layouts flag"
+  },
+  "featureReportLayoutsDesc": "Ein Bericht wird entworfen, indem jedes Element seine Position in mm, cm, px oder % nennt; das PDF druckt genau das. Ein Dokument mit Layout nutzt es, die übrigen behalten ihre Bänder.",
+  "@featureReportLayoutsDesc": {
+    "description": "Features screen description for the #875 positioned report layouts flag"
+  },
   "reserveMonthView": "Monat",
   "monthFreeCount": "{free}/{total}",
   "reservationRecurring": "Wiederkehrende Reservierung",

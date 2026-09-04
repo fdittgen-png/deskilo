@@ -8,6 +8,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'invoice.dart';
 import 'address_window.dart';
 import 'invoice_report.dart';
+import 'report_block_widgets.dart';
 
 /// Localized strings the invoice PDF prints.
 class InvoicePdfStrings {
@@ -312,11 +313,11 @@ Future<Uint8List> buildInvoicePdf({
               height: 2,
               color: _accent),
         ]
-        : _reportWidgets(report.header, images: reportImages);
+        : reportBlockWidgets(report.header, images: reportImages);
 
     final List<pw.Widget> footerWidgets = report == null
         ? const <pw.Widget>[]
-        : _reportWidgets(report.footer, images: reportImages);
+        : reportBlockWidgets(report.footer, images: reportImages);
 
     // #872 — what a page 2 says when the design does not say it: the
     // document's own title and number over a hairline. Enough to pair a
@@ -325,7 +326,7 @@ Future<Uint8List> buildInvoicePdf({
             report.continuation.isNotEmpty
         ? pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.stretch,
-            children: _reportWidgets(report.continuation,
+            children: reportBlockWidgets(report.continuation,
                 images: reportImages),
           )
         : pw.Container(
@@ -745,7 +746,7 @@ Future<Uint8List> buildInvoicePdf({
             ],
           ),
                 ]
-              : _reportWidgets(report.body, images: reportImages)),
+              : reportBlockWidgets(report.body, images: reportImages)),
           // ── Annex (0064) ──────────────────────────────────────────
           if (invoice.detailed) ...[
             pw.SizedBox(height: 22),
@@ -926,137 +927,17 @@ Future<Uint8List> buildBandedLetterPdf({
         ),
       ),
       build: (context) => [
-        ..._reportWidgets(report.header, images: reportImages),
-        ..._reportWidgets(report.body, images: reportImages),
+        ...reportBlockWidgets(report.header, images: reportImages),
+        ...reportBlockWidgets(report.body, images: reportImages),
         if (report.footer.isNotEmpty) ...[
           pw.SizedBox(height: 16),
-          ..._reportWidgets(report.footer, images: reportImages),
+          ...reportBlockWidgets(report.footer, images: reportImages),
         ],
       ],
     ),
   );
   return doc.save();
 }
-
-/// Report blocks → pdf widgets (#470). Table rows: the first cell takes
-/// the width, every further cell is right-aligned — the amounts column
-/// convention of the built-in layout.
-///
-/// Public since #671, so the batch prints (badge sheets, space QR
-/// cards) render the SAME markup the report editor edits. A second
-/// renderer for those would drift from this one, and the drift would
-/// show up as the owner's own wording coming out looking different
-/// depending on which button produced the PDF.
-List<pw.Widget> reportBlockWidgets(
-  List<ReportBlock> blocks, {
-  Map<String, Uint8List> images = const {},
-}) =>
-    _reportWidgets(blocks, images: images);
-
-List<pw.Widget> _reportWidgets(
-  List<ReportBlock> blocks, {
-  Map<String, Uint8List> images = const {},
-}) =>
-    [for (final block in blocks) _reportWidget(block, images)];
-
-pw.Widget _reportWidget(
-  ReportBlock block,
-  Map<String, Uint8List> images,
-) =>
-    switch (block) {
-          ReportHeading(:final text) => pw.Padding(
-              padding: const pw.EdgeInsets.only(bottom: 4),
-              child: pw.Text(text,
-                  style: pw.TextStyle(
-                      fontSize: 20,
-                      fontWeight: pw.FontWeight.bold,
-                      color: _ink)),
-            ),
-          ReportSubheading(:final text) => pw.Padding(
-              padding: const pw.EdgeInsets.only(top: 6, bottom: 3),
-              child: pw.Text(text.toUpperCase(),
-                  style: pw.TextStyle(
-                      fontSize: 8,
-                      color: _muted,
-                      fontWeight: pw.FontWeight.bold,
-                      letterSpacing: 1.2)),
-            ),
-          ReportText(:final text) => pw.Text(text,
-              style: const pw.TextStyle(fontSize: 10, color: _ink)),
-          ReportMuted(:final text) => pw.Text(text,
-              style: const pw.TextStyle(fontSize: 8, color: _muted)),
-          ReportDivider() => pw.Container(
-              margin: const pw.EdgeInsets.symmetric(vertical: 8),
-              height: 2,
-              color: _accent),
-          ReportSpacer() => pw.SizedBox(height: 8),
-          ReportTableRow(:final cells, :final bold) => pw.Padding(
-              padding: const pw.EdgeInsets.symmetric(vertical: 3),
-              child: pw.Row(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                children: [
-                  for (var i = 0; i < cells.length; i++)
-                    i == 0
-                        ? pw.Expanded(
-                            child: pw.Text(cells[i],
-                                style: pw.TextStyle(
-                                    fontSize: 10,
-                                    color: _ink,
-                                    fontWeight: bold
-                                        ? pw.FontWeight.bold
-                                        : pw.FontWeight.normal)),
-                          )
-                        : pw.Padding(
-                            padding: const pw.EdgeInsets.only(left: 12),
-                            child: pw.Text(cells[i],
-                                textAlign: pw.TextAlign.right,
-                                style: pw.TextStyle(
-                                    fontSize: 10,
-                                    color: _ink,
-                                    fontWeight: bold
-                                        ? pw.FontWeight.bold
-                                        : pw.FontWeight.normal)),
-                          ),
-                ],
-              ),
-            ),
-          // #482 — side-by-side columns: equal widths, top-aligned; an
-          // empty first column pushes the second to the right.
-          ReportColumns(:final columns) => pw.Row(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                for (var i = 0; i < columns.length; i++)
-                  pw.Expanded(
-                    child: pw.Padding(
-                      padding: pw.EdgeInsets.only(left: i == 0 ? 0 : 16),
-                      child: pw.Column(
-                        crossAxisAlignment: pw.CrossAxisAlignment.start,
-                        children:
-                            _reportWidgets(columns[i], images: images),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          // #488 — a library image (the logo…); unresolved → nothing.
-          ReportImage(:final name, :final size, :final align) =>
-            images[name] == null
-                ? pw.SizedBox()
-                : pw.Padding(
-                    padding: const pw.EdgeInsets.symmetric(vertical: 4),
-                    child: pw.Image(
-                      pw.MemoryImage(images[name]!),
-                      // #822 — `![name|size|align]`.
-                      height: size.height,
-                      fit: pw.BoxFit.contain,
-                      alignment: switch (align) {
-                        ReportImageAlign.left => pw.Alignment.centerLeft,
-                        ReportImageAlign.center => pw.Alignment.center,
-                        ReportImageAlign.right => pw.Alignment.centerRight,
-                      },
-                    ),
-                  ),
-        };
 
 /// #831 — which stamp a document wears, by priority: a proforma says so
 /// first; a source regrouped into a settlement says WHERE it went; a

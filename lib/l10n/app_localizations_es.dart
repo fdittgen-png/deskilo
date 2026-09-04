@@ -6900,6 +6900,13 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get featureReportLayouts => 'Maquetas de informe posicionadas';
+
+  @override
+  String get featureReportLayoutsDesc =>
+      'Diseñe un informe indicando dónde se sitúa cada elemento, en mm, cm, px o %; el PDF imprime exactamente eso. Un documento con maqueta la usa; los demás conservan sus bandas.';
+
+  @override
   String get reserveMonthView => 'Mes';
 
   @override

@@ -117,6 +117,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureUsageRecordsTitle ?? 'Usage records',
       WorkspaceFeature.reportDesignExchange =>
         l10n?.featureReportDesignExchangeTitle ?? 'Export and import report designs',
+      WorkspaceFeature.reportLayouts =>
+        l10n?.featureReportLayouts ?? 'Positioned report layouts',
       WorkspaceFeature.priceNegotiations =>
         l10n?.featurePriceNegotiationsTitle ?? 'Price negotiations',
       WorkspaceFeature.scheduledExpenses =>

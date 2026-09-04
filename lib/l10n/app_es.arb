@@ -3954,6 +3954,14 @@
   "memberSimultaneousLimitExplainer": "Cuántas reservas puede tener este miembro en el mismo periodo. Sin definir, se aplica el valor por defecto del espacio.",
   "memberSimultaneousLimitDefault": "Valor del espacio",
   "memberSimultaneousLimitChip": "{n} a la vez",
+  "featureReportLayouts": "Maquetas de informe posicionadas",
+  "@featureReportLayouts": {
+    "description": "Features screen name for the #875 positioned report layouts flag"
+  },
+  "featureReportLayoutsDesc": "Diseñe un informe indicando dónde se sitúa cada elemento, en mm, cm, px o %; el PDF imprime exactamente eso. Un documento con maqueta la usa; los demás conservan sus bandas.",
+  "@featureReportLayoutsDesc": {
+    "description": "Features screen description for the #875 positioned report layouts flag"
+  },
   "reserveMonthView": "Mes",
   "monthFreeCount": "{free}/{total}",
   "reservationRecurring": "Reserva recurrente",

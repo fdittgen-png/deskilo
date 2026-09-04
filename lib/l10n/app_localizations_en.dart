@@ -6856,6 +6856,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get featureReportLayouts => 'Positioned report layouts';
+
+  @override
+  String get featureReportLayoutsDesc =>
+      'Design a report by stating where each element sits, in mm, cm, px or %; the PDF prints exactly that. A document with a layout uses it, the others keep their bands.';
+
+  @override
   String get reserveMonthView => 'Month';
 
   @override

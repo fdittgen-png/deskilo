@@ -12025,6 +12025,18 @@ abstract class AppLocalizations {
   /// **'{n} at once'**
   String memberSimultaneousLimitChip(int n);
 
+  /// Features screen name for the #875 positioned report layouts flag
+  ///
+  /// In en, this message translates to:
+  /// **'Positioned report layouts'**
+  String get featureReportLayouts;
+
+  /// Features screen description for the #875 positioned report layouts flag
+  ///
+  /// In en, this message translates to:
+  /// **'Design a report by stating where each element sits, in mm, cm, px or %; the PDF prints exactly that. A document with a layout uses it, the others keep their bands.'**
+  String get featureReportLayoutsDesc;
+
   /// Reserve hub view segment: month availability calendar (#7)
   ///
   /// In en, this message translates to:

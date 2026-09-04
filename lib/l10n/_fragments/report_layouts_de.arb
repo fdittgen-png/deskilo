@@ -1,0 +1,11 @@
+{
+  "@@locale": "de",
+  "featureReportLayouts": "Positionierte Berichtslayouts",
+  "@featureReportLayouts": {
+    "description": "Features screen name for the #875 positioned report layouts flag"
+  },
+  "featureReportLayoutsDesc": "Ein Bericht wird entworfen, indem jedes Element seine Position in mm, cm, px oder % nennt; das PDF druckt genau das. Ein Dokument mit Layout nutzt es, die übrigen behalten ihre Bänder.",
+  "@featureReportLayoutsDesc": {
+    "description": "Features screen description for the #875 positioned report layouts flag"
+  }
+}

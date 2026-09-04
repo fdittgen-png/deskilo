@@ -29,6 +29,7 @@ import '../../domain/bill_pdf.dart';
 import '../../domain/invoice_pdf.dart';
 import '../../domain/invoice_report.dart';
 import '../invoice_actions.dart';
+import '../report_layout_actions.dart';
 import '../report_actions.dart';
 import '../invoice_status.dart';
 import '../report_defaults.dart';
@@ -173,7 +174,11 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       render: () => report,
       buildPdf: () async {
         final pdf = await letterDocPdf(context, ref,
-            report: report, title: title);
+            report: report,
+            title: title,
+            layoutXml:
+                letterLayoutXml(ref, docId: docId, language: language),
+            data: data);
         return (bytes: pdf.bytes, fileName: pdf.fileName);
       },
     );

@@ -120,7 +120,7 @@ const Map<String, int> _baseline = {
   // 1740→1820 (2026-08-05): #504 the write-off request dialog.
   // 1820→1910 (2026-08-05): #508 the credit-note refund dialog.
   // 1960→2000 (2026-08-14): #568 the customer-delivery send leg.
-  'lib/features/money/presentation/invoice_actions.dart': 2075, // 2026-09-02 #837 the annex question // 2026-09-04 #871 the bank block: IBAN/BIC/bank name reach a designed report, resolved once in legalMentionData for every document
+  'lib/features/money/presentation/invoice_actions.dart': 2120, // 2026-09-02 #837 the annex question // 2026-09-04 #871 the bank block: IBAN/BIC/bank name reach a designed report, resolved once in legalMentionData for every document // 2026-09-04 #875 layout-wins hooks + the strings/features hoists they need; the engine itself lives under domain/report_layout
   // 1920→1960 (2026-08-06): #514 quickViewInvoice + the proforma triad.
   // 1910→1920 (2026-08-06): #512 imputation candidates (adjustment
   // credits, baked-credit filter).
@@ -128,7 +128,7 @@ const Map<String, int> _baseline = {
   // 1410→1440 (2026-08-05): #496 the language chain on the workspace report.
   // 1440→1465 (2026-09-01): #802 the invoice-schedule entry beside the
   // reminder rules — issuing and chasing are one conversation.
-  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1465,
+  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1470, // 2026-09-04 #875 the workspace report passes its layout through
   // 600→640 (2026-08-05): #492 the request-deletion dialog + flow.
   // 640→760 (2026-08-22): #574 the running-booking extension flow.
   // 760→880 (2026-08-25): #638 the symmetric END-EARLIER flow — the
