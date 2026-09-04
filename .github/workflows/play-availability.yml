@@ -34,6 +34,18 @@ on:
           releases only. Leave off to only read.
         type: boolean
         default: false
+      retire_track:
+        description: >-
+          Remove EVERY release from the track chosen above, so it serves
+          nobody. Deleting the channel stays Console work.
+        type: boolean
+        default: false
+      drop_drafts:
+        description: >-
+          Remove only the DRAFT releases from the track above, leaving
+          what is live untouched.
+        type: boolean
+        default: false
       move_testers_from:
         description: >-
           Move every Google group testing THIS track onto the track
@@ -71,6 +83,32 @@ jobs:
         run: |
           echo "$SA_JSON" > "$RUNNER_TEMP/play-key.json"
           echo "PLAY_KEY_PATH=$RUNNER_TEMP/play-key.json" >> "$GITHUB_ENV"
+
+      - name: Retire the track
+        if: ${{ inputs.retire_track }}
+        run: |
+          python tools/upload_to_play.py --clear-track \
+            --track "${{ inputs.track }}" --key "$PLAY_KEY_PATH" \
+            | tee "$RUNNER_TEMP/retire.txt"
+          {
+            echo '## Track `${{ inputs.track }}` retired'
+            echo '```'
+            cat "$RUNNER_TEMP/retire.txt"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Drop the draft releases
+        if: ${{ inputs.drop_drafts }}
+        run: |
+          python tools/upload_to_play.py --drop-drafts \
+            --track "${{ inputs.track }}" --key "$PLAY_KEY_PATH" \
+            | tee "$RUNNER_TEMP/drafts.txt"
+          {
+            echo '## Drafts dropped from `${{ inputs.track }}`'
+            echo '```'
+            cat "$RUNNER_TEMP/drafts.txt"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Move the testers
         if: ${{ inputs.move_testers_from != '' }}
