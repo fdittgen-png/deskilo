@@ -226,3 +226,49 @@ looked right. So:
 
 Changing any of these millimetres means changing that file, and the
 reason belongs in the commit message.
+
+## Positioned report layouts (#875) — the CLI is the tester
+
+A report kind may carry a **positioned layout**: XML (`<report-layout>`)
+whose zones and elements state their own geometry in `mm`, `cm`, `px`
+(the CSS pixel), `pt` or `%`. When a kind has a layout it **wins** over
+its bands; when it has none, the bands print exactly as before. The two
+engines coexist on purpose — a workspace moves one document at a time.
+
+**Never import a layout that has not been checked.** The runner is pure
+Dart and needs no app:
+
+```bash
+dart run tool/report.dart describe                      # the vocabulary
+dart run tool/report.dart sample --out /tmp/d.json      # every placeholder, filled
+dart run tool/report.dart check  design.xml --data /tmp/d.json --out /tmp/d.pdf
+```
+
+`check` renders the sheet, measures every zone in millimetres against
+the window-envelope contract above and prints a verdict; exit 0 is
+CONFORMS, 1 is issues, 2 is a layout the engine cannot read (the message
+names the element path). Open the PDF; fold it; only then import.
+
+**Round trip is the workflow**: export the XML from the report designer,
+edit it (a person or Claude), `check`, import. The exported file carries
+its own editing reference, generated from the constants the reader
+accepts — if the reader and the documentation ever disagree, that is a
+bug in the generator, not something to patch in the file.
+
+**Where things live, and what may not drift:**
+
+- geometry constants: `lib/features/money/domain/address_window.dart` —
+  the layout engine, the harness and `check` all read these; change them
+  there only, with the reason in the commit;
+- the vocabulary: `report_layout/layout_xml.dart` (`LayoutXml`) — `describe`
+  and the how-to block print these constants, never a hand-written list;
+- the ink: `report_style.dart` — both engines and the on-screen mirror
+  draw from it; a `<markup>` element must look identical to the same
+  markup in a band;
+- exceptions: `LayoutException` carries the element path, the underlying
+  cause and its stack; a layout that fails at render time is TRACED and
+  the bands print instead (the #470 contract). Never swallow it.
+
+**Prove on the artefact.** `layout_render_test.dart` measures a
+generated PDF; `report_cli_test.dart` runs the CLI cold. A layout change
+that passes neither is not done.

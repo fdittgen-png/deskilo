@@ -889,6 +889,22 @@ Tous les rapports en disposent — facture, proforma, relevé, accord financier,
 
 Un import est **refusé avec sa raison** si le fichier n'est pas du JSON lisible, n'est pas une maquette DesKilo, vient d'une version plus récente, concerne un rapport que cet espace n'a pas, ou appartient à un **autre** rapport : une maquette n'est jamais redirigée en silence. Un import accepté arrive dans l'éditeur, pas dans l'espace : rien ne change tant que vous n'appuyez pas sur **Enregistrer**, vous pouvez donc le prévisualiser d'abord et repartir sans le conserver.
 
+### Maquettes positionnées (XML)
+
+Un rapport peut être décrit par une **maquette** qui indique où se place chaque élément — en millimètres, centimètres, pixels ou en pourcentage de son conteneur — plutôt que par des bandes qui s'enchaînent. Quand un document possède une maquette, c'est elle qui s'imprime ; sinon, ses bandes s'impriment comme avant. Les deux coexistent : vous migrez un document à la fois.
+
+**Le cycle** : dans le concepteur de rapports, **Exporter le XML** ; modifiez le fichier (vous, ou Claude) ; vérifiez-le localement ; **Importer un XML** ; enregistrez. Le fichier exporté contient son propre mode d'emploi : les zones (en-tête de la page 1, bandeau des pages suivantes, destinataire dans la fenêtre de l'enveloppe, corps, pied fixe sur chaque page), les éléments, les unités et les champs disponibles.
+
+**Vérifier avant d'importer** — sans lancer l'application :
+
+```
+dart run tool/report.dart check ma-maquette.xml
+```
+
+La commande imprime la position de chaque zone en millimètres et conclut **CONFORMS** ou liste les écarts (adresse hors de la fenêtre, texte dans la bande 45–90 mm, pied absent d'une page…). Ouvrez le PDF produit, pliez-le, glissez-le dans une enveloppe DL à fenêtre.
+
+**Images** : `<image name="logo" h="12mm"/>` place une image de la bibliothèque du rapport ; elle apparaît dans l'aperçu et dans le PDF.
+
 ## 12. Réglages et profil
 
 Votre écran personnel, de haut en bas :

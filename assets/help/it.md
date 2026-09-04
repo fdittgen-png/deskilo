@@ -889,6 +889,22 @@ Ogni report ce l'ha — fattura, proforma, estratto, accordo, report dei pagamen
 
 Un'importazione è **rifiutata con la motivazione** se il file non è JSON leggibile, non è un modello DesKilo, viene da una versione più recente, riguarda un report che questo spazio non ha, o appartiene a un **altro** report: un modello non viene mai reindirizzato in silenzio. Un'importazione accettata arriva nell'editor, non nello spazio: nulla cambia finché non premi **Salva**.
 
+### Layout posizionati (XML)
+
+Un report può essere descritto da un **layout** che indica dove si trova ogni elemento — in millimetri, centimetri, pixel o in percentuale del suo contenitore — invece che da bande in sequenza. Quando un documento ha un layout, è quello che si stampa; altrimenti si stampano le sue bande come prima. I due convivono: si migra un documento alla volta.
+
+**Il ciclo**: nel designer dei report, **Esporta XML**; modifica il file (tu o Claude); verificalo in locale; **Importa XML**; salva. Il file esportato contiene le proprie istruzioni: le zone (intestazione a pagina 1, striscia nelle pagine successive, destinatario nella finestra della busta, corpo, piè di pagina fisso su ogni pagina), gli elementi, le unità e i campi disponibili.
+
+**Verifica prima di importare** — senza avviare l'app:
+
+```
+dart run tool/report.dart check mio-layout.xml
+```
+
+Il comando stampa la posizione di ogni zona in millimetri e conclude con **CONFORMS** oppure elenca le deviazioni (indirizzo fuori dalla finestra, testo nella fascia 45–90 mm, pagina senza piè di pagina…). Apri il PDF, piegalo, infilalo in una busta DL a finestra.
+
+**Immagini**: `<image name="logo" h="12mm"/>` inserisce un'immagine dalla libreria del report; compare nell'anteprima e si stampa nel PDF.
+
 ## 12. Impostazioni e profilo
 
 La tua schermata personale, dall'alto in basso:
