@@ -2453,6 +2453,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Chaque réservation comptée laisse un relevé : la fenêtre réservée, le temps réellement passé, et ce qui est facturé. Une réservation où personne n\'est venu est facturée en entier. Un membre parti plus tôt peut demander que le temps non utilisé cesse d\'être facturé, et quelqu\'un d\'autre décide — jamais lui. Désactivé : aucun relevé, aucune correction.';
 
   @override
+  String get featureReportDesignExchangeTitle =>
+      'Exporter et importer les maquettes';
+
+  @override
+  String get featureReportDesignExchangeDesc =>
+      'Chaque maquette de rapport peut être écrite dans un fichier qui se décrit lui-même, puis relue. Le fichier contient la maquette ainsi que le sens de ses champs, le balisage accepté et les variables disponibles : une personne ou un outil peut donc l\'éditer hors de l\'application et la rendre. Un fichier destiné à un autre rapport, ou issu d\'une version plus récente, est refusé avec sa raison. Désactivé : les maquettes ne se modifient que dans l\'éditeur.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override
@@ -4764,6 +4772,43 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get repartitionStatusExpired => 'Expirée';
+
+  @override
+  String get reportDesignFileTypeLabel => 'JSON';
+
+  @override
+  String get reportDesignExport => 'Exporter cette maquette';
+
+  @override
+  String get reportDesignImport => 'Importer une maquette';
+
+  @override
+  String get reportDesignImported =>
+      'Maquette importée. Enregistrez pour la conserver.';
+
+  @override
+  String get reportDesignErrorMalformed =>
+      'Ce fichier n\'est pas du JSON lisible.';
+
+  @override
+  String get reportDesignErrorNotADesign =>
+      'Ce fichier n\'est pas une maquette de rapport DesKilo.';
+
+  @override
+  String get reportDesignErrorVersion =>
+      'Cette maquette vient d’une version plus récente de DesKilo.';
+
+  @override
+  String get reportDesignErrorUnknownKind =>
+      'Cette maquette concerne un rapport que cet espace n\'a pas.';
+
+  @override
+  String get reportDesignErrorWrongKind =>
+      'Cette maquette appartient à un autre rapport. Ouvrez ce rapport et importez-la là.';
+
+  @override
+  String get reportDesignErrorInvalidDesign =>
+      'Ce fichier ne contient aucune maquette lisible.';
 
   @override
   String get eventTypeMemberJoin => 'Nouveau membre';

@@ -2448,6 +2448,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Jede gezählte Buchung hinterlässt einen Satz: das gebuchte Fenster, die tatsächliche Anwesenheit und was davon berechnet wird. Eine Buchung, zu der niemand kam, wird voll berechnet. Wer früher geht, kann darum bitten, die ungenutzte Zeit nicht zu berechnen — entschieden wird das von jemand anderem. Aus: keine Sätze, keine Korrektur.';
 
   @override
+  String get featureReportDesignExchangeTitle =>
+      'Berichtsvorlagen exportieren und importieren';
+
+  @override
+  String get featureReportDesignExchangeDesc =>
+      'Jede Berichtsvorlage lässt sich als eine selbsterklärende Datei ausgeben und wieder einlesen. Die Datei enthält die Vorlage sowie die Bedeutung ihrer Felder, das erlaubte Markup und die vorhandenen Platzhalter — so kann sie außerhalb der App bearbeitet und zurückgegeben werden. Eine Datei für einen anderen Bericht oder aus einer neueren Version wird mit Begründung abgelehnt. Aus: Vorlagen sind nur im Designer änderbar.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override
@@ -4752,6 +4760,43 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get repartitionStatusExpired => 'Abgelaufen';
+
+  @override
+  String get reportDesignFileTypeLabel => 'JSON';
+
+  @override
+  String get reportDesignExport => 'Diese Vorlage exportieren';
+
+  @override
+  String get reportDesignImport => 'Vorlage importieren';
+
+  @override
+  String get reportDesignImported =>
+      'Vorlage importiert. Zum Behalten speichern.';
+
+  @override
+  String get reportDesignErrorMalformed =>
+      'Diese Datei ist kein lesbares JSON.';
+
+  @override
+  String get reportDesignErrorNotADesign =>
+      'Diese Datei ist keine DesKilo-Berichtsvorlage.';
+
+  @override
+  String get reportDesignErrorVersion =>
+      'Diese Vorlage stammt aus einer neueren DesKilo-Version.';
+
+  @override
+  String get reportDesignErrorUnknownKind =>
+      'Diese Vorlage gehört zu einem Bericht, den dieser Space nicht hat.';
+
+  @override
+  String get reportDesignErrorWrongKind =>
+      'Diese Vorlage gehört zu einem anderen Bericht. Öffnen Sie diesen und importieren Sie sie dort.';
+
+  @override
+  String get reportDesignErrorInvalidDesign =>
+      'Diese Datei enthält keine lesbare Vorlage.';
 
   @override
   String get eventTypeMemberJoin => 'Neues Mitglied';

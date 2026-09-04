@@ -1210,5 +1210,15 @@
   "repartitionStatusPending": "Wartet auf Bestätigung",
   "repartitionStatusConfirmed": "Gebucht",
   "repartitionStatusRejected": "Abgelehnt",
-  "repartitionStatusExpired": "Abgelaufen"
+  "repartitionStatusExpired": "Abgelaufen",
+  "reportDesignFileTypeLabel": "JSON",
+  "reportDesignExport": "Diese Vorlage exportieren",
+  "reportDesignImport": "Vorlage importieren",
+  "reportDesignImported": "Vorlage importiert. Zum Behalten speichern.",
+  "reportDesignErrorMalformed": "Diese Datei ist kein lesbares JSON.",
+  "reportDesignErrorNotADesign": "Diese Datei ist keine DesKilo-Berichtsvorlage.",
+  "reportDesignErrorVersion": "Diese Vorlage stammt aus einer neueren DesKilo-Version.",
+  "reportDesignErrorUnknownKind": "Diese Vorlage gehört zu einem Bericht, den dieser Space nicht hat.",
+  "reportDesignErrorWrongKind": "Diese Vorlage gehört zu einem anderen Bericht. Öffnen Sie diesen und importieren Sie sie dort.",
+  "reportDesignErrorInvalidDesign": "Diese Datei enthält keine lesbare Vorlage."
 }

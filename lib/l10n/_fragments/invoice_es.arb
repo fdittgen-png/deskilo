@@ -1210,5 +1210,15 @@
   "repartitionStatusPending": "Pendiente de validación",
   "repartitionStatusConfirmed": "Contabilizado",
   "repartitionStatusRejected": "Rechazado",
-  "repartitionStatusExpired": "Caducado"
+  "repartitionStatusExpired": "Caducado",
+  "reportDesignFileTypeLabel": "JSON",
+  "reportDesignExport": "Exportar este diseño",
+  "reportDesignImport": "Importar un diseño",
+  "reportDesignImported": "Diseño importado. Guarda para conservarlo.",
+  "reportDesignErrorMalformed": "Ese archivo no es JSON legible.",
+  "reportDesignErrorNotADesign": "Ese archivo no es un diseño de informe de DesKilo.",
+  "reportDesignErrorVersion": "Ese diseño se escribió con una versión más nueva de DesKilo.",
+  "reportDesignErrorUnknownKind": "Ese diseño es de un informe que este espacio no tiene.",
+  "reportDesignErrorWrongKind": "Ese diseño pertenece a otro informe. Ábrelo e impórtalo allí.",
+  "reportDesignErrorInvalidDesign": "Ese archivo no contiene ningún diseño legible."
 }

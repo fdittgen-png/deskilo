@@ -879,6 +879,16 @@ Ne discendono due regole, e le schede le dicono entrambe apertamente. Una prenot
 
 Vedi i tuoi rilevamenti; chi può vedere il denaro dello spazio li vede tutti. Un admin o la proprietà può **rimuovere** un rilevamento, e dove è configurata una regola *Rimozione del rilevamento*, a convalidarla è il membro interessato.
 
+### 11j. Portare fuori un modello di report e restituirlo
+
+**Esporta questo modello** (funzione *Esporta e importa i modelli di report*, nell'editor dei report) scrive l'impaginazione del report aperto in un file JSON. **Importa un modello** ne rilegge uno.
+
+Il file non è un semplice dump. Accanto alle tre bande porta un blocco `howToEdit` che dice a cosa serve ogni banda, la sintassi Liquid, ogni riga di markup accettata dal renderer, dimensioni e allineamenti delle immagini e l'elenco completo dei segnaposto: quanto basta perché una persona, o uno strumento come Claude, lo apra, ne cambi l'impaginazione e lo restituisca senza indovinare. Il blocco è rigenerato a ogni esportazione, quindi modificarlo non ha effetto; in ingresso si leggono solo `kind`, `language` e `design`.
+
+Ogni report ce l'ha — fattura, proforma, estratto, accordo, report dei pagamenti, report dello spazio, piano dei conti, badge, schede QR e ogni livello di sollecito — e un report aggiunto in seguito lo ottiene automaticamente.
+
+Un'importazione è **rifiutata con la motivazione** se il file non è JSON leggibile, non è un modello DesKilo, viene da una versione più recente, riguarda un report che questo spazio non ha, o appartiene a un **altro** report: un modello non viene mai reindirizzato in silenzio. Un'importazione accettata arriva nell'editor, non nello spazio: nulla cambia finché non premi **Salva**.
+
 ## 12. Impostazioni e profilo
 
 La tua schermata personale, dall'alto in basso:

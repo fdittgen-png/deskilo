@@ -836,6 +836,16 @@ Daraus folgen zwei Regeln, und die Karten sagen beide deutlich. Eine Buchung, **
 
 Sie sehen Ihre eigenen Sätze; wer das Geld des Space sehen darf, sieht alle. Admins und Inhaberschaft können einen Satz **entfernen**, und wo eine Regel *Nutzungssatz entfernen* konfiguriert ist, gibt das betroffene Mitglied sie frei.
 
+### 11j. Eine Berichtsvorlage herausgeben und zurücknehmen
+
+**Diese Vorlage exportieren** (Funktion *Berichtsvorlagen exportieren und importieren*, im Berichtseditor) schreibt das Layout des offenen Berichts in eine JSON-Datei. **Vorlage importieren** liest eine zurück.
+
+Die Datei ist kein bloßer Auszug. Neben den drei Bändern trägt sie einen `howToEdit`-Block: wofür jedes Band da ist, die Liquid-Syntax, jede vom Renderer akzeptierte Markup-Zeile, Bildgrößen und -ausrichtungen sowie die vollständige Platzhalterliste — genug, damit eine Person oder ein Werkzeug wie Claude sie öffnen, das Layout ändern und zurückgeben kann, ohne zu raten. Der Block wird bei jedem Export neu erzeugt: ihn zu ändern bewirkt nichts und kann keine Vorlage beschädigen; eingelesen werden nur `kind`, `language` und `design`.
+
+Jeder Bericht hat das — Rechnung, Proforma, Abrechnung, Vereinbarung, Zahlungsbericht, Space-Bericht, Kontenplan, Mitgliedsausweise, Space-QR-Karten und jede Mahnstufe — und ein später hinzugefügter Bericht bekommt es automatisch.
+
+Ein Import wird **mit Begründung abgelehnt**, wenn die Datei kein lesbares JSON ist, keine DesKilo-Vorlage, aus einer neueren Version stammt, einen hier nicht vorhandenen Bericht betrifft oder zu einem **anderen** Bericht gehört — eine Vorlage wird nie stillschweigend umgelenkt. Ein angenommener Import landet im Editor, nicht im Space: nichts ändert sich, bis Sie **Speichern** drücken.
+
 ## 12. Einstellungen & Profil
 
 Dein persönlicher Bildschirm, von oben nach unten:

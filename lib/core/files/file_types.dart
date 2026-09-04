@@ -17,6 +17,9 @@ String mimeTypeFor(String fileName) {
   final lower = fileName.toLowerCase();
   if (lower.endsWith('.pdf')) return 'application/pdf';
   if (lower.endsWith('.xml')) return 'text/xml';
+  // #864 — a report design travels as JSON. Without this it took the
+  // octet-stream fallback, which also made migrateLegacyExports skip it.
+  if (lower.endsWith('.json')) return 'application/json';
   if (lower.endsWith('.png')) return 'image/png';
   if (lower.endsWith('.log') || lower.endsWith('.txt')) return 'text/plain';
   return 'application/octet-stream';

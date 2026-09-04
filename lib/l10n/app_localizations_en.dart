@@ -2430,6 +2430,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Every counted booking leaves a record: the window booked, the time actually present, and what of it bills. A booking nobody checked into bills in full. A member who left early can ask for the unused time to stop billing, and somebody else decides it — never them. Off: no records and no correction.';
 
   @override
+  String get featureReportDesignExchangeTitle =>
+      'Export and import report designs';
+
+  @override
+  String get featureReportDesignExchangeDesc =>
+      'Every report design can be written out as one self-describing file and read back in. The file carries the design plus what its fields mean, the markup it accepts and the placeholders that exist, so a person or a tool can edit it outside the app and hand it back. A file for another report, or from a newer version, is refused with the reason. Off: designs are only editable in the designer.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override
@@ -4717,6 +4725,41 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get repartitionStatusExpired => 'Expired';
+
+  @override
+  String get reportDesignFileTypeLabel => 'JSON';
+
+  @override
+  String get reportDesignExport => 'Export this design';
+
+  @override
+  String get reportDesignImport => 'Import a design';
+
+  @override
+  String get reportDesignImported => 'Design imported. Save to keep it.';
+
+  @override
+  String get reportDesignErrorMalformed => 'That file is not readable JSON.';
+
+  @override
+  String get reportDesignErrorNotADesign =>
+      'That file is not a DesKilo report design.';
+
+  @override
+  String get reportDesignErrorVersion =>
+      'That design was written by a newer version of DesKilo.';
+
+  @override
+  String get reportDesignErrorUnknownKind =>
+      'That design is for a report this workspace does not have.';
+
+  @override
+  String get reportDesignErrorWrongKind =>
+      'That design belongs to a different report. Open that report and import it there.';
+
+  @override
+  String get reportDesignErrorInvalidDesign =>
+      'That file carries no readable design.';
 
   @override
   String get eventTypeMemberJoin => 'New member';

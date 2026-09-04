@@ -194,5 +194,7 @@
   "featureCalendarValidationsTitle": "Validaciones en el calendario",
   "featureCalendarValidationsDesc": "Cada decisión tomada sobre un evento aparece en el calendario en el momento en que se tomó, no en el del evento: quién validó o rechazó qué, y cuándo. Al tocarla se abre su historial. Desactivado: el calendario no lleva decisiones.",
   "featureUsageRecordsTitle": "Registros de uso",
-  "featureUsageRecordsDesc": "Cada reserva contada deja un registro: la ventana reservada, el tiempo realmente presente y lo que se factura. Una reserva a la que nadie llegó se factura entera. Quien sale antes puede pedir que el tiempo no usado deje de facturarse, y lo decide otra persona, nunca quien lo pide. Desactivado: sin registros ni corrección."
+  "featureUsageRecordsDesc": "Cada reserva contada deja un registro: la ventana reservada, el tiempo realmente presente y lo que se factura. Una reserva a la que nadie llegó se factura entera. Quien sale antes puede pedir que el tiempo no usado deje de facturarse, y lo decide otra persona, nunca quien lo pide. Desactivado: sin registros ni corrección.",
+  "featureReportDesignExchangeTitle": "Exportar e importar diseños de informe",
+  "featureReportDesignExchangeDesc": "Cada diseño de informe puede escribirse en un archivo que se explica a sí mismo y volver a leerse. El archivo lleva el diseño y además qué significan sus campos, qué marcado admite y qué variables existen, así una persona o una herramienta puede editarlo fuera de la app y devolverlo. Un archivo de otro informe, o de una versión más nueva, se rechaza con el motivo. Desactivado: los diseños solo se editan en el editor."
 }

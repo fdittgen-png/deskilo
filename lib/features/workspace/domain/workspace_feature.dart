@@ -62,6 +62,7 @@ enum WorkspaceFeature {
   richMessageRefs,
   calendarValidations,
   usageRecords,
+  reportDesignExchange,
   priceNegotiations,
 
   /// #767 — recurring scheduled expenses (internet, phone, electricity):
@@ -492,6 +493,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.usageRecords: FeatureManifestEntry(
     feature: WorkspaceFeature.usageRecords,
     requires: WorkspaceFeature.invoicing,
+  ),
+  // #864 — a report design leaves as a self-describing file and comes
+  // back the same way, so it can be edited outside the app.
+  WorkspaceFeature.reportDesignExchange: FeatureManifestEntry(
+    feature: WorkspaceFeature.reportDesignExchange,
+    requires: WorkspaceFeature.reportDesigner,
   ),
   // #739 — the tariff is the default; a member may have their own deal,
   // proposed by finance admins, validated, seen by the member and them.

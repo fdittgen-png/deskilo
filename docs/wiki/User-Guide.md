@@ -857,6 +857,16 @@ Two rules follow from that, and the cards say both out loud. A booking **nobody 
 
 You see your own records; whoever may see the workspace's money sees everyone's. An admin or owner can **remove** a record, and where a *Usage record removal* rule is configured the member concerned is the one who validates it.
 
+### 11j. Taking a report design out, and bringing it back
+
+**Export this design** (flag *Export and import report designs*, in the report editor) writes the open report's layout to one JSON file. **Import a design** reads one back.
+
+The file is not a bare dump. Beside the three bands it carries a `howToEdit` block naming what each band is for, the Liquid syntax, every markup line the renderer accepts, the image sizes and alignments, and the full list of placeholders — enough that a person, or a tool such as Claude, can open it, change the layout and hand it back without guessing. That block is regenerated on every export, so editing it does nothing and cannot corrupt a design; only `kind`, `language` and `design` are read on the way in.
+
+Every report has this — invoice, proforma, statement, financial agreement, payments report, workspace report, chart of accounts, member badges, space QR cards and each reminder level — and a report added to DesKilo later gets it automatically.
+
+An import is **refused with the reason** when the file is not readable JSON, is not a DesKilo design, was written by a newer version, is for a report this workspace does not have, or belongs to a **different** report — a design is never silently retargeted. An accepted import lands in the editor, not in the workspace: nothing changes until you press **Save**, so you can preview it first and leave without keeping it.
+
 ## 12. Settings & profile
 
 Your personal screen, top to bottom:

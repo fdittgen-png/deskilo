@@ -1210,5 +1210,15 @@
   "repartitionStatusPending": "In attesa di convalida",
   "repartitionStatusConfirmed": "Registrata",
   "repartitionStatusRejected": "Rifiutata",
-  "repartitionStatusExpired": "Scaduta"
+  "repartitionStatusExpired": "Scaduta",
+  "reportDesignFileTypeLabel": "JSON",
+  "reportDesignExport": "Esporta questo modello",
+  "reportDesignImport": "Importa un modello",
+  "reportDesignImported": "Modello importato. Salva per conservarlo.",
+  "reportDesignErrorMalformed": "Questo file non è JSON leggibile.",
+  "reportDesignErrorNotADesign": "Questo file non è un modello di report DesKilo.",
+  "reportDesignErrorVersion": "Questo modello viene da una versione più recente di DesKilo.",
+  "reportDesignErrorUnknownKind": "Questo modello riguarda un report che questo spazio non ha.",
+  "reportDesignErrorWrongKind": "Questo modello appartiene a un altro report. Aprilo e importalo lì.",
+  "reportDesignErrorInvalidDesign": "Questo file non contiene alcun modello leggibile."
 }

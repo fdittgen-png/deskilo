@@ -4297,6 +4297,18 @@ abstract class AppLocalizations {
   /// **'Every counted booking leaves a record: the window booked, the time actually present, and what of it bills. A booking nobody checked into bills in full. A member who left early can ask for the unused time to stop billing, and somebody else decides it — never them. Off: no records and no correction.'**
   String get featureUsageRecordsDesc;
 
+  /// #864 - feature title
+  ///
+  /// In en, this message translates to:
+  /// **'Export and import report designs'**
+  String get featureReportDesignExchangeTitle;
+
+  /// #864 - feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Every report design can be written out as one self-describing file and read back in. The file carries the design plus what its fields mean, the markup it accepts and the placeholders that exist, so a person or a tool can edit it outside the app and hand it back. A file for another report, or from a newer version, is refused with the reason. Off: designs are only editable in the designer.'**
+  String get featureReportDesignExchangeDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:
@@ -8232,6 +8244,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Expired'**
   String get repartitionStatusExpired;
+
+  /// #864 - file type in the design import picker
+  ///
+  /// In en, this message translates to:
+  /// **'JSON'**
+  String get reportDesignFileTypeLabel;
+
+  /// #864 - action exporting the open report design
+  ///
+  /// In en, this message translates to:
+  /// **'Export this design'**
+  String get reportDesignExport;
+
+  /// #864 - action importing a design file
+  ///
+  /// In en, this message translates to:
+  /// **'Import a design'**
+  String get reportDesignImport;
+
+  /// #864 - the import landed but is not saved yet
+  ///
+  /// In en, this message translates to:
+  /// **'Design imported. Save to keep it.'**
+  String get reportDesignImported;
+
+  /// #864 - import refusal: not JSON
+  ///
+  /// In en, this message translates to:
+  /// **'That file is not readable JSON.'**
+  String get reportDesignErrorMalformed;
+
+  /// #864 - import refusal: not one of our files
+  ///
+  /// In en, this message translates to:
+  /// **'That file is not a DesKilo report design.'**
+  String get reportDesignErrorNotADesign;
+
+  /// #864 - import refusal: newer schema
+  ///
+  /// In en, this message translates to:
+  /// **'That design was written by a newer version of DesKilo.'**
+  String get reportDesignErrorVersion;
+
+  /// #864 - import refusal: no such report here
+  ///
+  /// In en, this message translates to:
+  /// **'That design is for a report this workspace does not have.'**
+  String get reportDesignErrorUnknownKind;
+
+  /// #864 - import refusal: a design for another report
+  ///
+  /// In en, this message translates to:
+  /// **'That design belongs to a different report. Open that report and import it there.'**
+  String get reportDesignErrorWrongKind;
+
+  /// #864 - import refusal: no readable design
+  ///
+  /// In en, this message translates to:
+  /// **'That file carries no readable design.'**
+  String get reportDesignErrorInvalidDesign;
 
   /// No description provided for @eventTypeMemberJoin.
   ///

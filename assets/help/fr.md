@@ -879,6 +879,16 @@ Deux règles en découlent, et les cartes les disent clairement. Une réservatio
 
 Vous voyez vos propres relevés ; qui peut voir l'argent de l'espace les voit tous. Un admin ou le propriétaire peut **supprimer** un relevé, et lorsqu'une règle *Suppression d'un relevé d'usage* est configurée, c'est le membre concerné qui la valide.
 
+### 11j. Sortir une maquette de rapport, et la rendre
+
+**Exporter cette maquette** (option *Exporter et importer les maquettes*, dans l'éditeur de rapport) écrit la mise en page du rapport ouvert dans un fichier JSON. **Importer une maquette** en relit un.
+
+Le fichier n'est pas un simple export brut. À côté des trois bandes, il contient un bloc `howToEdit` qui nomme le rôle de chaque bande, la syntaxe Liquid, chaque ligne de balisage acceptée, les tailles et alignements d'image, et la liste complète des variables — de quoi permettre à une personne, ou à un outil comme Claude, de l'ouvrir, d'en changer la mise en page et de la rendre sans deviner. Ce bloc est régénéré à chaque export : le modifier n'a aucun effet et ne peut pas corrompre une maquette ; seuls `kind`, `language` et `design` sont lus à l'import.
+
+Tous les rapports en disposent — facture, proforma, relevé, accord financier, rapport de paiements, rapport d'espace, plan comptable, badges des membres, cartes QR des espaces et chaque niveau de relance — et un rapport ajouté plus tard à DesKilo en dispose automatiquement.
+
+Un import est **refusé avec sa raison** si le fichier n'est pas du JSON lisible, n'est pas une maquette DesKilo, vient d'une version plus récente, concerne un rapport que cet espace n'a pas, ou appartient à un **autre** rapport : une maquette n'est jamais redirigée en silence. Un import accepté arrive dans l'éditeur, pas dans l'espace : rien ne change tant que vous n'appuyez pas sur **Enregistrer**, vous pouvez donc le prévisualiser d'abord et repartir sans le conserver.
+
 ## 12. Réglages et profil
 
 Votre écran personnel, de haut en bas :
