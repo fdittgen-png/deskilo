@@ -154,7 +154,7 @@ const Map<String, int> _baseline = {
   // 700→800 (2026-08-05): #496 the template-language chips + per-language
   // overlay assembly.
   // 800→810 (2026-08-31): #763 the report editor's header help dot.
-  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 1040, // 2026-09-02 #822 the page, undo/redo, guards
+  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 1110, // 2026-09-02 #822 the page, undo/redo, guards // 2026-09-04 #875 layout drafts per kind, the panel mount and its three handlers — the panel and the actions themselves live in their own files
   'lib/features/workspace/domain/workspace_xml.dart': 800,
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.

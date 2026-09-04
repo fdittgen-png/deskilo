@@ -12025,6 +12025,66 @@ abstract class AppLocalizations {
   /// **'{n} at once'**
   String memberSimultaneousLimitChip(int n);
 
+  /// Designer card title for the positioned layout of one report kind (#875)
+  ///
+  /// In en, this message translates to:
+  /// **'Positioned layout (XML)'**
+  String get reportLayoutTitle;
+
+  /// Explains export/edit/check/import and that a layout wins over the bands (#875)
+  ///
+  /// In en, this message translates to:
+  /// **'A layout states where every element sits, in mm, cm, px or %. Export it, edit it, check it with `dart run tool/report.dart check`, import it back. When a layout exists it is what prints; remove it and the bands print again.'**
+  String get reportLayoutSubtitle;
+
+  /// Chip: this document is drawn by its positioned layout (#875)
+  ///
+  /// In en, this message translates to:
+  /// **'Layout active'**
+  String get reportLayoutActive;
+
+  /// Chip: this document is drawn by its bands (#875)
+  ///
+  /// In en, this message translates to:
+  /// **'Bands'**
+  String get reportLayoutBands;
+
+  /// Button: export the layout as XML (#875)
+  ///
+  /// In en, this message translates to:
+  /// **'Export XML'**
+  String get reportLayoutExport;
+
+  /// Button: import a layout XML (#875)
+  ///
+  /// In en, this message translates to:
+  /// **'Import XML'**
+  String get reportLayoutImport;
+
+  /// Button: open the page-true preview of the layout (#875)
+  ///
+  /// In en, this message translates to:
+  /// **'Page preview'**
+  String get reportLayoutPreview;
+
+  /// Button: remove the layout so the bands print again (#875)
+  ///
+  /// In en, this message translates to:
+  /// **'Remove layout (use bands)'**
+  String get reportLayoutRemove;
+
+  /// Snack after a successful import; save is still required (#875)
+  ///
+  /// In en, this message translates to:
+  /// **'Layout imported. Save to keep it.'**
+  String get reportLayoutImported;
+
+  /// File-picker type label for layout files (#875)
+  ///
+  /// In en, this message translates to:
+  /// **'XML'**
+  String get reportLayoutFileTypeLabel;
+
   /// Features screen name for the #875 positioned report layouts flag
   ///
   /// In en, this message translates to:

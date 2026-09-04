@@ -7022,6 +7022,46 @@
       }
     }
   },
+  "reportLayoutTitle": "Positioned layout (XML)",
+  "@reportLayoutTitle": {
+    "description": "Designer card title for the positioned layout of one report kind (#875)"
+  },
+  "reportLayoutSubtitle": "A layout states where every element sits, in mm, cm, px or %. Export it, edit it, check it with `dart run tool/report.dart check`, import it back. When a layout exists it is what prints; remove it and the bands print again.",
+  "@reportLayoutSubtitle": {
+    "description": "Explains export/edit/check/import and that a layout wins over the bands (#875)"
+  },
+  "reportLayoutActive": "Layout active",
+  "@reportLayoutActive": {
+    "description": "Chip: this document is drawn by its positioned layout (#875)"
+  },
+  "reportLayoutBands": "Bands",
+  "@reportLayoutBands": {
+    "description": "Chip: this document is drawn by its bands (#875)"
+  },
+  "reportLayoutExport": "Export XML",
+  "@reportLayoutExport": {
+    "description": "Button: export the layout as XML (#875)"
+  },
+  "reportLayoutImport": "Import XML",
+  "@reportLayoutImport": {
+    "description": "Button: import a layout XML (#875)"
+  },
+  "reportLayoutPreview": "Page preview",
+  "@reportLayoutPreview": {
+    "description": "Button: open the page-true preview of the layout (#875)"
+  },
+  "reportLayoutRemove": "Remove layout (use bands)",
+  "@reportLayoutRemove": {
+    "description": "Button: remove the layout so the bands print again (#875)"
+  },
+  "reportLayoutImported": "Layout imported. Save to keep it.",
+  "@reportLayoutImported": {
+    "description": "Snack after a successful import; save is still required (#875)"
+  },
+  "reportLayoutFileTypeLabel": "XML",
+  "@reportLayoutFileTypeLabel": {
+    "description": "File-picker type label for layout files (#875)"
+  },
   "featureReportLayouts": "Positioned report layouts",
   "@featureReportLayouts": {
     "description": "Features screen name for the #875 positioned report layouts flag"

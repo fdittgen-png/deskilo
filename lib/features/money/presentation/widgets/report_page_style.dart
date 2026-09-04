@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../domain/address_window.dart';
 
 import '../../domain/invoice_report.dart';
 
@@ -19,7 +20,8 @@ abstract final class ReportPage {
   static const double height = 841.88976;
 
   /// `invoice_pdf.dart`: `margin: EdgeInsets.fromLTRB(48, 44, 48, 44)`.
-  static const EdgeInsets margins = EdgeInsets.fromLTRB(48, 44, 48, 44);
+  // #873 — 20 mm all round, the one number the engine also uses.
+  static const EdgeInsets margins = EdgeInsets.all(pageMargin);
 
   /// The printable height of one page — the page-break guide interval.
   static double get contentHeight => height - margins.top - margins.bottom;
