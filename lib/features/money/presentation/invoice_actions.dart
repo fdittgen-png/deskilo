@@ -33,6 +33,7 @@ import '../domain/invoice_cii.dart';
 import '../domain/invoice_ubl.dart';
 import '../domain/invoice_ubl_check.dart';
 import '../domain/ledger_entry.dart';
+import '../../workspace/domain/payment_instructions.dart';
 import '../domain/address_window.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/dunning.dart';
@@ -126,6 +127,13 @@ Map<String, Object?> legalMentionData(
   String clientAddress = '',
 }) {
   final legal = InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {});
+  // #871 — the bank block. A French (and German) invoice carries the
+  // account it is to be paid into, and until now a designed report
+  // could not print one: the details were stored but no placeholder
+  // reached them, so the only way to show an IBAN was to type it into
+  // the template and let it rot there when the account changed.
+  final pay =
+      PaymentInstructions.fromDb(workspace?.paymentInstructions ?? const {});
   String orDefault(String value, String fallback) =>
       value.trim().isNotEmpty ? value.trim() : fallback;
   // #484 — the B2B-only clauses (mandatory between professionals) have
@@ -133,6 +141,15 @@ Map<String, Object?> legalMentionData(
   String orB2bDefault(String value, String fallback) =>
       legal.isAssociation ? value.trim() : orDefault(value, fallback);
   return <String, Object?>{
+    'iban': pay.iban,
+    'bic': pay.bic,
+    'bank_name': pay.bankName,
+    'bank_account': pay.accountNumber,
+    'bank_code': pay.bankCode,
+    // The holder is the seller; an invoice never asks to be paid to
+    // anyone else, so this is not a separate field to get wrong.
+    'account_holder': workspace?.name ?? '',
+    'payment_reference': pay.reference,
     'seller_legal_form': legal.legalForm,
     'seller_registration': legal.registration,
     'seller_vat_id': seller?.vatId ?? workspace?.vatId ?? '',

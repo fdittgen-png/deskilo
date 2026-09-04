@@ -73,6 +73,15 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
       // #480 — the legal mention variables, filled like a French SARL.
       'seller_legal_form': 'SARL au capital de 7 500 €',
       'seller_registration': 'RCS Demo City 123 456 789',
+      // #871 — the bank block, so the designer's preview shows what a
+      // real document will print rather than four empty lines.
+      'iban': 'FR76 3000 1007 9412 3456 7890 185',
+      'bic': 'BDFEFRPPCCT',
+      'bank_name': 'Banque de Démonstration',
+      'bank_account': '',
+      'bank_code': '',
+      'account_holder': 'Demo Coworking',
+      'payment_reference': 'INV-2026-0007',
       'seller_vat_id': 'FR 39 680 357 910',
       'seller_legal_id': '680 357 910',
       'exemption_reason': '',

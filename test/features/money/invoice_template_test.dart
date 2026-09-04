@@ -121,6 +121,9 @@ void main() {
         'net_total', 'vat_total',
         // #508 — the credit-note fields.
         'credit_note', 'refund_total',
+        // #871 — the bank block a payable invoice has to print.
+        'iban', 'bic', 'bank_name', 'bank_account', 'bank_code',
+        'account_holder', 'payment_reference',
         'seller_legal_form',
         'seller_registration', 'seller_vat_id', 'seller_legal_id',
         'exemption_reason', 'client_address', 'client_vat_id',

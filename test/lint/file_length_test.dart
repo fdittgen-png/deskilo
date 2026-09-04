@@ -120,7 +120,7 @@ const Map<String, int> _baseline = {
   // 1740→1820 (2026-08-05): #504 the write-off request dialog.
   // 1820→1910 (2026-08-05): #508 the credit-note refund dialog.
   // 1960→2000 (2026-08-14): #568 the customer-delivery send leg.
-  'lib/features/money/presentation/invoice_actions.dart': 2060, // 2026-09-02 #837 the annex question
+  'lib/features/money/presentation/invoice_actions.dart': 2075, // 2026-09-02 #837 the annex question // 2026-09-04 #871 the bank block: IBAN/BIC/bank name reach a designed report, resolved once in legalMentionData for every document
   // 1920→1960 (2026-08-06): #514 quickViewInvoice + the proforma triad.
   // 1910→1920 (2026-08-06): #512 imputation candidates (adjustment
   // credits, baked-credit filter).
