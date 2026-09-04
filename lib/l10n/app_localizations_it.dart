@@ -2449,6 +2449,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Ogni prenotazione conteggiata lascia un rilevamento: la finestra prenotata, il tempo realmente presente e ciò che viene fatturato. Una prenotazione a cui non è venuto nessuno è fatturata per intero. Chi esce prima può chiedere che il tempo non usato non sia fatturato, e decide qualcun altro, mai chi chiede. Disattivato: nessun rilevamento e nessuna correzione.';
 
   @override
+  String get featureReportDesignExchangeTitle =>
+      'Esporta e importa i modelli di report';
+
+  @override
+  String get featureReportDesignExchangeDesc =>
+      'Ogni modello di report può essere scritto in un file che si descrive da sé e riletto. Il file porta il modello e inoltre il significato dei campi, il markup ammesso e i segnaposto esistenti, così una persona o uno strumento può modificarlo fuori dall’app e restituirlo. Un file di un altro report, o di una versione più recente, viene rifiutato con la motivazione. Disattivato: i modelli si modificano solo nell’editor.';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override
@@ -4758,6 +4766,42 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get repartitionStatusExpired => 'Scaduta';
+
+  @override
+  String get reportDesignFileTypeLabel => 'JSON';
+
+  @override
+  String get reportDesignExport => 'Esporta questo modello';
+
+  @override
+  String get reportDesignImport => 'Importa un modello';
+
+  @override
+  String get reportDesignImported =>
+      'Modello importato. Salva per conservarlo.';
+
+  @override
+  String get reportDesignErrorMalformed => 'Questo file non è JSON leggibile.';
+
+  @override
+  String get reportDesignErrorNotADesign =>
+      'Questo file non è un modello di report DesKilo.';
+
+  @override
+  String get reportDesignErrorVersion =>
+      'Questo modello viene da una versione più recente di DesKilo.';
+
+  @override
+  String get reportDesignErrorUnknownKind =>
+      'Questo modello riguarda un report che questo spazio non ha.';
+
+  @override
+  String get reportDesignErrorWrongKind =>
+      'Questo modello appartiene a un altro report. Aprilo e importalo lì.';
+
+  @override
+  String get reportDesignErrorInvalidDesign =>
+      'Questo file non contiene alcun modello leggibile.';
 
   @override
   String get eventTypeMemberJoin => 'Nuovo membro';

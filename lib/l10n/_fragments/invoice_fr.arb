@@ -1210,5 +1210,15 @@
   "repartitionStatusPending": "En attente de validation",
   "repartitionStatusConfirmed": "Comptabilisée",
   "repartitionStatusRejected": "Refusée",
-  "repartitionStatusExpired": "Expirée"
+  "repartitionStatusExpired": "Expirée",
+  "reportDesignFileTypeLabel": "JSON",
+  "reportDesignExport": "Exporter cette maquette",
+  "reportDesignImport": "Importer une maquette",
+  "reportDesignImported": "Maquette importée. Enregistrez pour la conserver.",
+  "reportDesignErrorMalformed": "Ce fichier n'est pas du JSON lisible.",
+  "reportDesignErrorNotADesign": "Ce fichier n'est pas une maquette de rapport DesKilo.",
+  "reportDesignErrorVersion": "Cette maquette vient d’une version plus récente de DesKilo.",
+  "reportDesignErrorUnknownKind": "Cette maquette concerne un rapport que cet espace n'a pas.",
+  "reportDesignErrorWrongKind": "Cette maquette appartient à un autre rapport. Ouvrez ce rapport et importez-la là.",
+  "reportDesignErrorInvalidDesign": "Ce fichier ne contient aucune maquette lisible."
 }

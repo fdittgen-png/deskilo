@@ -879,6 +879,16 @@ De ahí salen dos reglas, y las tarjetas dicen ambas con claridad. Una reserva *
 
 Ves tus propios registros; quien pueda ver el dinero del espacio los ve todos. Un admin o la propiedad puede **eliminar** un registro, y donde haya una regla *Eliminar registro de uso*, quien la valida es el miembro afectado.
 
+### 11j. Sacar un diseño de informe y devolverlo
+
+**Exportar este diseño** (función *Exportar e importar diseños de informe*, en el editor de informes) escribe la maquetación del informe abierto en un archivo JSON. **Importar un diseño** vuelve a leer uno.
+
+El archivo no es un volcado escueto. Junto a las tres bandas lleva un bloque `howToEdit` que nombra para qué sirve cada banda, la sintaxis Liquid, cada línea de marcado que el renderizador acepta, los tamaños y alineaciones de imagen y la lista completa de variables: lo suficiente para que una persona, o una herramienta como Claude, lo abra, cambie la maquetación y lo devuelva sin adivinar. Ese bloque se regenera en cada exportación, así que editarlo no hace nada; al importar solo se leen `kind`, `language` y `design`.
+
+Todos los informes lo tienen — factura, proforma, extracto, acuerdo financiero, informe de pagos, informe del espacio, plan contable, credenciales, tarjetas QR y cada nivel de aviso — y un informe añadido más adelante lo obtiene automáticamente.
+
+Una importación se **rechaza con el motivo** si el archivo no es JSON legible, no es un diseño de DesKilo, viene de una versión más nueva, es de un informe que este espacio no tiene, o pertenece a **otro** informe: un diseño nunca se redirige en silencio. Una importación aceptada llega al editor, no al espacio: nada cambia hasta que pulsas **Guardar**.
+
 ## 12. Ajustes y perfil
 
 Tu pantalla personal, de arriba abajo:

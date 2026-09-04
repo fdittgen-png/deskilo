@@ -2448,6 +2448,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cada reserva contada deja un registro: la ventana reservada, el tiempo realmente presente y lo que se factura. Una reserva a la que nadie llegó se factura entera. Quien sale antes puede pedir que el tiempo no usado deje de facturarse, y lo decide otra persona, nunca quien lo pide. Desactivado: sin registros ni corrección.';
 
   @override
+  String get featureReportDesignExchangeTitle =>
+      'Exportar e importar diseños de informe';
+
+  @override
+  String get featureReportDesignExchangeDesc =>
+      'Cada diseño de informe puede escribirse en un archivo que se explica a sí mismo y volver a leerse. El archivo lleva el diseño y además qué significan sus campos, qué marcado admite y qué variables existen, así una persona o una herramienta puede editarlo fuera de la app y devolverlo. Un archivo de otro informe, o de una versión más nueva, se rechaza con el motivo. Desactivado: los diseños solo se editan en el editor.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override
@@ -4748,6 +4756,42 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get repartitionStatusExpired => 'Caducado';
+
+  @override
+  String get reportDesignFileTypeLabel => 'JSON';
+
+  @override
+  String get reportDesignExport => 'Exportar este diseño';
+
+  @override
+  String get reportDesignImport => 'Importar un diseño';
+
+  @override
+  String get reportDesignImported =>
+      'Diseño importado. Guarda para conservarlo.';
+
+  @override
+  String get reportDesignErrorMalformed => 'Ese archivo no es JSON legible.';
+
+  @override
+  String get reportDesignErrorNotADesign =>
+      'Ese archivo no es un diseño de informe de DesKilo.';
+
+  @override
+  String get reportDesignErrorVersion =>
+      'Ese diseño se escribió con una versión más nueva de DesKilo.';
+
+  @override
+  String get reportDesignErrorUnknownKind =>
+      'Ese diseño es de un informe que este espacio no tiene.';
+
+  @override
+  String get reportDesignErrorWrongKind =>
+      'Ese diseño pertenece a otro informe. Ábrelo e impórtalo allí.';
+
+  @override
+  String get reportDesignErrorInvalidDesign =>
+      'Ese archivo no contiene ningún diseño legible.';
 
   @override
   String get eventTypeMemberJoin => 'Nuevo miembro';

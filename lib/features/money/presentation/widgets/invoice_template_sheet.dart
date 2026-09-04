@@ -22,6 +22,9 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/dunning.dart';
 import '../../domain/invoice_pdf.dart';
 import '../../domain/invoice_pdf_template.dart';
+import '../../domain/report_kind.dart';
+import '../report_design_actions.dart';
+import '../report_kind_labels.dart';
 import '../../domain/invoice_report.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
@@ -211,22 +214,6 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
     _apply(bands, step: false);
   }
 
-  /// The extra documents the editor offers beside the classics (#494).
-  static const List<String> _extraDocs = [
-    'agreement',
-    'payments',
-    'workspace',
-    // #672 — the chart-of-accounts PREVIEW. A report rather than a
-    // screen, so the owner can hand the printed page to their
-    // accountant and ask "is this your chart?".
-    'coa',
-    // #672 — batch prints join report management instead of living as
-    // two hard-coded PDFs: badges and space QR cards are documents the
-    // owner prints repeatedly, so they belong where every other
-    // printable is edited.
-    'badges',
-    'space_codes',
-  ];
 
   /// The stored bands of document [doc] in the edited LANGUAGE, before
   /// any unsaved edit. In a language overlay, empty = inherits default.
@@ -237,22 +224,21 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
               InvoicePdfTemplate.empty),
       doc);
 
-  ReportBands _storedBandsOf(InvoicePdfTemplate template, String doc) =>
-      switch (doc) {
-        'invoice' => template.invoiceBands,
-        'proforma' => template.proforma,
-        'statement' => template.statement,
-        'agreement' ||
-        'payments' ||
-        'workspace' ||
-        'coa' ||
-        'badges' ||
-        'space_codes' =>
-          template.extraDocs[doc] ?? ReportBands.empty,
-        _ => template
-                .reminderBands(int.tryParse(doc.substring(1)) ?? 1) ??
-            ReportBands.empty,
-      };
+  /// #864 — one registry answers this now. The switch this replaces
+  /// fell through to "then it must be a reminder", so an unknown id
+  /// silently edited level 1 instead of failing.
+  ReportBands _storedBandsOf(InvoicePdfTemplate template, String doc) {
+    final kind = reportKindById(doc, reminderLevels: _reminderLevels);
+    return kind == null ? ReportBands.empty : bandsOf(template, kind);
+  }
+
+  /// The reminder levels this workspace has configured; 0 when dunning
+  /// is off, and then the reminder kinds simply do not exist.
+  int get _reminderLevels =>
+      ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.dunning)
+          ? (ref.read(dunningRulesProvider).value ?? DunningRules.defaults)
+              .levels
+          : 0;
 
   /// #822 — whether language [lang] carries its OWN bands for the
   /// current document (unsaved edits included).
@@ -295,9 +281,10 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
       final bands = _drafts['r$level'];
       if (bands != null) template = template.withReminder(level, bands);
     }
-    for (final doc in _extraDocs) {
-      final bands = _drafts[doc];
-      if (bands != null) template = template.withDoc(doc, bands);
+    for (final kind in reportKinds(reminderLevels: maxLevels)) {
+      if (kind.slot is! ReportDocSlot) continue;
+      final bands = _drafts[kind.id];
+      if (bands != null) template = withBands(template, kind, bands);
     }
     // #496 — fold every edited language overlay in.
     for (final lang in _templateLanguages) {
@@ -305,21 +292,10 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
           widget.initial.translations[lang] ?? InvoicePdfTemplate.empty;
       var touched = widget.initial.translations.containsKey(lang);
       void apply(String doc, ReportBands bands) {
+        final kind = reportKindById(doc, reminderLevels: maxLevels);
+        if (kind == null) return;
         touched = true;
-        overlay = switch (doc) {
-          'invoice' => overlay.copyWith(invoice: bands),
-          'proforma' => overlay.copyWith(proforma: bands),
-          'statement' => overlay.copyWith(statement: bands),
-          'agreement' ||
-          'payments' ||
-          'workspace' ||
-          'coa' ||
-          'badges' ||
-          'space_codes' =>
-            overlay.withDoc(doc, bands),
-          _ => overlay.withReminder(
-              int.tryParse(doc.substring(1)) ?? 1, bands),
-        };
+        overlay = withBands(overlay, kind, bands);
       }
 
       for (final entry in _drafts.entries) {
@@ -332,6 +308,45 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
       }
     }
     return template;
+  }
+
+  /// #864 — write the open design out. The file names the report it
+  /// belongs to, so importing it into another one is refused rather
+  /// than silently retargeted.
+  Future<void> _exportDesign() async {
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    final kind = reportKindById(_doc, reminderLevels: _reminderLevels);
+    if (workspace == null || kind == null) return;
+    await exportReportDesign(
+      context,
+      ref,
+      kind: kind,
+      language: _lang,
+      workspaceName: workspace.name,
+      bands: _currentBands,
+      exportedAt: ref.read(clockProvider).now(),
+    );
+  }
+
+  /// #864 — read one back into the document being edited. It lands in
+  /// the editor, not in the workspace: nothing is stored until Save,
+  /// which is what makes an import reviewable before it counts.
+  Future<void> _importDesign() async {
+    final l10n = AppLocalizations.of(context);
+    final kind = reportKindById(_doc, reminderLevels: _reminderLevels);
+    if (kind == null) return;
+    if (!await _confirmReplace() || !mounted) return;
+    final bands = await importReportDesign(
+      context,
+      ref,
+      kind: kind,
+      reminderLevels: _reminderLevels,
+    );
+    if (bands == null || !mounted) return;
+    _apply(bands);
+    AppSnack.info(
+        context,
+        l10n?.reportDesignImported ?? 'Design imported. Save to keep it.');
   }
 
   Future<void> _save() async {
@@ -551,7 +566,8 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
         );
         pdf = (bytes: invoicePdf.bytes, fileName: invoicePdf.fileName);
       } else if (_doc == 'statement' ||
-          _extraDocs.contains(_doc)) {
+          reportKindById(_doc, reminderLevels: _reminderLevels)?.slot
+              is ReportDocSlot) {
         // The letter documents: my own live data, or the sample.
         final data = _liveData() ?? sampleReportData(l10nSync);
         final bands = _currentBands.hasBands
@@ -653,32 +669,11 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
         ),
       );
 
+  /// #864 — the chips come from the registry, so a report kind added
+  /// there appears here without this list being remembered.
   List<(String, String)> _docs(AppLocalizations? l10n) => [
-        ('invoice', l10n?.invoiceTemplateDocInvoice ?? 'Invoice'),
-        ('proforma', l10n?.invoicePdfProforma ?? 'Proforma'),
-        ('statement', l10n?.invoiceTemplateDocStatement ?? 'Statement'),
-        // #494 — the further documents.
-        ('agreement', l10n?.reportDocAgreement ?? 'Financial agreement'),
-        ('payments', l10n?.reportDocPayments ?? 'Payments report'),
-        ('workspace', l10n?.reportDocWorkspace ?? 'Workspace report'),
-        // #822 — the three structural documents, until now editable
-        // yet unlisted.
-        ('coa', l10n?.reportDocCoa ?? 'Chart of accounts'),
-        ('badges', l10n?.reportDocBadges ?? 'Member badges'),
-        ('space_codes', l10n?.reportDocSpaceCodes ?? 'Space QR cards'),
-        if (ref
-            .watch(enabledFeaturesSyncProvider)
-            .contains(WorkspaceFeature.dunning))
-          for (var level = 1;
-              level <=
-                  (ref.watch(dunningRulesProvider).value ??
-                          DunningRules.defaults)
-                      .levels;
-              level++)
-            (
-              'r$level',
-              l10n?.invoiceTemplateDocReminder(level) ?? 'Reminder $level'
-            ),
+        for (final kind in reportKinds(reminderLevels: _reminderLevels))
+          (kind.id, reportKindLabel(l10n, kind)),
       ];
 
   Widget _langChips(AppLocalizations? l10n) => SingleChildScrollView(
@@ -806,6 +801,16 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
               onPressed: null,
             ),
           ),
+          // #864 — the design leaves as a self-describing file and
+          // comes back the same way, so it can be edited by a person or
+          // a tool outside the app and reviewed like source.
+          if (ref
+              .watch(enabledFeaturesSyncProvider)
+              .contains(WorkspaceFeature.reportDesignExchange))
+            ReportDesignExchangeButtons(
+              onExport: _busy ? null : _exportDesign,
+              onImport: _busy ? null : _importDesign,
+            ),
           TextButton.icon(
             key: const ValueKey('invoice-template-reset'),
             icon: const Icon(Icons.restart_alt),

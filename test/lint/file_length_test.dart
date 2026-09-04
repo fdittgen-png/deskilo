@@ -144,7 +144,10 @@ const Map<String, int> _baseline = {
   'lib/features/members/presentation/screens/member_page.dart': 840,
   'lib/features/workspace/presentation/member_admin_actions.dart': 720,
   // #828 (2026-09-02): the expense_repartition flag and repository methods.
-  'lib/features/workspace/domain/workspace_feature.dart': 640,
+  // 2026-09-04 #864: one more flag. This file is the feature
+  // registry — it grows by ~5 lines per flag by design, and
+  // splitting the registry would defeat its whole purpose.
+  'lib/features/workspace/domain/workspace_feature.dart': 660,
   'lib/features/money/presentation/widgets/report_visual_editor.dart': 1000, // 2026-09-02 #822 drag, insert palette, image controls, move-to-band
   // 660→700 (2026-08-05): #494 the three further document chips + their
   // live data and letter-PDF branches.

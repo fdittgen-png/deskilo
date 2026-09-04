@@ -9,6 +9,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/files/file_picker.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
@@ -55,6 +56,7 @@ Future<FakeMoneyRepository> pumpInvoices(
   FakeEventRepository? events,
   FileSaver? saver,
   FileSharer? sharer,
+  FilePicker? picker,
 }) async {
   tester.view.physicalSize = const Size(800, 1400);
   tester.view.devicePixelRatio = 1.0;
@@ -70,6 +72,7 @@ Future<FakeMoneyRepository> pumpInvoices(
           fileSharer: sharer,
         ),
         if (saver != null) fileSaverProvider.overrideWithValue(saver),
+        if (picker != null) filePickerProvider.overrideWithValue(picker),
       ],
       child: const DeskiloApp(),
     ),

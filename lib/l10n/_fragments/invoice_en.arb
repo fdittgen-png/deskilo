@@ -1896,5 +1896,45 @@
   "repartitionStatusPending": "Awaiting validation",
   "repartitionStatusConfirmed": "Booked",
   "repartitionStatusRejected": "Rejected",
-  "repartitionStatusExpired": "Expired"
+  "repartitionStatusExpired": "Expired",
+  "reportDesignFileTypeLabel": "JSON",
+  "@reportDesignFileTypeLabel": {
+    "description": "#864 - file type in the design import picker"
+  },
+  "reportDesignExport": "Export this design",
+  "@reportDesignExport": {
+    "description": "#864 - action exporting the open report design"
+  },
+  "reportDesignImport": "Import a design",
+  "@reportDesignImport": {
+    "description": "#864 - action importing a design file"
+  },
+  "reportDesignImported": "Design imported. Save to keep it.",
+  "@reportDesignImported": {
+    "description": "#864 - the import landed but is not saved yet"
+  },
+  "reportDesignErrorMalformed": "That file is not readable JSON.",
+  "@reportDesignErrorMalformed": {
+    "description": "#864 - import refusal: not JSON"
+  },
+  "reportDesignErrorNotADesign": "That file is not a DesKilo report design.",
+  "@reportDesignErrorNotADesign": {
+    "description": "#864 - import refusal: not one of our files"
+  },
+  "reportDesignErrorVersion": "That design was written by a newer version of DesKilo.",
+  "@reportDesignErrorVersion": {
+    "description": "#864 - import refusal: newer schema"
+  },
+  "reportDesignErrorUnknownKind": "That design is for a report this workspace does not have.",
+  "@reportDesignErrorUnknownKind": {
+    "description": "#864 - import refusal: no such report here"
+  },
+  "reportDesignErrorWrongKind": "That design belongs to a different report. Open that report and import it there.",
+  "@reportDesignErrorWrongKind": {
+    "description": "#864 - import refusal: a design for another report"
+  },
+  "reportDesignErrorInvalidDesign": "That file carries no readable design.",
+  "@reportDesignErrorInvalidDesign": {
+    "description": "#864 - import refusal: no readable design"
+  }
 }
