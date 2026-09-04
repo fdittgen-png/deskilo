@@ -14,8 +14,11 @@ For every locale directory under fastlane/metadata/android/ this uploads:
     - images/featureGraphic.png  -> feature graphic (1024x500)
     - images/phoneScreenshots/*  -> phone screenshots (sorted by name)
 
-A locale missing an image falls back to en-US's file, so brand images are
-stored once. Texts are per-locale and required (all five exist in-repo).
+A locale missing an image — single file OR the phoneScreenshots folder —
+falls back to en-US, so brand images live once. Texts are per-locale and
+required (all five exist in-repo). A locale left with fewer screenshots
+than Play accepts is a hard error, never a silent skip: an incomplete
+listing in one language makes the app undistributable in every track.
 
 Requires google-api-python-client + google-auth and a service-account key
 with "Manage store presence" permission on the app.
@@ -76,6 +79,29 @@ def _image_path(metadata: Path, locale: str, filename: str) -> Path | None:
         return own
     fallback = metadata / FALLBACK_LOCALE / "images" / filename
     return fallback if fallback.is_file() else None
+
+
+#: Play refuses to serve a listing whose language has fewer than this
+#: many phone screenshots. The whole app becomes undistributable — on
+#: EVERY track, internal included — and the store answers "item not
+#: found" to anyone whose device is in that language.
+MIN_SCREENSHOTS = 2
+
+
+def _screenshots(metadata: Path, locale: str) -> list[Path]:
+    """A locale's phone screenshots, falling back to en-US.
+
+    Single images had this fallback from the start; a DIRECTORY did not,
+    and the old code simply skipped a locale whose folder was empty. Four
+    locales therefore shipped a listing with texts, an icon and no
+    screenshots — which is not a listing Play will serve, and is why a
+    French phone could not find an app whose English listing was fine.
+    """
+    own = sorted((metadata / locale / "images" / "phoneScreenshots").glob("*.png"))
+    if own:
+        return own
+    return sorted(
+        (metadata / FALLBACK_LOCALE / "images" / "phoneScreenshots").glob("*.png"))
 
 
 def main() -> int:
@@ -153,9 +179,18 @@ def main() -> int:
                     media_body=MediaFileUpload(str(path), mimetype="image/png")),
                 label=f"images.upload {locale}/{image_type}")
 
-        shots = sorted((loc_dir / "images" / "phoneScreenshots").glob("*.png"))
+        shots = _screenshots(metadata, locale)
+        if len(shots) < MIN_SCREENSHOTS:
+            print(f"ERROR: [{locale}] has {len(shots)} phone screenshot(s) "
+                  f"and Play requires {MIN_SCREENSHOTS}. A language whose "
+                  f"listing is incomplete makes the app undistributable on "
+                  f"EVERY track, internal included.", file=sys.stderr)
+            return 4
+        borrowed = "" if (loc_dir / "images" / "phoneScreenshots").glob("*.png") \
+            and sorted((loc_dir / "images" / "phoneScreenshots").glob("*.png")) \
+            else f" (borrowed from {FALLBACK_LOCALE})"
         if shots:
-            print(f"[{locale}] {len(shots)} phone screenshots")
+            print(f"[{locale}] {len(shots)} phone screenshots{borrowed}")
             _execute_with_retry(
                 lambda: edits.images().deleteall(
                     packageName=args.package, editId=edit_id,
