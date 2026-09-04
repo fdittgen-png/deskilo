@@ -25,11 +25,12 @@ on:
         required: true
         type: choice
         options:
+          # alpha1 is DELIBERATELY absent. It was a second closed channel
+          # that held testers and no build; it is suspended now and must
+          # never receive another release. The uploader refuses it too,
+          # so this list being edited back is not enough to undo that.
           - internal
           - alpha
-          # Play names extra closed tracks itself. A second one with
-          # testers and no build is invisible to them (#853).
-          - alpha1
           - beta
           - production
         default: internal
