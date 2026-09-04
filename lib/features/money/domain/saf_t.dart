@@ -8,7 +8,7 @@ import 'vat_regime.dart';
 /// The app version SAF-T records as the producing software
 /// (`SoftwareVersion`). Cross-pinned to `pubspec.yaml` by test — an audit
 /// file that names the wrong version is a lie about its own provenance.
-const String safTSoftwareVersion = '1.0.0';
+const String safTSoftwareVersion = '1.0.1';
 
 /// SAF-T — **Standard Audit File for Tax**, the OECD's XML for handing a
 /// period of accounting data to an accountant or a tax administration.
