@@ -245,7 +245,7 @@ const Map<String, int> _baseline = {
   // 790→820 (2026-08-04): #472 the banded LETTER builder.
   // 820→840 (2026-08-05): #482 the side-by-side ReportColumns renderer.
   // 840→860 (2026-08-05): #488 the ReportImage renderer branch.
-  'lib/features/money/domain/invoice_pdf.dart': 1010, // 2026-09-02 #837 per-invoice sheets + annexes // 2026-09-02 #831 source groups + watermark helper // 2026-09-04 #869 page-1 window layout: the geometry and both painted blocks live in address_window.dart; what stays here is the flow restructure itself — the letterhead boxed into the band above the field and the field's own height reserved below it
+  'lib/features/money/domain/invoice_pdf.dart': 1055, // 2026-09-02 #837 per-invoice sheets + annexes // 2026-09-02 #831 source groups + watermark helper // 2026-09-04 #869 page-1 window layout: the geometry and both painted blocks live in address_window.dart; what stays here is the flow restructure itself — the letterhead boxed into the band above the field and the field's own height reserved below it // 2026-09-04 #872 the page model: header on page 1, continuation strip on 2+, footer pinned to every page — three callbacks that ARE this file's contract, so splitting them would hide it
   'lib/features/money/presentation/widgets/invoice_detail_sheet.dart': 640, // 2026-09-02 #831 folded banner // 2026-09-02 #822 image size/alignment
   // 670→680 (2026-08-04): #446 out-of-shell WorkHours install — the
   // kiosk arms the ambient working day itself, like realtime (#430).

@@ -32,16 +32,25 @@ void main() {
     }
   });
 
-  test('France posts on the right, the DIN world on the left', () {
-    expect(addressWindowForCountry('FR'), AddressWindow.right);
-    expect(addressWindowForCountry('fr'), AddressWindow.right);
-    expect(addressWindowForCountry('MC'), AddressWindow.right);
-    for (final country in ['DE', 'AT', 'CH', 'NL', 'US', 'CA', 'GB']) {
+  test('every country defaults to the left field — the side is the '
+      'owner\'s to correct, not ours to guess', () {
+    // The pilot workspace's own French envelope is a left-window one,
+    // and the French guidance measures the field from the LEFT edge.
+    // Right-window stock exists too, which is exactly why this is a
+    // default with an override rather than a per-country table.
+    for (final country in [
+      'FR', 'fr', 'MC', 'DE', 'AT', 'CH', 'NL', 'US', 'CA', 'GB', ''
+    ]) {
       expect(addressWindowForCountry(country), AddressWindow.left,
-          reason: country);
+          reason: country.isEmpty ? '(no country)' : country);
     }
-    // An unknown or empty country must still produce a usable sheet.
-    expect(addressWindowForCountry(''), AddressWindow.left);
+  });
+
+  test('20 mm is the safe offset against a 15 mm aperture', () {
+    // A block at 20 mm sits inside an aperture opening at 15 mm; a
+    // block at 15 mm would be clipped by one opening at 20 mm. The
+    // error only runs one way, so the larger offset wins.
+    expect(AddressWindow.left.leftEdge / _mm, greaterThanOrEqualTo(15));
   });
 
   test('an unset choice stays unset — it must not be pinned to a side',

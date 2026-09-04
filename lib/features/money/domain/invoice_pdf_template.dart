@@ -20,27 +20,50 @@ import 'address_window.dart';
 /// reminder LEVEL (#472) carries its own, so a friendly
 /// Zahlungserinnerung and a firm final notice are different documents.
 class ReportBands {
-  const ReportBands({this.header = '', this.body = '', this.footer = ''});
+  const ReportBands({
+    this.header = '',
+    this.body = '',
+    this.footer = '',
+    this.continuation = '',
+  });
 
   factory ReportBands.fromJson(Map<String, dynamic> json) => ReportBands(
-        header: json['header'] as String? ?? '',
-        body: json['body'] as String? ?? '',
-        footer: json['footer'] as String? ?? '',
-      );
+    header: json['header'] as String? ?? '',
+    body: json['body'] as String? ?? '',
+    footer: json['footer'] as String? ?? '',
+    continuation: json['continuation'] as String? ?? '',
+  );
 
   final String header;
   final String body;
   final String footer;
+
+  /// #872 — the header for pages TWO onwards.
+  ///
+  /// A letterhead belongs on the first sheet only: repeating the full
+  /// address block, the number box and the recipient on every page
+  /// wastes half of each one and reads as if a second document had
+  /// started. A continuation page needs a strip saying which document
+  /// this is. Empty falls back to that strip, built from the document's
+  /// own title and number — a page 2 identifying nothing helps no one.
+  final String continuation;
 
   static const ReportBands empty = ReportBands();
 
   bool get hasBands =>
       header.trim().isNotEmpty ||
       body.trim().isNotEmpty ||
-      footer.trim().isNotEmpty;
+      footer.trim().isNotEmpty ||
+      continuation.trim().isNotEmpty;
 
-  Map<String, String> toJson() =>
-      {'header': header, 'body': body, 'footer': footer};
+  Map<String, String> toJson() => {
+    'header': header,
+    'body': body,
+    'footer': footer,
+    // Absent from every pre-#872 file; an empty band means "use the
+    // built-in strip", so writing it always keeps that meaning.
+    'continuation': continuation,
+  };
 }
 
 class InvoicePdfTemplate {
@@ -48,6 +71,7 @@ class InvoicePdfTemplate {
     this.header = '',
     this.body = '',
     this.footer = '',
+    this.continuation = '',
     this.reminders = const [],
     this.proforma = ReportBands.empty,
     this.statement = ReportBands.empty,
@@ -58,40 +82,40 @@ class InvoicePdfTemplate {
 
   factory InvoicePdfTemplate.fromJson(Map<String, dynamic> json) =>
       InvoicePdfTemplate(
-        header: json[keyHeader] as String? ??
-            json[legacyKeyIntro] as String? ??
-            '',
+        header:
+            json[keyHeader] as String? ?? json[legacyKeyIntro] as String? ?? '',
         body: json[keyBody] as String? ?? '',
         footer: json[keyFooter] as String? ?? '',
+        continuation: json[keyContinuation] as String? ?? '',
         reminders: [
           for (final r in json[keyReminders] as List<dynamic>? ?? const [])
-            ReportBands.fromJson(
-                (r as Map).cast<String, dynamic>()),
+            ReportBands.fromJson((r as Map).cast<String, dynamic>()),
         ],
         proforma: json[keyProforma] is Map
             ? ReportBands.fromJson(
-                (json[keyProforma] as Map).cast<String, dynamic>())
+                (json[keyProforma] as Map).cast<String, dynamic>(),
+              )
             : ReportBands.empty,
         statement: json[keyStatement] is Map
             ? ReportBands.fromJson(
-                (json[keyStatement] as Map).cast<String, dynamic>())
+                (json[keyStatement] as Map).cast<String, dynamic>(),
+              )
             : ReportBands.empty,
         extraDocs: {
-          for (final entry
-              in (json[keyDocs] as Map? ?? const {}).entries)
+          for (final entry in (json[keyDocs] as Map? ?? const {}).entries)
             if (entry.value is Map)
               entry.key as String: ReportBands.fromJson(
-                  (entry.value as Map).cast<String, dynamic>()),
+                (entry.value as Map).cast<String, dynamic>(),
+              ),
         },
         translations: {
-          for (final entry
-              in (json[keyI18n] as Map? ?? const {}).entries)
+          for (final entry in (json[keyI18n] as Map? ?? const {}).entries)
             if (entry.value is Map)
               entry.key as String: InvoicePdfTemplate.fromJson(
-                  (entry.value as Map).cast<String, dynamic>()),
+                (entry.value as Map).cast<String, dynamic>(),
+              ),
         },
-        addressWindow:
-            addressWindowFromWire(json[keyAddressWindow] as String?),
+        addressWindow: addressWindowFromWire(json[keyAddressWindow] as String?),
       );
 
   /// Band above the whole document (letterhead territory).
@@ -102,6 +126,9 @@ class InvoicePdfTemplate {
 
   /// Band under the totals (payment terms, legal mentions…).
   final String footer;
+
+  /// #872 — the invoice's continuation header, for pages 2+.
+  final String continuation;
 
   /// Reminder band sets by LEVEL (index 0 = level 1, the friendly
   /// Zahlungserinnerung). An absent or empty entry falls back to the
@@ -135,6 +162,7 @@ class InvoicePdfTemplate {
   static const String keyHeader = 'header';
   static const String keyBody = 'body';
   static const String keyFooter = 'footer';
+  static const String keyContinuation = 'continuation';
   static const String keyReminders = 'reminders';
   static const String keyProforma = 'proforma';
   static const String keyStatement = 'statement';
@@ -203,11 +231,16 @@ class InvoicePdfTemplate {
   bool get hasBands =>
       header.trim().isNotEmpty ||
       body.trim().isNotEmpty ||
-      footer.trim().isNotEmpty;
+      footer.trim().isNotEmpty ||
+      continuation.trim().isNotEmpty;
 
   /// The invoice document's own bands as a [ReportBands].
-  ReportBands get invoiceBands =>
-      ReportBands(header: header, body: body, footer: footer);
+  ReportBands get invoiceBands => ReportBands(
+    header: header,
+    body: body,
+    footer: footer,
+    continuation: continuation,
+  );
 
   /// The proforma's own bands, or null to fall back to the invoice's.
   ReportBands? get proformaBands => proforma.hasBands ? proforma : null;
@@ -228,6 +261,7 @@ class InvoicePdfTemplate {
         header: header,
         body: body,
         footer: footer,
+        continuation: continuation,
         reminders: reminders,
         proforma: proforma,
         statement: statement,
@@ -236,12 +270,12 @@ class InvoicePdfTemplate {
       );
 
   /// Copy with language [lang]'s overlay replaced (#496).
-  InvoicePdfTemplate withTranslation(
-          String lang, InvoicePdfTemplate overlay) =>
+  InvoicePdfTemplate withTranslation(String lang, InvoicePdfTemplate overlay) =>
       InvoicePdfTemplate(
         header: header,
         body: body,
         footer: footer,
+        continuation: continuation,
         reminders: reminders,
         proforma: proforma,
         statement: statement,
@@ -263,6 +297,7 @@ class InvoicePdfTemplate {
       header: overlay.hasBands ? overlay.header : header,
       body: overlay.hasBands ? overlay.body : body,
       footer: overlay.hasBands ? overlay.footer : footer,
+      continuation: overlay.hasBands ? overlay.continuation : continuation,
       reminders: [
         for (var level = 1; level <= levels; level++)
           overlay.reminderBands(level) ??
@@ -271,8 +306,7 @@ class InvoicePdfTemplate {
                   : ReportBands.empty),
       ],
       proforma: overlay.proforma.hasBands ? overlay.proforma : proforma,
-      statement:
-          overlay.statement.hasBands ? overlay.statement : statement,
+      statement: overlay.statement.hasBands ? overlay.statement : statement,
       extraDocs: {
         ...extraDocs,
         for (final entry in overlay.extraDocs.entries)
@@ -301,6 +335,7 @@ class InvoicePdfTemplate {
       header: header,
       body: body,
       footer: footer,
+      continuation: continuation,
       reminders: next,
       proforma: proforma,
       statement: statement,
@@ -315,38 +350,38 @@ class InvoicePdfTemplate {
     ReportBands? proforma,
     ReportBands? statement,
     AddressWindow? addressWindow,
-  }) =>
-      InvoicePdfTemplate(
-        header: invoice?.header ?? header,
-        body: invoice?.body ?? body,
-        footer: invoice?.footer ?? footer,
-        reminders: reminders,
-        proforma: proforma ?? this.proforma,
-        statement: statement ?? this.statement,
-        extraDocs: extraDocs,
-        translations: translations,
-        addressWindow: addressWindow ?? this.addressWindow,
-      );
+  }) => InvoicePdfTemplate(
+    header: invoice?.header ?? header,
+    body: invoice?.body ?? body,
+    footer: invoice?.footer ?? footer,
+    continuation: invoice?.continuation ?? continuation,
+    reminders: reminders,
+    proforma: proforma ?? this.proforma,
+    statement: statement ?? this.statement,
+    extraDocs: extraDocs,
+    translations: translations,
+    addressWindow: addressWindow ?? this.addressWindow,
+  );
 
   Map<String, Object> toJson() => {
-        keyHeader: header,
-        keyBody: body,
-        keyFooter: footer,
-        keyReminders: [for (final r in reminders) r.toJson()],
-        keyProforma: proforma.toJson(),
-        keyStatement: statement.toJson(),
-        keyDocs: {
-          for (final entry in extraDocs.entries)
-            entry.key: entry.value.toJson(),
-        },
-        if (translations.isNotEmpty)
-          keyI18n: {
-            for (final entry in translations.entries)
-              entry.key: entry.value.toJson(),
-          },
-        // Absent means FOLLOW THE COUNTRY — writing a default here
-        // would pin the workspace to one convention forever.
-        if (addressWindow != null)
-          keyAddressWindow: addressWindowWire(addressWindow!),
-      };
+    keyHeader: header,
+    keyBody: body,
+    keyFooter: footer,
+    keyContinuation: continuation,
+    keyReminders: [for (final r in reminders) r.toJson()],
+    keyProforma: proforma.toJson(),
+    keyStatement: statement.toJson(),
+    keyDocs: {
+      for (final entry in extraDocs.entries) entry.key: entry.value.toJson(),
+    },
+    if (translations.isNotEmpty)
+      keyI18n: {
+        for (final entry in translations.entries)
+          entry.key: entry.value.toJson(),
+      },
+    // Absent means FOLLOW THE COUNTRY — writing a default here
+    // would pin the workspace to one convention forever.
+    if (addressWindow != null)
+      keyAddressWindow: addressWindowWire(addressWindow!),
+  };
 }

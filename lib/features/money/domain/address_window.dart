@@ -56,15 +56,27 @@ extension AddressWindowGeometry on AddressWindow {
 
 /// The convention a country's envelope stock implies.
 ///
-/// Only France (and Monaco, which uses La Poste's stock) is mapped to
-/// [AddressWindow.right] with any confidence; everything else takes the
-/// DIN geometry, which is the ISO-derived default and the one most
-/// window envelopes outside France are cut for. This is a starting
-/// point the owner corrects per workspace — never a claim about every
-/// envelope sold in a country.
+/// Every country defaults to [AddressWindow.left]. That is the DIN
+/// geometry, and it is what the French stock in front of us actually
+/// is: the pilot workspace's own window envelope carries the address on
+/// the left, and the French guidance the owner supplied puts the field
+/// "à environ 4,5 cm du haut de la feuille et à 1,5 cm du bord gauche"
+/// — 45 mm down and measured from the LEFT edge.
+///
+/// An earlier version of this mapped FR to [AddressWindow.right] on the
+/// strength of right-window stock also being sold in France. That was
+/// inference; a physical envelope is evidence, so the inference loses.
+///
+/// The 20 mm DIN offset is kept rather than the 15 mm that guidance
+/// names, because it is the safer of the two: a block at 20 mm sits
+/// comfortably inside an aperture opening at 15 mm, whereas a block at
+/// 15 mm is clipped by an aperture opening at 20 mm. The error only
+/// runs one way.
+///
+/// This is a DEFAULT the owner overrides per workspace, never a claim
+/// about every envelope sold in a country.
 AddressWindow addressWindowForCountry(String countryCode) =>
     switch (countryCode.toUpperCase()) {
-      'FR' || 'MC' => AddressWindow.right,
       _ => AddressWindow.left,
     };
 
