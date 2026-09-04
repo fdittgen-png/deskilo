@@ -23,6 +23,8 @@ void main() {
   final tool = File('tools/upload_to_play.py').readAsStringSync();
   final workflow =
       File('.github/workflows/play-availability.yml').readAsStringSync();
+  final uploadWorkflow =
+      File('.github/workflows/play-internal.yml').readAsStringSync();
 
   test('both modes are real flags, not just functions nobody can reach', () {
     // The failure this guards against is not hypothetical: the wiring
@@ -127,6 +129,19 @@ void main() {
     // The API has no delete-track call and the tool must not pretend
     // otherwise: a retired track still exists, it just serves nobody.
     expect(tool, contains('only be suspended or deleted in the Console'));
+  });
+
+  test('alpha1 is retired: it can be read, never published to', () {
+    // A second closed channel that held testers and no build. Its
+    // testers were told they were testers and handed an empty store. It
+    // is suspended in the Console; only Alpha is used.
+    expect(tool, contains('RETIRED_TRACKS = {"alpha1"}'));
+    expect(tool, contains('if not read_only and args.track in RETIRED_TRACKS'),
+        reason: 'the refusal must gate PUBLISHING only — reads and '
+            'cleanups must still be able to name a retired track, '
+            'because noticing it come back is the point');
+    expect(uploadWorkflow, isNot(contains('- alpha1')),
+        reason: 'and it must not be offered as a track choice');
   });
 
   test('the workflow reads by default and only writes when asked', () {

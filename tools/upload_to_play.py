@@ -198,6 +198,14 @@ EU_27 = [
 ]
 DEFAULT_COUNTRIES = EU_27 + ["US", "CA", "JP", "KR"]
 
+# Closed channels that must never receive another release. `alpha1` was a
+# second closed track that held testers and no build: its testers were
+# told they were testers and handed an empty store. It is suspended in the
+# Console and only Alpha is used. Reads and cleanups may still name it —
+# noticing it come back is the point — but a publish is refused outright,
+# because a workflow option list can be edited back and this cannot.
+RETIRED_TRACKS = {"alpha1"}
+
 
 def _set_countries(edits, package: str, track_name: str,
                    countries: list[str]) -> int:
@@ -633,14 +641,15 @@ def _report_status(edits, package: str) -> int:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--package", default=DEFAULT_PACKAGE, help=f"App package name (default: {DEFAULT_PACKAGE})")
-    # Not a fixed list: Play names extra closed tracks itself (alpha1,
-    # alpha2, …) and a workspace can create them in the Console at any
-    # time. Restricting this to the four well-known names is how a second
-    # closed track ends up with testers and no build.
+    # Not a fixed list: Play names extra closed tracks itself and a
+    # workspace can create them in the Console at any time, so reads and
+    # cleanups must be able to name one. PUBLISHING to a retired track is
+    # a different matter — see RETIRED_TRACKS below.
     parser.add_argument("--track", default=DEFAULT_TRACK,
                         help=f"Play Store track (default: {DEFAULT_TRACK}). The four "
                              f"well-known names are internal, alpha, beta and production; "
-                             f"extra closed tracks (alpha1, alpha2, …) are valid too.")
+                             f"an extra closed track can be named for reads and cleanups, "
+                             f"but a retired one can never receive a release.")
     parser.add_argument("--aab", default=DEFAULT_AAB, help=f"Path to AAB (default: {DEFAULT_AAB})")
     parser.add_argument("--key", default=DEFAULT_KEY, help=f"Service-account JSON key path (default: {DEFAULT_KEY})")
     parser.add_argument("--changelog-dir", default=DEFAULT_CHANGELOG_DIR,
@@ -685,6 +694,17 @@ def main() -> int:
     read_only = (args.status or args.set_countries is not None
                  or args.move_testers is not None
                  or args.clear_track or args.drop_drafts)
+
+    # A retired track never receives a release. Reads and cleanups may
+    # still name one — noticing it come back is the point, and emptying
+    # it is exactly what --clear-track is for.
+    if not read_only and args.track in RETIRED_TRACKS:
+        print(f"REFUSED: '{args.track}' is a retired track. It is suspended "
+              f"in the Console and must never receive another release; only "
+              f"'alpha' is used for closed testing.", file=sys.stderr)
+        _gh_annotate("error",
+                     f"refused to publish to the retired track '{args.track}'")
+        return 3
     if not read_only and not aab.is_file():
         print(f"ERROR: AAB not found at {aab}", file=sys.stderr)
         _gh_annotate("error", f"AAB not found at {aab}")
