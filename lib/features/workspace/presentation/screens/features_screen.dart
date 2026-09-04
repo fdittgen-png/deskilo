@@ -106,6 +106,11 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureInvoicePdfTemplateDesc ??
               'Owner-written intro and footer text on the invoice PDF. '
                   'Never touches the e-invoice XML.',
+        WorkspaceFeature.invoiceAddressWindow =>
+          l10n?.featureInvoiceAddressWindowDesc ??
+              'Place the recipient where a window envelope shows it, so '
+                  'a printed invoice can be folded and posted. The side '
+                  'follows the country and can be overridden.',
         WorkspaceFeature.memberNotifications =>
           l10n?.featureMemberNotificationsDesc ??
               'Send a short notification to another member; admins can '

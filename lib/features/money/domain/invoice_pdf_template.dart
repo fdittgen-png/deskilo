@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 
+import 'address_window.dart';
+
 /// Owner-written invoice report template (#454, rebuilt as a banded
 /// reporting tool in #470): three LIQUID bands — [header] above
 /// everything, [body] carrying the invoice lines (typically a
@@ -51,6 +53,7 @@ class InvoicePdfTemplate {
     this.statement = ReportBands.empty,
     this.extraDocs = const {},
     this.translations = const {},
+    this.addressWindow,
   });
 
   factory InvoicePdfTemplate.fromJson(Map<String, dynamic> json) =>
@@ -87,6 +90,8 @@ class InvoicePdfTemplate {
               entry.key as String: InvoicePdfTemplate.fromJson(
                   (entry.value as Map).cast<String, dynamic>()),
         },
+        addressWindow:
+            addressWindowFromWire(json[keyAddressWindow] as String?),
       );
 
   /// Band above the whole document (letterhead territory).
@@ -121,6 +126,12 @@ class InvoicePdfTemplate {
   /// rendered in that language. One level deep by design.
   final Map<String, InvoicePdfTemplate> translations;
 
+  /// #869 — where the recipient sits for a window envelope. `null`
+  /// means FOLLOW THE COUNTRY: an unset workspace must not be pinned to
+  /// one convention by a default, since the two conventions put the
+  /// address on opposite sides of the sheet.
+  final AddressWindow? addressWindow;
+
   static const String keyHeader = 'header';
   static const String keyBody = 'body';
   static const String keyFooter = 'footer';
@@ -129,6 +140,7 @@ class InvoicePdfTemplate {
   static const String keyStatement = 'statement';
   static const String keyDocs = 'docs';
   static const String keyI18n = 'i18n';
+  static const String keyAddressWindow = 'address_window';
 
   /// Pre-#470 key: a single intro paragraph — now the header band.
   static const String legacyKeyIntro = 'intro';
@@ -287,6 +299,7 @@ class InvoicePdfTemplate {
       statement: statement,
       extraDocs: extraDocs,
       translations: translations,
+      addressWindow: addressWindow,
     );
   }
 
@@ -294,6 +307,7 @@ class InvoicePdfTemplate {
     ReportBands? invoice,
     ReportBands? proforma,
     ReportBands? statement,
+    AddressWindow? addressWindow,
   }) =>
       InvoicePdfTemplate(
         header: invoice?.header ?? header,
@@ -304,6 +318,7 @@ class InvoicePdfTemplate {
         statement: statement ?? this.statement,
         extraDocs: extraDocs,
         translations: translations,
+        addressWindow: addressWindow ?? this.addressWindow,
       );
 
   Map<String, Object> toJson() => {
@@ -322,5 +337,9 @@ class InvoicePdfTemplate {
             for (final entry in translations.entries)
               entry.key: entry.value.toJson(),
           },
+        // Absent means FOLLOW THE COUNTRY — writing a default here
+        // would pin the workspace to one convention forever.
+        if (addressWindow != null)
+          keyAddressWindow: addressWindowWire(addressWindow!),
       };
 }

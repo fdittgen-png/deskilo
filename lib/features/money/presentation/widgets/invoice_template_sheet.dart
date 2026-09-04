@@ -276,6 +276,9 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
       proforma: _drafts['proforma'] ?? widget.initial.proforma,
       statement: _drafts['statement'] ?? widget.initial.statement,
       extraDocs: widget.initial.extraDocs,
+      // #869 — set on the legal identity screen; carried through so
+      // saving a design never resets it.
+      addressWindow: widget.initial.addressWindow,
     );
     for (var level = 1; level <= maxLevels; level++) {
       final bands = _drafts['r$level'];

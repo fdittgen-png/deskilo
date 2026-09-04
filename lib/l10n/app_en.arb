@@ -45,6 +45,38 @@
   "@accessoriesActive": {
     "description": "Label of the activate/deactivate switch in the edit sheet"
   },
+  "featureInvoiceAddressWindow": "Envelope address window",
+  "@featureInvoiceAddressWindow": {
+    "description": "Features screen name for the #869 window-envelope address placement flag"
+  },
+  "featureInvoiceAddressWindowDesc": "Place the recipient where a window envelope shows it, so a printed invoice can be folded and posted. The side follows the country and can be overridden.",
+  "@featureInvoiceAddressWindowDesc": {
+    "description": "Features screen description for the #869 window-envelope address placement flag"
+  },
+  "addressWindowTitle": "Address window",
+  "@addressWindowTitle": {
+    "description": "Invoice design setting choosing where the recipient is placed for a window envelope (#869)"
+  },
+  "addressWindowSubtitle": "Where the recipient is printed so it shows through a window envelope. The address field is 85 × 45 mm, 45 mm from the top of the sheet.",
+  "@addressWindowSubtitle": {
+    "description": "Explains the address-window setting and names the DIN field geometry (#869)"
+  },
+  "addressWindowCountry": "Follow the country",
+  "@addressWindowCountry": {
+    "description": "Address-window option: take the convention implied by the workspace country (#869)"
+  },
+  "addressWindowLeft": "Left (DIN 5008)",
+  "@addressWindowLeft": {
+    "description": "Address-window option: DIN 5008 left-hand window (#869)"
+  },
+  "addressWindowRight": "Right (French)",
+  "@addressWindowRight": {
+    "description": "Address-window option: French right-hand window (#869)"
+  },
+  "addressWindowOff": "No window",
+  "@addressWindowOff": {
+    "description": "Address-window option: keep the flow layout, print no window block (#869)"
+  },
   "authSignInTitle": "Sign in",
   "@authSignInTitle": {
     "description": "Heading on the auth screen in sign-in mode"

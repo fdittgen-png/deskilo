@@ -33,6 +33,7 @@ import '../domain/invoice_cii.dart';
 import '../domain/invoice_ubl.dart';
 import '../domain/invoice_ubl_check.dart';
 import '../domain/ledger_entry.dart';
+import '../domain/address_window.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/dunning.dart';
 import '../domain/invoice_report.dart';
@@ -995,7 +996,17 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
       if (imageBytes != null) reportImages[name] = imageBytes;
     }
   }
+  // #869 — the envelope window: the template's explicit choice wins,
+  // otherwise the seller's country decides the side. Off entirely when
+  // the workspace has not enabled the feature.
+  final addressWindow = effectiveFeatures(
+              resolveEnabledFeatures(workspace?.featureFlags ?? const {}))
+          .contains(WorkspaceFeature.invoiceAddressWindow)
+      ? (template.addressWindow ??
+          addressWindowForCountry(workspace?.countryCode ?? ''))
+      : AddressWindow.off;
   final bytes = await buildInvoicePdf(
+    addressWindow: addressWindow,
     invoice: invoice,
     reportImages: reportImages,
     lineText: (line) => invoiceLineText(l10n, line),

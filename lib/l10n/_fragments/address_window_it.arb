@@ -1,0 +1,35 @@
+{
+  "@@locale": "it",
+  "featureInvoiceAddressWindow": "Finestra indirizzo",
+  "@featureInvoiceAddressWindow": {
+    "description": "Features screen name for the #869 window-envelope address placement flag"
+  },
+  "featureInvoiceAddressWindowDesc": "Colloca il destinatario dove lo mostra una busta a finestra, così una fattura stampata può essere piegata e spedita. Il lato segue il paese ed è modificabile.",
+  "@featureInvoiceAddressWindowDesc": {
+    "description": "Features screen description for the #869 window-envelope address placement flag"
+  },
+  "addressWindowTitle": "Finestra indirizzo",
+  "@addressWindowTitle": {
+    "description": "Invoice design setting choosing where the recipient is placed for a window envelope (#869)"
+  },
+  "addressWindowSubtitle": "Dove viene stampato il destinatario perché compaia nella finestra della busta. Il blocco misura 85 × 45 mm, a 45 mm dal bordo superiore.",
+  "@addressWindowSubtitle": {
+    "description": "Explains the address-window setting and names the DIN field geometry (#869)"
+  },
+  "addressWindowCountry": "Segui il paese",
+  "@addressWindowCountry": {
+    "description": "Address-window option: take the convention implied by the workspace country (#869)"
+  },
+  "addressWindowLeft": "Sinistra (DIN 5008)",
+  "@addressWindowLeft": {
+    "description": "Address-window option: DIN 5008 left-hand window (#869)"
+  },
+  "addressWindowRight": "Destra (uso francese)",
+  "@addressWindowRight": {
+    "description": "Address-window option: French right-hand window (#869)"
+  },
+  "addressWindowOff": "Nessuna finestra",
+  "@addressWindowOff": {
+    "description": "Address-window option: keep the flow layout, print no window block (#869)"
+  }
+}

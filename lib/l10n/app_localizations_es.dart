@@ -41,6 +41,32 @@ class AppLocalizationsEs extends AppLocalizations {
   String get accessoriesActive => 'Activo';
 
   @override
+  String get featureInvoiceAddressWindow => 'Ventanilla de dirección';
+
+  @override
+  String get featureInvoiceAddressWindowDesc =>
+      'Coloca al destinatario donde lo muestra un sobre con ventanilla, para que una factura impresa pueda doblarse y enviarse. El lado sigue al país y puede cambiarse.';
+
+  @override
+  String get addressWindowTitle => 'Ventanilla de dirección';
+
+  @override
+  String get addressWindowSubtitle =>
+      'Dónde se imprime el destinatario para que se vea por la ventanilla del sobre. El bloque mide 85 × 45 mm, a 45 mm del borde superior.';
+
+  @override
+  String get addressWindowCountry => 'Seguir el país';
+
+  @override
+  String get addressWindowLeft => 'Izquierda (DIN 5008)';
+
+  @override
+  String get addressWindowRight => 'Derecha (uso francés)';
+
+  @override
+  String get addressWindowOff => 'Sin ventanilla';
+
+  @override
   String get authSignInTitle => 'Iniciar sesión';
 
   @override

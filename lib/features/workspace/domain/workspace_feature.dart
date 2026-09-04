@@ -31,6 +31,7 @@ enum WorkspaceFeature {
   dataExport,
   workingHours,
   invoicePdfTemplate,
+  invoiceAddressWindow,
   memberNotifications,
   documents,
   dunning,
@@ -272,6 +273,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // e-invoice XML never sees it.
   WorkspaceFeature.invoicePdfTemplate: FeatureManifestEntry(
     feature: WorkspaceFeature.invoicePdfTemplate,
+    requires: WorkspaceFeature.invoicing,
+  ),
+  // #869 — place the recipient where a window envelope shows it, and
+  // reserve the letterhead band above it, so a printed invoice can be
+  // folded and posted without the address moving off the window.
+  WorkspaceFeature.invoiceAddressWindow: FeatureManifestEntry(
+    feature: WorkspaceFeature.invoiceAddressWindow,
     requires: WorkspaceFeature.invoicing,
   ),
   // Member-to-member notes + admin broadcast (#456).

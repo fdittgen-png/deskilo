@@ -12,9 +12,12 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/address_window.dart';
 import '../../domain/invoice_legal.dart';
+import '../../domain/invoice_pdf_template.dart';
 import '../../domain/vat_regime.dart';
 import '../../providers/money_providers.dart';
+import '../widgets/address_window_field.dart';
 
 /// The workspace's LEGAL IDENTITY (0069) — owner-only, and the reason the
 /// e-invoice export can be valid at all.
@@ -52,6 +55,9 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   // #484 — '' = company/business, 'association' = non-profit.
   String _sellerKind = '';
   VatRegime _regime = VatRegime.notSubject;
+
+  /// #869 — null means follow the country.
+  AddressWindow? _addressWindow;
   bool _loaded = false;
   bool _saving = false;
 
@@ -99,6 +105,15 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           postalCode: _postalCode.text,
           vatAccount: _vatAccount.text,
         );
+        // #869 — the envelope choice lives in the document template
+        // beside the bands; read-modify-write so a design saved from
+        // the editor is never clobbered by this screen.
+        await ref.read(moneyRepositoryProvider).setInvoicePdfTemplate(
+              workspace.id,
+              (ref.read(invoicePdfTemplateProvider).value ??
+                      InvoicePdfTemplate.empty)
+                  .copyWith(addressWindow: _addressWindow),
+            );
         await repository.setInvoiceLegal(
           workspace.id,
           InvoiceLegal(
@@ -171,6 +186,8 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
     if (!_loaded) {
       _loaded = true;
       _regime = vatRegimeFromWire(workspace.vatRegime);
+      _addressWindow =
+          ref.read(invoicePdfTemplateProvider).value?.addressWindow;
       _vatId.text = workspace.vatId;
       _legalId.text = workspace.legalId;
       _reason.text = workspace.taxExemptionReason;
@@ -498,6 +515,19 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             _special,
             l10n?.invoiceLegalSpecialField ?? 'Special mentions',
           ),
+          const SizedBox(height: AppSpacing.md),
+          // #869 — where the sheet is addressed. It sits with the legal
+          // identity rather than the band editor because it applies
+          // whether or not the workspace writes its own template.
+          if (ref
+              .watch(enabledFeaturesSyncProvider)
+              .contains(WorkspaceFeature.invoiceAddressWindow))
+            AddressWindowField(
+              value: _addressWindow,
+              countryCode: workspace.countryCode,
+              onChanged: (window) =>
+                  setState(() => _addressWindow = window),
+            ),
           const SizedBox(height: AppSpacing.md),
           FilledButton(
             key: const ValueKey('legal-identity-save'),

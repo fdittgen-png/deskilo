@@ -6,6 +6,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import 'invoice.dart';
+import 'address_window.dart';
 import 'invoice_report.dart';
 
 /// Localized strings the invoice PDF prints.
@@ -108,6 +109,10 @@ const PdfColor _hairline = PdfColors.blueGrey200;
 /// at the same light grey; over a figure it only greys the stroke, so
 /// every amount stays readable.
 const PdfColor _watermark = PdfColors.grey400;
+/// The page's own top margin — the address window is measured from
+/// the PAGE edge, so the flow maths has to subtract exactly this.
+const double _pageMarginTop = 44;
+
 const double _watermarkOpacity = 0.5;
 const PdfColor _zebra = PdfColor.fromInt(0xFFF6F7F9);
 
@@ -171,6 +176,11 @@ Future<Uint8List> buildInvoicePdf({
   /// A settlement uses it to carry the invoices it regrouped, each
   /// stamped with the number that now owes their balance.
   List<InvoiceAnnex> annexes = const [],
+
+  /// #869 — where the recipient sits so it shows through a window
+  /// envelope. Resolved by the caller from the template and the seller's
+  /// country, because only the caller knows both.
+  AddressWindow addressWindow = AddressWindow.off,
 }) async {
   final hybrid = facturXml.isNotEmpty && colorProfile != null;
   final doc = pw.Document(
@@ -218,7 +228,11 @@ Future<Uint8List> buildInvoicePdf({
     required String dateLabel,
     required String periodLabel,
     String? watermarkOverride,
+    // #869 — only the sheet that goes in the envelope carries the
+    // address window; an annex is documentation behind it.
+    bool primary = false,
   }) {
+    final windowOn = primary && addressWindow.isOn;
     final numberLine = proforma
         ? (invoice.number.isEmpty
             ? strings.proforma
@@ -243,82 +257,9 @@ Future<Uint8List> buildInvoicePdf({
     String ratePercent(double percent) =>
         '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
 
-    pw.Widget label(String text) => pw.Text(text,
-        style: pw.TextStyle(
-            fontSize: 8,
-            color: _muted,
-            fontWeight: pw.FontWeight.bold,
-            letterSpacing: 1.2));
-
-    pw.Widget amountCell(int cents, {bool bold = false}) => pw.Padding(
-          padding: const pw.EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-          child: pw.Text(money(cents),
-              textAlign: pw.TextAlign.right,
-              style: pw.TextStyle(
-                  fontSize: 10,
-                  color: cents < 0 ? _accent : _ink,
-                  fontWeight:
-                      bold ? pw.FontWeight.bold : pw.FontWeight.normal)),
-        );
-
-    // An erroneous invoice must be unmistakable even at arm's length, or
-    // photocopied, or seen upside down on someone's desk (0071): the word
-    // runs across the whole sheet, diagonally, BEHIND the content — every
-    // page of it, annex included.
-    // #837 — an appended reference carries the stamp that says where it
-    // went; everything else follows the document's own state.
-    final watermark = watermarkOverride ??
-        invoiceWatermark(
-          strings,
-          proforma: proforma,
-          voided: invoice.isVoided,
-          copy: copy,
-        );
-    // Its size follows its LENGTH: 'ERRATA' and 'FEHLERHAFT' must both land
-    // inside the sheet. (The package's own Watermark scales to the rotated
-    // bounding box it computes, which runs the ends off the corners.)
-    final markSize = math.min(120.0, 820 / math.max(watermark.length, 1));
-
-    doc.addPage(
-      pw.MultiPage(
-        pageTheme: pw.PageTheme(
-          pageFormat: PdfPageFormat.a4,
-          theme: theme,
-          margin: const pw.EdgeInsets.fromLTRB(48, 44, 48, 44),
-          buildForeground: watermark.isEmpty
-              ? null
-              : (context) => pw.FullPage(
-                    ignoreMargins: true,
-                    child: pw.Opacity(
-                      opacity: _watermarkOpacity,
-                      child: pw.Center(
-                        child: pw.Transform.rotate(
-                          angle: math.pi / 4,
-                          child: pw.Text(
-                            watermark,
-                            style: pw.TextStyle(
-                              fontSize: markSize,
-                              color: _watermark,
-                              fontWeight: pw.FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-        ),
-        footer: (context) => pw.Container(
-          alignment: pw.Alignment.centerRight,
-          padding: const pw.EdgeInsets.only(top: 8),
-          child: pw.Text(
-            '${strings.page} ${context.pageNumber}/${context.pagesCount}',
-            style: const pw.TextStyle(fontSize: 8, color: _muted),
-          ),
-        ),
-        build: (context) => [
-          // #470: the header band replaces the letterhead wholesale.
-          ...(report == null
-              ? <pw.Widget>[
+    // #470: the header band replaces the letterhead wholesale.
+    final List<pw.Widget> headerWidgets = report == null
+        ? <pw.Widget>[
           // ── Letterhead ────────────────────────────────────────────
           pw.Row(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -367,8 +308,108 @@ Future<Uint8List> buildInvoicePdf({
               margin: const pw.EdgeInsets.symmetric(vertical: 14),
               height: 2,
               color: _accent),
-                ]
-              : _reportWidgets(report.header, images: reportImages)),
+        ]
+        : _reportWidgets(report.header, images: reportImages);
+
+    final pw.Widget windowRecipient = addressWindowRecipient(
+        name: invoice.memberName, address: invoice.memberAddress);
+
+    pw.Widget label(String text) => pw.Text(text,
+        style: pw.TextStyle(
+            fontSize: 8,
+            color: _muted,
+            fontWeight: pw.FontWeight.bold,
+            letterSpacing: 1.2));
+
+    pw.Widget amountCell(int cents, {bool bold = false}) => pw.Padding(
+          padding: const pw.EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+          child: pw.Text(money(cents),
+              textAlign: pw.TextAlign.right,
+              style: pw.TextStyle(
+                  fontSize: 10,
+                  color: cents < 0 ? _accent : _ink,
+                  fontWeight:
+                      bold ? pw.FontWeight.bold : pw.FontWeight.normal)),
+        );
+
+    // An erroneous invoice must be unmistakable even at arm's length, or
+    // photocopied, or seen upside down on someone's desk (0071): the word
+    // runs across the whole sheet, diagonally, BEHIND the content — every
+    // page of it, annex included.
+    // #837 — an appended reference carries the stamp that says where it
+    // went; everything else follows the document's own state.
+    final watermark = watermarkOverride ??
+        invoiceWatermark(
+          strings,
+          proforma: proforma,
+          voided: invoice.isVoided,
+          copy: copy,
+        );
+    // Its size follows its LENGTH: 'ERRATA' and 'FEHLERHAFT' must both land
+    // inside the sheet. (The package's own Watermark scales to the rotated
+    // bounding box it computes, which runs the ends off the corners.)
+    final markSize = math.min(120.0, 820 / math.max(watermark.length, 1));
+
+    doc.addPage(
+      pw.MultiPage(
+        pageTheme: pw.PageTheme(
+          pageFormat: PdfPageFormat.a4,
+          theme: theme,
+          margin: const pw.EdgeInsets.fromLTRB(
+              48, _pageMarginTop, 48, _pageMarginTop),
+          buildBackground: !windowOn
+              ? null
+              : (context) => addressWindowBackground(
+                    addressWindow,
+                    pageNumber: context.pageNumber,
+                    child: windowRecipient,
+                  ),
+          buildForeground: watermark.isEmpty
+              ? null
+              : (context) => pw.FullPage(
+                    ignoreMargins: true,
+                    child: pw.Opacity(
+                      opacity: _watermarkOpacity,
+                      child: pw.Center(
+                        child: pw.Transform.rotate(
+                          angle: math.pi / 4,
+                          child: pw.Text(
+                            watermark,
+                            style: pw.TextStyle(
+                              fontSize: markSize,
+                              color: _watermark,
+                              fontWeight: pw.FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+        ),
+        footer: (context) => pw.Container(
+          alignment: pw.Alignment.centerRight,
+          padding: const pw.EdgeInsets.only(top: 8),
+          child: pw.Text(
+            '${strings.page} ${context.pageNumber}/${context.pagesCount}',
+            style: const pw.TextStyle(fontSize: 8, color: _muted),
+          ),
+        ),
+        build: (context) => [
+          // #869 — with a window envelope the letterhead is boxed into
+          // the band ABOVE the address field and the field's own 45 mm
+          // is reserved below it, so the flow resumes at exactly 90 mm
+          // on every invoice, whatever the letterhead contains.
+          if (windowOn)
+            pw.SizedBox(
+              height: addressWindowTop - _pageMarginTop,
+              child: pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+                children: headerWidgets,
+              ),
+            )
+          else
+            ...headerWidgets,
+          if (windowOn) pw.SizedBox(height: addressWindowHeight),
           // ── Erroneous banner (0061) ───────────────────────────────
           if (invoice.isVoided && !proforma)
             pw.Container(
@@ -393,7 +434,12 @@ Future<Uint8List> buildInvoicePdf({
           pw.Row(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
-              pw.Expanded(
+              // #869 — the window already shows the recipient; repeating
+              // it here would print the address twice.
+              if (windowOn)
+                pw.Spacer()
+              else
+                pw.Expanded(
                 child: pw.Container(
                   padding: const pw.EdgeInsets.all(10),
                   decoration: const pw.BoxDecoration(
@@ -763,6 +809,7 @@ Future<Uint8List> buildInvoicePdf({
     report: report,
     dateLabel: dateLabel,
     periodLabel: periodLabel,
+    primary: true,
   );
   // The regrouped invoices behind this one, each stamped with where it
   // went. They are documentation, so they carry no report bands and are
