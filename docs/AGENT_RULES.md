@@ -181,3 +181,48 @@ unconfigurable for weeks because this list lagged), the `DOMAINS` entry
 plus feature gate in `web/setup.html`, and the guides' card count/list
 ×5. The events feed line must give validators what they DECIDE on (a
 deviated amount shows the validated amount and the member's reason).
+
+## Printed reports: the window-envelope contract (#873/#874) — no exceptions
+
+Every document the app posts is folded into a DL window envelope. These
+millimetres are a **must**, not a preference, and they are measured from
+the PAGE edge — never from the document's own margins, because the
+envelope ignores those too.
+
+| Zone | Band | Position |
+|---|---|---|
+| Sender | `header` | 20 mm from the top and left edges; it owns 20→45 mm and no more |
+| Recipient | drawn by the engine | 110 mm from the left (FR) or 20 mm (DIN), 45 mm from the top — 50 mm is the outer limit — inside an **85 × 40 mm** aperture |
+| Identification | first lines of `body` | resumes at **90 mm**: the word *Facture*, the number, the issue date and the service date |
+| Footer | `footer` | **pinned to the bottom of EVERY page**: bank details, seller address, contact |
+| Page 2+ | `continuation` | a short strip naming the document — **never** the letterhead again |
+
+**Three zones, always.** Header fixed to page one, body flowing, footer
+fixed to every page. A band that flows where it should be fixed is a
+defect, not a layout variant.
+
+**Never put anything in 45→90 mm** other than the recipient. That band
+is the aperture plus its tolerance; ink there is either invisible in the
+envelope or collides with the address.
+
+**The recipient block is mandatory.** A French invoice without the
+buyer's name *and address* is non-compliant
+([mentions obligatoires](https://www.economie.gouv.fr/entreprises/gerer-son-entreprise-au-quotidien/gerer-sa-comptabilite-et-ses-demarches/mentions-obligatoires-dune-facture-tout-savoir)),
+and an empty aperture posts a blank window.
+
+**Prove it on the artefact, never on the code.** Every one of these has
+been wrong in a document that was printed, and each time the widget tree
+looked right. So:
+
+* `test/features/money/invoice_geometry_test.dart` is the gate — it
+  inflates a generated PDF, walks the drawing operators keeping the
+  translation stack, and asserts every zone in millimetres.
+* `test/features/money/report_probe_test.dart` is the **local probe**:
+  run it, paste a workspace's real bands into `_bands`, and it prints
+  each zone with a verdict and writes the PDF to
+  `build/pdf-conformance/` so it can be opened and folded.
+* `lib/features/money/domain/report_conformance.dart` holds the numbers
+  once, so the gate and the probe cannot drift apart.
+
+Changing any of these millimetres means changing that file, and the
+reason belongs in the commit message.
