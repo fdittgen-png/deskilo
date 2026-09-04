@@ -25,7 +25,11 @@ on:
       track:
         description: Track to inspect (and to set countries on)
         type: choice
-        options: [alpha, beta, internal, production]
+        # alpha1 belongs here and NOT in play-internal.yml: a retired
+        # track must still be readable and emptiable — noticing it come
+        # back is the point of the report — while publishing to it is
+        # refused by the uploader itself.
+        options: [alpha, beta, internal, production, alpha1]
         default: alpha
       set_countries:
         description: >-

@@ -142,6 +142,11 @@ void main() {
             'because noticing it come back is the point');
     expect(uploadWorkflow, isNot(contains('- alpha1')),
         reason: 'and it must not be offered as a track choice');
+    // But the read/cleanup workflow MUST still be able to name it, or
+    // the ban would also blind the report that would catch it coming
+    // back, and there would be no way to empty it.
+    expect(workflow, contains('alpha1'),
+        reason: 'reads and cleanups must still reach a retired track');
   });
 
   test('the workflow reads by default and only writes when asked', () {
