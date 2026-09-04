@@ -163,5 +163,5 @@ VercodeOperation:
   - '%c * 10 + 2'
   - '%c * 10 + 3'
 UpdateCheckData: pubspec.yaml|version:\s.+\+(\d+)|.|version:\s(.+)\+
-CurrentVersion: 1.0.0
-CurrentVersionCode: 13
+CurrentVersion: 1.0.1
+CurrentVersionCode: 23

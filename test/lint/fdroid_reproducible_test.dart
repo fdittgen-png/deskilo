@@ -73,6 +73,42 @@ void main() {
         reason: 'the publishing job would sign with a key F-Droid refuses');
   });
 
+  test('CurrentVersion tracks the build entries', () {
+    // `fdroid lint` refuses a CurrentVersionCode below the oldest build
+    // entry, and `checkupdates` fails when these do not already match
+    // what it would compute from pubspec. Bumping the Builds and
+    // forgetting these two lines turned two green jobs red.
+    final codes = RegExp(r'^    versionCode: (\d+)$', multiLine: true)
+        .allMatches(recipe)
+        .map((m) => int.parse(m.group(1)!))
+        .toList();
+    expect(codes, isNotEmpty);
+    final current = RegExp(r'^CurrentVersionCode: (\d+)$', multiLine: true)
+        .firstMatch(recipe);
+    expect(current, isNotNull);
+    expect(int.parse(current!.group(1)!), codes.reduce((a, b) => a > b ? a : b),
+        reason: 'CurrentVersionCode must be the HIGHEST build entry');
+
+    final names = RegExp(r'^  - versionName: (.+)$', multiLine: true)
+        .allMatches(recipe)
+        .map((m) => m.group(1)!)
+        .toSet();
+    final currentName = RegExp(r'^CurrentVersion: (.+)$', multiLine: true)
+        .firstMatch(recipe)!
+        .group(1)!;
+    expect(names, contains(currentName),
+        reason: 'CurrentVersion names no build entry');
+
+    // And the version the recipe claims is the version the app is.
+    final pubspec = File('pubspec.yaml').readAsStringSync();
+    final version = RegExp(r'^version: (.+)\+(\d+)$', multiLine: true)
+        .firstMatch(pubspec)!;
+    expect(currentName, version.group(1),
+        reason: 'the recipe and pubspec.yaml disagree about the version');
+    expect(int.parse(current.group(1)!), int.parse(version.group(2)!) * 10 + 3,
+        reason: 'the ABI scheme is build number * 10 + abi index');
+  });
+
   test('each ABI is built from a clean build directory, as F-Droid does '
       'from a fresh checkout', () {
     expect(workflow, contains('rm -rf build'));
