@@ -78,6 +78,7 @@ class InvoicePdfTemplate {
     this.extraDocs = const {},
     this.translations = const {},
     this.addressWindow,
+    this.layouts = const {},
   });
 
   factory InvoicePdfTemplate.fromJson(Map<String, dynamic> json) =>
@@ -116,6 +117,11 @@ class InvoicePdfTemplate {
               ),
         },
         addressWindow: addressWindowFromWire(json[keyAddressWindow] as String?),
+        layouts: {
+          for (final entry in (json[keyLayouts] as Map? ?? const {}).entries)
+            if (entry.value is String && (entry.value as String).isNotEmpty)
+              entry.key as String: entry.value as String,
+        },
       );
 
   /// Band above the whole document (letterhead territory).
@@ -159,6 +165,20 @@ class InvoicePdfTemplate {
   /// address on opposite sides of the sheet.
   final AddressWindow? addressWindow;
 
+  /// #875 — positioned layouts by report kind id ('invoice',
+  /// 'proforma', 'statement', a doc key, 'reminder-N'), each the XML of
+  /// a `<report-layout>`. A kind with a layout is rendered by the
+  /// positioned engine; without one, by its bands. The two coexist so a
+  /// workspace moves one document at a time and nothing already
+  /// designed changes until its owner says so.
+  final Map<String, String> layouts;
+
+  /// The layout for [kindId], or null when the kind still uses bands.
+  String? layoutFor(String kindId) {
+    final xml = layouts[kindId];
+    return xml == null || xml.trim().isEmpty ? null : xml;
+  }
+
   static const String keyHeader = 'header';
   static const String keyBody = 'body';
   static const String keyFooter = 'footer';
@@ -169,6 +189,7 @@ class InvoicePdfTemplate {
   static const String keyDocs = 'docs';
   static const String keyI18n = 'i18n';
   static const String keyAddressWindow = 'address_window';
+  static const String keyLayouts = 'layouts';
 
   /// Pre-#470 key: a single intro paragraph — now the header band.
   static const String legacyKeyIntro = 'intro';
@@ -299,6 +320,8 @@ class InvoicePdfTemplate {
         statement: statement,
         extraDocs: {...extraDocs, docId: bands},
         translations: translations,
+        addressWindow: addressWindow,
+        layouts: layouts,
       );
 
   /// Copy with language [lang]'s overlay replaced (#496).
@@ -313,6 +336,8 @@ class InvoicePdfTemplate {
         statement: statement,
         extraDocs: extraDocs,
         translations: {...translations, lang: overlay},
+        addressWindow: addressWindow,
+        layouts: layouts,
       );
 
   /// The template as seen from language [lang] (#496): a MERGED view —
@@ -344,6 +369,10 @@ class InvoicePdfTemplate {
         for (final entry in overlay.extraDocs.entries)
           if (entry.value.hasBands) entry.key: entry.value,
       },
+      addressWindow: overlay.addressWindow ?? addressWindow,
+      // A language may carry its own positioned layout per kind; where
+      // it does, that layout wins exactly as its bands would.
+      layouts: {...layouts, ...overlay.layouts},
     );
   }
 
@@ -374,6 +403,7 @@ class InvoicePdfTemplate {
       extraDocs: extraDocs,
       translations: translations,
       addressWindow: addressWindow,
+      layouts: layouts,
     );
   }
 
@@ -382,6 +412,7 @@ class InvoicePdfTemplate {
     ReportBands? proforma,
     ReportBands? statement,
     AddressWindow? addressWindow,
+    Map<String, String>? layouts,
   }) => InvoicePdfTemplate(
     header: invoice?.header ?? header,
     body: invoice?.body ?? body,
@@ -393,6 +424,7 @@ class InvoicePdfTemplate {
     extraDocs: extraDocs,
     translations: translations,
     addressWindow: addressWindow ?? this.addressWindow,
+    layouts: layouts ?? this.layouts,
   );
 
   Map<String, Object> toJson() => {
@@ -415,5 +447,6 @@ class InvoicePdfTemplate {
     // would pin the workspace to one convention forever.
     if (addressWindow != null)
       keyAddressWindow: addressWindowWire(addressWindow!),
+    if (layouts.isNotEmpty) keyLayouts: layouts,
   };
 }

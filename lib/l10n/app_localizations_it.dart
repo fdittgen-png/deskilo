@@ -6913,6 +6913,13 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get featureReportLayouts => 'Layout di report posizionati';
+
+  @override
+  String get featureReportLayoutsDesc =>
+      'Progetta un report indicando dove si trova ogni elemento, in mm, cm, px o %; il PDF stampa esattamente questo. Un documento con layout lo usa, gli altri mantengono le loro bande.';
+
+  @override
   String get reserveMonthView => 'Mese';
 
   @override

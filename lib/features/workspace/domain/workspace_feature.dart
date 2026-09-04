@@ -64,6 +64,7 @@ enum WorkspaceFeature {
   calendarValidations,
   usageRecords,
   reportDesignExchange,
+  reportLayouts,
   priceNegotiations,
 
   /// #767 — recurring scheduled expenses (internet, phone, electricity):
@@ -506,6 +507,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // back the same way, so it can be edited outside the app.
   WorkspaceFeature.reportDesignExchange: FeatureManifestEntry(
     feature: WorkspaceFeature.reportDesignExchange,
+    requires: WorkspaceFeature.reportDesigner,
+  ),
+  // #875 — positioned layouts: a design states its geometry, the PDF
+  // prints it; a document with a layout is drawn by it, the rest unchanged.
+  WorkspaceFeature.reportLayouts: FeatureManifestEntry(
+    feature: WorkspaceFeature.reportLayouts,
     requires: WorkspaceFeature.reportDesigner,
   ),
   // #739 — the tariff is the default; a member may have their own deal,

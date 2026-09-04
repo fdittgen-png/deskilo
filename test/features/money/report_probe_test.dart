@@ -43,12 +43,13 @@ ReportBands? bandsUnderProbe() => const ReportBands(
 
 = Désignation | Quantité | Prix unit HT | Total HT
 {% for line in lines %}{{ line.label }} | {{ line.qty }} | {{ line.unit_price }} | {{ line.amount }}
-{% endfor %}---''',
+{% endfor %}---
+
+{% if payment_terms != "" %}> {{ payment_terms }}{% endif %}
+{% if late_penalty != "" %}> {{ late_penalty }}{% endif %}''',
   continuation: '''> {{ workspace }} · {{ number }}
 ---''',
   footer: '''---
-{% if payment_terms != "" %}> {{ payment_terms }}{% endif %}
-{% if late_penalty != "" %}> {{ late_penalty }}{% endif %}
 :::
 > {{ workspace }}
 {% if workspace_address != "" %}> {{ workspace_address }}{% endif %}

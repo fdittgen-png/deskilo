@@ -7022,6 +7022,14 @@
       }
     }
   },
+  "featureReportLayouts": "Positioned report layouts",
+  "@featureReportLayouts": {
+    "description": "Features screen name for the #875 positioned report layouts flag"
+  },
+  "featureReportLayoutsDesc": "Design a report by stating where each element sits, in mm, cm, px or %; the PDF prints exactly that. A document with a layout uses it, the others keep their bands.",
+  "@featureReportLayoutsDesc": {
+    "description": "Features screen description for the #875 positioned report layouts flag"
+  },
   "reserveMonthView": "Month",
   "@reserveMonthView": {
     "description": "Reserve hub view segment: month availability calendar (#7)"

@@ -3954,6 +3954,14 @@
   "memberSimultaneousLimitExplainer": "Quante prenotazioni questo membro può avere nello stesso periodo. Non impostato: vale il valore predefinito dello spazio.",
   "memberSimultaneousLimitDefault": "Valore dello spazio",
   "memberSimultaneousLimitChip": "{n} alla volta",
+  "featureReportLayouts": "Layout di report posizionati",
+  "@featureReportLayouts": {
+    "description": "Features screen name for the #875 positioned report layouts flag"
+  },
+  "featureReportLayoutsDesc": "Progetta un report indicando dove si trova ogni elemento, in mm, cm, px o %; il PDF stampa esattamente questo. Un documento con layout lo usa, gli altri mantengono le loro bande.",
+  "@featureReportLayoutsDesc": {
+    "description": "Features screen description for the #875 positioned report layouts flag"
+  },
   "reserveMonthView": "Mese",
   "monthFreeCount": "{free}/{total}",
   "reservationRecurring": "Prenotazione ricorrente",

@@ -6911,6 +6911,13 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get featureReportLayouts => 'Positionierte Berichtslayouts';
+
+  @override
+  String get featureReportLayoutsDesc =>
+      'Ein Bericht wird entworfen, indem jedes Element seine Position in mm, cm, px oder % nennt; das PDF druckt genau das. Ein Dokument mit Layout nutzt es, die übrigen behalten ihre Bänder.';
+
+  @override
   String get reserveMonthView => 'Monat';
 
   @override

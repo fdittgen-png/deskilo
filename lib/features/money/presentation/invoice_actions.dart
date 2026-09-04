@@ -38,6 +38,7 @@ import '../domain/address_window.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/dunning.dart';
 import '../domain/invoice_report.dart';
+import 'report_layout_actions.dart';
 import '../domain/statement.dart';
 import '../providers/money_providers.dart';
 import 'report_actions.dart';
@@ -898,16 +899,35 @@ InvoiceReport renderLetterDoc(
 }
 
 /// The PDF of a rendered letter document (#494).
+///
+/// #875 — with [layoutXml] and [data] the positioned engine renders the
+/// letter and [report] is only the fallback for a layout that fails.
 Future<({Uint8List bytes, String fileName})> letterDocPdf(
   BuildContext context,
   WidgetRef ref, {
   required InvoiceReport report,
   required String title,
+  String? layoutXml,
+  Map<String, Object?> data = const {},
 }) async {
   final l10n = AppLocalizations.of(context);
-  final images = await resolveReportImages(ref, report);
   Future<pw.Font> font(String asset) async =>
       pw.Font.ttf(await rootBundle.load(asset));
+  if (layoutXml != null) {
+    final bytes = await tryLayoutPdf(
+      layoutXml: layoutXml,
+      data: data,
+      what: title,
+      documentTitle: title,
+      pageLabel: l10n?.invoicePdfPage ?? 'Page',
+      font: font,
+      image: (name) => layoutImage(ref, name),
+    );
+    if (bytes != null) {
+      return (bytes: bytes, fileName: '${safeFileSlug(title)}.pdf');
+    }
+  }
+  final images = await resolveReportImages(ref, report);
   final bytes = await buildBandedLetterPdf(
     report: report,
     reportImages: images,
@@ -1019,34 +1039,9 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   final bands = proforma
       ? (template.proformaBands ?? template.invoiceBands)
       : template.invoiceBands;
-  final report = renderReportBands(bands: bands, data: reportData);
-  final reportImages = <String, Uint8List>{};
-  if (report != null && reportImage != null) {
-    for (final name in reportImageRefs(report)) {
-      final imageBytes = await reportImage(name);
-      if (imageBytes != null) reportImages[name] = imageBytes;
-    }
-  }
-  // #869 — the envelope window: the template's explicit choice wins,
-  // otherwise the seller's country decides the side. Off entirely when
-  // the workspace has not enabled the feature.
-  final addressWindow = effectiveFeatures(
-              resolveEnabledFeatures(workspace?.featureFlags ?? const {}))
-          .contains(WorkspaceFeature.invoiceAddressWindow)
-      ? (template.addressWindow ??
-          addressWindowForCountry(workspace?.countryCode ?? ''))
-      : AddressWindow.off;
-  final association =
-      InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {})
-          .isAssociation;
-  final bytes = await buildInvoicePdf(
-    addressWindow: addressWindow,
-    invoice: invoice,
-    reportImages: reportImages,
-    lineText: (line) =>
-        invoiceLineText(l10n, line, association: association),
-    activityText: (entry) => annexEntryText(l10n, entry),
-    strings: InvoicePdfStrings(
+  final features = effectiveFeatures(
+      resolveEnabledFeatures(workspace?.featureFlags ?? const {}));
+  final strings = InvoicePdfStrings(
       // #508 — a NEGATIVE document is titled as the credit note it is.
       invoiceTitle: invoice.totalCents < 0
           ? (l10n?.invoicePdfCreditNote ?? 'Credit note')
@@ -1074,7 +1069,67 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
       activity: l10n?.invoicePdfActivity ?? 'Bookings & payments',
       reserved: l10n?.invoicePdfReserved ?? 'reserved',
       page: l10n?.invoicePdfPage ?? 'Page',
-    ),
+  );
+  // A proforma is named after what it covers — it has no number to be
+  // filed under, and must never sit in a folder looking like the invoice.
+  final stem = proforma
+      ? safeFileSlug('${l10n?.invoicePdfProforma ?? 'proforma'} '
+          '${invoice.number.isEmpty ? '${invoice.memberName} $periodLabel' : invoice.number}')
+      : safeFileSlug(invoice.number);
+  // #875 — a positioned layout, when this document has one, IS the
+  // document: it states its own geometry and the bands never run. A
+  // proforma without a layout of its own borrows the invoice's, as it
+  // borrows its bands. Annexes stay banded — they are documentation
+  // appended behind, and the layout engine renders one document.
+  final layoutXml = features.contains(WorkspaceFeature.reportLayouts) &&
+          annexInvoices.isEmpty
+      ? (proforma
+          ? (template.layoutFor('proforma') ?? template.layoutFor('invoice'))
+          : template.layoutFor('invoice'))
+      : null;
+  if (layoutXml != null) {
+    final bytes = await tryLayoutPdf(
+      layoutXml: layoutXml,
+      data: reportData,
+      what: invoice.number.isEmpty ? stem : invoice.number,
+      documentTitle: '${strings.invoiceTitle} ${invoice.number}',
+      pageLabel: strings.page,
+      font: font,
+      image: reportImage,
+      watermark: invoiceWatermark(strings,
+          proforma: proforma, voided: invoice.isVoided, copy: copy),
+      signatureLabel: strings.signature,
+      signature: proforma ? '' : invoice.signature,
+    );
+    if (bytes != null) return (bytes: bytes, fileName: '$stem.pdf');
+  }
+  final report = renderReportBands(bands: bands, data: reportData);
+  final reportImages = <String, Uint8List>{};
+  if (report != null && reportImage != null) {
+    for (final name in reportImageRefs(report)) {
+      final imageBytes = await reportImage(name);
+      if (imageBytes != null) reportImages[name] = imageBytes;
+    }
+  }
+  // #869 — the envelope window: the template's explicit choice wins,
+  // otherwise the seller's country decides the side. Off entirely when
+  // the workspace has not enabled the feature.
+  final addressWindow = features
+          .contains(WorkspaceFeature.invoiceAddressWindow)
+      ? (template.addressWindow ??
+          addressWindowForCountry(workspace?.countryCode ?? ''))
+      : AddressWindow.off;
+  final association =
+      InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {})
+          .isAssociation;
+  final bytes = await buildInvoicePdf(
+    addressWindow: addressWindow,
+    invoice: invoice,
+    reportImages: reportImages,
+    lineText: (line) =>
+        invoiceLineText(l10n, line, association: association),
+    activityText: (entry) => annexEntryText(l10n, entry),
+    strings: strings,
     money: (cents) => currency.formatMinor(cents),
     dateLabel: dateLabel,
     // The stored title is the raw period ('2026-07'); the document reads
@@ -1089,12 +1144,6 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
     boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
   );
-  // A proforma is named after what it covers — it has no number to be
-  // filed under, and must never sit in a folder looking like the invoice.
-  final stem = proforma
-      ? safeFileSlug('${l10n?.invoicePdfProforma ?? 'proforma'} '
-          '${invoice.number.isEmpty ? '${invoice.memberName} $periodLabel' : invoice.number}')
-      : safeFileSlug(invoice.number);
   return (bytes: bytes, fileName: '$stem.pdf');
 }
 

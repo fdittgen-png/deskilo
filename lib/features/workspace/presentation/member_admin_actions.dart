@@ -11,6 +11,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../events/providers/event_providers.dart';
 import '../../members/providers/directory_providers.dart';
 import '../../money/presentation/invoice_actions.dart';
+import '../../money/presentation/report_layout_actions.dart';
 import '../../money/providers/money_providers.dart';
 import '../domain/member.dart';
 import '../domain/overage_policy.dart';
@@ -219,7 +220,10 @@ Future<void> sendMemberAgreement(
           docId: 'agreement', data: data, language: language);
       final pdf = await letterDocPdf(context, ref,
           report: report,
-          title: '${docL10n.reportDocAgreement} $name');
+          title: '${docL10n.reportDocAgreement} $name',
+          layoutXml: letterLayoutXml(ref,
+              docId: 'agreement', language: language),
+          data: data);
       await ref.read(fileSharerProvider)(
         bytes: pdf.bytes,
         fileName: pdf.fileName,

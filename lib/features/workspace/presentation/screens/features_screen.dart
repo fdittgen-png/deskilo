@@ -228,6 +228,12 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.reportDesignExchange =>
           l10n?.featureReportDesignExchangeDesc ??
               'Every report design can be written out as one self-describing file and read back in. The file carries the design plus what its fields mean, the markup it accepts and the placeholders that exist, so a person or a tool can edit it outside the app and hand it back. A file for another report, or from a newer version, is refused with the reason. Off: designs are only editable in the designer.',
+        WorkspaceFeature.reportLayouts =>
+          l10n?.featureReportLayoutsDesc ??
+              'Design a report by stating where each element sits, in '
+                  'mm, cm, px or %; the PDF prints exactly that. A '
+                  'document with a layout uses it, the others keep '
+                  'their bands.',
         WorkspaceFeature.priceNegotiations =>
           l10n?.featurePriceNegotiationsDesc ??
               'The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record.',

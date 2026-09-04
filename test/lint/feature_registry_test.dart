@@ -74,7 +74,9 @@ import 'package:flutter_test/flutter_test.dart';
 // 67→68 (2026-09-02): #831 settlementFold — settled sources fold.
 // 73→74 (2026-09-04): #869 invoiceAddressWindow (place the recipient
 //   where a window envelope shows it; side follows the country).
-const int _expectedFeatureCount = 74;
+// 74→75 (2026-09-04): #875 reportLayouts — a design states its geometry
+//   in mm/cm/px/%; the PDF prints exactly that; coexists with bands.
+const int _expectedFeatureCount = 75;
 
 void main() {
   test('every functionality is registered — the pin', () {

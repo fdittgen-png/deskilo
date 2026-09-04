@@ -53,6 +53,7 @@ import '../country_names.dart';
 import '../feature_names.dart';
 import '../../../../core/time/clock.dart';
 import '../../../money/presentation/invoice_actions.dart';
+import '../../../money/presentation/report_layout_actions.dart';
 import '../../../money/presentation/batch_cover.dart';
 import '../../../../core/locale/report_language.dart';
 
@@ -326,7 +327,11 @@ class _WorkspaceSettingsScreenState
         final report = renderLetterDoc(context, ref,
             docId: 'workspace', data: data, language: language);
         final pdf = await letterDocPdf(context, ref,
-            report: report, title: docL10n.reportDocWorkspace);
+            report: report,
+            title: docL10n.reportDocWorkspace,
+            layoutXml: letterLayoutXml(ref,
+                docId: 'workspace', language: language),
+            data: data);
         if (!mounted) return;
         final path = await ref.read(fileSaverProvider)(
           bytes: pdf.bytes,

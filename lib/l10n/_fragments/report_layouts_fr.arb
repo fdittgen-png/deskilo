@@ -1,0 +1,11 @@
+{
+  "@@locale": "fr",
+  "featureReportLayouts": "Maquettes de rapport positionnées",
+  "@featureReportLayouts": {
+    "description": "Features screen name for the #875 positioned report layouts flag"
+  },
+  "featureReportLayoutsDesc": "Concevez un rapport en indiquant où se place chaque élément, en mm, cm, px ou % ; le PDF imprime exactement cela. Un document doté d'une maquette l'utilise, les autres gardent leurs bandes.",
+  "@featureReportLayoutsDesc": {
+    "description": "Features screen description for the #875 positioned report layouts flag"
+  }
+}
