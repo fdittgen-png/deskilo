@@ -41,7 +41,8 @@ void main() {
   test('no inspecting mode needs a build — they read the store, they do '
       'not produce anything for it', () {
     expect(tool, contains('read_only = (args.status or args.set_countries'));
-    expect(tool, contains('or args.move_testers is not None)'));
+    expect(tool, contains('or args.move_testers is not None'));
+    expect(tool, contains('or args.clear_track or args.drop_drafts)'));
     expect(tool, contains('if not read_only and not aab.is_file():'),
         reason: 'the AAB guard must not fire for a read-only run');
   });
@@ -117,6 +118,15 @@ void main() {
         'changesNotSentForReview=False'.allMatches(tool).length;
     expect(reviewed, commits,
         reason: 'all $commits commits must send for review, $reviewed do');
+  });
+
+  test('retiring a track empties it and says what it cannot do', () {
+    expect(tool, contains('parser.add_argument("--clear-track"'));
+    expect(tool, contains('parser.add_argument("--drop-drafts"'));
+    expect(tool, contains('_rewrite_track(edits'));
+    // The API has no delete-track call and the tool must not pretend
+    // otherwise: a retired track still exists, it just serves nobody.
+    expect(tool, contains('only be suspended or deleted in the Console'));
   });
 
   test('the workflow reads by default and only writes when asked', () {

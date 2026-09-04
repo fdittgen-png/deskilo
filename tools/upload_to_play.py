@@ -464,6 +464,79 @@ def _listing_summary(edits, package: str, edit_id: str) -> str:
     return f"{len(listings)}: {langs}"
 
 
+
+def _rewrite_track(edits, package: str, track_name: str, drafts_only: bool) -> int:
+    """Empty a track, or drop only its draft releases.
+
+    The API has no delete-track call, so a track Play created cannot be
+    removed from here — but a track with no release serves nobody, which
+    is the whole of what "retire it" means to a tester. Suspending and
+    deleting the channel itself stay Console work.
+    """
+    try:
+        edit = _execute_with_retry(
+            lambda: edits.insert(packageName=package, body={}),
+            label="edits.insert",
+        )
+    except HttpError as e:
+        print(f"ERROR: edits.insert failed: {e}", file=sys.stderr)
+        _gh_annotate("error", f"edits.insert failed: {e}")
+        return 4
+    edit_id = edit["id"]
+    try:
+        current = _execute_with_retry(
+            lambda: edits.tracks().get(
+                packageName=package, editId=edit_id, track=track_name),
+            label=f"tracks.get({track_name})",
+        )
+    except HttpError as e:
+        print(f"ERROR: tracks.get({track_name}) failed: {e}", file=sys.stderr)
+        return 4
+
+    before = current.get("releases", []) or []
+    if drafts_only:
+        keep = [r for r in before if r.get("status") != "draft"]
+        what = "draft release(s)"
+    else:
+        keep = []
+        what = "release(s)"
+    dropped = len(before) - len(keep)
+    print(f"track '{track_name}': {len(before)} release(s) -> {len(keep)}")
+    for r in before:
+        mark = "" if r in keep else "   <- dropping"
+        print(f"  versionCodes {r.get('versionCodes') or ['-']} "
+              f"status={r.get('status')}{mark}")
+    if dropped == 0:
+        print(f"Nothing to drop: no {what} on '{track_name}'.")
+        return 0
+
+    try:
+        _execute_with_retry(
+            lambda: edits.tracks().update(
+                packageName=package, editId=edit_id, track=track_name,
+                body={"track": track_name, "releases": keep}),
+            label=f"tracks.update({track_name})",
+        )
+        _execute_with_retry(
+            lambda: edits.commit(packageName=package, editId=edit_id,
+                                 changesNotSentForReview=False),
+            label="edits.commit (track rewrite)",
+        )
+    except HttpError as e:
+        print(f"ERROR: rewriting '{track_name}' failed: {e}", file=sys.stderr)
+        _gh_annotate("error", f"rewriting track '{track_name}': {e}")
+        return 9
+
+    print(f"Dropped {dropped} {what} from '{track_name}'.")
+    if not drafts_only:
+        print(f"'{track_name}' now serves nothing. The CHANNEL itself can "
+              f"only be suspended or deleted in the Console: Testing -> "
+              f"Closed testing -> {track_name} -> Suspendre le canal.")
+    _gh_annotate("notice",
+                 f"dropped {dropped} {what} from track '{track_name}'")
+    return 0
+
+
 def _report_status(edits, package: str) -> int:
     """Print what every track actually serves, and why a tester might see
     nothing.
@@ -589,6 +662,14 @@ def main() -> int:
                              "Use it when a second closed track holds testers and no "
                              "build. Needs no AAB. Console e-mail lists are invisible "
                              "to this API and must be moved in the Console.")
+    parser.add_argument("--clear-track", action="store_true",
+                        help="Remove every release from --track, then exit. A track with "
+                             "no release serves nobody. Needs no AAB. Deleting the channel "
+                             "itself is Console-only; the API has no call for it.")
+    parser.add_argument("--drop-drafts", action="store_true",
+                        help="Remove only the DRAFT releases from --track, then exit. A "
+                             "draft sits beside the live release serving nothing and "
+                             "muddying every report. Needs no AAB.")
     parser.add_argument("--status", action="store_true",
                         help="Read-only: report every track's releases, their status and their "
                              "country targeting, then exit. Needs no AAB. Use it when a tester "
@@ -602,7 +683,8 @@ def main() -> int:
     changelog_dir = Path(args.changelog_dir).resolve()
 
     read_only = (args.status or args.set_countries is not None
-                 or args.move_testers is not None)
+                 or args.move_testers is not None
+                 or args.clear_track or args.drop_drafts)
     if not read_only and not aab.is_file():
         print(f"ERROR: AAB not found at {aab}", file=sys.stderr)
         _gh_annotate("error", f"AAB not found at {aab}")
@@ -635,6 +717,10 @@ def main() -> int:
 
     if args.move_testers is not None:
         return _move_testers(edits, args.package, *args.move_testers)
+
+    if args.clear_track or args.drop_drafts:
+        return _rewrite_track(edits, args.package, args.track,
+                              drafts_only=args.drop_drafts)
 
     # All Android-Publisher edit calls below route through
     # `_execute_with_retry` so each layered failure mode has the same
