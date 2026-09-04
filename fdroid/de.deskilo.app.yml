@@ -16,9 +16,9 @@ RepoType: git
 Repo: https://github.com/fdittgen-png/deskilo.git
 
 Builds:
-  - versionName: 1.0.0
-    versionCode: 11
-    commit: 20a3c90d7b874064d90cd27683830be12f826b19
+  - versionName: 1.0.1
+    versionCode: 21
+    commit: d0b4d4e167e261644b289d8bc5948f1a3b253e9e
     sudo:
       - apt-get update
       - apt-get install -y --no-install-recommends cmake ninja-build
@@ -62,9 +62,9 @@ Builds:
       - popd
       - mv $repo de.deskilo.app
 
-  - versionName: 1.0.0
-    versionCode: 12
-    commit: 20a3c90d7b874064d90cd27683830be12f826b19
+  - versionName: 1.0.1
+    versionCode: 22
+    commit: d0b4d4e167e261644b289d8bc5948f1a3b253e9e
     sudo:
       - apt-get update
       - apt-get install -y --no-install-recommends cmake ninja-build
@@ -108,9 +108,9 @@ Builds:
       - popd
       - mv $repo de.deskilo.app
 
-  - versionName: 1.0.0
-    versionCode: 13
-    commit: 20a3c90d7b874064d90cd27683830be12f826b19
+  - versionName: 1.0.1
+    versionCode: 23
+    commit: d0b4d4e167e261644b289d8bc5948f1a3b253e9e
     sudo:
       - apt-get update
       - apt-get install -y --no-install-recommends cmake ninja-build
