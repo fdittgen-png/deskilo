@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #875 — a French association's invoice as a positioned layout.
+
+  Every zone states its own millimetres, so `dart run tool/report.dart
+  check tool/report/samples/invoice-fr.xml` can prove them on the sheet:
+    sender block   20 mm from the top and left (the page margin)
+    recipient      110 mm across, 45 mm down, inside 85 × 40 mm (DL window)
+    body           resumes at 90 mm with "Facture", the number, the dates
+    footer         fixed to the bottom of every page
+  Edit, check, import. `dart run tool/report.dart describe` lists the
+  vocabulary.
+-->
+<report-layout version="1" page="A4" margin="20mm">
+
+  <header height="25mm">
+    <image name="logo" x="0" y="0" h="12mm" fit="contain"/>
+    <text x="0" y="13mm" style="heading">{{ workspace }}</text>
+    <text x="0" y="20mm" style="small">{{ seller_legal_form }} · {{ workspace_address }}</text>
+  </header>
+
+  <continuation height="8mm">
+    <text style="small">{{ workspace }} · Facture {{ number }} (suite)</text>
+    <rule/>
+  </continuation>
+
+  <recipient window="fr"/>
+
+  <body y="90mm">
+    <text style="subheading">{% if proforma %}PROFORMA{% else %}FACTURE{% endif %} {{ number }}</text>
+    <text style="small">Date d'émission : {{ issued }}</text>
+    <text style="small">Prestation : {{ period }}</text>
+    {% if client_legal_id != "" %}<text style="small">N° Adhérent : {{ client_legal_id }}</text>{% endif %}
+    <spacer size="4mm"/>
+
+    <table>
+      <col w="55%"/>
+      <col w="10%" align="right"/>
+      <col w="17%" align="right"/>
+      <col w="18%" align="right"/>
+      <row bold="true"><cell>Désignation</cell><cell>Quantité</cell><cell>Prix unit HT</cell><cell>Total HT</cell></row>
+      {% for line in lines %}
+      <row><cell>{{ line.label }}</cell><cell>{{ line.qty }}</cell><cell>{{ line.unit_price }}</cell><cell>{{ line.amount }}</cell></row>
+      {% endfor %}
+    </table>
+    <rule/>
+
+    <columns>
+      <column>
+        {% if exemption_reason != "" %}<text style="small">{{ exemption_reason }}</text>{% endif %}
+      </column>
+      <column>
+        <table>
+          <col w="60%"/><col w="40%" align="right"/>
+          <row><cell>Total Hors Taxe</cell><cell>{{ net_total }}</cell></row>
+          <row><cell>Règlements</cell><cell>{{ payments }}</cell></row>
+          <row bold="true"><cell>Total TTC en euros</cell><cell>{{ total }}</cell></row>
+        </table>
+      </column>
+    </columns>
+
+    <spacer size="6mm"/>
+    {% if payment_terms != "" %}<text style="small">{{ payment_terms }}</text>{% endif %}
+    {% if escompte != "" %}<text style="small">{{ escompte }}</text>{% endif %}
+    {% if late_penalty != "" %}<text style="small">{{ late_penalty }}</text>{% endif %}
+    {% if recovery_indemnity != "" %}<text style="small">{{ recovery_indemnity }}</text>{% endif %}
+  </body>
+
+  <footer height="26mm">
+    <rule/>
+    <columns>
+      <column>
+        <text style="small">{{ workspace }}</text>
+        <text style="small">{{ workspace_address }}</text>
+        <text style="small">{{ seller_registration }}</text>
+      </column>
+      <column>
+        {% if iban != "" %}<text style="small">IBAN : {{ iban }}</text>{% endif %}
+        {% if bic != "" %}<text style="small">BIC : {{ bic }}</text>{% endif %}
+        {% if account_holder != "" %}<text style="small">Titulaire : {{ account_holder }}</text>{% endif %}
+      </column>
+      <column>
+        <text style="small">Référence à rappeler</text>
+        <text style="small">{{ number }}</text>
+        {% if special_mentions != "" %}<text style="small">{{ special_mentions }}</text>{% endif %}
+      </column>
+    </columns>
+  </footer>
+
+</report-layout>

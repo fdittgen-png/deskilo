@@ -846,6 +846,22 @@ Jeder Bericht hat das — Rechnung, Proforma, Abrechnung, Vereinbarung, Zahlungs
 
 Ein Import wird **mit Begründung abgelehnt**, wenn die Datei kein lesbares JSON ist, keine DesKilo-Vorlage, aus einer neueren Version stammt, einen hier nicht vorhandenen Bericht betrifft oder zu einem **anderen** Bericht gehört — eine Vorlage wird nie stillschweigend umgelenkt. Ein angenommener Import landet im Editor, nicht im Space: nichts ändert sich, bis Sie **Speichern** drücken.
 
+### Positionierte Layouts (XML)
+
+Ein Bericht kann durch ein **Layout** beschrieben werden, das festlegt, wo jedes Element sitzt — in Millimetern, Zentimetern, Pixeln oder als Prozent seines Rahmens — statt durch aufeinanderfolgende Bänder. Hat ein Dokument ein Layout, wird es gedruckt; sonst drucken die Bänder wie bisher. Beides besteht nebeneinander: Sie stellen ein Dokument nach dem anderen um.
+
+**Der Ablauf**: im Berichtsdesigner **XML exportieren**; die Datei bearbeiten (Sie oder Claude); lokal prüfen; **XML importieren**; speichern. Die exportierte Datei erklärt sich selbst: die Zonen (Kopf auf Seite 1, Leiste auf den Folgeseiten, Empfänger im Umschlagfenster, Rumpf, fester Fuß auf jeder Seite), die Elemente, die Einheiten und die verfügbaren Felder.
+
+**Vor dem Import prüfen** — ohne die App zu starten:
+
+```
+dart run tool/report.dart check mein-layout.xml
+```
+
+Der Befehl druckt jede Zone in Millimetern und schließt mit **CONFORMS** oder listet die Abweichungen (Anschrift außerhalb des Fensters, Text im Band 45–90 mm, fehlender Fuß …). PDF öffnen, falten, in einen DL-Fensterumschlag stecken.
+
+**Bilder**: `<image name="logo" h="12mm"/>` setzt ein Bild aus der Berichtsbibliothek; es erscheint in der Vorschau und im PDF.
+
 ## 12. Einstellungen & Profil
 
 Dein persönlicher Bildschirm, von oben nach unten:

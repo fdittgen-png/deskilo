@@ -889,6 +889,22 @@ Todos los informes lo tienen — factura, proforma, extracto, acuerdo financiero
 
 Una importación se **rechaza con el motivo** si el archivo no es JSON legible, no es un diseño de DesKilo, viene de una versión más nueva, es de un informe que este espacio no tiene, o pertenece a **otro** informe: un diseño nunca se redirige en silencio. Una importación aceptada llega al editor, no al espacio: nada cambia hasta que pulsas **Guardar**.
 
+### Maquetas posicionadas (XML)
+
+Un informe puede describirse con una **maqueta** que indica dónde se sitúa cada elemento — en milímetros, centímetros, píxeles o como porcentaje de su contenedor — en lugar de bandas encadenadas. Cuando un documento tiene maqueta, es la que se imprime; si no, se imprimen sus bandas como antes. Ambas conviven: migra un documento cada vez.
+
+**El ciclo**: en el diseñador de informes, **Exportar XML**; edite el archivo (usted o Claude); compruébelo localmente; **Importar XML**; guarde. El archivo exportado incluye sus propias instrucciones: las zonas (cabecera de la página 1, franja en las siguientes, destinatario en la ventanilla del sobre, cuerpo, pie fijo en cada página), los elementos, las unidades y los campos disponibles.
+
+**Comprobar antes de importar** — sin arrancar la aplicación:
+
+```
+dart run tool/report.dart check mi-maqueta.xml
+```
+
+El comando imprime la posición de cada zona en milímetros y concluye **CONFORMS** o enumera las desviaciones (dirección fuera de la ventanilla, texto en la banda de 45–90 mm, página sin pie…). Abra el PDF, dóblelo, introdúzcalo en un sobre DL con ventanilla.
+
+**Imágenes**: `<image name="logo" h="12mm"/>` coloca una imagen de la biblioteca del informe; se ve en la vista previa y se imprime en el PDF.
+
 ## 12. Ajustes y perfil
 
 Tu pantalla personal, de arriba abajo:
