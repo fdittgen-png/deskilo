@@ -163,6 +163,20 @@ jobs:
             exit 1
           fi
           echo "No required hardware feature: the listing reaches every device."
+          echo "--- permissions in the built APK"
+          "$AAPT" dump permissions "$APK" | sed -n 's/^uses-permission: name=//p'
+          for banned in android.permission.RECORD_AUDIO \
+                        android.permission.WRITE_EXTERNAL_STORAGE \
+                        android.permission.READ_EXTERNAL_STORAGE; do
+            if "$AAPT" dump permissions "$APK" | grep -q "name='$banned'"; then
+              echo "::error::$banned survived the merge. It is unused here and"
+              echo "::error::Play reviews it: a prominent disclosure and a Data"
+              echo "::error::safety entry would be required for a capability"
+              echo "::error::this app does not have."
+              exit 1
+            fi
+          done
+          echo "No unused sensitive permission survived the merge."
 
       - name: Name the APKs the way the recipe asks for them
         id: assets
