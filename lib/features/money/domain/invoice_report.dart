@@ -170,8 +170,15 @@ InvoiceReport? renderReportBands({
 }) {
   if (!bands.hasBands) return null;
   try {
+    // #875 — seed every known placeholder first. An absent one must
+    // be EMPTY, not nil, or `{% if x != "" %}` passes and the band
+    // prints a bare label. The caller's data always wins.
+    final seeded = <String, Object?>{
+      ...InvoicePdfTemplate.placeholderDefaults,
+      ...data,
+    };
     List<ReportBlock> band(String source) => parseReportMarkup(
-          Template.parse(source, data: Map.of(data)).render(),
+          Template.parse(source, data: Map.of(seeded)).render(),
         );
     return InvoiceReport(
       header: band(bands.header),

@@ -47,12 +47,16 @@ ReportBands? bandsUnderProbe() => const ReportBands(
   continuation: '''> {{ workspace }} · {{ number }}
 ---''',
   footer: '''---
+{% if payment_terms != "" %}> {{ payment_terms }}{% endif %}
+{% if late_penalty != "" %}> {{ late_penalty }}{% endif %}
 :::
 > {{ workspace }}
+{% if workspace_address != "" %}> {{ workspace_address }}{% endif %}
+{% if seller_registration != "" %}> {{ seller_registration }}{% endif %}
 |||
 {% if iban != "" %}> IBAN : {{ iban }}{% endif %}
-|||
-{% if payment_terms != "" %}> {{ payment_terms }}{% endif %}
+{% if bic != "" %}> BIC : {{ bic }}{% endif %}
+{% if account_holder != "" %}> Titulaire : {{ account_holder }}{% endif %}
 :::''',
     );
 
@@ -100,6 +104,8 @@ void main() {
             'number': invoice.number,
             'issued': '4 sept. 2026',
             'period': 'août 2026',
+            // Deliberately NOT supplying bic/account_holder: the
+            // probe must show them vanish, not print bare labels.
             'iban': 'FR76 1027 8090 5300 0206 7120 122',
             'payment_terms': 'Paiement à réception, à 30 jours.',
             'lines': [

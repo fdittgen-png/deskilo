@@ -224,6 +224,38 @@ class InvoicePdfTemplate {
     'special_mentions',
   ];
 
+  /// #875 — the VALUE an absent placeholder takes.
+  ///
+  /// Liquid resolves an unknown name to nil, and nil is not the empty
+  /// string: `{% if iban != "" %}` therefore PASSES for a placeholder
+  /// the document never supplied, and the band prints a label with
+  /// nothing after it. That is how a real invoice went out reading
+  /// "IBAN :", "BIC :", "Titulaire :" with no values — the guard was
+  /// right and the engine was wrong.
+  ///
+  /// So every known placeholder is seeded before a band renders, and
+  /// the type matters: seeding a flag with '' would make
+  /// `{% if proforma %}` true, since '' is truthy in Liquid. Only nil
+  /// and false are falsy there.
+  static const List<String> _flagPlaceholders = [
+    'voided',
+    'proforma',
+    'copy',
+    'has_vat',
+    'credit_note',
+  ];
+
+  static const List<String> _listPlaceholders = ['lines', 'vat'];
+
+  static Map<String, Object?> get placeholderDefaults => {
+        for (final key in placeholders)
+          key: _flagPlaceholders.contains(key)
+              ? false
+              : _listPlaceholders.contains(key)
+                  ? const <Object?>[]
+                  : '',
+      };
+
   bool get isEmpty => !hasBands;
 
   /// Whether ANY band carries content — the switch between the built-in

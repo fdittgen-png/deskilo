@@ -88,4 +88,26 @@ void main() {
     // Editing a reminder level must not drop the invoice's own strip.
     expect(t.withReminder(1, const ReportBands()).continuation, 'c');
   });
+
+  test('rebuilding a template from bands keeps the continuation — the '
+      'designer preview must show what the save would produce', () {
+    // The preview constructs an InvoicePdfTemplate from the edited
+    // bands. Forgetting one band there shows a document that differs
+    // from the saved one, which is worse than showing nothing.
+    const edited = ReportBands(
+      header: 'h',
+      body: 'b',
+      footer: 'f',
+      continuation: 'strip',
+    );
+    final rebuilt = InvoicePdfTemplate(
+      header: edited.header,
+      body: edited.body,
+      footer: edited.footer,
+      continuation: edited.continuation,
+    );
+    expect(rebuilt.invoiceBands.continuation, edited.continuation);
+    expect(rebuilt.invoiceBands.toJson(), edited.toJson(),
+        reason: 'the preview would render a different document');
+  });
 }
