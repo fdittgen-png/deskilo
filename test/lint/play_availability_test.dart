@@ -98,7 +98,14 @@ void main() {
     // And the store page itself: a closed test still renders one,
     // and without it the store answers "item not found" too.
     expect(tool, contains('edits.listings().list('));
-    expect(tool, contains('there is no store page to show'));
+    // And the images: a listing with text but no icon or screenshots is
+    // INCOMPLETE, and an incomplete listing is not distributable on any
+    // track — internal included. That is the failure that looks exactly
+    // like a healthy track serving nothing.
+    expect(tool, contains('edits.images().list('));
+    expect(tool, contains('edits.details().get('));
+    expect(tool, contains('REQUIRED_IMAGES'));
+    expect(tool, contains('internal included'));
   });
 
   test('the track is not restricted to the four well-known names', () {
