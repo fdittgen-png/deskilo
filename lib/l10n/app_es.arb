@@ -10,6 +10,38 @@
   "accessoriesNoSupplement": "Sin suplemento",
   "accessoriesInactive": "Inactivo",
   "accessoriesActive": "Activo",
+  "featureInvoiceAddressWindow": "Ventanilla de dirección",
+  "@featureInvoiceAddressWindow": {
+    "description": "Features screen name for the #869 window-envelope address placement flag"
+  },
+  "featureInvoiceAddressWindowDesc": "Coloca al destinatario donde lo muestra un sobre con ventanilla, para que una factura impresa pueda doblarse y enviarse. El lado sigue al país y puede cambiarse.",
+  "@featureInvoiceAddressWindowDesc": {
+    "description": "Features screen description for the #869 window-envelope address placement flag"
+  },
+  "addressWindowTitle": "Ventanilla de dirección",
+  "@addressWindowTitle": {
+    "description": "Invoice design setting choosing where the recipient is placed for a window envelope (#869)"
+  },
+  "addressWindowSubtitle": "Dónde se imprime el destinatario para que se vea por la ventanilla del sobre. El bloque mide 85 × 45 mm, a 45 mm del borde superior.",
+  "@addressWindowSubtitle": {
+    "description": "Explains the address-window setting and names the DIN field geometry (#869)"
+  },
+  "addressWindowCountry": "Seguir el país",
+  "@addressWindowCountry": {
+    "description": "Address-window option: take the convention implied by the workspace country (#869)"
+  },
+  "addressWindowLeft": "Izquierda (DIN 5008)",
+  "@addressWindowLeft": {
+    "description": "Address-window option: DIN 5008 left-hand window (#869)"
+  },
+  "addressWindowRight": "Derecha (uso francés)",
+  "@addressWindowRight": {
+    "description": "Address-window option: French right-hand window (#869)"
+  },
+  "addressWindowOff": "Sin ventanilla",
+  "@addressWindowOff": {
+    "description": "Address-window option: keep the flow layout, print no window block (#869)"
+  },
   "authSignInTitle": "Iniciar sesión",
   "authSignUpTitle": "Crear cuenta",
   "authEmailLabel": "Correo electrónico",

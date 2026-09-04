@@ -41,6 +41,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accessoriesActive => 'Active';
 
   @override
+  String get featureInvoiceAddressWindow => 'Envelope address window';
+
+  @override
+  String get featureInvoiceAddressWindowDesc =>
+      'Place the recipient where a window envelope shows it, so a printed invoice can be folded and posted. The side follows the country and can be overridden.';
+
+  @override
+  String get addressWindowTitle => 'Address window';
+
+  @override
+  String get addressWindowSubtitle =>
+      'Where the recipient is printed so it shows through a window envelope. The address field is 85 × 45 mm, 45 mm from the top of the sheet.';
+
+  @override
+  String get addressWindowCountry => 'Follow the country';
+
+  @override
+  String get addressWindowLeft => 'Left (DIN 5008)';
+
+  @override
+  String get addressWindowRight => 'Right (French)';
+
+  @override
+  String get addressWindowOff => 'No window';
+
+  @override
   String get authSignInTitle => 'Sign in';
 
   @override

@@ -164,6 +164,54 @@ abstract class AppLocalizations {
   /// **'Active'**
   String get accessoriesActive;
 
+  /// Features screen name for the #869 window-envelope address placement flag
+  ///
+  /// In en, this message translates to:
+  /// **'Envelope address window'**
+  String get featureInvoiceAddressWindow;
+
+  /// Features screen description for the #869 window-envelope address placement flag
+  ///
+  /// In en, this message translates to:
+  /// **'Place the recipient where a window envelope shows it, so a printed invoice can be folded and posted. The side follows the country and can be overridden.'**
+  String get featureInvoiceAddressWindowDesc;
+
+  /// Invoice design setting choosing where the recipient is placed for a window envelope (#869)
+  ///
+  /// In en, this message translates to:
+  /// **'Address window'**
+  String get addressWindowTitle;
+
+  /// Explains the address-window setting and names the DIN field geometry (#869)
+  ///
+  /// In en, this message translates to:
+  /// **'Where the recipient is printed so it shows through a window envelope. The address field is 85 × 45 mm, 45 mm from the top of the sheet.'**
+  String get addressWindowSubtitle;
+
+  /// Address-window option: take the convention implied by the workspace country (#869)
+  ///
+  /// In en, this message translates to:
+  /// **'Follow the country'**
+  String get addressWindowCountry;
+
+  /// Address-window option: DIN 5008 left-hand window (#869)
+  ///
+  /// In en, this message translates to:
+  /// **'Left (DIN 5008)'**
+  String get addressWindowLeft;
+
+  /// Address-window option: French right-hand window (#869)
+  ///
+  /// In en, this message translates to:
+  /// **'Right (French)'**
+  String get addressWindowRight;
+
+  /// Address-window option: keep the flow layout, print no window block (#869)
+  ///
+  /// In en, this message translates to:
+  /// **'No window'**
+  String get addressWindowOff;
+
   /// Heading on the auth screen in sign-in mode
   ///
   /// In en, this message translates to:

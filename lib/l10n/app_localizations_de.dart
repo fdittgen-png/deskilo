@@ -41,6 +41,32 @@ class AppLocalizationsDe extends AppLocalizations {
   String get accessoriesActive => 'Aktiv';
 
   @override
+  String get featureInvoiceAddressWindow => 'Adressfenster';
+
+  @override
+  String get featureInvoiceAddressWindowDesc =>
+      'Platziert den Empfänger dort, wo ihn ein Fensterumschlag zeigt, damit eine gedruckte Rechnung gefaltet und versandt werden kann. Die Seite folgt dem Land und ist überschreibbar.';
+
+  @override
+  String get addressWindowTitle => 'Adressfenster';
+
+  @override
+  String get addressWindowSubtitle =>
+      'Wo der Empfänger gedruckt wird, damit er im Fensterumschlag erscheint. Das Anschriftfeld misst 85 × 45 mm, 45 mm von der Blattoberkante.';
+
+  @override
+  String get addressWindowCountry => 'Dem Land folgen';
+
+  @override
+  String get addressWindowLeft => 'Links (DIN 5008)';
+
+  @override
+  String get addressWindowRight => 'Rechts (französisch)';
+
+  @override
+  String get addressWindowOff => 'Kein Fenster';
+
+  @override
   String get authSignInTitle => 'Anmelden';
 
   @override

@@ -41,6 +41,32 @@ class AppLocalizationsIt extends AppLocalizations {
   String get accessoriesActive => 'Attivo';
 
   @override
+  String get featureInvoiceAddressWindow => 'Finestra indirizzo';
+
+  @override
+  String get featureInvoiceAddressWindowDesc =>
+      'Colloca il destinatario dove lo mostra una busta a finestra, così una fattura stampata può essere piegata e spedita. Il lato segue il paese ed è modificabile.';
+
+  @override
+  String get addressWindowTitle => 'Finestra indirizzo';
+
+  @override
+  String get addressWindowSubtitle =>
+      'Dove viene stampato il destinatario perché compaia nella finestra della busta. Il blocco misura 85 × 45 mm, a 45 mm dal bordo superiore.';
+
+  @override
+  String get addressWindowCountry => 'Segui il paese';
+
+  @override
+  String get addressWindowLeft => 'Sinistra (DIN 5008)';
+
+  @override
+  String get addressWindowRight => 'Destra (uso francese)';
+
+  @override
+  String get addressWindowOff => 'Nessuna finestra';
+
+  @override
   String get authSignInTitle => 'Accedi';
 
   @override

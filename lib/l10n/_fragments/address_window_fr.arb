@@ -1,0 +1,35 @@
+{
+  "@@locale": "fr",
+  "featureInvoiceAddressWindow": "Fenêtre d'adresse",
+  "@featureInvoiceAddressWindow": {
+    "description": "Features screen name for the #869 window-envelope address placement flag"
+  },
+  "featureInvoiceAddressWindowDesc": "Place le destinataire à l'endroit qu'une enveloppe à fenêtre laisse voir, pour qu'une facture imprimée puisse être pliée et postée. Le côté suit le pays et reste modifiable.",
+  "@featureInvoiceAddressWindowDesc": {
+    "description": "Features screen description for the #869 window-envelope address placement flag"
+  },
+  "addressWindowTitle": "Fenêtre d'adresse",
+  "@addressWindowTitle": {
+    "description": "Invoice design setting choosing where the recipient is placed for a window envelope (#869)"
+  },
+  "addressWindowSubtitle": "Où le destinataire est imprimé pour apparaître dans la fenêtre de l'enveloppe. Le bloc adresse mesure 85 × 45 mm, à 45 mm du haut de la feuille.",
+  "@addressWindowSubtitle": {
+    "description": "Explains the address-window setting and names the DIN field geometry (#869)"
+  },
+  "addressWindowCountry": "Suivre le pays",
+  "@addressWindowCountry": {
+    "description": "Address-window option: take the convention implied by the workspace country (#869)"
+  },
+  "addressWindowLeft": "Gauche (DIN 5008)",
+  "@addressWindowLeft": {
+    "description": "Address-window option: DIN 5008 left-hand window (#869)"
+  },
+  "addressWindowRight": "Droite (usage français)",
+  "@addressWindowRight": {
+    "description": "Address-window option: French right-hand window (#869)"
+  },
+  "addressWindowOff": "Sans fenêtre",
+  "@addressWindowOff": {
+    "description": "Address-window option: keep the flow layout, print no window block (#869)"
+  }
+}

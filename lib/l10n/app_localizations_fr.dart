@@ -41,6 +41,32 @@ class AppLocalizationsFr extends AppLocalizations {
   String get accessoriesActive => 'Actif';
 
   @override
+  String get featureInvoiceAddressWindow => 'Fenêtre d\'adresse';
+
+  @override
+  String get featureInvoiceAddressWindowDesc =>
+      'Place le destinataire à l\'endroit qu\'une enveloppe à fenêtre laisse voir, pour qu\'une facture imprimée puisse être pliée et postée. Le côté suit le pays et reste modifiable.';
+
+  @override
+  String get addressWindowTitle => 'Fenêtre d\'adresse';
+
+  @override
+  String get addressWindowSubtitle =>
+      'Où le destinataire est imprimé pour apparaître dans la fenêtre de l\'enveloppe. Le bloc adresse mesure 85 × 45 mm, à 45 mm du haut de la feuille.';
+
+  @override
+  String get addressWindowCountry => 'Suivre le pays';
+
+  @override
+  String get addressWindowLeft => 'Gauche (DIN 5008)';
+
+  @override
+  String get addressWindowRight => 'Droite (usage français)';
+
+  @override
+  String get addressWindowOff => 'Sans fenêtre';
+
+  @override
   String get authSignInTitle => 'Connexion';
 
   @override

@@ -72,7 +72,9 @@ import 'package:flutter_test/flutter_test.dart';
 // 65→66 (2026-09-02): #827 invoicingWizard — the guided month-close.
 // 66→67 (2026-09-02): #828 expenseRepartition — shared expenses split.
 // 67→68 (2026-09-02): #831 settlementFold — settled sources fold.
-const int _expectedFeatureCount = 73;
+// 73→74 (2026-09-04): #869 invoiceAddressWindow (place the recipient
+//   where a window envelope shows it; side follows the country).
+const int _expectedFeatureCount = 74;
 
 void main() {
   test('every functionality is registered — the pin', () {
