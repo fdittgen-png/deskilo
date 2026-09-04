@@ -442,37 +442,6 @@ def _track_countries(edits, package: str, edit_id: str, track_name: str) -> str:
 
 
 
-def _listing_summary(edits, package: str, edit_id: str) -> str:
-    """Which languages the store page exists in.
-
-    A closed test still renders a STORE PAGE. Without a listing there is
-    no page to render, and the store answers "item not found" — which
-    looks exactly like a missing release or a missing tester.
-    """
-    try:
-        result = _execute_with_retry(
-            lambda: edits.listings().list(
-                packageName=package, editId=edit_id),
-            label="listings.list",
-        )
-    except HttpError as e:
-        return f"unreadable ({str(e)[:60]}…)"
-    listings = result.get("listings", []) or []
-    if not listings:
-        return "NONE — there is no store page to show"
-    described = [
-        l.get("language") for l in listings
-        if (l.get("title") or "").strip()
-        and (l.get("shortDescription") or "").strip()
-        and (l.get("fullDescription") or "").strip()
-    ]
-    langs = ", ".join(sorted(l.get("language", "?") for l in listings))
-    if not described:
-        return f"{len(listings)} present ({langs}) but NONE complete"
-    return f"{len(listings)}: {langs}"
-
-
-
 def _rewrite_track(edits, package: str, track_name: str, drafts_only: bool) -> int:
     """Empty a track, or drop only its draft releases.
 
@@ -545,6 +514,84 @@ def _rewrite_track(edits, package: str, track_name: str, drafts_only: bool) -> i
     return 0
 
 
+
+# What Play requires before an app can be distributed AT ALL. A listing
+# missing any of these blocks every track, internal included — which is
+# the one failure that looks like "item not found" on a device whose
+# account is on the tester list of a healthy track.
+REQUIRED_IMAGES = {
+    "icon": 1,
+    "featureGraphic": 1,
+    "phoneScreenshots": 2,
+}
+
+
+def _audit_listing(edits, package: str, edit_id: str) -> list:
+    """Everything that stops this app being distributable, named.
+
+    Returns a list of problems, empty when the listing is complete.
+    """
+    problems = []
+
+    # 1. Contact details. Play refuses a listing without an e-mail.
+    try:
+        details = _execute_with_retry(
+            lambda: edits.details().get(packageName=package, editId=edit_id),
+            label="details.get",
+        )
+        email = (details.get("contactEmail") or "").strip()
+        print(f"default language : {details.get('defaultLanguage')}")
+        print(f"contact e-mail   : {email or 'MISSING'}")
+        print(f"contact website  : {details.get('contactWebsite') or '-'}")
+        if not email:
+            problems.append("no contact e-mail on the app details")
+        default_language = details.get("defaultLanguage")
+    except HttpError as e:
+        print(f"details          : unreadable ({str(e)[:60]}…)")
+        default_language = None
+
+    # 2. Listings, and whether the DEFAULT language is among them.
+    try:
+        listings = (_execute_with_retry(
+            lambda: edits.listings().list(packageName=package, editId=edit_id),
+            label="listings.list",
+        ).get("listings", []) or [])
+    except HttpError as e:
+        problems.append(f"listings unreadable: {str(e)[:80]}")
+        return problems
+
+    languages = [l.get("language") for l in listings]
+    print(f"listing languages: {', '.join(sorted(languages)) or 'NONE'}")
+    if default_language and default_language not in languages:
+        problems.append(
+            f"the default language {default_language} has no store listing")
+
+    # 3. Images, per language. This is the check that was missing: a
+    #    listing with text and no icon or screenshots is incomplete, and
+    #    an incomplete listing is not distributable on ANY track.
+    for language in sorted(languages):
+        for kind, minimum in REQUIRED_IMAGES.items():
+            try:
+                found = (_execute_with_retry(
+                    lambda k=kind, lg=language: edits.images().list(
+                        packageName=package, editId=edit_id,
+                        language=lg, imageType=k),
+                    label=f"images.list({language}/{kind})",
+                ).get("images", []) or [])
+            except HttpError as e:
+                print(f"  {language} {kind}: unreadable ({str(e)[:40]}…)")
+                continue
+            ok = len(found) >= minimum
+            print(f"  {language} {kind}: {len(found)}"
+                  f"{'' if ok else f'  <== NEEDS {minimum}'}")
+            if not ok:
+                problems.append(
+                    f"{language}: {kind} has {len(found)}, Play requires "
+                    f"{minimum} — an incomplete listing cannot be "
+                    f"distributed on ANY track, internal included")
+    return problems
+
+
 def _report_status(edits, package: str) -> int:
     """Print what every track actually serves, and why a tester might see
     nothing.
@@ -573,13 +620,9 @@ def _report_status(edits, package: str) -> int:
         return 4
 
     problems = []
-    store = _listing_summary(edits, package, edit_id)
-    print(f"store listing languages: {store}")
-    if "NONE" in store:
-        problems.append(
-            "the store page itself: " + store + " — a closed test still "
-            "renders a listing, and without one the store says the item "
-            "does not exist")
+    print("=== is this app distributable at all? ===")
+    problems.extend(_audit_listing(edits, package, edit_id))
+    print()
 
     for track in listing.get("tracks", []):
         name = track.get("track", "?")
