@@ -109,9 +109,6 @@ const PdfColor _hairline = PdfColors.blueGrey200;
 /// at the same light grey; over a figure it only greys the stroke, so
 /// every amount stays readable.
 const PdfColor _watermark = PdfColors.grey400;
-/// The page's own top margin — the address window is measured from
-/// the PAGE edge, so the flow maths has to subtract exactly this.
-const double _pageMarginTop = 44;
 
 const double _watermarkOpacity = 0.5;
 const PdfColor _zebra = PdfColor.fromInt(0xFFF6F7F9);
@@ -283,6 +280,12 @@ Future<Uint8List> buildInvoicePdf({
                   ],
                 ),
               ),
+              // #873 — with a window envelope the identification block
+              // does NOT sit up here: the spec puts it under the sender
+              // at 90 mm, so it is the first thing in the flow instead.
+              if (windowOn)
+                pw.SizedBox()
+              else
               pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.end,
                 children: [
@@ -310,6 +313,37 @@ Future<Uint8List> buildInvoicePdf({
               color: _accent),
         ]
         : _reportWidgets(report.header, images: reportImages);
+
+    final List<pw.Widget> footerWidgets = report == null
+        ? const <pw.Widget>[]
+        : _reportWidgets(report.footer, images: reportImages);
+
+    // #872 — what a page 2 says when the design does not say it: the
+    // document's own title and number over a hairline. Enough to pair a
+    // loose sheet with the invoice it belongs to, and nothing more.
+    final pw.Widget continuationHeader = report != null &&
+            report.continuation.isNotEmpty
+        ? pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+            children: _reportWidgets(report.continuation,
+                images: reportImages),
+          )
+        : pw.Container(
+            margin: const pw.EdgeInsets.only(bottom: 12),
+            padding: const pw.EdgeInsets.only(bottom: 4),
+            decoration: const pw.BoxDecoration(
+              border: pw.Border(bottom: pw.BorderSide(color: _hairline)),
+            ),
+            child: pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                pw.Text(invoice.workspaceName,
+                    style: const pw.TextStyle(fontSize: 8, color: _muted)),
+                pw.Text(numberLine,
+                    style: const pw.TextStyle(fontSize: 8, color: _muted)),
+              ],
+            ),
+          );
 
     final pw.Widget windowRecipient = addressWindowRecipient(
         name: invoice.memberName, address: invoice.memberAddress);
@@ -355,8 +389,9 @@ Future<Uint8List> buildInvoicePdf({
         pageTheme: pw.PageTheme(
           pageFormat: PdfPageFormat.a4,
           theme: theme,
-          margin: const pw.EdgeInsets.fromLTRB(
-              48, _pageMarginTop, 48, _pageMarginTop),
+          // #873 — 20 mm all round: the sender block sits at 20 mm
+          // from the top and left edges, which the spec fixes.
+          margin: const pw.EdgeInsets.all(pageMargin),
           buildBackground: !windowOn
               ? null
               : (context) => addressWindowBackground(
@@ -386,30 +421,70 @@ Future<Uint8List> buildInvoicePdf({
                     ),
                   ),
         ),
-        footer: (context) => pw.Container(
-          alignment: pw.Alignment.centerRight,
-          padding: const pw.EdgeInsets.only(top: 8),
-          child: pw.Text(
-            '${strings.page} ${context.pageNumber}/${context.pagesCount}',
-            style: const pw.TextStyle(fontSize: 8, color: _muted),
-          ),
+        // #872 — the letterhead is page furniture, not flow: page one
+        // carries it (and reserves the envelope window under it), every
+        // later page carries the short strip that says which document
+        // this is instead of repeating an address block nobody rereads.
+        header: (context) => context.pageNumber == 1
+            ? pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+                children: [
+                  if (windowOn)
+                    // The sender block owns 20 mm → 45 mm, and the flow
+                    // resumes at 90 mm: below the 85 × 40 mm aperture
+                    // AND below the tolerance band under it.
+                    pw.SizedBox(
+                      height: addressWindowTop - pageMargin,
+                      child: pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+                        children: headerWidgets,
+                      ),
+                    )
+                  else
+                    ...headerWidgets,
+                  if (windowOn)
+                    pw.SizedBox(
+                        height: addressWindowFlowResume - addressWindowTop),
+                ],
+              )
+            : continuationHeader,
+        // #872 — and the footer is pinned to EVERY page, so the terms,
+        // the account to pay into and the page number are on whichever
+        // sheet the reader is holding.
+        footer: (context) => pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+          mainAxisSize: pw.MainAxisSize.min,
+          children: [
+            ...footerWidgets,
+            pw.Container(
+              alignment: pw.Alignment.centerRight,
+              padding: const pw.EdgeInsets.only(top: 8),
+              child: pw.Text(
+                '${strings.page} ${context.pageNumber}/${context.pagesCount}',
+                style: const pw.TextStyle(fontSize: 8, color: _muted),
+              ),
+            ),
+          ],
         ),
         build: (context) => [
-          // #869 — with a window envelope the letterhead is boxed into
-          // the band ABOVE the address field and the field's own 45 mm
-          // is reserved below it, so the flow resumes at exactly 90 mm
-          // on every invoice, whatever the letterhead contains.
-          if (windowOn)
-            pw.SizedBox(
-              height: addressWindowTop - _pageMarginTop,
-              child: pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.stretch,
-                children: headerWidgets,
-              ),
-            )
-          else
-            ...headerWidgets,
-          if (windowOn) pw.SizedBox(height: addressWindowHeight),
+          // #873 — "Facture", its number and the dates, at 90 mm: the
+          // first thing under the address field, as the spec requires.
+          if (windowOn && report == null) ...[
+            pw.Text(numberLine,
+                style: pw.TextStyle(
+                    fontSize: 14,
+                    fontWeight: pw.FontWeight.bold,
+                    color: _accent)),
+            pw.SizedBox(height: 3),
+            pw.Text(issuedOnLine,
+                style: const pw.TextStyle(fontSize: 9, color: _muted)),
+            pw.Text(issuedByLine,
+                style: const pw.TextStyle(fontSize: 9, color: _muted)),
+            if (invoice.replacesNumber.isNotEmpty)
+              pw.Text(replacesLine,
+                  style: const pw.TextStyle(fontSize: 9, color: _muted)),
+            pw.SizedBox(height: 12),
+          ],
           // ── Erroneous banner (0061) ───────────────────────────────
           if (invoice.isVoided && !proforma)
             pw.Container(
@@ -770,12 +845,6 @@ Future<Uint8List> buildInvoicePdf({
                 ],
               ),
             ],
-          ],
-          // ── Owner-template footer band (#454/#470): payment terms,
-          // legal mentions — under the totals, above the signature.
-          if (report != null && report.footer.isNotEmpty) ...[
-            pw.SizedBox(height: 16),
-            ..._reportWidgets(report.footer, images: reportImages),
           ],
           pw.SizedBox(height: 24),
           // ── Digital signature ─────────────────────────────────────

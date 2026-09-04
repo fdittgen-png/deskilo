@@ -10807,6 +10807,12 @@ abstract class AppLocalizations {
   /// **'Usage'**
   String get moneyFaceUsage;
 
+  /// The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.
+  ///
+  /// In en, this message translates to:
+  /// **'Participation {pct}%'**
+  String billParticipation(int pct);
+
   /// Booking sheet: grid duration slider label (#574)
   ///
   /// In en, this message translates to:

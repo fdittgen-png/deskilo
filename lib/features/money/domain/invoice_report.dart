@@ -134,17 +134,22 @@ class ReportColumns extends ReportBlock {
   final List<List<ReportBlock>> columns;
 }
 
-/// The three rendered bands of one invoice document.
+/// The rendered bands of one invoice document.
 class InvoiceReport {
   const InvoiceReport({
     required this.header,
     required this.body,
     required this.footer,
+    this.continuation = const [],
   });
 
   final List<ReportBlock> header;
   final List<ReportBlock> body;
   final List<ReportBlock> footer;
+
+  /// #872 — the header pages 2+ carry instead of the letterhead. Empty
+  /// means the document draws its built-in identification strip.
+  final List<ReportBlock> continuation;
 }
 
 /// Renders [template]'s bands against [data]. Returns null when the
@@ -172,6 +177,7 @@ InvoiceReport? renderReportBands({
       header: band(bands.header),
       body: band(bands.body),
       footer: band(bands.footer),
+      continuation: band(bands.continuation),
     );
   } catch (e, st) {
     TraceLogger.instance.warn(

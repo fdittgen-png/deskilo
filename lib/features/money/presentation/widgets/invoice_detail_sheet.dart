@@ -51,6 +51,8 @@ Future<InvoiceAction?> showInvoiceDetailSheet(
   InvoiceJourney? journey,
   // #831 — the settlement a regrouped source went into.
   String settledByNumber = '',
+  // #870 — an association collects a participation, not a subscription.
+  bool association = false,
 }) =>
     showModalBottomSheet<InvoiceAction>(
       context: context,
@@ -58,6 +60,7 @@ Future<InvoiceAction?> showInvoiceDetailSheet(
       showDragHandle: true,
       useSafeArea: true,
       builder: (context) => _InvoiceDetailBody(
+        association: association,
         settledByNumber: settledByNumber,
         invoice: invoice,
         match: match,
@@ -73,6 +76,7 @@ Future<InvoiceAction?> showInvoiceDetailSheet(
 
 class _InvoiceDetailBody extends StatelessWidget {
   const _InvoiceDetailBody({
+    required this.association,
     this.settledByNumber = '',
     required this.invoice,
     required this.match,
@@ -86,6 +90,8 @@ class _InvoiceDetailBody extends StatelessWidget {
   });
 
   final String settledByNumber;
+  final bool association;
+
   final Invoice invoice;
   final InvoiceMatch? match;
   final bool canIssue;
@@ -241,7 +247,7 @@ class _InvoiceDetailBody extends StatelessWidget {
                   key: ValueKey('invoice-detail-line-$i'),
                   padding: const EdgeInsets.symmetric(vertical: 2),
                   child: Row(children: [
-                    Expanded(child: Text(invoiceLineText(l10n, position))),
+                    Expanded(child: Text(invoiceLineText(l10n, position, association: association))),
                     const SizedBox(width: AppSpacing.sm),
                     Text(currency.formatMinor(position.amountCents)),
                   ]),
@@ -322,7 +328,8 @@ class _InvoiceDetailBody extends StatelessWidget {
                             child: Row(children: [
                               Expanded(
                                 child: Text(
-                                  invoiceLineText(l10n, position),
+                                  invoiceLineText(l10n, position,
+                                      association: association),
                                   style: theme.textTheme.bodySmall
                                       ?.copyWith(color: muted),
                                 ),

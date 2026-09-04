@@ -6204,6 +6204,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get moneyFaceUsage => 'Utilizzo';
 
   @override
+  String billParticipation(int pct) {
+    return 'Partecipazione $pct %';
+  }
+
+  @override
   String get planDurationLabel => 'Durata';
 
   @override

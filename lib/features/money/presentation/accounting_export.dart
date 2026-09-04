@@ -50,6 +50,7 @@ Future<void> exportAccountingFile(
   required String label,
 }) async {
   final l10n = AppLocalizations.of(context);
+  final association = ref.read(sellerIsAssociationProvider);
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
   if (invoices.isEmpty) {
@@ -128,7 +129,8 @@ Future<void> exportAccountingFile(
             matches: matches,
             company: company,
             accounts: accounts,
-            lineText: (line) => invoiceLineText(l10n, line),
+            lineText: (line) => invoiceLineText(l10n, line,
+                association: association),
             customersLabel: l10n?.fecAccountCustomers ?? 'Clients',
             revenueLabel: l10n?.fecAccountRevenue ?? 'Ventes',
             bankLabel: l10n?.fecAccountBank ?? 'Banque',
@@ -242,7 +244,8 @@ Future<void> exportAccountingFile(
             currency: workspace.currencyCode,
             softwareVersion: safTSoftwareVersion,
             createdAt: now,
-            lineText: (line) => invoiceLineText(l10n, line),
+            lineText: (line) => invoiceLineText(l10n, line,
+                association: association),
             fallbackDescription: l10n?.invoicesTitle ?? 'Invoice',
             profile:
                 portugal ? SafTProfile.portugal : SafTProfile.generic,

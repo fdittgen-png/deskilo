@@ -45,6 +45,7 @@ abstract final class ReportDesignSchema {
   static const String keyHeader = 'header';
   static const String keyBody = 'body';
   static const String keyFooter = 'footer';
+  static const String keyContinuation = 'continuation';
 }
 
 /// Why an import was refused. Each one is a separate sentence to the
@@ -105,13 +106,22 @@ Map<String, Object> reportDesignInstructions() => {
               'same report. Everything under "howToEdit" is documentation '
               'regenerated on every export: changing it has no effect.',
       'bands': {
-        'header': 'Printed at the top of the document, once.',
-        'body': 'The middle of the document. On an invoice this is where '
-            'the lines are laid out, usually inside a {% for line in '
-            'lines %} loop.',
-        'footer': 'Printed at the bottom, once. Legal mentions live here.',
-        'note': 'A band may be empty. If all three are empty the document '
-            'falls back to the built-in layout.',
+        'header': 'Fixed at the top of the FIRST page: the letterhead, '
+            'the document number and the recipient. It does not repeat.',
+        'continuation': 'Fixed at the top of every page AFTER the first. '
+            'Keep it to a strip that identifies the document — repeating '
+            'the letterhead there wastes half of each page. Empty draws '
+            'a built-in strip with the document name and number.',
+        'body': 'The only band that FLOWS, and the only one that pages: '
+            'the lines are laid out here, usually inside a {% for line '
+            'in lines %} loop.',
+        'footer': 'Fixed at the bottom of EVERY page — payment terms, '
+            'the bank details and the legal mentions, so they are on '
+            'whichever sheet the reader is holding.',
+        'note': 'A band may be empty. If all of them are empty the '
+            'document falls back to the built-in layout. Keep the fixed '
+            'bands short: every line in the header and footer is a line '
+            'the body loses on every page.',
       },
       'templateLanguage': {
         'name': 'Liquid',
@@ -182,6 +192,7 @@ String buildReportDesignFile({
       ReportDesignSchema.keyHeader: bands.header,
       ReportDesignSchema.keyBody: bands.body,
       ReportDesignSchema.keyFooter: bands.footer,
+      ReportDesignSchema.keyContinuation: bands.continuation,
     },
     ReportDesignSchema.keyHowToEdit: reportDesignInstructions(),
   };
@@ -258,6 +269,9 @@ ReportDesignFile parseReportDesignFile(
       header: band(ReportDesignSchema.keyHeader),
       body: band(ReportDesignSchema.keyBody),
       footer: band(ReportDesignSchema.keyFooter),
+      // Absent in a pre-#872 file: empty means the built-in strip, so
+      // an older design imports unchanged and still behaves.
+      continuation: band(ReportDesignSchema.keyContinuation),
     ),
   );
 }

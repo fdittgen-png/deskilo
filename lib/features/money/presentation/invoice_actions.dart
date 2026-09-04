@@ -33,6 +33,7 @@ import '../domain/invoice_cii.dart';
 import '../domain/invoice_ubl.dart';
 import '../domain/invoice_ubl_check.dart';
 import '../domain/ledger_entry.dart';
+import '../../workspace/domain/payment_instructions.dart';
 import '../domain/address_window.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/dunning.dart';
@@ -126,6 +127,13 @@ Map<String, Object?> legalMentionData(
   String clientAddress = '',
 }) {
   final legal = InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {});
+  // #871 — the bank block. A French (and German) invoice carries the
+  // account it is to be paid into, and until now a designed report
+  // could not print one: the details were stored but no placeholder
+  // reached them, so the only way to show an IBAN was to type it into
+  // the template and let it rot there when the account changed.
+  final pay =
+      PaymentInstructions.fromDb(workspace?.paymentInstructions ?? const {});
   String orDefault(String value, String fallback) =>
       value.trim().isNotEmpty ? value.trim() : fallback;
   // #484 — the B2B-only clauses (mandatory between professionals) have
@@ -133,6 +141,15 @@ Map<String, Object?> legalMentionData(
   String orB2bDefault(String value, String fallback) =>
       legal.isAssociation ? value.trim() : orDefault(value, fallback);
   return <String, Object?>{
+    'iban': pay.iban,
+    'bic': pay.bic,
+    'bank_name': pay.bankName,
+    'bank_account': pay.accountNumber,
+    'bank_code': pay.bankCode,
+    // The holder is the seller; an invoice never asks to be paid to
+    // anyone else, so this is not a separate field to get wrong.
+    'account_holder': workspace?.name ?? '',
+    'payment_reference': pay.reference,
     'seller_legal_form': legal.legalForm,
     'seller_registration': legal.registration,
     'seller_vat_id': seller?.vatId ?? workspace?.vatId ?? '',
@@ -198,6 +215,11 @@ Map<String, Object?> invoiceReportData(
     Localizations.maybeLocaleOf(context)?.toString(),
   );
   String money(int cents) => currency.formatMinor(cents);
+  // #870 — an association's positions are participations, not
+  // subscriptions; the same word everywhere the document is produced.
+  final association =
+      InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {})
+          .isAssociation;
   String rate(double percent) =>
       '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
   return <String, Object?>{
@@ -227,7 +249,8 @@ Map<String, Object?> invoiceReportData(
     'lines': [
       for (final line in invoice.lines)
         {
-          'label': invoiceLineText(l10n, line),
+          'label':
+              invoiceLineText(l10n, line, association: association),
           'amount': money(line.amountCents),
           'negative': line.amountCents < 0,
           // #480 — quantity, unit price and per-line VAT so a template
@@ -274,11 +297,16 @@ Map<String, Object?> statementReportData(
   final l10n = AppLocalizations.of(context);
   final currency = moneyFormat(currencyCode);
   String money(int cents) => currency.formatMinor(cents);
+  // #870 — the seller kind decides what the recurring position is
+  // called; it must read the same here as on the invoice itself.
+  final association =
+      InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {})
+          .isAssociation;
   final lines = <Map<String, Object?>>[
     if (statement.feeCents > 0)
       {
-        'label': l10n?.billSubscription(statement.subscriptionPct) ??
-            'Subscription ${statement.subscriptionPct}%',
+        'label': subscriptionLabel(l10n, statement.subscriptionPct,
+            association: association),
         'amount': money(statement.feeCents),
         'negative': false,
       },
@@ -387,11 +415,12 @@ Map<String, Object?> agreementReportData(
   ];
   final accessories =
       ref.read(accessoriesProvider()).value ?? const <Accessory>[];
+  final association = ref.read(sellerIsAssociationProvider);
   final lines = <Map<String, Object?>>[
     if (band != null) ...[
       {
-        'label': l10n?.billSubscription(subscriptionPct) ??
-            'Subscription $subscriptionPct%',
+        'label': subscriptionLabel(l10n, subscriptionPct,
+            association: association),
         'amount': money(band.feeCents),
       },
       {
@@ -550,6 +579,7 @@ Map<String, Object?> workspaceReportData(
 }) {
   final l10n = l10nOverride ?? AppLocalizations.of(context);
   final workspace = ref.read(currentWorkspaceProvider).value;
+  final association = ref.read(sellerIsAssociationProvider);
   final currency =
       moneyFormat(workspace?.currencyCode ?? 'EUR');
   String money(int cents) => currency.formatMinor(cents);
@@ -614,7 +644,8 @@ Map<String, Object?> workspaceReportData(
       for (final band in bands)
         {
           'label':
-              '${l10n?.billSubscription(band.toPct) ?? 'Subscription ${band.toPct}%'} (${band.fromPct + 1}–${band.toPct}%)',
+              '${subscriptionLabel(l10n, band.toPct, association: association)}'
+              ' (${band.fromPct + 1}–${band.toPct}%)',
           'amount': money(band.feeCents),
         },
       for (final service in services)
@@ -1005,11 +1036,15 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
       ? (template.addressWindow ??
           addressWindowForCountry(workspace?.countryCode ?? ''))
       : AddressWindow.off;
+  final association =
+      InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {})
+          .isAssociation;
   final bytes = await buildInvoicePdf(
     addressWindow: addressWindow,
     invoice: invoice,
     reportImages: reportImages,
-    lineText: (line) => invoiceLineText(l10n, line),
+    lineText: (line) =>
+        invoiceLineText(l10n, line, association: association),
     activityText: (entry) => annexEntryText(l10n, entry),
     strings: InvoicePdfStrings(
       // #508 — a NEGATIVE document is titled as the credit note it is.
@@ -1075,13 +1110,15 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
   required InvoiceParty buyer,
   required String iban,
 }) async {
+  final association = ref.read(sellerIsAssociationProvider);
   final l10n = AppLocalizations.of(context);
   final xml = buildInvoiceCii(
     invoice: invoice,
     seller: seller,
     buyer: buyer,
     iban: iban,
-    lineText: (line) => invoiceLineText(l10n, line),
+    lineText: (line) =>
+        invoiceLineText(l10n, line, association: association),
   );
   // PDF/A-3 cannot exist without an embedded output intent.
   final icc = await rootBundle.load('assets/pdf/sRGB2014.icc');
@@ -1608,6 +1645,7 @@ Future<void> exportEInvoice(
   Invoice invoice, {
   required String countryCode,
 }) async {
+  final association = ref.read(sellerIsAssociationProvider);
   final route = eInvoiceRouteFor(countryCode);
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (route == null || workspace == null) return;
@@ -1740,7 +1778,8 @@ Future<void> exportEInvoice(
         seller: seller,
         buyer: buyer,
         iban: workspaceIban(workspace),
-        lineText: (line) => invoiceLineText(l10n, line),
+        lineText: (line) =>
+        invoiceLineText(l10n, line, association: association),
       );
       final bytes = Uint8List.fromList(utf8.encode(xml));
       final fileName = '${safeFileSlug(invoice.number)}.xml';

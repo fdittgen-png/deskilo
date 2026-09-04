@@ -6190,6 +6190,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moneyFaceUsage => 'Uso';
 
   @override
+  String billParticipation(int pct) {
+    return 'Participación $pct %';
+  }
+
+  @override
   String get planDurationLabel => 'Duración';
 
   @override

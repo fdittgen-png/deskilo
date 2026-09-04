@@ -14,12 +14,19 @@ import 'package:flutter_test/flutter_test.dart';
 const double _mm = 72 / 25.4;
 
 void main() {
-  test('the address field is DIN 5008 form B, in both conventions', () {
+  test('the address field matches the DL window-envelope spec', () {
     expect(addressWindowTop / _mm, closeTo(45, 0.001));
+    expect(addressWindowTopLimit / _mm, closeTo(50, 0.001));
     expect(addressWindowWidth / _mm, closeTo(85, 0.001));
-    expect(addressWindowHeight / _mm, closeTo(45, 0.001));
-    // The document's own content may only resume below the field.
-    expect(addressWindowBottom / _mm, closeTo(90, 0.001));
+    expect(addressWindowHeight / _mm, closeTo(40, 0.001));
+    // Content resumes below BOTH the field and the tolerance band.
+    expect(addressWindowFlowResume / _mm, closeTo(90, 0.001));
+    expect(addressWindowFlowResume,
+        greaterThanOrEqualTo(addressWindowTopLimit + addressWindowHeight),
+        reason: 'the body would collide with a field placed at 50 mm');
+    // The sender block sits at the page margin, above the field.
+    expect(pageMargin / _mm, closeTo(20, 0.001));
+    expect(pageMargin, lessThan(addressWindowTop));
   });
 
   test('the side is the only thing the two conventions disagree on', () {
@@ -32,16 +39,24 @@ void main() {
     }
   });
 
-  test('France posts on the right, the DIN world on the left', () {
-    expect(addressWindowForCountry('FR'), AddressWindow.right);
-    expect(addressWindowForCountry('fr'), AddressWindow.right);
-    expect(addressWindowForCountry('MC'), AddressWindow.right);
-    for (final country in ['DE', 'AT', 'CH', 'NL', 'US', 'CA', 'GB']) {
-      expect(addressWindowForCountry(country), AddressWindow.left,
+  test('France takes the right-hand aperture, the DIN world the left',
+      () {
+    for (final country in ['FR', 'fr', 'MC']) {
+      expect(addressWindowForCountry(country), AddressWindow.right,
           reason: country);
     }
-    // An unknown or empty country must still produce a usable sheet.
-    expect(addressWindowForCountry(''), AddressWindow.left);
+    for (final country in ['DE', 'AT', 'CH', 'NL', 'US', 'CA', 'GB', '']) {
+      expect(addressWindowForCountry(country), AddressWindow.left,
+          reason: country.isEmpty ? '(no country)' : country);
+    }
+  });
+
+
+  test('the right-hand field is the 110 mm DL aperture', () {
+    expect(AddressWindow.right.leftEdge / _mm, closeTo(110, 0.001));
+    // 110 + 85 = 195 mm, inside a 210 mm sheet.
+    expect((AddressWindow.right.leftEdge + addressWindowWidth) / _mm,
+        lessThanOrEqualTo(210));
   });
 
   test('an unset choice stays unset — it must not be pinned to a side',

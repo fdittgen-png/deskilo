@@ -45,6 +45,8 @@ void main() {
         'header': _bands.header,
         'body': _bands.body,
         'footer': _bands.footer,
+        // #872 — the page-2 strip travels with the design.
+        'continuation': _bands.continuation,
       });
       final howTo = json['howToEdit'] as Map<String, dynamic>;
       expect(howTo['bands'], isA<Map>());

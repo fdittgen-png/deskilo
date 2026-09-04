@@ -30,20 +30,35 @@ enum AddressWindow { off, left, right }
 /// One PostScript point per millimetre.
 const double _mm = 72 / 25.4;
 
-/// The top of the address field, and its size. Identical in both
-/// conventions — only the side differs — so they are constants rather
-/// than members of the enum.
+/// The address field, in page coordinates.
+///
+/// 45 mm from the top (50 mm is the outer limit an aperture tolerates)
+/// and a 85 × 40 mm rectangle. The width and height are the APERTURE:
+/// everything drawn must fit inside them or it is behind cardboard.
 const double addressWindowTop = 45 * _mm;
 const double addressWindowWidth = 85 * _mm;
-const double addressWindowHeight = 45 * _mm;
+const double addressWindowHeight = 40 * _mm;
 
-/// Where the sender's own letterhead has to stop: the address field
-/// begins at [addressWindowTop], so anything above it must fit in the
-/// 45 mm band, and the document's own content resumes below the field.
-const double addressWindowBottom = addressWindowTop + addressWindowHeight;
+/// The lowest top-edge an aperture still shows. Drawing the field below
+/// this hides it, so it is a bound the conformance check asserts.
+const double addressWindowTopLimit = 50 * _mm;
+
+/// Where the document's own content resumes — 90 mm, below BOTH the
+/// field and the tolerance band under it. The invoice identification
+/// (the word "Facture", the number, the dates) starts here, so this is
+/// the first line of the body and not a matter of taste.
+const double addressWindowFlowResume = 90 * _mm;
+
+/// The page margin: 20 mm from the top and left edges, which is where
+/// the sender block sits. The letterhead therefore has the 25 mm
+/// between it and [addressWindowTop] to work in.
+const double pageMargin = 20 * _mm;
 
 extension AddressWindowGeometry on AddressWindow {
   /// Distance from the LEFT PAGE EDGE to the address field.
+  ///
+  /// 110 mm is the right-hand DL aperture the French spec names; 20 mm
+  /// is the DIN 5008 left-hand one.
   double get leftEdge => switch (this) {
         AddressWindow.left => 20 * _mm,
         AddressWindow.right => 110 * _mm,
@@ -56,12 +71,14 @@ extension AddressWindowGeometry on AddressWindow {
 
 /// The convention a country's envelope stock implies.
 ///
-/// Only France (and Monaco, which uses La Poste's stock) is mapped to
-/// [AddressWindow.right] with any confidence; everything else takes the
-/// DIN geometry, which is the ISO-derived default and the one most
-/// window envelopes outside France are cut for. This is a starting
-/// point the owner corrects per workspace — never a claim about every
-/// envelope sold in a country.
+/// France (and Monaco, on La Poste's stock) uses the right-hand DL
+/// aperture at 110 mm that the French invoice spec names; the DIN world
+/// uses the left-hand one at 20 mm.
+///
+/// Both are sold in France — the pilot workspace's own envelope is a
+/// left-window one — so this is only the DEFAULT, and the workspace
+/// setting overrides it. Getting the side wrong posts the address
+/// behind cardboard, which is why the override is not optional.
 AddressWindow addressWindowForCountry(String countryCode) =>
     switch (countryCode.toUpperCase()) {
       'FR' || 'MC' => AddressWindow.right,
