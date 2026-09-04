@@ -7,11 +7,32 @@ import '../domain/invoice.dart';
 /// bill's own section labels so the invoice reads exactly like the
 /// monthly bill it summarizes. Legacy 0060 free-form lines (empty kind)
 /// and service/package lines render their stored text verbatim.
-String invoiceLineText(AppLocalizations? l10n, InvoiceLine line) =>
+/// #870 — what the recurring position is CALLED.
+///
+/// A non-profit collects a member participation; only a commercial
+/// space sells a subscription. The distinction is not cosmetic: on a
+/// French association's invoice 'abonnement' reads as a commercial
+/// supply and is exactly the wording that argues the association into
+/// the VAT-liable trading sector. So the word follows the seller kind,
+/// and every surface that names the position uses this one function.
+String subscriptionLabel(
+  AppLocalizations? l10n,
+  int pct, {
+  required bool association,
+}) =>
+    association
+        ? (l10n?.billParticipation(pct) ?? 'Participation $pct%')
+        : (l10n?.billSubscription(pct) ?? 'Subscription $pct%');
+
+String invoiceLineText(
+  AppLocalizations? l10n,
+  InvoiceLine line, {
+  bool association = false,
+}) =>
     switch (line.kind) {
-      'subscription' => l10n?.billSubscription(
-              int.tryParse(line.label) ?? 0) ??
-          'Subscription ${line.label}%',
+      'subscription' => subscriptionLabel(
+          l10n, int.tryParse(line.label) ?? 0,
+          association: association),
       'overage' =>
         l10n?.billOverage(line.quantity) ?? '${line.quantity} extra half-days',
       'accessories' =>

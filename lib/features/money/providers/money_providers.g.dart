@@ -1740,3 +1740,68 @@ final class PriceNegotiationFamily extends $Family
   @override
   String toString() => r'priceNegotiationProvider';
 }
+
+/// #870 — is the seller a non-profit association?
+///
+/// It decides what the recurring position is CALLED on every surface:
+/// an association collects a participation, a commercial space sells a
+/// subscription. Kept in one place because the wording has tax
+/// consequences and must never differ between the bill, the invoice
+/// and the accounting export.
+
+@ProviderFor(sellerIsAssociation)
+final sellerIsAssociationProvider = SellerIsAssociationProvider._();
+
+/// #870 — is the seller a non-profit association?
+///
+/// It decides what the recurring position is CALLED on every surface:
+/// an association collects a participation, a commercial space sells a
+/// subscription. Kept in one place because the wording has tax
+/// consequences and must never differ between the bill, the invoice
+/// and the accounting export.
+
+final class SellerIsAssociationProvider
+    extends $FunctionalProvider<bool, bool, bool>
+    with $Provider<bool> {
+  /// #870 — is the seller a non-profit association?
+  ///
+  /// It decides what the recurring position is CALLED on every surface:
+  /// an association collects a participation, a commercial space sells a
+  /// subscription. Kept in one place because the wording has tax
+  /// consequences and must never differ between the bill, the invoice
+  /// and the accounting export.
+  SellerIsAssociationProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'sellerIsAssociationProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$sellerIsAssociationHash();
+
+  @$internal
+  @override
+  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  bool create(Ref ref) {
+    return sellerIsAssociation(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+}
+
+String _$sellerIsAssociationHash() =>
+    r'9fce76d674efe81cef64e01f9516642451386574';

@@ -53,6 +53,7 @@ Future<void> showInvoiceIssueSheet(
     context: context,
     isScrollControlled: true,
     builder: (context) => _InvoiceForm(
+      association: ref.read(sellerIsAssociationProvider),
       now: now,
       l10n: l10n,
       members: [
@@ -111,6 +112,7 @@ Future<void> showInvoiceIssueSheet(
 /// no way to type a position — that is the point.
 class _InvoiceForm extends StatefulWidget {
   const _InvoiceForm({
+    required this.association,
     required this.l10n,
     required this.members,
     required this.currency,
@@ -121,6 +123,9 @@ class _InvoiceForm extends StatefulWidget {
     this.initialDetailed = false,
     this.replacesNumber,
   });
+
+  /// #870 — an association collects a participation.
+  final bool association;
 
   final AppLocalizations? l10n;
   final List<({String id, String name})> members;
@@ -316,7 +321,8 @@ class _InvoiceFormState extends State<_InvoiceForm> {
               child: Row(
                 key: ValueKey('invoice-preview-line-$i'),
                 children: [
-                  Expanded(child: Text(invoiceLineText(l10n, line))),
+                  Expanded(child: Text(invoiceLineText(l10n, line,
+                      association: widget.association))),
                   Text(widget.currency.formatMinor(line.amountCents)),
                 ],
               ),

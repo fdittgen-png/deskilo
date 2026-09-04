@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../invoice_line_text.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/i18n/money_format.dart';
 import 'package:flutter/services.dart';
@@ -193,8 +194,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
 
     final strings = BillPdfStrings(
       title: l10n?.billPdfTitle ?? 'Monthly bill',
-      subscription: l10n?.billSubscription(statement.subscriptionPct) ??
-          'Subscription ${statement.subscriptionPct}%',
+      subscription: subscriptionLabel(l10n, statement.subscriptionPct,
+          association: ref.watch(sellerIsAssociationProvider)),
       entitlement: l10n?.billEntitlement(
             statement.usedHalfDays,
             statement.includedHalfDays,

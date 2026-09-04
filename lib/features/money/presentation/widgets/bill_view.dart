@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../invoice_line_text.dart';
 import '../../../../core/i18n/money_format.dart';
 import 'how_to_pay_tiles.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,8 @@ class BillView extends StatelessWidget {
     this.face,
     this.onPayOnline,
     this.settlement,
+    // #870 — an association collects a participation.
+    this.association = false,
   });
 
 
@@ -73,6 +76,8 @@ class BillView extends StatelessWidget {
   /// outstanding forever.
   final PeriodSettlement? settlement;
 
+  final bool association;
+
   /// #720 — render only the cards of one face; null keeps the whole bill
   /// (the flag-off column and the PDF export, which prints everything).
   final MoneyFace? face;
@@ -101,7 +106,10 @@ class BillView extends StatelessWidget {
         // At-a-glance usage for the current month (days included, used and
         // left) — the member's answer to "how much can I still book?".
         _EntitlementCard(statement: statement, money: money),
-        _SubscriptionCard(statement: statement, money: money),
+        _SubscriptionCard(
+            statement: statement,
+            money: money,
+            association: association),
         if (sections.serviceEntries.isNotEmpty)
           _ServicesCard(sections: sections, money: money),
         if (sections.packageEntries.isNotEmpty)
@@ -470,7 +478,13 @@ class _EntitlementCard extends StatelessWidget {
 }
 
 class _SubscriptionCard extends StatelessWidget {
-  const _SubscriptionCard({required this.statement, required this.money});
+  const _SubscriptionCard({
+    required this.statement,
+    required this.money,
+    required this.association,
+  });
+
+  final bool association;
 
   final Statement statement;
   final String Function(int cents) money;
@@ -485,8 +499,8 @@ class _SubscriptionCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _BillLine(
-              label: l10n?.billSubscription(statement.subscriptionPct) ??
-                  'Subscription ${statement.subscriptionPct}%',
+              label: subscriptionLabel(l10n, statement.subscriptionPct,
+                  association: association),
               value: '−${money(statement.feeCents)}',
               emphasized: true,
             ),

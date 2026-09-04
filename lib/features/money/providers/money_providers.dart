@@ -8,6 +8,7 @@ import '../domain/invoice.dart';
 import '../domain/billing_rules.dart';
 import '../domain/dunning.dart';
 import '../domain/price_negotiation.dart';
+import '../domain/invoice_legal.dart';
 import '../domain/invoice_pdf_template.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -437,3 +438,15 @@ Future<PriceNegotiation> priceNegotiation(Ref ref, String memberId) =>
       'price negotiation',
       () => ref.read(moneyRepositoryProvider).fetchPriceNegotiation(memberId),
     );
+
+/// #870 — is the seller a non-profit association?
+///
+/// It decides what the recurring position is CALLED on every surface:
+/// an association collects a participation, a commercial space sells a
+/// subscription. Kept in one place because the wording has tax
+/// consequences and must never differ between the bill, the invoice
+/// and the accounting export.
+@Riverpod(keepAlive: true)
+bool sellerIsAssociation(Ref ref) => InvoiceLegal.fromJson(
+      ref.watch(currentWorkspaceProvider).value?.invoiceLegal ?? const {},
+    ).isAssociation;
