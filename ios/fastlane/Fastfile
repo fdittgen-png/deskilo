@@ -306,7 +306,32 @@ platform :ios do
       pilot_args[:skip_waiting_for_build_processing] = true
     end
 
-    pilot(**pilot_args)
+    begin
+      pilot(**pilot_args)
+    rescue => ex
+      # The upload itself has already succeeded by the time Beta App
+      # Review is asked for — pilot uploads, waits for processing, THEN
+      # submits. When Apple is still reviewing an earlier build of the
+      # same train it refuses the second submission and nothing more is
+      # wrong: the build is on TestFlight, internal testers can install
+      # it, and the external group gets it the moment the earlier review
+      # clears and the lane is run again. A red train for that would hide
+      # the six legs that went right (the #630 principle).
+      raise unless distribute_external &&
+                   ex.message.include?("Another build is in review")
+      UI.important("TestFlight: uploaded and processed, but Apple is still " \
+                   "reviewing an earlier build of this train — the external " \
+                   "submission was NOT made. Re-run ios-testflight with " \
+                   "distribute_external=true once that review completes.")
+      if ENV["GITHUB_STEP_SUMMARY"]
+        File.open(ENV["GITHUB_STEP_SUMMARY"], "a") do |f|
+          f.puts "- **TestFlight:** build uploaded and processed; external " \
+                 "submission deferred — another build of this train is " \
+                 "still in Beta App Review. Re-run `ios-testflight` with " \
+                 "`distribute_external=true` when it clears."
+        end
+      end
+    end
   end
 
   desc "Make sure Apple knows about de.deskilo.app, and SAY what it knows."
