@@ -30,8 +30,9 @@ import 'package:pdf/widgets.dart' as pw;
 
 import '../../helpers/pdf_geometry.dart';
 
-/// Paste a workspace's real bands here to probe THAT design.
-const ReportBands? _bands = ReportBands(
+/// The design under probe. Paste a workspace's real bands in here;
+/// `return null` instead to probe the built-in layout.
+ReportBands? bandsUnderProbe() => const ReportBands(
   header: '''# {{ workspace }}
 {% if seller_legal_form != "" %}> {{ seller_legal_form }}{% endif %}
 {% if workspace_address != "" %}> {{ workspace_address }}{% endif %}
@@ -53,7 +54,7 @@ const ReportBands? _bands = ReportBands(
 |||
 {% if payment_terms != "" %}> {{ payment_terms }}{% endif %}
 :::''',
-);
+    );
 
 pw.Font _ttf(String path) =>
     pw.Font.ttf(ByteData.sublistView(File(path).readAsBytesSync()));
@@ -88,7 +89,7 @@ void main() {
       ],
     );
 
-    const bands = _bands;
+    final bands = bandsUnderProbe();
     final report = bands == null
         ? null
         : renderReportBands(bands: bands, data: {
@@ -126,7 +127,7 @@ void main() {
     final issues = <ConformanceIssue>[];
 
     // ignore: avoid_print
-    print('\n  PDF: $path   (${_bands == null ? "built-in" : "bands"})\n');
+    print('\n  PDF: $path   (${bands == null ? "built-in" : "bands"})\n');
     for (final zone in reportZones(window)) {
       final inZone = ink.where((i) => zone.containsY(i.yMm)).toList();
       final left = zone.leftMm;
