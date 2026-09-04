@@ -3954,6 +3954,46 @@
   "memberSimultaneousLimitExplainer": "Combien de réservations ce membre peut détenir sur une même période. Non défini : le réglage de l'espace s'applique.",
   "memberSimultaneousLimitDefault": "Réglage de l'espace",
   "memberSimultaneousLimitChip": "{n} à la fois",
+  "reportLayoutTitle": "Maquette positionnée (XML)",
+  "@reportLayoutTitle": {
+    "description": "Designer card title for the positioned layout of one report kind (#875)"
+  },
+  "reportLayoutSubtitle": "Une maquette indique où se place chaque élément, en mm, cm, px ou %. Exportez-la, modifiez-la, vérifiez-la avec `dart run tool/report.dart check`, réimportez-la. Quand une maquette existe, c'est elle qui s'imprime ; supprimez-la et les bandes s'impriment à nouveau.",
+  "@reportLayoutSubtitle": {
+    "description": "Explains export/edit/check/import and that a layout wins over the bands (#875)"
+  },
+  "reportLayoutActive": "Maquette active",
+  "@reportLayoutActive": {
+    "description": "Chip: this document is drawn by its positioned layout (#875)"
+  },
+  "reportLayoutBands": "Bandes",
+  "@reportLayoutBands": {
+    "description": "Chip: this document is drawn by its bands (#875)"
+  },
+  "reportLayoutExport": "Exporter le XML",
+  "@reportLayoutExport": {
+    "description": "Button: export the layout as XML (#875)"
+  },
+  "reportLayoutImport": "Importer un XML",
+  "@reportLayoutImport": {
+    "description": "Button: import a layout XML (#875)"
+  },
+  "reportLayoutPreview": "Aperçu de la page",
+  "@reportLayoutPreview": {
+    "description": "Button: open the page-true preview of the layout (#875)"
+  },
+  "reportLayoutRemove": "Supprimer la maquette (bandes)",
+  "@reportLayoutRemove": {
+    "description": "Button: remove the layout so the bands print again (#875)"
+  },
+  "reportLayoutImported": "Maquette importée. Enregistrez pour la conserver.",
+  "@reportLayoutImported": {
+    "description": "Snack after a successful import; save is still required (#875)"
+  },
+  "reportLayoutFileTypeLabel": "XML",
+  "@reportLayoutFileTypeLabel": {
+    "description": "File-picker type label for layout files (#875)"
+  },
   "featureReportLayouts": "Maquettes de rapport positionnées",
   "@featureReportLayouts": {
     "description": "Features screen name for the #875 positioned report layouts flag"

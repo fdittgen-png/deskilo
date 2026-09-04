@@ -6856,6 +6856,37 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get reportLayoutTitle => 'Positioned layout (XML)';
+
+  @override
+  String get reportLayoutSubtitle =>
+      'A layout states where every element sits, in mm, cm, px or %. Export it, edit it, check it with `dart run tool/report.dart check`, import it back. When a layout exists it is what prints; remove it and the bands print again.';
+
+  @override
+  String get reportLayoutActive => 'Layout active';
+
+  @override
+  String get reportLayoutBands => 'Bands';
+
+  @override
+  String get reportLayoutExport => 'Export XML';
+
+  @override
+  String get reportLayoutImport => 'Import XML';
+
+  @override
+  String get reportLayoutPreview => 'Page preview';
+
+  @override
+  String get reportLayoutRemove => 'Remove layout (use bands)';
+
+  @override
+  String get reportLayoutImported => 'Layout imported. Save to keep it.';
+
+  @override
+  String get reportLayoutFileTypeLabel => 'XML';
+
+  @override
   String get featureReportLayouts => 'Positioned report layouts';
 
   @override

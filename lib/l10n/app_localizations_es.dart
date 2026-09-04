@@ -6900,6 +6900,38 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get reportLayoutTitle => 'Maqueta posicionada (XML)';
+
+  @override
+  String get reportLayoutSubtitle =>
+      'Una maqueta indica dónde se sitúa cada elemento, en mm, cm, px o %. Expórtela, edítela, compruébela con `dart run tool/report.dart check`, vuelva a importarla. Cuando existe una maqueta es la que se imprime; elimínela y vuelven a imprimirse las bandas.';
+
+  @override
+  String get reportLayoutActive => 'Maqueta activa';
+
+  @override
+  String get reportLayoutBands => 'Bandas';
+
+  @override
+  String get reportLayoutExport => 'Exportar XML';
+
+  @override
+  String get reportLayoutImport => 'Importar XML';
+
+  @override
+  String get reportLayoutPreview => 'Vista de página';
+
+  @override
+  String get reportLayoutRemove => 'Quitar la maqueta (bandas)';
+
+  @override
+  String get reportLayoutImported =>
+      'Maqueta importada. Guarde para conservarla.';
+
+  @override
+  String get reportLayoutFileTypeLabel => 'XML';
+
+  @override
   String get featureReportLayouts => 'Maquetas de informe posicionadas';
 
   @override

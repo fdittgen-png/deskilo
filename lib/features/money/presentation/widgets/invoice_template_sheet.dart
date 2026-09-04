@@ -23,6 +23,9 @@ import '../../domain/dunning.dart';
 import '../../domain/invoice_pdf.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../domain/report_kind.dart';
+import '../report_layout_design_actions.dart';
+import 'report_layout_panel.dart';
+import 'report_layout_preview_dialog.dart';
 import '../report_design_actions.dart';
 import '../report_kind_labels.dart';
 import '../../domain/invoice_report.dart';
@@ -126,6 +129,16 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
 
   /// Unsaved edits per language|document, so switching loses nothing.
   final Map<String, ReportBands> _drafts = {};
+
+  /// #875 — positioned layouts edited this session, by kind id; ''
+  /// means "remove, fall back to the bands". Saved with the bands.
+  final Map<String, String> _layoutDrafts = {};
+
+  String? get _layoutOfDoc {
+    final draft = _layoutDrafts[_doc];
+    if (draft != null) return draft.isEmpty ? null : draft;
+    return widget.initial.layoutFor(_doc);
+  }
 
   /// #822 — one undo history per language|document.
   final Map<String, ReportEditHistory> _histories = {};
@@ -289,6 +302,11 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
       final bands = _drafts[kind.id];
       if (bands != null) template = withBands(template, kind, bands);
     }
+    // #875 — a layout per kind, edited beside the bands.
+    for (final entry in _layoutDrafts.entries) {
+      final kind = reportKindById(entry.key, reminderLevels: maxLevels);
+      if (kind != null) template = withLayout(template, kind, entry.value);
+    }
     // #496 — fold every edited language overlay in.
     for (final lang in _templateLanguages) {
       var overlay =
@@ -316,6 +334,39 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
   /// #864 — write the open design out. The file names the report it
   /// belongs to, so importing it into another one is refused rather
   /// than silently retargeted.
+  Future<void> _exportLayout() async {
+    final kind = reportKindById(_doc, reminderLevels: _reminderLevels);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    final xml = _layoutOfDoc;
+    if (kind == null || workspace == null || xml == null) return;
+    await exportReportLayout(context, ref,
+        kind: kind,
+        language: _lang,
+        workspaceName: workspace.name,
+        layoutXml: xml,
+        exportedAt: ref.read(clockProvider).now());
+  }
+
+  Future<void> _importLayout() async {
+    final kind = reportKindById(_doc, reminderLevels: _reminderLevels);
+    if (kind == null) return;
+    final xml = await importReportLayout(context, ref,
+        kind: kind, reminderLevels: _reminderLevels);
+    if (xml == null || !mounted) return;
+    setState(() => _layoutDrafts[_doc] = xml);
+    AppSnack.success(context,
+        AppLocalizations.of(context)?.reportLayoutImported ??
+            'Layout imported. Save to keep it.');
+  }
+
+  Future<void> _previewLayout() async {
+    final xml = _layoutOfDoc;
+    if (xml == null) return;
+    await showLayoutQuickPreview(context, ref,
+        layoutXml: xml,
+        data: _liveData() ?? sampleReportData(AppLocalizations.of(context)));
+  }
+
   Future<void> _exportDesign() async {
     final workspace = ref.read(currentWorkspaceProvider).value;
     final kind = reportKindById(_doc, reminderLevels: _reminderLevels);
@@ -964,6 +1015,21 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
         // #474: pick a ready-made report, see it INSTANTLY, then
         // download or share the PDF — or save the bands.
         _actions(l10n),
+        // #875 — last in the column on purpose: the panel adds height
+        // below every existing control, and moves none of them.
+        if (ref
+            .watch(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.reportLayouts)) ...[
+          const SizedBox(height: AppSpacing.sm),
+          ReportLayoutPanel(
+            hasLayout: _layoutOfDoc != null,
+            busy: _busy,
+            onExport: _exportLayout,
+            onImport: _importLayout,
+            onRemove: () => setState(() => _layoutDrafts[_doc] = ''),
+            onPreview: _previewLayout,
+          ),
+        ],
       ],
     );
     if (!widget.asPage) {
