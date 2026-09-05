@@ -201,7 +201,7 @@ $linesTable
 $mentions''',
   };
 
-  return '''<report-layout version="1" page="A4" margin="20mm">
+  return '''<report-layout version="1" page="A4" margin="20mm" margin-top="8mm" margin-bottom="8mm">
 
   <header height="25mm">
     <image name="logo" x="0" y="0" h="12mm" fit="contain"/>

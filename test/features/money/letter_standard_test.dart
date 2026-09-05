@@ -87,4 +87,50 @@ void main() {
       });
     }
   });
+
+  _edges();
+}
+
+// #902 — the owner asked for the edges: the letterhead near the top, the
+// footer near the bottom, and no "Page 1/1" on a letter that fits one page.
+void _edges() {
+  Future<({double top, double bottom, String streams})> renderEdges(
+      String xml) async {
+    final data = _data();
+    final bytes = await buildLayoutPdf(
+      document: renderLayoutDocument(xml, data),
+      data: data,
+      documentTitle: 'invoice',
+      pageLabel: 'Page',
+      baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+    );
+    final page1 = textPositions(bytes).where((i) => i.page == 1).toList();
+    return (
+      top: page1.map((i) => i.yMm).reduce((a, b) => a < b ? a : b),
+      bottom: page1.map((i) => i.yMm).reduce((a, b) => a > b ? a : b),
+      streams: pageStreams(bytes).join(),
+    );
+  }
+
+  test('the letterhead rises and the footer drops with the vertical margins',
+      () async {
+    final xml = defaultLetterLayoutXml('invoice', const LetterStrings());
+    expect(xml, contains('margin-top="8mm"'));
+    expect(xml, contains('margin-bottom="8mm"'));
+    final tight = await renderEdges(xml);
+    // The control: the same letter with the old all-round 20 mm margin.
+    final wide = await renderEdges(xml
+        .replaceAll(' margin-top="8mm"', '')
+        .replaceAll(' margin-bottom="8mm"', ''));
+    expect(tight.top, lessThan(wide.top - 10),
+        reason: 'the letterhead must rise: ${tight.top} vs ${wide.top}');
+    expect(tight.bottom, greaterThan(wide.bottom + 10),
+        reason: 'the footer must drop: ${tight.bottom} vs ${wide.bottom}');
+    expect(tight.bottom, greaterThan(275),
+        reason: 'the footer reaches the bottom edge: ${tight.bottom}');
+    // A one-page letter numbers nothing.
+    expect(tight.streams.contains('Page 1/1'), isFalse,
+        reason: 'no page count on a single-page letter');
+  });
 }

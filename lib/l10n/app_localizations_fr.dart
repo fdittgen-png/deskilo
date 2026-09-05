@@ -3437,7 +3437,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get legalIdentitySubtitle =>
-      'Régime de TVA et numéros d\'immatriculation — exigés par la facture électronique';
+      'Régime de TVA, identifiants légaux et conditions de paiement par défaut de l\'espace';
 
   @override
   String get legalIdentityIntro =>

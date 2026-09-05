@@ -273,14 +273,17 @@ void main() {
     });
   });
 
-  testWidgets('the hub offers the wizard (button and card) when the flag '
-      'is on, and the wizard opens on its rail', (tester) async {
+  testWidgets('the hub offers the wizard on its card when the flag is on, '
+      'and the wizard opens on its rail', (tester) async {
     await pumpInvoices(tester, money: await seededMoney());
     // The card sits on the To-invoice tab.
     await tester.tap(find.byKey(const ValueKey('invoice-tab-todo')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('invoice-wizard-card')), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('invoice-wizard-button')));
+    // #902 — the toolbar's magic wand was the same wizard; the card is
+    // the one door now.
+    expect(find.byKey(const ValueKey('invoice-wizard-button')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('invoice-wizard-card')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('invoicing-wizard')), findsOneWidget);
     for (final step in WizardStep.values) {
@@ -289,7 +292,7 @@ void main() {
     expect(find.byKey(const ValueKey('wizard-period')), findsOneWidget);
   });
 
-  testWidgets('with the flag off neither the button nor the card shows',
+  testWidgets('with the flag off the card does not show',
       (tester) async {
     await pumpInvoices(
       tester,

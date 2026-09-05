@@ -285,7 +285,7 @@
   "invoiceGapMissingSellerPostalCode": "le code postal de l'adresse de l'espace",
   "invoiceEInvoiceFixIdentity": "Compléter l'identité légale",
   "legalIdentityTitle": "Identité légale et facturation électronique",
-  "legalIdentitySubtitle": "Régime de TVA et numéros d'immatriculation — exigés par la facture électronique",
+  "legalIdentitySubtitle": "Régime de TVA, identifiants légaux et conditions de paiement par défaut de l'espace",
   "legalIdentityIntro": "Ce qu'une facture électronique EN 16931 doit indiquer à votre sujet. Les factures déjà émises conservent l'identité avec laquelle elles ont été signées.",
   "legalIdentityRegime": "Régime de TVA",
   "legalIdentityRegimeNotSubject": "Hors du champ de la TVA",

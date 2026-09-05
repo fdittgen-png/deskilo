@@ -5950,7 +5950,7 @@ abstract class AppLocalizations {
   /// Workspace-settings tile subtitle
   ///
   /// In en, this message translates to:
-  /// **'VAT regime and registration numbers — required by the e-invoice'**
+  /// **'VAT regime, registration numbers and the workspace\'s default payment conditions'**
   String get legalIdentitySubtitle;
 
   /// Screen intro paragraph

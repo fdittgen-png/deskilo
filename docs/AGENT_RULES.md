@@ -193,7 +193,7 @@ envelope ignores those too.
 
 | Zone | Band | Position |
 |---|---|---|
-| Sender | `header` | 20 mm from the top and left edges; it owns 20→45 mm and no more |
+| Sender | `header` | 20 mm from the left edge; **vertically the design's own margin** (`margin-top`, 8 mm in the shipped layouts — #902: the owner wants the letterhead at the top edge). It owns everything above 45 mm and no more |
 | Recipient | drawn by the engine | 110 mm from the left (FR) or 20 mm (DIN), 45 mm from the top — 50 mm is the outer limit — inside an **85 × 40 mm** aperture |
 | Identification | first lines of `body` | resumes at **90 mm**: the word *Facture*, the number, the issue date and the service date |
 | Footer | `footer` | **pinned to the bottom of EVERY page**: bank details, seller address, contact |
@@ -228,6 +228,15 @@ looked right. So:
 
 Changing any of these millimetres means changing that file, and the
 reason belongs in the commit message.
+
+### The edges belong to the design (#902)
+
+`<report-layout margin="20mm" margin-top="8mm" margin-bottom="8mm">` — the
+side margin and the two vertical ones are stated apart; absent, both fall
+back to `margin`. The letterhead rises to the top edge and the footer
+drops to the bottom one WITHOUT moving the recipient aperture or the body
+resume (both page-absolute). The engine prints the page count from page 2
+only: a letter that fits one page says nothing about pages.
 
 ## Positioned report layouts (#875) — the CLI is the tester
 

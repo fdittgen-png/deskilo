@@ -30,8 +30,18 @@ Widget moneySectionLabel(BuildContext context, String text) => Padding(
       ),
     );
 
-Widget fittedLabel(String text) =>
-    FittedBox(fit: BoxFit.scaleDown, child: Text(text));
+/// A label that never wraps: it shrinks to the width it is given and,
+/// beyond that, ends in an ellipsis (#902).
+Widget fittedLabel(String text) => FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(
+        text,
+        maxLines: 1,
+        softWrap: false,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
 
 /// Two buttons per row on a phone, wrapping; each cell half the width.
 class MoneyActionGrid extends StatelessWidget {
@@ -173,19 +183,15 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
     final tabs = TabBar(
       key: const ValueKey('money-faces'),
       controller: _controller,
-      // Four short labels fit a phone; a long locale wraps to two lines
-      // rather than clipping.
+      // #902 — a label NEVER wraps: "Documents" broke into "Document"
+      // + "s". It shrinks to fit its tab and, at the very worst, loses
+      // its last letters to an ellipsis.
       labelPadding: const EdgeInsets.symmetric(horizontal: 4),
       tabs: [
         for (final f in MoneyFace.values)
           Tab(
             key: ValueKey('money-face-${f.name}'),
-            child: Text(
-              moneyFaceLabel(l10n, f),
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-            ),
+            child: fittedLabel(moneyFaceLabel(l10n, f)),
           ),
       ],
     );

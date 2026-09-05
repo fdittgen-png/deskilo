@@ -192,7 +192,9 @@ class _TabLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final text = Text(label, overflow: TextOverflow.ellipsis);
+    // #902 — a tab label never wraps; it ends in an ellipsis instead.
+    final text = Text(label,
+        maxLines: 1, softWrap: false, overflow: TextOverflow.ellipsis);
     if (count <= 0) return text;
     return Row(mainAxisSize: MainAxisSize.min, children: [
       Flexible(child: text),

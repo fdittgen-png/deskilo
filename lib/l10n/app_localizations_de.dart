@@ -3427,7 +3427,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get legalIdentitySubtitle =>
-      'Steuerregime und Registernummern — von der E-Rechnung verlangt';
+      'USt-Regime, Registernummern und die Standard-Zahlungsbedingungen des Space';
 
   @override
   String get legalIdentityIntro =>

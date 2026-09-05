@@ -3407,7 +3407,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get legalIdentitySubtitle =>
-      'VAT regime and registration numbers — required by the e-invoice';
+      'VAT regime, registration numbers and the workspace\'s default payment conditions';
 
   @override
   String get legalIdentityIntro =>

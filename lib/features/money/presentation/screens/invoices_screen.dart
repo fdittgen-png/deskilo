@@ -16,7 +16,6 @@ import '../invoice_status.dart';
 import '../widgets/dunning_rules_dialog.dart';
 import '../widgets/settlement_sheet.dart';
 import '../widgets/expense_repartition_sheet.dart';
-import '../widgets/wizard_context.dart';
 import '../widgets/invoice_template_sheet.dart';
 import '../widgets/invoice_archive_tab.dart';
 import '../widgets/invoice_detail_sheet.dart';
@@ -119,16 +118,6 @@ class InvoicesScreen extends ConsumerWidget {
                 onPressed: () => showExpenseRepartitionSheet(context, ref),
               )
             : null;
-    // #827 — the guided month-close process.
-    final wizardAction =
-        (canIssue && features.contains(WorkspaceFeature.invoicingWizard))
-            ? IconButton(
-                key: const ValueKey('invoice-wizard-button'),
-                tooltip: '${l10n?.assistantPrefix ?? 'Assistant'} · ${l10n?.invoiceWizardAction ?? 'Month-close wizard'}',
-                icon: const Icon(Icons.auto_fix_high_outlined),
-                onPressed: () => openInvoicingWizard(context),
-              )
-            : null;
     // #804 — regrouping a member's open invoices into one they pay.
     final settlementAction =
         (canIssue && features.contains(WorkspaceFeature.invoiceSettlement))
@@ -215,7 +204,6 @@ class InvoicesScreen extends ConsumerWidget {
           actions: [
             ?templateAction,
             ?repartitionAction,
-            ?wizardAction,
             ?settlementAction,
             ?dunningAction,
             registerAction,

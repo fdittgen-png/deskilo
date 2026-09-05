@@ -3432,7 +3432,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get legalIdentitySubtitle =>
-      'Regime IVA e numeri di registrazione — richiesti dalla fattura elettronica';
+      'Regime IVA, identificativi e le condizioni di pagamento predefinite dello spazio';
 
   @override
   String get legalIdentityIntro =>

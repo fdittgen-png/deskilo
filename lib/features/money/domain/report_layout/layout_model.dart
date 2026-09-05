@@ -163,6 +163,8 @@ class LayoutDocument {
   const LayoutDocument({
     this.page = 'A4',
     this.margin = const Length(20, LengthUnit.mm),
+    this.marginTop,
+    this.marginBottom,
     this.header = LayoutZone.empty,
     this.continuation = LayoutZone.empty,
     this.body = LayoutZone.empty,
@@ -172,6 +174,16 @@ class LayoutDocument {
 
   final String page;
   final Length margin;
+
+  /// #902 — the vertical margins when the design states them apart. A
+  /// letter wants its letterhead near the top edge and its footer near
+  /// the bottom one while the text column keeps the horizontal margin;
+  /// absent, both fall back to [margin].
+  final Length? marginTop;
+  final Length? marginBottom;
+
+  Length get topMargin => marginTop ?? margin;
+  Length get bottomMargin => marginBottom ?? margin;
   final LayoutZone header;
   final LayoutZone continuation;
   final LayoutZone body;

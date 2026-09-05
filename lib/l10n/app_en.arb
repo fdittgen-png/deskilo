@@ -3546,7 +3546,7 @@
   "@legalIdentityTitle": {
     "description": "Screen title: the workspace legal identity"
   },
-  "legalIdentitySubtitle": "VAT regime and registration numbers — required by the e-invoice",
+  "legalIdentitySubtitle": "VAT regime, registration numbers and the workspace's default payment conditions",
   "@legalIdentitySubtitle": {
     "description": "Workspace-settings tile subtitle"
   },

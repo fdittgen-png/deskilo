@@ -36,6 +36,10 @@ Future<InMemoryBackendSettingsStore> pumpServerScreen(
     250,
     scrollable: find.byType(Scrollable).first,
   );
+  // The scroll stops as soon as the tile EXISTS — it may still sit under
+  // the fold; bring it fully in before tapping.
+  await tester.ensureVisible(find.byKey(const ValueKey('backend-server-tile')));
+  await tester.pumpAndSettle();
   await tester.tap(find.byKey(const ValueKey('backend-server-tile')));
   await tester.pumpAndSettle();
   return store;

@@ -248,7 +248,8 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final myProfile = ref.watch(myProfileProvider).value;
-    final isOwner = ref.watch(myMemberProvider).value?.actsAsOwner ?? false;
+    final myMember = ref.watch(myMemberProvider).value;
+    final isOwner = myMember?.actsAsOwner ?? false;
     final canAdminister =
         ref.watch(myMemberProvider).value?.canAdminister ?? false;
     final devMode = ref.watch(devModeProvider).value ?? false;
@@ -445,6 +446,24 @@ class SettingsScreen extends ConsumerWidget {
                 context: context,
                 builder: (_) => const _AddressDialog(),
               ),
+            ),
+          // #881/#902 — the conditions this member's documents print.
+          // The workspace sets the default (Workspace → Legal identity);
+          // an authorised admin changes a member's own through
+          // validation; the member reads them here.
+          if (myMember != null &&
+              features.contains(WorkspaceFeature.memberPaymentTerms))
+            ListTile(
+              key: const ValueKey('settings-payment-terms'),
+              leading: const Icon(Icons.request_quote_outlined),
+              title: HelpDotTitle(
+                l10n?.paymentTermsTitle ?? 'Payment conditions',
+                l10n?.helpTopicSettings ?? 'Settings & profile',
+              ),
+              subtitle: Text(myMember.paymentTerms == null
+                  ? (l10n?.paymentTermsInherited ?? 'Workspace default')
+                  : (l10n?.paymentTermsOverridden ?? "Member's own")),
+              onTap: () => context.push('/settings/payment-terms'),
             ),
           // In-app help: the wiki user guide bundled as an offline asset,
           // in the app's language. Available to every member.

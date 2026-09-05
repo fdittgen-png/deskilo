@@ -72,7 +72,7 @@ const Map<String, int> _baseline = {
   // 1000→1020 (2026-08-05): #486 Payment methods admin entry.
   // 1040→1140 (2026-08-13): #560 the About section (author, licence,
   // privacy, bug link, support tiles).
-  'lib/features/profile/presentation/screens/settings_screen.dart': 1230, // 2026-08 #586 default-period tile + dialog // 2026-09-05 #886 the personal-information tile beside the legacy address dialog it replaces
+  'lib/features/profile/presentation/screens/settings_screen.dart': 1260, // 2026-08 #586 default-period tile + dialog // 2026-09-05 #886 the personal-information tile beside the legacy address dialog it replaces // 2026-09-05 #902 the payment-conditions tile
   // 1020→1040 (2026-08-06): #513 the Role management tile.
   // 980→1030 (2026-08-05): #476 the statement export honors the
   // owner's report template (#478 Invoices button joins the grid).
@@ -230,7 +230,7 @@ const Map<String, int> _baseline = {
   'lib/features/events/presentation/screens/validation_settings_screen.dart': 615,
   // 600→615 (2026-08-31): #771 the kiosk consent exemption and its
   // rationale live where the gate lives.
-  'lib/app/router.dart': 680, // 2026-09-02 #821/#822/#825/#827 the conversation, report-editor, member and wizard routes
+  'lib/app/router.dart': 700, // 2026-09-02 #821/#822/#825/#827 the conversation, report-editor, member and wizard routes // 2026-09-05 #902 /settings/payment-terms
   // 600→620 (2026-09-01): #791 the tap dispatcher records the branch it
   // took. The paragraphs explaining WHY each silent branch needs a line
   // were extracted to booking_trace_points.dart; what stayed is eight
