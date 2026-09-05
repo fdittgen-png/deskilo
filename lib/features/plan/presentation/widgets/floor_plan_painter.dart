@@ -328,8 +328,11 @@ class FloorPlanPainter extends CustomPainter {
         _ => overPhoto ? 0.40 : 0.22,
       };
       final segments = seatDaySegments[seat.id] ?? const <SeatDaySegment>[];
-      final partial = segments.isNotEmpty && seatDayIsPartial(segments);
-      if (partial) {
+      // #908 — divided whenever the day is not ONE booking: partly free,
+      // or shared between members. A flat fill over a shared day names
+      // one holder for hours that belong to someone else.
+      final split = segments.isNotEmpty && seatDayIsSplit(segments);
+      if (split) {
         // The day is the seat's width: each booking paints its own
         // stretch over an otherwise free-looking pad, and a hairline
         // keeps two neighbouring bookings from reading as one.
@@ -425,6 +428,9 @@ class FloorPlanPainter extends CustomPainter {
           photo: seatPhotos[seat.id],
           checkedIn: state == SeatState.occupied,
           online: onlineSeatIds.contains(seat.id),
+          // #908 — the seat changes hands today: say how many bookings
+          // it carries instead of letting one avatar speak for the day.
+          shareCount: segments.length > 1 ? segments.length : 0,
         );
       } else if (state == null) {
         // Editor mode: name + orientation so the owner can place seats.
@@ -526,6 +532,7 @@ class FloorPlanPainter extends CustomPainter {
     ui.Image? photo,
     bool checkedIn = false,
     bool online = false,
+    int shareCount = 0,
   }) {
     final r = (rect.shortestSide * 0.34).clamp(8.0, 16.0);
     final center = rect.center;
@@ -595,6 +602,29 @@ class FloorPlanPainter extends CustomPainter {
         badgeR,
         Paint()..color = AppStatusColors.successOf(brightness),
       );
+    }
+
+    // #908 — shared today (top-left): the number of bookings the seat
+    // carries. The avatar shows whoever holds it at the browsed moment;
+    // this says they are not the only one, and the day sheet names the
+    // rest. Placed opposite the presence dot so neither hides the other.
+    if (shareCount > 1) {
+      final at = center + Offset(-diag, -diag);
+      canvas.drawCircle(at, badgeR + 1.4, Paint()..color = Colors.white);
+      canvas.drawCircle(at, badgeR, Paint()..color = accent);
+      final count = TextPainter(
+        text: TextSpan(
+          text: '$shareCount',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: badgeR * 1.35,
+            fontWeight: FontWeight.w700,
+            height: 1,
+          ),
+        ),
+        textDirection: TextDirection.ltr,
+      )..layout();
+      count.paint(canvas, at - Offset(count.width / 2, count.height / 2));
     }
 
     // Checked in (bottom-right): a white-ringed accent disc with a check —

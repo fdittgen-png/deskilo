@@ -527,14 +527,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
 
   /// #903 — the OPEN day around [at]: what the divided seat fill and the
   /// seat-day timeline measure themselves against.
-  ({DateTime start, DateTime end}) _dayWindow(DateTime at) {
-    final hours = bookingGateOf(ref)?.hours ?? WorkHours.current;
-    final day = DateTime(at.year, at.month, at.day);
-    return (
-      start: day.add(Duration(minutes: hours.startMinutes)),
-      end: day.add(Duration(minutes: hours.endMinutes)),
-    );
-  }
+  // #908 — anchored on the workspace clock: "08:00–17:00" describes the
+  // space, not the device reading it.
+  ({DateTime start, DateTime end}) _dayWindow(DateTime at) =>
+      workDayWindow(at, hours: bookingGateOf(ref)?.hours);
 
   bool _isWorkspaceOpenAt(DateTime at) {
     final openWeekdays = ref.read(openWeekdaysProvider).value;

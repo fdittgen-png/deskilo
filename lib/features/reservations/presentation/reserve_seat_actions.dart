@@ -260,8 +260,10 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         final template = state == SeatState.occupied
             ? (l10n?.planOccupiedBy(name) ?? 'Occupied by $name')
             : (l10n?.planReservedBy(name) ?? 'Reserved by $name');
+        // #908 — display, not wall: a member who asked to read hours in
+        // their own timezone must get them here too.
         final until =
-            DateFormat.Hm().format(WorkspaceTime.wall(other.endsAt));
+            DateFormat.Hm().format(WorkspaceTime.display(other.endsAt));
         final infoLine =
             '$template · ${l10n?.planUntil(until) ?? 'until $until'}';
         // #622 — a REGULAR member can message the holder instead of
@@ -692,11 +694,10 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         .contains(WorkspaceFeature.seatDayTimeline)) {
       return false;
     }
-    final hours = bookingGateOf(ref)?.hours ?? WorkHours.current;
-    final day = DateTime(
-        window.start.year, window.start.month, window.start.day);
-    final dayStart = day.add(Duration(minutes: hours.startMinutes));
-    final dayEnd = day.add(Duration(minutes: hours.endMinutes));
+    // #908 — the same workspace-anchored day the plan draws.
+    final day = workDayWindow(window.start, hours: bookingGateOf(ref)?.hours);
+    final dayStart = day.start;
+    final dayEnd = day.end;
     final segments = seatDaySegments(
       plan: plan,
       seat: seat,

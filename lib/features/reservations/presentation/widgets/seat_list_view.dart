@@ -11,6 +11,7 @@ import '../../../plan/domain/seat.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
 import '../../domain/seat_state_logic.dart';
+import '../../../../core/time/workspace_time.dart';
 
 /// The plan's SEAT LIST (#687), ported out of the deleted Plan tab.
 ///
@@ -120,7 +121,8 @@ class SeatListView extends ConsumerWidget {
               );
         final until = covering == null
             ? null
-            : timeFormat.format(covering.endsAt.toLocal());
+            // #908 — on the space's clock, like the plan beside it.
+            : timeFormat.format(WorkspaceTime.display(covering.endsAt));
         final who = covering == null
             ? ''
             : (names[covering.memberId] ?? '');
