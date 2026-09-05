@@ -4382,6 +4382,51 @@
   },
   "scanCameraWebUnavailable": "El escaneo con cámara no está disponible en el navegador — escriba el código o acerque una etiqueta NFC al dispositivo (Chrome en Android).",
   "bookingGateBlocked": "No reservable así",
+  "seatDayTitle": "Plaza {seat} hoy",
+  "@seatDayTitle": {
+    "description": "#903 seat day timeline: seatDayTitle",
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      }
+    }
+  },
+  "seatDaySubtitle": "Quién ocupa esta plaza, y cuándo. Toca un tramo libre para reservarlo.",
+  "@seatDaySubtitle": {
+    "description": "#903 seat day timeline: seatDaySubtitle"
+  },
+  "seatDayMine": "Tú",
+  "@seatDayMine": {
+    "description": "#903 seat day timeline: seatDayMine"
+  },
+  "seatDaySomeone": "Un miembro",
+  "@seatDaySomeone": {
+    "description": "#903 seat day timeline: seatDaySomeone"
+  },
+  "seatDayFree": "Libre — reservar",
+  "@seatDayFree": {
+    "description": "#903 seat day timeline: seatDayFree"
+  },
+  "seatDayPast": "Terminado",
+  "@seatDayPast": {
+    "description": "#903 seat day timeline: seatDayPast"
+  },
+  "seatDayNow": "Ahora",
+  "@seatDayNow": {
+    "description": "#903 seat day timeline: seatDayNow"
+  },
+  "seatDayAhead": "Por venir",
+  "@seatDayAhead": {
+    "description": "#903 seat day timeline: seatDayAhead"
+  },
+  "featureSeatDayTimeline": "La jornada de una plaza",
+  "@featureSeatDayTimeline": {
+    "description": "#903 seat day timeline: featureSeatDayTimeline"
+  },
+  "featureSeatDayTimelineDesc": "Una plaza reservada solo parte del día se dibuja parcialmente llena en el plano, y una plaza compartida por varias personas abre la jornada: quién la ocupa, cuándo y qué tramos quedan libres.",
+  "@featureSeatDayTimelineDesc": {
+    "description": "#903 seat day timeline: featureSeatDayTimelineDesc"
+  },
   "servicesTitle": "Servicios",
   "servicesEmpty": "Aún no hay servicios.",
   "servicesNew": "Nuevo servicio",

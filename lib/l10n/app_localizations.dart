@@ -12691,6 +12691,66 @@ abstract class AppLocalizations {
   /// **'Not bookable as chosen'**
   String get bookingGateBlocked;
 
+  /// #903 seat day timeline: seatDayTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Seat {seat} today'**
+  String seatDayTitle(String seat);
+
+  /// #903 seat day timeline: seatDaySubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Who has this seat, and when. Tap a free stretch to take it.'**
+  String get seatDaySubtitle;
+
+  /// #903 seat day timeline: seatDayMine
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get seatDayMine;
+
+  /// #903 seat day timeline: seatDaySomeone
+  ///
+  /// In en, this message translates to:
+  /// **'A member'**
+  String get seatDaySomeone;
+
+  /// #903 seat day timeline: seatDayFree
+  ///
+  /// In en, this message translates to:
+  /// **'Free — book it'**
+  String get seatDayFree;
+
+  /// #903 seat day timeline: seatDayPast
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get seatDayPast;
+
+  /// #903 seat day timeline: seatDayNow
+  ///
+  /// In en, this message translates to:
+  /// **'Now'**
+  String get seatDayNow;
+
+  /// #903 seat day timeline: seatDayAhead
+  ///
+  /// In en, this message translates to:
+  /// **'Ahead'**
+  String get seatDayAhead;
+
+  /// #903 seat day timeline: featureSeatDayTimeline
+  ///
+  /// In en, this message translates to:
+  /// **'Seat day timeline'**
+  String get featureSeatDayTimeline;
+
+  /// #903 seat day timeline: featureSeatDayTimelineDesc
+  ///
+  /// In en, this message translates to:
+  /// **'A seat booked for part of the day is drawn part-filled on the plan, and a seat several people share opens a timeline of the day: who has it, when, and which stretches are still free.'**
+  String get featureSeatDayTimelineDesc;
+
   /// App-bar title of the owner service-catalog editor and its settings tile
   ///
   /// In en, this message translates to:

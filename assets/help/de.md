@@ -118,6 +118,10 @@ Vom Plan aus buchen:
 
 *Der Plan im Reservieren-Hub an einem Schließtag: das Schließungsbanner, der Ansichtswechsel, das Datum und die Tagesabschnitt-Chips, die Ebenenleiste (1 · 2 · Ebenen) und die Zoomsteuerung.*
 
+**Ein Platz, der nur einen Teil des Tages gebucht ist, sieht auch so aus (#903).** Die Plan liest den Platz von links nach rechts als den offenen Tag: eine Buchung bis mittags füllt die linke Hälfte des Pads, eine ab nachmittags die rechte, und ein ganztägig gehaltener Platz füllt sich ganz wie bisher. Eine Haarlinie trennt zwei benachbarte Buchungen, damit sie nie als eine gelesen werden, und jede Spanne trägt die Farbe dessen, der sie hält — deine oder die eines anderen.
+
+**Wer heute auf diesem Platz sitzt.** Tippe auf einen Platz mit **mehr als einer Buchung** und statt der üblichen Karte öffnet sich der Tag: jede Spanne mit Uhrzeit, Person und Stand (vorbei, jetzt, später), und jede freie Spanne als etwas, das du nehmen kannst — tippe darauf und die gewohnte Buchungskarte öffnet sich genau auf diesem Fenster. Ein Platz mit einer einzigen Buchung verhält sich wie immer. Das Ganze hängt an der Funktion *Tagesverlauf eines Platzes*.
+
 ## 4. Reservierungen (Reservieren-Hub)
 
 Öffne den **Reservieren**-Hub (Mittelknopf). Oben: zwei Reihen von Bedienelementen. Die erste sagt, **was** du siehst: die vier **Ansichts-Knöpfe** und, auf dem Plan, der Umschalter **Plan / Liste**. Die zweite sagt **wann**: der **Datums-Chip**, ein **Jetzt**-Knopf, sobald du von heute weggeblättert hast, und die **Tageszeit-Chips**. Die **Etagen-Chips** (*Alle Etagen* oder eine je Ebene) sitzen auf dem Plan selbst, der **QR-Scan** (§4a) in der Kopfzeile, neben Editor und Glocke. Dann vier Ansichten:

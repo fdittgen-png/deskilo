@@ -50,6 +50,8 @@ import '../widgets/seat_legend.dart';
 import '../widgets/week_grid.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../booking_gate_scope.dart';
+import '../../../../core/time/work_hours.dart';
 
 /// Geometry and ranges of the Reserve hub (#208). Pinned by test — treat
 /// these as part of the visual/behavioural contract, not free-floating
@@ -523,6 +525,17 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     });
   }
 
+  /// #903 — the OPEN day around [at]: what the divided seat fill and the
+  /// seat-day timeline measure themselves against.
+  ({DateTime start, DateTime end}) _dayWindow(DateTime at) {
+    final hours = bookingGateOf(ref)?.hours ?? WorkHours.current;
+    final day = DateTime(at.year, at.month, at.day);
+    return (
+      start: day.add(Duration(minutes: hours.startMinutes)),
+      end: day.add(Duration(minutes: hours.endMinutes)),
+    );
+  }
+
   bool _isWorkspaceOpenAt(DateTime at) {
     final openWeekdays = ref.read(openWeekdaysProvider).value;
     final closures = ref.read(closureDaysProvider).value;
@@ -874,6 +887,9 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     final reservations =
         reservationsAcrossWindow(ref, window.start, window.end);
     final myMemberId = ref.watch(myMemberProvider).value?.id;
+    final seatDayOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.seatDayTimeline);
     final names = ref.watch(memberNamesProvider).value ?? const {};
     // #620 — occupant profile photos on every map, kiosk or not.
     final photosOn = ref
@@ -1018,6 +1034,18 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                   at: window.start,
                   dayOpen: dayOpen,
                 ),
+                // #903 — the day's taken stretches: a seat booked for
+                // part of the day is drawn part-filled.
+                seatDaySegments: seatDayOn
+                    ? seatDaySegmentsFor(
+                        plan: plan,
+                        reservations: reservations,
+                        myMemberId: myMemberId,
+                        dayStart: _dayWindow(window.start).start,
+                        dayEnd: _dayWindow(window.start).end,
+                        dayOpen: dayOpen,
+                      )
+                    : const {},
                 seatLabels: {
                   for (final seat in plan.seats)
                     seat.id: occupantLabelFor(

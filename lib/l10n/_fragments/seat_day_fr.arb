@@ -1,0 +1,48 @@
+{
+  "@@locale": "fr",
+  "seatDayTitle": "Place {seat} aujourd'hui",
+  "@seatDayTitle": {
+    "description": "#903 seat day timeline: seatDayTitle",
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      }
+    }
+  },
+  "seatDaySubtitle": "Qui occupe cette place, et quand. Touchez une plage libre pour la prendre.",
+  "@seatDaySubtitle": {
+    "description": "#903 seat day timeline: seatDaySubtitle"
+  },
+  "seatDayMine": "Vous",
+  "@seatDayMine": {
+    "description": "#903 seat day timeline: seatDayMine"
+  },
+  "seatDaySomeone": "Un membre",
+  "@seatDaySomeone": {
+    "description": "#903 seat day timeline: seatDaySomeone"
+  },
+  "seatDayFree": "Libre — réserver",
+  "@seatDayFree": {
+    "description": "#903 seat day timeline: seatDayFree"
+  },
+  "seatDayPast": "Terminé",
+  "@seatDayPast": {
+    "description": "#903 seat day timeline: seatDayPast"
+  },
+  "seatDayNow": "En cours",
+  "@seatDayNow": {
+    "description": "#903 seat day timeline: seatDayNow"
+  },
+  "seatDayAhead": "À venir",
+  "@seatDayAhead": {
+    "description": "#903 seat day timeline: seatDayAhead"
+  },
+  "featureSeatDayTimeline": "Journée d'une place",
+  "@featureSeatDayTimeline": {
+    "description": "#903 seat day timeline: featureSeatDayTimeline"
+  },
+  "featureSeatDayTimelineDesc": "Une place réservée sur une partie de la journée s'affiche partiellement remplie sur le plan, et une place partagée par plusieurs personnes ouvre la journée en détail : qui l'occupe, quand, et quelles plages restent libres.",
+  "@featureSeatDayTimelineDesc": {
+    "description": "#903 seat day timeline: featureSeatDayTimelineDesc"
+  }
+}

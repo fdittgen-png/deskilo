@@ -7491,6 +7491,51 @@
   },
   "scanCameraWebUnavailable": "Camera scanning is not available in the browser — type the code, or hold an NFC tag to the device (Chrome on Android).",
   "bookingGateBlocked": "Not bookable as chosen",
+  "seatDayTitle": "Seat {seat} today",
+  "@seatDayTitle": {
+    "description": "#903 seat day timeline: seatDayTitle",
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      }
+    }
+  },
+  "seatDaySubtitle": "Who has this seat, and when. Tap a free stretch to take it.",
+  "@seatDaySubtitle": {
+    "description": "#903 seat day timeline: seatDaySubtitle"
+  },
+  "seatDayMine": "You",
+  "@seatDayMine": {
+    "description": "#903 seat day timeline: seatDayMine"
+  },
+  "seatDaySomeone": "A member",
+  "@seatDaySomeone": {
+    "description": "#903 seat day timeline: seatDaySomeone"
+  },
+  "seatDayFree": "Free — book it",
+  "@seatDayFree": {
+    "description": "#903 seat day timeline: seatDayFree"
+  },
+  "seatDayPast": "Done",
+  "@seatDayPast": {
+    "description": "#903 seat day timeline: seatDayPast"
+  },
+  "seatDayNow": "Now",
+  "@seatDayNow": {
+    "description": "#903 seat day timeline: seatDayNow"
+  },
+  "seatDayAhead": "Ahead",
+  "@seatDayAhead": {
+    "description": "#903 seat day timeline: seatDayAhead"
+  },
+  "featureSeatDayTimeline": "Seat day timeline",
+  "@featureSeatDayTimeline": {
+    "description": "#903 seat day timeline: featureSeatDayTimeline"
+  },
+  "featureSeatDayTimelineDesc": "A seat booked for part of the day is drawn part-filled on the plan, and a seat several people share opens a timeline of the day: who has it, when, and which stretches are still free.",
+  "@featureSeatDayTimelineDesc": {
+    "description": "#903 seat day timeline: featureSeatDayTimelineDesc"
+  },
   "servicesTitle": "Services",
   "@servicesTitle": {
     "description": "App-bar title of the owner service-catalog editor and its settings tile"

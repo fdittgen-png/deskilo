@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import '../../../../l10n/app_localizations.dart';
 
 import '../../../../core/motion/motion.dart';
-import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/ui/canvas_controls.dart';
 import '../../domain/desk.dart';
+import '../../../reservations/domain/seat_state_logic.dart';
 import '../../domain/floor_plan.dart';
 import '../../domain/office.dart';
 import '../../domain/seat.dart';
@@ -45,6 +45,7 @@ class PlanCanvas extends StatefulWidget {
     required this.plan,
     required this.seatStates,
     this.seatDayPhases = const {},
+    this.seatDaySegments = const {},
     required this.seatLabels,
     required this.onSeatTap,
     this.onSpaceDoubleTap,
@@ -69,6 +70,10 @@ class PlanCanvas extends StatefulWidget {
 
   /// The browsed day's per-seat phase rings (#575).
   final Map<String, SeatDayPhase> seatDayPhases;
+
+  /// #903 — the day's taken stretches per seat; the painter divides a
+  /// part-booked seat along them.
+  final Map<String, List<SeatDaySegment>> seatDaySegments;
   final Map<String, String> seatLabels;
 
   /// Whole-space overlays (#462) — see [FloorPlanPainter.spaceOverlays].
@@ -231,6 +236,7 @@ class _PlanCanvasState extends State<PlanCanvas>
                 colorScheme: Theme.of(context).colorScheme,
                 brightness: Theme.of(context).brightness,
                 seatStates: widget.seatStates,
+                seatDaySegments: widget.seatDaySegments,
                 previousSeatStates: _previousSeatStates,
                 seatStateLerp:
                     MotionTokens.ease.transform(_stateFade.value),

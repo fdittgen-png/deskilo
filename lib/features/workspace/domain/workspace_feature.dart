@@ -67,6 +67,7 @@ enum WorkspaceFeature {
   reportLayouts,
   personalInfo,
   managedProfiles,
+  seatDayTimeline,
   memberPaymentTerms,
   reportTexts,
   usageReport,
@@ -532,6 +533,10 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.managedProfiles,
     requires: WorkspaceFeature.membersDirectory,
   ),
+  // #903 — a part-booked seat looks part-booked, and a shared one opens
+  // its day: who has it, when, what is still free.
+  WorkspaceFeature.seatDayTimeline:
+      FeatureManifestEntry(feature: WorkspaceFeature.seatDayTimeline),
   // #881 — a member's own payment conditions, changed by validated request.
   WorkspaceFeature.memberPaymentTerms: FeatureManifestEntry(
     feature: WorkspaceFeature.memberPaymentTerms,

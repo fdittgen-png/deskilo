@@ -7289,6 +7289,40 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bookingGateBlocked => 'Non prenotabile così';
 
   @override
+  String seatDayTitle(String seat) {
+    return 'Postazione $seat oggi';
+  }
+
+  @override
+  String get seatDaySubtitle =>
+      'Chi occupa questa postazione, e quando. Tocca una fascia libera per prenderla.';
+
+  @override
+  String get seatDayMine => 'Tu';
+
+  @override
+  String get seatDaySomeone => 'Un membro';
+
+  @override
+  String get seatDayFree => 'Libera — prenota';
+
+  @override
+  String get seatDayPast => 'Finito';
+
+  @override
+  String get seatDayNow => 'Ora';
+
+  @override
+  String get seatDayAhead => 'Più tardi';
+
+  @override
+  String get featureSeatDayTimeline => 'La giornata di una postazione';
+
+  @override
+  String get featureSeatDayTimelineDesc =>
+      'Una postazione prenotata solo per parte della giornata è disegnata parzialmente piena sulla piantina, e una postazione condivisa da più persone apre la giornata: chi la occupa, quando e quali fasce restano libere.';
+
+  @override
   String get servicesTitle => 'Servizi';
 
   @override

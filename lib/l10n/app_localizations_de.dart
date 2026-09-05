@@ -7288,6 +7288,40 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bookingGateBlocked => 'So nicht buchbar';
 
   @override
+  String seatDayTitle(String seat) {
+    return 'Platz $seat heute';
+  }
+
+  @override
+  String get seatDaySubtitle =>
+      'Wer diesen Platz hat, und wann. Tippe auf eine freie Spanne, um sie zu nehmen.';
+
+  @override
+  String get seatDayMine => 'Du';
+
+  @override
+  String get seatDaySomeone => 'Ein Mitglied';
+
+  @override
+  String get seatDayFree => 'Frei — buchen';
+
+  @override
+  String get seatDayPast => 'Vorbei';
+
+  @override
+  String get seatDayNow => 'Jetzt';
+
+  @override
+  String get seatDayAhead => 'Später';
+
+  @override
+  String get featureSeatDayTimeline => 'Tagesverlauf eines Platzes';
+
+  @override
+  String get featureSeatDayTimelineDesc =>
+      'Ein Platz, der nur einen Teil des Tages gebucht ist, wird auf dem Plan teilweise gefüllt gezeichnet; ein von mehreren geteilter Platz öffnet den Tagesverlauf: wer ihn hat, wann, und welche Spannen frei sind.';
+
+  @override
   String get servicesTitle => 'Leistungen';
 
   @override

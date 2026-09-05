@@ -65,7 +65,7 @@ const Map<String, int> _baseline = {
   // 1190→1215 (2026-08-31): #772 windowIsNow — the live-window probe in
   // workspace wall time beside the isLive it refines.
   // 1215→1240 (2026-09-01): #814 closed days into the Day/Week/Month views + the legend.
-  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1250,
+  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1300, // 2026-09-05 #903 the seat's day: segments for the plan, the timeline behind a shared seat
   // 980→990 (2026-08-03): #419 workspace dev-mode switch — admin gate,
   // workspace hint subtitle and the RPC write helper.
   // 990→1000 (2026-08-05): #478 Billing & reports admin entry.
@@ -236,7 +236,7 @@ const Map<String, int> _baseline = {
   // were extracted to booking_trace_points.dart; what stayed is eight
   // call sites, on the branches that used to end in nothing at all.
   // 620→680 (2026-09-01): #814 the booking gate before the sheet, the admin check-out.
-  'lib/features/reservations/presentation/reserve_seat_actions.dart': 680,
+  'lib/features/reservations/presentation/reserve_seat_actions.dart': 760, // 2026-09-05 #903 the seat's day: segments for the plan, the timeline behind a shared seat
   // the validated amount and the member's explanation.
   'lib/features/events/presentation/screens/events_screen.dart': 925, // 2026-09-02 #821 mark seen only when showing // 2026-09-05 #881 member payment conditions: effective terms threaded to every document
   // 680→700 (2026-08-04): #454 owner-template intro/footer blocks.

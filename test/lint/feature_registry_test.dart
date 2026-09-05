@@ -90,7 +90,9 @@ import 'package:flutter_test/flutter_test.dart';
 // 78→79 (2026-09-05): #874 letterStandard — default positioned layouts for
 // 81→82 (2026-09-05): #874 letterStandard — default positioned layouts for
 //   every person-facing document.
-const int _expectedFeatureCount = 82;
+// 82→83 (2026-09-05): #903 seatDayTimeline — a part-booked seat looks
+//   part-booked; a shared one opens its day.
+const int _expectedFeatureCount = 83;
 
 void main() {
   test('every functionality is registered — the pin', () {
