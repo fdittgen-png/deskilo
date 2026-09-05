@@ -651,6 +651,7 @@ class _OpenPositionsCard extends StatelessWidget {
       case EventType.expenseSchedule:
       case EventType.usageCorrection:
       case EventType.usageRecordDelete:
+      case EventType.paymentTermsChange:
       case EventType.quota:
         return l10n?.eventTypeQuota ?? 'Extra half-days';
       case EventType.invoiceWriteoff:

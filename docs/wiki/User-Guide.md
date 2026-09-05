@@ -782,6 +782,8 @@ Members add their **country** — and their VAT number if they invoice as a busi
 
 **An invoice already issued never changes.** It carries the rates, the identity and the amounts it was signed with — that is what makes it an invoice. If a document has to carry new figures, mark it **erroneous** and issue a **replacement**: the correction chain is visible on both documents, which is exactly what an audit wants to see.
 
+**Payment conditions per member (#881).** The wording above is the workspace's default for everyone. A member may carry **their own** — a longer payment term for a key account, say. It is never typed on the member directly: an admin holding the *Request payment-condition changes* permission opens the member's page, **Payment conditions → Request a change**, fills only the fields that differ (an empty field keeps the workspace's wording) and gives a reason; the request becomes a **Payment conditions** validation card decided like every other domain (the owner, by default), and the override applies on confirmation. The member sees the effective conditions read-only on their page and under Finances → Invoices, labelled *Workspace default* or *Member's own*; every invoice and reminder prints the effective ones, and a layout may test `payment_terms_source`. *Use the workspace default again* asks to drop the override — through the same validation.
+
 ### 11b. Where the e-invoice has to go (EU)
 
 The **e-invoice (XML)** action opens a sheet that answers this for the workspace's own country before handing the file over: which channel business customers expect it on, whether a platform sits in the path, and which channel public buyers use. Four models exist in the union:

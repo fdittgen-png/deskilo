@@ -2,6 +2,7 @@
 import 'event_decision.dart';
 import 'validation_policy.dart';
 import 'workspace_event.dart';
+import '../../money/domain/payment_terms.dart';
 
 /// Events boundary. Fetching also triggers the lazy timeout sweep
 /// (spec §8.2) until Epic #9 adds a scheduled runner.
@@ -38,6 +39,16 @@ abstract class EventRepository {
   /// (0097, #492); returns the pending event id.
   Future<String> requestReservationDeletion(
     String reservationId, {
+    String reason = '',
+  });
+
+  /// #881 — an authorised admin asks to change [memberId]'s payment
+  /// conditions (RPC `request_payment_terms_change`, 0154): a pending
+  /// 'payment_terms_change' event validators decide; the override is
+  /// written on confirm. An empty [terms] asks to inherit again.
+  Future<String> requestPaymentTermsChange(
+    String memberId, {
+    required PaymentTerms terms,
     String reason = '',
   });
 

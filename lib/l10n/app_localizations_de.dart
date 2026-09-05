@@ -6251,6 +6251,81 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get featureMemberPaymentTerms => 'Zahlungsbedingungen je Mitglied';
+
+  @override
+  String get featureMemberPaymentTermsDesc =>
+      'Der Space legt die Standard-Zahlungsbedingungen fest; ein Mitglied kann eigene haben, für es sichtbar, geändert nur über einen bestätigten Antrag eines berechtigten Admins.';
+
+  @override
+  String get permPaymentTermsEdit =>
+      'Änderung der Zahlungsbedingungen beantragen';
+
+  @override
+  String get eventTypePaymentTermsChange => 'Zahlungsbedingungen';
+
+  @override
+  String eventPaymentTermsChangeLine(String actor, String terms) {
+    return '$actor beantragt Zahlungsbedingungen: $terms';
+  }
+
+  @override
+  String get paymentTermsInherit => 'die Standardbedingungen des Space';
+
+  @override
+  String get paymentTermsTitle => 'Zahlungsbedingungen';
+
+  @override
+  String get paymentTermsInherited => 'Standard des Space';
+
+  @override
+  String get paymentTermsOverridden => 'Eigene des Mitglieds';
+
+  @override
+  String get paymentTermsEdit => 'Änderung beantragen';
+
+  @override
+  String get paymentTermsRequestTitle =>
+      'Änderung der Zahlungsbedingungen beantragen';
+
+  @override
+  String get paymentTermsRequestHint =>
+      'Ein leeres Feld behält den Wortlaut des Space. Die Änderung gilt nach der Bestätigung.';
+
+  @override
+  String get paymentTermsReason => 'Grund (optional)';
+
+  @override
+  String get paymentTermsRequested =>
+      'Änderung beantragt — Bestätigung ausstehend';
+
+  @override
+  String get paymentTermsUseDefault =>
+      'Wieder den Standard des Space verwenden';
+
+  @override
+  String get paymentTermsMemberNote =>
+      'Diese Bedingungen legt der Space fest; eine Änderung durchläuft seine Bestätigung.';
+
+  @override
+  String get paymentTermsSubmit => 'Antrag senden';
+
+  @override
+  String get paymentTermsFieldTerms => 'Zahlungsziel';
+
+  @override
+  String get paymentTermsFieldEscompte => 'Skonto';
+
+  @override
+  String get paymentTermsFieldLatePenalty => 'Verzugszinsen';
+
+  @override
+  String get paymentTermsFieldRecovery => 'Mahnpauschale';
+
+  @override
+  String get paymentTermsNone => 'Noch keine Bedingungen';
+
+  @override
   String get featurePersonalInfo => 'Persönliche Angaben';
 
   @override

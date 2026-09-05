@@ -66,7 +66,11 @@ enum EventType {
   /// and an admin removing a usage record. Both are decided by somebody
   /// other than the person who asked.
   usageCorrection('usage_correction'),
-  usageRecordDelete('usage_record_delete');
+  usageRecordDelete('usage_record_delete'),
+
+  /// #881 — an authorised admin asks to change a member's payment
+  /// conditions; confirmed → the override is written by trigger.
+  paymentTermsChange('payment_terms_change');
 
   const EventType([String? dbName]) : _dbName = dbName;
 

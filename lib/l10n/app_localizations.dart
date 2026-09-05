@@ -10897,6 +10897,138 @@ abstract class AppLocalizations {
   /// **'Participation {pct}%'**
   String billParticipation(int pct);
 
+  /// #881 member payment conditions: featureMemberPaymentTerms
+  ///
+  /// In en, this message translates to:
+  /// **'Payment conditions per member'**
+  String get featureMemberPaymentTerms;
+
+  /// #881 member payment conditions: featureMemberPaymentTermsDesc
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace sets the default payment conditions; a member may have their own, visible to them, changed only through a validated request by an authorised admin.'**
+  String get featureMemberPaymentTermsDesc;
+
+  /// #881 member payment conditions: permPaymentTermsEdit
+  ///
+  /// In en, this message translates to:
+  /// **'Request payment-condition changes'**
+  String get permPaymentTermsEdit;
+
+  /// #881 member payment conditions: eventTypePaymentTermsChange
+  ///
+  /// In en, this message translates to:
+  /// **'Payment conditions'**
+  String get eventTypePaymentTermsChange;
+
+  /// #881 member payment conditions: eventPaymentTermsChangeLine
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} asks to set payment conditions: {terms}'**
+  String eventPaymentTermsChangeLine(String actor, String terms);
+
+  /// #881 member payment conditions: paymentTermsInherit
+  ///
+  /// In en, this message translates to:
+  /// **'the workspace\'s default'**
+  String get paymentTermsInherit;
+
+  /// #881 member payment conditions: paymentTermsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Payment conditions'**
+  String get paymentTermsTitle;
+
+  /// #881 member payment conditions: paymentTermsInherited
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace default'**
+  String get paymentTermsInherited;
+
+  /// #881 member payment conditions: paymentTermsOverridden
+  ///
+  /// In en, this message translates to:
+  /// **'Member\'s own'**
+  String get paymentTermsOverridden;
+
+  /// #881 member payment conditions: paymentTermsEdit
+  ///
+  /// In en, this message translates to:
+  /// **'Request a change'**
+  String get paymentTermsEdit;
+
+  /// #881 member payment conditions: paymentTermsRequestTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Request a change of payment conditions'**
+  String get paymentTermsRequestTitle;
+
+  /// #881 member payment conditions: paymentTermsRequestHint
+  ///
+  /// In en, this message translates to:
+  /// **'Leave a field empty to keep the workspace\'s wording for it. The change applies once validated.'**
+  String get paymentTermsRequestHint;
+
+  /// #881 member payment conditions: paymentTermsReason
+  ///
+  /// In en, this message translates to:
+  /// **'Reason (optional)'**
+  String get paymentTermsReason;
+
+  /// #881 member payment conditions: paymentTermsRequested
+  ///
+  /// In en, this message translates to:
+  /// **'Change requested — pending validation'**
+  String get paymentTermsRequested;
+
+  /// #881 member payment conditions: paymentTermsUseDefault
+  ///
+  /// In en, this message translates to:
+  /// **'Use the workspace default again'**
+  String get paymentTermsUseDefault;
+
+  /// #881 member payment conditions: paymentTermsMemberNote
+  ///
+  /// In en, this message translates to:
+  /// **'These conditions are set by the workspace; a change goes through its validation.'**
+  String get paymentTermsMemberNote;
+
+  /// #881 member payment conditions: paymentTermsSubmit
+  ///
+  /// In en, this message translates to:
+  /// **'Submit request'**
+  String get paymentTermsSubmit;
+
+  /// #881 member payment conditions: paymentTermsFieldTerms
+  ///
+  /// In en, this message translates to:
+  /// **'Payment terms'**
+  String get paymentTermsFieldTerms;
+
+  /// #881 member payment conditions: paymentTermsFieldEscompte
+  ///
+  /// In en, this message translates to:
+  /// **'Early-payment discount'**
+  String get paymentTermsFieldEscompte;
+
+  /// #881 member payment conditions: paymentTermsFieldLatePenalty
+  ///
+  /// In en, this message translates to:
+  /// **'Late-payment penalty'**
+  String get paymentTermsFieldLatePenalty;
+
+  /// #881 member payment conditions: paymentTermsFieldRecovery
+  ///
+  /// In en, this message translates to:
+  /// **'Recovery indemnity'**
+  String get paymentTermsFieldRecovery;
+
+  /// #881 member payment conditions: paymentTermsNone
+  ///
+  /// In en, this message translates to:
+  /// **'No conditions written yet'**
+  String get paymentTermsNone;
+
   /// #886 personal-information form / feature: featurePersonalInfo
   ///
   /// In en, this message translates to:

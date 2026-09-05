@@ -244,6 +244,11 @@ class FeaturesScreen extends ConsumerWidget {
               'Admins create members who have no account yet, book and '
                   'invoice for them, and hand the profile over with a '
                   'personal code the person redeems when they join.',
+        WorkspaceFeature.memberPaymentTerms =>
+          l10n?.featureMemberPaymentTermsDesc ??
+              'The workspace sets the default payment conditions; a '
+                  'member may have their own, visible to them, changed '
+                  'only through a validated request by an authorised admin.',
         WorkspaceFeature.priceNegotiations =>
           l10n?.featurePriceNegotiationsDesc ??
               'The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record.',

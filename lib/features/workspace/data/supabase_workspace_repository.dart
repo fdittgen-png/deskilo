@@ -5,6 +5,7 @@ import '../../../core/time/work_hours.dart';
 import '../domain/booking_granularity.dart';
 import '../domain/booking_policies.dart';
 import '../domain/closure_day.dart';
+import '../../money/domain/payment_terms.dart';
 import '../../profile/domain/personal_info.dart';
 import '../domain/member.dart';
 import '../domain/member_badge.dart';
@@ -881,6 +882,9 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
           (row['managed_identity'] as Map?)?.cast<String, dynamic>() ??
               const {},
         ),
+        paymentTerms: row['payment_terms'] is Map
+            ? PaymentTerms.fromJson(row['payment_terms'] as Map)
+            : null,
         claimedAt: row['claimed_at'] == null
             ? null
             : DateTime.parse(row['claimed_at'] as String),

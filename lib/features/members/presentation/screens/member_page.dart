@@ -31,6 +31,7 @@ import '../../../workspace/presentation/widgets/open_conversation.dart';
 import '../../../workspace/presentation/widgets/invite_sheet.dart';
 import '../../../workspace/domain/invite_uri.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../money/presentation/widgets/payment_terms_card.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/directory_status.dart';
 import '../../providers/directory_providers.dart';
@@ -461,6 +462,10 @@ class _MemberPageBody extends ConsumerWidget {
           // Role-gated INSIDE each card, as on the old sheet.
           MemberContactCard(member: member, isSelf: isSelf),
           MemberMoneyCard(memberId: member.id, isSelf: isSelf),
+          // #881 — the conditions the member's documents print.
+          if (features.contains(WorkspaceFeature.memberPaymentTerms) &&
+              (isSelf || canAdmin))
+            PaymentTermsCard(member: member, isSelf: isSelf),
           if (groups.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.lg),
             Text(

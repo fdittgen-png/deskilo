@@ -25,6 +25,8 @@ String eventTypeLabel(AppLocalizations? l10n, EventType type) {
       l10n?.eventTypeUsageCorrection ?? 'Early departure',
     EventType.usageRecordDelete =>
       l10n?.eventTypeUsageRecordDelete ?? 'Usage record removal',
+    EventType.paymentTermsChange =>
+      l10n?.eventTypePaymentTermsChange ?? 'Payment conditions',
     EventType.invoiceWriteoff =>
       l10n?.eventTypeInvoiceWriteoff ?? 'Outstanding write-off',
     EventType.invoiceReminder =>

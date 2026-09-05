@@ -67,6 +67,7 @@ enum WorkspaceFeature {
   reportLayouts,
   personalInfo,
   managedProfiles,
+  memberPaymentTerms,
   priceNegotiations,
 
   /// #767 — recurring scheduled expenses (internet, phone, electricity):
@@ -526,6 +527,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.managedProfiles: FeatureManifestEntry(
     feature: WorkspaceFeature.managedProfiles,
     requires: WorkspaceFeature.membersDirectory,
+  ),
+  // #881 — a member's own payment conditions, changed by validated request.
+  WorkspaceFeature.memberPaymentTerms: FeatureManifestEntry(
+    feature: WorkspaceFeature.memberPaymentTerms,
+    requires: WorkspaceFeature.invoicing,
   ),
   // #739 — the tariff is the default; a member may have their own deal,
   // proposed by finance admins, validated, seen by the member and them.

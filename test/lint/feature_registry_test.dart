@@ -80,7 +80,9 @@ import 'package:flutter_test/flutter_test.dart';
 //   profile, printed by every document.
 // 76→77 (2026-09-05): #887 managedProfiles — members without an account,
 //   handed over by a bound invitation.
-const int _expectedFeatureCount = 77;
+// 77→78 (2026-09-05): #881 memberPaymentTerms — a member's own payment
+//   conditions, changed by validated request.
+const int _expectedFeatureCount = 78;
 
 void main() {
   test('every functionality is registered — the pin', () {

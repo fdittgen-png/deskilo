@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../money/domain/payment_terms.dart';
 import '../../profile/domain/personal_info.dart';
 import 'overage_policy.dart';
 
@@ -96,6 +97,11 @@ sealed class Member with _$Member {
     /// #887 — when the person took the profile over; null while managed
     /// and for members who joined by themselves.
     DateTime? claimedAt,
+
+    /// #881 — the member's own payment conditions (keys on top of the
+    /// workspace's); null = inherit everything. Changed only through a
+    /// validated payment_terms_change request.
+    PaymentTerms? paymentTerms,
   }) = _Member;
 
   /// #887 — a member an admin runs on the person's behalf: no account

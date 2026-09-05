@@ -1,0 +1,99 @@
+{
+  "@@locale": "es",
+  "featureMemberPaymentTerms": "Condiciones de pago por miembro",
+  "@featureMemberPaymentTerms": {
+    "description": "#881 member payment conditions: featureMemberPaymentTerms"
+  },
+  "featureMemberPaymentTermsDesc": "El espacio fija las condiciones de pago por defecto; un miembro puede tener las suyas, visibles para él, cambiadas solo por una solicitud validada de un admin autorizado.",
+  "@featureMemberPaymentTermsDesc": {
+    "description": "#881 member payment conditions: featureMemberPaymentTermsDesc"
+  },
+  "permPaymentTermsEdit": "Solicitar cambios de condiciones de pago",
+  "@permPaymentTermsEdit": {
+    "description": "#881 member payment conditions: permPaymentTermsEdit"
+  },
+  "eventTypePaymentTermsChange": "Condiciones de pago",
+  "@eventTypePaymentTermsChange": {
+    "description": "#881 member payment conditions: eventTypePaymentTermsChange"
+  },
+  "eventPaymentTermsChangeLine": "{actor} pide fijar las condiciones de pago: {terms}",
+  "@eventPaymentTermsChangeLine": {
+    "description": "#881 member payment conditions: eventPaymentTermsChangeLine",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "terms": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentTermsInherit": "las del espacio por defecto",
+  "@paymentTermsInherit": {
+    "description": "#881 member payment conditions: paymentTermsInherit"
+  },
+  "paymentTermsTitle": "Condiciones de pago",
+  "@paymentTermsTitle": {
+    "description": "#881 member payment conditions: paymentTermsTitle"
+  },
+  "paymentTermsInherited": "Por defecto del espacio",
+  "@paymentTermsInherited": {
+    "description": "#881 member payment conditions: paymentTermsInherited"
+  },
+  "paymentTermsOverridden": "Propias del miembro",
+  "@paymentTermsOverridden": {
+    "description": "#881 member payment conditions: paymentTermsOverridden"
+  },
+  "paymentTermsEdit": "Solicitar un cambio",
+  "@paymentTermsEdit": {
+    "description": "#881 member payment conditions: paymentTermsEdit"
+  },
+  "paymentTermsRequestTitle": "Solicitar un cambio de condiciones de pago",
+  "@paymentTermsRequestTitle": {
+    "description": "#881 member payment conditions: paymentTermsRequestTitle"
+  },
+  "paymentTermsRequestHint": "Deje un campo vacío para conservar la redacción del espacio. El cambio se aplica una vez validado.",
+  "@paymentTermsRequestHint": {
+    "description": "#881 member payment conditions: paymentTermsRequestHint"
+  },
+  "paymentTermsReason": "Motivo (opcional)",
+  "@paymentTermsReason": {
+    "description": "#881 member payment conditions: paymentTermsReason"
+  },
+  "paymentTermsRequested": "Cambio solicitado — pendiente de validación",
+  "@paymentTermsRequested": {
+    "description": "#881 member payment conditions: paymentTermsRequested"
+  },
+  "paymentTermsUseDefault": "Volver a las condiciones por defecto del espacio",
+  "@paymentTermsUseDefault": {
+    "description": "#881 member payment conditions: paymentTermsUseDefault"
+  },
+  "paymentTermsMemberNote": "Estas condiciones las fija el espacio; un cambio pasa por su validación.",
+  "@paymentTermsMemberNote": {
+    "description": "#881 member payment conditions: paymentTermsMemberNote"
+  },
+  "paymentTermsSubmit": "Enviar solicitud",
+  "@paymentTermsSubmit": {
+    "description": "#881 member payment conditions: paymentTermsSubmit"
+  },
+  "paymentTermsFieldTerms": "Condiciones de pago",
+  "@paymentTermsFieldTerms": {
+    "description": "#881 member payment conditions: paymentTermsFieldTerms"
+  },
+  "paymentTermsFieldEscompte": "Descuento por pronto pago",
+  "@paymentTermsFieldEscompte": {
+    "description": "#881 member payment conditions: paymentTermsFieldEscompte"
+  },
+  "paymentTermsFieldLatePenalty": "Penalización por demora",
+  "@paymentTermsFieldLatePenalty": {
+    "description": "#881 member payment conditions: paymentTermsFieldLatePenalty"
+  },
+  "paymentTermsFieldRecovery": "Indemnización de cobro",
+  "@paymentTermsFieldRecovery": {
+    "description": "#881 member payment conditions: paymentTermsFieldRecovery"
+  },
+  "paymentTermsNone": "Sin condiciones redactadas",
+  "@paymentTermsNone": {
+    "description": "#881 member payment conditions: paymentTermsNone"
+  }
+}

@@ -3748,6 +3748,102 @@
       }
     }
   },
+  "featureMemberPaymentTerms": "Zahlungsbedingungen je Mitglied",
+  "@featureMemberPaymentTerms": {
+    "description": "#881 member payment conditions: featureMemberPaymentTerms"
+  },
+  "featureMemberPaymentTermsDesc": "Der Space legt die Standard-Zahlungsbedingungen fest; ein Mitglied kann eigene haben, für es sichtbar, geändert nur über einen bestätigten Antrag eines berechtigten Admins.",
+  "@featureMemberPaymentTermsDesc": {
+    "description": "#881 member payment conditions: featureMemberPaymentTermsDesc"
+  },
+  "permPaymentTermsEdit": "Änderung der Zahlungsbedingungen beantragen",
+  "@permPaymentTermsEdit": {
+    "description": "#881 member payment conditions: permPaymentTermsEdit"
+  },
+  "eventTypePaymentTermsChange": "Zahlungsbedingungen",
+  "@eventTypePaymentTermsChange": {
+    "description": "#881 member payment conditions: eventTypePaymentTermsChange"
+  },
+  "eventPaymentTermsChangeLine": "{actor} beantragt Zahlungsbedingungen: {terms}",
+  "@eventPaymentTermsChangeLine": {
+    "description": "#881 member payment conditions: eventPaymentTermsChangeLine",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "terms": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentTermsInherit": "die Standardbedingungen des Space",
+  "@paymentTermsInherit": {
+    "description": "#881 member payment conditions: paymentTermsInherit"
+  },
+  "paymentTermsTitle": "Zahlungsbedingungen",
+  "@paymentTermsTitle": {
+    "description": "#881 member payment conditions: paymentTermsTitle"
+  },
+  "paymentTermsInherited": "Standard des Space",
+  "@paymentTermsInherited": {
+    "description": "#881 member payment conditions: paymentTermsInherited"
+  },
+  "paymentTermsOverridden": "Eigene des Mitglieds",
+  "@paymentTermsOverridden": {
+    "description": "#881 member payment conditions: paymentTermsOverridden"
+  },
+  "paymentTermsEdit": "Änderung beantragen",
+  "@paymentTermsEdit": {
+    "description": "#881 member payment conditions: paymentTermsEdit"
+  },
+  "paymentTermsRequestTitle": "Änderung der Zahlungsbedingungen beantragen",
+  "@paymentTermsRequestTitle": {
+    "description": "#881 member payment conditions: paymentTermsRequestTitle"
+  },
+  "paymentTermsRequestHint": "Ein leeres Feld behält den Wortlaut des Space. Die Änderung gilt nach der Bestätigung.",
+  "@paymentTermsRequestHint": {
+    "description": "#881 member payment conditions: paymentTermsRequestHint"
+  },
+  "paymentTermsReason": "Grund (optional)",
+  "@paymentTermsReason": {
+    "description": "#881 member payment conditions: paymentTermsReason"
+  },
+  "paymentTermsRequested": "Änderung beantragt — Bestätigung ausstehend",
+  "@paymentTermsRequested": {
+    "description": "#881 member payment conditions: paymentTermsRequested"
+  },
+  "paymentTermsUseDefault": "Wieder den Standard des Space verwenden",
+  "@paymentTermsUseDefault": {
+    "description": "#881 member payment conditions: paymentTermsUseDefault"
+  },
+  "paymentTermsMemberNote": "Diese Bedingungen legt der Space fest; eine Änderung durchläuft seine Bestätigung.",
+  "@paymentTermsMemberNote": {
+    "description": "#881 member payment conditions: paymentTermsMemberNote"
+  },
+  "paymentTermsSubmit": "Antrag senden",
+  "@paymentTermsSubmit": {
+    "description": "#881 member payment conditions: paymentTermsSubmit"
+  },
+  "paymentTermsFieldTerms": "Zahlungsziel",
+  "@paymentTermsFieldTerms": {
+    "description": "#881 member payment conditions: paymentTermsFieldTerms"
+  },
+  "paymentTermsFieldEscompte": "Skonto",
+  "@paymentTermsFieldEscompte": {
+    "description": "#881 member payment conditions: paymentTermsFieldEscompte"
+  },
+  "paymentTermsFieldLatePenalty": "Verzugszinsen",
+  "@paymentTermsFieldLatePenalty": {
+    "description": "#881 member payment conditions: paymentTermsFieldLatePenalty"
+  },
+  "paymentTermsFieldRecovery": "Mahnpauschale",
+  "@paymentTermsFieldRecovery": {
+    "description": "#881 member payment conditions: paymentTermsFieldRecovery"
+  },
+  "paymentTermsNone": "Noch keine Bedingungen",
+  "@paymentTermsNone": {
+    "description": "#881 member payment conditions: paymentTermsNone"
+  },
   "featurePersonalInfo": "Persönliche Angaben",
   "@featurePersonalInfo": {
     "description": "#886 personal-information form / feature: featurePersonalInfo"

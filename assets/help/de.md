@@ -775,6 +775,8 @@ Mitglieder ergänzen ihr **Land** — und ihre USt-IdNr., wenn sie als Unternehm
 
 **Eine ausgestellte Rechnung ändert sich nie.** Braucht ein Dokument neue Zahlen: **fehlerhaft** markieren und **Ersatz** ausstellen — die Korrekturkette ist auf beiden sichtbar.
 
+**Zahlungsbedingungen je Mitglied (#881).** Der Wortlaut oben ist der Standard des Space für alle. Ein Mitglied kann **eigene** tragen — ein längeres Zahlungsziel für einen Großkunden etwa. Sie werden nie direkt am Mitglied eingetragen: ein Admin mit der Berechtigung *Änderung der Zahlungsbedingungen beantragen* öffnet die Mitgliederseite, **Zahlungsbedingungen → Änderung beantragen**, füllt nur die abweichenden Felder (ein leeres Feld behält den Wortlaut des Space) und nennt einen Grund; der Antrag wird eine Bestätigungskarte **Zahlungsbedingungen**, entschieden wie jede andere Domäne (standardmäßig der Eigentümer), und die Abweichung gilt nach der Bestätigung. Das Mitglied sieht die wirksamen Bedingungen nur lesend auf seiner Seite und unter Finanzen → Rechnungen, beschriftet *Standard des Space* oder *Eigene des Mitglieds*; jede Rechnung und Mahnung druckt die wirksamen, und eine Vorlage kann `payment_terms_source` prüfen. *Wieder den Standard des Space verwenden* beantragt das Ende der Abweichung — über dieselbe Bestätigung.
+
 ### 11b. Wohin die E-Rechnung muss (EU)
 
 Die Aktion **E-Rechnung (XML)** öffnet ein Blatt, das es fürs Land des Space beantwortet: welcher Kanal für Geschäftskunden, ob eine Plattform dazwischen sitzt, welcher Kanal für öffentliche Käufer. Vier Modelle:
