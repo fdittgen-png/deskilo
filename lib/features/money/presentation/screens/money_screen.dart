@@ -47,6 +47,7 @@ import '../../providers/payment_reminder_sweep.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/expense_schedule_providers.dart';
 import '../payment_method_labels.dart';
+import '../widgets/payment_terms_card.dart';
 import '../widgets/account_card.dart';
 import '../widgets/bill_view.dart';
 import '../widgets/usage_face.dart';
@@ -1091,6 +1092,12 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
           InvoiceSummaryCard(exposure: exposure),
           const SizedBox(height: 8),
           MyInvoicesList(memberId: member?.id ?? '', exposure: exposure),
+        ],
+        // #881 — what my invoices print as conditions, read-only here.
+        if (member != null &&
+            features.contains(WorkspaceFeature.memberPaymentTerms)) ...[
+          const SizedBox(height: 8),
+          PaymentTermsCard(member: member, isSelf: true),
         ],
       ],
       // #833 — the month's bookings and what each of them costs. The

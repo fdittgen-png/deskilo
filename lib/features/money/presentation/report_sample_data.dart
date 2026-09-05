@@ -92,6 +92,7 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
       'client_address': 'Atelier Dupont SARL\n3 Avenue de la Liberté\n35000 RENNES',
       'client_vat_id': 'FR 79 849 149 108',
       'client_legal_id': '849 149 108',
+      'payment_terms_source': 'workspace',
       'payment_terms':
           l10n?.invoiceLegalPaymentTermsDefault ?? 'Payment on receipt.',
       'late_penalty': l10n?.invoiceLegalLatePenaltyDefault ??

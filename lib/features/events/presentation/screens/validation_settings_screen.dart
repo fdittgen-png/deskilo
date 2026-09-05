@@ -46,6 +46,8 @@ const _cardTypes = [
   // and an admin clearing somebody's usage record.
   EventType.usageCorrection,
   EventType.usageRecordDelete,
+  // #881 — a member's payment conditions, changed by request.
+  EventType.paymentTermsChange,
 ];
 
 /// A pickable validator: an active non-owner admin (owners always may

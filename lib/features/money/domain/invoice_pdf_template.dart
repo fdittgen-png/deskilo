@@ -243,6 +243,8 @@ class InvoicePdfTemplate {
     'client_vat_id',
     'client_legal_id',
     'payment_terms',
+    // #881 — 'workspace' | 'member': whether the conditions are the member's own.
+    'payment_terms_source',
     'late_penalty',
     'recovery_indemnity',
     'escompte',

@@ -135,6 +135,7 @@ NotificationCategory categoryOfEvent(WorkspaceEvent event) {
     // money the member is being asked about.
     case EventType.usageCorrection:
     case EventType.usageRecordDelete:
+    case EventType.paymentTermsChange:
     case EventType.expenseRepartition:
     case EventType.expenseSchedule:
     case EventType.expense:

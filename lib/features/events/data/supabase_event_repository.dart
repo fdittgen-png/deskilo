@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../money/domain/payment_terms.dart';
 import '../domain/event_decision.dart';
 import '../domain/event_repository.dart';
 import '../domain/validation_policy.dart';
@@ -58,6 +59,21 @@ class SupabaseEventRepository implements EventRepository {
     final result = await _client
         .rpc<dynamic>('request_reservation_deletion', params: {
       'p_reservation_id': reservationId,
+      'p_reason': reason,
+    });
+    return result as String;
+  }
+
+  @override
+  Future<String> requestPaymentTermsChange(
+    String memberId, {
+    required PaymentTerms terms,
+    String reason = '',
+  }) async {
+    final result =
+        await _client.rpc<dynamic>('request_payment_terms_change', params: {
+      'p_member_id': memberId,
+      'p_terms': terms.toJson(),
       'p_reason': reason,
     });
     return result as String;

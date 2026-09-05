@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:deskilo/features/events/domain/event_decision.dart';
+import 'package:deskilo/features/money/domain/payment_terms.dart';
 import 'package:deskilo/features/events/domain/event_repository.dart';
 import 'package:deskilo/features/events/domain/validation_policy.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
@@ -106,6 +107,45 @@ class FakeEventRepository implements EventRepository {
       actorMemberId: respondingMemberId,
       subjectMemberId: respondingMemberId,
       payload: {'invoice_id': invoiceId, 'reason': reason},
+      status: EventStatus.pending,
+      createdAt: kTestNow,
+    );
+    events.add(event);
+    return event.id;
+  }
+
+  /// #881 — the requests made, for assertions.
+  final List<({String memberId, PaymentTerms terms, String reason})>
+      paymentTermsRequests = [];
+
+  @override
+  Future<String> requestPaymentTermsChange(
+    String memberId, {
+    required PaymentTerms terms,
+    String reason = '',
+  }) async {
+    paymentTermsRequests.add((memberId: memberId, terms: terms, reason: reason));
+    for (var i = 0; i < events.length; i++) {
+      final e = events[i];
+      if (e.type == EventType.paymentTermsChange &&
+          e.status == EventStatus.pending &&
+          e.subjectMemberId == memberId) {
+        events[i] = e.copyWith(status: EventStatus.expired);
+      }
+    }
+    final event = WorkspaceEvent(
+      id: 'ev-terms-${events.length + 1}',
+      workspaceId: 'ws-1',
+      type: EventType.paymentTermsChange,
+      action: EventAction.submitted,
+      actorMemberId: 'member-1',
+      subjectMemberId: memberId,
+      payload: {
+        'member_id': memberId,
+        'after': terms.toJson(),
+        'inherit': terms.isEmpty,
+        'reason': reason,
+      },
       status: EventStatus.pending,
       createdAt: kTestNow,
     );

@@ -275,6 +275,7 @@ String _openPositionLabel(BillPdfStrings strings, WorkspaceEvent event) {
     case EventType.expenseSchedule:
     case EventType.usageCorrection:
     case EventType.usageRecordDelete:
+    case EventType.paymentTermsChange:
     case EventType.quota:
     case EventType.invoiceWriteoff:
       case EventType.invoiceReminder:

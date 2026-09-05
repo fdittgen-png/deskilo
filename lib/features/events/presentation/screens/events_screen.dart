@@ -234,6 +234,17 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 (event.payload['to_minutes'] as num?)?.toInt() ?? 0),
           ) ??
           '$actor asks to be billed less',
+      // #881 — validators decide on the conditions themselves.
+      (EventType.paymentTermsChange, _) =>
+        l10n?.eventPaymentTermsChangeLine(
+              actor,
+              (event.payload['inherit'] == true)
+                  ? (l10n.paymentTermsInherit)
+                  : ((event.payload['after'] as Map?)?['payment_terms']
+                          as String? ??
+                      ''),
+            ) ??
+            '$actor asks to change payment conditions',
       (EventType.usageRecordDelete, _) => l10n?.eventUsageRecordDeleteLine(
             actor,
             event.payload['space_label'] as String? ?? '',
@@ -348,6 +359,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.expenseRepartition => Icons.call_split,
     EventType.usageCorrection => Icons.timelapse_outlined,
     EventType.usageRecordDelete => Icons.playlist_remove_outlined,
+    EventType.paymentTermsChange => Icons.request_quote_outlined,
     };
   }
 

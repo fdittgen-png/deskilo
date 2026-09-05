@@ -6201,6 +6201,78 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get featureMemberPaymentTerms => 'Payment conditions per member';
+
+  @override
+  String get featureMemberPaymentTermsDesc =>
+      'The workspace sets the default payment conditions; a member may have their own, visible to them, changed only through a validated request by an authorised admin.';
+
+  @override
+  String get permPaymentTermsEdit => 'Request payment-condition changes';
+
+  @override
+  String get eventTypePaymentTermsChange => 'Payment conditions';
+
+  @override
+  String eventPaymentTermsChangeLine(String actor, String terms) {
+    return '$actor asks to set payment conditions: $terms';
+  }
+
+  @override
+  String get paymentTermsInherit => 'the workspace\'s default';
+
+  @override
+  String get paymentTermsTitle => 'Payment conditions';
+
+  @override
+  String get paymentTermsInherited => 'Workspace default';
+
+  @override
+  String get paymentTermsOverridden => 'Member\'s own';
+
+  @override
+  String get paymentTermsEdit => 'Request a change';
+
+  @override
+  String get paymentTermsRequestTitle =>
+      'Request a change of payment conditions';
+
+  @override
+  String get paymentTermsRequestHint =>
+      'Leave a field empty to keep the workspace\'s wording for it. The change applies once validated.';
+
+  @override
+  String get paymentTermsReason => 'Reason (optional)';
+
+  @override
+  String get paymentTermsRequested => 'Change requested — pending validation';
+
+  @override
+  String get paymentTermsUseDefault => 'Use the workspace default again';
+
+  @override
+  String get paymentTermsMemberNote =>
+      'These conditions are set by the workspace; a change goes through its validation.';
+
+  @override
+  String get paymentTermsSubmit => 'Submit request';
+
+  @override
+  String get paymentTermsFieldTerms => 'Payment terms';
+
+  @override
+  String get paymentTermsFieldEscompte => 'Early-payment discount';
+
+  @override
+  String get paymentTermsFieldLatePenalty => 'Late-payment penalty';
+
+  @override
+  String get paymentTermsFieldRecovery => 'Recovery indemnity';
+
+  @override
+  String get paymentTermsNone => 'No conditions written yet';
+
+  @override
   String get featurePersonalInfo => 'Personal information';
 
   @override

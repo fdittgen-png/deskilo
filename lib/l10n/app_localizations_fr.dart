@@ -6262,6 +6262,81 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get featureMemberPaymentTerms => 'Conditions de paiement par membre';
+
+  @override
+  String get featureMemberPaymentTermsDesc =>
+      'L\'espace définit les conditions par défaut ; un membre peut avoir les siennes, visibles par lui, modifiées uniquement par une demande validée d\'un admin autorisé.';
+
+  @override
+  String get permPaymentTermsEdit =>
+      'Demander un changement de conditions de paiement';
+
+  @override
+  String get eventTypePaymentTermsChange => 'Conditions de paiement';
+
+  @override
+  String eventPaymentTermsChangeLine(String actor, String terms) {
+    return '$actor demande de fixer les conditions de paiement : $terms';
+  }
+
+  @override
+  String get paymentTermsInherit => 'celles de l\'espace par défaut';
+
+  @override
+  String get paymentTermsTitle => 'Conditions de paiement';
+
+  @override
+  String get paymentTermsInherited => 'Par défaut de l\'espace';
+
+  @override
+  String get paymentTermsOverridden => 'Propres au membre';
+
+  @override
+  String get paymentTermsEdit => 'Demander un changement';
+
+  @override
+  String get paymentTermsRequestTitle =>
+      'Demander un changement de conditions de paiement';
+
+  @override
+  String get paymentTermsRequestHint =>
+      'Laissez un champ vide pour garder la formulation de l\'espace. Le changement s\'applique une fois validé.';
+
+  @override
+  String get paymentTermsReason => 'Motif (facultatif)';
+
+  @override
+  String get paymentTermsRequested =>
+      'Changement demandé — en attente de validation';
+
+  @override
+  String get paymentTermsUseDefault =>
+      'Reprendre les conditions par défaut de l\'espace';
+
+  @override
+  String get paymentTermsMemberNote =>
+      'Ces conditions sont fixées par l\'espace ; un changement passe par sa validation.';
+
+  @override
+  String get paymentTermsSubmit => 'Envoyer la demande';
+
+  @override
+  String get paymentTermsFieldTerms => 'Conditions de paiement';
+
+  @override
+  String get paymentTermsFieldEscompte => 'Escompte';
+
+  @override
+  String get paymentTermsFieldLatePenalty => 'Pénalités de retard';
+
+  @override
+  String get paymentTermsFieldRecovery => 'Indemnité de recouvrement';
+
+  @override
+  String get paymentTermsNone => 'Aucune condition rédigée';
+
+  @override
   String get featurePersonalInfo => 'Informations personnelles';
 
   @override

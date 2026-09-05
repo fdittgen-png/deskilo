@@ -55,6 +55,8 @@ Future<FakeEventRepository> pumpValidationSettings(
   return events;
 }
 
+// #881 — the payment_terms_change card joins the list: 18 cards, 17
+// inheriting the default.
 void main() {
   testWidgets(
       'renders the default card and one card per event type with the '
@@ -74,9 +76,9 @@ void main() {
     // No stored rows: every card shows the built-in defaults and inherits.
     expect(
       find.text("Required validations: 1 · All admins · Never one's own"),
-      findsNWidgets(17),
+      findsNWidgets(18),
     );
-    expect(find.text('Inherits default'), findsNWidgets(17));
+    expect(find.text('Inherits default'), findsNWidgets(18));
     expect(find.text('Customized'), findsNothing);
   });
 
@@ -245,7 +247,7 @@ void main() {
     );
 
     expect(find.text('Customized'), findsOneWidget);
-    expect(find.text('Inherits default'), findsNWidgets(16));
+    expect(find.text('Inherits default'), findsNWidgets(17));
     expect(
       find.text(
         'Required validations: 2 · All admins · Owner must always '

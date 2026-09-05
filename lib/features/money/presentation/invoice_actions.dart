@@ -21,6 +21,7 @@ import '../../events/providers/event_providers.dart';
 import '../../members/providers/directory_providers.dart';
 import '../../reservations/providers/reservation_providers.dart';
 import '../../profile/domain/personal_info.dart';
+import '../domain/payment_terms.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -131,8 +132,11 @@ Map<String, Object?> legalMentionData(
   InvoiceParty? buyer,
   String clientAddress = '',
   String clientName = '',
+  // #881 — the member's own conditions on top of the workspace's.
+  PaymentTerms? memberTerms,
 }) {
   final legal = InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {});
+  final terms = PaymentTerms.ofLegal(legal).mergedWith(memberTerms);
   // #871 — the bank block. A French (and German) invoice carries the
   // account it is to be paid into, and until now a designed report
   // could not print one: the details were stored but no placeholder
@@ -174,22 +178,24 @@ Map<String, Object?> legalMentionData(
     // #482 — the client's own identifiers on B2B documents.
     'client_vat_id': buyer?.vatId ?? '',
     'client_legal_id': buyer?.legalId ?? '',
+    // #881 — whether anything printed is the member's own condition.
+    'payment_terms_source': memberTerms == null ? 'workspace' : 'member',
     'payment_terms': orDefault(
-      legal.paymentTerms,
+      terms.paymentTerms,
       l10n?.invoiceLegalPaymentTermsDefault ?? 'Payment on receipt.',
     ),
     'late_penalty': orB2bDefault(
-      legal.latePenalty,
+      terms.latePenalty,
       l10n?.invoiceLegalLatePenaltyDefault ??
           'Late-payment penalty: three times the statutory interest rate.',
     ),
     'recovery_indemnity': orB2bDefault(
-      legal.recoveryIndemnity,
+      terms.recoveryIndemnity,
       l10n?.invoiceLegalRecoveryDefault ??
           'Fixed recovery indemnity for collection costs: €40.',
     ),
     'escompte': orB2bDefault(
-      legal.escompte,
+      terms.escompte,
       l10n?.invoiceLegalEscompteDefault ?? 'No discount for early payment.',
     ),
     'insurance': legal.insurance,
@@ -232,6 +238,7 @@ Map<String, Object?> invoiceReportData(
   required bool proforma,
   required bool copy,
   Workspace? workspace,
+  PaymentTerms? memberTerms,
 }) {
   final l10n = AppLocalizations.of(context);
   final currency = moneyFormat(invoice.currency);
@@ -305,6 +312,7 @@ Map<String, Object?> invoiceReportData(
       buyer: invoice.buyerParty,
       clientAddress: _clientAddressOf(invoice, workspace),
       clientName: _clientNameOf(invoice),
+      memberTerms: memberTerms,
     ),
   };
 }
@@ -1012,6 +1020,7 @@ Map<String, Object?> reminderReportData(
       buyer: invoice.buyerParty,
       clientAddress: _clientAddressOf(invoice, workspace),
       clientName: _clientNameOf(invoice),
+      memberTerms: memberTermsFor(ref, invoice.memberId),
     ),
   };
 }
@@ -1035,6 +1044,9 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   /// pages as documentation. The caller resolves them, because only it
   /// holds the archive; each is stamped with this document's number.
   List<Invoice> annexInvoices = const [],
+  // #881 — the member's own conditions; callers holding a ref pass
+  // memberTermsFor(ref, invoice.memberId).
+  PaymentTerms? memberTerms,
 }) async {
   final l10n = AppLocalizations.of(context);
   final currency = moneyFormat(invoice.currency);
@@ -1066,6 +1078,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   final reportData = invoiceReportData(
     context,
     invoice,
+    memberTerms: memberTerms,
     proforma: proforma,
     copy: copy,
     workspace: workspace,
@@ -1217,6 +1230,7 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
   final pdf = await buildInvoicePdfFile(
     context,
     invoice,
+    memberTerms: memberTermsFor(ref, invoice.memberId),
     copy: _rendersCopy(ref),
     settledIn: settledStampOf(context, ref, invoice),
     facturXml: xml,
@@ -1341,6 +1355,7 @@ Future<void> shareProforma(
         data: invoiceReportData(
           context,
           invoice,
+          memberTerms: memberTermsFor(ref, invoice.memberId),
           proforma: true,
           copy: false,
           workspace: ref.read(currentWorkspaceProvider).value,
@@ -1351,6 +1366,7 @@ Future<void> shareProforma(
       final pdf = await buildInvoicePdfFile(
         context,
         invoice,
+        memberTerms: memberTermsFor(ref, invoice.memberId),
         proforma: true,
         template: invoicePdfTemplateFor(ref),
         workspace: ref.read(currentWorkspaceProvider).value,
@@ -1485,6 +1501,7 @@ Future<void> downloadInvoicePdf(
       final pdf = await buildInvoicePdfFile(
         context,
         invoice,
+        memberTerms: memberTermsFor(ref, invoice.memberId),
         copy: _rendersCopy(ref),
         settledIn: settledStampOf(context, ref, invoice),
         annexInvoices: annexes,
@@ -1519,6 +1536,7 @@ Future<void> quickViewInvoice(
   final data = invoiceReportData(
     context,
     invoice,
+    memberTerms: memberTermsFor(ref, invoice.memberId),
     proforma: proforma,
     copy: _rendersCopy(ref),
     workspace: ref.read(currentWorkspaceProvider).value,
@@ -1547,6 +1565,7 @@ Future<void> quickViewInvoice(
       data: invoiceReportData(
         context,
         source,
+        memberTerms: memberTermsFor(ref, source.memberId),
         proforma: false,
         copy: _rendersCopy(ref),
         workspace: ref.read(currentWorkspaceProvider).value,
@@ -1586,6 +1605,7 @@ Future<void> shareInvoicePdf(
       final pdf = await buildInvoicePdfFile(
         context,
         invoice,
+        memberTerms: memberTermsFor(ref, invoice.memberId),
         copy: _rendersCopy(ref),
         settledIn: settledStampOf(context, ref, invoice),
         annexInvoices: annexes,
@@ -2245,3 +2265,12 @@ Future<List<Invoice>?> askRegroupedAnnexes(
   if (include == null) return null;
   return include ? sources : const [];
 }
+
+/// #881 — the member's own payment conditions, from the members list
+/// already loaded; null when they inherit the workspace's.
+PaymentTerms? memberTermsFor(WidgetRef ref, String memberId) => ref
+    .read(workspaceMembersProvider)
+    .value
+    ?.where((m) => m.id == memberId)
+    .firstOrNull
+    ?.paymentTerms;

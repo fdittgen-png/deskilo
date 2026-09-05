@@ -6314,6 +6314,102 @@
       }
     }
   },
+  "featureMemberPaymentTerms": "Payment conditions per member",
+  "@featureMemberPaymentTerms": {
+    "description": "#881 member payment conditions: featureMemberPaymentTerms"
+  },
+  "featureMemberPaymentTermsDesc": "The workspace sets the default payment conditions; a member may have their own, visible to them, changed only through a validated request by an authorised admin.",
+  "@featureMemberPaymentTermsDesc": {
+    "description": "#881 member payment conditions: featureMemberPaymentTermsDesc"
+  },
+  "permPaymentTermsEdit": "Request payment-condition changes",
+  "@permPaymentTermsEdit": {
+    "description": "#881 member payment conditions: permPaymentTermsEdit"
+  },
+  "eventTypePaymentTermsChange": "Payment conditions",
+  "@eventTypePaymentTermsChange": {
+    "description": "#881 member payment conditions: eventTypePaymentTermsChange"
+  },
+  "eventPaymentTermsChangeLine": "{actor} asks to set payment conditions: {terms}",
+  "@eventPaymentTermsChangeLine": {
+    "description": "#881 member payment conditions: eventPaymentTermsChangeLine",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "terms": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentTermsInherit": "the workspace's default",
+  "@paymentTermsInherit": {
+    "description": "#881 member payment conditions: paymentTermsInherit"
+  },
+  "paymentTermsTitle": "Payment conditions",
+  "@paymentTermsTitle": {
+    "description": "#881 member payment conditions: paymentTermsTitle"
+  },
+  "paymentTermsInherited": "Workspace default",
+  "@paymentTermsInherited": {
+    "description": "#881 member payment conditions: paymentTermsInherited"
+  },
+  "paymentTermsOverridden": "Member's own",
+  "@paymentTermsOverridden": {
+    "description": "#881 member payment conditions: paymentTermsOverridden"
+  },
+  "paymentTermsEdit": "Request a change",
+  "@paymentTermsEdit": {
+    "description": "#881 member payment conditions: paymentTermsEdit"
+  },
+  "paymentTermsRequestTitle": "Request a change of payment conditions",
+  "@paymentTermsRequestTitle": {
+    "description": "#881 member payment conditions: paymentTermsRequestTitle"
+  },
+  "paymentTermsRequestHint": "Leave a field empty to keep the workspace's wording for it. The change applies once validated.",
+  "@paymentTermsRequestHint": {
+    "description": "#881 member payment conditions: paymentTermsRequestHint"
+  },
+  "paymentTermsReason": "Reason (optional)",
+  "@paymentTermsReason": {
+    "description": "#881 member payment conditions: paymentTermsReason"
+  },
+  "paymentTermsRequested": "Change requested — pending validation",
+  "@paymentTermsRequested": {
+    "description": "#881 member payment conditions: paymentTermsRequested"
+  },
+  "paymentTermsUseDefault": "Use the workspace default again",
+  "@paymentTermsUseDefault": {
+    "description": "#881 member payment conditions: paymentTermsUseDefault"
+  },
+  "paymentTermsMemberNote": "These conditions are set by the workspace; a change goes through its validation.",
+  "@paymentTermsMemberNote": {
+    "description": "#881 member payment conditions: paymentTermsMemberNote"
+  },
+  "paymentTermsSubmit": "Submit request",
+  "@paymentTermsSubmit": {
+    "description": "#881 member payment conditions: paymentTermsSubmit"
+  },
+  "paymentTermsFieldTerms": "Payment terms",
+  "@paymentTermsFieldTerms": {
+    "description": "#881 member payment conditions: paymentTermsFieldTerms"
+  },
+  "paymentTermsFieldEscompte": "Early-payment discount",
+  "@paymentTermsFieldEscompte": {
+    "description": "#881 member payment conditions: paymentTermsFieldEscompte"
+  },
+  "paymentTermsFieldLatePenalty": "Late-payment penalty",
+  "@paymentTermsFieldLatePenalty": {
+    "description": "#881 member payment conditions: paymentTermsFieldLatePenalty"
+  },
+  "paymentTermsFieldRecovery": "Recovery indemnity",
+  "@paymentTermsFieldRecovery": {
+    "description": "#881 member payment conditions: paymentTermsFieldRecovery"
+  },
+  "paymentTermsNone": "No conditions written yet",
+  "@paymentTermsNone": {
+    "description": "#881 member payment conditions: paymentTermsNone"
+  },
   "featurePersonalInfo": "Personal information",
   "@featurePersonalInfo": {
     "description": "#886 personal-information form / feature: featurePersonalInfo"

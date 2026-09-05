@@ -123,6 +123,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featurePersonalInfo ?? 'Personal information',
       WorkspaceFeature.managedProfiles =>
         l10n?.featureManagedProfiles ?? 'Managed profiles',
+      WorkspaceFeature.memberPaymentTerms =>
+        l10n?.featureMemberPaymentTerms ?? 'Payment conditions per member',
       WorkspaceFeature.priceNegotiations =>
         l10n?.featurePriceNegotiationsTitle ?? 'Price negotiations',
       WorkspaceFeature.scheduledExpenses =>

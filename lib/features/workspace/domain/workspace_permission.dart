@@ -40,7 +40,11 @@ enum WorkspacePermission {
   viewNegotiations,
 
   /// #749 — propose or change a member's commercial agreement.
-  manageNegotiations;
+  manageNegotiations,
+
+  /// #881 — request a change of a member's payment conditions (the
+  /// change itself goes through validation).
+  paymentTermsEdit;
 
   /// The wire name — identical to the Dart name, pinned by test.
   String get wireName => name;
@@ -76,6 +80,7 @@ Set<WorkspacePermission> defaultPermissionsFor(PermissionRole role) =>
           WorkspacePermission.viewFinances,
           WorkspacePermission.viewNegotiations,
           WorkspacePermission.manageNegotiations,
+          WorkspacePermission.paymentTermsEdit,
         },
       PermissionRole.member => <WorkspacePermission>{},
     };

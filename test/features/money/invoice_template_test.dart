@@ -130,7 +130,7 @@ void main() {
         // #886 — the client's identity as the postal standard prints it.
         'client_name', 'client_company', 'client_phone', 'client_email',
         'client_address', 'client_vat_id',
-        'client_legal_id', 'payment_terms',
+        'client_legal_id', 'payment_terms', 'payment_terms_source',
         'late_penalty', 'recovery_indemnity', 'escompte', 'insurance',
         'special_mentions', //
       ]);
