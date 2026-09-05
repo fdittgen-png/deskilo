@@ -97,6 +97,7 @@ ${l10n?.vatPdfNet ?? 'Net'} | {{ net_total }}
 :::''';
   const mentions = '''
 {% if exemption_reason != "" %}> {{ exemption_reason }}
+{% endif %}{% if vat_exigibility_mention != "" %}> {{ vat_exigibility_mention }}
 {% endif %}> {{ payment_terms }}{% if escompte != "" %} — {{ escompte }}{% endif %}''';
   switch (id) {
     case 'simple':

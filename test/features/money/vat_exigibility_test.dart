@@ -15,6 +15,8 @@ import 'package:deskilo/features/money/domain/vat_compliance.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
+import 'package:deskilo/features/money/presentation/invoice_actions.dart';
+import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Invoice _invoice(
@@ -112,6 +114,41 @@ void main() {
           onPaymentBasis: true,
         ),
         contains('cash'),
+      );
+    });
+  });
+
+  group('the document says it', () {
+    Workspace ws(String exigibility) => Workspace(
+          id: 'ws-1',
+          name: 'Demo SARL',
+          countryCode: 'FR',
+          currencyCode: 'EUR',
+          timezone: 'Europe/Paris',
+          inviteCode: 'CODE',
+          vatRegime: 'vat_registered',
+          invoiceLegal: {'vat_exigibility': exigibility},
+        );
+
+    test('a cash-basis seller prints the encaissements mention', () {
+      expect(
+        legalMentionData(null, ws('payment'))['vat_exigibility_mention'],
+        'TVA acquittée sur les encaissements.',
+      );
+    });
+
+    test('and a seller on the invoice basis prints the other one', () {
+      expect(
+        legalMentionData(null, ws('invoice'))['vat_exigibility_mention'],
+        'TVA acquittée sur les débits.',
+      );
+    });
+
+    test('a workspace outside the scope of VAT prints nothing', () {
+      final outside = ws('payment').copyWith(vatRegime: 'not_subject');
+      expect(
+        legalMentionData(null, outside)['vat_exigibility_mention'],
+        '',
       );
     });
   });
