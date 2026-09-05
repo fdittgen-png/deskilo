@@ -61,6 +61,8 @@ Die App hat bis zu fünf Ziele am unteren Rand: **Nachrichten** (§16), **Kalend
 
 **Alles bleibt live.** Was irgendjemand ändert — eine Buchung, ein neues Mitglied, eine Einstellung — wird binnen Sekunden auf jedes verbundene Gerät geschoben, auch auf das, das die Änderung machte. Kein Neustart, kein Ziehen zum Aktualisieren.
 
+**Im Web: der Menü-Knopf.** Im Browser entfallen die untere Leiste und ihr runder Reservieren-Knopf — das Fenster hat die Breite, die dem Telefon fehlt, und nichts von dessen Daumenreichweite. Das **☰-Menü** oben links öffnet eine Schublade mit jedem Ziel einen Tipp entfernt: Reservieren, die Tabs, Ereignisse, dann die Verwaltungsseiten (Space, Mitglieder & Pläne, Verfügbarkeit, Rollen, Abrechnung & Berichte, Zahlungsangaben, Online-Zahlungen, Badges, Services, Zubehör, Abrechnung, Funktionen, Space bearbeiten) und zuletzt Dokumente, Datenschutz, Einstellungen. Die ganze Höhe bleibt dem Inhalt. Telefone und Desktop-Apps behalten die Leiste.
+
 ## 2. Rollen & Einladungen
 
 DesKilo hat drei additive Rollen und darüber die Co-Inhaberschaft als Aufsatz, plus ein Gerätekonto:
