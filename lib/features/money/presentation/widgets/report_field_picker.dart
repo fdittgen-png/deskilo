@@ -10,17 +10,23 @@ import '../../domain/invoice_pdf_template.dart';
 /// place to find a field by name when there are thirty-odd of them.
 /// Pops with the markup to insert (`{{ field }}`, or a loop scaffold
 /// for `lines` / `vat`), or null.
-Future<String?> showReportFieldPicker(BuildContext context) =>
+Future<String?> showReportFieldPicker(
+  BuildContext context, {
+  /// #880 — the owner's text keys, offered as `text.<key>`.
+  List<String> textKeys = const [],
+}) =>
     showModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
-      builder: (_) => const _FieldPickerSheet(),
+      builder: (_) => _FieldPickerSheet(textKeys: textKeys),
     );
 
 /// The groups a field belongs to — a reading aid over one flat list.
-enum ReportFieldGroup { document, member, money, legal, loops }
+enum ReportFieldGroup { document, member, money, legal, loops, texts }
 
 ReportFieldGroup reportFieldGroup(String field) => switch (field) {
+      // #880 — the owner's own texts.
+      String f when f.startsWith('text.') => ReportFieldGroup.texts,
       'number' ||
       'period' ||
       'issued' ||
@@ -65,6 +71,7 @@ String reportFieldGroupName(ReportFieldGroup group, AppLocalizations? l10n) =>
         l10n?.reportFieldGroupLegal ?? 'Legal mentions',
       ReportFieldGroup.loops =>
         l10n?.reportFieldGroupLoops ?? 'Lines & VAT loops',
+      ReportFieldGroup.texts => l10n?.reportFieldGroupTexts ?? 'Your texts',
     };
 
 /// What a field inserts: a token, or for the two loops the scaffold
@@ -78,7 +85,9 @@ String reportFieldMarkup(String field) => switch (field) {
     };
 
 class _FieldPickerSheet extends StatefulWidget {
-  const _FieldPickerSheet();
+  const _FieldPickerSheet({this.textKeys = const []});
+
+  final List<String> textKeys;
 
   @override
   State<_FieldPickerSheet> createState() => _FieldPickerSheetState();
@@ -92,9 +101,10 @@ class _FieldPickerSheetState extends State<_FieldPickerSheet> {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final q = _query.trim().toLowerCase();
-    final fields = InvoicePdfTemplate.placeholders
-        .where((f) => q.isEmpty || f.contains(q))
-        .toList();
+    final fields = [
+      ...InvoicePdfTemplate.placeholders,
+      for (final key in widget.textKeys) 'text.$key',
+    ].where((f) => q.isEmpty || f.contains(q)).toList();
     final groups = <ReportFieldGroup, List<String>>{};
     for (final f in fields) {
       groups.putIfAbsent(reportFieldGroup(f), () => []).add(f);

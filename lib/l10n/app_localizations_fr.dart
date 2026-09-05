@@ -7141,6 +7141,46 @@ class AppLocalizationsFr extends AppLocalizations {
       'Concevez un rapport en indiquant où se place chaque élément, en mm, cm, px ou % ; le PDF imprime exactement cela. Un document doté d\'une maquette l\'utilise, les autres gardent leurs bandes.';
 
   @override
+  String get featureReportTexts => 'Textes des rapports';
+
+  @override
+  String get featureReportTextsDesc =>
+      'Le propriétaire rédige des textes (formule, note, paragraphe légal) par langue et les place dans n\'importe quel rapport avec text.cle — le libellé change sans toucher la maquette.';
+
+  @override
+  String get reportTextsTitle => 'Textes';
+
+  @override
+  String get reportTextsHint =>
+      'Vos propres formulations, placées dans n\'importe quelle bande ou maquette avec text.cle. Chaque langue peut porter sa valeur ; une valeur vide reprend celle de la langue par défaut.';
+
+  @override
+  String get reportTextsAdd => 'Ajouter un texte';
+
+  @override
+  String get reportTextsKey => 'Clé';
+
+  @override
+  String get reportTextsKeyHint =>
+      'Lettres, chiffres et tirets bas, ex. formule';
+
+  @override
+  String get reportTextsKeyInvalid =>
+      'Lettres, chiffres et tirets bas uniquement, en commençant par une lettre.';
+
+  @override
+  String get reportTextsKeyExists => 'Cette clé existe déjà.';
+
+  @override
+  String get reportTextsRemove => 'Supprimer le texte';
+
+  @override
+  String get reportTextsInherited => 'Langue par défaut';
+
+  @override
+  String get reportFieldGroupTexts => 'Vos textes';
+
+  @override
   String get reserveMonthView => 'Mois';
 
   @override

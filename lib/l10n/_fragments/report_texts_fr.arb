@@ -1,0 +1,51 @@
+{
+  "@@locale": "fr",
+  "featureReportTexts": "Textes des rapports",
+  "@featureReportTexts": {
+    "description": "#880 report texts: featureReportTexts"
+  },
+  "featureReportTextsDesc": "Le propriétaire rédige des textes (formule, note, paragraphe légal) par langue et les place dans n'importe quel rapport avec text.cle — le libellé change sans toucher la maquette.",
+  "@featureReportTextsDesc": {
+    "description": "#880 report texts: featureReportTextsDesc"
+  },
+  "reportTextsTitle": "Textes",
+  "@reportTextsTitle": {
+    "description": "#880 report texts: reportTextsTitle"
+  },
+  "reportTextsHint": "Vos propres formulations, placées dans n'importe quelle bande ou maquette avec text.cle. Chaque langue peut porter sa valeur ; une valeur vide reprend celle de la langue par défaut.",
+  "@reportTextsHint": {
+    "description": "#880 report texts: reportTextsHint"
+  },
+  "reportTextsAdd": "Ajouter un texte",
+  "@reportTextsAdd": {
+    "description": "#880 report texts: reportTextsAdd"
+  },
+  "reportTextsKey": "Clé",
+  "@reportTextsKey": {
+    "description": "#880 report texts: reportTextsKey"
+  },
+  "reportTextsKeyHint": "Lettres, chiffres et tirets bas, ex. formule",
+  "@reportTextsKeyHint": {
+    "description": "#880 report texts: reportTextsKeyHint"
+  },
+  "reportTextsKeyInvalid": "Lettres, chiffres et tirets bas uniquement, en commençant par une lettre.",
+  "@reportTextsKeyInvalid": {
+    "description": "#880 report texts: reportTextsKeyInvalid"
+  },
+  "reportTextsKeyExists": "Cette clé existe déjà.",
+  "@reportTextsKeyExists": {
+    "description": "#880 report texts: reportTextsKeyExists"
+  },
+  "reportTextsRemove": "Supprimer le texte",
+  "@reportTextsRemove": {
+    "description": "#880 report texts: reportTextsRemove"
+  },
+  "reportTextsInherited": "Langue par défaut",
+  "@reportTextsInherited": {
+    "description": "#880 report texts: reportTextsInherited"
+  },
+  "reportFieldGroupTexts": "Vos textes",
+  "@reportFieldGroupTexts": {
+    "description": "#880 report texts: reportFieldGroupTexts"
+  }
+}

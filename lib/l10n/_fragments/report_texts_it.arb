@@ -1,0 +1,51 @@
+{
+  "@@locale": "it",
+  "featureReportTexts": "Testi dei report",
+  "@featureReportTexts": {
+    "description": "#880 report texts: featureReportTexts"
+  },
+  "featureReportTextsDesc": "Il proprietario scrive testi (saluto, nota, paragrafo legale) per lingua e li colloca in qualsiasi report come text.chiave — la formulazione cambia senza toccare il design.",
+  "@featureReportTextsDesc": {
+    "description": "#880 report texts: featureReportTextsDesc"
+  },
+  "reportTextsTitle": "Testi",
+  "@reportTextsTitle": {
+    "description": "#880 report texts: reportTextsTitle"
+  },
+  "reportTextsHint": "Le tue formulazioni, collocate in qualsiasi banda o layout come text.chiave. Ogni lingua può avere il proprio valore; uno vuoto ricade sulla lingua predefinita.",
+  "@reportTextsHint": {
+    "description": "#880 report texts: reportTextsHint"
+  },
+  "reportTextsAdd": "Aggiungi un testo",
+  "@reportTextsAdd": {
+    "description": "#880 report texts: reportTextsAdd"
+  },
+  "reportTextsKey": "Chiave",
+  "@reportTextsKey": {
+    "description": "#880 report texts: reportTextsKey"
+  },
+  "reportTextsKeyHint": "Lettere, cifre e trattini bassi, es. saluto",
+  "@reportTextsKeyHint": {
+    "description": "#880 report texts: reportTextsKeyHint"
+  },
+  "reportTextsKeyInvalid": "Solo lettere, cifre e trattini bassi, iniziando con una lettera.",
+  "@reportTextsKeyInvalid": {
+    "description": "#880 report texts: reportTextsKeyInvalid"
+  },
+  "reportTextsKeyExists": "Questa chiave esiste già.",
+  "@reportTextsKeyExists": {
+    "description": "#880 report texts: reportTextsKeyExists"
+  },
+  "reportTextsRemove": "Rimuovi testo",
+  "@reportTextsRemove": {
+    "description": "#880 report texts: reportTextsRemove"
+  },
+  "reportTextsInherited": "Lingua predefinita",
+  "@reportTextsInherited": {
+    "description": "#880 report texts: reportTextsInherited"
+  },
+  "reportFieldGroupTexts": "I tuoi testi",
+  "@reportFieldGroupTexts": {
+    "description": "#880 report texts: reportFieldGroupTexts"
+  }
+}

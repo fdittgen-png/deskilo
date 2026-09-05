@@ -873,6 +873,10 @@ Tous les rapports en disposent — facture, proforma, relevé, accord financier,
 
 Un import est **refusé avec sa raison** si le fichier n'est pas du JSON lisible, n'est pas une maquette DesKilo, vient d'une version plus récente, concerne un rapport que cet espace n'a pas, ou appartient à un **autre** rapport : une maquette n'est jamais redirigée en silence. Un import accepté arrive dans l'éditeur, pas dans l'espace : rien ne change tant que vous n'appuyez pas sur **Enregistrer**, vous pouvez donc le prévisualiser d'abord et repartir sans le conserver.
 
+### 11k. Vos propres textes, par langue (#880)
+
+Certaines formulations sont à vous, pas à la maquette : une formule de politesse, une note saisonnière, un paragraphe légal, le nom de la banque. Le panneau **Textes** au pied du concepteur de rapports les tient sous forme `clé → valeur`. **Ajouter un texte** demande une clé (lettres, chiffres, tirets bas — `formule`), puis vous rédigez la valeur ; toute bande ou maquette positionnée l'imprime avec le champ `text.formule` entre doubles accolades, proposé par le sélecteur de champs sous **Vos textes**. Changez la valeur et tous les documents changent — la maquette n'est pas touchée. Avec une pastille de langue sélectionnée, le panneau édite les valeurs de cette langue ; une valeur vide reprend celle de la langue par défaut, exactement comme les documents. Une clé que personne n'a remplie n'imprime rien (et une condition dessus reste fausse). Un fichier de maquette exporté emporte les textes de sa langue dans un élément `<texts>` ; l'import les ramène.
+
 ### Maquettes positionnées (XML)
 
 Un rapport peut être décrit par une **maquette** qui indique où se place chaque élément — en millimètres, centimètres, pixels ou en pourcentage de son conteneur — plutôt que par des bandes qui s'enchaînent. Quand un document possède une maquette, c'est elle qui s'imprime ; sinon, ses bandes s'impriment comme avant. Les deux coexistent : vous migrez un document à la fois.

@@ -12427,6 +12427,78 @@ abstract class AppLocalizations {
   /// **'Design a report by stating where each element sits, in mm, cm, px or %; the PDF prints exactly that. A document with a layout uses it, the others keep their bands.'**
   String get featureReportLayoutsDesc;
 
+  /// #880 report texts: featureReportTexts
+  ///
+  /// In en, this message translates to:
+  /// **'Report texts'**
+  String get featureReportTexts;
+
+  /// #880 report texts: featureReportTextsDesc
+  ///
+  /// In en, this message translates to:
+  /// **'The owner writes texts (a greeting, a note, a legal paragraph) per language and places them in any report as text.key — wording changes without touching the design.'**
+  String get featureReportTextsDesc;
+
+  /// #880 report texts: reportTextsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Texts'**
+  String get reportTextsTitle;
+
+  /// #880 report texts: reportTextsHint
+  ///
+  /// In en, this message translates to:
+  /// **'Your own wording, placed in any band or layout as text.key. Each language may carry its own value; an empty one falls back to the default language.'**
+  String get reportTextsHint;
+
+  /// #880 report texts: reportTextsAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Add a text'**
+  String get reportTextsAdd;
+
+  /// #880 report texts: reportTextsKey
+  ///
+  /// In en, this message translates to:
+  /// **'Key'**
+  String get reportTextsKey;
+
+  /// #880 report texts: reportTextsKeyHint
+  ///
+  /// In en, this message translates to:
+  /// **'Letters, digits and underscores, e.g. greeting'**
+  String get reportTextsKeyHint;
+
+  /// #880 report texts: reportTextsKeyInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'Use letters, digits and underscores only, starting with a letter.'**
+  String get reportTextsKeyInvalid;
+
+  /// #880 report texts: reportTextsKeyExists
+  ///
+  /// In en, this message translates to:
+  /// **'This key already exists.'**
+  String get reportTextsKeyExists;
+
+  /// #880 report texts: reportTextsRemove
+  ///
+  /// In en, this message translates to:
+  /// **'Remove text'**
+  String get reportTextsRemove;
+
+  /// #880 report texts: reportTextsInherited
+  ///
+  /// In en, this message translates to:
+  /// **'Default language'**
+  String get reportTextsInherited;
+
+  /// #880 report texts: reportFieldGroupTexts
+  ///
+  /// In en, this message translates to:
+  /// **'Your texts'**
+  String get reportFieldGroupTexts;
+
   /// Reserve hub view segment: month availability calendar (#7)
   ///
   /// In en, this message translates to:

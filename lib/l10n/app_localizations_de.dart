@@ -7129,6 +7129,46 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein Bericht wird entworfen, indem jedes Element seine Position in mm, cm, px oder % nennt; das PDF druckt genau das. Ein Dokument mit Layout nutzt es, die übrigen behalten ihre Bänder.';
 
   @override
+  String get featureReportTexts => 'Berichtstexte';
+
+  @override
+  String get featureReportTextsDesc =>
+      'Der Eigentümer schreibt Texte (Gruß, Hinweis, Rechtsabsatz) je Sprache und setzt sie in jeden Bericht als text.schluessel — der Wortlaut ändert sich, ohne das Design anzufassen.';
+
+  @override
+  String get reportTextsTitle => 'Texte';
+
+  @override
+  String get reportTextsHint =>
+      'Eigene Formulierungen, in jeder Band oder Vorlage als text.schluessel platziert. Jede Sprache kann ihren Wert tragen; ein leerer fällt auf die Standardsprache zurück.';
+
+  @override
+  String get reportTextsAdd => 'Text hinzufügen';
+
+  @override
+  String get reportTextsKey => 'Schlüssel';
+
+  @override
+  String get reportTextsKeyHint =>
+      'Buchstaben, Ziffern und Unterstriche, z. B. gruss';
+
+  @override
+  String get reportTextsKeyInvalid =>
+      'Nur Buchstaben, Ziffern und Unterstriche, beginnend mit einem Buchstaben.';
+
+  @override
+  String get reportTextsKeyExists => 'Dieser Schlüssel existiert bereits.';
+
+  @override
+  String get reportTextsRemove => 'Text entfernen';
+
+  @override
+  String get reportTextsInherited => 'Standardsprache';
+
+  @override
+  String get reportFieldGroupTexts => 'Ihre Texte';
+
+  @override
   String get reserveMonthView => 'Monat';
 
   @override

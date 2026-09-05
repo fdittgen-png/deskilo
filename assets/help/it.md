@@ -895,6 +895,10 @@ Ogni report ce l'ha — fattura, proforma, estratto, accordo, report dei pagamen
 
 Un'importazione è **rifiutata con la motivazione** se il file non è JSON leggibile, non è un modello DesKilo, viene da una versione più recente, riguarda un report che questo spazio non ha, o appartiene a un **altro** report: un modello non viene mai reindirizzato in silenzio. Un'importazione accettata arriva nell'editor, non nello spazio: nulla cambia finché non premi **Salva**.
 
+### 11k. I tuoi testi, per lingua (#880)
+
+Alcune formulazioni sono tue, non del design: un saluto, una nota stagionale, un paragrafo legale, il nome della banca. Il pannello **Testi** in fondo al designer dei report le tiene come `chiave → valore`. **Aggiungi un testo** chiede una chiave (lettere, cifre, trattini bassi — `saluto`), poi scrivi il valore; qualsiasi banda o layout posizionato lo stampa con il campo `text.saluto` tra doppie graffe, offerto dal selettore dei campi sotto **I tuoi testi**. Cambia il valore e ogni documento cambia — il design non viene toccato. Con un chip di lingua selezionato il pannello modifica i valori di quella lingua; uno vuoto ricade sulla lingua predefinita, esattamente come i documenti. Una chiave che nessuno ha compilato non stampa nulla (e una condizione su di essa resta falsa). Un file di layout esportato porta i testi della sua lingua in un elemento `<texts>`; l'importazione li riporta.
+
 ### Layout posizionati (XML)
 
 Un report può essere descritto da un **layout** che indica dove si trova ogni elemento — in millimetri, centimetri, pixel o in percentuale del suo contenitore — invece che da bande in sequenza. Quando un documento ha un layout, è quello che si stampa; altrimenti si stampano le sue bande come prima. I due convivono: si migra un documento alla volta.

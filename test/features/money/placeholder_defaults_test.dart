@@ -62,10 +62,14 @@ void main() {
 
   test('every declared placeholder has a default of the right shape', () {
     final defaults = InvoicePdfTemplate.placeholderDefaults;
+    // #880 — `text` is the owner-texts map, seeded beside the flat
+    // placeholders so `text.<key>` is empty rather than nil.
     expect(defaults.keys.toSet(),
-        InvoicePdfTemplate.placeholders.toSet(),
+        {...InvoicePdfTemplate.placeholders, 'text'},
         reason: 'a placeholder without a default is one that can be nil');
+    expect(defaults['text'], isA<OwnerTexts>());
     for (final entry in defaults.entries) {
+      if (entry.key == 'text') continue;
       expect(entry.value, anyOf(isA<String>(), isA<bool>(), isA<List>()),
           reason: entry.key);
     }

@@ -19,6 +19,12 @@ import 'report_layout/layout_xml.dart';
 
 /// The envelope around a `<report-layout>`.
 abstract final class ReportLayoutSchema {
+  /// #880 — `<texts><text key="…">…</text></texts>`: the owner's texts
+  /// of the exported language, beside the layout.
+  static const String texts = 'texts';
+  static const String text = 'text';
+  static const String attrKey = 'key';
+
   static const String id = 'deskilo.report-layout';
   static const int version = 1;
 
@@ -40,6 +46,7 @@ class ReportLayoutFile {
     required this.language,
     required this.layoutXml,
     required this.document,
+    this.texts = const {},
   });
 
   final String kindId;
@@ -48,6 +55,10 @@ class ReportLayoutFile {
   final String language;
   final String layoutXml;
   final LayoutDocument document;
+
+  /// #880 — the owner's texts of the exported language, so the file
+  /// renders on its own and an import brings the wording along.
+  final Map<String, String> texts;
 }
 
 /// The editing reference that travels with every export, as text for a
@@ -55,8 +66,14 @@ class ReportLayoutFile {
 String layoutHowToEdit() => '''
 HOW TO EDIT THIS FILE
 
-Only the <report-layout> element is read on import; this comment and
-the envelope's attributes are documentation regenerated on export.
+Only the <report-layout> element and the optional <texts> element are
+read on import; this comment and the envelope's attributes are
+documentation regenerated on export.
+
+TEXTS — the owner's own wording (#880), reachable as {{ text.<key> }}:
+  <texts><text key="greeting">Merci de votre confiance</text></texts>
+  Edit the values here; an import replaces the same keys for the
+  file's language. An unknown key prints nothing.
 
 ZONES — children of <report-layout>, each fixed except the body:
   <header height="…">        top of page 1 only: the letterhead
@@ -106,6 +123,7 @@ String buildReportLayoutFile({
   required String workspaceName,
   required String layoutXml,
   required DateTime exportedAt,
+  Map<String, String> texts = const {},
 }) {
   // Re-serialise through the model so the export is canonical — a bare
   // "12" comes back as "12mm" — and provably readable.
@@ -121,6 +139,16 @@ String buildReportLayoutFile({
     b.attribute(ReportLayoutSchema.attrExportedAt,
         exportedAt.toUtc().toIso8601String());
     b.comment('\n${layoutHowToEdit()}');
+    if (texts.isNotEmpty) {
+      b.element(ReportLayoutSchema.texts, nest: () {
+        for (final entry in texts.entries) {
+          b.element(ReportLayoutSchema.text, nest: () {
+            b.attribute(ReportLayoutSchema.attrKey, entry.key);
+            b.text(entry.value);
+          });
+        }
+      });
+    }
     b.xml(layoutToXml(document));
   });
   return '${b.buildDocument().toXmlString(pretty: true, indent: '  ')}\n';
@@ -186,11 +214,21 @@ ReportLayoutFile parseReportLayoutFile(
             ReportDesignError.invalidDesign, '${e.error.name}: ${e.detail}'),
         e.stackTrace ?? st);
   }
+  final textsElement = root.childElements
+      .where((e) => e.name.local == ReportLayoutSchema.texts)
+      .firstOrNull;
   return ReportLayoutFile(
     kindId: kind.id,
     language: root.getAttribute(ReportLayoutSchema.attrLanguage) ?? '',
     layoutXml: layoutXml,
     document: document,
+    texts: {
+      if (textsElement != null)
+        for (final t in textsElement.childElements)
+          if (t.name.local == ReportLayoutSchema.text &&
+              (t.getAttribute(ReportLayoutSchema.attrKey) ?? '').isNotEmpty)
+            t.getAttribute(ReportLayoutSchema.attrKey)!: t.innerText,
+    },
   );
 }
 

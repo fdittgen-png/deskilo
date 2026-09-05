@@ -68,6 +68,7 @@ enum WorkspaceFeature {
   personalInfo,
   managedProfiles,
   memberPaymentTerms,
+  reportTexts,
   priceNegotiations,
 
   /// #767 — recurring scheduled expenses (internet, phone, electricity):
@@ -532,6 +533,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.memberPaymentTerms: FeatureManifestEntry(
     feature: WorkspaceFeature.memberPaymentTerms,
     requires: WorkspaceFeature.invoicing,
+  ),
+  // #880 — the owner's own texts, `{{ text.<key> }}`, per language.
+  WorkspaceFeature.reportTexts: FeatureManifestEntry(
+    feature: WorkspaceFeature.reportTexts,
+    requires: WorkspaceFeature.reportDesigner,
   ),
   // #739 — the tariff is the default; a member may have their own deal,
   // proposed by finance admins, validated, seen by the member and them.

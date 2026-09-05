@@ -274,6 +274,7 @@ LIQUID: {{ field }}, {% if field != "" %}…{% endif %}, {% for line in lines %}
 
 PLACEHOLDERS
   ${InvoicePdfTemplate.placeholders.join(', ')}
+  text.<key>   the owner's texts (#880): the file's <texts> element, or "text" in --data
 ''');
   return 0;
 }

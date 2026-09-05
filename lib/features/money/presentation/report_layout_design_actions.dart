@@ -30,11 +30,13 @@ Future<String?> exportReportLayout(
   required String workspaceName,
   required String layoutXml,
   required DateTime exportedAt,
+  Map<String, String> texts = const {},
 }) async {
   final l10n = AppLocalizations.of(context);
   final content = buildReportLayoutFile(
     kind: kind,
     language: language,
+    texts: texts,
     workspaceName: workspaceName,
     layoutXml: layoutXml,
     exportedAt: exportedAt,
@@ -59,7 +61,7 @@ Future<String?> exportReportLayout(
 
 /// Picks a layout file and returns its `<report-layout>` XML, or null
 /// when cancelled or refused (the refusal is shown, with its reason).
-Future<String?> importReportLayout(
+Future<ReportLayoutFile?> importReportLayout(
   BuildContext context,
   WidgetRef ref, {
   required ReportKind kind,
@@ -76,7 +78,7 @@ Future<String?> importReportLayout(
   try {
     final parsed = parseReportLayoutFile(content,
         expectedKind: kind, reminderLevels: reminderLevels);
-    return parsed.layoutXml;
+    return parsed;
   } on ReportDesignException catch (e, st) {
     // trace-exempt: a refused file is the user's to see, not a fault to
     // trace — the reason is shown in the snack, in their language.

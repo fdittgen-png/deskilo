@@ -54,6 +54,8 @@ Map<String, Object?> _xmlEscaped(Map<String, Object?> data) =>
     {for (final e in data.entries) e.key: _escapeValue(e.value)};
 
 Object? _escapeValue(Object? v) => switch (v) {
+      // #880 — the owner's texts are values too.
+      OwnerTexts t => t.mapValues((s) => _escapeValue(s)! as String),
       String s => s
           .replaceAll('&', '&amp;')
           .replaceAll('<', '&lt;')

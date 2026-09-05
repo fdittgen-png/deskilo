@@ -932,11 +932,12 @@ InvoiceReport renderLetterDoc(
   final l10n = language.isEmpty
       ? AppLocalizations.of(context)
       : l10nForLanguage(language);
-  final bands =
-      invoicePdfTemplateFor(ref).forLocale(language).docBands(docId) ??
-      defaultBandsForDoc(docId, l10n);
-  return renderReportBands(bands: bands, data: data) ??
-      renderReportBands(bands: defaultBandsForDoc(docId, l10n), data: data)!;
+  final template = invoicePdfTemplateFor(ref).forLocale(language);
+  final bands = template.docBands(docId) ?? defaultBandsForDoc(docId, l10n);
+  // #880 — the owner's texts ride beside the data for every document.
+  final texted = withOwnerTexts(data, template.texts);
+  return renderReportBands(bands: bands, data: texted) ??
+      renderReportBands(bands: defaultBandsForDoc(docId, l10n), data: texted)!;
 }
 
 /// The PDF of a rendered letter document (#494).
@@ -1142,7 +1143,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   if (layoutXml != null) {
     final bytes = await tryLayoutPdf(
       layoutXml: layoutXml,
-      data: reportData,
+      data: withOwnerTexts(reportData, template.texts),
       what: invoice.number.isEmpty ? stem : invoice.number,
       documentTitle: '${strings.invoiceTitle} ${invoice.number}',
       pageLabel: strings.page,
@@ -1159,7 +1160,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     );
     if (bytes != null) return (bytes: bytes, fileName: '$stem.pdf');
   }
-  final report = renderReportBands(bands: bands, data: reportData);
+  final report = renderReportBands(bands: bands, data: withOwnerTexts(reportData, template.texts));
   final reportImages = <String, Uint8List>{};
   if (report != null && reportImage != null) {
     for (final name in reportImageRefs(report)) {
@@ -1352,13 +1353,16 @@ Future<void> shareProforma(
       if (!bands.hasBands) bands = defaultBandsForDoc('proforma', l10n);
       return renderReportBands(
         bands: bands,
-        data: invoiceReportData(
-          context,
-          invoice,
-          memberTerms: memberTermsFor(ref, invoice.memberId),
-          proforma: true,
-          copy: false,
-          workspace: ref.read(currentWorkspaceProvider).value,
+        data: withOwnerTexts(
+          invoiceReportData(
+            context,
+            invoice,
+            memberTerms: memberTermsFor(ref, invoice.memberId),
+            proforma: true,
+            copy: false,
+            workspace: ref.read(currentWorkspaceProvider).value,
+          ),
+          template.texts,
         ),
       );
     },
@@ -1533,13 +1537,16 @@ Future<void> quickViewInvoice(
   final annexes = await askRegroupedAnnexes(context, ref, invoice);
   if (annexes == null || !context.mounted) return;
   final template = invoicePdfTemplateFor(ref);
-  final data = invoiceReportData(
-    context,
-    invoice,
-    memberTerms: memberTermsFor(ref, invoice.memberId),
-    proforma: proforma,
-    copy: _rendersCopy(ref),
-    workspace: ref.read(currentWorkspaceProvider).value,
+  final data = withOwnerTexts(
+    invoiceReportData(
+      context,
+      invoice,
+      memberTerms: memberTermsFor(ref, invoice.memberId),
+      proforma: proforma,
+      copy: _rendersCopy(ref),
+      workspace: ref.read(currentWorkspaceProvider).value,
+    ),
+    template.texts,
   );
   var bands = proforma
       ? (template.proformaBands ?? template.invoiceBands)
@@ -1562,13 +1569,16 @@ Future<void> quickViewInvoice(
   for (final source in annexes) {
     final sourceReport = renderReportBands(
       bands: bands,
-      data: invoiceReportData(
-        context,
-        source,
-        memberTerms: memberTermsFor(ref, source.memberId),
-        proforma: false,
-        copy: _rendersCopy(ref),
-        workspace: ref.read(currentWorkspaceProvider).value,
+      data: withOwnerTexts(
+        invoiceReportData(
+          context,
+          source,
+          memberTerms: memberTermsFor(ref, source.memberId),
+          proforma: false,
+          copy: _rendersCopy(ref),
+          workspace: ref.read(currentWorkspaceProvider).value,
+        ),
+        template.texts,
       ),
     );
     if (sourceReport != null) {
@@ -1720,13 +1730,13 @@ Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
     l10nOverride: l10n,
     localeName: language.isEmpty ? null : language,
   );
-  final bands =
-      draftBands ??
-      invoicePdfTemplateFor(ref).forLocale(language).reminderBands(level);
+  final template = invoicePdfTemplateFor(ref).forLocale(language);
+  final bands = draftBands ?? template.reminderBands(level);
   final fallback = defaultReminderBands(level, l10n);
+  final texted = withOwnerTexts(data, template.texts);
   final report =
-      (bands == null ? null : renderReportBands(bands: bands, data: data)) ??
-      renderReportBands(bands: fallback, data: data)!;
+      (bands == null ? null : renderReportBands(bands: bands, data: texted)) ??
+      renderReportBands(bands: fallback, data: texted)!;
   final pageLabel = l10n?.invoicePdfPage ?? 'Page';
   Future<pw.Font> font(String asset) async =>
       pw.Font.ttf(await rootBundle.load(asset));

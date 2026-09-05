@@ -1,0 +1,51 @@
+{
+  "@@locale": "de",
+  "featureReportTexts": "Berichtstexte",
+  "@featureReportTexts": {
+    "description": "#880 report texts: featureReportTexts"
+  },
+  "featureReportTextsDesc": "Der Eigentümer schreibt Texte (Gruß, Hinweis, Rechtsabsatz) je Sprache und setzt sie in jeden Bericht als text.schluessel — der Wortlaut ändert sich, ohne das Design anzufassen.",
+  "@featureReportTextsDesc": {
+    "description": "#880 report texts: featureReportTextsDesc"
+  },
+  "reportTextsTitle": "Texte",
+  "@reportTextsTitle": {
+    "description": "#880 report texts: reportTextsTitle"
+  },
+  "reportTextsHint": "Eigene Formulierungen, in jeder Band oder Vorlage als text.schluessel platziert. Jede Sprache kann ihren Wert tragen; ein leerer fällt auf die Standardsprache zurück.",
+  "@reportTextsHint": {
+    "description": "#880 report texts: reportTextsHint"
+  },
+  "reportTextsAdd": "Text hinzufügen",
+  "@reportTextsAdd": {
+    "description": "#880 report texts: reportTextsAdd"
+  },
+  "reportTextsKey": "Schlüssel",
+  "@reportTextsKey": {
+    "description": "#880 report texts: reportTextsKey"
+  },
+  "reportTextsKeyHint": "Buchstaben, Ziffern und Unterstriche, z. B. gruss",
+  "@reportTextsKeyHint": {
+    "description": "#880 report texts: reportTextsKeyHint"
+  },
+  "reportTextsKeyInvalid": "Nur Buchstaben, Ziffern und Unterstriche, beginnend mit einem Buchstaben.",
+  "@reportTextsKeyInvalid": {
+    "description": "#880 report texts: reportTextsKeyInvalid"
+  },
+  "reportTextsKeyExists": "Dieser Schlüssel existiert bereits.",
+  "@reportTextsKeyExists": {
+    "description": "#880 report texts: reportTextsKeyExists"
+  },
+  "reportTextsRemove": "Text entfernen",
+  "@reportTextsRemove": {
+    "description": "#880 report texts: reportTextsRemove"
+  },
+  "reportTextsInherited": "Standardsprache",
+  "@reportTextsInherited": {
+    "description": "#880 report texts: reportTextsInherited"
+  },
+  "reportFieldGroupTexts": "Ihre Texte",
+  "@reportFieldGroupTexts": {
+    "description": "#880 report texts: reportFieldGroupTexts"
+  }
+}

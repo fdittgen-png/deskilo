@@ -25,6 +25,7 @@ import '../../domain/invoice_pdf_template.dart';
 import '../../domain/report_kind.dart';
 import '../report_layout_design_actions.dart';
 import 'report_layout_panel.dart';
+import 'report_texts_panel.dart';
 import 'report_layout_preview_dialog.dart';
 import '../report_design_actions.dart';
 import '../report_kind_labels.dart';
@@ -133,6 +134,32 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
   /// #875 — positioned layouts edited this session, by kind id; ''
   /// means "remove, fall back to the bands". Saved with the bands.
   final Map<String, String> _layoutDrafts = {};
+
+  /// #880 — the owner's texts per language ('' = the default language),
+  /// edited in the Texts panel; absent = untouched, read from the
+  /// stored template.
+  final Map<String, Map<String, String>> _textDrafts = {};
+
+  Map<String, String> _textsFor(String lang) =>
+      _textDrafts[lang] ??
+      (lang.isEmpty
+          ? widget.initial.texts
+          : widget.initial.translations[lang]?.texts ?? const {});
+
+  /// What `{{ text.<key> }}` resolves to in the language being edited:
+  /// the default language's texts, the overlay's non-empty ones on top.
+  Map<String, String> get _currentTexts => {
+        ..._textsFor(''),
+        if (_lang.isNotEmpty)
+          for (final e in _textsFor(_lang).entries)
+            if (e.value.isNotEmpty) e.key: e.value,
+      };
+
+  void _setTexts(Map<String, String> texts) => setState(() {
+        _textDrafts[_lang] = texts;
+        _dirty = true;
+        _bumpEpoch();
+      });
 
   String? get _layoutOfDoc {
     final draft = _layoutDrafts[_doc];
@@ -292,6 +319,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
       // #869 — set on the legal identity screen; carried through so
       // saving a design never resets it.
       addressWindow: widget.initial.addressWindow,
+      texts: _textsFor(''),
     );
     for (var level = 1; level <= maxLevels; level++) {
       final bands = _drafts['r$level'];
@@ -324,6 +352,11 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
           apply(entry.key.substring(lang.length + 1), entry.value);
         }
       }
+      final texts = _textDrafts[lang];
+      if (texts != null) {
+        touched = true;
+        overlay = overlay.copyWith(texts: texts);
+      }
       if (touched) {
         template = template.withTranslation(lang, overlay);
       }
@@ -344,16 +377,23 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
         language: _lang,
         workspaceName: workspace.name,
         layoutXml: xml,
+        texts: _currentTexts,
         exportedAt: ref.read(clockProvider).now());
   }
 
   Future<void> _importLayout() async {
     final kind = reportKindById(_doc, reminderLevels: _reminderLevels);
     if (kind == null) return;
-    final xml = await importReportLayout(context, ref,
+    final file = await importReportLayout(context, ref,
         kind: kind, reminderLevels: _reminderLevels);
-    if (xml == null || !mounted) return;
-    setState(() => _layoutDrafts[_doc] = xml);
+    if (file == null || !mounted) return;
+    setState(() {
+      _layoutDrafts[_doc] = file.layoutXml;
+      // #880 — the file's texts land on the language being edited.
+      if (file.texts.isNotEmpty) {
+        _textDrafts[_lang] = {..._textsFor(_lang), ...file.texts};
+      }
+    });
     AppSnack.success(context,
         AppLocalizations.of(context)?.reportLayoutImported ??
             'Layout imported. Save to keep it.');
@@ -364,7 +404,9 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
     if (xml == null) return;
     await showLayoutQuickPreview(context, ref,
         layoutXml: xml,
-        data: _liveData() ?? sampleReportData(AppLocalizations.of(context)));
+        data: withOwnerTexts(
+            _liveData() ?? sampleReportData(AppLocalizations.of(context)),
+            _currentTexts));
   }
 
   Future<void> _exportDesign() async {
@@ -561,7 +603,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
     final l10n = AppLocalizations.of(context);
     final live = _liveData();
     final simulated = live == null;
-    final data = live ?? sampleReportData(l10n);
+    final data = withOwnerTexts(live ?? sampleReportData(l10n), _currentTexts);
     final bands = _currentBands.hasBands
         ? _currentBands
         : defaultBandsForDoc(_doc, l10n);
@@ -625,7 +667,8 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
           reportKindById(_doc, reminderLevels: _reminderLevels)?.slot
               is ReportDocSlot) {
         // The letter documents: my own live data, or the sample.
-        final data = _liveData() ?? sampleReportData(l10nSync);
+        final data = withOwnerTexts(
+            _liveData() ?? sampleReportData(l10nSync), _currentTexts);
         final bands = _currentBands.hasBands
             ? _currentBands
             : defaultBandsForDoc(_doc, l10nSync);
@@ -905,7 +948,9 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
         footerLabel: l10n?.invoiceTemplateFooterLabel ??
             'Footer band (payment terms, legal mentions)',
         editorKeyPrefix: 'visual-$_doc-$_visualEpoch',
-        previewData: () => _liveData() ?? sampleReportData(l10n),
+        previewData: () =>
+            withOwnerTexts(_liveData() ?? sampleReportData(l10n), _currentTexts),
+        textKeys: _currentTexts.keys.toList(),
         sideBySide: sideBySide,
       );
     }
@@ -1028,6 +1073,20 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
             onImport: _importLayout,
             onRemove: () => setState(() => _layoutDrafts[_doc] = ''),
             onPreview: _previewLayout,
+          ),
+        ],
+        // #880 — the owner's texts, after the layout panel for the same
+        // reason: nothing above moves.
+        if (ref
+            .watch(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.reportTexts)) ...[
+          const SizedBox(height: AppSpacing.sm),
+          ReportTextsPanel(
+            key: ValueKey('report-texts-$_lang'),
+            language: _lang,
+            texts: _textsFor(_lang),
+            inherited: _lang.isEmpty ? const {} : _textsFor(''),
+            onChanged: _setTexts,
           ),
         ],
       ],

@@ -38,6 +38,7 @@ class ReportPageDesigner extends ConsumerStatefulWidget {
     required this.editorKeyPrefix,
     required this.previewData,
     this.sideBySide = false,
+    this.textKeys = const [],
   });
 
   final TextEditingController header;
@@ -54,6 +55,9 @@ class ReportPageDesigner extends ConsumerStatefulWidget {
   /// The data preview merges with — the host's live data, or its
   /// sample set.
   final Map<String, Object?> Function() previewData;
+
+  /// #880 — the owner's text keys, for the field picker.
+  final List<String> textKeys;
 
   /// #822 — design and preview as two pages next to each other; the
   /// toggle disappears.
@@ -188,6 +192,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
       mainAxisSize: MainAxisSize.min,
       children: [
         ReportVisualEditor(
+          textKeys: widget.textKeys,
           key: _headerKey,
           controller: widget.header,
           label: widget.headerLabel,
@@ -196,6 +201,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
           onMoveToBand: _moveToBand,
         ),
         ReportVisualEditor(
+          textKeys: widget.textKeys,
           key: _bodyKey,
           controller: widget.body,
           label: widget.bodyLabel,
@@ -204,6 +210,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
           onMoveToBand: _moveToBand,
         ),
         ReportVisualEditor(
+          textKeys: widget.textKeys,
           key: _footerKey,
           controller: widget.footer,
           label: widget.footerLabel,

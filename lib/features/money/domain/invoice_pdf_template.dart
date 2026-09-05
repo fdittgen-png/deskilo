@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:collection';
+
 
 import 'address_window.dart';
 
@@ -79,6 +81,7 @@ class InvoicePdfTemplate {
     this.translations = const {},
     this.addressWindow,
     this.layouts = const {},
+    this.texts = const {},
   });
 
   factory InvoicePdfTemplate.fromJson(Map<String, dynamic> json) =>
@@ -121,6 +124,10 @@ class InvoicePdfTemplate {
           for (final entry in (json[keyLayouts] as Map? ?? const {}).entries)
             if (entry.value is String && (entry.value as String).isNotEmpty)
               entry.key as String: entry.value as String,
+        },
+        texts: {
+          for (final entry in (json[keyTexts] as Map? ?? const {}).entries)
+            if (entry.value is String) entry.key as String: entry.value as String,
         },
       );
 
@@ -173,6 +180,13 @@ class InvoicePdfTemplate {
   /// designed changes until its owner says so.
   final Map<String, String> layouts;
 
+  /// #880 — the owner's own texts, `key → value`, reachable from every
+  /// band and layout as `{{ text.<key> }}`: a greeting, a seasonal
+  /// note, a legal paragraph — wording changed without touching the
+  /// design, and per language (an overlay's non-empty value wins,
+  /// exactly as its documents do).
+  final Map<String, String> texts;
+
   /// The layout for [kindId], or null when the kind still uses bands.
   String? layoutFor(String kindId) {
     final xml = layouts[kindId];
@@ -190,6 +204,7 @@ class InvoicePdfTemplate {
   static const String keyI18n = 'i18n';
   static const String keyAddressWindow = 'address_window';
   static const String keyLayouts = 'layouts';
+  static const String keyTexts = 'texts';
 
   /// Pre-#470 key: a single intro paragraph — now the header band.
   static const String legacyKeyIntro = 'intro';
@@ -276,6 +291,10 @@ class InvoicePdfTemplate {
   static const List<String> _listPlaceholders = ['lines', 'vat'];
 
   static Map<String, Object?> get placeholderDefaults => {
+        // #880 — `text.<key>` answers '' for an unknown key, so a guard
+        // `{% if text.note != "" %}` stays false (the nested twin of
+        // the #875 nil bug). The caller's own texts replace this.
+        'text': OwnerTexts(const {}),
         for (final key in placeholders)
           key: _flagPlaceholders.contains(key)
               ? false
@@ -329,6 +348,7 @@ class InvoicePdfTemplate {
         translations: translations,
         addressWindow: addressWindow,
         layouts: layouts,
+        texts: texts,
       );
 
   /// Copy with language [lang]'s overlay replaced (#496).
@@ -345,6 +365,7 @@ class InvoicePdfTemplate {
         translations: {...translations, lang: overlay},
         addressWindow: addressWindow,
         layouts: layouts,
+        texts: texts,
       );
 
   /// The template as seen from language [lang] (#496): a MERGED view —
@@ -380,6 +401,11 @@ class InvoicePdfTemplate {
       // A language may carry its own positioned layout per kind; where
       // it does, that layout wins exactly as its bands would.
       layouts: {...layouts, ...overlay.layouts},
+      texts: {
+        ...texts,
+        for (final entry in overlay.texts.entries)
+          if (entry.value.isNotEmpty) entry.key: entry.value,
+      },
     );
   }
 
@@ -411,6 +437,7 @@ class InvoicePdfTemplate {
       translations: translations,
       addressWindow: addressWindow,
       layouts: layouts,
+      texts: texts,
     );
   }
 
@@ -420,6 +447,7 @@ class InvoicePdfTemplate {
     ReportBands? statement,
     AddressWindow? addressWindow,
     Map<String, String>? layouts,
+    Map<String, String>? texts,
   }) => InvoicePdfTemplate(
     header: invoice?.header ?? header,
     body: invoice?.body ?? body,
@@ -432,6 +460,7 @@ class InvoicePdfTemplate {
     translations: translations,
     addressWindow: addressWindow ?? this.addressWindow,
     layouts: layouts ?? this.layouts,
+    texts: texts ?? this.texts,
   );
 
   Map<String, Object> toJson() => {
@@ -455,5 +484,46 @@ class InvoicePdfTemplate {
     if (addressWindow != null)
       keyAddressWindow: addressWindowWire(addressWindow!),
     if (layouts.isNotEmpty) keyLayouts: layouts,
+    if (texts.isNotEmpty) keyTexts: texts,
   };
 }
+
+/// #880 — the owner's texts as Liquid sees them: a map that answers ''
+/// for a key nobody defined, so `{{ text.x }}` prints nothing and
+/// `{% if text.x != "" %}` is false instead of true-on-nil.
+class OwnerTexts extends MapBase<String, Object?> {
+  OwnerTexts(Map<String, String> texts) : _texts = Map.of(texts);
+
+  final Map<String, String> _texts;
+
+  @override
+  Object? operator [](Object? key) => _texts[key] ?? '';
+
+  @override
+  void operator []=(String key, Object? value) => _texts[key] = '$value';
+
+  @override
+  void clear() => _texts.clear();
+
+  @override
+  Iterable<String> get keys => _texts.keys;
+
+  @override
+  Object? remove(Object? key) => _texts.remove(key);
+
+  @override
+  bool containsKey(Object? key) => true;
+
+  /// The same texts with every value passed through [f] — how the
+  /// layout renderer XML-escapes them.
+  OwnerTexts mapValues(String Function(String value) f) =>
+      OwnerTexts({for (final e in _texts.entries) e.key: f(e.value)});
+}
+
+/// [data] with the owner's [texts] beside it under `text` — what every
+/// render site passes so `{{ text.<key> }}` resolves.
+Map<String, Object?> withOwnerTexts(
+  Map<String, Object?> data,
+  Map<String, String> texts,
+) =>
+    {...data, 'text': OwnerTexts(texts)};
