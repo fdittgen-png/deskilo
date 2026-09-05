@@ -3428,7 +3428,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get legalIdentitySubtitle =>
-      'Régimen de IVA y números de registro — exigidos por la factura electrónica';
+      'Régimen de IVA, identificadores y las condiciones de pago por defecto del espacio';
 
   @override
   String get legalIdentityIntro =>

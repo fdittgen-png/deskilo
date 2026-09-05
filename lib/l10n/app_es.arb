@@ -1941,7 +1941,7 @@
   "invoiceGapMissingSellerPostalCode": "el código postal de la dirección del espacio",
   "invoiceEInvoiceFixIdentity": "Completar la identidad legal",
   "legalIdentityTitle": "Identidad legal y facturación electrónica",
-  "legalIdentitySubtitle": "Régimen de IVA y números de registro — exigidos por la factura electrónica",
+  "legalIdentitySubtitle": "Régimen de IVA, identificadores y las condiciones de pago por defecto del espacio",
   "legalIdentityIntro": "Lo que una factura electrónica EN 16931 debe indicar sobre ti. Las facturas ya emitidas conservan la identidad con la que se firmaron.",
   "legalIdentityRegime": "Régimen de IVA",
   "legalIdentityRegimeNotSubject": "Fuera del ámbito del IVA",

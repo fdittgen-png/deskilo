@@ -87,8 +87,12 @@ Future<Uint8List> buildLayoutPdf({
   final pageW = PdfPageFormat.a4.width;
   final pageH = PdfPageFormat.a4.height;
   final margin = document.margin.resolve(pageW);
+  // #902 — the letterhead sits near the top edge and the footer near the
+  // bottom one; the text column keeps the side margin.
+  final marginTop = document.topMargin.resolve(pageH);
+  final marginBottom = document.bottomMargin.resolve(pageH);
   final contentW = pageW - 2 * margin;
-  final contentH = pageH - 2 * margin;
+  final contentH = pageH - marginTop - marginBottom;
   final ctx = _Box(contentW, contentH, images);
 
   // The recipient: a named convention takes the millimetres from the one
@@ -108,12 +112,12 @@ Future<Uint8List> buildLayoutPdf({
   // the design says, or at 90 mm under a window, or right after the
   // header otherwise.
   final headerH = document.header.height?.resolve(contentH) ??
-      (windowOn ? fieldTop - margin : null);
+      (windowOn ? fieldTop - marginTop : null);
   final bodyTop = document.body.y?.resolve(pageH) ??
       (windowOn ? addressWindowFlowResume : null);
   final reserve = bodyTop == null
       ? 0.0
-      : math.max(0.0, bodyTop - margin - (headerH ?? 0));
+      : math.max(0.0, bodyTop - marginTop - (headerH ?? 0));
 
   final theme = pw.ThemeData.withFont(base: baseFont, bold: boldFont);
   final doc = pw.Document(title: documentTitle);
@@ -124,7 +128,7 @@ Future<Uint8List> buildLayoutPdf({
       pageTheme: pw.PageTheme(
         pageFormat: PdfPageFormat.a4,
         theme: theme,
-        margin: pw.EdgeInsets.all(margin),
+        margin: pw.EdgeInsets.fromLTRB(margin, marginTop, margin, marginBottom),
         buildBackground: !windowOn
             ? null
             : (context) => context.pageNumber != 1
@@ -185,15 +189,18 @@ Future<Uint8List> buildLayoutPdf({
         children: [
           ctx.zone(document.footer,
               height: document.footer.height?.resolve(contentH)),
-          pw.Container(
-            alignment: pw.Alignment.centerRight,
-            padding: const pw.EdgeInsets.only(top: 8),
-            child: pw.Text(
-              '$pageLabel ${context.pageNumber}/${context.pagesCount}',
-              style: const pw.TextStyle(
-                  fontSize: reportSmallSize, color: reportMuted),
+          // #902 — a letter that fits one page says nothing about
+          // pages; the count appears from page 2, where it helps.
+          if (context.pageNumber > 1)
+            pw.Container(
+              alignment: pw.Alignment.centerRight,
+              padding: const pw.EdgeInsets.only(top: 8),
+              child: pw.Text(
+                '$pageLabel ${context.pageNumber}/${context.pagesCount}',
+                style: const pw.TextStyle(
+                    fontSize: reportSmallSize, color: reportMuted),
+              ),
             ),
-          ),
         ],
       ),
       build: (context) => [

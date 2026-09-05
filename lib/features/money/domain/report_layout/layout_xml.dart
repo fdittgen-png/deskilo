@@ -23,6 +23,8 @@ abstract final class LayoutXml {
   static const String attrVersion = 'version';
   static const String attrPage = 'page';
   static const String attrMargin = 'margin';
+  static const String attrMarginTop = 'margin-top';
+  static const String attrMarginBottom = 'margin-bottom';
 
   static const String header = 'header';
   static const String continuation = 'continuation';
@@ -94,6 +96,12 @@ LayoutDocument parseLayoutXml(String source) {
   final margin = Length.tryParse(root.getAttribute(LayoutXml.attrMargin),
           attribute: 'report-layout/@margin') ??
       const Length(20, LengthUnit.mm);
+  // #902 — top and bottom may be stated apart from the side margin.
+  final marginTop = Length.tryParse(root.getAttribute(LayoutXml.attrMarginTop),
+      attribute: 'report-layout/@margin-top');
+  final marginBottom = Length.tryParse(
+      root.getAttribute(LayoutXml.attrMarginBottom),
+      attribute: 'report-layout/@margin-bottom');
 
   LayoutZone? header, continuation, body, footer;
   LayoutRecipient? recipient;
@@ -117,6 +125,8 @@ LayoutDocument parseLayoutXml(String source) {
   return LayoutDocument(
     page: page,
     margin: margin,
+    marginTop: marginTop,
+    marginBottom: marginBottom,
     header: header ?? LayoutZone.empty,
     continuation: continuation ?? LayoutZone.empty,
     body: body ?? LayoutZone.empty,
@@ -295,6 +305,12 @@ String layoutToXml(LayoutDocument document) {
     b.attribute(LayoutXml.attrVersion, LayoutXml.version);
     b.attribute(LayoutXml.attrPage, document.page);
     b.attribute(LayoutXml.attrMargin, document.margin.toString());
+    if (document.marginTop != null) {
+      b.attribute(LayoutXml.attrMarginTop, document.marginTop.toString());
+    }
+    if (document.marginBottom != null) {
+      b.attribute(LayoutXml.attrMarginBottom, document.marginBottom.toString());
+    }
     _writeZone(b, LayoutXml.header, document.header);
     _writeZone(b, LayoutXml.continuation, document.continuation);
     final r = document.recipient;

@@ -285,7 +285,7 @@
   "invoiceGapMissingSellerPostalCode": "die Postleitzahl der Workspace-Adresse",
   "invoiceEInvoiceFixIdentity": "Rechtliche Identität vervollständigen",
   "legalIdentityTitle": "Rechtliche Identität & E-Rechnung",
-  "legalIdentitySubtitle": "Steuerregime und Registernummern — von der E-Rechnung verlangt",
+  "legalIdentitySubtitle": "USt-Regime, Registernummern und die Standard-Zahlungsbedingungen des Space",
   "legalIdentityIntro": "Was eine EN-16931-E-Rechnung über dich aussagen muss. Bereits ausgestellte Rechnungen behalten die Identität, mit der sie signiert wurden.",
   "legalIdentityRegime": "Steuerregime",
   "legalIdentityRegimeNotSubject": "Nicht der Umsatzsteuer unterliegend",

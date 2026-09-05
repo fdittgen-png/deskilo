@@ -285,7 +285,7 @@
   "invoiceGapMissingSellerPostalCode": "il codice postale dell'indirizzo dello spazio",
   "invoiceEInvoiceFixIdentity": "Completare l'identità legale",
   "legalIdentityTitle": "Identità legale e fatturazione elettronica",
-  "legalIdentitySubtitle": "Regime IVA e numeri di registrazione — richiesti dalla fattura elettronica",
+  "legalIdentitySubtitle": "Regime IVA, identificativi e le condizioni di pagamento predefinite dello spazio",
   "legalIdentityIntro": "Ciò che una fattura elettronica EN 16931 deve dichiarare su di te. Le fatture già emesse conservano l’identità con cui sono state firmate.",
   "legalIdentityRegime": "Regime IVA",
   "legalIdentityRegimeNotSubject": "Fuori dal campo di applicazione dell'IVA",

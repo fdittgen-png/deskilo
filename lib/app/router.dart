@@ -20,6 +20,7 @@ import '../features/money/presentation/screens/invoices_screen.dart';
 import '../features/money/presentation/screens/einvoice_config_screen.dart';
 import '../features/money/presentation/screens/invoice_register_screen.dart';
 import '../features/money/presentation/screens/legal_identity_screen.dart';
+import '../features/money/presentation/screens/my_payment_terms_screen.dart';
 import '../features/money/presentation/screens/vat_declarations_screen.dart';
 import '../features/reservations/domain/space_code.dart';
 import '../features/reservations/presentation/screens/reference_link_screen.dart';
@@ -517,6 +518,15 @@ GoRouter router(Ref ref) {
         redirect: (context, state) =>
             featureEnabled(WorkspaceFeature.personalInfo) ? null : '/settings',
         builder: (context, state) => const PersonalInfoScreen(),
+      ),
+      // #902 — the conditions this member's documents print, read-only.
+      GoRoute(
+        path: '/settings/payment-terms',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.memberPaymentTerms)
+                ? null
+                : '/settings',
+        builder: (context, state) => const MyPaymentTermsScreen(),
       ),
       // #887 — create or edit a managed member's identity.
       GoRoute(

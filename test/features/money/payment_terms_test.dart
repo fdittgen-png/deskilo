@@ -6,6 +6,7 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/payment_terms.dart';
 import 'package:deskilo/features/money/presentation/invoice_actions.dart';
+import 'package:deskilo/features/money/presentation/screens/my_payment_terms_screen.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter/material.dart';
@@ -58,6 +59,32 @@ void main() {
     expect(own['payment_terms'], 'Payment at 45 days.');
     expect(own['escompte'], 'None.', reason: 'untouched keys stay the workspace\'s');
     expect(own['payment_terms_source'], 'member');
+  });
+
+  testWidgets('the member reads their conditions in the settings, not on '
+      'the Invoices face (#902)', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    tester.view.physicalSize = const Size(800, 1600);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(ProviderScope(
+      overrides: standardTestOverrides(workspace: workspace),
+      child: const DeskiloApp(),
+    ));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await tester.pumpAndSettle();
+
+    final tile = find.byKey(const ValueKey('settings-payment-terms'));
+    await tester.scrollUntilVisible(tile, 120);
+    expect(find.text('Workspace default'), findsOneWidget);
+    await tester.tap(find.descendant(
+        of: tile, matching: find.byIcon(Icons.request_quote_outlined)));
+    await tester.pumpAndSettle();
+    expect(find.byType(MyPaymentTermsScreen), findsOneWidget);
+    expect(find.byKey(const ValueKey('payment-terms-card')), findsOneWidget);
+    // Read-only for the member: no request button in their own view.
+    expect(find.byKey(const ValueKey('payment-terms-edit')), findsNothing);
   });
 
   group('the card', () {

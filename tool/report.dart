@@ -249,7 +249,8 @@ Map<String, Object?> _sampleData(String kind) {
 
 int _describe() {
   stdout.writeln('''
-<report-layout version="1" page="A4" margin="20mm">   the root; margin is the page margin
+<report-layout version="1" page="A4" margin="20mm"          the root; margin is the side margin
+                margin-top="8mm" margin-bottom="8mm">     top/bottom apart (#902); absent = margin
 
 ZONES (children of the root, in any order)
   <header height="…">        fixed at the top of page 1 only — the letterhead
