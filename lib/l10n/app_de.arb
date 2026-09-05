@@ -3025,6 +3025,58 @@
   "bookingOutsideOffError": "Buchungen außerhalb der Öffnungszeiten sind nicht erlaubt.",
   "bookingOutsideWalkUpError": "Außerhalb der Öffnungszeiten ist nur ein spontaner Check-in möglich — keine Vorausbuchung.",
   "bookingSameDayError": "Eine Buchung endet an dem Tag, an dem sie beginnt — den nächsten Tag separat buchen.",
+  "featureManagedProfiles": "Verwaltete Profile",
+  "@featureManagedProfiles": {
+    "description": "#887 managed profiles: featureManagedProfiles"
+  },
+  "featureManagedProfilesDesc": "Admins legen Mitglieder ohne Konto an, buchen und fakturieren für sie und übergeben das Profil mit einem persönlichen Code, den die Person beim Beitritt einlöst.",
+  "@featureManagedProfilesDesc": {
+    "description": "#887 managed profiles: featureManagedProfilesDesc"
+  },
+  "managedProfileAdd": "Verwaltetes Profil anlegen",
+  "@managedProfileAdd": {
+    "description": "#887 managed profiles: managedProfileAdd"
+  },
+  "managedProfileTitle": "Verwaltetes Profil",
+  "@managedProfileTitle": {
+    "description": "#887 managed profiles: managedProfileTitle"
+  },
+  "managedProfileChip": "Verwaltet",
+  "@managedProfileChip": {
+    "description": "#887 managed profiles: managedProfileChip"
+  },
+  "managedProfileEdit": "Identität bearbeiten",
+  "@managedProfileEdit": {
+    "description": "#887 managed profiles: managedProfileEdit"
+  },
+  "managedProfileHandOver": "An die Person übergeben",
+  "@managedProfileHandOver": {
+    "description": "#887 managed profiles: managedProfileHandOver"
+  },
+  "managedProfileHandOverHint": "Erzeugt einen persönlichen Code für dieses Profil. Wer ihn einlöst, übernimmt das Profil — Reservierungen, Rechnungen, Abo — sobald Sie die Mitgliedschaft bestätigen.",
+  "@managedProfileHandOverHint": {
+    "description": "#887 managed profiles: managedProfileHandOverHint"
+  },
+  "managedProfileRevoke": "Übergabe zurückziehen",
+  "@managedProfileRevoke": {
+    "description": "#887 managed profiles: managedProfileRevoke"
+  },
+  "managedProfileRevoked": "Übergabe zurückgezogen",
+  "@managedProfileRevoked": {
+    "description": "#887 managed profiles: managedProfileRevoked"
+  },
+  "managedProfileCreated": "Verwaltetes Profil angelegt",
+  "@managedProfileCreated": {
+    "description": "#887 managed profiles: managedProfileCreated"
+  },
+  "managedProfileSaved": "Identität gespeichert",
+  "@managedProfileSaved": {
+    "description": "#887 managed profiles: managedProfileSaved"
+  },
+  "managedProfileIntro": "Diese Person hat noch kein Konto. Sie buchen, fakturieren und verwalten für sie; übergeben Sie das Profil, wenn sie beitritt.",
+  "@managedProfileIntro": {
+    "description": "#887 managed profiles: managedProfileIntro"
+  },
   "membersTitle": "Mitglieder & Tarife",
   "membersPlanNone": "Kein Tarif",
   "memberRoleOwner": "Inhaber",

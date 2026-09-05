@@ -11,6 +11,7 @@ import 'overage_policy.dart';
 import 'payment_instructions.dart';
 import 'workspace.dart';
 import 'workspace_document.dart';
+import '../../profile/domain/personal_info.dart';
 
 /// Pure-Dart workspace boundary. Supabase impl in data/, fake in tests.
 abstract class WorkspaceRepository {
@@ -40,7 +41,23 @@ abstract class WorkspaceRepository {
     required bool isAdmin,
     String firstName = '',
     String lastName = '',
+
+    /// #887 — bound to a managed member: whoever redeems the code takes
+    /// that profile over instead of joining as a new member.
+    String? memberId,
   });
+
+  /// #887 — a member the admin runs until the person claims it (RPC
+  /// `create_managed_member`, 0153): active at once, named from
+  /// [identity]. Returns the member id.
+  Future<String> createManagedMember(String workspaceId, PersonalInfo identity);
+
+  /// #887 — the admin edits a managed member's identity while nobody
+  /// owns it (RPC `update_managed_identity`).
+  Future<void> updateManagedIdentity(String memberId, PersonalInfo identity);
+
+  /// #887 — takes an unredeemed handover back (RPC `revoke_handover`).
+  Future<void> revokeHandover(String memberId);
 
   /// Admin/owner (RPC `decide_member_join`, migration 0052): approves
   /// (active) or rejects (exited) a PENDING membership and settles its

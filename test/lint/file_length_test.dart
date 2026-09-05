@@ -141,7 +141,7 @@ const Map<String, int> _baseline = {
   // new→840 (2026-08-05): #498 the WYSIWYG design surface — styled
   // band rendering, column groups, token palette, in-place editor.
   // #825 (2026-09-02): the member page and the shared admin actions.
-  'lib/features/members/presentation/screens/member_page.dart': 840,
+  'lib/features/members/presentation/screens/member_page.dart': 900, // 2026-09-05 #887 the managed-member tiles (edit identity, hand over, revoke) + chip
   'lib/features/workspace/presentation/member_admin_actions.dart': 720,
   // #828 (2026-09-02): the expense_repartition flag and repository methods.
   // 2026-09-04 #864: one more flag. This file is the feature
@@ -270,7 +270,7 @@ const Map<String, int> _baseline = {
   // now share ONE private _mergeBookingRule helper.
   // 890→900 (2026-08-25): #628 setSimultaneousReservations (through the
   // SAME _mergeBookingRule helper) + setMemberSimultaneousLimit.
-  'lib/features/workspace/data/supabase_workspace_repository.dart': 900,
+  'lib/features/workspace/data/supabase_workspace_repository.dart': 940, // 2026-09-05 #887 managed members: identity parse, names from managed_identity, three handover RPCs
   // 600→660 (2026-08-23): #600 the Booking policies section — three
   // switches + one write handler on the existing availability screen.
   // 660→730 (2026-08-25): #624 the outside-hours segmented control +

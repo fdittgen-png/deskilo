@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../profile/domain/personal_info.dart';
 import 'overage_policy.dart';
 
 part 'member.freezed.dart';
@@ -20,8 +21,10 @@ enum MemberStatus {
 /// Co-ownership flavor (migration 0058). Wire values by name.
 enum CoOwnerStatus {
   none,
+
   /// Owner permissions NOW + automatic succession.
   active,
+
   /// Successor-in-waiting: becomes owner when activated by the owner or
   /// when the last owner leaves.
   passive;
@@ -43,6 +46,7 @@ sealed class Member with _$Member {
     required bool isAdmin,
     required bool isOwner,
     required MemberStatus status,
+
     /// Subscription percentage 1–100 (ADR 0008): the membership level the
     /// fee band and the half-day entitlement derive from.
     @Default(100) int subscriptionPct,
@@ -83,10 +87,24 @@ sealed class Member with _$Member {
     /// first-served: the letters a member is given never move again
     /// because someone with an earlier name joined later.
     DateTime? joinedAt,
+
+    /// #887 — the identity of a MANAGED member (no account yet): what
+    /// the admin typed, carried until the person claims the profile.
+    /// Empty once claimed — the data then lives on their profile.
+    @Default(PersonalInfo.empty) PersonalInfo managedIdentity,
+
+    /// #887 — when the person took the profile over; null while managed
+    /// and for members who joined by themselves.
+    DateTime? claimedAt,
   }) = _Member;
 
+  /// #887 — a member an admin runs on the person's behalf: no account
+  /// ([userId] is ''), so nothing addressed to a user reaches anyone.
+  bool get isManaged => userId.isEmpty;
+
   /// Admin capability (owners inherit it, spec §2).
-  bool get canAdminister => (isAdmin || isOwner) && status == MemberStatus.active;
+  bool get canAdminister =>
+      (isAdmin || isOwner) && status == MemberStatus.active;
 
   /// Owner-level PERMISSION (0058): literal owners and ACTIVE co-owners.
   /// Use this for permission gates; use [isOwner] only where literal

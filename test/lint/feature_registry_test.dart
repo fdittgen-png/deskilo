@@ -78,7 +78,9 @@ import 'package:flutter_test/flutter_test.dart';
 //   in mm/cm/px/%; the PDF prints exactly that; coexists with bands.
 // 75→76 (2026-09-05): #886 personalInfo — the structured identity on the
 //   profile, printed by every document.
-const int _expectedFeatureCount = 76;
+// 76→77 (2026-09-05): #887 managedProfiles — members without an account,
+//   handed over by a bound invitation.
+const int _expectedFeatureCount = 77;
 
 void main() {
   test('every functionality is registered — the pin', () {

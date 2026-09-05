@@ -27,6 +27,7 @@ import '../features/workspace/presentation/screens/payment_methods_screen.dart';
 import '../features/workspace/presentation/screens/documents_screen.dart';
 import '../features/workspace/presentation/screens/roles_screen.dart';
 import '../features/profile/presentation/screens/personal_info_screen.dart';
+import '../features/members/presentation/screens/managed_profile_screen.dart';
 import '../features/money/presentation/screens/vat_screen.dart';
 import '../features/money/presentation/screens/services_screen.dart';
 import '../features/plan/presentation/screens/accessories_screen.dart';
@@ -516,6 +517,15 @@ GoRouter router(Ref ref) {
         redirect: (context, state) =>
             featureEnabled(WorkspaceFeature.personalInfo) ? null : '/settings',
         builder: (context, state) => const PersonalInfoScreen(),
+      ),
+      // #887 — create or edit a managed member's identity.
+      GoRoute(
+        path: '/members/managed',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.managedProfiles) ? null : '/members',
+        builder: (context, state) => ManagedProfileScreen(
+          memberId: state.uri.queryParameters['member'],
+        ),
       ),
       // The workspace's manual payment methods (#486) — owner-only.
       GoRoute(

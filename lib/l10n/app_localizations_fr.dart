@@ -5213,6 +5213,48 @@ class AppLocalizationsFr extends AppLocalizations {
       'Une réservation se termine le jour où elle commence — réservez le lendemain séparément.';
 
   @override
+  String get featureManagedProfiles => 'Profils gérés';
+
+  @override
+  String get featureManagedProfilesDesc =>
+      'Les admins créent des membres sans compte, réservent et facturent pour eux, puis leur remettent le profil par un code personnel utilisé en rejoignant l\'espace.';
+
+  @override
+  String get managedProfileAdd => 'Ajouter un profil géré';
+
+  @override
+  String get managedProfileTitle => 'Profil géré';
+
+  @override
+  String get managedProfileChip => 'Géré';
+
+  @override
+  String get managedProfileEdit => 'Modifier l\'identité';
+
+  @override
+  String get managedProfileHandOver => 'Remettre à la personne';
+
+  @override
+  String get managedProfileHandOverHint =>
+      'Crée un code personnel lié à ce profil. Qui l\'utilise reprend le profil — réservations, factures, abonnement — dès que vous validez l\'adhésion.';
+
+  @override
+  String get managedProfileRevoke => 'Annuler la remise';
+
+  @override
+  String get managedProfileRevoked => 'Remise annulée';
+
+  @override
+  String get managedProfileCreated => 'Profil géré créé';
+
+  @override
+  String get managedProfileSaved => 'Identité enregistrée';
+
+  @override
+  String get managedProfileIntro =>
+      'Cette personne n\'a pas encore de compte. Vous réservez, facturez et gérez pour elle ; remettez-lui le profil quand elle rejoint l\'espace.';
+
+  @override
   String get membersTitle => 'Membres et forfaits';
 
   @override

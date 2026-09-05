@@ -42,7 +42,8 @@ import 'package:flutter_test/flutter_test.dart';
 // 48→49 (2026-09-02): #825 /member/:memberId — one page per member.
 // 49→50 (2026-09-02): #827 /invoicing/wizard — the guided month-close.
 // 50→51 (2026-09-05): #886 /settings/personal-info — the identity form.
-const int _expectedRouteCount = 51;
+// 51→52 (2026-09-05): #887 /members/managed — a managed member's identity.
+const int _expectedRouteCount = 52;
 
 void main() {
   test('router carries exactly $_expectedRouteCount GoRoutes', () {

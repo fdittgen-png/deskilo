@@ -23,6 +23,7 @@ class PersonalInfoForm extends StatefulWidget {
     required this.onSave,
     this.workspaceCountry = '',
     this.saving = false,
+    this.intro,
   });
 
   final PersonalInfo initial;
@@ -32,6 +33,10 @@ class PersonalInfoForm extends StatefulWidget {
   /// drives the postal-block preview (the country line only abroad).
   final String workspaceCountry;
   final bool saving;
+
+  /// Replaces the "printed on YOUR documents" line — an admin editing a
+  /// managed member (#887) is told whose data this is instead.
+  final String? intro;
 
   @override
   State<PersonalInfoForm> createState() => _PersonalInfoFormState();
@@ -151,7 +156,8 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          l10n?.personalInfoSubtitle ??
+          widget.intro ??
+              l10n?.personalInfoSubtitle ??
               'Printed on your invoices and letters. Your family name is '
                   'written in capitals, as on official mail.',
           style: theme.textTheme.bodyMedium,

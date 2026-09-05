@@ -3025,6 +3025,58 @@
   "bookingOutsideOffError": "Las reservas fuera del horario de apertura no están permitidas.",
   "bookingOutsideWalkUpError": "Fuera del horario de apertura solo es posible un check-in espontáneo, no una reserva por adelantado.",
   "bookingSameDayError": "Una reserva termina el día en que empieza: reserva el día siguiente por separado.",
+  "featureManagedProfiles": "Perfiles gestionados",
+  "@featureManagedProfiles": {
+    "description": "#887 managed profiles: featureManagedProfiles"
+  },
+  "featureManagedProfilesDesc": "Los admins crean miembros sin cuenta, reservan y facturan por ellos y les entregan el perfil con un código personal que la persona canjea al unirse.",
+  "@featureManagedProfilesDesc": {
+    "description": "#887 managed profiles: featureManagedProfilesDesc"
+  },
+  "managedProfileAdd": "Añadir un perfil gestionado",
+  "@managedProfileAdd": {
+    "description": "#887 managed profiles: managedProfileAdd"
+  },
+  "managedProfileTitle": "Perfil gestionado",
+  "@managedProfileTitle": {
+    "description": "#887 managed profiles: managedProfileTitle"
+  },
+  "managedProfileChip": "Gestionado",
+  "@managedProfileChip": {
+    "description": "#887 managed profiles: managedProfileChip"
+  },
+  "managedProfileEdit": "Editar identidad",
+  "@managedProfileEdit": {
+    "description": "#887 managed profiles: managedProfileEdit"
+  },
+  "managedProfileHandOver": "Entregar a la persona",
+  "@managedProfileHandOver": {
+    "description": "#887 managed profiles: managedProfileHandOver"
+  },
+  "managedProfileHandOverHint": "Genera un código personal ligado a este perfil. Quien lo canjee se hace con el perfil — reservas, facturas, suscripción — en cuanto apruebes la membresía.",
+  "@managedProfileHandOverHint": {
+    "description": "#887 managed profiles: managedProfileHandOverHint"
+  },
+  "managedProfileRevoke": "Revocar la entrega",
+  "@managedProfileRevoke": {
+    "description": "#887 managed profiles: managedProfileRevoke"
+  },
+  "managedProfileRevoked": "Entrega revocada",
+  "@managedProfileRevoked": {
+    "description": "#887 managed profiles: managedProfileRevoked"
+  },
+  "managedProfileCreated": "Perfil gestionado creado",
+  "@managedProfileCreated": {
+    "description": "#887 managed profiles: managedProfileCreated"
+  },
+  "managedProfileSaved": "Identidad guardada",
+  "@managedProfileSaved": {
+    "description": "#887 managed profiles: managedProfileSaved"
+  },
+  "managedProfileIntro": "Esta persona aún no tiene cuenta. Reservas, facturas y gestionas por ella; entrégale el perfil cuando se una.",
+  "@managedProfileIntro": {
+    "description": "#887 managed profiles: managedProfileIntro"
+  },
   "membersTitle": "Miembros y planes",
   "membersPlanNone": "Sin plan",
   "memberRoleOwner": "Propietario",

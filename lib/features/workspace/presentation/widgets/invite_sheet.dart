@@ -9,6 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../profile/domain/personal_info.dart';
 import '../../domain/invitation_message.dart';
 import '../../domain/invite_uri.dart';
 import '../../domain/workspace.dart';
@@ -83,21 +84,37 @@ Future<void> showInviteSheet(
   BuildContext context, {
   required Workspace workspace,
   required InviteRole role,
+  String? memberId,
+  PersonalInfo? identity,
 }) =>
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (_) => _InviteSheet(workspace: workspace, role: role),
+      builder: (_) => _InviteSheet(
+        workspace: workspace,
+        role: role,
+        memberId: memberId,
+        identity: identity,
+      ),
     );
 
 class _InviteSheet extends ConsumerStatefulWidget {
   const _InviteSheet({
     required this.workspace,
     required this.role,
+    this.memberId,
+    this.identity,
   });
 
   final Workspace workspace;
   final InviteRole role;
+
+  /// #887 — the managed member this invitation hands over; the code it
+  /// mints claims that profile instead of creating a new member.
+  final String? memberId;
+
+  /// The managed identity, pre-filling the name and phone fields.
+  final PersonalInfo? identity;
 
   @override
   ConsumerState<_InviteSheet> createState() => _InviteSheetState();
@@ -119,6 +136,17 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
     final configured = widget.workspace.defaultLocale;
     if (_inviteLanguages.containsKey(configured)) return configured;
     return Localizations.localeOf(context).languageCode;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final identity = widget.identity;
+    if (identity != null) {
+      _firstName.text = identity.firstName;
+      _lastName.text = identity.lastName;
+      _phone.text = identity.phone;
+    }
   }
 
   @override
@@ -149,6 +177,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
               isAdmin: widget.role == InviteRole.admin,
               firstName: _firstName.text.trim(),
               lastName: _lastName.text.trim(),
+              memberId: widget.memberId,
             );
       },
     )) {

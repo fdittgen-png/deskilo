@@ -3025,6 +3025,58 @@
   "bookingOutsideOffError": "Les réservations en dehors des heures d'ouverture ne sont pas autorisées.",
   "bookingOutsideWalkUpError": "En dehors des heures d'ouverture, seul un check-in spontané est possible — pas une réservation à l'avance.",
   "bookingSameDayError": "Une réservation se termine le jour où elle commence — réservez le lendemain séparément.",
+  "featureManagedProfiles": "Profils gérés",
+  "@featureManagedProfiles": {
+    "description": "#887 managed profiles: featureManagedProfiles"
+  },
+  "featureManagedProfilesDesc": "Les admins créent des membres sans compte, réservent et facturent pour eux, puis leur remettent le profil par un code personnel utilisé en rejoignant l'espace.",
+  "@featureManagedProfilesDesc": {
+    "description": "#887 managed profiles: featureManagedProfilesDesc"
+  },
+  "managedProfileAdd": "Ajouter un profil géré",
+  "@managedProfileAdd": {
+    "description": "#887 managed profiles: managedProfileAdd"
+  },
+  "managedProfileTitle": "Profil géré",
+  "@managedProfileTitle": {
+    "description": "#887 managed profiles: managedProfileTitle"
+  },
+  "managedProfileChip": "Géré",
+  "@managedProfileChip": {
+    "description": "#887 managed profiles: managedProfileChip"
+  },
+  "managedProfileEdit": "Modifier l'identité",
+  "@managedProfileEdit": {
+    "description": "#887 managed profiles: managedProfileEdit"
+  },
+  "managedProfileHandOver": "Remettre à la personne",
+  "@managedProfileHandOver": {
+    "description": "#887 managed profiles: managedProfileHandOver"
+  },
+  "managedProfileHandOverHint": "Crée un code personnel lié à ce profil. Qui l'utilise reprend le profil — réservations, factures, abonnement — dès que vous validez l'adhésion.",
+  "@managedProfileHandOverHint": {
+    "description": "#887 managed profiles: managedProfileHandOverHint"
+  },
+  "managedProfileRevoke": "Annuler la remise",
+  "@managedProfileRevoke": {
+    "description": "#887 managed profiles: managedProfileRevoke"
+  },
+  "managedProfileRevoked": "Remise annulée",
+  "@managedProfileRevoked": {
+    "description": "#887 managed profiles: managedProfileRevoked"
+  },
+  "managedProfileCreated": "Profil géré créé",
+  "@managedProfileCreated": {
+    "description": "#887 managed profiles: managedProfileCreated"
+  },
+  "managedProfileSaved": "Identité enregistrée",
+  "@managedProfileSaved": {
+    "description": "#887 managed profiles: managedProfileSaved"
+  },
+  "managedProfileIntro": "Cette personne n'a pas encore de compte. Vous réservez, facturez et gérez pour elle ; remettez-lui le profil quand elle rejoint l'espace.",
+  "@managedProfileIntro": {
+    "description": "#887 managed profiles: managedProfileIntro"
+  },
   "membersTitle": "Membres et forfaits",
   "membersPlanNone": "Aucun forfait",
   "memberRoleOwner": "Propriétaire",

@@ -1,0 +1,55 @@
+{
+  "@@locale": "en",
+  "featureManagedProfiles": "Managed profiles",
+  "@featureManagedProfiles": {
+    "description": "#887 managed profiles: featureManagedProfiles"
+  },
+  "featureManagedProfilesDesc": "Admins create members who have no account yet, book and invoice for them, and hand the profile over with a personal code the person redeems when they join.",
+  "@featureManagedProfilesDesc": {
+    "description": "#887 managed profiles: featureManagedProfilesDesc"
+  },
+  "managedProfileAdd": "Add a managed profile",
+  "@managedProfileAdd": {
+    "description": "#887 managed profiles: managedProfileAdd"
+  },
+  "managedProfileTitle": "Managed profile",
+  "@managedProfileTitle": {
+    "description": "#887 managed profiles: managedProfileTitle"
+  },
+  "managedProfileChip": "Managed",
+  "@managedProfileChip": {
+    "description": "#887 managed profiles: managedProfileChip"
+  },
+  "managedProfileEdit": "Edit identity",
+  "@managedProfileEdit": {
+    "description": "#887 managed profiles: managedProfileEdit"
+  },
+  "managedProfileHandOver": "Hand over to the person",
+  "@managedProfileHandOver": {
+    "description": "#887 managed profiles: managedProfileHandOver"
+  },
+  "managedProfileHandOverHint": "Mints a personal code bound to this profile. Whoever redeems it takes the profile over — reservations, invoices, subscription — once you approve the membership.",
+  "@managedProfileHandOverHint": {
+    "description": "#887 managed profiles: managedProfileHandOverHint"
+  },
+  "managedProfileRevoke": "Revoke handover",
+  "@managedProfileRevoke": {
+    "description": "#887 managed profiles: managedProfileRevoke"
+  },
+  "managedProfileRevoked": "Handover revoked",
+  "@managedProfileRevoked": {
+    "description": "#887 managed profiles: managedProfileRevoked"
+  },
+  "managedProfileCreated": "Managed profile created",
+  "@managedProfileCreated": {
+    "description": "#887 managed profiles: managedProfileCreated"
+  },
+  "managedProfileSaved": "Identity saved",
+  "@managedProfileSaved": {
+    "description": "#887 managed profiles: managedProfileSaved"
+  },
+  "managedProfileIntro": "This person has no account yet. You book, invoice and manage for them; hand the profile over when they join.",
+  "@managedProfileIntro": {
+    "description": "#887 managed profiles: managedProfileIntro"
+  }
+}

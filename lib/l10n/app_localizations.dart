@@ -9013,6 +9013,84 @@ abstract class AppLocalizations {
   /// **'A booking ends on the day it starts — book the next day separately.'**
   String get bookingSameDayError;
 
+  /// #887 managed profiles: featureManagedProfiles
+  ///
+  /// In en, this message translates to:
+  /// **'Managed profiles'**
+  String get featureManagedProfiles;
+
+  /// #887 managed profiles: featureManagedProfilesDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Admins create members who have no account yet, book and invoice for them, and hand the profile over with a personal code the person redeems when they join.'**
+  String get featureManagedProfilesDesc;
+
+  /// #887 managed profiles: managedProfileAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Add a managed profile'**
+  String get managedProfileAdd;
+
+  /// #887 managed profiles: managedProfileTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Managed profile'**
+  String get managedProfileTitle;
+
+  /// #887 managed profiles: managedProfileChip
+  ///
+  /// In en, this message translates to:
+  /// **'Managed'**
+  String get managedProfileChip;
+
+  /// #887 managed profiles: managedProfileEdit
+  ///
+  /// In en, this message translates to:
+  /// **'Edit identity'**
+  String get managedProfileEdit;
+
+  /// #887 managed profiles: managedProfileHandOver
+  ///
+  /// In en, this message translates to:
+  /// **'Hand over to the person'**
+  String get managedProfileHandOver;
+
+  /// #887 managed profiles: managedProfileHandOverHint
+  ///
+  /// In en, this message translates to:
+  /// **'Mints a personal code bound to this profile. Whoever redeems it takes the profile over — reservations, invoices, subscription — once you approve the membership.'**
+  String get managedProfileHandOverHint;
+
+  /// #887 managed profiles: managedProfileRevoke
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke handover'**
+  String get managedProfileRevoke;
+
+  /// #887 managed profiles: managedProfileRevoked
+  ///
+  /// In en, this message translates to:
+  /// **'Handover revoked'**
+  String get managedProfileRevoked;
+
+  /// #887 managed profiles: managedProfileCreated
+  ///
+  /// In en, this message translates to:
+  /// **'Managed profile created'**
+  String get managedProfileCreated;
+
+  /// #887 managed profiles: managedProfileSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Identity saved'**
+  String get managedProfileSaved;
+
+  /// #887 managed profiles: managedProfileIntro
+  ///
+  /// In en, this message translates to:
+  /// **'This person has no account yet. You book, invoice and manage for them; hand the profile over when they join.'**
+  String get managedProfileIntro;
+
   /// Title of the owner-only member management screen + its settings entry
   ///
   /// In en, this message translates to:
