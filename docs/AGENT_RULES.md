@@ -2,6 +2,8 @@
 
 These rules are version-controlled so a fresh clone sees them. They mirror the sibling project tankstellen/Sparkilo.
 
+**Project skills** (`.claude/skills/`, indexed in `CLAUDE.md`) carry the how-to behind each rule: `deskilo-ship-feature`, `deskilo-supabase-migration`, `deskilo-widget-test-gotchas`, `deskilo-reports`, `deskilo-ci-release`, and the project-agnostic `project-evolution-playbook`.
+
 ## HARD RULES
 
 1. **No hard-coded user-facing text.** Every string goes through ARB / `AppLocalizations` with a defensive English fallback. English (`en`) is the canonical locale — every key must exist there. FR, DE, ES and IT are maintained launch locales: every new key needs all five translations in the same PR. Enforced by a lint test with a ratchet-to-zero baseline.
