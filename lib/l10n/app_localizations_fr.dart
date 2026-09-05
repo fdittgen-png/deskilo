@@ -7783,6 +7783,27 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un taux encore utilisé par une facture ou un service est conservé, désactivé.';
 
   @override
+  String get vatExigibilityTitle => 'Exigibilité de la TVA';
+
+  @override
+  String get vatExigibilityInvoice => 'Sur les débits (à la facture)';
+
+  @override
+  String get vatExigibilityPayment => 'Sur les encaissements (au paiement)';
+
+  @override
+  String get vatExigibilitySubtitle =>
+      'Sur les encaissements, une période déclare ce que les clients ont payé pendant celle-ci ; sur les débits, ce que vous avez facturé. Le choix est imprimé sur chaque facture.';
+
+  @override
+  String get vatDeclarationBasisPayment =>
+      'Base : encaissements (TVA sur les paiements reçus pendant la période).';
+
+  @override
+  String get vatDeclarationBasisInvoice =>
+      'Base : débits (TVA sur les factures émises pendant la période).';
+
+  @override
   String get featureVatReport => 'Rapport de TVA';
 
   @override

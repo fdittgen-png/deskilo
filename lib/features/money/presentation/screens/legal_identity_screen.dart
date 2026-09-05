@@ -58,6 +58,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   // #895 — intra-EU B2B supplies are reverse-charged unless a workspace
   // that never invoices businesses abroad turns it off.
   bool _reverseCharge = true;
+  // #896 — when the tax falls due: 'invoice' (débits) or 'payment'
+  // (encaissements). Services are on payment by default in France, but
+  // the choice is the seller's declared one, so it is asked, not guessed.
+  String _exigibility = 'invoice';
 
   /// #869 — null means follow the country.
   AddressWindow? _addressWindow;
@@ -130,6 +134,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             insurance: _insurance.text,
             specialMentions: _special.text,
             reverseChargeOptIn: _reverseCharge,
+            vatExigibility: _exigibility,
           ).toJson(),
         );
       },
@@ -205,6 +210,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
       final legal = InvoiceLegal.fromJson(workspace.invoiceLegal);
       _sellerKind = legal.sellerKind;
       _reverseCharge = legal.reverseCharge;
+      _exigibility = legal.vatExigibility;
       _legalForm.text = legal.legalForm;
       _registration.text = legal.registration;
       _paymentTerms.text = legal.paymentTerms;
@@ -289,6 +295,38 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                       '(art. 196). Turn it off if you never invoice '
                       'businesses abroad.'),
               onChanged: (v) => setState(() => _reverseCharge = v),
+            ),
+          // #896 — WHEN the tax falls due decides which period a
+          // declaration covers, and it is printed on every invoice.
+          if (_regime == VatRegime.vatRegistered)
+            Padding(
+              padding: const EdgeInsets.only(top: AppSpacing.sm),
+              child: DropdownButtonFormField<String>(
+                key: const ValueKey('legal-identity-exigibility'),
+                initialValue: _exigibility,
+                items: [
+                  DropdownMenuItem(
+                    value: 'invoice',
+                    child: Text(l10n?.vatExigibilityInvoice ??
+                        'On invoices (débits)'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'payment',
+                    child: Text(l10n?.vatExigibilityPayment ??
+                        'On receipts (encaissements)'),
+                  ),
+                ],
+                onChanged: (v) =>
+                    setState(() => _exigibility = v ?? _exigibility),
+                decoration: InputDecoration(
+                  labelText: l10n?.vatExigibilityTitle ?? 'VAT falls due',
+                  helperMaxLines: 4,
+                  helperText: l10n?.vatExigibilitySubtitle ??
+                      'On receipts, a period declares what customers paid '
+                          'inside it; on invoices, what you issued. '
+                          'The choice is printed on every invoice.',
+                ),
+              ),
             ),
           if (_regime == VatRegime.vatRegistered && rates.isEmpty)
             InlineBanner(

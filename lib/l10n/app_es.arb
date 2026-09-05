@@ -4613,6 +4613,30 @@
   "vatPdfVat": "IVA",
   "fecAccountVat": "IVA recaudado",
   "vatKeptRate": "Un tipo que todavía usa una factura o un servicio se conserva, desactivado.",
+  "vatExigibilityTitle": "Devengo del IVA",
+  "@vatExigibilityTitle": {
+    "description": "#896 vat exigibility: vatExigibilityTitle"
+  },
+  "vatExigibilityInvoice": "Con la factura (criterio general)",
+  "@vatExigibilityInvoice": {
+    "description": "#896 vat exigibility: vatExigibilityInvoice"
+  },
+  "vatExigibilityPayment": "Con el cobro (criterio de caja)",
+  "@vatExigibilityPayment": {
+    "description": "#896 vat exigibility: vatExigibilityPayment"
+  },
+  "vatExigibilitySubtitle": "Con el cobro, un periodo declara lo que los clientes pagaron dentro de él; con la factura, lo que usted emitió. La elección se imprime en cada factura.",
+  "@vatExigibilitySubtitle": {
+    "description": "#896 vat exigibility: vatExigibilitySubtitle"
+  },
+  "vatDeclarationBasisPayment": "Base: cobros (IVA sobre los pagos recibidos durante el periodo).",
+  "@vatDeclarationBasisPayment": {
+    "description": "#896 vat exigibility: vatDeclarationBasisPayment"
+  },
+  "vatDeclarationBasisInvoice": "Base: facturas (IVA sobre los documentos emitidos durante el periodo).",
+  "@vatDeclarationBasisInvoice": {
+    "description": "#896 vat exigibility: vatDeclarationBasisInvoice"
+  },
   "featureVatReport": "Informe de IVA",
   "@featureVatReport": {
     "description": "#878 VAT review / report: featureVatReport"

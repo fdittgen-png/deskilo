@@ -150,6 +150,84 @@ List<VatDeclarationLine> computeVatDeclarationLines(
   ];
 }
 
+/// #896 — a payment, rate by rate.
+///
+/// A customer pays a document, not a rate; the authorities apportion the
+/// payment across the rates in proportion to what each weighs in the
+/// document, so a part payment carries part of every rate. The largest
+/// share takes the rounding remainder, so the cents add up to exactly
+/// what was received. Shared by the declaration and the VAT report, so
+/// the two can never disagree about the same payment.
+Map<double, int> paymentSharesByRate(Invoice invoice, int paidCents) {
+  final perRate = <double, int>{};
+  for (final line in invoice.lines) {
+    perRate[line.vatPercent] =
+        (perRate[line.vatPercent] ?? 0) + line.amountCents;
+  }
+  final total = perRate.values.fold(0, (sum, cents) => sum + cents);
+  if (total == 0 || paidCents == 0) return const {};
+  final shares = <double, int>{};
+  var placed = 0;
+  for (final entry in perRate.entries) {
+    final share = (paidCents * entry.value / total).round();
+    shares[entry.key] = share;
+    placed += share;
+  }
+  if (shares.isNotEmpty && placed != paidCents) {
+    final widest = shares.keys
+        .reduce((a, b) => perRate[a]!.abs() >= perRate[b]!.abs() ? a : b);
+    shares[widest] = shares[widest]! + (paidCents - placed);
+  }
+  shares.removeWhere((_, cents) => cents == 0);
+  return shares;
+}
+
+/// #896 — the declaration on the CASH basis: the tax falls due the day
+/// the customer pays, not the day the document was issued (CGI 269-2-c
+/// for services in France, § 20 UStG's Ist-Versteuerung, IVA per cassa).
+/// Each payment matched inside the period is split across the invoice's
+/// rates in proportion to what each rate weighs in it — a part payment
+/// therefore carries part of every rate, which is how the authorities
+/// apportion one.
+List<VatDeclarationLine> computeVatDeclarationLinesOnPayment({
+  required Iterable<Invoice> invoices,
+  required Map<String, InvoiceMatch> matches,
+  required DateTime periodStart,
+  required DateTime periodEnd,
+}) {
+  final gross = <double, int>{};
+  final net = <double, int>{};
+  final count = <double, Set<String>>{};
+  final byId = {for (final invoice in invoices) invoice.id: invoice};
+  for (final match in matches.values) {
+    final invoice = byId[match.invoiceId];
+    if (invoice == null || invoice.voidedAt != null) continue;
+    if (invoice.kind == InvoiceKind.settlement) continue;
+    final day = DateTime(
+        match.matchedAt.year, match.matchedAt.month, match.matchedAt.day);
+    if (day.isBefore(periodStart) || day.isAfter(periodEnd)) continue;
+    final shares = paymentSharesByRate(invoice, match.paidCents);
+    for (final entry in shares.entries) {
+      if (entry.value == 0) continue;
+      final split = vatSplit(entry.value, entry.key);
+      gross[entry.key] = (gross[entry.key] ?? 0) + entry.value;
+      net[entry.key] = (net[entry.key] ?? 0) + split.netCents;
+      count.putIfAbsent(entry.key, () => <String>{}).add(invoice.id);
+    }
+  }
+  final percents = gross.keys.toList()..sort((a, b) => b.compareTo(a));
+  return [
+    for (final p in percents)
+      VatDeclarationLine(
+        percent: p,
+        grossCents: gross[p]!,
+        netCents: net[p]!,
+        vatCents: gross[p]! - net[p]!,
+        invoiceCount: count[p]!.length,
+      ),
+  ];
+}
+
 /// One box of a country's official return form the declaration lines map
 /// onto (#534) — e.g. CA3 line 08 or UStVA Kennzahl 81.
 class VatFormBox {

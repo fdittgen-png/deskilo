@@ -126,7 +126,7 @@ void main() {
         'account_holder', 'payment_reference',
         'seller_legal_form',
         'seller_registration', 'seller_vat_id', 'seller_legal_id',
-        'exemption_reason',
+        'exemption_reason', 'vat_exigibility_mention',
         // #886 — the client's identity as the postal standard prints it.
         'client_name', 'client_company', 'client_phone', 'client_email',
         'client_address', 'client_vat_id',
@@ -137,6 +137,7 @@ void main() {
         'usage_supplements', 'usage_records',
         // #878 — the VAT report.
         'vat_period', 'vat_period_net', 'vat_period_vat', 'vat_period_gross',
+        'vat_basis_note',
         'vat_positions', 'vat_rate_totals',
         'payment_terms', 'payment_terms_source',
         'late_penalty', 'recovery_indemnity', 'escompte', 'insurance',

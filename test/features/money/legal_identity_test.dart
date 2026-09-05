@@ -190,6 +190,42 @@ void main() {
     expect(legal.isAssociation, isTrue);
   });
 
+  testWidgets(
+      'a VAT-registered workspace chooses WHEN the tax falls due, and the '
+      'choice is stored on the wire key the invoice reads (#896)',
+      (tester) async {
+    final workspace = await pumpIdentity(tester);
+
+    await tester.tap(find.byKey(const ValueKey('legal-identity-regime')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('VAT-registered (charges VAT)').last);
+    await tester.pumpAndSettle();
+
+    await reveal(tester, const ValueKey('legal-identity-exigibility'));
+    await tester.tap(find.byKey(const ValueKey('legal-identity-exigibility')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('On receipts (cash)').last);
+    await tester.pumpAndSettle();
+
+    await reveal(tester, const ValueKey('legal-identity-save'));
+    await tester.tap(find.byKey(const ValueKey('legal-identity-save')));
+    await tester.pumpAndSettle();
+
+    final legal =
+        InvoiceLegal.fromJson(workspace.workspaces.single.invoiceLegal);
+    expect(legal.vatExigibility, 'payment');
+    expect(legal.onPaymentBasis, isTrue);
+  });
+
+  testWidgets(
+      'a workspace outside the scope of VAT is never asked when its tax '
+      'falls due — it has none (#896)', (tester) async {
+    await pumpIdentity(tester);
+
+    expect(find.byKey(const ValueKey('legal-identity-exigibility')),
+        findsNothing);
+  });
+
   testWidgets('a plain member cannot reach the screen at all', (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace();
     workspace.myMember =

@@ -147,3 +147,33 @@ String exemptionCodeForCategory(
     category == 'AE'
         ? 'VATEX-EU-AE'
         : regime.exemptionReasonCode(sellerCountry);
+
+/// #896 — the mention a seller must print about WHEN its tax falls due.
+/// France asks for it explicitly (« TVA acquittée sur les encaissements /
+/// sur les débits »); elsewhere it is said once, plainly, and harms
+/// nothing. Empty for a seller that charges no VAT — there is no tax to
+/// be due.
+String exigibilityMention({
+  required VatRegime regime,
+  required String sellerCountry,
+  required bool onPaymentBasis,
+}) {
+  if (regime != VatRegime.vatRegistered) return '';
+  return switch (sellerCountry.trim().toUpperCase()) {
+    'FR' => onPaymentBasis
+        ? 'TVA acquittée sur les encaissements.'
+        : 'TVA acquittée sur les débits.',
+    'DE' || 'AT' => onPaymentBasis
+        ? 'Umsatzsteuer nach vereinnahmten Entgelten (Ist-Versteuerung).'
+        : 'Umsatzsteuer nach vereinbarten Entgelten (Soll-Versteuerung).',
+    'IT' => onPaymentBasis
+        ? 'IVA per cassa (art. 32-bis D.L. 83/2012).'
+        : 'IVA esigibile secondo il criterio ordinario.',
+    'ES' => onPaymentBasis
+        ? 'Régimen especial del criterio de caja.'
+        : 'Devengo del IVA según el criterio general.',
+    _ => onPaymentBasis
+        ? 'VAT accounted for on receipts (cash accounting).'
+        : 'VAT accounted for on invoices (accrual accounting).',
+  };
+}
