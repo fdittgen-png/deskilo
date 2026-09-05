@@ -10,6 +10,7 @@
 class InvoiceLegal {
   const InvoiceLegal({
     this.sellerKind = '',
+    this.reverseChargeOptIn = true,
     this.legalForm = '',
     this.registration = '',
     this.paymentTerms = '',
@@ -27,8 +28,16 @@ class InvoiceLegal {
   /// professionals); whatever the owner types still prints.
   final String sellerKind;
 
+  /// #895 — the stored switch; read it through [reverseCharge].
+  final bool reverseChargeOptIn;
+
   /// Whether this seller is a non-profit association.
   bool get isAssociation => sellerKind == 'association';
+
+  /// #895 — whether intra-EU B2B supplies are reverse-charged. On by
+  /// law for a VAT-registered seller; a workspace that never invoices
+  /// businesses abroad may turn it off.
+  bool get reverseCharge => reverseChargeOptIn;
 
   /// 'SARL au capital de 7 500 €' — legal form and share capital.
   /// For an association: 'Association loi 1901'.
@@ -60,6 +69,7 @@ class InvoiceLegal {
 
   factory InvoiceLegal.fromJson(Map<dynamic, dynamic> json) => InvoiceLegal(
         sellerKind: json['seller_kind'] as String? ?? '',
+        reverseChargeOptIn: json['reverse_charge'] as bool? ?? true,
         legalForm: json['legal_form'] as String? ?? '',
         registration: json['registration'] as String? ?? '',
         paymentTerms: json['payment_terms'] as String? ?? '',
@@ -72,6 +82,7 @@ class InvoiceLegal {
 
   Map<String, Object?> toJson() => {
         'seller_kind': sellerKind,
+        'reverse_charge': reverseChargeOptIn,
         'legal_form': legalForm.trim(),
         'registration': registration.trim(),
         'payment_terms': paymentTerms.trim(),
@@ -86,6 +97,7 @@ class InvoiceLegal {
   bool operator ==(Object other) =>
       other is InvoiceLegal &&
       other.sellerKind == sellerKind &&
+      other.reverseChargeOptIn == reverseChargeOptIn &&
       other.legalForm == legalForm &&
       other.registration == registration &&
       other.paymentTerms == paymentTerms &&
@@ -96,7 +108,7 @@ class InvoiceLegal {
       other.specialMentions == specialMentions;
 
   @override
-  int get hashCode => Object.hash(sellerKind, legalForm, registration,
+  int get hashCode => Object.hash(reverseChargeOptIn, sellerKind, legalForm, registration,
       paymentTerms, latePenalty, recoveryIndemnity, escompte, insurance,
       specialMentions);
 }

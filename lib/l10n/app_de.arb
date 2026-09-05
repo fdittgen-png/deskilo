@@ -4382,6 +4382,18 @@
   },
   "scanCameraWebUnavailable": "Kamera-Scan ist im Browser nicht verfügbar — Code eingeben oder ein NFC-Tag ans Gerät halten (Chrome auf Android).",
   "bookingGateBlocked": "So nicht buchbar",
+  "reverseChargeTitle": "Reverse-Charge für EU-Unternehmen",
+  "@reverseChargeTitle": {
+    "description": "#895 reverse charge: reverseChargeTitle"
+  },
+  "reverseChargeSubtitle": "Ein Kunde mit USt-IdNr. in einem anderen Mitgliedstaat wird ohne Steuer fakturiert und schuldet sie selbst (Art. 196). Ausschalten, wenn du nie Unternehmen im Ausland fakturierst.",
+  "@reverseChargeSubtitle": {
+    "description": "#895 reverse charge: reverseChargeSubtitle"
+  },
+  "invoiceGapMissingBuyerVatId": "Die USt-IdNr. des Kunden fehlt — eine Reverse-Charge-Rechnung muss sie nennen.",
+  "@invoiceGapMissingBuyerVatId": {
+    "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
+  },
   "seatDayTitle": "Platz {seat} heute",
   "@seatDayTitle": {
     "description": "#903 seat day timeline: seatDayTitle",

@@ -3,6 +3,7 @@ import 'package:xml/xml.dart';
 
 import 'invoice.dart';
 import 'vat_rate.dart';
+import 'vat_compliance.dart';
 import 'vat_regime.dart';
 
 /// The 27 EU member states — the e-invoice affordance shows only for
@@ -57,8 +58,12 @@ String buildInvoiceUbl({
 }) {
   String amount(int cents) => (cents / 100).toStringAsFixed(2);
   final regime = vatRegimeFromWire(seller.vatRegime);
-  final category = regime.taxCategoryCode;
-  final exemptionCode = regime.exemptionReasonCode(seller.country);
+  // #895 — a reverse-charged document is category AE whatever the
+  // seller's own regime says: the tax is the customer's.
+  final category =
+      invoice.isReverseCharged ? 'AE' : regime.taxCategoryCode;
+  final exemptionCode =
+      exemptionCodeForCategory(category, seller.country, regime);
   final charges =
       invoice.lines.where((l) => l.amountCents > 0).toList(growable: false);
   final chargesCents = charges.fold(0, (sum, l) => sum + l.amountCents);

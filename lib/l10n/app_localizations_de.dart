@@ -7288,6 +7288,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bookingGateBlocked => 'So nicht buchbar';
 
   @override
+  String get reverseChargeTitle => 'Reverse-Charge für EU-Unternehmen';
+
+  @override
+  String get reverseChargeSubtitle =>
+      'Ein Kunde mit USt-IdNr. in einem anderen Mitgliedstaat wird ohne Steuer fakturiert und schuldet sie selbst (Art. 196). Ausschalten, wenn du nie Unternehmen im Ausland fakturierst.';
+
+  @override
+  String get invoiceGapMissingBuyerVatId =>
+      'Die USt-IdNr. des Kunden fehlt — eine Reverse-Charge-Rechnung muss sie nennen.';
+
+  @override
   String seatDayTitle(String seat) {
     return 'Platz $seat heute';
   }

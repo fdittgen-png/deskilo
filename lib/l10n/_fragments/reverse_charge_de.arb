@@ -1,0 +1,15 @@
+{
+  "@@locale": "de",
+  "reverseChargeTitle": "Reverse-Charge für EU-Unternehmen",
+  "@reverseChargeTitle": {
+    "description": "#895 reverse charge: reverseChargeTitle"
+  },
+  "reverseChargeSubtitle": "Ein Kunde mit USt-IdNr. in einem anderen Mitgliedstaat wird ohne Steuer fakturiert und schuldet sie selbst (Art. 196). Ausschalten, wenn du nie Unternehmen im Ausland fakturierst.",
+  "@reverseChargeSubtitle": {
+    "description": "#895 reverse charge: reverseChargeSubtitle"
+  },
+  "invoiceGapMissingBuyerVatId": "Die USt-IdNr. des Kunden fehlt — eine Reverse-Charge-Rechnung muss sie nennen.",
+  "@invoiceGapMissingBuyerVatId": {
+    "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
+  }
+}

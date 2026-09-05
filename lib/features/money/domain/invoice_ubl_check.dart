@@ -51,6 +51,10 @@ enum EInvoiceGap {
   /// shape (a typo an e-invoice platform will bounce). Not blocking:
   /// the id may be right and the table wrong.
   buyerVatIdFormat,
+
+  /// #895 — a reverse-charged supply must name the customer's VAT
+  /// identifier (BT-48): it is what proves the tax is theirs.
+  missingBuyerVatId,
 }
 
 extension EInvoiceGapKind on EInvoiceGap {
@@ -122,6 +126,8 @@ EInvoiceReadiness checkEInvoiceReadiness({
     if (buyer.country.isEmpty) EInvoiceGap.missingBuyerCountry,
     if (buyer.vatId.isNotEmpty && !looksLikeEuVatId(buyer.vatId))
       EInvoiceGap.buyerVatIdFormat,
+    if (invoice.isReverseCharged && buyer.vatId.trim().isEmpty)
+      EInvoiceGap.missingBuyerVatId,
     if (!invoice.lines.any((l) => l.amountCents > 0))
       EInvoiceGap.noChargeLines,
     if (seller.city.isEmpty) EInvoiceGap.missingSellerCity,

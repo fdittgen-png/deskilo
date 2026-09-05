@@ -1,0 +1,15 @@
+{
+  "@@locale": "es",
+  "reverseChargeTitle": "Inversión del sujeto pasivo para empresas de la UE",
+  "@reverseChargeTitle": {
+    "description": "#895 reverse charge: reverseChargeTitle"
+  },
+  "reverseChargeSubtitle": "Un cliente con NIF-IVA en otro Estado miembro se factura sin impuesto y lo autoliquida (art. 196). Desactívalo si nunca facturas a empresas en el extranjero.",
+  "@reverseChargeSubtitle": {
+    "description": "#895 reverse charge: reverseChargeSubtitle"
+  },
+  "invoiceGapMissingBuyerVatId": "Falta el NIF-IVA del cliente — una factura con inversión del sujeto pasivo debe indicarlo.",
+  "@invoiceGapMissingBuyerVatId": {
+    "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
+  }
+}

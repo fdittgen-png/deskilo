@@ -12691,6 +12691,24 @@ abstract class AppLocalizations {
   /// **'Not bookable as chosen'**
   String get bookingGateBlocked;
 
+  /// #895 reverse charge: reverseChargeTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse charge for EU businesses'**
+  String get reverseChargeTitle;
+
+  /// #895 reverse charge: reverseChargeSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'A customer with a VAT number in another member state is invoiced without tax and self-assesses it (art. 196). Turn it off if you never invoice businesses abroad.'**
+  String get reverseChargeSubtitle;
+
+  /// #895 reverse charge: invoiceGapMissingBuyerVatId
+  ///
+  /// In en, this message translates to:
+  /// **'The customer\'s VAT number is missing — a reverse-charged invoice must name it.'**
+  String get invoiceGapMissingBuyerVatId;
+
   /// #903 seat day timeline: seatDayTitle
   ///
   /// In en, this message translates to:

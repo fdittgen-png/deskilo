@@ -1,0 +1,15 @@
+{
+  "@@locale": "en",
+  "reverseChargeTitle": "Reverse charge for EU businesses",
+  "@reverseChargeTitle": {
+    "description": "#895 reverse charge: reverseChargeTitle"
+  },
+  "reverseChargeSubtitle": "A customer with a VAT number in another member state is invoiced without tax and self-assesses it (art. 196). Turn it off if you never invoice businesses abroad.",
+  "@reverseChargeSubtitle": {
+    "description": "#895 reverse charge: reverseChargeSubtitle"
+  },
+  "invoiceGapMissingBuyerVatId": "The customer's VAT number is missing — a reverse-charged invoice must name it.",
+  "@invoiceGapMissingBuyerVatId": {
+    "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
+  }
+}
