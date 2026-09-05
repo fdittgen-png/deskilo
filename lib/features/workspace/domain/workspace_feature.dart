@@ -533,6 +533,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.memberPaymentTerms: FeatureManifestEntry(
     feature: WorkspaceFeature.memberPaymentTerms,
     requires: WorkspaceFeature.invoicing,
+  ),
   // #880 — the owner's own texts, `{{ text.<key> }}`, per language.
   WorkspaceFeature.reportTexts: FeatureManifestEntry(
     feature: WorkspaceFeature.reportTexts,

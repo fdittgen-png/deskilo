@@ -82,8 +82,7 @@ const Map<String, int> _baseline = {
   // 1180→1210 (2026-08-05): #496 the member-language chain on self-service docs.
   // 1220→1200 (2026-08-31): #767 scheduled expenses — the button, the
   // sweep watch and the occurrence cards join the other money actions.
-  'lib/features/money/presentation/screens/money_screen.dart': 1227, // 2026-09-05 #881 member payment conditions: effective terms threaded to every document
-  'lib/features/money/presentation/screens/money_screen.dart': 1224, // 2026-09-05 #880 reportTexts beside #887 managedProfiles after the rebase
+  'lib/features/money/presentation/screens/money_screen.dart': 1227, // 2026-09-05 #881 member payment conditions: effective terms threaded to every document // 2026-09-05 #880 reportTexts beside #887 managedProfiles after the rebase
   // 1210→1220 (2026-08-06): #512 the account card above the bill.
   // 910→950 (2026-08-04): #456 note tile + admin broadcast button —
   // the dialog itself is its own file.
@@ -121,7 +120,7 @@ const Map<String, int> _baseline = {
   // 1740→1820 (2026-08-05): #504 the write-off request dialog.
   // 1820→1910 (2026-08-05): #508 the credit-note refund dialog.
   // 1960→2000 (2026-08-14): #568 the customer-delivery send leg.
-  'lib/features/money/presentation/invoice_actions.dart': 2296, // 2026-09-02 #837 the annex question // 2026-09-04 #871 the bank block: IBAN/BIC/bank name reach a designed report, resolved once in legalMentionData for every document // 2026-09-04 #875 layout-wins hooks + the strings/features hoists they need; the engine itself lives under domain/report_layout // 2026-09-05 #886 the client identity (name, company, contacts, postal block) resolved for every document and frozen on the proforma // 2026-09-05 #881 member payment conditions: effective terms threaded to every document
+  'lib/features/money/presentation/invoice_actions.dart': 2330, // 2026-09-02 #837 the annex question // 2026-09-04 #871 the bank block: IBAN/BIC/bank name reach a designed report, resolved once in legalMentionData for every document // 2026-09-04 #875 layout-wins hooks + the strings/features hoists they need; the engine itself lives under domain/report_layout // 2026-09-05 #886 the client identity (name, company, contacts, postal block) resolved for every document and frozen on the proforma // 2026-09-05 #881 member payment conditions: effective terms threaded to every document // 2026-09-05 #880 owner texts beside #881 member terms after the rebase
   // 1920→1960 (2026-08-06): #514 quickViewInvoice + the proforma triad.
   // 1910→1920 (2026-08-06): #512 imputation candidates (adjustment
   // credits, baked-credit filter).
@@ -148,7 +147,7 @@ const Map<String, int> _baseline = {
   // 2026-09-04 #864: one more flag. This file is the feature
   // registry — it grows by ~5 lines per flag by design, and
   // splitting the registry would defeat its whole purpose.
-  'lib/features/workspace/domain/workspace_feature.dart': 680, // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries
+  'lib/features/workspace/domain/workspace_feature.dart': 700, // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase
   'lib/features/money/presentation/widgets/report_visual_editor.dart': 1000, // 2026-09-02 #822 drag, insert palette, image controls, move-to-band
   // 660→700 (2026-08-05): #494 the three further document chips + their
   // live data and letter-PDF branches.

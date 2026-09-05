@@ -1353,17 +1353,11 @@ Future<void> shareProforma(
       if (!bands.hasBands) bands = defaultBandsForDoc('proforma', l10n);
       return renderReportBands(
         bands: bands,
-        data: invoiceReportData(
-          context,
-          invoice,
-          memberTerms: memberTermsFor(ref, invoice.memberId),
-          proforma: true,
-          copy: false,
-          workspace: ref.read(currentWorkspaceProvider).value,
         data: withOwnerTexts(
           invoiceReportData(
             context,
             invoice,
+            memberTerms: memberTermsFor(ref, invoice.memberId),
             proforma: true,
             copy: false,
             workspace: ref.read(currentWorkspaceProvider).value,
@@ -1543,17 +1537,11 @@ Future<void> quickViewInvoice(
   final annexes = await askRegroupedAnnexes(context, ref, invoice);
   if (annexes == null || !context.mounted) return;
   final template = invoicePdfTemplateFor(ref);
-  final data = invoiceReportData(
-    context,
-    invoice,
-    memberTerms: memberTermsFor(ref, invoice.memberId),
-    proforma: proforma,
-    copy: _rendersCopy(ref),
-    workspace: ref.read(currentWorkspaceProvider).value,
   final data = withOwnerTexts(
     invoiceReportData(
       context,
       invoice,
+      memberTerms: memberTermsFor(ref, invoice.memberId),
       proforma: proforma,
       copy: _rendersCopy(ref),
       workspace: ref.read(currentWorkspaceProvider).value,
@@ -1581,17 +1569,14 @@ Future<void> quickViewInvoice(
   for (final source in annexes) {
     final sourceReport = renderReportBands(
       bands: bands,
-      data: invoiceReportData(
-        context,
-        source,
-        memberTerms: memberTermsFor(ref, source.memberId),
       data: withOwnerTexts(
         invoiceReportData(
           context,
           source,
-        proforma: false,
-        copy: _rendersCopy(ref),
-        workspace: ref.read(currentWorkspaceProvider).value,
+          memberTerms: memberTermsFor(ref, source.memberId),
+          proforma: false,
+          copy: _rendersCopy(ref),
+          workspace: ref.read(currentWorkspaceProvider).value,
         ),
         template.texts,
       ),
