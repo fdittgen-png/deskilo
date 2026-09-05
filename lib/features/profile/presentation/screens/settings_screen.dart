@@ -36,6 +36,7 @@ import '../../providers/profile_providers.dart';
 import '../widgets/backend_settings_tile.dart';
 import '../widgets/member_avatar.dart';
 import '../widgets/whatsapp_dialog.dart';
+import '../../../workspace/presentation/widgets/environment_tile.dart';
 
 /// Endonyms are proper nouns, identical in every UI language — deliberately
 /// const strings, not l10n keys (#147). Order matches the issue spec.
@@ -727,6 +728,9 @@ class SettingsScreen extends ConsumerWidget {
           // Push pipeline state (#424): a device without a UnifiedPush
           // distributor was silently push-less — say so, with the fix.
           const PushStatusTile(),
+          // #917 — is this space real? Owner-only, and the one setting
+          // that changes what every document says about itself.
+          const WorkspaceEnvironmentTile(),
           // #419: admins/owners flip dev mode for EVERYONE; other
           // members inherit the state without seeing the switch.
           if (ref.watch(myMemberProvider).value?.canAdminister ?? false)

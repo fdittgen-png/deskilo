@@ -38,14 +38,25 @@ class SupabaseWorkspaceRepository
     required String countryCode,
     required String currencyCode,
     required String timezone,
+    WorkspaceEnvironment environment = WorkspaceEnvironment.development,
   }) async {
     final result = await _client.rpc<dynamic>('create_workspace', params: {
       'p_name': name,
       'p_country_code': countryCode,
       'p_currency_code': currencyCode,
       'p_timezone': timezone,
+      'p_environment': environment.wire,
     });
     return result as String;
+  }
+
+  @override
+  Future<void> setWorkspaceEnvironment(
+      String workspaceId, WorkspaceEnvironment environment) async {
+    await _client.rpc<dynamic>('set_workspace_environment', params: {
+      'p_workspace_id': workspaceId,
+      'p_environment': environment.wire,
+    });
   }
 
   @override
@@ -376,6 +387,9 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         rolePermissions:
             row['role_permissions'] as Map<String, dynamic>? ?? const {},
         devMode: row['dev_mode'] as bool? ?? false,
+        // #917 — a row without the column is a space that predates
+        // 0160, and those are development spaces.
+        environment: row['environment'] as String? ?? 'dev',
         paymentInstructions:
             row['payment_instructions'] as Map<String, dynamic>? ?? const {},
         whatsappGroup: row['whatsapp_group'] as String? ?? '',

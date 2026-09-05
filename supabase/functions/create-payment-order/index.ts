@@ -258,6 +258,24 @@ Deno.serve(async (req: Request): Promise<Response> => {
     return json({ providers, missing });
   }
 
+  // #917 — a DEVELOPMENT workspace never opens a payment order: the
+  // providers below take real money from a real card. Probing the
+  // configuration above stays allowed, so a rehearsal space can be set
+  // up exactly like the real one; only the charge is refused.
+  const { data: ws } = await admin
+    .from("workspaces")
+    .select("environment")
+    .eq("id", workspaceId)
+    .maybeSingle();
+  if ((ws?.environment ?? "dev") !== "prod") {
+    return json({
+      error: "development_workspace",
+      detail:
+        "This workspace is a development one: it does not take payments. " +
+        "Declare it production to charge for real.",
+    }, 409);
+  }
+
   const provider = body.provider as Provider;
   const memberId = body.member_id as string;
   const amountCents = body.amount_cents as number;

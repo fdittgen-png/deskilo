@@ -42,6 +42,10 @@
   "@addressWindowOff": {
     "description": "Address-window option: keep the flow layout, print no window block (#869)"
   },
+  "legalIdentityAssociationRegime": "Un'associazione senza attività commerciale non è soggetta a IVA: scegliete «Fuori campo IVA», non «Esente». Il regime di esenzione richiede una partita IVA che non avete, e la fattura elettronica verrebbe respinta. Fuori campo, è il vostro numero di registro a identificare l'associazione.",
+  "@legalIdentityAssociationRegime": {
+    "description": "#919 association regime: legalIdentityAssociationRegime"
+  },
   "authSignInTitle": "Accedi",
   "authSignUpTitle": "Crea account",
   "authEmailLabel": "E-mail",
@@ -1170,6 +1174,46 @@
   "editorDeleteLevelConfirmAudit": "Eliminare questo piano? Tutti gli uffici, i tavoli e i posti su di esso vengono rimossi. Le prenotazioni che vi fanno riferimento conservano un'istantanea di testo per gli audit; le prenotazioni aperte vengono annullate.",
   "@editorDeleteLevelConfirmAudit": {
     "description": "#587 delete despite reservations — audit substitution warning"
+  },
+  "developmentBanner": "Spazio di sviluppo — qui nulla è reale",
+  "@developmentBanner": {
+    "description": "#917 workspace environment: developmentBanner"
+  },
+  "developmentWatermark": "SVILUPPO",
+  "@developmentWatermark": {
+    "description": "#917 workspace environment: developmentWatermark"
+  },
+  "environmentLabel": "Tipo di spazio",
+  "@environmentLabel": {
+    "description": "#917 workspace environment: environmentLabel"
+  },
+  "environmentHint": "Uno spazio di sviluppo lo dichiara su ogni schermata e filigrana ogni documento. Dichiaratelo di produzione solo quando le fatture che ne escono sono davvero dovute.",
+  "@environmentHint": {
+    "description": "#917 workspace environment: environmentHint"
+  },
+  "environmentDev": "Sviluppo — per provare",
+  "@environmentDev": {
+    "description": "#917 workspace environment: environmentDev"
+  },
+  "environmentProd": "Produzione — le fatture sono dovute",
+  "@environmentProd": {
+    "description": "#917 workspace environment: environmentProd"
+  },
+  "environmentSaved": "Tipo di spazio salvato.",
+  "@environmentSaved": {
+    "description": "#917 workspace environment: environmentSaved"
+  },
+  "environmentProdConfirmTitle": "Dichiarare questo spazio di produzione?",
+  "@environmentProdConfirmTitle": {
+    "description": "#917 workspace environment: environmentProdConfirmTitle"
+  },
+  "environmentProdConfirmBody": "Il banner sparisce e i documenti perdono la filigrana. Le fatture già emesse non cambiano: mantengono la filigrana che portavano al momento dell’emissione.",
+  "@environmentProdConfirmBody": {
+    "description": "#917 workspace environment: environmentProdConfirmBody"
+  },
+  "environmentProdConfirmAction": "Dichiarare di produzione",
+  "@environmentProdConfirmAction": {
+    "description": "#917 workspace environment: environmentProdConfirmAction"
   },
   "eventsPendingHeader": "In attesa della tua conferma",
   "eventAccept": "Accetta",

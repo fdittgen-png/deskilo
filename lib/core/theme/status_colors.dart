@@ -44,3 +44,23 @@ abstract final class AppStatusColors {
   static Color onSuccessOf(Brightness brightness) =>
       brightness == Brightness.dark ? onSuccessDark : onSuccess;
 }
+
+/// #917 — the workspace ENVIRONMENT, as one colour.
+///
+/// Green says the space is real; orange says it is one to try things in.
+/// Both are read against white, and neither is ever the only carrier of
+/// the state (spec §11): every surface that uses them also says the word.
+abstract final class AppEnvironmentColors {
+  /// Amber 800 / Amber 300 — the same warning family the app already
+  /// uses, dark enough for white text in light mode.
+  static const Color development = Color(0xFFB25E00);
+  static const Color developmentDark = Color(0xFFFFB74D);
+
+  static Color developmentOf(Brightness brightness) =>
+      brightness == Brightness.dark ? developmentDark : development;
+
+  /// Production reuses the success green, so "fine" looks the same
+  /// everywhere in the app.
+  static Color productionOf(Brightness brightness) =>
+      AppStatusColors.successOf(brightness);
+}

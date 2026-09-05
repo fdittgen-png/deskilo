@@ -231,6 +231,7 @@ const DOMAINS=[
 const HORIZON=[['7','7 jours'],['14','14 jours'],['30','30 jours'],['60','60 jours'],['90','90 jours (défaut)'],['120','120 jours'],['180','180 jours'],['365','1 an'],['730','2 ans']];
 const DURATIONS=[['5','5 minutes'],['10','10 minutes'],['15','15 minutes'],['30','30 minutes (défaut min.)'],['45','45 minutes'],['60','1 heure'],['90','1 h 30'],['120','2 heures'],['180','3 heures'],['240','4 heures'],['300','5 heures'],['360','6 heures'],['480','8 heures'],['600','10 heures'],['720','12 heures'],['1440','24 heures (défaut max.)']];
 const VATPERIOD=[['month','Mensuelle'],['quarter','Trimestrielle']];
+const ENVIRONMENTS=[['dev',"Développement — pour essayer : l'app l'annonce partout et filigrane chaque document"],['prod','Production — les factures qui en sortent sont réellement dues']];
 const VATEXIGIBILITY=[['invoice','Sur les débits — la TVA est due à la facture'],['payment','Sur les encaissements — la TVA est due au paiement']];
 const OUTSIDE=[['charged','Facturé (défaut) — compté comme un usage ordinaire'],['free','Gratuit — autorisé, jamais compté ni facturé'],['walkup_only','Spontané seulement — arrivée impromptue oui, réservation à l\'avance non'],['off','Interdit — rien en dehors des heures, débordement compris']];
 const GRAN=[['half_day','Demi-journées (matin / après-midi)'],['full_day','Journées entières uniquement'],['hours','Heures réelles (de–à exact, demi/journées en raccourcis)'],['minutes_60',"Créneaux d'une heure"],['minutes_30','Créneaux de 30 minutes'],['minutes_15','Créneaux de 15 minutes'],['minutes_5','Créneaux de 5 minutes'],['flexible','Plage horaire libre']];
@@ -239,7 +240,7 @@ const WD=[['1','lun.'],['2','mar.'],['3','mer.'],['4','jeu.'],['5','ven.'],['6',
 
 // ------------------------------------------------------------------ state
 const DEFAULTS={
- name:'',country:'FR',currency:'EUR',timezone:'Europe/Paris',language:'',address:'',whatsapp:'',
+ name:'',country:'FR',currency:'EUR',timezone:'Europe/Paris',environment:'dev',language:'',address:'',whatsapp:'',
  weekdays:['1','2','3','4','5'],granularity:'half_day',dayStart:'08:00',boundary:'12:00',dayEnd:'17:00',closures:[],
  halfDayHours:'4',fullDayHours:'8',deskOpacity:'100',
  horizonDays:'90',minDuration:'30',maxDuration:'1440',
@@ -392,6 +393,7 @@ const STEPS=[
 {id:'identity',title:'Identité',why:"Le nom, le pays et la devise déterminent tout ce qui suit : les devises et fuseaux proposés, le format des factures, les moyens de paiement, la TVA.",
  build(){return[
   input("Nom de l'espace *",'name','Le nom affiché partout : app, factures, invitations.','text','','identity'),
+  selectEl("Type d'espace",'environment',ENVIRONMENTS,"Un espace de développement l'annonce sur chaque écran et filigrane « DÉVELOPPEMENT » sur chaque document. Ne choisissez « production » que si les factures qui en sortiront sont réellement dues. Par défaut : développement.",null,'identity'),
   h('div',{class:'row'},selectEl('Pays','country',COUNTRIES.map(c=>[c[0],c[1]]),"Propose la devise, le fuseau et les taux de TVA usuels ; décide de la facture électronique (UE) et des coordonnées bancaires demandées (IBAN, sort code, routing…).",v=>{const c=COUNTRIES.find(x=>x[0]===v);if(c){S.currency=c[2];S.timezone=c[3];save()}},'region'),
    selectEl('Devise','currency',CURRENCIES.map(c=>[c,c]),"Code ISO 4217. L'app connaît le nombre de décimales de chacune (le yen n'en a pas, le dinar en a trois).",null,'region')),
   selectEl('Fuseau horaire','timezone',TIMEZONES.map(t=>[t,t]),"Nom IANA. Tous les créneaux de réservation s'y ancrent ; chaque membre peut afficher l'heure dans le sien.",null,'region'),
@@ -709,7 +711,7 @@ function exportXml(){
  push('<?xml version="1.0" encoding="UTF-8"?>');
  push('<deskilo-workspace version="2">');
  // settings — app-importable
- push(`  <settings name="${esc(S.name)}" country="${esc(S.country)}" currency="${esc(S.currency)}" timezone="${esc(S.timezone)}">`);
+ push(`  <settings name="${esc(S.name)}" country="${esc(S.country)}" currency="${esc(S.currency)}" timezone="${esc(S.timezone)}" environment="${esc(S.environment)}">`);
  for(const[k]of FEATURES)push(`    <feature key="${k}" enabled="${!!S.features[k]}"/>`);
  for(const[k,v]of Object.entries(S.pay))if(String(v).trim())push(`    <payment-instruction key="${k}" value="${esc(v.trim())}"/>`);
  push('  </settings>');
@@ -788,7 +790,7 @@ function parseBack(text){
  const doc=new DOMParser().parseFromString(text,'application/xml');
  if(doc.querySelector('parsererror'))throw new Error('XML mal formé');
  const root=doc.documentElement;if(root.tagName!=='deskilo-workspace')throw new Error('racine inattendue');
- const st=root.querySelector('settings');if(st){S.name=st.getAttribute('name')||'';S.country=st.getAttribute('country')||'FR';S.currency=st.getAttribute('currency')||'EUR';S.timezone=st.getAttribute('timezone')||'Europe/Paris';
+ const st=root.querySelector('settings');if(st){S.name=st.getAttribute('name')||'';S.country=st.getAttribute('country')||'FR';S.currency=st.getAttribute('currency')||'EUR';S.timezone=st.getAttribute('timezone')||'Europe/Paris';S.environment=st.getAttribute('environment')||'dev';
   st.querySelectorAll('feature').forEach(f=>S.features[f.getAttribute('key')]=f.getAttribute('enabled')==='true');
   Object.keys(S.pay).forEach(k=>S.pay[k]='');st.querySelectorAll('payment-instruction').forEach(p=>{S.pay[p.getAttribute('key')]=p.getAttribute('value')||''});}
  S.accessories=[...root.querySelectorAll('accessories > accessory')].map(a=>({name:a.getAttribute('name'),supp:String((parseInt(a.getAttribute('supplement-cents'))||0)/100)}));

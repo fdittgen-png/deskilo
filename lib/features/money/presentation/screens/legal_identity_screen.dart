@@ -328,6 +328,25 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 ),
               ),
             ),
+          // #919 — an ASSOCIATION that charges no VAT is out of the
+          // SCOPE of it, not exempt within the scope. The two look
+          // interchangeable on this screen and are not: 'exempt' demands
+          // a seller VAT identifier (BR-E-02) that a non-profit does not
+          // have, so its e-invoice is refused by the validator with a
+          // message about a missing number nobody can supply. Out of
+          // scope, BR-O-02 forbids that number and the registration one
+          // identifies the seller instead — which the association has.
+          if (_sellerKind == 'association' && _regime == VatRegime.exempt)
+            InlineBanner(
+              key: const ValueKey('legal-identity-association-regime'),
+              icon: Icons.info_outline,
+              text: l10n?.legalIdentityAssociationRegime ??
+                  'A non-profit association with no trading activity is '
+                      'not subject to VAT: choose "Outside the scope of '
+                      'VAT", not "Exempt". The exempt scheme requires a '
+                      'VAT number you do not have, and the e-invoice '
+                      'would be rejected.',
+            ),
           if (_regime == VatRegime.vatRegistered && rates.isEmpty)
             InlineBanner(
               key: const ValueKey('legal-identity-vat-warning'),

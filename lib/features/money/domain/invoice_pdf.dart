@@ -24,6 +24,7 @@ class InvoicePdfStrings {
     this.proforma = '',
     this.copy = '',
     this.settledIn = '',
+    this.development = '',
     required this.replaces,
     required this.description,
     required this.charges,
@@ -65,6 +66,11 @@ class InvoicePdfStrings {
   /// #831 — the whole watermark of a settled source ("REGROUPED IN
   /// INV-…"); '' on every other document.
   final String settledIn;
+
+  /// #917 — the word a document printed by a DEVELOPMENT workspace
+  /// carries across the page. '' from a production workspace, which is
+  /// what makes its absence meaningful.
+  final String development;
 
   /// Label before the replaced invoice's number on a replacement (0061).
   final String replaces;
@@ -373,13 +379,18 @@ Future<Uint8List> buildInvoicePdf({
     // page of it, annex included.
     // #837 — an appended reference carries the stamp that says where it
     // went; everything else follows the document's own state.
-    final watermark = watermarkOverride ??
-        invoiceWatermark(
-          strings,
-          proforma: proforma,
-          voided: invoice.isVoided,
-          copy: copy,
-        );
+    // #917 — the development mark is absolute: even an appended annex,
+    // which normally carries the stamp saying where it went, is first of
+    // all a page that is not real.
+    final watermark = strings.development.isNotEmpty
+        ? strings.development.toUpperCase()
+        : watermarkOverride ??
+            invoiceWatermark(
+              strings,
+              proforma: proforma,
+              voided: invoice.isVoided,
+              copy: copy,
+            );
     // Its size follows its LENGTH: 'ERRATA' and 'FEHLERHAFT' must both land
     // inside the sheet. (The package's own Watermark scales to the rotated
     // bounding box it computes, which runs the ends off the corners.)
@@ -912,6 +923,12 @@ Future<Uint8List> buildBandedLetterPdf({
   required String documentTitle,
   required pw.Font baseFont,
   required pw.Font boldFont,
+  /// #917 — 'DEVELOPMENT' when the workspace is not a real one. Every
+  /// report the app prints goes through here or through the positioned
+  /// engine, and both carry it: a statement, an agreement, a VAT report
+  /// or a reminder from a rehearsal space must be as unmistakable as
+  /// the invoices are.
+  String watermark = '',
 }) {
   final doc = pw.Document(title: documentTitle, producer: _producer);
   doc.addPage(
@@ -920,6 +937,7 @@ Future<Uint8List> buildBandedLetterPdf({
         pageFormat: PdfPageFormat.a4,
         theme: pw.ThemeData.withFont(base: baseFont, bold: boldFont),
         margin: const pw.EdgeInsets.fromLTRB(48, 44, 48, 44),
+        buildForeground: watermarkForeground(watermark),
       ),
       footer: (context) => context.pageNumber > 1
           ? pw.Container(
@@ -944,6 +962,33 @@ Future<Uint8List> buildBandedLetterPdf({
   return doc.save();
 }
 
+/// #917 — the diagonal mark, painted the same way on EVERY document
+/// this app produces. Its size follows the word's LENGTH so a long one
+/// ('DÉVELOPPEMENT', 'FEHLERHAFT') still lands inside the sheet.
+pw.Widget Function(pw.Context)? watermarkForeground(String watermark) {
+  if (watermark.isEmpty) return null;
+  final markSize = math.min(120.0, 820 / math.max(watermark.length, 1));
+  return (context) => pw.FullPage(
+        ignoreMargins: true,
+        child: pw.Opacity(
+          opacity: _watermarkOpacity,
+          child: pw.Center(
+            child: pw.Transform.rotate(
+              angle: math.pi / 4,
+              child: pw.Text(
+                watermark,
+                style: pw.TextStyle(
+                  fontSize: markSize,
+                  color: _watermark,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+}
+
 /// #831 — which stamp a document wears, by priority: a proforma says so
 /// first; a source regrouped into a settlement says WHERE it went; a
 /// voided one says so; a copy says it is one. One string, or none.
@@ -953,6 +998,14 @@ String invoiceWatermark(
   required bool voided,
   required bool copy,
 }) {
+  // #917 — "this is not a real document" outranks every other thing the
+  // page could say about itself. A rehearsal invoice that is ALSO a
+  // proforma, a copy or an erratum is, first and last, not real; the
+  // banner and the header still carry the finer state, and the one word
+  // running across the sheet carries the one that matters at a glance.
+  if (strings.development.isNotEmpty) {
+    return strings.development.toUpperCase();
+  }
   if (proforma) return strings.proforma.toUpperCase();
   if (strings.settledIn.isNotEmpty) return strings.settledIn.toUpperCase();
   if (voided && strings.voidedWatermark.isNotEmpty) {

@@ -67,6 +67,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get addressWindowOff => 'Nessuna finestra';
 
   @override
+  String get legalIdentityAssociationRegime =>
+      'Un\'associazione senza attività commerciale non è soggetta a IVA: scegliete «Fuori campo IVA», non «Esente». Il regime di esenzione richiede una partita IVA che non avete, e la fattura elettronica verrebbe respinta. Fuori campo, è il vostro numero di registro a identificare l\'associazione.';
+
+  @override
   String get authSignInTitle => 'Accedi';
 
   @override
@@ -1815,6 +1819,39 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get editorDeleteLevelConfirmAudit =>
       'Eliminare questo piano? Tutti gli uffici, i tavoli e i posti su di esso vengono rimossi. Le prenotazioni che vi fanno riferimento conservano un\'istantanea di testo per gli audit; le prenotazioni aperte vengono annullate.';
+
+  @override
+  String get developmentBanner => 'Spazio di sviluppo — qui nulla è reale';
+
+  @override
+  String get developmentWatermark => 'SVILUPPO';
+
+  @override
+  String get environmentLabel => 'Tipo di spazio';
+
+  @override
+  String get environmentHint =>
+      'Uno spazio di sviluppo lo dichiara su ogni schermata e filigrana ogni documento. Dichiaratelo di produzione solo quando le fatture che ne escono sono davvero dovute.';
+
+  @override
+  String get environmentDev => 'Sviluppo — per provare';
+
+  @override
+  String get environmentProd => 'Produzione — le fatture sono dovute';
+
+  @override
+  String get environmentSaved => 'Tipo di spazio salvato.';
+
+  @override
+  String get environmentProdConfirmTitle =>
+      'Dichiarare questo spazio di produzione?';
+
+  @override
+  String get environmentProdConfirmBody =>
+      'Il banner sparisce e i documenti perdono la filigrana. Le fatture già emesse non cambiano: mantengono la filigrana che portavano al momento dell’emissione.';
+
+  @override
+  String get environmentProdConfirmAction => 'Dichiarare di produzione';
 
   @override
   String get eventsPendingHeader => 'In attesa della tua conferma';

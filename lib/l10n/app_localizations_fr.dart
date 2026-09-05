@@ -67,6 +67,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get addressWindowOff => 'Sans fenêtre';
 
   @override
+  String get legalIdentityAssociationRegime =>
+      'Une association sans activité lucrative n\'est pas assujettie à la TVA : choisissez « Hors du champ de la TVA », pas « Franchise ». La franchise exige un numéro de TVA que vous n\'avez pas, et la facture électronique serait rejetée. Hors du champ, c\'est votre SIRET qui identifie l\'association.';
+
+  @override
   String get authSignInTitle => 'Connexion';
 
   @override
@@ -1815,6 +1819,40 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get editorDeleteLevelConfirmAudit =>
       'Supprimer ce niveau ? Tous les bureaux, tables et places qui s\'y trouvent sont retirés. Les réservations qui y font référence gardent un instantané texte pour les audits ; les réservations ouvertes sont annulées.';
+
+  @override
+  String get developmentBanner =>
+      'Espace de développement — rien ici n\'est réel';
+
+  @override
+  String get developmentWatermark => 'DÉVELOPPEMENT';
+
+  @override
+  String get environmentLabel => 'Type d’espace';
+
+  @override
+  String get environmentHint =>
+      'Un espace de développement l\'annonce sur chaque écran et filigrane chaque document. Ne le déclarez « production » que lorsque les factures qui en sortent sont réellement dues.';
+
+  @override
+  String get environmentDev => 'Développement — pour essayer';
+
+  @override
+  String get environmentProd => 'Production — les factures sont dues';
+
+  @override
+  String get environmentSaved => 'Type d’espace enregistré.';
+
+  @override
+  String get environmentProdConfirmTitle =>
+      'Déclarer cet espace en production ?';
+
+  @override
+  String get environmentProdConfirmBody =>
+      'Le bandeau disparaît et les documents perdent leur filigrane. Les factures déjà émises ne changent pas : elles gardent le filigrane qu\'elles portaient à l\'émission.';
+
+  @override
+  String get environmentProdConfirmAction => 'Déclarer en production';
 
   @override
   String get eventsPendingHeader => 'En attente de votre confirmation';

@@ -24,6 +24,11 @@ abstract class WorkspaceRepository {
     required String countryCode,
     required String currencyCode,
     required String timezone,
+
+    /// #917 — real, or a place to try things out. Development by
+    /// default: the safe answer to "is this real?" is no until somebody
+    /// says otherwise.
+    WorkspaceEnvironment environment = WorkspaceEnvironment.development,
   });
 
   /// Joins via invite code. Returns the workspace id. The granted role is
@@ -293,6 +298,13 @@ abstract class WorkspaceRepository {
   /// Workspace-wide developer mode (#419, 0081): admin/owner only —
   /// the server enforces via set_dev_mode.
   Future<void> setDevMode(String workspaceId, bool enabled);
+
+  /// #917 — declares the workspace real, or back to a development one.
+  /// OWNER only, enforced by `set_workspace_environment` (0160): an
+  /// admin cannot quietly take the development mark off the documents
+  /// they issue.
+  Future<void> setWorkspaceEnvironment(
+      String workspaceId, WorkspaceEnvironment environment);
 
   /// ISO weekdays (1=Mon..7=Sun) the workspace is open on (#127); read
   /// from booking_rules, defaults to Mon–Fri when the key is absent.

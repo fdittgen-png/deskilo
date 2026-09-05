@@ -173,6 +173,21 @@ rules for images:
 - The five guides stay structurally parallel: same image names, same
   heading skeleton. Verify with per-name `<img` counts when editing.
 
+## The development mark has no feature flag (#917)
+
+Every functionality lives behind a `WorkspaceFeature` — except this one.
+A workspace's environment (`dev` / `prod`) drives the strip on every
+screen and the watermark on every document, and a marker that can be
+switched off marks nothing: the flag would be the first thing a
+confused workspace turned off, which is precisely when the mark matters.
+It is infrastructure, like the invite code, not a feature.
+
+Two rules that go with it: the watermark OUTRANKS every other stamp a
+page can carry (proforma, copy, erroneous, regrouped) — "this is not
+real" is the fact a reader needs first — and only the OWNER may declare
+a space production, enforced in `set_workspace_environment`, so an admin
+cannot take the mark off the documents they issue.
+
 ## Validation domains grow in FOUR places (#767/#769)
 
 A new server-side validation domain (`events_type_check` +

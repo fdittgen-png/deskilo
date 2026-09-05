@@ -77,6 +77,10 @@
   "@addressWindowOff": {
     "description": "Address-window option: keep the flow layout, print no window block (#869)"
   },
+  "legalIdentityAssociationRegime": "A non-profit association with no trading activity is not subject to VAT: choose \"Outside the scope of VAT\", not \"Exempt\". The exempt scheme requires a VAT number you do not have, and the e-invoice would be rejected. Outside the scope, your registration number identifies the association.",
+  "@legalIdentityAssociationRegime": {
+    "description": "#919 association regime: legalIdentityAssociationRegime"
+  },
   "authSignInTitle": "Sign in",
   "@authSignInTitle": {
     "description": "Heading on the auth screen in sign-in mode"
@@ -2137,6 +2141,46 @@
   "editorDeleteLevelConfirmAudit": "Delete this level? All offices, desks and seats on it are removed. Bookings that reference them keep a text snapshot for audits; open bookings are cancelled.",
   "@editorDeleteLevelConfirmAudit": {
     "description": "#587 delete despite reservations — audit substitution warning"
+  },
+  "developmentBanner": "Development workspace — nothing here is real",
+  "@developmentBanner": {
+    "description": "#917 workspace environment: developmentBanner"
+  },
+  "developmentWatermark": "DEVELOPMENT",
+  "@developmentWatermark": {
+    "description": "#917 workspace environment: developmentWatermark"
+  },
+  "environmentLabel": "Workspace type",
+  "@environmentLabel": {
+    "description": "#917 workspace environment: environmentLabel"
+  },
+  "environmentHint": "A development workspace says so on every screen and watermarks every document. Declare it production only when the invoices leaving it are genuinely owed.",
+  "@environmentHint": {
+    "description": "#917 workspace environment: environmentHint"
+  },
+  "environmentDev": "Development — for trying things out",
+  "@environmentDev": {
+    "description": "#917 workspace environment: environmentDev"
+  },
+  "environmentProd": "Production — the invoices are owed",
+  "@environmentProd": {
+    "description": "#917 workspace environment: environmentProd"
+  },
+  "environmentSaved": "Workspace type saved.",
+  "@environmentSaved": {
+    "description": "#917 workspace environment: environmentSaved"
+  },
+  "environmentProdConfirmTitle": "Declare this workspace production?",
+  "@environmentProdConfirmTitle": {
+    "description": "#917 workspace environment: environmentProdConfirmTitle"
+  },
+  "environmentProdConfirmBody": "The banner goes away and documents lose their watermark. Invoices already issued do not change: they keep the watermark they carried when they were issued.",
+  "@environmentProdConfirmBody": {
+    "description": "#917 workspace environment: environmentProdConfirmBody"
+  },
+  "environmentProdConfirmAction": "Declare production",
+  "@environmentProdConfirmAction": {
+    "description": "#917 workspace environment: environmentProdConfirmAction"
   },
   "eventsPendingHeader": "Waiting for your confirmation",
   "@eventsPendingHeader": {

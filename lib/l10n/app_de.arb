@@ -42,6 +42,10 @@
   "@addressWindowOff": {
     "description": "Address-window option: keep the flow layout, print no window block (#869)"
   },
+  "legalIdentityAssociationRegime": "Ein gemeinnütziger Verein ohne wirtschaftliche Tätigkeit unterliegt nicht der Umsatzsteuer: Wählen Sie „Nicht steuerbar“, nicht „Steuerbefreit“. Die Befreiung verlangt eine USt-IdNr., die Sie nicht haben, und die E-Rechnung würde abgelehnt. Nicht steuerbar identifiziert Ihre Registernummer den Verein.",
+  "@legalIdentityAssociationRegime": {
+    "description": "#919 association regime: legalIdentityAssociationRegime"
+  },
   "authSignInTitle": "Anmelden",
   "authSignUpTitle": "Konto erstellen",
   "authEmailLabel": "E-Mail",
@@ -1170,6 +1174,46 @@
   "editorDeleteLevelConfirmAudit": "Diese Ebene löschen? Alle Büros, Tische und Sitzplätze darauf werden entfernt. Buchungen, die darauf verweisen, behalten einen Text-Schnappschuss für Audits; offene Buchungen werden storniert.",
   "@editorDeleteLevelConfirmAudit": {
     "description": "#587 delete despite reservations — audit substitution warning"
+  },
+  "developmentBanner": "Entwicklungs-Space — nichts hier ist echt",
+  "@developmentBanner": {
+    "description": "#917 workspace environment: developmentBanner"
+  },
+  "developmentWatermark": "ENTWICKLUNG",
+  "@developmentWatermark": {
+    "description": "#917 workspace environment: developmentWatermark"
+  },
+  "environmentLabel": "Art des Space",
+  "@environmentLabel": {
+    "description": "#917 workspace environment: environmentLabel"
+  },
+  "environmentHint": "Ein Entwicklungs-Space sagt das auf jedem Bildschirm und versieht jedes Dokument mit einem Wasserzeichen. Erklären Sie ihn erst dann zur Produktion, wenn die Rechnungen daraus wirklich geschuldet sind.",
+  "@environmentHint": {
+    "description": "#917 workspace environment: environmentHint"
+  },
+  "environmentDev": "Entwicklung — zum Ausprobieren",
+  "@environmentDev": {
+    "description": "#917 workspace environment: environmentDev"
+  },
+  "environmentProd": "Produktion — die Rechnungen sind geschuldet",
+  "@environmentProd": {
+    "description": "#917 workspace environment: environmentProd"
+  },
+  "environmentSaved": "Art des Space gespeichert.",
+  "@environmentSaved": {
+    "description": "#917 workspace environment: environmentSaved"
+  },
+  "environmentProdConfirmTitle": "Diesen Space zur Produktion erklären?",
+  "@environmentProdConfirmTitle": {
+    "description": "#917 workspace environment: environmentProdConfirmTitle"
+  },
+  "environmentProdConfirmBody": "Das Band verschwindet und Dokumente verlieren ihr Wasserzeichen. Bereits ausgestellte Rechnungen ändern sich nicht: Sie behalten das Wasserzeichen, das sie bei der Ausstellung trugen.",
+  "@environmentProdConfirmBody": {
+    "description": "#917 workspace environment: environmentProdConfirmBody"
+  },
+  "environmentProdConfirmAction": "Zur Produktion erklären",
+  "@environmentProdConfirmAction": {
+    "description": "#917 workspace environment: environmentProdConfirmAction"
   },
   "eventsPendingHeader": "Wartet auf deine Bestätigung",
   "eventAccept": "Annehmen",

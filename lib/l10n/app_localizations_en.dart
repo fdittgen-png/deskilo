@@ -67,6 +67,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addressWindowOff => 'No window';
 
   @override
+  String get legalIdentityAssociationRegime =>
+      'A non-profit association with no trading activity is not subject to VAT: choose \"Outside the scope of VAT\", not \"Exempt\". The exempt scheme requires a VAT number you do not have, and the e-invoice would be rejected. Outside the scope, your registration number identifies the association.';
+
+  @override
   String get authSignInTitle => 'Sign in';
 
   @override
@@ -1803,6 +1807,40 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get editorDeleteLevelConfirmAudit =>
       'Delete this level? All offices, desks and seats on it are removed. Bookings that reference them keep a text snapshot for audits; open bookings are cancelled.';
+
+  @override
+  String get developmentBanner =>
+      'Development workspace — nothing here is real';
+
+  @override
+  String get developmentWatermark => 'DEVELOPMENT';
+
+  @override
+  String get environmentLabel => 'Workspace type';
+
+  @override
+  String get environmentHint =>
+      'A development workspace says so on every screen and watermarks every document. Declare it production only when the invoices leaving it are genuinely owed.';
+
+  @override
+  String get environmentDev => 'Development — for trying things out';
+
+  @override
+  String get environmentProd => 'Production — the invoices are owed';
+
+  @override
+  String get environmentSaved => 'Workspace type saved.';
+
+  @override
+  String get environmentProdConfirmTitle =>
+      'Declare this workspace production?';
+
+  @override
+  String get environmentProdConfirmBody =>
+      'The banner goes away and documents lose their watermark. Invoices already issued do not change: they keep the watermark they carried when they were issued.';
+
+  @override
+  String get environmentProdConfirmAction => 'Declare production';
 
   @override
   String get eventsPendingHeader => 'Waiting for your confirmation';

@@ -1,0 +1,43 @@
+{
+  "@@locale": "it",
+  "developmentBanner": "Spazio di sviluppo — qui nulla è reale",
+  "@developmentBanner": {
+    "description": "#917 workspace environment: developmentBanner"
+  },
+  "developmentWatermark": "SVILUPPO",
+  "@developmentWatermark": {
+    "description": "#917 workspace environment: developmentWatermark"
+  },
+  "environmentLabel": "Tipo di spazio",
+  "@environmentLabel": {
+    "description": "#917 workspace environment: environmentLabel"
+  },
+  "environmentHint": "Uno spazio di sviluppo lo dichiara su ogni schermata e filigrana ogni documento. Dichiaratelo di produzione solo quando le fatture che ne escono sono davvero dovute.",
+  "@environmentHint": {
+    "description": "#917 workspace environment: environmentHint"
+  },
+  "environmentDev": "Sviluppo — per provare",
+  "@environmentDev": {
+    "description": "#917 workspace environment: environmentDev"
+  },
+  "environmentProd": "Produzione — le fatture sono dovute",
+  "@environmentProd": {
+    "description": "#917 workspace environment: environmentProd"
+  },
+  "environmentSaved": "Tipo di spazio salvato.",
+  "@environmentSaved": {
+    "description": "#917 workspace environment: environmentSaved"
+  },
+  "environmentProdConfirmTitle": "Dichiarare questo spazio di produzione?",
+  "@environmentProdConfirmTitle": {
+    "description": "#917 workspace environment: environmentProdConfirmTitle"
+  },
+  "environmentProdConfirmBody": "Il banner sparisce e i documenti perdono la filigrana. Le fatture già emesse non cambiano: mantengono la filigrana che portavano al momento dell’emissione.",
+  "@environmentProdConfirmBody": {
+    "description": "#917 workspace environment: environmentProdConfirmBody"
+  },
+  "environmentProdConfirmAction": "Dichiarare di produzione",
+  "@environmentProdConfirmAction": {
+    "description": "#917 workspace environment: environmentProdConfirmAction"
+  }
+}

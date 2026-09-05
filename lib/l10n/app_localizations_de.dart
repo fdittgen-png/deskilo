@@ -67,6 +67,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get addressWindowOff => 'Kein Fenster';
 
   @override
+  String get legalIdentityAssociationRegime =>
+      'Ein gemeinnütziger Verein ohne wirtschaftliche Tätigkeit unterliegt nicht der Umsatzsteuer: Wählen Sie „Nicht steuerbar“, nicht „Steuerbefreit“. Die Befreiung verlangt eine USt-IdNr., die Sie nicht haben, und die E-Rechnung würde abgelehnt. Nicht steuerbar identifiziert Ihre Registernummer den Verein.';
+
+  @override
   String get authSignInTitle => 'Anmelden';
 
   @override
@@ -1815,6 +1819,39 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get editorDeleteLevelConfirmAudit =>
       'Diese Ebene löschen? Alle Büros, Tische und Sitzplätze darauf werden entfernt. Buchungen, die darauf verweisen, behalten einen Text-Schnappschuss für Audits; offene Buchungen werden storniert.';
+
+  @override
+  String get developmentBanner => 'Entwicklungs-Space — nichts hier ist echt';
+
+  @override
+  String get developmentWatermark => 'ENTWICKLUNG';
+
+  @override
+  String get environmentLabel => 'Art des Space';
+
+  @override
+  String get environmentHint =>
+      'Ein Entwicklungs-Space sagt das auf jedem Bildschirm und versieht jedes Dokument mit einem Wasserzeichen. Erklären Sie ihn erst dann zur Produktion, wenn die Rechnungen daraus wirklich geschuldet sind.';
+
+  @override
+  String get environmentDev => 'Entwicklung — zum Ausprobieren';
+
+  @override
+  String get environmentProd => 'Produktion — die Rechnungen sind geschuldet';
+
+  @override
+  String get environmentSaved => 'Art des Space gespeichert.';
+
+  @override
+  String get environmentProdConfirmTitle =>
+      'Diesen Space zur Produktion erklären?';
+
+  @override
+  String get environmentProdConfirmBody =>
+      'Das Band verschwindet und Dokumente verlieren ihr Wasserzeichen. Bereits ausgestellte Rechnungen ändern sich nicht: Sie behalten das Wasserzeichen, das sie bei der Ausstellung trugen.';
+
+  @override
+  String get environmentProdConfirmAction => 'Zur Produktion erklären';
 
   @override
   String get eventsPendingHeader => 'Wartet auf deine Bestätigung';

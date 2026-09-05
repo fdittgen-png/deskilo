@@ -1,0 +1,7 @@
+{
+  "@@locale": "de",
+  "legalIdentityAssociationRegime": "Ein gemeinnütziger Verein ohne wirtschaftliche Tätigkeit unterliegt nicht der Umsatzsteuer: Wählen Sie „Nicht steuerbar“, nicht „Steuerbefreit“. Die Befreiung verlangt eine USt-IdNr., die Sie nicht haben, und die E-Rechnung würde abgelehnt. Nicht steuerbar identifiziert Ihre Registernummer den Verein.",
+  "@legalIdentityAssociationRegime": {
+    "description": "#919 association regime: legalIdentityAssociationRegime"
+  }
+}
