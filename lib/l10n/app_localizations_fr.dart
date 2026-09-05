@@ -7651,6 +7651,19 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un taux encore utilisé par une facture ou un service est conservé, désactivé.';
 
   @override
+  String get assistantPrefix => 'Assistant';
+
+  @override
+  String get settlementStepPick => 'Choisir les factures';
+
+  @override
+  String get settlementSummaryHint =>
+      'Ces factures sont regroupées dans un document de règlement ; chacune reste lisible derrière lui.';
+
+  @override
+  String get repartitionStepExpense => 'La dépense';
+
+  @override
   String get onboardingTitle => 'Bienvenue sur DesKilo';
 
   @override

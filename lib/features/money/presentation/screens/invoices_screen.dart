@@ -114,7 +114,7 @@ class InvoicesScreen extends ConsumerWidget {
         (canIssue && features.contains(WorkspaceFeature.expenseRepartition))
             ? IconButton(
                 key: const ValueKey('invoice-distribute-button'),
-                tooltip: l10n?.repartitionAction ?? 'Distribute an expense',
+                tooltip: '${l10n?.assistantPrefix ?? 'Assistant'} · ${l10n?.repartitionAction ?? 'Distribute an expense'}',
                 icon: const Icon(Icons.call_split),
                 onPressed: () => showExpenseRepartitionSheet(context, ref),
               )
@@ -124,7 +124,7 @@ class InvoicesScreen extends ConsumerWidget {
         (canIssue && features.contains(WorkspaceFeature.invoicingWizard))
             ? IconButton(
                 key: const ValueKey('invoice-wizard-button'),
-                tooltip: l10n?.invoiceWizardAction ?? 'Month-close wizard',
+                tooltip: '${l10n?.assistantPrefix ?? 'Assistant'} · ${l10n?.invoiceWizardAction ?? 'Month-close wizard'}',
                 icon: const Icon(Icons.auto_fix_high_outlined),
                 onPressed: () => openInvoicingWizard(context),
               )
@@ -134,7 +134,7 @@ class InvoicesScreen extends ConsumerWidget {
         (canIssue && features.contains(WorkspaceFeature.invoiceSettlement))
             ? IconButton(
                 key: const ValueKey('invoice-settlement'),
-                tooltip: l10n?.settlementAction ?? 'Regroup into one invoice',
+                tooltip: '${l10n?.assistantPrefix ?? 'Assistant'} · ${l10n?.settlementAction ?? 'Regroup into one invoice'}',
                 icon: const Icon(Icons.merge_outlined),
                 onPressed: () => showSettlementSheet(context, ref),
               )

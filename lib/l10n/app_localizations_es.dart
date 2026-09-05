@@ -7628,6 +7628,19 @@ class AppLocalizationsEs extends AppLocalizations {
       'Un tipo que todavía usa una factura o un servicio se conserva, desactivado.';
 
   @override
+  String get assistantPrefix => 'Asistente';
+
+  @override
+  String get settlementStepPick => 'Elegir facturas';
+
+  @override
+  String get settlementSummaryHint =>
+      'Estas facturas se agrupan en un documento de liquidación; cada una sigue legible detrás.';
+
+  @override
+  String get repartitionStepExpense => 'El gasto';
+
+  @override
   String get onboardingTitle => 'Bienvenido a DesKilo';
 
   @override

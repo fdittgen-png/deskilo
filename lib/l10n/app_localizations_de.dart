@@ -7638,6 +7638,19 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein Satz, den eine Rechnung oder eine Leistung noch nutzt, bleibt erhalten und wird deaktiviert.';
 
   @override
+  String get assistantPrefix => 'Assistent';
+
+  @override
+  String get settlementStepPick => 'Rechnungen wählen';
+
+  @override
+  String get settlementSummaryHint =>
+      'Diese Rechnungen werden in einem Abrechnungsbeleg zusammengefasst; jede bleibt dahinter lesbar.';
+
+  @override
+  String get repartitionStepExpense => 'Die Ausgabe';
+
+  @override
   String get onboardingTitle => 'Willkommen bei DesKilo';
 
   @override

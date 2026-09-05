@@ -7641,6 +7641,19 @@ class AppLocalizationsIt extends AppLocalizations {
       'Un\'aliquota ancora usata da una fattura o da un servizio viene conservata, disattivata.';
 
   @override
+  String get assistantPrefix => 'Assistente';
+
+  @override
+  String get settlementStepPick => 'Scegli le fatture';
+
+  @override
+  String get settlementSummaryHint =>
+      'Queste fatture vengono raggruppate in un documento di saldo; ognuna resta leggibile dietro di esso.';
+
+  @override
+  String get repartitionStepExpense => 'La spesa';
+
+  @override
   String get onboardingTitle => 'Benvenuto su DesKilo';
 
   @override

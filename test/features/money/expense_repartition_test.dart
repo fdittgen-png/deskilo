@@ -98,6 +98,9 @@ void main() {
     await tester.enterText(
         find.byKey(const ValueKey('repartition-amount')), '100');
     await tester.pumpAndSettle();
+    // #872 — the shares are the assistant's second step.
+    await tester.tap(find.byKey(const ValueKey('wizard-next')));
+    await tester.pumpAndSettle();
     expect(_share(tester, 'member-1'), contains('33.34'));
     expect(_share(tester, 'member-2'), contains('33.33'));
     expect(find.byKey(const ValueKey('repartition-sum')), findsOneWidget);
@@ -145,6 +148,8 @@ void main() {
         find.byKey(const ValueKey('repartition-amount')), '30');
     await tester.tap(find.byKey(const ValueKey('repartition-reverse')));
     await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('wizard-next')));
+    await tester.pumpAndSettle();
     expect(_share(tester, 'member-1'), contains('-'));
 
     await tester.tap(find.text('Custom key'));
@@ -187,6 +192,8 @@ void main() {
         find.byKey(const ValueKey('repartition-title')), 'Chair');
     await tester.enterText(
         find.byKey(const ValueKey('repartition-amount')), '90');
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('wizard-next')));
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(const ValueKey('repartition-submit')));
     await tester.tap(find.byKey(const ValueKey('repartition-submit')));
