@@ -1339,7 +1339,9 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
     colorProfile: icc.buffer.asUint8List(),
     template: invoicePdfTemplateFor(ref),
     workspace: ref.read(currentWorkspaceProvider).value,
-    reportImage: (name) => ref.read(reportImageBytesProvider(name).future),
+    // #920 — through layoutImage, so the shipped layouts' `logo`
+    // resolves to whatever the owner actually called theirs.
+    reportImage: (name) => layoutImage(ref, name),
   );
   return (
     bytes: pdf.bytes,
@@ -1477,7 +1479,9 @@ Future<void> shareProforma(
         proforma: true,
         template: invoicePdfTemplateFor(ref),
         workspace: ref.read(currentWorkspaceProvider).value,
-        reportImage: (name) => ref.read(reportImageBytesProvider(name).future),
+        // #920 — through layoutImage, so the shipped layouts' `logo`
+    // resolves to whatever the owner actually called theirs.
+    reportImage: (name) => layoutImage(ref, name),
       );
       return (bytes: Uint8List.fromList(pdf.bytes), fileName: pdf.fileName);
     },
@@ -1621,7 +1625,9 @@ Future<void> downloadInvoicePdf(
         annexInvoices: annexes,
         template: invoicePdfTemplateFor(ref),
         workspace: ref.read(currentWorkspaceProvider).value,
-        reportImage: (name) => ref.read(reportImageBytesProvider(name).future),
+        // #920 — through layoutImage, so the shipped layouts' `logo`
+    // resolves to whatever the owner actually called theirs.
+    reportImage: (name) => layoutImage(ref, name),
       );
       if (!context.mounted) return;
       await savePdfToDownloads(
@@ -1732,7 +1738,9 @@ Future<void> shareInvoicePdf(
         annexInvoices: annexes,
         template: invoicePdfTemplateFor(ref),
         workspace: ref.read(currentWorkspaceProvider).value,
-        reportImage: (name) => ref.read(reportImageBytesProvider(name).future),
+        // #920 — through layoutImage, so the shipped layouts' `logo`
+    // resolves to whatever the owner actually called theirs.
+    reportImage: (name) => layoutImage(ref, name),
       );
       await ref.read(fileSharerProvider)(
         bytes: Uint8List.fromList(pdf.bytes),
