@@ -194,4 +194,58 @@ void main() {
       expect(text.first.xMm, closeTo(122, 1.0));
     });
   });
+
+  group('zones that outgrow their box', () {
+    test('a footer taller than its declared height still prints — it grows, '
+        'it never vanishes', () async {
+      const layout = '''
+<report-layout margin="20mm">
+  <body><text>corps</text></body>
+  <footer height="10mm">
+    <text style="small">L1</text><text style="small">L2</text><text style="small">L3</text>
+    <text style="small">L4</text><text style="small">L5</text><text style="small">L6</text>
+    <text style="small">L7</text><text style="small">L8</text><text style="small">L9</text>
+  </footer>
+</report-layout>''';
+      final bytes = await buildLayoutPdf(
+        document: renderLayoutDocument(layout, const {}),
+        data: const {},
+        documentTitle: 't',
+        pageLabel: 'Page',
+        baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+        boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+      );
+      final ink = textPositions(bytes).where((i) => i.page == 1);
+      // Nine lines at 8 pt need ~ 30 mm; the box said 10. The footer must
+      // be there anyway: ink on the LEFT above the page number's line.
+      final footer = ink.where((i) => i.yMm > 235 && i.xMm < 150).toList();
+      expect(footer.length, greaterThanOrEqualTo(9),
+          reason: 'the footer was dropped instead of grown');
+    });
+
+    test('a letterhead taller than 25 mm is clipped above the window — '
+        'nothing leaks into the 45–90 mm band', () async {
+      const layout = '''
+<report-layout margin="20mm">
+  <header height="25mm">
+    <text style="heading">Un</text><text style="heading">Deux</text>
+    <text style="heading">Trois</text><text style="heading">Quatre</text>
+    <text style="heading">Cinq</text><text style="heading">Six</text>
+  </header>
+  <recipient window="fr"/>
+  <body y="90mm"><text>corps</text></body>
+</report-layout>''';
+      final bytes = await buildLayoutPdf(
+        document: renderLayoutDocument(layout, {'member': 'X', 'client_address': ''}),
+        data: const {'member': 'X', 'client_address': ''},
+        documentTitle: 't',
+        pageLabel: 'Page',
+        baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+        boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+      );
+      final ink = textPositions(bytes).where((i) => i.page == 1);
+      final leak = ink.where((i) => i.xMm < 100 && i.yMm > 45.5 && i.yMm < 89.5);
+      expect(leak, isEmpty, reason: 'letterhead overflow reached the window band: $leak');
+    });
+  });
 }

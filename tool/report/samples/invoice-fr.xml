@@ -27,7 +27,7 @@
   <recipient window="fr"/>
 
   <body y="90mm">
-    <text style="subheading">{% if proforma %}PROFORMA{% else %}FACTURE{% endif %} {{ number }}</text>
+    <text style="heading">{% if proforma %}PROFORMA{% else %}FACTURE{% endif %} {{ number }}</text>
     <text style="small">Date d'émission : {{ issued }}</text>
     <text style="small">Prestation : {{ period }}</text>
     {% if client_legal_id != "" %}<text style="small">N° Adhérent : {{ client_legal_id }}</text>{% endif %}
@@ -66,8 +66,9 @@
     {% if recovery_indemnity != "" %}<text style="small">{{ recovery_indemnity }}</text>{% endif %}
   </body>
 
-  <footer height="26mm">
+  <footer height="30mm">
     <rule/>
+    {% if special_mentions != "" %}<text style="small">{{ special_mentions }}</text>{% endif %}
     <columns>
       <column>
         <text style="small">{{ workspace }}</text>
@@ -82,7 +83,6 @@
       <column>
         <text style="small">Référence à rappeler</text>
         <text style="small">{{ number }}</text>
-        {% if special_mentions != "" %}<text style="small">{{ special_mentions }}</text>{% endif %}
       </column>
     </columns>
   </footer>
