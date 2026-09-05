@@ -260,6 +260,12 @@ class FeaturesScreen extends ConsumerWidget {
               'At month end a member receives what their participation '
                   'paid for, what they actually consumed and what is left '
                   'or exceeded — from the usage records, as a letter.',
+        WorkspaceFeature.vatReport =>
+          l10n?.featureVatReportDesc ??
+              'Every taxable position of a month or period — document, '
+                  'customer, net, rate, VAT, gross, category — with '
+                  'subtotals per rate, as a letter and as a CSV for the '
+                  'accountant.',
         WorkspaceFeature.priceNegotiations =>
           l10n?.featurePriceNegotiationsDesc ??
               'The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record.',

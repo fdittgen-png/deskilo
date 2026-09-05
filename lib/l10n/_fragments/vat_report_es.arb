@@ -1,0 +1,39 @@
+{
+  "@@locale": "es",
+  "featureVatReport": "Informe de IVA",
+  "@featureVatReport": {
+    "description": "#878 VAT review / report: featureVatReport"
+  },
+  "featureVatReportDesc": "Cada posición gravable de un mes o periodo — documento, cliente, base, tipo, IVA, total, categoría — con subtotales por tipo, como carta y como CSV para el contable.",
+  "@featureVatReportDesc": {
+    "description": "#878 VAT review / report: featureVatReportDesc"
+  },
+  "reportDocVat": "Informe de IVA",
+  "@reportDocVat": {
+    "description": "#878 VAT review / report: reportDocVat"
+  },
+  "vatReportPositions": "Posiciones",
+  "@vatReportPositions": {
+    "description": "#878 VAT review / report: vatReportPositions"
+  },
+  "vatReportByRate": "Totales por tipo",
+  "@vatReportByRate": {
+    "description": "#878 VAT review / report: vatReportByRate"
+  },
+  "vatReportTotals": "Totales del periodo",
+  "@vatReportTotals": {
+    "description": "#878 VAT review / report: vatReportTotals"
+  },
+  "vatReportPdf": "Informe de IVA (PDF)",
+  "@vatReportPdf": {
+    "description": "#878 VAT review / report: vatReportPdf"
+  },
+  "vatReportCsv": "Informe de IVA (CSV)",
+  "@vatReportCsv": {
+    "description": "#878 VAT review / report: vatReportCsv"
+  },
+  "invoiceGapBuyerVatIdFormat": "El NIF-IVA del cliente no tiene la forma de su país — compruébelo.",
+  "@invoiceGapBuyerVatIdFormat": {
+    "description": "#878 VAT review / report: invoiceGapBuyerVatIdFormat"
+  }
+}

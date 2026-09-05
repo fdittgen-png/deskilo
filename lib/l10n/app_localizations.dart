@@ -13453,6 +13453,60 @@ abstract class AppLocalizations {
   /// **'A rate still used by an invoice or a service is kept, deactivated.'**
   String get vatKeptRate;
 
+  /// #878 VAT review / report: featureVatReport
+  ///
+  /// In en, this message translates to:
+  /// **'VAT report'**
+  String get featureVatReport;
+
+  /// #878 VAT review / report: featureVatReportDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Every taxable position of a month or period — document, customer, net, rate, VAT, gross, category — with subtotals per rate, as a letter and as a CSV for the accountant.'**
+  String get featureVatReportDesc;
+
+  /// #878 VAT review / report: reportDocVat
+  ///
+  /// In en, this message translates to:
+  /// **'VAT report'**
+  String get reportDocVat;
+
+  /// #878 VAT review / report: vatReportPositions
+  ///
+  /// In en, this message translates to:
+  /// **'Positions'**
+  String get vatReportPositions;
+
+  /// #878 VAT review / report: vatReportByRate
+  ///
+  /// In en, this message translates to:
+  /// **'Totals per rate'**
+  String get vatReportByRate;
+
+  /// #878 VAT review / report: vatReportTotals
+  ///
+  /// In en, this message translates to:
+  /// **'Period totals'**
+  String get vatReportTotals;
+
+  /// #878 VAT review / report: vatReportPdf
+  ///
+  /// In en, this message translates to:
+  /// **'VAT report (PDF)'**
+  String get vatReportPdf;
+
+  /// #878 VAT review / report: vatReportCsv
+  ///
+  /// In en, this message translates to:
+  /// **'VAT report (CSV)'**
+  String get vatReportCsv;
+
+  /// #878 VAT review / report: invoiceGapBuyerVatIdFormat
+  ///
+  /// In en, this message translates to:
+  /// **'The customer\'s VAT number does not have its country\'s shape — check it.'**
+  String get invoiceGapBuyerVatIdFormat;
+
   /// #872 one wizard idiom: assistantPrefix
   ///
   /// In en, this message translates to:

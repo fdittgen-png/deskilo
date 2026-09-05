@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'invoice.dart';
+import 'vat_compliance.dart';
 import 'vat_regime.dart';
 
 /// One thing standing between this invoice and a VALID EN 16931 file.
@@ -45,13 +46,19 @@ enum EInvoiceGap {
 
   /// …and post code.
   missingSellerPostalCode,
+
+  /// #878 — the customer's VAT id does not have its member state's
+  /// shape (a typo an e-invoice platform will bounce). Not blocking:
+  /// the id may be right and the table wrong.
+  buyerVatIdFormat,
 }
 
 extension EInvoiceGapKind on EInvoiceGap {
   /// Whether the export must refuse (as opposed to warn).
   bool get isBlocking => switch (this) {
         EInvoiceGap.missingSellerCity ||
-        EInvoiceGap.missingSellerPostalCode =>
+        EInvoiceGap.missingSellerPostalCode ||
+        EInvoiceGap.buyerVatIdFormat =>
           false,
         _ => true,
       };
@@ -113,6 +120,8 @@ EInvoiceReadiness checkEInvoiceReadiness({
       EInvoiceGap.missingExemptionReason,
     if (seller.country.isEmpty) EInvoiceGap.missingSellerCountry,
     if (buyer.country.isEmpty) EInvoiceGap.missingBuyerCountry,
+    if (buyer.vatId.isNotEmpty && !looksLikeEuVatId(buyer.vatId))
+      EInvoiceGap.buyerVatIdFormat,
     if (!invoice.lines.any((l) => l.amountCents > 0))
       EInvoiceGap.noChargeLines,
     if (seller.city.isEmpty) EInvoiceGap.missingSellerCity,

@@ -7706,6 +7706,35 @@ class AppLocalizationsEs extends AppLocalizations {
       'Un tipo que todavía usa una factura o un servicio se conserva, desactivado.';
 
   @override
+  String get featureVatReport => 'Informe de IVA';
+
+  @override
+  String get featureVatReportDesc =>
+      'Cada posición gravable de un mes o periodo — documento, cliente, base, tipo, IVA, total, categoría — con subtotales por tipo, como carta y como CSV para el contable.';
+
+  @override
+  String get reportDocVat => 'Informe de IVA';
+
+  @override
+  String get vatReportPositions => 'Posiciones';
+
+  @override
+  String get vatReportByRate => 'Totales por tipo';
+
+  @override
+  String get vatReportTotals => 'Totales del periodo';
+
+  @override
+  String get vatReportPdf => 'Informe de IVA (PDF)';
+
+  @override
+  String get vatReportCsv => 'Informe de IVA (CSV)';
+
+  @override
+  String get invoiceGapBuyerVatIdFormat =>
+      'El NIF-IVA del cliente no tiene la forma de su país — compruébelo.';
+
+  @override
   String get assistantPrefix => 'Asistente';
 
   @override

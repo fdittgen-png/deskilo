@@ -29,6 +29,8 @@ import '../../domain/accounting_view.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/vat_declaration_providers.dart';
 import '../report_actions.dart';
+import '../../../workspace/domain/workspace_feature.dart';
+import '../vat_report_actions.dart';
 
 /// Periodic VAT declarations (#534/0107): the owner picks a filing
 /// period (month or quarter), the app aggregates the period's issued
@@ -324,6 +326,33 @@ class _VatDeclarationsScreenState
                     ),
                   ],
                 ),
+                // #878 — the period's positions for the accountant, as
+                // the letter and as a CSV, beside the declaration.
+                if (ref
+                    .watch(enabledFeaturesSyncProvider)
+                    .contains(WorkspaceFeature.vatReport)) ...[
+                  const SizedBox(height: AppSpacing.sm),
+                  Wrap(
+                    spacing: AppSpacing.sm,
+                    runSpacing: AppSpacing.sm,
+                    children: [
+                      OutlinedButton.icon(
+                        key: const ValueKey('vat-report-pdf'),
+                        onPressed: () => showVatReport(context, ref,
+                            start: period.start, end: period.end),
+                        icon: const Icon(Icons.summarize_outlined),
+                        label: Text(l10n?.vatReportPdf ?? 'VAT report (PDF)'),
+                      ),
+                      OutlinedButton.icon(
+                        key: const ValueKey('vat-report-csv'),
+                        onPressed: () => saveVatReportCsv(context, ref,
+                            start: period.start, end: period.end),
+                        icon: const Icon(Icons.table_view_outlined),
+                        label: Text(l10n?.vatReportCsv ?? 'VAT report (CSV)'),
+                      ),
+                    ],
+                  ),
+                ],
                 const SizedBox(height: AppSpacing.lg),
                 switch (declarationsAsync) {
                   AsyncData(value: final declarations)

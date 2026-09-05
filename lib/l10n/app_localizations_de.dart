@@ -7716,6 +7716,35 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein Satz, den eine Rechnung oder eine Leistung noch nutzt, bleibt erhalten und wird deaktiviert.';
 
   @override
+  String get featureVatReport => 'MwSt-Bericht';
+
+  @override
+  String get featureVatReportDesc =>
+      'Jede steuerbare Position eines Monats oder Zeitraums — Beleg, Kunde, netto, Satz, MwSt, brutto, Kategorie — mit Zwischensummen je Satz, als Brief und als CSV für die Buchhaltung.';
+
+  @override
+  String get reportDocVat => 'MwSt-Bericht';
+
+  @override
+  String get vatReportPositions => 'Positionen';
+
+  @override
+  String get vatReportByRate => 'Summen je Satz';
+
+  @override
+  String get vatReportTotals => 'Summen des Zeitraums';
+
+  @override
+  String get vatReportPdf => 'MwSt-Bericht (PDF)';
+
+  @override
+  String get vatReportCsv => 'MwSt-Bericht (CSV)';
+
+  @override
+  String get invoiceGapBuyerVatIdFormat =>
+      'Die USt-IdNr. des Kunden hat nicht die Form ihres Landes — bitte prüfen.';
+
+  @override
   String get assistantPrefix => 'Assistent';
 
   @override

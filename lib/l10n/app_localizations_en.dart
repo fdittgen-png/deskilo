@@ -7652,6 +7652,35 @@ class AppLocalizationsEn extends AppLocalizations {
       'A rate still used by an invoice or a service is kept, deactivated.';
 
   @override
+  String get featureVatReport => 'VAT report';
+
+  @override
+  String get featureVatReportDesc =>
+      'Every taxable position of a month or period — document, customer, net, rate, VAT, gross, category — with subtotals per rate, as a letter and as a CSV for the accountant.';
+
+  @override
+  String get reportDocVat => 'VAT report';
+
+  @override
+  String get vatReportPositions => 'Positions';
+
+  @override
+  String get vatReportByRate => 'Totals per rate';
+
+  @override
+  String get vatReportTotals => 'Period totals';
+
+  @override
+  String get vatReportPdf => 'VAT report (PDF)';
+
+  @override
+  String get vatReportCsv => 'VAT report (CSV)';
+
+  @override
+  String get invoiceGapBuyerVatIdFormat =>
+      'The customer\'s VAT number does not have its country\'s shape — check it.';
+
+  @override
   String get assistantPrefix => 'Assistant';
 
   @override

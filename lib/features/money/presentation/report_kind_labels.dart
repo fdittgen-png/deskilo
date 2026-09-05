@@ -19,6 +19,7 @@ String reportKindLabel(AppLocalizations? l10n, ReportKind kind) {
     'payments' => l10n?.reportDocPayments ?? 'Payments report',
     'usage' => l10n?.reportDocUsage ?? 'Consumption report',
     'workspace' => l10n?.reportDocWorkspace ?? 'Workspace report',
+    'vat' => l10n?.reportDocVat ?? 'VAT report',
     'coa' => l10n?.reportDocCoa ?? 'Chart of accounts',
     'badges' => l10n?.reportDocBadges ?? 'Member badges',
     'space_codes' => l10n?.reportDocSpaceCodes ?? 'Space QR cards',

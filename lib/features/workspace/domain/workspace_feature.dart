@@ -70,6 +70,7 @@ enum WorkspaceFeature {
   memberPaymentTerms,
   reportTexts,
   usageReport,
+  vatReport,
   priceNegotiations,
 
   /// #767 — recurring scheduled expenses (internet, phone, electricity):
@@ -544,6 +545,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.reportTexts: FeatureManifestEntry(
     feature: WorkspaceFeature.reportTexts,
     requires: WorkspaceFeature.reportDesigner,
+  ),
+  // #878 — the period's VAT positions as a letter and a CSV.
+  WorkspaceFeature.vatReport: FeatureManifestEntry(
+    feature: WorkspaceFeature.vatReport,
+    requires: WorkspaceFeature.vatDeclarations,
   ),
   // #739 — the tariff is the default; a member may have their own deal,
   // proposed by finance admins, validated, seen by the member and them.

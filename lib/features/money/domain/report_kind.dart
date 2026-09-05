@@ -74,6 +74,8 @@ const List<ReportKind> fixedReportKinds = [
   // #873 — the month's consumption against what was paid ahead.
   ReportKind(id: 'usage', slot: ReportDocSlot('usage')),
   ReportKind(id: 'workspace', slot: ReportDocSlot('workspace')),
+  // #878 — the period's VAT positions, for the accountant.
+  ReportKind(id: 'vat', slot: ReportDocSlot('vat')),
   // #822 — the three structural documents.
   ReportKind(id: 'coa', slot: ReportDocSlot('coa')),
   ReportKind(id: 'badges', slot: ReportDocSlot('badges')),

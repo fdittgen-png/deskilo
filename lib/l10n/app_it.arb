@@ -4548,6 +4548,42 @@
   "vatPdfVat": "IVA",
   "fecAccountVat": "IVA incassata",
   "vatKeptRate": "Un'aliquota ancora usata da una fattura o da un servizio viene conservata, disattivata.",
+  "featureVatReport": "Report IVA",
+  "@featureVatReport": {
+    "description": "#878 VAT review / report: featureVatReport"
+  },
+  "featureVatReportDesc": "Ogni posizione imponibile di un mese o periodo — documento, cliente, imponibile, aliquota, IVA, totale, categoria — con subtotali per aliquota, come lettera e come CSV per il commercialista.",
+  "@featureVatReportDesc": {
+    "description": "#878 VAT review / report: featureVatReportDesc"
+  },
+  "reportDocVat": "Report IVA",
+  "@reportDocVat": {
+    "description": "#878 VAT review / report: reportDocVat"
+  },
+  "vatReportPositions": "Posizioni",
+  "@vatReportPositions": {
+    "description": "#878 VAT review / report: vatReportPositions"
+  },
+  "vatReportByRate": "Totali per aliquota",
+  "@vatReportByRate": {
+    "description": "#878 VAT review / report: vatReportByRate"
+  },
+  "vatReportTotals": "Totali del periodo",
+  "@vatReportTotals": {
+    "description": "#878 VAT review / report: vatReportTotals"
+  },
+  "vatReportPdf": "Report IVA (PDF)",
+  "@vatReportPdf": {
+    "description": "#878 VAT review / report: vatReportPdf"
+  },
+  "vatReportCsv": "Report IVA (CSV)",
+  "@vatReportCsv": {
+    "description": "#878 VAT review / report: vatReportCsv"
+  },
+  "invoiceGapBuyerVatIdFormat": "La partita IVA del cliente non ha la forma del suo paese — verificala.",
+  "@invoiceGapBuyerVatIdFormat": {
+    "description": "#878 VAT review / report: invoiceGapBuyerVatIdFormat"
+  },
   "assistantPrefix": "Assistente",
   "@assistantPrefix": {
     "description": "#872 one wizard idiom: assistantPrefix"

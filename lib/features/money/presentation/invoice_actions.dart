@@ -26,6 +26,8 @@ import '../../workspace/domain/workspace.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/invoice_legal.dart';
+import '../domain/vat_regime.dart';
+import '../domain/vat_compliance.dart';
 import '../domain/vat_rate.dart';
 import '../domain/e_invoice_routing.dart';
 import '../domain/invoice.dart';
@@ -165,8 +167,17 @@ Map<String, Object?> legalMentionData(
     'seller_registration': legal.registration,
     'seller_vat_id': seller?.vatId ?? workspace?.vatId ?? '',
     'seller_legal_id': seller?.legalId ?? workspace?.legalId ?? '',
-    'exemption_reason':
-        seller?.taxExemptionReason ?? workspace?.taxExemptionReason ?? '',
+    // #878 — BR-E-10: an exempt (or out-of-scope) seller's document
+    // carries the statutory mention of its member state when the owner
+    // wrote none; a VAT-charging seller prints nothing here.
+    'exemption_reason': orDefault(
+      seller?.taxExemptionReason ?? workspace?.taxExemptionReason ?? '',
+      defaultExemptionMention(
+        seller?.country ?? workspace?.countryCode ?? '',
+        vatRegimeFromWire(
+            seller?.vatRegime ?? workspace?.vatRegime ?? 'not_subject'),
+      ),
+    ),
     // #886 — the client as the postal standard prints them: the full
     // name on its own line, the block (company · street · POSTAL CITY ·
     // country when abroad) beneath, the contacts beside.
