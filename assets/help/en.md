@@ -118,6 +118,10 @@ Booking from the plan:
 
 *The plan in the Reserve hub on a closed day: the closure banner, the view switch, the date and the day-part chips, the level rail (1 · 2 · layers) and the zoom controls.*
 
+**A seat booked for part of the day looks part-booked (#903).** The plan reads a seat left to right as the open day: a booking that ends at midday fills the left half of the pad, one that starts after lunch fills the right, and a seat held all day fills whole as before. A hairline separates two neighbouring bookings so they never read as one, and each stretch carries the colour of who holds it — yours or somebody else's.
+
+**Who is on this seat today.** Tap a seat that carries **more than one booking** and the day opens instead of the usual sheet: every stretch with its hours, its occupant and whether it is done, running or still ahead, and every free stretch as something you can take — tap it and the ordinary booking sheet opens on exactly that window. A seat with a single booking behaves as it always did. The whole thing rides the *Seat day timeline* feature.
+
 ## 4. Reservations (Reserve hub)
 
 Open the **Reserve** hub (center button). Along the top: two rows of controls. The first says **what** you are looking at: the four **view buttons** and, on the plan, the **map / list** switch. The second says **when**: the **date chip**, a **Now** button once you have browsed away from today, and the same granularity-dependent window controls the plan itself uses (§3 — day-part chips, a *Full day* chip, or from → to). The **floor chips** (*All floors*, or one per level) sit on the plan itself, and the **QR scan** button (§4a) sits in the app bar, beside the editor and the bell. Then four views:

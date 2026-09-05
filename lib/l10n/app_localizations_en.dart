@@ -7227,6 +7227,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingGateBlocked => 'Not bookable as chosen';
 
   @override
+  String seatDayTitle(String seat) {
+    return 'Seat $seat today';
+  }
+
+  @override
+  String get seatDaySubtitle =>
+      'Who has this seat, and when. Tap a free stretch to take it.';
+
+  @override
+  String get seatDayMine => 'You';
+
+  @override
+  String get seatDaySomeone => 'A member';
+
+  @override
+  String get seatDayFree => 'Free — book it';
+
+  @override
+  String get seatDayPast => 'Done';
+
+  @override
+  String get seatDayNow => 'Now';
+
+  @override
+  String get seatDayAhead => 'Ahead';
+
+  @override
+  String get featureSeatDayTimeline => 'Seat day timeline';
+
+  @override
+  String get featureSeatDayTimelineDesc =>
+      'A seat booked for part of the day is drawn part-filled on the plan, and a seat several people share opens a timeline of the day: who has it, when, and which stretches are still free.';
+
+  @override
   String get servicesTitle => 'Services';
 
   @override

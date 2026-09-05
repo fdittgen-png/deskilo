@@ -22,6 +22,8 @@ import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../../plan/domain/seat_block_policy.dart';
 import '../domain/booking_error_text.dart';
+import 'widgets/seat_day_sheet.dart';
+import '../../../core/time/work_hours.dart';
 import 'booking_gate_scope.dart';
 import '../../plan/domain/half_day_windows.dart';
 import '../domain/default_booking_period.dart';
@@ -142,6 +144,13 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     }
     final myMemberId = ref.read(myMemberProvider).value?.id;
     if (myMemberId == null) traceMemberIdentityMissing(seat);
+    // #903 — a seat several people share cannot answer "who has it, and
+    // when" with one sheet: the day opens instead, and a free stretch
+    // picked there goes on to the ordinary booking sheet.
+    if (await _seatDayHandled(plan, seat, reservations, window, myMemberId)) {
+      return;
+    }
+    if (!mounted) return;
     // #687 — LIVE mode judges the seat at THIS INSTANT, browsing judges
     // it across the window.
     //
@@ -669,4 +678,52 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     if (!mounted) return;
     invalidateBookingData(ref);
   }
+  /// #903 — the day on this seat, when more than one booking shares it.
+  /// Returns true when the tap was handled here.
+  Future<bool> _seatDayHandled(
+    FloorPlan plan,
+    Seat seat,
+    List<Reservation> reservations,
+    HalfDayWindow window,
+    String? myMemberId,
+  ) async {
+    if (!ref
+        .read(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.seatDayTimeline)) {
+      return false;
+    }
+    final hours = bookingGateOf(ref)?.hours ?? WorkHours.current;
+    final day = DateTime(
+        window.start.year, window.start.month, window.start.day);
+    final dayStart = day.add(Duration(minutes: hours.startMinutes));
+    final dayEnd = day.add(Duration(minutes: hours.endMinutes));
+    final segments = seatDaySegments(
+      plan: plan,
+      seat: seat,
+      reservations: reservations,
+      myMemberId: myMemberId,
+      dayStart: dayStart,
+      dayEnd: dayEnd,
+    );
+    // One booking behaves exactly as it always did.
+    if (segments.length < 2) return false;
+    final gap = await showSeatDaySheet(
+      context,
+      seat: seat,
+      segments: segments,
+      names: ref.read(memberNamesProvider).value ?? const {},
+      dayStart: dayStart,
+      dayEnd: dayEnd,
+      now: ref.read(clockProvider).now(),
+    );
+    if (gap == null || !mounted) return true;
+    await bookingSheet(
+      seat,
+      reservations,
+      (start: gap.start, end: gap.end),
+      plan: plan,
+    );
+    return true;
+  }
+
 }

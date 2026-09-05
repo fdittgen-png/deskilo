@@ -198,3 +198,28 @@ Set<String> onlineSeatIdsFor({
         if (online(r.memberId)) seat.id,
   };
 }
+
+/// #903 — the day, seat by seat: every taken stretch of the browsed day
+/// with its place in the opening window. Feeds the divided seat fill on
+/// the plan and the "who is here today" timeline behind a tap. A closed
+/// day holds nothing: every seat is blocked anyway.
+Map<String, List<SeatDaySegment>> seatDaySegmentsFor({
+  required FloorPlan plan,
+  required List<Reservation> reservations,
+  required String? myMemberId,
+  required DateTime dayStart,
+  required DateTime dayEnd,
+  bool dayOpen = true,
+}) =>
+    {
+      if (dayOpen)
+        for (final seat in plan.seats)
+          seat.id: seatDaySegments(
+            plan: plan,
+            seat: seat,
+            reservations: reservations,
+            myMemberId: myMemberId,
+            dayStart: dayStart,
+            dayEnd: dayEnd,
+          ),
+    };

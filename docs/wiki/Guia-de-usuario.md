@@ -118,6 +118,10 @@ Reservar desde el plano:
 
 *El plano en el hub Reservar en un día de cierre: el aviso de cierre, el selector de vista, la fecha y los chips de media jornada, el carril de niveles (1 · 2 · capas) y los controles de zoom.*
 
+**Una plaza reservada parte del día lo parece (#903).** El plano lee la plaza de izquierda a derecha como la jornada abierta: una reserva que acaba a mediodía llena la mitad izquierda, una que empieza por la tarde llena la derecha, y una plaza ocupada todo el día se llena entera como antes. Un filete separa dos reservas contiguas para que nunca se lean como una, y cada tramo lleva el color de quien lo ocupa — tuyo o de otra persona.
+
+**Quién está hoy en esta plaza.** Toca una plaza con **más de una reserva** y se abre la jornada en lugar de la ficha habitual: cada tramo con su horario, su ocupante y su estado (terminado, ahora, por venir), y cada tramo libre como algo que puedes tomar — tócalo y la ficha de reserva se abre exactamente en esa ventana. Una plaza con una sola reserva se comporta como siempre. Todo ello depende de la función *La jornada de una plaza*.
+
 ## 4. Reservas (hub Reservar)
 
 Abre el hub **Reservar** (botón central). A lo largo del borde superior: dos filas de controles. La primera dice **qué** está mirando: los cuatro **botones de vista** y, en el plano, el selector **plano / lista**. La segunda dice **cuándo**: el **chip de fecha**, un botón **Ahora** en cuanto se aleja de hoy, y los **chips de franja** (mañana / tarde / día completo). Los **chips de planta** (*Todas las plantas*, o uno por planta) están sobre el propio plano, y el **botón de escaneo QR** (§4a) está en la barra superior, junto al editor y la campana. Después, cuatro vistas:

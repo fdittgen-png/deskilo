@@ -244,6 +244,12 @@ class FeaturesScreen extends ConsumerWidget {
               'Admins create members who have no account yet, book and '
                   'invoice for them, and hand the profile over with a '
                   'personal code the person redeems when they join.',
+        WorkspaceFeature.seatDayTimeline =>
+          l10n?.featureSeatDayTimelineDesc ??
+              'A seat booked for part of the day is drawn part-filled on '
+                  'the plan, and a seat several people share opens a '
+                  'timeline of the day: who has it, when, and which '
+                  'stretches are still free.',
         WorkspaceFeature.memberPaymentTerms =>
           l10n?.featureMemberPaymentTermsDesc ??
               'The workspace sets the default payment conditions; a '

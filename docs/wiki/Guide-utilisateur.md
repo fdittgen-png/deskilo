@@ -118,6 +118,10 @@ Réserver depuis le plan :
 
 *Le plan dans le hub Réserver un jour de fermeture : le bandeau de fermeture, le sélecteur de vue, la date et les puces de demi-journée, le rail des niveaux (1 · 2 · calques) et les commandes de zoom.*
 
+**Une place réservée sur une partie de la journée en a l'air (#903).** Le plan lit la place de gauche à droite comme la journée ouverte : une réservation qui finit à midi remplit la moitié gauche du pavé, une qui commence l'après-midi remplit la droite, et une place tenue toute la journée se remplit entièrement comme avant. Un filet sépare deux réservations voisines pour qu'elles ne se lisent jamais comme une seule, et chaque plage porte la couleur de qui l'occupe — vous ou quelqu'un d'autre.
+
+**Qui occupe cette place aujourd'hui.** Touchez une place qui porte **plus d'une réservation** et la journée s'ouvre à la place de la fiche habituelle : chaque plage avec ses horaires, son occupant et son état (terminé, en cours, à venir), et chaque plage libre comme quelque chose à prendre — touchez-la et la fiche de réservation s'ouvre sur exactement ce créneau. Une place avec une seule réservation se comporte comme toujours. Le tout dépend de la fonctionnalité *Journée d'une place*.
+
 ## 4. Réservations (hub Réserver)
 
 Ouvrez le hub **Réserver** (bouton central). En haut : deux rangées de commandes. La première dit **ce que** vous regardez : les quatre **boutons de vue** et, sur le plan, le sélecteur **plan / liste**. La seconde dit **quand** : la **puce de date**, un bouton **Maintenant** dès que vous avez quitté aujourd'hui, et les **puces de moment** (matin / après-midi / journée). Les **puces d'étage** (*Tous les étages*, ou un par niveau) sont sur le plan lui-même, et le bouton **scan QR** (§4a) est dans la barre d'app, à côté de l'éditeur et de la cloche. Puis quatre vues :

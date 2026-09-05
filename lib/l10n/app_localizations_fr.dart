@@ -7299,6 +7299,40 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bookingGateBlocked => 'Non réservable ainsi';
 
   @override
+  String seatDayTitle(String seat) {
+    return 'Place $seat aujourd\'hui';
+  }
+
+  @override
+  String get seatDaySubtitle =>
+      'Qui occupe cette place, et quand. Touchez une plage libre pour la prendre.';
+
+  @override
+  String get seatDayMine => 'Vous';
+
+  @override
+  String get seatDaySomeone => 'Un membre';
+
+  @override
+  String get seatDayFree => 'Libre — réserver';
+
+  @override
+  String get seatDayPast => 'Terminé';
+
+  @override
+  String get seatDayNow => 'En cours';
+
+  @override
+  String get seatDayAhead => 'À venir';
+
+  @override
+  String get featureSeatDayTimeline => 'Journée d\'une place';
+
+  @override
+  String get featureSeatDayTimelineDesc =>
+      'Une place réservée sur une partie de la journée s\'affiche partiellement remplie sur le plan, et une place partagée par plusieurs personnes ouvre la journée en détail : qui l\'occupe, quand, et quelles plages restent libres.';
+
+  @override
   String get servicesTitle => 'Services';
 
   @override

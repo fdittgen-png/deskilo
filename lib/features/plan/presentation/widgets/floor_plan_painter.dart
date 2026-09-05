@@ -10,6 +10,7 @@ import 'package:flutter/rendering.dart';
 import '../../../../core/theme/office_colors.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/theme/status_colors.dart';
+import '../../../reservations/domain/seat_state_logic.dart';
 import '../../domain/floor_plan.dart';
 import '../../domain/grid_geometry.dart';
 import '../../domain/seat.dart';
@@ -26,6 +27,7 @@ class FloorPlanPainter extends CustomPainter {
     this.background,
     this.images = const {},
     this.seatStates,
+    this.seatDaySegments = const {},
     this.previousSeatStates,
     this.seatStateLerp = 1,
     this.seatDayPhases = const {},
@@ -64,6 +66,12 @@ class FloorPlanPainter extends CustomPainter {
 
   /// Live mode: seat id → state. Null = editor mode (uniform styling).
   final Map<String, SeatState>? seatStates;
+
+  /// #903 — the day's taken stretches per seat. A seat whose day is only
+  /// PARTLY taken is filled only over those stretches, the horizontal
+  /// axis being the open day: a morning booking fills the left half. A
+  /// seat held all day fills whole, exactly as before.
+  final Map<String, List<SeatDaySegment>> seatDaySegments;
 
   /// Motion pass (#611): the state a just-changed seat had BEFORE, only
   /// for seats currently animating — the seat's colour lerps from the
@@ -319,7 +327,41 @@ class FloorPlanPainter extends CustomPainter {
         SeatState.blocked => overPhoto ? 0.24 : 0.10,
         _ => overPhoto ? 0.40 : 0.22,
       };
-      canvas.drawRRect(rrect, Paint()..color = accent.withValues(alpha: fillAlpha));
+      final segments = seatDaySegments[seat.id] ?? const <SeatDaySegment>[];
+      final partial = segments.isNotEmpty && seatDayIsPartial(segments);
+      if (partial) {
+        // The day is the seat's width: each booking paints its own
+        // stretch over an otherwise free-looking pad, and a hairline
+        // keeps two neighbouring bookings from reading as one.
+        final freeAccent =
+            SeatStateColors.of(SeatState.free, brightness: brightness);
+        canvas.drawRRect(rrect,
+            Paint()..color = freeAccent.withValues(alpha: overPhoto ? 0.20 : 0.14));
+        canvas.save();
+        canvas.clipRRect(rrect);
+        for (final segment in segments) {
+          final left = rect.left + rect.width * segment.from;
+          final right = rect.left + rect.width * segment.to;
+          if (right - left < 0.5) continue;
+          canvas.drawRect(
+            Rect.fromLTRB(left, rect.top, right, rect.bottom),
+            Paint()
+              ..color = SeatStateColors.of(segment.state, brightness: brightness)
+                  .withValues(alpha: overPhoto ? 0.40 : 0.22),
+          );
+          canvas.drawLine(
+            Offset(left, rect.top),
+            Offset(left, rect.bottom),
+            Paint()
+              ..strokeWidth = 1
+              ..color = accent.withValues(alpha: 0.55),
+          );
+        }
+        canvas.restore();
+      } else {
+        canvas.drawRRect(
+            rrect, Paint()..color = accent.withValues(alpha: fillAlpha));
+      }
       canvas.drawRRect(
         rrect,
         Paint()
@@ -615,6 +657,7 @@ class FloorPlanPainter extends CustomPainter {
       !mapEquals(oldDelegate.previousSeatStates, previousSeatStates) ||
       oldDelegate.seatStateLerp != seatStateLerp ||
       !mapEquals(oldDelegate.seatDayPhases, seatDayPhases) ||
+      !_sameSegments(oldDelegate.seatDaySegments, seatDaySegments) ||
       !mapEquals(oldDelegate.seatLabels, seatLabels) ||
       !mapEquals(oldDelegate.spaceOverlays, spaceOverlays) ||
       oldDelegate.highlightedSeatId != highlightedSeatId ||
@@ -647,4 +690,20 @@ class FloorPlanPainter extends CustomPainter {
             ),
         ];
   }
+}
+
+/// Map equality for the day segments: `mapEquals` compares lists by
+/// identity, which would repaint the whole plan on every build (#903).
+bool _sameSegments(Map<String, List<SeatDaySegment>> a,
+    Map<String, List<SeatDaySegment>> b) {
+  if (identical(a, b)) return true;
+  if (a.length != b.length) return false;
+  for (final entry in a.entries) {
+    final other = b[entry.key];
+    if (other == null || other.length != entry.value.length) return false;
+    for (var i = 0; i < other.length; i++) {
+      if (other[i] != entry.value[i]) return false;
+    }
+  }
+  return true;
 }

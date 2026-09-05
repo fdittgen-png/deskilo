@@ -4382,6 +4382,51 @@
   },
   "scanCameraWebUnavailable": "La scansione con fotocamera non è disponibile nel browser — digita il codice o avvicina un tag NFC al dispositivo (Chrome su Android).",
   "bookingGateBlocked": "Non prenotabile così",
+  "seatDayTitle": "Postazione {seat} oggi",
+  "@seatDayTitle": {
+    "description": "#903 seat day timeline: seatDayTitle",
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      }
+    }
+  },
+  "seatDaySubtitle": "Chi occupa questa postazione, e quando. Tocca una fascia libera per prenderla.",
+  "@seatDaySubtitle": {
+    "description": "#903 seat day timeline: seatDaySubtitle"
+  },
+  "seatDayMine": "Tu",
+  "@seatDayMine": {
+    "description": "#903 seat day timeline: seatDayMine"
+  },
+  "seatDaySomeone": "Un membro",
+  "@seatDaySomeone": {
+    "description": "#903 seat day timeline: seatDaySomeone"
+  },
+  "seatDayFree": "Libera — prenota",
+  "@seatDayFree": {
+    "description": "#903 seat day timeline: seatDayFree"
+  },
+  "seatDayPast": "Finito",
+  "@seatDayPast": {
+    "description": "#903 seat day timeline: seatDayPast"
+  },
+  "seatDayNow": "Ora",
+  "@seatDayNow": {
+    "description": "#903 seat day timeline: seatDayNow"
+  },
+  "seatDayAhead": "Più tardi",
+  "@seatDayAhead": {
+    "description": "#903 seat day timeline: seatDayAhead"
+  },
+  "featureSeatDayTimeline": "La giornata di una postazione",
+  "@featureSeatDayTimeline": {
+    "description": "#903 seat day timeline: featureSeatDayTimeline"
+  },
+  "featureSeatDayTimelineDesc": "Una postazione prenotata solo per parte della giornata è disegnata parzialmente piena sulla piantina, e una postazione condivisa da più persone apre la giornata: chi la occupa, quando e quali fasce restano libere.",
+  "@featureSeatDayTimelineDesc": {
+    "description": "#903 seat day timeline: featureSeatDayTimelineDesc"
+  },
   "servicesTitle": "Servizi",
   "servicesEmpty": "Ancora nessun servizio.",
   "servicesNew": "Nuovo servizio",

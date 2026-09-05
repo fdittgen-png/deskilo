@@ -118,6 +118,10 @@ Prenotare dalla piantina:
 
 *La planimetria nell'hub Prenota in un giorno di chiusura: il banner di chiusura, il selettore di vista, la data e i chip di mezza giornata, la barra dei livelli (1 · 2 · livelli) e i controlli di zoom.*
 
+**Una postazione prenotata per parte della giornata lo dimostra (#903).** La piantina legge la postazione da sinistra a destra come la giornata aperta: una prenotazione che finisce a mezzogiorno riempie la metà sinistra, una che inizia nel pomeriggio riempie la destra, e una postazione tenuta tutto il giorno si riempie interamente come prima. Un filetto separa due prenotazioni vicine perché non si leggano mai come una sola, e ogni fascia porta il colore di chi la occupa — tua o di qualcun altro.
+
+**Chi occupa oggi questa postazione.** Tocca una postazione con **più di una prenotazione** e si apre la giornata al posto della scheda abituale: ogni fascia con l'orario, la persona e lo stato (finito, ora, più tardi), e ogni fascia libera come qualcosa da prendere — toccala e la scheda di prenotazione si apre esattamente su quella finestra. Una postazione con una sola prenotazione si comporta come sempre. Il tutto dipende dalla funzionalità *La giornata di una postazione*.
+
 ## 4. Prenotazioni (hub Prenota)
 
 Apri l'hub **Prenota** (pulsante centrale). In alto: due righe di controlli. La prima dice **che cosa** stai guardando: i quattro **pulsanti di vista** e, sulla piantina, il selettore **piantina / elenco**. La seconda dice **quando**: il **chip della data**, un pulsante **Adesso** appena ti allontani da oggi, e gli stessi controlli della finestra legati alla granularità della piantina stessa (§3 — chip di fascia oraria, un chip *Giornata intera*, oppure da → a). I **chip di piano** (*Tutti i piani*, o uno per livello) stanno sulla piantina stessa, e il pulsante di **scansione QR** (§4a) sta nella barra dell'app, accanto all'editor e alla campanella. Poi quattro viste:

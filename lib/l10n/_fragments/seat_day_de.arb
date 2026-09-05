@@ -1,0 +1,48 @@
+{
+  "@@locale": "de",
+  "seatDayTitle": "Platz {seat} heute",
+  "@seatDayTitle": {
+    "description": "#903 seat day timeline: seatDayTitle",
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      }
+    }
+  },
+  "seatDaySubtitle": "Wer diesen Platz hat, und wann. Tippe auf eine freie Spanne, um sie zu nehmen.",
+  "@seatDaySubtitle": {
+    "description": "#903 seat day timeline: seatDaySubtitle"
+  },
+  "seatDayMine": "Du",
+  "@seatDayMine": {
+    "description": "#903 seat day timeline: seatDayMine"
+  },
+  "seatDaySomeone": "Ein Mitglied",
+  "@seatDaySomeone": {
+    "description": "#903 seat day timeline: seatDaySomeone"
+  },
+  "seatDayFree": "Frei — buchen",
+  "@seatDayFree": {
+    "description": "#903 seat day timeline: seatDayFree"
+  },
+  "seatDayPast": "Vorbei",
+  "@seatDayPast": {
+    "description": "#903 seat day timeline: seatDayPast"
+  },
+  "seatDayNow": "Jetzt",
+  "@seatDayNow": {
+    "description": "#903 seat day timeline: seatDayNow"
+  },
+  "seatDayAhead": "Später",
+  "@seatDayAhead": {
+    "description": "#903 seat day timeline: seatDayAhead"
+  },
+  "featureSeatDayTimeline": "Tagesverlauf eines Platzes",
+  "@featureSeatDayTimeline": {
+    "description": "#903 seat day timeline: featureSeatDayTimeline"
+  },
+  "featureSeatDayTimelineDesc": "Ein Platz, der nur einen Teil des Tages gebucht ist, wird auf dem Plan teilweise gefüllt gezeichnet; ein von mehreren geteilter Platz öffnet den Tagesverlauf: wer ihn hat, wann, und welche Spannen frei sind.",
+  "@featureSeatDayTimelineDesc": {
+    "description": "#903 seat day timeline: featureSeatDayTimelineDesc"
+  }
+}
