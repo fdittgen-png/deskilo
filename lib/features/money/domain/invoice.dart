@@ -108,6 +108,14 @@ sealed class InvoiceParty with _$InvoiceParty {
     /// the buyer's trading name); '' for a private person.
     @Default('') String company,
 
+    /// #912 — the title the client asked to be addressed by, as a code;
+    /// each reader prints it in its own language.
+    @Default('') String courtesy,
+
+    /// #912 — the PERSON inside the organisation, when [name] is the
+    /// company. Frozen apart so the block can name them under it.
+    @Default('') String person,
+
     /// BT-35 — one line; legacy free-text addresses land here whole.
     @Default('') String street,
 
@@ -144,6 +152,8 @@ sealed class InvoiceParty with _$InvoiceParty {
   factory InvoiceParty.fromSnapshot(Map<dynamic, dynamic> json) => InvoiceParty(
     name: json['name'] as String? ?? '',
     company: json['company'] as String? ?? '',
+    courtesy: json['courtesy'] as String? ?? '',
+    person: json['person'] as String? ?? '',
     street: json['street'] as String? ?? '',
     city: json['city'] as String? ?? '',
     postalCode: json['postal_code'] as String? ?? '',

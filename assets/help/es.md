@@ -800,6 +800,15 @@ Los miembros añaden su **país** — y su número de IVA si facturan como empre
 
 **Un cliente puede ser una empresa (#910).** Un perfil gestionado no necesita un nombre de pila: basta con la **razón social**. Cuando no hay nombre de persona, la empresa pasa a ser el destinatario — en la factura, en las listas, en el hilo de pago — y desaparece entonces de la dirección de abajo, porque ya es la línea de arriba. Si se nombra a una persona, nada cambia: la empresa permanece en el bloque de dirección, entre el nombre y la calle. Los documentos ya emitidos también se benefician: la razón social estaba congelada en ellos desde el principio, simplemente no se leía.
 
+**Primero la empresa, después la persona (#912).** Cuando un cliente lleva razón social Y nombre de persona, el documento se dirige a la **empresa** — es ella quien debe la factura — y nombra a la persona en la línea de abajo, con el tratamiento que ha elegido:
+
+> SASU KaloA
+> Sr. Guilhem MARTIN
+> 209 rue Jean Bart, Immeuble AGORA 1B
+> 31670 LABÈGE
+
+El **tratamiento** es un campo de sus datos personales: *Sr.*, *Sra.* o *Ninguno*, que imprime solo el nombre. Nunca se deduce de un nombre de pila, y cada lector lo ve en su idioma — *Monsieur* en francés, *Herr* en alemán. Sin empresa, nada cambia: la persona sigue siendo el destinatario.
+
 **El vencimiento figura en el documento (#910).** Cada factura imprime ahora su **fecha de pago**, calculada a partir del plazo de sus reglas de aviso — el mismo plazo que la aplicación muestra en el hilo de pago, de modo que ambos ya no pueden anunciar dos fechas distintas. Un diseño puede colocarla donde quiera con `due_date`. Y un documento de una sola página ya no lleva número de página: «1/1» no informa a nadie.
 
 **En DesKilo los precios incluyen IVA.** Lo que escribes como precio de suscripción, de servicio o de paquete de días es lo que paga el miembro. Activar el IVA no cambia ni un solo importe adeudado — dice qué parte de ese importe es impuesto. Por eso una factura mensual, un extracto y una cuota no se mueven al añadir tipos, y por eso ningún total hay que cuadrarlo. Bajo un régimen sujeto a IVA el catálogo lo dice en voz alta: cada fila de servicio y de bono nombra su tipo incluido (*IVA 21 % incl.*), el editor de facturación permite al propietario elegir el tipo de IVA de las tarifas (por defecto: el tipo por defecto del espacio) y muestra la parte de IVA de cada importe al teclear, cada accesorio puede llevar su propio tipo (por defecto: el del espacio), y cada campo de precio recuerda que es bruto.

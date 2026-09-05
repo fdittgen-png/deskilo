@@ -786,6 +786,15 @@ Les membres ajoutent leur **pays** — et leur numéro de TVA s'ils facturent en
 
 **Un client peut être une société (#910).** Un profil géré n'a pas besoin d'un prénom : une **raison sociale** suffit. Quand aucun nom de personne n'est saisi, c'est la société qui devient le destinataire — sur la facture, dans la liste, dans le fil de paiement — et elle disparaît alors de l'adresse en dessous, puisqu'elle est déjà la ligne du dessus. Si une personne est nommée, rien ne change : la société reste dans le bloc adresse, entre le nom et la rue. Les documents déjà émis en profitent aussi : la raison sociale y était figée depuis le début, elle n'était simplement pas lue.
 
+**La société d'abord, la personne ensuite (#912).** Quand un client porte une raison sociale ET un nom de personne, le document s'adresse à la **société** — c'est elle qui doit la facture — et nomme la personne juste en dessous, avec la formule qu'elle a choisie :
+
+> SASU KaloA
+> Monsieur Guilhem MARTIN
+> 209 rue Jean Bart, Immeuble AGORA 1B
+> 31670 LABÈGE
+
+La **formule d'appel** est un champ de vos informations personnelles : *Monsieur*, *Madame*, ou *Aucune*, qui imprime le nom seul. Elle n'est jamais devinée d'après un prénom, et chaque lecteur la voit dans sa langue — *Herr* en allemand, *Sig.* en italien. Sans société, rien ne change : la personne reste l'adressataire.
+
 **L'échéance figure sur le document (#910).** Chaque facture imprime désormais sa **date de règlement**, calculée à partir du délai de vos règles de relance — le même délai que l'application affiche dans le fil de paiement, donc les deux ne peuvent plus annoncer deux dates. Une maquette peut la placer où elle veut avec `due_date`. Et un document d'une seule page ne porte plus de numéro de page : « 1/1 » n'apprend rien à personne.
 
 **Les prix DesKilo sont TTC.** Ce que vous tapez comme prix d'abonnement, de service ou de forfait est ce que le membre paie. Activer la TVA ne change aucun montant dû — elle dit quelle part de ce montant est de l'impôt. C'est pourquoi relevé, quota et solde ne bougent jamais quand vous ajoutez des taux. Sous un régime assujetti, le catalogue le dit tout haut : chaque ligne de service et de forfait nomme son taux inclus (*dont TVA 20 %*), l'éditeur de facturation laisse le propriétaire choisir le taux de TVA des paliers (par défaut : le taux par défaut de l'espace) et affiche la part de TVA de chaque montant pendant la saisie, chaque accessoire peut porter son propre taux (par défaut : celui de l'espace), et chaque champ de prix rappelle qu'il est TTC.

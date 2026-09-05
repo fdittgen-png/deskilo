@@ -1,0 +1,23 @@
+{
+  "@@locale": "es",
+  "courtesyLabel": "Tratamiento",
+  "@courtesyLabel": {
+    "description": "#912 courtesy title: courtesyLabel"
+  },
+  "courtesyHint": "Se imprime delante de su nombre en los documentos. «Ninguno» imprime solo el nombre.",
+  "@courtesyHint": {
+    "description": "#912 courtesy title: courtesyHint"
+  },
+  "courtesyNone": "Ninguno",
+  "@courtesyNone": {
+    "description": "#912 courtesy title: courtesyNone"
+  },
+  "courtesyMr": "Sr.",
+  "@courtesyMr": {
+    "description": "#912 courtesy title: courtesyMr"
+  },
+  "courtesyMrs": "Sra.",
+  "@courtesyMrs": {
+    "description": "#912 courtesy title: courtesyMrs"
+  }
+}

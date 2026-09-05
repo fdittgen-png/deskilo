@@ -979,6 +979,26 @@
   "coOwnerActivate": "Jetzt zur Inhaberin machen",
   "memberCoOwnerChip": "Mit-Inhaberin",
   "memberCoOwnerPassiveChip": "Mit-Inhaberin (passiv)",
+  "courtesyLabel": "Anrede",
+  "@courtesyLabel": {
+    "description": "#912 courtesy title: courtesyLabel"
+  },
+  "courtesyHint": "Wird auf Dokumenten vor Ihrem Namen gedruckt. „Keine“ druckt nur den Namen.",
+  "@courtesyHint": {
+    "description": "#912 courtesy title: courtesyHint"
+  },
+  "courtesyNone": "Keine",
+  "@courtesyNone": {
+    "description": "#912 courtesy title: courtesyNone"
+  },
+  "courtesyMr": "Herr",
+  "@courtesyMr": {
+    "description": "#912 courtesy title: courtesyMr"
+  },
+  "courtesyMrs": "Frau",
+  "@courtesyMrs": {
+    "description": "#912 courtesy title: courtesyMrs"
+  },
   "developerMode": "Entwicklermodus",
   "developerModeWorkspaceHint": "Gilt für alle Mitglieder dieses Workspace.",
   "developerTitle": "Entwickler",

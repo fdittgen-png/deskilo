@@ -1440,6 +1440,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get memberCoOwnerPassiveChip => 'Copropietario (pasivo)';
 
   @override
+  String get courtesyLabel => 'Tratamiento';
+
+  @override
+  String get courtesyHint =>
+      'Se imprime delante de su nombre en los documentos. «Ninguno» imprime solo el nombre.';
+
+  @override
+  String get courtesyNone => 'Ninguno';
+
+  @override
+  String get courtesyMr => 'Sr.';
+
+  @override
+  String get courtesyMrs => 'Sra.';
+
+  @override
   String get developerMode => 'Modo desarrollador';
 
   @override

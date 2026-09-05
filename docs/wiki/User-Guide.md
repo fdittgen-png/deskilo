@@ -786,6 +786,15 @@ Members add their **country** — and their VAT number if they invoice as a busi
 
 **A client can be a company (#910).** A managed profile does not need a first name: a **company name** is enough. When no personal name is given, the company becomes the addressee — on the invoice, in the lists, in the payment thread — and it then drops out of the address beneath it, since it is already the line above. Name a person and nothing changes: the company stays in the address block, between the name and the street. Documents already issued benefit too — the company name was frozen on them all along, it simply was not read.
 
+**The company first, the person after (#912).** When a client carries both a company name and a personal one, the document is addressed to the **company** — it is the company that owes the invoice — and names the person on the line below, with the form of address they chose:
+
+> SASU KaloA
+> Mr Guilhem MARTIN
+> 209 rue Jean Bart, Immeuble AGORA 1B
+> 31670 LABÈGE
+
+The **form of address** is a field in your personal information: *Mr*, *Ms*, or *None*, which prints the name alone. It is never guessed from a first name, and each reader sees it in their own language — *Monsieur* in French, *Herr* in German. With no company, nothing changes: the person stays the addressee.
+
 **The due date is on the document (#910).** Every invoice now prints its **settlement date**, taken from the delay in your reminder rules — the same delay the app counts down in the payment thread, so the two can no longer announce different dates. A design can place it anywhere with `due_date`. And a one-page document no longer carries a page number: "1/1" tells nobody anything.
 
 **Prices in DesKilo include VAT.** What you type as a subscription price, a service price or a day-pack price is what the member pays. Turning VAT on does not change a single amount anyone owes — it says how much of that amount is tax. That is why a bill, a statement and a quota never move when you add rates, and why no total ever needs reconciling. Under a VAT-charging regime the catalogue says so out loud: every service and day-pack row names its included rate (*incl. VAT 20 %*), the billing editor lets the owner pick the tariff's own VAT rate (default: the workspace default) and shows the VAT share inside each band amount as you type, each accessory can carry its own rate (default: the workspace default), and every price field reminds you it is gross.
