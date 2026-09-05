@@ -87,6 +87,8 @@ import 'package:flutter_test/flutter_test.dart';
 // 77→78 (2026-09-05): #873 usageReport — the month-end consumption report.
 // 79→80 (2026-09-05): #873 usageReport — the month-end consumption report.
 // 80→81 (2026-09-05): #878 vatReport — the period's VAT positions.
+// 78→79 (2026-09-05): #874 letterStandard — default positioned layouts for
+//   every person-facing document.
 const int _expectedFeatureCount = 81;
 
 void main() {

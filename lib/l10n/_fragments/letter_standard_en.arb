@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "featureLetterStandard": "Letter standard for every document",
+  "@featureLetterStandard": {
+    "description": "#874 letter standard flag"
+  },
+  "featureLetterStandardDesc": "Invoices, proformas, statements, agreements, payments and consumption reports and reminders without a design print as standard letters: letterhead, recipient in the envelope window, body from 90 mm, a fixed footer.",
+  "@featureLetterStandardDesc": {
+    "description": "#874 letter standard flag description"
+  }
+}

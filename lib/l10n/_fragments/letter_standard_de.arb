@@ -1,0 +1,11 @@
+{
+  "@@locale": "de",
+  "featureLetterStandard": "Briefstandard für jedes Dokument",
+  "@featureLetterStandard": {
+    "description": "#874 letter standard flag"
+  },
+  "featureLetterStandardDesc": "Rechnungen, Proformas, Abrechnungen, Vereinbarungen, Zahlungs- und Verbrauchsberichte und Mahnungen ohne Vorlage drucken als Normbrief: Briefkopf, Empfänger im Fensterfeld, Text ab 90 mm, fester Fuß.",
+  "@featureLetterStandardDesc": {
+    "description": "#874 letter standard flag description"
+  }
+}

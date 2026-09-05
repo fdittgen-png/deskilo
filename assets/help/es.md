@@ -644,6 +644,8 @@ Cada informe de la app — la factura mensual, las facturas, los proformas, las 
 
 **Los informes hablan el idioma de quien los lee:** un documento se imprime en el idioma **del miembro** cuando existe una plantilla para él, si no en el **idioma del espacio**, y a falta de ambos en el **idioma del país del espacio** (§11, plantillas por idioma). Cuando ese país tiene varios idiomas, la app no adivina: se niega y te pide *definir primero el idioma del espacio*.
 
+**Cada documento como carta estándar (#874).** Con *Estándar de carta para cada documento* activo, un documento que el propietario nunca diseñó — factura, proforma, estado, acuerdo financiero, informe de pagos, informe de consumo, cada nivel de recordatorio — se imprime como carta posicionada: membrete a 20 mm, destinatario en la ventana del sobre DL (110 mm de ancho, 45 mm de alto), bloque de identificación desde 90 mm, un pie en cada página con los datos bancarios y la referencia, una tira corta en las páginas 2+. Doble por las marcas y la dirección aparece. Un diseño propio siempre gana; `dart run tool/report.dart default --kind usage` imprime un diseño de partida.
+
 ### 9c. La vista Extracto
 
 **El mes tal como está.** Tu cuenta (la posición real entre meses), la tarjeta **Este mes** (días incluidos, usados, restantes), la tarjeta de **suscripción**, **servicios consumidos**, **suplementos de accesorios y espacios**, **paquetes de días**, **posiciones abiertas** pendientes de validación, **pagos y abonos**, la **tarjeta de factura** del mes en cuanto se factura (§9a) y el **saldo**. Solo lectura: nada que pulsar salvo el selector **‹ mes ›**, común a todas las vistas.

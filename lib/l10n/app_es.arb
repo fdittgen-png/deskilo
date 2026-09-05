@@ -2998,6 +2998,14 @@
   "kioskBlockedContactHint": "Ocupado por {name} — puedes escribirle desde la aplicación en tu teléfono.",
   "languageTitle": "Idioma",
   "languageSystemDefault": "Predeterminado del sistema",
+  "featureLetterStandard": "Estándar de carta para cada documento",
+  "@featureLetterStandard": {
+    "description": "#874 letter standard flag"
+  },
+  "featureLetterStandardDesc": "Facturas, proformas, estados, acuerdos, informes de pagos y de consumo y recordatorios sin diseño se imprimen como carta estándar: membrete, destinatario en la ventana del sobre, cuerpo desde 90 mm, pie fijo.",
+  "@featureLetterStandardDesc": {
+    "description": "#874 letter standard flag description"
+  },
   "levelReserveButton": "Reservar la planta",
   "levelReserveTitle": "Reservar la planta entera",
   "levelPermissionTile": "Reservas de planta",

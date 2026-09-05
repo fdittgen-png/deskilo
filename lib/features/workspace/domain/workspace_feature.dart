@@ -71,6 +71,7 @@ enum WorkspaceFeature {
   reportTexts,
   usageReport,
   vatReport,
+  letterStandard,
   priceNegotiations,
 
   /// #767 — recurring scheduled expenses (internet, phone, electricity):
@@ -545,6 +546,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.reportTexts: FeatureManifestEntry(
     feature: WorkspaceFeature.reportTexts,
     requires: WorkspaceFeature.reportDesigner,
+  // #874 — every person-facing document folds into a window envelope:
+  // a kind without a design renders its default positioned layout.
+  WorkspaceFeature.letterStandard: FeatureManifestEntry(
+    feature: WorkspaceFeature.letterStandard,
+    requires: WorkspaceFeature.reportLayouts,
   ),
   // #878 — the period's VAT positions as a letter and a CSV.
   WorkspaceFeature.vatReport: FeatureManifestEntry(

@@ -5101,6 +5101,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get languageSystemDefault => 'Predefinita di sistema';
 
   @override
+  String get featureLetterStandard => 'Standard lettera per ogni documento';
+
+  @override
+  String get featureLetterStandardDesc =>
+      'Fatture, proforma, estratti, accordi, report di pagamenti e consumi e solleciti senza layout si stampano come lettera standard: intestazione, destinatario nella finestra della busta, corpo da 90 mm, piè di pagina fisso.';
+
+  @override
   String get levelReserveButton => 'Prenota il piano';
 
   @override

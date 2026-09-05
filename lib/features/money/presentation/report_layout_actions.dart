@@ -19,6 +19,8 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../domain/report_layout/layout_render.dart';
 import '../domain/report_layout/layout_units.dart';
 import '../providers/money_providers.dart';
+import 'report_layout_defaults.dart';
+import '../../../l10n/app_localizations.dart';
 import 'invoice_actions.dart';
 
 /// Renders [layoutXml] against [data] into a PDF, or returns null after
@@ -77,12 +79,18 @@ String? letterLayoutXml(
   WidgetRef ref, {
   required String docId,
   String language = '',
-}) =>
-    ref
-            .read(enabledFeaturesSyncProvider)
-            .contains(WorkspaceFeature.reportLayouts)
-        ? invoicePdfTemplateFor(ref).forLocale(language).layoutFor(docId)
-        : null;
+  AppLocalizations? l10n,
+}) {
+  final features = ref.read(enabledFeaturesSyncProvider);
+  if (!features.contains(WorkspaceFeature.reportLayouts)) return null;
+  // #874 — no design → the letter standard's default for a person-facing kind.
+  return resolveLayoutXml(
+    template: invoicePdfTemplateFor(ref).forLocale(language),
+    kindId: docId,
+    letterStandard: features.contains(WorkspaceFeature.letterStandard),
+    l10n: l10n,
+  );
+}
 
 /// The library image named [name], for a layout rendered with a [ref].
 Future<Uint8List?> layoutImage(WidgetRef ref, String name) =>

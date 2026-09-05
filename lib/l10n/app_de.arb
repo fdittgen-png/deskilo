@@ -2998,6 +2998,14 @@
   "kioskBlockedContactHint": "Belegt von {name} — du kannst ihm/ihr über die App auf deinem Handy schreiben.",
   "languageTitle": "Sprache",
   "languageSystemDefault": "Systemstandard",
+  "featureLetterStandard": "Briefstandard für jedes Dokument",
+  "@featureLetterStandard": {
+    "description": "#874 letter standard flag"
+  },
+  "featureLetterStandardDesc": "Rechnungen, Proformas, Abrechnungen, Vereinbarungen, Zahlungs- und Verbrauchsberichte und Mahnungen ohne Vorlage drucken als Normbrief: Briefkopf, Empfänger im Fensterfeld, Text ab 90 mm, fester Fuß.",
+  "@featureLetterStandardDesc": {
+    "description": "#874 letter standard flag description"
+  },
   "levelReserveButton": "Etage reservieren",
   "levelReserveTitle": "Die ganze Etage reservieren",
   "levelPermissionTile": "Etagen-Reservierungen",

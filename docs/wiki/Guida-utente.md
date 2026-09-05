@@ -638,6 +638,8 @@ Ogni report dell'app — l'estratto, le fatture, le proforma, le note di credito
 
 **I report parlano la lingua di chi legge:** un documento viene stampato nella lingua del **membro** quando per essa esiste un modello, altrimenti nella **lingua dello spazio**, e in mancanza di entrambe nella **lingua del paese dello spazio** (§11 modelli per lingua). Dove quel paese non ha una lingua unica, l'app non tira a indovinare: rifiuta e ti chiede di *impostare prima la lingua dello spazio*.
 
+**Ogni documento come lettera standard (#874).** Con *Standard lettera per ogni documento* attivo, un documento mai progettato dal proprietario — fattura, proforma, estratto, accordo finanziario, report dei pagamenti, report dei consumi, ogni livello di sollecito — si stampa come lettera posizionata: intestazione a 20 mm, destinatario nella finestra della busta DL (110 mm in larghezza, 45 mm in altezza), blocco di identificazione da 90 mm, un piè di pagina su ogni pagina con le coordinate bancarie e il riferimento, una breve striscia dalle pagine 2+. Piega sui segni e l'indirizzo appare. Un layout progettato vince sempre; `dart run tool/report.dart default --kind usage` stampa un layout di partenza.
+
 ### 9c. La vista Estratto
 
 **Il mese così com'è.** Il tuo conto (la posizione reale su più mesi), la scheda **Questo mese** (giorni inclusi, usati, rimasti), la scheda **abbonamento**, **servizi consumati**, **supplementi di accessori e spazi**, **pacchetti di giorni**, **posizioni aperte** in attesa di convalida, **pagamenti e crediti**, la **scheda fattura** del mese appena è fatturato (§9a) e il **saldo**. Sola lettura: nulla da premere tranne il selettore **‹ mese ›**, comune a tutte le viste.

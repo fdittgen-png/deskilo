@@ -131,6 +131,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureUsageReport ?? 'Consumption report',
       WorkspaceFeature.vatReport =>
         l10n?.featureVatReport ?? 'VAT report',
+      WorkspaceFeature.letterStandard =>
+        l10n?.featureLetterStandard ?? 'Letter standard for every document',
       WorkspaceFeature.priceNegotiations =>
         l10n?.featurePriceNegotiationsTitle ?? 'Price negotiations',
       WorkspaceFeature.scheduledExpenses =>

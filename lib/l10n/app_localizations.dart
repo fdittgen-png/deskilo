@@ -8833,6 +8833,18 @@ abstract class AppLocalizations {
   /// **'System default'**
   String get languageSystemDefault;
 
+  /// #874 letter standard flag
+  ///
+  /// In en, this message translates to:
+  /// **'Letter standard for every document'**
+  String get featureLetterStandard;
+
+  /// #874 letter standard flag description
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices, proformas, statements, agreements, payments and consumption reports and reminders without a design print as standard letters: letterhead, recipient in the envelope window, body from 90 mm, a fixed footer.'**
+  String get featureLetterStandardDesc;
+
   /// No description provided for @levelReserveButton.
   ///
   /// In en, this message translates to:

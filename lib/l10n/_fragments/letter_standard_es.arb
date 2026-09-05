@@ -1,0 +1,11 @@
+{
+  "@@locale": "es",
+  "featureLetterStandard": "Estándar de carta para cada documento",
+  "@featureLetterStandard": {
+    "description": "#874 letter standard flag"
+  },
+  "featureLetterStandardDesc": "Facturas, proformas, estados, acuerdos, informes de pagos y de consumo y recordatorios sin diseño se imprimen como carta estándar: membrete, destinatario en la ventana del sobre, cuerpo desde 90 mm, pie fijo.",
+  "@featureLetterStandardDesc": {
+    "description": "#874 letter standard flag description"
+  }
+}

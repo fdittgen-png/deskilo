@@ -43,6 +43,7 @@ import '../domain/invoice_pdf_template.dart';
 import '../domain/dunning.dart';
 import '../domain/invoice_report.dart';
 import 'report_layout_actions.dart';
+import 'report_layout_defaults.dart';
 import '../domain/statement.dart';
 import '../providers/money_providers.dart';
 import 'report_actions.dart';
@@ -1145,11 +1146,25 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   // proforma without a layout of its own borrows the invoice's, as it
   // borrows its bands. Annexes stay banded — they are documentation
   // appended behind, and the layout engine renders one document.
+  // #874 — a kind without a design renders the letter standard's
+  // default layout when that flag is on.
+  final letterStandard = features.contains(WorkspaceFeature.letterStandard);
   final layoutXml =
       features.contains(WorkspaceFeature.reportLayouts) && annexInvoices.isEmpty
       ? (proforma
-            ? (template.layoutFor('proforma') ?? template.layoutFor('invoice'))
-            : template.layoutFor('invoice'))
+            ? (template.layoutFor('proforma') ??
+                  resolveLayoutXml(
+                    template: template,
+                    kindId: 'invoice',
+                    letterStandard: letterStandard,
+                    l10n: AppLocalizations.of(context),
+                  ))
+            : resolveLayoutXml(
+                template: template,
+                kindId: 'invoice',
+                letterStandard: letterStandard,
+                l10n: AppLocalizations.of(context),
+              ))
       : null;
   if (layoutXml != null) {
     final bytes = await tryLayoutPdf(

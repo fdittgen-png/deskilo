@@ -644,6 +644,8 @@ Chaque rapport de l'application — relevé, factures, proformas, avoirs, vos do
 
 **Les rapports parlent la langue du lecteur :** un document s'imprime dans la langue du **membre** si un modèle existe pour elle, sinon dans la **langue de l'espace**, et à défaut des deux dans la **langue du pays de l'espace** (§11, modèles par langue). Si ce pays n'a pas de langue unique, l'app ne devine pas — elle refuse et vous demande de *définir d'abord la langue de l'espace*.
 
+**Chaque document en lettre normalisée (#874).** Avec *Standard lettre pour chaque document* activé, un document jamais conçu par le propriétaire — facture, proforma, relevé, accord financier, rapport de paiements, rapport de consommation, chaque niveau de rappel — s'imprime en lettre positionnée : l'en-tête à 20 mm, le destinataire dans la fenêtre de l'enveloppe DL (110 mm en largeur, 45 mm en hauteur), le bloc d'identification reprenant à 90 mm, un pied sur chaque page avec les coordonnées bancaires et la référence, un bandeau court sur les pages 2+. Pliez sur les repères et l'adresse apparaît. Une maquette conçue l'emporte toujours ; `dart run tool/report.dart default --kind usage` imprime une maquette de départ.
+
 ### 9c. Le volet Relevé
 
 **Le mois tel qu'il est.** Votre compte (la position réelle sur plusieurs mois), la carte **Ce mois-ci** (jours inclus, utilisés, restants), la carte **abonnement**, les **services consommés**, les **suppléments d'accessoires et d'espaces**, les **forfaits de jours**, les **positions ouvertes** en attente de validation, **paiements et avoirs**, la **carte de facture** du mois dès qu'il est facturé (§9a) et le **solde**. En lecture seule : rien à presser ici sauf le sélecteur **‹ mois ›**, commun à tous les volets.
