@@ -13,6 +13,7 @@ import '../l10n/app_localizations.dart';
 import 'boot_splash.dart';
 import 'router.dart';
 import 'theme.dart';
+import 'shell/development_banner.dart';
 
 /// Composition root of DesKilo.
 class DeskiloApp extends ConsumerWidget {
@@ -53,9 +54,12 @@ class DeskiloApp extends ConsumerWidget {
       // warm-up finishes — the user never watches the form assemble.
       // MotionSettings sits above the navigator so every screen, sheet
       // and snackbar reads the uiAnimations flag from one place (#611).
+      // #917 — the development strip sits ABOVE the navigator, so it
+      // shows on every route there is, and above the splash, so it is
+      // there from the first frame the workspace is known.
       builder: (context, child) => MotionSettings(
         animationsEnabled: animations,
-        child: BootSplash(child: child),
+        child: DevelopmentBanner(child: BootSplash(child: child)),
       ),
       routerConfig: router,
     );

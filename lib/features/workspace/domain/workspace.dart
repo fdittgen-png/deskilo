@@ -43,7 +43,19 @@ sealed class Workspace with _$Workspace {
 
     /// Workspace-wide developer mode (#419, 0081): admin/owner-set,
     /// applies to every member on every device (realtime-pushed).
+    /// Distinct from [environment] — this one only opens the e-invoice
+    /// TEST endpoints; a production space may legitimately use them
+    /// while rehearsing, and a development space is not sending real
+    /// documents anywhere at all.
     @Default(false) bool devMode,
+
+    /// #917 — whether this workspace is REAL. `'dev'` (the default, and
+    /// what every workspace that predates 0160 became) says it is a
+    /// place to try things out: the app says so on every screen and
+    /// every document it prints carries the development watermark.
+    /// `'prod'` is a deliberate statement by the owner that the
+    /// invoices leaving here are owed.
+    @Default('dev') String environment,
 
     /// Owner-configured payment instructions (#155) as stored — decode
     /// with [PaymentInstructions.fromDb]. Empty = none configured.
@@ -121,4 +133,32 @@ sealed class Workspace with _$Workspace {
   /// or null when no group is configured.
   Uri? get whatsappGroupUri =>
       whatsappGroup.isEmpty ? null : Uri.tryParse(whatsappGroup);
+}
+
+/// #917 — is this workspace real?
+///
+/// The question has exactly two answers and no default that flatters:
+/// a space is a development space until its owner says otherwise. Every
+/// surface that can be mistaken for a real one — the app itself, and
+/// above all the documents it prints — says which it is.
+enum WorkspaceEnvironment {
+  development('dev'),
+  production('prod');
+
+  const WorkspaceEnvironment(this.wire);
+
+  final String wire;
+
+  static WorkspaceEnvironment fromWire(String? wire) =>
+      values.where((e) => e.wire == wire).firstOrNull ?? development;
+
+  bool get isDevelopment => this == WorkspaceEnvironment.development;
+}
+
+extension WorkspaceEnvironmentX on Workspace {
+  /// The declared environment; anything unknown reads as development.
+  WorkspaceEnvironment get env => WorkspaceEnvironment.fromWire(environment);
+
+  /// Shorthand for the many places that only care whether to warn.
+  bool get isDevelopment => env.isDevelopment;
 }

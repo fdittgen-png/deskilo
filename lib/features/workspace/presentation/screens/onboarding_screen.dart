@@ -11,6 +11,7 @@ import '../../../auth/providers/auth_providers.dart';
 import '../../domain/invite_uri.dart';
 import '../../providers/workspace_providers.dart';
 import '../country_names.dart';
+import '../../domain/workspace.dart';
 
 /// First-run screen for a signed-in user without a workspace: create one
 /// (become owner) or join via invite code (spec §11 onboarding).
@@ -27,6 +28,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _name = TextEditingController();
   final _currency = TextEditingController(text: 'EUR');
   final _timezone = TextEditingController(text: 'Europe/Berlin');
+  // #917 — a new space is for trying things out until its owner
+  // says otherwise. The safe answer to "is this real?" is no.
+  WorkspaceEnvironment _environment = WorkspaceEnvironment.development;
   final _inviteCode = TextEditingController();
   String _countryCode = 'DE';
   bool _joinMode = false;
@@ -72,6 +76,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             countryCode: _countryCode,
             currencyCode: _currency.text.trim().toUpperCase(),
             timezone: _timezone.text.trim(),
+            environment: _environment,
           ),
     );
   }
@@ -195,6 +200,39 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           validator: (v) => (v == null || v.trim().isEmpty)
                               ? (l10n?.authFieldRequired ?? 'Required')
                               : null,
+                        ),
+                        const SizedBox(height: 12),
+                        DropdownButtonFormField<WorkspaceEnvironment>(
+                          key: const ValueKey('onboarding-environment'),
+                          initialValue: _environment,
+                          // The labels carry a dash and a clause; without
+                          // this the row sizes to its natural width and
+                          // overflows a narrow form.
+                          isExpanded: true,
+                          decoration: InputDecoration(
+                            labelText:
+                                l10n?.environmentLabel ?? 'Workspace type',
+                            helperMaxLines: 4,
+                            helperText: l10n?.environmentHint ??
+                                'A development workspace says so on every '
+                                    'screen and watermarks every document.',
+                          ),
+                          items: [
+                            DropdownMenuItem(
+                              value: WorkspaceEnvironment.development,
+                              child: Text(l10n?.environmentDev ??
+                                  'Development — for trying things out'),
+                            ),
+                            DropdownMenuItem(
+                              value: WorkspaceEnvironment.production,
+                              child: Text(l10n?.environmentProd ??
+                                  'Production — the invoices are owed'),
+                            ),
+                          ],
+                          onChanged: _busy
+                              ? null
+                              : (v) => setState(
+                                  () => _environment = v ?? _environment),
                         ),
                         const SizedBox(height: 24),
                         FilledButton(

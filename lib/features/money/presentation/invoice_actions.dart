@@ -1175,6 +1175,11 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     copy: l10n?.invoicePdfCopy ?? 'Copy',
     // #831 — a regrouped source says where it went.
     settledIn: settledIn,
+    // #917 — a document printed by a development workspace says so
+    // across the page, above every other stamp it could carry.
+    development: workspace?.isDevelopment ?? false
+        ? (l10n?.developmentWatermark ?? 'DEVELOPMENT')
+        : '',
     replaces: l10n?.invoicePdfReplaces ?? 'Replaces',
     description: l10n?.invoicePdfDescription ?? 'Description',
     charges: l10n?.invoicePdfCharges ?? 'Charges',

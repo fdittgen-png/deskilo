@@ -3236,6 +3236,66 @@ abstract class AppLocalizations {
   /// **'Delete this level? All offices, desks and seats on it are removed. Bookings that reference them keep a text snapshot for audits; open bookings are cancelled.'**
   String get editorDeleteLevelConfirmAudit;
 
+  /// #917 workspace environment: developmentBanner
+  ///
+  /// In en, this message translates to:
+  /// **'Development workspace — nothing here is real'**
+  String get developmentBanner;
+
+  /// #917 workspace environment: developmentWatermark
+  ///
+  /// In en, this message translates to:
+  /// **'DEVELOPMENT'**
+  String get developmentWatermark;
+
+  /// #917 workspace environment: environmentLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace type'**
+  String get environmentLabel;
+
+  /// #917 workspace environment: environmentHint
+  ///
+  /// In en, this message translates to:
+  /// **'A development workspace says so on every screen and watermarks every document. Declare it production only when the invoices leaving it are genuinely owed.'**
+  String get environmentHint;
+
+  /// #917 workspace environment: environmentDev
+  ///
+  /// In en, this message translates to:
+  /// **'Development — for trying things out'**
+  String get environmentDev;
+
+  /// #917 workspace environment: environmentProd
+  ///
+  /// In en, this message translates to:
+  /// **'Production — the invoices are owed'**
+  String get environmentProd;
+
+  /// #917 workspace environment: environmentSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace type saved.'**
+  String get environmentSaved;
+
+  /// #917 workspace environment: environmentProdConfirmTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Declare this workspace production?'**
+  String get environmentProdConfirmTitle;
+
+  /// #917 workspace environment: environmentProdConfirmBody
+  ///
+  /// In en, this message translates to:
+  /// **'The banner goes away and documents lose their watermark. Invoices already issued do not change: they keep the watermark they carried when they were issued.'**
+  String get environmentProdConfirmBody;
+
+  /// #917 workspace environment: environmentProdConfirmAction
+  ///
+  /// In en, this message translates to:
+  /// **'Declare production'**
+  String get environmentProdConfirmAction;
+
   /// Header above pinned pending-confirmation cards (spec §8)
   ///
   /// In en, this message translates to:

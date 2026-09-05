@@ -1805,6 +1805,40 @@ class AppLocalizationsEn extends AppLocalizations {
       'Delete this level? All offices, desks and seats on it are removed. Bookings that reference them keep a text snapshot for audits; open bookings are cancelled.';
 
   @override
+  String get developmentBanner =>
+      'Development workspace — nothing here is real';
+
+  @override
+  String get developmentWatermark => 'DEVELOPMENT';
+
+  @override
+  String get environmentLabel => 'Workspace type';
+
+  @override
+  String get environmentHint =>
+      'A development workspace says so on every screen and watermarks every document. Declare it production only when the invoices leaving it are genuinely owed.';
+
+  @override
+  String get environmentDev => 'Development — for trying things out';
+
+  @override
+  String get environmentProd => 'Production — the invoices are owed';
+
+  @override
+  String get environmentSaved => 'Workspace type saved.';
+
+  @override
+  String get environmentProdConfirmTitle =>
+      'Declare this workspace production?';
+
+  @override
+  String get environmentProdConfirmBody =>
+      'The banner goes away and documents lose their watermark. Invoices already issued do not change: they keep the watermark they carried when they were issued.';
+
+  @override
+  String get environmentProdConfirmAction => 'Declare production';
+
+  @override
   String get eventsPendingHeader => 'Waiting for your confirmation';
 
   @override

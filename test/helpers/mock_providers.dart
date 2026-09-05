@@ -272,6 +272,13 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
             timezone: 'Europe/Berlin',
             inviteCode: 'GOODCODE22',
             featureFlags: featureFlags,
+            // #917 — the shared fixture is a PRODUCTION workspace, so the
+            // development strip does not steal a row from every layout
+            // assertion in the suite. The strip has its own tests
+            // (environment_banner_test.dart), which pump the whole app on
+            // a development one and walk a pushed route under it; a test
+            // that is about the environment says so by setting it.
+            environment: 'prod',
           ),
         ];
 
@@ -356,6 +363,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     required String countryCode,
     required String currencyCode,
     required String timezone,
+    WorkspaceEnvironment environment = WorkspaceEnvironment.development,
   }) async {
     final workspace = Workspace(
       id: 'ws-created-${_nextId++}',
@@ -364,9 +372,25 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       currencyCode: currencyCode,
       timezone: timezone,
       inviteCode: 'NEWCODE$_nextId',
+      // #917 — what the server's default does, mirrored here.
+      environment: environment.wire,
     );
     workspaces.add(workspace);
     return workspace.id;
+  }
+
+  /// #917 — the last environment written, for assertions.
+  String? lastEnvironment;
+
+  @override
+  Future<void> setWorkspaceEnvironment(
+      String workspaceId, WorkspaceEnvironment environment) async {
+    lastEnvironment = environment.wire;
+    final index = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (index >= 0) {
+      workspaces[index] =
+          workspaces[index].copyWith(environment: environment.wire);
+    }
   }
 
   /// (0052) member id → last join decision, for assertions.

@@ -1816,6 +1816,39 @@ class AppLocalizationsEs extends AppLocalizations {
       '¿Eliminar esta planta? Se eliminan todas las oficinas, mesas y asientos que contiene. Las reservas que hacen referencia a ellos conservan una instantánea de texto para auditorías; las reservas abiertas se cancelan.';
 
   @override
+  String get developmentBanner => 'Espacio de desarrollo — aquí nada es real';
+
+  @override
+  String get developmentWatermark => 'DESARROLLO';
+
+  @override
+  String get environmentLabel => 'Tipo de espacio';
+
+  @override
+  String get environmentHint =>
+      'Un espacio de desarrollo lo anuncia en cada pantalla y pone marca de agua en cada documento. Decláre­lo producción solo cuando las facturas que salen de él se deban de verdad.';
+
+  @override
+  String get environmentDev => 'Desarrollo — para probar';
+
+  @override
+  String get environmentProd => 'Producción — las facturas se deben';
+
+  @override
+  String get environmentSaved => 'Tipo de espacio guardado.';
+
+  @override
+  String get environmentProdConfirmTitle =>
+      '¿Declarar este espacio de producción?';
+
+  @override
+  String get environmentProdConfirmBody =>
+      'El banner desaparece y los documentos pierden su marca de agua. Las facturas ya emitidas no cambian: conservan la marca que llevaban al emitirse.';
+
+  @override
+  String get environmentProdConfirmAction => 'Declarar producción';
+
+  @override
   String get eventsPendingHeader => 'Esperando tu confirmación';
 
   @override
