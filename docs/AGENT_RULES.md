@@ -287,3 +287,17 @@ keep `personal_info_test.dart` pinned to the SQL harness output.
 Documents read `client_name` / `client_address` / `client_company` /
 `client_phone` / `client_email`; the `<recipient>` element prints the
 name over the block without a designer's help.
+
+## One feature branch at a time — the registries are append-at-one-spot
+
+Every functionality adds itself to the SAME lines: the `WorkspaceFeature`
+enum and manifest, `feature_names.dart`, `features_screen.dart`, the
+registry pin, `web/setup.html` FEATURES/REQUIRES, the file budgets, the
+placeholder list and its pin. Two branches cut from the same master
+that both add there CONFLICT on merge, and the rebase repeats for every
+branch behind. So: cut a branch from master, open its PR, merge it, THEN
+cut the next — or, when work must overlap, stack the second branch on
+the first and merge them in order. Never run several registry-touching
+PRs side by side (2026-09-05: five did, and each landed only after a
+hand-merged rebase).
+

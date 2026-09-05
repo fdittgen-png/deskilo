@@ -546,6 +546,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.reportTexts: FeatureManifestEntry(
     feature: WorkspaceFeature.reportTexts,
     requires: WorkspaceFeature.reportDesigner,
+  ),
   // #874 — every person-facing document folds into a window envelope:
   // a kind without a design renders its default positioned layout.
   WorkspaceFeature.letterStandard: FeatureManifestEntry(

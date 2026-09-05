@@ -37,6 +37,14 @@ void main() {
         'kind when the standard is on; nothing otherwise', () {
       expect(resolveLayoutXml(template: designed, kindId: 'invoice', letterStandard: true),
           '<report-layout page="A4"/>');
+      expect(
+          resolveLayoutXml(
+              template: InvoicePdfTemplate.empty,
+              kindId: 'invoice',
+              letterStandard: true,
+              bandsDesigned: true),
+          isNull,
+          reason: 'bands the owner customised are a design too');
       expect(resolveLayoutXml(template: InvoicePdfTemplate.empty, kindId: 'usage', letterStandard: true),
           contains('<recipient window="fr"/>'));
       expect(resolveLayoutXml(template: InvoicePdfTemplate.empty, kindId: 'usage', letterStandard: false),
@@ -49,7 +57,7 @@ void main() {
   group('every person-facing default CONFORMS on the sheet', () {
     for (final kind in _kinds) {
       test(kind, () async {
-        final xml = defaultLetterLayoutXml(kind, null);
+        final xml = defaultLetterLayoutXml(kind, const LetterStrings());
         final data = _data();
         final document = renderLayoutDocument(xml, data);
         final bytes = await buildLayoutPdf(

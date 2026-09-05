@@ -70,6 +70,16 @@ Future<Uint8List?> tryLayoutPdf({
       stackTrace: e.stackTrace ?? st,
     );
     return null;
+  } catch (e, st) {
+    // #874 — an image store or font that cannot be reached must not
+    // block a legal document either: the bands still render.
+    TraceLogger.instance.warn(
+      'money',
+      'report layout for $what could not be built — rendering the bands instead',
+      error: e,
+      stackTrace: st,
+    );
+    return null;
   }
 }
 
@@ -84,7 +94,7 @@ String? letterLayoutXml(
   final features = ref.read(enabledFeaturesSyncProvider);
   if (!features.contains(WorkspaceFeature.reportLayouts)) return null;
   // #874 — no design → the letter standard's default for a person-facing kind.
-  return resolveLayoutXml(
+  return resolveLayoutXmlFor(
     template: invoicePdfTemplateFor(ref).forLocale(language),
     kindId: docId,
     letterStandard: features.contains(WorkspaceFeature.letterStandard),

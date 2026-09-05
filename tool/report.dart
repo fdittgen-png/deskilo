@@ -18,7 +18,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:deskilo/features/money/domain/address_window.dart';
-import 'package:deskilo/features/money/presentation/report_layout_defaults.dart';
+import 'package:deskilo/features/money/domain/report_letter_layouts.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/report_conformance.dart';
 import 'package:deskilo/features/money/domain/report_layout/layout_model.dart';
@@ -310,6 +310,6 @@ int _default(_Args args) {
     stderr.writeln('no default layout for "$kind" — not a document sent to a person');
     return 2;
   }
-  stdout.write(defaultLetterLayoutXml(kind, null));
+  stdout.write(defaultLetterLayoutXml(kind, const LetterStrings()));
   return 0;
 }

@@ -1153,13 +1153,13 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
       features.contains(WorkspaceFeature.reportLayouts) && annexInvoices.isEmpty
       ? (proforma
             ? (template.layoutFor('proforma') ??
-                  resolveLayoutXml(
+                  resolveLayoutXmlFor(
                     template: template,
                     kindId: 'invoice',
                     letterStandard: letterStandard,
                     l10n: AppLocalizations.of(context),
                   ))
-            : resolveLayoutXml(
+            : resolveLayoutXmlFor(
                 template: template,
                 kindId: 'invoice',
                 letterStandard: letterStandard,
