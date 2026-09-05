@@ -55,6 +55,9 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   // #484 — '' = company/business, 'association' = non-profit.
   String _sellerKind = '';
   VatRegime _regime = VatRegime.notSubject;
+  // #895 — intra-EU B2B supplies are reverse-charged unless a workspace
+  // that never invoices businesses abroad turns it off.
+  bool _reverseCharge = true;
 
   /// #869 — null means follow the country.
   AddressWindow? _addressWindow;
@@ -126,6 +129,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             escompte: _escompte.text,
             insurance: _insurance.text,
             specialMentions: _special.text,
+            reverseChargeOptIn: _reverseCharge,
           ).toJson(),
         );
       },
@@ -200,6 +204,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
       _vatAccount.text = workspace.vatAccount;
       final legal = InvoiceLegal.fromJson(workspace.invoiceLegal);
       _sellerKind = legal.sellerKind;
+      _reverseCharge = legal.reverseCharge;
       _legalForm.text = legal.legalForm;
       _registration.text = legal.registration;
       _paymentTerms.text = legal.paymentTerms;
@@ -270,6 +275,21 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           ]),
           // Only a workspace that charges VAT and has no rate to charge
           // it at is in trouble — the rest is a link, not a warning.
+          // #895 — the customer's tax, across the border.
+          if (_regime == VatRegime.vatRegistered)
+            SwitchListTile(
+              key: const ValueKey('legal-identity-reverse-charge'),
+              contentPadding: EdgeInsets.zero,
+              value: _reverseCharge,
+              title: Text(l10n?.reverseChargeTitle ??
+                  'Reverse charge for EU businesses'),
+              subtitle: Text(l10n?.reverseChargeSubtitle ??
+                  'A customer with a VAT number in another member state '
+                      'is invoiced without tax and self-assesses it '
+                      '(art. 196). Turn it off if you never invoice '
+                      'businesses abroad.'),
+              onChanged: (v) => setState(() => _reverseCharge = v),
+            ),
           if (_regime == VatRegime.vatRegistered && rates.isEmpty)
             InlineBanner(
               key: const ValueKey('legal-identity-vat-warning'),

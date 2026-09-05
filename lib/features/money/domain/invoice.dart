@@ -276,6 +276,10 @@ sealed class Invoice with _$Invoice {
 
   bool get isVoided => voidedAt != null;
 
+  /// #895 — the tax is the customer's: the frozen breakdown says AE.
+  bool get isReverseCharged =>
+      vatTotals.any((total) => total.category == 'AE');
+
   /// #894 — a document that gives money back: the month's credits
   /// outweigh its charges (#508's avoir). EN 16931 types it 381, and
   /// the VAT it carries is the VAT it reverses.

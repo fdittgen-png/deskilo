@@ -7299,6 +7299,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bookingGateBlocked => 'Non réservable ainsi';
 
   @override
+  String get reverseChargeTitle =>
+      'Autoliquidation pour les entreprises de l\'UE';
+
+  @override
+  String get reverseChargeSubtitle =>
+      'Un client titulaire d\'un numéro de TVA dans un autre État membre est facturé sans taxe et l\'autoliquide (art. 196). Désactivez si vous ne facturez jamais d\'entreprises à l\'étranger.';
+
+  @override
+  String get invoiceGapMissingBuyerVatId =>
+      'Le numéro de TVA du client manque — une facture en autoliquidation doit le porter.';
+
+  @override
   String seatDayTitle(String seat) {
     return 'Place $seat aujourd\'hui';
   }

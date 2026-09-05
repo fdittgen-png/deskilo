@@ -7289,6 +7289,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bookingGateBlocked => 'Non prenotabile così';
 
   @override
+  String get reverseChargeTitle => 'Inversione contabile per imprese UE';
+
+  @override
+  String get reverseChargeSubtitle =>
+      'Un cliente con partita IVA in un altro Stato membro è fatturato senza imposta e la assolve lui (art. 196). Disattiva se non fatturi mai imprese all\'estero.';
+
+  @override
+  String get invoiceGapMissingBuyerVatId =>
+      'Manca la partita IVA del cliente — una fattura in inversione contabile deve indicarla.';
+
+  @override
   String seatDayTitle(String seat) {
     return 'Postazione $seat oggi';
   }

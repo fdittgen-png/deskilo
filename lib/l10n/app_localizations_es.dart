@@ -7276,6 +7276,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bookingGateBlocked => 'No reservable así';
 
   @override
+  String get reverseChargeTitle =>
+      'Inversión del sujeto pasivo para empresas de la UE';
+
+  @override
+  String get reverseChargeSubtitle =>
+      'Un cliente con NIF-IVA en otro Estado miembro se factura sin impuesto y lo autoliquida (art. 196). Desactívalo si nunca facturas a empresas en el extranjero.';
+
+  @override
+  String get invoiceGapMissingBuyerVatId =>
+      'Falta el NIF-IVA del cliente — una factura con inversión del sujeto pasivo debe indicarlo.';
+
+  @override
   String seatDayTitle(String seat) {
     return 'Plaza $seat hoy';
   }

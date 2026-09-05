@@ -1,0 +1,15 @@
+{
+  "@@locale": "fr",
+  "reverseChargeTitle": "Autoliquidation pour les entreprises de l'UE",
+  "@reverseChargeTitle": {
+    "description": "#895 reverse charge: reverseChargeTitle"
+  },
+  "reverseChargeSubtitle": "Un client titulaire d'un numéro de TVA dans un autre État membre est facturé sans taxe et l'autoliquide (art. 196). Désactivez si vous ne facturez jamais d'entreprises à l'étranger.",
+  "@reverseChargeSubtitle": {
+    "description": "#895 reverse charge: reverseChargeSubtitle"
+  },
+  "invoiceGapMissingBuyerVatId": "Le numéro de TVA du client manque — une facture en autoliquidation doit le porter.",
+  "@invoiceGapMissingBuyerVatId": {
+    "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
+  }
+}

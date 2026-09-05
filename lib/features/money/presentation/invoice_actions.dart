@@ -135,6 +135,9 @@ Map<String, Object?> legalMentionData(
   InvoiceParty? buyer,
   String clientAddress = '',
   String clientName = '',
+  /// #895 — the document is an intra-EU B2B supply: the customer owes
+  /// the tax and the mention says so.
+  bool reverseCharged = false,
   // #881 — the member's own conditions on top of the workspace's.
   PaymentTerms? memberTerms,
 }) {
@@ -171,14 +174,18 @@ Map<String, Object?> legalMentionData(
     // #878 — BR-E-10: an exempt (or out-of-scope) seller's document
     // carries the statutory mention of its member state when the owner
     // wrote none; a VAT-charging seller prints nothing here.
-    'exemption_reason': orDefault(
-      seller?.taxExemptionReason ?? workspace?.taxExemptionReason ?? '',
-      defaultExemptionMention(
-        seller?.country ?? workspace?.countryCode ?? '',
-        vatRegimeFromWire(
-            seller?.vatRegime ?? workspace?.vatRegime ?? 'not_subject'),
-      ),
-    ),
+    // #895 — a reverse-charged supply states WHY no tax is charged, and
+    // that mention is statutory: it wins over the seller's own text.
+    'exemption_reason': reverseCharged
+        ? reverseChargeMention(seller?.country ?? workspace?.countryCode ?? '')
+        : orDefault(
+            seller?.taxExemptionReason ?? workspace?.taxExemptionReason ?? '',
+            defaultExemptionMention(
+              seller?.country ?? workspace?.countryCode ?? '',
+              vatRegimeFromWire(
+                  seller?.vatRegime ?? workspace?.vatRegime ?? 'not_subject'),
+            ),
+          ),
     // #886 — the client as the postal standard prints them: the full
     // name on its own line, the block (company · street · POSTAL CITY ·
     // country when abroad) beneath, the contacts beside.
@@ -324,6 +331,7 @@ Map<String, Object?> invoiceReportData(
       buyer: invoice.buyerParty,
       clientAddress: _clientAddressOf(invoice, workspace),
       clientName: _clientNameOf(invoice),
+      reverseCharged: invoice.isReverseCharged,
       memberTerms: memberTerms,
     ),
   };
@@ -1033,6 +1041,7 @@ Map<String, Object?> reminderReportData(
       buyer: invoice.buyerParty,
       clientAddress: _clientAddressOf(invoice, workspace),
       clientName: _clientNameOf(invoice),
+      reverseCharged: invoice.isReverseCharged,
       memberTerms: memberTermsFor(ref, invoice.memberId),
     ),
   };

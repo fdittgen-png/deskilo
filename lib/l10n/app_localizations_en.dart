@@ -7227,6 +7227,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingGateBlocked => 'Not bookable as chosen';
 
   @override
+  String get reverseChargeTitle => 'Reverse charge for EU businesses';
+
+  @override
+  String get reverseChargeSubtitle =>
+      'A customer with a VAT number in another member state is invoiced without tax and self-assesses it (art. 196). Turn it off if you never invoice businesses abroad.';
+
+  @override
+  String get invoiceGapMissingBuyerVatId =>
+      'The customer\'s VAT number is missing — a reverse-charged invoice must name it.';
+
+  @override
   String seatDayTitle(String seat) {
     return 'Seat $seat today';
   }
