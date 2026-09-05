@@ -105,6 +105,10 @@ void main() {
         find.byKey(const ValueKey('perm-admin-issueInvoices'));
     await tester.scrollUntilVisible(adminInvoicing, 300,
         scrollable: find.byType(Scrollable).first);
+    // #881 — one more permission row: the tile may sit at the viewport
+    // edge after the scroll, where a tap on its centre misses.
+    await tester.ensureVisible(adminInvoicing);
+    await tester.pumpAndSettle();
     expect(tester.widget<CheckboxListTile>(adminInvoicing).value, isFalse);
     await tester.tap(adminInvoicing);
     await tester.pumpAndSettle();

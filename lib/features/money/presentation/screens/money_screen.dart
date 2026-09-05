@@ -1001,7 +1001,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             title: Text(l10n?.invoicesManage ?? 'Manage invoices'),
             subtitle:
                 Text(l10n?.settingsBillingReports ?? 'Billing & reports'),
-            trailing: const Icon(Icons.chevron_right),
+            // Not chevron_right: the period bar owns that icon on this screen.
+            trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () => context.push('/invoices'),
           )
         : null;

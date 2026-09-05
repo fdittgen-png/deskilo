@@ -152,8 +152,12 @@ void main() {
     });
 
     test('the catalog carries every permission the client can grant', () {
+      // #881 — the catalog moved to 0155 with paymentTermsEdit.
+      final latestCatalog =
+          File('supabase/migrations/0155_payment_terms_permission_catalog.sql')
+              .readAsStringSync();
       final catalog = RegExp(r"v_catalog text\[\] := array\[([^\]]+)\]")
-          .firstMatch(sql)!
+          .firstMatch(latestCatalog)!
           .group(1)!;
       for (final permission in WorkspacePermission.values) {
         expect(catalog, contains("'${permission.wireName}'"),

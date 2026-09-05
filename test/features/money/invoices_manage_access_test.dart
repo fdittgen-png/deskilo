@@ -39,7 +39,7 @@ void main() {
       findsOneWidget,
     );
     expect(
-      find.descendant(of: row, matching: find.byIcon(Icons.chevron_right)),
+      find.descendant(of: row, matching: find.byIcon(Icons.arrow_forward_ios)),
       findsOneWidget,
     );
     expect(find.widgetWithText(OutlinedButton, 'Invoices'), findsNothing,
