@@ -4837,6 +4837,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce fichier ne contient aucune maquette lisible.';
 
   @override
+  String get invoicesManage => 'Gérer les factures';
+
+  @override
   String get eventTypeMemberJoin => 'Nouveau membre';
 
   @override

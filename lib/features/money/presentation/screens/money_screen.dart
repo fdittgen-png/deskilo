@@ -988,12 +988,20 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             label: fitted(l10n?.consumptionAdd ?? 'Add consumption'),
           )
         : null;
+    // #871 — the hand-off to invoice MANAGEMENT reads like every other
+    // management access in the app (the Settings tiles): a row with the
+    // management icon, a verb, and a chevron — never a button that
+    // repeats the name of the tab the person is already on.
     final invoicesButton = features.contains(WorkspaceFeature.invoicing)
-        ? OutlinedButton.icon(
+        ? ListTile(
             key: const ValueKey('invoices-button'),
-            onPressed: () => context.push('/invoices'),
-            icon: const Icon(Icons.receipt_long_outlined),
-            label: Text(l10n?.invoicesTitle ?? 'Invoices'),
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.receipt_long_outlined),
+            title: Text(l10n?.invoicesManage ?? 'Manage invoices'),
+            subtitle:
+                Text(l10n?.settingsBillingReports ?? 'Billing & reports'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push('/invoices'),
           )
         : null;
     // #494 — member self-service reports: the standing financial

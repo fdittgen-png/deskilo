@@ -4820,6 +4820,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ese archivo no contiene ningún diseño legible.';
 
   @override
+  String get invoicesManage => 'Gestionar facturas';
+
+  @override
   String get eventTypeMemberJoin => 'Nuevo miembro';
 
   @override

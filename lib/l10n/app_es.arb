@@ -2877,6 +2877,10 @@
   "reportDesignErrorUnknownKind": "Ese diseño es de un informe que este espacio no tiene.",
   "reportDesignErrorWrongKind": "Ese diseño pertenece a otro informe. Ábrelo e impórtalo allí.",
   "reportDesignErrorInvalidDesign": "Ese archivo no contiene ningún diseño legible.",
+  "invoicesManage": "Gestionar facturas",
+  "@invoicesManage": {
+    "description": "#871 the Money tab row that opens invoice management (the billing hub)"
+  },
   "eventTypeMemberJoin": "Nuevo miembro",
   "memberStatusPending": "Pendiente",
   "pendingApprovalTitle": "Esperando aprobación",

@@ -4893,6 +4893,10 @@
   "@reportDesignErrorInvalidDesign": {
     "description": "#864 - import refusal: no readable design"
   },
+  "invoicesManage": "Manage invoices",
+  "@invoicesManage": {
+    "description": "#871 the Money tab row that opens invoice management (the billing hub)"
+  },
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",
   "pendingApprovalTitle": "Awaiting approval",

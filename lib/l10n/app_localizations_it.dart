@@ -4830,6 +4830,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo file non contiene alcun modello leggibile.';
 
   @override
+  String get invoicesManage => 'Gestire le fatture';
+
+  @override
   String get eventTypeMemberJoin => 'Nuovo membro';
 
   @override
