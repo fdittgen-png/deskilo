@@ -15,6 +15,7 @@ import '../../../core/time/clock.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accounting_view.dart';
+import '../domain/invoice_legal.dart';
 import '../domain/vat_regime.dart';
 import '../domain/vat_report.dart';
 import '../providers/money_providers.dart';
@@ -29,16 +30,23 @@ Future<VatReport> loadVatReport(
   required DateTime end,
 }) async {
   final workspace = ref.read(currentWorkspaceProvider).value;
+  final matches = ref.read(invoiceMatchesProvider).value ?? const {};
   final view = accountingView(
     await ref.read(invoicesProvider.future),
-    ref.read(invoiceMatchesProvider).value ?? const {},
+    matches,
   );
+  // #896 — on the cash basis the period holds the payments received in
+  // it, so the report is built from the matches, not the issue dates.
+  final onPayment =
+      InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {})
+          .onPaymentBasis;
   return buildVatReport(
     view.invoices,
     start: start,
     end: end,
     zeroCategory: vatRegimeFromWire(workspace?.vatRegime ?? 'not_subject')
         .taxCategoryCode,
+    matches: onPayment ? matches : null,
   );
 }
 
@@ -81,6 +89,17 @@ Map<String, Object?> vatReportData(
     'lines': const <Map<String, Object?>>[],
     'vat': const <Map<String, Object?>>[],
     'vat_period': periodLabel,
+    // #896 — the reader must know WHICH period this is: what was paid
+    // inside it, or what was issued inside it.
+    'vat_basis_note':
+        InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {})
+                .onPaymentBasis
+            ? (l10n?.vatDeclarationBasisPayment ??
+                'Basis: receipts (VAT on payments received during the '
+                    'period).')
+            : (l10n?.vatDeclarationBasisInvoice ??
+                'Basis: invoices (VAT on documents issued during the '
+                    'period).'),
     'vat_period_net': money(report.netCents),
     'vat_period_vat': money(report.vatCents),
     'vat_period_gross': money(report.grossCents),

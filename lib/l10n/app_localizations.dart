@@ -13543,6 +13543,42 @@ abstract class AppLocalizations {
   /// **'A rate still used by an invoice or a service is kept, deactivated.'**
   String get vatKeptRate;
 
+  /// #896 vat exigibility: vatExigibilityTitle
+  ///
+  /// In en, this message translates to:
+  /// **'VAT falls due'**
+  String get vatExigibilityTitle;
+
+  /// #896 vat exigibility: vatExigibilityInvoice
+  ///
+  /// In en, this message translates to:
+  /// **'On invoices (accrual)'**
+  String get vatExigibilityInvoice;
+
+  /// #896 vat exigibility: vatExigibilityPayment
+  ///
+  /// In en, this message translates to:
+  /// **'On receipts (cash)'**
+  String get vatExigibilityPayment;
+
+  /// #896 vat exigibility: vatExigibilitySubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'On receipts, a period declares what customers paid inside it; on invoices, what you issued. The choice is printed on every invoice.'**
+  String get vatExigibilitySubtitle;
+
+  /// #896 vat exigibility: vatDeclarationBasisPayment
+  ///
+  /// In en, this message translates to:
+  /// **'Basis: receipts (VAT on payments received during the period).'**
+  String get vatDeclarationBasisPayment;
+
+  /// #896 vat exigibility: vatDeclarationBasisInvoice
+  ///
+  /// In en, this message translates to:
+  /// **'Basis: invoices (VAT on documents issued during the period).'**
+  String get vatDeclarationBasisInvoice;
+
   /// #878 VAT review / report: featureVatReport
   ///
   /// In en, this message translates to:

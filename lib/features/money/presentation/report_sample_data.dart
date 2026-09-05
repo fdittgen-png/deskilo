@@ -85,6 +85,7 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
       'seller_vat_id': 'FR 39 680 357 910',
       'seller_legal_id': '680 357 910',
       'exemption_reason': '',
+      'vat_exigibility_mention': 'TVA acquittée sur les encaissements.',
       'client_name': 'Anne DUPONT',
       'client_company': 'Atelier Dupont SARL',
       'client_phone': '+33 6 12 34 56 78',
@@ -108,6 +109,9 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
       'vat_period_net': '1 000,00 €',
       'vat_period_vat': '200,00 €',
       'vat_period_gross': '1 200,00 €',
+      'vat_basis_note':
+          'Base : encaissements (TVA sur les paiements reçus pendant la '
+              'période).',
       'vat_positions': [
         {'number': 'INV-2026-0007', 'date': '2026-09-03', 'customer': 'Anne DUPONT', 'rate': '20 %', 'category': 'S', 'net': '500,00 €', 'vat': '100,00 €', 'gross': '600,00 €', 'reverses': ''},
         {'number': 'INV-2026-0008', 'date': '2026-09-12', 'customer': 'Atelier Dupont SARL', 'rate': '20 %', 'category': 'S', 'net': '500,00 €', 'vat': '100,00 €', 'gross': '600,00 €', 'reverses': ''},

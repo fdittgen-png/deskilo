@@ -6,6 +6,8 @@
 // from lines: a pre-0072 invoice derives its single zero-rated entry
 // exactly as the documents do (vatBreakdown).
 import 'invoice.dart';
+import 'vat_declaration.dart';
+import 'vat_rate.dart';
 
 /// One invoice × one rate.
 class VatReportPosition {
@@ -74,40 +76,85 @@ class VatReport {
   int get documentCount => positions.map((p) => p.invoiceId).toSet().length;
 }
 
-/// Issued documents of [start]..[end] (inclusive days), voided ones and
+/// Documents of [start]..[end] (inclusive days), voided ones and
 /// documents folded into a settlement excluded (the settlement carries
 /// them), each split by rate. [zeroCategory] is the seller's category
 /// for a zero rate (O or E) on pre-0072 documents.
+///
+/// #896 — on the CASH basis ([matches] given, one entry per payment) a
+/// period holds the payments received inside it, not the documents
+/// issued inside it: a position is then a payment, dated the day it was
+/// matched, apportioned across the document's rates by
+/// [paymentSharesByRate] — the very function the declaration uses, so
+/// the accountant's list and the return can never disagree.
 VatReport buildVatReport(
   Iterable<Invoice> invoices, {
   required DateTime start,
   required DateTime end,
   required String zeroCategory,
+  Map<String, InvoiceMatch>? matches,
 }) {
   final endExclusive = DateTime(end.year, end.month, end.day + 1);
   final positions = <VatReportPosition>[];
-  for (final invoice in invoices) {
-    if (invoice.isVoided || invoice.isFolded) continue;
-    if (invoice.issuedAt.isBefore(start) ||
-        !invoice.issuedAt.isBefore(endExclusive)) {
-      continue;
+  String customerOf(Invoice invoice) =>
+      invoice.buyerParty?.name.isNotEmpty == true
+          ? invoice.buyerParty!.name
+          : invoice.memberName;
+  if (matches != null) {
+    final byId = {for (final invoice in invoices) invoice.id: invoice};
+    for (final match in matches.values) {
+      final invoice = byId[match.invoiceId];
+      if (invoice == null || invoice.isVoided || invoice.isFolded) continue;
+      if (match.matchedAt.isBefore(start) ||
+          !match.matchedAt.isBefore(endExclusive)) {
+        continue;
+      }
+      // The category the document froze for each rate, so a
+      // reverse-charged or exempt supply keeps saying why it bears no
+      // tax when the money for it arrives.
+      final categories = {
+        for (final total in invoice.vatBreakdown(zeroCategory: zeroCategory))
+          total.percent: total.category,
+      };
+      for (final entry in paymentSharesByRate(invoice, match.paidCents)
+          .entries) {
+        final split = vatSplit(entry.value, entry.key);
+        positions.add(VatReportPosition(
+          invoiceId: invoice.id,
+          number: invoice.number,
+          issuedAt: match.matchedAt,
+          customer: customerOf(invoice),
+          percent: entry.key,
+          category: categories[entry.key] ??
+              (entry.key == 0 ? zeroCategory : 'S'),
+          netCents: split.netCents,
+          vatCents: split.vatCents,
+          grossCents: entry.value,
+          reversesNumber: invoice.replacesNumber,
+        ));
+      }
     }
-    final customer = invoice.buyerParty?.name.isNotEmpty == true
-        ? invoice.buyerParty!.name
-        : invoice.memberName;
-    for (final total in invoice.vatBreakdown(zeroCategory: zeroCategory)) {
-      positions.add(VatReportPosition(
-        invoiceId: invoice.id,
-        number: invoice.number,
-        issuedAt: invoice.issuedAt,
-        customer: customer,
-        percent: total.percent,
-        category: total.category,
-        netCents: total.netCents,
-        vatCents: total.vatCents,
-        grossCents: total.grossCents,
-        reversesNumber: invoice.replacesNumber,
-      ));
+  } else {
+    for (final invoice in invoices) {
+      if (invoice.isVoided || invoice.isFolded) continue;
+      if (invoice.issuedAt.isBefore(start) ||
+          !invoice.issuedAt.isBefore(endExclusive)) {
+        continue;
+      }
+      for (final total in invoice.vatBreakdown(zeroCategory: zeroCategory)) {
+        positions.add(VatReportPosition(
+          invoiceId: invoice.id,
+          number: invoice.number,
+          issuedAt: invoice.issuedAt,
+          customer: customerOf(invoice),
+          percent: total.percent,
+          category: total.category,
+          netCents: total.netCents,
+          vatCents: total.vatCents,
+          grossCents: total.grossCents,
+          reversesNumber: invoice.replacesNumber,
+        ));
+      }
     }
   }
   positions.sort((a, b) {

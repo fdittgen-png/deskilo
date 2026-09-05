@@ -249,6 +249,8 @@ class InvoicePdfTemplate {
     'seller_vat_id',
     'seller_legal_id',
     'exemption_reason',
+    // #896 — when the tax falls due, in the seller's words.
+    'vat_exigibility_mention',
     // #886 — the client as the postal standard prints them.
     'client_name',
     'client_company',
@@ -271,6 +273,8 @@ class InvoicePdfTemplate {
     'vat_period_net',
     'vat_period_vat',
     'vat_period_gross',
+    // #896 — which period this is: paid in it, or issued in it.
+    'vat_basis_note',
     'vat_positions',
     'vat_rate_totals',
     'payment_terms',

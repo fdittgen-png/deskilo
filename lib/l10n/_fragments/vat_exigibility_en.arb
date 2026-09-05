@@ -1,0 +1,27 @@
+{
+  "@@locale": "en",
+  "vatExigibilityTitle": "VAT falls due",
+  "@vatExigibilityTitle": {
+    "description": "#896 vat exigibility: vatExigibilityTitle"
+  },
+  "vatExigibilityInvoice": "On invoices (accrual)",
+  "@vatExigibilityInvoice": {
+    "description": "#896 vat exigibility: vatExigibilityInvoice"
+  },
+  "vatExigibilityPayment": "On receipts (cash)",
+  "@vatExigibilityPayment": {
+    "description": "#896 vat exigibility: vatExigibilityPayment"
+  },
+  "vatExigibilitySubtitle": "On receipts, a period declares what customers paid inside it; on invoices, what you issued. The choice is printed on every invoice.",
+  "@vatExigibilitySubtitle": {
+    "description": "#896 vat exigibility: vatExigibilitySubtitle"
+  },
+  "vatDeclarationBasisPayment": "Basis: receipts (VAT on payments received during the period).",
+  "@vatDeclarationBasisPayment": {
+    "description": "#896 vat exigibility: vatDeclarationBasisPayment"
+  },
+  "vatDeclarationBasisInvoice": "Basis: invoices (VAT on documents issued during the period).",
+  "@vatDeclarationBasisInvoice": {
+    "description": "#896 vat exigibility: vatDeclarationBasisInvoice"
+  }
+}

@@ -4613,6 +4613,30 @@
   "vatPdfVat": "MwSt.",
   "fecAccountVat": "Vereinnahmte Steuer",
   "vatKeptRate": "Ein Satz, den eine Rechnung oder eine Leistung noch nutzt, bleibt erhalten und wird deaktiviert.",
+  "vatExigibilityTitle": "Entstehung der Umsatzsteuer",
+  "@vatExigibilityTitle": {
+    "description": "#896 vat exigibility: vatExigibilityTitle"
+  },
+  "vatExigibilityInvoice": "Nach vereinbarten Entgelten (Soll)",
+  "@vatExigibilityInvoice": {
+    "description": "#896 vat exigibility: vatExigibilityInvoice"
+  },
+  "vatExigibilityPayment": "Nach vereinnahmten Entgelten (Ist)",
+  "@vatExigibilityPayment": {
+    "description": "#896 vat exigibility: vatExigibilityPayment"
+  },
+  "vatExigibilitySubtitle": "Nach vereinnahmten Entgelten meldet ein Zeitraum, was Kunden darin bezahlt haben; nach vereinbarten Entgelten, was Sie gestellt haben. Die Wahl steht auf jeder Rechnung.",
+  "@vatExigibilitySubtitle": {
+    "description": "#896 vat exigibility: vatExigibilitySubtitle"
+  },
+  "vatDeclarationBasisPayment": "Grundlage: vereinnahmte Entgelte (Steuer auf im Zeitraum erhaltene Zahlungen).",
+  "@vatDeclarationBasisPayment": {
+    "description": "#896 vat exigibility: vatDeclarationBasisPayment"
+  },
+  "vatDeclarationBasisInvoice": "Grundlage: vereinbarte Entgelte (Steuer auf im Zeitraum gestellte Rechnungen).",
+  "@vatDeclarationBasisInvoice": {
+    "description": "#896 vat exigibility: vatDeclarationBasisInvoice"
+  },
   "featureVatReport": "MwSt-Bericht",
   "@featureVatReport": {
     "description": "#878 VAT review / report: featureVatReport"

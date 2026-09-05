@@ -39,6 +39,7 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       'member' ||
       'workspace' ||
       'workspace_address' ||
+      'vat_exigibility_mention' ||
       'client_name' ||
       'client_company' ||
       'client_phone' ||
@@ -58,6 +59,7 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       'vat_period_net' ||
       'vat_period_vat' ||
       'vat_period_gross' ||
+      'vat_basis_note' ||
       'total' ||
       'charges' ||
       'payments' ||

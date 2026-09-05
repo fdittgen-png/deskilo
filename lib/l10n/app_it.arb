@@ -4591,6 +4591,30 @@
   "validationOwnerSelfShort": "La proprietà può convalidare il proprio",
   "validationSequential": "Una dopo l’altra",
   "validationSequentialDesc": "La convalida successiva è chiesta quando la precedente è passata, e la cronologia numera ogni passo.",
+  "vatExigibilityTitle": "Esigibilità dell’IVA",
+  "@vatExigibilityTitle": {
+    "description": "#896 vat exigibility: vatExigibilityTitle"
+  },
+  "vatExigibilityInvoice": "Alla fattura (criterio ordinario)",
+  "@vatExigibilityInvoice": {
+    "description": "#896 vat exigibility: vatExigibilityInvoice"
+  },
+  "vatExigibilityPayment": "All'incasso (IVA per cassa)",
+  "@vatExigibilityPayment": {
+    "description": "#896 vat exigibility: vatExigibilityPayment"
+  },
+  "vatExigibilitySubtitle": "All'incasso, un periodo dichiara ciò che i clienti hanno pagato al suo interno; alla fattura, ciò che avete emesso. La scelta è stampata su ogni fattura.",
+  "@vatExigibilitySubtitle": {
+    "description": "#896 vat exigibility: vatExigibilitySubtitle"
+  },
+  "vatDeclarationBasisPayment": "Base: incassi (IVA sui pagamenti ricevuti nel periodo).",
+  "@vatDeclarationBasisPayment": {
+    "description": "#896 vat exigibility: vatDeclarationBasisPayment"
+  },
+  "vatDeclarationBasisInvoice": "Base: fatture (IVA sui documenti emessi nel periodo).",
+  "@vatDeclarationBasisInvoice": {
+    "description": "#896 vat exigibility: vatDeclarationBasisInvoice"
+  },
   "vatTitle": "IVA",
   "vatIntro": "In DesKilo i prezzi sono IVA inclusa. Aggiungere aliquote non cambia nulla di ciò che i membri pagano: l'imposta viene estratta dal prezzo già applicato e mostrata in fattura.",
   "vatRegimeHint": "Questo spazio non è dichiarato soggetto a IVA, quindi le fatture non la espongono. Si cambia in Identità legale.",

@@ -7759,6 +7759,27 @@ class AppLocalizationsEs extends AppLocalizations {
       'Un tipo que todavía usa una factura o un servicio se conserva, desactivado.';
 
   @override
+  String get vatExigibilityTitle => 'Devengo del IVA';
+
+  @override
+  String get vatExigibilityInvoice => 'Con la factura (criterio general)';
+
+  @override
+  String get vatExigibilityPayment => 'Con el cobro (criterio de caja)';
+
+  @override
+  String get vatExigibilitySubtitle =>
+      'Con el cobro, un periodo declara lo que los clientes pagaron dentro de él; con la factura, lo que usted emitió. La elección se imprime en cada factura.';
+
+  @override
+  String get vatDeclarationBasisPayment =>
+      'Base: cobros (IVA sobre los pagos recibidos durante el periodo).';
+
+  @override
+  String get vatDeclarationBasisInvoice =>
+      'Base: facturas (IVA sobre los documentos emitidos durante el periodo).';
+
+  @override
   String get featureVatReport => 'Informe de IVA';
 
   @override

@@ -1,0 +1,27 @@
+{
+  "@@locale": "fr",
+  "vatExigibilityTitle": "Exigibilité de la TVA",
+  "@vatExigibilityTitle": {
+    "description": "#896 vat exigibility: vatExigibilityTitle"
+  },
+  "vatExigibilityInvoice": "Sur les débits (à la facture)",
+  "@vatExigibilityInvoice": {
+    "description": "#896 vat exigibility: vatExigibilityInvoice"
+  },
+  "vatExigibilityPayment": "Sur les encaissements (au paiement)",
+  "@vatExigibilityPayment": {
+    "description": "#896 vat exigibility: vatExigibilityPayment"
+  },
+  "vatExigibilitySubtitle": "Sur les encaissements, une période déclare ce que les clients ont payé pendant celle-ci ; sur les débits, ce que vous avez facturé. Le choix est imprimé sur chaque facture.",
+  "@vatExigibilitySubtitle": {
+    "description": "#896 vat exigibility: vatExigibilitySubtitle"
+  },
+  "vatDeclarationBasisPayment": "Base : encaissements (TVA sur les paiements reçus pendant la période).",
+  "@vatDeclarationBasisPayment": {
+    "description": "#896 vat exigibility: vatDeclarationBasisPayment"
+  },
+  "vatDeclarationBasisInvoice": "Base : débits (TVA sur les factures émises pendant la période).",
+  "@vatDeclarationBasisInvoice": {
+    "description": "#896 vat exigibility: vatDeclarationBasisInvoice"
+  }
+}

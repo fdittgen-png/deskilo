@@ -398,7 +398,8 @@ ReportBands defaultVatBands(AppLocalizations? l10n) => ReportBands(
 > {{ issued }}
 ---
 # ${l10n?.reportDocVat ?? 'VAT report'}
-> {{ vat_period }}''',
+> {{ vat_period }}
+> {{ vat_basis_note }}''',
       body: '''
 ## ${l10n?.vatReportPositions ?? 'Positions'}
 {% for p in vat_positions %}{{ p.number }} · {{ p.date }} · {{ p.customer }}{% if p.reverses != "" %} ⟲ {{ p.reverses }}{% endif %} | {{ p.rate }} {{ p.category }} | {{ p.net }} | {{ p.vat }} | {{ p.gross }}

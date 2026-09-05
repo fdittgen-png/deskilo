@@ -7768,6 +7768,27 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein Satz, den eine Rechnung oder eine Leistung noch nutzt, bleibt erhalten und wird deaktiviert.';
 
   @override
+  String get vatExigibilityTitle => 'Entstehung der Umsatzsteuer';
+
+  @override
+  String get vatExigibilityInvoice => 'Nach vereinbarten Entgelten (Soll)';
+
+  @override
+  String get vatExigibilityPayment => 'Nach vereinnahmten Entgelten (Ist)';
+
+  @override
+  String get vatExigibilitySubtitle =>
+      'Nach vereinnahmten Entgelten meldet ein Zeitraum, was Kunden darin bezahlt haben; nach vereinbarten Entgelten, was Sie gestellt haben. Die Wahl steht auf jeder Rechnung.';
+
+  @override
+  String get vatDeclarationBasisPayment =>
+      'Grundlage: vereinnahmte Entgelte (Steuer auf im Zeitraum erhaltene Zahlungen).';
+
+  @override
+  String get vatDeclarationBasisInvoice =>
+      'Grundlage: vereinbarte Entgelte (Steuer auf im Zeitraum gestellte Rechnungen).';
+
+  @override
   String get featureVatReport => 'MwSt-Bericht';
 
   @override

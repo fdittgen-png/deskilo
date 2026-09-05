@@ -7771,6 +7771,27 @@ class AppLocalizationsIt extends AppLocalizations {
       'Un\'aliquota ancora usata da una fattura o da un servizio viene conservata, disattivata.';
 
   @override
+  String get vatExigibilityTitle => 'Esigibilità dell’IVA';
+
+  @override
+  String get vatExigibilityInvoice => 'Alla fattura (criterio ordinario)';
+
+  @override
+  String get vatExigibilityPayment => 'All\'incasso (IVA per cassa)';
+
+  @override
+  String get vatExigibilitySubtitle =>
+      'All\'incasso, un periodo dichiara ciò che i clienti hanno pagato al suo interno; alla fattura, ciò che avete emesso. La scelta è stampata su ogni fattura.';
+
+  @override
+  String get vatDeclarationBasisPayment =>
+      'Base: incassi (IVA sui pagamenti ricevuti nel periodo).';
+
+  @override
+  String get vatDeclarationBasisInvoice =>
+      'Base: fatture (IVA sui documenti emessi nel periodo).';
+
+  @override
   String get featureVatReport => 'Report IVA';
 
   @override

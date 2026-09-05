@@ -117,6 +117,7 @@ String defaultLetterLayoutXml(String kindId, LetterStrings s) {
     </table>''';
   const mentions = '''
     <spacer size="6mm"/>
+    {% if vat_exigibility_mention != "" %}<text style="small">{{ vat_exigibility_mention }}</text>{% endif %}
     {% if payment_terms != "" %}<text style="small">{{ payment_terms }}</text>{% endif %}
     {% if escompte != "" %}<text style="small">{{ escompte }}</text>{% endif %}
     {% if late_penalty != "" %}<text style="small">{{ late_penalty }}</text>{% endif %}

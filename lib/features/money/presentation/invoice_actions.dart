@@ -174,6 +174,13 @@ Map<String, Object?> legalMentionData(
     // #878 — BR-E-10: an exempt (or out-of-scope) seller's document
     // carries the statutory mention of its member state when the owner
     // wrote none; a VAT-charging seller prints nothing here.
+    // #896 — WHEN the tax falls due, said on the document.
+    'vat_exigibility_mention': exigibilityMention(
+      regime: vatRegimeFromWire(
+          seller?.vatRegime ?? workspace?.vatRegime ?? 'not_subject'),
+      sellerCountry: seller?.country ?? workspace?.countryCode ?? '',
+      onPaymentBasis: legal.onPaymentBasis,
+    ),
     // #895 — a reverse-charged supply states WHY no tax is charged, and
     // that mention is statutory: it wins over the seller's own text.
     'exemption_reason': reverseCharged

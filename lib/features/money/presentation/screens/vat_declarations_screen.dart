@@ -26,6 +26,7 @@ import '../../domain/vat_declaration.dart';
 import '../../domain/vat_declaration_pdf.dart';
 import '../../domain/vat_regime.dart';
 import '../../domain/accounting_view.dart';
+import '../../domain/invoice_legal.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/vat_declaration_providers.dart';
 import '../report_actions.dart';
@@ -79,8 +80,20 @@ class _VatDeclarationsScreenState
           await ref.read(invoicesProvider.future),
           ref.read(invoiceMatchesProvider).value ?? const {},
         ).invoices;
-        final lines =
-            computeVatDeclarationLines(invoices, period.start, period.end);
+        // #896 — on the cash basis a period holds what was PAID inside
+        // it, not what was issued: both the lines and the count of
+        // documents behind them follow the payments.
+        final matches = ref.read(invoiceMatchesProvider).value ?? const {};
+        final onPayment =
+            InvoiceLegal.fromJson(workspace.invoiceLegal).onPaymentBasis;
+        final lines = onPayment
+            ? computeVatDeclarationLinesOnPayment(
+                invoices: invoices,
+                matches: matches,
+                periodStart: period.start,
+                periodEnd: period.end,
+              )
+            : computeVatDeclarationLines(invoices, period.start, period.end);
         var net = 0;
         var vat = 0;
         final ids = <String>{};
@@ -88,11 +101,13 @@ class _VatDeclarationsScreenState
           net += line.netCents;
           vat += line.vatCents;
         }
+        final last = period.end.add(const Duration(days: 1));
         for (final invoice in invoices) {
-          if (invoice.voidedAt == null &&
-              !invoice.issuedAt.isBefore(period.start) &&
-              invoice.issuedAt
-                  .isBefore(period.end.add(const Duration(days: 1)))) {
+          if (invoice.voidedAt != null) continue;
+          final on = onPayment
+              ? matches[invoice.id]?.matchedAt
+              : invoice.issuedAt;
+          if (on != null && !on.isBefore(period.start) && on.isBefore(last)) {
             ids.add(invoice.id);
           }
         }
@@ -109,6 +124,19 @@ class _VatDeclarationsScreenState
       },
     );
     ref.invalidate(vatDeclarationsProvider);
+  }
+
+  /// #896 — one sentence naming the basis this workspace declares on.
+  String _basisNote(AppLocalizations? l10n) {
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    final onPayment =
+        InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {})
+            .onPaymentBasis;
+    return onPayment
+        ? (l10n?.vatDeclarationBasisPayment ??
+            'Basis: receipts (VAT on payments received during the period).')
+        : (l10n?.vatDeclarationBasisInvoice ??
+            'Basis: invoices (VAT on documents issued during the period).');
   }
 
   Future<({Uint8List bytes, String fileName})> _buildPdf(
@@ -132,10 +160,12 @@ class _VatDeclarationsScreenState
         boxesTitle: l10n?.vatDeclBoxes ?? 'Official form lines',
         colBox: l10n?.vatDeclBox ?? 'Box',
         statusLabel: l10n?.vatDeclStatus ?? 'Status',
-        disclaimer: l10n?.vatDeclDisclaimer ??
-            'Generated from the period\'s issued invoices. Verify against '
-                'your accounting before filing — this is a filing aid, '
-                'not tax advice.',
+        // #896 — the disclaimer must say WHICH period this is, or it
+        // describes the wrong document half the time.
+        disclaimer: '${_basisNote(l10n)} '
+            '${l10n?.vatDeclDisclaimer ?? "Generated from the period's "
+                "issued invoices. Verify against your accounting before "
+                "filing — this is a filing aid, not tax advice."}',
       ),
       declaration: declaration,
       workspaceName: workspace?.name ?? '',
@@ -293,6 +323,14 @@ class _VatDeclarationsScreenState
           : ListView(
               padding: AppSpacing.lgAll,
               children: [
+                // #896 — which period a declaration covers depends on
+                // the basis, so the basis is said before it is used.
+                InlineBanner(
+                  key: const ValueKey('vat-decl-basis'),
+                  icon: Icons.event_available_outlined,
+                  text: _basisNote(l10n),
+                ),
+                const SizedBox(height: AppSpacing.sm),
                 // New declaration: period + generate.
                 Row(
                   children: [

@@ -11,6 +11,7 @@ class InvoiceLegal {
   const InvoiceLegal({
     this.sellerKind = '',
     this.reverseChargeOptIn = true,
+    this.vatExigibility = 'invoice',
     this.legalForm = '',
     this.registration = '',
     this.paymentTerms = '',
@@ -30,6 +31,14 @@ class InvoiceLegal {
 
   /// #895 — the stored switch; read it through [reverseCharge].
   final bool reverseChargeOptIn;
+
+  /// #896 — WHEN the tax becomes due: `invoice` (sur les débits — the
+  /// day the document is issued) or `payment` (sur les encaissements —
+  /// the day the customer pays, which is the rule for services in
+  /// France unless the seller opted for the debits).
+  final String vatExigibility;
+
+  bool get onPaymentBasis => vatExigibility == 'payment';
 
   /// Whether this seller is a non-profit association.
   bool get isAssociation => sellerKind == 'association';
@@ -70,6 +79,7 @@ class InvoiceLegal {
   factory InvoiceLegal.fromJson(Map<dynamic, dynamic> json) => InvoiceLegal(
         sellerKind: json['seller_kind'] as String? ?? '',
         reverseChargeOptIn: json['reverse_charge'] as bool? ?? true,
+        vatExigibility: json['vat_exigibility'] as String? ?? 'invoice',
         legalForm: json['legal_form'] as String? ?? '',
         registration: json['registration'] as String? ?? '',
         paymentTerms: json['payment_terms'] as String? ?? '',
@@ -83,6 +93,7 @@ class InvoiceLegal {
   Map<String, Object?> toJson() => {
         'seller_kind': sellerKind,
         'reverse_charge': reverseChargeOptIn,
+        'vat_exigibility': vatExigibility,
         'legal_form': legalForm.trim(),
         'registration': registration.trim(),
         'payment_terms': paymentTerms.trim(),
@@ -98,6 +109,7 @@ class InvoiceLegal {
       other is InvoiceLegal &&
       other.sellerKind == sellerKind &&
       other.reverseChargeOptIn == reverseChargeOptIn &&
+      other.vatExigibility == vatExigibility &&
       other.legalForm == legalForm &&
       other.registration == registration &&
       other.paymentTerms == paymentTerms &&
@@ -108,7 +120,7 @@ class InvoiceLegal {
       other.specialMentions == specialMentions;
 
   @override
-  int get hashCode => Object.hash(reverseChargeOptIn, sellerKind, legalForm, registration,
+  int get hashCode => Object.hash(vatExigibility, reverseChargeOptIn, sellerKind, legalForm, registration,
       paymentTerms, latePenalty, recoveryIndemnity, escompte, insurance,
       specialMentions);
 }

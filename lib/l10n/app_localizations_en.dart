@@ -7704,6 +7704,27 @@ class AppLocalizationsEn extends AppLocalizations {
       'A rate still used by an invoice or a service is kept, deactivated.';
 
   @override
+  String get vatExigibilityTitle => 'VAT falls due';
+
+  @override
+  String get vatExigibilityInvoice => 'On invoices (accrual)';
+
+  @override
+  String get vatExigibilityPayment => 'On receipts (cash)';
+
+  @override
+  String get vatExigibilitySubtitle =>
+      'On receipts, a period declares what customers paid inside it; on invoices, what you issued. The choice is printed on every invoice.';
+
+  @override
+  String get vatDeclarationBasisPayment =>
+      'Basis: receipts (VAT on payments received during the period).';
+
+  @override
+  String get vatDeclarationBasisInvoice =>
+      'Basis: invoices (VAT on documents issued during the period).';
+
+  @override
   String get featureVatReport => 'VAT report';
 
   @override
