@@ -22,6 +22,7 @@ LetterStrings letterStringsOf(AppLocalizations? l10n) => LetterStrings(
           ? 'Reminder'
           : l10n.invoiceTemplateDocReminder(0).replaceAll(' 0', '').trim(),
       issuedOn: l10n?.invoicePdfIssuedOn ?? 'Issued on',
+      dueOn: l10n?.invoicePdfDueOn ?? 'Due on',
       description: l10n?.invoicePdfDescription ?? 'Description',
       qty: l10n?.reportColQty ?? 'Qty',
       unitPrice: l10n?.reportColUnitPrice ?? 'Unit price',

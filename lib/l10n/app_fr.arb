@@ -1656,6 +1656,10 @@
   "invitationTemplateHint": "Message d'invitation personnalisé utilisant les balises ci-dessus…",
   "workspaceInvitePasteHint": "Collez le message d'invitation entier — l'identifiant est trouvé automatiquement.",
   "workspaceInviteCodeInvalid": "Aucun identifiant trouvé — collez l'invitation ou saisissez l'identifiant.",
+  "invoicePdfDueOn": "Échéance",
+  "@invoicePdfDueOn": {
+    "description": "#910 invoice due date: invoicePdfDueOn"
+  },
   "invoicesTitle": "Factures",
   "invoicesEmpty": "Aucune facture pour l'instant.",
   "invoiceCreate": "Nouvelle facture",

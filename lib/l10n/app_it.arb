@@ -1656,6 +1656,10 @@
   "invitationTemplateHint": "Messaggio d'invito personalizzato con i tag qui sopra…",
   "workspaceInvitePasteHint": "Incolla l'intero messaggio d'invito — l'ID viene trovato automaticamente.",
   "workspaceInviteCodeInvalid": "Nessun ID trovato — incolla l'invito o digita l'ID.",
+  "invoicePdfDueOn": "Scadenza",
+  "@invoicePdfDueOn": {
+    "description": "#910 invoice due date: invoicePdfDueOn"
+  },
   "invoicesTitle": "Fatture",
   "invoicesEmpty": "Ancora nessuna fattura.",
   "invoiceCreate": "Nuova fattura",

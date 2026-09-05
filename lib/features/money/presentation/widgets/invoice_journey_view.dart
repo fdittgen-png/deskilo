@@ -218,7 +218,8 @@ String invoiceMoveText(
   final dateFormat = DateFormat.yMMMd(
     Localizations.maybeLocaleOf(context)?.toString(),
   );
-  final name = invoice.memberName;
+  // #910 — the client, company included when there is no person.
+  final name = invoice.clientName;
   final owed = currency.formatMinor(journey.remainingCents);
   final due = dateFormat.format(journey.dueOn);
   final late = -journey.daysToTerm;

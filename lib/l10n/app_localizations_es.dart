@@ -3018,6 +3018,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se encontró ningún ID — pega la invitación o escribe el ID.';
 
   @override
+  String get invoicePdfDueOn => 'Vencimiento';
+
+  @override
   String get invoicesTitle => 'Facturas';
 
   @override

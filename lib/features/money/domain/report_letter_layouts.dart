@@ -21,6 +21,7 @@ class LetterStrings {
     this.usage = 'Consumption report',
     this.reminder = 'Reminder',
     this.issuedOn = 'Issued on',
+    this.dueOn = 'Due on',
     this.description = 'Description',
     this.qty = 'Qty',
     this.unitPrice = 'Unit price',
@@ -33,7 +34,8 @@ class LetterStrings {
   });
 
   final String invoice, proforma, statement, agreement, payments, usage,
-      reminder, issuedOn, description, qty, unitPrice, total, paymentsLabel,
+      reminder, issuedOn, dueOn, description, qty, unitPrice, total,
+      paymentsLabel,
       balance, regards, page, records;
 }
 
@@ -86,6 +88,7 @@ String defaultLetterLayoutXml(String kindId, LetterStrings s) {
     _ => '${s.reminder} $level',
   });
   final issuedOn = _esc(s.issuedOn);
+  final dueOn = _esc(s.dueOn);
   final description = _esc(s.description);
   final colQty = _esc(s.qty);
   final colUnit = _esc(s.unitPrice);
@@ -127,6 +130,7 @@ String defaultLetterLayoutXml(String kindId, LetterStrings s) {
     'invoice' || 'proforma' => '''
     <text style="heading">{% if proforma %}${_esc(s.proforma)}{% else %}$title{% endif %} {{ number }}</text>
     <text style="small">$issuedOn {{ issued }}</text>
+    {% if due_date != "" %}<text style="small">$dueOn {{ due_date }}</text>{% endif %}
     <text style="small">{{ period }}</text>
     {% if client_legal_id != "" %}<text style="small">{{ client_legal_id }}</text>{% endif %}
     <spacer size="4mm"/>
@@ -149,6 +153,7 @@ $mentions''',
     'statement' => '''
     <text style="heading">$title — {{ period }}</text>
     <text style="small">$issuedOn {{ issued }}</text>
+    {% if due_date != "" %}<text style="small">$dueOn {{ due_date }}</text>{% endif %}
     <spacer size="4mm"/>
 $simpleLines
     <rule/>

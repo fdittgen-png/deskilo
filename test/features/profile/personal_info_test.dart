@@ -36,6 +36,59 @@ void main() {
       expect(const PersonalInfo(lastName: 'Dupont').fullName, 'DUPONT');
       expect(PersonalInfo.empty.fullName, '');
     });
+
+    test('#910 — a client with no personal name IS its company', () {
+      const company = PersonalInfo(company: 'SASU KaloA');
+      expect(company.fullName, 'SASU KaloA');
+      expect(company.personName, '', reason: 'nobody is named');
+    });
+
+    test('#910 — a person named alongside a company keeps the name', () {
+      expect(_kaloa.fullName, 'Guilhem MARTIN');
+      expect(_kaloa.personName, 'Guilhem MARTIN');
+    });
+  });
+
+  group('the company and the block (#910)', () {
+    const company = PersonalInfo(
+      company: 'SASU KaloA',
+      street: '209 rue Jean Bart, Immeuble AGORA 1B',
+      postalCode: '31670',
+      city: 'Labège',
+      countryCode: 'FR',
+    );
+
+    test('promoted to the name line, it leaves the block — an address '
+        'that repeats its own addressee is not an address', () {
+      expect(
+        company.postalBlock(workspaceCountry: 'FR'),
+        '209 rue Jean Bart, Immeuble AGORA 1B\n31670 LABÈGE',
+      );
+    });
+
+    test('but it stays in the block when a PERSON is named above it', () {
+      expect(
+        _kaloa.postalBlock(workspaceCountry: 'FR'),
+        startsWith('SASU KaloA\n'),
+      );
+    });
+
+    test('nameAbove decides it, so a caller printing a frozen name says '
+        'which one', () {
+      // An older document names the person and freezes the company
+      // beside it: the block must still carry the company.
+      expect(
+        company.postalBlock(
+          workspaceCountry: 'FR',
+          nameAbove: 'Guilhem MARTIN',
+        ),
+        startsWith('SASU KaloA\n'),
+      );
+    });
+
+    test('the country still closes the block when abroad', () {
+      expect(company.postalBlock(workspaceCountry: 'DE'), endsWith('\nFR'));
+    });
   });
 
   group('postal block', () {

@@ -285,6 +285,24 @@ sealed class Invoice with _$Invoice {
   /// the VAT it carries is the VAT it reverses.
   bool get isCreditNote => totalCents < 0;
 
+  /// #910 — who the document is addressed to, for every surface that
+  /// names the client.
+  ///
+  /// The frozen snapshot is read in the order it was written: the buyer
+  /// party's name, then `member_name`, then the buyer's COMPANY. That
+  /// last step is what rescues a document issued for a client with no
+  /// personal name — an admin-managed company profile — WITHOUT
+  /// touching the row: the company was always frozen alongside, only
+  /// nobody looked at it, so the invoice printed a dangling separator
+  /// where its addressee should be. An issued document never changes;
+  /// what it says about itself can still be read properly.
+  String get clientName {
+    final party = buyerParty;
+    if (party != null && party.name.trim().isNotEmpty) return party.name.trim();
+    if (memberName.trim().isNotEmpty) return memberName.trim();
+    return party?.company.trim() ?? '';
+  }
+
   /// #831 — regrouped into a settlement and not voided: documentation
   /// only, every operation happens on the settlement.
   bool get isFolded => settledByInvoiceId != null && !isVoided;

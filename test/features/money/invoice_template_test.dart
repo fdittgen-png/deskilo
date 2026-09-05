@@ -115,7 +115,7 @@ void main() {
     test('pins the data fields — they are part of saved templates', () {
       expect(InvoicePdfTemplate.placeholders, [
         'number', 'member', 'workspace', 'workspace_address', 'period',
-        'issued', 'issued_by', 'replaces', 'total', 'charges', 'payments',
+        'issued', 'due_date', 'issued_by', 'replaces', 'total', 'charges', 'payments',
         'voided', 'proforma', 'copy', 'has_vat', 'lines', 'vat',
         // #480 — the legal mention variables.
         'net_total', 'vat_total',
