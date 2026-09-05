@@ -93,8 +93,11 @@ String buildInvoiceCii({
     // ── The document itself ────────────────────────────────────────────
     builder.element('rsm:ExchangedDocument', nest: () {
       ram('ID', invoice.number);
-      // 380 = commercial invoice; 384 = corrective (a replacement).
-      ram('TypeCode', invoice.replacesNumber.isNotEmpty ? '384' : '380');
+      // 380 = commercial invoice; 384 = corrective (a replacement);
+      // 381 = credit note — a document that gives money back (#894).
+      ram('TypeCode', invoice.isCreditNote
+              ? '381'
+              : invoice.replacesNumber.isNotEmpty ? '384' : '380');
       date('IssueDateTime', invoice.issuedAt);
     });
 

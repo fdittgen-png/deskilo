@@ -276,6 +276,11 @@ sealed class Invoice with _$Invoice {
 
   bool get isVoided => voidedAt != null;
 
+  /// #894 — a document that gives money back: the month's credits
+  /// outweigh its charges (#508's avoir). EN 16931 types it 381, and
+  /// the VAT it carries is the VAT it reverses.
+  bool get isCreditNote => totalCents < 0;
+
   /// #831 — regrouped into a settlement and not voided: documentation
   /// only, every operation happens on the settlement.
   bool get isFolded => settledByInvoiceId != null && !isVoided;
