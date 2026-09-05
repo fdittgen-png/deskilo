@@ -8353,6 +8353,12 @@ abstract class AppLocalizations {
   /// **'That file carries no readable design.'**
   String get reportDesignErrorInvalidDesign;
 
+  /// #871 the Money tab row that opens invoice management (the billing hub)
+  ///
+  /// In en, this message translates to:
+  /// **'Manage invoices'**
+  String get invoicesManage;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

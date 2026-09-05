@@ -4788,6 +4788,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'That file carries no readable design.';
 
   @override
+  String get invoicesManage => 'Manage invoices';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

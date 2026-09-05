@@ -2877,6 +2877,10 @@
   "reportDesignErrorUnknownKind": "Cette maquette concerne un rapport que cet espace n'a pas.",
   "reportDesignErrorWrongKind": "Cette maquette appartient à un autre rapport. Ouvrez ce rapport et importez-la là.",
   "reportDesignErrorInvalidDesign": "Ce fichier ne contient aucune maquette lisible.",
+  "invoicesManage": "Gérer les factures",
+  "@invoicesManage": {
+    "description": "#871 the Money tab row that opens invoice management (the billing hub)"
+  },
   "eventTypeMemberJoin": "Nouveau membre",
   "memberStatusPending": "En attente",
   "pendingApprovalTitle": "En attente d'approbation",

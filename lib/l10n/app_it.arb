@@ -2877,6 +2877,10 @@
   "reportDesignErrorUnknownKind": "Questo modello riguarda un report che questo spazio non ha.",
   "reportDesignErrorWrongKind": "Questo modello appartiene a un altro report. Aprilo e importalo lì.",
   "reportDesignErrorInvalidDesign": "Questo file non contiene alcun modello leggibile.",
+  "invoicesManage": "Gestire le fatture",
+  "@invoicesManage": {
+    "description": "#871 the Money tab row that opens invoice management (the billing hub)"
+  },
   "eventTypeMemberJoin": "Nuovo membro",
   "memberStatusPending": "In attesa",
   "pendingApprovalTitle": "In attesa di approvazione",

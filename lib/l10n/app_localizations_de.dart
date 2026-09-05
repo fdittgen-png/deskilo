@@ -4825,6 +4825,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Datei enthält keine lesbare Vorlage.';
 
   @override
+  String get invoicesManage => 'Rechnungen verwalten';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override
