@@ -103,5 +103,28 @@ String? letterLayoutXml(
 }
 
 /// The library image named [name], for a layout rendered with a [ref].
-Future<Uint8List?> layoutImage(WidgetRef ref, String name) =>
-    ref.read(reportImageBytesProvider(name).future);
+Future<Uint8List?> layoutImage(WidgetRef ref, String name) async {
+  final exact = await ref.read(reportImageBytesProvider(name).future);
+  if (exact != null) return exact;
+  // #920 — the SHIPPED layouts ask for an image called `logo`, because a
+  // default cannot know what the owner called theirs. Nobody uploads a
+  // file named exactly "logo": theirs is "coworking-logo-1-jpg" or
+  // whatever the phone produced, so the letter came out without it while
+  // the banded template — which references the real name — showed it.
+  //
+  // So `logo` is a ROLE, not a file name: the library's own logo is the
+  // one named after it, else the only image there is. Anything else
+  // stays an exact lookup, because a design that names a picture means
+  // that picture.
+  if (name != _logoRole) return null;
+  final names = await ref.read(reportImagesProvider.future);
+  final named = names.firstWhere(
+    (n) => n.toLowerCase().contains(_logoRole),
+    orElse: () => names.length == 1 ? names.first : '',
+  );
+  if (named.isEmpty) return null;
+  return ref.read(reportImageBytesProvider(named).future);
+}
+
+/// The name the shipped layouts use for "the workspace's own mark".
+const String _logoRole = 'logo';
