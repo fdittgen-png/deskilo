@@ -1,0 +1,55 @@
+{
+  "@@locale": "it",
+  "featureManagedProfiles": "Profili gestiti",
+  "@featureManagedProfiles": {
+    "description": "#887 managed profiles: featureManagedProfiles"
+  },
+  "featureManagedProfilesDesc": "Gli admin creano membri senza account, prenotano e fatturano per loro e consegnano il profilo con un codice personale che la persona riscatta quando entra.",
+  "@featureManagedProfilesDesc": {
+    "description": "#887 managed profiles: featureManagedProfilesDesc"
+  },
+  "managedProfileAdd": "Aggiungi un profilo gestito",
+  "@managedProfileAdd": {
+    "description": "#887 managed profiles: managedProfileAdd"
+  },
+  "managedProfileTitle": "Profilo gestito",
+  "@managedProfileTitle": {
+    "description": "#887 managed profiles: managedProfileTitle"
+  },
+  "managedProfileChip": "Gestito",
+  "@managedProfileChip": {
+    "description": "#887 managed profiles: managedProfileChip"
+  },
+  "managedProfileEdit": "Modifica identità",
+  "@managedProfileEdit": {
+    "description": "#887 managed profiles: managedProfileEdit"
+  },
+  "managedProfileHandOver": "Consegna alla persona",
+  "@managedProfileHandOver": {
+    "description": "#887 managed profiles: managedProfileHandOver"
+  },
+  "managedProfileHandOverHint": "Genera un codice personale legato a questo profilo. Chi lo riscatta prende il profilo — prenotazioni, fatture, abbonamento — appena approvi l'adesione.",
+  "@managedProfileHandOverHint": {
+    "description": "#887 managed profiles: managedProfileHandOverHint"
+  },
+  "managedProfileRevoke": "Revoca la consegna",
+  "@managedProfileRevoke": {
+    "description": "#887 managed profiles: managedProfileRevoke"
+  },
+  "managedProfileRevoked": "Consegna revocata",
+  "@managedProfileRevoked": {
+    "description": "#887 managed profiles: managedProfileRevoked"
+  },
+  "managedProfileCreated": "Profilo gestito creato",
+  "@managedProfileCreated": {
+    "description": "#887 managed profiles: managedProfileCreated"
+  },
+  "managedProfileSaved": "Identità salvata",
+  "@managedProfileSaved": {
+    "description": "#887 managed profiles: managedProfileSaved"
+  },
+  "managedProfileIntro": "Questa persona non ha ancora un account. Prenoti, fatturi e gestisci per lei; consegnale il profilo quando entra.",
+  "@managedProfileIntro": {
+    "description": "#887 managed profiles: managedProfileIntro"
+  }
+}

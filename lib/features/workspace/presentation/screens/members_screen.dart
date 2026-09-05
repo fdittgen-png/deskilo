@@ -75,7 +75,12 @@ class MembersScreen extends ConsumerWidget {
       // Messaging (#456, refactor): the member's CONVERSATION — read
       // the whole exchange and send from the same thread every other
       // surface opens.
-      if (notesOn && !isSelf && !member.isKiosk && active)
+      // #887 — nobody reads a message to a managed member.
+      if (notesOn &&
+          !isSelf &&
+          !member.isKiosk &&
+          !member.isManaged &&
+          active)
         _sheetAction(
           context,
           icon: Icons.chat_outlined,
@@ -358,6 +363,16 @@ class MembersScreen extends ConsumerWidget {
                 recipientName:
                     l10n?.memberAllAdmins ?? 'all admins',
               ),
+            ),
+          // #887 — a member who has no account yet: the admin runs the
+          // profile until the person claims it.
+          if ((me?.canAdminister ?? false) &&
+              features.contains(WorkspaceFeature.managedProfiles))
+            IconButton(
+              key: const ValueKey('members-add-managed'),
+              icon: const Icon(Icons.person_add_alt_1_outlined),
+              tooltip: l10n?.managedProfileAdd ?? 'Add a managed profile',
+              onPressed: () => context.push('/members/managed'),
             ),
           // Invite entry point (#195): the members list is where owners
           // notice someone is missing. Links to the owner-only workspace

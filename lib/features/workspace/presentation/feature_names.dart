@@ -121,6 +121,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureReportLayouts ?? 'Positioned report layouts',
       WorkspaceFeature.personalInfo =>
         l10n?.featurePersonalInfo ?? 'Personal information',
+      WorkspaceFeature.managedProfiles =>
+        l10n?.featureManagedProfiles ?? 'Managed profiles',
       WorkspaceFeature.priceNegotiations =>
         l10n?.featurePriceNegotiationsTitle ?? 'Price negotiations',
       WorkspaceFeature.scheduledExpenses =>

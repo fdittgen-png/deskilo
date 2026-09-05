@@ -5203,6 +5203,48 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine Buchung endet an dem Tag, an dem sie beginnt — den nächsten Tag separat buchen.';
 
   @override
+  String get featureManagedProfiles => 'Verwaltete Profile';
+
+  @override
+  String get featureManagedProfilesDesc =>
+      'Admins legen Mitglieder ohne Konto an, buchen und fakturieren für sie und übergeben das Profil mit einem persönlichen Code, den die Person beim Beitritt einlöst.';
+
+  @override
+  String get managedProfileAdd => 'Verwaltetes Profil anlegen';
+
+  @override
+  String get managedProfileTitle => 'Verwaltetes Profil';
+
+  @override
+  String get managedProfileChip => 'Verwaltet';
+
+  @override
+  String get managedProfileEdit => 'Identität bearbeiten';
+
+  @override
+  String get managedProfileHandOver => 'An die Person übergeben';
+
+  @override
+  String get managedProfileHandOverHint =>
+      'Erzeugt einen persönlichen Code für dieses Profil. Wer ihn einlöst, übernimmt das Profil — Reservierungen, Rechnungen, Abo — sobald Sie die Mitgliedschaft bestätigen.';
+
+  @override
+  String get managedProfileRevoke => 'Übergabe zurückziehen';
+
+  @override
+  String get managedProfileRevoked => 'Übergabe zurückgezogen';
+
+  @override
+  String get managedProfileCreated => 'Verwaltetes Profil angelegt';
+
+  @override
+  String get managedProfileSaved => 'Identität gespeichert';
+
+  @override
+  String get managedProfileIntro =>
+      'Diese Person hat noch kein Konto. Sie buchen, fakturieren und verwalten für sie; übergeben Sie das Profil, wenn sie beitritt.';
+
+  @override
   String get membersTitle => 'Mitglieder & Tarife';
 
   @override

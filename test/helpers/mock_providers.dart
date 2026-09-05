@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart' show ValueChanged;
 import 'package:flutter/widgets.dart' show Widget, ColoredBox, Color, Center, Text;
 
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
+import 'package:deskilo/features/profile/domain/personal_info.dart';
 import 'package:deskilo/features/auth/domain/badge_sign_in.dart';
 import 'package:deskilo/features/auth/domain/social_provider.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
@@ -306,8 +307,14 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   /// Personal invitations minted through [createInvitation] (0051), in
   /// mint order — tests read the codes and roles back from here.
-  final List<({String code, bool isAdmin, String firstName, String lastName})>
-      mintedInvitations = [];
+  final List<
+      ({
+        String code,
+        bool isAdmin,
+        String firstName,
+        String lastName,
+        String? memberId
+      })> mintedInvitations = [];
 
   var _nextInviteCode = 1;
 
@@ -319,6 +326,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     required bool isAdmin,
     String firstName = '',
     String lastName = '',
+    String? memberId,
   }) async {
     if (isAdmin && !myMember.isOwner) {
       throw Exception('only owners may invite admins');
@@ -332,6 +340,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       isAdmin: isAdmin,
       firstName: firstName,
       lastName: lastName,
+      memberId: memberId,
     ));
     return code;
   }
@@ -498,8 +507,13 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   Map<String, String> memberNames = {'member-1': 'Flo'};
 
   @override
-  Future<Map<String, String>> fetchMemberNames(String workspaceId) async =>
-      Map.of(memberNames);
+  Future<Map<String, String>> fetchMemberNames(String workspaceId) async => {
+        ...memberNames,
+        // #887 — a managed member is named from its identity, as the
+        // server does.
+        for (final m in otherMembers)
+          if (m.isManaged) m.id: m.managedIdentity.fullName,
+      };
 
   /// memberId → email; served only to admin/owner callers, mirroring
   /// the member_emails RPC gate (0078, #410).
@@ -514,6 +528,42 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   /// Extra members beyond [myMember] for the management screen.
   final List<Member> otherMembers = [];
+
+  /// #887 — managed members created through the fake, and the
+  /// handovers revoked, for assertions.
+  final List<String> revokedHandovers = [];
+  var _nextManagedId = 1;
+
+  @override
+  Future<String> createManagedMember(
+      String workspaceId, PersonalInfo identity) async {
+    final id = 'managed-${_nextManagedId++}';
+    otherMembers.add(Member(
+      id: id,
+      workspaceId: workspaceId,
+      userId: '',
+      isAdmin: false,
+      isOwner: false,
+      status: MemberStatus.active,
+      managedIdentity: identity.normalized(),
+    ));
+    return id;
+  }
+
+  @override
+  Future<void> updateManagedIdentity(
+      String memberId, PersonalInfo identity) async {
+    final i = otherMembers.indexWhere((m) => m.id == memberId);
+    if (i < 0) throw StateError('member not found');
+    otherMembers[i] =
+        otherMembers[i].copyWith(managedIdentity: identity.normalized());
+  }
+
+  @override
+  Future<void> revokeHandover(String memberId) async {
+    revokedHandovers.add(memberId);
+    mintedInvitations.removeWhere((i) => i.memberId == memberId);
+  }
 
   @override
   Future<List<Member>> fetchMembers(String workspaceId) async =>

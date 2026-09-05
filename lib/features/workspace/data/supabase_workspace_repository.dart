@@ -5,6 +5,7 @@ import '../../../core/time/work_hours.dart';
 import '../domain/booking_granularity.dart';
 import '../domain/booking_policies.dart';
 import '../domain/closure_day.dart';
+import '../../profile/domain/personal_info.dart';
 import '../domain/member.dart';
 import '../domain/member_badge.dart';
 import '../domain/overage_policy.dart';
@@ -60,14 +61,43 @@ class SupabaseWorkspaceRepository
     required bool isAdmin,
     String firstName = '',
     String lastName = '',
+    String? memberId,
   }) async {
     final result = await _client.rpc<dynamic>('create_invitation', params: {
       'p_workspace_id': workspaceId,
       'p_is_admin': isAdmin,
       'p_first_name': firstName,
       'p_last_name': lastName,
+      'p_member_id': ?memberId,
     });
     return result as String;
+  }
+
+  @override
+  Future<String> createManagedMember(
+      String workspaceId, PersonalInfo identity) async {
+    final result =
+        await _client.rpc<dynamic>('create_managed_member', params: {
+      'p_workspace_id': workspaceId,
+      'p_identity': identity.normalized().toDb(),
+    });
+    return result as String;
+  }
+
+  @override
+  Future<void> updateManagedIdentity(
+      String memberId, PersonalInfo identity) async {
+    await _client.rpc<dynamic>('update_managed_identity', params: {
+      'p_member_id': memberId,
+      'p_identity': identity.normalized().toDb(),
+    });
+  }
+
+  @override
+  Future<void> revokeHandover(String memberId) async {
+    await _client.rpc<dynamic>('revoke_handover', params: {
+      'p_member_id': memberId,
+    });
   }
 
   @override
@@ -278,12 +308,26 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
     // PostgREST cannot embed — two queries, joined client-side.
     final memberRows = await _client
         .from('members')
-        .select('id, user_id')
+        .select('id, user_id, managed_identity')
         .eq('workspace_id', workspaceId);
-    final userIds =
-        memberRows.map((r) => r['user_id'] as String).toSet().toList();
-    if (userIds.isEmpty) return const {};
-    final profileRows = await _client
+    // #887 — a managed member has no profile: its name is the identity
+    // the admin typed (company when the person is nameless).
+    String managedName(Map<String, dynamic> r) {
+      final identity = PersonalInfo.fromDb(
+          (r['managed_identity'] as Map?)?.cast<String, dynamic>() ??
+              const {});
+      return identity.fullName.isNotEmpty
+          ? identity.fullName
+          : identity.company;
+    }
+    final userIds = memberRows
+        .map((r) => r['user_id'] as String?)
+        .whereType<String>()
+        .toSet()
+        .toList();
+    final profileRows = userIds.isEmpty
+        ? const <Map<String, dynamic>>[]
+        : await _client
         .from('profiles')
         .select('id, display_name, first_name, last_name')
         .inFilter('id', userIds);
@@ -300,7 +344,9 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
     };
     return {
       for (final r in memberRows)
-        r['id'] as String: nameByUser[r['user_id'] as String] ?? '',
+        r['id'] as String: r['user_id'] == null
+            ? managedName(r)
+            : nameByUser[r['user_id'] as String] ?? '',
     };
   }
 
@@ -824,12 +870,20 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   Member _memberFromRow(Map<String, dynamic> row) => Member(
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
-        userId: row['user_id'] as String,
+        // #887 — a managed member has no user yet.
+        userId: row['user_id'] as String? ?? '',
         isAdmin: row['is_admin'] as bool,
         isOwner: row['is_owner'] as bool,
         coOwner: CoOwnerStatus.fromWire(row['co_owner'] as String?),
         status: MemberStatus.values.byName(row['status'] as String),
         subscriptionPct: row['subscription_pct'] as int? ?? 100,
+        managedIdentity: PersonalInfo.fromDb(
+          (row['managed_identity'] as Map?)?.cast<String, dynamic>() ??
+              const {},
+        ),
+        claimedAt: row['claimed_at'] == null
+            ? null
+            : DateTime.parse(row['claimed_at'] as String),
         joinedAt: row['joined_at'] == null
             ? null
             : DateTime.parse(row['joined_at'] as String).toUtc(),

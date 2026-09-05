@@ -1382,17 +1382,18 @@ Future<Invoice?> proformaForMonth(
   if (preview.lines.isEmpty) return null;
   final names = await ref.read(memberNamesProvider.future);
   final members = await ref.read(workspaceMembersProvider.future);
-  final userId = members
-      .where((m) => m.id == memberId)
-      .map((m) => m.userId)
-      .firstOrNull;
+  final member = members.where((m) => m.id == memberId).firstOrNull;
   final profiles = await ref.read(memberProfilesProvider.future);
-  final profile = userId == null ? null : profiles[userId];
+  final profile = member == null || member.isManaged
+      ? null
+      : profiles[member.userId];
   // #886 — the preview names and addresses the buyer the way
   // create_invoice will freeze them, so the proforma and the invoice
   // put the same block in the envelope window.
-  final identity = profile?.identity ?? PersonalInfo.empty;
-  final fullName = profile?.fullName ?? '';
+  // #887 — a managed member is named from the identity the admin typed.
+  final identity =
+      profile?.identity ?? member?.managedIdentity ?? PersonalInfo.empty;
+  final fullName = profile?.fullName ?? identity.fullName;
   return Invoice(
     // No id and no number: nothing was issued.
     id: '',
@@ -1407,15 +1408,16 @@ Future<Invoice?> proformaForMonth(
     currency: workspace.currencyCode,
     memberName: fullName.isNotEmpty ? fullName : names[memberId] ?? '',
     memberAddress:
-        profile?.postalBlock(workspaceCountry: workspace.countryCode) ?? '',
-    buyerParty: profile == null
+        profile?.postalBlock(workspaceCountry: workspace.countryCode) ??
+        identity.postalBlock(workspaceCountry: workspace.countryCode),
+    buyerParty: profile == null && identity.isEmpty
         ? null
         : InvoiceParty(
             name: fullName.isNotEmpty ? fullName : names[memberId] ?? '',
             company: identity.company,
             street: identity.street.isNotEmpty
                 ? identity.street
-                : profile.address,
+                : profile?.address ?? '',
             postalCode: identity.postalCode,
             city: identity.city,
             country: identity.countryCode.isNotEmpty

@@ -5195,6 +5195,48 @@ class AppLocalizationsEs extends AppLocalizations {
       'Una reserva termina el día en que empieza: reserva el día siguiente por separado.';
 
   @override
+  String get featureManagedProfiles => 'Perfiles gestionados';
+
+  @override
+  String get featureManagedProfilesDesc =>
+      'Los admins crean miembros sin cuenta, reservan y facturan por ellos y les entregan el perfil con un código personal que la persona canjea al unirse.';
+
+  @override
+  String get managedProfileAdd => 'Añadir un perfil gestionado';
+
+  @override
+  String get managedProfileTitle => 'Perfil gestionado';
+
+  @override
+  String get managedProfileChip => 'Gestionado';
+
+  @override
+  String get managedProfileEdit => 'Editar identidad';
+
+  @override
+  String get managedProfileHandOver => 'Entregar a la persona';
+
+  @override
+  String get managedProfileHandOverHint =>
+      'Genera un código personal ligado a este perfil. Quien lo canjee se hace con el perfil — reservas, facturas, suscripción — en cuanto apruebes la membresía.';
+
+  @override
+  String get managedProfileRevoke => 'Revocar la entrega';
+
+  @override
+  String get managedProfileRevoked => 'Entrega revocada';
+
+  @override
+  String get managedProfileCreated => 'Perfil gestionado creado';
+
+  @override
+  String get managedProfileSaved => 'Identidad guardada';
+
+  @override
+  String get managedProfileIntro =>
+      'Esta persona aún no tiene cuenta. Reservas, facturas y gestionas por ella; entrégale el perfil cuando se una.';
+
+  @override
   String get membersTitle => 'Miembros y planes';
 
   @override

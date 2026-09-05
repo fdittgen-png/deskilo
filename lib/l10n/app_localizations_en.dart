@@ -5158,6 +5158,48 @@ class AppLocalizationsEn extends AppLocalizations {
       'A booking ends on the day it starts — book the next day separately.';
 
   @override
+  String get featureManagedProfiles => 'Managed profiles';
+
+  @override
+  String get featureManagedProfilesDesc =>
+      'Admins create members who have no account yet, book and invoice for them, and hand the profile over with a personal code the person redeems when they join.';
+
+  @override
+  String get managedProfileAdd => 'Add a managed profile';
+
+  @override
+  String get managedProfileTitle => 'Managed profile';
+
+  @override
+  String get managedProfileChip => 'Managed';
+
+  @override
+  String get managedProfileEdit => 'Edit identity';
+
+  @override
+  String get managedProfileHandOver => 'Hand over to the person';
+
+  @override
+  String get managedProfileHandOverHint =>
+      'Mints a personal code bound to this profile. Whoever redeems it takes the profile over — reservations, invoices, subscription — once you approve the membership.';
+
+  @override
+  String get managedProfileRevoke => 'Revoke handover';
+
+  @override
+  String get managedProfileRevoked => 'Handover revoked';
+
+  @override
+  String get managedProfileCreated => 'Managed profile created';
+
+  @override
+  String get managedProfileSaved => 'Identity saved';
+
+  @override
+  String get managedProfileIntro =>
+      'This person has no account yet. You book, invoice and manage for them; hand the profile over when they join.';
+
+  @override
   String get membersTitle => 'Members & plans';
 
   @override

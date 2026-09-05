@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/links/link_launcher.dart';
@@ -27,6 +28,9 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/presentation/member_admin_actions.dart';
 import '../../../workspace/presentation/widgets/open_conversation.dart';
+import '../../../workspace/presentation/widgets/invite_sheet.dart';
+import '../../../workspace/domain/invite_uri.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/directory_status.dart';
 import '../../providers/directory_providers.dart';
@@ -109,6 +113,7 @@ class _MemberPageBody extends ConsumerWidget {
     final features = ref.watch(enabledFeaturesSyncProvider);
     final perms = ref.watch(myPermissionsProvider);
     final profile = ref.watch(memberProfilesProvider).value?[member.userId];
+    final workspace = ref.watch(currentWorkspaceProvider).value;
     final email = ref.watch(memberEmailsProvider).value?[member.id] ?? '';
     final reservations =
         ref.watch(directoryReservationsProvider).value ?? const <Reservation>[];
@@ -137,7 +142,9 @@ class _MemberPageBody extends ConsumerWidget {
     final whatsappOn = features.contains(WorkspaceFeature.whatsappIntegration);
     final whatsappUri = whatsappOn ? profile?.whatsappUri : null;
     final notesOn = features.contains(WorkspaceFeature.memberNotifications);
-    final canMessage = notesOn && !isSelf && !member.isKiosk && active;
+    // #887 — nobody reads a message sent to a managed member.
+    final canMessage =
+        notesOn && !isSelf && !member.isKiosk && !member.isManaged && active;
     final servicesOn = features.contains(WorkspaceFeature.services);
     final reportsOn = features.contains(WorkspaceFeature.memberReports);
     final kioskOn = features.contains(WorkspaceFeature.kioskMode);
@@ -210,6 +217,43 @@ class _MemberPageBody extends ConsumerWidget {
           icon: Icons.person_off_outlined,
           title: l10n?.memberRejectJoin ?? 'Reject membership',
           onTap: () => decideMemberJoin(context, ref, member, approve: false),
+        ),
+      ],
+      // #887 — the admin runs a managed member's identity and hands
+      // the profile over with a bound invitation.
+      if (member.isManaged && canAdmin) ...[
+        _ManageTile(
+          tileKey: const ValueKey('member-page-managed-edit'),
+          icon: Icons.contact_mail_outlined,
+          title: l10n?.managedProfileEdit ?? 'Edit identity',
+          subtitle: member.managedIdentity
+              .postalBlock(workspaceCountry: workspace?.countryCode ?? '')
+              .replaceAll('\n', ', '),
+          onTap: () => context.push('/members/managed?member=${member.id}'),
+        ),
+        if (workspace != null)
+          _ManageTile(
+            tileKey: const ValueKey('member-page-hand-over'),
+            icon: Icons.qr_code_2_outlined,
+            title: l10n?.managedProfileHandOver ?? 'Hand over to the person',
+            subtitle: l10n?.managedProfileHandOverHint ??
+                'Mints a personal code bound to this profile. Whoever '
+                    'redeems it takes the profile over — reservations, '
+                    'invoices, subscription — once you approve the '
+                    'membership.',
+            onTap: () => showInviteSheet(
+              context,
+              workspace: workspace,
+              role: InviteRole.user,
+              memberId: member.id,
+              identity: member.managedIdentity,
+            ),
+          ),
+        _ManageTile(
+          tileKey: const ValueKey('member-page-revoke-handover'),
+          icon: Icons.link_off_outlined,
+          title: l10n?.managedProfileRevoke ?? 'Revoke handover',
+          onTap: () => _revokeHandover(context, ref, member),
         ),
       ],
       if (isOwner && member.status != MemberStatus.exited)
@@ -503,6 +547,9 @@ class _HeaderCard extends StatelessWidget {
       if (member.isKiosk)
         _Chip(l10n?.memberKioskLabel ?? 'Kiosk',
             foreground: theme.colorScheme.onSurfaceVariant, outlined: true),
+      if (member.isManaged)
+        _Chip(l10n?.managedProfileChip ?? 'Managed',
+            foreground: theme.colorScheme.tertiary, outlined: true),
       if (member.status == MemberStatus.pending)
         _Chip(l10n?.memberStatusPending ?? 'Pending',
             foreground: theme.colorScheme.onError,
@@ -800,4 +847,21 @@ String relativeLastSeen(
   }
   return l10n?.directoryLastSeenDays(diff.inDays) ??
       'Seen ${diff.inDays} d ago';
+}
+
+/// #887 — takes an unredeemed handover back; the member stays managed.
+Future<void> _revokeHandover(
+    BuildContext context, WidgetRef ref, Member member) async {
+  final l10n = AppLocalizations.of(context);
+  final ok = await runGuarded(
+    context,
+    domain: 'workspace',
+    message: 'revoke handover failed',
+    errorText: l10n?.workspaceGenericError ??
+        'Something went wrong. Please try again.',
+    action: () =>
+        ref.read(workspaceRepositoryProvider).revokeHandover(member.id),
+  );
+  if (!ok || !context.mounted) return;
+  AppSnack.success(context, l10n?.managedProfileRevoked ?? 'Handover revoked');
 }
