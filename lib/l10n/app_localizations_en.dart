@@ -7614,6 +7614,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'A rate still used by an invoice or a service is kept, deactivated.';
 
   @override
+  String get assistantPrefix => 'Assistant';
+
+  @override
+  String get settlementStepPick => 'Choose invoices';
+
+  @override
+  String get settlementSummaryHint =>
+      'These invoices are folded into one settlement document; each stays readable behind it.';
+
+  @override
+  String get repartitionStepExpense => 'The expense';
+
+  @override
   String get onboardingTitle => 'Welcome to DesKilo';
 
   @override

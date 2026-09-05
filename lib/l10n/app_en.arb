@@ -7976,6 +7976,22 @@
   "@vatKeptRate": {
     "description": "Explains that a referenced rate is deactivated, not deleted"
   },
+  "assistantPrefix": "Assistant",
+  "@assistantPrefix": {
+    "description": "#872 one wizard idiom: assistantPrefix"
+  },
+  "settlementStepPick": "Choose invoices",
+  "@settlementStepPick": {
+    "description": "#872 one wizard idiom: settlementStepPick"
+  },
+  "settlementSummaryHint": "These invoices are folded into one settlement document; each stays readable behind it.",
+  "@settlementSummaryHint": {
+    "description": "#872 one wizard idiom: settlementSummaryHint"
+  },
+  "repartitionStepExpense": "The expense",
+  "@repartitionStepExpense": {
+    "description": "#872 one wizard idiom: repartitionStepExpense"
+  },
   "onboardingTitle": "Welcome to DesKilo",
   "@onboardingTitle": {
     "description": "App-bar title of the first-run onboarding screen"

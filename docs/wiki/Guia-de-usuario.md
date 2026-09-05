@@ -849,6 +849,8 @@ Con **Recordatorios de pago automáticos** activado (Funciones, hijo de *Recorda
 
 ### 11g. El asistente de cierre mensual
 
+Los tres asistentes — **cierre mensual**, **reagrupar en una factura**, **repartir un gasto** — comparten una forma (#872): pasos numerados arriba, el contenido del paso, luego **Atrás · i / n · Siguiente** y una acción final en el último paso. Se aprende una vez; cada entrada de la barra se llama *Asistente · …*.
+
 El **asistente de cierre** (opción *Asistente de facturación*; la varita en la cabecera de Facturas o la tarjeta sobre *Por facturar*) encadena todo el trabajo de facturación en **un solo proceso guiado** con un carril de pasos: **Revisión** (qué pasada, qué periodo, qué está pendiente), **Emitir** (las facturas de la pasada en un lote: los socios ya cubiertos aparecen hechos, desmarque para excluir), **Enviar** (compartir o descargar cada PDF), **Recordar** (todo lo vencido según sus reglas, registrado y notificado con un toque, la carta por fila), **Pagos** (confirmar o rechazar lo que declararon los socios; **registrar** una transferencia o un pago en efectivo para un socio, que lo confirma por su parte), **Conciliar** (cada factura abierta frente al crédito del socio; las filas con crédito están listas), **Cerrar** (reagrupar varias facturas de un socio en una, anular un resto, reembolsar una nota de crédito, cada una con validación) y **Resumen** (lo que hizo la pasada y lo que sigue abierto con a quién le toca). Dos pasadas: **Inicio de mes** para las suscripciones pagadas por adelantado (sugerida desde su ventana de anticipación), **Fin de mes** para el uso, el consumo y los cargos adicionales del mes cerrado.
 
 ### 11h. Gastos compartidos, repartidos

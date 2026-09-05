@@ -4500,6 +4500,22 @@
   "vatPdfVat": "IVA",
   "fecAccountVat": "IVA incassata",
   "vatKeptRate": "Un'aliquota ancora usata da una fattura o da un servizio viene conservata, disattivata.",
+  "assistantPrefix": "Assistente",
+  "@assistantPrefix": {
+    "description": "#872 one wizard idiom: assistantPrefix"
+  },
+  "settlementStepPick": "Scegli le fatture",
+  "@settlementStepPick": {
+    "description": "#872 one wizard idiom: settlementStepPick"
+  },
+  "settlementSummaryHint": "Queste fatture vengono raggruppate in un documento di saldo; ognuna resta leggibile dietro di esso.",
+  "@settlementSummaryHint": {
+    "description": "#872 one wizard idiom: settlementSummaryHint"
+  },
+  "repartitionStepExpense": "La spesa",
+  "@repartitionStepExpense": {
+    "description": "#872 one wizard idiom: repartitionStepExpense"
+  },
   "onboardingTitle": "Benvenuto su DesKilo",
   "onboardingCreateTab": "Crea uno spazio",
   "onboardingJoinTab": "Unisciti a uno spazio",

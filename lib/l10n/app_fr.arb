@@ -4500,6 +4500,22 @@
   "vatPdfVat": "TVA",
   "fecAccountVat": "TVA collectée",
   "vatKeptRate": "Un taux encore utilisé par une facture ou un service est conservé, désactivé.",
+  "assistantPrefix": "Assistant",
+  "@assistantPrefix": {
+    "description": "#872 one wizard idiom: assistantPrefix"
+  },
+  "settlementStepPick": "Choisir les factures",
+  "@settlementStepPick": {
+    "description": "#872 one wizard idiom: settlementStepPick"
+  },
+  "settlementSummaryHint": "Ces factures sont regroupées dans un document de règlement ; chacune reste lisible derrière lui.",
+  "@settlementSummaryHint": {
+    "description": "#872 one wizard idiom: settlementSummaryHint"
+  },
+  "repartitionStepExpense": "La dépense",
+  "@repartitionStepExpense": {
+    "description": "#872 one wizard idiom: repartitionStepExpense"
+  },
   "onboardingTitle": "Bienvenue sur DesKilo",
   "onboardingCreateTab": "Créer un espace",
   "onboardingJoinTab": "Rejoindre un espace",

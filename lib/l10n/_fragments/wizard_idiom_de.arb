@@ -1,0 +1,19 @@
+{
+  "@@locale": "de",
+  "assistantPrefix": "Assistent",
+  "@assistantPrefix": {
+    "description": "#872 one wizard idiom: assistantPrefix"
+  },
+  "settlementStepPick": "Rechnungen wählen",
+  "@settlementStepPick": {
+    "description": "#872 one wizard idiom: settlementStepPick"
+  },
+  "settlementSummaryHint": "Diese Rechnungen werden in einem Abrechnungsbeleg zusammengefasst; jede bleibt dahinter lesbar.",
+  "@settlementSummaryHint": {
+    "description": "#872 one wizard idiom: settlementSummaryHint"
+  },
+  "repartitionStepExpense": "Die Ausgabe",
+  "@repartitionStepExpense": {
+    "description": "#872 one wizard idiom: repartitionStepExpense"
+  }
+}

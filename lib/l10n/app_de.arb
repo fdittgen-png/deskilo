@@ -4500,6 +4500,22 @@
   "vatPdfVat": "MwSt.",
   "fecAccountVat": "Vereinnahmte Steuer",
   "vatKeptRate": "Ein Satz, den eine Rechnung oder eine Leistung noch nutzt, bleibt erhalten und wird deaktiviert.",
+  "assistantPrefix": "Assistent",
+  "@assistantPrefix": {
+    "description": "#872 one wizard idiom: assistantPrefix"
+  },
+  "settlementStepPick": "Rechnungen wählen",
+  "@settlementStepPick": {
+    "description": "#872 one wizard idiom: settlementStepPick"
+  },
+  "settlementSummaryHint": "Diese Rechnungen werden in einem Abrechnungsbeleg zusammengefasst; jede bleibt dahinter lesbar.",
+  "@settlementSummaryHint": {
+    "description": "#872 one wizard idiom: settlementSummaryHint"
+  },
+  "repartitionStepExpense": "Die Ausgabe",
+  "@repartitionStepExpense": {
+    "description": "#872 one wizard idiom: repartitionStepExpense"
+  },
   "onboardingTitle": "Willkommen bei DesKilo",
   "onboardingCreateTab": "Workspace erstellen",
   "onboardingJoinTab": "Workspace beitreten",

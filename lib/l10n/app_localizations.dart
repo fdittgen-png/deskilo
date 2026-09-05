@@ -13381,6 +13381,30 @@ abstract class AppLocalizations {
   /// **'A rate still used by an invoice or a service is kept, deactivated.'**
   String get vatKeptRate;
 
+  /// #872 one wizard idiom: assistantPrefix
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant'**
+  String get assistantPrefix;
+
+  /// #872 one wizard idiom: settlementStepPick
+  ///
+  /// In en, this message translates to:
+  /// **'Choose invoices'**
+  String get settlementStepPick;
+
+  /// #872 one wizard idiom: settlementSummaryHint
+  ///
+  /// In en, this message translates to:
+  /// **'These invoices are folded into one settlement document; each stays readable behind it.'**
+  String get settlementSummaryHint;
+
+  /// #872 one wizard idiom: repartitionStepExpense
+  ///
+  /// In en, this message translates to:
+  /// **'The expense'**
+  String get repartitionStepExpense;
+
   /// App-bar title of the first-run onboarding screen
   ///
   /// In en, this message translates to:
