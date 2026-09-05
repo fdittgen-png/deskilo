@@ -268,6 +268,15 @@ List<SeatDaySegment> seatDaySegments({
   return taken;
 }
 
+/// #908 — whether the seat's day must be drawn DIVIDED rather than as
+/// one flat state: either it is shared by more than one booking, or it
+/// is left partly free. One colour across the whole symbol would say
+/// "one person has this all day", and on a seat two members split
+/// between them that is simply false — the week grid and the timeline
+/// both show the two, and the plan may not contradict them.
+bool seatDayIsSplit(List<SeatDaySegment> segments) =>
+    segments.length > 1 || seatDayIsPartial(segments);
+
 /// Whether [segments] leave the day partly free — what makes a seat read
 /// as PART-booked instead of taken.
 bool seatDayIsPartial(List<SeatDaySegment> segments) {

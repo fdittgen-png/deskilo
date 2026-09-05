@@ -4,6 +4,7 @@
 // seat several people share must say who has it and when. One
 // derivation (seatDaySegments) feeds the divided fill on the plan and
 // the day sheet behind the tap.
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/plan/presentation/widgets/floor_plan_painter.dart';
@@ -16,11 +17,25 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/test_clock.dart';
 import 'plan_screen_test.dart' show pumpPlan;
 
+// #908 — o'clock on the WORKSPACE clock, which is what a stored
+// reservation and the open day both anchor to. Building these on the
+// device clock made the fixtures agree with a bug: the plan's day window
+// used to be device-local too, so a test machine outside the workspace's
+// zone never noticed the day was in the wrong place.
 DateTime _at(int hour, [int minute = 0]) =>
-    DateTime(kTestNow.year, kTestNow.month, kTestNow.day, hour, minute);
+    WorkspaceTime.at(kTestNow.year, kTestNow.month, kTestNow.day, hour, minute);
 
-final _dayStart = _at(8);
-final _dayEnd = _at(17);
+DateTime get _dayStart => _at(8);
+DateTime get _dayEnd => _at(17);
+
+/// The same moment as a BARE utc instant — what `DateTime.parse` gives
+/// the repository for a `timestamptz` row. A TZDateTime would carry its
+/// own zone and print correctly by accident, which is precisely how #908
+/// went unnoticed.
+DateTime _utc(int hour, [int minute = 0]) => DateTime.fromMillisecondsSinceEpoch(
+      _at(hour, minute).millisecondsSinceEpoch,
+      isUtc: true,
+    );
 
 const _seat = Seat(
   id: 'seat-1',
@@ -55,8 +70,9 @@ Reservation _booking(
       seatId: seatId,
       deskId: deskId,
       memberId: member,
-      startsAt: _at(fromHour),
-      endsAt: _at(toHour),
+      // As the repository hands them over: bare UTC instants.
+      startsAt: _utc(fromHour),
+      endsAt: _utc(toHour),
       status: status,
     );
 
@@ -72,6 +88,11 @@ List<SeatDaySegment> _segments(List<Reservation> reservations,
     );
 
 void main() {
+  // The fake workspace the plan pumps lives in Berlin; the fixtures must
+  // speak the same clock the screen does.
+  setUp(() => WorkspaceTime.install('Europe/Berlin'));
+  tearDown(WorkspaceTime.reset);
+
   group('the day, seat by seat', () {
     test('a booking held all day is ONE segment filling the seat', () {
       final segments = _segments([_booking('r', fromHour: 8, toHour: 17)]);
@@ -80,6 +101,25 @@ void main() {
       expect(segments.single.to, 1);
       expect(seatDayIsPartial(segments), isFalse,
           reason: 'nothing to divide — the seat is taken all day');
+      expect(seatDayIsSplit(segments), isFalse,
+          reason: 'one booking, all day: one flat state is the truth');
+    });
+
+    test('#908 — two bookings that COVER the day still divide the seat: '
+        'the day is full, but it is not one person\'s', () {
+      final segments = _segments([
+        _booking('morning', fromHour: 8, toHour: 12, member: 'member-1'),
+        _booking('afternoon', fromHour: 12, toHour: 17, member: 'member-2'),
+      ]);
+      expect(segments, hasLength(2));
+      expect(seatDayIsPartial(segments), isFalse,
+          reason: 'no free stretch is left');
+      expect(seatDayIsSplit(segments), isTrue,
+          reason: 'the plan must show the handover, like the grid does');
+      expect(segments.first.state, SeatState.mine);
+      expect(segments.last.state, SeatState.reserved);
+      expect(segments.first.to, closeTo(4 / 9, 0.001));
+      expect(segments.last.from, closeTo(4 / 9, 0.001));
     });
 
     test('a morning booking stops at midday, and the seat reads partial',
@@ -141,8 +181,8 @@ void main() {
         dayEnd: _dayEnd,
       );
       expect(gaps, hasLength(1));
-      expect(gaps.single.start, _at(12));
-      expect(gaps.single.end, _at(15));
+      expect(gaps.single.start.isAtSameMomentAs(_at(12)), isTrue);
+      expect(gaps.single.end.isAtSameMomentAs(_at(15)), isTrue);
     });
   });
 
@@ -214,6 +254,18 @@ void main() {
       expect(find.text('Ahead'), findsOneWidget, reason: 'mine is still to come');
       // The free stretch between them is offered.
       expect(find.text('Free — book it'), findsOneWidget);
+    });
+
+    testWidgets('#908 — the hours are the SPACE\'s, not UTC: a Berlin '
+        'morning reads 08:00, whatever clock the device keeps',
+        (tester) async {
+      await open(tester, reservations: [
+        _booking('morning', fromHour: 8, toHour: 12, member: 'member-2'),
+      ]);
+      expect(find.text('08:00 – 12:00'), findsOneWidget);
+      // The stored instant is 06:00 UTC in summer; printing it raw is
+      // the defect this pins.
+      expect(find.textContaining('06:00'), findsNothing);
     });
 
     testWidgets('tapping a free stretch hands its window back', (tester) async {

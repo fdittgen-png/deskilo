@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/time/workspace_time.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -103,8 +104,13 @@ class _SeatDaySheet extends StatelessWidget {
       for (final g in gaps) (start: g.start, end: g.end, booking: null),
     ]..sort((a, b) => a.start.compareTo(b.start));
 
+    // #908 — a segment carries the raw instant; every reservation
+    // surface prints it through WorkspaceTime.display, which reads the
+    // space's clock unless the member asked for their own. Formatting
+    // the instant itself printed UTC — a Paris morning showed 06:00.
     String when(DateTime start, DateTime end) =>
-        '${hm.format(start)} – ${hm.format(end)}';
+        '${hm.format(WorkspaceTime.display(start))} – '
+        '${hm.format(WorkspaceTime.display(end))}';
     String phaseOf(DateTime start, DateTime end) => end.isBefore(now)
         ? (l10n?.seatDayPast ?? 'Done')
         : start.isAfter(now)

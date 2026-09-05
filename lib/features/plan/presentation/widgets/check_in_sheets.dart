@@ -50,8 +50,12 @@ Future<String?> showMySeatSheet(
                   : seat.name,
             ),
             subtitle: Text(
-              '${DateFormat.Hm().format(mine.startsAt.toLocal())} – '
-              '${DateFormat.Hm().format(mine.endsAt.toLocal())}',
+              // #908 — the space's clock (or the member's own, when they
+              // asked for it) — never the device's behind its back: the
+              // opening time two lines up already reads that way.
+              '${DateFormat.Hm().format(WorkspaceTime.display(mine.startsAt))}'
+              ' – '
+              '${DateFormat.Hm().format(WorkspaceTime.display(mine.endsAt))}',
             ),
           ),
           if (mine.status == ReservationStatus.checkedIn)
@@ -131,8 +135,9 @@ Future<String?> showCheckInOtherSheet(
               title: Text(seat.name.isEmpty ? reservedBy : seat.name),
               subtitle: Text(
                 '$reservedBy · '
-                '${DateFormat.Hm().format(other.startsAt.toLocal())} – '
-                '${DateFormat.Hm().format(other.endsAt.toLocal())}',
+                '${DateFormat.Hm().format(WorkspaceTime.display(other.startsAt))}'
+                ' – '
+                '${DateFormat.Hm().format(WorkspaceTime.display(other.endsAt))}',
               ),
             ),
             if (offerCheckIn)

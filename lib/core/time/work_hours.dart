@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'workspace_time.dart';
 
 /// The active workspace's working day (#446) — stored inside the
 /// `booking_rules` jsonb (keys below) and enforced server-side by
@@ -130,4 +131,22 @@ class WorkHours {
   @override
   int get hashCode => Object.hash(startMinutes, halfBoundaryMinutes,
       endMinutes, halfDayHours, fullDayHours);
+}
+
+/// #908 — the open day of [on], as instants, on the WORKSPACE clock.
+///
+/// "08:00–17:00" is a wall-clock statement about the space, not about
+/// the device reading it. A naive `DateTime(y, m, d).add(startMinutes)`
+/// agrees with the setting only while the two clocks coincide; from a
+/// device an hour away it slides the whole day by the offset, so a seat
+/// booked for the morning is placed in the afternoon of the plan and
+/// the day sheet offers free stretches that are not free.
+({DateTime start, DateTime end}) workDayWindow(
+  DateTime on, {
+  WorkHours? hours,
+}) {
+  final h = hours ?? WorkHours.current;
+  DateTime at(int minutes) =>
+      WorkspaceTime.at(on.year, on.month, on.day, minutes ~/ 60, minutes % 60);
+  return (start: at(h.startMinutes), end: at(h.endMinutes));
 }
