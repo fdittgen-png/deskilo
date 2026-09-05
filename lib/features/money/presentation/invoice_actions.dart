@@ -21,6 +21,7 @@ import '../../events/providers/event_providers.dart';
 import '../../members/providers/directory_providers.dart';
 import '../../reservations/providers/reservation_providers.dart';
 import '../../profile/domain/personal_info.dart';
+import '../../profile/presentation/courtesy_words.dart';
 import '../domain/payment_terms.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/domain/workspace_feature.dart';
@@ -233,11 +234,17 @@ Map<String, Object?> legalMentionData(
 /// element, the same renderer as the profile form and the SQL twin
 /// (#886) — from the frozen buyer party (0069) or the flat snapshot on
 /// legacy invoices.
-String _clientAddressOf(Invoice invoice, Workspace? workspace) {
+String _clientAddressOf(
+    Invoice invoice, Workspace? workspace, AppLocalizations? l10n) {
   final buyer = invoice.buyerParty;
   if (buyer == null) return invoice.memberAddress;
+  final person = buyer.person.trim();
   return PersonalInfo(
     company: buyer.company,
+    // #912 — the person inside the organisation, rebuilt into the two
+    // halves the block renders from. Only the rendering cares which is
+    // which, and the frozen party keeps the name whole.
+    firstName: person,
     street: buyer.street,
     postalCode: buyer.postalCode,
     city: buyer.city,
@@ -248,6 +255,8 @@ String _clientAddressOf(Invoice invoice, Workspace? workspace) {
     // client IS the company, the block drops it rather than saying it
     // twice; when a person is named, the company stays where it belongs.
     nameAbove: _clientNameOf(invoice),
+    // #912 — in the reader's language, from the code the party froze.
+    courtesyWord: courtesyWord(l10n, Courtesy.fromWire(buyer.courtesy)),
   );
 }
 
@@ -361,7 +370,7 @@ Map<String, Object?> invoiceReportData(
       workspace,
       seller: invoice.sellerParty,
       buyer: invoice.buyerParty,
-      clientAddress: _clientAddressOf(invoice, workspace),
+      clientAddress: _clientAddressOf(invoice, workspace, l10n),
       clientName: _clientNameOf(invoice),
       reverseCharged: invoice.isReverseCharged,
       memberTerms: memberTerms,
@@ -1071,7 +1080,7 @@ Map<String, Object?> reminderReportData(
       workspace,
       seller: invoice.sellerParty,
       buyer: invoice.buyerParty,
-      clientAddress: _clientAddressOf(invoice, workspace),
+      clientAddress: _clientAddressOf(invoice, workspace, l10n),
       clientName: _clientNameOf(invoice),
       reverseCharged: invoice.isReverseCharged,
       memberTerms: memberTermsFor(ref, invoice.memberId),

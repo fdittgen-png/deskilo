@@ -1690,6 +1690,26 @@
   "@memberCoOwnerPassiveChip": {
     "description": "Members-list chip for a passive co-owner"
   },
+  "courtesyLabel": "Form of address",
+  "@courtesyLabel": {
+    "description": "#912 courtesy title: courtesyLabel"
+  },
+  "courtesyHint": "Printed before your name on documents. \"None\" prints the name alone.",
+  "@courtesyHint": {
+    "description": "#912 courtesy title: courtesyHint"
+  },
+  "courtesyNone": "None",
+  "@courtesyNone": {
+    "description": "#912 courtesy title: courtesyNone"
+  },
+  "courtesyMr": "Mr",
+  "@courtesyMr": {
+    "description": "#912 courtesy title: courtesyMr"
+  },
+  "courtesyMrs": "Ms",
+  "@courtesyMrs": {
+    "description": "#912 courtesy title: courtesyMrs"
+  },
   "developerMode": "Developer mode",
   "@developerMode": {
     "description": "Settings toggle enabling the local diagnostics screen"

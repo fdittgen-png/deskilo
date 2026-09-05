@@ -1442,6 +1442,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get memberCoOwnerPassiveChip => 'Mit-Inhaberin (passiv)';
 
   @override
+  String get courtesyLabel => 'Anrede';
+
+  @override
+  String get courtesyHint =>
+      'Wird auf Dokumenten vor Ihrem Namen gedruckt. „Keine“ druckt nur den Namen.';
+
+  @override
+  String get courtesyNone => 'Keine';
+
+  @override
+  String get courtesyMr => 'Herr';
+
+  @override
+  String get courtesyMrs => 'Frau';
+
+  @override
   String get developerMode => 'Entwicklermodus';
 
   @override

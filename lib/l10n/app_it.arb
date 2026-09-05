@@ -979,6 +979,26 @@
   "coOwnerActivate": "Promuovi a proprietario ora",
   "memberCoOwnerChip": "Comproprietario",
   "memberCoOwnerPassiveChip": "Comproprietario (passivo)",
+  "courtesyLabel": "Formula di cortesia",
+  "@courtesyLabel": {
+    "description": "#912 courtesy title: courtesyLabel"
+  },
+  "courtesyHint": "Stampata prima del nome sui documenti. «Nessuna» stampa solo il nome.",
+  "@courtesyHint": {
+    "description": "#912 courtesy title: courtesyHint"
+  },
+  "courtesyNone": "Nessuna",
+  "@courtesyNone": {
+    "description": "#912 courtesy title: courtesyNone"
+  },
+  "courtesyMr": "Sig.",
+  "@courtesyMr": {
+    "description": "#912 courtesy title: courtesyMr"
+  },
+  "courtesyMrs": "Sig.ra",
+  "@courtesyMrs": {
+    "description": "#912 courtesy title: courtesyMrs"
+  },
   "developerMode": "Modalità sviluppatore",
   "developerModeWorkspaceHint": "Vale per tutti i membri di questo spazio.",
   "developerTitle": "Sviluppatore",

@@ -27,7 +27,7 @@ void main() {
     test(
       '"Prénom NOM": family name in capitals, trimmed — as SQL renders it',
       () {
-        expect(_kaloa.fullName, 'Guilhem MARTIN');
+        expect(_kaloa.personName, 'Guilhem MARTIN');
       },
     );
 
@@ -43,8 +43,10 @@ void main() {
       expect(company.personName, '', reason: 'nobody is named');
     });
 
-    test('#910 — a person named alongside a company keeps the name', () {
-      expect(_kaloa.fullName, 'Guilhem MARTIN');
+    test('#912 — the COMPANY is the addressee when there is one: an '
+        'invoice is owed by the organisation, and the person is named '
+        'on the line below it', () {
+      expect(_kaloa.fullName, 'SASU KaloA');
       expect(_kaloa.personName, 'Guilhem MARTIN');
     });
   });
@@ -66,17 +68,42 @@ void main() {
       );
     });
 
-    test('but it stays in the block when a PERSON is named above it', () {
+    test('#912 — the person moves INTO the block, under the company', () {
       expect(
         _kaloa.postalBlock(workspaceCountry: 'FR'),
-        startsWith('SASU KaloA\n'),
+        'Guilhem MARTIN\n209 rue Jean Bart, Immeuble AGORA 1B\n'
+            '31670 LABÈGE',
       );
     });
 
-    test('nameAbove decides it, so a caller printing a frozen name says '
-        'which one', () {
-      // An older document names the person and freezes the company
-      // beside it: the block must still carry the company.
+    test('#912 — with the title they asked for, in the reader\'s word', () {
+      expect(
+        _kaloa
+            .copyWith(courtesy: Courtesy.mr)
+            .postalBlock(workspaceCountry: 'FR', courtesyWord: 'Monsieur'),
+        startsWith('Monsieur Guilhem MARTIN\n'),
+      );
+      expect(
+        _kaloa
+            .copyWith(courtesy: Courtesy.mrs)
+            .postalBlock(workspaceCountry: 'FR', courtesyWord: 'Frau'),
+        startsWith('Frau Guilhem MARTIN\n'),
+      );
+    });
+
+    test('#912 — Courtesy.none prints the name alone; a title is never '
+        'inferred from a name', () {
+      expect(_kaloa.courtesy, Courtesy.none);
+      expect(
+        _kaloa.postalBlock(workspaceCountry: 'FR'),
+        startsWith('Guilhem MARTIN\n'),
+      );
+    });
+
+    test('nameAbove decides what is not repeated, so a caller printing a '
+        'frozen name says which one', () {
+      // An older document names the PERSON above: the company then has
+      // to stay in the block rather than vanish from the letter.
       expect(
         company.postalBlock(
           workspaceCountry: 'FR',
@@ -93,11 +120,13 @@ void main() {
 
   group('postal block', () {
     test(
-      'company · street · POSTAL CITY, locality in capitals (NF Z 10-011)',
+      'person · street · POSTAL CITY, locality in capitals (NF Z 10-011) '
+      '— the company holds the line ABOVE the block (#912)',
       () {
         expect(
           _kaloa.postalBlock(workspaceCountry: 'FR'),
-          'SASU KaloA\n209 rue Jean Bart, Immeuble AGORA 1B\n31670 LABÈGE',
+          'Guilhem MARTIN\n209 rue Jean Bart, Immeuble AGORA 1B\n'
+              '31670 LABÈGE',
         );
       },
     );

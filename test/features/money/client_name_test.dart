@@ -84,22 +84,42 @@ void main() {
     });
   });
 
-  group('the SQL twin (migration 0158)', () {
+  group('the SQL twin (migrations 0158 · 0159)', () {
     final sql =
         File('supabase/migrations/0158_client_name_company.sql').readAsStringSync();
+    final sql912 =
+        File('supabase/migrations/0159_courtesy_title.sql').readAsStringSync();
 
-    test('profile_full_name falls back to the company, as Dart does', () {
-      expect(sql, contains('create or replace function public.profile_full_name'));
-      expect(sql, contains("btrim(coalesce(p.company, ''))"));
+    test('#912 — the courtesy word is a code resolved per language, and '
+        'the five the app speaks are all there', () {
+      expect(sql912, contains('create or replace function public.courtesy_word'));
+      for (final word in ['Monsieur', 'Madame', 'Herr', 'Frau', 'Sr.',
+        'Sra.', 'Sig.', 'Sig.ra', 'Mr', 'Ms']) {
+        expect(sql912, contains("'$word'"), reason: '$word missing');
+      }
     });
 
-    test('profile_postal_block drops the company when no person is named '
-        '— the same condition PersonalInfo.postalBlock applies', () {
-      expect(
-        sql,
-        contains("case when btrim(coalesce(p.first_name, '')) <> ''"),
-      );
-      expect(sql, contains("or btrim(coalesce(p.last_name, '')) <> ''"));
+    test('#912 — profile_full_name puts the company first, and the block '
+        'names the person under it', () {
+      expect(sql912,
+          contains("select coalesce(nullif(btrim(coalesce(p.company, '')), '')"));
+      expect(sql912, contains('public.profile_person_name(p)'));
+      expect(sql912, contains('public.courtesy_word(p.courtesy, p_lang)'));
+    });
+
+    test('#912 — create_invoice freezes the person and the code beside '
+        'the company, so another language can still greet them', () {
+      expect(sql912, contains("''person'', v_member_person"));
+      expect(sql912, contains("''courtesy'', v_member_courtesy"));
+      expect(sql912, contains('public.profile_person_name(pr)'));
+    });
+
+    test('0158 introduced the company fallback; 0159 keeps it and puts '
+        'the company FIRST', () {
+      expect(sql, contains('create or replace function public.profile_full_name'));
+      expect(sql, contains("btrim(coalesce(p.company, ''))"));
+      expect(sql912,
+          contains('create or replace function public.profile_full_name'));
     });
 
     test('the two renderings agree, case by case, with the Dart ones', () {
@@ -116,6 +136,7 @@ void main() {
           '209 rue Jean Bart, Immeuble AGORA 1B\n31670 LABÈGE');
       expect(company.postalBlock(workspaceCountry: 'DE'),
           '209 rue Jean Bart, Immeuble AGORA 1B\n31670 LABÈGE\nFR');
+      // Captured from the 0159 harness on 2026-09-05: A, B, D and E.
       const both = PersonalInfo(
         firstName: 'Guilhem',
         lastName: 'martin',
@@ -125,9 +146,17 @@ void main() {
         city: 'Labège',
         countryCode: 'FR',
       );
-      expect(both.fullName, 'Guilhem MARTIN');
+      // #912 — the organisation is the addressee; the person is named
+      // under it, with the title they chose.
+      expect(both.fullName, 'SASU KaloA');
       expect(both.postalBlock(workspaceCountry: 'FR'),
-          'SASU KaloA\n209 rue Jean Bart\n31670 LABÈGE');
+          'Guilhem MARTIN\n209 rue Jean Bart\n31670 LABÈGE');
+      expect(
+        both
+            .copyWith(courtesy: Courtesy.mr)
+            .postalBlock(workspaceCountry: 'FR', courtesyWord: 'Monsieur'),
+        'Monsieur Guilhem MARTIN\n209 rue Jean Bart\n31670 LABÈGE',
+      );
     });
   });
 }

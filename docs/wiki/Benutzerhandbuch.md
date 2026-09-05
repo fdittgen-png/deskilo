@@ -765,6 +765,15 @@ Mitglieder ergänzen ihr **Land** — und ihre USt-IdNr., wenn sie als Unternehm
 
 **Ein Kunde kann ein Unternehmen sein (#910).** Ein verwaltetes Profil braucht keinen Vornamen: eine **Firmenbezeichnung** genügt. Fehlt ein Personenname, wird das Unternehmen zum Adressaten — auf der Rechnung, in den Listen, im Zahlungsverlauf — und entfällt dann in der Anschrift darunter, weil es bereits die Zeile darüber ist. Wird eine Person genannt, ändert sich nichts: Das Unternehmen bleibt im Adressblock zwischen Name und Straße. Auch bereits ausgestellte Dokumente profitieren — die Firmenbezeichnung war dort von Anfang an eingefroren, sie wurde nur nicht gelesen.
 
+**Zuerst das Unternehmen, dann die Person (#912).** Trägt ein Kunde eine Firmenbezeichnung UND einen Personennamen, richtet sich das Dokument an das **Unternehmen** — es schuldet die Rechnung — und nennt die Person in der Zeile darunter, mit der von ihr gewählten Anrede:
+
+> SASU KaloA
+> Herr Guilhem MARTIN
+> 209 rue Jean Bart, Immeuble AGORA 1B
+> 31670 LABÈGE
+
+Die **Anrede** ist ein Feld Ihrer persönlichen Angaben: *Herr*, *Frau* oder *Keine*, was nur den Namen druckt. Sie wird nie aus einem Vornamen erraten, und jeder Leser sieht sie in seiner Sprache — *Monsieur* auf Französisch, *Sig.* auf Italienisch. Ohne Unternehmen ändert sich nichts: Die Person bleibt der Adressat.
+
 **Das Fälligkeitsdatum steht auf dem Dokument (#910).** Jede Rechnung druckt jetzt ihr **Zahlungsdatum**, berechnet aus der Frist Ihrer Mahnregeln — dieselbe Frist, die die App im Zahlungsverlauf herunterzählt, sodass beide nicht mehr zwei verschiedene Daten nennen können. Ein Entwurf kann es mit `due_date` beliebig platzieren. Und ein einseitiges Dokument trägt keine Seitenzahl mehr: „1/1“ sagt niemandem etwas.
 
 **DesKilo-Preise sind brutto.** Was du als Preis eintippst, zahlt das Mitglied. MwSt einschalten ändert keinen geschuldeten Betrag — es sagt, wie viel davon Steuer ist. Unter einem steuerpflichtigen Regime sagt es der Katalog laut: jede Service- und Paket-Zeile nennt ihren enthaltenen Satz (*inkl. 19 % USt*), im Abrechnungs-Editor wählt der Eigentümer den USt-Satz des Tarifs (Standard: der Workspace-Standardsatz) und sieht beim Tippen den USt-Anteil jedes Betrags, jede Ausstattung kann ihren eigenen Satz tragen (Standard: der Workspace-Standardsatz), und jedes Preisfeld erinnert daran, dass es brutto ist.

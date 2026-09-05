@@ -37,6 +37,7 @@ import '../../domain/directory_status.dart';
 import '../../providers/directory_providers.dart';
 import '../widgets/member_contact_card.dart';
 import '../widgets/member_money_card.dart';
+import '../../../profile/presentation/courtesy_words.dart';
 
 /// #825 — ONE page per person (`/member/:id`): who they are and whether
 /// they are here, what they have booked, how to reach them, their money
@@ -228,7 +229,13 @@ class _MemberPageBody extends ConsumerWidget {
           icon: Icons.contact_mail_outlined,
           title: l10n?.managedProfileEdit ?? 'Edit identity',
           subtitle: member.managedIdentity
-              .postalBlock(workspaceCountry: workspace?.countryCode ?? '')
+              .postalBlock(
+                workspaceCountry: workspace?.countryCode ?? '',
+                // #912 — the title the person asked for, in the reader's
+                // language, exactly as the document will print it.
+                courtesyWord:
+                    courtesyWord(l10n, member.managedIdentity.courtesy),
+              )
               .replaceAll('\n', ', '),
           onTap: () => context.push('/members/managed?member=${member.id}'),
         ),

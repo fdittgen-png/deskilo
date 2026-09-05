@@ -1,0 +1,23 @@
+{
+  "@@locale": "fr",
+  "courtesyLabel": "Formule d’appel",
+  "@courtesyLabel": {
+    "description": "#912 courtesy title: courtesyLabel"
+  },
+  "courtesyHint": "Imprimée devant votre nom sur les documents. « Aucune » n'imprime que le nom.",
+  "@courtesyHint": {
+    "description": "#912 courtesy title: courtesyHint"
+  },
+  "courtesyNone": "Aucune",
+  "@courtesyNone": {
+    "description": "#912 courtesy title: courtesyNone"
+  },
+  "courtesyMr": "Monsieur",
+  "@courtesyMr": {
+    "description": "#912 courtesy title: courtesyMr"
+  },
+  "courtesyMrs": "Madame",
+  "@courtesyMrs": {
+    "description": "#912 courtesy title: courtesyMrs"
+  }
+}

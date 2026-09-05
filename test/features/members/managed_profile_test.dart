@@ -65,7 +65,8 @@ void main() {
     await tester.pumpAndSettle();
 
     // Straight on the member page: named from the identity, marked.
-    expect(find.text('Guilhem MARTIN'), findsWidgets);
+    // #912 — a client with a company is named by the company.
+    expect(find.text('SASU KaloA'), findsWidgets);
     expect(find.text('Managed'), findsOneWidget);
     expect(find.byKey(const ValueKey('member-page-message')), findsNothing,
         reason: 'nobody reads a message to a managed member');
@@ -76,7 +77,10 @@ void main() {
       120,
       scrollable: find.byType(Scrollable).first,
     );
-    expect(find.text('SASU KaloA, 209 rue Jean Bart, 31670 LABÈGE'),
+    // #912 — the company is the tile's title; the block beneath it
+    // carries the address, no longer repeating the company.
+    expect(
+        find.text('Guilhem MARTIN, 209 rue Jean Bart, 31670 LABÈGE'),
         findsOneWidget,
         reason: 'the identity tile shows the postal block');
 

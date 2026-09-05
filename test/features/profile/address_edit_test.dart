@@ -76,7 +76,9 @@ void main() {
       await type(tester, 'city', 'Labège');
       await type(tester, 'phone', ' +33 6 00 00 00 00 ');
 
-      // The preview IS the envelope window: name, then the block.
+      // The preview IS the envelope window: the addressee, then the
+      // block. #912 — the company is the addressee, the person moves
+      // under it.
       final preview = tester.widget<Text>(
         find.descendant(
           of: find.byKey(const ValueKey('personal-info-preview')),
@@ -85,8 +87,8 @@ void main() {
       );
       expect(
         preview.data,
-        'Guilhem MARTIN\n'
-        'SASU KaloA\n209 rue Jean Bart, Immeuble AGORA 1B\n31670 LABÈGE',
+        'SASU KaloA\n'
+        'Guilhem MARTIN\n209 rue Jean Bart, Immeuble AGORA 1B\n31670 LABÈGE',
       );
 
       await tester.tap(find.byKey(const ValueKey('personal-info-save')));
@@ -114,8 +116,9 @@ void main() {
         120,
       );
       expect(find.text('Not filled in yet'), findsNothing);
+      // #912 — the company leads, the person follows it.
       expect(
-        find.textContaining('Guilhem MARTIN · SASU KaloA'),
+        find.textContaining('SASU KaloA · Guilhem MARTIN'),
         findsOneWidget,
       );
     },

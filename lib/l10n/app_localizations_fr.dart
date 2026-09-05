@@ -1442,6 +1442,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get memberCoOwnerPassiveChip => 'Copropriétaire (passif)';
 
   @override
+  String get courtesyLabel => 'Formule d’appel';
+
+  @override
+  String get courtesyHint =>
+      'Imprimée devant votre nom sur les documents. « Aucune » n\'imprime que le nom.';
+
+  @override
+  String get courtesyNone => 'Aucune';
+
+  @override
+  String get courtesyMr => 'Monsieur';
+
+  @override
+  String get courtesyMrs => 'Madame';
+
+  @override
   String get developerMode => 'Mode développeur';
 
   @override

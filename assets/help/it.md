@@ -800,6 +800,15 @@ I membri aggiungono il proprio **paese** — e la partita IVA se fatturano come 
 
 **Un cliente può essere un'azienda (#910).** Un profilo gestito non ha bisogno di un nome di battesimo: basta la **ragione sociale**. Quando manca il nome di una persona, è l'azienda a diventare il destinatario — sulla fattura, negli elenchi, nel flusso di pagamento — e sparisce allora dall'indirizzo sottostante, perché è già la riga sopra. Se una persona è indicata, non cambia nulla: l'azienda resta nel blocco indirizzo, tra il nome e la via. Ne beneficiano anche i documenti già emessi: la ragione sociale vi era congelata fin dall'inizio, semplicemente non veniva letta.
 
+**Prima l'azienda, poi la persona (#912).** Quando un cliente porta una ragione sociale E un nome di persona, il documento si rivolge all'**azienda** — è lei a dovere la fattura — e nomina la persona nella riga sottostante, con la formula che ha scelto:
+
+> SASU KaloA
+> Sig. Guilhem MARTIN
+> 209 rue Jean Bart, Immeuble AGORA 1B
+> 31670 LABÈGE
+
+La **formula di cortesia** è un campo dei vostri dati personali: *Sig.*, *Sig.ra* o *Nessuna*, che stampa solo il nome. Non viene mai dedotta da un nome di battesimo, e ogni lettore la vede nella propria lingua — *Monsieur* in francese, *Herr* in tedesco. Senza azienda nulla cambia: la persona resta il destinatario.
+
 **La scadenza è sul documento (#910).** Ogni fattura stampa ora la sua **data di pagamento**, calcolata dal termine delle vostre regole di sollecito — lo stesso termine che l'app mostra nel flusso di pagamento, così i due non possono più annunciare date diverse. Un modello può collocarla dove vuole con `due_date`. E un documento di una sola pagina non porta più il numero di pagina: «1/1» non dice nulla a nessuno.
 
 **In DesKilo i prezzi sono IVA inclusa.** Ciò che scrivi come prezzo di abbonamento, di servizio o di pacchetto di giorni è ciò che il membro paga. Attivare l'IVA non cambia un solo importo dovuto da nessuno — dice quanta parte di quell'importo è imposta. Per questo un estratto, un conto e una quota non si muovono mai quando aggiungi le aliquote, e per questo nessun totale va mai riconciliato. Sotto un regime soggetto a IVA il catalogo lo dice ad alta voce: ogni riga di servizio e di pacchetto nomina la sua aliquota inclusa (*IVA 22 % incl.*), l'editor di fatturazione consente al proprietario di scegliere l'aliquota IVA delle tariffe (predefinita: quella dello spazio) e mostra la quota IVA di ogni importo mentre digiti, ogni accessorio può portare la propria aliquota (predefinita: quella dello spazio), e ogni campo prezzo ricorda che è lordo.

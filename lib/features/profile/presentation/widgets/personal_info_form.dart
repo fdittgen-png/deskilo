@@ -13,6 +13,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/presentation/country_names.dart';
 import '../../domain/personal_info.dart';
+import '../courtesy_words.dart';
 
 /// Edits a [PersonalInfo]; [onSave] receives the normalized value.
 /// Every field carries a `personal-info-<field>` key for tests.
@@ -54,11 +55,14 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
   late final TextEditingController _vat;
   late final TextEditingController _legal;
   String? _country;
+  // #912 — how this person asks to be addressed.
+  late Courtesy _courtesy;
 
   @override
   void initState() {
     super.initState();
     final i = widget.initial;
+    _courtesy = i.courtesy;
     _first = TextEditingController(text: i.firstName);
     _last = TextEditingController(text: i.lastName);
     _company = TextEditingController(text: i.company);
@@ -104,6 +108,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
   }
 
   PersonalInfo get _value => PersonalInfo(
+    courtesy: _courtesy,
     firstName: _first.text,
     lastName: _last.text,
     company: _company.text,
@@ -147,7 +152,10 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
     final value = _value;
     final previewLines = [
       value.fullName,
-      value.postalBlock(workspaceCountry: widget.workspaceCountry),
+      value.postalBlock(
+        workspaceCountry: widget.workspaceCountry,
+        courtesyWord: courtesyWord(l10n, value.courtesy),
+      ),
     ].where((l) => l.isNotEmpty).join('\n');
     final preview = previewLines.isEmpty
         ? (l10n?.personalInfoNone ?? 'Not filled in yet')
@@ -163,6 +171,31 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           style: theme.textTheme.bodyMedium,
         ),
         const SizedBox(height: AppSpacing.lg),
+        Padding(
+          padding: const EdgeInsets.only(bottom: AppSpacing.md),
+          child: DropdownButtonFormField<Courtesy>(
+            key: const ValueKey('personal-info-courtesy'),
+            initialValue: _courtesy,
+            decoration: InputDecoration(
+              labelText: l10n?.courtesyLabel ?? 'Form of address',
+              helperMaxLines: 3,
+              helperText: l10n?.courtesyHint ??
+                  'Printed before your name on documents. "None" prints '
+                      'the name alone.',
+              border: const OutlineInputBorder(),
+            ),
+            items: [
+              for (final c in Courtesy.values)
+                DropdownMenuItem(
+                  value: c,
+                  child: Text(courtesyOptionLabel(l10n, c)),
+                ),
+            ],
+            onChanged: widget.saving
+                ? null
+                : (v) => setState(() => _courtesy = v ?? _courtesy),
+          ),
+        ),
         _field(
           _first,
           'first-name',

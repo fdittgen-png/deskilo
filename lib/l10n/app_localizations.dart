@@ -2570,6 +2570,36 @@ abstract class AppLocalizations {
   /// **'Co-owner (passive)'**
   String get memberCoOwnerPassiveChip;
 
+  /// #912 courtesy title: courtesyLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Form of address'**
+  String get courtesyLabel;
+
+  /// #912 courtesy title: courtesyHint
+  ///
+  /// In en, this message translates to:
+  /// **'Printed before your name on documents. \"None\" prints the name alone.'**
+  String get courtesyHint;
+
+  /// #912 courtesy title: courtesyNone
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get courtesyNone;
+
+  /// #912 courtesy title: courtesyMr
+  ///
+  /// In en, this message translates to:
+  /// **'Mr'**
+  String get courtesyMr;
+
+  /// #912 courtesy title: courtesyMrs
+  ///
+  /// In en, this message translates to:
+  /// **'Ms'**
+  String get courtesyMrs;
+
   /// Settings toggle enabling the local diagnostics screen
   ///
   /// In en, this message translates to:
