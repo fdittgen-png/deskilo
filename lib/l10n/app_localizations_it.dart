@@ -6209,6 +6209,65 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get featurePersonalInfo => 'Dati personali';
+
+  @override
+  String get featurePersonalInfoDesc =>
+      'I membri inseriscono nome, indirizzo postale, telefono, e-mail e identificativi nelle Impostazioni; fatture e lettere li stampano nel blocco indirizzo standard.';
+
+  @override
+  String get personalInfoTitle => 'Dati personali';
+
+  @override
+  String get personalInfoSubtitle =>
+      'Stampati su fatture e lettere. Il cognome è scritto in maiuscolo, come nella posta ufficiale.';
+
+  @override
+  String get personalInfoFirstName => 'Nome';
+
+  @override
+  String get personalInfoLastName => 'Cognome';
+
+  @override
+  String get personalInfoCompany => 'Società (facoltativo)';
+
+  @override
+  String get personalInfoStreet => 'Via e numero';
+
+  @override
+  String get personalInfoPostalCode => 'CAP';
+
+  @override
+  String get personalInfoCity => 'Città';
+
+  @override
+  String get personalInfoCountry => 'Paese';
+
+  @override
+  String get personalInfoPhone => 'Telefono';
+
+  @override
+  String get personalInfoEmail => 'E-mail per i documenti';
+
+  @override
+  String get personalInfoVatId => 'Partita IVA (facoltativo)';
+
+  @override
+  String get personalInfoLegalId => 'Identificativo società (facoltativo)';
+
+  @override
+  String get personalInfoSaved => 'Dati personali salvati';
+
+  @override
+  String get personalInfoNone => 'Non ancora compilati';
+
+  @override
+  String get personalInfoPreview => 'Sui tuoi documenti';
+
+  @override
+  String get personalInfoSave => 'Salva';
+
+  @override
   String get planDurationLabel => 'Durata';
 
   @override

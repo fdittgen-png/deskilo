@@ -50,43 +50,46 @@ const _layout = '''
 ''';
 
 Map<String, Object?> _data({int lines = 1}) => {
-      'workspace': 'COWORKONTI',
-      'workspace_address': '4 avenue de Castelnau, 34120 Pézenas',
-      'number': 'INV-2026-0050',
-      'member': 'Smith & Sons <SASU>',
-      'client_address': '209 rue Jean Bart\n31670 LABÈGE',
-      'lines': [
-        for (var i = 0; i < lines; i++)
-          {'label': 'Participation 100 % — $i', 'amount': '100,00 €'},
-      ],
-    };
+  'workspace': 'COWORKONTI',
+  'workspace_address': '4 avenue de Castelnau, 34120 Pézenas',
+  'number': 'INV-2026-0050',
+  'member': 'Smith & Sons <SASU>',
+  'client_address': '209 rue Jean Bart\n31670 LABÈGE',
+  'lines': [
+    for (var i = 0; i < lines; i++)
+      {'label': 'Participation 100 % — $i', 'amount': '100,00 €'},
+  ],
+};
 
 Future<Uint8List> _pdf({int lines = 1}) => buildLayoutPdf(
-      document: renderLayoutDocument(_layout, _data(lines: lines)),
-      data: _data(lines: lines),
-      documentTitle: 'test',
-      pageLabel: 'Page',
-      baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
-      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
-    );
+  document: renderLayoutDocument(_layout, _data(lines: lines)),
+  data: _data(lines: lines),
+  documentTitle: 'test',
+  pageLabel: 'Page',
+  baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+  boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+);
 
 void main() {
   group('the Liquid pass', () {
     test('escapes data so an ampersand cannot break the XML', () {
       final d = renderLayoutDocument(
-          '<report-layout><body><text>{{ member }}</text></body></report-layout>',
-          {'member': 'Smith & Sons <SASU>'});
-      expect((d.body.children.single as LayoutText).text,
-          'Smith & Sons <SASU>',
-          reason: 'escaped on the way in, decoded by the parser');
+        '<report-layout><body><text>{{ member }}</text></body></report-layout>',
+        {'member': 'Smith & Sons <SASU>'},
+      );
+      expect(
+        (d.body.children.single as LayoutText).text,
+        'Smith & Sons <SASU>',
+        reason: 'escaped on the way in, decoded by the parser',
+      );
     });
 
-    test('an absent placeholder is empty, so a guarded element vanishes',
-        () {
+    test('an absent placeholder is empty, so a guarded element vanishes', () {
       final d = renderLayoutDocument(
-          '<report-layout><body>{% if iban != "" %}<text>IBAN</text>{% endif %}'
-          '</body></report-layout>',
-          const {});
+        '<report-layout><body>{% if iban != "" %}<text>IBAN</text>{% endif %}'
+        '</body></report-layout>',
+        const {},
+      );
       expect(d.body.children, isEmpty);
     });
 
@@ -100,14 +103,67 @@ void main() {
     test('a Liquid error is a LayoutError.liquid, not a crash', () {
       expect(
         () => renderLayoutDocument(
-            '<report-layout>{% for %}</report-layout>', const {}),
-        throwsA(isA<LayoutException>()
-            .having((e) => e.error, 'error', LayoutError.liquid)),
+          '<report-layout>{% for %}</report-layout>',
+          const {},
+        ),
+        throwsA(
+          isA<LayoutException>().having(
+            (e) => e.error,
+            'error',
+            LayoutError.liquid,
+          ),
+        ),
       );
     });
   });
 
   group('the sheet', () {
+    test('#886 — the name is the first window line, the block below', () async {
+      Future<List<double>> windowRows(Map<String, Object?> data) async {
+        final bytes = await buildLayoutPdf(
+          document: renderLayoutDocument(_layout, data),
+          data: data,
+          documentTitle: 'test',
+          pageLabel: 'Page',
+          baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+          boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+        );
+        final ys =
+            textPositions(bytes)
+                .where(
+                  (i) =>
+                      i.page == 1 && i.xMm >= 100 && i.yMm >= 40 && i.yMm <= 90,
+                )
+                .map((i) => (i.yMm * 2).roundToDouble() / 2)
+                .toSet()
+                .toList()
+              ..sort();
+        return ys;
+      }
+
+      // Full name + two address lines → three rows, the first at 45 mm.
+      final named = await windowRows({
+        ..._data(),
+        'member': 'Guilhem',
+        'client_name': 'Guilhem MARTIN',
+      });
+      expect(named, hasLength(3), reason: 'name, street, locality: $named');
+      // Ink is measured at the baseline: the first line's sits ~3.5 mm
+      // under the 45 mm top edge.
+      expect(named.first, inInclusiveRange(44.5, 50));
+      // No structured name → the display name takes the first line, so a
+      // legacy profile is still addressed.
+      final legacy = await windowRows({..._data(), 'client_name': ''});
+      expect(legacy, hasLength(3), reason: '$legacy');
+      // No name at all → only the block.
+      final anonymous = await windowRows({
+        ..._data(),
+        'member': '',
+        'client_name': '',
+      });
+      expect(anonymous, hasLength(2), reason: '$anonymous');
+    });
+
     test('the recipient lands in the 85 × 40 mm aperture at 110/45', () async {
       final bytes = await _pdf();
       saveForInspection(bytes, 'layout-invoice.pdf');
@@ -123,32 +179,39 @@ void main() {
         expect(i.yMm, lessThanOrEqualTo(85), reason: '$i');
       }
       expect(
-        addressFieldPages(bytes,
-            leftEdgePt: AddressWindow.right.leftEdge,
-            topPt: addressWindowTop,
-            heightPt: addressWindowHeight),
+        addressFieldPages(
+          bytes,
+          leftEdgePt: AddressWindow.right.leftEdge,
+          topPt: addressWindowTop,
+          heightPt: addressWindowHeight,
+        ),
         [1],
       );
     });
 
-    test('the sender starts at the 20 mm margin and the body at 90 mm',
-        () async {
-      final bytes = await _pdf();
-      final page1 = textPositions(bytes).where((i) => i.page == 1).toList();
-      final leftMost = page1.map((i) => i.xMm).reduce((a, b) => a < b ? a : b);
-      final topMost = page1.map((i) => i.yMm).reduce((a, b) => a < b ? a : b);
-      expect(leftMost, greaterThanOrEqualTo(19.5));
-      expect(leftMost, lessThan(24));
-      expect(topMost, greaterThanOrEqualTo(19.5));
-      expect(topMost, lessThan(30));
-      // Nothing of the flow may sit in the window band.
-      final intruders =
-          page1.where((i) => i.xMm < 100 && i.yMm > 45 && i.yMm < 89.5);
-      expect(intruders, isEmpty, reason: '$intruders');
-      // And the first body ink is at or under 90 mm.
-      final body = page1.where((i) => i.xMm < 100 && i.yMm >= 89.5);
-      expect(body, isNotEmpty);
-    });
+    test(
+      'the sender starts at the 20 mm margin and the body at 90 mm',
+      () async {
+        final bytes = await _pdf();
+        final page1 = textPositions(bytes).where((i) => i.page == 1).toList();
+        final leftMost = page1
+            .map((i) => i.xMm)
+            .reduce((a, b) => a < b ? a : b);
+        final topMost = page1.map((i) => i.yMm).reduce((a, b) => a < b ? a : b);
+        expect(leftMost, greaterThanOrEqualTo(19.5));
+        expect(leftMost, lessThan(24));
+        expect(topMost, greaterThanOrEqualTo(19.5));
+        expect(topMost, lessThan(30));
+        // Nothing of the flow may sit in the window band.
+        final intruders = page1.where(
+          (i) => i.xMm < 100 && i.yMm > 45 && i.yMm < 89.5,
+        );
+        expect(intruders, isEmpty, reason: '$intruders');
+        // And the first body ink is at or under 90 mm.
+        final body = page1.where((i) => i.xMm < 100 && i.yMm >= 89.5);
+        expect(body, isNotEmpty);
+      },
+    );
 
     test('the footer is fixed on every page; page 2 has the strip, not '
         'the letterhead', () async {
@@ -167,8 +230,11 @@ void main() {
           .where((i) => i.page == 2)
           .map((i) => i.yMm)
           .reduce((a, b) => a < b ? a : b);
-      expect(page2Top, lessThan(45),
-          reason: 'page 2 must not reserve the letterhead band');
+      expect(
+        page2Top,
+        lessThan(45),
+        reason: 'page 2 must not reserve the letterhead band',
+      );
     });
 
     test('a percentage width resolves against the parent, so a 60 % box '
@@ -219,8 +285,11 @@ void main() {
       // Nine lines at 8 pt need ~ 30 mm; the box said 10. The footer must
       // be there anyway: ink on the LEFT above the page number's line.
       final footer = ink.where((i) => i.yMm > 235 && i.xMm < 150).toList();
-      expect(footer.length, greaterThanOrEqualTo(9),
-          reason: 'the footer was dropped instead of grown');
+      expect(
+        footer.length,
+        greaterThanOrEqualTo(9),
+        reason: 'the footer was dropped instead of grown',
+      );
     });
 
     test('a letterhead taller than 25 mm is clipped above the window — '
@@ -236,7 +305,10 @@ void main() {
   <body y="90mm"><text>corps</text></body>
 </report-layout>''';
       final bytes = await buildLayoutPdf(
-        document: renderLayoutDocument(layout, {'member': 'X', 'client_address': ''}),
+        document: renderLayoutDocument(layout, {
+          'member': 'X',
+          'client_address': '',
+        }),
         data: const {'member': 'X', 'client_address': ''},
         documentTitle: 't',
         pageLabel: 'Page',
@@ -244,8 +316,14 @@ void main() {
         boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
       );
       final ink = textPositions(bytes).where((i) => i.page == 1);
-      final leak = ink.where((i) => i.xMm < 100 && i.yMm > 45.5 && i.yMm < 89.5);
-      expect(leak, isEmpty, reason: 'letterhead overflow reached the window band: $leak');
+      final leak = ink.where(
+        (i) => i.xMm < 100 && i.yMm > 45.5 && i.yMm < 89.5,
+      );
+      expect(
+        leak,
+        isEmpty,
+        reason: 'letterhead overflow reached the window band: $leak',
+      );
     });
   });
 }

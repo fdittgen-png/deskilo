@@ -126,7 +126,10 @@ void main() {
         'account_holder', 'payment_reference',
         'seller_legal_form',
         'seller_registration', 'seller_vat_id', 'seller_legal_id',
-        'exemption_reason', 'client_address', 'client_vat_id',
+        'exemption_reason',
+        // #886 — the client's identity as the postal standard prints it.
+        'client_name', 'client_company', 'client_phone', 'client_email',
+        'client_address', 'client_vat_id',
         'client_legal_id', 'payment_terms',
         'late_penalty', 'recovery_indemnity', 'escompte', 'insurance',
         'special_mentions', //

@@ -72,7 +72,7 @@ const Map<String, int> _baseline = {
   // 1000→1020 (2026-08-05): #486 Payment methods admin entry.
   // 1040→1140 (2026-08-13): #560 the About section (author, licence,
   // privacy, bug link, support tiles).
-  'lib/features/profile/presentation/screens/settings_screen.dart': 1200, // 2026-08 #586 default-period tile + dialog
+  'lib/features/profile/presentation/screens/settings_screen.dart': 1230, // 2026-08 #586 default-period tile + dialog // 2026-09-05 #886 the personal-information tile beside the legacy address dialog it replaces
   // 1020→1040 (2026-08-06): #513 the Role management tile.
   // 980→1030 (2026-08-05): #476 the statement export honors the
   // owner's report template (#478 Invoices button joins the grid).
@@ -120,7 +120,7 @@ const Map<String, int> _baseline = {
   // 1740→1820 (2026-08-05): #504 the write-off request dialog.
   // 1820→1910 (2026-08-05): #508 the credit-note refund dialog.
   // 1960→2000 (2026-08-14): #568 the customer-delivery send leg.
-  'lib/features/money/presentation/invoice_actions.dart': 2120, // 2026-09-02 #837 the annex question // 2026-09-04 #871 the bank block: IBAN/BIC/bank name reach a designed report, resolved once in legalMentionData for every document // 2026-09-04 #875 layout-wins hooks + the strings/features hoists they need; the engine itself lives under domain/report_layout
+  'lib/features/money/presentation/invoice_actions.dart': 2260, // 2026-09-02 #837 the annex question // 2026-09-04 #871 the bank block: IBAN/BIC/bank name reach a designed report, resolved once in legalMentionData for every document // 2026-09-04 #875 layout-wins hooks + the strings/features hoists they need; the engine itself lives under domain/report_layout // 2026-09-05 #886 the client identity (name, company, contacts, postal block) resolved for every document and frozen on the proforma
   // 1920→1960 (2026-08-06): #514 quickViewInvoice + the proforma triad.
   // 1910→1920 (2026-08-06): #512 imputation candidates (adjustment
   // credits, baked-credit filter).
@@ -147,7 +147,7 @@ const Map<String, int> _baseline = {
   // 2026-09-04 #864: one more flag. This file is the feature
   // registry — it grows by ~5 lines per flag by design, and
   // splitting the registry would defeat its whole purpose.
-  'lib/features/workspace/domain/workspace_feature.dart': 660,
+  'lib/features/workspace/domain/workspace_feature.dart': 680, // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries
   'lib/features/money/presentation/widgets/report_visual_editor.dart': 1000, // 2026-09-02 #822 drag, insert palette, image controls, move-to-band
   // 660→700 (2026-08-05): #494 the three further document chips + their
   // live data and letter-PDF branches.

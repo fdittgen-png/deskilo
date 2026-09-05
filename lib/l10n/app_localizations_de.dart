@@ -6206,6 +6206,65 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get featurePersonalInfo => 'Persönliche Angaben';
+
+  @override
+  String get featurePersonalInfoDesc =>
+      'Mitglieder tragen Name, Postanschrift, Telefon, E-Mail und Kennungen in den Einstellungen ein; Rechnungen und Briefe drucken sie im genormten Anschriftenblock.';
+
+  @override
+  String get personalInfoTitle => 'Persönliche Angaben';
+
+  @override
+  String get personalInfoSubtitle =>
+      'Werden auf Ihren Rechnungen und Briefen gedruckt. Der Nachname erscheint in Großbuchstaben wie auf amtlicher Post.';
+
+  @override
+  String get personalInfoFirstName => 'Vorname';
+
+  @override
+  String get personalInfoLastName => 'Nachname';
+
+  @override
+  String get personalInfoCompany => 'Firma (optional)';
+
+  @override
+  String get personalInfoStreet => 'Straße und Hausnummer';
+
+  @override
+  String get personalInfoPostalCode => 'Postleitzahl';
+
+  @override
+  String get personalInfoCity => 'Ort';
+
+  @override
+  String get personalInfoCountry => 'Land';
+
+  @override
+  String get personalInfoPhone => 'Telefon';
+
+  @override
+  String get personalInfoEmail => 'E-Mail für Dokumente';
+
+  @override
+  String get personalInfoVatId => 'USt-IdNr. (optional)';
+
+  @override
+  String get personalInfoLegalId => 'Handelsregister / Kennung (optional)';
+
+  @override
+  String get personalInfoSaved => 'Persönliche Angaben gespeichert';
+
+  @override
+  String get personalInfoNone => 'Noch nicht ausgefüllt';
+
+  @override
+  String get personalInfoPreview => 'Auf Ihren Dokumenten';
+
+  @override
+  String get personalInfoSave => 'Speichern';
+
+  @override
   String get planDurationLabel => 'Dauer';
 
   @override

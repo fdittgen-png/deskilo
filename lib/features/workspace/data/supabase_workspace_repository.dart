@@ -285,11 +285,18 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
     if (userIds.isEmpty) return const {};
     final profileRows = await _client
         .from('profiles')
-        .select('id, display_name')
+        .select('id, display_name, first_name, last_name')
         .inFilter('id', userIds);
+    // #886 — a structured name outranks the display name on lists that
+    // feed documents; the display name stays the fallback.
+    String nameOf(Map<String, dynamic> r) {
+      final first = (r['first_name'] as String? ?? '').trim();
+      final last = (r['last_name'] as String? ?? '').trim().toUpperCase();
+      final full = [first, last].where((s) => s.isNotEmpty).join(' ');
+      return full.isNotEmpty ? full : r['display_name'] as String;
+    }
     final nameByUser = {
-      for (final r in profileRows)
-        r['id'] as String: r['display_name'] as String,
+      for (final r in profileRows) r['id'] as String: nameOf(r),
     };
     return {
       for (final r in memberRows)

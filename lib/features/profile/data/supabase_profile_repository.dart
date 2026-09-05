@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/profile.dart';
+import '../domain/personal_info.dart';
 import '../domain/profile_repository.dart';
 
 class SupabaseProfileRepository implements ProfileRepository {
@@ -31,8 +32,10 @@ class SupabaseProfileRepository implements ProfileRepository {
   @override
   Future<List<Profile>> fetchProfiles(List<String> userIds) async {
     if (userIds.isEmpty) return const [];
-    final rows =
-        await _client.from('profiles').select().inFilter('id', userIds);
+    final rows = await _client
+        .from('profiles')
+        .select()
+        .inFilter('id', userIds);
     return rows.map(Profile.fromDb).toList();
   }
 
@@ -46,7 +49,8 @@ class SupabaseProfileRepository implements ProfileRepository {
     // self, and the 0028 column check re-validates the '+digits' shape.
     await _client
         .from('profiles')
-        .update({'whatsapp': whatsapp}).eq('id', userId);
+        .update({'whatsapp': whatsapp})
+        .eq('id', userId);
   }
 
   @override
@@ -74,7 +78,23 @@ class SupabaseProfileRepository implements ProfileRepository {
     // Self-only via profiles_update RLS (0002); 0060 caps at 400 chars.
     await _client
         .from('profiles')
-        .update({'address': address.trim()}).eq('id', userId);
+        .update({'address': address.trim()})
+        .eq('id', userId);
+  }
+
+  @override
+  Future<void> updatePersonalInfo(PersonalInfo info) async {
+    final userId = _client.auth.currentUser?.id;
+    if (userId == null) {
+      throw StateError('cannot update the profile while signed out');
+    }
+    // Self-only via profiles_update RLS; the 0152 column checks bound
+    // every field. Stored normalized, so what prints is what was typed
+    // minus the whitespace and with the country in capitals.
+    await _client
+        .from('profiles')
+        .update(info.normalized().toDb())
+        .eq('id', userId);
   }
 
   @override
@@ -88,10 +108,13 @@ class SupabaseProfileRepository implements ProfileRepository {
     }
     // Self-only via profiles_update RLS; the 0069 column checks enforce
     // the two-letter shape and the length.
-    await _client.from('profiles').update({
-      'country_code': countryCode.trim().toUpperCase(),
-      'vat_id': vatId.trim(),
-    }).eq('id', userId);
+    await _client
+        .from('profiles')
+        .update({
+          'country_code': countryCode.trim().toUpperCase(),
+          'vat_id': vatId.trim(),
+        })
+        .eq('id', userId);
   }
 
   @override
@@ -100,7 +123,8 @@ class SupabaseProfileRepository implements ProfileRepository {
     if (userId == null) throw StateError('not signed in');
     await _client
         .from('profiles')
-        .update({'preferred_locale': locale}).eq('id', userId);
+        .update({'preferred_locale': locale})
+        .eq('id', userId);
   }
 
   @override
@@ -111,8 +135,10 @@ class SupabaseProfileRepository implements ProfileRepository {
   }
 
   @override
-  Future<void> acceptPrivacyPolicy(String version) =>
-      _client.rpc<void>('accept_privacy_policy', params: {'p_version': version});
+  Future<void> acceptPrivacyPolicy(String version) => _client.rpc<void>(
+    'accept_privacy_policy',
+    params: {'p_version': version},
+  );
 
   @override
   Future<void> touchLastSeen() async {
@@ -130,14 +156,17 @@ class SupabaseProfileRepository implements ProfileRepository {
     }
     final path = _avatarPath(userId);
     // Self-only storage RLS (0038); upsert overwrites a previous photo.
-    await _client.storage.from('avatars').uploadBinary(
+    await _client.storage
+        .from('avatars')
+        .uploadBinary(
           path,
           bytes,
           fileOptions: FileOptions(contentType: contentType, upsert: true),
         );
     await _client
         .from('profiles')
-        .update({'avatar_path': path}).eq('id', userId);
+        .update({'avatar_path': path})
+        .eq('id', userId);
   }
 
   @override
@@ -149,15 +178,16 @@ class SupabaseProfileRepository implements ProfileRepository {
     await _client.storage.from('avatars').remove([_avatarPath(userId)]);
     await _client
         .from('profiles')
-        .update({'avatar_path': null}).eq('id', userId);
+        .update({'avatar_path': null})
+        .eq('id', userId);
   }
 
   @override
   Future<Uint8List?> fetchAvatarBytes(String userId) async {
     try {
-      return await _client.storage.from('avatars').download(
-            _avatarPath(userId),
-          );
+      return await _client.storage
+          .from('avatars')
+          .download(_avatarPath(userId));
     } on StorageException {
       // No object (never uploaded) or not readable — the initial avatar
       // shows instead; not an error worth surfacing.

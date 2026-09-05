@@ -272,3 +272,18 @@ bug in the generator, not something to patch in the file.
 **Prove on the artefact.** `layout_render_test.dart` measures a
 generated PDF; `report_cli_test.dart` runs the CLI cold. A layout change
 that passes neither is not done.
+
+## The identity form is ONE form (#886/#887)
+
+A person's identity — first name, family name, company, street, postal
+code, city, country, phone, e-mail, VAT id, legal id — is `PersonalInfo`
+(`lib/features/profile/domain/personal_info.dart`), edited ONLY by
+`PersonalInfoForm`, whether the person edits their own settings or an
+admin edits a managed member. Never add a second address dialog or a
+partial form. The two renderings documents print (`fullName`,
+`postalBlock`) exist in Dart AND in SQL (`profile_full_name`,
+`profile_postal_block`); when you change one, change the other and
+keep `personal_info_test.dart` pinned to the SQL harness output.
+Documents read `client_name` / `client_address` / `client_company` /
+`client_phone` / `client_email`; the `<recipient>` element prints the
+name over the block without a designer's help.

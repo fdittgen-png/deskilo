@@ -1,0 +1,79 @@
+{
+  "@@locale": "en",
+  "featurePersonalInfo": "Personal information",
+  "@featurePersonalInfo": {
+    "description": "#886 personal-information form / feature: featurePersonalInfo"
+  },
+  "featurePersonalInfoDesc": "Members enter their name, postal address, phone, e-mail and legal ids in Settings; invoices and letters print them in the standard postal block.",
+  "@featurePersonalInfoDesc": {
+    "description": "#886 personal-information form / feature: featurePersonalInfoDesc"
+  },
+  "personalInfoTitle": "Personal information",
+  "@personalInfoTitle": {
+    "description": "#886 personal-information form / feature: personalInfoTitle"
+  },
+  "personalInfoSubtitle": "Printed on your invoices and letters. Your family name is written in capitals, as on official mail.",
+  "@personalInfoSubtitle": {
+    "description": "#886 personal-information form / feature: personalInfoSubtitle"
+  },
+  "personalInfoFirstName": "First name",
+  "@personalInfoFirstName": {
+    "description": "#886 personal-information form / feature: personalInfoFirstName"
+  },
+  "personalInfoLastName": "Family name",
+  "@personalInfoLastName": {
+    "description": "#886 personal-information form / feature: personalInfoLastName"
+  },
+  "personalInfoCompany": "Company (optional)",
+  "@personalInfoCompany": {
+    "description": "#886 personal-information form / feature: personalInfoCompany"
+  },
+  "personalInfoStreet": "Street and number",
+  "@personalInfoStreet": {
+    "description": "#886 personal-information form / feature: personalInfoStreet"
+  },
+  "personalInfoPostalCode": "Postal code",
+  "@personalInfoPostalCode": {
+    "description": "#886 personal-information form / feature: personalInfoPostalCode"
+  },
+  "personalInfoCity": "City",
+  "@personalInfoCity": {
+    "description": "#886 personal-information form / feature: personalInfoCity"
+  },
+  "personalInfoCountry": "Country",
+  "@personalInfoCountry": {
+    "description": "#886 personal-information form / feature: personalInfoCountry"
+  },
+  "personalInfoPhone": "Telephone",
+  "@personalInfoPhone": {
+    "description": "#886 personal-information form / feature: personalInfoPhone"
+  },
+  "personalInfoEmail": "E-mail for documents",
+  "@personalInfoEmail": {
+    "description": "#886 personal-information form / feature: personalInfoEmail"
+  },
+  "personalInfoVatId": "VAT number (optional)",
+  "@personalInfoVatId": {
+    "description": "#886 personal-information form / feature: personalInfoVatId"
+  },
+  "personalInfoLegalId": "Company / registration id (optional)",
+  "@personalInfoLegalId": {
+    "description": "#886 personal-information form / feature: personalInfoLegalId"
+  },
+  "personalInfoSaved": "Personal information saved",
+  "@personalInfoSaved": {
+    "description": "#886 personal-information form / feature: personalInfoSaved"
+  },
+  "personalInfoNone": "Not filled in yet",
+  "@personalInfoNone": {
+    "description": "#886 personal-information form / feature: personalInfoNone"
+  },
+  "personalInfoPreview": "On your documents",
+  "@personalInfoPreview": {
+    "description": "#886 personal-information form / feature: personalInfoPreview"
+  },
+  "personalInfoSave": "Save",
+  "@personalInfoSave": {
+    "description": "#886 personal-information form: save button"
+  }
+}

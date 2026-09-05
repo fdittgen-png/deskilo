@@ -65,6 +65,7 @@ enum WorkspaceFeature {
   usageRecords,
   reportDesignExchange,
   reportLayouts,
+  personalInfo,
   priceNegotiations,
 
   /// #767 — recurring scheduled expenses (internet, phone, electricity):
@@ -515,6 +516,10 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.reportLayouts,
     requires: WorkspaceFeature.reportDesigner,
   ),
+  // #886 — the person's structured identity (name, postal address,
+  // phone, e-mail, ids) on their settings, printed by every document.
+  WorkspaceFeature.personalInfo:
+      FeatureManifestEntry(feature: WorkspaceFeature.personalInfo),
   // #739 — the tariff is the default; a member may have their own deal,
   // proposed by finance admins, validated, seen by the member and them.
   WorkspaceFeature.priceNegotiations: FeatureManifestEntry(

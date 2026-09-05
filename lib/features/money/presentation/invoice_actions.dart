@@ -20,6 +20,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../events/providers/event_providers.dart';
 import '../../members/providers/directory_providers.dart';
 import '../../reservations/providers/reservation_providers.dart';
+import '../../profile/domain/personal_info.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -97,8 +98,12 @@ Future<Map<String, Uint8List>> resolveReportImages(
       final bytes = await ref.read(reportImageBytesProvider(name).future);
       if (bytes != null) images[name] = bytes;
     } catch (e, st) {
-      TraceLogger.instance.warn('money', 'report image fetch failed',
-          error: e, stackTrace: st);
+      TraceLogger.instance.warn(
+        'money',
+        'report image fetch failed',
+        error: e,
+        stackTrace: st,
+      );
     }
   }
   return images;
@@ -106,11 +111,10 @@ Future<Map<String, Uint8List>> resolveReportImages(
 
 InvoicePdfTemplate invoicePdfTemplateFor(WidgetRef ref) =>
     ref
-            .read(enabledFeaturesSyncProvider)
-            .contains(WorkspaceFeature.invoicePdfTemplate)
-        ? ref.read(invoicePdfTemplateProvider).value ??
-            InvoicePdfTemplate.empty
-        : InvoicePdfTemplate.empty;
+        .read(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.invoicePdfTemplate)
+    ? ref.read(invoicePdfTemplateProvider).value ?? InvoicePdfTemplate.empty
+    : InvoicePdfTemplate.empty;
 
 /// The LEGAL mention variables (#480) shared by every document's data
 /// model: the seller's statutory lines and the payment-condition
@@ -126,6 +130,7 @@ Map<String, Object?> legalMentionData(
   InvoiceParty? seller,
   InvoiceParty? buyer,
   String clientAddress = '',
+  String clientName = '',
 }) {
   final legal = InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {});
   // #871 — the bank block. A French (and German) invoice carries the
@@ -133,8 +138,9 @@ Map<String, Object?> legalMentionData(
   // could not print one: the details were stored but no placeholder
   // reached them, so the only way to show an IBAN was to type it into
   // the template and let it rot there when the account changed.
-  final pay =
-      PaymentInstructions.fromDb(workspace?.paymentInstructions ?? const {});
+  final pay = PaymentInstructions.fromDb(
+    workspace?.paymentInstructions ?? const {},
+  );
   String orDefault(String value, String fallback) =>
       value.trim().isNotEmpty ? value.trim() : fallback;
   // #484 — the B2B-only clauses (mandatory between professionals) have
@@ -155,9 +161,15 @@ Map<String, Object?> legalMentionData(
     'seller_registration': legal.registration,
     'seller_vat_id': seller?.vatId ?? workspace?.vatId ?? '',
     'seller_legal_id': seller?.legalId ?? workspace?.legalId ?? '',
-    'exemption_reason': seller?.taxExemptionReason ??
-        workspace?.taxExemptionReason ??
-        '',
+    'exemption_reason':
+        seller?.taxExemptionReason ?? workspace?.taxExemptionReason ?? '',
+    // #886 — the client as the postal standard prints them: the full
+    // name on its own line, the block (company · street · POSTAL CITY ·
+    // country when abroad) beneath, the contacts beside.
+    'client_name': clientName,
+    'client_company': buyer?.company ?? '',
+    'client_phone': buyer?.phone ?? '',
+    'client_email': buyer?.email ?? '',
     'client_address': clientAddress,
     // #482 — the client's own identifiers on B2B documents.
     'client_vat_id': buyer?.vatId ?? '',
@@ -178,22 +190,33 @@ Map<String, Object?> legalMentionData(
     ),
     'escompte': orB2bDefault(
       legal.escompte,
-      l10n?.invoiceLegalEscompteDefault ??
-          'No discount for early payment.',
+      l10n?.invoiceLegalEscompteDefault ?? 'No discount for early payment.',
     ),
     'insurance': legal.insurance,
     'special_mentions': legal.specialMentions,
   };
 }
 
-/// One line's postal address as the document prints it, from the frozen
-/// buyer party (0069) or the flat snapshot on legacy invoices.
-String _clientAddressOf(Invoice invoice) {
+/// The client's postal block as the document prints it — one line per
+/// element, the same renderer as the profile form and the SQL twin
+/// (#886) — from the frozen buyer party (0069) or the flat snapshot on
+/// legacy invoices.
+String _clientAddressOf(Invoice invoice, Workspace? workspace) {
   final buyer = invoice.buyerParty;
   if (buyer == null) return invoice.memberAddress;
-  final cityLine =
-      [buyer.postalCode, buyer.city].where((p) => p.isNotEmpty).join(' ');
-  return [buyer.street, cityLine].where((p) => p.isNotEmpty).join(', ');
+  return PersonalInfo(
+    company: buyer.company,
+    street: buyer.street,
+    postalCode: buyer.postalCode,
+    city: buyer.city,
+    countryCode: buyer.country,
+  ).postalBlock(workspaceCountry: workspace?.countryCode ?? '');
+}
+
+/// The client's full name: the frozen buyer party, else the snapshot.
+String _clientNameOf(Invoice invoice) {
+  final name = invoice.buyerParty?.name ?? '';
+  return name.isNotEmpty ? name : invoice.memberName;
 }
 
 /// The report data model (#470/#474) — every value the Liquid bands
@@ -218,9 +241,9 @@ Map<String, Object?> invoiceReportData(
   String money(int cents) => currency.formatMinor(cents);
   // #870 — an association's positions are participations, not
   // subscriptions; the same word everywhere the document is produced.
-  final association =
-      InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {})
-          .isAssociation;
+  final association = InvoiceLegal.fromJson(
+    workspace?.invoiceLegal ?? const {},
+  ).isAssociation;
   String rate(double percent) =>
       '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
   return <String, Object?>{
@@ -234,9 +257,11 @@ Map<String, Object?> invoiceReportData(
     'replaces': invoice.replacesNumber,
     'total': money(invoice.totalCents),
     'charges': money(invoice.chargesCents),
-    'payments': money(invoice.lines
-        .where((l) => l.amountCents < 0)
-        .fold(0, (sum, l) => sum + l.amountCents)),
+    'payments': money(
+      invoice.lines
+          .where((l) => l.amountCents < 0)
+          .fold(0, (sum, l) => sum + l.amountCents),
+    ),
     // #480 — total HT / total TVA beside the TTC the bands always had.
     'net_total': money(invoice.netCents),
     'vat_total': money(invoice.vatCents),
@@ -250,16 +275,17 @@ Map<String, Object?> invoiceReportData(
     'lines': [
       for (final line in invoice.lines)
         {
-          'label':
-              invoiceLineText(l10n, line, association: association),
+          'label': invoiceLineText(l10n, line, association: association),
           'amount': money(line.amountCents),
           'negative': line.amountCents < 0,
           // #480 — quantity, unit price and per-line VAT so a template
           // can print the statutory line detail.
           'qty': '${line.quantity}',
-          'unit_price': money(line.quantity > 1
-              ? line.amountCents ~/ line.quantity
-              : line.amountCents),
+          'unit_price': money(
+            line.quantity > 1
+                ? line.amountCents ~/ line.quantity
+                : line.amountCents,
+          ),
           'vat_rate': line.vatPercent > 0 ? rate(line.vatPercent) : '',
           'net': money(vatSplit(line.amountCents, line.vatPercent).netCents),
         },
@@ -277,7 +303,8 @@ Map<String, Object?> invoiceReportData(
       workspace,
       seller: invoice.sellerParty,
       buyer: invoice.buyerParty,
-      clientAddress: _clientAddressOf(invoice),
+      clientAddress: _clientAddressOf(invoice, workspace),
+      clientName: _clientNameOf(invoice),
     ),
   };
 }
@@ -300,20 +327,24 @@ Map<String, Object?> statementReportData(
   String money(int cents) => currency.formatMinor(cents);
   // #870 — the seller kind decides what the recurring position is
   // called; it must read the same here as on the invoice itself.
-  final association =
-      InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {})
-          .isAssociation;
+  final association = InvoiceLegal.fromJson(
+    workspace?.invoiceLegal ?? const {},
+  ).isAssociation;
   final lines = <Map<String, Object?>>[
     if (statement.feeCents > 0)
       {
-        'label': subscriptionLabel(l10n, statement.subscriptionPct,
-            association: association),
+        'label': subscriptionLabel(
+          l10n,
+          statement.subscriptionPct,
+          association: association,
+        ),
         'amount': money(statement.feeCents),
         'negative': false,
       },
     if (statement.overageCents > 0)
       {
-        'label': l10n?.billOverage(statement.extraHalfDays) ??
+        'label':
+            l10n?.billOverage(statement.extraHalfDays) ??
             '${statement.extraHalfDays} extra half-days',
         'amount': money(statement.overageCents),
         'negative': false,
@@ -388,8 +419,7 @@ Map<String, Object?> agreementReportData(
 }) {
   final l10n = l10nOverride ?? AppLocalizations.of(context);
   final workspace = ref.read(currentWorkspaceProvider).value;
-  final currency =
-      moneyFormat(workspace?.currencyCode ?? 'EUR');
+  final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
   String money(int cents) => currency.formatMinor(cents);
   final bands = ref.read(feeBandsProvider).value ?? const <FeeBand>[];
   final band = bands
@@ -398,7 +428,7 @@ Map<String, Object?> agreementReportData(
   final services = ref.read(servicesProvider).value ?? const <ServiceItem>[];
   final packages =
       ref.read(packagesProvider).value?.where((p) => p.active) ??
-          const <Package>[];
+      const <Package>[];
   final levels = ref.read(levelsProvider).value ?? const <Level>[];
   final offices = [
     for (final level in levels)
@@ -411,8 +441,7 @@ Map<String, Object?> agreementReportData(
   // their own agreement never named.
   final desks = [
     for (final level in levels)
-      ...(ref.read(floorPlanProvider(level.id)).value?.desks ??
-          const <Desk>[]),
+      ...(ref.read(floorPlanProvider(level.id)).value?.desks ?? const <Desk>[]),
   ];
   final accessories =
       ref.read(accessoriesProvider()).value ?? const <Accessory>[];
@@ -420,8 +449,11 @@ Map<String, Object?> agreementReportData(
   final lines = <Map<String, Object?>>[
     if (band != null) ...[
       {
-        'label': subscriptionLabel(l10n, subscriptionPct,
-            association: association),
+        'label': subscriptionLabel(
+          l10n,
+          subscriptionPct,
+          association: association,
+        ),
         'amount': money(band.feeCents),
       },
       {
@@ -459,10 +491,7 @@ Map<String, Object?> agreementReportData(
         },
     for (final accessory in accessories)
       if (accessory.supplementCents > 0)
-        {
-          'label': accessory.name,
-          'amount': money(accessory.supplementCents),
-        },
+        {'label': accessory.name, 'amount': money(accessory.supplementCents)},
   ];
   return <String, Object?>{
     'workspace': workspace?.name ?? '',
@@ -505,30 +534,35 @@ Map<String, Object?> paymentsReportData(
   final l10n = l10nOverride ?? AppLocalizations.of(context);
   final workspace = ref.read(currentWorkspaceProvider).value;
   final me = ref.read(myMemberProvider).value;
-  final currency =
-      moneyFormat(workspace?.currencyCode ?? 'EUR');
+  final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
   String money(int cents) => currency.formatMinor(cents);
   final dateFormat = DateFormat.yMMMd(
     localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
   );
   final ledger = (ref.read(myLedgerProvider).value ?? const <LedgerEntry>[])
-      .where((entry) =>
-          entry.period == period && entry.kind == LedgerKind.credit)
+      .where(
+        (entry) => entry.period == period && entry.kind == LedgerKind.credit,
+      )
       .toList();
   final pending = (ref.read(eventsProvider).value ?? const [])
-      .where((event) =>
-          event.isPending &&
-          event.subjectMemberId == me?.id &&
-          (event.type == EventType.payment ||
-              event.type == EventType.expense) &&
-          (event.payload['period'] as String? ?? period) == period)
+      .where(
+        (event) =>
+            event.isPending &&
+            event.subjectMemberId == me?.id &&
+            (event.type == EventType.payment ||
+                event.type == EventType.expense) &&
+            (event.payload['period'] as String? ?? period) == period,
+      )
       .toList();
-  final validatedCents =
-      ledger.fold<int>(0, (sum, entry) => sum + entry.amountCents);
+  final validatedCents = ledger.fold<int>(
+    0,
+    (sum, entry) => sum + entry.amountCents,
+  );
   final pendingCents = pending.fold<int>(
-      0,
-      (sum, event) =>
-          sum + ((event.payload['amount_cents'] as num?)?.toInt() ?? 0));
+    0,
+    (sum, event) =>
+        sum + ((event.payload['amount_cents'] as num?)?.toInt() ?? 0),
+  );
   final statement = ref.read(myStatementProvider(period)).value;
   return <String, Object?>{
     'workspace': workspace?.name ?? '',
@@ -562,7 +596,8 @@ Map<String, Object?> paymentsReportData(
           'label':
               '${event.payload['note'] as String? ?? (l10n?.eventTypePayment ?? 'Payment')} — ${l10n?.paymentsPendingTag ?? 'pending validation'}',
           'amount': money(
-              (event.payload['amount_cents'] as num?)?.toInt() ?? 0),
+            (event.payload['amount_cents'] as num?)?.toInt() ?? 0,
+          ),
         },
     ],
     'vat': const <Map<String, Object?>>[],
@@ -581,13 +616,11 @@ Map<String, Object?> workspaceReportData(
   final l10n = l10nOverride ?? AppLocalizations.of(context);
   final workspace = ref.read(currentWorkspaceProvider).value;
   final association = ref.read(sellerIsAssociationProvider);
-  final currency =
-      moneyFormat(workspace?.currencyCode ?? 'EUR');
+  final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
   String money(int cents) => currency.formatMinor(cents);
   final levels = ref.read(levelsProvider).value ?? const <Level>[];
   final plans = [
-    for (final level in levels)
-      ref.read(floorPlanProvider(level.id)).value,
+    for (final level in levels) ref.read(floorPlanProvider(level.id)).value,
   ].whereType<FloorPlan>().toList();
   final features = ref.read(enabledFeaturesSyncProvider);
   final members = ref.read(workspaceMembersProvider).value ?? const [];
@@ -626,20 +659,19 @@ Map<String, Object?> workspaceReportData(
     'timezone': workspace?.timezone ?? '',
     'members_count': members.length,
     'levels_count': levels.length,
-    'offices_count':
-        plans.fold<int>(0, (sum, plan) => sum + plan.offices.length),
-    'desks_count':
-        plans.fold<int>(0, (sum, plan) => sum + plan.desks.length),
-    'seats_count':
-        plans.fold<int>(0, (sum, plan) => sum + plan.seats.length),
+    'offices_count': plans.fold<int>(
+      0,
+      (sum, plan) => sum + plan.offices.length,
+    ),
+    'desks_count': plans.fold<int>(0, (sum, plan) => sum + plan.desks.length),
+    'seats_count': plans.fold<int>(0, (sum, plan) => sum + plan.seats.length),
     'open_days': openDays
         .map((d) => dayNames.format(monday.add(Duration(days: d - 1))))
         .join(', '),
     'work_hours':
         '${clock(hours.startMinutes)}–${clock(hours.halfBoundaryMinutes)}–${clock(hours.endMinutes)}',
     'features': [
-      for (final feature in features)
-        {'label': featureName(l10n, feature)},
+      for (final feature in features) {'label': featureName(l10n, feature)},
     ],
     'lines': [
       for (final band in bands)
@@ -677,13 +709,16 @@ Future<void> settleCreditInvoiceDialog(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n?.invoiceRefundExplain(
-                  currency.format(-invoice.totalCents / 100)) ??
-              'This credit note means the WORKSPACE owes the member '
-                  '${currency.format(-invoice.totalCents / 100)}. '
-                  'Record that the refund was paid out — the amount is '
-                  'booked against the member\'s balance and the '
-                  'document closes as Refunded.'),
+          Text(
+            l10n?.invoiceRefundExplain(
+                  currency.format(-invoice.totalCents / 100),
+                ) ??
+                'This credit note means the WORKSPACE owes the member '
+                    '${currency.format(-invoice.totalCents / 100)}. '
+                    'Record that the refund was paid out — the amount is '
+                    'booked against the member\'s balance and the '
+                    'document closes as Refunded.',
+          ),
           const SizedBox(height: AppSpacing.md),
           TextField(
             key: const ValueKey('invoice-refund-note'),
@@ -691,8 +726,8 @@ Future<void> settleCreditInvoiceDialog(
             maxLength: 300,
             maxLines: 2,
             decoration: InputDecoration(
-              labelText: l10n?.reservationDeleteReasonLabel ??
-                  'Reason (optional)',
+              labelText:
+                  l10n?.reservationDeleteReasonLabel ?? 'Reason (optional)',
               counterText: '',
             ),
           ),
@@ -717,7 +752,8 @@ Future<void> settleCreditInvoiceDialog(
     context,
     domain: 'money',
     message: 'credit note refund failed',
-    errorText: l10n?.workspaceGenericError ??
+    errorText:
+        l10n?.workspaceGenericError ??
         'Something went wrong. Please try again.',
     action: () => ref
         .read(moneyRepositoryProvider)
@@ -730,10 +766,7 @@ Future<void> settleCreditInvoiceDialog(
   ref.invalidate(invoicesProvider);
   invalidateBookingData(ref);
   if (!context.mounted) return;
-  AppSnack.success(
-    context,
-    l10n?.invoiceRefunded ?? 'Refund recorded.',
-  );
+  AppSnack.success(context, l10n?.invoiceRefunded ?? 'Refund recorded.');
 }
 
 /// #504 — asks the validators to CANCEL the outstanding remainder of a
@@ -749,17 +782,18 @@ Future<void> requestInvoiceWriteoffDialog(
   final confirmed = await showDialog<bool>(
     context: context,
     builder: (dialogContext) => AlertDialog(
-      title: Text(
-          l10n?.invoiceWriteoffButton ?? 'Cancel outstanding amount'),
+      title: Text(l10n?.invoiceWriteoffButton ?? 'Cancel outstanding amount'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n?.invoiceWriteoffExplain ??
-              'The unpaid remainder of this invoice will be cancelled '
-                  'and the invoice archived as partially paid — once '
-                  'the validators confirm. Until then it stays open '
-                  'and owed.'),
+          Text(
+            l10n?.invoiceWriteoffExplain ??
+                'The unpaid remainder of this invoice will be cancelled '
+                    'and the invoice archived as partially paid — once '
+                    'the validators confirm. Until then it stays open '
+                    'and owed.',
+          ),
           const SizedBox(height: AppSpacing.md),
           TextField(
             key: const ValueKey('invoice-writeoff-reason'),
@@ -767,8 +801,8 @@ Future<void> requestInvoiceWriteoffDialog(
             maxLength: 300,
             maxLines: 2,
             decoration: InputDecoration(
-              labelText: l10n?.reservationDeleteReasonLabel ??
-                  'Reason (optional)',
+              labelText:
+                  l10n?.reservationDeleteReasonLabel ?? 'Reason (optional)',
               counterText: '',
             ),
           ),
@@ -782,8 +816,7 @@ Future<void> requestInvoiceWriteoffDialog(
         FilledButton(
           key: const ValueKey('invoice-writeoff-submit'),
           onPressed: () => Navigator.of(dialogContext).pop(true),
-          child: Text(
-              l10n?.reservationDeleteSubmit ?? 'Send request'),
+          child: Text(l10n?.reservationDeleteSubmit ?? 'Send request'),
         ),
       ],
     ),
@@ -794,7 +827,8 @@ Future<void> requestInvoiceWriteoffDialog(
     context,
     domain: 'money',
     message: 'invoice writeoff request failed',
-    errorText: l10n?.workspaceGenericError ??
+    errorText:
+        l10n?.workspaceGenericError ??
         'Something went wrong. Please try again.',
     action: () => ref
         .read(eventRepositoryProvider)
@@ -821,10 +855,7 @@ AppLocalizations l10nForLanguage(String language) =>
 /// preferred → workspace language → country language; throws
 /// [AmbiguousReportLanguage] for a multi-language country with nothing
 /// configured.
-String resolveMemberReportLanguage(
-  WidgetRef ref, {
-  String memberLocale = '',
-}) {
+String resolveMemberReportLanguage(WidgetRef ref, {String memberLocale = ''}) {
   final workspace = ref.read(currentWorkspaceProvider).value;
   return resolveReportLanguage(
     memberLocale: memberLocale,
@@ -840,8 +871,12 @@ Future<void> warmLetterDocProviders(WidgetRef ref, String docId) async {
     try {
       await load();
     } catch (e, st) {
-      TraceLogger.instance.warn('money', 'letter-doc provider warm failed',
-          error: e, stackTrace: st);
+      TraceLogger.instance.warn(
+        'money',
+        'letter-doc provider warm failed',
+        error: e,
+        stackTrace: st,
+      );
     }
   }
 
@@ -889,13 +924,11 @@ InvoiceReport renderLetterDoc(
   final l10n = language.isEmpty
       ? AppLocalizations.of(context)
       : l10nForLanguage(language);
-  final bands = invoicePdfTemplateFor(ref)
-          .forLocale(language)
-          .docBands(docId) ??
+  final bands =
+      invoicePdfTemplateFor(ref).forLocale(language).docBands(docId) ??
       defaultBandsForDoc(docId, l10n);
   return renderReportBands(bands: bands, data: data) ??
-      renderReportBands(
-          bands: defaultBandsForDoc(docId, l10n), data: data)!;
+      renderReportBands(bands: defaultBandsForDoc(docId, l10n), data: data)!;
 }
 
 /// The PDF of a rendered letter document (#494).
@@ -977,7 +1010,8 @@ Map<String, Object?> reminderReportData(
       workspace,
       seller: invoice.sellerParty,
       buyer: invoice.buyerParty,
-      clientAddress: _clientAddressOf(invoice),
+      clientAddress: _clientAddressOf(invoice, workspace),
+      clientName: _clientNameOf(invoice),
     ),
   };
 }
@@ -996,6 +1030,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   // #831 — the stamp of a regrouped source ('' otherwise); the callers
   // with a ref build it with [settledStampOf].
   String settledIn = '',
+
   /// #837 — the invoices this one regrouped, appended after its own
   /// pages as documentation. The caller resolves them, because only it
   /// holds the archive; each is stamped with this document's number.
@@ -1016,7 +1051,8 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
         invoice: source,
         dateLabel: dateFormat.format(source.issuedAt),
         periodLabel: invoicePeriodLabel(context, source),
-        watermark: l10n?.invoicePdfSettledIn(invoice.number) ??
+        watermark:
+            l10n?.invoicePdfSettledIn(invoice.number) ??
             'Regrouped in ${invoice.number}',
       ),
   ];
@@ -1024,7 +1060,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   final voidedLabel = voidedAt == null
       ? ''
       : '${l10n?.invoicePdfVoided ?? 'ERRONEOUS — voided on'} '
-          '${dateFormat.format(voidedAt)}';
+            '${dateFormat.format(voidedAt)}';
   Future<pw.Font> font(String asset) async =>
       pw.Font.ttf(await rootBundle.load(asset));
   final reportData = invoiceReportData(
@@ -1040,52 +1076,55 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
       ? (template.proformaBands ?? template.invoiceBands)
       : template.invoiceBands;
   final features = effectiveFeatures(
-      resolveEnabledFeatures(workspace?.featureFlags ?? const {}));
+    resolveEnabledFeatures(workspace?.featureFlags ?? const {}),
+  );
   final strings = InvoicePdfStrings(
-      // #508 — a NEGATIVE document is titled as the credit note it is.
-      invoiceTitle: invoice.totalCents < 0
-          ? (l10n?.invoicePdfCreditNote ?? 'Credit note')
-          : (l10n?.invoicePdfTitle ?? 'Invoice'),
-      issuedOn: l10n?.invoicePdfIssuedOn ?? 'Issued on',
-      issuedBy: l10n?.invoicePdfIssuedBy ?? 'Issued by',
-      billedTo: l10n?.invoicePdfBilledTo ?? 'Billed to',
-      total: l10n?.invoiceBalance ?? 'Balance due',
-      signature: l10n?.invoicePdfSignature ?? 'Digital signature (SHA-256)',
-      voided: voidedLabel,
-      // The archive row's own word for it — one term, everywhere.
-      voidedWatermark: l10n?.invoiceVoidedChip ?? 'Erroneous',
-      proforma: l10n?.invoicePdfProforma ?? 'Proforma',
-      copy: l10n?.invoicePdfCopy ?? 'Copy',
-      // #831 — a regrouped source says where it went.
-      settledIn: settledIn,
-      replaces: l10n?.invoicePdfReplaces ?? 'Replaces',
-      description: l10n?.invoicePdfDescription ?? 'Description',
-      charges: l10n?.invoicePdfCharges ?? 'Charges',
-      payments: l10n?.invoicePdfPayments ?? 'Payments',
-      net: l10n?.vatPdfNet ?? 'Net',
-      vat: l10n?.vatPdfVat ?? 'VAT',
-      annex: l10n?.invoicePdfAnnex ?? 'Annex — details',
-      attendance: l10n?.invoicePdfAttendance ?? 'Check-ins',
-      activity: l10n?.invoicePdfActivity ?? 'Bookings & payments',
-      reserved: l10n?.invoicePdfReserved ?? 'reserved',
-      page: l10n?.invoicePdfPage ?? 'Page',
+    // #508 — a NEGATIVE document is titled as the credit note it is.
+    invoiceTitle: invoice.totalCents < 0
+        ? (l10n?.invoicePdfCreditNote ?? 'Credit note')
+        : (l10n?.invoicePdfTitle ?? 'Invoice'),
+    issuedOn: l10n?.invoicePdfIssuedOn ?? 'Issued on',
+    issuedBy: l10n?.invoicePdfIssuedBy ?? 'Issued by',
+    billedTo: l10n?.invoicePdfBilledTo ?? 'Billed to',
+    total: l10n?.invoiceBalance ?? 'Balance due',
+    signature: l10n?.invoicePdfSignature ?? 'Digital signature (SHA-256)',
+    voided: voidedLabel,
+    // The archive row's own word for it — one term, everywhere.
+    voidedWatermark: l10n?.invoiceVoidedChip ?? 'Erroneous',
+    proforma: l10n?.invoicePdfProforma ?? 'Proforma',
+    copy: l10n?.invoicePdfCopy ?? 'Copy',
+    // #831 — a regrouped source says where it went.
+    settledIn: settledIn,
+    replaces: l10n?.invoicePdfReplaces ?? 'Replaces',
+    description: l10n?.invoicePdfDescription ?? 'Description',
+    charges: l10n?.invoicePdfCharges ?? 'Charges',
+    payments: l10n?.invoicePdfPayments ?? 'Payments',
+    net: l10n?.vatPdfNet ?? 'Net',
+    vat: l10n?.vatPdfVat ?? 'VAT',
+    annex: l10n?.invoicePdfAnnex ?? 'Annex — details',
+    attendance: l10n?.invoicePdfAttendance ?? 'Check-ins',
+    activity: l10n?.invoicePdfActivity ?? 'Bookings & payments',
+    reserved: l10n?.invoicePdfReserved ?? 'reserved',
+    page: l10n?.invoicePdfPage ?? 'Page',
   );
   // A proforma is named after what it covers — it has no number to be
   // filed under, and must never sit in a folder looking like the invoice.
   final stem = proforma
-      ? safeFileSlug('${l10n?.invoicePdfProforma ?? 'proforma'} '
-          '${invoice.number.isEmpty ? '${invoice.memberName} $periodLabel' : invoice.number}')
+      ? safeFileSlug(
+          '${l10n?.invoicePdfProforma ?? 'proforma'} '
+          '${invoice.number.isEmpty ? '${invoice.memberName} $periodLabel' : invoice.number}',
+        )
       : safeFileSlug(invoice.number);
   // #875 — a positioned layout, when this document has one, IS the
   // document: it states its own geometry and the bands never run. A
   // proforma without a layout of its own borrows the invoice's, as it
   // borrows its bands. Annexes stay banded — they are documentation
   // appended behind, and the layout engine renders one document.
-  final layoutXml = features.contains(WorkspaceFeature.reportLayouts) &&
-          annexInvoices.isEmpty
+  final layoutXml =
+      features.contains(WorkspaceFeature.reportLayouts) && annexInvoices.isEmpty
       ? (proforma
-          ? (template.layoutFor('proforma') ?? template.layoutFor('invoice'))
-          : template.layoutFor('invoice'))
+            ? (template.layoutFor('proforma') ?? template.layoutFor('invoice'))
+            : template.layoutFor('invoice'))
       : null;
   if (layoutXml != null) {
     final bytes = await tryLayoutPdf(
@@ -1096,8 +1135,12 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
       pageLabel: strings.page,
       font: font,
       image: reportImage,
-      watermark: invoiceWatermark(strings,
-          proforma: proforma, voided: invoice.isVoided, copy: copy),
+      watermark: invoiceWatermark(
+        strings,
+        proforma: proforma,
+        voided: invoice.isVoided,
+        copy: copy,
+      ),
       signatureLabel: strings.signature,
       signature: proforma ? '' : invoice.signature,
     );
@@ -1114,20 +1157,18 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   // #869 — the envelope window: the template's explicit choice wins,
   // otherwise the seller's country decides the side. Off entirely when
   // the workspace has not enabled the feature.
-  final addressWindow = features
-          .contains(WorkspaceFeature.invoiceAddressWindow)
+  final addressWindow = features.contains(WorkspaceFeature.invoiceAddressWindow)
       ? (template.addressWindow ??
-          addressWindowForCountry(workspace?.countryCode ?? ''))
+            addressWindowForCountry(workspace?.countryCode ?? ''))
       : AddressWindow.off;
-  final association =
-      InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {})
-          .isAssociation;
+  final association = InvoiceLegal.fromJson(
+    workspace?.invoiceLegal ?? const {},
+  ).isAssociation;
   final bytes = await buildInvoicePdf(
     addressWindow: addressWindow,
     invoice: invoice,
     reportImages: reportImages,
-    lineText: (line) =>
-        invoiceLineText(l10n, line, association: association),
+    lineText: (line) => invoiceLineText(l10n, line, association: association),
     activityText: (entry) => annexEntryText(l10n, entry),
     strings: strings,
     money: (cents) => currency.formatMinor(cents),
@@ -1166,8 +1207,7 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
     seller: seller,
     buyer: buyer,
     iban: iban,
-    lineText: (line) =>
-        invoiceLineText(l10n, line, association: association),
+    lineText: (line) => invoiceLineText(l10n, line, association: association),
   );
   // PDF/A-3 cannot exist without an embedded output intent.
   final icc = await rootBundle.load('assets/pdf/sRGB2014.icc');
@@ -1213,7 +1253,8 @@ Future<void> sendEInvoice(
     context,
     domain: 'money',
     message: 'e-invoice submission failed',
-    errorText: l10n?.workspaceGenericError ??
+    errorText:
+        l10n?.workspaceGenericError ??
         'Something went wrong. Please try again.',
     action: () async {
       final file = await buildFacturXFile(
@@ -1225,7 +1266,9 @@ Future<void> sendEInvoice(
         iban: iban,
       );
       if (file.fileName.isEmpty) return;
-      result = await ref.read(moneyRepositoryProvider).sendEInvoice(
+      result = await ref
+          .read(moneyRepositoryProvider)
+          .sendEInvoice(
             workspaceId: workspaceId,
             invoiceId: invoice.id,
             fileName: file.fileName,
@@ -1247,12 +1290,11 @@ Future<void> sendEInvoice(
       context,
       environment != 'prod'
           ? (l10n?.invoiceSendAcceptedTest(environment.toUpperCase()) ??
-              'Test send accepted (${environment.toUpperCase()}).')
+                'Test send accepted (${environment.toUpperCase()}).')
           : destination == 'customer'
-              ? (l10n?.invoiceSendCustomerAccepted ??
-                  "Sent — the customer's service accepted it.")
-              : (l10n?.invoiceSendAccepted ??
-                  'Sent — the platform accepted it.'),
+          ? (l10n?.invoiceSendCustomerAccepted ??
+                "Sent — the customer's service accepted it.")
+          : (l10n?.invoiceSendAccepted ?? 'Sent — the platform accepted it.'),
     );
     return;
   }
@@ -1263,7 +1305,7 @@ Future<void> sendEInvoice(
     submission.detail.isEmpty
         ? (l10n?.invoiceSendRejected ?? 'The platform refused it.')
         : '${l10n?.invoiceSendRejected ?? 'The platform refused it.'} '
-            '${submission.detail}',
+              '${submission.detail}',
   );
 }
 
@@ -1296,19 +1338,24 @@ Future<void> shareProforma(
       if (!bands.hasBands) bands = defaultBandsForDoc('proforma', l10n);
       return renderReportBands(
         bands: bands,
-        data: invoiceReportData(context, invoice,
-            proforma: true,
-            copy: false,
-            workspace: ref.read(currentWorkspaceProvider).value),
+        data: invoiceReportData(
+          context,
+          invoice,
+          proforma: true,
+          copy: false,
+          workspace: ref.read(currentWorkspaceProvider).value,
+        ),
       );
     },
     buildPdf: () async {
-      final pdf = await buildInvoicePdfFile(context, invoice,
-          proforma: true,
-          template: invoicePdfTemplateFor(ref),
-          workspace: ref.read(currentWorkspaceProvider).value,
-          reportImage: (name) =>
-              ref.read(reportImageBytesProvider(name).future));
+      final pdf = await buildInvoicePdfFile(
+        context,
+        invoice,
+        proforma: true,
+        template: invoicePdfTemplateFor(ref),
+        workspace: ref.read(currentWorkspaceProvider).value,
+        reportImage: (name) => ref.read(reportImageBytesProvider(name).future),
+      );
       return (bytes: Uint8List.fromList(pdf.bytes), fileName: pdf.fileName);
     },
   );
@@ -1325,7 +1372,9 @@ Future<Invoice?> proformaForMonth(
 }) async {
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return null;
-  final preview = await ref.read(moneyRepositoryProvider).previewInvoice(
+  final preview = await ref
+      .read(moneyRepositoryProvider)
+      .previewInvoice(
         workspaceId: workspace.id,
         memberId: memberId,
         period: period,
@@ -1338,6 +1387,12 @@ Future<Invoice?> proformaForMonth(
       .map((m) => m.userId)
       .firstOrNull;
   final profiles = await ref.read(memberProfilesProvider.future);
+  final profile = userId == null ? null : profiles[userId];
+  // #886 — the preview names and addresses the buyer the way
+  // create_invoice will freeze them, so the proforma and the invoice
+  // put the same block in the envelope window.
+  final identity = profile?.identity ?? PersonalInfo.empty;
+  final fullName = profile?.fullName ?? '';
   return Invoice(
     // No id and no number: nothing was issued.
     id: '',
@@ -1350,8 +1405,27 @@ Future<Invoice?> proformaForMonth(
     lines: preview.lines,
     totalCents: preview.totalCents,
     currency: workspace.currencyCode,
-    memberName: names[memberId] ?? '',
-    memberAddress: userId == null ? '' : profiles[userId]?.address ?? '',
+    memberName: fullName.isNotEmpty ? fullName : names[memberId] ?? '',
+    memberAddress:
+        profile?.postalBlock(workspaceCountry: workspace.countryCode) ?? '',
+    buyerParty: profile == null
+        ? null
+        : InvoiceParty(
+            name: fullName.isNotEmpty ? fullName : names[memberId] ?? '',
+            company: identity.company,
+            street: identity.street.isNotEmpty
+                ? identity.street
+                : profile.address,
+            postalCode: identity.postalCode,
+            city: identity.city,
+            country: identity.countryCode.isNotEmpty
+                ? identity.countryCode
+                : workspace.countryCode,
+            vatId: identity.vatId,
+            legalId: identity.legalId,
+            email: identity.email,
+            phone: identity.phone,
+          ),
     workspaceName: workspace.name,
     workspaceAddress: workspace.address,
     issuerName: '',
@@ -1402,7 +1476,8 @@ Future<void> downloadInvoicePdf(
     context,
     domain: 'money',
     message: 'invoice download failed',
-    errorText: l10n?.workspaceGenericError ??
+    errorText:
+        l10n?.workspaceGenericError ??
         'Something went wrong. Please try again.',
     action: () async {
       final pdf = await buildInvoicePdfFile(
@@ -1413,7 +1488,7 @@ Future<void> downloadInvoicePdf(
         annexInvoices: annexes,
         template: invoicePdfTemplateFor(ref),
         workspace: ref.read(currentWorkspaceProvider).value,
-    reportImage: (name) => ref.read(reportImageBytesProvider(name).future),
+        reportImage: (name) => ref.read(reportImageBytesProvider(name).future),
       );
       if (!context.mounted) return;
       await savePdfToDownloads(
@@ -1454,14 +1529,14 @@ Future<void> quickViewInvoice(
   if (report == null) {
     AppSnack.error(
       context,
-      l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      l10n?.workspaceGenericError ?? 'Something went wrong. Please try again.',
     );
     return;
   }
   // #837 — the regrouped invoices as further sheets, same stamp as the
   // PDF, each below the one before it.
-  final stamp = l10n?.invoicePdfSettledIn(invoice.number) ??
+  final stamp =
+      l10n?.invoicePdfSettledIn(invoice.number) ??
       'Regrouped in ${invoice.number}';
   final annexReports = <QuickPreviewAnnex>[];
   for (final source in annexes) {
@@ -1481,9 +1556,13 @@ Future<void> quickViewInvoice(
   }
   final images = await resolveReportImages(ref, report);
   if (!context.mounted) return;
-  await showReportQuickPreview(context,
-      annexes: annexReports,
-      report: report, simulated: false, images: images);
+  await showReportQuickPreview(
+    context,
+    annexes: annexReports,
+    report: report,
+    simulated: false,
+    images: images,
+  );
 }
 
 Future<void> shareInvoicePdf(
@@ -1498,7 +1577,8 @@ Future<void> shareInvoicePdf(
     context,
     domain: 'money',
     message: 'invoice share failed',
-    errorText: l10n?.workspaceGenericError ??
+    errorText:
+        l10n?.workspaceGenericError ??
         'Something went wrong. Please try again.',
     action: () async {
       final pdf = await buildInvoicePdfFile(
@@ -1509,7 +1589,7 @@ Future<void> shareInvoicePdf(
         annexInvoices: annexes,
         template: invoicePdfTemplateFor(ref),
         workspace: ref.read(currentWorkspaceProvider).value,
-    reportImage: (name) => ref.read(reportImageBytesProvider(name).future),
+        reportImage: (name) => ref.read(reportImageBytesProvider(name).future),
       );
       await ref.read(fileSharerProvider)(
         bytes: Uint8List.fromList(pdf.bytes),
@@ -1555,7 +1635,8 @@ Future<void> voidInvoiceWithConfirm(
     context,
     domain: 'money',
     message: 'invoice void failed',
-    errorText: l10n?.workspaceGenericError ??
+    errorText:
+        l10n?.workspaceGenericError ??
         'Something went wrong. Please try again.',
     action: () => ref.read(moneyRepositoryProvider).voidInvoice(invoice.id),
   )) {
@@ -1576,8 +1657,7 @@ Future<void> voidInvoiceWithConfirm(
 /// owner's band set for that level, else the shipped localized default.
 /// A broken custom band set falls back to the default — a reminder must
 /// never fail on a template.
-Future<({List<int> bytes, String fileName, String title})>
-    buildReminderPdfFile(
+Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice, {
@@ -1597,8 +1677,10 @@ Future<({List<int> bytes, String fileName, String title})>
     final profile = userId == null
         ? null
         : ref.read(memberProfilesProvider).value?[userId];
-    language = resolveMemberReportLanguage(ref,
-        memberLocale: profile?.preferredLocale ?? '');
+    language = resolveMemberReportLanguage(
+      ref,
+      memberLocale: profile?.preferredLocale ?? '',
+    );
   } on AmbiguousReportLanguage {
     language = '';
   }
@@ -1608,16 +1690,20 @@ Future<({List<int> bytes, String fileName, String title})>
   final title = level <= 1
       ? (l10n?.reminderPdfTitleFriendly ?? 'Payment reminder')
       : '${l10n?.reminderPdfTitleFirm ?? 'Reminder'} $level';
-  final data = reminderReportData(context, ref, invoice,
-      level: level,
-      l10nOverride: l10n,
-      localeName: language.isEmpty ? null : language);
-  final bands = draftBands ??
+  final data = reminderReportData(
+    context,
+    ref,
+    invoice,
+    level: level,
+    l10nOverride: l10n,
+    localeName: language.isEmpty ? null : language,
+  );
+  final bands =
+      draftBands ??
       invoicePdfTemplateFor(ref).forLocale(language).reminderBands(level);
   final fallback = defaultReminderBands(level, l10n);
-  final report = (bands == null
-          ? null
-          : renderReportBands(bands: bands, data: data)) ??
+  final report =
+      (bands == null ? null : renderReportBands(bands: bands, data: data)) ??
       renderReportBands(bands: fallback, data: data)!;
   final pageLabel = l10n?.invoicePdfPage ?? 'Page';
   Future<pw.Font> font(String asset) async =>
@@ -1644,7 +1730,8 @@ Future<void> remindInvoice(
 ) async {
   final l10n = AppLocalizations.of(context);
   final currency = moneyFormat(invoice.currency);
-  final message = l10n?.invoiceReminderMessage(
+  final message =
+      l10n?.invoiceReminderMessage(
         invoice.number,
         currency.formatMinor(invoice.totalCents),
       ) ??
@@ -1653,8 +1740,7 @@ Future<void> remindInvoice(
   // #472: the level of THIS send — one past what was already sent,
   // capped at the configured maximum (extra sends reuse the last
   // letter).
-  final rules =
-      ref.read(dunningRulesProvider).value ?? DunningRules.defaults;
+  final rules = ref.read(dunningRulesProvider).value ?? DunningRules.defaults;
   final sent =
       ref.read(invoiceRemindersProvider).value?[invoice.id]?.count ?? 0;
   final level = (sent + 1).clamp(1, rules.levels);
@@ -1662,13 +1748,18 @@ Future<void> remindInvoice(
     context,
     domain: 'money',
     message: 'invoice reminder failed',
-    errorText: l10n?.workspaceGenericError ??
+    errorText:
+        l10n?.workspaceGenericError ??
         'Something went wrong. Please try again.',
     action: () async {
       // PDF first — it captures its context-derived values before any
       // await (use_build_context_synchronously).
-      final pdf = await buildReminderPdfFile(context, ref, invoice,
-          level: level);
+      final pdf = await buildReminderPdfFile(
+        context,
+        ref,
+        invoice,
+        level: level,
+      );
       await ref.read(moneyRepositoryProvider).remindInvoice(invoice.id);
       await ref.read(fileSharerProvider)(
         bytes: Uint8List.fromList(pdf.bytes),
@@ -1710,7 +1801,8 @@ Future<void> exportEInvoice(
   // The same judgement against the LIVE identity: if that one passes, the
   // owner is not missing anything — the document is simply older than the
   // identity, and only a replacement can carry the new one.
-  final identityFixedSince = invoice.sellerParty != null &&
+  final identityFixedSince =
+      invoice.sellerParty != null &&
       !readiness.ready &&
       checkEInvoiceReadiness(
         invoice: invoice,
@@ -1724,8 +1816,12 @@ Future<void> exportEInvoice(
   try {
     gateway = await ref.read(eInvoiceGatewayProvider.future);
   } catch (e, st) {
-    TraceLogger.instance.warn('money', 'e-invoice gateway probe failed',
-        error: e, stackTrace: st);
+    TraceLogger.instance.warn(
+      'money',
+      'e-invoice gateway probe failed',
+      error: e,
+      stackTrace: st,
+    );
     gateway = EInvoiceGatewayConfig.notConfigured;
   }
   if (!context.mounted) return;
@@ -1740,7 +1836,8 @@ Future<void> exportEInvoice(
     canSend: gateway.configured && isIssuer,
     // The customer leg (#568): its own endpoint, its own flag, the same
     // issuer gate.
-    canSendCustomer: gateway.customerConfigured &&
+    canSendCustomer:
+        gateway.customerConfigured &&
         isIssuer &&
         ref
             .read(enabledFeaturesSyncProvider)
@@ -1752,8 +1849,7 @@ Future<void> exportEInvoice(
     return;
   }
   final l10nForFile = AppLocalizations.of(context);
-  if (export == EInvoiceExport.send ||
-      export == EInvoiceExport.sendCustomer) {
+  if (export == EInvoiceExport.send || export == EInvoiceExport.sendCustomer) {
     final toCustomer = export == EInvoiceExport.sendCustomer;
     // Dev mode + a configured test platform → choose the target (#393);
     // anyone else goes straight to production, no extra tap. The picker
@@ -1765,8 +1861,11 @@ Future<void> exportEInvoice(
                 gateway.destinations['customer']?.environments ?? const {},
           )
         : gateway;
-    final environment =
-        await pickEInvoiceEnvironment(context, ref, gateway: envGateway);
+    final environment = await pickEInvoiceEnvironment(
+      context,
+      ref,
+      gateway: envGateway,
+    );
     if (environment == null || !context.mounted) return;
     await sendEInvoice(
       context,
@@ -1787,7 +1886,8 @@ Future<void> exportEInvoice(
       context,
       domain: 'money',
       message: 'factur-x export failed',
-      errorText: l10nForFile?.workspaceGenericError ??
+      errorText:
+          l10nForFile?.workspaceGenericError ??
           'Something went wrong. Please try again.',
       action: () async {
         final file = await buildFacturXFile(
@@ -1809,7 +1909,12 @@ Future<void> exportEInvoice(
           return;
         }
         if (!context.mounted) return;
-        await savePdfToDownloads(context, ref, bytes: bytes, fileName: file.fileName);
+        await savePdfToDownloads(
+          context,
+          ref,
+          bytes: bytes,
+          fileName: file.fileName,
+        );
       },
     );
     return;
@@ -1819,7 +1924,8 @@ Future<void> exportEInvoice(
     context,
     domain: 'money',
     message: 'e-invoice export failed',
-    errorText: l10n?.workspaceGenericError ??
+    errorText:
+        l10n?.workspaceGenericError ??
         'Something went wrong. Please try again.',
     action: () async {
       final xml = buildInvoiceUbl(
@@ -1828,7 +1934,7 @@ Future<void> exportEInvoice(
         buyer: buyer,
         iban: workspaceIban(workspace),
         lineText: (line) =>
-        invoiceLineText(l10n, line, association: association),
+            invoiceLineText(l10n, line, association: association),
       );
       final bytes = Uint8List.fromList(utf8.encode(xml));
       final fileName = '${safeFileSlug(invoice.number)}.xml';
@@ -1867,13 +1973,13 @@ Future<void> matchInvoiceToPayment(
   final workspace = ref.read(currentWorkspaceProvider).value;
   final consumed = {
     for (final match in matches.values) ?match.paymentLedgerId,
-    if (workspace != null)
-      ...await repo.fetchConsumedPaymentIds(workspace.id),
+    if (workspace != null) ...await repo.fetchConsumedPaymentIds(workspace.id),
   };
   // A standing PARTIAL match shifts the target: further payments are
   // measured against what is STILL DUE.
   final existing = matches[invoice.id];
-  final dueCents = existing != null &&
+  final dueCents =
+      existing != null &&
           !existing.pending &&
           existing.resolution == 'under_accepted' &&
           existing.writeoffAt == null
@@ -1882,11 +1988,13 @@ Future<void> matchInvoiceToPayment(
   // #512 — a credit BAKED into an issued invoice (negative line at
   // derivation) was spent there; the server refuses it too.
   final memberInvoices = ref.read(invoicesProvider).value ?? const <Invoice>[];
-  bool baked(LedgerEntry entry) => memberInvoices.any((i) =>
-      i.memberId == invoice.memberId &&
-      !i.isVoided &&
-      i.period == entry.period &&
-      i.issuedAt.isAfter(entry.createdAt));
+  bool baked(LedgerEntry entry) => memberInvoices.any(
+    (i) =>
+        i.memberId == invoice.memberId &&
+        !i.isVoided &&
+        i.period == entry.period &&
+        i.issuedAt.isAfter(entry.createdAt),
+  );
   final payments = [
     for (final entry in ledger)
       if (entry.kind == LedgerKind.credit &&
@@ -1914,9 +2022,12 @@ Future<void> matchInvoiceToPayment(
     context,
     domain: 'money',
     message: 'invoice match failed',
-    errorText: l10n?.workspaceGenericError ??
+    errorText:
+        l10n?.workspaceGenericError ??
         'Something went wrong. Please try again.',
-    action: () => ref.read(moneyRepositoryProvider).matchInvoice(
+    action: () => ref
+        .read(moneyRepositoryProvider)
+        .matchInvoice(
           invoiceId: invoice.id,
           paymentLedgerId: choice.paymentLedgerId,
           resolution: choice.resolution,
@@ -1981,15 +2092,21 @@ Future<void> issueInvoicesForAll(
   var issued = 0;
   for (final entry in entries) {
     try {
-      await ref.read(moneyRepositoryProvider).createInvoice(
+      await ref
+          .read(moneyRepositoryProvider)
+          .createInvoice(
             workspaceId: workspace.id,
             memberId: entry.memberId,
             period: period,
           );
       issued++;
     } catch (e, st) {
-      TraceLogger.instance.error('money', 'invoice sweep entry failed',
-          error: e, stackTrace: st);
+      TraceLogger.instance.error(
+        'money',
+        'invoice sweep entry failed',
+        error: e,
+        stackTrace: st,
+      );
     }
   }
   ref.invalidate(invoicesProvider);
@@ -2034,18 +2151,28 @@ Future<void> runInvoiceAction(
     return Future.value();
   }
   return switch (action) {
-      InvoiceAction.quickView => quickViewInvoice(context, ref, invoice),
-      InvoiceAction.downloadPdf => downloadInvoicePdf(context, ref, invoice),
-      InvoiceAction.sharePdf => shareInvoicePdf(context, ref, invoice),
-      InvoiceAction.eInvoice =>
-        exportEInvoice(context, ref, invoice, countryCode: countryCode),
-      InvoiceAction.remind => remindInvoice(context, ref, invoice),
-      InvoiceAction.markPaid => matchInvoiceToPayment(context, ref, invoice),
-      InvoiceAction.markErroneous =>
-        voidInvoiceWithConfirm(context, ref, invoice),
-      InvoiceAction.replace =>
-        showInvoiceIssueSheet(context, ref, replaces: invoice),
-    };
+    InvoiceAction.quickView => quickViewInvoice(context, ref, invoice),
+    InvoiceAction.downloadPdf => downloadInvoicePdf(context, ref, invoice),
+    InvoiceAction.sharePdf => shareInvoicePdf(context, ref, invoice),
+    InvoiceAction.eInvoice => exportEInvoice(
+      context,
+      ref,
+      invoice,
+      countryCode: countryCode,
+    ),
+    InvoiceAction.remind => remindInvoice(context, ref, invoice),
+    InvoiceAction.markPaid => matchInvoiceToPayment(context, ref, invoice),
+    InvoiceAction.markErroneous => voidInvoiceWithConfirm(
+      context,
+      ref,
+      invoice,
+    ),
+    InvoiceAction.replace => showInvoiceIssueSheet(
+      context,
+      ref,
+      replaces: invoice,
+    ),
+  };
 }
 
 /// #831 — the watermark of a regrouped source: "Regrouped in INV-…", or
@@ -2053,8 +2180,10 @@ Future<void> runInvoiceAction(
 String settledStampOf(BuildContext context, WidgetRef ref, Invoice invoice) {
   if (!invoice.isFolded) return '';
   final l10n = AppLocalizations.of(context);
-  final number =
-      settledByNumberOf(invoice, ref.read(invoicesProvider).value ?? const []);
+  final number = settledByNumberOf(
+    invoice,
+    ref.read(invoicesProvider).value ?? const [],
+  );
   return l10n?.invoicePdfSettledIn(number) ?? 'Regrouped in $number';
 }
 
@@ -2089,10 +2218,14 @@ Future<List<Invoice>?> askRegroupedAnnexes(
   final include = await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text(l10n?.settlementAnnexTitle ?? 'Attach the regrouped invoices?'),
-      content: Text(l10n?.settlementAnnexBody(sources.length) ??
-          'The ${sources.length} invoices this one replaces can follow it, '
-              'each on its own pages and stamped as regrouped.'),
+      title: Text(
+        l10n?.settlementAnnexTitle ?? 'Attach the regrouped invoices?',
+      ),
+      content: Text(
+        l10n?.settlementAnnexBody(sources.length) ??
+            'The ${sources.length} invoices this one replaces can follow it, '
+                'each on its own pages and stamped as regrouped.',
+      ),
       actions: [
         TextButton(
           key: const ValueKey('invoice-annex-alone'),

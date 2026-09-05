@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:deskilo/core/privacy/privacy_policy.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
+import 'package:deskilo/features/profile/domain/personal_info.dart';
 import 'package:deskilo/features/profile/domain/profile_repository.dart';
 
 import '../helpers/test_clock.dart';
@@ -15,6 +16,19 @@ class FakeProfileRepository implements ProfileRepository {
     if (failing) throw StateError('address write failed');
     final mine = _mine;
     if (mine != null) _replaceMine(mine.copyWith(address: address.trim()));
+  }
+
+  /// #886 — the last identity written, for assertions.
+  PersonalInfo? lastPersonalInfo;
+
+  @override
+  Future<void> updatePersonalInfo(PersonalInfo info) async {
+    final mine = _mine;
+    if (mine == null) throw StateError('not signed in');
+    final n = info.normalized();
+    lastPersonalInfo = n;
+    _replaceMine(mine.copyWith(
+        identity: n, countryCode: n.countryCode, vatId: n.vatId));
   }
 
   @override

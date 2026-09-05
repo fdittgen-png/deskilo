@@ -1,0 +1,79 @@
+{
+  "@@locale": "de",
+  "featurePersonalInfo": "Persönliche Angaben",
+  "@featurePersonalInfo": {
+    "description": "#886 personal-information form / feature: featurePersonalInfo"
+  },
+  "featurePersonalInfoDesc": "Mitglieder tragen Name, Postanschrift, Telefon, E-Mail und Kennungen in den Einstellungen ein; Rechnungen und Briefe drucken sie im genormten Anschriftenblock.",
+  "@featurePersonalInfoDesc": {
+    "description": "#886 personal-information form / feature: featurePersonalInfoDesc"
+  },
+  "personalInfoTitle": "Persönliche Angaben",
+  "@personalInfoTitle": {
+    "description": "#886 personal-information form / feature: personalInfoTitle"
+  },
+  "personalInfoSubtitle": "Werden auf Ihren Rechnungen und Briefen gedruckt. Der Nachname erscheint in Großbuchstaben wie auf amtlicher Post.",
+  "@personalInfoSubtitle": {
+    "description": "#886 personal-information form / feature: personalInfoSubtitle"
+  },
+  "personalInfoFirstName": "Vorname",
+  "@personalInfoFirstName": {
+    "description": "#886 personal-information form / feature: personalInfoFirstName"
+  },
+  "personalInfoLastName": "Nachname",
+  "@personalInfoLastName": {
+    "description": "#886 personal-information form / feature: personalInfoLastName"
+  },
+  "personalInfoCompany": "Firma (optional)",
+  "@personalInfoCompany": {
+    "description": "#886 personal-information form / feature: personalInfoCompany"
+  },
+  "personalInfoStreet": "Straße und Hausnummer",
+  "@personalInfoStreet": {
+    "description": "#886 personal-information form / feature: personalInfoStreet"
+  },
+  "personalInfoPostalCode": "Postleitzahl",
+  "@personalInfoPostalCode": {
+    "description": "#886 personal-information form / feature: personalInfoPostalCode"
+  },
+  "personalInfoCity": "Ort",
+  "@personalInfoCity": {
+    "description": "#886 personal-information form / feature: personalInfoCity"
+  },
+  "personalInfoCountry": "Land",
+  "@personalInfoCountry": {
+    "description": "#886 personal-information form / feature: personalInfoCountry"
+  },
+  "personalInfoPhone": "Telefon",
+  "@personalInfoPhone": {
+    "description": "#886 personal-information form / feature: personalInfoPhone"
+  },
+  "personalInfoEmail": "E-Mail für Dokumente",
+  "@personalInfoEmail": {
+    "description": "#886 personal-information form / feature: personalInfoEmail"
+  },
+  "personalInfoVatId": "USt-IdNr. (optional)",
+  "@personalInfoVatId": {
+    "description": "#886 personal-information form / feature: personalInfoVatId"
+  },
+  "personalInfoLegalId": "Handelsregister / Kennung (optional)",
+  "@personalInfoLegalId": {
+    "description": "#886 personal-information form / feature: personalInfoLegalId"
+  },
+  "personalInfoSaved": "Persönliche Angaben gespeichert",
+  "@personalInfoSaved": {
+    "description": "#886 personal-information form / feature: personalInfoSaved"
+  },
+  "personalInfoNone": "Noch nicht ausgefüllt",
+  "@personalInfoNone": {
+    "description": "#886 personal-information form / feature: personalInfoNone"
+  },
+  "personalInfoPreview": "Auf Ihren Dokumenten",
+  "@personalInfoPreview": {
+    "description": "#886 personal-information form / feature: personalInfoPreview"
+  },
+  "personalInfoSave": "Speichern",
+  "@personalInfoSave": {
+    "description": "#886 personal-information form: save button"
+  }
+}
