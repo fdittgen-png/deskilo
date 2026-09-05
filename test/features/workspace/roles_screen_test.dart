@@ -56,6 +56,8 @@ void main() {
           WorkspacePermission.viewFinances,
           WorkspacePermission.viewNegotiations,
           WorkspacePermission.manageNegotiations,
+          // #881 — admins may request payment-condition changes.
+          WorkspacePermission.paymentTermsEdit,
         },
       );
       expect(defaultPermissionsFor(PermissionRole.member), isEmpty);
@@ -162,6 +164,12 @@ void main() {
         File('supabase/migrations/0139_negotiation_permissions.sql')
             .readAsStringSync() +
         File('supabase/migrations/0144_money_validation_parity.sql')
+            .readAsStringSync() +
+        // #881 — paymentTermsEdit: has_permission defaults (0154) and
+        // the set_role_permissions catalog (0155).
+        File('supabase/migrations/0154_member_payment_terms.sql')
+            .readAsStringSync() +
+        File('supabase/migrations/0155_payment_terms_permission_catalog.sql')
             .readAsStringSync();
     expect(sql, contains('role_permissions jsonb'));
     expect(sql, contains('has_permission'));
@@ -171,8 +179,9 @@ void main() {
     // lacked the two negotiation permissions while the file text
     // mentioned them elsewhere, and the RPC refused the client's own
     // payload with "unknown permission").
-    final latest = File('supabase/migrations/0144_money_validation_parity.sql')
-        .readAsStringSync();
+    final latest =
+        File('supabase/migrations/0155_payment_terms_permission_catalog.sql')
+            .readAsStringSync();
     final catalog = RegExp(r"v_catalog text\[\] := array\[([^\]]+)\]")
         .firstMatch(latest)!
         .group(1)!;
