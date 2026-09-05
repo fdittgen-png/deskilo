@@ -388,6 +388,28 @@ ReportBands defaultUsageBands(AppLocalizations? l10n) => ReportBands(
       footer: _legalFooter(l10n),
     );
 
+/// The VAT REPORT (#878): every position of the period by rate, the
+/// subtotals per rate and category, the period totals — what the
+/// accountant reconciles against the declaration boxes.
+ReportBands defaultVatBands(AppLocalizations? l10n) => ReportBands(
+      header: '''
+# {{ workspace }}
+> {{ workspace_address }}
+> {{ issued }}
+---
+# ${l10n?.reportDocVat ?? 'VAT report'}
+> {{ vat_period }}''',
+      body: '''
+## ${l10n?.vatReportPositions ?? 'Positions'}
+{% for p in vat_positions %}{{ p.number }} · {{ p.date }} · {{ p.customer }}{% if p.reverses != "" %} ⟲ {{ p.reverses }}{% endif %} | {{ p.rate }} {{ p.category }} | {{ p.net }} | {{ p.vat }} | {{ p.gross }}
+{% endfor %}
+## ${l10n?.vatReportByRate ?? 'Totals per rate'}
+{% for t in vat_rate_totals %}{{ t.rate }} {{ t.category }} · {{ t.count }} | {{ t.net }} | {{ t.vat }} | {{ t.gross }}
+{% endfor %}---
+= ${l10n?.vatReportTotals ?? 'Period totals'} | {{ vat_period_net }} | {{ vat_period_vat }} | {{ vat_period_gross }}''',
+      footer: _legalFooter(l10n),
+    );
+
 /// The WORKSPACE REPORT document (#494) as editable bands.
 ReportBands defaultWorkspaceBands(AppLocalizations? l10n) => ReportBands(
       header: '''
@@ -533,6 +555,7 @@ List<ReportPreset> presetsForDoc(String docId, AppLocalizations? l10n) {
       // break them.
       return defaultBandsForDoc(docId, l10n);
     }
+    if (docId == 'vat') return defaultVatBands(l10n);
     if (docId == 'workspace') {
       return id == 'classic'
           ? defaultWorkspaceBands(l10n)
@@ -561,6 +584,7 @@ ReportBands defaultBandsForDoc(String docId, AppLocalizations? l10n) {
   if (docId == 'payments') return defaultPaymentsBands(l10n);
   if (docId == 'usage') return defaultUsageBands(l10n);
   if (docId == 'workspace') return defaultWorkspaceBands(l10n);
+  if (docId == 'vat') return defaultVatBands(l10n);
   if (docId == 'coa') return defaultCoaBands(l10n);
   if (docId == 'badges') return defaultBadgeSheetBands(l10n);
   if (docId == 'space_codes') return defaultSpaceCodesBands(l10n);

@@ -7730,6 +7730,35 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un taux encore utilisé par une facture ou un service est conservé, désactivé.';
 
   @override
+  String get featureVatReport => 'Rapport de TVA';
+
+  @override
+  String get featureVatReportDesc =>
+      'Chaque position taxable d\'un mois ou d\'une période — document, client, HT, taux, TVA, TTC, catégorie — avec sous-totaux par taux, en lettre et en CSV pour le comptable.';
+
+  @override
+  String get reportDocVat => 'Rapport de TVA';
+
+  @override
+  String get vatReportPositions => 'Positions';
+
+  @override
+  String get vatReportByRate => 'Totaux par taux';
+
+  @override
+  String get vatReportTotals => 'Totaux de la période';
+
+  @override
+  String get vatReportPdf => 'Rapport de TVA (PDF)';
+
+  @override
+  String get vatReportCsv => 'Rapport de TVA (CSV)';
+
+  @override
+  String get invoiceGapBuyerVatIdFormat =>
+      'Le numéro de TVA du client n\'a pas la forme de son pays — vérifiez-le.';
+
+  @override
   String get assistantPrefix => 'Assistant';
 
   @override

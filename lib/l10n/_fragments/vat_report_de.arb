@@ -1,0 +1,39 @@
+{
+  "@@locale": "de",
+  "featureVatReport": "MwSt-Bericht",
+  "@featureVatReport": {
+    "description": "#878 VAT review / report: featureVatReport"
+  },
+  "featureVatReportDesc": "Jede steuerbare Position eines Monats oder Zeitraums — Beleg, Kunde, netto, Satz, MwSt, brutto, Kategorie — mit Zwischensummen je Satz, als Brief und als CSV für die Buchhaltung.",
+  "@featureVatReportDesc": {
+    "description": "#878 VAT review / report: featureVatReportDesc"
+  },
+  "reportDocVat": "MwSt-Bericht",
+  "@reportDocVat": {
+    "description": "#878 VAT review / report: reportDocVat"
+  },
+  "vatReportPositions": "Positionen",
+  "@vatReportPositions": {
+    "description": "#878 VAT review / report: vatReportPositions"
+  },
+  "vatReportByRate": "Summen je Satz",
+  "@vatReportByRate": {
+    "description": "#878 VAT review / report: vatReportByRate"
+  },
+  "vatReportTotals": "Summen des Zeitraums",
+  "@vatReportTotals": {
+    "description": "#878 VAT review / report: vatReportTotals"
+  },
+  "vatReportPdf": "MwSt-Bericht (PDF)",
+  "@vatReportPdf": {
+    "description": "#878 VAT review / report: vatReportPdf"
+  },
+  "vatReportCsv": "MwSt-Bericht (CSV)",
+  "@vatReportCsv": {
+    "description": "#878 VAT review / report: vatReportCsv"
+  },
+  "invoiceGapBuyerVatIdFormat": "Die USt-IdNr. des Kunden hat nicht die Form ihres Landes — bitte prüfen.",
+  "@invoiceGapBuyerVatIdFormat": {
+    "description": "#878 VAT review / report: invoiceGapBuyerVatIdFormat"
+  }
+}

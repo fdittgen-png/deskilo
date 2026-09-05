@@ -86,7 +86,8 @@ import 'package:flutter_test/flutter_test.dart';
 //   every report.
 // 77→78 (2026-09-05): #873 usageReport — the month-end consumption report.
 // 79→80 (2026-09-05): #873 usageReport — the month-end consumption report.
-const int _expectedFeatureCount = 80;
+// 80→81 (2026-09-05): #878 vatReport — the period's VAT positions.
+const int _expectedFeatureCount = 81;
 
 void main() {
   test('every functionality is registered — the pin', () {

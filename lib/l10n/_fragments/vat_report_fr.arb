@@ -1,0 +1,39 @@
+{
+  "@@locale": "fr",
+  "featureVatReport": "Rapport de TVA",
+  "@featureVatReport": {
+    "description": "#878 VAT review / report: featureVatReport"
+  },
+  "featureVatReportDesc": "Chaque position taxable d'un mois ou d'une période — document, client, HT, taux, TVA, TTC, catégorie — avec sous-totaux par taux, en lettre et en CSV pour le comptable.",
+  "@featureVatReportDesc": {
+    "description": "#878 VAT review / report: featureVatReportDesc"
+  },
+  "reportDocVat": "Rapport de TVA",
+  "@reportDocVat": {
+    "description": "#878 VAT review / report: reportDocVat"
+  },
+  "vatReportPositions": "Positions",
+  "@vatReportPositions": {
+    "description": "#878 VAT review / report: vatReportPositions"
+  },
+  "vatReportByRate": "Totaux par taux",
+  "@vatReportByRate": {
+    "description": "#878 VAT review / report: vatReportByRate"
+  },
+  "vatReportTotals": "Totaux de la période",
+  "@vatReportTotals": {
+    "description": "#878 VAT review / report: vatReportTotals"
+  },
+  "vatReportPdf": "Rapport de TVA (PDF)",
+  "@vatReportPdf": {
+    "description": "#878 VAT review / report: vatReportPdf"
+  },
+  "vatReportCsv": "Rapport de TVA (CSV)",
+  "@vatReportCsv": {
+    "description": "#878 VAT review / report: vatReportCsv"
+  },
+  "invoiceGapBuyerVatIdFormat": "Le numéro de TVA du client n'a pas la forme de son pays — vérifiez-le.",
+  "@invoiceGapBuyerVatIdFormat": {
+    "description": "#878 VAT review / report: invoiceGapBuyerVatIdFormat"
+  }
+}

@@ -54,6 +54,10 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       'usage_extra_half_days' ||
       'usage_overage' ||
       'usage_supplements' ||
+      'vat_period' ||
+      'vat_period_net' ||
+      'vat_period_vat' ||
+      'vat_period_gross' ||
       'total' ||
       'charges' ||
       'payments' ||
@@ -63,8 +67,12 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       'credit_note' ||
       'refund_total' =>
         ReportFieldGroup.money,
-      'lines' || 'vat' ||
-      'usage_records' => ReportFieldGroup.loops,
+      'lines' ||
+      'vat' ||
+      'usage_records' ||
+      'vat_positions' ||
+      'vat_rate_totals' =>
+        ReportFieldGroup.loops,
       _ => ReportFieldGroup.legal,
     };
 
@@ -91,6 +99,10 @@ String reportFieldMarkup(String field) => switch (field) {
         '{% for v in vat %}{{ v.rate }} | {{ v.net }} | {{ v.amount }}{% endfor %}',
       'usage_records' =>
         '{% for r in usage_records %}{{ r.date }} | {{ r.space }} | {{ r.counted }}{% endfor %}',
+      'vat_positions' =>
+        '{% for p in vat_positions %}{{ p.number }} | {{ p.rate }} | {{ p.net }} | {{ p.vat }} | {{ p.gross }}{% endfor %}',
+      'vat_rate_totals' =>
+        '{% for t in vat_rate_totals %}{{ t.rate }} | {{ t.net }} | {{ t.vat }} | {{ t.gross }}{% endfor %}',
       _ => '{{ $field }}',
     };
 

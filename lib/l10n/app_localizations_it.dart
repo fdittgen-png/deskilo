@@ -7719,6 +7719,35 @@ class AppLocalizationsIt extends AppLocalizations {
       'Un\'aliquota ancora usata da una fattura o da un servizio viene conservata, disattivata.';
 
   @override
+  String get featureVatReport => 'Report IVA';
+
+  @override
+  String get featureVatReportDesc =>
+      'Ogni posizione imponibile di un mese o periodo — documento, cliente, imponibile, aliquota, IVA, totale, categoria — con subtotali per aliquota, come lettera e come CSV per il commercialista.';
+
+  @override
+  String get reportDocVat => 'Report IVA';
+
+  @override
+  String get vatReportPositions => 'Posizioni';
+
+  @override
+  String get vatReportByRate => 'Totali per aliquota';
+
+  @override
+  String get vatReportTotals => 'Totali del periodo';
+
+  @override
+  String get vatReportPdf => 'Report IVA (PDF)';
+
+  @override
+  String get vatReportCsv => 'Report IVA (CSV)';
+
+  @override
+  String get invoiceGapBuyerVatIdFormat =>
+      'La partita IVA del cliente non ha la forma del suo paese — verificala.';
+
+  @override
   String get assistantPrefix => 'Assistente';
 
   @override

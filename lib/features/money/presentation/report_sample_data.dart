@@ -104,6 +104,17 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
         {'date': '2026-09-02', 'space': 'A1', 'counted': '4 h 00'},
         {'date': '2026-09-04', 'space': 'A1', 'counted': '8 h 00'},
       ],
+      'vat_period': '2026-09',
+      'vat_period_net': '1 000,00 €',
+      'vat_period_vat': '200,00 €',
+      'vat_period_gross': '1 200,00 €',
+      'vat_positions': [
+        {'number': 'INV-2026-0007', 'date': '2026-09-03', 'customer': 'Anne DUPONT', 'rate': '20 %', 'category': 'S', 'net': '500,00 €', 'vat': '100,00 €', 'gross': '600,00 €', 'reverses': ''},
+        {'number': 'INV-2026-0008', 'date': '2026-09-12', 'customer': 'Atelier Dupont SARL', 'rate': '20 %', 'category': 'S', 'net': '500,00 €', 'vat': '100,00 €', 'gross': '600,00 €', 'reverses': ''},
+      ],
+      'vat_rate_totals': [
+        {'rate': '20 %', 'category': 'S', 'count': '2', 'net': '1 000,00 €', 'vat': '200,00 €', 'gross': '1 200,00 €'},
+      ],
       'payment_terms':
           l10n?.invoiceLegalPaymentTermsDefault ?? 'Payment on receipt.',
       'late_penalty': l10n?.invoiceLegalLatePenaltyDefault ??

@@ -1,0 +1,39 @@
+{
+  "@@locale": "en",
+  "featureVatReport": "VAT report",
+  "@featureVatReport": {
+    "description": "#878 VAT review / report: featureVatReport"
+  },
+  "featureVatReportDesc": "Every taxable position of a month or period — document, customer, net, rate, VAT, gross, category — with subtotals per rate, as a letter and as a CSV for the accountant.",
+  "@featureVatReportDesc": {
+    "description": "#878 VAT review / report: featureVatReportDesc"
+  },
+  "reportDocVat": "VAT report",
+  "@reportDocVat": {
+    "description": "#878 VAT review / report: reportDocVat"
+  },
+  "vatReportPositions": "Positions",
+  "@vatReportPositions": {
+    "description": "#878 VAT review / report: vatReportPositions"
+  },
+  "vatReportByRate": "Totals per rate",
+  "@vatReportByRate": {
+    "description": "#878 VAT review / report: vatReportByRate"
+  },
+  "vatReportTotals": "Period totals",
+  "@vatReportTotals": {
+    "description": "#878 VAT review / report: vatReportTotals"
+  },
+  "vatReportPdf": "VAT report (PDF)",
+  "@vatReportPdf": {
+    "description": "#878 VAT review / report: vatReportPdf"
+  },
+  "vatReportCsv": "VAT report (CSV)",
+  "@vatReportCsv": {
+    "description": "#878 VAT review / report: vatReportCsv"
+  },
+  "invoiceGapBuyerVatIdFormat": "The customer's VAT number does not have its country's shape — check it.",
+  "@invoiceGapBuyerVatIdFormat": {
+    "description": "#878 VAT review / report: invoiceGapBuyerVatIdFormat"
+  }
+}

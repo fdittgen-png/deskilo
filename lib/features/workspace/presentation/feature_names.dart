@@ -129,6 +129,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureReportTexts ?? 'Report texts',
       WorkspaceFeature.usageReport =>
         l10n?.featureUsageReport ?? 'Consumption report',
+      WorkspaceFeature.vatReport =>
+        l10n?.featureVatReport ?? 'VAT report',
       WorkspaceFeature.priceNegotiations =>
         l10n?.featurePriceNegotiationsTitle ?? 'Price negotiations',
       WorkspaceFeature.scheduledExpenses =>

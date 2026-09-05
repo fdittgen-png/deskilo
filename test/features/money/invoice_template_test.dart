@@ -135,6 +135,9 @@ void main() {
         'usage_paid', 'usage_included_half_days', 'usage_used_half_days',
         'usage_remaining_half_days', 'usage_extra_half_days', 'usage_overage',
         'usage_supplements', 'usage_records',
+        // #878 — the VAT report.
+        'vat_period', 'vat_period_net', 'vat_period_vat', 'vat_period_gross',
+        'vat_positions', 'vat_rate_totals',
         'payment_terms', 'payment_terms_source',
         'late_penalty', 'recovery_indemnity', 'escompte', 'insurance',
         'special_mentions', //

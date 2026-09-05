@@ -266,6 +266,13 @@ class InvoicePdfTemplate {
     'usage_overage',
     'usage_supplements',
     'usage_records',
+    // #878 — the VAT report.
+    'vat_period',
+    'vat_period_net',
+    'vat_period_vat',
+    'vat_period_gross',
+    'vat_positions',
+    'vat_rate_totals',
     'payment_terms',
     // #881 — 'workspace' | 'member': whether the conditions are the member's own.
     'payment_terms_source',
@@ -297,7 +304,9 @@ class InvoicePdfTemplate {
     'credit_note',
   ];
 
-  static const List<String> _listPlaceholders = ['lines', 'vat', 'usage_records'];
+  static const List<String> _listPlaceholders = [
+    'lines', 'vat', 'usage_records', 'vat_positions', 'vat_rate_totals',
+  ];
 
   static Map<String, Object?> get placeholderDefaults => {
         // #880 — `text.<key>` answers '' for an unknown key, so a guard

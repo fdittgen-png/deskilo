@@ -45,6 +45,8 @@ String eInvoiceGapText(AppLocalizations? l10n, EInvoiceGap gap) =>
             'The workspace country is missing.',
       EInvoiceGap.missingBuyerCountry => l10n?.invoiceGapMissingBuyerCountry ??
           "The customer's country is missing.",
+      EInvoiceGap.buyerVatIdFormat => l10n?.invoiceGapBuyerVatIdFormat ??
+          "The customer's VAT number does not have its country's shape — check it.",
       EInvoiceGap.noChargeLines => l10n?.invoiceGapNoChargeLines ??
           'This invoice has no charge line — there is no invoice to send.',
       EInvoiceGap.missingSellerCity => l10n?.invoiceGapMissingSellerCity ??
