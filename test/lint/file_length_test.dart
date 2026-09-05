@@ -83,6 +83,7 @@ const Map<String, int> _baseline = {
   // 1220→1200 (2026-08-31): #767 scheduled expenses — the button, the
   // sweep watch and the occurrence cards join the other money actions.
   'lib/features/money/presentation/screens/money_screen.dart': 1227, // 2026-09-05 #881 member payment conditions: effective terms threaded to every document
+  'lib/features/money/presentation/screens/money_screen.dart': 1224, // 2026-09-05 #880 reportTexts beside #887 managedProfiles after the rebase
   // 1210→1220 (2026-08-06): #512 the account card above the bill.
   // 910→950 (2026-08-04): #456 note tile + admin broadcast button —
   // the dialog itself is its own file.
@@ -154,7 +155,7 @@ const Map<String, int> _baseline = {
   // 700→800 (2026-08-05): #496 the template-language chips + per-language
   // overlay assembly.
   // 800→810 (2026-08-31): #763 the report editor's header help dot.
-  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 1110, // 2026-09-02 #822 the page, undo/redo, guards // 2026-09-04 #875 layout drafts per kind, the panel mount and its three handlers — the panel and the actions themselves live in their own files
+  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 1170, // 2026-09-02 #822 the page, undo/redo, guards // 2026-09-04 #875 layout drafts per kind, the panel mount and its three handlers — the panel and the actions themselves live in their own files // 2026-09-05 #880 the owner-texts drafts per language, merged into every preview/export, and the Texts panel mount
   'lib/features/workspace/domain/workspace_xml.dart': 800,
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.

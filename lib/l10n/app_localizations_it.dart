@@ -7130,6 +7130,46 @@ class AppLocalizationsIt extends AppLocalizations {
       'Progetta un report indicando dove si trova ogni elemento, in mm, cm, px o %; il PDF stampa esattamente questo. Un documento con layout lo usa, gli altri mantengono le loro bande.';
 
   @override
+  String get featureReportTexts => 'Testi dei report';
+
+  @override
+  String get featureReportTextsDesc =>
+      'Il proprietario scrive testi (saluto, nota, paragrafo legale) per lingua e li colloca in qualsiasi report come text.chiave — la formulazione cambia senza toccare il design.';
+
+  @override
+  String get reportTextsTitle => 'Testi';
+
+  @override
+  String get reportTextsHint =>
+      'Le tue formulazioni, collocate in qualsiasi banda o layout come text.chiave. Ogni lingua può avere il proprio valore; uno vuoto ricade sulla lingua predefinita.';
+
+  @override
+  String get reportTextsAdd => 'Aggiungi un testo';
+
+  @override
+  String get reportTextsKey => 'Chiave';
+
+  @override
+  String get reportTextsKeyHint =>
+      'Lettere, cifre e trattini bassi, es. saluto';
+
+  @override
+  String get reportTextsKeyInvalid =>
+      'Solo lettere, cifre e trattini bassi, iniziando con una lettera.';
+
+  @override
+  String get reportTextsKeyExists => 'Questa chiave esiste già.';
+
+  @override
+  String get reportTextsRemove => 'Rimuovi testo';
+
+  @override
+  String get reportTextsInherited => 'Lingua predefinita';
+
+  @override
+  String get reportFieldGroupTexts => 'I tuoi testi';
+
+  @override
   String get reserveMonthView => 'Mese';
 
   @override

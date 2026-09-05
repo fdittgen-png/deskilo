@@ -174,6 +174,7 @@ class ReportVisualEditor extends ConsumerStatefulWidget {
     required this.bandKey,
     this.bandChoices = const {},
     this.onMoveToBand,
+    this.textKeys = const [],
   });
 
   final TextEditingController controller;
@@ -182,6 +183,9 @@ class ReportVisualEditor extends ConsumerStatefulWidget {
 
   /// #822 — the OTHER bands (key → label) an element can be sent to.
   final Map<String, String> bandChoices;
+
+  /// #880 — the owner's text keys the field picker offers.
+  final List<String> textKeys;
 
   /// #822 — called when an element leaves for [bandChoices]' band; the
   /// host appends it there.
@@ -348,7 +352,8 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
   }
 
   Future<void> _pickField() async {
-    final markup = await showReportFieldPicker(context);
+    final markup =
+        await showReportFieldPicker(context, textKeys: widget.textKeys);
     if (markup == null || !mounted) return;
     _insertToken(markup);
   }

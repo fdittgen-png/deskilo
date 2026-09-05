@@ -35,12 +35,15 @@ Future<void> reset(WidgetTester tester) async {
 }
 
 Future<String> markupOf(WidgetTester tester, String band) async {
+  // #880 — the column may be taller than the viewport now.
+  await tester.ensureVisible(find.text('Markup'));
   await tester.tap(find.text('Markup'));
   await tester.pumpAndSettle();
   final text = tester
       .widget<TextField>(find.byKey(ValueKey('invoice-template-$band')))
       .controller!
       .text;
+  await tester.ensureVisible(find.text('Visual'));
   await tester.tap(find.text('Visual'));
   await tester.pumpAndSettle();
   return text;

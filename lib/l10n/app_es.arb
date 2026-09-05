@@ -4230,6 +4230,54 @@
   "@featureReportLayoutsDesc": {
     "description": "Features screen description for the #875 positioned report layouts flag"
   },
+  "featureReportTexts": "Textos de informes",
+  "@featureReportTexts": {
+    "description": "#880 report texts: featureReportTexts"
+  },
+  "featureReportTextsDesc": "El propietario escribe textos (saludo, nota, párrafo legal) por idioma y los coloca en cualquier informe como text.clave — el texto cambia sin tocar el diseño.",
+  "@featureReportTextsDesc": {
+    "description": "#880 report texts: featureReportTextsDesc"
+  },
+  "reportTextsTitle": "Textos",
+  "@reportTextsTitle": {
+    "description": "#880 report texts: reportTextsTitle"
+  },
+  "reportTextsHint": "Sus propias formulaciones, colocadas en cualquier banda o diseño como text.clave. Cada idioma puede tener su valor; uno vacío recurre al idioma predeterminado.",
+  "@reportTextsHint": {
+    "description": "#880 report texts: reportTextsHint"
+  },
+  "reportTextsAdd": "Añadir un texto",
+  "@reportTextsAdd": {
+    "description": "#880 report texts: reportTextsAdd"
+  },
+  "reportTextsKey": "Clave",
+  "@reportTextsKey": {
+    "description": "#880 report texts: reportTextsKey"
+  },
+  "reportTextsKeyHint": "Letras, dígitos y guiones bajos, p. ej. saludo",
+  "@reportTextsKeyHint": {
+    "description": "#880 report texts: reportTextsKeyHint"
+  },
+  "reportTextsKeyInvalid": "Solo letras, dígitos y guiones bajos, empezando por una letra.",
+  "@reportTextsKeyInvalid": {
+    "description": "#880 report texts: reportTextsKeyInvalid"
+  },
+  "reportTextsKeyExists": "Esta clave ya existe.",
+  "@reportTextsKeyExists": {
+    "description": "#880 report texts: reportTextsKeyExists"
+  },
+  "reportTextsRemove": "Eliminar texto",
+  "@reportTextsRemove": {
+    "description": "#880 report texts: reportTextsRemove"
+  },
+  "reportTextsInherited": "Idioma predeterminado",
+  "@reportTextsInherited": {
+    "description": "#880 report texts: reportTextsInherited"
+  },
+  "reportFieldGroupTexts": "Sus textos",
+  "@reportFieldGroupTexts": {
+    "description": "#880 report texts: reportFieldGroupTexts"
+  },
   "reserveMonthView": "Mes",
   "monthFreeCount": "{free}/{total}",
   "reservationRecurring": "Reserva recurrente",

@@ -895,6 +895,10 @@ Todos los informes lo tienen — factura, proforma, extracto, acuerdo financiero
 
 Una importación se **rechaza con el motivo** si el archivo no es JSON legible, no es un diseño de DesKilo, viene de una versión más nueva, es de un informe que este espacio no tiene, o pertenece a **otro** informe: un diseño nunca se redirige en silencio. Una importación aceptada llega al editor, no al espacio: nada cambia hasta que pulsas **Guardar**.
 
+### 11k. Sus propios textos, por idioma (#880)
+
+Algunas formulaciones son suyas, no del diseño: un saludo, una nota de temporada, un párrafo legal, el nombre del banco. El panel **Textos** al pie del diseñador de informes las guarda como `clave → valor`. **Añadir un texto** pide una clave (letras, dígitos, guiones bajos — `saludo`) y después escribe el valor; cualquier banda o diseño posicionado lo imprime con el campo `text.saludo` entre llaves dobles, ofrecido por el selector de campos bajo **Sus textos**. Cambie el valor y todos los documentos cambian — el diseño no se toca. Con un chip de idioma seleccionado el panel edita los valores de ese idioma; uno vacío recurre al idioma predeterminado, exactamente como los documentos. Una clave que nadie rellenó no imprime nada (y una condición sobre ella queda falsa). Un archivo de diseño exportado lleva los textos de su idioma en un elemento `<texts>`; la importación los devuelve.
+
 ### Maquetas posicionadas (XML)
 
 Un informe puede describirse con una **maqueta** que indica dónde se sitúa cada elemento — en milímetros, centímetros, píxeles o como porcentaje de su contenedor — en lugar de bandas encadenadas. Cuando un documento tiene maqueta, es la que se imprime; si no, se imprimen sus bandas como antes. Ambas conviven: migra un documento cada vez.

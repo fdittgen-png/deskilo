@@ -82,6 +82,8 @@ import 'package:flutter_test/flutter_test.dart';
 //   handed over by a bound invitation.
 // 77→78 (2026-09-05): #881 memberPaymentTerms — a member's own payment
 //   conditions, changed by validated request.
+// 77→78 (2026-09-05): #880 reportTexts — owner texts per language in
+//   every report.
 const int _expectedFeatureCount = 78;
 
 void main() {

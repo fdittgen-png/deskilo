@@ -249,6 +249,12 @@ class FeaturesScreen extends ConsumerWidget {
               'The workspace sets the default payment conditions; a '
                   'member may have their own, visible to them, changed '
                   'only through a validated request by an authorised admin.',
+        WorkspaceFeature.reportTexts =>
+          l10n?.featureReportTextsDesc ??
+              'The owner writes texts (a greeting, a note, a legal '
+                  'paragraph) per language and places them in any '
+                  'report as {{ text.key }} — wording changes without '
+                  'touching the design.',
         WorkspaceFeature.priceNegotiations =>
           l10n?.featurePriceNegotiationsDesc ??
               'The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record.',

@@ -7070,6 +7070,46 @@ class AppLocalizationsEn extends AppLocalizations {
       'Design a report by stating where each element sits, in mm, cm, px or %; the PDF prints exactly that. A document with a layout uses it, the others keep their bands.';
 
   @override
+  String get featureReportTexts => 'Report texts';
+
+  @override
+  String get featureReportTextsDesc =>
+      'The owner writes texts (a greeting, a note, a legal paragraph) per language and places them in any report as text.key — wording changes without touching the design.';
+
+  @override
+  String get reportTextsTitle => 'Texts';
+
+  @override
+  String get reportTextsHint =>
+      'Your own wording, placed in any band or layout as text.key. Each language may carry its own value; an empty one falls back to the default language.';
+
+  @override
+  String get reportTextsAdd => 'Add a text';
+
+  @override
+  String get reportTextsKey => 'Key';
+
+  @override
+  String get reportTextsKeyHint =>
+      'Letters, digits and underscores, e.g. greeting';
+
+  @override
+  String get reportTextsKeyInvalid =>
+      'Use letters, digits and underscores only, starting with a letter.';
+
+  @override
+  String get reportTextsKeyExists => 'This key already exists.';
+
+  @override
+  String get reportTextsRemove => 'Remove text';
+
+  @override
+  String get reportTextsInherited => 'Default language';
+
+  @override
+  String get reportFieldGroupTexts => 'Your texts';
+
+  @override
   String get reserveMonthView => 'Month';
 
   @override

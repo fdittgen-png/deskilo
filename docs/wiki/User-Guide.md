@@ -923,6 +923,10 @@ Your personal screen, top to bottom:
 - **About** — the app version, the author (Florian DITTGEN), the open-source licence (0BSD) with the source on GitHub, the privacy policy, a bug-report/feature link, and how to **support the project** (PayPal, Revolut).
 - **Sign out**.
 
+### 11k. Your own texts, per language (#880)
+
+Some wording is yours, not the design's: a greeting, a seasonal note, a legal paragraph, the name of the bank. The **Texts** panel at the foot of the report designer holds them as `key → value`. **Add a text** asks for a key (letters, digits, underscores — `greeting`), then you write the value; any band or positioned layout prints it with the placeholder `text.greeting` between double braces, offered by the field picker under **Your texts**. Change the value and every document changes — the design is untouched. With a language chip selected the panel edits that language's values; an empty one falls back to the default language's, exactly as documents do. A key nobody filled in prints nothing (and a condition on it stays false). An exported layout file carries the texts of its language in a `<texts>` element; importing brings them back.
+
 ### Your own server — point the app at your community's Supabase
 
 By default the app talks to its own server, and nothing here needs your attention. But DesKilo's backend is part of the source code — the schema, the row-level-security policies and the edge functions — so a community can run **its own Supabase project** and keep every byte on it. **Settings → Advanced → Server** switches this device over, with no rebuild:

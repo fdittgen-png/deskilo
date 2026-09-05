@@ -1,0 +1,51 @@
+{
+  "@@locale": "en",
+  "featureReportTexts": "Report texts",
+  "@featureReportTexts": {
+    "description": "#880 report texts: featureReportTexts"
+  },
+  "featureReportTextsDesc": "The owner writes texts (a greeting, a note, a legal paragraph) per language and places them in any report as text.key — wording changes without touching the design.",
+  "@featureReportTextsDesc": {
+    "description": "#880 report texts: featureReportTextsDesc"
+  },
+  "reportTextsTitle": "Texts",
+  "@reportTextsTitle": {
+    "description": "#880 report texts: reportTextsTitle"
+  },
+  "reportTextsHint": "Your own wording, placed in any band or layout as text.key. Each language may carry its own value; an empty one falls back to the default language.",
+  "@reportTextsHint": {
+    "description": "#880 report texts: reportTextsHint"
+  },
+  "reportTextsAdd": "Add a text",
+  "@reportTextsAdd": {
+    "description": "#880 report texts: reportTextsAdd"
+  },
+  "reportTextsKey": "Key",
+  "@reportTextsKey": {
+    "description": "#880 report texts: reportTextsKey"
+  },
+  "reportTextsKeyHint": "Letters, digits and underscores, e.g. greeting",
+  "@reportTextsKeyHint": {
+    "description": "#880 report texts: reportTextsKeyHint"
+  },
+  "reportTextsKeyInvalid": "Use letters, digits and underscores only, starting with a letter.",
+  "@reportTextsKeyInvalid": {
+    "description": "#880 report texts: reportTextsKeyInvalid"
+  },
+  "reportTextsKeyExists": "This key already exists.",
+  "@reportTextsKeyExists": {
+    "description": "#880 report texts: reportTextsKeyExists"
+  },
+  "reportTextsRemove": "Remove text",
+  "@reportTextsRemove": {
+    "description": "#880 report texts: reportTextsRemove"
+  },
+  "reportTextsInherited": "Default language",
+  "@reportTextsInherited": {
+    "description": "#880 report texts: reportTextsInherited"
+  },
+  "reportFieldGroupTexts": "Your texts",
+  "@reportFieldGroupTexts": {
+    "description": "#880 report texts: reportFieldGroupTexts"
+  }
+}

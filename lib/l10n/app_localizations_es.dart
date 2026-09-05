@@ -7117,6 +7117,46 @@ class AppLocalizationsEs extends AppLocalizations {
       'Diseñe un informe indicando dónde se sitúa cada elemento, en mm, cm, px o %; el PDF imprime exactamente eso. Un documento con maqueta la usa; los demás conservan sus bandas.';
 
   @override
+  String get featureReportTexts => 'Textos de informes';
+
+  @override
+  String get featureReportTextsDesc =>
+      'El propietario escribe textos (saludo, nota, párrafo legal) por idioma y los coloca en cualquier informe como text.clave — el texto cambia sin tocar el diseño.';
+
+  @override
+  String get reportTextsTitle => 'Textos';
+
+  @override
+  String get reportTextsHint =>
+      'Sus propias formulaciones, colocadas en cualquier banda o diseño como text.clave. Cada idioma puede tener su valor; uno vacío recurre al idioma predeterminado.';
+
+  @override
+  String get reportTextsAdd => 'Añadir un texto';
+
+  @override
+  String get reportTextsKey => 'Clave';
+
+  @override
+  String get reportTextsKeyHint =>
+      'Letras, dígitos y guiones bajos, p. ej. saludo';
+
+  @override
+  String get reportTextsKeyInvalid =>
+      'Solo letras, dígitos y guiones bajos, empezando por una letra.';
+
+  @override
+  String get reportTextsKeyExists => 'Esta clave ya existe.';
+
+  @override
+  String get reportTextsRemove => 'Eliminar texto';
+
+  @override
+  String get reportTextsInherited => 'Idioma predeterminado';
+
+  @override
+  String get reportFieldGroupTexts => 'Sus textos';
+
+  @override
   String get reserveMonthView => 'Mes';
 
   @override

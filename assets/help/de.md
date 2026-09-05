@@ -874,6 +874,10 @@ Jeder Bericht hat das — Rechnung, Proforma, Abrechnung, Vereinbarung, Zahlungs
 
 Ein Import wird **mit Begründung abgelehnt**, wenn die Datei kein lesbares JSON ist, keine DesKilo-Vorlage, aus einer neueren Version stammt, einen hier nicht vorhandenen Bericht betrifft oder zu einem **anderen** Bericht gehört — eine Vorlage wird nie stillschweigend umgelenkt. Ein angenommener Import landet im Editor, nicht im Space: nichts ändert sich, bis Sie **Speichern** drücken.
 
+### 11k. Eigene Texte, je Sprache (#880)
+
+Manche Formulierungen gehören dir, nicht der Vorlage: ein Gruß, ein saisonaler Hinweis, ein Rechtsabsatz, der Name der Bank. Das Panel **Texte** am Fuß des Report-Editors hält sie als `Schlüssel → Wert`. **Text hinzufügen** fragt nach einem Schlüssel (Buchstaben, Ziffern, Unterstriche — `gruss`), dann schreibst du den Wert; jede Band oder positionierte Vorlage druckt ihn über den Platzhalter `text.gruss` in doppelten geschweiften Klammern, den die Feldauswahl unter **Ihre Texte** anbietet. Ändere den Wert und jedes Dokument ändert sich — die Vorlage bleibt unberührt. Mit gewähltem Sprach-Chip bearbeitet das Panel die Werte dieser Sprache; ein leerer fällt auf die Standardsprache zurück, genau wie Dokumente. Ein nie befüllter Schlüssel druckt nichts (und eine Bedingung darauf bleibt falsch). Eine exportierte Vorlagendatei trägt die Texte ihrer Sprache in einem `<texts>`-Element; der Import bringt sie zurück.
+
 ### Positionierte Layouts (XML)
 
 Ein Bericht kann durch ein **Layout** beschrieben werden, das festlegt, wo jedes Element sitzt — in Millimetern, Zentimetern, Pixeln oder als Prozent seines Rahmens — statt durch aufeinanderfolgende Bänder. Hat ein Dokument ein Layout, wird es gedruckt; sonst drucken die Bänder wie bisher. Beides besteht nebeneinander: Sie stellen ein Dokument nach dem anderen um.

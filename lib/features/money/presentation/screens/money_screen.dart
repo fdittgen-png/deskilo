@@ -25,6 +25,7 @@ import '../../../workspace/domain/overage_policy.dart';
 import '../../../workspace/domain/payment_instructions.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/invoice_pdf_template.dart';
 import '../../domain/bill_pdf.dart';
 import '../../domain/invoice_pdf.dart';
 import '../../domain/invoice_report.dart';
@@ -246,16 +247,18 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
         currencyCode: workspace.currencyCode,
         workspace: workspace,
       );
-      final statementBands = (ref
-                  .read(enabledFeaturesSyncProvider)
-                  .contains(WorkspaceFeature.invoicePdfTemplate)
-              ? ref.read(invoicePdfTemplateProvider).value
-              : null)
-          ?.statementBands;
+      final statementTemplate = ref
+              .read(enabledFeaturesSyncProvider)
+              .contains(WorkspaceFeature.invoicePdfTemplate)
+          ? ref.read(invoicePdfTemplateProvider).value
+          : null;
+      final statementBands = statementTemplate?.statementBands;
+      // #880 — the owner's texts beside the data.
+      final statementTexts = statementTemplate?.texts ?? const <String, String>{};
       return (statementBands != null
-              ? renderReportBands(bands: statementBands, data: data)
+              ? renderReportBands(bands: statementBands, data: withOwnerTexts(data, statementTexts))
               : null) ??
-          renderReportBands(bands: defaultStatementBands(l10n), data: data);
+          renderReportBands(bands: defaultStatementBands(l10n), data: withOwnerTexts(data, statementTexts));
     }
 
     await runReportActions(
@@ -280,12 +283,14 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
         final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
         // #476: an owner-customized statement TEMPLATE replaces the
         // built-in bill layout; empty bands keep it exactly as before.
-        final statementBands = (ref
-                    .read(enabledFeaturesSyncProvider)
-                    .contains(WorkspaceFeature.invoicePdfTemplate)
-                ? ref.read(invoicePdfTemplateProvider).value
-                : null)
-            ?.statementBands;
+        final statementTemplate = ref
+                .read(enabledFeaturesSyncProvider)
+                .contains(WorkspaceFeature.invoicePdfTemplate)
+            ? ref.read(invoicePdfTemplateProvider).value
+            : null;
+        final statementBands = statementTemplate?.statementBands;
+        // #880 — the owner's texts beside the data.
+        final statementTexts = statementTemplate?.texts ?? const <String, String>{};
         final Uint8List bytes;
         if (statementBands != null && context.mounted) {
           final data = statementReportData(
@@ -298,9 +303,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             workspace: workspace,
           );
           final report =
-              renderReportBands(bands: statementBands, data: data) ??
-                  renderReportBands(
-                      bands: defaultStatementBands(l10n), data: data)!;
+              renderReportBands(bands: statementBands, data: withOwnerTexts(data, statementTexts)) ??
+                  renderReportBands(bands: defaultStatementBands(l10n), data: withOwnerTexts(data, statementTexts))!;
           bytes = await buildBandedLetterPdf(
             report: report,
             reportImages: await resolveReportImages(ref, report),
