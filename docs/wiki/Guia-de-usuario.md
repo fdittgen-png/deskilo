@@ -61,6 +61,8 @@ La app tiene hasta cinco destinos en la barra inferior: **Mensajes** (§16), **C
 
 **Todo se mantiene en vivo.** Lo que cualquiera cambie — una reserva, un miembro nuevo, un ajuste — se envía en segundos a cada dispositivo conectado, incluido el que hizo el cambio. Sin reiniciar, sin tirar para actualizar.
 
+**En la web: el botón de menú.** En un navegador desaparecen la barra inferior y su botón redondo Reservar — la ventana tiene el ancho que le falta al teléfono y nada de su alcance del pulgar. El **menú ☰** arriba a la izquierda abre un cajón con cada destino a un toque: Reservar, las pestañas, Eventos, luego las pantallas de administración (Espacio, Miembros y planes, Disponibilidad, Roles, Facturación e informes, Datos de pago, Pagos en línea, Tarjetas, Servicios, Accesorios, Facturación, Funciones, Editar espacio) y, al final, Documentos, Privacidad y datos, Ajustes. Toda la altura queda para el contenido. Teléfonos y aplicaciones de escritorio conservan la barra.
+
 ## 2. Roles e invitaciones
 
 DesKilo tiene tres roles acumulativos y, encima de ellos, una variante de copropiedad, más una cuenta de dispositivo:

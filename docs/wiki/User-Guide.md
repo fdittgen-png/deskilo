@@ -61,6 +61,8 @@ The app has up to five destinations along the bottom: **Messages** (§16), **Cal
 
 **Everything stays live.** Whatever anyone changes — a booking, a new member, a setting — is pushed to every connected device within seconds, including the one that made the change. No restart, no pull-to-refresh.
 
+**On the web: the menu button.** In a browser the bottom bar and its round Reserve button are gone — the window has the width a phone lacks and none of its thumb reach. The **☰ menu** at the top left opens a drawer with every destination one tap away: Reserve, the tabs, Events, then the administration screens (Workspace, Members & plans, Availability, Roles, Billing & reports, Payment instructions, Online payments, Badges, Services, Accessories, Billing, Features, Edit workspace) and, last, Documents, Privacy & data and Settings. The whole height stays for content. Phones and desktop apps keep the bar.
+
 ## 2. Roles & invitations
 
 DesKilo has three additive roles and a co-ownership flavour on top of them, plus a device account:

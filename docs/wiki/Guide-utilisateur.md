@@ -61,6 +61,8 @@ L'app a jusqu'à cinq destinations en bas : **Messages** (§16), **Calendrier** 
 
 **Tout reste en direct.** Tout changement — une réservation, un nouveau membre, un réglage — est poussé vers chaque appareil connecté en quelques secondes, y compris celui qui l'a fait. Pas de redémarrage, pas de tirer-pour-rafraîchir.
 
+**Sur le web : le bouton menu.** Dans un navigateur, la barre du bas et son bouton rond Réserver disparaissent — la fenêtre a la largeur qui manque au téléphone et pas sa portée du pouce. Le **menu ☰** en haut à gauche ouvre un tiroir avec chaque destination à un geste : Réserver, les onglets, Événements, puis les écrans d'administration (Espace, Membres et abonnements, Disponibilités, Rôles, Facturation et rapports, Coordonnées de paiement, Paiements en ligne, Badges, Services, Accessoires, Facturation, Fonctionnalités, Modifier l'espace) et, en dernier, Documents, Confidentialité et données, Réglages. Toute la hauteur reste au contenu. Téléphones et applications de bureau gardent la barre.
+
 ## 2. Rôles et invitations
 
 DesKilo a trois rôles additifs, une déclinaison de copropriété par-dessus, plus un compte d'appareil :

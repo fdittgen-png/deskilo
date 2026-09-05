@@ -30,6 +30,7 @@ import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../router.dart';
 import 'shell_bottom_bar.dart';
+import 'shell_drawer.dart';
 import '../../core/time/clock.dart';
 
 /// #821 — the conversations I muted; empty when the list cannot be
@@ -288,7 +289,22 @@ class ShellScreen extends ConsumerWidget {
             ),
         };
 
+    // The web navigates through a drawer (every destination one tap
+    // away, the full height for content); native keeps the bar.
+    final webShell = ref.watch(webShellProvider);
     return Scaffold(
+      drawer: webShell
+          ? ShellDrawer(
+              tabTitles: tabTitles,
+              visibleBranches: visibleBranches,
+              currentIndex: navigationShell.currentIndex,
+              pendingEvents: pendingEvents,
+              onBranch: (branch) => navigationShell.goBranch(
+                branch,
+                initialLocation: branch == navigationShell.currentIndex,
+              ),
+            )
+          : null,
       appBar: AppBar(
         title: Text(tabTitles[navigationShell.currentIndex]),
         actions: [
@@ -376,7 +392,7 @@ class ShellScreen extends ConsumerWidget {
       //
       // The bar lays a single tab out on the leading side and leaves the
       // other blank, which looks sparse and works.
-      bottomNavigationBar: visibleBranches.isEmpty
+      bottomNavigationBar: webShell || visibleBranches.isEmpty
           ? null
           : ShellBottomBar(
               // -1 when no side tab matches the active branch — on the

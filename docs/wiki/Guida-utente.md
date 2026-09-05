@@ -61,6 +61,8 @@ L'app ha fino a cinque destinazioni lungo il bordo inferiore: **Messaggi** (§16
 
 **Tutto resta dal vivo.** Qualunque cosa qualcuno cambi — una prenotazione, un nuovo membro, un'impostazione — viene inviata in pochi secondi a ogni dispositivo connesso, compreso quello che ha fatto la modifica. Nessun riavvio, nessun trascinare-per-aggiornare.
 
+**Sul web: il pulsante menu.** In un browser spariscono la barra in basso e il suo pulsante rotondo Prenota — la finestra ha la larghezza che manca al telefono e nulla della sua portata del pollice. Il **menu ☰** in alto a sinistra apre un cassetto con ogni destinazione a un tocco: Prenota, le schede, Eventi, poi le schermate di amministrazione (Spazio, Membri e piani, Disponibilità, Ruoli, Fatturazione e report, Coordinate di pagamento, Pagamenti online, Badge, Servizi, Accessori, Fatturazione, Funzionalità, Modifica spazio) e, per ultimi, Documenti, Privacy e dati, Impostazioni. Tutta l'altezza resta al contenuto. Telefoni e app desktop mantengono la barra.
+
 ## 2. Ruoli e inviti
 
 DesKilo ha tre ruoli cumulativi e, sopra di essi, una variante di comproprietà, più un account dispositivo:
