@@ -85,7 +85,11 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
       'seller_vat_id': 'FR 39 680 357 910',
       'seller_legal_id': '680 357 910',
       'exemption_reason': '',
-      'client_address': '3 Avenue de la Liberté, 35000 Rennes',
+      'client_name': 'Anne DUPONT',
+      'client_company': 'Atelier Dupont SARL',
+      'client_phone': '+33 6 12 34 56 78',
+      'client_email': 'anne@atelier-dupont.example',
+      'client_address': 'Atelier Dupont SARL\n3 Avenue de la Liberté\n35000 RENNES',
       'client_vat_id': 'FR 79 849 149 108',
       'client_legal_id': '849 149 108',
       'payment_terms':

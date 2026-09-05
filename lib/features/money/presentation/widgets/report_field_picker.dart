@@ -33,6 +33,10 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       'member' ||
       'workspace' ||
       'workspace_address' ||
+      'client_name' ||
+      'client_company' ||
+      'client_phone' ||
+      'client_email' ||
       'client_address' ||
       'client_vat_id' ||
       'client_legal_id' =>

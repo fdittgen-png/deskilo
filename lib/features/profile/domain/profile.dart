@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import '../../../core/i18n/format_prefs.dart';
+import 'personal_info.dart';
 
 /// Rules for the self-set status line (#231). The cap is enforced three
 /// times with this single constant: the editor's `maxLength`, the
@@ -28,6 +29,7 @@ class Profile {
     this.formatPrefs = FormatPrefs.defaults,
     this.privacyAcceptedVersion,
     this.privacyAcceptedAt,
+    this.identity = PersonalInfo.empty,
   });
 
   /// auth.users id (uuid).
@@ -38,7 +40,6 @@ class Profile {
   /// Opt-in WhatsApp number in wire shape `+<digits>`; '' = not shared
   /// (mirrors the display_name not-null-empty convention).
   final String whatsapp;
-
 
   /// Self-set status line shown in the member directory (#231/#232),
   /// e.g. "In a call · back at 14:00"; '' = no status. At most
@@ -76,6 +77,22 @@ class Profile {
   final String? privacyAcceptedVersion;
   final DateTime? privacyAcceptedAt;
 
+  /// #886 — the structured identity documents print: name, company,
+  /// postal address, phone, e-mail, legal ids. Read from the same row;
+  /// [countryCode] and [vatId] are mirrored in it (one column each).
+  final PersonalInfo identity;
+
+  /// "Prénom NOM", or the display name while the identity is unset.
+  String get fullName =>
+      identity.fullName.isNotEmpty ? identity.fullName : displayName;
+
+  /// The postal block for documents, or the legacy free-text address
+  /// while the structured fields are unset.
+  String postalBlock({String workspaceCountry = ''}) {
+    final block = identity.postalBlock(workspaceCountry: workspaceCountry);
+    return block.isNotEmpty ? block : address;
+  }
+
   bool get hasAvatar => avatarPath != null && avatarPath!.isNotEmpty;
 
   bool get sharesWhatsapp => whatsapp.isNotEmpty;
@@ -89,38 +106,40 @@ class Profile {
   bool get hasStatus => statusText.isNotEmpty;
 
   factory Profile.fromDb(Map<String, dynamic> db) => Profile(
-        id: db['id'] as String,
-        displayName: db['display_name'] as String? ?? '',
-        whatsapp: db['whatsapp'] as String? ?? '',
-        statusText: db['status_text'] as String? ?? '',
-        address: db['address'] as String? ?? '',
-        countryCode: db['country_code'] as String? ?? '',
-        vatId: db['vat_id'] as String? ?? '',
-        lastSeenAt: db['last_seen_at'] == null
-            ? null
-            : DateTime.parse(db['last_seen_at'] as String).toUtc(),
-        avatarPath: db['avatar_path'] as String?,
-        preferredLocale: db['preferred_locale'] as String? ?? '',
-        privacyAcceptedVersion: db['privacy_accepted_version'] as String?,
-        privacyAcceptedAt: db['privacy_accepted_at'] == null
-            ? null
-            : DateTime.parse(db['privacy_accepted_at'] as String).toUtc(),
-        formatPrefs: FormatPrefs.fromDb(db),
-      );
+    id: db['id'] as String,
+    displayName: db['display_name'] as String? ?? '',
+    whatsapp: db['whatsapp'] as String? ?? '',
+    statusText: db['status_text'] as String? ?? '',
+    address: db['address'] as String? ?? '',
+    countryCode: db['country_code'] as String? ?? '',
+    vatId: db['vat_id'] as String? ?? '',
+    lastSeenAt: db['last_seen_at'] == null
+        ? null
+        : DateTime.parse(db['last_seen_at'] as String).toUtc(),
+    avatarPath: db['avatar_path'] as String?,
+    preferredLocale: db['preferred_locale'] as String? ?? '',
+    privacyAcceptedVersion: db['privacy_accepted_version'] as String?,
+    privacyAcceptedAt: db['privacy_accepted_at'] == null
+        ? null
+        : DateTime.parse(db['privacy_accepted_at'] as String).toUtc(),
+    formatPrefs: FormatPrefs.fromDb(db),
+    identity: PersonalInfo.fromDb(db),
+  );
 
   Map<String, dynamic> toDb() => {
-        'id': id,
-        'display_name': displayName,
-        'whatsapp': whatsapp,
-        'status_text': statusText,
-        'address': address,
-        'country_code': countryCode,
-        'vat_id': vatId,
-        'last_seen_at': lastSeenAt?.toUtc().toIso8601String(),
-        'avatar_path': avatarPath,
-        'privacy_accepted_version': privacyAcceptedVersion,
-        'privacy_accepted_at': privacyAcceptedAt?.toUtc().toIso8601String(),
-      };
+    ...identity.toDb(),
+    'id': id,
+    'display_name': displayName,
+    'whatsapp': whatsapp,
+    'status_text': statusText,
+    'address': address,
+    'country_code': countryCode,
+    'vat_id': vatId,
+    'last_seen_at': lastSeenAt?.toUtc().toIso8601String(),
+    'avatar_path': avatarPath,
+    'privacy_accepted_version': privacyAcceptedVersion,
+    'privacy_accepted_at': privacyAcceptedAt?.toUtc().toIso8601String(),
+  };
 
   Profile copyWith({
     String? displayName,
@@ -133,27 +152,28 @@ class Profile {
     String? avatarPath,
     String? preferredLocale,
     FormatPrefs? formatPrefs,
-      String? privacyAcceptedVersion,
+    String? privacyAcceptedVersion,
     DateTime? privacyAcceptedAt,
-}) =>
-      Profile(
-        id: id,
-        displayName: displayName ?? this.displayName,
-        whatsapp: whatsapp ?? this.whatsapp,
-        statusText: statusText ?? this.statusText,
-        address: address ?? this.address,
-        countryCode: countryCode ?? this.countryCode,
-        vatId: vatId ?? this.vatId,
-        lastSeenAt: lastSeenAt ?? this.lastSeenAt,
-        avatarPath: avatarPath ?? this.avatarPath,
-        // copyWith used to DROP these two: a status edit reset the
-        // document language. Carried now (#711).
-        preferredLocale: preferredLocale ?? this.preferredLocale,
-        formatPrefs: formatPrefs ?? this.formatPrefs,
-        privacyAcceptedVersion:
-            privacyAcceptedVersion ?? this.privacyAcceptedVersion,
-        privacyAcceptedAt: privacyAcceptedAt ?? this.privacyAcceptedAt,
-      );
+    PersonalInfo? identity,
+  }) => Profile(
+    id: id,
+    displayName: displayName ?? this.displayName,
+    whatsapp: whatsapp ?? this.whatsapp,
+    statusText: statusText ?? this.statusText,
+    address: address ?? this.address,
+    countryCode: countryCode ?? this.countryCode,
+    vatId: vatId ?? this.vatId,
+    lastSeenAt: lastSeenAt ?? this.lastSeenAt,
+    avatarPath: avatarPath ?? this.avatarPath,
+    // copyWith used to DROP these two: a status edit reset the
+    // document language. Carried now (#711).
+    preferredLocale: preferredLocale ?? this.preferredLocale,
+    formatPrefs: formatPrefs ?? this.formatPrefs,
+    privacyAcceptedVersion:
+        privacyAcceptedVersion ?? this.privacyAcceptedVersion,
+    privacyAcceptedAt: privacyAcceptedAt ?? this.privacyAcceptedAt,
+    identity: identity ?? this.identity,
+  );
 }
 
 /// Normalizes user input to the stored wire shape (#223): keep digits

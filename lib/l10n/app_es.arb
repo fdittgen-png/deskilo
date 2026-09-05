@@ -3692,6 +3692,82 @@
       }
     }
   },
+  "featurePersonalInfo": "Datos personales",
+  "@featurePersonalInfo": {
+    "description": "#886 personal-information form / feature: featurePersonalInfo"
+  },
+  "featurePersonalInfoDesc": "Los miembros introducen nombre, dirección postal, teléfono, e-mail e identificadores en Ajustes; facturas y cartas los imprimen en el bloque postal normalizado.",
+  "@featurePersonalInfoDesc": {
+    "description": "#886 personal-information form / feature: featurePersonalInfoDesc"
+  },
+  "personalInfoTitle": "Datos personales",
+  "@personalInfoTitle": {
+    "description": "#886 personal-information form / feature: personalInfoTitle"
+  },
+  "personalInfoSubtitle": "Se imprimen en sus facturas y cartas. El apellido se escribe en mayúsculas, como en el correo oficial.",
+  "@personalInfoSubtitle": {
+    "description": "#886 personal-information form / feature: personalInfoSubtitle"
+  },
+  "personalInfoFirstName": "Nombre",
+  "@personalInfoFirstName": {
+    "description": "#886 personal-information form / feature: personalInfoFirstName"
+  },
+  "personalInfoLastName": "Apellidos",
+  "@personalInfoLastName": {
+    "description": "#886 personal-information form / feature: personalInfoLastName"
+  },
+  "personalInfoCompany": "Empresa (opcional)",
+  "@personalInfoCompany": {
+    "description": "#886 personal-information form / feature: personalInfoCompany"
+  },
+  "personalInfoStreet": "Calle y número",
+  "@personalInfoStreet": {
+    "description": "#886 personal-information form / feature: personalInfoStreet"
+  },
+  "personalInfoPostalCode": "Código postal",
+  "@personalInfoPostalCode": {
+    "description": "#886 personal-information form / feature: personalInfoPostalCode"
+  },
+  "personalInfoCity": "Ciudad",
+  "@personalInfoCity": {
+    "description": "#886 personal-information form / feature: personalInfoCity"
+  },
+  "personalInfoCountry": "País",
+  "@personalInfoCountry": {
+    "description": "#886 personal-information form / feature: personalInfoCountry"
+  },
+  "personalInfoPhone": "Teléfono",
+  "@personalInfoPhone": {
+    "description": "#886 personal-information form / feature: personalInfoPhone"
+  },
+  "personalInfoEmail": "E-mail para documentos",
+  "@personalInfoEmail": {
+    "description": "#886 personal-information form / feature: personalInfoEmail"
+  },
+  "personalInfoVatId": "NIF-IVA (opcional)",
+  "@personalInfoVatId": {
+    "description": "#886 personal-information form / feature: personalInfoVatId"
+  },
+  "personalInfoLegalId": "Identificador de empresa (opcional)",
+  "@personalInfoLegalId": {
+    "description": "#886 personal-information form / feature: personalInfoLegalId"
+  },
+  "personalInfoSaved": "Datos personales guardados",
+  "@personalInfoSaved": {
+    "description": "#886 personal-information form / feature: personalInfoSaved"
+  },
+  "personalInfoNone": "Aún sin rellenar",
+  "@personalInfoNone": {
+    "description": "#886 personal-information form / feature: personalInfoNone"
+  },
+  "personalInfoPreview": "En sus documentos",
+  "@personalInfoPreview": {
+    "description": "#886 personal-information form / feature: personalInfoPreview"
+  },
+  "personalInfoSave": "Guardar",
+  "@personalInfoSave": {
+    "description": "#886 personal-information form: save button"
+  },
   "planDurationLabel": "Duración",
   "@planDurationLabel": {
     "description": "Booking sheet: grid duration slider label (#574)"

@@ -1,0 +1,79 @@
+{
+  "@@locale": "it",
+  "featurePersonalInfo": "Dati personali",
+  "@featurePersonalInfo": {
+    "description": "#886 personal-information form / feature: featurePersonalInfo"
+  },
+  "featurePersonalInfoDesc": "I membri inseriscono nome, indirizzo postale, telefono, e-mail e identificativi nelle Impostazioni; fatture e lettere li stampano nel blocco indirizzo standard.",
+  "@featurePersonalInfoDesc": {
+    "description": "#886 personal-information form / feature: featurePersonalInfoDesc"
+  },
+  "personalInfoTitle": "Dati personali",
+  "@personalInfoTitle": {
+    "description": "#886 personal-information form / feature: personalInfoTitle"
+  },
+  "personalInfoSubtitle": "Stampati su fatture e lettere. Il cognome è scritto in maiuscolo, come nella posta ufficiale.",
+  "@personalInfoSubtitle": {
+    "description": "#886 personal-information form / feature: personalInfoSubtitle"
+  },
+  "personalInfoFirstName": "Nome",
+  "@personalInfoFirstName": {
+    "description": "#886 personal-information form / feature: personalInfoFirstName"
+  },
+  "personalInfoLastName": "Cognome",
+  "@personalInfoLastName": {
+    "description": "#886 personal-information form / feature: personalInfoLastName"
+  },
+  "personalInfoCompany": "Società (facoltativo)",
+  "@personalInfoCompany": {
+    "description": "#886 personal-information form / feature: personalInfoCompany"
+  },
+  "personalInfoStreet": "Via e numero",
+  "@personalInfoStreet": {
+    "description": "#886 personal-information form / feature: personalInfoStreet"
+  },
+  "personalInfoPostalCode": "CAP",
+  "@personalInfoPostalCode": {
+    "description": "#886 personal-information form / feature: personalInfoPostalCode"
+  },
+  "personalInfoCity": "Città",
+  "@personalInfoCity": {
+    "description": "#886 personal-information form / feature: personalInfoCity"
+  },
+  "personalInfoCountry": "Paese",
+  "@personalInfoCountry": {
+    "description": "#886 personal-information form / feature: personalInfoCountry"
+  },
+  "personalInfoPhone": "Telefono",
+  "@personalInfoPhone": {
+    "description": "#886 personal-information form / feature: personalInfoPhone"
+  },
+  "personalInfoEmail": "E-mail per i documenti",
+  "@personalInfoEmail": {
+    "description": "#886 personal-information form / feature: personalInfoEmail"
+  },
+  "personalInfoVatId": "Partita IVA (facoltativo)",
+  "@personalInfoVatId": {
+    "description": "#886 personal-information form / feature: personalInfoVatId"
+  },
+  "personalInfoLegalId": "Identificativo società (facoltativo)",
+  "@personalInfoLegalId": {
+    "description": "#886 personal-information form / feature: personalInfoLegalId"
+  },
+  "personalInfoSaved": "Dati personali salvati",
+  "@personalInfoSaved": {
+    "description": "#886 personal-information form / feature: personalInfoSaved"
+  },
+  "personalInfoNone": "Non ancora compilati",
+  "@personalInfoNone": {
+    "description": "#886 personal-information form / feature: personalInfoNone"
+  },
+  "personalInfoPreview": "Sui tuoi documenti",
+  "@personalInfoPreview": {
+    "description": "#886 personal-information form / feature: personalInfoPreview"
+  },
+  "personalInfoSave": "Salva",
+  "@personalInfoSave": {
+    "description": "#886 personal-information form: save button"
+  }
+}

@@ -6156,6 +6156,65 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get featurePersonalInfo => 'Personal information';
+
+  @override
+  String get featurePersonalInfoDesc =>
+      'Members enter their name, postal address, phone, e-mail and legal ids in Settings; invoices and letters print them in the standard postal block.';
+
+  @override
+  String get personalInfoTitle => 'Personal information';
+
+  @override
+  String get personalInfoSubtitle =>
+      'Printed on your invoices and letters. Your family name is written in capitals, as on official mail.';
+
+  @override
+  String get personalInfoFirstName => 'First name';
+
+  @override
+  String get personalInfoLastName => 'Family name';
+
+  @override
+  String get personalInfoCompany => 'Company (optional)';
+
+  @override
+  String get personalInfoStreet => 'Street and number';
+
+  @override
+  String get personalInfoPostalCode => 'Postal code';
+
+  @override
+  String get personalInfoCity => 'City';
+
+  @override
+  String get personalInfoCountry => 'Country';
+
+  @override
+  String get personalInfoPhone => 'Telephone';
+
+  @override
+  String get personalInfoEmail => 'E-mail for documents';
+
+  @override
+  String get personalInfoVatId => 'VAT number (optional)';
+
+  @override
+  String get personalInfoLegalId => 'Company / registration id (optional)';
+
+  @override
+  String get personalInfoSaved => 'Personal information saved';
+
+  @override
+  String get personalInfoNone => 'Not filled in yet';
+
+  @override
+  String get personalInfoPreview => 'On your documents';
+
+  @override
+  String get personalInfoSave => 'Save';
+
+  @override
   String get planDurationLabel => 'Duration';
 
   @override

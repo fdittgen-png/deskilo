@@ -234,6 +234,11 @@ class InvoicePdfTemplate {
     'seller_vat_id',
     'seller_legal_id',
     'exemption_reason',
+    // #886 — the client as the postal standard prints them.
+    'client_name',
+    'client_company',
+    'client_phone',
+    'client_email',
     'client_address',
     'client_vat_id',
     'client_legal_id',

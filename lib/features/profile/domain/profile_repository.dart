@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import '../../../core/i18n/format_prefs.dart';
+import 'personal_info.dart';
 import 'dart:typed_data';
 
 import 'profile.dart';
@@ -18,7 +19,6 @@ abstract class ProfileRepository {
   /// [normalizeWhatsapp]; '' clears it. Throws [StateError] signed out.
   Future<void> updateWhatsapp(String whatsapp);
 
-
   /// Writes my preferred DOCUMENT language (0098, #496); '' clears it.
   Future<void> setPreferredLocale(String locale);
 
@@ -32,6 +32,10 @@ abstract class ProfileRepository {
 
   /// Postal address (0060), printed on invoices; '' clears it.
   Future<void> updateAddress(String address);
+
+  /// #886 — the whole structured identity in one write (the form saves
+  /// every field together, so a half-saved address cannot exist).
+  Future<void> updatePersonalInfo(PersonalInfo info);
 
   /// The two facts an EN 16931 e-invoice needs about the CUSTOMER (0069):
   /// the address country (BT-55, mandatory — '' lets the invoice fall back

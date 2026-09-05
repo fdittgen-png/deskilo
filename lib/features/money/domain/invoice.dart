@@ -104,6 +104,10 @@ sealed class InvoiceParty with _$InvoiceParty {
   const factory InvoiceParty({
     @Default('') String name,
 
+    /// #886 — the organisation the person is invoiced through (BT-45,
+    /// the buyer's trading name); '' for a private person.
+    @Default('') String company,
+
     /// BT-35 — one line; legacy free-text addresses land here whole.
     @Default('') String street,
 
@@ -128,23 +132,29 @@ sealed class InvoiceParty with _$InvoiceParty {
 
     /// Free-text exemption reason (BT-120); seller only.
     @Default('') String taxExemptionReason,
+
+    /// #886 — the contact the document is sent to (BT-43 / BT-42).
+    @Default('') String email,
+    @Default('') String phone,
   }) = _InvoiceParty;
 
   /// Reads one party out of the invoice's `parties` jsonb. Named away
   /// from `fromJson` on purpose: that name would make freezed reach for
   /// json_serializable and demand a generated part file.
-  factory InvoiceParty.fromSnapshot(Map<dynamic, dynamic> json) =>
-      InvoiceParty(
-        name: json['name'] as String? ?? '',
-        street: json['street'] as String? ?? '',
-        city: json['city'] as String? ?? '',
-        postalCode: json['postal_code'] as String? ?? '',
-        country: json['country'] as String? ?? '',
-        vatId: json['vat_id'] as String? ?? '',
-        legalId: json['legal_id'] as String? ?? '',
-        vatRegime: json['vat_regime'] as String? ?? 'not_subject',
-        taxExemptionReason: json['tax_exemption_reason'] as String? ?? '',
-      );
+  factory InvoiceParty.fromSnapshot(Map<dynamic, dynamic> json) => InvoiceParty(
+    name: json['name'] as String? ?? '',
+    company: json['company'] as String? ?? '',
+    street: json['street'] as String? ?? '',
+    city: json['city'] as String? ?? '',
+    postalCode: json['postal_code'] as String? ?? '',
+    country: json['country'] as String? ?? '',
+    vatId: json['vat_id'] as String? ?? '',
+    legalId: json['legal_id'] as String? ?? '',
+    vatRegime: json['vat_regime'] as String? ?? 'not_subject',
+    taxExemptionReason: json['tax_exemption_reason'] as String? ?? '',
+    email: json['email'] as String? ?? '',
+    phone: json['phone'] as String? ?? '',
+  );
 }
 
 /// One invoice folded into a settlement (#804), snapshotted when it was
@@ -253,8 +263,7 @@ sealed class Invoice with _$Invoice {
       .fold(0, (sum, line) => sum + line.amountCents);
 
   /// The tax contained in those charges. 0 when no VAT applies.
-  int get vatCents =>
-      vatTotals.fold(0, (sum, total) => sum + total.vatCents);
+  int get vatCents => vatTotals.fold(0, (sum, total) => sum + total.vatCents);
 
   /// The charges without their tax.
   int get netCents => vatTotals.isEmpty
@@ -279,88 +288,83 @@ sealed class Invoice with _$Invoice {
   /// entry those documents always showed.
   List<InvoiceVatTotal> vatBreakdown({required String zeroCategory}) =>
       vatTotals.isNotEmpty
-          ? vatTotals
-          : vatTotalsOf(
-              [
-                for (final line in lines)
-                  (amountCents: line.amountCents, vatPercent: line.vatPercent),
-              ],
-              zeroCategory: zeroCategory,
-            );
+      ? vatTotals
+      : vatTotalsOf([
+          for (final line in lines)
+            (amountCents: line.amountCents, vatPercent: line.vatPercent),
+        ], zeroCategory: zeroCategory);
 
   factory Invoice.fromRow(Map<String, dynamic> row) => Invoice(
-        id: row['id'] as String,
-        workspaceId: row['workspace_id'] as String,
-        memberId: row['member_id'] as String,
-        number: row['number'] as String,
-        issuedAt: DateTime.parse(row['issued_at'] as String).toLocal(),
-        period: row['period'] as String?,
-        title: row['title'] as String,
-        lines: [
-          for (final line in (row['lines'] as List? ?? const []))
-            InvoiceLine(
-              kind: (line as Map)['kind'] as String? ?? '',
-              label: line['label'] as String? ?? '',
-              quantity: (line['quantity'] as num?)?.toInt() ?? 1,
-              amountCents: (line['amount_cents'] as num).toInt(),
-              vatPercent:
-                  (line['vat_percent'] as num?)?.toDouble() ?? 0,
-              sourceNumber: line['source_number'] as String? ?? '',
-            ),
-        ],
-        kind: InvoiceKind.fromWire(row['kind'] as String?),
-        settledByInvoiceId: row['settled_by_invoice_id'] as String?,
-        settles: [
-          for (final source in (row['settles'] as List? ?? const []))
-            SettledSource.fromSnapshot(source as Map),
-        ],
-        totalCents: (row['total_cents'] as num).toInt(),
-        currency: row['currency'] as String,
-        memberName: row['member_name'] as String? ?? '',
-        memberAddress: row['member_address'] as String? ?? '',
-        workspaceName: row['workspace_name'] as String? ?? '',
-        workspaceAddress: row['workspace_address'] as String? ?? '',
-        issuerName: row['issuer_name'] as String? ?? '',
-        signature: row['signature'] as String,
-        voidedAt: row['voided_at'] == null
-            ? null
-            : DateTime.parse(row['voided_at'] as String).toLocal(),
-        voidedByName: row['voided_by_name'] as String? ?? '',
-        replacesInvoiceId: row['replaces_invoice_id'] as String?,
-        replacesNumber: row['replaces_number'] as String? ?? '',
-        detailed: row['details'] != null,
-        detailLedger: [
-          for (final entry
-              in ((row['details'] as Map?)?['ledger'] as List? ?? const []))
-            InvoiceDetailEntry(
-              on: (entry as Map)['on'] as String? ?? '',
-              category: entry['category'] as String? ?? '',
-              label: entry['description'] as String? ?? '',
-              amountCents: (entry['amount_cents'] as num?)?.toInt() ?? 0,
-            ),
-        ],
-        vatTotals: [
-          for (final total in (row['vat_totals'] as List? ?? const []))
-            InvoiceVatTotal.fromJson(total as Map),
-        ],
-        sellerParty: switch ((row['parties'] as Map?)?['seller']) {
-          final Map<dynamic, dynamic> seller => InvoiceParty.fromSnapshot(seller),
-          _ => null,
-        },
-        buyerParty: switch ((row['parties'] as Map?)?['buyer']) {
-          final Map<dynamic, dynamic> buyer => InvoiceParty.fromSnapshot(buyer),
-          _ => null,
-        },
-        attendance: [
-          for (final entry in ((row['details'] as Map?)?['attendance']
-                  as List? ??
-              const []))
-            InvoiceAttendance(
-              startsAt: (entry as Map)['starts_at'] as String? ?? '',
-              endsAt: entry['ends_at'] as String? ?? '',
-              space: entry['space'] as String? ?? '',
-              status: entry['status'] as String? ?? '',
-            ),
-        ],
-      );
+    id: row['id'] as String,
+    workspaceId: row['workspace_id'] as String,
+    memberId: row['member_id'] as String,
+    number: row['number'] as String,
+    issuedAt: DateTime.parse(row['issued_at'] as String).toLocal(),
+    period: row['period'] as String?,
+    title: row['title'] as String,
+    lines: [
+      for (final line in (row['lines'] as List? ?? const []))
+        InvoiceLine(
+          kind: (line as Map)['kind'] as String? ?? '',
+          label: line['label'] as String? ?? '',
+          quantity: (line['quantity'] as num?)?.toInt() ?? 1,
+          amountCents: (line['amount_cents'] as num).toInt(),
+          vatPercent: (line['vat_percent'] as num?)?.toDouble() ?? 0,
+          sourceNumber: line['source_number'] as String? ?? '',
+        ),
+    ],
+    kind: InvoiceKind.fromWire(row['kind'] as String?),
+    settledByInvoiceId: row['settled_by_invoice_id'] as String?,
+    settles: [
+      for (final source in (row['settles'] as List? ?? const []))
+        SettledSource.fromSnapshot(source as Map),
+    ],
+    totalCents: (row['total_cents'] as num).toInt(),
+    currency: row['currency'] as String,
+    memberName: row['member_name'] as String? ?? '',
+    memberAddress: row['member_address'] as String? ?? '',
+    workspaceName: row['workspace_name'] as String? ?? '',
+    workspaceAddress: row['workspace_address'] as String? ?? '',
+    issuerName: row['issuer_name'] as String? ?? '',
+    signature: row['signature'] as String,
+    voidedAt: row['voided_at'] == null
+        ? null
+        : DateTime.parse(row['voided_at'] as String).toLocal(),
+    voidedByName: row['voided_by_name'] as String? ?? '',
+    replacesInvoiceId: row['replaces_invoice_id'] as String?,
+    replacesNumber: row['replaces_number'] as String? ?? '',
+    detailed: row['details'] != null,
+    detailLedger: [
+      for (final entry
+          in ((row['details'] as Map?)?['ledger'] as List? ?? const []))
+        InvoiceDetailEntry(
+          on: (entry as Map)['on'] as String? ?? '',
+          category: entry['category'] as String? ?? '',
+          label: entry['description'] as String? ?? '',
+          amountCents: (entry['amount_cents'] as num?)?.toInt() ?? 0,
+        ),
+    ],
+    vatTotals: [
+      for (final total in (row['vat_totals'] as List? ?? const []))
+        InvoiceVatTotal.fromJson(total as Map),
+    ],
+    sellerParty: switch ((row['parties'] as Map?)?['seller']) {
+      final Map<dynamic, dynamic> seller => InvoiceParty.fromSnapshot(seller),
+      _ => null,
+    },
+    buyerParty: switch ((row['parties'] as Map?)?['buyer']) {
+      final Map<dynamic, dynamic> buyer => InvoiceParty.fromSnapshot(buyer),
+      _ => null,
+    },
+    attendance: [
+      for (final entry
+          in ((row['details'] as Map?)?['attendance'] as List? ?? const []))
+        InvoiceAttendance(
+          startsAt: (entry as Map)['starts_at'] as String? ?? '',
+          endsAt: entry['ends_at'] as String? ?? '',
+          space: entry['space'] as String? ?? '',
+          status: entry['status'] as String? ?? '',
+        ),
+    ],
+  );
 }

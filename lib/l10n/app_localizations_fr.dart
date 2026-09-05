@@ -6217,6 +6217,65 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get featurePersonalInfo => 'Informations personnelles';
+
+  @override
+  String get featurePersonalInfoDesc =>
+      'Les membres saisissent nom, adresse postale, téléphone, e-mail et identifiants légaux dans Réglages ; factures et courriers les impriment dans le bloc adresse normalisé.';
+
+  @override
+  String get personalInfoTitle => 'Informations personnelles';
+
+  @override
+  String get personalInfoSubtitle =>
+      'Imprimées sur vos factures et courriers. Le nom de famille s\'écrit en capitales, comme sur un courrier officiel.';
+
+  @override
+  String get personalInfoFirstName => 'Prénom';
+
+  @override
+  String get personalInfoLastName => 'Nom';
+
+  @override
+  String get personalInfoCompany => 'Société (facultatif)';
+
+  @override
+  String get personalInfoStreet => 'Rue et numéro';
+
+  @override
+  String get personalInfoPostalCode => 'Code postal';
+
+  @override
+  String get personalInfoCity => 'Ville';
+
+  @override
+  String get personalInfoCountry => 'Pays';
+
+  @override
+  String get personalInfoPhone => 'Téléphone';
+
+  @override
+  String get personalInfoEmail => 'E-mail pour les documents';
+
+  @override
+  String get personalInfoVatId => 'N° de TVA (facultatif)';
+
+  @override
+  String get personalInfoLegalId => 'SIRET / identifiant (facultatif)';
+
+  @override
+  String get personalInfoSaved => 'Informations personnelles enregistrées';
+
+  @override
+  String get personalInfoNone => 'Pas encore renseignées';
+
+  @override
+  String get personalInfoPreview => 'Sur vos documents';
+
+  @override
+  String get personalInfoSave => 'Enregistrer';
+
+  @override
   String get planDurationLabel => 'Durée';
 
   @override

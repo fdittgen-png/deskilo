@@ -26,6 +26,7 @@ import '../features/reservations/presentation/screens/reference_link_screen.dart
 import '../features/workspace/presentation/screens/payment_methods_screen.dart';
 import '../features/workspace/presentation/screens/documents_screen.dart';
 import '../features/workspace/presentation/screens/roles_screen.dart';
+import '../features/profile/presentation/screens/personal_info_screen.dart';
 import '../features/money/presentation/screens/vat_screen.dart';
 import '../features/money/presentation/screens/services_screen.dart';
 import '../features/plan/presentation/screens/accessories_screen.dart';
@@ -129,19 +130,20 @@ GoRouter router(Ref ref) {
       // owning the device's route.
       final kioskMember = ref.read(myMemberProvider).value?.isKiosk ?? false;
       final profileAsync = ref.read(myProfileProvider);
-      final accepted = profileAsync.value?.privacyAcceptedVersion ==
-          kPrivacyPolicyVersion;
+      final accepted =
+          profileAsync.value?.privacyAcceptedVersion == kPrivacyPolicyVersion;
       final atConsent = state.matchedLocation == '/consent';
-      final consentFree = atConsent ||
+      final consentFree =
+          atConsent ||
           state.matchedLocation == '/help' ||
           state.matchedLocation == '/privacy';
-      if (!profileAsync.isLoading && !accepted && !consentFree &&
+      if (!profileAsync.isLoading &&
+          !accepted &&
+          !consentFree &&
           !kioskMember) {
         return '/consent';
       }
-      if (atConsent &&
-          state.uri.queryParameters['review'] != '1' &&
-          accepted) {
+      if (atConsent && state.uri.queryParameters['review'] != '1' && accepted) {
         return '/reserve';
       }
 
@@ -194,11 +196,8 @@ GoRouter router(Ref ref) {
       // approve. Profiles stays reachable — the user may be active in
       // another workspace and switch to it.
       final atPending = state.matchedLocation == '/pending';
-      final pendingSafe =
-          atPending || state.matchedLocation == '/profiles';
-      if (me != null &&
-          me.status == MemberStatus.pending &&
-          !pendingSafe) {
+      final pendingSafe = atPending || state.matchedLocation == '/profiles';
+      if (me != null && me.status == MemberStatus.pending && !pendingSafe) {
         return '/pending';
       }
       if ((me == null || me.status != MemberStatus.pending) && atPending) {
@@ -207,18 +206,12 @@ GoRouter router(Ref ref) {
       return null;
     },
     routes: [
-      GoRoute(
-        path: '/auth',
-        builder: (context, state) => const AuthScreen(),
-      ),
+      GoRoute(path: '/auth', builder: (context, state) => const AuthScreen()),
       GoRoute(
         path: '/kiosk-gate',
         builder: (context, state) => const KioskGateScreen(),
       ),
-      GoRoute(
-        path: '/kiosk',
-        builder: (context, state) => const KioskScreen(),
-      ),
+      GoRoute(path: '/kiosk', builder: (context, state) => const KioskScreen()),
       GoRoute(
         path: '/pending',
         builder: (context, state) => const PendingApprovalScreen(),
@@ -251,8 +244,8 @@ GoRouter router(Ref ref) {
                 path: '/calendar',
                 redirect: (context, state) =>
                     featureEnabled(WorkspaceFeature.calendarTab)
-                        ? null
-                        : '/messages',
+                    ? null
+                    : '/messages',
                 // #718 — the hub when the feature is on, the classic
                 // reservations calendar when it is off; picked per build.
                 builder: (context, state) => const CalendarBranch(),
@@ -268,8 +261,8 @@ GoRouter router(Ref ref) {
                 path: '/directory',
                 redirect: (context, state) =>
                     featureEnabled(WorkspaceFeature.membersDirectory)
-                        ? null
-                        : '/messages',
+                    ? null
+                    : '/messages',
                 builder: (context, state) => const DirectoryScreen(),
               ),
             ],
@@ -280,8 +273,8 @@ GoRouter router(Ref ref) {
                 path: '/money',
                 redirect: (context, state) =>
                     featureEnabled(WorkspaceFeature.moneyTab)
-                        ? null
-                        : '/messages',
+                    ? null
+                    : '/messages',
                 builder: (context, state) => const MoneyScreen(),
               ),
             ],
@@ -331,9 +324,8 @@ GoRouter router(Ref ref) {
       GoRoute(
         // #751 — the GDPR consent; ?review=1 reads it without the gate.
         path: '/consent',
-        builder: (context, state) => ConsentScreen(
-          review: state.uri.queryParameters['review'] == '1',
-        ),
+        builder: (context, state) =>
+            ConsentScreen(review: state.uri.queryParameters['review'] == '1'),
       ),
       GoRoute(
         // #719 — Privacy & data: who can see my data, who did, export,
@@ -375,10 +367,7 @@ GoRouter router(Ref ref) {
       // deleted: "Show on plan" (#182/#576), any stored shortcut and any
       // link someone already sent all point at it, and a dead path is a
       // worse answer than the map they were asking for.
-      GoRoute(
-        path: '/plan',
-        redirect: (context, state) => '/reserve',
-      ),
+      GoRoute(path: '/plan', redirect: (context, state) => '/reserve'),
       // Deep links from WhatsApp-mirrored messages (0106): the message
       // itself, a referenced reservation, a referenced space. All ride
       // the memberNotifications gate the messenger rides.
@@ -394,13 +383,15 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/res/:id',
         builder: (context, state) => ReferenceLinkScreen.reservation(
-            id: state.pathParameters['id'] ?? ''),
+          id: state.pathParameters['id'] ?? '',
+        ),
       ),
       GoRoute(
         path: '/space/:kind/:id',
         builder: (context, state) => ReferenceLinkScreen.space(
-          kind: SpaceKind.values.asNameMap()[
-                  state.pathParameters['kind'] ?? ''] ??
+          kind:
+              SpaceKind.values.asNameMap()[state.pathParameters['kind'] ??
+                  ''] ??
               SpaceKind.seat,
           id: state.pathParameters['id'] ?? '',
         ),
@@ -408,7 +399,8 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/workspace-code',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          final isOwner =
+              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner ? null : '/messages';
         },
         builder: (context, state) => const WorkspaceCodeScreen(),
@@ -420,7 +412,8 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/nfc-config',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          final isOwner =
+              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner && featureEnabled(WorkspaceFeature.nfcBadges)
               ? null
               : '/messages';
@@ -430,7 +423,8 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/payment-config',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          final isOwner =
+              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner && featureEnabled(WorkspaceFeature.onlinePayments)
               ? null
               : '/messages';
@@ -440,7 +434,8 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/billing',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          final isOwner =
+              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner ? null : '/messages';
         },
         builder: (context, state) => const BillingScreen(),
@@ -463,7 +458,8 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/einvoice-config',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          final isOwner =
+              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner && featureEnabled(WorkspaceFeature.invoicing)
               ? null
               : '/money';
@@ -509,8 +505,17 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/roles',
         redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.roleManagement) ? null : '/messages',
+            featureEnabled(WorkspaceFeature.roleManagement)
+            ? null
+            : '/messages',
         builder: (context, state) => const RolesScreen(),
+      ),
+      // #886 — the person's identity as the documents print it.
+      GoRoute(
+        path: '/settings/personal-info',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.personalInfo) ? null : '/settings',
+        builder: (context, state) => const PersonalInfoScreen(),
       ),
       // The workspace's manual payment methods (#486) — owner-only.
       GoRoute(
@@ -527,7 +532,8 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/legal-identity',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          final isOwner =
+              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner && featureEnabled(WorkspaceFeature.invoicing)
               ? null
               : '/money';
@@ -541,7 +547,8 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/vat-declarations',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          final isOwner =
+              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner &&
                   featureEnabled(WorkspaceFeature.invoicing) &&
                   featureEnabled(WorkspaceFeature.vatDeclarations)
@@ -553,7 +560,8 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/vat',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          final isOwner =
+              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner && featureEnabled(WorkspaceFeature.vatManagement)
               ? null
               : '/money';
@@ -563,7 +571,8 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/services',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          final isOwner =
+              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner && featureEnabled(WorkspaceFeature.services)
               ? null
               : '/messages';
@@ -587,7 +596,8 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/features',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          final isOwner =
+              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner ? null : '/messages';
         },
         builder: (context, state) => const FeaturesScreen(),
@@ -595,7 +605,8 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/workspace-settings',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          final isOwner =
+              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner ? null : '/messages';
         },
         builder: (context, state) => const WorkspaceSettingsScreen(),
@@ -615,7 +626,8 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/availability',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          final isOwner =
+              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner ? null : '/messages';
         },
         builder: (context, state) => const AvailabilityScreen(),
@@ -634,16 +646,16 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/editor',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          final isOwner =
+              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner ? null : '/messages';
         },
         builder: (context, state) => const EditorScreen(),
         routes: [
           GoRoute(
             path: 'level/:levelId',
-            builder: (context, state) => LevelCanvasScreen(
-              levelId: state.pathParameters['levelId']!,
-            ),
+            builder: (context, state) =>
+                LevelCanvasScreen(levelId: state.pathParameters['levelId']!),
           ),
         ],
       ),

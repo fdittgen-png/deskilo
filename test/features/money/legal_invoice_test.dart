@@ -84,7 +84,10 @@ void main() {
         expect(text, contains('FR 39 680 357 910'));
         // Client name + address.
         expect(text, contains('Alex Sample'));
-        expect(text, contains('3 Avenue de la Liberté, 35000 Rennes'));
+        // #886 — the sample client prints as the postal block: one
+        // element per line, the locality in capitals.
+        expect(text, contains('3 Avenue de la Liberté'));
+        expect(text, contains('35000 RENNES'));
         // Number and date.
         expect(text, contains('INV-2026-0042'));
         expect(text, contains('2026-07-31'));

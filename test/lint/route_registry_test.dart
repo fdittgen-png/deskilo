@@ -41,7 +41,8 @@ import 'package:flutter_test/flutter_test.dart';
 // 47→48 (2026-09-02): #822 /report-editor — the full-screen report designer.
 // 48→49 (2026-09-02): #825 /member/:memberId — one page per member.
 // 49→50 (2026-09-02): #827 /invoicing/wizard — the guided month-close.
-const int _expectedRouteCount = 50;
+// 50→51 (2026-09-05): #886 /settings/personal-info — the identity form.
+const int _expectedRouteCount = 51;
 
 void main() {
   test('router carries exactly $_expectedRouteCount GoRoutes', () {

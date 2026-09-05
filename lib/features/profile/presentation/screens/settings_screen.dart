@@ -115,24 +115,29 @@ class SettingsScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     try {
       final pick = ref.read(filePickerProvider);
-      final file = await pick(XTypeGroup(
-        label: l10n?.profilePhotoFileType ?? 'Image',
-        extensions: const ['jpg', 'jpeg', 'png', 'webp'],
-        mimeTypes: const ['image/jpeg', 'image/png', 'image/webp'],
-      ));
+      final file = await pick(
+        XTypeGroup(
+          label: l10n?.profilePhotoFileType ?? 'Image',
+          extensions: const ['jpg', 'jpeg', 'png', 'webp'],
+          mimeTypes: const ['image/jpeg', 'image/png', 'image/webp'],
+        ),
+      );
       if (file == null) return; // cancelled
       final bytes = await file.readAsBytes();
-      await ref.read(profileRepositoryProvider).setAvatar(
-            bytes: bytes,
-            contentType: file.mimeType ?? 'image/jpeg',
-          );
+      await ref
+          .read(profileRepositoryProvider)
+          .setAvatar(bytes: bytes, contentType: file.mimeType ?? 'image/jpeg');
       _invalidateAvatar(ref, userId);
       if (!context.mounted) return;
       AppSnack.success(context, l10n?.profilePhotoSaved ?? 'Photo updated');
     } catch (e, st) {
       debugPrint('profile photo upload failed: $e\n$st');
-      TraceLogger.instance.error('profile', 'profile photo upload failed',
-          error: e, stackTrace: st);
+      TraceLogger.instance.error(
+        'profile',
+        'profile photo upload failed',
+        error: e,
+        stackTrace: st,
+      );
       if (!context.mounted) return;
       AppSnack.error(
         context,
@@ -154,8 +159,12 @@ class SettingsScreen extends ConsumerWidget {
       AppSnack.success(context, l10n?.profilePhotoRemoved ?? 'Photo removed');
     } catch (e, st) {
       debugPrint('profile photo removal failed: $e\n$st');
-      TraceLogger.instance.error('profile', 'profile photo removal failed',
-          error: e, stackTrace: st);
+      TraceLogger.instance.error(
+        'profile',
+        'profile photo removal failed',
+        error: e,
+        stackTrace: st,
+      );
       if (!context.mounted) return;
       AppSnack.error(
         context,
@@ -201,9 +210,7 @@ class SettingsScreen extends ConsumerWidget {
           FilledButton(
             key: const ValueKey('kiosk-revert-confirm'),
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(
-              l10n?.memberUnmakeKiosk ?? 'Revert kiosk to member',
-            ),
+            child: Text(l10n?.memberUnmakeKiosk ?? 'Revert kiosk to member'),
           ),
         ],
       ),
@@ -213,8 +220,12 @@ class SettingsScreen extends ConsumerWidget {
       await ref.read(workspaceRepositoryProvider).unsetMyKiosk(workspaceId);
     } catch (e, st) {
       debugPrint('kiosk revert failed: $e\n$st');
-      TraceLogger.instance
-          .error('workspace', 'kiosk revert failed', error: e, stackTrace: st);
+      TraceLogger.instance.error(
+        'workspace',
+        'kiosk revert failed',
+        error: e,
+        stackTrace: st,
+      );
       if (!context.mounted) return;
       AppSnack.error(
         context,
@@ -283,11 +294,11 @@ class SettingsScreen extends ConsumerWidget {
           // #230: go() switches to the Members branch (closing settings)
           // instead of pushing a second copy. Gated with the tab.
           if (features.contains(WorkspaceFeature.membersDirectory))
-          ListTile(
-            leading: const Icon(Icons.people_outline),
-            title: Text(l10n?.directoryTitle ?? 'Members'),
-            onTap: () => context.go('/directory'),
-          ),
+            ListTile(
+              leading: const Icon(Icons.people_outline),
+              title: Text(l10n?.directoryTitle ?? 'Members'),
+              onTap: () => context.go('/directory'),
+            ),
           // #711 — Region & formats: numbers, dates, clock, zone. Gated by
           // the regionalFormats feature like every member preference the
           // owner may switch off.
@@ -297,22 +308,22 @@ class SettingsScreen extends ConsumerWidget {
           // members of my workspaces, consumed by the directory (#224).
           // Rides the whatsappIntegration feature (hierarchy pass).
           if (features.contains(WorkspaceFeature.whatsappIntegration))
-          ListTile(
-            leading: const Icon(Icons.chat_outlined),
-            title: HelpDotTitle(
-              l10n?.whatsappTitle ?? 'WhatsApp',
-              l10n?.helpTopicSettings ?? 'Settings & profile',
+            ListTile(
+              leading: const Icon(Icons.chat_outlined),
+              title: HelpDotTitle(
+                l10n?.whatsappTitle ?? 'WhatsApp',
+                l10n?.helpTopicSettings ?? 'Settings & profile',
+              ),
+              subtitle: Text(
+                (myProfile?.sharesWhatsapp ?? false)
+                    ? myProfile!.whatsapp
+                    : (l10n?.whatsappNotShared ?? 'Not shared'),
+              ),
+              onTap: () => showDialog<void>(
+                context: context,
+                builder: (_) => const WhatsappDialog(),
+              ),
             ),
-            subtitle: Text(
-              (myProfile?.sharesWhatsapp ?? false)
-                  ? myProfile!.whatsapp
-                  : (l10n?.whatsappNotShared ?? 'Not shared'),
-            ),
-            onTap: () => showDialog<void>(
-              context: context,
-              builder: (_) => const WhatsappDialog(),
-            ),
-          ),
           // Self-set status line on my profile (#231): shown next to me
           // in the member directory (#232). Sits with WhatsApp in the
           // ungrouped personal area on top.
@@ -345,16 +356,14 @@ class SettingsScreen extends ConsumerWidget {
                 l10n?.defaultPeriodTitle ?? 'Default booking period',
                 l10n?.helpTopicSettings ?? 'Settings & profile',
               ),
-              subtitle: Text(switch (
-                  ref.watch(defaultPeriodProvider).value) {
+              subtitle: Text(switch (ref.watch(defaultPeriodProvider).value) {
                 DefaultBookingPeriod.morning =>
                   l10n?.planMorningChip ?? 'Morning',
                 DefaultBookingPeriod.afternoon =>
                   l10n?.planAfternoonChip ?? 'Afternoon',
                 DefaultBookingPeriod.fullDay =>
                   l10n?.reserveFullDayChip ?? 'Full day',
-                null => l10n?.defaultPeriodNone ??
-                    'No preference (full day)',
+                null => l10n?.defaultPeriodNone ?? 'No preference (full day)',
               }),
               onTap: () => showDialog<void>(
                 context: context,
@@ -365,19 +374,27 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                   children: [
                     for (final (period, label) in [
-                      (null,
-                          l10n?.defaultPeriodNone ??
-                              'No preference (full day)'),
-                      (DefaultBookingPeriod.morning,
-                          l10n?.planMorningChip ?? 'Morning'),
-                      (DefaultBookingPeriod.afternoon,
-                          l10n?.planAfternoonChip ?? 'Afternoon'),
-                      (DefaultBookingPeriod.fullDay,
-                          l10n?.reserveFullDayChip ?? 'Full day'),
+                      (
+                        null,
+                        l10n?.defaultPeriodNone ?? 'No preference (full day)',
+                      ),
+                      (
+                        DefaultBookingPeriod.morning,
+                        l10n?.planMorningChip ?? 'Morning',
+                      ),
+                      (
+                        DefaultBookingPeriod.afternoon,
+                        l10n?.planAfternoonChip ?? 'Afternoon',
+                      ),
+                      (
+                        DefaultBookingPeriod.fullDay,
+                        l10n?.reserveFullDayChip ?? 'Full day',
+                      ),
                     ])
                       SimpleDialogOption(
                         key: ValueKey(
-                            'default-period-${period?.wire ?? 'none'}'),
+                          'default-period-${period?.wire ?? 'none'}',
+                        ),
                         onPressed: () {
                           ref
                               .read(defaultPeriodProvider.notifier)
@@ -390,26 +407,45 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ),
             ),
-          // Postal address (0060): printed on the member's invoices.
-          ListTile(
-            key: const ValueKey('settings-address'),
-            leading: const Icon(Icons.home_outlined),
-            title: HelpDotTitle(
-              l10n?.addressTitle ?? 'Address',
-              l10n?.helpTopicSettings ?? 'Settings & profile',
+          // #886 — the structured identity: name, postal block, contacts.
+          // The legacy free-text address dialog stays while the flag is off.
+          if (features.contains(WorkspaceFeature.personalInfo))
+            ListTile(
+              key: const ValueKey('settings-personal-info'),
+              leading: const Icon(Icons.contact_mail_outlined),
+              title: HelpDotTitle(
+                l10n?.personalInfoTitle ?? 'Personal information',
+                l10n?.helpTopicSettings ?? 'Settings & profile',
+              ),
+              subtitle: Text(
+                _identitySummary(myProfile) ??
+                    (l10n?.personalInfoNone ?? 'Not filled in yet'),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              onTap: () => context.push('/settings/personal-info'),
+            )
+          else
+            // Postal address (0060): printed on the member's invoices.
+            ListTile(
+              key: const ValueKey('settings-address'),
+              leading: const Icon(Icons.home_outlined),
+              title: HelpDotTitle(
+                l10n?.addressTitle ?? 'Address',
+                l10n?.helpTopicSettings ?? 'Settings & profile',
+              ),
+              subtitle: Text(
+                (myProfile?.address.isNotEmpty ?? false)
+                    ? myProfile!.address
+                    : (l10n?.addressNone ?? 'No address'),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              onTap: () => showDialog<void>(
+                context: context,
+                builder: (_) => const _AddressDialog(),
+              ),
             ),
-            subtitle: Text(
-              (myProfile?.address.isNotEmpty ?? false)
-                  ? myProfile!.address
-                  : (l10n?.addressNone ?? 'No address'),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            onTap: () => showDialog<void>(
-              context: context,
-              builder: (_) => const _AddressDialog(),
-            ),
-          ),
           // In-app help: the wiki user guide bundled as an offline asset,
           // in the app's language. Available to every member.
           ListTile(
@@ -437,16 +473,14 @@ class SettingsScreen extends ConsumerWidget {
                 if (!context.mounted) return;
                 AppSnack.success(
                   context,
-                  l10n?.helpHintRestored ??
-                      'Help hints will be shown again.',
+                  l10n?.helpHintRestored ?? 'Help hints will be shown again.',
                 );
               },
             ),
           // Kiosk escape hatch (0056, field report: "cannot be undone"):
           // a profile flagged as kiosk reverts ITSELF to a regular
           // member right here — the kiosk gate stops appearing on start.
-          if (ref.watch(myMemberProvider).value case final me?
-              when me.isKiosk)
+          if (ref.watch(myMemberProvider).value case final me? when me.isKiosk)
             ListTile(
               key: const ValueKey('settings-kiosk-revert'),
               leading: const Icon(Icons.tablet_mac_outlined),
@@ -467,14 +501,18 @@ class SettingsScreen extends ConsumerWidget {
           // visibility rule so it never floats alone.
           if (ref.watch(myMemberProvider).value case final me?
               when me.status == MemberStatus.active && !me.isKiosk) ...[
-            Row(children: [
-              const Expanded(child: MyBadgeTile()),
-              HelpDot(l10n?.helpHintBadgesTopic ?? 'NFC badges'),
-            ]),
-            Row(children: [
-              const Expanded(child: BadgePinTile()),
-              HelpDot(l10n?.helpHintBadgesTopic ?? 'NFC badges'),
-            ]),
+            Row(
+              children: [
+                const Expanded(child: MyBadgeTile()),
+                HelpDot(l10n?.helpHintBadgesTopic ?? 'NFC badges'),
+              ],
+            ),
+            Row(
+              children: [
+                const Expanded(child: BadgePinTile()),
+                HelpDot(l10n?.helpHintBadgesTopic ?? 'NFC badges'),
+              ],
+            ),
           ],
           // Linked accounts (0051): attach Google/Microsoft/Apple/
           // Facebook to this account for password-less sign-in.
@@ -534,13 +572,11 @@ class SettingsScreen extends ConsumerWidget {
               title: Text(l10n?.rolesTitle ?? 'Role management'),
               onTap: () => context.push('/roles'),
             ),
-          if (showAdminSection &&
-              features.contains(WorkspaceFeature.invoicing))
+          if (showAdminSection && features.contains(WorkspaceFeature.invoicing))
             ListTile(
               key: const ValueKey('settings-billing-reports'),
               leading: const Icon(Icons.receipt_long_outlined),
-              title: Text(
-                  l10n?.settingsBillingReports ?? 'Billing & reports'),
+              title: Text(l10n?.settingsBillingReports ?? 'Billing & reports'),
               onTap: () => context.push('/invoices'),
             ),
           // #486 — the manual payment methods members see on an unpaid
@@ -549,8 +585,9 @@ class SettingsScreen extends ConsumerWidget {
             ListTile(
               key: const ValueKey('settings-payment-methods'),
               leading: const Icon(Icons.account_balance_wallet_outlined),
-              title: Text(l10n?.paymentInstructionsTitle ??
-                  'Payment instructions'),
+              title: Text(
+                l10n?.paymentInstructionsTitle ?? 'Payment instructions',
+              ),
               onTap: () => context.push('/payment-methods'),
             ),
           if (isOwner && features.contains(WorkspaceFeature.onlinePayments))
@@ -619,7 +656,7 @@ class SettingsScreen extends ConsumerWidget {
               localeOverride == null
                   ? (l10n?.languageSystemDefault ?? 'System default')
                   : _endonyms[localeOverride.languageCode] ??
-                      localeOverride.languageCode,
+                        localeOverride.languageCode,
             ),
             onTap: () => showDialog<void>(
               context: context,
@@ -677,8 +714,10 @@ class SettingsScreen extends ConsumerWidget {
             SwitchListTile(
               secondary: const Icon(Icons.developer_mode_outlined),
               title: Text(l10n?.developerMode ?? 'Developer mode'),
-              subtitle: Text(l10n?.developerModeWorkspaceHint ??
-                  'Applies to every member of this workspace.'),
+              subtitle: Text(
+                l10n?.developerModeWorkspaceHint ??
+                    'Applies to every member of this workspace.',
+              ),
               value: devMode,
               onChanged: (v) => _setWorkspaceDevMode(ref, v),
             ),
@@ -701,8 +740,8 @@ class SettingsScreen extends ConsumerWidget {
             subtitle: switch (ref.watch(appVersionProvider).value) {
               null || '' => null,
               final version => Text(
-                  l10n?.aboutVersion(version) ?? 'Version $version',
-                ),
+                l10n?.aboutVersion(version) ?? 'Version $version',
+              ),
             },
           ),
           ListTile(
@@ -710,33 +749,32 @@ class SettingsScreen extends ConsumerWidget {
             leading: const Icon(Icons.person_outline),
             title: const Text(_authorName),
             subtitle: const Text(_authorEmail),
-            onTap: () => ref
-                .read(linkLauncherProvider)
-                (Uri(scheme: 'mailto', path: _authorEmail)),
+            onTap: () => ref.read(linkLauncherProvider)(
+              Uri(scheme: 'mailto', path: _authorEmail),
+            ),
           ),
           ListTile(
             key: const ValueKey('about-source'),
             leading: const Icon(Icons.code),
             title: Text(l10n?.aboutOpenSource ?? 'Open source (0BSD)'),
-            subtitle:
-                Text(l10n?.aboutOpenSourceDesc ?? 'Source code on GitHub'),
-            onTap: () =>
-                ref.read(linkLauncherProvider)(Uri.parse(_repoUrl)),
+            subtitle: Text(
+              l10n?.aboutOpenSourceDesc ?? 'Source code on GitHub',
+            ),
+            onTap: () => ref.read(linkLauncherProvider)(Uri.parse(_repoUrl)),
           ),
           ListTile(
             key: const ValueKey('about-privacy'),
             leading: const Icon(Icons.shield_outlined),
             title: Text(l10n?.aboutPrivacy ?? 'Privacy policy'),
-            onTap: () =>
-                ref.read(linkLauncherProvider)(Uri.parse(_privacyUrl)),
+            onTap: () => ref.read(linkLauncherProvider)(Uri.parse(_privacyUrl)),
           ),
           ListTile(
             key: const ValueKey('about-issues'),
             leading: const Icon(Icons.bug_report_outlined),
-            title: Text(l10n?.aboutReportBug ??
-                'Report a bug / suggest a feature'),
-            onTap: () =>
-                ref.read(linkLauncherProvider)(Uri.parse(_issuesUrl)),
+            title: Text(
+              l10n?.aboutReportBug ?? 'Report a bug / suggest a feature',
+            ),
+            onTap: () => ref.read(linkLauncherProvider)(Uri.parse(_issuesUrl)),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(
@@ -749,10 +787,9 @@ class SettingsScreen extends ConsumerWidget {
               children: [
                 Text(
                   l10n?.aboutSupportTitle ?? 'Support this project',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall
-                      ?.copyWith(fontWeight: FontWeight.w700),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
@@ -770,8 +807,9 @@ class SettingsScreen extends ConsumerWidget {
             leading: const Icon(Icons.payment_outlined),
             title: const Text(_paypalName),
             subtitle: const Text(_paypalHandle),
-            onTap: () => ref
-                .read(linkLauncherProvider)(Uri.parse('https://$_paypalHandle')),
+            onTap: () => ref.read(linkLauncherProvider)(
+              Uri.parse('https://$_paypalHandle'),
+            ),
           ),
           ListTile(
             key: const ValueKey('about-revolut'),
@@ -779,7 +817,8 @@ class SettingsScreen extends ConsumerWidget {
             title: const Text(_revolutName),
             subtitle: const Text(_revolutHandle),
             onTap: () => ref.read(linkLauncherProvider)(
-                Uri.parse('https://$_revolutHandle')),
+              Uri.parse('https://$_revolutHandle'),
+            ),
           ),
           // Sign out sits apart from the sections, with the destructive
           // foreground treatment used elsewhere (colorScheme.error, as in
@@ -821,8 +860,9 @@ class _SectionHeader extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: theme.textTheme.titleSmall
-            ?.copyWith(color: theme.colorScheme.primary),
+        style: theme.textTheme.titleSmall?.copyWith(
+          color: theme.colorScheme.primary,
+        ),
       ),
     );
   }
@@ -839,7 +879,7 @@ class _LanguageDialog extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final current =
         ref.watch(localeControllerProvider).value?.languageCode ??
-            _systemDefault;
+        _systemDefault;
     return SimpleDialog(
       title: HelpDotTitle(
         l10n?.languageTitle ?? 'Language',
@@ -849,10 +889,10 @@ class _LanguageDialog extends ConsumerWidget {
         RadioGroup<String>(
           groupValue: current,
           onChanged: (code) {
-            ref.read(localeControllerProvider.notifier).set(
-                  code == null || code == _systemDefault
-                      ? null
-                      : Locale(code),
+            ref
+                .read(localeControllerProvider.notifier)
+                .set(
+                  code == null || code == _systemDefault ? null : Locale(code),
                 );
             Navigator.of(context).pop();
           },
@@ -861,8 +901,7 @@ class _LanguageDialog extends ConsumerWidget {
             children: [
               RadioListTile<String>(
                 value: _systemDefault,
-                title:
-                    Text(l10n?.languageSystemDefault ?? 'System default'),
+                title: Text(l10n?.languageSystemDefault ?? 'System default'),
               ),
               for (final entry in _endonyms.entries)
                 RadioListTile<String>(
@@ -877,7 +916,6 @@ class _LanguageDialog extends ConsumerWidget {
     );
   }
 }
-
 
 /// Editor for the self-set status line on my profile (#231). The raw
 /// input is trimmed + hard-capped by [normalizeStatusText] on save (the
@@ -925,7 +963,8 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
       context,
       domain: 'profile',
       message: 'address update failed',
-      errorText: l10n?.workspaceGenericError ??
+      errorText:
+          l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
       action: () async {
         final repository = ref.read(profileRepositoryProvider);
@@ -956,49 +995,54 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
         l10n?.helpTopicSettings ?? 'Settings & profile',
       ),
       content: SingleChildScrollView(
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          TextField(
-            key: const ValueKey('address-field'),
-            controller: _controller,
-            maxLines: 3,
-            maxLength: 400,
-            decoration: InputDecoration(
-              labelText: l10n?.addressTitle ?? 'Address',
-              suffixIcon:
-                  HelpDot(l10n?.helpTopicSettings ?? 'Settings & profile'),
-            ),
-          ),
-          // 0069 — what the e-invoice needs beyond the street: the
-          // country, and the VAT id of a member who invoices as a
-          // business.
-          DropdownButtonFormField<String>(
-            key: const ValueKey('address-country'),
-            initialValue: _countryCode,
-            isExpanded: true,
-            items: [
-              for (final country in CountryCatalog.countries)
-                DropdownMenuItem(
-                  value: country.code,
-                  child: Text(localizedCountryName(l10n, country.code)),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              key: const ValueKey('address-field'),
+              controller: _controller,
+              maxLines: 3,
+              maxLength: 400,
+              decoration: InputDecoration(
+                labelText: l10n?.addressTitle ?? 'Address',
+                suffixIcon: HelpDot(
+                  l10n?.helpTopicSettings ?? 'Settings & profile',
                 ),
-            ],
-            onChanged: (value) => setState(() => _countryCode = value),
-            decoration: InputDecoration(
-              labelText: l10n?.addressCountryLabel ?? 'Country',
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-          TextField(
-            key: const ValueKey('address-vat-id'),
-            controller: _vatId,
-            textCapitalization: TextCapitalization.characters,
-            decoration: InputDecoration(
-              labelText: l10n?.addressVatIdLabel ?? 'VAT number',
-              suffixIcon:
-                  HelpDot(l10n?.helpTopicSettings ?? 'Settings & profile'),
+            // 0069 — what the e-invoice needs beyond the street: the
+            // country, and the VAT id of a member who invoices as a
+            // business.
+            DropdownButtonFormField<String>(
+              key: const ValueKey('address-country'),
+              initialValue: _countryCode,
+              isExpanded: true,
+              items: [
+                for (final country in CountryCatalog.countries)
+                  DropdownMenuItem(
+                    value: country.code,
+                    child: Text(localizedCountryName(l10n, country.code)),
+                  ),
+              ],
+              onChanged: (value) => setState(() => _countryCode = value),
+              decoration: InputDecoration(
+                labelText: l10n?.addressCountryLabel ?? 'Country',
+              ),
             ),
-          ),
-        ]),
+            const SizedBox(height: 8),
+            TextField(
+              key: const ValueKey('address-vat-id'),
+              controller: _vatId,
+              textCapitalization: TextCapitalization.characters,
+              decoration: InputDecoration(
+                labelText: l10n?.addressVatIdLabel ?? 'VAT number',
+                suffixIcon: HelpDot(
+                  l10n?.helpTopicSettings ?? 'Settings & profile',
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       actions: [
         TextButton(
@@ -1050,14 +1094,15 @@ class _StatusDialogState extends ConsumerState<_StatusDialog> {
       ref.invalidate(myProfileProvider);
       if (!mounted) return;
       Navigator.of(context).pop();
-      AppSnack.success(
-        context,
-        l10n?.profileStatusSaved ?? 'Status saved',
-      );
+      AppSnack.success(context, l10n?.profileStatusSaved ?? 'Status saved');
     } catch (e, st) {
       debugPrint('status save failed: $e\n$st');
-      TraceLogger.instance.error('profile', 'status save failed',
-          error: e, stackTrace: st);
+      TraceLogger.instance.error(
+        'profile',
+        'status save failed',
+        error: e,
+        stackTrace: st,
+      );
       if (!mounted) return;
       setState(() => _saving = false);
       AppSnack.error(
@@ -1078,20 +1123,18 @@ class _StatusDialogState extends ConsumerState<_StatusDialog> {
         maxLength: StatusTextRules.maxLength,
         decoration: InputDecoration(
           labelText: l10n?.profileStatusFieldLabel ?? 'Status',
-          hintText:
-              l10n?.profileStatusHint ?? 'In a call · back at 14:00',
-          helperText: l10n?.profileStatusHelper ??
+          hintText: l10n?.profileStatusHint ?? 'In a call · back at 14:00',
+          helperText:
+              l10n?.profileStatusHelper ??
               'Optional. Visible to members of your workspaces in the '
                   'member directory. Leave empty to clear it.',
           helperMaxLines: 3,
-          suffixIcon:
-              HelpDot(l10n?.helpTopicSettings ?? 'Settings & profile'),
+          suffixIcon: HelpDot(l10n?.helpTopicSettings ?? 'Settings & profile'),
         ),
       ),
       actions: [
         TextButton(
-          onPressed:
-              _saving ? null : () => Navigator.of(context).pop(),
+          onPressed: _saving ? null : () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),
         FilledButton(
@@ -1124,9 +1167,9 @@ class _ThemeDialog extends ConsumerWidget {
         RadioGroup<ThemeMode>(
           groupValue: current,
           onChanged: (mode) {
-            ref.read(themeControllerProvider.notifier).set(
-                  mode == null || mode == ThemeMode.system ? null : mode,
-                );
+            ref
+                .read(themeControllerProvider.notifier)
+                .set(mode == null || mode == ThemeMode.system ? null : mode);
             Navigator.of(context).pop();
           },
           child: Column(
@@ -1158,4 +1201,15 @@ Future<void> _setWorkspaceDevMode(WidgetRef ref, bool enabled) async {
   if (ws == null) return;
   await ref.read(workspaceRepositoryProvider).setDevMode(ws.id, enabled);
   ref.invalidate(myWorkspacesProvider);
+}
+
+/// "Guilhem MARTIN · SASU KaloA, 209 rue Jean Bart…, 31670 LABÈGE" — the
+/// tile's one-glance summary; null when nothing is filled in yet.
+String? _identitySummary(Profile? profile) {
+  if (profile == null || profile.identity.isEmpty) return null;
+  final parts = [
+    profile.fullName,
+    profile.postalBlock().replaceAll('\n', ', '),
+  ].where((p) => p.isNotEmpty);
+  return parts.isEmpty ? null : parts.join(' · ');
 }

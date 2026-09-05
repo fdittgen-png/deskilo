@@ -234,6 +234,11 @@ class FeaturesScreen extends ConsumerWidget {
                   'mm, cm, px or %; the PDF prints exactly that. A '
                   'document with a layout uses it, the others keep '
                   'their bands.',
+        WorkspaceFeature.personalInfo =>
+          l10n?.featurePersonalInfoDesc ??
+              'Members enter their name, postal address, phone, e-mail '
+                  'and legal ids in Settings; invoices and letters print '
+                  'them in the standard postal block.',
         WorkspaceFeature.priceNegotiations =>
           l10n?.featurePriceNegotiationsDesc ??
               'The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record.',

@@ -4,6 +4,7 @@
 // normalization rules: WhatsApp (keep digits, fold a leading 00 into +,
 // prepend +; blank clears) and the status line (trim + hard cap at
 // StatusTextRules.maxLength; blank clears).
+import 'package:deskilo/features/profile/domain/personal_info.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -37,28 +38,30 @@ void main() {
       expect(profile.lastSeenAt, DateTime.utc(2026, 7, 11, 9, 30));
       expect(profile.hasAvatar, isTrue);
       expect(profile.avatarPath, 'user-1/avatar');
-      expect(profile.toDb(), db);
+      // #886 — the identity columns ride along, blank when absent.
+      expect(profile.toDb(), {...PersonalInfo.fromDb(db).toDb(), ...db});
     });
 
-    test('tolerates a pre-0028/0029 row (columns absent) and null heartbeat',
-        () {
-      final profile = Profile.fromDb(const {
-        'id': 'user-2',
-        'display_name': 'Grace',
-      });
+    test(
+      'tolerates a pre-0028/0029 row (columns absent) and null heartbeat',
+      () {
+        final profile = Profile.fromDb(const {
+          'id': 'user-2',
+          'display_name': 'Grace',
+        });
 
-      expect(profile.whatsapp, '');
-      expect(profile.sharesWhatsapp, isFalse);
-      expect(profile.countryCode, '', reason: 'pre-0069 rows carry none');
-      expect(profile.vatId, '');
-      expect(profile.statusText, '');
-      expect(profile.hasStatus, isFalse);
-      expect(profile.lastSeenAt, isNull);
-      expect(profile.toDb()['last_seen_at'], isNull);
-    });
+        expect(profile.whatsapp, '');
+        expect(profile.sharesWhatsapp, isFalse);
+        expect(profile.countryCode, '', reason: 'pre-0069 rows carry none');
+        expect(profile.vatId, '');
+        expect(profile.statusText, '');
+        expect(profile.hasStatus, isFalse);
+        expect(profile.lastSeenAt, isNull);
+        expect(profile.toDb()['last_seen_at'], isNull);
+      },
+    );
 
-    test('whatsappUri is the wa.me link without the +, null when unshared',
-        () {
+    test('whatsappUri is the wa.me link without the +, null when unshared', () {
       const shared = Profile(id: 'u', whatsapp: '+33612345678');
       const unshared = Profile(id: 'u');
 
@@ -69,14 +72,8 @@ void main() {
 
   group('normalizeWhatsapp', () {
     test('strips spacing and punctuation down to + and digits', () {
-      expect(
-        normalizeWhatsapp('+33 6 12-34.56.78'),
-        '+33612345678',
-      );
-      expect(
-        normalizeWhatsapp('(+49) 151 / 2345 6789'),
-        '+4915123456789',
-      );
+      expect(normalizeWhatsapp('+33 6 12-34.56.78'), '+33612345678');
+      expect(normalizeWhatsapp('(+49) 151 / 2345 6789'), '+4915123456789');
     });
 
     test('folds the 00 international dialing prefix into +', () {
@@ -95,10 +92,12 @@ void main() {
   });
 
   group('normalizeStatusText (#231)', () {
-    test('pins the 40-char cap the editor, normalizer and 0029 check share',
-        () {
-      expect(StatusTextRules.maxLength, 40);
-    });
+    test(
+      'pins the 40-char cap the editor, normalizer and 0029 check share',
+      () {
+        expect(StatusTextRules.maxLength, 40);
+      },
+    );
 
     test('trims surrounding whitespace', () {
       expect(

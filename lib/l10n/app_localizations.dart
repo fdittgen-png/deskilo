@@ -10813,6 +10813,120 @@ abstract class AppLocalizations {
   /// **'Participation {pct}%'**
   String billParticipation(int pct);
 
+  /// #886 personal-information form / feature: featurePersonalInfo
+  ///
+  /// In en, this message translates to:
+  /// **'Personal information'**
+  String get featurePersonalInfo;
+
+  /// #886 personal-information form / feature: featurePersonalInfoDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Members enter their name, postal address, phone, e-mail and legal ids in Settings; invoices and letters print them in the standard postal block.'**
+  String get featurePersonalInfoDesc;
+
+  /// #886 personal-information form / feature: personalInfoTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Personal information'**
+  String get personalInfoTitle;
+
+  /// #886 personal-information form / feature: personalInfoSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Printed on your invoices and letters. Your family name is written in capitals, as on official mail.'**
+  String get personalInfoSubtitle;
+
+  /// #886 personal-information form / feature: personalInfoFirstName
+  ///
+  /// In en, this message translates to:
+  /// **'First name'**
+  String get personalInfoFirstName;
+
+  /// #886 personal-information form / feature: personalInfoLastName
+  ///
+  /// In en, this message translates to:
+  /// **'Family name'**
+  String get personalInfoLastName;
+
+  /// #886 personal-information form / feature: personalInfoCompany
+  ///
+  /// In en, this message translates to:
+  /// **'Company (optional)'**
+  String get personalInfoCompany;
+
+  /// #886 personal-information form / feature: personalInfoStreet
+  ///
+  /// In en, this message translates to:
+  /// **'Street and number'**
+  String get personalInfoStreet;
+
+  /// #886 personal-information form / feature: personalInfoPostalCode
+  ///
+  /// In en, this message translates to:
+  /// **'Postal code'**
+  String get personalInfoPostalCode;
+
+  /// #886 personal-information form / feature: personalInfoCity
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get personalInfoCity;
+
+  /// #886 personal-information form / feature: personalInfoCountry
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get personalInfoCountry;
+
+  /// #886 personal-information form / feature: personalInfoPhone
+  ///
+  /// In en, this message translates to:
+  /// **'Telephone'**
+  String get personalInfoPhone;
+
+  /// #886 personal-information form / feature: personalInfoEmail
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail for documents'**
+  String get personalInfoEmail;
+
+  /// #886 personal-information form / feature: personalInfoVatId
+  ///
+  /// In en, this message translates to:
+  /// **'VAT number (optional)'**
+  String get personalInfoVatId;
+
+  /// #886 personal-information form / feature: personalInfoLegalId
+  ///
+  /// In en, this message translates to:
+  /// **'Company / registration id (optional)'**
+  String get personalInfoLegalId;
+
+  /// #886 personal-information form / feature: personalInfoSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Personal information saved'**
+  String get personalInfoSaved;
+
+  /// #886 personal-information form / feature: personalInfoNone
+  ///
+  /// In en, this message translates to:
+  /// **'Not filled in yet'**
+  String get personalInfoNone;
+
+  /// #886 personal-information form / feature: personalInfoPreview
+  ///
+  /// In en, this message translates to:
+  /// **'On your documents'**
+  String get personalInfoPreview;
+
+  /// #886 personal-information form: save button
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get personalInfoSave;
+
   /// Booking sheet: grid duration slider label (#574)
   ///
   /// In en, this message translates to:

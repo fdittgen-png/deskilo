@@ -137,7 +137,8 @@ Future<Uint8List> buildLayoutPdf({
                           width: fieldW,
                           height: fieldH,
                           child: addressWindowRecipient(
-                            name: '${data['member'] ?? ''}',
+                            // #886 — the full name, else the display name.
+                            name: '${_nonEmpty(data['client_name']) ?? data['member'] ?? ''}',
                             address: '${data['client_address'] ?? ''}',
                           ),
                         ),
@@ -479,3 +480,5 @@ Set<String> layoutImageNames(LayoutDocument document) {
   }
   return names;
 }
+
+Object? _nonEmpty(Object? v) => v == null || '$v'.isEmpty ? null : v;

@@ -76,7 +76,9 @@ import 'package:flutter_test/flutter_test.dart';
 //   where a window envelope shows it; side follows the country).
 // 74→75 (2026-09-04): #875 reportLayouts — a design states its geometry
 //   in mm/cm/px/%; the PDF prints exactly that; coexists with bands.
-const int _expectedFeatureCount = 75;
+// 75→76 (2026-09-05): #886 personalInfo — the structured identity on the
+//   profile, printed by every document.
+const int _expectedFeatureCount = 76;
 
 void main() {
   test('every functionality is registered — the pin', () {
