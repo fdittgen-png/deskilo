@@ -443,7 +443,8 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
         ),
         subtitle: Text([
           invoicePeriodLabel(context, invoice),
-          if (widget.showMemberNames) invoice.memberName,
+          if (widget.showMemberNames && invoice.clientName.isNotEmpty)
+            invoice.clientName,
           dateFormat.format(invoice.issuedAt),
           if (widget.showMemberNames && reminder != null)
             l10n?.invoiceRemindedBadge(reminder.count) ??

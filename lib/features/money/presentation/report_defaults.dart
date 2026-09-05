@@ -65,6 +65,8 @@ ReportBands _invoicePresetBands(AppLocalizations? l10n, String id) {
 ## $title
 {{ number }}
 > ${l10n?.invoicePdfIssuedOn ?? 'Issued on'} {{ issued }} · {{ issued_by }}
+{% if due_date != "" %}> ${l10n?.invoicePdfDueOn ?? 'Due on'} {{ due_date }}
+{% endif %}
 {% if replaces != "" %}> ${l10n?.invoicePdfReplaces ?? 'Replaces'} {{ replaces }}{% endif %}
 :::''';
   // Row 2: seller coordinates left, client box right.

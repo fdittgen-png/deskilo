@@ -242,14 +242,29 @@ String _clientAddressOf(Invoice invoice, Workspace? workspace) {
     postalCode: buyer.postalCode,
     city: buyer.city,
     countryCode: buyer.country,
-  ).postalBlock(workspaceCountry: workspace?.countryCode ?? '');
+  ).postalBlock(
+    workspaceCountry: workspace?.countryCode ?? '',
+    // #910 — the name the document prints above this block. When the
+    // client IS the company, the block drops it rather than saying it
+    // twice; when a person is named, the company stays where it belongs.
+    nameAbove: _clientNameOf(invoice),
+  );
 }
 
-/// The client's full name: the frozen buyer party, else the snapshot.
-String _clientNameOf(Invoice invoice) {
-  final name = invoice.buyerParty?.name ?? '';
-  return name.isNotEmpty ? name : invoice.memberName;
-}
+/// The client's full name: the frozen buyer party, else the snapshot,
+/// else the frozen company (#910).
+String _clientNameOf(Invoice invoice) => invoice.clientName;
+
+/// #910 — the day the invoice falls due: the issue date plus the delay
+/// the workspace's reminder rules define, which is the same delay the
+/// journey counts down (`invoice_journey.dart`). One source, so the
+/// document and the app can never state two different deadlines.
+DateTime invoiceDueAt(WidgetRef ref, Invoice invoice) => invoice.issuedAt.add(
+      Duration(
+        days: (ref.read(dunningRulesProvider).value ?? DunningRules.defaults)
+            .firstAfterDays,
+      ),
+    );
 
 /// The report data model (#470/#474) — every value the Liquid bands
 /// can reference, resolved where formatting is at hand. Amounts arrive
@@ -265,6 +280,12 @@ Map<String, Object?> invoiceReportData(
   required bool copy,
   Workspace? workspace,
   PaymentTerms? memberTerms,
+  /// #910 — the day the settlement is due. A French invoice must carry
+  /// it (art. L441-9 code de commerce), and until now the document said
+  /// only "à 30 jours" in prose while the app showed a date computed
+  /// from the reminder delay: two deadlines, neither of them stated on
+  /// the paper. Null leaves the placeholder empty.
+  DateTime? dueAt,
 }) {
   final l10n = AppLocalizations.of(context);
   final currency = moneyFormat(invoice.currency);
@@ -282,10 +303,14 @@ Map<String, Object?> invoiceReportData(
   return <String, Object?>{
     'workspace': invoice.workspaceName,
     'workspace_address': invoice.workspaceAddress,
-    'member': invoice.memberName,
+    'member': invoice.clientName,
     'number': invoice.number,
     'period': invoicePeriodLabel(context, invoice),
     'issued': dateFormat.format(invoice.issuedAt),
+    // #910 — the settlement date, on the document itself.
+    'due_date': dueAt == null || invoice.number.isEmpty
+        ? ''
+        : dateFormat.format(dueAt),
     'issued_by': invoice.issuerName,
     'replaces': invoice.replacesNumber,
     'total': money(invoice.totalCents),
@@ -1033,7 +1058,7 @@ Map<String, Object?> reminderReportData(
   return <String, Object?>{
     'workspace': invoice.workspaceName,
     'workspace_address': invoice.workspaceAddress,
-    'member': invoice.memberName,
+    'member': invoice.clientName,
     'number': invoice.number,
     'issued': dateFormat.format(invoice.issuedAt),
     'total': currency.formatMinor(invoice.totalCents),
@@ -1076,6 +1101,9 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   // #881 — the member's own conditions; callers holding a ref pass
   // memberTermsFor(ref, invoice.memberId).
   PaymentTerms? memberTerms,
+  // #910 — the settlement date the document must state; callers
+  // holding a ref pass invoiceDueAt(ref, invoice).
+  DateTime? dueAt,
 }) async {
   final l10n = AppLocalizations.of(context);
   final currency = moneyFormat(invoice.currency);
@@ -1111,6 +1139,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     proforma: proforma,
     copy: copy,
     workspace: workspace,
+    dueAt: dueAt,
   );
   // #476: a proforma renders its OWN bands when the owner set them —
   // else the invoice's, as it always did.
@@ -1154,7 +1183,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   final stem = proforma
       ? safeFileSlug(
           '${l10n?.invoicePdfProforma ?? 'proforma'} '
-          '${invoice.number.isEmpty ? '${invoice.memberName} $periodLabel' : invoice.number}',
+          '${invoice.number.isEmpty ? '${invoice.clientName} $periodLabel' : invoice.number}',
         )
       : safeFileSlug(invoice.number);
   // #875 — a positioned layout, when this document has one, IS the
@@ -1274,6 +1303,7 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
     context,
     invoice,
     memberTerms: memberTermsFor(ref, invoice.memberId),
+    dueAt: invoiceDueAt(ref, invoice),
     copy: _rendersCopy(ref),
     settledIn: settledStampOf(context, ref, invoice),
     facturXml: xml,
@@ -1400,6 +1430,7 @@ Future<void> shareProforma(
             context,
             invoice,
             memberTerms: memberTermsFor(ref, invoice.memberId),
+        dueAt: invoiceDueAt(ref, invoice),
             proforma: true,
             copy: false,
             workspace: ref.read(currentWorkspaceProvider).value,
@@ -1413,6 +1444,7 @@ Future<void> shareProforma(
         context,
         invoice,
         memberTerms: memberTermsFor(ref, invoice.memberId),
+        dueAt: invoiceDueAt(ref, invoice),
         proforma: true,
         template: invoicePdfTemplateFor(ref),
         workspace: ref.read(currentWorkspaceProvider).value,
@@ -1470,8 +1502,14 @@ Future<Invoice?> proformaForMonth(
     currency: workspace.currencyCode,
     memberName: fullName.isNotEmpty ? fullName : names[memberId] ?? '',
     memberAddress:
-        profile?.postalBlock(workspaceCountry: workspace.countryCode) ??
-        identity.postalBlock(workspaceCountry: workspace.countryCode),
+        profile?.postalBlock(
+          workspaceCountry: workspace.countryCode,
+          nameAbove: fullName,
+        ) ??
+        identity.postalBlock(
+          workspaceCountry: workspace.countryCode,
+          nameAbove: fullName,
+        ),
     buyerParty: profile == null && identity.isEmpty
         ? null
         : InvoiceParty(
@@ -1548,6 +1586,7 @@ Future<void> downloadInvoicePdf(
         context,
         invoice,
         memberTerms: memberTermsFor(ref, invoice.memberId),
+        dueAt: invoiceDueAt(ref, invoice),
         copy: _rendersCopy(ref),
         settledIn: settledStampOf(context, ref, invoice),
         annexInvoices: annexes,
@@ -1658,6 +1697,7 @@ Future<void> shareInvoicePdf(
         context,
         invoice,
         memberTerms: memberTermsFor(ref, invoice.memberId),
+        dueAt: invoiceDueAt(ref, invoice),
         copy: _rendersCopy(ref),
         settledIn: settledStampOf(context, ref, invoice),
         annexInvoices: annexes,

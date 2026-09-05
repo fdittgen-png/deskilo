@@ -2956,6 +2956,10 @@
   },
   "workspaceInvitePasteHint": "Paste the whole invitation message — the ID is found automatically.",
   "workspaceInviteCodeInvalid": "No workspace ID found — paste the invitation or type the ID.",
+  "invoicePdfDueOn": "Due on",
+  "@invoicePdfDueOn": {
+    "description": "#910 invoice due date: invoicePdfDueOn"
+  },
   "invoicesTitle": "Invoices",
   "@invoicesTitle": {
     "description": "The invoice archive screen title and its Money entry button (0060)"

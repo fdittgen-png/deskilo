@@ -21,6 +21,7 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
       'member': 'Alex Sample',
       'number': 'INV-2026-0042',
       'period': 'July 2026',
+      'due_date': '19 sept. 2026',
       'issued': '2026-07-31',
       'issued_by': 'Demo Owner',
       'replaces': '',

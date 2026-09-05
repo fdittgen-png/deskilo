@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../events/presentation/widgets/event_validation_trail.dart';
 import '../../../../core/i18n/money_format.dart';
@@ -11,6 +12,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/einvoice_gateway.dart';
 import '../../domain/billing_rules.dart';
 import '../../domain/invoice.dart';
+import '../../providers/money_providers.dart';
 import '../invoice_journey.dart';
 import '../invoice_line_text.dart';
 import '../invoice_status.dart';
@@ -51,8 +53,6 @@ Future<InvoiceAction?> showInvoiceDetailSheet(
   InvoiceJourney? journey,
   // #831 — the settlement a regrouped source went into.
   String settledByNumber = '',
-  // #870 — an association collects a participation, not a subscription.
-  bool association = false,
 }) =>
     showModalBottomSheet<InvoiceAction>(
       context: context,
@@ -60,7 +60,6 @@ Future<InvoiceAction?> showInvoiceDetailSheet(
       showDragHandle: true,
       useSafeArea: true,
       builder: (context) => _InvoiceDetailBody(
-        association: association,
         settledByNumber: settledByNumber,
         invoice: invoice,
         match: match,
@@ -74,9 +73,13 @@ Future<InvoiceAction?> showInvoiceDetailSheet(
       ),
     );
 
-class _InvoiceDetailBody extends StatelessWidget {
+/// #910 — the seller kind is READ here, not passed in. Every one of the
+/// six callers forgot the flag, so an association's own app called its
+/// participations "subscriptions" while the PDF beside it said
+/// "participation" — the very word #870 exists to keep off the
+/// document. A parameter nobody remembers is not a setting.
+class _InvoiceDetailBody extends ConsumerWidget {
   const _InvoiceDetailBody({
-    required this.association,
     this.settledByNumber = '',
     required this.invoice,
     required this.match,
@@ -90,7 +93,6 @@ class _InvoiceDetailBody extends StatelessWidget {
   });
 
   final String settledByNumber;
-  final bool association;
 
   final Invoice invoice;
   final InvoiceMatch? match;
@@ -108,7 +110,8 @@ class _InvoiceDetailBody extends StatelessWidget {
   final InvoiceJourney? journey;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final association = ref.watch(sellerIsAssociationProvider);
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final muted = theme.colorScheme.onSurfaceVariant;
@@ -211,8 +214,8 @@ class _InvoiceDetailBody extends StatelessWidget {
                 ),
               line([
                 invoicePeriodLabel(context, invoice),
-                if (showMemberName && invoice.memberName.isNotEmpty)
-                  invoice.memberName,
+                if (showMemberName && invoice.clientName.isNotEmpty)
+                  invoice.clientName,
               ].join(' · ')),
               // #812 — the journey first: the four steps, then the move.
               if (journey case final journey?) ...[
@@ -235,10 +238,13 @@ class _InvoiceDetailBody extends StatelessWidget {
                   '${invoice.issuerName.isEmpty ? '' : ' · '
                       '${l10n?.invoicePdfIssuedBy ?? 'Issued by'} '
                       '${invoice.issuerName}'}'),
+              // #910 — "Billed to: , SASU KaloA, …": the name was empty
+              // and its comma stayed behind. Build the parts, then join.
               line('${l10n?.invoicePdfBilledTo ?? 'Billed to'}: '
-                  '${invoice.memberName}'
-                  '${invoice.memberAddress.isEmpty ? '' : ', '
-                      '${invoice.memberAddress.replaceAll('\n', ', ')}'}'),
+                  '${[
+                    invoice.clientName,
+                    ...invoice.memberAddress.split('\n'),
+                  ].map((p) => p.trim()).where((p) => p.isNotEmpty).join(', ')}'),
               const Divider(height: AppSpacing.xl),
 
               // The positions, exactly as the PDF prints them.

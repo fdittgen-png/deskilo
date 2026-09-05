@@ -2877,6 +2877,10 @@
   "reportDesignErrorUnknownKind": "Diese Vorlage gehört zu einem Bericht, den dieser Space nicht hat.",
   "reportDesignErrorWrongKind": "Diese Vorlage gehört zu einem anderen Bericht. Öffnen Sie diesen und importieren Sie sie dort.",
   "reportDesignErrorInvalidDesign": "Diese Datei enthält keine lesbare Vorlage.",
+  "invoicePdfDueOn": "Fällig am",
+  "@invoicePdfDueOn": {
+    "description": "#910 invoice due date: invoicePdfDueOn"
+  },
   "invoicesManage": "Rechnungen verwalten",
   "@invoicesManage": {
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"

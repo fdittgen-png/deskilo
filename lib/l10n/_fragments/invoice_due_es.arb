@@ -1,0 +1,7 @@
+{
+  "@@locale": "es",
+  "invoicePdfDueOn": "Vencimiento",
+  "@invoicePdfDueOn": {
+    "description": "#910 invoice due date: invoicePdfDueOn"
+  }
+}

@@ -3025,6 +3025,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucun identifiant trouvé — collez l\'invitation ou saisissez l\'identifiant.';
 
   @override
+  String get invoicePdfDueOn => 'Échéance';
+
+  @override
   String get invoicesTitle => 'Factures';
 
   @override

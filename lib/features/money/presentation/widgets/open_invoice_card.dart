@@ -352,7 +352,11 @@ class OpenInvoiceCard extends StatelessWidget {
               Row(children: [
                 Expanded(
                   child: Text(
-                    '${invoice.number} · ${invoice.memberName}',
+                    // #910 — the client, company included; and no
+                    // separator hanging off a name nobody has.
+                    [invoice.number, invoice.clientName]
+                        .where((p) => p.isNotEmpty)
+                        .join(' · '),
                     style: theme.textTheme.titleSmall,
                   ),
                 ),

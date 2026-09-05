@@ -5257,6 +5257,12 @@ abstract class AppLocalizations {
   /// **'No workspace ID found — paste the invitation or type the ID.'**
   String get workspaceInviteCodeInvalid;
 
+  /// #910 invoice due date: invoicePdfDueOn
+  ///
+  /// In en, this message translates to:
+  /// **'Due on'**
+  String get invoicePdfDueOn;
+
   /// The invoice archive screen title and its Money entry button (0060)
   ///
   /// In en, this message translates to:

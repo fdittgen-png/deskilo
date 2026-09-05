@@ -347,7 +347,7 @@ Future<Uint8List> buildInvoicePdf({
           );
 
     final pw.Widget windowRecipient = addressWindowRecipient(
-        name: invoice.memberName, address: invoice.memberAddress);
+        name: invoice.clientName, address: invoice.memberAddress);
 
     pw.Widget label(String text) => pw.Text(text,
         style: pw.TextStyle(
@@ -457,14 +457,17 @@ Future<Uint8List> buildInvoicePdf({
           mainAxisSize: pw.MainAxisSize.min,
           children: [
             ...footerWidgets,
-            pw.Container(
-              alignment: pw.Alignment.centerRight,
-              padding: const pw.EdgeInsets.only(top: 8),
-              child: pw.Text(
-                '${strings.page} ${context.pageNumber}/${context.pagesCount}',
-                style: const pw.TextStyle(fontSize: 8, color: _muted),
+            // #902/#910 — "1/1" on a one-page letter is noise; the page
+            // number earns its place only once there is a second page.
+            if (context.pageNumber > 1)
+              pw.Container(
+                alignment: pw.Alignment.centerRight,
+                padding: const pw.EdgeInsets.only(top: 8),
+                child: pw.Text(
+                  '${strings.page} ${context.pageNumber}/${context.pagesCount}',
+                  style: const pw.TextStyle(fontSize: 8, color: _muted),
+                ),
               ),
-            ),
           ],
         ),
         build: (context) => [
@@ -527,7 +530,7 @@ Future<Uint8List> buildInvoicePdf({
                     children: [
                       label(strings.billedTo.toUpperCase()),
                       pw.SizedBox(height: 4),
-                      pw.Text(invoice.memberName,
+                      pw.Text(invoice.clientName,
                           style: pw.TextStyle(
                               fontSize: 11,
                               fontWeight: pw.FontWeight.bold,
@@ -918,14 +921,16 @@ Future<Uint8List> buildBandedLetterPdf({
         theme: pw.ThemeData.withFont(base: baseFont, bold: boldFont),
         margin: const pw.EdgeInsets.fromLTRB(48, 44, 48, 44),
       ),
-      footer: (context) => pw.Container(
-        alignment: pw.Alignment.centerRight,
-        padding: const pw.EdgeInsets.only(top: 8),
-        child: pw.Text(
-          '$pageLabel ${context.pageNumber}/${context.pagesCount}',
-          style: const pw.TextStyle(fontSize: 8, color: _muted),
-        ),
-      ),
+      footer: (context) => context.pageNumber > 1
+          ? pw.Container(
+              alignment: pw.Alignment.centerRight,
+              padding: const pw.EdgeInsets.only(top: 8),
+              child: pw.Text(
+                '$pageLabel ${context.pageNumber}/${context.pagesCount}',
+                style: const pw.TextStyle(fontSize: 8, color: _muted),
+              ),
+            )
+          : pw.SizedBox(),
       build: (context) => [
         ...reportBlockWidgets(report.header, images: reportImages),
         ...reportBlockWidgets(report.body, images: reportImages),

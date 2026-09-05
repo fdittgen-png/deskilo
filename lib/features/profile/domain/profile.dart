@@ -88,8 +88,13 @@ class Profile {
 
   /// The postal block for documents, or the legacy free-text address
   /// while the structured fields are unset.
-  String postalBlock({String workspaceCountry = ''}) {
-    final block = identity.postalBlock(workspaceCountry: workspaceCountry);
+  String postalBlock({String workspaceCountry = '', String? nameAbove}) {
+    // #910 — the company only leaves the block when it is the line
+    // printed above it; [fullName] may be the display name instead.
+    final block = identity.postalBlock(
+      workspaceCountry: workspaceCountry,
+      nameAbove: nameAbove ?? fullName,
+    );
     return block.isNotEmpty ? block : address;
   }
 

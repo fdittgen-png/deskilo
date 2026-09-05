@@ -221,6 +221,8 @@ class InvoicePdfTemplate {
     'workspace_address',
     'period',
     'issued',
+    // #910 — the settlement date the law wants stated.
+    'due_date',
     'issued_by',
     'replaces',
     'total',

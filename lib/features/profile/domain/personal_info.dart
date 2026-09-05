@@ -66,14 +66,31 @@ class PersonalInfo {
       vatId.isEmpty &&
       legalId.isEmpty;
 
-  /// Enough to name AND locate the person: a name and a street or city.
+  /// Enough to name AND locate the client: a name (or a company) and a
+  /// street or city.
   bool get isPostalComplete =>
       fullName.isNotEmpty && (street.isNotEmpty || city.isNotEmpty);
 
   /// "Prénom NOM" — the family name in capitals, as French letters and
   /// most European invoices write it; either half alone when the other
-  /// is missing; '' when both are.
-  String get fullName => _fullName(firstName, lastName);
+  /// is missing.
+  ///
+  /// #910 — a client is not always a person. An admin-managed profile
+  /// may hold nothing but a COMPANY (the invitation only needs one of
+  /// the three), and a company is who the invoice is addressed to: with
+  /// no fallback the document named nobody and every surface that
+  /// interpolated the name printed an orphan separator. So the company
+  /// stands in when neither half of a personal name is given, and
+  /// [postalBlock] then leaves it out — it is on the line above.
+  String get fullName {
+    final personal = _fullName(firstName, lastName);
+    return personal.isNotEmpty ? personal : company.trim();
+  }
+
+  /// The personal name alone, without the company standing in for it —
+  /// what a greeting needs, and what tells [postalBlock] whether the
+  /// company has been promoted to the name line.
+  String get personName => _fullName(firstName, lastName);
 
   /// The postal block, one line per element, as the envelope window and
   /// the invoice print it:
@@ -86,14 +103,22 @@ class PersonalInfo {
   ///
   /// The name is NOT part of the block: the recipient widget prints it
   /// on its own line above, so a company can sit between them.
-  String postalBlock({String workspaceCountry = ''}) => _postalBlock(
-    company: company,
-    street: street,
-    postalCode: postalCode,
-    city: city,
-    countryCode: countryCode,
-    workspaceCountry: workspaceCountry,
-  );
+  ///
+  /// [nameAbove] is the line the document prints over the block —
+  /// [fullName] by default. When it IS the company (a client with no
+  /// personal name, #910), the company line is dropped: printing
+  /// "SASU KaloA" twice, once as the addressee and again as the first
+  /// line of its own address, is not an address.
+  String postalBlock({String workspaceCountry = '', String? nameAbove}) =>
+      _postalBlock(
+        company:
+            company.trim() == (nameAbove ?? fullName).trim() ? '' : company,
+        street: street,
+        postalCode: postalCode,
+        city: city,
+        countryCode: countryCode,
+        workspaceCountry: workspaceCountry,
+      );
 
   PersonalInfo copyWith({
     String? firstName,

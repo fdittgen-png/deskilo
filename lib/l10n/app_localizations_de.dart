@@ -3017,6 +3017,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Keine Workspace-ID gefunden — Einladung einfügen oder ID eintippen.';
 
   @override
+  String get invoicePdfDueOn => 'Fällig am';
+
+  @override
   String get invoicesTitle => 'Rechnungen';
 
   @override
