@@ -67,6 +67,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get addressWindowOff => 'Sans fenêtre';
 
   @override
+  String get legalIdentityAssociationRegime =>
+      'Une association sans activité lucrative n\'est pas assujettie à la TVA : choisissez « Hors du champ de la TVA », pas « Franchise ». La franchise exige un numéro de TVA que vous n\'avez pas, et la facture électronique serait rejetée. Hors du champ, c\'est votre SIRET qui identifie l\'association.';
+
+  @override
   String get authSignInTitle => 'Connexion';
 
   @override

@@ -67,6 +67,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get addressWindowOff => 'Nessuna finestra';
 
   @override
+  String get legalIdentityAssociationRegime =>
+      'Un\'associazione senza attività commerciale non è soggetta a IVA: scegliete «Fuori campo IVA», non «Esente». Il regime di esenzione richiede una partita IVA che non avete, e la fattura elettronica verrebbe respinta. Fuori campo, è il vostro numero di registro a identificare l\'associazione.';
+
+  @override
   String get authSignInTitle => 'Accedi';
 
   @override

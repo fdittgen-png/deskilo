@@ -3,6 +3,7 @@
 // #917 — the strip that says a workspace is not real, and the one
 // control that can take it away.
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/theme/status_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -76,6 +77,19 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(workspace.lastEnvironment, 'prod');
+  });
+
+  testWidgets('#917 — the switcher paints each space its environment '
+      'colour: orange for development, green for real', (tester) async {
+    await _pump(tester);
+    final context = tester.element(find.byType(Scaffold).first);
+    GoRouter.of(context).push('/profiles');
+    await tester.pumpAndSettle();
+    final avatar = tester.widget<CircleAvatar>(
+      find.byKey(const ValueKey('profile-env-ws-1')),
+    );
+    expect(avatar.backgroundColor, AppEnvironmentColors.development,
+        reason: 'a development space is orange');
   });
 
   testWidgets('a plain member never sees the control — only an owner may '

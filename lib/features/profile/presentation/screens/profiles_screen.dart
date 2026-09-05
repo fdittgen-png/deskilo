@@ -8,6 +8,8 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../../../core/theme/status_colors.dart';
+import '../../../workspace/domain/workspace.dart';
 
 /// Profile switcher à la tankstellen (#89): each membership is a profile —
 /// a workspace plus the role held there. The active profile shapes the
@@ -54,11 +56,27 @@ class ProfilesScreen extends ConsumerWidget {
                 final isActive = workspace.id == active?.id;
                 return Card(
                   child: ListTile(
-                    leading: CircleAvatar(
-                      child: Text(
-                        workspace.name.isEmpty
-                            ? '?'
-                            : workspace.name.substring(0, 1).toUpperCase(),
+                    // #917 — the environment, at a glance and before
+                    // the tap: green is a real workspace, orange one to
+                    // try things out in. Colour alone never carries a
+                    // state (spec §11), so the tooltip names it too.
+                    leading: Tooltip(
+                      message: workspace.isDevelopment
+                          ? (l10n?.environmentDev ?? 'Development')
+                          : (l10n?.environmentProd ?? 'Production'),
+                      child: CircleAvatar(
+                        key: ValueKey('profile-env-${workspace.id}'),
+                        backgroundColor: workspace.isDevelopment
+                            ? AppEnvironmentColors.developmentOf(
+                                Theme.of(context).brightness)
+                            : AppEnvironmentColors.productionOf(
+                                Theme.of(context).brightness),
+                        foregroundColor: Colors.white,
+                        child: Text(
+                          workspace.name.isEmpty
+                              ? '?'
+                              : workspace.name.substring(0, 1).toUpperCase(),
+                        ),
                       ),
                     ),
                     title: Text(workspace.name),

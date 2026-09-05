@@ -148,6 +148,65 @@ void main() {
     });
   });
 
+  group('every document, not only the invoice', () {
+    test('the shared foreground painter is used, or absent for a real '
+        'workspace', () {
+      expect(watermarkForeground(''), isNull,
+          reason: 'a production document carries nothing');
+      expect(watermarkForeground('DEVELOPMENT'), isNotNull);
+    });
+
+    test('every builder the app has takes the mark — a statement, an '
+        'agreement, a VAT report and a declaration are as mistakable as '
+        'an invoice', () {
+      final pdf = File('lib/features/money/domain/invoice_pdf.dart')
+          .readAsStringSync();
+      // The banded letter builder is the funnel for every non-invoice
+      // report; the declaration has its own builder.
+      expect(pdf, contains('Future<Uint8List> buildBandedLetterPdf('));
+      expect(
+        pdf.substring(pdf.indexOf('buildBandedLetterPdf(')),
+        contains('buildForeground: watermarkForeground(watermark)'),
+      );
+      final decl = File('lib/features/money/domain/vat_declaration_pdf.dart')
+          .readAsStringSync();
+      expect(decl, contains('buildForeground: watermarkForeground(watermark)'));
+      final actions =
+          File('lib/features/money/presentation/invoice_actions.dart')
+              .readAsStringSync();
+      expect(actions, contains('String developmentMark('),
+          reason: 'one source for the word, read where the workspace is');
+    });
+  });
+
+  group('a development workspace does not reach the outside world', () {
+    test('it files nothing with a government platform, nor with a '
+        "customer's service", () {
+      final fn = File('supabase/functions/send-e-invoice/index.ts')
+          .readAsStringSync();
+      expect(fn, contains('development_workspace'));
+      expect(fn, contains("(ws?.environment ?? \"dev\") !== \"prod\""),
+          reason: 'an unreadable environment must refuse, not send');
+    });
+
+    test('and it takes no money', () {
+      final fn = File('supabase/functions/create-payment-order/index.ts')
+          .readAsStringSync();
+      expect(fn, contains('development_workspace'));
+      expect(fn, contains("(ws?.environment ?? \"dev\") !== \"prod\""));
+    });
+
+    test('reading the CONFIGURATION stays allowed — a rehearsal space is '
+        'set up exactly like the real one; only the sending is refused',
+        () {
+      final fn = File('supabase/functions/send-e-invoice/index.ts')
+          .readAsStringSync();
+      // The refusal sits after the config branch returns.
+      expect(fn.indexOf('payload.action === "config"'),
+          lessThan(fn.indexOf('development_workspace')));
+    });
+  });
+
   group('the SQL twin (migration 0160)', () {
     final sql = File('supabase/migrations/0160_workspace_environment.sql')
         .readAsStringSync();

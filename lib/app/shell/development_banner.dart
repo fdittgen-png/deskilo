@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/theme/app_spacing.dart';
+import '../../core/theme/status_colors.dart';
 import '../../features/workspace/domain/workspace.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
@@ -45,10 +46,13 @@ class _DevelopmentStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final scheme = Theme.of(context).colorScheme;
+    // #917 — orange, the same orange the workspace switcher paints on a
+    // development space, so the two agree at a glance.
+    final ink = AppEnvironmentColors.developmentOf(
+        Theme.of(context).brightness);
     return Material(
       key: const ValueKey('development-banner'),
-      color: scheme.tertiaryContainer,
+      color: ink,
       child: SafeArea(
         bottom: false,
         child: Padding(
@@ -59,8 +63,8 @@ class _DevelopmentStrip extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.construction_outlined,
-                  size: 14, color: scheme.onTertiaryContainer),
+              const Icon(Icons.construction_outlined,
+                  size: 14, color: Colors.white),
               const SizedBox(width: AppSpacing.sm),
               Flexible(
                 child: Text(
@@ -70,7 +74,7 @@ class _DevelopmentStrip extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: scheme.onTertiaryContainer,
+                        color: Colors.white,
                         fontWeight: FontWeight.w600,
                       ),
                 ),

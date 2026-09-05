@@ -212,6 +212,12 @@ abstract class AppLocalizations {
   /// **'No window'**
   String get addressWindowOff;
 
+  /// #919 association regime: legalIdentityAssociationRegime
+  ///
+  /// In en, this message translates to:
+  /// **'A non-profit association with no trading activity is not subject to VAT: choose \"Outside the scope of VAT\", not \"Exempt\". The exempt scheme requires a VAT number you do not have, and the e-invoice would be rejected. Outside the scope, your registration number identifies the association.'**
+  String get legalIdentityAssociationRegime;
+
   /// Heading on the auth screen in sign-in mode
   ///
   /// In en, this message translates to:

@@ -923,6 +923,12 @@ Future<Uint8List> buildBandedLetterPdf({
   required String documentTitle,
   required pw.Font baseFont,
   required pw.Font boldFont,
+  /// #917 — 'DEVELOPMENT' when the workspace is not a real one. Every
+  /// report the app prints goes through here or through the positioned
+  /// engine, and both carry it: a statement, an agreement, a VAT report
+  /// or a reminder from a rehearsal space must be as unmistakable as
+  /// the invoices are.
+  String watermark = '',
 }) {
   final doc = pw.Document(title: documentTitle, producer: _producer);
   doc.addPage(
@@ -931,6 +937,7 @@ Future<Uint8List> buildBandedLetterPdf({
         pageFormat: PdfPageFormat.a4,
         theme: pw.ThemeData.withFont(base: baseFont, bold: boldFont),
         margin: const pw.EdgeInsets.fromLTRB(48, 44, 48, 44),
+        buildForeground: watermarkForeground(watermark),
       ),
       footer: (context) => context.pageNumber > 1
           ? pw.Container(
@@ -953,6 +960,33 @@ Future<Uint8List> buildBandedLetterPdf({
     ),
   );
   return doc.save();
+}
+
+/// #917 — the diagonal mark, painted the same way on EVERY document
+/// this app produces. Its size follows the word's LENGTH so a long one
+/// ('DÉVELOPPEMENT', 'FEHLERHAFT') still lands inside the sheet.
+pw.Widget Function(pw.Context)? watermarkForeground(String watermark) {
+  if (watermark.isEmpty) return null;
+  final markSize = math.min(120.0, 820 / math.max(watermark.length, 1));
+  return (context) => pw.FullPage(
+        ignoreMargins: true,
+        child: pw.Opacity(
+          opacity: _watermarkOpacity,
+          child: pw.Center(
+            child: pw.Transform.rotate(
+              angle: math.pi / 4,
+              child: pw.Text(
+                watermark,
+                style: pw.TextStyle(
+                  fontSize: markSize,
+                  color: _watermark,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
 }
 
 /// #831 — which stamp a document wears, by priority: a proforma says so

@@ -32,6 +32,7 @@ import '../../providers/vat_declaration_providers.dart';
 import '../report_actions.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../vat_report_actions.dart';
+import '../../../workspace/domain/workspace.dart';
 
 /// Periodic VAT declarations (#534/0107): the owner picks a filing
 /// period (month or quarter), the app aggregates the period's issued
@@ -176,6 +177,11 @@ class _VatDeclarationsScreenState
       date: dateFormat.format,
       baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
       boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
+      // #917 — the document that goes to the tax authority must be the
+      // least mistakable of all.
+      watermark: (workspace?.isDevelopment ?? false)
+          ? (l10n?.developmentWatermark ?? 'DEVELOPMENT')
+          : '',
     );
     final start =
         declaration.periodStart.toIso8601String().substring(0, 10);

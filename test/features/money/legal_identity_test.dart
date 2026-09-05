@@ -226,6 +226,41 @@ void main() {
         findsNothing);
   });
 
+  testWidgets(
+      '#919 — an ASSOCIATION that picks the exempt scheme is told to pick '
+      'out-of-scope instead: exempt demands a VAT number a non-profit '
+      'does not have, and the e-invoice would be refused for it',
+      (tester) async {
+    await pumpIdentity(tester);
+
+    await reveal(tester, const ValueKey('legal-identity-kind'));
+    await tester.tap(find.text('Association (non-profit)'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('legal-identity-association-regime')),
+        findsNothing,
+        reason: 'out of scope is the default and is correct');
+
+    await tester.tap(find.byKey(const ValueKey('legal-identity-regime')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('VAT-exempt (small-business scheme)').last);
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('legal-identity-association-regime')),
+        findsOneWidget);
+  });
+
+  testWidgets('#919 — a COMPANY on the exempt scheme is not lectured: the '
+      'small-business scheme is exactly right for one', (tester) async {
+    await pumpIdentity(tester);
+    await tester.tap(find.byKey(const ValueKey('legal-identity-regime')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('VAT-exempt (small-business scheme)').last);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('legal-identity-association-regime')),
+        findsNothing);
+  });
+
   testWidgets('a plain member cannot reach the screen at all', (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace();
     workspace.myMember =

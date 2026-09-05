@@ -67,6 +67,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get addressWindowOff => 'Sin ventanilla';
 
   @override
+  String get legalIdentityAssociationRegime =>
+      'Una asociación sin actividad lucrativa no está sujeta al IVA: elija «Fuera del ámbito del IVA», no «Exento». El régimen de exención exige un número de IVA que no tiene, y la factura electrónica sería rechazada. Fuera del ámbito, su número de registro identifica a la asociación.';
+
+  @override
   String get authSignInTitle => 'Iniciar sesión';
 
   @override

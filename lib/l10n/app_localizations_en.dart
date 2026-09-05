@@ -67,6 +67,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addressWindowOff => 'No window';
 
   @override
+  String get legalIdentityAssociationRegime =>
+      'A non-profit association with no trading activity is not subject to VAT: choose \"Outside the scope of VAT\", not \"Exempt\". The exempt scheme requires a VAT number you do not have, and the e-invoice would be rejected. Outside the scope, your registration number identifies the association.';
+
+  @override
   String get authSignInTitle => 'Sign in';
 
   @override

@@ -63,6 +63,7 @@ import '../widgets/negotiation_card.dart';
 import '../widgets/consumption_sheet.dart';
 import '../../../profile/providers/profile_providers.dart';
 import '../../../../core/locale/report_language.dart';
+import '../../../workspace/domain/workspace.dart';
 
 /// Money tab (spec §7.3, #132): a structured monthly bill per period —
 /// subscription, consumed services, open positions awaiting validation,
@@ -328,6 +329,10 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             documentTitle: strings.title,
             baseFont: pw.Font.ttf(regular),
             boldFont: pw.Font.ttf(bold),
+            // #917 — a statement from a rehearsal space says so.
+            watermark: workspace.isDevelopment
+                ? (l10n?.developmentWatermark ?? 'DEVELOPMENT')
+                : '',
           );
         } else {
           bytes = await buildBillPdf(

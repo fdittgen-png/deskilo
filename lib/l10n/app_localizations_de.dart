@@ -67,6 +67,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get addressWindowOff => 'Kein Fenster';
 
   @override
+  String get legalIdentityAssociationRegime =>
+      'Ein gemeinnütziger Verein ohne wirtschaftliche Tätigkeit unterliegt nicht der Umsatzsteuer: Wählen Sie „Nicht steuerbar“, nicht „Steuerbefreit“. Die Befreiung verlangt eine USt-IdNr., die Sie nicht haben, und die E-Rechnung würde abgelehnt. Nicht steuerbar identifiziert Ihre Registernummer den Verein.';
+
+  @override
   String get authSignInTitle => 'Anmelden';
 
   @override

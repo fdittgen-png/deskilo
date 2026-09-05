@@ -210,6 +210,28 @@ Deno.serve(async (req) => {
     });
   }
 
+  // #917 — a DEVELOPMENT workspace does not talk to the outside world.
+  // Reading configuration is fine — the owner sets a rehearsal space up
+  // exactly as the real one — but nothing leaves it: the government
+  // platform and the customer's service both receive documents that are
+  // legal instruments, and a rehearsal document is not one. Checked
+  // AFTER the config branch above, which only reports what is set, and
+  // before any credential is used.
+  const { data: ws } = await admin
+    .from("workspaces")
+    .select("environment")
+    .eq("id", workspaceId)
+    .maybeSingle();
+  if ((ws?.environment ?? "dev") !== "prod") {
+    return json({
+      error: "development_workspace",
+      detail:
+        "This workspace is a development one: it does not send documents " +
+        "to a government platform or to a customer. Declare it production " +
+        "to send for real.",
+    }, 409);
+  }
+
   if (missing.length > 0) {
     return json({ error: "not_configured", missing, environment }, 409);
   }

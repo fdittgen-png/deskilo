@@ -1001,6 +1001,14 @@ InvoiceReport renderLetterDoc(
       renderReportBands(bands: defaultBandsForDoc(docId, l10n), data: texted)!;
 }
 
+/// #917 — the word every document of a DEVELOPMENT workspace carries,
+/// '' from a real one. One source, so an invoice, a statement, a VAT
+/// report and a reminder all say it the same way.
+String developmentMark(BuildContext context, WidgetRef ref) =>
+    (ref.read(currentWorkspaceProvider).value?.isDevelopment ?? false)
+        ? (AppLocalizations.of(context)?.developmentWatermark ?? 'DEVELOPMENT')
+        : '';
+
 /// The PDF of a rendered letter document (#494).
 ///
 /// #875 — with [layoutXml] and [data] the positioned engine renders the
@@ -1014,6 +1022,9 @@ Future<({Uint8List bytes, String fileName})> letterDocPdf(
   Map<String, Object?> data = const {},
 }) async {
   final l10n = AppLocalizations.of(context);
+  // #917 — read before the first await: the context must not be used
+  // across an async gap, and the answer cannot change mid-render.
+  final mark = developmentMark(context, ref);
   Future<pw.Font> font(String asset) async =>
       pw.Font.ttf(await rootBundle.load(asset));
   if (layoutXml != null) {
@@ -1025,6 +1036,9 @@ Future<({Uint8List bytes, String fileName})> letterDocPdf(
       pageLabel: l10n?.invoicePdfPage ?? 'Page',
       font: font,
       image: (name) => layoutImage(ref, name),
+      // #917 — a report from a rehearsal space says so, like its
+      // invoices do.
+      watermark: mark,
     );
     if (bytes != null) {
       return (bytes: bytes, fileName: '${safeFileSlug(title)}.pdf');
@@ -1038,6 +1052,7 @@ Future<({Uint8List bytes, String fileName})> letterDocPdf(
     documentTitle: title,
     baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
     boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
+    watermark: mark,
   );
   return (
     bytes: Uint8List.fromList(bytes),
@@ -1834,6 +1849,7 @@ Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
       (bands == null ? null : renderReportBands(bands: bands, data: texted)) ??
       renderReportBands(bands: fallback, data: texted)!;
   final pageLabel = l10n?.invoicePdfPage ?? 'Page';
+  final mark = developmentMark(context, ref);
   Future<pw.Font> font(String asset) async =>
       pw.Font.ttf(await rootBundle.load(asset));
   final bytes = await buildBandedLetterPdf(
@@ -1843,6 +1859,7 @@ Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
     documentTitle: '$title ${invoice.number}',
     baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
     boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
+    watermark: mark,
   );
   return (
     bytes: bytes,

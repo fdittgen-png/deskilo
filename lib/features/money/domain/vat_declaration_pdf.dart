@@ -5,6 +5,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import 'vat_declaration.dart';
+import 'invoice_pdf.dart' show watermarkForeground;
 
 /// The localized labels the declaration PDF prints (#534) — passed in so
 /// the domain builder stays l10n-free like the other PDF seams.
@@ -54,6 +55,10 @@ Future<Uint8List> buildVatDeclarationPdf({
   required String Function(DateTime day) date,
   required pw.Font baseFont,
   required pw.Font boldFont,
+  /// #917 — 'DEVELOPMENT' from a rehearsal workspace. A declaration is
+  /// the one document that goes to a tax authority: it must be the
+  /// LEAST mistakable of all.
+  String watermark = '',
 }) async {
   final document = pw.Document(
     theme: pw.ThemeData.withFont(base: baseFont, bold: boldFont),
@@ -79,7 +84,11 @@ Future<Uint8List> buildVatDeclarationPdf({
 
   document.addPage(
     pw.MultiPage(
-      pageFormat: PdfPageFormat.a4,
+      pageTheme: pw.PageTheme(
+        pageFormat: PdfPageFormat.a4,
+        theme: pw.ThemeData.withFont(base: baseFont, bold: boldFont),
+        buildForeground: watermarkForeground(watermark),
+      ),
       build: (context) => [
         pw.Text(strings.title,
             style:
