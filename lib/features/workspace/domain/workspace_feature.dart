@@ -534,6 +534,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.memberPaymentTerms: FeatureManifestEntry(
     feature: WorkspaceFeature.memberPaymentTerms,
     requires: WorkspaceFeature.invoicing,
+  ),
   // #873 — the month-end consumption report, from the usage records.
   WorkspaceFeature.usageReport: FeatureManifestEntry(
     feature: WorkspaceFeature.usageReport,

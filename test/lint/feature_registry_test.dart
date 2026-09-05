@@ -85,7 +85,8 @@ import 'package:flutter_test/flutter_test.dart';
 // 78→79 (2026-09-05): #880 reportTexts — owner texts per language in
 //   every report.
 // 77→78 (2026-09-05): #873 usageReport — the month-end consumption report.
-const int _expectedFeatureCount = 79;
+// 79→80 (2026-09-05): #873 usageReport — the month-end consumption report.
+const int _expectedFeatureCount = 80;
 
 void main() {
   test('every functionality is registered — the pin', () {

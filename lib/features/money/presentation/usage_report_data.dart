@@ -18,7 +18,6 @@ import '../domain/usage_record.dart';
 import '../providers/money_providers.dart';
 import '../providers/usage_providers.dart';
 import 'invoice_actions.dart';
-import 'package:deskilo/features/money/domain/usage_record.dart';
 
 Map<String, Object?> usageReportData(
   BuildContext context,
