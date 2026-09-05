@@ -5091,6 +5091,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get languageSystemDefault => 'Predeterminado del sistema';
 
   @override
+  String get featureLetterStandard => 'Estándar de carta para cada documento';
+
+  @override
+  String get featureLetterStandardDesc =>
+      'Facturas, proformas, estados, acuerdos, informes de pagos y de consumo y recordatorios sin diseño se imprimen como carta estándar: membrete, destinatario en la ventana del sobre, cuerpo desde 90 mm, pie fijo.';
+
+  @override
   String get levelReserveButton => 'Reservar la planta';
 
   @override

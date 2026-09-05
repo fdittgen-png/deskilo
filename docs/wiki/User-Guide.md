@@ -638,6 +638,8 @@ Every report in the app — the bill, invoices, proformas, credit notes, your se
 
 **Reports speak the reader's language:** a document prints in the **member's** language when a template exists for it, otherwise in the **workspace language**, and failing both in the **language of the workspace's country** (§11 templates per language). Where that country has no single language, the app does not guess — it refuses and asks you to *set the workspace language first*.
 
+**Every document as a standard letter (#874).** With *Letter standard for every document* on, a document the owner never designed — invoice, proforma, statement, financial agreement, payments report, consumption report, every reminder level — prints as a positioned letter: the letterhead at 20 mm, the recipient inside the DL envelope window (110 mm across, 45 mm down), the identification block resuming at 90 mm, one footer on every page with the bank details and the reference, a short strip on pages 2+. Fold on the marks and the address shows. A designed layout always wins; `dart run tool/report.dart default --kind usage` prints a default to start from.
+
 ### 9c. The Statement face
 
 **The month as it stands.** Your account (the real cross-month position), the **This month** card (days included, used, left), the **subscription** card, **consumed services**, **accessory and space supplements**, **day packages**, **open positions** still awaiting validation, **payments & credits**, the month's **invoice card** once invoiced (§9a) and the **balance**. Read-only: nothing to press here except the **‹ month ›** chooser, shared by all faces.

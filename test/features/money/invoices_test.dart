@@ -297,12 +297,14 @@ void main() {
     final invoice = money.invoices.single;
     // Download is the one action frequent enough to stay ON the row.
     // Font assets and PDF assembly need real async to complete.
+    // #874 — the letter-standard layout fetches its images and fonts
+    // through providers, so the whole exit runs under real async.
     await tester.runAsync(() async {
       await tester
           .tap(find.byKey(ValueKey('invoice-download-row-${invoice.id}')));
       await tester.pump();
+      await tester.pumpAndSettle();
     });
-    await tester.pumpAndSettle();
 
     expect(saved.single.name, 'inv-2026-0001.pdf');
     expect(String.fromCharCodes(saved.single.bytes.sublist(0, 5)), '%PDF-');

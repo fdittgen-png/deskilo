@@ -2998,6 +2998,14 @@
   "kioskBlockedContactHint": "Occupato da {name} — puoi scrivergli dall'app sul tuo telefono.",
   "languageTitle": "Lingua",
   "languageSystemDefault": "Predefinita di sistema",
+  "featureLetterStandard": "Standard lettera per ogni documento",
+  "@featureLetterStandard": {
+    "description": "#874 letter standard flag"
+  },
+  "featureLetterStandardDesc": "Fatture, proforma, estratti, accordi, report di pagamenti e consumi e solleciti senza layout si stampano come lettera standard: intestazione, destinatario nella finestra della busta, corpo da 90 mm, piè di pagina fisso.",
+  "@featureLetterStandardDesc": {
+    "description": "#874 letter standard flag description"
+  },
   "levelReserveButton": "Prenota il piano",
   "levelReserveTitle": "Prenotare l'intero piano",
   "levelPermissionTile": "Prenotazioni del piano",

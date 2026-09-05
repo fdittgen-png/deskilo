@@ -623,6 +623,8 @@ Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine
 
 **Berichte sprechen die Sprache des Lesers:** ein Dokument druckt in der Sprache des **Mitglieds**, wenn dafür eine Vorlage existiert, sonst in der **Sprache des Arbeitsbereichs** und, wenn auch die fehlt, in der **Sprache des Landes** des Space (§11, Vorlagen je Sprache). Hat dieses Land keine eindeutige Sprache, rät die App nicht — sie verweigert und bittet darum, *erst die Sprache des Arbeitsbereichs zu setzen*.
 
+**Jedes Dokument als Normbrief (#874).** Mit *Briefstandard für jedes Dokument* druckt ein nie gestaltetes Dokument — Rechnung, Proforma, Abrechnung, Finanzvereinbarung, Zahlungsbericht, Verbrauchsbericht, jede Mahnstufe — als positionierter Brief: Briefkopf bei 20 mm, Empfänger im DL-Fensterfeld (110 mm quer, 45 mm tief), Identifikationsblock ab 90 mm, ein Fuß auf jeder Seite mit Bankverbindung und Referenz, ein kurzer Streifen auf den Seiten 2+. An den Marken falten und die Anschrift erscheint. Eine gestaltete Vorlage gewinnt immer; `dart run tool/report.dart default --kind usage` gibt eine Startvorlage aus.
+
 ### 9c. Die Ansicht Abrechnung
 
 **Der Monat, wie er steht.** Ihr Konto (die echte monatsübergreifende Position), die Karte **Dieser Monat** (enthaltene, genutzte, verbleibende Tage), die **Abonnement**-Karte, **genutzte Leistungen**, **Zubehör- und Raumzuschläge**, **Tagespakete**, **offene Posten** in Prüfung, **Zahlungen & Gutschriften**, die **Rechnungskarte** des Monats, sobald er fakturiert ist (§9a), und der **Saldo**. Nur lesen: nichts zu drücken außer der **‹ Monat ›**-Auswahl, die alle Ansichten teilen.

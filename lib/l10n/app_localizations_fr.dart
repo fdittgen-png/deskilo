@@ -5109,6 +5109,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get languageSystemDefault => 'Par défaut du système';
 
   @override
+  String get featureLetterStandard => 'Standard lettre pour chaque document';
+
+  @override
+  String get featureLetterStandardDesc =>
+      'Factures, proformas, relevés, accords, rapports de paiements et de consommation, rappels sans maquette s\'impriment en lettre normalisée : en-tête, destinataire dans la fenêtre de l\'enveloppe, corps à 90 mm, pied fixe.';
+
+  @override
   String get levelReserveButton => 'Réserver le niveau';
 
   @override

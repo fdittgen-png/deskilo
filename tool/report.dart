@@ -18,6 +18,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:deskilo/features/money/domain/address_window.dart';
+import 'package:deskilo/features/money/domain/report_letter_layouts.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/report_conformance.dart';
 import 'package:deskilo/features/money/domain/report_layout/layout_model.dart';
@@ -35,6 +36,7 @@ Future<void> main(List<String> argv) async {
       'check' => await _render(args, check: true),
       'sample' => _sample(args),
       'describe' => _describe(),
+      'default' => _default(args),
       _ => _usage(),
     };
     exit(code);
@@ -57,6 +59,7 @@ usage: dart run tool/report.dart <command> [options]
            exit 0 = CONFORMS, 1 = issues, 2 = the layout could not be read
   sample   [--kind invoice] [--out d.json]     the data a design renders against
   describe                                     units, elements, attributes, placeholders
+  default  --kind invoice|proforma|statement|agreement|payments|usage|r1…   the letter standard's default layout (#874)
 ''');
   return 64;
 }
@@ -298,4 +301,15 @@ class _Args {
   final positional = <String>[];
   final _options = <String, String>{};
   String? option(String name) => _options[name];
+}
+
+// ─── default ─────────────────────────────────────────────────────────
+int _default(_Args args) {
+  final kind = args.option('kind') ?? 'invoice';
+  if (!isPersonFacingKind(kind)) {
+    stderr.writeln('no default layout for "$kind" — not a document sent to a person');
+    return 2;
+  }
+  stdout.write(defaultLetterLayoutXml(kind, const LetterStrings()));
+  return 0;
 }

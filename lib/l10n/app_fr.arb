@@ -2998,6 +2998,14 @@
   "kioskBlockedContactHint": "Occupé par {name} — vous pouvez lui écrire depuis l'application sur votre téléphone.",
   "languageTitle": "Langue",
   "languageSystemDefault": "Par défaut du système",
+  "featureLetterStandard": "Standard lettre pour chaque document",
+  "@featureLetterStandard": {
+    "description": "#874 letter standard flag"
+  },
+  "featureLetterStandardDesc": "Factures, proformas, relevés, accords, rapports de paiements et de consommation, rappels sans maquette s'impriment en lettre normalisée : en-tête, destinataire dans la fenêtre de l'enveloppe, corps à 90 mm, pied fixe.",
+  "@featureLetterStandardDesc": {
+    "description": "#874 letter standard flag description"
+  },
   "levelReserveButton": "Réserver le niveau",
   "levelReserveTitle": "Réserver le niveau entier",
   "levelPermissionTile": "Réservations de niveau",

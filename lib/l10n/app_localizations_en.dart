@@ -5056,6 +5056,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageSystemDefault => 'System default';
 
   @override
+  String get featureLetterStandard => 'Letter standard for every document';
+
+  @override
+  String get featureLetterStandardDesc =>
+      'Invoices, proformas, statements, agreements, payments and consumption reports and reminders without a design print as standard letters: letterhead, recipient in the envelope window, body from 90 mm, a fixed footer.';
+
+  @override
   String get levelReserveButton => 'Reserve level';
 
   @override

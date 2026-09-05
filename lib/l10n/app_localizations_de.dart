@@ -5098,6 +5098,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get languageSystemDefault => 'Systemstandard';
 
   @override
+  String get featureLetterStandard => 'Briefstandard für jedes Dokument';
+
+  @override
+  String get featureLetterStandardDesc =>
+      'Rechnungen, Proformas, Abrechnungen, Vereinbarungen, Zahlungs- und Verbrauchsberichte und Mahnungen ohne Vorlage drucken als Normbrief: Briefkopf, Empfänger im Fensterfeld, Text ab 90 mm, fester Fuß.';
+
+  @override
   String get levelReserveButton => 'Etage reservieren';
 
   @override
