@@ -71,6 +71,8 @@ const List<ReportKind> fixedReportKinds = [
   // #494 — the further documents.
   ReportKind(id: 'agreement', slot: ReportDocSlot('agreement')),
   ReportKind(id: 'payments', slot: ReportDocSlot('payments')),
+  // #873 — the month's consumption against what was paid ahead.
+  ReportKind(id: 'usage', slot: ReportDocSlot('usage')),
   ReportKind(id: 'workspace', slot: ReportDocSlot('workspace')),
   // #822 — the three structural documents.
   ReportKind(id: 'coa', slot: ReportDocSlot('coa')),

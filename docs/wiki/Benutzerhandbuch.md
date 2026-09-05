@@ -672,6 +672,10 @@ Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine
 
 Die Liste Ihrer Pläne (Status, Regel, nächste Fälligkeit) und das Formular *Wiederkehrende Ausgabe planen* liegen hinter **Finanzen → Zahlungen → Geplante Ausgaben**; ein Plan endet dort mit einem Tipp. Funktion *Geplante Ausgaben* (unter dem Finanzen-Tab).
 
+### 9i. Der Verbrauchsbericht
+
+Da die Teilnahme **vor ihrem Monat abgerechnet** und währenddessen **verbraucht** wird, verdient der Monat ein Schlusswort. **Verbrauchsbericht des Monats** — auf der Nutzungsseite und unter den Dokumenten — ist ein Brief an das Mitglied: was die Teilnahme bezahlt hat (Beitrag, enthaltene Halbtage), was tatsächlich verbraucht wurde (Halbtage, Zuschläge), was übrig ist oder überschritten wurde, und darunter **jeder Nutzungseintrag** des Monats mit seiner gezählten Zeit. Die Zahlen sind die der Abrechnung und der Einträge — nichts wird neu berechnet. Wie jeder Brief lässt er sich ansehen, speichern oder teilen, gedruckt mit dem Briefkopf des Space und, einmal gestaltet, mit eigener Vorlage (der Editor führt ihn als *Verbrauchsbericht*).
+
 ## 10. Kiosk-Modus (Wandtablet)
 
 Ein Android-Tablet oder iPad an die Tür:

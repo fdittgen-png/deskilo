@@ -93,6 +93,17 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
       'client_vat_id': 'FR 79 849 149 108',
       'client_legal_id': '849 149 108',
       'payment_terms_source': 'workspace',
+      'usage_paid': '100,00 €',
+      'usage_included_half_days': '22',
+      'usage_used_half_days': '6',
+      'usage_remaining_half_days': '16',
+      'usage_extra_half_days': '0',
+      'usage_overage': '',
+      'usage_supplements': '',
+      'usage_records': [
+        {'date': '2026-09-02', 'space': 'A1', 'counted': '4 h 00'},
+        {'date': '2026-09-04', 'space': 'A1', 'counted': '8 h 00'},
+      ],
       'payment_terms':
           l10n?.invoiceLegalPaymentTermsDefault ?? 'Payment on receipt.',
       'late_penalty': l10n?.invoiceLegalLatePenaltyDefault ??

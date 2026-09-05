@@ -30,6 +30,7 @@ import '../../domain/bill_pdf.dart';
 import '../../domain/invoice_pdf.dart';
 import '../../domain/invoice_report.dart';
 import '../invoice_actions.dart';
+import '../usage_report_data.dart';
 import '../report_layout_actions.dart';
 import '../report_actions.dart';
 import '../invoice_status.dart';
@@ -46,6 +47,7 @@ import '../../providers/money_focus_controller.dart';
 import '../../providers/billing_invoice_sweep.dart';
 import '../../providers/payment_reminder_sweep.dart';
 import '../../providers/money_providers.dart';
+import '../../providers/usage_providers.dart';
 import '../../providers/expense_schedule_providers.dart';
 import '../payment_method_labels.dart';
 import '../widgets/payment_terms_card.dart';
@@ -151,22 +153,37 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       return;
     }
     final docL10n = l10nForLanguage(language);
-    final data = docId == 'agreement'
-        ? agreementReportData(context, ref,
-            memberName: names[me.id] ?? '',
-            subscriptionPct: me.subscriptionPct,
-            l10nOverride: docL10n,
-            localeName: language)
-        : paymentsReportData(context, ref,
-            period: _period,
-            memberName: names[me.id] ?? '',
-            l10nOverride: docL10n,
-            localeName: language);
+    if (docId == 'usage') {
+      // #873 — the figures come from the statement and the records.
+      await ref.read(memberStatementProvider(me.id, _period).future);
+      await ref.read(usageRecordsProvider(_period).future);
+      if (!mounted) return;
+    }
+    final data = switch (docId) {
+      'agreement' => agreementReportData(context, ref,
+          memberName: names[me.id] ?? '',
+          subscriptionPct: me.subscriptionPct,
+          l10nOverride: docL10n,
+          localeName: language),
+      'usage' => usageReportData(context, ref,
+          period: _period,
+          memberId: me.id,
+          memberName: names[me.id] ?? '',
+          l10nOverride: docL10n,
+          localeName: language),
+      _ => paymentsReportData(context, ref,
+          period: _period,
+          memberName: names[me.id] ?? '',
+          l10nOverride: docL10n,
+          localeName: language),
+    };
     final report = renderLetterDoc(context, ref,
         docId: docId, data: data, language: language);
-    final title = docId == 'agreement'
-        ? docL10n.reportDocAgreement
-        : docL10n.reportDocPayments;
+    final title = switch (docId) {
+      'agreement' => docL10n.reportDocAgreement,
+      'usage' => docL10n.reportDocUsage,
+      _ => docL10n.reportDocPayments,
+    };
     // #514 — the shared triad: quick view / save / share.
     await runReportActions(
       context,
@@ -1014,6 +1031,9 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     // agreement and the month's payments, viewable/downloadable/
     // shareable without asking anyone. Gated by memberReports (#502).
     final reportsOn = features.contains(WorkspaceFeature.memberReports);
+    // #873 — the consumption report needs the records AND the letters.
+    final usageReportOn =
+        reportsOn && features.contains(WorkspaceFeature.usageReport);
     Widget grid(List<Widget> buttons) => MoneyActionGrid(buttons);
     final requestButtons = [
       submitExpense,
@@ -1059,6 +1079,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
         DocumentsFaceActions(
           onAgreement: () => _memberDoc('agreement'),
           onPaymentsReport: () => _memberDoc('payments'),
+          onUsageReport: usageReportOn ? () => _memberDoc('usage') : null,
           onStatementPdf: null,
           showDocumentLibrary: false,
         ),
@@ -1109,6 +1130,17 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       // face is always in the tab strip; the flag decides whether it has
       // anything to say, so turning it off never leaves a dead tab.
       MoneyFace.usage: [
+        // #873 — the month's consumption as a letter, from this face too.
+        if (usageReportOn)
+          Align(
+            alignment: AlignmentDirectional.centerEnd,
+            child: OutlinedButton.icon(
+              key: const ValueKey('usage-report-button-face'),
+              onPressed: () => _memberDoc('usage'),
+              icon: const Icon(Icons.insights_outlined),
+              label: Text(l10n?.usageReportButton ?? 'Month consumption report'),
+            ),
+          ),
         if (features.contains(WorkspaceFeature.usageRecords))
           UsageFace(period: _period),
       ],
@@ -1132,6 +1164,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
         DocumentsFaceActions(
           onAgreement: reportsOn ? () => _memberDoc('agreement') : null,
           onPaymentsReport: reportsOn ? () => _memberDoc('payments') : null,
+          onUsageReport: usageReportOn ? () => _memberDoc('usage') : null,
           onStatementPdf: features.contains(WorkspaceFeature.pdfExport) &&
                   visibleStatement != null
               ? () => _exportPdf(visibleStatement)

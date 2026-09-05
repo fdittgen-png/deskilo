@@ -7487,6 +7487,44 @@ class AppLocalizationsIt extends AppLocalizations {
   String get usageMemberAll => 'Tutti';
 
   @override
+  String get featureUsageReport => 'Report dei consumi';
+
+  @override
+  String get featureUsageReportDesc =>
+      'A fine mese il membro riceve ciò che la sua partecipazione ha pagato, ciò che ha realmente consumato e ciò che resta o eccede — dai record di utilizzo, come lettera.';
+
+  @override
+  String get reportDocUsage => 'Report dei consumi';
+
+  @override
+  String get usageReportPaid => 'Pagato in anticipo (partecipazione)';
+
+  @override
+  String get usageReportIncluded => 'Mezze giornate incluse';
+
+  @override
+  String get usageReportUsed => 'Mezze giornate consumate';
+
+  @override
+  String get usageReportRemaining => 'Mezze giornate rimanenti';
+
+  @override
+  String get usageReportExtra => 'Mezze giornate extra';
+
+  @override
+  String get usageReportOverage => 'Eccedenza riportata sulla prossima fattura';
+
+  @override
+  String get usageReportSupplements =>
+      'Supplementi (accessori, scrivanie, uffici)';
+
+  @override
+  String get usageReportRecordsHeading => 'Cosa è stato consumato';
+
+  @override
+  String get usageReportButton => 'Report dei consumi del mese';
+
+  @override
   String eventValidations(int current, int required) {
     return '$current/$required convalide';
   }

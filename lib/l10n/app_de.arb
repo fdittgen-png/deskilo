@@ -4446,6 +4446,54 @@
   "usageDeleteSubmitted": "Entfernung angefragt.",
   "usageMember": "Mitglied",
   "usageMemberAll": "Alle",
+  "featureUsageReport": "Verbrauchsbericht",
+  "@featureUsageReport": {
+    "description": "#873 consumption report: featureUsageReport"
+  },
+  "featureUsageReportDesc": "Zum Monatsende erhält ein Mitglied, was seine Teilnahme bezahlt hat, was es tatsächlich verbraucht hat und was übrig ist oder überschritten wurde — aus den Nutzungseinträgen, als Brief.",
+  "@featureUsageReportDesc": {
+    "description": "#873 consumption report: featureUsageReportDesc"
+  },
+  "reportDocUsage": "Verbrauchsbericht",
+  "@reportDocUsage": {
+    "description": "#873 consumption report: reportDocUsage"
+  },
+  "usageReportPaid": "Vorausbezahlt (Teilnahme)",
+  "@usageReportPaid": {
+    "description": "#873 consumption report: usageReportPaid"
+  },
+  "usageReportIncluded": "Enthaltene Halbtage",
+  "@usageReportIncluded": {
+    "description": "#873 consumption report: usageReportIncluded"
+  },
+  "usageReportUsed": "Verbrauchte Halbtage",
+  "@usageReportUsed": {
+    "description": "#873 consumption report: usageReportUsed"
+  },
+  "usageReportRemaining": "Verbleibende Halbtage",
+  "@usageReportRemaining": {
+    "description": "#873 consumption report: usageReportRemaining"
+  },
+  "usageReportExtra": "Zusätzliche Halbtage",
+  "@usageReportExtra": {
+    "description": "#873 consumption report: usageReportExtra"
+  },
+  "usageReportOverage": "Überziehung, auf die nächste Rechnung übertragen",
+  "@usageReportOverage": {
+    "description": "#873 consumption report: usageReportOverage"
+  },
+  "usageReportSupplements": "Zuschläge (Zubehör, Tische, Büros)",
+  "@usageReportSupplements": {
+    "description": "#873 consumption report: usageReportSupplements"
+  },
+  "usageReportRecordsHeading": "Was verbraucht wurde",
+  "@usageReportRecordsHeading": {
+    "description": "#873 consumption report: usageReportRecordsHeading"
+  },
+  "usageReportButton": "Verbrauchsbericht des Monats",
+  "@usageReportButton": {
+    "description": "#873 consumption report: usageReportButton"
+  },
   "eventValidations": "{current}/{required} Bestätigungen",
   "eventValidatedBy": "Bestätigt von {name} · {when}",
   "eventRejectedBy": "Abgelehnt von {name} · {when}",

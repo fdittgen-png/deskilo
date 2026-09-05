@@ -4446,6 +4446,54 @@
   "usageDeleteSubmitted": "Rimozione richiesta.",
   "usageMember": "Membro",
   "usageMemberAll": "Tutti",
+  "featureUsageReport": "Report dei consumi",
+  "@featureUsageReport": {
+    "description": "#873 consumption report: featureUsageReport"
+  },
+  "featureUsageReportDesc": "A fine mese il membro riceve ciò che la sua partecipazione ha pagato, ciò che ha realmente consumato e ciò che resta o eccede — dai record di utilizzo, come lettera.",
+  "@featureUsageReportDesc": {
+    "description": "#873 consumption report: featureUsageReportDesc"
+  },
+  "reportDocUsage": "Report dei consumi",
+  "@reportDocUsage": {
+    "description": "#873 consumption report: reportDocUsage"
+  },
+  "usageReportPaid": "Pagato in anticipo (partecipazione)",
+  "@usageReportPaid": {
+    "description": "#873 consumption report: usageReportPaid"
+  },
+  "usageReportIncluded": "Mezze giornate incluse",
+  "@usageReportIncluded": {
+    "description": "#873 consumption report: usageReportIncluded"
+  },
+  "usageReportUsed": "Mezze giornate consumate",
+  "@usageReportUsed": {
+    "description": "#873 consumption report: usageReportUsed"
+  },
+  "usageReportRemaining": "Mezze giornate rimanenti",
+  "@usageReportRemaining": {
+    "description": "#873 consumption report: usageReportRemaining"
+  },
+  "usageReportExtra": "Mezze giornate extra",
+  "@usageReportExtra": {
+    "description": "#873 consumption report: usageReportExtra"
+  },
+  "usageReportOverage": "Eccedenza riportata sulla prossima fattura",
+  "@usageReportOverage": {
+    "description": "#873 consumption report: usageReportOverage"
+  },
+  "usageReportSupplements": "Supplementi (accessori, scrivanie, uffici)",
+  "@usageReportSupplements": {
+    "description": "#873 consumption report: usageReportSupplements"
+  },
+  "usageReportRecordsHeading": "Cosa è stato consumato",
+  "@usageReportRecordsHeading": {
+    "description": "#873 consumption report: usageReportRecordsHeading"
+  },
+  "usageReportButton": "Report dei consumi del mese",
+  "@usageReportButton": {
+    "description": "#873 consumption report: usageReportButton"
+  },
   "eventValidations": "{current}/{required} convalide",
   "eventValidatedBy": "Convalidato da {name} · {when}",
   "eventRejectedBy": "Rifiutato da {name} · {when}",

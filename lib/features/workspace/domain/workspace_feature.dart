@@ -69,6 +69,7 @@ enum WorkspaceFeature {
   managedProfiles,
   memberPaymentTerms,
   reportTexts,
+  usageReport,
   priceNegotiations,
 
   /// #767 — recurring scheduled expenses (internet, phone, electricity):
@@ -533,6 +534,10 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.memberPaymentTerms: FeatureManifestEntry(
     feature: WorkspaceFeature.memberPaymentTerms,
     requires: WorkspaceFeature.invoicing,
+  // #873 — the month-end consumption report, from the usage records.
+  WorkspaceFeature.usageReport: FeatureManifestEntry(
+    feature: WorkspaceFeature.usageReport,
+    requires: WorkspaceFeature.usageRecords,
   ),
   // #880 — the owner's own texts, `{{ text.<key> }}`, per language.
   WorkspaceFeature.reportTexts: FeatureManifestEntry(

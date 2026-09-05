@@ -84,6 +84,7 @@ import 'package:flutter_test/flutter_test.dart';
 //   conditions, changed by validated request.
 // 78→79 (2026-09-05): #880 reportTexts — owner texts per language in
 //   every report.
+// 77→78 (2026-09-05): #873 usageReport — the month-end consumption report.
 const int _expectedFeatureCount = 79;
 
 void main() {

@@ -366,6 +366,28 @@ ReportBands defaultPaymentsBands(AppLocalizations? l10n) =>
         totalsLine:
             '= {{ payments }} | {% if pending_total != "" %}{{ pending_total }}{% endif %}');
 
+/// The CONSUMPTION REPORT (#873): what the month's participation paid
+/// for, what was actually consumed, what is left or exceeded — and the
+/// records behind the numbers. Sent to the member at month end.
+ReportBands defaultUsageBands(AppLocalizations? l10n) => ReportBands(
+      header: '''
+# {{ workspace }}
+> {{ workspace_address }}
+> {{ issued }}
+---
+# ${l10n?.reportDocUsage ?? 'Consumption report'}
+> {{ member }} — {{ period }}''',
+      body: '''
+{% for line in lines %}{{ line.label }} | {{ line.amount }}
+{% endfor %}
+{% if usage_overage != "" %}> ${l10n?.usageReportOverage ?? 'Overage carried to the next invoice'} : {{ usage_overage }}{% endif %}
+
+## ${l10n?.usageReportRecordsHeading ?? 'What was consumed'}
+{% for r in usage_records %}{{ r.date }} | {{ r.space }} | {{ r.counted }}
+{% endfor %}''',
+      footer: _legalFooter(l10n),
+    );
+
 /// The WORKSPACE REPORT document (#494) as editable bands.
 ReportBands defaultWorkspaceBands(AppLocalizations? l10n) => ReportBands(
       header: '''
@@ -497,6 +519,13 @@ List<ReportPreset> presetsForDoc(String docId, AppLocalizations? l10n) {
           l10n, id, l10n?.reportDocPayments ?? 'Payments report',
           subtitle: '{{ member }} — {{ period }}');
     }
+    if (docId == 'usage') {
+      return id == 'classic'
+          ? defaultUsageBands(l10n)
+          : _simpleDocPresetBands(
+              l10n, id, l10n?.reportDocUsage ?? 'Consumption report',
+              subtitle: '{{ member }} — {{ period }}');
+    }
     if (docId == 'coa' || docId == 'badges' || docId == 'space_codes') {
       // One shipped layout each. These documents are structural — a
       // chart, a grid of cards — so the presets that make sense for an
@@ -530,6 +559,7 @@ ReportBands defaultBandsForDoc(String docId, AppLocalizations? l10n) {
   if (docId == 'statement') return defaultStatementBands(l10n);
   if (docId == 'agreement') return defaultAgreementBands(l10n);
   if (docId == 'payments') return defaultPaymentsBands(l10n);
+  if (docId == 'usage') return defaultUsageBands(l10n);
   if (docId == 'workspace') return defaultWorkspaceBands(l10n);
   if (docId == 'coa') return defaultCoaBands(l10n);
   if (docId == 'badges') return defaultBadgeSheetBands(l10n);

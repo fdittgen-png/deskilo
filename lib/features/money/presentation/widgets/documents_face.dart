@@ -14,12 +14,16 @@ class DocumentsFaceActions extends StatelessWidget {
     super.key,
     required this.onAgreement,
     required this.onPaymentsReport,
+    this.onUsageReport,
     required this.onStatementPdf,
     required this.showDocumentLibrary,
   });
 
   final VoidCallback? onAgreement;
   final VoidCallback? onPaymentsReport;
+
+  /// #873 — the month's consumption report.
+  final VoidCallback? onUsageReport;
   final VoidCallback? onStatementPdf;
   final bool showDocumentLibrary;
 
@@ -40,6 +44,13 @@ class DocumentsFaceActions extends StatelessWidget {
           onPressed: onPaymentsReport,
           icon: const Icon(Icons.summarize_outlined),
           label: fittedLabel(l10n?.reportDocPayments ?? 'Payments report'),
+        ),
+      if (onUsageReport != null)
+        OutlinedButton.icon(
+          key: const ValueKey('usage-report-button'),
+          onPressed: onUsageReport,
+          icon: const Icon(Icons.insights_outlined),
+          label: fittedLabel(l10n?.reportDocUsage ?? 'Consumption report'),
         ),
       if (onStatementPdf != null)
         OutlinedButton.icon(

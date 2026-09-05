@@ -257,6 +257,15 @@ class InvoicePdfTemplate {
     'client_address',
     'client_vat_id',
     'client_legal_id',
+    // #873 — the consumption report's figures and its records loop.
+    'usage_paid',
+    'usage_included_half_days',
+    'usage_used_half_days',
+    'usage_remaining_half_days',
+    'usage_extra_half_days',
+    'usage_overage',
+    'usage_supplements',
+    'usage_records',
     'payment_terms',
     // #881 — 'workspace' | 'member': whether the conditions are the member's own.
     'payment_terms_source',
@@ -288,7 +297,7 @@ class InvoicePdfTemplate {
     'credit_note',
   ];
 
-  static const List<String> _listPlaceholders = ['lines', 'vat'];
+  static const List<String> _listPlaceholders = ['lines', 'vat', 'usage_records'];
 
   static Map<String, Object?> get placeholderDefaults => {
         // #880 — `text.<key>` answers '' for an unknown key, so a guard

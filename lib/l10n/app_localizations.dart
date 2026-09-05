@@ -13057,6 +13057,78 @@ abstract class AppLocalizations {
   /// **'Everyone'**
   String get usageMemberAll;
 
+  /// #873 consumption report: featureUsageReport
+  ///
+  /// In en, this message translates to:
+  /// **'Consumption report'**
+  String get featureUsageReport;
+
+  /// #873 consumption report: featureUsageReportDesc
+  ///
+  /// In en, this message translates to:
+  /// **'At month end a member receives what their participation paid for, what they actually consumed and what is left or exceeded — from the usage records, as a letter.'**
+  String get featureUsageReportDesc;
+
+  /// #873 consumption report: reportDocUsage
+  ///
+  /// In en, this message translates to:
+  /// **'Consumption report'**
+  String get reportDocUsage;
+
+  /// #873 consumption report: usageReportPaid
+  ///
+  /// In en, this message translates to:
+  /// **'Paid ahead (participation)'**
+  String get usageReportPaid;
+
+  /// #873 consumption report: usageReportIncluded
+  ///
+  /// In en, this message translates to:
+  /// **'Included half-days'**
+  String get usageReportIncluded;
+
+  /// #873 consumption report: usageReportUsed
+  ///
+  /// In en, this message translates to:
+  /// **'Half-days consumed'**
+  String get usageReportUsed;
+
+  /// #873 consumption report: usageReportRemaining
+  ///
+  /// In en, this message translates to:
+  /// **'Half-days remaining'**
+  String get usageReportRemaining;
+
+  /// #873 consumption report: usageReportExtra
+  ///
+  /// In en, this message translates to:
+  /// **'Extra half-days'**
+  String get usageReportExtra;
+
+  /// #873 consumption report: usageReportOverage
+  ///
+  /// In en, this message translates to:
+  /// **'Overage carried to the next invoice'**
+  String get usageReportOverage;
+
+  /// #873 consumption report: usageReportSupplements
+  ///
+  /// In en, this message translates to:
+  /// **'Supplements (accessories, desks, offices)'**
+  String get usageReportSupplements;
+
+  /// #873 consumption report: usageReportRecordsHeading
+  ///
+  /// In en, this message translates to:
+  /// **'What was consumed'**
+  String get usageReportRecordsHeading;
+
+  /// #873 consumption report: usageReportButton
+  ///
+  /// In en, this message translates to:
+  /// **'Month consumption report'**
+  String get usageReportButton;
+
   /// Quorum progress on a pending event (#130): accepts so far / accepts required
   ///
   /// In en, this message translates to:

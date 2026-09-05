@@ -83,6 +83,8 @@ const Map<String, int> _baseline = {
   // 1220→1200 (2026-08-31): #767 scheduled expenses — the button, the
   // sweep watch and the occurrence cards join the other money actions.
   'lib/features/money/presentation/screens/money_screen.dart': 1227, // 2026-09-05 #881 member payment conditions: effective terms threaded to every document // 2026-09-05 #880 reportTexts beside #887 managedProfiles after the rebase
+  'lib/features/money/presentation/screens/money_screen.dart': 1227, // 2026-09-05 #881 member payment conditions: effective terms threaded to every document
+  'lib/features/money/presentation/screens/money_screen.dart': 1253, // 2026-09-05 #873 the consumption report entry points
   // 1210→1220 (2026-08-06): #512 the account card above the bill.
   // 910→950 (2026-08-04): #456 note tile + admin broadcast button —
   // the dialog itself is its own file.

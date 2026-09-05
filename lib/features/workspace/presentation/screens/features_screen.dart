@@ -255,6 +255,11 @@ class FeaturesScreen extends ConsumerWidget {
                   'paragraph) per language and places them in any '
                   'report as {{ text.key }} — wording changes without '
                   'touching the design.',
+        WorkspaceFeature.usageReport =>
+          l10n?.featureUsageReportDesc ??
+              'At month end a member receives what their participation '
+                  'paid for, what they actually consumed and what is left '
+                  'or exceeded — from the usage records, as a letter.',
         WorkspaceFeature.priceNegotiations =>
           l10n?.featurePriceNegotiationsDesc ??
               'The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record.',
