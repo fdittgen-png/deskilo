@@ -142,11 +142,32 @@ int _check(Uint8List bytes, LayoutDocument document) {
           'address field', 'painted on pages $fieldPages, must be [1]'));
     }
   }
+  // The footer, on every page — and NOT the page number: that line sits
+  // alone at the bottom right and is drawn by the engine itself, so it
+  // must not vouch for a footer zone that vanished (which is exactly how
+  // a footer one line too tall slipped past this check once).
+  final footerDeclared = !document.footer.isEmpty;
   for (var p = 1; p <= pages; p++) {
-    final bottom = ink.where((i) => i.page == p).map((i) => i.yMm).fold(0.0,
-        (m, y) => y > m ? y : m);
-    if (bottom < 240) {
-      issues.add(ConformanceIssue('footer', 'page $p has no footer near the bottom'));
+    final onPage = ink.where((i) => i.page == p);
+    final footerInk = onPage.where((i) => i.yMm > 235 && i.xMm < 150).toList();
+    if (footerDeclared && footerInk.isEmpty) {
+      issues.add(ConformanceIssue('footer',
+          'page $p shows no footer content — a declared footer rendered '
+          'nothing (content taller than its box?)'));
+    } else if (!footerDeclared && onPage.every((i) => i.yMm < 240)) {
+      issues.add(ConformanceIssue('footer', 'page $p has nothing at the bottom'));
+    }
+    final declared = document.footer.height;
+    if (declared != null && footerInk.isNotEmpty) {
+      final top = footerInk.map((i) => i.yMm).reduce((a, b) => a < b ? a : b);
+      final allowedTop = 297 - document.margin.resolve(0) * 25.4 / 72 -
+          declared.resolve(0) * 25.4 / 72 - 12;
+      if (top < allowedTop) {
+        issues.add(ConformanceIssue('footer',
+            'page $p: footer content starts at ${top.toStringAsFixed(1)} mm, '
+            'taller than its declared $declared — it grew; raise the '
+            'height or shorten the content'));
+      }
     }
   }
   stdout.writeln('  pages: $pages');

@@ -169,9 +169,8 @@ Future<Uint8List> buildLayoutPdf({
               children: [
                 headerH == null
                     ? ctx.zone(document.header)
-                    : pw.SizedBox(
-                        height: headerH,
-                        child: ctx.zone(document.header, height: headerH)),
+                    : ctx.zone(document.header,
+                        height: headerH, clip: true, context: context),
                 if (reserve > 0) pw.SizedBox(height: reserve),
               ],
             )
@@ -235,16 +234,58 @@ class _Box {
   /// A zone: flowing children stacked, positioned children in a Stack
   /// of the zone's height — or, in a zone without one, tall enough for
   /// the lowest of them.
-  pw.Widget zone(LayoutZone zone, {double? height}) {
+  ///
+  /// A declared [height] is a MINIMUM. Content taller than it grows the
+  /// zone; it is never dropped. A footer with one line too many used to
+  /// vanish entirely — rule, bank block, reference, all of it — because
+  /// the engine was handed a box the content did not fit, and a footer
+  /// that is not there is worse than one that is a little tall. When
+  /// [clip] is set the box IS fixed and the overflow is cut instead:
+  /// that is the page-1 letterhead, which must stop above the envelope
+  /// window whatever it contains.
+  pw.Widget zone(
+    LayoutZone zone, {
+    double? height,
+    bool clip = false,
+    pw.Context? context,
+  }) {
     if (zone.isEmpty) return pw.SizedBox(height: height ?? 0);
-    return pw.SizedBox(
-      height: height,
-      child: pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.stretch,
-        mainAxisSize: pw.MainAxisSize.min,
-        children: children(zone.children, height: height ?? h),
-      ),
+    var widgets = children(zone.children, height: height ?? h);
+    if (height != null && clip && context != null) {
+      // A clip path would hide the overflow on paper but the text
+      // operators would still be in the file — a screen reader, a
+      // search, or the conformance harness would all find a letterhead
+      // "in the window". So the overflow is never emitted: children are
+      // laid out one by one and kept only while they fit the box.
+      widgets = _fitting(widgets, context, height);
+    }
+    final column = pw.Column(
+      crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+      mainAxisSize: pw.MainAxisSize.min,
+      children: widgets,
     );
+    if (height == null) return column;
+    if (clip) return pw.SizedBox(height: height, child: column);
+    return pw.ConstrainedBox(
+      constraints: pw.BoxConstraints(minHeight: height),
+      child: column,
+    );
+  }
+
+  /// The longest prefix of [widgets] whose laid-out heights fit [height]
+  /// at this box's width.
+  List<pw.Widget> _fitting(
+      List<pw.Widget> widgets, pw.Context context, double height) {
+    final kept = <pw.Widget>[];
+    var used = 0.0;
+    for (final widget in widgets) {
+      widget.layout(context, pw.BoxConstraints(maxWidth: w));
+      final own = widget.box?.height ?? 0;
+      if (used + own > height + 0.01) break;
+      used += own;
+      kept.add(widget);
+    }
+    return kept;
   }
 
   List<pw.Widget> children(List<LayoutElement> elements,
