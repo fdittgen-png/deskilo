@@ -130,7 +130,12 @@ void main() {
         // #886 — the client's identity as the postal standard prints it.
         'client_name', 'client_company', 'client_phone', 'client_email',
         'client_address', 'client_vat_id',
-        'client_legal_id', 'payment_terms', 'payment_terms_source',
+        'client_legal_id',
+        // #873 — the consumption report.
+        'usage_paid', 'usage_included_half_days', 'usage_used_half_days',
+        'usage_remaining_half_days', 'usage_extra_half_days', 'usage_overage',
+        'usage_supplements', 'usage_records',
+        'payment_terms', 'payment_terms_source',
         'late_penalty', 'recovery_indemnity', 'escompte', 'insurance',
         'special_mentions', //
       ]);

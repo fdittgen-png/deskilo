@@ -703,6 +703,10 @@ Ogni report dell'app — l'estratto, le fatture, le proforma, le note di credito
 
 L'elenco delle tue programmazioni (stato, regola, prossima scadenza) e il modulo *Programma una spesa ricorrente* stanno dietro **Finanze → Pagamenti → Spese programmate**; terminarne una è un tocco. Funzionalità *Spese programmate* (sotto la scheda Finanze).
 
+### 9i. Il report dei consumi
+
+Poiché la partecipazione è **fatturata prima del suo mese** e **consumata** durante, il mese merita una parola di chiusura. **Report dei consumi del mese** — sulla faccia Utilizzo e tra i Documenti — è una lettera al membro: ciò che la partecipazione ha pagato (la quota, le mezze giornate incluse), ciò che è stato realmente consumato (mezze giornate, supplementi), ciò che resta o eccede e, sotto, **ogni record di utilizzo** del mese con il tempo conteggiato. Le cifre sono quelle dell'estratto e dei record — nulla viene ricalcolato. Come ogni lettera si consulta, si salva o si condivide, stampata con l'intestazione dello spazio e, una volta progettata, con il proprio layout (il designer la elenca come *Report dei consumi*).
+
 ## 10. Modalità chiosco (tablet a parete)
 
 Monta un tablet Android o un iPad vicino alla porta e lascia che le persone facciano check-in entrando:

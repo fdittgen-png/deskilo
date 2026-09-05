@@ -7424,6 +7424,44 @@ class AppLocalizationsEn extends AppLocalizations {
   String get usageMemberAll => 'Everyone';
 
   @override
+  String get featureUsageReport => 'Consumption report';
+
+  @override
+  String get featureUsageReportDesc =>
+      'At month end a member receives what their participation paid for, what they actually consumed and what is left or exceeded — from the usage records, as a letter.';
+
+  @override
+  String get reportDocUsage => 'Consumption report';
+
+  @override
+  String get usageReportPaid => 'Paid ahead (participation)';
+
+  @override
+  String get usageReportIncluded => 'Included half-days';
+
+  @override
+  String get usageReportUsed => 'Half-days consumed';
+
+  @override
+  String get usageReportRemaining => 'Half-days remaining';
+
+  @override
+  String get usageReportExtra => 'Extra half-days';
+
+  @override
+  String get usageReportOverage => 'Overage carried to the next invoice';
+
+  @override
+  String get usageReportSupplements =>
+      'Supplements (accessories, desks, offices)';
+
+  @override
+  String get usageReportRecordsHeading => 'What was consumed';
+
+  @override
+  String get usageReportButton => 'Month consumption report';
+
+  @override
   String eventValidations(int current, int required) {
     return '$current/$required validations';
   }

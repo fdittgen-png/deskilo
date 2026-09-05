@@ -127,6 +127,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureMemberPaymentTerms ?? 'Payment conditions per member',
       WorkspaceFeature.reportTexts =>
         l10n?.featureReportTexts ?? 'Report texts',
+      WorkspaceFeature.usageReport =>
+        l10n?.featureUsageReport ?? 'Consumption report',
       WorkspaceFeature.priceNegotiations =>
         l10n?.featurePriceNegotiationsTitle ?? 'Price negotiations',
       WorkspaceFeature.scheduledExpenses =>

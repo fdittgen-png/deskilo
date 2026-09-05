@@ -7718,6 +7718,54 @@
   "@usageMemberAll": {
     "description": "#833 - member filter: no narrowing"
   },
+  "featureUsageReport": "Consumption report",
+  "@featureUsageReport": {
+    "description": "#873 consumption report: featureUsageReport"
+  },
+  "featureUsageReportDesc": "At month end a member receives what their participation paid for, what they actually consumed and what is left or exceeded — from the usage records, as a letter.",
+  "@featureUsageReportDesc": {
+    "description": "#873 consumption report: featureUsageReportDesc"
+  },
+  "reportDocUsage": "Consumption report",
+  "@reportDocUsage": {
+    "description": "#873 consumption report: reportDocUsage"
+  },
+  "usageReportPaid": "Paid ahead (participation)",
+  "@usageReportPaid": {
+    "description": "#873 consumption report: usageReportPaid"
+  },
+  "usageReportIncluded": "Included half-days",
+  "@usageReportIncluded": {
+    "description": "#873 consumption report: usageReportIncluded"
+  },
+  "usageReportUsed": "Half-days consumed",
+  "@usageReportUsed": {
+    "description": "#873 consumption report: usageReportUsed"
+  },
+  "usageReportRemaining": "Half-days remaining",
+  "@usageReportRemaining": {
+    "description": "#873 consumption report: usageReportRemaining"
+  },
+  "usageReportExtra": "Extra half-days",
+  "@usageReportExtra": {
+    "description": "#873 consumption report: usageReportExtra"
+  },
+  "usageReportOverage": "Overage carried to the next invoice",
+  "@usageReportOverage": {
+    "description": "#873 consumption report: usageReportOverage"
+  },
+  "usageReportSupplements": "Supplements (accessories, desks, offices)",
+  "@usageReportSupplements": {
+    "description": "#873 consumption report: usageReportSupplements"
+  },
+  "usageReportRecordsHeading": "What was consumed",
+  "@usageReportRecordsHeading": {
+    "description": "#873 consumption report: usageReportRecordsHeading"
+  },
+  "usageReportButton": "Month consumption report",
+  "@usageReportButton": {
+    "description": "#873 consumption report: usageReportButton"
+  },
   "eventValidations": "{current}/{required} validations",
   "@eventValidations": {
     "description": "Quorum progress on a pending event (#130): accepts so far / accepts required",

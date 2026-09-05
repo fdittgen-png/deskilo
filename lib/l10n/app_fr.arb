@@ -4446,6 +4446,54 @@
   "usageDeleteSubmitted": "Suppression demandée.",
   "usageMember": "Membre",
   "usageMemberAll": "Tout le monde",
+  "featureUsageReport": "Rapport de consommation",
+  "@featureUsageReport": {
+    "description": "#873 consumption report: featureUsageReport"
+  },
+  "featureUsageReportDesc": "En fin de mois, le membre reçoit ce que sa participation a payé, ce qu'il a réellement consommé et ce qui reste ou dépasse — d'après les relevés d'utilisation, sous forme de lettre.",
+  "@featureUsageReportDesc": {
+    "description": "#873 consumption report: featureUsageReportDesc"
+  },
+  "reportDocUsage": "Rapport de consommation",
+  "@reportDocUsage": {
+    "description": "#873 consumption report: reportDocUsage"
+  },
+  "usageReportPaid": "Payé d'avance (participation)",
+  "@usageReportPaid": {
+    "description": "#873 consumption report: usageReportPaid"
+  },
+  "usageReportIncluded": "Demi-journées incluses",
+  "@usageReportIncluded": {
+    "description": "#873 consumption report: usageReportIncluded"
+  },
+  "usageReportUsed": "Demi-journées consommées",
+  "@usageReportUsed": {
+    "description": "#873 consumption report: usageReportUsed"
+  },
+  "usageReportRemaining": "Demi-journées restantes",
+  "@usageReportRemaining": {
+    "description": "#873 consumption report: usageReportRemaining"
+  },
+  "usageReportExtra": "Demi-journées supplémentaires",
+  "@usageReportExtra": {
+    "description": "#873 consumption report: usageReportExtra"
+  },
+  "usageReportOverage": "Dépassement reporté sur la prochaine facture",
+  "@usageReportOverage": {
+    "description": "#873 consumption report: usageReportOverage"
+  },
+  "usageReportSupplements": "Suppléments (accessoires, bureaux, espaces)",
+  "@usageReportSupplements": {
+    "description": "#873 consumption report: usageReportSupplements"
+  },
+  "usageReportRecordsHeading": "Ce qui a été consommé",
+  "@usageReportRecordsHeading": {
+    "description": "#873 consumption report: usageReportRecordsHeading"
+  },
+  "usageReportButton": "Rapport de consommation du mois",
+  "@usageReportButton": {
+    "description": "#873 consumption report: usageReportButton"
+  },
   "eventValidations": "{current}/{required} validations",
   "eventValidatedBy": "Validé par {name} · {when}",
   "eventRejectedBy": "Refusé par {name} · {when}",

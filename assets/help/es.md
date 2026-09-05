@@ -703,6 +703,10 @@ Cada informe de la app — la factura mensual, las facturas, los proformas, las 
 
 La lista de tus programaciones (estado, regla, próximo vencimiento) y el formulario *Programar un gasto recurrente* viven tras **Finanzas → Pagos → Gastos programados**; terminar una es un toque. Función *Gastos programados* (bajo la pestaña Finanzas).
 
+### 9i. El informe de consumo
+
+Como la participación se **factura antes de su mes** y se **consume** durante él, el mes merece una palabra de cierre. **Informe de consumo del mes** — en la cara Uso y entre los Documentos — es una carta al miembro: lo que pagó la participación (la cuota, las medias jornadas incluidas), lo consumido realmente (medias jornadas, suplementos), lo que queda o excede y, debajo, **cada registro de uso** del mes con su tiempo contado. Las cifras son las del estado de cuenta y de los registros — nada se recalcula. Como toda carta, se consulta, guarda o comparte, impresa con el membrete del espacio y, una vez diseñada, con su propio diseño (el diseñador la lista como *Informe de consumo*).
+
 ## 10. Modo quiosco (tableta de pared)
 
 Monta una tableta Android o un iPad junto a la puerta y deja que la gente se registre al entrar:

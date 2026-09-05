@@ -47,6 +47,13 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       'client_vat_id' ||
       'client_legal_id' =>
         ReportFieldGroup.member,
+      'usage_paid' ||
+      'usage_included_half_days' ||
+      'usage_used_half_days' ||
+      'usage_remaining_half_days' ||
+      'usage_extra_half_days' ||
+      'usage_overage' ||
+      'usage_supplements' ||
       'total' ||
       'charges' ||
       'payments' ||
@@ -56,7 +63,8 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       'credit_note' ||
       'refund_total' =>
         ReportFieldGroup.money,
-      'lines' || 'vat' => ReportFieldGroup.loops,
+      'lines' || 'vat' ||
+      'usage_records' => ReportFieldGroup.loops,
       _ => ReportFieldGroup.legal,
     };
 
@@ -81,6 +89,8 @@ String reportFieldMarkup(String field) => switch (field) {
         '{% for line in lines %}{{ line.label }} | {{ line.amount }}{% endfor %}',
       'vat' =>
         '{% for v in vat %}{{ v.rate }} | {{ v.net }} | {{ v.amount }}{% endfor %}',
+      'usage_records' =>
+        '{% for r in usage_records %}{{ r.date }} | {{ r.space }} | {{ r.counted }}{% endfor %}',
       _ => '{{ $field }}',
     };
 
