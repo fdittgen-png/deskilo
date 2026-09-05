@@ -135,17 +135,25 @@ void main() {
             'preview and its invoice disagree about the tax',
       );
       expect(normalised, contains("'vat_cents', gross - net"));
+      // #894 — and the rule about WHICH lines count, in both places.
+      final credit =
+          File('supabase/migrations/0156_credit_note_vat.sql').readAsStringSync();
+      expect(credit, contains("or coalesce((l->>''vat_percent'')::numeric, 0) > 0"),
+          reason: 'a negative line that names a rate must count in SQL too');
     });
   });
 
   group('the breakdown', () {
-    test('groups charges by rate, highest first, and ignores credits', () {
+    test('groups charges by rate, highest first, and ignores money moving',
+        () {
       final totals = vatTotalsOf(
         const [
           (amountCents: 24000, vatPercent: 20),
           (amountCents: 1200, vatPercent: 20),
           (amountCents: 1000, vatPercent: 5.5),
-          (amountCents: -5000, vatPercent: 20),
+          // Money moving: a payment carries no rate (#894 — a NEGATIVE
+          // line that names one is a reversal and does count).
+          (amountCents: -5000, vatPercent: 0),
         ],
         zeroCategory: 'O',
       );
@@ -171,6 +179,31 @@ void main() {
 
       expect(totals.single.netCents, 8);
       expect(totals.single.vatCents, 2);
+    });
+
+    test('#894 — a reversal that NAMES a rate nets the tax off; a payment '
+        'never does', () {
+      final totals = vatTotalsOf(const [
+        (amountCents: 12000, vatPercent: 20),
+        // The avoir: 20,00 given back at the rate it was charged.
+        (amountCents: -2000, vatPercent: 20),
+        // Money moving carries no rate and must not touch the tax.
+        (amountCents: -5000, vatPercent: 0),
+      ], zeroCategory: 'O');
+      expect(totals, hasLength(1), reason: 'one rate on the document');
+      expect(totals.single.percent, 20);
+      expect(totals.single.grossCents, 10000);
+      expect(totals.single.netCents, 8333);
+      expect(totals.single.vatCents, 1667);
+    });
+
+    test('#894 — a document that only gives back carries NEGATIVE tax', () {
+      final totals = vatTotalsOf(const [
+        (amountCents: -12000, vatPercent: 20),
+      ], zeroCategory: 'O');
+      expect(totals.single.grossCents, -12000);
+      expect(totals.single.netCents, -10000);
+      expect(totals.single.vatCents, -2000);
     });
 
     test('a zero rate takes its CATEGORY from the workspace regime', () {

@@ -125,7 +125,11 @@ List<InvoiceVatTotal> vatTotalsOf(
   final gross = <double, int>{};
   final net = <double, int>{};
   for (final line in lines) {
-    if (line.amountCents <= 0) continue;
+    // #894 — charges count, and so does a line that NAMES a rate even
+    // when it is negative: an avoir reverses the tax it gives back
+    // (art. 219). A payment carries no rate and stays out — money
+    // moving is not a supply.
+    if (line.amountCents <= 0 && line.vatPercent <= 0) continue;
     final split = vatSplit(line.amountCents, line.vatPercent);
     gross[line.vatPercent] = (gross[line.vatPercent] ?? 0) + line.amountCents;
     net[line.vatPercent] = (net[line.vatPercent] ?? 0) + split.netCents;

@@ -99,8 +99,11 @@ String buildInvoiceUbl({
     cbc('CustomizationID', 'urn:cen.eu:en16931:2017');
     cbc('ID', invoice.number);
     cbc('IssueDate', issueDate);
-    // 380 = commercial invoice; 384 = corrective (a replacement).
-    cbc('InvoiceTypeCode', invoice.replacesNumber.isNotEmpty ? '384' : '380');
+    // 380 = commercial invoice; 384 = corrective (a replacement);
+    // 381 = credit note — a document that gives money back (#894).
+    cbc('InvoiceTypeCode', invoice.isCreditNote
+        ? '381'
+        : invoice.replacesNumber.isNotEmpty ? '384' : '380');
     cbc('DocumentCurrencyCode', currency);
     // BT-73/74 — the invoiced month as the norm states a period, not as
     // free-text prose in a note.
