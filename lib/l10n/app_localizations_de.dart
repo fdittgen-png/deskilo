@@ -7589,13 +7589,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get servicesActive => 'Aktiv';
 
   @override
-<<<<<<< HEAD
   String get featureSiteDocuments => 'Standorte auf Belegen';
 
   @override
   String get featureSiteDocumentsDesc =>
       'Belege nennen den betroffenen Standort: Adresse und Registrierung des Heimatstandorts des Mitglieds als Verkäufer, und die anderen im Monat genutzten Standorte im Detail. Aus: die Adresse des Arbeitsbereichs auf jedem Beleg.';
-=======
+
+  @override
   String get siteVatId => 'USt-IdNr. (diese Einheit)';
 
   @override
@@ -7604,7 +7604,6 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get siteRegistrationHint =>
       'Nur wenn der Standort eine eigene juristische Person ist — das ist meist ein eigener Arbeitsbereich. Leer: die Nummern des Arbeitsbereichs gelten.';
->>>>>>> 65ce5d59 (feat(workspace): a site that is a distinct legal entity carries its own VAT number and exemption (#948))
 
   @override
   String get featureMultiSite => 'Standorte';

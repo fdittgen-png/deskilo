@@ -7602,13 +7602,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get servicesActive => 'Actif';
 
   @override
-<<<<<<< HEAD
   String get featureSiteDocuments => 'Sites sur les documents';
 
   @override
   String get featureSiteDocumentsDesc =>
       'Les documents nomment le site concerné : l\'adresse et le SIRET du site de rattachement de l\'adhérent côté vendeur, et les autres sites fréquentés dans le mois dans le détail. Désactivé : l\'adresse de l\'espace sur tous les documents.';
-=======
+
+  @override
   String get siteVatId => 'Numéro de TVA (cette entité)';
 
   @override
@@ -7617,7 +7617,6 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get siteRegistrationHint =>
       'Seulement si le site est une entité juridique distincte — c\'est en général un espace séparé. Vide : les numéros de l\'espace s\'appliquent.';
->>>>>>> 65ce5d59 (feat(workspace): a site that is a distinct legal entity carries its own VAT number and exemption (#948))
 
   @override
   String get featureMultiSite => 'Sites';

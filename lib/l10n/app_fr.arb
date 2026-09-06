@@ -4742,7 +4742,6 @@
   "servicesPrice": "Prix",
   "servicesInactive": "Inactif",
   "servicesActive": "Actif",
-<<<<<<< HEAD
   "featureSiteDocuments": "Sites sur les documents",
   "@featureSiteDocuments": {
     "description": "#946 site documents: featureSiteDocuments"
@@ -4750,7 +4749,7 @@
   "featureSiteDocumentsDesc": "Les documents nomment le site concerné : l'adresse et le SIRET du site de rattachement de l'adhérent côté vendeur, et les autres sites fréquentés dans le mois dans le détail. Désactivé : l'adresse de l'espace sur tous les documents.",
   "@featureSiteDocumentsDesc": {
     "description": "#946 site documents: featureSiteDocumentsDesc"
-=======
+  },
   "siteVatId": "Numéro de TVA (cette entité)",
   "@siteVatId": {
     "description": "#948 site registrations: siteVatId"
@@ -4762,7 +4761,6 @@
   "siteRegistrationHint": "Seulement si le site est une entité juridique distincte — c'est en général un espace séparé. Vide : les numéros de l'espace s'appliquent.",
   "@siteRegistrationHint": {
     "description": "#948 site registrations: siteRegistrationHint"
->>>>>>> 65ce5d59 (feat(workspace): a site that is a distinct legal entity carries its own VAT number and exemption (#948))
   },
   "featureMultiSite": "Sites",
   "@featureMultiSite": {

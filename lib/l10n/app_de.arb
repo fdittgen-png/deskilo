@@ -4742,7 +4742,6 @@
   "servicesPrice": "Preis",
   "servicesInactive": "Inaktiv",
   "servicesActive": "Aktiv",
-<<<<<<< HEAD
   "featureSiteDocuments": "Standorte auf Belegen",
   "@featureSiteDocuments": {
     "description": "#946 site documents: featureSiteDocuments"
@@ -4750,7 +4749,7 @@
   "featureSiteDocumentsDesc": "Belege nennen den betroffenen Standort: Adresse und Registrierung des Heimatstandorts des Mitglieds als Verkäufer, und die anderen im Monat genutzten Standorte im Detail. Aus: die Adresse des Arbeitsbereichs auf jedem Beleg.",
   "@featureSiteDocumentsDesc": {
     "description": "#946 site documents: featureSiteDocumentsDesc"
-=======
+  },
   "siteVatId": "USt-IdNr. (diese Einheit)",
   "@siteVatId": {
     "description": "#948 site registrations: siteVatId"
@@ -4762,7 +4761,6 @@
   "siteRegistrationHint": "Nur wenn der Standort eine eigene juristische Person ist — das ist meist ein eigener Arbeitsbereich. Leer: die Nummern des Arbeitsbereichs gelten.",
   "@siteRegistrationHint": {
     "description": "#948 site registrations: siteRegistrationHint"
->>>>>>> 65ce5d59 (feat(workspace): a site that is a distinct legal entity carries its own VAT number and exemption (#948))
   },
   "featureMultiSite": "Standorte",
   "@featureMultiSite": {
