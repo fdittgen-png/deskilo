@@ -45,7 +45,8 @@ import 'package:flutter_test/flutter_test.dart';
 // 51→52 (2026-09-05): #887 /members/managed — a managed member's identity.
 // 52→53 (2026-09-05): #902 /settings/payment-terms — the member reads
 //   the conditions their documents print.
-const int _expectedRouteCount = 53;
+// 53→54 (2026-09-06): #925 /settings/number-sequences.
+const int _expectedRouteCount = 54;
 
 void main() {
   test('router carries exactly $_expectedRouteCount GoRoutes', () {

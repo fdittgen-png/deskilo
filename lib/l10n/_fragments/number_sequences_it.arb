@@ -1,0 +1,87 @@
+{
+  "@@locale": "it",
+  "featureNumberSequences": "Serie di numerazione",
+  "@featureNumberSequences": {
+    "description": "#925 number sequences: featureNumberSequences"
+  },
+  "featureNumberSequencesDesc": "Come ogni registro numera i suoi documenti — prefisso, anno o mese, cifre, azzeramento del contatore — in una sola schermata per tutte le serie. I numeri sono assegnati nel database, senza buchi, attivato o no; attivato, il proprietario cambia il formato per ciò che segue.",
+  "@featureNumberSequencesDesc": {
+    "description": "#925 number sequences: featureNumberSequencesDesc"
+  },
+  "numberSequencesTitle": "Serie di numerazione",
+  "@numberSequencesTitle": {
+    "description": "#925 number sequences: numberSequencesTitle"
+  },
+  "numberSequencesSubtitle": "Come sono numerate fatture e note di credito.",
+  "@numberSequencesSubtitle": {
+    "description": "#925 number sequences: numberSequencesSubtitle"
+  },
+  "numberSequencesIntro": "Una serie per registro, senza buchi: il numero è preso nel database al momento dell’emissione, e un documento che fallisce non consuma nulla. Cambiare il formato non tocca mai un documento già emesso.",
+  "@numberSequencesIntro": {
+    "description": "#925 number sequences: numberSequencesIntro"
+  },
+  "numberSequenceJournalInvoice": "Fatture",
+  "@numberSequenceJournalInvoice": {
+    "description": "#925 number sequences: numberSequenceJournalInvoice"
+  },
+  "numberSequenceJournalCreditNote": "Note di credito",
+  "@numberSequenceJournalCreditNote": {
+    "description": "#925 number sequences: numberSequenceJournalCreditNote"
+  },
+  "numberSequencePrefix": "Prefisso",
+  "@numberSequencePrefix": {
+    "description": "#925 number sequences: numberSequencePrefix"
+  },
+  "numberSequenceSuffix": "Suffisso",
+  "@numberSequenceSuffix": {
+    "description": "#925 number sequences: numberSequenceSuffix"
+  },
+  "numberSequenceDigits": "Cifre",
+  "@numberSequenceDigits": {
+    "description": "#925 number sequences: numberSequenceDigits"
+  },
+  "numberSequenceDatePart": "Data",
+  "@numberSequenceDatePart": {
+    "description": "#925 number sequences: numberSequenceDatePart"
+  },
+  "numberSequenceDateNone": "Nessuna",
+  "@numberSequenceDateNone": {
+    "description": "#925 number sequences: numberSequenceDateNone"
+  },
+  "numberSequenceDateYear": "Anno",
+  "@numberSequenceDateYear": {
+    "description": "#925 number sequences: numberSequenceDateYear"
+  },
+  "numberSequenceDateYearMonth": "Anno-mese",
+  "@numberSequenceDateYearMonth": {
+    "description": "#925 number sequences: numberSequenceDateYearMonth"
+  },
+  "numberSequenceReset": "Azzeramento",
+  "@numberSequenceReset": {
+    "description": "#925 number sequences: numberSequenceReset"
+  },
+  "numberSequenceResetNever": "Mai",
+  "@numberSequenceResetNever": {
+    "description": "#925 number sequences: numberSequenceResetNever"
+  },
+  "numberSequenceResetYearly": "Ogni anno",
+  "@numberSequenceResetYearly": {
+    "description": "#925 number sequences: numberSequenceResetYearly"
+  },
+  "numberSequenceResetMonthly": "Ogni mese",
+  "@numberSequenceResetMonthly": {
+    "description": "#925 number sequences: numberSequenceResetMonthly"
+  },
+  "numberSequenceNext": "Prossimo numero",
+  "@numberSequenceNext": {
+    "description": "#925 number sequences: numberSequenceNext"
+  },
+  "numberSequenceGapless": "Senza buchi — garantito",
+  "@numberSequenceGapless": {
+    "description": "#925 number sequences: numberSequenceGapless"
+  },
+  "numberSequenceSaved": "Serie salvata.",
+  "@numberSequenceSaved": {
+    "description": "#925 number sequences: numberSequenceSaved"
+  }
+}

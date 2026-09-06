@@ -6462,6 +6462,90 @@
   "@moneyFaceUsage": {
     "description": "#833 - the Money tab face showing usage records"
   },
+  "featureNumberSequences": "Number sequences",
+  "@featureNumberSequences": {
+    "description": "#925 number sequences: featureNumberSequences"
+  },
+  "featureNumberSequencesDesc": "How each journal numbers its documents — prefix, year or month, digits, when the counter restarts — one screen for every series. Numbers are drawn in the database, gapless, whether this is on or off; on, the owner can change the format for what comes next.",
+  "@featureNumberSequencesDesc": {
+    "description": "#925 number sequences: featureNumberSequencesDesc"
+  },
+  "numberSequencesTitle": "Number sequences",
+  "@numberSequencesTitle": {
+    "description": "#925 number sequences: numberSequencesTitle"
+  },
+  "numberSequencesSubtitle": "How invoices and credit notes are numbered.",
+  "@numberSequencesSubtitle": {
+    "description": "#925 number sequences: numberSequencesSubtitle"
+  },
+  "numberSequencesIntro": "One series per journal, gapless: the number is taken in the database the moment the document is issued, and a document that fails takes nothing. Changing the format never touches a document already issued.",
+  "@numberSequencesIntro": {
+    "description": "#925 number sequences: numberSequencesIntro"
+  },
+  "numberSequenceJournalInvoice": "Invoices",
+  "@numberSequenceJournalInvoice": {
+    "description": "#925 number sequences: numberSequenceJournalInvoice"
+  },
+  "numberSequenceJournalCreditNote": "Credit notes",
+  "@numberSequenceJournalCreditNote": {
+    "description": "#925 number sequences: numberSequenceJournalCreditNote"
+  },
+  "numberSequencePrefix": "Prefix",
+  "@numberSequencePrefix": {
+    "description": "#925 number sequences: numberSequencePrefix"
+  },
+  "numberSequenceSuffix": "Suffix",
+  "@numberSequenceSuffix": {
+    "description": "#925 number sequences: numberSequenceSuffix"
+  },
+  "numberSequenceDigits": "Digits",
+  "@numberSequenceDigits": {
+    "description": "#925 number sequences: numberSequenceDigits"
+  },
+  "numberSequenceDatePart": "Date",
+  "@numberSequenceDatePart": {
+    "description": "#925 number sequences: numberSequenceDatePart"
+  },
+  "numberSequenceDateNone": "None",
+  "@numberSequenceDateNone": {
+    "description": "#925 number sequences: numberSequenceDateNone"
+  },
+  "numberSequenceDateYear": "Year",
+  "@numberSequenceDateYear": {
+    "description": "#925 number sequences: numberSequenceDateYear"
+  },
+  "numberSequenceDateYearMonth": "Year-month",
+  "@numberSequenceDateYearMonth": {
+    "description": "#925 number sequences: numberSequenceDateYearMonth"
+  },
+  "numberSequenceReset": "Restart",
+  "@numberSequenceReset": {
+    "description": "#925 number sequences: numberSequenceReset"
+  },
+  "numberSequenceResetNever": "Never",
+  "@numberSequenceResetNever": {
+    "description": "#925 number sequences: numberSequenceResetNever"
+  },
+  "numberSequenceResetYearly": "Every year",
+  "@numberSequenceResetYearly": {
+    "description": "#925 number sequences: numberSequenceResetYearly"
+  },
+  "numberSequenceResetMonthly": "Every month",
+  "@numberSequenceResetMonthly": {
+    "description": "#925 number sequences: numberSequenceResetMonthly"
+  },
+  "numberSequenceNext": "Next number",
+  "@numberSequenceNext": {
+    "description": "#925 number sequences: numberSequenceNext"
+  },
+  "numberSequenceGapless": "Gapless — guaranteed",
+  "@numberSequenceGapless": {
+    "description": "#925 number sequences: numberSequenceGapless"
+  },
+  "numberSequenceSaved": "Sequence saved.",
+  "@numberSequenceSaved": {
+    "description": "#925 number sequences: numberSequenceSaved"
+  },
   "billParticipation": "Participation {pct}%",
   "@billParticipation": {
     "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.",

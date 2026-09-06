@@ -3896,6 +3896,90 @@
   "scheduleUnitMonths": "meses",
   "scheduleUnitYears": "años",
   "moneyFaceUsage": "Uso",
+  "featureNumberSequences": "Series de numeración",
+  "@featureNumberSequences": {
+    "description": "#925 number sequences: featureNumberSequences"
+  },
+  "featureNumberSequencesDesc": "Cómo numera cada diario sus documentos — prefijo, año o mes, dígitos, reinicio del contador — en una sola pantalla para todas las series. Los números se asignan en la base de datos, sin huecos, esté activado o no; activado, el propietario cambia el formato para lo que venga.",
+  "@featureNumberSequencesDesc": {
+    "description": "#925 number sequences: featureNumberSequencesDesc"
+  },
+  "numberSequencesTitle": "Series de numeración",
+  "@numberSequencesTitle": {
+    "description": "#925 number sequences: numberSequencesTitle"
+  },
+  "numberSequencesSubtitle": "Cómo se numeran facturas y abonos.",
+  "@numberSequencesSubtitle": {
+    "description": "#925 number sequences: numberSequencesSubtitle"
+  },
+  "numberSequencesIntro": "Una serie por diario, sin huecos: el número se toma en la base de datos al emitir el documento, y un documento que falla no consume nada. Cambiar el formato nunca toca un documento ya emitido.",
+  "@numberSequencesIntro": {
+    "description": "#925 number sequences: numberSequencesIntro"
+  },
+  "numberSequenceJournalInvoice": "Facturas",
+  "@numberSequenceJournalInvoice": {
+    "description": "#925 number sequences: numberSequenceJournalInvoice"
+  },
+  "numberSequenceJournalCreditNote": "Abonos",
+  "@numberSequenceJournalCreditNote": {
+    "description": "#925 number sequences: numberSequenceJournalCreditNote"
+  },
+  "numberSequencePrefix": "Prefijo",
+  "@numberSequencePrefix": {
+    "description": "#925 number sequences: numberSequencePrefix"
+  },
+  "numberSequenceSuffix": "Sufijo",
+  "@numberSequenceSuffix": {
+    "description": "#925 number sequences: numberSequenceSuffix"
+  },
+  "numberSequenceDigits": "Dígitos",
+  "@numberSequenceDigits": {
+    "description": "#925 number sequences: numberSequenceDigits"
+  },
+  "numberSequenceDatePart": "Fecha",
+  "@numberSequenceDatePart": {
+    "description": "#925 number sequences: numberSequenceDatePart"
+  },
+  "numberSequenceDateNone": "Ninguna",
+  "@numberSequenceDateNone": {
+    "description": "#925 number sequences: numberSequenceDateNone"
+  },
+  "numberSequenceDateYear": "Año",
+  "@numberSequenceDateYear": {
+    "description": "#925 number sequences: numberSequenceDateYear"
+  },
+  "numberSequenceDateYearMonth": "Año-mes",
+  "@numberSequenceDateYearMonth": {
+    "description": "#925 number sequences: numberSequenceDateYearMonth"
+  },
+  "numberSequenceReset": "Reinicio",
+  "@numberSequenceReset": {
+    "description": "#925 number sequences: numberSequenceReset"
+  },
+  "numberSequenceResetNever": "Nunca",
+  "@numberSequenceResetNever": {
+    "description": "#925 number sequences: numberSequenceResetNever"
+  },
+  "numberSequenceResetYearly": "Cada año",
+  "@numberSequenceResetYearly": {
+    "description": "#925 number sequences: numberSequenceResetYearly"
+  },
+  "numberSequenceResetMonthly": "Cada mes",
+  "@numberSequenceResetMonthly": {
+    "description": "#925 number sequences: numberSequenceResetMonthly"
+  },
+  "numberSequenceNext": "Próximo número",
+  "@numberSequenceNext": {
+    "description": "#925 number sequences: numberSequenceNext"
+  },
+  "numberSequenceGapless": "Sin huecos — garantizado",
+  "@numberSequenceGapless": {
+    "description": "#925 number sequences: numberSequenceGapless"
+  },
+  "numberSequenceSaved": "Serie guardada.",
+  "@numberSequenceSaved": {
+    "description": "#925 number sequences: numberSequenceSaved"
+  },
   "billParticipation": "Participación {pct} %",
   "@billParticipation": {
     "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.",

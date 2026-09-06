@@ -6362,6 +6362,71 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moneyFaceUsage => 'Uso';
 
   @override
+  String get featureNumberSequences => 'Series de numeración';
+
+  @override
+  String get featureNumberSequencesDesc =>
+      'Cómo numera cada diario sus documentos — prefijo, año o mes, dígitos, reinicio del contador — en una sola pantalla para todas las series. Los números se asignan en la base de datos, sin huecos, esté activado o no; activado, el propietario cambia el formato para lo que venga.';
+
+  @override
+  String get numberSequencesTitle => 'Series de numeración';
+
+  @override
+  String get numberSequencesSubtitle => 'Cómo se numeran facturas y abonos.';
+
+  @override
+  String get numberSequencesIntro =>
+      'Una serie por diario, sin huecos: el número se toma en la base de datos al emitir el documento, y un documento que falla no consume nada. Cambiar el formato nunca toca un documento ya emitido.';
+
+  @override
+  String get numberSequenceJournalInvoice => 'Facturas';
+
+  @override
+  String get numberSequenceJournalCreditNote => 'Abonos';
+
+  @override
+  String get numberSequencePrefix => 'Prefijo';
+
+  @override
+  String get numberSequenceSuffix => 'Sufijo';
+
+  @override
+  String get numberSequenceDigits => 'Dígitos';
+
+  @override
+  String get numberSequenceDatePart => 'Fecha';
+
+  @override
+  String get numberSequenceDateNone => 'Ninguna';
+
+  @override
+  String get numberSequenceDateYear => 'Año';
+
+  @override
+  String get numberSequenceDateYearMonth => 'Año-mes';
+
+  @override
+  String get numberSequenceReset => 'Reinicio';
+
+  @override
+  String get numberSequenceResetNever => 'Nunca';
+
+  @override
+  String get numberSequenceResetYearly => 'Cada año';
+
+  @override
+  String get numberSequenceResetMonthly => 'Cada mes';
+
+  @override
+  String get numberSequenceNext => 'Próximo número';
+
+  @override
+  String get numberSequenceGapless => 'Sin huecos — garantizado';
+
+  @override
+  String get numberSequenceSaved => 'Serie guardada.';
+
+  @override
   String billParticipation(int pct) {
     return 'Participación $pct %';
   }

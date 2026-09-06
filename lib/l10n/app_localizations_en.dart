@@ -6324,6 +6324,72 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moneyFaceUsage => 'Usage';
 
   @override
+  String get featureNumberSequences => 'Number sequences';
+
+  @override
+  String get featureNumberSequencesDesc =>
+      'How each journal numbers its documents — prefix, year or month, digits, when the counter restarts — one screen for every series. Numbers are drawn in the database, gapless, whether this is on or off; on, the owner can change the format for what comes next.';
+
+  @override
+  String get numberSequencesTitle => 'Number sequences';
+
+  @override
+  String get numberSequencesSubtitle =>
+      'How invoices and credit notes are numbered.';
+
+  @override
+  String get numberSequencesIntro =>
+      'One series per journal, gapless: the number is taken in the database the moment the document is issued, and a document that fails takes nothing. Changing the format never touches a document already issued.';
+
+  @override
+  String get numberSequenceJournalInvoice => 'Invoices';
+
+  @override
+  String get numberSequenceJournalCreditNote => 'Credit notes';
+
+  @override
+  String get numberSequencePrefix => 'Prefix';
+
+  @override
+  String get numberSequenceSuffix => 'Suffix';
+
+  @override
+  String get numberSequenceDigits => 'Digits';
+
+  @override
+  String get numberSequenceDatePart => 'Date';
+
+  @override
+  String get numberSequenceDateNone => 'None';
+
+  @override
+  String get numberSequenceDateYear => 'Year';
+
+  @override
+  String get numberSequenceDateYearMonth => 'Year-month';
+
+  @override
+  String get numberSequenceReset => 'Restart';
+
+  @override
+  String get numberSequenceResetNever => 'Never';
+
+  @override
+  String get numberSequenceResetYearly => 'Every year';
+
+  @override
+  String get numberSequenceResetMonthly => 'Every month';
+
+  @override
+  String get numberSequenceNext => 'Next number';
+
+  @override
+  String get numberSequenceGapless => 'Gapless — guaranteed';
+
+  @override
+  String get numberSequenceSaved => 'Sequence saved.';
+
+  @override
   String billParticipation(int pct) {
     return 'Participation $pct%';
   }

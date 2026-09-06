@@ -22,6 +22,7 @@ import 'expense_schedule.dart';
 import 'service_item.dart';
 import 'statement.dart';
 import 'subscription_levels.dart';
+import 'number_sequence.dart';
 
 /// Money boundary (spec §7). Payments are only *recorded* — the pending
 /// event created by [recordPayment] must be confirmed by the other side
@@ -151,6 +152,22 @@ abstract class MoneyRepository {
 
   /// Owner-only: persist the dunning policy.
   Future<void> setDunningRules(String workspaceId, DunningRules rules);
+
+  /// #925 — every number series of the workspace (table
+  /// `number_sequences`, 0164), one per journal, seeded lazily.
+  Future<List<NumberSequence>> fetchNumberSequences(String workspaceId);
+
+  /// #925 — the owner sets a series' format; the counter may only be
+  /// raised (RPC `set_number_sequence`).
+  Future<void> setNumberSequence(
+    String workspaceId,
+    NumberSequence sequence, {
+    int? raiseNextValueTo,
+  });
+
+  /// #925 — what the next number of [journal] would be, without taking
+  /// it (RPC `preview_document_number`).
+  Future<String> previewDocumentNumber(String workspaceId, String journal);
 
   /// Issues an IMMUTABLE invoice (RPC `create_invoice`) — owner always,
   /// admins per the adminInvoicing delegation. Returns its id. Since

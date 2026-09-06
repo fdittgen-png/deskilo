@@ -3896,6 +3896,90 @@
   "scheduleUnitMonths": "Monate",
   "scheduleUnitYears": "Jahre",
   "moneyFaceUsage": "Nutzung",
+  "featureNumberSequences": "Nummernkreise",
+  "@featureNumberSequences": {
+    "description": "#925 number sequences: featureNumberSequences"
+  },
+  "featureNumberSequencesDesc": "Wie jedes Journal seine Belege nummeriert — Präfix, Jahr oder Monat, Stellen, Neustart des Zählers — ein Bildschirm für alle Kreise. Die Nummern werden in der Datenbank vergeben, lückenlos, ob ein- oder ausgeschaltet; eingeschaltet ändert die Inhaberin das Format für alles Kommende.",
+  "@featureNumberSequencesDesc": {
+    "description": "#925 number sequences: featureNumberSequencesDesc"
+  },
+  "numberSequencesTitle": "Nummernkreise",
+  "@numberSequencesTitle": {
+    "description": "#925 number sequences: numberSequencesTitle"
+  },
+  "numberSequencesSubtitle": "Wie Rechnungen und Gutschriften nummeriert werden.",
+  "@numberSequencesSubtitle": {
+    "description": "#925 number sequences: numberSequencesSubtitle"
+  },
+  "numberSequencesIntro": "Ein Kreis je Journal, lückenlos: Die Nummer wird in der Datenbank genommen, sobald der Beleg ausgestellt wird, und ein Beleg, der scheitert, verbraucht nichts. Eine Formatänderung berührt nie einen bereits ausgestellten Beleg.",
+  "@numberSequencesIntro": {
+    "description": "#925 number sequences: numberSequencesIntro"
+  },
+  "numberSequenceJournalInvoice": "Rechnungen",
+  "@numberSequenceJournalInvoice": {
+    "description": "#925 number sequences: numberSequenceJournalInvoice"
+  },
+  "numberSequenceJournalCreditNote": "Gutschriften",
+  "@numberSequenceJournalCreditNote": {
+    "description": "#925 number sequences: numberSequenceJournalCreditNote"
+  },
+  "numberSequencePrefix": "Präfix",
+  "@numberSequencePrefix": {
+    "description": "#925 number sequences: numberSequencePrefix"
+  },
+  "numberSequenceSuffix": "Suffix",
+  "@numberSequenceSuffix": {
+    "description": "#925 number sequences: numberSequenceSuffix"
+  },
+  "numberSequenceDigits": "Stellen",
+  "@numberSequenceDigits": {
+    "description": "#925 number sequences: numberSequenceDigits"
+  },
+  "numberSequenceDatePart": "Datum",
+  "@numberSequenceDatePart": {
+    "description": "#925 number sequences: numberSequenceDatePart"
+  },
+  "numberSequenceDateNone": "Keins",
+  "@numberSequenceDateNone": {
+    "description": "#925 number sequences: numberSequenceDateNone"
+  },
+  "numberSequenceDateYear": "Jahr",
+  "@numberSequenceDateYear": {
+    "description": "#925 number sequences: numberSequenceDateYear"
+  },
+  "numberSequenceDateYearMonth": "Jahr-Monat",
+  "@numberSequenceDateYearMonth": {
+    "description": "#925 number sequences: numberSequenceDateYearMonth"
+  },
+  "numberSequenceReset": "Neustart",
+  "@numberSequenceReset": {
+    "description": "#925 number sequences: numberSequenceReset"
+  },
+  "numberSequenceResetNever": "Nie",
+  "@numberSequenceResetNever": {
+    "description": "#925 number sequences: numberSequenceResetNever"
+  },
+  "numberSequenceResetYearly": "Jährlich",
+  "@numberSequenceResetYearly": {
+    "description": "#925 number sequences: numberSequenceResetYearly"
+  },
+  "numberSequenceResetMonthly": "Monatlich",
+  "@numberSequenceResetMonthly": {
+    "description": "#925 number sequences: numberSequenceResetMonthly"
+  },
+  "numberSequenceNext": "Nächste Nummer",
+  "@numberSequenceNext": {
+    "description": "#925 number sequences: numberSequenceNext"
+  },
+  "numberSequenceGapless": "Lückenlos — garantiert",
+  "@numberSequenceGapless": {
+    "description": "#925 number sequences: numberSequenceGapless"
+  },
+  "numberSequenceSaved": "Nummernkreis gespeichert.",
+  "@numberSequenceSaved": {
+    "description": "#925 number sequences: numberSequenceSaved"
+  },
   "billParticipation": "Beitrag {pct} %",
   "@billParticipation": {
     "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.",

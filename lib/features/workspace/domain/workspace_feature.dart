@@ -68,6 +68,7 @@ enum WorkspaceFeature {
   personalInfo,
   managedProfiles,
   managedProfileAccess,
+  numberSequences,
   seatDayTimeline,
   memberPaymentTerms,
   reportTexts,
@@ -538,6 +539,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // owner and admin may, which is what #887 shipped; the identity is
   // protected either way (#915), because a protection you can switch
   // off protects nobody.
+  // #925 — the owner sets how each journal numbers its documents. The
+  // NUMBERS are drawn in the database whether this is on or off; the
+  // flag only shows the settings screen, because a series nobody has
+  // reason to change is not a control everybody needs to see.
+  WorkspaceFeature.numberSequences: FeatureManifestEntry(
+    feature: WorkspaceFeature.numberSequences,
+    defaultOn: false,
+    requires: WorkspaceFeature.invoicing,
+  ),
   WorkspaceFeature.managedProfileAccess: FeatureManifestEntry(
     feature: WorkspaceFeature.managedProfileAccess,
     // OFF by default: the rule nobody narrowed is exactly what #887

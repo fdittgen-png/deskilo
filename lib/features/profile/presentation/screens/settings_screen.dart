@@ -731,6 +731,22 @@ class SettingsScreen extends ConsumerWidget {
           // #917 — is this space real? Owner-only, and the one setting
           // that changes what every document says about itself.
           const WorkspaceEnvironmentTile(),
+          // #925 — one screen for every number series, owner-only.
+          if ((ref.watch(myMemberProvider).value?.isOwner ?? false) &&
+              ref
+                  .watch(enabledFeaturesSyncProvider)
+                  .contains(WorkspaceFeature.numberSequences))
+            ListTile(
+              key: const ValueKey('settings-number-sequences'),
+              leading: const Icon(Icons.format_list_numbered_outlined),
+              title: Text(l10n?.numberSequencesTitle ?? 'Number sequences'),
+              subtitle: Text(
+                l10n?.numberSequencesSubtitle ??
+                    'How invoices and credit notes are numbered.',
+              ),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () => context.push('/settings/number-sequences'),
+            ),
           // #419: admins/owners flip dev mode for EVERYONE; other
           // members inherit the state without seeing the switch.
           if (ref.watch(myMemberProvider).value?.canAdminister ?? false)

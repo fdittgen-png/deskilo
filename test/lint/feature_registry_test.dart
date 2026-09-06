@@ -94,7 +94,9 @@ import 'package:flutter_test/flutter_test.dart';
 //   part-booked; a shared one opens its day.
 // 83→84 (2026-09-06): #914 managedProfileAccess — a managed profile
 //   says who may administer it.
-const int _expectedFeatureCount = 84;
+// 84→85 (2026-09-06): #925 numberSequences — one screen for every series
+//   a workspace issues.
+const int _expectedFeatureCount = 85;
 
 void main() {
   test('every functionality is registered — the pin', () {
