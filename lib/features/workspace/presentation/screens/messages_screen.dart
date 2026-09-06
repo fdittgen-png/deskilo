@@ -237,13 +237,8 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen> {
               style: Theme.of(context).textTheme.titleSmall,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppSpacing.md),
-            FilledButton.tonalIcon(
-              key: const ValueKey('conversation-list-empty-compose'),
-              onPressed: () => _compose(context, ref),
-              icon: const Icon(Icons.edit_outlined),
-              label: Text(l10n?.newConversationTitle ?? 'New conversation'),
-            ),
+            // #973 — no second compose button: the pencil at the bottom
+            // right is the one way to start a conversation.
           ],
         ),
       ),

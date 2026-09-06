@@ -162,7 +162,11 @@ enum WorkspaceFeature {
 
   /// #969 — the user picks the shell's navigation: the classic bottom
   /// bar with the round button, or the menu the web uses.
-  navigationStyle;
+  navigationStyle,
+
+  /// #970 — demo mode: a per-device switch that replaces every name,
+  /// e-mail and address on screen by invented ones.
+  demoMode;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -483,6 +487,10 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // and every device keeps its platform's default.
   WorkspaceFeature.navigationStyle: FeatureManifestEntry(
     feature: WorkspaceFeature.navigationStyle,
+  ),
+  // #970 — demo mode; off hides the switch and nothing is invented.
+  WorkspaceFeature.demoMode: FeatureManifestEntry(
+    feature: WorkspaceFeature.demoMode,
   ),
   // #719 — "who accessed my data": the server-written log of reads of
   // another member's finances, shown to the subject. OFF hides the row;

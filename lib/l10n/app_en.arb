@@ -1227,6 +1227,10 @@
       }
     }
   },
+  "eInvoiceGapBuyerLegalIdAdvisable": "The buyer's SIREN is missing. A French platform routes by it: enter it on the member's profile before transmitting. Not a refusal — the file is valid without it.",
+  "@eInvoiceGapBuyerLegalIdAdvisable": {
+    "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
+  },
   "reservationExtendButton": "Stay longer",
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"
@@ -1817,6 +1821,26 @@
   "courtesyMrs": "Ms",
   "@courtesyMrs": {
     "description": "#912 courtesy title: courtesyMrs"
+  },
+  "featureDemoMode": "Demo mode",
+  "@featureDemoMode": {
+    "description": "#970 demo mode: featureDemoMode"
+  },
+  "featureDemoModeDesc": "A switch in each member's settings: while it is on, every name, e-mail, phone and postal address on their screen is replaced by an invented one, so screenshots and videos carry no personal data. Off: the switch is hidden.",
+  "@featureDemoModeDesc": {
+    "description": "#970 demo mode: featureDemoModeDesc"
+  },
+  "demoModeTitle": "Demo mode",
+  "@demoModeTitle": {
+    "description": "#970 demo mode: demoModeTitle"
+  },
+  "demoModeSubtitle": "Names, e-mails, phones and addresses are replaced by invented ones on this device — for screenshots and videos.",
+  "@demoModeSubtitle": {
+    "description": "#970 demo mode: demoModeSubtitle"
+  },
+  "demoModeEditBlocked": "Demo mode is on: switch it off in Settings to edit personal information.",
+  "@demoModeEditBlocked": {
+    "description": "#970 demo mode: demoModeEditBlocked"
   },
   "developerMode": "Developer mode",
   "@developerMode": {

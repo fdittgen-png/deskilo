@@ -124,9 +124,11 @@ void main() {
     // action itself instead.
     expect(find.textContaining('pencil'), findsOneWidget,
         reason: 'once, in the help hint — not again below it');
+    // #973 — the empty state has no compose button of its own; the
+    // pencil at the bottom right is the one way in.
     expect(
       find.byKey(const ValueKey('conversation-list-empty-compose')),
-      findsOneWidget,
+      findsNothing,
     );
     expect(find.byKey(const ValueKey('new-conversation')), findsOneWidget);
   });

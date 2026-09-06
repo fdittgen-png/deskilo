@@ -1,0 +1,7 @@
+{
+  "@@locale": "fr",
+  "eInvoiceGapBuyerLegalIdAdvisable": "Le SIREN de l'acheteur manque. Une plateforme agréée l'utilise pour acheminer la facture : renseignez-le sur le profil de l'adhérent avant de transmettre. Ce n'est pas un refus — le fichier est valide sans lui.",
+  "@eInvoiceGapBuyerLegalIdAdvisable": {
+    "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
+  }
+}

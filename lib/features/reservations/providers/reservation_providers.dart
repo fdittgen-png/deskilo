@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/demo/demo_mode.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' show WidgetRef;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -60,7 +61,12 @@ Future<List<Reservation>> myUpcomingReservations(Ref ref) async {
 Future<Map<String, String>> memberNames(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const {};
-  return ref.watch(workspaceRepositoryProvider).fetchMemberNames(workspace.id);
+  final names =
+      await ref.watch(workspaceRepositoryProvider).fetchMemberNames(workspace.id);
+  // #970 — demo mode: invented names, the same for the same person.
+  return await ref.watch(demoModeControllerProvider.future)
+      ? scrubNames(names)
+      : names;
 }
 
 /// Reservations of the active workspace intersecting the given LOCAL

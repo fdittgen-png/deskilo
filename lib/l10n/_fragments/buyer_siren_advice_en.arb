@@ -1,0 +1,7 @@
+{
+  "@@locale": "en",
+  "eInvoiceGapBuyerLegalIdAdvisable": "The buyer's SIREN is missing. A French platform routes by it: enter it on the member's profile before transmitting. Not a refusal — the file is valid without it.",
+  "@eInvoiceGapBuyerLegalIdAdvisable": {
+    "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
+  }
+}
