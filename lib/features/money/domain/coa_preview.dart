@@ -34,6 +34,11 @@ enum CoaAccountRole {
 
   /// Output VAT, only under a VAT-charging regime.
   vat,
+
+  /// #936 — what the workspace spends: reimbursed expenses and shared
+  /// costs, which the purchases journal books since the exporters
+  /// carry it. Every chart proposes one, so the preview matches the file.
+  expenses,
 }
 
 /// One suggested account.
@@ -122,6 +127,7 @@ CoaChart coaChartFor({
           ),
           (role: CoaAccountRole.bank, number: '512000', label: 'Banques'),
           (role: CoaAccountRole.vat, number: '445710', label: 'TVA collectée'),
+          (role: CoaAccountRole.expenses, number: '606000', label: 'Achats non stockés de matières et fournitures'),
         ]),
       ),
     // SKR03 — the commonest German chart for a small service business,
@@ -146,6 +152,7 @@ CoaChart coaChartFor({
             number: '1776',
             label: 'Umsatzsteuer 19 %'
           ),
+          (role: CoaAccountRole.expenses, number: '4900', label: 'Sonstige betriebliche Aufwendungen'),
         ]),
       ),
     'ES' => CoaChart(
@@ -164,6 +171,7 @@ CoaChart coaChartFor({
             number: '477',
             label: 'IVA repercutido'
           ),
+          (role: CoaAccountRole.expenses, number: '629', label: 'Otros servicios'),
         ]),
       ),
     'IT' => CoaChart(
@@ -182,6 +190,7 @@ CoaChart coaChartFor({
             number: '2610',
             label: 'IVA a debito'
           ),
+          (role: CoaAccountRole.expenses, number: '7100', label: 'Costi per servizi'),
         ]),
       ),
     'BE' || 'LU' => CoaChart(
@@ -200,6 +209,7 @@ CoaChart coaChartFor({
             label: 'Établissements de crédit'
           ),
           (role: CoaAccountRole.vat, number: '451', label: 'TVA à payer'),
+          (role: CoaAccountRole.expenses, number: '610', label: 'Services et biens divers'),
         ]),
       ),
     'NL' => CoaChart(
@@ -218,6 +228,7 @@ CoaChart coaChartFor({
             number: '1500',
             label: 'Af te dragen btw'
           ),
+          (role: CoaAccountRole.expenses, number: '4000', label: 'Algemene kosten'),
         ]),
       ),
     'PT' => CoaChart(
@@ -236,6 +247,7 @@ CoaChart coaChartFor({
             label: 'Depósitos à ordem'
           ),
           (role: CoaAccountRole.vat, number: '2433', label: 'IVA liquidado'),
+          (role: CoaAccountRole.expenses, number: '62', label: 'Fornecimentos e serviços externos'),
         ]),
       ),
     'CH' => CoaChart(
@@ -258,6 +270,7 @@ CoaChart coaChartFor({
             number: '2200',
             label: 'Geschuldete MWST'
           ),
+          (role: CoaAccountRole.expenses, number: '6500', label: 'Übriger Betriebsaufwand'),
         ]),
       ),
     // No national chart is imposed in these; the numbering below is the
@@ -278,6 +291,7 @@ CoaChart coaChartFor({
           ),
           (role: CoaAccountRole.bank, number: '1000', label: 'Bank'),
           (role: CoaAccountRole.vat, number: '2200', label: 'Sales tax payable'),
+          (role: CoaAccountRole.expenses, number: '6500', label: 'Übriger Betriebsaufwand'),
         ]),
       ),
   };
