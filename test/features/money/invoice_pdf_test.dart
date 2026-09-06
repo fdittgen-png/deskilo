@@ -456,8 +456,6 @@ void main() {
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
       boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
     );
-    File('/private/tmp/claude-501/-Users-floriandittgen-orgcowrk/6d3b4ed0-0312-41d6-957a-dd7d987ce044/scratchpad/pilot-header.pdf')
-        .writeAsBytesSync(bytes);
     final raw = String.fromCharCodes(bytes);
     expect(raw, contains('/Subtype/Image'),
         reason: 'the logo must reach the page, not be clipped out of it');
