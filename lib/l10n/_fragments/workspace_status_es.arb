@@ -1,0 +1,139 @@
+{
+  "@@locale": "es",
+  "featureWorkspaceStatus": "Situación del espacio",
+  "@featureWorkspaceStatus": {
+    "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"
+  },
+  "featureWorkspaceStatusDesc": "Lo que el espacio facturó, cobró, reembolsó y repartió en un periodo, socio por socio — en pantalla para propietarios y admins, y como informe imprimible. Desactivado: sin vista de situación.",
+  "@featureWorkspaceStatusDesc": {
+    "description": "#934 workspace status / repartition wizard: featureWorkspaceStatusDesc"
+  },
+  "featureExpenseRepartitionWizard": "Asistente de reparto",
+  "@featureExpenseRepartitionWizard": {
+    "description": "#934 workspace status / repartition wizard: featureExpenseRepartitionWizard"
+  },
+  "featureExpenseRepartitionWizardDesc": "Un reparto guiado: un gasto común propuesto según el porcentaje de suscripción, cada parte ajustable, y la regla ajustada recordada para el mes siguiente. Desactivado: solo la ficha de reparto de un gasto.",
+  "@featureExpenseRepartitionWizardDesc": {
+    "description": "#934 workspace status / repartition wizard: featureExpenseRepartitionWizardDesc"
+  },
+  "reportDocStatus": "Situación del espacio",
+  "@reportDocStatus": {
+    "description": "#934 workspace status / repartition wizard: reportDocStatus"
+  },
+  "statusTitle": "Situación del espacio",
+  "@statusTitle": {
+    "description": "#934 workspace status / repartition wizard: statusTitle"
+  },
+  "statusSubtitle": "Ingresos, gastos y socios en un periodo",
+  "@statusSubtitle": {
+    "description": "#934 workspace status / repartition wizard: statusSubtitle"
+  },
+  "statusFrom": "Desde",
+  "@statusFrom": {
+    "description": "#934 workspace status / repartition wizard: statusFrom"
+  },
+  "statusTo": "Hasta",
+  "@statusTo": {
+    "description": "#934 workspace status / repartition wizard: statusTo"
+  },
+  "statusInvoiced": "Facturado",
+  "@statusInvoiced": {
+    "description": "#934 workspace status / repartition wizard: statusInvoiced"
+  },
+  "statusCreditNotes": "Abonos",
+  "@statusCreditNotes": {
+    "description": "#934 workspace status / repartition wizard: statusCreditNotes"
+  },
+  "statusPaymentsMatched": "Pagos conciliados",
+  "@statusPaymentsMatched": {
+    "description": "#934 workspace status / repartition wizard: statusPaymentsMatched"
+  },
+  "statusPaymentsReceived": "Pagos recibidos",
+  "@statusPaymentsReceived": {
+    "description": "#934 workspace status / repartition wizard: statusPaymentsReceived"
+  },
+  "statusReimbursed": "Gastos reembolsados",
+  "@statusReimbursed": {
+    "description": "#934 workspace status / repartition wizard: statusReimbursed"
+  },
+  "statusRepartitioned": "Gastos repartidos",
+  "@statusRepartitioned": {
+    "description": "#934 workspace status / repartition wizard: statusRepartitioned"
+  },
+  "statusAwaiting": "Pendiente",
+  "@statusAwaiting": {
+    "description": "#934 workspace status / repartition wizard: statusAwaiting"
+  },
+  "statusCredits": "Créditos concedidos",
+  "@statusCredits": {
+    "description": "#934 workspace status / repartition wizard: statusCredits"
+  },
+  "statusNet": "Neto",
+  "@statusNet": {
+    "description": "#934 workspace status / repartition wizard: statusNet"
+  },
+  "statusMembers": "Socios",
+  "@statusMembers": {
+    "description": "#934 workspace status / repartition wizard: statusMembers"
+  },
+  "statusPrint": "Imprimir la situación",
+  "@statusPrint": {
+    "description": "#934 workspace status / repartition wizard: statusPrint"
+  },
+  "repartitionWizardTitle": "Repartir un gasto",
+  "@repartitionWizardTitle": {
+    "description": "#934 workspace status / repartition wizard: repartitionWizardTitle"
+  },
+  "repartitionWizardSubtitle": "Proponer según la suscripción, ajustar, contabilizar",
+  "@repartitionWizardSubtitle": {
+    "description": "#934 workspace status / repartition wizard: repartitionWizardSubtitle"
+  },
+  "repartitionStepCost": "El gasto",
+  "@repartitionStepCost": {
+    "description": "#934 workspace status / repartition wizard: repartitionStepCost"
+  },
+  "repartitionStepRule": "La regla",
+  "@repartitionStepRule": {
+    "description": "#934 workspace status / repartition wizard: repartitionStepRule"
+  },
+  "repartitionStepBook": "Contabilizar",
+  "@repartitionStepBook": {
+    "description": "#934 workspace status / repartition wizard: repartitionStepBook"
+  },
+  "repartitionTitleLabel": "Concepto",
+  "@repartitionTitleLabel": {
+    "description": "#934 workspace status / repartition wizard: repartitionTitleLabel"
+  },
+  "repartitionAmountLabel": "Importe",
+  "@repartitionAmountLabel": {
+    "description": "#934 workspace status / repartition wizard: repartitionAmountLabel"
+  },
+  "repartitionPeriodLabel": "Mes",
+  "@repartitionPeriodLabel": {
+    "description": "#934 workspace status / repartition wizard: repartitionPeriodLabel"
+  },
+  "repartitionRuleHint": "Cada parte se propone según el porcentaje de suscripción. Desmarque un socio para excluirlo; con el método «clave», indique su peso. La regla ajustada se propondrá el mes que viene.",
+  "@repartitionRuleHint": {
+    "description": "#934 workspace status / repartition wizard: repartitionRuleHint"
+  },
+  "repartitionExclude": "Excluir",
+  "@repartitionExclude": {
+    "description": "#934 workspace status / repartition wizard: repartitionExclude"
+  },
+  "repartitionWizardWeight": "Peso",
+  "@repartitionWizardWeight": {
+    "description": "#934 workspace status / repartition wizard: repartitionWeight"
+  },
+  "repartitionSharesTotal": "Total de las partes",
+  "@repartitionSharesTotal": {
+    "description": "#934 workspace status / repartition wizard: repartitionSharesTotal"
+  },
+  "repartitionBooked": "Reparto contabilizado.",
+  "@repartitionBooked": {
+    "description": "#934 workspace status / repartition wizard: repartitionBooked"
+  },
+  "repartitionRememberRule": "Recordar esta regla",
+  "@repartitionRememberRule": {
+    "description": "#934 workspace status / repartition wizard: repartitionRememberRule"
+  }
+}

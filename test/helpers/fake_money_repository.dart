@@ -29,6 +29,7 @@ import 'package:deskilo/features/money/domain/vat_rate.dart';
 
 import 'fake_event_repository.dart';
 import 'package:deskilo/features/money/domain/number_sequence.dart';
+import 'package:deskilo/features/money/domain/workspace_status.dart';
 
 /// In-memory [MoneyRepository]; recorded payments are captured for
 /// assertions (they only become ledger credits after confirmation).
@@ -384,6 +385,25 @@ class FakeMoneyRepository implements MoneyRepository {
     BillingRules rules,
   ) async {
     billingRules = rules;
+  }
+
+  /// #934 — the status the fake answers with, and the remembered rule.
+  WorkspaceStatus? status;
+  RepartitionRule repartitionRule = const RepartitionRule();
+
+  @override
+  Future<WorkspaceStatus> fetchWorkspaceStatus(
+          String workspaceId, String from, String to) async =>
+      status ?? WorkspaceStatus(from: from, to: to, currency: 'EUR');
+
+  @override
+  Future<RepartitionRule> fetchRepartitionRule(String workspaceId) async =>
+      repartitionRule;
+
+  @override
+  Future<void> setRepartitionRule(
+      String workspaceId, RepartitionRule rule) async {
+    repartitionRule = rule;
   }
 
   @override

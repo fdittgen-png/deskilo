@@ -27,6 +27,9 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.managedProfileAccess,
   // #925 — the numbering screen is opt-in; the numbers are drawn either way.
   WorkspaceFeature.numberSequences,
+  // #934 — the status view and the guided repartition are opt-in.
+  WorkspaceFeature.workspaceStatus,
+  WorkspaceFeature.expenseRepartitionWizard,
 };
 
 /// Every other feature ships ON.
@@ -76,6 +79,8 @@ void main() {
       'badgeSignIn': true,
       'managedProfileAccess': true,
       'numberSequences': true,
+      'workspaceStatus': true,
+      'expenseRepartitionWizard': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

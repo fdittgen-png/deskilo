@@ -82,7 +82,8 @@ const Map<String, int> _baseline = {
   // 1180→1210 (2026-08-05): #496 the member-language chain on self-service docs.
   // 1220→1200 (2026-08-31): #767 scheduled expenses — the button, the
   // sweep watch and the occurrence cards join the other money actions.
-  'lib/features/money/presentation/screens/money_screen.dart': 1253, // 2026-09-05 #881 member payment conditions: effective terms threaded to every document // 2026-09-05 #880 reportTexts beside #887 managedProfiles after the rebase // 2026-09-05 #873 the consumption report entry points // 2026-09-05 #881 member payment conditions: effective terms threaded to every document // 2026-09-05 #873 the consumption report entry points
+  // 1253→1316 (2026-09-06): #934 the status report kind and the money-screen tiles.
+  'lib/features/money/presentation/screens/money_screen.dart': 1316, // 2026-09-05 #881 member payment conditions: effective terms threaded to every document // 2026-09-05 #880 reportTexts beside #887 managedProfiles after the rebase // 2026-09-05 #873 the consumption report entry points // 2026-09-05 #881 member payment conditions: effective terms threaded to every document // 2026-09-05 #873 the consumption report entry points
   // 1210→1220 (2026-08-06): #512 the account card above the bill.
   // 910→950 (2026-08-04): #456 note tile + admin broadcast button —
   // the dialog itself is its own file.
@@ -150,7 +151,8 @@ const Map<String, int> _baseline = {
   // 2026-09-04 #864: one more flag. This file is the feature
   // registry — it grows by ~5 lines per flag by design, and
   // splitting the registry would defeat its whole purpose.
-  'lib/features/workspace/domain/workspace_feature.dart': 740, // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #873 usageReport beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #878 vatReport beside #881 memberPaymentTerms after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #873 usageReport beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 five flags landed the same day (#880 #887 #881 #873 #878 #874)
+  // 740→789 (2026-09-06): #934 the status report kind and the money-screen tiles.
+  'lib/features/workspace/domain/workspace_feature.dart': 789, // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #873 usageReport beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #878 vatReport beside #881 memberPaymentTerms after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #873 usageReport beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 five flags landed the same day (#880 #887 #881 #873 #878 #874)
   'lib/features/money/presentation/widgets/report_visual_editor.dart': 1000, // 2026-09-02 #822 drag, insert palette, image controls, move-to-band
   // 660→700 (2026-08-05): #494 the three further document chips + their
   // live data and letter-PDF branches.
@@ -188,7 +190,8 @@ const Map<String, int> _baseline = {
   // class of thin `_client.rpc` calls; splitting it would put one
   // repository implementation in two places for no gain.
   // 1260→1320 (2026-09-06): #925 three number-sequence methods.
-  'lib/features/money/data/supabase_money_repository.dart': 1320,
+  // 1320→1383 (2026-09-06): #934 two routes / three repository methods.
+  'lib/features/money/data/supabase_money_repository.dart': 1383,
   // 600→630 (2026-08-11): #537 VAT price transparency — the gross-price
   // hint + per-pack VAT/currency subtitles (labeling, no new concern).
   // 630→660 (2026-08-11): #537 follow-up — live VAT-share helpers under
@@ -234,7 +237,10 @@ const Map<String, int> _baseline = {
   'lib/features/events/presentation/screens/validation_settings_screen.dart': 615,
   // 600→615 (2026-08-31): #771 the kiosk consent exemption and its
   // rationale live where the gate lives.
-  'lib/app/router.dart': 700, // 2026-09-02 #821/#822/#825/#827 the conversation, report-editor, member and wizard routes // 2026-09-05 #902 /settings/payment-terms
+  // 700→751 (2026-09-06): #934 two routes / three repository methods.
+  'lib/app/router.dart': 751, // 2026-09-02 #821/#822/#825/#827 the conversation, report-editor, member and wizard routes // 2026-09-05 #902 /settings/payment-terms
+  // default→660 (2026-09-06): #934 the status report kind / two flags.
+  'lib/features/money/presentation/report_defaults.dart': 660,
   // 600→620 (2026-09-01): #791 the tap dispatcher records the branch it
   // took. The paragraphs explaining WHY each silent branch needs a line
   // were extracted to booking_trace_points.dart; what stayed is eight

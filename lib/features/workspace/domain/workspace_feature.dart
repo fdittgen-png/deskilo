@@ -69,6 +69,8 @@ enum WorkspaceFeature {
   managedProfiles,
   managedProfileAccess,
   numberSequences,
+  workspaceStatus,
+  expenseRepartitionWizard,
   seatDayTimeline,
   memberPaymentTerms,
   reportTexts,
@@ -547,6 +549,21 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.numberSequences,
     defaultOn: false,
     requires: WorkspaceFeature.invoicing,
+  ),
+  // #934 — the treasurer's view: what the workspace invoiced, collected,
+  // reimbursed and shared out over a range of months, on screen and as
+  // a printable report.
+  WorkspaceFeature.workspaceStatus: FeatureManifestEntry(
+    feature: WorkspaceFeature.workspaceStatus,
+    defaultOn: false,
+    requires: WorkspaceFeature.invoicing,
+  ),
+  // #934 — the guided repartition: a shared cost proposed over the
+  // members by subscription share, adjustable, remembered as the rule.
+  WorkspaceFeature.expenseRepartitionWizard: FeatureManifestEntry(
+    feature: WorkspaceFeature.expenseRepartitionWizard,
+    defaultOn: false,
+    requires: WorkspaceFeature.expenseRepartition,
   ),
   WorkspaceFeature.managedProfileAccess: FeatureManifestEntry(
     feature: WorkspaceFeature.managedProfileAccess,

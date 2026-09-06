@@ -1057,3 +1057,6 @@ La pestaña **Mensajes** es el centro de mensajería de su espacio: todas las co
 ### Operador de la plataforma
 
 La cuenta que opera la instalación ve, en *Perfiles*, **todos los espacios** de la base de datos: los suyos como siempre, los demás **atenuados** con su entorno y su número de miembros. Al tocar un espacio atenuado se muestran sus **propietarios** con su correo — y esa consulta queda registrada, visible para los propietarios del espacio. Un propietario siempre tiene una dirección de correo: la app rehúsa crear un espacio o nombrar un copropietario sin ella.
+### Situación del espacio y reparto guiado (#934)
+
+*Dinero → Situación del espacio* muestra a propietarios y admins, en el periodo que elijan, lo que el espacio **facturó** (neto de abonos), **cobró**, **reembolsó** y **repartió**, y lo mismo socio por socio con su porcentaje de suscripción — y lo imprime como informe. *Repartir un gasto* propone la parte de cada uno **según la suscripción**, permite excluir a un socio o ajustar un peso, contabiliza las partes como hoy (líneas de la próxima factura de consumo) y **recuerda la regla** para el mes siguiente.

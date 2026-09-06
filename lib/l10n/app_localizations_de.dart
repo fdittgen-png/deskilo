@@ -8655,6 +8655,113 @@ class AppLocalizationsDe extends AppLocalizations {
   String get permManageNegotiations => 'Geschäftsvereinbarungen verwalten';
 
   @override
+  String get featureWorkspaceStatus => 'Lage des Arbeitsbereichs';
+
+  @override
+  String get featureWorkspaceStatusDesc =>
+      'Was der Arbeitsbereich über einen Zeitraum in Rechnung gestellt, eingenommen, erstattet und umgelegt hat, Mitglied für Mitglied — am Bildschirm für Inhaber und Admins und als druckbarer Bericht. Aus: keine Lageansicht.';
+
+  @override
+  String get featureExpenseRepartitionWizard => 'Umlage-Assistent';
+
+  @override
+  String get featureExpenseRepartitionWizardDesc =>
+      'Eine geführte Umlage: gemeinsame Kosten anteilig zum Abonnement vorgeschlagen, jeder Anteil anpassbar, die angepasste Regel für den nächsten Monat gemerkt. Aus: nur das Umlage-Formular für eine Ausgabe.';
+
+  @override
+  String get reportDocStatus => 'Lage des Arbeitsbereichs';
+
+  @override
+  String get statusTitle => 'Lage des Arbeitsbereichs';
+
+  @override
+  String get statusSubtitle =>
+      'Einnahmen, Ausgaben und Mitglieder über einen Zeitraum';
+
+  @override
+  String get statusFrom => 'Von';
+
+  @override
+  String get statusTo => 'Bis';
+
+  @override
+  String get statusInvoiced => 'In Rechnung gestellt';
+
+  @override
+  String get statusCreditNotes => 'Gutschriften';
+
+  @override
+  String get statusPaymentsMatched => 'Zugeordnete Zahlungen';
+
+  @override
+  String get statusPaymentsReceived => 'Eingegangene Zahlungen';
+
+  @override
+  String get statusReimbursed => 'Erstattete Ausgaben';
+
+  @override
+  String get statusRepartitioned => 'Umgelegte Ausgaben';
+
+  @override
+  String get statusAwaiting => 'Offen';
+
+  @override
+  String get statusCredits => 'Gewährte Gutschriften';
+
+  @override
+  String get statusNet => 'Netto';
+
+  @override
+  String get statusMembers => 'Mitglieder';
+
+  @override
+  String get statusPrint => 'Lage drucken';
+
+  @override
+  String get repartitionWizardTitle => 'Kosten umlegen';
+
+  @override
+  String get repartitionWizardSubtitle =>
+      'Anteilig zum Abonnement vorschlagen, anpassen, buchen';
+
+  @override
+  String get repartitionStepCost => 'Die Kosten';
+
+  @override
+  String get repartitionStepRule => 'Die Regel';
+
+  @override
+  String get repartitionStepBook => 'Buchen';
+
+  @override
+  String get repartitionTitleLabel => 'Bezeichnung';
+
+  @override
+  String get repartitionAmountLabel => 'Betrag';
+
+  @override
+  String get repartitionPeriodLabel => 'Monat';
+
+  @override
+  String get repartitionRuleHint =>
+      'Jeder Anteil wird anteilig zum Abonnement vorgeschlagen. Ein Mitglied abwählen, um es auszunehmen; bei der Methode „Schlüssel“ das Gewicht eintragen. Die angepasste Regel wird nächsten Monat wieder vorgeschlagen.';
+
+  @override
+  String get repartitionExclude => 'Ausnehmen';
+
+  @override
+  String get repartitionWizardWeight => 'Gewicht';
+
+  @override
+  String get repartitionSharesTotal => 'Summe der Anteile';
+
+  @override
+  String get repartitionBooked => 'Umlage gebucht.';
+
+  @override
+  String get repartitionRememberRule => 'Diese Regel merken';
+
+  @override
   String get workspaceXmlExport => 'Workspace exportieren (XML)';
 
   @override

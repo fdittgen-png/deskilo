@@ -1105,3 +1105,6 @@ L'onglet **Messages** est la messagerie de votre espace : toutes les conversatio
 ### Opérateur de la plateforme
 
 Le compte qui exploite l'installation voit, dans *Profils*, **tous les espaces** de la base : les siens comme d'habitude, les autres **grisés** avec leur environnement et leur nombre de membres. Toucher un espace grisé affiche ses **propriétaires** avec leur e-mail — et cette consultation est enregistrée, visible par les propriétaires de l'espace concerné. Un propriétaire a toujours une adresse e-mail : l'application refuse de créer un espace ou de nommer un copropriétaire sans.
+### Situation de l'espace et répartition guidée (#934)
+
+*Argent → Situation de l'espace* montre aux propriétaires et admins, sur une période au choix, ce que l'espace a **facturé** (net des avoirs), **encaissé**, **remboursé** et **réparti**, puis la même chose adhérent par adhérent avec leur pourcentage d'abonnement — et l'imprime comme rapport. *Répartir une dépense* propose la part de chacun **au prorata de l'abonnement**, laisse exclure un adhérent ou ajuster un poids, comptabilise les parts comme aujourd'hui (lignes de la prochaine facture de consommation) et **mémorise la règle** pour le mois suivant.

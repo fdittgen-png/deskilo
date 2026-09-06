@@ -8656,6 +8656,112 @@ class AppLocalizationsIt extends AppLocalizations {
   String get permManageNegotiations => 'Gestire gli accordi commerciali';
 
   @override
+  String get featureWorkspaceStatus => 'Situazione dello spazio';
+
+  @override
+  String get featureWorkspaceStatusDesc =>
+      'Ciò che lo spazio ha fatturato, incassato, rimborsato e ripartito in un periodo, socio per socio — a schermo per proprietari e admin, e come rapporto stampabile. Disattivato: nessuna vista della situazione.';
+
+  @override
+  String get featureExpenseRepartitionWizard => 'Assistente di ripartizione';
+
+  @override
+  String get featureExpenseRepartitionWizardDesc =>
+      'Una ripartizione guidata: una spesa comune proposta in base alla percentuale di abbonamento, ogni quota modificabile, e la regola modificata ricordata per il mese successivo. Disattivato: solo la scheda di ripartizione di una spesa.';
+
+  @override
+  String get reportDocStatus => 'Situazione dello spazio';
+
+  @override
+  String get statusTitle => 'Situazione dello spazio';
+
+  @override
+  String get statusSubtitle => 'Entrate, spese e soci in un periodo';
+
+  @override
+  String get statusFrom => 'Dal';
+
+  @override
+  String get statusTo => 'Al';
+
+  @override
+  String get statusInvoiced => 'Fatturato';
+
+  @override
+  String get statusCreditNotes => 'Note di credito';
+
+  @override
+  String get statusPaymentsMatched => 'Pagamenti abbinati';
+
+  @override
+  String get statusPaymentsReceived => 'Pagamenti ricevuti';
+
+  @override
+  String get statusReimbursed => 'Spese rimborsate';
+
+  @override
+  String get statusRepartitioned => 'Spese ripartite';
+
+  @override
+  String get statusAwaiting => 'In attesa';
+
+  @override
+  String get statusCredits => 'Crediti concessi';
+
+  @override
+  String get statusNet => 'Netto';
+
+  @override
+  String get statusMembers => 'Soci';
+
+  @override
+  String get statusPrint => 'Stampa la situazione';
+
+  @override
+  String get repartitionWizardTitle => 'Ripartire una spesa';
+
+  @override
+  String get repartitionWizardSubtitle =>
+      'Proporre in base all\'abbonamento, modificare, registrare';
+
+  @override
+  String get repartitionStepCost => 'La spesa';
+
+  @override
+  String get repartitionStepRule => 'La regola';
+
+  @override
+  String get repartitionStepBook => 'Registrare';
+
+  @override
+  String get repartitionTitleLabel => 'Descrizione';
+
+  @override
+  String get repartitionAmountLabel => 'Importo';
+
+  @override
+  String get repartitionPeriodLabel => 'Mese';
+
+  @override
+  String get repartitionRuleHint =>
+      'Ogni quota è proposta in base alla percentuale di abbonamento. Deseleziona un socio per escluderlo; con il metodo «chiave», indica il suo peso. La regola modificata sarà proposta il mese prossimo.';
+
+  @override
+  String get repartitionExclude => 'Escludere';
+
+  @override
+  String get repartitionWizardWeight => 'Peso';
+
+  @override
+  String get repartitionSharesTotal => 'Totale delle quote';
+
+  @override
+  String get repartitionBooked => 'Ripartizione registrata.';
+
+  @override
+  String get repartitionRememberRule => 'Ricorda questa regola';
+
+  @override
   String get workspaceXmlExport => 'Esporta lo spazio (XML)';
 
   @override

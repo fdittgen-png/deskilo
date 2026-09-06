@@ -281,6 +281,10 @@ class InvoicePdfTemplate {
     'vat_period_gross',
     // #896 — which period this is: paid in it, or issued in it.
     'vat_basis_note',
+    // #934 — the workspace status.
+    'status_from', 'status_to', 'status_invoiced', 'status_credit_notes',
+    'status_payments', 'status_reimbursed', 'status_repartitioned',
+    'status_credits', 'status_net', 'status_members',
     'vat_positions',
     'vat_rate_totals',
     'payment_terms',

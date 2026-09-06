@@ -1031,6 +1031,35 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             onTap: () => context.push('/invoices'),
           )
         : null;
+    // #934 — the treasurer's view and the guided repartition, for those
+    // who manage the money.
+    final statusButton = features.contains(WorkspaceFeature.workspaceStatus) &&
+            (ref.watch(myMemberProvider).value?.isAdmin ?? false)
+        ? ListTile(
+            key: const ValueKey('workspace-status-button'),
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.account_balance_outlined),
+            title: Text(l10n?.statusTitle ?? 'Workspace status'),
+            subtitle: Text(l10n?.statusSubtitle ??
+                'Revenues, expenses and members over a period'),
+            trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+            onTap: () => context.push('/money/status'),
+          )
+        : null;
+    final wizardButton =
+        features.contains(WorkspaceFeature.expenseRepartitionWizard) &&
+                (ref.watch(myMemberProvider).value?.isAdmin ?? false)
+            ? ListTile(
+                key: const ValueKey('repartition-wizard-button'),
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.pie_chart_outline),
+                title: Text(l10n?.repartitionWizardTitle ?? 'Share a cost'),
+                subtitle: Text(l10n?.repartitionWizardSubtitle ??
+                    'Propose a split by subscription share, adjust, book'),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () => context.push('/money/repartition-wizard'),
+              )
+            : null;
     // #494 — member self-service reports: the standing financial
     // agreement and the month's payments, viewable/downloadable/
     // shareable without asking anyone. Gated by memberReports (#502).
@@ -1079,6 +1108,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       grid(requestButtons),
       sectionLabel(l10n?.moneySectionDocuments ?? 'Documents'),
       if (invoicesButton != null) ...[invoicesButton, const SizedBox(height: 8)],
+      if (statusButton != null) ...[statusButton, const SizedBox(height: 8)],
+      if (wizardButton != null) ...[wizardButton, const SizedBox(height: 8)],
       if (reportsOn)
         DocumentsFaceActions(
           onAgreement: () => _memberDoc('agreement'),
@@ -1156,6 +1187,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       ],
       MoneyFace.invoices: [
         if (invoicesButton != null) ...[const SizedBox(height: 8), invoicesButton],
+        if (statusButton != null) ...[const SizedBox(height: 8), statusButton],
+        if (wizardButton != null) ...[const SizedBox(height: 8), wizardButton],
       ],
       MoneyFace.usage: const [],
       MoneyFace.documents: [

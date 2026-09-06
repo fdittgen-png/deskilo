@@ -125,6 +125,10 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureManagedProfiles ?? 'Managed profiles',
       WorkspaceFeature.numberSequences =>
         l10n?.featureNumberSequences ?? 'Number sequences',
+      WorkspaceFeature.workspaceStatus =>
+        l10n?.featureWorkspaceStatus ?? 'Workspace status',
+      WorkspaceFeature.expenseRepartitionWizard =>
+        l10n?.featureExpenseRepartitionWizard ?? 'Repartition wizard',
       WorkspaceFeature.managedProfileAccess =>
         l10n?.featureManagedProfileAccess ?? 'Who administers a profile',
       WorkspaceFeature.seatDayTimeline =>

@@ -8588,6 +8588,112 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permManageNegotiations => 'Manage commercial agreements';
 
   @override
+  String get featureWorkspaceStatus => 'Workspace status';
+
+  @override
+  String get featureWorkspaceStatusDesc =>
+      'What the workspace invoiced, collected, reimbursed and shared out over a range of months, member by member — on screen for owners and admins, and as a printable report. Off: no status view.';
+
+  @override
+  String get featureExpenseRepartitionWizard => 'Repartition wizard';
+
+  @override
+  String get featureExpenseRepartitionWizardDesc =>
+      'A guided repartition: a shared cost proposed over the members by subscription share, each share adjustable, and the adjusted rule remembered for next month. Off: the one-expense repartition sheet only.';
+
+  @override
+  String get reportDocStatus => 'Workspace status';
+
+  @override
+  String get statusTitle => 'Workspace status';
+
+  @override
+  String get statusSubtitle => 'Revenues, expenses and members over a period';
+
+  @override
+  String get statusFrom => 'From';
+
+  @override
+  String get statusTo => 'To';
+
+  @override
+  String get statusInvoiced => 'Invoiced';
+
+  @override
+  String get statusCreditNotes => 'Credit notes';
+
+  @override
+  String get statusPaymentsMatched => 'Payments matched';
+
+  @override
+  String get statusPaymentsReceived => 'Payments received';
+
+  @override
+  String get statusReimbursed => 'Expenses reimbursed';
+
+  @override
+  String get statusRepartitioned => 'Expenses shared out';
+
+  @override
+  String get statusAwaiting => 'Awaiting';
+
+  @override
+  String get statusCredits => 'Credits granted';
+
+  @override
+  String get statusNet => 'Net';
+
+  @override
+  String get statusMembers => 'Members';
+
+  @override
+  String get statusPrint => 'Print the status';
+
+  @override
+  String get repartitionWizardTitle => 'Share a cost';
+
+  @override
+  String get repartitionWizardSubtitle =>
+      'Propose a split by subscription share, adjust, book';
+
+  @override
+  String get repartitionStepCost => 'The cost';
+
+  @override
+  String get repartitionStepRule => 'The rule';
+
+  @override
+  String get repartitionStepBook => 'Book';
+
+  @override
+  String get repartitionTitleLabel => 'Title';
+
+  @override
+  String get repartitionAmountLabel => 'Amount';
+
+  @override
+  String get repartitionPeriodLabel => 'Month';
+
+  @override
+  String get repartitionRuleHint =>
+      'Each share is proposed by subscription percentage. Untick a member to leave them out; with the custom method, type their weight. The adjusted rule is proposed again next month.';
+
+  @override
+  String get repartitionExclude => 'Leave out';
+
+  @override
+  String get repartitionWizardWeight => 'Weight';
+
+  @override
+  String get repartitionSharesTotal => 'Total of the shares';
+
+  @override
+  String get repartitionBooked => 'Repartition booked.';
+
+  @override
+  String get repartitionRememberRule => 'Remember this rule';
+
+  @override
   String get workspaceXmlExport => 'Export workspace (XML)';
 
   @override

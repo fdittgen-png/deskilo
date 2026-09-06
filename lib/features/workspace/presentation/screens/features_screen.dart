@@ -246,6 +246,18 @@ class FeaturesScreen extends ConsumerWidget {
                   'for every series. Numbers are drawn in the database, '
                   'gapless, whether this is on or off; on, the owner can '
                   'change the format for what comes next.',
+        WorkspaceFeature.workspaceStatus =>
+          l10n?.featureWorkspaceStatusDesc ??
+              'What the workspace invoiced, collected, reimbursed and '
+                  'shared out over a range of months, member by member — '
+                  'on screen for owners and admins, and as a printable '
+                  'report. Off: no status view.',
+        WorkspaceFeature.expenseRepartitionWizard =>
+          l10n?.featureExpenseRepartitionWizardDesc ??
+              'A guided repartition: a shared cost proposed over the '
+                  'members by subscription share, each share adjustable, '
+                  'and the adjusted rule remembered for next month. '
+                  'Off: the one-expense repartition sheet only.',
         WorkspaceFeature.managedProfileAccess =>
           l10n?.featureManagedProfileAccessDesc ??
               'Each managed profile says who may administer it — by role, '

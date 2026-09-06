@@ -1105,3 +1105,6 @@ La scheda **Messaggi** è il centro di messaggistica del tuo spazio: tutte le co
 ### Operatore della piattaforma
 
 L'account che gestisce l'installazione vede, in *Profili*, **tutti gli spazi** del database: i propri come sempre, gli altri **in grigio** con ambiente e numero di membri. Toccando uno spazio in grigio compaiono i suoi **proprietari** con l'e-mail — e quella lettura è registrata, visibile ai proprietari dello spazio. Un proprietario ha sempre un indirizzo e-mail: l'app rifiuta di creare uno spazio o nominare un comproprietario senza.
+### Situazione dello spazio e ripartizione guidata (#934)
+
+*Denaro → Situazione dello spazio* mostra a proprietari e admin, nel periodo scelto, ciò che lo spazio ha **fatturato** (al netto delle note di credito), **incassato**, **rimborsato** e **ripartito**, poi lo stesso socio per socio con la percentuale di abbonamento — e lo stampa come rapporto. *Ripartire una spesa* propone la quota di ciascuno **in base all'abbonamento**, permette di escludere un socio o modificare un peso, registra le quote come oggi (righe della prossima fattura di consumo) e **ricorda la regola** per il mese successivo.

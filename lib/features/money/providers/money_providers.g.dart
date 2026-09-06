@@ -1851,3 +1851,132 @@ final class NumberSequencesProvider
 }
 
 String _$numberSequencesHash() => r'28a4ce9e3329227ca5d6be4407a66dbfbee6c935';
+
+/// #934 — the workspace's status over a range of months.
+
+@ProviderFor(workspaceStatus)
+final workspaceStatusProvider = WorkspaceStatusFamily._();
+
+/// #934 — the workspace's status over a range of months.
+
+final class WorkspaceStatusProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<WorkspaceStatus>,
+          WorkspaceStatus,
+          FutureOr<WorkspaceStatus>
+        >
+    with $FutureModifier<WorkspaceStatus>, $FutureProvider<WorkspaceStatus> {
+  /// #934 — the workspace's status over a range of months.
+  WorkspaceStatusProvider._({
+    required WorkspaceStatusFamily super.from,
+    required (String, String) super.argument,
+  }) : super(
+         retry: null,
+         name: r'workspaceStatusProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceStatusHash();
+
+  @override
+  String toString() {
+    return r'workspaceStatusProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<WorkspaceStatus> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<WorkspaceStatus> create(Ref ref) {
+    final argument = this.argument as (String, String);
+    return workspaceStatus(ref, argument.$1, argument.$2);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is WorkspaceStatusProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$workspaceStatusHash() => r'56748c4ac1006dde02ac46bb86fd2e5d9c10b942';
+
+/// #934 — the workspace's status over a range of months.
+
+final class WorkspaceStatusFamily extends $Family
+    with
+        $FunctionalFamilyOverride<FutureOr<WorkspaceStatus>, (String, String)> {
+  WorkspaceStatusFamily._()
+    : super(
+        retry: null,
+        name: r'workspaceStatusProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #934 — the workspace's status over a range of months.
+
+  WorkspaceStatusProvider call(String from, String to) =>
+      WorkspaceStatusProvider._(argument: (from, to), from: this);
+
+  @override
+  String toString() => r'workspaceStatusProvider';
+}
+
+/// #934 — the remembered repartition rule.
+
+@ProviderFor(repartitionRule)
+final repartitionRuleProvider = RepartitionRuleProvider._();
+
+/// #934 — the remembered repartition rule.
+
+final class RepartitionRuleProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<RepartitionRule>,
+          RepartitionRule,
+          FutureOr<RepartitionRule>
+        >
+    with $FutureModifier<RepartitionRule>, $FutureProvider<RepartitionRule> {
+  /// #934 — the remembered repartition rule.
+  RepartitionRuleProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'repartitionRuleProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$repartitionRuleHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<RepartitionRule> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<RepartitionRule> create(Ref ref) {
+    return repartitionRule(ref);
+  }
+}
+
+String _$repartitionRuleHash() => r'15e240c4526551c2b737b6746cd0ca04457e5709';
