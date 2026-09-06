@@ -106,6 +106,7 @@ class _FormatTile extends StatelessWidget {
         'fec' || 'datev' || 'sage50' => Icons.table_chart_outlined,
         'saft' || 'saft_pt' => Icons.code_outlined,
         'audit_trail' => Icons.fact_check_outlined,
+        'bundle' => Icons.archive_outlined,
         _ => Icons.description_outlined,
       };
 
@@ -118,6 +119,7 @@ class _FormatTile extends StatelessWidget {
         'accountant_csv' =>
           l10n?.invoiceExportAccountantCsv ?? 'Accounting CSV',
         'audit_trail' => l10n?.invoiceExportAuditTrail ?? 'Audit trail',
+        'bundle' => l10n?.invoiceExportBundle ?? 'Year archive (zip)',
         _ => format.id,
       };
 

@@ -1127,3 +1127,6 @@ En Francia el número de IVA y la exención pertenecen a la entidad jurídica; c
 ### Grupos de IVA (#947)
 
 Cada tipo lleva ahora el **grupo fiscal** de lo que grava: general, intermedio, reducido, superreducido, cero, exento, no sujeto, **envase retornable** (fuera del IVA) o **con impuestos especiales** (cerveza, licores, bebidas azucaradas: impuesto dentro del precio, IVA general). *Ajustes → IVA* muestra qué entra en cada grupo en su país y la mención de exención que implica. Una asociación no sujeta mantiene la categoría O. Un envase junto a líneas gravadas no puede salir como factura electrónica (EN 16931): la app lo avisa y se emite aparte.
+### Archivo del ejercicio (#957)
+
+*Exportaciones contables → Archivo del ejercicio* descarga un solo zip con el número de registro y el año: cada factura en PDF/A-3 con su factura electrónica incrustada, el **registro de facturas** (número, fecha, importe, estado y la palabra de integridad de cada documento), el FEC con las cuentas por defecto y la pista de auditoría. Un espacio de desarrollo produce un archivo marcado DEV.

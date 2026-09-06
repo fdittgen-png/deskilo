@@ -1063,3 +1063,6 @@ In France the VAT number and the exemption belong to the legal entity; each esta
 ### VAT groups (#947)
 
 Each rate now carries the **fiscal group** of what it taxes: standard, intermediate, reduced, super-reduced, zero, exempt, not subject, **deposit** (outside the VAT base) or **excise-bearing** (beer, spirits, sugar drinks: excise inside the price, standard VAT). *Settings → VAT* shows what falls in each group in your country and the exemption reason a group implies. An association not subject to VAT keeps category O on its documents. A deposit beside taxed lines cannot go out as an e-invoice (EN 16931): the app says so and you issue it separately.
+### Year archive (#957)
+
+*Accounting exports → Year archive* downloads one zip named after the registration number and the year: every invoice as PDF/A-3 with its embedded e-invoice, the **invoice register** (number, date, amount, status and each document's integrity word), the FEC on the default accounts and the audit trail. A development workspace produces a file marked DEV.

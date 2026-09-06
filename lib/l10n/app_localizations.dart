@@ -230,6 +230,12 @@ abstract class AppLocalizations {
   /// **'No window'**
   String get addressWindowOff;
 
+  /// #957 archive bundle: invoiceExportBundle
+  ///
+  /// In en, this message translates to:
+  /// **'Year archive (zip)'**
+  String get invoiceExportBundle;
+
   /// #919 association regime: legalIdentityAssociationRegime
   ///
   /// In en, this message translates to:

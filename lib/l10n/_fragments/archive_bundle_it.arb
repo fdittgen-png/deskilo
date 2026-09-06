@@ -1,0 +1,7 @@
+{
+  "@@locale": "it",
+  "invoiceExportBundle": "Archivio dell'esercizio (zip)",
+  "@invoiceExportBundle": {
+    "description": "#957 archive bundle: invoiceExportBundle"
+  }
+}

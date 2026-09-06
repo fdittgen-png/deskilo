@@ -183,6 +183,17 @@ const auditTrailFormat = AccountingFormat(
 /// the generic fallbacks. Someone under audit is looking for one
 /// specific file and should not have to read past three alternatives to
 /// find it.
+/// #957 — one download per fiscal year: every invoice as PDF/A-3 with its
+/// embedded e-invoice, the register, the FEC and the audit trail. Not a
+/// filing — an archive an auditor opens; offered everywhere.
+const archiveBundleFormat = AccountingFormat(
+  id: 'bundle',
+  claim: FormatClaim.exchange,
+  countries: <String>{},
+  extension: 'zip',
+  needsLegalId: true,
+);
+
 const List<AccountingFormat> accountingFormats = [
   fecFormat,
   safTPtFormat,
@@ -191,6 +202,7 @@ const List<AccountingFormat> accountingFormats = [
   safTFormat,
   accountantCsvFormat,
   auditTrailFormat,
+  archiveBundleFormat,
 ];
 
 /// What to offer in [countryCode], most specific first.
