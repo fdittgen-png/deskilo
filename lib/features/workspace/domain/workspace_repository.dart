@@ -333,8 +333,9 @@ abstract class WorkspaceRepository {
   /// normalized code.
   Future<String> setWorkspaceCode(String workspaceId, String code);
 
-  /// Owner-only (RLS-enforced): replace the workspace's feature_flags
-  /// jsonb wholesale (#146). Keys are WorkspaceFeature enum names.
+  /// Merges [flags] into the workspace's stored feature flags (#963):
+  /// only the keys named here change, every other key stays as it is.
+  /// Owner-only.
   Future<void> setFeatureFlags(String workspaceId, Map<String, bool> flags);
 
   /// Workspace-wide developer mode (#419, 0081): admin/owner only —

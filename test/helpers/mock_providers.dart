@@ -1053,9 +1053,16 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   ) async {
     final i = workspaces.indexWhere((w) => w.id == workspaceId);
     if (i < 0) throw StateError('unknown workspace $workspaceId');
-    workspaces[i] = workspaces[i]
-        .copyWith(featureFlags: Map<String, dynamic>.of(flags));
+    flagWrites.add(Map.of(flags));
+    // A MERGE, like set_feature_flags (0176, #963).
+    workspaces[i] = workspaces[i].copyWith(
+      featureFlags: {...workspaces[i].featureFlags, ...flags},
+    );
   }
+
+  /// Every flag map handed to [setFeatureFlags], in order (#963 pins
+  /// that a toggle writes only what it changes).
+  final List<Map<String, bool>> flagWrites = [];
 
   /// ISO open weekdays (1=Mon..7=Sun) per workspace; Mon–Fri when unseeded.
   final Map<String, List<int>> openWeekdays = {};

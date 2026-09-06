@@ -38,14 +38,15 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
 
   Future<void> _toggle(Workspace workspace, bool value) async {
     final l10n = AppLocalizations.of(context);
-    final enabled = ref.read(enabledFeaturesSyncProvider);
-    // Write the full flag map (features-screen pattern) so a later
-    // registry-default change never silently flips the owner's choice.
+    // #963 — only this switch is written; the server merges it. The
+    // former full map, built from the EFFECTIVE set, switched off every
+    // feature a parent was holding back.
     final flags = {
-      for (final f in featureManifest.keys)
-        f.dbKey: f == WorkspaceFeature.nfcBadges
-            ? value
-            : enabled.contains(f),
+      for (final entry in featureFlagsToggleDelta(
+        feature: WorkspaceFeature.nfcBadges,
+        value: value,
+      ).entries)
+        entry.key.dbKey: entry.value,
     };
     if (!await runGuarded(
       context,
@@ -60,6 +61,7 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
       return;
     }
     ref.invalidate(myWorkspacesProvider);
+    await ref.read(myWorkspacesProvider.future);
   }
 
   @override

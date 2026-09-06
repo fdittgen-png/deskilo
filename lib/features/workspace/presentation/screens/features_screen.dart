@@ -400,14 +400,12 @@ class FeaturesScreen extends ConsumerWidget {
     // is the worst kind of setting: the owner has configured the thing
     // and the app disagrees, with nothing on screen to explain it.
     final alsoOn = alsoEnabledWith(raw: enabled, feature: feature);
-    // Always write the FULL map so the row is self-describing and a later
-    // registry-default change never silently flips an owner's choice.
+    // #963 — write ONLY what this toggle changes; the server merges it
+    // into the row. A full map written from a stale copy of the row put
+    // the pilot's earlier switches back off.
     final flags = {
-      for (final entry in featureFlagsAfterToggle(
-        raw: enabled,
-        feature: feature,
-        value: value,
-      ).entries)
+      for (final entry
+          in featureFlagsToggleDelta(feature: feature, value: value).entries)
         entry.key.dbKey: entry.value,
     };
     if (!await runGuarded(
@@ -425,8 +423,11 @@ class FeaturesScreen extends ConsumerWidget {
       return;
     }
     // The workspace chain re-derives enabledFeatures from the new row —
-    // that applies the gates locally right away.
+    // that applies the gates locally right away. The read after the
+    // invalidation FORCES the fetch: the pilot's device skipped it twice
+    // out of three and the switch stayed where it was.
     ref.invalidate(myWorkspacesProvider);
+    await ref.read(myWorkspacesProvider.future);
     // Naming what else came on: a cascade nobody sees is a surprise the
     // next time they read the list.
     if (value && alsoOn.isNotEmpty && context.mounted) {

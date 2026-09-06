@@ -517,12 +517,13 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
     String workspaceId,
     Map<String, bool> flags,
   ) async {
-    // The whole jsonb is replaced (unlike booking_rules there are no
-    // foreign keys inside it): the Features screen always writes the
-    // full current map.
-    await _client
-        .from('workspaces')
-        .update({'feature_flags': flags}).eq('id', workspaceId);
+    // #963 — a MERGE (0176): the row keeps every key this write does
+    // not name, so a caller holding an older copy of the row can no
+    // longer put the other switches back to what it remembered.
+    await _client.rpc<dynamic>('set_feature_flags', params: {
+      'p_workspace_id': workspaceId,
+      'p_flags': flags,
+    });
   }
 
   @override
