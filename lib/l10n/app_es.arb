@@ -4540,6 +4540,431 @@
   "memberSimultaneousLimitExplainer": "Cuántas reservas puede tener este miembro en el mismo periodo. Sin definir, se aplica el valor por defecto del espacio.",
   "memberSimultaneousLimitDefault": "Valor del espacio",
   "memberSimultaneousLimitChip": "{n} a la vez",
+  "reportGuideTitle": "Campos y marcado",
+  "@reportGuideTitle": {
+    "description": "#966 report guide: reportGuideTitle"
+  },
+  "reportGuideIntro": "Tres bandas componen el PDF: cabecera, cuerpo, pie. Escriba texto, ponga un campo donde va un valor y un signo de marcado al inicio de la línea para su estilo. El XML de la factura electrónica nunca se toca.",
+  "@reportGuideIntro": {
+    "description": "#966 report guide: reportGuideIntro"
+  },
+  "reportGuideInsertField": "Insertar un campo…",
+  "@reportGuideInsertField": {
+    "description": "#966 report guide: reportGuideInsertField"
+  },
+  "reportGuideMarkupTitle": "Marcado de línea",
+  "@reportGuideMarkupTitle": {
+    "description": "#966 report guide: reportGuideMarkupTitle"
+  },
+  "reportGuideSnippetsTitle": "Piezas listas",
+  "@reportGuideSnippetsTitle": {
+    "description": "#966 report guide: reportGuideSnippetsTitle"
+  },
+  "reportGuideSnippetIf": "Una línea solo si el valor existe",
+  "@reportGuideSnippetIf": {
+    "description": "#966 report guide: reportGuideSnippetIf"
+  },
+  "reportGuideSnippetLoop": "Una fila por línea de factura",
+  "@reportGuideSnippetLoop": {
+    "description": "#966 report guide: reportGuideSnippetLoop"
+  },
+  "reportGuideSnippetTitle": "El título: factura, nota de crédito o proforma",
+  "@reportGuideSnippetTitle": {
+    "description": "#966 report guide: reportGuideSnippetTitle"
+  },
+  "reportGuideInsertedInto": "Insertado en {band}",
+  "@reportGuideInsertedInto": {
+    "description": "#966 report guide: reportGuideInsertedInto",
+    "placeholders": {
+      "band": {
+        "type": "String"
+      }
+    }
+  },
+  "reportMarkupHeading": "Un título grande",
+  "@reportMarkupHeading": {
+    "description": "#966 report guide: reportMarkupHeading"
+  },
+  "reportMarkupSection": "Un encabezado de sección",
+  "@reportMarkupSection": {
+    "description": "#966 report guide: reportMarkupSection"
+  },
+  "reportMarkupSmall": "Texto pequeño y discreto",
+  "@reportMarkupSmall": {
+    "description": "#966 report guide: reportMarkupSmall"
+  },
+  "reportMarkupRule": "Una línea horizontal",
+  "@reportMarkupRule": {
+    "description": "#966 report guide: reportMarkupRule"
+  },
+  "reportMarkupTable": "Una fila de tabla, una celda por |",
+  "@reportMarkupTable": {
+    "description": "#966 report guide: reportMarkupTable"
+  },
+  "reportMarkupBoldRow": "Una fila de tabla en negrita",
+  "@reportMarkupBoldRow": {
+    "description": "#966 report guide: reportMarkupBoldRow"
+  },
+  "reportMarkupColumns": "Columnas lado a lado, separadas por |||",
+  "@reportMarkupColumns": {
+    "description": "#966 report guide: reportMarkupColumns"
+  },
+  "reportMarkupImage": "Una imagen de la biblioteca: tamaño s/m/l, alineación left/center/right",
+  "@reportMarkupImage": {
+    "description": "#966 report guide: reportMarkupImage"
+  },
+  "reportFieldGroupSeller": "Vendedor",
+  "@reportFieldGroupSeller": {
+    "description": "#966 report guide: reportFieldGroupSeller"
+  },
+  "reportFieldGroupBank": "Datos bancarios",
+  "@reportFieldGroupBank": {
+    "description": "#966 report guide: reportFieldGroupBank"
+  },
+  "reportFieldGroupVat": "Informe de IVA",
+  "@reportFieldGroupVat": {
+    "description": "#966 report guide: reportFieldGroupVat"
+  },
+  "reportFieldGroupUsage": "Informe de consumo",
+  "@reportFieldGroupUsage": {
+    "description": "#966 report guide: reportFieldGroupUsage"
+  },
+  "reportFieldGroupSites": "Sedes",
+  "@reportFieldGroupSites": {
+    "description": "#966 report guide: reportFieldGroupSites"
+  },
+  "reportFieldGroupStatus": "Situación del espacio",
+  "@reportFieldGroupStatus": {
+    "description": "#966 report guide: reportFieldGroupStatus"
+  },
+  "reportFieldMeaningNumber": "El número del documento",
+  "@reportFieldMeaningNumber": {
+    "description": "#966 report guide: meaning of number"
+  },
+  "reportFieldMeaningMember": "El nombre visible del miembro",
+  "@reportFieldMeaningMember": {
+    "description": "#966 report guide: meaning of member"
+  },
+  "reportFieldMeaningWorkspace": "El nombre del espacio",
+  "@reportFieldMeaningWorkspace": {
+    "description": "#966 report guide: meaning of workspace"
+  },
+  "reportFieldMeaningWorkspaceAddress": "La dirección del espacio, o la de la sede del documento",
+  "@reportFieldMeaningWorkspaceAddress": {
+    "description": "#966 report guide: meaning of workspace_address"
+  },
+  "reportFieldMeaningPeriod": "El mes que cubre el documento",
+  "@reportFieldMeaningPeriod": {
+    "description": "#966 report guide: meaning of period"
+  },
+  "reportFieldMeaningIssued": "La fecha de emisión",
+  "@reportFieldMeaningIssued": {
+    "description": "#966 report guide: meaning of issued"
+  },
+  "reportFieldMeaningDueDate": "La fecha de vencimiento",
+  "@reportFieldMeaningDueDate": {
+    "description": "#966 report guide: meaning of due_date"
+  },
+  "reportFieldMeaningPurchaseOrder": "La referencia del pedido del comprador",
+  "@reportFieldMeaningPurchaseOrder": {
+    "description": "#966 report guide: meaning of purchase_order"
+  },
+  "reportFieldMeaningBuyerReference": "La referencia propia del comprador (sector público)",
+  "@reportFieldMeaningBuyerReference": {
+    "description": "#966 report guide: meaning of buyer_reference"
+  },
+  "reportFieldMeaningIssuedBy": "Quién emitió el documento",
+  "@reportFieldMeaningIssuedBy": {
+    "description": "#966 report guide: meaning of issued_by"
+  },
+  "reportFieldMeaningReplaces": "El número de la factura que esta reemplaza",
+  "@reportFieldMeaningReplaces": {
+    "description": "#966 report guide: meaning of replaces"
+  },
+  "reportFieldMeaningTotal": "El importe debido, todo incluido",
+  "@reportFieldMeaningTotal": {
+    "description": "#966 report guide: meaning of total"
+  },
+  "reportFieldMeaningCharges": "Los cargos antes de los pagos",
+  "@reportFieldMeaningCharges": {
+    "description": "#966 report guide: meaning of charges"
+  },
+  "reportFieldMeaningPayments": "Los pagos ya recibidos",
+  "@reportFieldMeaningPayments": {
+    "description": "#966 report guide: meaning of payments"
+  },
+  "reportFieldMeaningVoided": "Verdadero cuando la factura está anulada",
+  "@reportFieldMeaningVoided": {
+    "description": "#966 report guide: meaning of voided"
+  },
+  "reportFieldMeaningProforma": "Verdadero en una proforma",
+  "@reportFieldMeaningProforma": {
+    "description": "#966 report guide: meaning of proforma"
+  },
+  "reportFieldMeaningCopy": "Verdadero en un duplicado",
+  "@reportFieldMeaningCopy": {
+    "description": "#966 report guide: meaning of copy"
+  },
+  "reportFieldMeaningHasVat": "Verdadero cuando se aplica IVA",
+  "@reportFieldMeaningHasVat": {
+    "description": "#966 report guide: meaning of has_vat"
+  },
+  "reportFieldMeaningLines": "Las líneas de la factura — un bucle",
+  "@reportFieldMeaningLines": {
+    "description": "#966 report guide: meaning of lines"
+  },
+  "reportFieldMeaningVat": "El IVA por tipo — un bucle",
+  "@reportFieldMeaningVat": {
+    "description": "#966 report guide: meaning of vat"
+  },
+  "reportFieldMeaningNetTotal": "El total sin IVA",
+  "@reportFieldMeaningNetTotal": {
+    "description": "#966 report guide: meaning of net_total"
+  },
+  "reportFieldMeaningVatTotal": "El total de IVA",
+  "@reportFieldMeaningVatTotal": {
+    "description": "#966 report guide: meaning of vat_total"
+  },
+  "reportFieldMeaningCreditNote": "Verdadero en una nota de crédito",
+  "@reportFieldMeaningCreditNote": {
+    "description": "#966 report guide: meaning of credit_note"
+  },
+  "reportFieldMeaningRefundTotal": "El importe reembolsado",
+  "@reportFieldMeaningRefundTotal": {
+    "description": "#966 report guide: meaning of refund_total"
+  },
+  "reportFieldMeaningIban": "El IBAN de la cuenta",
+  "@reportFieldMeaningIban": {
+    "description": "#966 report guide: meaning of iban"
+  },
+  "reportFieldMeaningBic": "El BIC del banco",
+  "@reportFieldMeaningBic": {
+    "description": "#966 report guide: meaning of bic"
+  },
+  "reportFieldMeaningBankName": "El nombre del banco",
+  "@reportFieldMeaningBankName": {
+    "description": "#966 report guide: meaning of bank_name"
+  },
+  "reportFieldMeaningBankAccount": "El número de cuenta",
+  "@reportFieldMeaningBankAccount": {
+    "description": "#966 report guide: meaning of bank_account"
+  },
+  "reportFieldMeaningBankCode": "El código bancario",
+  "@reportFieldMeaningBankCode": {
+    "description": "#966 report guide: meaning of bank_code"
+  },
+  "reportFieldMeaningAccountHolder": "El titular de la cuenta",
+  "@reportFieldMeaningAccountHolder": {
+    "description": "#966 report guide: meaning of account_holder"
+  },
+  "reportFieldMeaningPaymentReference": "La referencia a indicar al pagar",
+  "@reportFieldMeaningPaymentReference": {
+    "description": "#966 report guide: meaning of payment_reference"
+  },
+  "reportFieldMeaningSellerLegalForm": "La forma jurídica del vendedor",
+  "@reportFieldMeaningSellerLegalForm": {
+    "description": "#966 report guide: meaning of seller_legal_form"
+  },
+  "reportFieldMeaningSellerRegistration": "El registro del vendedor",
+  "@reportFieldMeaningSellerRegistration": {
+    "description": "#966 report guide: meaning of seller_registration"
+  },
+  "reportFieldMeaningSellerVatId": "El número de IVA del vendedor",
+  "@reportFieldMeaningSellerVatId": {
+    "description": "#966 report guide: meaning of seller_vat_id"
+  },
+  "reportFieldMeaningSellerLegalId": "El identificador legal del vendedor",
+  "@reportFieldMeaningSellerLegalId": {
+    "description": "#966 report guide: meaning of seller_legal_id"
+  },
+  "reportFieldMeaningExemptionReason": "La mención de exención de IVA",
+  "@reportFieldMeaningExemptionReason": {
+    "description": "#966 report guide: meaning of exemption_reason"
+  },
+  "reportFieldMeaningVatExigibilityMention": "Cuándo es exigible el IVA, en palabras",
+  "@reportFieldMeaningVatExigibilityMention": {
+    "description": "#966 report guide: meaning of vat_exigibility_mention"
+  },
+  "reportFieldMeaningClientName": "El nombre completo del cliente",
+  "@reportFieldMeaningClientName": {
+    "description": "#966 report guide: meaning of client_name"
+  },
+  "reportFieldMeaningClientCompany": "La empresa del cliente",
+  "@reportFieldMeaningClientCompany": {
+    "description": "#966 report guide: meaning of client_company"
+  },
+  "reportFieldMeaningClientPhone": "El teléfono del cliente",
+  "@reportFieldMeaningClientPhone": {
+    "description": "#966 report guide: meaning of client_phone"
+  },
+  "reportFieldMeaningClientEmail": "El correo del cliente",
+  "@reportFieldMeaningClientEmail": {
+    "description": "#966 report guide: meaning of client_email"
+  },
+  "reportFieldMeaningClientAddress": "El bloque postal del cliente",
+  "@reportFieldMeaningClientAddress": {
+    "description": "#966 report guide: meaning of client_address"
+  },
+  "reportFieldMeaningClientVatId": "El número de IVA del cliente",
+  "@reportFieldMeaningClientVatId": {
+    "description": "#966 report guide: meaning of client_vat_id"
+  },
+  "reportFieldMeaningClientLegalId": "El identificador legal del cliente",
+  "@reportFieldMeaningClientLegalId": {
+    "description": "#966 report guide: meaning of client_legal_id"
+  },
+  "reportFieldMeaningClientMemberNumber": "El número de socio del cliente",
+  "@reportFieldMeaningClientMemberNumber": {
+    "description": "#966 report guide: meaning of client_member_number"
+  },
+  "reportFieldMeaningUsagePaid": "Lo que costó el consumo del mes",
+  "@reportFieldMeaningUsagePaid": {
+    "description": "#966 report guide: meaning of usage_paid"
+  },
+  "reportFieldMeaningUsageIncludedHalfDays": "Medias jornadas incluidas en la suscripción",
+  "@reportFieldMeaningUsageIncludedHalfDays": {
+    "description": "#966 report guide: meaning of usage_included_half_days"
+  },
+  "reportFieldMeaningUsageUsedHalfDays": "Medias jornadas usadas",
+  "@reportFieldMeaningUsageUsedHalfDays": {
+    "description": "#966 report guide: meaning of usage_used_half_days"
+  },
+  "reportFieldMeaningUsageRemainingHalfDays": "Medias jornadas restantes",
+  "@reportFieldMeaningUsageRemainingHalfDays": {
+    "description": "#966 report guide: meaning of usage_remaining_half_days"
+  },
+  "reportFieldMeaningUsageExtraHalfDays": "Medias jornadas más allá de la suscripción",
+  "@reportFieldMeaningUsageExtraHalfDays": {
+    "description": "#966 report guide: meaning of usage_extra_half_days"
+  },
+  "reportFieldMeaningUsageOverage": "El exceso facturado",
+  "@reportFieldMeaningUsageOverage": {
+    "description": "#966 report guide: meaning of usage_overage"
+  },
+  "reportFieldMeaningUsageSupplements": "Los suplementos de accesorios",
+  "@reportFieldMeaningUsageSupplements": {
+    "description": "#966 report guide: meaning of usage_supplements"
+  },
+  "reportFieldMeaningUsageRecords": "Cada registro de consumo — un bucle",
+  "@reportFieldMeaningUsageRecords": {
+    "description": "#966 report guide: meaning of usage_records"
+  },
+  "reportFieldMeaningVatPeriod": "El periodo de IVA declarado",
+  "@reportFieldMeaningVatPeriod": {
+    "description": "#966 report guide: meaning of vat_period"
+  },
+  "reportFieldMeaningVatPeriodNet": "El total neto del periodo",
+  "@reportFieldMeaningVatPeriodNet": {
+    "description": "#966 report guide: meaning of vat_period_net"
+  },
+  "reportFieldMeaningVatPeriodVat": "El IVA del periodo",
+  "@reportFieldMeaningVatPeriodVat": {
+    "description": "#966 report guide: meaning of vat_period_vat"
+  },
+  "reportFieldMeaningVatPeriodGross": "El total bruto del periodo",
+  "@reportFieldMeaningVatPeriodGross": {
+    "description": "#966 report guide: meaning of vat_period_gross"
+  },
+  "reportFieldMeaningVatBasisNote": "Si el periodo cuenta lo cobrado o lo emitido",
+  "@reportFieldMeaningVatBasisNote": {
+    "description": "#966 report guide: meaning of vat_basis_note"
+  },
+  "reportFieldMeaningSiteName": "El nombre de la sede del documento",
+  "@reportFieldMeaningSiteName": {
+    "description": "#966 report guide: meaning of site_name"
+  },
+  "reportFieldMeaningSiteAddress": "La dirección de la sede del documento",
+  "@reportFieldMeaningSiteAddress": {
+    "description": "#966 report guide: meaning of site_address"
+  },
+  "reportFieldMeaningUsageSites": "Las otras sedes del mes",
+  "@reportFieldMeaningUsageSites": {
+    "description": "#966 report guide: meaning of usage_sites"
+  },
+  "reportFieldMeaningPendingPaymentsTotal": "Pagos aún por confirmar",
+  "@reportFieldMeaningPendingPaymentsTotal": {
+    "description": "#966 report guide: meaning of pending_payments_total"
+  },
+  "reportFieldMeaningPendingExpensesTotal": "Gastos aún por validar",
+  "@reportFieldMeaningPendingExpensesTotal": {
+    "description": "#966 report guide: meaning of pending_expenses_total"
+  },
+  "reportFieldMeaningStatusFrom": "El primer día del periodo de situación",
+  "@reportFieldMeaningStatusFrom": {
+    "description": "#966 report guide: meaning of status_from"
+  },
+  "reportFieldMeaningStatusTo": "El último día del periodo de situación",
+  "@reportFieldMeaningStatusTo": {
+    "description": "#966 report guide: meaning of status_to"
+  },
+  "reportFieldMeaningStatusInvoiced": "Lo que el espacio facturó",
+  "@reportFieldMeaningStatusInvoiced": {
+    "description": "#966 report guide: meaning of status_invoiced"
+  },
+  "reportFieldMeaningStatusCreditNotes": "Las notas de crédito emitidas",
+  "@reportFieldMeaningStatusCreditNotes": {
+    "description": "#966 report guide: meaning of status_credit_notes"
+  },
+  "reportFieldMeaningStatusPayments": "Lo que se cobró",
+  "@reportFieldMeaningStatusPayments": {
+    "description": "#966 report guide: meaning of status_payments"
+  },
+  "reportFieldMeaningStatusReimbursed": "Lo que se reembolsó",
+  "@reportFieldMeaningStatusReimbursed": {
+    "description": "#966 report guide: meaning of status_reimbursed"
+  },
+  "reportFieldMeaningStatusRepartitioned": "Lo que se repartió",
+  "@reportFieldMeaningStatusRepartitioned": {
+    "description": "#966 report guide: meaning of status_repartitioned"
+  },
+  "reportFieldMeaningStatusCredits": "Los créditos concedidos",
+  "@reportFieldMeaningStatusCredits": {
+    "description": "#966 report guide: meaning of status_credits"
+  },
+  "reportFieldMeaningStatusNet": "Ingresos menos gastos",
+  "@reportFieldMeaningStatusNet": {
+    "description": "#966 report guide: meaning of status_net"
+  },
+  "reportFieldMeaningStatusMembers": "Las líneas por miembro — un bucle",
+  "@reportFieldMeaningStatusMembers": {
+    "description": "#966 report guide: meaning of status_members"
+  },
+  "reportFieldMeaningVatPositions": "Cada factura del periodo de IVA — un bucle",
+  "@reportFieldMeaningVatPositions": {
+    "description": "#966 report guide: meaning of vat_positions"
+  },
+  "reportFieldMeaningVatRateTotals": "Los totales del periodo por tipo — un bucle",
+  "@reportFieldMeaningVatRateTotals": {
+    "description": "#966 report guide: meaning of vat_rate_totals"
+  },
+  "reportFieldMeaningPaymentTerms": "La mención de las condiciones de pago",
+  "@reportFieldMeaningPaymentTerms": {
+    "description": "#966 report guide: meaning of payment_terms"
+  },
+  "reportFieldMeaningPaymentTermsSource": "De dónde vienen las condiciones (miembro o espacio)",
+  "@reportFieldMeaningPaymentTermsSource": {
+    "description": "#966 report guide: meaning of payment_terms_source"
+  },
+  "reportFieldMeaningLatePenalty": "La mención de penalización por demora",
+  "@reportFieldMeaningLatePenalty": {
+    "description": "#966 report guide: meaning of late_penalty"
+  },
+  "reportFieldMeaningRecoveryIndemnity": "La mención de la indemnización de cobro",
+  "@reportFieldMeaningRecoveryIndemnity": {
+    "description": "#966 report guide: meaning of recovery_indemnity"
+  },
+  "reportFieldMeaningEscompte": "La mención de descuento por pronto pago",
+  "@reportFieldMeaningEscompte": {
+    "description": "#966 report guide: meaning of escompte"
+  },
+  "reportFieldMeaningInsurance": "La mención del seguro profesional",
+  "@reportFieldMeaningInsurance": {
+    "description": "#966 report guide: meaning of insurance"
+  },
+  "reportFieldMeaningSpecialMentions": "Las menciones especiales del espacio",
+  "@reportFieldMeaningSpecialMentions": {
+    "description": "#966 report guide: meaning of special_mentions"
+  },
   "reportLayoutTitle": "Maqueta posicionada (XML)",
   "@reportLayoutTitle": {
     "description": "Designer card title for the positioned layout of one report kind (#875)"

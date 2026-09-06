@@ -7312,6 +7312,351 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get reportGuideTitle => 'Placeholders and markup';
+
+  @override
+  String get reportGuideIntro =>
+      'Three bands make the PDF: header, body, footer. Write text, put a field where a value goes, and use one markup sign at the start of a line for its style. The e-invoice XML is never touched.';
+
+  @override
+  String get reportGuideInsertField => 'Insert a field…';
+
+  @override
+  String get reportGuideMarkupTitle => 'Line markup';
+
+  @override
+  String get reportGuideSnippetsTitle => 'Ready-made pieces';
+
+  @override
+  String get reportGuideSnippetIf => 'A line only when the value exists';
+
+  @override
+  String get reportGuideSnippetLoop => 'One row per invoice line';
+
+  @override
+  String get reportGuideSnippetTitle =>
+      'The title: invoice, credit note or proforma';
+
+  @override
+  String reportGuideInsertedInto(String band) {
+    return 'Inserted into $band';
+  }
+
+  @override
+  String get reportMarkupHeading => 'A large title';
+
+  @override
+  String get reportMarkupSection => 'A section heading';
+
+  @override
+  String get reportMarkupSmall => 'Small muted text';
+
+  @override
+  String get reportMarkupRule => 'A horizontal rule';
+
+  @override
+  String get reportMarkupTable => 'A table row, one cell per |';
+
+  @override
+  String get reportMarkupBoldRow => 'A bold table row';
+
+  @override
+  String get reportMarkupColumns => 'Side-by-side columns, split at |||';
+
+  @override
+  String get reportMarkupImage =>
+      'A library image: size s/m/l, align left/center/right';
+
+  @override
+  String get reportFieldGroupSeller => 'Seller';
+
+  @override
+  String get reportFieldGroupBank => 'Bank details';
+
+  @override
+  String get reportFieldGroupVat => 'VAT report';
+
+  @override
+  String get reportFieldGroupUsage => 'Usage report';
+
+  @override
+  String get reportFieldGroupSites => 'Sites';
+
+  @override
+  String get reportFieldGroupStatus => 'Workspace status';
+
+  @override
+  String get reportFieldMeaningNumber => 'The document\'s number';
+
+  @override
+  String get reportFieldMeaningMember => 'The member\'s display name';
+
+  @override
+  String get reportFieldMeaningWorkspace => 'The workspace\'s name';
+
+  @override
+  String get reportFieldMeaningWorkspaceAddress =>
+      'The workspace\'s address, or the document site\'s';
+
+  @override
+  String get reportFieldMeaningPeriod => 'The month the document covers';
+
+  @override
+  String get reportFieldMeaningIssued => 'The issue date';
+
+  @override
+  String get reportFieldMeaningDueDate => 'The settlement date';
+
+  @override
+  String get reportFieldMeaningPurchaseOrder =>
+      'The buyer\'s purchase-order reference';
+
+  @override
+  String get reportFieldMeaningBuyerReference =>
+      'The buyer\'s own reference (public sector)';
+
+  @override
+  String get reportFieldMeaningIssuedBy => 'Who issued the document';
+
+  @override
+  String get reportFieldMeaningReplaces =>
+      'The number of the invoice this one replaces';
+
+  @override
+  String get reportFieldMeaningTotal => 'The amount due, everything included';
+
+  @override
+  String get reportFieldMeaningCharges => 'The charges before payments';
+
+  @override
+  String get reportFieldMeaningPayments => 'Payments already received';
+
+  @override
+  String get reportFieldMeaningVoided => 'True when the invoice was cancelled';
+
+  @override
+  String get reportFieldMeaningProforma => 'True on a proforma';
+
+  @override
+  String get reportFieldMeaningCopy => 'True on a duplicate';
+
+  @override
+  String get reportFieldMeaningHasVat => 'True when VAT applies';
+
+  @override
+  String get reportFieldMeaningLines => 'The invoice lines — a loop';
+
+  @override
+  String get reportFieldMeaningVat => 'VAT by rate — a loop';
+
+  @override
+  String get reportFieldMeaningNetTotal => 'The total before VAT';
+
+  @override
+  String get reportFieldMeaningVatTotal => 'The total VAT';
+
+  @override
+  String get reportFieldMeaningCreditNote => 'True on a credit note';
+
+  @override
+  String get reportFieldMeaningRefundTotal => 'The amount refunded';
+
+  @override
+  String get reportFieldMeaningIban => 'The account\'s IBAN';
+
+  @override
+  String get reportFieldMeaningBic => 'The bank\'s BIC';
+
+  @override
+  String get reportFieldMeaningBankName => 'The bank\'s name';
+
+  @override
+  String get reportFieldMeaningBankAccount => 'The account number';
+
+  @override
+  String get reportFieldMeaningBankCode => 'The bank code';
+
+  @override
+  String get reportFieldMeaningAccountHolder => 'The account holder';
+
+  @override
+  String get reportFieldMeaningPaymentReference =>
+      'The reference to quote when paying';
+
+  @override
+  String get reportFieldMeaningSellerLegalForm => 'The seller\'s legal form';
+
+  @override
+  String get reportFieldMeaningSellerRegistration =>
+      'The seller\'s registration (SIREN, RNA…)';
+
+  @override
+  String get reportFieldMeaningSellerVatId => 'The seller\'s VAT number';
+
+  @override
+  String get reportFieldMeaningSellerLegalId =>
+      'The seller\'s legal identifier';
+
+  @override
+  String get reportFieldMeaningExemptionReason => 'The VAT exemption mention';
+
+  @override
+  String get reportFieldMeaningVatExigibilityMention =>
+      'When the VAT falls due, in words';
+
+  @override
+  String get reportFieldMeaningClientName => 'The client\'s full name';
+
+  @override
+  String get reportFieldMeaningClientCompany => 'The client\'s company';
+
+  @override
+  String get reportFieldMeaningClientPhone => 'The client\'s phone';
+
+  @override
+  String get reportFieldMeaningClientEmail => 'The client\'s e-mail';
+
+  @override
+  String get reportFieldMeaningClientAddress => 'The client\'s postal block';
+
+  @override
+  String get reportFieldMeaningClientVatId => 'The client\'s VAT number';
+
+  @override
+  String get reportFieldMeaningClientLegalId =>
+      'The client\'s legal identifier (SIREN…)';
+
+  @override
+  String get reportFieldMeaningClientMemberNumber =>
+      'The client\'s member number';
+
+  @override
+  String get reportFieldMeaningUsagePaid => 'What the month\'s usage cost';
+
+  @override
+  String get reportFieldMeaningUsageIncludedHalfDays =>
+      'Half-days included in the subscription';
+
+  @override
+  String get reportFieldMeaningUsageUsedHalfDays => 'Half-days used';
+
+  @override
+  String get reportFieldMeaningUsageRemainingHalfDays => 'Half-days remaining';
+
+  @override
+  String get reportFieldMeaningUsageExtraHalfDays =>
+      'Half-days beyond the subscription';
+
+  @override
+  String get reportFieldMeaningUsageOverage => 'The overage charged';
+
+  @override
+  String get reportFieldMeaningUsageSupplements => 'The accessory supplements';
+
+  @override
+  String get reportFieldMeaningUsageRecords =>
+      'Every consumption record — a loop';
+
+  @override
+  String get reportFieldMeaningVatPeriod => 'The VAT period reported';
+
+  @override
+  String get reportFieldMeaningVatPeriodNet => 'The period\'s net total';
+
+  @override
+  String get reportFieldMeaningVatPeriodVat => 'The period\'s VAT';
+
+  @override
+  String get reportFieldMeaningVatPeriodGross => 'The period\'s gross total';
+
+  @override
+  String get reportFieldMeaningVatBasisNote =>
+      'Whether the period counts what was paid or what was issued';
+
+  @override
+  String get reportFieldMeaningSiteName => 'The document site\'s name';
+
+  @override
+  String get reportFieldMeaningSiteAddress => 'The document site\'s address';
+
+  @override
+  String get reportFieldMeaningUsageSites =>
+      'The other sites the month stood at';
+
+  @override
+  String get reportFieldMeaningPendingPaymentsTotal =>
+      'Payments still to confirm';
+
+  @override
+  String get reportFieldMeaningPendingExpensesTotal =>
+      'Expenses still to validate';
+
+  @override
+  String get reportFieldMeaningStatusFrom => 'The status period\'s first day';
+
+  @override
+  String get reportFieldMeaningStatusTo => 'The status period\'s last day';
+
+  @override
+  String get reportFieldMeaningStatusInvoiced => 'What the workspace invoiced';
+
+  @override
+  String get reportFieldMeaningStatusCreditNotes => 'The credit notes issued';
+
+  @override
+  String get reportFieldMeaningStatusPayments => 'What was collected';
+
+  @override
+  String get reportFieldMeaningStatusReimbursed => 'What was reimbursed';
+
+  @override
+  String get reportFieldMeaningStatusRepartitioned => 'What was repartitioned';
+
+  @override
+  String get reportFieldMeaningStatusCredits => 'The credits granted';
+
+  @override
+  String get reportFieldMeaningStatusNet => 'Revenues minus expenses';
+
+  @override
+  String get reportFieldMeaningStatusMembers =>
+      'The member-by-member lines — a loop';
+
+  @override
+  String get reportFieldMeaningVatPositions =>
+      'Every invoice of the VAT period — a loop';
+
+  @override
+  String get reportFieldMeaningVatRateTotals =>
+      'The VAT period totals by rate — a loop';
+
+  @override
+  String get reportFieldMeaningPaymentTerms => 'The payment terms mention';
+
+  @override
+  String get reportFieldMeaningPaymentTermsSource =>
+      'Where the payment terms come from (member or workspace)';
+
+  @override
+  String get reportFieldMeaningLatePenalty =>
+      'The late-payment penalty mention';
+
+  @override
+  String get reportFieldMeaningRecoveryIndemnity =>
+      'The recovery indemnity mention';
+
+  @override
+  String get reportFieldMeaningEscompte => 'The early-payment discount mention';
+
+  @override
+  String get reportFieldMeaningInsurance =>
+      'The professional insurance mention';
+
+  @override
+  String get reportFieldMeaningSpecialMentions =>
+      'The workspace\'s special mentions';
+
+  @override
   String get reportLayoutTitle => 'Positioned layout (XML)';
 
   @override

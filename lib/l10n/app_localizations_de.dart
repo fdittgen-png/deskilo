@@ -7371,6 +7371,356 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get reportGuideTitle => 'Platzhalter und Markup';
+
+  @override
+  String get reportGuideIntro =>
+      'Drei Bänder ergeben das PDF: Kopf, Rumpf, Fuß. Schreiben Sie Text, setzen Sie ein Feld, wo ein Wert hingehört, und ein Markup-Zeichen am Zeilenanfang für den Stil. Das E-Rechnungs-XML bleibt unberührt.';
+
+  @override
+  String get reportGuideInsertField => 'Feld einfügen…';
+
+  @override
+  String get reportGuideMarkupTitle => 'Zeilen-Markup';
+
+  @override
+  String get reportGuideSnippetsTitle => 'Fertige Bausteine';
+
+  @override
+  String get reportGuideSnippetIf => 'Eine Zeile nur, wenn der Wert existiert';
+
+  @override
+  String get reportGuideSnippetLoop => 'Eine Zeile je Rechnungsposition';
+
+  @override
+  String get reportGuideSnippetTitle =>
+      'Der Titel: Rechnung, Gutschrift oder Proforma';
+
+  @override
+  String reportGuideInsertedInto(String band) {
+    return 'Eingefügt in $band';
+  }
+
+  @override
+  String get reportMarkupHeading => 'Ein großer Titel';
+
+  @override
+  String get reportMarkupSection => 'Eine Abschnittsüberschrift';
+
+  @override
+  String get reportMarkupSmall => 'Kleiner, gedämpfter Text';
+
+  @override
+  String get reportMarkupRule => 'Eine Trennlinie';
+
+  @override
+  String get reportMarkupTable => 'Eine Tabellenzeile, eine Zelle je |';
+
+  @override
+  String get reportMarkupBoldRow => 'Eine fette Tabellenzeile';
+
+  @override
+  String get reportMarkupColumns => 'Spalten nebeneinander, getrennt durch |||';
+
+  @override
+  String get reportMarkupImage =>
+      'Ein Bild aus der Bibliothek: Größe s/m/l, Ausrichtung left/center/right';
+
+  @override
+  String get reportFieldGroupSeller => 'Verkäufer';
+
+  @override
+  String get reportFieldGroupBank => 'Bankverbindung';
+
+  @override
+  String get reportFieldGroupVat => 'MwSt.-Bericht';
+
+  @override
+  String get reportFieldGroupUsage => 'Verbrauchsbericht';
+
+  @override
+  String get reportFieldGroupSites => 'Standorte';
+
+  @override
+  String get reportFieldGroupStatus => 'Raumstatus';
+
+  @override
+  String get reportFieldMeaningNumber => 'Die Nummer des Dokuments';
+
+  @override
+  String get reportFieldMeaningMember => 'Der Anzeigename des Mitglieds';
+
+  @override
+  String get reportFieldMeaningWorkspace => 'Der Name des Raums';
+
+  @override
+  String get reportFieldMeaningWorkspaceAddress =>
+      'Die Adresse des Raums oder des Dokument-Standorts';
+
+  @override
+  String get reportFieldMeaningPeriod => 'Der Monat, den das Dokument abdeckt';
+
+  @override
+  String get reportFieldMeaningIssued => 'Das Ausstellungsdatum';
+
+  @override
+  String get reportFieldMeaningDueDate => 'Das Fälligkeitsdatum';
+
+  @override
+  String get reportFieldMeaningPurchaseOrder => 'Die Bestellnummer des Käufers';
+
+  @override
+  String get reportFieldMeaningBuyerReference =>
+      'Die eigene Referenz des Käufers (öffentlicher Sektor)';
+
+  @override
+  String get reportFieldMeaningIssuedBy => 'Wer das Dokument ausgestellt hat';
+
+  @override
+  String get reportFieldMeaningReplaces => 'Die Nummer der ersetzten Rechnung';
+
+  @override
+  String get reportFieldMeaningTotal => 'Der fällige Betrag, alles inklusive';
+
+  @override
+  String get reportFieldMeaningCharges => 'Die Kosten vor Zahlungen';
+
+  @override
+  String get reportFieldMeaningPayments => 'Bereits erhaltene Zahlungen';
+
+  @override
+  String get reportFieldMeaningVoided =>
+      'Wahr, wenn die Rechnung storniert ist';
+
+  @override
+  String get reportFieldMeaningProforma => 'Wahr auf einer Proforma';
+
+  @override
+  String get reportFieldMeaningCopy => 'Wahr auf einem Duplikat';
+
+  @override
+  String get reportFieldMeaningHasVat => 'Wahr, wenn MwSt. anfällt';
+
+  @override
+  String get reportFieldMeaningLines => 'Die Rechnungszeilen — eine Schleife';
+
+  @override
+  String get reportFieldMeaningVat => 'MwSt. je Satz — eine Schleife';
+
+  @override
+  String get reportFieldMeaningNetTotal => 'Die Summe ohne MwSt.';
+
+  @override
+  String get reportFieldMeaningVatTotal => 'Die gesamte MwSt.';
+
+  @override
+  String get reportFieldMeaningCreditNote => 'Wahr auf einer Gutschrift';
+
+  @override
+  String get reportFieldMeaningRefundTotal => 'Der erstattete Betrag';
+
+  @override
+  String get reportFieldMeaningIban => 'Die IBAN des Kontos';
+
+  @override
+  String get reportFieldMeaningBic => 'Die BIC der Bank';
+
+  @override
+  String get reportFieldMeaningBankName => 'Der Name der Bank';
+
+  @override
+  String get reportFieldMeaningBankAccount => 'Die Kontonummer';
+
+  @override
+  String get reportFieldMeaningBankCode => 'Die Bankleitzahl';
+
+  @override
+  String get reportFieldMeaningAccountHolder => 'Der Kontoinhaber';
+
+  @override
+  String get reportFieldMeaningPaymentReference => 'Der Verwendungszweck';
+
+  @override
+  String get reportFieldMeaningSellerLegalForm =>
+      'Die Rechtsform des Verkäufers';
+
+  @override
+  String get reportFieldMeaningSellerRegistration =>
+      'Die Registrierung des Verkäufers';
+
+  @override
+  String get reportFieldMeaningSellerVatId => 'Die USt-IdNr. des Verkäufers';
+
+  @override
+  String get reportFieldMeaningSellerLegalId =>
+      'Die rechtliche Kennung des Verkäufers';
+
+  @override
+  String get reportFieldMeaningExemptionReason =>
+      'Der Hinweis auf die MwSt.-Befreiung';
+
+  @override
+  String get reportFieldMeaningVatExigibilityMention =>
+      'Wann die MwSt. fällig wird, in Worten';
+
+  @override
+  String get reportFieldMeaningClientName => 'Der vollständige Name des Kunden';
+
+  @override
+  String get reportFieldMeaningClientCompany => 'Die Firma des Kunden';
+
+  @override
+  String get reportFieldMeaningClientPhone => 'Das Telefon des Kunden';
+
+  @override
+  String get reportFieldMeaningClientEmail => 'Die E-Mail des Kunden';
+
+  @override
+  String get reportFieldMeaningClientAddress => 'Der Adressblock des Kunden';
+
+  @override
+  String get reportFieldMeaningClientVatId => 'Die USt-IdNr. des Kunden';
+
+  @override
+  String get reportFieldMeaningClientLegalId =>
+      'Die rechtliche Kennung des Kunden';
+
+  @override
+  String get reportFieldMeaningClientMemberNumber =>
+      'Die Mitgliedsnummer des Kunden';
+
+  @override
+  String get reportFieldMeaningUsagePaid =>
+      'Was der Verbrauch des Monats kostete';
+
+  @override
+  String get reportFieldMeaningUsageIncludedHalfDays =>
+      'Im Abo enthaltene halbe Tage';
+
+  @override
+  String get reportFieldMeaningUsageUsedHalfDays => 'Verbrauchte halbe Tage';
+
+  @override
+  String get reportFieldMeaningUsageRemainingHalfDays =>
+      'Verbleibende halbe Tage';
+
+  @override
+  String get reportFieldMeaningUsageExtraHalfDays =>
+      'Halbe Tage über das Abo hinaus';
+
+  @override
+  String get reportFieldMeaningUsageOverage => 'Der berechnete Mehrverbrauch';
+
+  @override
+  String get reportFieldMeaningUsageSupplements => 'Die Zubehör-Zuschläge';
+
+  @override
+  String get reportFieldMeaningUsageRecords =>
+      'Jeder Verbrauchseintrag — eine Schleife';
+
+  @override
+  String get reportFieldMeaningVatPeriod => 'Der gemeldete MwSt.-Zeitraum';
+
+  @override
+  String get reportFieldMeaningVatPeriodNet => 'Die Nettosumme des Zeitraums';
+
+  @override
+  String get reportFieldMeaningVatPeriodVat => 'Die MwSt. des Zeitraums';
+
+  @override
+  String get reportFieldMeaningVatPeriodGross =>
+      'Die Bruttosumme des Zeitraums';
+
+  @override
+  String get reportFieldMeaningVatBasisNote =>
+      'Ob der Zeitraum das Bezahlte oder das Ausgestellte zählt';
+
+  @override
+  String get reportFieldMeaningSiteName => 'Der Name des Dokument-Standorts';
+
+  @override
+  String get reportFieldMeaningSiteAddress =>
+      'Die Adresse des Dokument-Standorts';
+
+  @override
+  String get reportFieldMeaningUsageSites => 'Die anderen Standorte des Monats';
+
+  @override
+  String get reportFieldMeaningPendingPaymentsTotal =>
+      'Noch zu bestätigende Zahlungen';
+
+  @override
+  String get reportFieldMeaningPendingExpensesTotal =>
+      'Noch freizugebende Ausgaben';
+
+  @override
+  String get reportFieldMeaningStatusFrom =>
+      'Der erste Tag des Statuszeitraums';
+
+  @override
+  String get reportFieldMeaningStatusTo => 'Der letzte Tag des Statuszeitraums';
+
+  @override
+  String get reportFieldMeaningStatusInvoiced =>
+      'Was der Raum in Rechnung stellte';
+
+  @override
+  String get reportFieldMeaningStatusCreditNotes =>
+      'Die ausgestellten Gutschriften';
+
+  @override
+  String get reportFieldMeaningStatusPayments => 'Was eingenommen wurde';
+
+  @override
+  String get reportFieldMeaningStatusReimbursed => 'Was erstattet wurde';
+
+  @override
+  String get reportFieldMeaningStatusRepartitioned => 'Was umgelegt wurde';
+
+  @override
+  String get reportFieldMeaningStatusCredits => 'Die gewährten Gutschriften';
+
+  @override
+  String get reportFieldMeaningStatusNet => 'Einnahmen minus Ausgaben';
+
+  @override
+  String get reportFieldMeaningStatusMembers =>
+      'Die Zeilen je Mitglied — eine Schleife';
+
+  @override
+  String get reportFieldMeaningVatPositions =>
+      'Jede Rechnung des MwSt.-Zeitraums — eine Schleife';
+
+  @override
+  String get reportFieldMeaningVatRateTotals =>
+      'Die Zeitraumsummen je Satz — eine Schleife';
+
+  @override
+  String get reportFieldMeaningPaymentTerms =>
+      'Der Hinweis zu den Zahlungsbedingungen';
+
+  @override
+  String get reportFieldMeaningPaymentTermsSource =>
+      'Woher die Zahlungsbedingungen stammen (Mitglied oder Raum)';
+
+  @override
+  String get reportFieldMeaningLatePenalty => 'Der Hinweis zu Verzugszinsen';
+
+  @override
+  String get reportFieldMeaningRecoveryIndemnity =>
+      'Der Hinweis zur Inkassopauschale';
+
+  @override
+  String get reportFieldMeaningEscompte => 'Der Hinweis zum Skonto';
+
+  @override
+  String get reportFieldMeaningInsurance => 'Der Hinweis zur Berufshaftpflicht';
+
+  @override
+  String get reportFieldMeaningSpecialMentions =>
+      'Die besonderen Hinweise des Raums';
+
+  @override
   String get reportLayoutTitle => 'Positioniertes Layout (XML)';
 
   @override

@@ -36,6 +36,7 @@ import '../report_defaults.dart';
 import '../report_edit_history.dart';
 import '../screens/report_editor_screen.dart';
 import 'report_image_picker.dart';
+import 'report_markup_guide.dart';
 import 'report_page_designer.dart';
 import 'report_preview.dart';
 
@@ -748,6 +749,15 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
     setState(_bumpEpoch);
   }
 
+  /// #966 — the band last edited, where the guide inserts; the header
+  /// until one is touched.
+  TextEditingController? _focusedBand;
+
+  void _insertMarkup(String markup) {
+    final controller = _focusedBand ?? _header;
+    controller.value = insertMarkupAt(controller.value, markup);
+  }
+
   Widget _bandField(
     TextEditingController controller,
     String label, {
@@ -759,6 +769,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
         child: TextField(
           key: ValueKey(key),
           controller: controller,
+          onTap: () => _focusedBand = controller,
           minLines: minLines,
           maxLines: 14,
           style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
@@ -984,16 +995,6 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    // The cheat-sheet is SYNTAX, not copy (HARD RULE #1): field names,
-    // Liquid keywords and the line markup are language, identical in
-    // every locale.
-    final fieldsLine =
-        InvoicePdfTemplate.placeholders.map((p) => '{{ $p }}').join('  ');
-    const syntaxLines =
-        '{% if voided %} … {% else %} … {% endif %}   '
-        '{% for line in lines %} {{ line.label }} | {{ line.amount }} {% endfor %}\n'
-        '# title   ## section   > small   ---   a | b   = bold | row\n'
-        ':::  left column  |||  right column  :::   ![image|m|center]';
     final wide = widget.asPage && MediaQuery.sizeOf(context).width >= 1000;
     final content = Column(
       mainAxisSize: MainAxisSize.min,
@@ -1010,22 +1011,14 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
             ],
           ),
         const SizedBox(height: 4),
-        Text(
-          l10n?.invoiceTemplateHint ??
-              'Three report bands rendered on the PDF — the e-invoice '
-                  'XML is never touched. Liquid conditions and loops, '
-                  'then line markup:',
-          style: theme.textTheme.bodySmall,
-        ),
-        // #822 — the syntax sheet stays for the markup mode; the
-        // designer carries the fields in its own picker.
+        // #966 — the markup mode's guide: grouped fields with their
+        // meaning, the line markup one sign per row, three ready-made
+        // pieces, everything inserted at the caret. Collapsed until
+        // asked for; the designer carries the fields in its own picker.
         if (!_visual)
-          Text(
-            '$fieldsLine\n$syntaxLines',
-            style: theme.textTheme.bodySmall?.copyWith(
-              fontFamily: 'monospace',
-              color: theme.colorScheme.primary,
-            ),
+          ReportMarkupGuide(
+            textKeys: _currentTexts.keys.toList(),
+            onInsert: _insertMarkup,
           ),
         const SizedBox(height: AppSpacing.sm),
         // #496 — one template per LANGUAGE: the default, plus an

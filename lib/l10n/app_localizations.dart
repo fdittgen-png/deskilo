@@ -12857,6 +12857,636 @@ abstract class AppLocalizations {
   /// **'{n} at once'**
   String memberSimultaneousLimitChip(int n);
 
+  /// #966 report guide: reportGuideTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Placeholders and markup'**
+  String get reportGuideTitle;
+
+  /// #966 report guide: reportGuideIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Three bands make the PDF: header, body, footer. Write text, put a field where a value goes, and use one markup sign at the start of a line for its style. The e-invoice XML is never touched.'**
+  String get reportGuideIntro;
+
+  /// #966 report guide: reportGuideInsertField
+  ///
+  /// In en, this message translates to:
+  /// **'Insert a field…'**
+  String get reportGuideInsertField;
+
+  /// #966 report guide: reportGuideMarkupTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Line markup'**
+  String get reportGuideMarkupTitle;
+
+  /// #966 report guide: reportGuideSnippetsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Ready-made pieces'**
+  String get reportGuideSnippetsTitle;
+
+  /// #966 report guide: reportGuideSnippetIf
+  ///
+  /// In en, this message translates to:
+  /// **'A line only when the value exists'**
+  String get reportGuideSnippetIf;
+
+  /// #966 report guide: reportGuideSnippetLoop
+  ///
+  /// In en, this message translates to:
+  /// **'One row per invoice line'**
+  String get reportGuideSnippetLoop;
+
+  /// #966 report guide: reportGuideSnippetTitle
+  ///
+  /// In en, this message translates to:
+  /// **'The title: invoice, credit note or proforma'**
+  String get reportGuideSnippetTitle;
+
+  /// #966 report guide: reportGuideInsertedInto
+  ///
+  /// In en, this message translates to:
+  /// **'Inserted into {band}'**
+  String reportGuideInsertedInto(String band);
+
+  /// #966 report guide: reportMarkupHeading
+  ///
+  /// In en, this message translates to:
+  /// **'A large title'**
+  String get reportMarkupHeading;
+
+  /// #966 report guide: reportMarkupSection
+  ///
+  /// In en, this message translates to:
+  /// **'A section heading'**
+  String get reportMarkupSection;
+
+  /// #966 report guide: reportMarkupSmall
+  ///
+  /// In en, this message translates to:
+  /// **'Small muted text'**
+  String get reportMarkupSmall;
+
+  /// #966 report guide: reportMarkupRule
+  ///
+  /// In en, this message translates to:
+  /// **'A horizontal rule'**
+  String get reportMarkupRule;
+
+  /// #966 report guide: reportMarkupTable
+  ///
+  /// In en, this message translates to:
+  /// **'A table row, one cell per |'**
+  String get reportMarkupTable;
+
+  /// #966 report guide: reportMarkupBoldRow
+  ///
+  /// In en, this message translates to:
+  /// **'A bold table row'**
+  String get reportMarkupBoldRow;
+
+  /// #966 report guide: reportMarkupColumns
+  ///
+  /// In en, this message translates to:
+  /// **'Side-by-side columns, split at |||'**
+  String get reportMarkupColumns;
+
+  /// #966 report guide: reportMarkupImage
+  ///
+  /// In en, this message translates to:
+  /// **'A library image: size s/m/l, align left/center/right'**
+  String get reportMarkupImage;
+
+  /// #966 report guide: reportFieldGroupSeller
+  ///
+  /// In en, this message translates to:
+  /// **'Seller'**
+  String get reportFieldGroupSeller;
+
+  /// #966 report guide: reportFieldGroupBank
+  ///
+  /// In en, this message translates to:
+  /// **'Bank details'**
+  String get reportFieldGroupBank;
+
+  /// #966 report guide: reportFieldGroupVat
+  ///
+  /// In en, this message translates to:
+  /// **'VAT report'**
+  String get reportFieldGroupVat;
+
+  /// #966 report guide: reportFieldGroupUsage
+  ///
+  /// In en, this message translates to:
+  /// **'Usage report'**
+  String get reportFieldGroupUsage;
+
+  /// #966 report guide: reportFieldGroupSites
+  ///
+  /// In en, this message translates to:
+  /// **'Sites'**
+  String get reportFieldGroupSites;
+
+  /// #966 report guide: reportFieldGroupStatus
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace status'**
+  String get reportFieldGroupStatus;
+
+  /// #966 report guide: meaning of number
+  ///
+  /// In en, this message translates to:
+  /// **'The document\'s number'**
+  String get reportFieldMeaningNumber;
+
+  /// #966 report guide: meaning of member
+  ///
+  /// In en, this message translates to:
+  /// **'The member\'s display name'**
+  String get reportFieldMeaningMember;
+
+  /// #966 report guide: meaning of workspace
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace\'s name'**
+  String get reportFieldMeaningWorkspace;
+
+  /// #966 report guide: meaning of workspace_address
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace\'s address, or the document site\'s'**
+  String get reportFieldMeaningWorkspaceAddress;
+
+  /// #966 report guide: meaning of period
+  ///
+  /// In en, this message translates to:
+  /// **'The month the document covers'**
+  String get reportFieldMeaningPeriod;
+
+  /// #966 report guide: meaning of issued
+  ///
+  /// In en, this message translates to:
+  /// **'The issue date'**
+  String get reportFieldMeaningIssued;
+
+  /// #966 report guide: meaning of due_date
+  ///
+  /// In en, this message translates to:
+  /// **'The settlement date'**
+  String get reportFieldMeaningDueDate;
+
+  /// #966 report guide: meaning of purchase_order
+  ///
+  /// In en, this message translates to:
+  /// **'The buyer\'s purchase-order reference'**
+  String get reportFieldMeaningPurchaseOrder;
+
+  /// #966 report guide: meaning of buyer_reference
+  ///
+  /// In en, this message translates to:
+  /// **'The buyer\'s own reference (public sector)'**
+  String get reportFieldMeaningBuyerReference;
+
+  /// #966 report guide: meaning of issued_by
+  ///
+  /// In en, this message translates to:
+  /// **'Who issued the document'**
+  String get reportFieldMeaningIssuedBy;
+
+  /// #966 report guide: meaning of replaces
+  ///
+  /// In en, this message translates to:
+  /// **'The number of the invoice this one replaces'**
+  String get reportFieldMeaningReplaces;
+
+  /// #966 report guide: meaning of total
+  ///
+  /// In en, this message translates to:
+  /// **'The amount due, everything included'**
+  String get reportFieldMeaningTotal;
+
+  /// #966 report guide: meaning of charges
+  ///
+  /// In en, this message translates to:
+  /// **'The charges before payments'**
+  String get reportFieldMeaningCharges;
+
+  /// #966 report guide: meaning of payments
+  ///
+  /// In en, this message translates to:
+  /// **'Payments already received'**
+  String get reportFieldMeaningPayments;
+
+  /// #966 report guide: meaning of voided
+  ///
+  /// In en, this message translates to:
+  /// **'True when the invoice was cancelled'**
+  String get reportFieldMeaningVoided;
+
+  /// #966 report guide: meaning of proforma
+  ///
+  /// In en, this message translates to:
+  /// **'True on a proforma'**
+  String get reportFieldMeaningProforma;
+
+  /// #966 report guide: meaning of copy
+  ///
+  /// In en, this message translates to:
+  /// **'True on a duplicate'**
+  String get reportFieldMeaningCopy;
+
+  /// #966 report guide: meaning of has_vat
+  ///
+  /// In en, this message translates to:
+  /// **'True when VAT applies'**
+  String get reportFieldMeaningHasVat;
+
+  /// #966 report guide: meaning of lines
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice lines — a loop'**
+  String get reportFieldMeaningLines;
+
+  /// #966 report guide: meaning of vat
+  ///
+  /// In en, this message translates to:
+  /// **'VAT by rate — a loop'**
+  String get reportFieldMeaningVat;
+
+  /// #966 report guide: meaning of net_total
+  ///
+  /// In en, this message translates to:
+  /// **'The total before VAT'**
+  String get reportFieldMeaningNetTotal;
+
+  /// #966 report guide: meaning of vat_total
+  ///
+  /// In en, this message translates to:
+  /// **'The total VAT'**
+  String get reportFieldMeaningVatTotal;
+
+  /// #966 report guide: meaning of credit_note
+  ///
+  /// In en, this message translates to:
+  /// **'True on a credit note'**
+  String get reportFieldMeaningCreditNote;
+
+  /// #966 report guide: meaning of refund_total
+  ///
+  /// In en, this message translates to:
+  /// **'The amount refunded'**
+  String get reportFieldMeaningRefundTotal;
+
+  /// #966 report guide: meaning of iban
+  ///
+  /// In en, this message translates to:
+  /// **'The account\'s IBAN'**
+  String get reportFieldMeaningIban;
+
+  /// #966 report guide: meaning of bic
+  ///
+  /// In en, this message translates to:
+  /// **'The bank\'s BIC'**
+  String get reportFieldMeaningBic;
+
+  /// #966 report guide: meaning of bank_name
+  ///
+  /// In en, this message translates to:
+  /// **'The bank\'s name'**
+  String get reportFieldMeaningBankName;
+
+  /// #966 report guide: meaning of bank_account
+  ///
+  /// In en, this message translates to:
+  /// **'The account number'**
+  String get reportFieldMeaningBankAccount;
+
+  /// #966 report guide: meaning of bank_code
+  ///
+  /// In en, this message translates to:
+  /// **'The bank code'**
+  String get reportFieldMeaningBankCode;
+
+  /// #966 report guide: meaning of account_holder
+  ///
+  /// In en, this message translates to:
+  /// **'The account holder'**
+  String get reportFieldMeaningAccountHolder;
+
+  /// #966 report guide: meaning of payment_reference
+  ///
+  /// In en, this message translates to:
+  /// **'The reference to quote when paying'**
+  String get reportFieldMeaningPaymentReference;
+
+  /// #966 report guide: meaning of seller_legal_form
+  ///
+  /// In en, this message translates to:
+  /// **'The seller\'s legal form'**
+  String get reportFieldMeaningSellerLegalForm;
+
+  /// #966 report guide: meaning of seller_registration
+  ///
+  /// In en, this message translates to:
+  /// **'The seller\'s registration (SIREN, RNA…)'**
+  String get reportFieldMeaningSellerRegistration;
+
+  /// #966 report guide: meaning of seller_vat_id
+  ///
+  /// In en, this message translates to:
+  /// **'The seller\'s VAT number'**
+  String get reportFieldMeaningSellerVatId;
+
+  /// #966 report guide: meaning of seller_legal_id
+  ///
+  /// In en, this message translates to:
+  /// **'The seller\'s legal identifier'**
+  String get reportFieldMeaningSellerLegalId;
+
+  /// #966 report guide: meaning of exemption_reason
+  ///
+  /// In en, this message translates to:
+  /// **'The VAT exemption mention'**
+  String get reportFieldMeaningExemptionReason;
+
+  /// #966 report guide: meaning of vat_exigibility_mention
+  ///
+  /// In en, this message translates to:
+  /// **'When the VAT falls due, in words'**
+  String get reportFieldMeaningVatExigibilityMention;
+
+  /// #966 report guide: meaning of client_name
+  ///
+  /// In en, this message translates to:
+  /// **'The client\'s full name'**
+  String get reportFieldMeaningClientName;
+
+  /// #966 report guide: meaning of client_company
+  ///
+  /// In en, this message translates to:
+  /// **'The client\'s company'**
+  String get reportFieldMeaningClientCompany;
+
+  /// #966 report guide: meaning of client_phone
+  ///
+  /// In en, this message translates to:
+  /// **'The client\'s phone'**
+  String get reportFieldMeaningClientPhone;
+
+  /// #966 report guide: meaning of client_email
+  ///
+  /// In en, this message translates to:
+  /// **'The client\'s e-mail'**
+  String get reportFieldMeaningClientEmail;
+
+  /// #966 report guide: meaning of client_address
+  ///
+  /// In en, this message translates to:
+  /// **'The client\'s postal block'**
+  String get reportFieldMeaningClientAddress;
+
+  /// #966 report guide: meaning of client_vat_id
+  ///
+  /// In en, this message translates to:
+  /// **'The client\'s VAT number'**
+  String get reportFieldMeaningClientVatId;
+
+  /// #966 report guide: meaning of client_legal_id
+  ///
+  /// In en, this message translates to:
+  /// **'The client\'s legal identifier (SIREN…)'**
+  String get reportFieldMeaningClientLegalId;
+
+  /// #966 report guide: meaning of client_member_number
+  ///
+  /// In en, this message translates to:
+  /// **'The client\'s member number'**
+  String get reportFieldMeaningClientMemberNumber;
+
+  /// #966 report guide: meaning of usage_paid
+  ///
+  /// In en, this message translates to:
+  /// **'What the month\'s usage cost'**
+  String get reportFieldMeaningUsagePaid;
+
+  /// #966 report guide: meaning of usage_included_half_days
+  ///
+  /// In en, this message translates to:
+  /// **'Half-days included in the subscription'**
+  String get reportFieldMeaningUsageIncludedHalfDays;
+
+  /// #966 report guide: meaning of usage_used_half_days
+  ///
+  /// In en, this message translates to:
+  /// **'Half-days used'**
+  String get reportFieldMeaningUsageUsedHalfDays;
+
+  /// #966 report guide: meaning of usage_remaining_half_days
+  ///
+  /// In en, this message translates to:
+  /// **'Half-days remaining'**
+  String get reportFieldMeaningUsageRemainingHalfDays;
+
+  /// #966 report guide: meaning of usage_extra_half_days
+  ///
+  /// In en, this message translates to:
+  /// **'Half-days beyond the subscription'**
+  String get reportFieldMeaningUsageExtraHalfDays;
+
+  /// #966 report guide: meaning of usage_overage
+  ///
+  /// In en, this message translates to:
+  /// **'The overage charged'**
+  String get reportFieldMeaningUsageOverage;
+
+  /// #966 report guide: meaning of usage_supplements
+  ///
+  /// In en, this message translates to:
+  /// **'The accessory supplements'**
+  String get reportFieldMeaningUsageSupplements;
+
+  /// #966 report guide: meaning of usage_records
+  ///
+  /// In en, this message translates to:
+  /// **'Every consumption record — a loop'**
+  String get reportFieldMeaningUsageRecords;
+
+  /// #966 report guide: meaning of vat_period
+  ///
+  /// In en, this message translates to:
+  /// **'The VAT period reported'**
+  String get reportFieldMeaningVatPeriod;
+
+  /// #966 report guide: meaning of vat_period_net
+  ///
+  /// In en, this message translates to:
+  /// **'The period\'s net total'**
+  String get reportFieldMeaningVatPeriodNet;
+
+  /// #966 report guide: meaning of vat_period_vat
+  ///
+  /// In en, this message translates to:
+  /// **'The period\'s VAT'**
+  String get reportFieldMeaningVatPeriodVat;
+
+  /// #966 report guide: meaning of vat_period_gross
+  ///
+  /// In en, this message translates to:
+  /// **'The period\'s gross total'**
+  String get reportFieldMeaningVatPeriodGross;
+
+  /// #966 report guide: meaning of vat_basis_note
+  ///
+  /// In en, this message translates to:
+  /// **'Whether the period counts what was paid or what was issued'**
+  String get reportFieldMeaningVatBasisNote;
+
+  /// #966 report guide: meaning of site_name
+  ///
+  /// In en, this message translates to:
+  /// **'The document site\'s name'**
+  String get reportFieldMeaningSiteName;
+
+  /// #966 report guide: meaning of site_address
+  ///
+  /// In en, this message translates to:
+  /// **'The document site\'s address'**
+  String get reportFieldMeaningSiteAddress;
+
+  /// #966 report guide: meaning of usage_sites
+  ///
+  /// In en, this message translates to:
+  /// **'The other sites the month stood at'**
+  String get reportFieldMeaningUsageSites;
+
+  /// #966 report guide: meaning of pending_payments_total
+  ///
+  /// In en, this message translates to:
+  /// **'Payments still to confirm'**
+  String get reportFieldMeaningPendingPaymentsTotal;
+
+  /// #966 report guide: meaning of pending_expenses_total
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses still to validate'**
+  String get reportFieldMeaningPendingExpensesTotal;
+
+  /// #966 report guide: meaning of status_from
+  ///
+  /// In en, this message translates to:
+  /// **'The status period\'s first day'**
+  String get reportFieldMeaningStatusFrom;
+
+  /// #966 report guide: meaning of status_to
+  ///
+  /// In en, this message translates to:
+  /// **'The status period\'s last day'**
+  String get reportFieldMeaningStatusTo;
+
+  /// #966 report guide: meaning of status_invoiced
+  ///
+  /// In en, this message translates to:
+  /// **'What the workspace invoiced'**
+  String get reportFieldMeaningStatusInvoiced;
+
+  /// #966 report guide: meaning of status_credit_notes
+  ///
+  /// In en, this message translates to:
+  /// **'The credit notes issued'**
+  String get reportFieldMeaningStatusCreditNotes;
+
+  /// #966 report guide: meaning of status_payments
+  ///
+  /// In en, this message translates to:
+  /// **'What was collected'**
+  String get reportFieldMeaningStatusPayments;
+
+  /// #966 report guide: meaning of status_reimbursed
+  ///
+  /// In en, this message translates to:
+  /// **'What was reimbursed'**
+  String get reportFieldMeaningStatusReimbursed;
+
+  /// #966 report guide: meaning of status_repartitioned
+  ///
+  /// In en, this message translates to:
+  /// **'What was repartitioned'**
+  String get reportFieldMeaningStatusRepartitioned;
+
+  /// #966 report guide: meaning of status_credits
+  ///
+  /// In en, this message translates to:
+  /// **'The credits granted'**
+  String get reportFieldMeaningStatusCredits;
+
+  /// #966 report guide: meaning of status_net
+  ///
+  /// In en, this message translates to:
+  /// **'Revenues minus expenses'**
+  String get reportFieldMeaningStatusNet;
+
+  /// #966 report guide: meaning of status_members
+  ///
+  /// In en, this message translates to:
+  /// **'The member-by-member lines — a loop'**
+  String get reportFieldMeaningStatusMembers;
+
+  /// #966 report guide: meaning of vat_positions
+  ///
+  /// In en, this message translates to:
+  /// **'Every invoice of the VAT period — a loop'**
+  String get reportFieldMeaningVatPositions;
+
+  /// #966 report guide: meaning of vat_rate_totals
+  ///
+  /// In en, this message translates to:
+  /// **'The VAT period totals by rate — a loop'**
+  String get reportFieldMeaningVatRateTotals;
+
+  /// #966 report guide: meaning of payment_terms
+  ///
+  /// In en, this message translates to:
+  /// **'The payment terms mention'**
+  String get reportFieldMeaningPaymentTerms;
+
+  /// #966 report guide: meaning of payment_terms_source
+  ///
+  /// In en, this message translates to:
+  /// **'Where the payment terms come from (member or workspace)'**
+  String get reportFieldMeaningPaymentTermsSource;
+
+  /// #966 report guide: meaning of late_penalty
+  ///
+  /// In en, this message translates to:
+  /// **'The late-payment penalty mention'**
+  String get reportFieldMeaningLatePenalty;
+
+  /// #966 report guide: meaning of recovery_indemnity
+  ///
+  /// In en, this message translates to:
+  /// **'The recovery indemnity mention'**
+  String get reportFieldMeaningRecoveryIndemnity;
+
+  /// #966 report guide: meaning of escompte
+  ///
+  /// In en, this message translates to:
+  /// **'The early-payment discount mention'**
+  String get reportFieldMeaningEscompte;
+
+  /// #966 report guide: meaning of insurance
+  ///
+  /// In en, this message translates to:
+  /// **'The professional insurance mention'**
+  String get reportFieldMeaningInsurance;
+
+  /// #966 report guide: meaning of special_mentions
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace\'s special mentions'**
+  String get reportFieldMeaningSpecialMentions;
+
   /// Designer card title for the positioned layout of one report kind (#875)
   ///
   /// In en, this message translates to:
