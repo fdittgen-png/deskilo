@@ -88,46 +88,49 @@ void main() {
     expect(onCount, featureManifest.length - 15);
   });
 
-  testWidgets('toggling a feature persists the full map and flips the switch',
-      (tester) async {
+  testWidgets(
+      '#963 — toggling a feature writes THAT key only; the row keeps the '
+      'rest, and the switch flips', (tester) async {
     final workspace = await pumpFeatures(tester);
+    final before = Map.of(workspace.workspaces.single.featureFlags);
 
     await tester.tap(find.text('Money tab'));
     await tester.pumpAndSettle();
 
-    // The fake row now carries the FULL map with moneyTab off (and the
-    // default-OFF adminSeatBlocking #161 and accessorySupplements #170
-    // still off).
+    expect(workspace.flagWrites.last, {'moneyTab': false},
+        reason: 'a full map from a stale copy of the row undid the '
+            'pilot\'s earlier switches');
     final flags = workspace.workspaces.single.featureFlags;
     expect(flags['moneyTab'], isFalse);
-    expect(flags.length, WorkspaceFeature.values.length);
-    expect(
-      flags.entries.where((e) => e.value == false).map((e) => e.key),
-      unorderedEquals(
-        ['moneyTab', 'badgeSignIn', 'adminSeatBlocking',
-          'accessorySupplements',
-          'onlinePayments', 'levelBooking', 'adminLevelAssign',
-          'adminInvoicing', 'autoCheckInOut',
-          // #914 — narrowing who administers a managed profile is opt-in.
-          'managedProfileAccess', 'numberSequences', 'workspaceStatus',
-          'expenseRepartitionWizard', 'multiSite', 'siteDocuments', 'vatGroups'],
-      ),
-    );
+    for (final entry in before.entries) {
+      if (entry.key != 'moneyTab') expect(flags[entry.key], entry.value);
+    }
     expect(switchTitled(tester, 'Money tab').value, isFalse);
 
     // Toggling back re-enables it.
     await tester.tap(find.text('Money tab'));
     await tester.pumpAndSettle();
-    expect(
-      workspace.workspaces.single.featureFlags['moneyTab'],
-      isTrue,
-    );
+    expect(workspace.flagWrites.last, {'moneyTab': true});
     expect(switchTitled(tester, 'Money tab').value, isTrue);
   });
 
   testWidgets(
-      'the owner activates accessory supplements (#170): the full map '
-      'persists with the flag true', (tester) async {
+      '#963 — switching a child on writes its parent chain with it and '
+      'nothing else', (tester) async {
+    final workspace = await pumpFeatures(tester);
+
+    await tester.tap(find.text('Sites on documents'));
+    await tester.pumpAndSettle();
+
+    expect(workspace.flagWrites.last,
+        {'siteDocuments': true, 'multiSite': true});
+    expect(switchTitled(tester, 'Sites on documents').value, isTrue);
+    expect(switchTitled(tester, 'Sites').value, isTrue);
+  });
+
+  testWidgets(
+      'the owner activates accessory supplements (#170): the flag '
+      'persists true', (tester) async {
     final workspace = await pumpFeatures(tester);
 
     await tester.tap(find.text('Accessory supplements'));
@@ -136,8 +139,10 @@ void main() {
     final flags = workspace.workspaces.single.featureFlags;
     expect(flags['accessorySupplements'], isTrue);
     expect(switchTitled(tester, 'Accessory supplements').value, isTrue);
-    // The other default-OFF feature stays off.
-    expect(flags['adminSeatBlocking'], isFalse);
+    // The other default-OFF feature is not even written (#963) and
+    // stays off.
+    expect(flags.containsKey('adminSeatBlocking'), isFalse);
+    expect(switchTitled(tester, 'Admins can block seats').value, isFalse);
   });
 
   testWidgets('stored overrides seed the switches', (tester) async {

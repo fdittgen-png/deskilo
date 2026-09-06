@@ -31,11 +31,14 @@ class SupabaseProfileRepository implements ProfileRepository {
 
   @override
   Future<List<Profile>> fetchProfiles(List<String> userIds) async {
-    if (userIds.isEmpty) return const [];
+    // An empty id (a managed member, #962) is not a uuid: PostgREST
+    // answers 22P02 for the whole request, so it is dropped here too.
+    final ids = [for (final id in userIds) if (id.isNotEmpty) id];
+    if (ids.isEmpty) return const [];
     final rows = await _client
         .from('profiles')
         .select()
-        .inFilter('id', userIds);
+        .inFilter('id', ids);
     return rows.map(Profile.fromDb).toList();
   }
 

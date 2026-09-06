@@ -25,6 +25,13 @@ v_anchor := E'exact text\n'; if position(v_anchor in v_def) = 0 then raise excep
 execute replace(v_def, v_anchor, new_text);
 ```
 A silent no-op ships a broken document — always assert the anchor.
+An anchor that ends in `))` closes MORE than the expression you mean:
+0169 appended `, 'site', …` behind the parenthesis that also closed
+`jsonb_build_object(` and every detailed invoice failed for a day
+(#960, fixed by 0175). plpgsql compiles a statement when it is first
+REACHED, so the harness must execute every branch the patch touches —
+for create_invoice that means a DETAILED invoice (`p_detailed => true`)
+in the rolled-back transaction, not only the plain one.
 
 ## 3. Overloads
 Adding a parameter WITH a default to an existing function creates a

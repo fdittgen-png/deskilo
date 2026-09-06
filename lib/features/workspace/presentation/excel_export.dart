@@ -16,6 +16,7 @@ import '../../plan/providers/floor_plan_providers.dart';
 import '../../profile/domain/profile.dart';
 import '../../profile/providers/profile_providers.dart';
 import '../../reservations/providers/reservation_providers.dart';
+import '../domain/member.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_excel.dart';
 import '../providers/workspace_providers.dart';
@@ -45,7 +46,7 @@ Future<void> exportWorkspaceExcel(
       final members = await ref.read(workspaceMembersProvider.future);
       final profiles = await ref
           .read(profileRepositoryProvider)
-          .fetchProfiles([for (final m in members) m.userId]);
+          .fetchProfiles(accountIdsOf(members));
       final money = ref.read(moneyRepositoryProvider);
       final events = await ref
           .read(eventRepositoryProvider)

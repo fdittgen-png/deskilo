@@ -140,3 +140,9 @@ sealed class Member with _$Member {
       (isOwner || coOwner == CoOwnerStatus.active) &&
       status == MemberStatus.active;
 }
+
+/// The user ids that HAVE a profile to fetch (#962): managed members
+/// carry the empty string as their user id and are left out, because
+/// one malformed uuid fails the whole `in` query.
+List<String> accountIdsOf(Iterable<Member> members) =>
+    [for (final m in members) if (!m.isManaged) m.userId];

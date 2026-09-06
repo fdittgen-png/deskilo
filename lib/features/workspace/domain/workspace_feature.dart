@@ -761,6 +761,19 @@ Map<WorkspaceFeature, bool> featureFlagsAfterToggle({
   return next;
 }
 
+/// What ONE toggle writes (#963): the feature itself and, when it goes
+/// on, everything it needs — nothing else. The row is merged on the
+/// server, so a screen holding an older copy of the row cannot undo a
+/// switch someone (or itself, a moment ago) flipped in between.
+Map<WorkspaceFeature, bool> featureFlagsToggleDelta({
+  required WorkspaceFeature feature,
+  required bool value,
+}) => {
+      feature: value,
+      if (value)
+        for (final required in requirementChain(feature)) required: true,
+    };
+
 /// The features [featureFlagsAfterToggle] would switch on ALONGSIDE
 /// [feature] — empty when its chain is already on. The UI names them, so
 /// enabling one thing never silently changes another.
