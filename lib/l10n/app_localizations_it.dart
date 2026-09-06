@@ -7275,6 +7275,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get profilesMakeDefault => 'Usa come predefinito all\'avvio';
 
   @override
+  String profilesSiteLine(String site) {
+    return 'Sede: $site';
+  }
+
+  @override
+  String get profilesSitePick => 'Cambia sede';
+
+  @override
   String get eventTypeRoleChange => 'Cambio di ruolo';
 
   @override

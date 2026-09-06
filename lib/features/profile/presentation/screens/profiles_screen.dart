@@ -10,6 +10,9 @@ import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../workspace/domain/workspace.dart';
+import '../../../workspace/domain/site.dart';
+import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/presentation/member_admin_actions.dart';
 import '../../../workspace/domain/workspace_overview.dart';
 import '../widgets/workspace_owners_sheet.dart';
 
@@ -96,6 +99,13 @@ class ProfilesScreen extends ConsumerWidget {
                           workspace.inviteCode,
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
+                        // #974 — the home site, and a tap to change it,
+                        // once the workspace has more than one.
+                        if (member != null &&
+                            effectiveFeatures(resolveEnabledFeatures(
+                                    workspace.featureFlags))
+                                .contains(WorkspaceFeature.multiSite))
+                          _HomeSiteLine(member: member),
                       ],
                     ),
                     trailing: Row(
@@ -181,6 +191,37 @@ class ProfilesScreen extends ConsumerWidget {
           ],
         ],
       ),
+    );
+  }
+}
+
+/// #974 — "Site: Pézenas" under the profile, tappable when there is a
+/// choice. Nothing at all while the workspace has a single site: one
+/// site is not a choice and not worth a line.
+class _HomeSiteLine extends ConsumerWidget {
+  const _HomeSiteLine({required this.member});
+
+  final Member member;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final sites = ref.watch(sitesOfProvider(member.workspaceId)).value ??
+        const <Site>[];
+    if (sites.length < 2) return const SizedBox.shrink();
+    final home = sites
+            .where((s) => s.id == member.homeSiteId)
+            .firstOrNull ??
+        sites.where((s) => s.isDefault).firstOrNull ??
+        sites.first;
+    return ActionChip(
+      key: ValueKey('profile-site-${member.workspaceId}'),
+      avatar: const Icon(Icons.location_city_outlined, size: 16),
+      label: Text(l10n?.profilesSiteLine(home.name) ?? 'Site: ${home.name}'),
+      tooltip: l10n?.profilesSitePick ?? 'Change your site',
+      visualDensity: VisualDensity.compact,
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      onPressed: () => pickOwnHomeSite(context, ref, member),
     );
   }
 }

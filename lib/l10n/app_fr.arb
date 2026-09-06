@@ -4549,6 +4549,19 @@
   "backendCopyLink": "Copier",
   "profilesDefault": "Profil par défaut au démarrage",
   "profilesMakeDefault": "Utiliser par défaut au démarrage",
+  "profilesSiteLine": "Site : {site}",
+  "@profilesSiteLine": {
+    "description": "#974 profiles site: profilesSiteLine",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      }
+    }
+  },
+  "profilesSitePick": "Changer de site",
+  "@profilesSitePick": {
+    "description": "#974 profiles site: profilesSitePick"
+  },
   "eventTypeRoleChange": "Changement de rôle",
   "eventRolePromote": "{actor} promeut un membre en admin",
   "eventRoleDemote": "{actor} rétrograde un admin en membre",
