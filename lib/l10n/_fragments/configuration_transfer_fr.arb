@@ -1,0 +1,30 @@
+{
+  "@@locale": "fr",
+  "featureConfigurationTransfer": "Configuration dans le fichier de l'espace",
+  "@featureConfigurationTransfer": {
+    "description": "#916 configuration transfer: featureConfigurationTransfer"
+  },
+  "featureConfigurationTransferDesc": "Le fichier de l'espace (XML) emporte toute la configuration — tarifs, identité légale, règles de réservation et de validation, rôles, maquettes de documents, sites, jours de fermeture — et l'import l'applique, même sur un espace qui a déjà des réservations. Désactivé : le fichier n'emporte que les réglages et le plan.",
+  "@featureConfigurationTransferDesc": {
+    "description": "#916 configuration transfer: featureConfigurationTransferDesc"
+  },
+  "workspaceXmlImportPreviewConfiguration": "Configuration : {settings} réglages, {rows} lignes dans {tables} tables",
+  "@workspaceXmlImportPreviewConfiguration": {
+    "description": "#916 configuration transfer: workspaceXmlImportPreviewConfiguration",
+    "placeholders": {
+      "settings": {
+        "type": "int"
+      },
+      "tables": {
+        "type": "int"
+      },
+      "rows": {
+        "type": "int"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationOnly": "La configuration a été appliquée. Le plan a été conservé : cet espace a déjà des réservations, son plan ne peut pas être remplacé.",
+  "@workspaceXmlImportConfigurationOnly": {
+    "description": "#916 configuration transfer: workspaceXmlImportConfigurationOnly"
+  }
+}

@@ -38,6 +38,22 @@ class RecordingImportRepository implements WorkspaceImportRepository {
     if (e != null) throw e;
     calls.add((workspaceId, data));
   }
+
+  /// #916 — the configuration trees handed to [importConfiguration].
+  final List<Map<String, Object?>> configurations = [];
+
+  /// What [exportConfiguration] answers.
+  Map<String, Object?> exported = const {'workspace': {}, 'tables': {}};
+
+  @override
+  Future<Map<String, Object?>> exportConfiguration(String workspaceId) async =>
+      exported;
+
+  @override
+  Future<void> importConfiguration(
+      String workspaceId, Map<String, Object?> configuration) async {
+    configurations.add(configuration);
+  }
 }
 
 /// Counts [fetchLevels] so the test can assert the import invalidated the
@@ -54,7 +70,7 @@ class CountingFloorPlanRepository extends FakeFloorPlanRepository {
 
 /// A valid exported file: FR settings (differing from the seeded ws-1 so
 /// the apply is observable), one level, one office, one desk, two seats.
-String importableXml() {
+String importableXml({Map<String, Object?>? configuration}) {
   const workspace = Workspace(
     id: 'ws-import',
     name: 'Imported Space',
@@ -149,8 +165,19 @@ String importableXml() {
     seatAccessories: const {
       'seat-x1': {'accessory-x1'},
     },
+    configuration: configuration,
   );
 }
+
+/// #916 — a configuration tree as the server would answer it.
+const Map<String, Object?> kTestConfiguration = {
+  'workspace': {'vat_regime': 'not_subject', 'city': 'Pézenas'},
+  'tables': {
+    'fee_bands': [
+      {'from_pct': 0, 'to_pct': 100, 'fee_cents': 10000, 'overage_fee_cents': 0},
+    ],
+  },
+};
 
 XFile xmlFile(String content) => XFile.fromData(
       utf8.encode(content),
@@ -365,5 +392,79 @@ void main() {
     // Plan-first ordering: the refused RPC left the settings untouched.
     expect(workspaceRepository.lastLocaleUpdate, isNull);
     expect(workspaceRepository.lastPaymentInstructions, isNull);
+  });
+
+  testWidgets(
+      '#916 — a v3 file: the configuration is applied BEFORE the plan, and '
+      'the preview counts it', (tester) async {
+    final importRepository = RecordingImportRepository();
+    final workspaceRepository = FakeWorkspaceRepository.withWorkspace();
+    final floorPlan = CountingFloorPlanRepository()..seedSmallPlan();
+    await pumpWorkspaceSettings(
+      tester,
+      picker: (_) async =>
+          xmlFile(importableXml(configuration: kTestConfiguration)),
+      importRepository: importRepository,
+      workspaceRepository: workspaceRepository,
+      floorPlan: floorPlan,
+    );
+    await tapImportTile(tester);
+
+    expect(find.textContaining('Configuration: 2 settings, 1 rows in 1 tables'),
+        findsOneWidget);
+    await tester.tap(find.byKey(const Key('workspaceXmlImportConfirm')));
+    await tester.pumpAndSettle();
+
+    expect(importRepository.configurations, [kTestConfiguration]);
+    expect(importRepository.calls, hasLength(1), reason: 'then the plan');
+    expect(find.text('Workspace imported.'), findsOneWidget);
+  });
+
+  testWidgets(
+      '#916 — a space with reservations: the configuration lands, the plan '
+      'is kept, and the message says exactly that', (tester) async {
+    final importRepository = RecordingImportRepository()
+      ..error = const PostgrestException(
+          message: kWorkspaceHasReservationsError);
+    final workspaceRepository = FakeWorkspaceRepository.withWorkspace();
+    final floorPlan = CountingFloorPlanRepository()..seedSmallPlan();
+    await pumpWorkspaceSettings(
+      tester,
+      picker: (_) async =>
+          xmlFile(importableXml(configuration: kTestConfiguration)),
+      importRepository: importRepository,
+      workspaceRepository: workspaceRepository,
+      floorPlan: floorPlan,
+    );
+    await tapImportTile(tester);
+    await tester.tap(find.byKey(const Key('workspaceXmlImportConfirm')));
+    await tester.pumpAndSettle();
+
+    expect(importRepository.configurations, [kTestConfiguration]);
+    expect(
+        find.textContaining('The configuration was applied. The floor plan '
+            'was kept'),
+        findsOneWidget);
+    expect(find.text('Something went wrong. Please try again.'), findsNothing);
+  });
+
+  testWidgets('#916 — a v2 file (no configuration) imports as before',
+      (tester) async {
+    final importRepository = RecordingImportRepository();
+    final workspaceRepository = FakeWorkspaceRepository.withWorkspace();
+    final floorPlan = CountingFloorPlanRepository()..seedSmallPlan();
+    await pumpWorkspaceSettings(
+      tester,
+      picker: (_) async => xmlFile(importableXml()),
+      importRepository: importRepository,
+      workspaceRepository: workspaceRepository,
+      floorPlan: floorPlan,
+    );
+    await tapImportTile(tester);
+    expect(find.textContaining('Configuration:'), findsNothing);
+    await tester.tap(find.byKey(const Key('workspaceXmlImportConfirm')));
+    await tester.pumpAndSettle();
+    expect(importRepository.configurations, isEmpty);
+    expect(importRepository.calls, hasLength(1));
   });
 }

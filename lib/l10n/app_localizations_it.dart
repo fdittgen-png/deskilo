@@ -1453,6 +1453,27 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa app è gratuita, open source e senza pubblicità. Se la trovi utile, sostieni lo sviluppatore.';
 
   @override
+  String get featureConfigurationTransfer =>
+      'Configurazione nel file dello spazio';
+
+  @override
+  String get featureConfigurationTransferDesc =>
+      'Il file dello spazio (XML) porta l\'intera configurazione — tariffe, identità legale, regole di prenotazione e convalida, ruoli, layout dei documenti, sedi, giorni di chiusura — e l\'importazione la applica, anche su uno spazio che ha già prenotazioni. Disattivato: il file porta solo impostazioni e planimetria.';
+
+  @override
+  String workspaceXmlImportPreviewConfiguration(
+    int settings,
+    int tables,
+    int rows,
+  ) {
+    return 'Configurazione: $settings impostazioni, $rows righe in $tables tabelle';
+  }
+
+  @override
+  String get workspaceXmlImportConfigurationOnly =>
+      'La configurazione è stata applicata. La planimetria è stata mantenuta: questo spazio ha già prenotazioni, la sua planimetria non può essere sostituita.';
+
+  @override
   String get consumptionAdd => 'Aggiungi consumo';
 
   @override

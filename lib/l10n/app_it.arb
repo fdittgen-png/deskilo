@@ -1044,6 +1044,33 @@
   "@aboutSupportBody": {
     "description": "Support block body (#560)"
   },
+  "featureConfigurationTransfer": "Configurazione nel file dello spazio",
+  "@featureConfigurationTransfer": {
+    "description": "#916 configuration transfer: featureConfigurationTransfer"
+  },
+  "featureConfigurationTransferDesc": "Il file dello spazio (XML) porta l'intera configurazione — tariffe, identità legale, regole di prenotazione e convalida, ruoli, layout dei documenti, sedi, giorni di chiusura — e l'importazione la applica, anche su uno spazio che ha già prenotazioni. Disattivato: il file porta solo impostazioni e planimetria.",
+  "@featureConfigurationTransferDesc": {
+    "description": "#916 configuration transfer: featureConfigurationTransferDesc"
+  },
+  "workspaceXmlImportPreviewConfiguration": "Configurazione: {settings} impostazioni, {rows} righe in {tables} tabelle",
+  "@workspaceXmlImportPreviewConfiguration": {
+    "description": "#916 configuration transfer: workspaceXmlImportPreviewConfiguration",
+    "placeholders": {
+      "settings": {
+        "type": "int"
+      },
+      "tables": {
+        "type": "int"
+      },
+      "rows": {
+        "type": "int"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationOnly": "La configurazione è stata applicata. La planimetria è stata mantenuta: questo spazio ha già prenotazioni, la sua planimetria non può essere sostituita.",
+  "@workspaceXmlImportConfigurationOnly": {
+    "description": "#916 configuration transfer: workspaceXmlImportConfigurationOnly"
+  },
   "consumptionAdd": "Aggiungi consumo",
   "consumptionAddForMember": "Aggiungi servizio per {name}",
   "consumptionService": "Servizio",

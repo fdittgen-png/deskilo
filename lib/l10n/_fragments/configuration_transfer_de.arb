@@ -1,0 +1,30 @@
+{
+  "@@locale": "de",
+  "featureConfigurationTransfer": "Konfiguration in der Raumdatei",
+  "@featureConfigurationTransfer": {
+    "description": "#916 configuration transfer: featureConfigurationTransfer"
+  },
+  "featureConfigurationTransferDesc": "Die Raumdatei (XML) trägt die gesamte Konfiguration — Tarife, rechtliche Identität, Buchungs- und Freigaberegeln, Rollen, Dokumentvorlagen, Standorte, Schließtage — und der Import wendet sie an, auch auf einen Raum, der schon Buchungen hat. Aus: die Datei trägt nur Einstellungen und Grundriss.",
+  "@featureConfigurationTransferDesc": {
+    "description": "#916 configuration transfer: featureConfigurationTransferDesc"
+  },
+  "workspaceXmlImportPreviewConfiguration": "Konfiguration: {settings} Einstellungen, {rows} Zeilen in {tables} Tabellen",
+  "@workspaceXmlImportPreviewConfiguration": {
+    "description": "#916 configuration transfer: workspaceXmlImportPreviewConfiguration",
+    "placeholders": {
+      "settings": {
+        "type": "int"
+      },
+      "tables": {
+        "type": "int"
+      },
+      "rows": {
+        "type": "int"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationOnly": "Die Konfiguration wurde übernommen. Der Grundriss blieb erhalten: dieser Raum hat bereits Buchungen, sein Grundriss kann nicht ersetzt werden.",
+  "@workspaceXmlImportConfigurationOnly": {
+    "description": "#916 configuration transfer: workspaceXmlImportConfigurationOnly"
+  }
+}

@@ -1452,6 +1452,26 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese App ist kostenlos, Open Source und werbefrei. Wenn sie dir nützt, unterstütze den Entwickler.';
 
   @override
+  String get featureConfigurationTransfer => 'Konfiguration in der Raumdatei';
+
+  @override
+  String get featureConfigurationTransferDesc =>
+      'Die Raumdatei (XML) trägt die gesamte Konfiguration — Tarife, rechtliche Identität, Buchungs- und Freigaberegeln, Rollen, Dokumentvorlagen, Standorte, Schließtage — und der Import wendet sie an, auch auf einen Raum, der schon Buchungen hat. Aus: die Datei trägt nur Einstellungen und Grundriss.';
+
+  @override
+  String workspaceXmlImportPreviewConfiguration(
+    int settings,
+    int tables,
+    int rows,
+  ) {
+    return 'Konfiguration: $settings Einstellungen, $rows Zeilen in $tables Tabellen';
+  }
+
+  @override
+  String get workspaceXmlImportConfigurationOnly =>
+      'Die Konfiguration wurde übernommen. Der Grundriss blieb erhalten: dieser Raum hat bereits Buchungen, sein Grundriss kann nicht ersetzt werden.';
+
+  @override
   String get consumptionAdd => 'Verbrauch erfassen';
 
   @override

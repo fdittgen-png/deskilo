@@ -89,7 +89,7 @@ void main() {
   test('the page ships in web/ so the web deploy publishes it at '
       '/deskilo/setup.html', () {
     final page = File('web/setup.html').readAsStringSync();
-    expect(page, contains('deskilo-workspace version="2"'));
+    expect(page, contains('deskilo-workspace version="3"'));
     // The setup extension the configurator reads.
     expect(page, contains('<setup>'));
     // Every workspace feature key appears exactly as the enum names it.

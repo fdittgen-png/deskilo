@@ -8,6 +8,8 @@ import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/workspace/domain/workspace_xml.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:deskilo/features/workspace/domain/workspace_import.dart';
+import 'package:deskilo/features/workspace/providers/workspace_import_providers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_accessory_repository.dart';
@@ -44,6 +46,9 @@ Future<void> pumpWorkspaceSettings(
           accessories: accessoryRepository,
         ),
         fileSaverProvider.overrideWithValue(saver),
+        // #916 — the configuration section comes from its own RPC.
+        workspaceImportRepositoryProvider
+            .overrideWithValue(_ConfigurationOnlyRepository()),
       ],
       child: const DeskiloApp(),
     ),
@@ -82,7 +87,7 @@ void main() {
     final xml = utf8.decode(saved.single.$2);
     expect(xml, isNot(contains('GOODCODE22')));
     // v2 is what the app exports now (#180).
-    expect(xml, contains('<deskilo-workspace version="2">'));
+    expect(xml, contains('<deskilo-workspace version="3">'));
     final parsed = parseWorkspaceXml(xml);
     expect(parsed.settings.name, 'Test Space');
     expect(parsed.settings.countryCode, 'DE');
@@ -129,4 +134,24 @@ void main() {
       findsOneWidget,
     );
   });
+}
+
+/// #916 — answers the configuration export with a small tree; the plan
+/// import is never called by the export tile.
+class _ConfigurationOnlyRepository implements WorkspaceImportRepository {
+  @override
+  Future<Map<String, Object?>> exportConfiguration(String workspaceId) async =>
+      {
+        'workspace': {'vat_regime': 'not_subject'},
+        'tables': {'fee_bands': <Object?>[]},
+      };
+
+  @override
+  Future<void> importConfiguration(
+          String workspaceId, Map<String, Object?> configuration) async =>
+      throw UnimplementedError();
+
+  @override
+  Future<void> importFloorPlan(String workspaceId, WorkspaceXmlData data) async =>
+      throw UnimplementedError();
 }

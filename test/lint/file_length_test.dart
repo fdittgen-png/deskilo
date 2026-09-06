@@ -134,7 +134,7 @@ const Map<String, int> _baseline = {
   // 1410→1440 (2026-08-05): #496 the language chain on the workspace report.
   // 1440→1465 (2026-09-01): #802 the invoice-schedule entry beside the
   // reminder rules — issuing and chasing are one conversation.
-  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1470, // 2026-09-04 #875 the workspace report passes its layout through
+  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1560, // 2026-09-04 #875 the workspace report passes its layout through
   // 600→640 (2026-08-05): #492 the request-deletion dialog + flow.
   // 640→760 (2026-08-22): #574 the running-booking extension flow.
   // 760→880 (2026-08-25): #638 the symmetric END-EARLIER flow — the
@@ -156,7 +156,7 @@ const Map<String, int> _baseline = {
   // registry — it grows by ~5 lines per flag by design, and
   // splitting the registry would defeat its whole purpose.
   // 740→789 (2026-09-06): #934 the status report kind and the money-screen tiles.
-  'lib/features/workspace/domain/workspace_feature.dart': 789, // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #873 usageReport beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #878 vatReport beside #881 memberPaymentTerms after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #873 usageReport beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 five flags landed the same day (#880 #887 #881 #873 #878 #874)
+  'lib/features/workspace/domain/workspace_feature.dart': 830, // 2026-09-06 #916 configurationTransfer // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #873 usageReport beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #878 vatReport beside #881 memberPaymentTerms after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #873 usageReport beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 five flags landed the same day (#880 #887 #881 #873 #878 #874)
   'lib/features/money/presentation/widgets/report_visual_editor.dart': 1000, // 2026-09-02 #822 drag, insert palette, image controls, move-to-band
   // 660→700 (2026-08-05): #494 the three further document chips + their
   // live data and letter-PDF branches.
@@ -164,7 +164,7 @@ const Map<String, int> _baseline = {
   // overlay assembly.
   // 800→810 (2026-08-31): #763 the report editor's header help dot.
   'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 1170, // 2026-09-02 #822 the page, undo/redo, guards // 2026-09-04 #875 layout drafts per kind, the panel mount and its three handlers — the panel and the actions themselves live in their own files // 2026-09-05 #880 the owner-texts drafts per language, merged into every preview/export, and the Texts panel mount
-  'lib/features/workspace/domain/workspace_xml.dart': 800,
+  'lib/features/workspace/domain/workspace_xml.dart': 960, // 2026-09-06 #916 schema v3: plan attributes + the configuration section
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.
   // 780→810 (2026-09-01): #814 closed columns.

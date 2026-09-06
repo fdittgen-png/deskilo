@@ -395,6 +395,91 @@ void main() {
     });
   });
 
+  testWidgets('#965 — the PILOT header (heading, blank line, logo, three muted lines) keeps the logo AND the lines; '
+      'sender band is fixed at 25 mm and a letterhead with a logo is '
+      'taller, so it scales instead of being clipped away',
+      (tester) async {
+    // The engine encodes the PNG and the pdf package decodes it: both
+    // need the real async zone, not the fake one a widget test pumps.
+    await tester.runAsync(() async {
+    final invoice = Invoice(
+      id: 'inv-logo',
+      workspaceId: 'ws-1',
+      memberId: 'member-1',
+      number: 'INV-2026-0004',
+      issuedAt: DateTime(2026, 9, 6),
+      period: '2026-09',
+      title: 'INV-2026-0004',
+      lines: const [
+        InvoiceLine(kind: 'service', label: 'Participation', amountCents: 10000),
+      ],
+      totalCents: 10000,
+      currency: 'EUR',
+      memberName: 'SASU KaloA',
+      memberAddress: '209 rue Jean Bart\n31670 LABÈGE',
+      workspaceName: 'COWORKONTI',
+      workspaceAddress: '4 avenue de Castelnau, 34120 Pézenas',
+      issuerName: 'Flo',
+      signature: 'c' * 64,
+    );
+    // A real engine-encoded PNG: the codec refuses hand-rolled bytes.
+    final logo = await _pngBytes();
+    final report = renderReportBands(
+      bands: const ReportBands(
+        header: '# {{ workspace }}\n\n![logo]\n> Association loi 1901\n'
+            '> 4 avenue de Castelnau\n> RNA W341015106',
+        body: '{% for line in lines %}{{ line.label }} | {{ line.amount }}\n'
+            '{% endfor %}',
+        footer: '> {{ workspace }}',
+      ),
+      data: const {
+        'workspace': 'COWORKONTI',
+        'lines': [
+          {'label': 'Participation', 'amount': '100,00 €'},
+        ],
+      },
+    );
+    expect(report, isNotNull);
+    expect(reportImageRefs(report!), contains('logo'));
+
+    final bytes = await buildInvoicePdf(
+      invoice: invoice,
+      strings: _strings,
+      money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
+      lineText: (line) => invoiceLineText(null, line),
+      activityText: (entry) => annexEntryText(null, entry),
+      dateLabel: 'Sep 6, 2026',
+      report: report,
+      reportImages: {'logo': logo},
+      // The window ON is the case that used to lose it.
+      addressWindow: AddressWindow.left,
+      baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+    );
+    File('/private/tmp/claude-501/-Users-floriandittgen-orgcowrk/6d3b4ed0-0312-41d6-957a-dd7d987ce044/scratchpad/pilot-header.pdf')
+        .writeAsBytesSync(bytes);
+    final raw = String.fromCharCodes(bytes);
+    expect(raw, contains('/Subtype/Image'),
+        reason: 'the logo must reach the page, not be clipped out of it');
+
+    // And with the window OFF it was always there — the guard must not
+    // have traded one case for the other.
+    final plain = await buildInvoicePdf(
+      invoice: invoice,
+      strings: _strings,
+      money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
+      lineText: (line) => invoiceLineText(null, line),
+      activityText: (entry) => annexEntryText(null, entry),
+      dateLabel: 'Sep 6, 2026',
+      report: report,
+      reportImages: {'logo': logo},
+      baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+    );
+    expect(String.fromCharCodes(plain), contains('/Subtype/Image'));
+    });
+  });
+
   test(
       'a PROFORMA carries the same figures with NO signature and its own '
       'diagonal stamp — a quote, not a document of record (0072)', () async {

@@ -1445,6 +1445,26 @@ class AppLocalizationsEn extends AppLocalizations {
       'This app is free, open source and ad-free. If you find it useful, support the developer.';
 
   @override
+  String get featureConfigurationTransfer => 'Configuration in the space file';
+
+  @override
+  String get featureConfigurationTransferDesc =>
+      'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.';
+
+  @override
+  String workspaceXmlImportPreviewConfiguration(
+    int settings,
+    int tables,
+    int rows,
+  ) {
+    return 'Configuration: $settings settings, $rows rows in $tables tables';
+  }
+
+  @override
+  String get workspaceXmlImportConfigurationOnly =>
+      'The configuration was applied. The floor plan was kept: this space already has reservations, so its plan cannot be replaced.';
+
+  @override
   String get consumptionAdd => 'Add consumption';
 
   @override

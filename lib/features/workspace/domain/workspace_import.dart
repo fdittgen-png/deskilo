@@ -40,6 +40,14 @@ abstract final class WorkspaceImportPlanKeys {
   static const String accessories = 'accessories';
   static const String supplementCents = 'supplement_cents';
   static const String active = 'active';
+
+  // v3 (#916): prices, whole-booking, the level's site, seat tags and the
+  // accessory's VAT rate — every one by name/label, resolved by
+  // import_floor_plan_v3 (migration 0177).
+  static const String priceCents = 'price_cents';
+  static const String site = 'site';
+  static const String nfcUid = 'nfc_uid';
+  static const String vatRate = 'vat_rate';
 }
 
 /// Owner-only import boundary (#165). Separate from [WorkspaceRepository]
@@ -48,9 +56,21 @@ abstract final class WorkspaceImportPlanKeys {
 abstract class WorkspaceImportRepository {
   /// Transactionally replaces the workspace's floor plan with the parsed
   /// file's levels and upserts its accessory catalog via the
-  /// `import_floor_plan_v2` RPC (migration 0027). Throws the backend's
+  /// `import_floor_plan_v3` RPC (migration 0177, v2's shape plus the
+  /// #916 attributes). Throws the backend's
   /// [kWorkspaceHasReservationsError] when any reservation exists.
   Future<void> importFloorPlan(String workspaceId, WorkspaceXmlData data);
+
+  /// The workspace's configuration tree (#916, migration 0177): every
+  /// configuration domain beyond settings and plan, ids left out,
+  /// references by name. Owner-only.
+  Future<Map<String, Object?>> exportConfiguration(String workspaceId);
+
+  /// Applies a configuration tree (#916). Unlike the floor plan this is
+  /// never refused over reservations — nothing transactional is
+  /// touched. Owner-only.
+  Future<void> importConfiguration(
+      String workspaceId, Map<String, Object?> configuration);
 }
 
 /// Converts the parsed floor plan to the `p_plan` jsonb payload of
@@ -65,6 +85,9 @@ List<Map<String, Object?>> workspaceXmlPlanToJson(
       {
         WorkspaceImportPlanKeys.name: level.name,
         WorkspaceImportPlanKeys.sortOrder: level.sortOrder,
+        WorkspaceImportPlanKeys.priceCents: level.priceCents,
+        WorkspaceImportPlanKeys.bookableAsWhole: level.bookableAsWhole,
+        if (level.site.isNotEmpty) WorkspaceImportPlanKeys.site: level.site,
         WorkspaceImportPlanKeys.offices: [
           for (final office in level.offices)
             {
@@ -75,6 +98,7 @@ List<Map<String, Object?>> workspaceXmlPlanToJson(
               WorkspaceImportPlanKeys.y: office.rect.y,
               WorkspaceImportPlanKeys.w: office.rect.w,
               WorkspaceImportPlanKeys.h: office.rect.h,
+              WorkspaceImportPlanKeys.priceCents: office.priceCents,
               WorkspaceImportPlanKeys.desks: [
                 for (final desk in office.desks)
                   {
@@ -83,6 +107,9 @@ List<Map<String, Object?>> workspaceXmlPlanToJson(
                     WorkspaceImportPlanKeys.y: desk.rect.y,
                     WorkspaceImportPlanKeys.w: desk.rect.w,
                     WorkspaceImportPlanKeys.h: desk.rect.h,
+                    WorkspaceImportPlanKeys.priceCents: desk.priceCents,
+                    WorkspaceImportPlanKeys.bookableAsWhole:
+                        desk.bookableAsWhole,
                     WorkspaceImportPlanKeys.seats: [
                       for (final seat in desk.seats)
                         {
@@ -100,6 +127,8 @@ List<Map<String, Object?>> workspaceXmlPlanToJson(
                               .toIso8601String(),
                           WorkspaceImportPlanKeys.blockedTo:
                               seat.blockedTo?.toUtc().toIso8601String(),
+                          if (seat.nfcUid.isNotEmpty)
+                            WorkspaceImportPlanKeys.nfcUid: seat.nfcUid,
                         },
                     ],
                   },
@@ -124,6 +153,8 @@ List<Map<String, Object?>> workspaceXmlAccessoriesToJson(
         WorkspaceImportPlanKeys.supplementCents: accessory.supplementCents,
         WorkspaceImportPlanKeys.active: accessory.active,
         WorkspaceImportPlanKeys.sortOrder: accessory.sortOrder,
+        if (accessory.vatRate.isNotEmpty)
+          WorkspaceImportPlanKeys.vatRate: accessory.vatRate,
       },
   ];
 }
@@ -217,6 +248,7 @@ List<Map<String, Object?>> workspaceXmlAccessoriesToJson(
             amenities: seat.amenities,
             blockedFrom: seat.blockedFrom,
             blockedTo: seat.blockedTo,
+            nfcUid: seat.nfcUid.isEmpty ? null : seat.nfcUid,
           );
           final seatProblem =
               validateSeatPlacement(seatModel, deskModel, placedSeats);

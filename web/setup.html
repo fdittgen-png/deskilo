@@ -197,6 +197,7 @@ const FEATURES=[
  ['calendarViews','Vues du calendrier','L\'onglet Calendrier en agenda, semaine et mois : repères par jour selon le type, jours fermés affichés fermés, en-têtes Aujourd\'hui / Demain, échéances de paiement et dépenses programmées dans le fil. Désactivé : le simple sélecteur jour ou plage au-dessus du fil.',1],
  ['bookingGate','Garde-fou de réservation','Chaque surface de réservation — plan, vues jour, semaine et mois, feuille de réservation, kiosque, scan QR ou NFC — vérifie les paramètres de disponibilité avant de proposer un créneau et nomme la raison quand elle ne peut pas ; les jours fermés s\'affichent fermés dans chaque vue, une légende nomme les états des places, et les admins peuvent faire sortir un membre là où la règle le permet.',1],
  ['invoiceJourney','Le parcours d\'une facture','Chaque facture montre où elle en est — Émise, Paiement, Confirmation, Close — et à qui est le tour : le membre paie, un admin confirme le paiement déclaré, l\'émetteur le rapproche, les valideurs décident. Le hub des émetteurs ajoute un bandeau d\'étapes avec les compteurs et une explication « Comment ça marche ».',1],
+ ['configurationTransfer','Configuration dans le fichier de l\'espace',"Le fichier de l\'espace (XML) emporte toute la configuration — tarifs, identité légale, règles de réservation et de validation, rôles, maquettes de documents, sites, jours de fermeture — et l\'import l\'applique, même sur un espace qui a déjà des réservations. Désactivé : le fichier n\'emporte que les réglages et le plan.",1],
 ];
 const PERMS=[['manageRoles','Gérer les rôles et permissions'],['manageMembers','Gérer les membres'],['manageValidation','Configurer les règles de validation'],['workspaceSettings',"Modifier les réglages de l'espace"],['issueInvoices','Émettre les factures et rapprocher les paiements'],['viewFinances',"Consulter les finances de l'espace"],['manageDocuments','Gérer la bibliothèque de documents'],['manageServices','Gérer les services et forfaits'],['approveExpenses','Approuver les dépenses'],['viewNegotiations','Consulter les accords commerciaux'],['manageNegotiations','Gérer les accords commerciaux'],['paymentTermsEdit','Demander un changement de conditions de paiement']];
 const PERM_DEFAULTS={co_owner:PERMS.map(p=>p[0]),admin:['manageMembers','manageDocuments','manageServices','approveExpenses','viewFinances','viewNegotiations','manageNegotiations','paymentTermsEdit'],member:[]};
@@ -303,7 +304,7 @@ function set(path,val){const p=path.split('.');let o=S;while(p.length>1)o=o[p.sh
 // The feature tree as the app declares it (featureManifest `requires`):
 // a child is only offered while its parent is on, and switching a parent
 // off switches its children off — exactly what effectiveFeatures does.
-const REQUIRES={services:'moneyTab',accessorySupplements:'moneyTab',onlinePayments:'moneyTab',invoicing:'moneyTab',adminInvoicing:'invoicing',adminLevelAssign:'levelBooking',nfcBadges:'kioskMode',whatsappIntegration:'membersDirectory',invoicePdfTemplate:'invoicing',dunning:'invoicing',vatManagement:'invoicing',vatDeclarations:'vatManagement',einvoiceCustomerDelivery:'invoicing',notificationGrouping:'eventsTab',qrBadges:'kioskMode',kioskMemberPhotos:'kioskMode',badgeSignIn:'nfcBadges',paymentReminders:'dunning',supplyExpenses:'services',priceNegotiations:'moneyTab',scheduledExpenses:'moneyTab',memberReports:'moneyTab',financeFaces:'moneyTab',dataAccessLog:'moneyTab',subscriptionInvoices:'invoicing',usageInvoices:'invoicing',invoiceSettlement:'invoicing',invoiceJourney:'invoicing',bookingGate:'bookingPolicies',calendarViews:'calendarHub',reportDesigner:'invoicePdfTemplate',memberPage:'membersDirectory',invoicingWizard:'invoicing',expenseRepartition:'invoicing',settlementFold:'invoiceSettlement',richMessageRefs:'memberNotifications',calendarValidations:'calendarHub',usageRecords:'invoicing',reportDesignExchange:'reportDesigner',invoiceAddressWindow:'invoicing',reportLayouts:'reportDesigner',managedProfiles:'membersDirectory',managedProfileAccess:'managedProfiles',numberSequences:'invoicing',workspaceStatus:'invoicing',siteDocuments:'multiSite',vatGroups:'vatManagement',expenseRepartitionWizard:'expenseRepartition',memberPaymentTerms:'invoicing',reportTexts:'reportDesigner',usageReport:'usageRecords',vatReport:'vatDeclarations',letterStandard:'reportLayouts'};
+const REQUIRES={configurationTransfer:'dataExport',services:'moneyTab',accessorySupplements:'moneyTab',onlinePayments:'moneyTab',invoicing:'moneyTab',adminInvoicing:'invoicing',adminLevelAssign:'levelBooking',nfcBadges:'kioskMode',whatsappIntegration:'membersDirectory',invoicePdfTemplate:'invoicing',dunning:'invoicing',vatManagement:'invoicing',vatDeclarations:'vatManagement',einvoiceCustomerDelivery:'invoicing',notificationGrouping:'eventsTab',qrBadges:'kioskMode',kioskMemberPhotos:'kioskMode',badgeSignIn:'nfcBadges',paymentReminders:'dunning',supplyExpenses:'services',priceNegotiations:'moneyTab',scheduledExpenses:'moneyTab',memberReports:'moneyTab',financeFaces:'moneyTab',dataAccessLog:'moneyTab',subscriptionInvoices:'invoicing',usageInvoices:'invoicing',invoiceSettlement:'invoicing',invoiceJourney:'invoicing',bookingGate:'bookingPolicies',calendarViews:'calendarHub',reportDesigner:'invoicePdfTemplate',memberPage:'membersDirectory',invoicingWizard:'invoicing',expenseRepartition:'invoicing',settlementFold:'invoiceSettlement',richMessageRefs:'memberNotifications',calendarValidations:'calendarHub',usageRecords:'invoicing',reportDesignExchange:'reportDesigner',invoiceAddressWindow:'invoicing',reportLayouts:'reportDesigner',managedProfiles:'membersDirectory',managedProfileAccess:'managedProfiles',numberSequences:'invoicing',workspaceStatus:'invoicing',siteDocuments:'multiSite',vatGroups:'vatManagement',expenseRepartitionWizard:'expenseRepartition',memberPaymentTerms:'invoicing',reportTexts:'reportDesigner',usageReport:'usageRecords',vatReport:'vatDeclarations',letterStandard:'reportLayouts'};
 const EU=new Set(['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GR','HR','HU','IE','IT','LT','LU','LV','MT','NL','PL','PT','RO','SE','SI','SK']);
 const on=k=>{let f=k;while(f){if(!S.features[f])return false;f=REQUIRES[f]}return true};
 // #800 — cocher une fonctionnalité active tout ce dont elle a besoin.
@@ -722,11 +723,56 @@ function exportChecked(){const errs=findings().filter(x=>x.lvl==='err');if(errs.
 
 // ------------------------------------------------------------------ XML export
 const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+// ------------------------------------------------------------------ configuration (schema v3, #916)
+// The typed tree the app's <configuration> section carries: object members
+// sorted by name, strings in the value attribute (line breaks as &#10;), so
+// the app's export of the imported space reads byte for byte the same.
+const escAttr=s=>esc(s).replace(/\n/g,'&#10;').replace(/\r/g,'&#13;').replace(/\t/g,'&#9;');
+function cfgField(push,ind,name,v){
+ const n=name==null?'':` name="${esc(name)}"`;const pad=' '.repeat(ind);
+ if(v===null||v===undefined){push(`${pad}<field${n} type="null"/>`);return}
+ if(typeof v==='boolean'){push(`${pad}<field${n} type="boolean">${v}</field>`);return}
+ if(typeof v==='number'){push(`${pad}<field${n} type="number">${String(v)}</field>`);return}
+ if(typeof v==='string'){push(`${pad}<field${n} type="string" value="${escAttr(v)}"/>`);return}
+ if(Array.isArray(v)){push(`${pad}<field${n} type="array">`);v.forEach(x=>cfgField(push,ind+2,null,x));push(`${pad}</field>`);return}
+ push(`${pad}<field${n} type="object">`);Object.keys(v).sort().forEach(k=>cfgField(push,ind+2,k,v[k]));push(`${pad}</field>`);
+}
+function configurationTree(){
+ const cents=x=>Math.round((parseFloat(x)||0)*100),int=(x,d)=>{const n=parseInt(x);return isNaN(n)?d:n};
+ const vatLabel=pct=>{if(pct===''||pct==null)return null;const r=(S.vatRates||[]).find(r=>parseFloat(r.percent)===parseFloat(pct));return r?String(r.label).trim():null};
+ const ws={
+  address:S.address||'',street:S.street||'',postal_code:S.postal||'',city:S.city||'',
+  default_locale:S.language||'',whatsapp_group:on('whatsappIntegration')?(S.whatsapp||''):'',desk_opacity:int(S.deskOpacity,100),
+  invitation_templates:Object.fromEntries(Object.entries(S.invites).filter(([,v])=>String(v).trim()).map(([k,v])=>[k,String(v).trim()])),
+  vat_regime:S.vatRegime||'not_subject',vat_id:S.vatId||'',legal_id:S.regNumber||'',tax_exemption_reason:S.exemption||'',
+  booking_rules:{granularity:S.granularity,open_weekdays:S.weekdays.map(d=>int(d,1)),outside_hours_mode:on('bookingPolicies')?(S.policies.outsideHours||'charged'):'charged',
+   advance_horizon_days:int(S.horizonDays,90),min_duration_minutes:int(S.minDuration,30),max_duration_minutes:int(S.maxDuration,1440)},
+  subscription_levels:{enabled_presets:(S.subLevels||[]).map(x=>int(x,0)).filter(x=>x>0),extra_levels:[],allow_custom:false},
+  invoice_legal:{legal_form:S.mentions.legalForm||'',registration:S.mentions.register||'',payment_terms:S.mentions.terms||'',late_penalty:S.mentions.penalty||'',
+   recovery_indemnity:S.mentions.recovery||'',escompte:S.mentions.escompte||'',insurance:S.mentions.insurance||'',special_mentions:S.mentions.special||'',
+   seller_kind:S.org||'association',vat_exigibility:S.vatExigibility||'invoice'},
+ };
+ if(on('dunning'))ws.dunning_rules={levels:int(S.reminders.levels,1),first_after_days:int(S.reminders.firstDays,14),between_days:int(S.reminders.betweenDays,14)};
+ const t={
+  fee_bands:S.tiers.filter(x=>x.fee!=='').map(x=>({from_pct:int(x.from,0),to_pct:int(x.to,100),fee_cents:cents(x.fee),overage_fee_cents:cents(x.over)})),
+  packages:S.packages.filter(p=>p.name.trim()).map(p=>({name:p.name.trim(),days:int(p.days,0),price_cents:cents(p.price),active:true,vat_rate:null})),
+  closure_days:S.closures.filter(Boolean).map(d=>({day:d,reason:''})),
+  validation_policies:DOMAINS.map(([k])=>[k,S.domains[k]]).filter(([,d])=>d&&d.on).map(([k,d])=>({event_type:k,required_count:int(d.required,1),admins_may_validate:true,
+   owner_required:!!d.ownerSignOff,auto_validate_admin:k==='reservation_delete'&&!!S.autoValidate.admin,auto_validate_owner:k==='reservation_delete'&&!!S.autoValidate.owner,
+   validator_scope:d.validators||'admins',owner_may_self_validate:false,sequential:false})),
+ };
+ if(on('services'))t.services=S.services.filter(x=>x.name.trim()).map(x=>({name:x.name.trim(),price_cents:cents(x.price),active:true,stock:null,vat_rate:vatLabel(x.vat)}));
+ if(on('vatManagement')&&registered())t.vat_rates=S.vatRates.filter(r=>String(r.label).trim()&&r.percent!==''&&r.percent!=null).map((r,i)=>({label:String(r.label).trim(),percent:parseFloat(r.percent),
+   category:parseFloat(r.percent)>0?'S':'Z',is_default:i===0,active:true,group_key:on('vatGroups')&&r.group?r.group:null,outside_base:false,exemption_reason:null}));
+ if(on('multiSite'))t.sites=S.sites.filter(x=>String(x.name).trim()).map((x,i)=>({name:x.name.trim(),street:x.street||'',postal_code:x.postal||'',city:x.city||'',country_code:S.country||'',
+   legal_id:x.legalId||'',is_default:i===0,sort_order:i,vat_id:'',tax_exemption_reason:''}));
+ return {workspace:ws,tables:t};
+}
 function exportXml(){
  if(!S.name.trim()){alert("Renseignez le nom de l'espace (section 1).");return}
  const x=[];const push=s=>x.push(s);
  push('<?xml version="1.0" encoding="UTF-8"?>');
- push('<deskilo-workspace version="2">');
+ push('<deskilo-workspace version="3">');
  // settings — app-importable
  push(`  <settings name="${esc(S.name)}" country="${esc(S.country)}" currency="${esc(S.currency)}" timezone="${esc(S.timezone)}" environment="${esc(S.environment)}">`);
  for(const[k]of FEATURES)push(`    <feature key="${k}" enabled="${!!S.features[k]}"/>`);
@@ -757,7 +803,10 @@ function exportXml(){
   push('    </level>');
  });
  push('  </floor-plan>');
- // setup extension — ignored by the app importer, read by the configurator
+ // configuration — app-importable (schema v3, #916): what the <setup> block
+ // below says, in the shape the app stores, so the import applies it
+ if(on('configurationTransfer')){const tree=configurationTree();push('  <configuration>');Object.keys(tree).sort().forEach(k=>cfgField(push,4,k,tree[k]));push('  </configuration>')}
+ // setup extension — read back by the configurator
  push('  <setup>');
  push(`    <availability granularity="${S.granularity}" day-start="${S.dayStart}" half-boundary="${S.boundary}" day-end="${S.dayEnd}" open-weekdays="${S.weekdays.join(',')}" allow-past-bookings="${on('bookingPolicies')&&!!S.policies.allowPast}" outside-hours-mode="${on('bookingPolicies')?(S.policies.outsideHours||'charged'):'charged'}" simultaneous-reservations="${on('bookingPolicies')?(S.policies.simultaneous||'1'):'1'}" admin-check-out="${on('bookingPolicies')&&!!S.policies.adminCheckout}" advance-horizon-days="${S.horizonDays}" min-duration-minutes="${S.minDuration}" max-duration-minutes="${S.maxDuration}">`);
  S.closures.filter(Boolean).forEach(c=>push(`      <closure day="${esc(c)}"/>`));
