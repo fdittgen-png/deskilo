@@ -16,7 +16,7 @@
   <header height="25mm">
     <image name="logo" x="0" y="0" h="12mm" fit="contain"/>
     <text x="0" y="13mm" style="heading">{{ workspace }}</text>
-    <text x="0" y="20mm" style="small">{{ seller_legal_form }} · {{ workspace_address }}</text>
+    <text x="0" y="20mm" style="small">{{ seller_legal_form }} · {{ workspace_address }}{% if site_name != "" %} · {{ site_name }}{% endif %}</text>
   </header>
 
   <continuation height="8mm">

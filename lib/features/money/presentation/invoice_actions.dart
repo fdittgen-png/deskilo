@@ -313,6 +313,11 @@ Map<String, Object?> invoiceReportData(
   return <String, Object?>{
     'workspace': invoice.workspaceName,
     'workspace_address': invoice.workspaceAddress,
+    // #946 — the site the document concerns, when it is not the default
+    // one, and the other sites the month's attendance stood at.
+    'site_name': siteNameOf(invoice),
+    'site_address': siteAddressOf(invoice),
+    'usage_sites': usageSitesOf(invoice),
     'member': invoice.clientName,
     'number': invoice.number,
     'period': invoicePeriodLabel(context, invoice),
@@ -1086,6 +1091,11 @@ Map<String, Object?> reminderReportData(
   return <String, Object?>{
     'workspace': invoice.workspaceName,
     'workspace_address': invoice.workspaceAddress,
+    // #946 — the site the document concerns, when it is not the default
+    // one, and the other sites the month's attendance stood at.
+    'site_name': siteNameOf(invoice),
+    'site_address': siteAddressOf(invoice),
+    'usage_sites': usageSitesOf(invoice),
     'member': invoice.clientName,
     'number': invoice.number,
     'issued': dateFormat.format(invoice.issuedAt),
@@ -2415,3 +2425,28 @@ PaymentTerms? memberTermsFor(WidgetRef ref, String memberId) => ref
     ?.where((m) => m.id == memberId)
     .firstOrNull
     ?.paymentTerms;
+
+/// #946 — the site a document concerns, when it is not the default one.
+String siteNameOf(Invoice invoice) {
+  final seller = invoice.sellerParty;
+  return seller == null || seller.siteDefault ? '' : seller.site;
+}
+
+/// #946 — that site's address on one line, '' at the default site.
+String siteAddressOf(Invoice invoice) {
+  final seller = invoice.sellerParty;
+  if (seller == null || seller.siteDefault) return '';
+  return [seller.street, '${seller.postalCode} ${seller.city}'.trim()]
+      .where((l) => l.isNotEmpty)
+      .join(', ');
+}
+
+/// #946 — the other sites the month's attendance stood at.
+String usageSitesOf(Invoice invoice) {
+  final home = invoice.sellerParty?.site ?? '';
+  return invoice.attendance
+      .map((a) => a.site)
+      .where((s) => s.isNotEmpty && s != home)
+      .toSet()
+      .join(', ');
+}

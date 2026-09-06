@@ -264,6 +264,12 @@ class FeaturesScreen extends ConsumerWidget {
                   'its own address and registration, each member a home '
                   'site, and documents name the site they concern. Off: one '
                   'address for the whole workspace.',
+        WorkspaceFeature.siteDocuments =>
+          l10n?.featureSiteDocumentsDesc ??
+              'Documents name the site they concern: the member\'s home '
+                  'site\'s address and registration as the seller, and the '
+                  'other sites the month stood at in the details. Off: the '
+                  'workspace address on every document.',
         WorkspaceFeature.managedProfileAccess =>
           l10n?.featureManagedProfileAccessDesc ??
               'Each managed profile says who may administer it — by role, '

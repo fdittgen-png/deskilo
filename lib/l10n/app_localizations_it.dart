@@ -7590,6 +7590,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get servicesActive => 'Attivo';
 
   @override
+  String get featureSiteDocuments => 'Sedi sui documenti';
+
+  @override
+  String get featureSiteDocumentsDesc =>
+      'I documenti indicano la sede interessata: l\'indirizzo e la registrazione della sede di riferimento del socio come venditore, e le altre sedi frequentate nel mese nel dettaglio. Disattivato: l\'indirizzo dello spazio su tutti i documenti.';
+
+  @override
   String get featureMultiSite => 'Sedi';
 
   @override

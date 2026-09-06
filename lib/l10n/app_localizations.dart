@@ -13237,6 +13237,18 @@ abstract class AppLocalizations {
   /// **'Active'**
   String get servicesActive;
 
+  /// #946 site documents: featureSiteDocuments
+  ///
+  /// In en, this message translates to:
+  /// **'Sites on documents'**
+  String get featureSiteDocuments;
+
+  /// #946 site documents: featureSiteDocumentsDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Documents name the site they concern: the member\'s home site\'s address and registration as the seller, and the other sites the month stood at in the details. Off: the workspace address on every document.'**
+  String get featureSiteDocumentsDesc;
+
   /// #945 sites: featureMultiSite
   ///
   /// In en, this message translates to:

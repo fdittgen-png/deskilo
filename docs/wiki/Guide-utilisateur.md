@@ -1068,3 +1068,7 @@ Le FEC et le fichier DATEV portent désormais, en plus des ventes et de la banqu
 ### Sites (#945)
 
 Un espace peut avoir **plusieurs adresses**. *Réglages → Sites* : le site par défaut porte l'adresse de l'espace ; ajoutez un site par adresse supplémentaire (rue, code postal, ville, SIRET de l'établissement) et rattachez-y ses étages. Chaque adhérent a un **site de rattachement** (page de l'adhérent) : c'est l'adresse que porteront ses documents. Supprimer un site renvoie ses étages et ses adhérents au site par défaut.
+
+### Sites sur les documents (#946)
+
+Avec plusieurs sites, une facture porte **l'adresse et le SIRET du site de rattachement** de l'adhérent côté vendeur (le site par défaut garde l'adresse de l'espace), nomme le site sous l'en-tête, et — quand le détail des passages est imprimé — indique les **autres sites** où l'adhérent a travaillé dans le mois. La facture électronique suit la même adresse.

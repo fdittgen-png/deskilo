@@ -1116,3 +1116,7 @@ El FEC y el archivo DATEV incluyen ahora, junto a ventas y banco, un **diario de
 ### Sedes (#945)
 
 Un espacio puede tener **varias direcciones**. *Ajustes → Sedes*: la sede por defecto lleva la dirección del espacio; añada una sede por cada dirección adicional (calle, código postal, ciudad, registro del establecimiento) y asígnele sus plantas. Cada socio tiene una **sede de referencia** (página del socio): es la dirección que llevarán sus documentos. Eliminar una sede devuelve sus plantas y socios a la sede por defecto.
+
+### Sedes en los documentos (#946)
+
+Con varias sedes, una factura lleva **la dirección y el registro de la sede de referencia** del socio como vendedor (la sede por defecto conserva la dirección del espacio), nombra la sede bajo el encabezado y — cuando se imprime el detalle de asistencia — indica las **otras sedes** donde el socio trabajó en el mes. La factura electrónica sigue la misma dirección.

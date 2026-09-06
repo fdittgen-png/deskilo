@@ -4742,6 +4742,14 @@
   "servicesPrice": "Prix",
   "servicesInactive": "Inactif",
   "servicesActive": "Actif",
+  "featureSiteDocuments": "Sites sur les documents",
+  "@featureSiteDocuments": {
+    "description": "#946 site documents: featureSiteDocuments"
+  },
+  "featureSiteDocumentsDesc": "Les documents nomment le site concerné : l'adresse et le SIRET du site de rattachement de l'adhérent côté vendeur, et les autres sites fréquentés dans le mois dans le détail. Désactivé : l'adresse de l'espace sur tous les documents.",
+  "@featureSiteDocumentsDesc": {
+    "description": "#946 site documents: featureSiteDocumentsDesc"
+  },
   "featureMultiSite": "Sites",
   "@featureMultiSite": {
     "description": "#945 sites: featureMultiSite"

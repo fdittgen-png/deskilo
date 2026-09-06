@@ -20,6 +20,7 @@ class LetterStrings {
     this.payments = 'Payments report',
     this.usage = 'Consumption report',
     this.status = 'Workspace status',
+    this.sites = 'Also at',
     this.reminder = 'Reminder',
     this.issuedOn = 'Issued on',
     this.dueOn = 'Due on',
@@ -37,6 +38,7 @@ class LetterStrings {
   });
 
   final String invoice, proforma, statement, agreement, payments, usage, status,
+      sites,
       reminder, issuedOn, dueOn, orderRef, serviceRef, description, qty, unitPrice, total,
       paymentsLabel,
       balance, regards, page, records;
@@ -93,6 +95,7 @@ String defaultLetterLayoutXml(String kindId, LetterStrings s) {
   });
   final issuedOn = _esc(s.issuedOn);
   final dueOn = _esc(s.dueOn);
+  final sites = _esc(s.sites);
   final orderRef = _esc(s.orderRef);
   final serviceRef = _esc(s.serviceRef);
   final description = _esc(s.description);
@@ -137,6 +140,7 @@ String defaultLetterLayoutXml(String kindId, LetterStrings s) {
     <text style="heading">{% if proforma %}${_esc(s.proforma)}{% else %}$title{% endif %} {{ number }}</text>
     <text style="small">$issuedOn {{ issued }}</text>
     {% if due_date != "" %}<text style="small">$dueOn {{ due_date }}</text>{% endif %}
+    {% if usage_sites != "" %}<text style="small">$sites {{ usage_sites }}</text>{% endif %}
     <text style="small">{{ period }}</text>
     {% if client_legal_id != "" %}<text style="small">{{ client_legal_id }}</text>{% endif %}
     {% if purchase_order != "" %}<text style="small">$orderRef {{ purchase_order }}</text>{% endif %}
@@ -237,7 +241,7 @@ $mentions''',
   <header height="25mm">
     <image name="logo" x="0" y="0" h="12mm" fit="contain"/>
     <text x="0" y="13mm" style="heading">{{ workspace }}</text>
-    <text x="0" y="20mm" style="small">{% if seller_legal_form != "" %}{{ seller_legal_form }} · {% endif %}{{ workspace_address }}</text>
+    <text x="0" y="20mm" style="small">{% if seller_legal_form != "" %}{{ seller_legal_form }} · {% endif %}{{ workspace_address }}{% if site_name != "" %} · {{ site_name }}{% endif %}</text>
   </header>
 
   <continuation height="8mm">

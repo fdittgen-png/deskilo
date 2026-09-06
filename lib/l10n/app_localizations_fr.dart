@@ -7602,6 +7602,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get servicesActive => 'Actif';
 
   @override
+  String get featureSiteDocuments => 'Sites sur les documents';
+
+  @override
+  String get featureSiteDocumentsDesc =>
+      'Les documents nomment le site concerné : l\'adresse et le SIRET du site de rattachement de l\'adhérent côté vendeur, et les autres sites fréquentés dans le mois dans le détail. Désactivé : l\'adresse de l\'espace sur tous les documents.';
+
+  @override
   String get featureMultiSite => 'Sites';
 
   @override

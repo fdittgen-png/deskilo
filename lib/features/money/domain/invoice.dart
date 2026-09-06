@@ -55,6 +55,8 @@ sealed class InvoiceAttendance with _$InvoiceAttendance {
     required String startsAt,
     required String endsAt,
     @Default('') String space,
+    /// #946 — the site the reservation stood at ('' for the default).
+    @Default('') String site,
     @Default('') String status,
   }) = _InvoiceAttendance;
 }
@@ -137,6 +139,13 @@ sealed class InvoiceParty with _$InvoiceParty {
     /// #928 — the buyer's member number ("N° adhérent"), frozen at issue.
     @Default('') String memberNumber,
 
+    /// #946 — the site this party stands at (the seller's document site).
+    @Default('') String site,
+
+    /// #946 — whether that site is the workspace's default one; a
+    /// document at another site prints the site's name and address.
+    @Default(true) bool siteDefault,
+
     /// Wire value of [VatRegime]; seller only.
     @Default('not_subject') String vatRegime,
 
@@ -171,6 +180,8 @@ sealed class InvoiceParty with _$InvoiceParty {
     vatId: json['vat_id'] as String? ?? '',
     legalId: json['legal_id'] as String? ?? '',
     memberNumber: json['member_number'] as String? ?? '',
+    site: json['site'] as String? ?? '',
+    siteDefault: json['site_default'] as bool? ?? true,
     reference: json['reference'] as String? ?? '',
     orderReference: json['order'] as String? ?? '',
     vatRegime: json['vat_regime'] as String? ?? 'not_subject',
@@ -413,6 +424,7 @@ sealed class Invoice with _$Invoice {
           startsAt: (entry as Map)['starts_at'] as String? ?? '',
           endsAt: entry['ends_at'] as String? ?? '',
           space: entry['space'] as String? ?? '',
+          site: entry['site'] as String? ?? '',
           status: entry['status'] as String? ?? '',
         ),
     ],

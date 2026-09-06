@@ -141,6 +141,8 @@ void main() {
         'vat_period', 'vat_period_net', 'vat_period_vat', 'vat_period_gross',
         'vat_basis_note',
         // #934 — the workspace status.
+        // #946 — the document site.
+        'site_name', 'site_address', 'usage_sites',
         'status_from', 'status_to', 'status_invoiced', 'status_credit_notes',
         'status_payments', 'status_reimbursed', 'status_repartitioned',
         'status_credits', 'status_net', 'status_members',
