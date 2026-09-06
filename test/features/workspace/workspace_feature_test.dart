@@ -32,6 +32,7 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.expenseRepartitionWizard,
   // #945 — a second address is opt-in.
   WorkspaceFeature.multiSite,
+  WorkspaceFeature.siteDocuments,
 };
 
 /// Every other feature ships ON.
@@ -84,6 +85,7 @@ void main() {
       'workspaceStatus': true,
       'expenseRepartitionWizard': true,
       'multiSite': true,
+      'siteDocuments': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

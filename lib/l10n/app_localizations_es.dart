@@ -7577,6 +7577,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get servicesActive => 'Activo';
 
   @override
+  String get featureSiteDocuments => 'Sedes en los documentos';
+
+  @override
+  String get featureSiteDocumentsDesc =>
+      'Los documentos nombran la sede a la que se refieren: la dirección y el registro de la sede de referencia del socio como vendedor, y las demás sedes utilizadas en el mes en el detalle. Desactivado: la dirección del espacio en todos los documentos.';
+
+  @override
   String get featureMultiSite => 'Sedes';
 
   @override

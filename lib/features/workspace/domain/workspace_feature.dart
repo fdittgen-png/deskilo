@@ -72,6 +72,7 @@ enum WorkspaceFeature {
   workspaceStatus,
   expenseRepartitionWizard,
   multiSite,
+  siteDocuments,
   seatDayTimeline,
   memberPaymentTerms,
   reportTexts,
@@ -572,6 +573,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.multiSite: FeatureManifestEntry(
     feature: WorkspaceFeature.multiSite,
     defaultOn: false,
+  ),
+  // #946 — documents name the site they concern: the member's home
+  // site's address and registration on the seller side, the other
+  // sites the month stood at in the details.
+  WorkspaceFeature.siteDocuments: FeatureManifestEntry(
+    feature: WorkspaceFeature.siteDocuments,
+    defaultOn: false,
+    requires: WorkspaceFeature.multiSite,
   ),
   WorkspaceFeature.managedProfileAccess: FeatureManifestEntry(
     feature: WorkspaceFeature.managedProfileAccess,

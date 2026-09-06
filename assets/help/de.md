@@ -1095,3 +1095,7 @@ FEC und DATEV-Datei führen neben Verkauf und Bank nun ein **Einkaufsjournal**: 
 ### Standorte (#945)
 
 Ein Arbeitsbereich kann **mehrere Adressen** haben. *Einstellungen → Standorte*: der Standard-Standort trägt die Adresse des Arbeitsbereichs; fügen Sie je weiterer Adresse einen Standort hinzu (Straße, PLZ, Ort, Registrierung der Betriebsstätte) und ordnen Sie ihm seine Ebenen zu. Jedes Mitglied hat einen **Heimatstandort** (Mitgliedsseite): diese Adresse tragen seine Belege. Das Löschen eines Standorts gibt Ebenen und Mitglieder an den Standard-Standort zurück.
+
+### Standorte auf Belegen (#946)
+
+Mit mehreren Standorten trägt eine Rechnung **Adresse und Registrierung des Heimatstandorts** des Mitglieds auf der Verkäuferseite (der Standard-Standort behält die Adresse des Arbeitsbereichs), nennt den Standort unter der Kopfzeile und führt — wenn die Anwesenheitsdetails gedruckt werden — die **anderen Standorte** auf, an denen das Mitglied im Monat gearbeitet hat. Die E-Rechnung folgt derselben Adresse.

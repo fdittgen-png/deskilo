@@ -1,0 +1,11 @@
+{
+  "@@locale": "de",
+  "featureSiteDocuments": "Standorte auf Belegen",
+  "@featureSiteDocuments": {
+    "description": "#946 site documents: featureSiteDocuments"
+  },
+  "featureSiteDocumentsDesc": "Belege nennen den betroffenen Standort: Adresse und Registrierung des Heimatstandorts des Mitglieds als Verkäufer, und die anderen im Monat genutzten Standorte im Detail. Aus: die Adresse des Arbeitsbereichs auf jedem Beleg.",
+  "@featureSiteDocumentsDesc": {
+    "description": "#946 site documents: featureSiteDocumentsDesc"
+  }
+}

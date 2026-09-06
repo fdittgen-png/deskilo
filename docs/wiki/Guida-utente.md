@@ -1068,3 +1068,7 @@ Il FEC e il file DATEV riportano ora, oltre a vendite e banca, un **giornale acq
 ### Sedi (#945)
 
 Uno spazio può avere **più indirizzi**. *Impostazioni → Sedi*: la sede predefinita porta l'indirizzo dello spazio; aggiungi una sede per ogni indirizzo in più (via, CAP, città, registrazione dell'unità locale) e assegnale i suoi piani. Ogni socio ha una **sede di riferimento** (pagina del socio): è l'indirizzo che porteranno i suoi documenti. Eliminare una sede riporta piani e soci alla sede predefinita.
+
+### Sedi sui documenti (#946)
+
+Con più sedi, una fattura porta **l'indirizzo e la registrazione della sede di riferimento** del socio come venditore (la sede predefinita mantiene l'indirizzo dello spazio), indica la sede sotto l'intestazione e — quando si stampa il dettaglio delle presenze — elenca le **altre sedi** in cui il socio ha lavorato nel mese. La fattura elettronica segue lo stesso indirizzo.

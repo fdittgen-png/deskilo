@@ -7589,6 +7589,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get servicesActive => 'Aktiv';
 
   @override
+  String get featureSiteDocuments => 'Standorte auf Belegen';
+
+  @override
+  String get featureSiteDocumentsDesc =>
+      'Belege nennen den betroffenen Standort: Adresse und Registrierung des Heimatstandorts des Mitglieds als Verkäufer, und die anderen im Monat genutzten Standorte im Detail. Aus: die Adresse des Arbeitsbereichs auf jedem Beleg.';
+
+  @override
   String get featureMultiSite => 'Standorte';
 
   @override

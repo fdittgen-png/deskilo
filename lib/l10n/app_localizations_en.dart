@@ -7528,6 +7528,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get servicesActive => 'Active';
 
   @override
+  String get featureSiteDocuments => 'Sites on documents';
+
+  @override
+  String get featureSiteDocumentsDesc =>
+      'Documents name the site they concern: the member\'s home site\'s address and registration as the seller, and the other sites the month stood at in the details. Off: the workspace address on every document.';
+
+  @override
   String get featureMultiSite => 'Sites';
 
   @override

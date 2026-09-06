@@ -28,6 +28,7 @@ String _sellerBlock(AppLocalizations? l10n) => '''
 {{ workspace }}
 {% if seller_legal_form != "" %}> {{ seller_legal_form }}{% endif %}
 > {{ workspace_address }}
+{% if site_name != "" %}> {{ site_name }} — {{ site_address }}{% endif %}
 {% if seller_registration != "" %}> {{ seller_registration }}{% endif %}
 {% if seller_vat_id != "" %}> ${l10n?.legalIdentityVatId ?? 'VAT number'}: {{ seller_vat_id }}{% endif %}''';
 
