@@ -106,7 +106,8 @@ void main() {
 
     expect(rows, hasLength(2));
     expect(rows.first['JournalCode'], 'VE');
-    expect(rows.first['EcritureNum'], 'VE0001');
+    expect(rows.first['EcritureNum'], 'VE-INV-2026-0001',
+        reason: '#927 — derived from the document, stable across exports');
     expect(rows.first['EcritureDate'], '20260702');
     expect(rows.first['CompteNum'], '411000');
     expect(rows.first['CompAuxNum'], 'member-1',
@@ -223,8 +224,22 @@ void main() {
     ]);
 
     expect(rows.first['PieceRef'], 'INV-EARLY');
-    expect(rows.first['EcritureNum'], 'VE0001');
-    expect(rows.last['EcritureNum'], 'VE0002');
+    expect(rows.first['EcritureNum'], 'VE-INV-EARLY');
+    expect(rows.last['EcritureNum'], 'VE-INV-LATE');
+  });
+
+  test('#927 — two exports of overlapping ranges carry the SAME entry '
+      'number for the same entry: it is derived from the document, not '
+      'counted per file', () {
+    final early = _invoice(number: 'INV-EARLY', issuedAt: DateTime(2026, 6, 1));
+    final late = _invoice(number: 'INV-LATE', issuedAt: DateTime(2026, 9, 1));
+    final halfYear = _rows(invoices: [early]);
+    final fullYear = _rows(invoices: [early, late]);
+    expect(halfYear.first['EcritureNum'], fullYear.first['EcritureNum']);
+    expect(fullYear.last['EcritureNum'], 'VE-INV-LATE');
+    // And a per-file counter would have called BOTH files' first entry
+    // VE0001 — the collision this replaces.
+    expect(fullYear.map((r) => r['EcritureNum']).toSet().length, 2);
   });
 
   test('a tab inside a label can never shift a column', () {
