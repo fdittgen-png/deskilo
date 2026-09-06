@@ -7374,6 +7374,360 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get reportGuideTitle => 'Campi e marcatura';
+
+  @override
+  String get reportGuideIntro =>
+      'Tre bande compongono il PDF: intestazione, corpo, piè di pagina. Scrivete testo, mettete un campo dove va un valore e un segno di marcatura a inizio riga per lo stile. L\'XML della fattura elettronica non viene mai toccato.';
+
+  @override
+  String get reportGuideInsertField => 'Inserisci un campo…';
+
+  @override
+  String get reportGuideMarkupTitle => 'Marcatura di riga';
+
+  @override
+  String get reportGuideSnippetsTitle => 'Pezzi pronti';
+
+  @override
+  String get reportGuideSnippetIf => 'Una riga solo se il valore esiste';
+
+  @override
+  String get reportGuideSnippetLoop => 'Una riga per ogni riga di fattura';
+
+  @override
+  String get reportGuideSnippetTitle =>
+      'Il titolo: fattura, nota di credito o proforma';
+
+  @override
+  String reportGuideInsertedInto(String band) {
+    return 'Inserito in $band';
+  }
+
+  @override
+  String get reportMarkupHeading => 'Un titolo grande';
+
+  @override
+  String get reportMarkupSection => 'Un titolo di sezione';
+
+  @override
+  String get reportMarkupSmall => 'Testo piccolo e discreto';
+
+  @override
+  String get reportMarkupRule => 'Una linea orizzontale';
+
+  @override
+  String get reportMarkupTable => 'Una riga di tabella, una cella per |';
+
+  @override
+  String get reportMarkupBoldRow => 'Una riga di tabella in grassetto';
+
+  @override
+  String get reportMarkupColumns => 'Colonne affiancate, separate da |||';
+
+  @override
+  String get reportMarkupImage =>
+      'Un\'immagine della libreria: dimensione s/m/l, allineamento left/center/right';
+
+  @override
+  String get reportFieldGroupSeller => 'Venditore';
+
+  @override
+  String get reportFieldGroupBank => 'Coordinate bancarie';
+
+  @override
+  String get reportFieldGroupVat => 'Rapporto IVA';
+
+  @override
+  String get reportFieldGroupUsage => 'Rapporto di consumo';
+
+  @override
+  String get reportFieldGroupSites => 'Sedi';
+
+  @override
+  String get reportFieldGroupStatus => 'Situazione dello spazio';
+
+  @override
+  String get reportFieldMeaningNumber => 'Il numero del documento';
+
+  @override
+  String get reportFieldMeaningMember => 'Il nome visualizzato del membro';
+
+  @override
+  String get reportFieldMeaningWorkspace => 'Il nome dello spazio';
+
+  @override
+  String get reportFieldMeaningWorkspaceAddress =>
+      'L\'indirizzo dello spazio, o quello della sede del documento';
+
+  @override
+  String get reportFieldMeaningPeriod => 'Il mese coperto dal documento';
+
+  @override
+  String get reportFieldMeaningIssued => 'La data di emissione';
+
+  @override
+  String get reportFieldMeaningDueDate => 'La data di scadenza';
+
+  @override
+  String get reportFieldMeaningPurchaseOrder =>
+      'Il riferimento dell\'ordine d\'acquisto';
+
+  @override
+  String get reportFieldMeaningBuyerReference =>
+      'Il riferimento proprio dell\'acquirente (settore pubblico)';
+
+  @override
+  String get reportFieldMeaningIssuedBy => 'Chi ha emesso il documento';
+
+  @override
+  String get reportFieldMeaningReplaces => 'Il numero della fattura sostituita';
+
+  @override
+  String get reportFieldMeaningTotal => 'L\'importo dovuto, tutto compreso';
+
+  @override
+  String get reportFieldMeaningCharges => 'Gli addebiti prima dei pagamenti';
+
+  @override
+  String get reportFieldMeaningPayments => 'I pagamenti già ricevuti';
+
+  @override
+  String get reportFieldMeaningVoided => 'Vero quando la fattura è annullata';
+
+  @override
+  String get reportFieldMeaningProforma => 'Vero su una proforma';
+
+  @override
+  String get reportFieldMeaningCopy => 'Vero su un duplicato';
+
+  @override
+  String get reportFieldMeaningHasVat => 'Vero quando si applica l\'IVA';
+
+  @override
+  String get reportFieldMeaningLines => 'Le righe della fattura — un ciclo';
+
+  @override
+  String get reportFieldMeaningVat => 'L\'IVA per aliquota — un ciclo';
+
+  @override
+  String get reportFieldMeaningNetTotal => 'Il totale senza IVA';
+
+  @override
+  String get reportFieldMeaningVatTotal => 'L\'IVA totale';
+
+  @override
+  String get reportFieldMeaningCreditNote => 'Vero su una nota di credito';
+
+  @override
+  String get reportFieldMeaningRefundTotal => 'L\'importo rimborsato';
+
+  @override
+  String get reportFieldMeaningIban => 'L\'IBAN del conto';
+
+  @override
+  String get reportFieldMeaningBic => 'Il BIC della banca';
+
+  @override
+  String get reportFieldMeaningBankName => 'Il nome della banca';
+
+  @override
+  String get reportFieldMeaningBankAccount => 'Il numero di conto';
+
+  @override
+  String get reportFieldMeaningBankCode => 'Il codice bancario';
+
+  @override
+  String get reportFieldMeaningAccountHolder => 'L\'intestatario del conto';
+
+  @override
+  String get reportFieldMeaningPaymentReference => 'La causale del pagamento';
+
+  @override
+  String get reportFieldMeaningSellerLegalForm =>
+      'La forma giuridica del venditore';
+
+  @override
+  String get reportFieldMeaningSellerRegistration =>
+      'La registrazione del venditore';
+
+  @override
+  String get reportFieldMeaningSellerVatId => 'La partita IVA del venditore';
+
+  @override
+  String get reportFieldMeaningSellerLegalId =>
+      'L\'identificativo legale del venditore';
+
+  @override
+  String get reportFieldMeaningExemptionReason =>
+      'La dicitura di esenzione IVA';
+
+  @override
+  String get reportFieldMeaningVatExigibilityMention =>
+      'Quando l\'IVA è esigibile, per esteso';
+
+  @override
+  String get reportFieldMeaningClientName => 'Il nome completo del cliente';
+
+  @override
+  String get reportFieldMeaningClientCompany => 'L\'azienda del cliente';
+
+  @override
+  String get reportFieldMeaningClientPhone => 'Il telefono del cliente';
+
+  @override
+  String get reportFieldMeaningClientEmail => 'L\'e-mail del cliente';
+
+  @override
+  String get reportFieldMeaningClientAddress => 'Il blocco postale del cliente';
+
+  @override
+  String get reportFieldMeaningClientVatId => 'La partita IVA del cliente';
+
+  @override
+  String get reportFieldMeaningClientLegalId =>
+      'L\'identificativo legale del cliente';
+
+  @override
+  String get reportFieldMeaningClientMemberNumber =>
+      'Il numero di socio del cliente';
+
+  @override
+  String get reportFieldMeaningUsagePaid =>
+      'Quanto è costato il consumo del mese';
+
+  @override
+  String get reportFieldMeaningUsageIncludedHalfDays =>
+      'Mezze giornate incluse nell\'abbonamento';
+
+  @override
+  String get reportFieldMeaningUsageUsedHalfDays => 'Mezze giornate usate';
+
+  @override
+  String get reportFieldMeaningUsageRemainingHalfDays =>
+      'Mezze giornate rimanenti';
+
+  @override
+  String get reportFieldMeaningUsageExtraHalfDays =>
+      'Mezze giornate oltre l\'abbonamento';
+
+  @override
+  String get reportFieldMeaningUsageOverage => 'L\'eccedenza addebitata';
+
+  @override
+  String get reportFieldMeaningUsageSupplements =>
+      'I supplementi per accessori';
+
+  @override
+  String get reportFieldMeaningUsageRecords =>
+      'Ogni registrazione di consumo — un ciclo';
+
+  @override
+  String get reportFieldMeaningVatPeriod => 'Il periodo IVA dichiarato';
+
+  @override
+  String get reportFieldMeaningVatPeriodNet => 'Il totale netto del periodo';
+
+  @override
+  String get reportFieldMeaningVatPeriodVat => 'L\'IVA del periodo';
+
+  @override
+  String get reportFieldMeaningVatPeriodGross => 'Il totale lordo del periodo';
+
+  @override
+  String get reportFieldMeaningVatBasisNote =>
+      'Se il periodo conta l\'incassato o l\'emesso';
+
+  @override
+  String get reportFieldMeaningSiteName => 'Il nome della sede del documento';
+
+  @override
+  String get reportFieldMeaningSiteAddress =>
+      'L\'indirizzo della sede del documento';
+
+  @override
+  String get reportFieldMeaningUsageSites => 'Le altre sedi del mese';
+
+  @override
+  String get reportFieldMeaningPendingPaymentsTotal =>
+      'Pagamenti ancora da confermare';
+
+  @override
+  String get reportFieldMeaningPendingExpensesTotal =>
+      'Spese ancora da convalidare';
+
+  @override
+  String get reportFieldMeaningStatusFrom =>
+      'Il primo giorno del periodo di situazione';
+
+  @override
+  String get reportFieldMeaningStatusTo =>
+      'L\'ultimo giorno del periodo di situazione';
+
+  @override
+  String get reportFieldMeaningStatusInvoiced =>
+      'Quanto lo spazio ha fatturato';
+
+  @override
+  String get reportFieldMeaningStatusCreditNotes => 'Le note di credito emesse';
+
+  @override
+  String get reportFieldMeaningStatusPayments => 'Quanto è stato incassato';
+
+  @override
+  String get reportFieldMeaningStatusReimbursed => 'Quanto è stato rimborsato';
+
+  @override
+  String get reportFieldMeaningStatusRepartitioned =>
+      'Quanto è stato ripartito';
+
+  @override
+  String get reportFieldMeaningStatusCredits => 'I crediti concessi';
+
+  @override
+  String get reportFieldMeaningStatusNet => 'Entrate meno uscite';
+
+  @override
+  String get reportFieldMeaningStatusMembers =>
+      'Le righe per membro — un ciclo';
+
+  @override
+  String get reportFieldMeaningVatPositions =>
+      'Ogni fattura del periodo IVA — un ciclo';
+
+  @override
+  String get reportFieldMeaningVatRateTotals =>
+      'I totali del periodo per aliquota — un ciclo';
+
+  @override
+  String get reportFieldMeaningPaymentTerms =>
+      'La dicitura delle condizioni di pagamento';
+
+  @override
+  String get reportFieldMeaningPaymentTermsSource =>
+      'Da dove vengono le condizioni (membro o spazio)';
+
+  @override
+  String get reportFieldMeaningLatePenalty =>
+      'La dicitura delle penali di ritardo';
+
+  @override
+  String get reportFieldMeaningRecoveryIndemnity =>
+      'La dicitura dell\'indennità di recupero';
+
+  @override
+  String get reportFieldMeaningEscompte =>
+      'La dicitura dello sconto per pagamento anticipato';
+
+  @override
+  String get reportFieldMeaningInsurance =>
+      'La dicitura dell\'assicurazione professionale';
+
+  @override
+  String get reportFieldMeaningSpecialMentions =>
+      'Le diciture particolari dello spazio';
+
+  @override
   String get reportLayoutTitle => 'Layout posizionato (XML)';
 
   @override
