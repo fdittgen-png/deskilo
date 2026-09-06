@@ -925,6 +925,38 @@
   "calendarValidationRefused": "Abgelehnt: {what}",
   "calendarEventActionValidated": "freigegeben",
   "calendarEventActionRefused": "abgelehnt",
+  "invoicePurchaseOrder": "Auftragsnummer",
+  "@invoicePurchaseOrder": {
+    "description": "#922 chorus pro: invoicePurchaseOrder"
+  },
+  "invoicePurchaseOrderHint": "Öffentlicher Auftraggeber (Chorus Pro): die numéro d'engagement.",
+  "@invoicePurchaseOrderHint": {
+    "description": "#922 chorus pro: invoicePurchaseOrderHint"
+  },
+  "invoiceBuyerReference": "Dienststellencode",
+  "@invoiceBuyerReference": {
+    "description": "#922 chorus pro: invoiceBuyerReference"
+  },
+  "invoiceBuyerReferenceHint": "Öffentlicher Auftraggeber (Chorus Pro): der code service exécutant.",
+  "@invoiceBuyerReferenceHint": {
+    "description": "#922 chorus pro: invoiceBuyerReferenceHint"
+  },
+  "invoiceGapPublicSectorRefs": "Für eine öffentliche Plattform bestimmt, ohne Auftragsnummer und ohne Dienststellencode — Chorus Pro lehnt die meisten Einreichungen ohne eines von beiden ab.",
+  "@invoiceGapPublicSectorRefs": {
+    "description": "#922 chorus pro: invoiceGapPublicSectorRefs"
+  },
+  "invoicePdfPurchaseOrder": "Auftragsreferenz",
+  "@invoicePdfPurchaseOrder": {
+    "description": "#922 chorus pro: invoicePdfPurchaseOrder"
+  },
+  "invoicePdfBuyerReference": "Dienststelle",
+  "@invoicePdfBuyerReference": {
+    "description": "#922 chorus pro: invoicePdfBuyerReference"
+  },
+  "invoicePublicBuyer": "Öffentlicher Auftraggeber (Chorus Pro)",
+  "@invoicePublicBuyer": {
+    "description": "#922 chorus pro: invoicePublicBuyer"
+  },
   "appTitle": "DesKilo",
   "tabPlan": "Plan",
   "tabCalendar": "Kalender",

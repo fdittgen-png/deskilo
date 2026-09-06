@@ -22,6 +22,8 @@ class LetterStrings {
     this.reminder = 'Reminder',
     this.issuedOn = 'Issued on',
     this.dueOn = 'Due on',
+    this.orderRef = 'Order',
+    this.serviceRef = 'Service',
     this.description = 'Description',
     this.qty = 'Qty',
     this.unitPrice = 'Unit price',
@@ -34,7 +36,7 @@ class LetterStrings {
   });
 
   final String invoice, proforma, statement, agreement, payments, usage,
-      reminder, issuedOn, dueOn, description, qty, unitPrice, total,
+      reminder, issuedOn, dueOn, orderRef, serviceRef, description, qty, unitPrice, total,
       paymentsLabel,
       balance, regards, page, records;
 }
@@ -89,6 +91,8 @@ String defaultLetterLayoutXml(String kindId, LetterStrings s) {
   });
   final issuedOn = _esc(s.issuedOn);
   final dueOn = _esc(s.dueOn);
+  final orderRef = _esc(s.orderRef);
+  final serviceRef = _esc(s.serviceRef);
   final description = _esc(s.description);
   final colQty = _esc(s.qty);
   final colUnit = _esc(s.unitPrice);
@@ -133,6 +137,8 @@ String defaultLetterLayoutXml(String kindId, LetterStrings s) {
     {% if due_date != "" %}<text style="small">$dueOn {{ due_date }}</text>{% endif %}
     <text style="small">{{ period }}</text>
     {% if client_legal_id != "" %}<text style="small">{{ client_legal_id }}</text>{% endif %}
+    {% if purchase_order != "" %}<text style="small">$orderRef {{ purchase_order }}</text>{% endif %}
+    {% if buyer_reference != "" %}<text style="small">$serviceRef {{ buyer_reference }}</text>{% endif %}
     <spacer size="4mm"/>
 $linesTable
     <rule/>

@@ -260,6 +260,10 @@ class FakeMoneyRepository implements MoneyRepository {
   /// The id [settleInvoices] hands back.
   String nextSettlementId = 'INV-2026-9999';
 
+  /// #922 — what the last issue carried, for assertions.
+  String lastBuyerReference = '';
+  String lastPurchaseOrder = '';
+
   @override
   Future<String> settleInvoices({
     required String workspaceId,
@@ -426,7 +430,11 @@ class FakeMoneyRepository implements MoneyRepository {
     String? replacesId,
     bool detailed = false,
     InvoiceKind kind = InvoiceKind.full,
+    String buyerReference = '',
+    String purchaseOrder = '',
   }) async {
+    lastBuyerReference = buyerReference;
+    lastPurchaseOrder = purchaseOrder;
     // Server contract (0067/0142): one ACTIVE invoice per member, month
     // and KIND — a full invoice blocks both kinds.
     if (invoices.any((i) =>

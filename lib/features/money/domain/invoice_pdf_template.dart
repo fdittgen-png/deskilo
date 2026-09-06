@@ -223,6 +223,9 @@ class InvoicePdfTemplate {
     'issued',
     // #910 — the settlement date the law wants stated.
     'due_date',
+    // #922 — the public-sector references, when the buyer is one.
+    'purchase_order',
+    'buyer_reference',
     'issued_by',
     'replaces',
     'total',

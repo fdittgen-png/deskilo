@@ -407,6 +407,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
     String? replacesId,
     bool detailed = false,
     InvoiceKind kind = InvoiceKind.full,
+    String buyerReference = '',
+    String purchaseOrder = '',
   }) async {
     final id = await _client.rpc<dynamic>('create_invoice', params: {
       'p_workspace_id': workspaceId,
@@ -415,6 +417,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
       'p_replaces': replacesId,
       'p_detailed': detailed,
       // #827 — the kind (0142); full stays the default.
+      'p_buyer_reference': buyerReference,
+      'p_purchase_order': purchaseOrder,
       'p_kind': kind.name,
     });
     return id as String;

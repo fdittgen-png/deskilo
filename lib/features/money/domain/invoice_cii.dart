@@ -183,8 +183,16 @@ String buildInvoiceCii({
       }
 
       builder.element('ram:ApplicableHeaderTradeAgreement', nest: () {
+        // #922 — BT-10 leads the agreement in CII's element order.
+        if (buyer.reference.isNotEmpty) ram('BuyerReference', buyer.reference);
         party('SellerTradeParty', seller, isSeller: true);
         party('BuyerTradeParty', buyer, isSeller: false);
+        // #922 — BT-13 follows the parties.
+        if (buyer.orderReference.isNotEmpty) {
+          builder.element('ram:BuyerOrderReferencedDocument', nest: () {
+            ram('IssuerAssignedID', buyer.orderReference);
+          });
+        }
       });
       // Mandatory even when empty: services have no delivery event.
       builder.element('ram:ApplicableHeaderTradeDelivery', nest: () {});

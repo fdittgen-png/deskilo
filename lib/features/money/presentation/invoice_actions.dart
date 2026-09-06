@@ -320,6 +320,9 @@ Map<String, Object?> invoiceReportData(
     'due_date': dueAt == null || invoice.number.isEmpty
         ? ''
         : dateFormat.format(dueAt),
+    // #922 — what Chorus Pro reads from the XML, said on the paper too.
+    'purchase_order': invoice.buyerParty?.orderReference ?? '',
+    'buyer_reference': invoice.buyerParty?.reference ?? '',
     'issued_by': invoice.issuerName,
     'replaces': invoice.replacesNumber,
     'total': money(invoice.totalCents),
@@ -1950,6 +1953,9 @@ Future<void> exportEInvoice(
     invoice: invoice,
     seller: seller,
     buyer: buyer,
+    // #922 — the sheet's default leg is the government platform; the
+    // public-sector references are asked for there, as a warning.
+    destination: 'government',
   );
   // The same judgement against the LIVE identity: if that one passes, the
   // owner is not missing anything — the document is simply older than the

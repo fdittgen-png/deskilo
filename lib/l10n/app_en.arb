@@ -1525,6 +1525,38 @@
   "@calendarEventActionRefused": {
     "description": "#843 - verb of a refused decision"
   },
+  "invoicePurchaseOrder": "Engagement number",
+  "@invoicePurchaseOrder": {
+    "description": "#922 chorus pro: invoicePurchaseOrder"
+  },
+  "invoicePurchaseOrderHint": "Public-sector buyer (Chorus Pro): the numéro d'engagement.",
+  "@invoicePurchaseOrderHint": {
+    "description": "#922 chorus pro: invoicePurchaseOrderHint"
+  },
+  "invoiceBuyerReference": "Service code",
+  "@invoiceBuyerReference": {
+    "description": "#922 chorus pro: invoiceBuyerReference"
+  },
+  "invoiceBuyerReferenceHint": "Public-sector buyer (Chorus Pro): the code service exécutant.",
+  "@invoiceBuyerReferenceHint": {
+    "description": "#922 chorus pro: invoiceBuyerReferenceHint"
+  },
+  "invoiceGapPublicSectorRefs": "Bound for a public-sector platform with no engagement number and no service code — Chorus Pro refuses most deposits without one.",
+  "@invoiceGapPublicSectorRefs": {
+    "description": "#922 chorus pro: invoiceGapPublicSectorRefs"
+  },
+  "invoicePdfPurchaseOrder": "Order reference",
+  "@invoicePdfPurchaseOrder": {
+    "description": "#922 chorus pro: invoicePdfPurchaseOrder"
+  },
+  "invoicePdfBuyerReference": "Service reference",
+  "@invoicePdfBuyerReference": {
+    "description": "#922 chorus pro: invoicePdfBuyerReference"
+  },
+  "invoicePublicBuyer": "Public-sector buyer (Chorus Pro)",
+  "@invoicePublicBuyer": {
+    "description": "#922 chorus pro: invoicePublicBuyer"
+  },
   "appTitle": "DesKilo",
   "@appTitle": {
     "description": "Application name shown in the task switcher and app bar. Brand name — identical in all locales."

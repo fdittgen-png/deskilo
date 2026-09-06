@@ -49,7 +49,8 @@ Future<void> showInvoiceIssueSheet(
   // period must not straddle a midnight (or month) tick.
   final now = ref.read(clockProvider).now();
   final result = await showModalBottomSheet<
-      ({String memberId, String period, bool detailed})>(
+      ({String memberId, String period, bool detailed,
+        String buyerReference, String purchaseOrder})>(
     context: context,
     isScrollControlled: true,
     builder: (context) => _InvoiceForm(
@@ -86,6 +87,8 @@ Future<void> showInvoiceIssueSheet(
           period: result.period,
           replacesId: replaces?.id,
           detailed: result.detailed,
+          buyerReference: result.buyerReference,
+          purchaseOrder: result.purchaseOrder,
         );
   } catch (e, st) {
     TraceLogger.instance
@@ -151,6 +154,12 @@ class _InvoiceFormState extends State<_InvoiceForm> {
   late String? _memberId = widget.initialMemberId;
   late String _period = widget.initialPeriod;
   late bool _detailed = widget.initialDetailed;
+  // #922 — for a public-sector buyer; empty for everyone else. The two
+  // fields hide behind a switch that is OFF by default: a member's
+  // invoice is derived and has nothing to type, and that stays true.
+  bool _publicBuyer = false;
+  final _buyerReference = TextEditingController();
+  final _purchaseOrder = TextEditingController();
   ({List<InvoiceLine> lines, int totalCents})? _preview;
   bool _loading = false;
 
@@ -390,6 +399,41 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
+        // #922 — Chorus Pro refuses a public-sector deposit without an
+        // engagement number or a service code. A member is not a mairie,
+        // so the two fields appear only when the buyer is a public body.
+        SwitchListTile(
+          key: const ValueKey('invoice-form-public-buyer'),
+          contentPadding: EdgeInsets.zero,
+          value: _publicBuyer,
+          onChanged: (value) => setState(() => _publicBuyer = value),
+          title: Text(
+            l10n?.invoicePublicBuyer ?? 'Public-sector buyer (Chorus Pro)',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
+        if (_publicBuyer)
+        TextField(
+          key: const ValueKey('invoice-form-purchase-order'),
+          controller: _purchaseOrder,
+          decoration: InputDecoration(
+            labelText: l10n?.invoicePurchaseOrder ?? 'Engagement number',
+            helperText: l10n?.invoicePurchaseOrderHint ??
+                'Public-sector buyer (Chorus Pro): the numéro d\'engagement.',
+            helperMaxLines: 2,
+          ),
+        ),
+        if (_publicBuyer)
+        TextField(
+          key: const ValueKey('invoice-form-buyer-reference'),
+          controller: _buyerReference,
+          decoration: InputDecoration(
+            labelText: l10n?.invoiceBuyerReference ?? 'Service code',
+            helperText: l10n?.invoiceBuyerReferenceHint ??
+                'Public-sector buyer (Chorus Pro): the code service exécutant.',
+            helperMaxLines: 2,
+          ),
+        ),
         const SizedBox(height: 4),
         FilledButton(
           key: const ValueKey('invoice-submit'),
@@ -399,6 +443,10 @@ class _InvoiceFormState extends State<_InvoiceForm> {
                     memberId: _memberId!,
                     period: _period,
                     detailed: _detailed,
+                    buyerReference:
+                        _publicBuyer ? _buyerReference.text.trim() : '',
+                    purchaseOrder:
+                        _publicBuyer ? _purchaseOrder.text.trim() : '',
                   )),
           child: Text(l10n?.invoiceIssue ?? 'Issue invoice'),
         ),

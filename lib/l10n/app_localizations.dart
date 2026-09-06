@@ -2354,6 +2354,54 @@ abstract class AppLocalizations {
   /// **'refused'**
   String get calendarEventActionRefused;
 
+  /// #922 chorus pro: invoicePurchaseOrder
+  ///
+  /// In en, this message translates to:
+  /// **'Engagement number'**
+  String get invoicePurchaseOrder;
+
+  /// #922 chorus pro: invoicePurchaseOrderHint
+  ///
+  /// In en, this message translates to:
+  /// **'Public-sector buyer (Chorus Pro): the numéro d\'engagement.'**
+  String get invoicePurchaseOrderHint;
+
+  /// #922 chorus pro: invoiceBuyerReference
+  ///
+  /// In en, this message translates to:
+  /// **'Service code'**
+  String get invoiceBuyerReference;
+
+  /// #922 chorus pro: invoiceBuyerReferenceHint
+  ///
+  /// In en, this message translates to:
+  /// **'Public-sector buyer (Chorus Pro): the code service exécutant.'**
+  String get invoiceBuyerReferenceHint;
+
+  /// #922 chorus pro: invoiceGapPublicSectorRefs
+  ///
+  /// In en, this message translates to:
+  /// **'Bound for a public-sector platform with no engagement number and no service code — Chorus Pro refuses most deposits without one.'**
+  String get invoiceGapPublicSectorRefs;
+
+  /// #922 chorus pro: invoicePdfPurchaseOrder
+  ///
+  /// In en, this message translates to:
+  /// **'Order reference'**
+  String get invoicePdfPurchaseOrder;
+
+  /// #922 chorus pro: invoicePdfBuyerReference
+  ///
+  /// In en, this message translates to:
+  /// **'Service reference'**
+  String get invoicePdfBuyerReference;
+
+  /// #922 chorus pro: invoicePublicBuyer
+  ///
+  /// In en, this message translates to:
+  /// **'Public-sector buyer (Chorus Pro)'**
+  String get invoicePublicBuyer;
+
   /// Application name shown in the task switcher and app bar. Brand name — identical in all locales.
   ///
   /// In en, this message translates to:

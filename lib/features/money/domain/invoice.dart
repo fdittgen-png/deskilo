@@ -144,6 +144,14 @@ sealed class InvoiceParty with _$InvoiceParty {
     /// #886 — the contact the document is sent to (BT-43 / BT-42).
     @Default('') String email,
     @Default('') String phone,
+
+    /// #922 — BT-10, the buyer reference: Chorus Pro's *code service
+    /// exécutant*. Buyer only; frozen at issue.
+    @Default('') String reference,
+
+    /// #922 — BT-13, the purchase-order reference: the *numéro
+    /// d'engagement*. Buyer only; frozen at issue.
+    @Default('') String orderReference,
   }) = _InvoiceParty;
 
   /// Reads one party out of the invoice's `parties` jsonb. Named away
@@ -160,6 +168,8 @@ sealed class InvoiceParty with _$InvoiceParty {
     country: json['country'] as String? ?? '',
     vatId: json['vat_id'] as String? ?? '',
     legalId: json['legal_id'] as String? ?? '',
+    reference: json['reference'] as String? ?? '',
+    orderReference: json['order'] as String? ?? '',
     vatRegime: json['vat_regime'] as String? ?? 'not_subject',
     taxExemptionReason: json['tax_exemption_reason'] as String? ?? '',
     email: json['email'] as String? ?? '',

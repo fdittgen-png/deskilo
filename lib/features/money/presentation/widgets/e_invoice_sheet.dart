@@ -47,6 +47,9 @@ String eInvoiceGapText(AppLocalizations? l10n, EInvoiceGap gap) =>
           "The customer's country is missing.",
       EInvoiceGap.missingBuyerVatId => l10n?.invoiceGapMissingBuyerVatId ??
           "The customer's VAT number is missing — a reverse-charged invoice must name it.",
+      EInvoiceGap.missingPublicSectorReferences =>
+          l10n?.invoiceGapPublicSectorRefs ??
+              'Bound for a public-sector platform with no engagement number and no service code — Chorus Pro refuses most deposits without one.',
       EInvoiceGap.buyerVatIdFormat => l10n?.invoiceGapBuyerVatIdFormat ??
           "The customer's VAT number does not have its country's shape — check it.",
       EInvoiceGap.noChargeLines => l10n?.invoiceGapNoChargeLines ??

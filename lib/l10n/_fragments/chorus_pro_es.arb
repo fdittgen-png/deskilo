@@ -1,0 +1,35 @@
+{
+  "@@locale": "es",
+  "invoicePurchaseOrder": "N.º de compromiso",
+  "@invoicePurchaseOrder": {
+    "description": "#922 chorus pro: invoicePurchaseOrder"
+  },
+  "invoicePurchaseOrderHint": "Comprador público (Chorus Pro): el numéro d'engagement.",
+  "@invoicePurchaseOrderHint": {
+    "description": "#922 chorus pro: invoicePurchaseOrderHint"
+  },
+  "invoiceBuyerReference": "Código de servicio",
+  "@invoiceBuyerReference": {
+    "description": "#922 chorus pro: invoiceBuyerReference"
+  },
+  "invoiceBuyerReferenceHint": "Comprador público (Chorus Pro): el code service exécutant.",
+  "@invoiceBuyerReferenceHint": {
+    "description": "#922 chorus pro: invoiceBuyerReferenceHint"
+  },
+  "invoiceGapPublicSectorRefs": "Destinada a una plataforma pública sin número de compromiso ni código de servicio — Chorus Pro rechaza la mayoría de los depósitos sin uno de los dos.",
+  "@invoiceGapPublicSectorRefs": {
+    "description": "#922 chorus pro: invoiceGapPublicSectorRefs"
+  },
+  "invoicePdfPurchaseOrder": "Referencia de pedido",
+  "@invoicePdfPurchaseOrder": {
+    "description": "#922 chorus pro: invoicePdfPurchaseOrder"
+  },
+  "invoicePdfBuyerReference": "Servicio",
+  "@invoicePdfBuyerReference": {
+    "description": "#922 chorus pro: invoicePdfBuyerReference"
+  },
+  "invoicePublicBuyer": "Comprador público (Chorus Pro)",
+  "@invoicePublicBuyer": {
+    "description": "#922 chorus pro: invoicePublicBuyer"
+  }
+}
