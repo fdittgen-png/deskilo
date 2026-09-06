@@ -568,7 +568,11 @@ void main() {
           reason: 'tax collected for the state, not revenue');
       expect(entries[2]['CompteLib'], 'TVA collectée');
       // Double entry: one debit, two credits, same entry, balanced.
-      expect(entries.map((r) => r['EcritureNum']).toSet(), {'VE0001'});
+      // #927 — one entry number for the three legs, derived from the
+      // document rather than counted per file.
+      final numbers = entries.map((r) => r['EcritureNum']).toSet();
+      expect(numbers, hasLength(1));
+      expect(numbers.single, startsWith('VE-INV-'));
       expect(entries[1]['EcritureLib'], contains('20 %'));
     });
 

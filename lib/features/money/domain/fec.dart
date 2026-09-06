@@ -117,8 +117,16 @@ String buildFecFile({
       text.replaceAll(RegExp(r'[\t\r\n]+'), ' ').trim();
 
   final rows = <List<String>>[];
-  var salesCount = 0;
-  var bankCount = 0;
+  // #927 — an entry number is derived from the DOCUMENT it books, never
+  // from a per-file counter. A counter restarts at 1 on every export, so
+  // a January-to-June file and a full-year file both contained a
+  // VE0001 — and they were different entries. EcritureNum exists to
+  // identify an entry uniquely and irreversibly (art. A47 A-1 du LPF);
+  // a number that changes with the range of the export cannot. Built
+  // from the invoice number (unique per workspace) plus, for the bank
+  // side, which of the invoice's cash movements it is, the number is
+  // the same in every file that carries the entry. Continuity of the
+  // series is #925's persisted sequence; this removes the collision.
 
   void write({
     required String journal,
@@ -171,8 +179,7 @@ String buildFecFile({
         .where((line) => line.amountCents > 0)
         .fold(0, (sum, line) => sum + line.amountCents);
     if (charges == 0) continue;
-    salesCount++;
-    final entry = '$_salesJournal${salesCount.toString().padLeft(4, '0')}';
+    final entry = '$_salesJournal-${invoice.number}';
     final label = 'Facture ${invoice.number}'
         '${invoice.period == null ? '' : ' ${invoice.period}'}';
     // The receivable…
@@ -245,9 +252,11 @@ String buildFecFile({
     }
 
     // The credits the invoice netted: money that had already arrived.
+    var creditOrdinal = 0;
     for (final line in invoice.lines.where((l) => l.amountCents < 0)) {
-      bankCount++;
-      final cashEntry = '$_bankJournal${bankCount.toString().padLeft(4, '0')}';
+      // The invoice's lines are frozen, so the ordinal is stable.
+      creditOrdinal++;
+      final cashEntry = '$_bankJournal-${invoice.number}-C$creditOrdinal';
       final amount = -line.amountCents;
       final cashLabel = lineText(line);
       write(
@@ -290,8 +299,8 @@ String buildFecFile({
     // left: a solde of zero was already covered by the credits above.
     final match = matches[invoice.id];
     if (match != null && !match.pending && invoice.totalCents > 0) {
-      bankCount++;
-      final cashEntry = '$_bankJournal${bankCount.toString().padLeft(4, '0')}';
+      // One settling match per invoice (0067): the suffix is enough.
+      final cashEntry = '$_bankJournal-${invoice.number}-P';
       final label = 'Règlement ${invoice.number}';
       write(
         journal: _bankJournal,
