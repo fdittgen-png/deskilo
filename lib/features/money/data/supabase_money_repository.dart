@@ -355,6 +355,13 @@ class SupabaseMoneyRepository implements MoneyRepository {
   }
 
   @override
+  Future<String> verifyInvoiceSignature(String invoiceId) async {
+    final r = await _client.rpc<dynamic>('verify_invoice_signature',
+        params: {'p_invoice_id': invoiceId});
+    return r as String? ?? 'unverifiable';
+  }
+
+  @override
   Future<List<NumberSequence>> fetchNumberSequences(String workspaceId) async {
     final rows = await _client
         .from('number_sequences')

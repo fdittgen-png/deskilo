@@ -236,6 +236,42 @@ abstract class AppLocalizations {
   /// **'A non-profit association with no trading activity is not subject to VAT: choose \"Outside the scope of VAT\", not \"Exempt\". The exempt scheme requires a VAT number you do not have, and the e-invoice would be rejected. Outside the scope, your registration number identifies the association.'**
   String get legalIdentityAssociationRegime;
 
+  /// #955/#956 audit follow-ups: reportPaymentsPeriodTotal
+  ///
+  /// In en, this message translates to:
+  /// **'Payments this period'**
+  String get reportPaymentsPeriodTotal;
+
+  /// #955/#956 audit follow-ups: reportPendingPayments
+  ///
+  /// In en, this message translates to:
+  /// **'Pending payments'**
+  String get reportPendingPayments;
+
+  /// #955/#956 audit follow-ups: reportPendingExpenses
+  ///
+  /// In en, this message translates to:
+  /// **'Pending expenses'**
+  String get reportPendingExpenses;
+
+  /// #955/#956 audit follow-ups: invoiceIntegrityVerified
+  ///
+  /// In en, this message translates to:
+  /// **'Integrity verified'**
+  String get invoiceIntegrityVerified;
+
+  /// #955/#956 audit follow-ups: invoiceIntegrityAltered
+  ///
+  /// In en, this message translates to:
+  /// **'Altered since issue'**
+  String get invoiceIntegrityAltered;
+
+  /// #955/#956 audit follow-ups: invoiceIntegrityUnverifiable
+  ///
+  /// In en, this message translates to:
+  /// **'Issued before integrity checks'**
+  String get invoiceIntegrityUnverifiable;
+
   /// Heading on the auth screen in sign-in mode
   ///
   /// In en, this message translates to:

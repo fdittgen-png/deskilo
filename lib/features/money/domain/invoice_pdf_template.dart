@@ -284,6 +284,8 @@ class InvoicePdfTemplate {
     // #934 — the workspace status.
     // #946 — the document site and the other sites the month stood at.
     'site_name', 'site_address', 'usage_sites',
+    // #955 — pending payments and pending expenses apart.
+    'pending_payments_total', 'pending_expenses_total',
     'status_from', 'status_to', 'status_invoiced', 'status_credit_notes',
     'status_payments', 'status_reimbursed', 'status_repartitioned',
     'status_credits', 'status_net', 'status_members',

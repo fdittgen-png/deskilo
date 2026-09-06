@@ -83,6 +83,25 @@ class AppLocalizationsEs extends AppLocalizations {
       'Una asociación sin actividad lucrativa no está sujeta al IVA: elija «Fuera del ámbito del IVA», no «Exento». El régimen de exención exige un número de IVA que no tiene, y la factura electrónica sería rechazada. Fuera del ámbito, su número de registro identifica a la asociación.';
 
   @override
+  String get reportPaymentsPeriodTotal => 'Pagos del periodo';
+
+  @override
+  String get reportPendingPayments => 'Pagos pendientes';
+
+  @override
+  String get reportPendingExpenses => 'Gastos pendientes';
+
+  @override
+  String get invoiceIntegrityVerified => 'Integridad verificada';
+
+  @override
+  String get invoiceIntegrityAltered => 'Modificada desde la emisión';
+
+  @override
+  String get invoiceIntegrityUnverifiable =>
+      'Emitida antes de los controles de integridad';
+
+  @override
   String get authSignInTitle => 'Iniciar sesión';
 
   @override

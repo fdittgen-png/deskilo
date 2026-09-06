@@ -262,6 +262,13 @@ class FakeMoneyRepository implements MoneyRepository {
   };
   NumberSequence? lastNumberSequence;
 
+  /// #956 — what the fake answers for an invoice's fingerprint.
+  final integrity = <String, String>{};
+
+  @override
+  Future<String> verifyInvoiceSignature(String invoiceId) async =>
+      integrity[invoiceId] ?? 'verified';
+
   @override
   Future<List<NumberSequence>> fetchNumberSequences(String workspaceId) async => [
     for (final j in NumberSequence.journals)

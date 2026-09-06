@@ -658,6 +658,13 @@ Map<String, Object?> paymentsReportData(
     'vat_total': '',
     'validated_total': money(validatedCents),
     'pending_total': money(pendingCents),
+    // #955 — pending payments and pending expense submissions apart.
+    'pending_payments_total': money(pending
+        .where((e) => e.type == EventType.payment)
+        .fold<int>(0, (s, e) => s + ((e.payload['amount_cents'] as num?)?.toInt() ?? 0))),
+    'pending_expenses_total': money(pending
+        .where((e) => e.type == EventType.expense)
+        .fold<int>(0, (s, e) => s + ((e.payload['amount_cents'] as num?)?.toInt() ?? 0))),
     'voided': false,
     'proforma': false,
     'copy': false,

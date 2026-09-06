@@ -83,6 +83,25 @@ class AppLocalizationsFr extends AppLocalizations {
       'Une association sans activité lucrative n\'est pas assujettie à la TVA : choisissez « Hors du champ de la TVA », pas « Franchise ». La franchise exige un numéro de TVA que vous n\'avez pas, et la facture électronique serait rejetée. Hors du champ, c\'est votre SIRET qui identifie l\'association.';
 
   @override
+  String get reportPaymentsPeriodTotal => 'Paiements de la période';
+
+  @override
+  String get reportPendingPayments => 'Paiements en attente';
+
+  @override
+  String get reportPendingExpenses => 'Dépenses en attente';
+
+  @override
+  String get invoiceIntegrityVerified => 'Intégrité vérifiée';
+
+  @override
+  String get invoiceIntegrityAltered => 'Modifiée depuis l\'émission';
+
+  @override
+  String get invoiceIntegrityUnverifiable =>
+      'Émise avant les contrôles d\'intégrité';
+
+  @override
   String get authSignInTitle => 'Connexion';
 
   @override

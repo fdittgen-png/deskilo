@@ -1,0 +1,27 @@
+{
+  "@@locale": "fr",
+  "reportPaymentsPeriodTotal": "Paiements de la période",
+  "@reportPaymentsPeriodTotal": {
+    "description": "#955/#956 audit follow-ups: reportPaymentsPeriodTotal"
+  },
+  "reportPendingPayments": "Paiements en attente",
+  "@reportPendingPayments": {
+    "description": "#955/#956 audit follow-ups: reportPendingPayments"
+  },
+  "reportPendingExpenses": "Dépenses en attente",
+  "@reportPendingExpenses": {
+    "description": "#955/#956 audit follow-ups: reportPendingExpenses"
+  },
+  "invoiceIntegrityVerified": "Intégrité vérifiée",
+  "@invoiceIntegrityVerified": {
+    "description": "#955/#956 audit follow-ups: invoiceIntegrityVerified"
+  },
+  "invoiceIntegrityAltered": "Modifiée depuis l'émission",
+  "@invoiceIntegrityAltered": {
+    "description": "#955/#956 audit follow-ups: invoiceIntegrityAltered"
+  },
+  "invoiceIntegrityUnverifiable": "Émise avant les contrôles d'intégrité",
+  "@invoiceIntegrityUnverifiable": {
+    "description": "#955/#956 audit follow-ups: invoiceIntegrityUnverifiable"
+  }
+}

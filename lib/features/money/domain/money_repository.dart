@@ -169,6 +169,11 @@ abstract class MoneyRepository {
   /// `number_sequences`, 0164), one per journal, seeded lazily.
   Future<List<NumberSequence>> fetchNumberSequences(String workspaceId);
 
+  /// #956 — 'verified' | 'altered' | 'unverifiable' (RPC
+  /// `verify_invoice_signature`): the fingerprint recomputed from the
+  /// stored columns.
+  Future<String> verifyInvoiceSignature(String invoiceId);
+
   /// #925 — the owner sets a series' format; the counter may only be
   /// raised (RPC `set_number_sequence`).
   Future<void> setNumberSequence(
