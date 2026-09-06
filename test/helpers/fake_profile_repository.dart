@@ -112,9 +112,15 @@ class FakeProfileRepository implements ProfileRepository {
   @override
   Future<Profile?> fetchMyProfile() async => _mine;
 
+  /// Every id list a caller asked for (#962 pins that no empty id is
+  /// ever requested).
+  final List<List<String>> requestedIds = [];
+
   @override
-  Future<List<Profile>> fetchProfiles(List<String> userIds) async =>
-      profiles.where((p) => userIds.contains(p.id)).toList();
+  Future<List<Profile>> fetchProfiles(List<String> userIds) async {
+    requestedIds.add(List.of(userIds));
+    return profiles.where((p) => userIds.contains(p.id)).toList();
+  }
 
   @override
   Future<void> updateWhatsapp(String whatsapp) async {

@@ -5,6 +5,7 @@ import '../../profile/domain/profile.dart';
 import '../../profile/providers/profile_providers.dart';
 import '../../reservations/domain/reservation.dart';
 import '../../reservations/providers/reservation_providers.dart';
+import '../../workspace/domain/member.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/directory_status.dart';
 import '../../../core/time/clock.dart';
@@ -18,10 +19,13 @@ part 'directory_providers.g.dart';
 @riverpod
 Future<Map<String, Profile>> memberProfiles(Ref ref) async {
   final members = await ref.watch(workspaceMembersProvider.future);
-  if (members.isEmpty) return const {};
-  final profiles = await ref
-      .watch(profileRepositoryProvider)
-      .fetchProfiles(members.map((m) => m.userId).toList());
+  // A managed member (#962) has no account and therefore no profile;
+  // its empty user id must never reach the query, where PostgREST
+  // rejects the whole request over one malformed uuid.
+  final ids = accountIdsOf(members);
+  if (ids.isEmpty) return const {};
+  final profiles =
+      await ref.watch(profileRepositoryProvider).fetchProfiles(ids);
   return {for (final p in profiles) p.id: p};
 }
 
