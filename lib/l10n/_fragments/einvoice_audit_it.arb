@@ -1,0 +1,7 @@
+{
+  "@@locale": "it",
+  "eInvoiceGapMissingBuyerLegalId": "L'acquirente è un'impresa francese senza SIREN — inserisci il suo identificativo legale nel profilo del socio.",
+  "@eInvoiceGapMissingBuyerLegalId": {
+    "description": "#941 e-invoice audit: eInvoiceGapMissingBuyerLegalId"
+  }
+}

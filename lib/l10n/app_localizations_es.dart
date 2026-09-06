@@ -1859,6 +1859,10 @@ class AppLocalizationsEs extends AppLocalizations {
       '¿Eliminar esta planta? Se eliminan todas las oficinas, mesas y asientos que contiene. Las reservas que hacen referencia a ellos conservan una instantánea de texto para auditorías; las reservas abiertas se cancelan.';
 
   @override
+  String get eInvoiceGapMissingBuyerLegalId =>
+      'El comprador es una empresa francesa sin SIREN — indique su identificador legal en el perfil del socio.';
+
+  @override
   String get developmentBanner => 'Espacio de desarrollo — aquí nada es real';
 
   @override

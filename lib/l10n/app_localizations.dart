@@ -3308,6 +3308,12 @@ abstract class AppLocalizations {
   /// **'Delete this level? All offices, desks and seats on it are removed. Bookings that reference them keep a text snapshot for audits; open bookings are cancelled.'**
   String get editorDeleteLevelConfirmAudit;
 
+  /// #941 e-invoice audit: eInvoiceGapMissingBuyerLegalId
+  ///
+  /// In en, this message translates to:
+  /// **'The buyer is a French business without a SIREN — fill in its legal id on the member\'s profile.'**
+  String get eInvoiceGapMissingBuyerLegalId;
+
   /// #917 workspace environment: developmentBanner
   ///
   /// In en, this message translates to:

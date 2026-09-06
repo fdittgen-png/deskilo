@@ -1860,6 +1860,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Ebene löschen? Alle Büros, Tische und Sitzplätze darauf werden entfernt. Buchungen, die darauf verweisen, behalten einen Text-Schnappschuss für Audits; offene Buchungen werden storniert.';
 
   @override
+  String get eInvoiceGapMissingBuyerLegalId =>
+      'Der Käufer ist ein französisches Unternehmen ohne SIREN — tragen Sie die Registernummer im Profil des Mitglieds ein.';
+
+  @override
   String get developmentBanner => 'Entwicklungs-Space — nichts hier ist echt';
 
   @override
