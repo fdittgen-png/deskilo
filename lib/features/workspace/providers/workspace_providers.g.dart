@@ -1076,7 +1076,7 @@ final class MemberEmailsProvider
   }
 }
 
-String _$memberEmailsHash() => r'308db39231bc0739fc357a65d0ad15d763502ef9';
+String _$memberEmailsHash() => r'1165baf10d7b7b88ca938022e847ec49049fe5df';
 
 /// The signed-in user's membership (roles!) in the active workspace.
 
@@ -1194,7 +1194,7 @@ final class ManagedIdentityProvider
   }
 }
 
-String _$managedIdentityHash() => r'9b1201aff790041882f6b49a8ce473031db34205';
+String _$managedIdentityHash() => r'400fbfd8fc48c068d5ad94b2d13527cbd0f9dfff';
 
 /// #915 — one managed profile's identity, from behind the access rule.
 ///

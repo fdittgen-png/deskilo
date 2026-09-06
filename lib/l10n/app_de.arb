@@ -1115,7 +1115,7 @@
   "@featureDemoMode": {
     "description": "#970 demo mode: featureDemoMode"
   },
-  "featureDemoModeDesc": "Ein Schalter in den Einstellungen jedes Mitglieds: solange er an ist, wird jeder Name, jede E-Mail, Telefonnummer und Postadresse auf dem Bildschirm durch eine erfundene ersetzt, damit Screenshots und Videos keine persönlichen Daten tragen. Aus: der Schalter ist verborgen.",
+  "featureDemoModeDesc": "Ein Schalter in den Einstellungen jedes Mitglieds: solange er an ist, wird jeder Name, jede E-Mail, Telefonnummer und Postadresse auf dem Bildschirm an Ort und Stelle unscharf gemacht, damit Screenshots und Videos keine persönlichen Daten tragen. Aus: der Schalter ist verborgen.",
   "@featureDemoModeDesc": {
     "description": "#970 demo mode: featureDemoModeDesc"
   },
@@ -1123,13 +1123,9 @@
   "@demoModeTitle": {
     "description": "#970 demo mode: demoModeTitle"
   },
-  "demoModeSubtitle": "Namen, E-Mails, Telefonnummern und Adressen werden auf diesem Gerät durch erfundene ersetzt — für Screenshots und Videos.",
+  "demoModeSubtitle": "Namen, E-Mails, Telefonnummern und Adressen werden auf dem Bildschirm dieses Geräts unscharf gemacht — für Screenshots und Videos.",
   "@demoModeSubtitle": {
     "description": "#970 demo mode: demoModeSubtitle"
-  },
-  "demoModeEditBlocked": "Der Demomodus ist an: schalten Sie ihn in den Einstellungen aus, um persönliche Daten zu bearbeiten.",
-  "@demoModeEditBlocked": {
-    "description": "#970 demo mode: demoModeEditBlocked"
   },
   "developerMode": "Entwicklermodus",
   "developerModeWorkspaceHint": "Gilt für alle Mitglieder dieses Workspace.",

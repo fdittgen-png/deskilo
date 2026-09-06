@@ -1115,7 +1115,7 @@
   "@featureDemoMode": {
     "description": "#970 demo mode: featureDemoMode"
   },
-  "featureDemoModeDesc": "Un interruttore nelle impostazioni di ogni membro: finché è attivo, ogni nome, e-mail, telefono e indirizzo postale sullo schermo è sostituito da uno inventato, così screenshot e video non portano dati personali. Disattivato: l'interruttore è nascosto.",
+  "featureDemoModeDesc": "Un interruttore nelle impostazioni di ogni membro: finché è attivo, ogni nome, e-mail, telefono e indirizzo postale sullo schermo è sfocato sul posto, così screenshot e video non portano dati personali. Disattivato: l'interruttore è nascosto.",
   "@featureDemoModeDesc": {
     "description": "#970 demo mode: featureDemoModeDesc"
   },
@@ -1123,13 +1123,9 @@
   "@demoModeTitle": {
     "description": "#970 demo mode: demoModeTitle"
   },
-  "demoModeSubtitle": "Nomi, e-mail, telefoni e indirizzi sono sostituiti da inventati su questo dispositivo — per screenshot e video.",
+  "demoModeSubtitle": "Nomi, e-mail, telefoni e indirizzi sono sfocati sullo schermo di questo dispositivo — per screenshot e video.",
   "@demoModeSubtitle": {
     "description": "#970 demo mode: demoModeSubtitle"
-  },
-  "demoModeEditBlocked": "La modalità demo è attiva: disattivala nelle Impostazioni per modificare le informazioni personali.",
-  "@demoModeEditBlocked": {
-    "description": "#970 demo mode: demoModeEditBlocked"
   },
   "developerMode": "Modalità sviluppatore",
   "developerModeWorkspaceHint": "Vale per tutti i membri di questo spazio.",

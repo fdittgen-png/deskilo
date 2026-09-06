@@ -39,7 +39,7 @@ const Map<String, int> _baseline = {
   // new 700 (2026-08-22): #575 day-phase rings + #576 space rings.
 // 700→740 (2026-08-24): #618 the occupant photo marker — clipped
   // photo draw beside the initial disc, one concern, same method.
-    'lib/features/plan/presentation/widgets/floor_plan_painter.dart': 740,
+    'lib/features/plan/presentation/widgets/floor_plan_painter.dart': 750, // 2026-09-06 #970 the demo blur on painted labels
   // 1290→1330 (2026-08-02): #395 Excel-export tile — feature lines, the
   // orchestration itself lives in excel_export.dart.
   'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1250, // 2026-08 #585 seat NFC field

@@ -194,11 +194,11 @@ Future<List<Invoice>> invoices(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   final all = await ref.watch(moneyRepositoryProvider).fetchInvoices(workspace.id);
-  // #970 — demo mode: the frozen buyer on every invoice is invented on
-  // screen; the stored document is untouched.
-  return await ref.watch(demoModeControllerProvider.future)
-      ? [for (final invoice in all) scrubInvoice(invoice)]
-      : all;
+  // #970 — demo mode blurs the frozen buyer wherever it is printed.
+  for (final invoice in all) {
+    demoSensitive.addAll(sensitiveOfInvoice(invoice));
+  }
+  return all;
 }
 
 /// Invoice-PDF template of the active workspace (#454); empty while no
