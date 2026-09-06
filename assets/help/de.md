@@ -1106,3 +1106,6 @@ In Frankreich gehören USt-Nummer und Befreiung zur juristischen Person; jede Be
 ### USt-Gruppen (#947)
 
 Jeder Satz trägt jetzt die **steuerliche Gruppe** dessen, was er besteuert: Regel-, Zwischen-, ermäßigter, stark ermäßigter, Null-Satz, steuerfrei, nicht steuerbar, **Pfand** (in Deutschland mit der Ware besteuert, andernorts außerhalb der USt) oder **verbrauchsteuerpflichtig** (Bier, Spirituosen, Zuckergetränke: Verbrauchsteuer im Preis, Regelsatz). *Einstellungen → USt* zeigt, was in Ihrem Land in welche Gruppe fällt. Ein nicht steuerbarer Verein behält Kategorie O. Ein nicht steuerbares Pfand neben besteuerten Zeilen kann nicht als E-Rechnung gehen (EN 16931): die App sagt es, Sie stellen es gesondert.
+### Jahresarchiv (#957)
+
+*Buchhaltungsexporte → Jahresarchiv* lädt ein einziges Zip herunter, benannt nach Registernummer und Jahr: jede Rechnung als PDF/A-3 mit eingebetteter E-Rechnung, das **Rechnungsregister** (Nummer, Datum, Betrag, Status und das Integritätswort jedes Belegs), den FEC mit den Standardkonten und die Prüfspur. Ein Entwicklungs-Arbeitsbereich erzeugt eine mit DEV markierte Datei.

@@ -1127,3 +1127,6 @@ In Francia la partita IVA e l'esenzione appartengono all'entità giuridica; ogni
 ### Gruppi IVA (#947)
 
 Ogni aliquota porta ora il **gruppo fiscale** di ciò che tassa: ordinaria, intermedia, ridotta, super-ridotta, zero, esente, non soggetta, **cauzione** (fuori IVA) o **con accise** (birra, liquori, bevande zuccherate: accise nel prezzo, IVA ordinaria). *Impostazioni → IVA* mostra cosa rientra in ogni gruppo nel tuo paese e la dicitura di esenzione che implica. Un'associazione non soggetta mantiene la categoria O. Una cauzione accanto a righe tassate non può uscire come fattura elettronica (EN 16931): l'app lo segnala e la emetti a parte.
+### Archivio dell'esercizio (#957)
+
+*Esportazioni contabili → Archivio dell'esercizio* scarica un unico zip con il numero di registrazione e l'anno: ogni fattura in PDF/A-3 con la fattura elettronica incorporata, il **registro delle fatture** (numero, data, importo, stato e la parola di integrità di ogni documento), il FEC sui conti predefiniti e la traccia di audit. Uno spazio di sviluppo produce un file contrassegnato DEV.

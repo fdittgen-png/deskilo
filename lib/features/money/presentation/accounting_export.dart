@@ -27,6 +27,7 @@ import 'invoice_line_text.dart';
 import 'widgets/accounting_export_sheet.dart';
 import 'widgets/export_accounts_dialogs.dart';
 import '../../reservations/providers/reservation_providers.dart';
+import '../domain/archive_bundle.dart';
 
 /// THE ACCOUNTING EXPORT (0074, extended by #669).
 ///
@@ -300,6 +301,63 @@ Future<void> exportAccountingFile(
         ),
       );
 
+    case 'bundle':
+      // #957 — the fiscal year in one download: every invoice as PDF/A-3
+      // with its embedded e-invoice, the register with each document's
+      // integrity word, the FEC on the default accounts, the audit trail.
+      await runGuarded(
+        context,
+        domain: 'money',
+        message: 'archive bundle failed',
+        errorText: l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+        action: () async {
+          final yearInvoices = [
+            for (final i in exported)
+              if (i.issuedAt.year == year) i,
+          ];
+          final integrity = <String, String>{};
+          final files = <String, List<int>>{};
+          for (final invoice in yearInvoices) {
+            integrity[invoice.id] = await repo.verifyInvoiceSignature(invoice.id);
+            if (!context.mounted) return;
+            final pdf = await buildFacturXFile(
+              context,
+              ref,
+              invoice,
+              seller: sellerOf(invoice, workspace),
+              buyer: buyerOf(invoice, workspace),
+              iban: workspaceIban(workspace),
+            );
+            if (pdf.bytes.isNotEmpty) files['invoices/${pdf.fileName}'] = pdf.bytes;
+          }
+          files['register.csv'] = textBytes(buildInvoiceRegisterCsv(yearInvoices, integrity: integrity));
+          files['audit-trail.csv'] = textBytes(buildAuditTrailCsv(
+            events: buildAuditEvents(invoices: yearInvoices, matches: matches, ledger: ledger),
+            generatedAt: now,
+            workspaceName: workspace.name,
+          ));
+          files['fec.txt'] = textBytes(buildFecFile(
+            invoices: yearInvoices,
+            matches: matches,
+            company: company,
+            accounts: workspace.vatAccount.isEmpty
+                ? const FecAccounts()
+                : FecAccounts(vat: workspace.vatAccount),
+            lineText: (line) => invoiceLineText(l10n, line, association: association),
+            ledger: ledger,
+            memberNames: memberNames,
+            repartitions: repartitions,
+          ));
+          if (!context.mounted) return;
+          await savePdfToDownloads(
+            context,
+            ref,
+            bytes: zipBundle(files),
+            fileName: archiveBundleFileName(company.legalId, year, development: development),
+          );
+        },
+      );
     case 'audit_trail':
       await runGuarded(
         context,
