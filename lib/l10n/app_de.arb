@@ -723,6 +723,10 @@
       }
     }
   },
+  "eInvoiceGapBuyerLegalIdAdvisable": "Die SIREN des Käufers fehlt. Eine französische Plattform leitet danach weiter: tragen Sie sie vor der Übermittlung im Profil des Mitglieds ein. Keine Ablehnung — die Datei ist auch ohne sie gültig.",
+  "@eInvoiceGapBuyerLegalIdAdvisable": {
+    "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
+  },
   "reservationExtendButton": "Länger bleiben",
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"
@@ -1106,6 +1110,26 @@
   "courtesyMrs": "Frau",
   "@courtesyMrs": {
     "description": "#912 courtesy title: courtesyMrs"
+  },
+  "featureDemoMode": "Demomodus",
+  "@featureDemoMode": {
+    "description": "#970 demo mode: featureDemoMode"
+  },
+  "featureDemoModeDesc": "Ein Schalter in den Einstellungen jedes Mitglieds: solange er an ist, wird jeder Name, jede E-Mail, Telefonnummer und Postadresse auf dem Bildschirm durch eine erfundene ersetzt, damit Screenshots und Videos keine persönlichen Daten tragen. Aus: der Schalter ist verborgen.",
+  "@featureDemoModeDesc": {
+    "description": "#970 demo mode: featureDemoModeDesc"
+  },
+  "demoModeTitle": "Demomodus",
+  "@demoModeTitle": {
+    "description": "#970 demo mode: demoModeTitle"
+  },
+  "demoModeSubtitle": "Namen, E-Mails, Telefonnummern und Adressen werden auf diesem Gerät durch erfundene ersetzt — für Screenshots und Videos.",
+  "@demoModeSubtitle": {
+    "description": "#970 demo mode: demoModeSubtitle"
+  },
+  "demoModeEditBlocked": "Der Demomodus ist an: schalten Sie ihn in den Einstellungen aus, um persönliche Daten zu bearbeiten.",
+  "@demoModeEditBlocked": {
+    "description": "#970 demo mode: demoModeEditBlocked"
   },
   "developerMode": "Entwicklermodus",
   "developerModeWorkspaceHint": "Gilt für alle Mitglieder dieses Workspace.",
@@ -4525,6 +4549,19 @@
   "backendCopyLink": "Kopieren",
   "profilesDefault": "Standard beim Start",
   "profilesMakeDefault": "Beim Start als Standard verwenden",
+  "profilesSiteLine": "Standort: {site}",
+  "@profilesSiteLine": {
+    "description": "#974 profiles site: profilesSiteLine",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      }
+    }
+  },
+  "profilesSitePick": "Standort wechseln",
+  "@profilesSitePick": {
+    "description": "#974 profiles site: profilesSitePick"
+  },
   "eventTypeRoleChange": "Rollenwechsel",
   "eventRolePromote": "{actor} befördert ein Mitglied zum Admin",
   "eventRoleDemote": "{actor} stuft einen Admin zum Mitglied zurück",

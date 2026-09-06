@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../core/navigation/navigation_style_test.dart';
+import '../../helpers/fake_pref_stores.dart';
 import '../../helpers/mock_providers.dart';
 
 Future<void> _pump(WidgetTester tester,
@@ -17,8 +17,7 @@ Future<void> _pump(WidgetTester tester,
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
-        ...standardTestOverrides(),
-        navigationStyleStoreProvider.overrideWithValue(store),
+        ...standardTestOverrides(navigationStyle: store),
         platformIsWebProvider.overrideWithValue(web),
       ],
       child: const DeskiloApp(),

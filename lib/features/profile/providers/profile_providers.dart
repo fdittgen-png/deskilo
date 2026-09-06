@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/demo/demo_mode.dart';
 import 'dart:typed_data';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -26,7 +27,13 @@ ProfileRepository profileRepository(Ref ref) =>
 Future<Profile?> myProfile(Ref ref) async {
   final signedIn = ref.watch(authStateProvider).value != null;
   if (!signedIn) return null;
-  return ref.watch(profileRepositoryProvider).fetchMyProfile();
+  final profile = await ref.watch(profileRepositoryProvider).fetchMyProfile();
+  // #970 — demo mode: my own details invented too, on every screen
+  // that shows them; the forms that edit them refuse to open meanwhile.
+  if (profile != null && await ref.watch(demoModeControllerProvider.future)) {
+    return scrubProfile(profile);
+  }
+  return profile;
 }
 
 /// Bytes of [userId]'s profile photo (0038), or null when they have none.

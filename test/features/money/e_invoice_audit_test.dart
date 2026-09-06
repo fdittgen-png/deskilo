@@ -88,15 +88,26 @@ void main() {
   });
 
   group('readiness', () {
-    test('a French business buyer without a SIREN BLOCKS the e-invoice; '
-        'with one it is clean', () {
-      final without = checkEInvoiceReadiness(invoice: _invoice(), seller: _seller, buyer: _kaloa);
-      expect(without.blocking, contains(EInvoiceGap.missingBuyerLegalId));
+    test('#972 — a French business buyer without a SIREN: ADVICE from a '
+        'seller the reform does not bind (an association), a REFUSAL from a '
+        'VAT-registered French seller; with one it is clean', () {
+      final advice = checkEInvoiceReadiness(invoice: _invoice(), seller: _seller, buyer: _kaloa);
+      expect(advice.blocking, isEmpty,
+          reason: 'EN 16931 never required BT-47; the file is valid');
+      expect(advice.warnings, contains(EInvoiceGap.buyerLegalIdAdvisable));
+      expect(advice.ready, isTrue);
+
+      final registered = _seller.copyWith(vatRegime: 'vat_registered', vatId: 'FR12345678901');
+      final refusal = checkEInvoiceReadiness(
+          invoice: _invoice(), seller: registered, buyer: _kaloa);
+      expect(refusal.blocking, contains(EInvoiceGap.missingBuyerLegalId));
       expect(EInvoiceGap.missingBuyerLegalId.fixableInSettings, isFalse,
           reason: 'it is the member\'s data, not a workspace setting');
+
       final with_ = checkEInvoiceReadiness(
           invoice: _invoice(), seller: _seller, buyer: _kaloa.copyWith(legalId: '901234567'));
       expect(with_.gaps, isNot(contains(EInvoiceGap.missingBuyerLegalId)));
+      expect(with_.gaps, isNot(contains(EInvoiceGap.buyerLegalIdAdvisable)));
     });
 
     test('a private person, or a foreign buyer, is not asked for a SIREN', () {

@@ -2,6 +2,8 @@
 //
 // #886 — Settings → Personal information: the person's own identity as
 // every document prints it.
+import '../../../../core/demo/demo_mode.dart';
+import '../../../../core/demo/demo_mode_notice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -76,7 +78,10 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 560),
-              child: PersonalInfoForm(
+              // #970 — never a form seeded with invented data.
+              child: (ref.watch(demoModeControllerProvider).value ?? false)
+                  ? const DemoModeEditBlocked()
+                  : PersonalInfoForm(
                 initial: p?.identity ?? PersonalInfo.empty,
                 workspaceCountry: workspaceCountry,
                 saving: _saving,

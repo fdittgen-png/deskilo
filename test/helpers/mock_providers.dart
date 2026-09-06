@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+import 'package:deskilo/core/demo/demo_mode.dart';
+import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'dart:async';
 import 'package:flutter/foundation.dart' show ValueChanged;
 import 'package:flutter/widgets.dart' show Widget, ColoredBox, Color, Center, Text;
@@ -75,6 +77,7 @@ import 'fake_reservation_repository.dart';
 import 'in_memory_default_level_store.dart';
 import 'package:deskilo/features/workspace/domain/workspace_overview.dart';
 import 'package:deskilo/features/workspace/domain/site.dart';
+import 'fake_pref_stores.dart';
 
 /// In-memory [AuthRepository] for widget/unit tests (fakes over mocks).
 class FakeAuthRepository implements AuthRepository {
@@ -1622,8 +1625,14 @@ List<Override> standardTestOverrides({
   NoteSeenStore? noteSeen,
   NotificationFilterStore? notificationFilters,
   HelpHintStore? helpHints,
+  DemoModeStore? demoMode,
+  NavigationStyleStore? navigationStyle,
 }) {
   return [
+    // #969/#970 — the per-device preferences, in memory by default.
+    demoModeStoreProvider.overrideWithValue(demoMode ?? InMemoryDemoModeStore()),
+    navigationStyleStoreProvider.overrideWithValue(
+        navigationStyle ?? InMemoryNavigationStyleStore()),
     // No-op realtime by default: the real impl touches Supabase.instance,
     // which does not exist under flutter_test (#413).
     realtimeSyncProvider.overrideWithValue(realtime ?? FakeRealtimeSync()),

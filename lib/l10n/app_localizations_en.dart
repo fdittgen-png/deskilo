@@ -1062,6 +1062,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get eInvoiceGapBuyerLegalIdAdvisable =>
+      'The buyer\'s SIREN is missing. A French platform routes by it: enter it on the member\'s profile before transmitting. Not a refusal — the file is valid without it.';
+
+  @override
   String get reservationExtendButton => 'Stay longer';
 
   @override
@@ -1534,6 +1538,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get courtesyMrs => 'Ms';
+
+  @override
+  String get featureDemoMode => 'Demo mode';
+
+  @override
+  String get featureDemoModeDesc =>
+      'A switch in each member\'s settings: while it is on, every name, e-mail, phone and postal address on their screen is replaced by an invented one, so screenshots and videos carry no personal data. Off: the switch is hidden.';
+
+  @override
+  String get demoModeTitle => 'Demo mode';
+
+  @override
+  String get demoModeSubtitle =>
+      'Names, e-mails, phones and addresses are replaced by invented ones on this device — for screenshots and videos.';
+
+  @override
+  String get demoModeEditBlocked =>
+      'Demo mode is on: switch it off in Settings to edit personal information.';
 
   @override
   String get developerMode => 'Developer mode';
@@ -7191,6 +7213,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profilesMakeDefault => 'Use as default at startup';
+
+  @override
+  String profilesSiteLine(String site) {
+    return 'Site: $site';
+  }
+
+  @override
+  String get profilesSitePick => 'Change your site';
 
   @override
   String get eventTypeRoleChange => 'Role change';

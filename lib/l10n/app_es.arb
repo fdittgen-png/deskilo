@@ -723,6 +723,10 @@
       }
     }
   },
+  "eInvoiceGapBuyerLegalIdAdvisable": "Falta el SIREN del comprador. Una plataforma francesa enruta por él: introdúzcalo en el perfil del miembro antes de transmitir. No es un rechazo — el archivo es válido sin él.",
+  "@eInvoiceGapBuyerLegalIdAdvisable": {
+    "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
+  },
   "reservationExtendButton": "Quedarse más tiempo",
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"
@@ -1106,6 +1110,26 @@
   "courtesyMrs": "Sra.",
   "@courtesyMrs": {
     "description": "#912 courtesy title: courtesyMrs"
+  },
+  "featureDemoMode": "Modo demo",
+  "@featureDemoMode": {
+    "description": "#970 demo mode: featureDemoMode"
+  },
+  "featureDemoModeDesc": "Un interruptor en los ajustes de cada miembro: mientras está activado, cada nombre, correo, teléfono y dirección postal en su pantalla se sustituye por uno inventado, para que las capturas y los vídeos no lleven datos personales. Desactivado: el interruptor se oculta.",
+  "@featureDemoModeDesc": {
+    "description": "#970 demo mode: featureDemoModeDesc"
+  },
+  "demoModeTitle": "Modo demo",
+  "@demoModeTitle": {
+    "description": "#970 demo mode: demoModeTitle"
+  },
+  "demoModeSubtitle": "Nombres, correos, teléfonos y direcciones se sustituyen por inventados en este dispositivo — para capturas de pantalla y vídeos.",
+  "@demoModeSubtitle": {
+    "description": "#970 demo mode: demoModeSubtitle"
+  },
+  "demoModeEditBlocked": "El modo demo está activado: desactívalo en Ajustes para editar información personal.",
+  "@demoModeEditBlocked": {
+    "description": "#970 demo mode: demoModeEditBlocked"
   },
   "developerMode": "Modo desarrollador",
   "developerModeWorkspaceHint": "Se aplica a todos los miembros de este espacio.",
@@ -4525,6 +4549,19 @@
   "backendCopyLink": "Copiar",
   "profilesDefault": "Predeterminado al iniciar",
   "profilesMakeDefault": "Usar como predeterminado al iniciar",
+  "profilesSiteLine": "Sede: {site}",
+  "@profilesSiteLine": {
+    "description": "#974 profiles site: profilesSiteLine",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      }
+    }
+  },
+  "profilesSitePick": "Cambiar de sede",
+  "@profilesSitePick": {
+    "description": "#974 profiles site: profilesSitePick"
+  },
   "eventTypeRoleChange": "Cambio de rol",
   "eventRolePromote": "{actor} promueve a un miembro a admin",
   "eventRoleDemote": "{actor} degrada a un admin a miembro",

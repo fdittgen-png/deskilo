@@ -1068,6 +1068,10 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get eInvoiceGapBuyerLegalIdAdvisable =>
+      'Die SIREN des Käufers fehlt. Eine französische Plattform leitet danach weiter: tragen Sie sie vor der Übermittlung im Profil des Mitglieds ein. Keine Ablehnung — die Datei ist auch ohne sie gültig.';
+
+  @override
   String get reservationExtendButton => 'Länger bleiben';
 
   @override
@@ -1541,6 +1545,24 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get courtesyMrs => 'Frau';
+
+  @override
+  String get featureDemoMode => 'Demomodus';
+
+  @override
+  String get featureDemoModeDesc =>
+      'Ein Schalter in den Einstellungen jedes Mitglieds: solange er an ist, wird jeder Name, jede E-Mail, Telefonnummer und Postadresse auf dem Bildschirm durch eine erfundene ersetzt, damit Screenshots und Videos keine persönlichen Daten tragen. Aus: der Schalter ist verborgen.';
+
+  @override
+  String get demoModeTitle => 'Demomodus';
+
+  @override
+  String get demoModeSubtitle =>
+      'Namen, E-Mails, Telefonnummern und Adressen werden auf diesem Gerät durch erfundene ersetzt — für Screenshots und Videos.';
+
+  @override
+  String get demoModeEditBlocked =>
+      'Der Demomodus ist an: schalten Sie ihn in den Einstellungen aus, um persönliche Daten zu bearbeiten.';
 
   @override
   String get developerMode => 'Entwicklermodus';
@@ -7249,6 +7271,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get profilesMakeDefault => 'Beim Start als Standard verwenden';
+
+  @override
+  String profilesSiteLine(String site) {
+    return 'Standort: $site';
+  }
+
+  @override
+  String get profilesSitePick => 'Standort wechseln';
 
   @override
   String get eventTypeRoleChange => 'Rollenwechsel';

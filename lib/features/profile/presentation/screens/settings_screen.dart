@@ -13,6 +13,8 @@ import '../../../../core/links/link_launcher.dart';
 import '../../../../core/locale/locale_controller.dart';
 import '../../../../core/scan/front_camera.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/demo/demo_mode.dart';
+import '../../../../core/demo/demo_mode_notice.dart';
 import '../../../../core/navigation/navigation_style.dart';
 import '../../../../core/theme/theme_controller.dart';
 import '../../../../core/trace/guarded.dart';
@@ -728,6 +730,26 @@ class SettingsScreen extends ConsumerWidget {
                 builder: (_) => const _NavigationDialog(),
               ),
             ),
+          // #970 — demo mode: invented names, e-mails and addresses on
+          // this device, for screenshots and recordings.
+          if (ref
+              .watch(enabledFeaturesSyncProvider)
+              .contains(WorkspaceFeature.demoMode))
+            SwitchListTile(
+              key: const ValueKey('settings-demo-mode'),
+              secondary: const Icon(Icons.visibility_off_outlined),
+              title: HelpDotTitle(
+                l10n?.demoModeTitle ?? 'Demo mode',
+                l10n?.helpTopicSettings ?? 'Settings & profile',
+              ),
+              subtitle: Text(l10n?.demoModeSubtitle ??
+                  'Names, e-mails, phones and addresses are replaced by '
+                      'invented ones on this device — for screenshots and '
+                      'videos.'),
+              value: ref.watch(demoModeControllerProvider).value ?? false,
+              onChanged: (on) =>
+                  ref.read(demoModeControllerProvider.notifier).set(on),
+            ),
           // Which camera reads badge QR codes: front by default (a
           // wall-mounted kiosk's back lens faces the wall). Device-local
           // preference, like language and theme.
@@ -1067,6 +1089,10 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
 
   @override
   Widget build(BuildContext context) {
+    // #970 — a form seeded with invented data must never save it.
+    if (ref.watch(demoModeControllerProvider).value ?? false) {
+      return const DemoModeEditBlocked(asDialog: true);
+    }
     final l10n = AppLocalizations.of(context);
     return AlertDialog(
       // The dot on the title covers the country dropdown too, whose

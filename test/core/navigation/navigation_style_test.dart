@@ -7,14 +7,8 @@ import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-class InMemoryNavigationStyleStore implements NavigationStyleStore {
-  InMemoryNavigationStyleStore({this.style});
-  String? style;
-  @override
-  Future<String?> read() async => style;
-  @override
-  Future<void> write(String? style) async => this.style = style;
-}
+import '../../helpers/fake_pref_stores.dart';
+
 
 void main() {
   test('the web has the menu and only the menu; native follows the choice',

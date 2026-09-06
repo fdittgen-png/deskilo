@@ -994,7 +994,7 @@ final class InvoicesProvider
   }
 }
 
-String _$invoicesHash() => r'1750a78bf092e310a8b152b40bc7f4facd84c06d';
+String _$invoicesHash() => r'2c79cee4f5c9495adaa30986c2ff977e7130a5c4';
 
 /// Invoice-PDF template of the active workspace (#454); empty while no
 /// workspace is selected. The renderer additionally gates on the

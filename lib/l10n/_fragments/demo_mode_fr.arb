@@ -1,0 +1,23 @@
+{
+  "@@locale": "fr",
+  "featureDemoMode": "Mode démo",
+  "@featureDemoMode": {
+    "description": "#970 demo mode: featureDemoMode"
+  },
+  "featureDemoModeDesc": "Un interrupteur dans les réglages de chaque membre : tant qu'il est activé, chaque nom, courriel, téléphone et adresse postale à l'écran est remplacé par un inventé, pour des captures et vidéos sans données personnelles. Désactivé : l'interrupteur est masqué.",
+  "@featureDemoModeDesc": {
+    "description": "#970 demo mode: featureDemoModeDesc"
+  },
+  "demoModeTitle": "Mode démo",
+  "@demoModeTitle": {
+    "description": "#970 demo mode: demoModeTitle"
+  },
+  "demoModeSubtitle": "Noms, courriels, téléphones et adresses sont remplacés par des inventés sur cet appareil — pour les captures d'écran et les vidéos.",
+  "@demoModeSubtitle": {
+    "description": "#970 demo mode: demoModeSubtitle"
+  },
+  "demoModeEditBlocked": "Le mode démo est activé : désactivez-le dans les Réglages pour modifier des informations personnelles.",
+  "@demoModeEditBlocked": {
+    "description": "#970 demo mode: demoModeEditBlocked"
+  }
+}

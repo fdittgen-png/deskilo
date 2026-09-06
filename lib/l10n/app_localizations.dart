@@ -1910,6 +1910,12 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{The invoice this one replaces can follow it, on its own pages and stamped as regrouped.} other{The {count} invoices this one replaces can follow it, each on its own pages and stamped as regrouped.}}'**
   String settlementAnnexBody(int count);
 
+  /// #972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable
+  ///
+  /// In en, this message translates to:
+  /// **'The buyer\'s SIREN is missing. A French platform routes by it: enter it on the member\'s profile before transmitting. Not a refusal — the file is valid without it.'**
+  String get eInvoiceGapBuyerLegalIdAdvisable;
+
   /// Detail sheet: extend a running booking's end (#574)
   ///
   /// In en, this message translates to:
@@ -2741,6 +2747,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ms'**
   String get courtesyMrs;
+
+  /// #970 demo mode: featureDemoMode
+  ///
+  /// In en, this message translates to:
+  /// **'Demo mode'**
+  String get featureDemoMode;
+
+  /// #970 demo mode: featureDemoModeDesc
+  ///
+  /// In en, this message translates to:
+  /// **'A switch in each member\'s settings: while it is on, every name, e-mail, phone and postal address on their screen is replaced by an invented one, so screenshots and videos carry no personal data. Off: the switch is hidden.'**
+  String get featureDemoModeDesc;
+
+  /// #970 demo mode: demoModeTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Demo mode'**
+  String get demoModeTitle;
+
+  /// #970 demo mode: demoModeSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Names, e-mails, phones and addresses are replaced by invented ones on this device — for screenshots and videos.'**
+  String get demoModeSubtitle;
+
+  /// #970 demo mode: demoModeEditBlocked
+  ///
+  /// In en, this message translates to:
+  /// **'Demo mode is on: switch it off in Settings to edit personal information.'**
+  String get demoModeEditBlocked;
 
   /// Settings toggle enabling the local diagnostics screen
   ///
@@ -12658,6 +12694,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Use as default at startup'**
   String get profilesMakeDefault;
+
+  /// #974 profiles site: profilesSiteLine
+  ///
+  /// In en, this message translates to:
+  /// **'Site: {site}'**
+  String profilesSiteLine(String site);
+
+  /// #974 profiles site: profilesSitePick
+  ///
+  /// In en, this message translates to:
+  /// **'Change your site'**
+  String get profilesSitePick;
 
   /// Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card
   ///

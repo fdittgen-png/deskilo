@@ -1067,6 +1067,10 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get eInvoiceGapBuyerLegalIdAdvisable =>
+      'Falta el SIREN del comprador. Una plataforma francesa enruta por él: introdúzcalo en el perfil del miembro antes de transmitir. No es un rechazo — el archivo es válido sin él.';
+
+  @override
   String get reservationExtendButton => 'Quedarse más tiempo';
 
   @override
@@ -1540,6 +1544,24 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get courtesyMrs => 'Sra.';
+
+  @override
+  String get featureDemoMode => 'Modo demo';
+
+  @override
+  String get featureDemoModeDesc =>
+      'Un interruptor en los ajustes de cada miembro: mientras está activado, cada nombre, correo, teléfono y dirección postal en su pantalla se sustituye por uno inventado, para que las capturas y los vídeos no lleven datos personales. Desactivado: el interruptor se oculta.';
+
+  @override
+  String get demoModeTitle => 'Modo demo';
+
+  @override
+  String get demoModeSubtitle =>
+      'Nombres, correos, teléfonos y direcciones se sustituyen por inventados en este dispositivo — para capturas de pantalla y vídeos.';
+
+  @override
+  String get demoModeEditBlocked =>
+      'El modo demo está activado: desactívalo en Ajustes para editar información personal.';
 
   @override
   String get developerMode => 'Modo desarrollador';
@@ -7236,6 +7258,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get profilesMakeDefault => 'Usar como predeterminado al iniciar';
+
+  @override
+  String profilesSiteLine(String site) {
+    return 'Sede: $site';
+  }
+
+  @override
+  String get profilesSitePick => 'Cambiar de sede';
 
   @override
   String get eventTypeRoleChange => 'Cambio de rol';

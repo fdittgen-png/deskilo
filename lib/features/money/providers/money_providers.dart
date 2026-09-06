@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/demo/demo_mode.dart';
 import 'dart:typed_data';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -192,7 +193,12 @@ Future<double> defaultVatPercent(Ref ref) async {
 Future<List<Invoice>> invoices(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return ref.watch(moneyRepositoryProvider).fetchInvoices(workspace.id);
+  final all = await ref.watch(moneyRepositoryProvider).fetchInvoices(workspace.id);
+  // #970 — demo mode: the frozen buyer on every invoice is invented on
+  // screen; the stored document is untouched.
+  return await ref.watch(demoModeControllerProvider.future)
+      ? [for (final invoice in all) scrubInvoice(invoice)]
+      : all;
 }
 
 /// Invoice-PDF template of the active workspace (#454); empty while no

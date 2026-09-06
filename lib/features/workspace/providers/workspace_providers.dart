@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/demo/demo_mode.dart';
+import '../../reservations/providers/reservation_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -311,9 +313,17 @@ Future<Map<String, String>> memberEmails(Ref ref) async {
   if (workspace == null) return const {};
   final me = await ref.watch(myMemberProvider.future);
   if (!(me?.canAdminister ?? false)) return const {};
-  return ref
+  final emails = await ref
       .watch(workspaceRepositoryProvider)
       .fetchMemberEmails(workspace.id);
+  if (!await ref.watch(demoModeControllerProvider.future)) return emails;
+  // #970 — demo mode: the e-mail that goes with the invented name the
+  // directory row shows, so the two agree.
+  final names = await ref.watch(memberNamesProvider.future);
+  return {
+    for (final e in emails.entries)
+      e.key: demoEmailOf(names[e.key] ?? demoName(e.value)),
+  };
 }
 
 /// The signed-in user's membership (roles!) in the active workspace.
@@ -335,9 +345,13 @@ Future<Member?> myMember(Ref ref) async {
 Future<PersonalInfo> managedIdentity(Ref ref, String memberId) async {
   if (memberId.isEmpty) return PersonalInfo.empty;
   try {
-    return await ref
+    final identity = await ref
         .watch(workspaceRepositoryProvider)
         .managedIdentityOf(memberId);
+    // #970 — demo mode: invented details.
+    return await ref.watch(demoModeControllerProvider.future)
+        ? scrubPersonalInfo(identity)
+        : identity;
   } catch (e, st) {
     // Refused is a legitimate answer, not a failure to report: an admin
     // the rule does not name simply does not see the contact details.
@@ -374,3 +388,9 @@ Future<List<Site>> sites(Ref ref) async {
   if (workspace == null) return const [];
   return ref.watch(workspaceRepositoryProvider).fetchSites(workspace.id);
 }
+
+/// #974 — the sites of one workspace the person belongs to, for the
+/// profiles list (which spans every workspace, not only the active one).
+@riverpod
+Future<List<Site>> sitesOf(Ref ref, String workspaceId) =>
+    ref.watch(workspaceRepositoryProvider).fetchSites(workspaceId);

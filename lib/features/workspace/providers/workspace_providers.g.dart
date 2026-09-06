@@ -1076,7 +1076,7 @@ final class MemberEmailsProvider
   }
 }
 
-String _$memberEmailsHash() => r'cfccc637ccb06a0ea7e993be57e21be4324c5ac7';
+String _$memberEmailsHash() => r'308db39231bc0739fc357a65d0ad15d763502ef9';
 
 /// The signed-in user's membership (roles!) in the active workspace.
 
@@ -1194,7 +1194,7 @@ final class ManagedIdentityProvider
   }
 }
 
-String _$managedIdentityHash() => r'601854decf45c40345fb40983fa29a7edcfdb54b';
+String _$managedIdentityHash() => r'9b1201aff790041882f6b49a8ce473031db34205';
 
 /// #915 — one managed profile's identity, from behind the access rule.
 ///
@@ -1359,3 +1359,91 @@ final class SitesProvider
 }
 
 String _$sitesHash() => r'7d7f89dd27e5500c73fa2c91ad2af2769b569dff';
+
+/// #974 — the sites of one workspace the person belongs to, for the
+/// profiles list (which spans every workspace, not only the active one).
+
+@ProviderFor(sitesOf)
+final sitesOfProvider = SitesOfFamily._();
+
+/// #974 — the sites of one workspace the person belongs to, for the
+/// profiles list (which spans every workspace, not only the active one).
+
+final class SitesOfProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Site>>,
+          List<Site>,
+          FutureOr<List<Site>>
+        >
+    with $FutureModifier<List<Site>>, $FutureProvider<List<Site>> {
+  /// #974 — the sites of one workspace the person belongs to, for the
+  /// profiles list (which spans every workspace, not only the active one).
+  SitesOfProvider._({
+    required SitesOfFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'sitesOfProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$sitesOfHash();
+
+  @override
+  String toString() {
+    return r'sitesOfProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Site>> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Site>> create(Ref ref) {
+    final argument = this.argument as String;
+    return sitesOf(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is SitesOfProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$sitesOfHash() => r'0b8ce05ad10af9d1a709455e3a8e13e5fc258af6';
+
+/// #974 — the sites of one workspace the person belongs to, for the
+/// profiles list (which spans every workspace, not only the active one).
+
+final class SitesOfFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<List<Site>>, String> {
+  SitesOfFamily._()
+    : super(
+        retry: null,
+        name: r'sitesOfProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #974 — the sites of one workspace the person belongs to, for the
+  /// profiles list (which spans every workspace, not only the active one).
+
+  SitesOfProvider call(String workspaceId) =>
+      SitesOfProvider._(argument: workspaceId, from: this);
+
+  @override
+  String toString() => r'sitesOfProvider';
+}

@@ -1,0 +1,16 @@
+{
+  "@@locale": "it",
+  "profilesSiteLine": "Sede: {site}",
+  "@profilesSiteLine": {
+    "description": "#974 profiles site: profilesSiteLine",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      }
+    }
+  },
+  "profilesSitePick": "Cambia sede",
+  "@profilesSitePick": {
+    "description": "#974 profiles site: profilesSitePick"
+  }
+}

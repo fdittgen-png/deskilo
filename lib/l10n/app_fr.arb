@@ -723,6 +723,10 @@
       }
     }
   },
+  "eInvoiceGapBuyerLegalIdAdvisable": "Le SIREN de l'acheteur manque. Une plateforme agréée l'utilise pour acheminer la facture : renseignez-le sur le profil de l'adhérent avant de transmettre. Ce n'est pas un refus — le fichier est valide sans lui.",
+  "@eInvoiceGapBuyerLegalIdAdvisable": {
+    "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
+  },
   "reservationExtendButton": "Rester plus longtemps",
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"
@@ -1106,6 +1110,26 @@
   "courtesyMrs": "Madame",
   "@courtesyMrs": {
     "description": "#912 courtesy title: courtesyMrs"
+  },
+  "featureDemoMode": "Mode démo",
+  "@featureDemoMode": {
+    "description": "#970 demo mode: featureDemoMode"
+  },
+  "featureDemoModeDesc": "Un interrupteur dans les réglages de chaque membre : tant qu'il est activé, chaque nom, courriel, téléphone et adresse postale à l'écran est remplacé par un inventé, pour des captures et vidéos sans données personnelles. Désactivé : l'interrupteur est masqué.",
+  "@featureDemoModeDesc": {
+    "description": "#970 demo mode: featureDemoModeDesc"
+  },
+  "demoModeTitle": "Mode démo",
+  "@demoModeTitle": {
+    "description": "#970 demo mode: demoModeTitle"
+  },
+  "demoModeSubtitle": "Noms, courriels, téléphones et adresses sont remplacés par des inventés sur cet appareil — pour les captures d'écran et les vidéos.",
+  "@demoModeSubtitle": {
+    "description": "#970 demo mode: demoModeSubtitle"
+  },
+  "demoModeEditBlocked": "Le mode démo est activé : désactivez-le dans les Réglages pour modifier des informations personnelles.",
+  "@demoModeEditBlocked": {
+    "description": "#970 demo mode: demoModeEditBlocked"
   },
   "developerMode": "Mode développeur",
   "developerModeWorkspaceHint": "S'applique à tous les membres de cet espace.",
@@ -4525,6 +4549,19 @@
   "backendCopyLink": "Copier",
   "profilesDefault": "Profil par défaut au démarrage",
   "profilesMakeDefault": "Utiliser par défaut au démarrage",
+  "profilesSiteLine": "Site : {site}",
+  "@profilesSiteLine": {
+    "description": "#974 profiles site: profilesSiteLine",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      }
+    }
+  },
+  "profilesSitePick": "Changer de site",
+  "@profilesSitePick": {
+    "description": "#974 profiles site: profilesSitePick"
+  },
   "eventTypeRoleChange": "Changement de rôle",
   "eventRolePromote": "{actor} promeut un membre en admin",
   "eventRoleDemote": "{actor} rétrograde un admin en membre",

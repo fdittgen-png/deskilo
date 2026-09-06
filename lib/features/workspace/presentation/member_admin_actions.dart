@@ -14,6 +14,7 @@ import '../../money/presentation/invoice_actions.dart';
 import '../../money/presentation/report_layout_actions.dart';
 import '../../money/providers/money_providers.dart';
 import '../domain/member.dart';
+import '../domain/site.dart';
 import '../domain/overage_policy.dart';
 import '../providers/workspace_providers.dart';
 import 'widgets/badge_manager_dialog.dart';
@@ -705,9 +706,36 @@ Future<void> pickMemberHomeSite(
   WidgetRef ref,
   Member member,
 ) async {
-  final l10n = AppLocalizations.of(context);
   final sites = await ref.read(sitesProvider.future);
   if (!context.mounted) return;
+  await pickHomeSiteAmong(context, ref, member, sites);
+  ref.invalidate(workspaceMembersProvider);
+}
+
+/// #974 — the person's OWN home site, from the profiles list: the same
+/// dialog over the sites of THAT workspace, the membership list
+/// refreshed afterwards (set_member_home_site admits the member since
+/// 0178).
+Future<void> pickOwnHomeSite(
+  BuildContext context,
+  WidgetRef ref,
+  Member member,
+) async {
+  final sites = await ref.read(sitesOfProvider(member.workspaceId).future);
+  if (!context.mounted) return;
+  await pickHomeSiteAmong(context, ref, member, sites);
+  ref.invalidate(myMembershipsProvider);
+  ref.invalidate(myMemberProvider);
+}
+
+/// The dialog and the write, over a given list of sites.
+Future<void> pickHomeSiteAmong(
+  BuildContext context,
+  WidgetRef ref,
+  Member member,
+  List<Site> sites,
+) async {
+  final l10n = AppLocalizations.of(context);
   final chosen = await showDialog<String>(
     context: context,
     builder: (context) => SimpleDialog(
@@ -738,5 +766,4 @@ Future<void> pickMemberHomeSite(
         .read(workspaceRepositoryProvider)
         .setMemberHomeSite(member.id, chosen.isEmpty ? null : chosen),
   );
-  ref.invalidate(workspaceMembersProvider);
 }
