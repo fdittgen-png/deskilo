@@ -28,11 +28,8 @@ Future<Profile?> myProfile(Ref ref) async {
   final signedIn = ref.watch(authStateProvider).value != null;
   if (!signedIn) return null;
   final profile = await ref.watch(profileRepositoryProvider).fetchMyProfile();
-  // #970 — demo mode: my own details invented too, on every screen
-  // that shows them; the forms that edit them refuse to open meanwhile.
-  if (profile != null && await ref.watch(demoModeControllerProvider.future)) {
-    return scrubProfile(profile);
-  }
+  // #970 — demo mode blurs my own details wherever they are printed.
+  if (profile != null) demoSensitive.addAll(sensitiveOfProfile(profile));
   return profile;
 }
 

@@ -11,18 +11,27 @@
 // whole-space booking is hatched.
 import 'package:flutter/material.dart';
 
+/// #970 — the blur a painted personal label wears in demo mode.
+const MaskFilter demoLabelBlur = MaskFilter.blur(BlurStyle.normal, 3);
+
 void drawLabel(
   Canvas canvas,
   String text,
   Rect rect,
   Color color, {
   bool center = false,
+  bool blur = false,
 }) {
   if (text.isEmpty) return;
   final painter = TextPainter(
     text: TextSpan(
       text: text,
-      style: TextStyle(color: color, fontSize: 11),
+      style: TextStyle(
+        color: blur ? null : color,
+        fontSize: 11,
+        // #970 — demo mode: the occupant's name painted as a smear.
+        foreground: blur ? (Paint()..color = color..maskFilter = demoLabelBlur) : null,
+      ),
     ),
     textDirection: TextDirection.ltr,
     maxLines: 1,
@@ -89,6 +98,7 @@ void drawReservedChip(
   String name,
   Color accent, {
   required bool checkedIn,
+  bool blur = false,
 }) {
   final icon = checkedIn ? Icons.how_to_reg : Icons.lock;
   final fontSize = (rect.shortestSide * 0.28).clamp(11.0, 15.0);
@@ -108,7 +118,9 @@ void drawReservedChip(
     text: TextSpan(
       text: name.trim(),
       style: TextStyle(
-        color: Colors.white,
+        // #970 — demo mode: the occupant's name painted as a smear.
+        foreground: blur ? (Paint()..maskFilter = demoLabelBlur..color = Colors.white) : null,
+        color: blur ? null : Colors.white,
         fontSize: fontSize,
         fontWeight: FontWeight.w600,
         height: 1,

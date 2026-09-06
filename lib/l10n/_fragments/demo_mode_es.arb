@@ -4,7 +4,7 @@
   "@featureDemoMode": {
     "description": "#970 demo mode: featureDemoMode"
   },
-  "featureDemoModeDesc": "Un interruptor en los ajustes de cada miembro: mientras está activado, cada nombre, correo, teléfono y dirección postal en su pantalla se sustituye por uno inventado, para que las capturas y los vídeos no lleven datos personales. Desactivado: el interruptor se oculta.",
+  "featureDemoModeDesc": "Un interruptor en los ajustes de cada miembro: mientras está activado, cada nombre, correo, teléfono y dirección postal en su pantalla se difumina en su sitio, para que las capturas y los vídeos no lleven datos personales. Desactivado: el interruptor se oculta.",
   "@featureDemoModeDesc": {
     "description": "#970 demo mode: featureDemoModeDesc"
   },
@@ -12,12 +12,8 @@
   "@demoModeTitle": {
     "description": "#970 demo mode: demoModeTitle"
   },
-  "demoModeSubtitle": "Nombres, correos, teléfonos y direcciones se sustituyen por inventados en este dispositivo — para capturas de pantalla y vídeos.",
+  "demoModeSubtitle": "Nombres, correos, teléfonos y direcciones se difuminan en la pantalla de este dispositivo — para capturas de pantalla y vídeos.",
   "@demoModeSubtitle": {
     "description": "#970 demo mode: demoModeSubtitle"
-  },
-  "demoModeEditBlocked": "El modo demo está activado: desactívalo en Ajustes para editar información personal.",
-  "@demoModeEditBlocked": {
-    "description": "#970 demo mode: demoModeEditBlocked"
   }
 }

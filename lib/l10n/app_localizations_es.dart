@@ -1550,18 +1550,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureDemoModeDesc =>
-      'Un interruptor en los ajustes de cada miembro: mientras está activado, cada nombre, correo, teléfono y dirección postal en su pantalla se sustituye por uno inventado, para que las capturas y los vídeos no lleven datos personales. Desactivado: el interruptor se oculta.';
+      'Un interruptor en los ajustes de cada miembro: mientras está activado, cada nombre, correo, teléfono y dirección postal en su pantalla se difumina en su sitio, para que las capturas y los vídeos no lleven datos personales. Desactivado: el interruptor se oculta.';
 
   @override
   String get demoModeTitle => 'Modo demo';
 
   @override
   String get demoModeSubtitle =>
-      'Nombres, correos, teléfonos y direcciones se sustituyen por inventados en este dispositivo — para capturas de pantalla y vídeos.';
-
-  @override
-  String get demoModeEditBlocked =>
-      'El modo demo está activado: desactívalo en Ajustes para editar información personal.';
+      'Nombres, correos, teléfonos y direcciones se difuminan en la pantalla de este dispositivo — para capturas de pantalla y vídeos.';
 
   @override
   String get developerMode => 'Modo desarrollador';

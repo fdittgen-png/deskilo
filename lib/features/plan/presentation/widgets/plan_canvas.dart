@@ -47,6 +47,7 @@ class PlanCanvas extends StatefulWidget {
     this.seatDayPhases = const {},
     this.seatDaySegments = const {},
     required this.seatLabels,
+    this.blurLabels = false,
     required this.onSeatTap,
     this.onSpaceDoubleTap,
     this.highlightedSeatId,
@@ -75,6 +76,9 @@ class PlanCanvas extends StatefulWidget {
   /// part-booked seat along them.
   final Map<String, List<SeatDaySegment>> seatDaySegments;
   final Map<String, String> seatLabels;
+
+  /// #970 — demo mode: occupant labels painted as a smear.
+  final bool blurLabels;
 
   /// Whole-space overlays (#462) — see [FloorPlanPainter.spaceOverlays].
   final Map<String, ({SeatState state, String label})> spaceOverlays;
@@ -232,6 +236,7 @@ class _PlanCanvasState extends State<PlanCanvas>
               size: PlanCanvasMetrics.size,
               painter: FloorPlanPainter(
                 plan: widget.plan,
+                blurLabels: widget.blurLabels,
                 cellSize: PlanCanvasMetrics.cellSize,
                 colorScheme: Theme.of(context).colorScheme,
                 brightness: Theme.of(context).brightness,

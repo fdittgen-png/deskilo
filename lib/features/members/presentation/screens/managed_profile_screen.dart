@@ -4,8 +4,6 @@
 // with THE identity form (PersonalInfoForm): the same fields, in the
 // same words, as the person will see in their own settings once they
 // claim the profile.
-import '../../../../core/demo/demo_mode.dart';
-import '../../../../core/demo/demo_mode_notice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -96,10 +94,6 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // #970 — never a form seeded with invented data.
-                if (ref.watch(demoModeControllerProvider).value ?? false)
-                  const DemoModeEditBlocked()
-                else
                 PersonalInfoForm(
               // Rebuilt when the member arrives so the fields prefill.
               key: ValueKey('managed-form-${existing?.id}'),

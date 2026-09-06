@@ -1551,18 +1551,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureDemoModeDesc =>
-      'Ein Schalter in den Einstellungen jedes Mitglieds: solange er an ist, wird jeder Name, jede E-Mail, Telefonnummer und Postadresse auf dem Bildschirm durch eine erfundene ersetzt, damit Screenshots und Videos keine persönlichen Daten tragen. Aus: der Schalter ist verborgen.';
+      'Ein Schalter in den Einstellungen jedes Mitglieds: solange er an ist, wird jeder Name, jede E-Mail, Telefonnummer und Postadresse auf dem Bildschirm an Ort und Stelle unscharf gemacht, damit Screenshots und Videos keine persönlichen Daten tragen. Aus: der Schalter ist verborgen.';
 
   @override
   String get demoModeTitle => 'Demomodus';
 
   @override
   String get demoModeSubtitle =>
-      'Namen, E-Mails, Telefonnummern und Adressen werden auf diesem Gerät durch erfundene ersetzt — für Screenshots und Videos.';
-
-  @override
-  String get demoModeEditBlocked =>
-      'Der Demomodus ist an: schalten Sie ihn in den Einstellungen aus, um persönliche Daten zu bearbeiten.';
+      'Namen, E-Mails, Telefonnummern und Adressen werden auf dem Bildschirm dieses Geräts unscharf gemacht — für Screenshots und Videos.';
 
   @override
   String get developerMode => 'Entwicklermodus';

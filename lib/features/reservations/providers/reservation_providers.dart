@@ -63,10 +63,9 @@ Future<Map<String, String>> memberNames(Ref ref) async {
   if (workspace == null) return const {};
   final names =
       await ref.watch(workspaceRepositoryProvider).fetchMemberNames(workspace.id);
-  // #970 — demo mode: invented names, the same for the same person.
-  return await ref.watch(demoModeControllerProvider.future)
-      ? scrubNames(names)
-      : names;
+  // #970 — demo mode blurs these names wherever they are printed.
+  registerSensitiveNames(names);
+  return names;
 }
 
 /// Reservations of the active workspace intersecting the given LOCAL

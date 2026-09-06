@@ -27,9 +27,11 @@ Future<Map<String, Profile>> memberProfiles(Ref ref) async {
   if (ids.isEmpty) return const {};
   final profiles =
       await ref.watch(profileRepositoryProvider).fetchProfiles(ids);
-  // #970 — demo mode: invented names and contact details.
-  final demo = await ref.watch(demoModeControllerProvider.future);
-  return {for (final p in profiles) p.id: demo ? scrubProfile(p) : p};
+  // #970 — demo mode blurs these details wherever they are printed.
+  for (final p in profiles) {
+    demoSensitive.addAll(sensitiveOfProfile(p));
+  }
+  return {for (final p in profiles) p.id: p};
 }
 
 /// All reservations feeding the directory's reservation chips (#237):

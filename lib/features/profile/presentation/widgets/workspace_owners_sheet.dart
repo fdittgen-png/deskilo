@@ -2,6 +2,7 @@
 //
 // #937 — who owns a workspace the platform owner is not in: name and
 // e-mail, with a copy action. The read is logged server-side.
+import '../../../../core/demo/demo_mode.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,7 +20,12 @@ Future<void> showWorkspaceOwnersSheet(
 ) {
   final owners = ref
       .read(workspaceRepositoryProvider)
-      .fetchWorkspaceOwners(workspace.id);
+      .fetchWorkspaceOwners(workspace.id)
+      .then((list) {
+    // #970 — demo mode blurs the owners' names and addresses.
+    demoSensitive.addAll([for (final o in list) o.name, for (final o in list) o.email]);
+    return list;
+  });
   return showModalBottomSheet<void>(
     context: context,
     showDragHandle: true,

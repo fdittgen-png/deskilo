@@ -19,8 +19,12 @@ import '../../domain/seat.dart';
 /// canvas (#34/#35) and the live floor plan (Epic #4): passing [seatStates]
 /// switches seats to live state colors + occupant labels.
 class FloorPlanPainter extends CustomPainter {
+  /// #970 — demo mode: occupant labels painted as a smear.
+  final bool blurLabels;
+
   FloorPlanPainter({
     required this.plan,
+    this.blurLabels = false,
     required this.cellSize,
     required this.colorScheme,
     this.brightness = Brightness.light,
@@ -231,7 +235,7 @@ class FloorPlanPainter extends CustomPainter {
           rect,
           colorScheme.onSurface,
         );
-        drawReservedChip(canvas, rect, overlay.label, accent,
+        drawReservedChip(canvas, rect, overlay.label, accent, blur: blurLabels,
             checkedIn: overlay.state == SeatState.occupied);
       } else {
         canvas.drawRect(rect, officeBorder);
@@ -286,7 +290,7 @@ class FloorPlanPainter extends CustomPainter {
         // one for the same booking — a whole-office/level overlay
         // covers its desks too, and stacked identical chips are noise.
         if (spaceOverlays?[desk.officeId] == null) {
-          drawReservedChip(canvas, rect, overlay.label, accent,
+          drawReservedChip(canvas, rect, overlay.label, accent, blur: blurLabels,
               checkedIn: overlay.state == SeatState.occupied);
         }
       } else {
@@ -436,7 +440,7 @@ class FloorPlanPainter extends CustomPainter {
         // Editor mode: name + orientation so the owner can place seats.
         _orientationArrow(canvas, seat, rect, accent);
         if (label.isNotEmpty) {
-          drawLabel(canvas, label, rect, colorScheme.onSurface, center: true);
+          drawLabel(canvas, label, rect, colorScheme.onSurface, center: true, blur: blurLabels);
         }
       }
     }

@@ -274,8 +274,8 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureDemoModeDesc ??
               'A switch in each member\'s settings: while it is on, every '
                   'name, e-mail, phone and postal address on their screen is '
-                  'replaced by an invented one, so screenshots and videos '
-                  'carry no personal data. Off: the switch is hidden.',
+                  'blurred in place, so screenshots and videos carry no '
+                  'personal data. Off: the switch is hidden.',
         WorkspaceFeature.navigationStyle =>
           l10n?.featureNavigationStyleDesc ??
               'Each member picks in their settings how the app navigates: '

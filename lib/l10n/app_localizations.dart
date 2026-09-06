@@ -2757,7 +2757,7 @@ abstract class AppLocalizations {
   /// #970 demo mode: featureDemoModeDesc
   ///
   /// In en, this message translates to:
-  /// **'A switch in each member\'s settings: while it is on, every name, e-mail, phone and postal address on their screen is replaced by an invented one, so screenshots and videos carry no personal data. Off: the switch is hidden.'**
+  /// **'A switch in each member\'s settings: while it is on, every name, e-mail, phone and postal address on their screen is blurred in place, so screenshots and videos carry no personal data. Off: the switch is hidden.'**
   String get featureDemoModeDesc;
 
   /// #970 demo mode: demoModeTitle
@@ -2769,14 +2769,8 @@ abstract class AppLocalizations {
   /// #970 demo mode: demoModeSubtitle
   ///
   /// In en, this message translates to:
-  /// **'Names, e-mails, phones and addresses are replaced by invented ones on this device — for screenshots and videos.'**
+  /// **'Names, e-mails, phones and addresses are blurred on this device\'s screen — for screenshots and videos.'**
   String get demoModeSubtitle;
-
-  /// #970 demo mode: demoModeEditBlocked
-  ///
-  /// In en, this message translates to:
-  /// **'Demo mode is on: switch it off in Settings to edit personal information.'**
-  String get demoModeEditBlocked;
 
   /// Settings toggle enabling the local diagnostics screen
   ///

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../../core/demo/demo_mode.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -952,6 +953,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                                 seat.id: userId,
                       },
                 builder: (context, seatPhotos) => PlanCanvas(
+              blurLabels: ref.watch(demoModeControllerProvider).value ?? false,
                 seatPhotos: seatPhotos,
                 paintKey: const ValueKey('reserve-plan-canvas'),
                 plan: plan,

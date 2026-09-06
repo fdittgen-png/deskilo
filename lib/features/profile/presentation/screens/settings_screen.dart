@@ -14,7 +14,6 @@ import '../../../../core/locale/locale_controller.dart';
 import '../../../../core/scan/front_camera.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/demo/demo_mode.dart';
-import '../../../../core/demo/demo_mode_notice.dart';
 import '../../../../core/navigation/navigation_style.dart';
 import '../../../../core/theme/theme_controller.dart';
 import '../../../../core/trace/guarded.dart';
@@ -743,9 +742,8 @@ class SettingsScreen extends ConsumerWidget {
                 l10n?.helpTopicSettings ?? 'Settings & profile',
               ),
               subtitle: Text(l10n?.demoModeSubtitle ??
-                  'Names, e-mails, phones and addresses are replaced by '
-                      'invented ones on this device — for screenshots and '
-                      'videos.'),
+                  'Names, e-mails, phones and addresses are blurred on '
+                      'this device\'s screen — for screenshots and videos.'),
               value: ref.watch(demoModeControllerProvider).value ?? false,
               onChanged: (on) =>
                   ref.read(demoModeControllerProvider.notifier).set(on),
@@ -1089,10 +1087,6 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
 
   @override
   Widget build(BuildContext context) {
-    // #970 — a form seeded with invented data must never save it.
-    if (ref.watch(demoModeControllerProvider).value ?? false) {
-      return const DemoModeEditBlocked(asDialog: true);
-    }
     final l10n = AppLocalizations.of(context);
     return AlertDialog(
       // The dot on the title covers the country dropdown too, whose

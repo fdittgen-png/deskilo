@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../core/demo/demo_blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -57,9 +58,12 @@ class DeskiloApp extends ConsumerWidget {
       // #917 — the development strip sits ABOVE the navigator, so it
       // shows on every route there is, and above the splash, so it is
       // there from the first frame the workspace is known.
+      // #970 — the demo blur sits above everything, banner included.
       builder: (context, child) => MotionSettings(
         animationsEnabled: animations,
-        child: DevelopmentBanner(child: BootSplash(child: child)),
+        child: DemoBlurLayer(
+          child: DevelopmentBanner(child: BootSplash(child: child)),
+        ),
       ),
       routerConfig: router,
     );

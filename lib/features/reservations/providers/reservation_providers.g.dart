@@ -248,7 +248,7 @@ final class MemberNamesProvider
   }
 }
 
-String _$memberNamesHash() => r'77420efc4902904deaf7d20399d37e361ee3f6d8';
+String _$memberNamesHash() => r'39978154bf4f0d5edefdc9b8e806aede5b0e246a';
 
 /// Reservations of the active workspace intersecting the given LOCAL
 /// month (keyed 'yyyy-MM'). See [reservationsForDay] for why local (#119):

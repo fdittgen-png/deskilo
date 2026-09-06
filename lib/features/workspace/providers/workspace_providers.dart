@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: 0BSD
 import '../../../core/demo/demo_mode.dart';
-import '../../reservations/providers/reservation_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -316,14 +315,9 @@ Future<Map<String, String>> memberEmails(Ref ref) async {
   final emails = await ref
       .watch(workspaceRepositoryProvider)
       .fetchMemberEmails(workspace.id);
-  if (!await ref.watch(demoModeControllerProvider.future)) return emails;
-  // #970 — demo mode: the e-mail that goes with the invented name the
-  // directory row shows, so the two agree.
-  final names = await ref.watch(memberNamesProvider.future);
-  return {
-    for (final e in emails.entries)
-      e.key: demoEmailOf(names[e.key] ?? demoName(e.value)),
-  };
+  // #970 — demo mode blurs these addresses wherever they are printed.
+  demoSensitive.addAll(emails.values);
+  return emails;
 }
 
 /// The signed-in user's membership (roles!) in the active workspace.
@@ -348,10 +342,9 @@ Future<PersonalInfo> managedIdentity(Ref ref, String memberId) async {
     final identity = await ref
         .watch(workspaceRepositoryProvider)
         .managedIdentityOf(memberId);
-    // #970 — demo mode: invented details.
-    return await ref.watch(demoModeControllerProvider.future)
-        ? scrubPersonalInfo(identity)
-        : identity;
+    // #970 — demo mode blurs these details wherever they are printed.
+    demoSensitive.addAll(sensitiveOfPersonalInfo(identity));
+    return identity;
   } catch (e, st) {
     // Refused is a legitimate answer, not a failure to report: an admin
     // the rule does not name simply does not see the contact details.
