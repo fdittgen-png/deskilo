@@ -1805,3 +1805,49 @@ final class SellerIsAssociationProvider
 
 String _$sellerIsAssociationHash() =>
     r'9fce76d674efe81cef64e01f9516642451386574';
+
+/// #925 — every number series of the active workspace, one per journal.
+
+@ProviderFor(numberSequences)
+final numberSequencesProvider = NumberSequencesProvider._();
+
+/// #925 — every number series of the active workspace, one per journal.
+
+final class NumberSequencesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<NumberSequence>>,
+          List<NumberSequence>,
+          FutureOr<List<NumberSequence>>
+        >
+    with
+        $FutureModifier<List<NumberSequence>>,
+        $FutureProvider<List<NumberSequence>> {
+  /// #925 — every number series of the active workspace, one per journal.
+  NumberSequencesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'numberSequencesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$numberSequencesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<NumberSequence>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<NumberSequence>> create(Ref ref) {
+    return numberSequences(ref);
+  }
+}
+
+String _$numberSequencesHash() => r'28a4ce9e3329227ca5d6be4407a66dbfbee6c935';

@@ -28,6 +28,7 @@ import 'package:deskilo/features/money/domain/subscription_levels.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 
 import 'fake_event_repository.dart';
+import 'package:deskilo/features/money/domain/number_sequence.dart';
 
 /// In-memory [MoneyRepository]; recorded payments are captured for
 /// assertions (they only become ledger credits after confirmation).
@@ -252,6 +253,45 @@ class FakeMoneyRepository implements MoneyRepository {
     DunningRules rules,
   ) async {
     dunningRules = rules;
+  }
+
+  /// #925 — the series as the fake holds them.
+  final numberSequences = <String, NumberSequence>{
+    'invoice': const NumberSequence(journal: 'invoice', prefix: 'INV-'),
+  };
+  NumberSequence? lastNumberSequence;
+
+  @override
+  Future<List<NumberSequence>> fetchNumberSequences(String workspaceId) async => [
+    for (final j in NumberSequence.journals)
+      numberSequences[j] ?? NumberSequence(journal: j),
+  ];
+
+  @override
+  Future<void> setNumberSequence(
+    String workspaceId,
+    NumberSequence sequence, {
+    int? raiseNextValueTo,
+  }) async {
+    final current = numberSequences[sequence.journal];
+    if (raiseNextValueTo != null &&
+        current != null &&
+        raiseNextValueTo < current.nextValue) {
+      throw StateError('a sequence never goes backwards');
+    }
+    lastNumberSequence = sequence.copyWith(
+      nextValue: raiseNextValueTo ?? current?.nextValue,
+    );
+    numberSequences[sequence.journal] = lastNumberSequence!;
+  }
+
+  @override
+  Future<String> previewDocumentNumber(
+    String workspaceId,
+    String journal,
+  ) async {
+    final s = numberSequences[journal] ?? NumberSequence(journal: journal);
+    return s.format(s.nextValue, kTestNow);
   }
 
   /// #804 — settlements requested, in order.

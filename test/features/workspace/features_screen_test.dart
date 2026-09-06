@@ -85,7 +85,7 @@ void main() {
     // autoCheckInOut (#396), badgeSignIn (#662) and, since #914,
     // managedProfileAccess — narrowing who administers a profile is
     // opt-in, because the rule nobody narrowed is what #887 already did.
-    expect(onCount, featureManifest.length - 9);
+    expect(onCount, featureManifest.length - 10);
   });
 
   testWidgets('toggling a feature persists the full map and flips the switch',
@@ -109,7 +109,7 @@ void main() {
           'onlinePayments', 'levelBooking', 'adminLevelAssign',
           'adminInvoicing', 'autoCheckInOut',
           // #914 — narrowing who administers a managed profile is opt-in.
-          'managedProfileAccess'],
+          'managedProfileAccess', 'numberSequences'],
       ),
     );
     expect(switchTitled(tester, 'Money tab').value, isFalse);

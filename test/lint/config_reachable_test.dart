@@ -22,12 +22,17 @@ const _configModels = <String>[
   'lib/features/money/domain/dunning.dart',
   'lib/features/money/domain/billing_rules.dart',
   'lib/features/workspace/domain/booking_policies.dart',
+  // #925 — every field of a series is set on the Number sequences screen.
+  'lib/features/money/domain/number_sequence.dart',
 ];
 
 /// Fields that legitimately have no control, each with its reason. A new
 /// entry here is a claim someone has to defend in review — which is the
 /// point of writing it down rather than loosening the rule.
 const _exempt = <String, String>{
+  // #925 — the period the counter belongs to: written by
+  // next_document_number when the series rolls over, never by an owner.
+  'periodKey': 'server-written on rollover, read through the preview (#925)',
   // #634 — retired switch kept only so a stored `true` still resolves;
   // nothing writes it and no screen offers it, by design.
   'gridWithinHours': 'retired legacy key, read-only (#634)',

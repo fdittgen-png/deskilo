@@ -187,7 +187,8 @@ const Map<String, int> _baseline = {
   // early-departure correction, the record removal). This file is one
   // class of thin `_client.rpc` calls; splitting it would put one
   // repository implementation in two places for no gain.
-  'lib/features/money/data/supabase_money_repository.dart': 1260,
+  // 1260→1320 (2026-09-06): #925 three number-sequence methods.
+  'lib/features/money/data/supabase_money_repository.dart': 1320,
   // 600→630 (2026-08-11): #537 VAT price transparency — the gross-price
   // hint + per-pack VAT/currency subtitles (labeling, no new concern).
   // 630→660 (2026-08-11): #537 follow-up — live VAT-share helpers under

@@ -6376,6 +6376,72 @@ class AppLocalizationsIt extends AppLocalizations {
   String get moneyFaceUsage => 'Utilizzo';
 
   @override
+  String get featureNumberSequences => 'Serie di numerazione';
+
+  @override
+  String get featureNumberSequencesDesc =>
+      'Come ogni registro numera i suoi documenti — prefisso, anno o mese, cifre, azzeramento del contatore — in una sola schermata per tutte le serie. I numeri sono assegnati nel database, senza buchi, attivato o no; attivato, il proprietario cambia il formato per ciò che segue.';
+
+  @override
+  String get numberSequencesTitle => 'Serie di numerazione';
+
+  @override
+  String get numberSequencesSubtitle =>
+      'Come sono numerate fatture e note di credito.';
+
+  @override
+  String get numberSequencesIntro =>
+      'Una serie per registro, senza buchi: il numero è preso nel database al momento dell’emissione, e un documento che fallisce non consuma nulla. Cambiare il formato non tocca mai un documento già emesso.';
+
+  @override
+  String get numberSequenceJournalInvoice => 'Fatture';
+
+  @override
+  String get numberSequenceJournalCreditNote => 'Note di credito';
+
+  @override
+  String get numberSequencePrefix => 'Prefisso';
+
+  @override
+  String get numberSequenceSuffix => 'Suffisso';
+
+  @override
+  String get numberSequenceDigits => 'Cifre';
+
+  @override
+  String get numberSequenceDatePart => 'Data';
+
+  @override
+  String get numberSequenceDateNone => 'Nessuna';
+
+  @override
+  String get numberSequenceDateYear => 'Anno';
+
+  @override
+  String get numberSequenceDateYearMonth => 'Anno-mese';
+
+  @override
+  String get numberSequenceReset => 'Azzeramento';
+
+  @override
+  String get numberSequenceResetNever => 'Mai';
+
+  @override
+  String get numberSequenceResetYearly => 'Ogni anno';
+
+  @override
+  String get numberSequenceResetMonthly => 'Ogni mese';
+
+  @override
+  String get numberSequenceNext => 'Prossimo numero';
+
+  @override
+  String get numberSequenceGapless => 'Senza buchi — garantito';
+
+  @override
+  String get numberSequenceSaved => 'Serie salvata.';
+
+  @override
   String billParticipation(int pct) {
     return 'Partecipazione $pct %';
   }

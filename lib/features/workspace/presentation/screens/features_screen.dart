@@ -239,6 +239,13 @@ class FeaturesScreen extends ConsumerWidget {
               'Members enter their name, postal address, phone, e-mail '
                   'and legal ids in Settings; invoices and letters print '
                   'them in the standard postal block.',
+        WorkspaceFeature.numberSequences =>
+          l10n?.featureNumberSequencesDesc ??
+              'How each journal numbers its documents — prefix, year or '
+                  'month, digits, when the counter restarts — one screen '
+                  'for every series. Numbers are drawn in the database, '
+                  'gapless, whether this is on or off; on, the owner can '
+                  'change the format for what comes next.',
         WorkspaceFeature.managedProfileAccess =>
           l10n?.featureManagedProfileAccessDesc ??
               'Each managed profile says who may administer it — by role, '

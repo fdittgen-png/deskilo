@@ -25,6 +25,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   // rule nobody narrowed is what #887 already did, so a space that
   // never needs to restrict anything is not shown the control.
   WorkspaceFeature.managedProfileAccess,
+  // #925 — the numbering screen is opt-in; the numbers are drawn either way.
+  WorkspaceFeature.numberSequences,
 };
 
 /// Every other feature ships ON.
@@ -73,6 +75,7 @@ void main() {
       'autoCheckInOut': true,
       'badgeSignIn': true,
       'managedProfileAccess': true,
+      'numberSequences': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

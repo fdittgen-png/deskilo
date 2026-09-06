@@ -6373,6 +6373,72 @@ class AppLocalizationsDe extends AppLocalizations {
   String get moneyFaceUsage => 'Nutzung';
 
   @override
+  String get featureNumberSequences => 'Nummernkreise';
+
+  @override
+  String get featureNumberSequencesDesc =>
+      'Wie jedes Journal seine Belege nummeriert — Präfix, Jahr oder Monat, Stellen, Neustart des Zählers — ein Bildschirm für alle Kreise. Die Nummern werden in der Datenbank vergeben, lückenlos, ob ein- oder ausgeschaltet; eingeschaltet ändert die Inhaberin das Format für alles Kommende.';
+
+  @override
+  String get numberSequencesTitle => 'Nummernkreise';
+
+  @override
+  String get numberSequencesSubtitle =>
+      'Wie Rechnungen und Gutschriften nummeriert werden.';
+
+  @override
+  String get numberSequencesIntro =>
+      'Ein Kreis je Journal, lückenlos: Die Nummer wird in der Datenbank genommen, sobald der Beleg ausgestellt wird, und ein Beleg, der scheitert, verbraucht nichts. Eine Formatänderung berührt nie einen bereits ausgestellten Beleg.';
+
+  @override
+  String get numberSequenceJournalInvoice => 'Rechnungen';
+
+  @override
+  String get numberSequenceJournalCreditNote => 'Gutschriften';
+
+  @override
+  String get numberSequencePrefix => 'Präfix';
+
+  @override
+  String get numberSequenceSuffix => 'Suffix';
+
+  @override
+  String get numberSequenceDigits => 'Stellen';
+
+  @override
+  String get numberSequenceDatePart => 'Datum';
+
+  @override
+  String get numberSequenceDateNone => 'Keins';
+
+  @override
+  String get numberSequenceDateYear => 'Jahr';
+
+  @override
+  String get numberSequenceDateYearMonth => 'Jahr-Monat';
+
+  @override
+  String get numberSequenceReset => 'Neustart';
+
+  @override
+  String get numberSequenceResetNever => 'Nie';
+
+  @override
+  String get numberSequenceResetYearly => 'Jährlich';
+
+  @override
+  String get numberSequenceResetMonthly => 'Monatlich';
+
+  @override
+  String get numberSequenceNext => 'Nächste Nummer';
+
+  @override
+  String get numberSequenceGapless => 'Lückenlos — garantiert';
+
+  @override
+  String get numberSequenceSaved => 'Nummernkreis gespeichert.';
+
+  @override
   String billParticipation(int pct) {
     return 'Beitrag $pct %';
   }

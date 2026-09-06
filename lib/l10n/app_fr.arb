@@ -3896,6 +3896,90 @@
   "scheduleUnitMonths": "mois",
   "scheduleUnitYears": "ans",
   "moneyFaceUsage": "Usage",
+  "featureNumberSequences": "Séquences de numérotation",
+  "@featureNumberSequences": {
+    "description": "#925 number sequences: featureNumberSequences"
+  },
+  "featureNumberSequencesDesc": "Comment chaque journal numérote ses documents — préfixe, année ou mois, nombre de chiffres, remise à zéro — sur un seul écran pour toutes les séries. Les numéros sont attribués dans la base, sans trou, que ce soit activé ou non ; activé, le propriétaire change le format pour la suite.",
+  "@featureNumberSequencesDesc": {
+    "description": "#925 number sequences: featureNumberSequencesDesc"
+  },
+  "numberSequencesTitle": "Séquences de numérotation",
+  "@numberSequencesTitle": {
+    "description": "#925 number sequences: numberSequencesTitle"
+  },
+  "numberSequencesSubtitle": "Comment factures et avoirs sont numérotés.",
+  "@numberSequencesSubtitle": {
+    "description": "#925 number sequences: numberSequencesSubtitle"
+  },
+  "numberSequencesIntro": "Une série par journal, sans trou : le numéro est pris dans la base au moment où le document est émis, et un document qui n'aboutit pas ne consomme rien. Modifier le format ne change jamais un document déjà émis.",
+  "@numberSequencesIntro": {
+    "description": "#925 number sequences: numberSequencesIntro"
+  },
+  "numberSequenceJournalInvoice": "Factures",
+  "@numberSequenceJournalInvoice": {
+    "description": "#925 number sequences: numberSequenceJournalInvoice"
+  },
+  "numberSequenceJournalCreditNote": "Avoirs",
+  "@numberSequenceJournalCreditNote": {
+    "description": "#925 number sequences: numberSequenceJournalCreditNote"
+  },
+  "numberSequencePrefix": "Préfixe",
+  "@numberSequencePrefix": {
+    "description": "#925 number sequences: numberSequencePrefix"
+  },
+  "numberSequenceSuffix": "Suffixe",
+  "@numberSequenceSuffix": {
+    "description": "#925 number sequences: numberSequenceSuffix"
+  },
+  "numberSequenceDigits": "Chiffres",
+  "@numberSequenceDigits": {
+    "description": "#925 number sequences: numberSequenceDigits"
+  },
+  "numberSequenceDatePart": "Date",
+  "@numberSequenceDatePart": {
+    "description": "#925 number sequences: numberSequenceDatePart"
+  },
+  "numberSequenceDateNone": "Aucune",
+  "@numberSequenceDateNone": {
+    "description": "#925 number sequences: numberSequenceDateNone"
+  },
+  "numberSequenceDateYear": "Année",
+  "@numberSequenceDateYear": {
+    "description": "#925 number sequences: numberSequenceDateYear"
+  },
+  "numberSequenceDateYearMonth": "Année-mois",
+  "@numberSequenceDateYearMonth": {
+    "description": "#925 number sequences: numberSequenceDateYearMonth"
+  },
+  "numberSequenceReset": "Remise à zéro",
+  "@numberSequenceReset": {
+    "description": "#925 number sequences: numberSequenceReset"
+  },
+  "numberSequenceResetNever": "Jamais",
+  "@numberSequenceResetNever": {
+    "description": "#925 number sequences: numberSequenceResetNever"
+  },
+  "numberSequenceResetYearly": "Chaque année",
+  "@numberSequenceResetYearly": {
+    "description": "#925 number sequences: numberSequenceResetYearly"
+  },
+  "numberSequenceResetMonthly": "Chaque mois",
+  "@numberSequenceResetMonthly": {
+    "description": "#925 number sequences: numberSequenceResetMonthly"
+  },
+  "numberSequenceNext": "Prochain numéro",
+  "@numberSequenceNext": {
+    "description": "#925 number sequences: numberSequenceNext"
+  },
+  "numberSequenceGapless": "Sans trou — garanti",
+  "@numberSequenceGapless": {
+    "description": "#925 number sequences: numberSequenceGapless"
+  },
+  "numberSequenceSaved": "Séquence enregistrée.",
+  "@numberSequenceSaved": {
+    "description": "#925 number sequences: numberSequenceSaved"
+  },
   "billParticipation": "Participation {pct} %",
   "@billParticipation": {
     "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.",

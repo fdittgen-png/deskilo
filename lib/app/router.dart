@@ -64,6 +64,7 @@ import '../features/kiosk/providers/kiosk_mode.dart';
 import '../features/money/presentation/screens/payment_config_screen.dart';
 import '../features/workspace/presentation/screens/nfc_config_screen.dart';
 import 'shell/shell_screen.dart';
+import '../features/money/presentation/screens/number_sequences_screen.dart';
 
 part 'router.g.dart';
 
@@ -527,6 +528,13 @@ GoRouter router(Ref ref) {
                 ? null
                 : '/settings',
         builder: (context, state) => const MyPaymentTermsScreen(),
+      ),
+      // #925 — how every journal numbers its documents, one screen.
+      GoRoute(
+        path: '/settings/number-sequences',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.numberSequences) ? null : '/settings',
+        builder: (context, state) => const NumberSequencesScreen(),
       ),
       // #887 — create or edit a managed member's identity.
       GoRoute(

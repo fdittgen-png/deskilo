@@ -11119,6 +11119,132 @@ abstract class AppLocalizations {
   /// **'Usage'**
   String get moneyFaceUsage;
 
+  /// #925 number sequences: featureNumberSequences
+  ///
+  /// In en, this message translates to:
+  /// **'Number sequences'**
+  String get featureNumberSequences;
+
+  /// #925 number sequences: featureNumberSequencesDesc
+  ///
+  /// In en, this message translates to:
+  /// **'How each journal numbers its documents — prefix, year or month, digits, when the counter restarts — one screen for every series. Numbers are drawn in the database, gapless, whether this is on or off; on, the owner can change the format for what comes next.'**
+  String get featureNumberSequencesDesc;
+
+  /// #925 number sequences: numberSequencesTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Number sequences'**
+  String get numberSequencesTitle;
+
+  /// #925 number sequences: numberSequencesSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'How invoices and credit notes are numbered.'**
+  String get numberSequencesSubtitle;
+
+  /// #925 number sequences: numberSequencesIntro
+  ///
+  /// In en, this message translates to:
+  /// **'One series per journal, gapless: the number is taken in the database the moment the document is issued, and a document that fails takes nothing. Changing the format never touches a document already issued.'**
+  String get numberSequencesIntro;
+
+  /// #925 number sequences: numberSequenceJournalInvoice
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get numberSequenceJournalInvoice;
+
+  /// #925 number sequences: numberSequenceJournalCreditNote
+  ///
+  /// In en, this message translates to:
+  /// **'Credit notes'**
+  String get numberSequenceJournalCreditNote;
+
+  /// #925 number sequences: numberSequencePrefix
+  ///
+  /// In en, this message translates to:
+  /// **'Prefix'**
+  String get numberSequencePrefix;
+
+  /// #925 number sequences: numberSequenceSuffix
+  ///
+  /// In en, this message translates to:
+  /// **'Suffix'**
+  String get numberSequenceSuffix;
+
+  /// #925 number sequences: numberSequenceDigits
+  ///
+  /// In en, this message translates to:
+  /// **'Digits'**
+  String get numberSequenceDigits;
+
+  /// #925 number sequences: numberSequenceDatePart
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get numberSequenceDatePart;
+
+  /// #925 number sequences: numberSequenceDateNone
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get numberSequenceDateNone;
+
+  /// #925 number sequences: numberSequenceDateYear
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get numberSequenceDateYear;
+
+  /// #925 number sequences: numberSequenceDateYearMonth
+  ///
+  /// In en, this message translates to:
+  /// **'Year-month'**
+  String get numberSequenceDateYearMonth;
+
+  /// #925 number sequences: numberSequenceReset
+  ///
+  /// In en, this message translates to:
+  /// **'Restart'**
+  String get numberSequenceReset;
+
+  /// #925 number sequences: numberSequenceResetNever
+  ///
+  /// In en, this message translates to:
+  /// **'Never'**
+  String get numberSequenceResetNever;
+
+  /// #925 number sequences: numberSequenceResetYearly
+  ///
+  /// In en, this message translates to:
+  /// **'Every year'**
+  String get numberSequenceResetYearly;
+
+  /// #925 number sequences: numberSequenceResetMonthly
+  ///
+  /// In en, this message translates to:
+  /// **'Every month'**
+  String get numberSequenceResetMonthly;
+
+  /// #925 number sequences: numberSequenceNext
+  ///
+  /// In en, this message translates to:
+  /// **'Next number'**
+  String get numberSequenceNext;
+
+  /// #925 number sequences: numberSequenceGapless
+  ///
+  /// In en, this message translates to:
+  /// **'Gapless — guaranteed'**
+  String get numberSequenceGapless;
+
+  /// #925 number sequences: numberSequenceSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Sequence saved.'**
+  String get numberSequenceSaved;
+
   /// The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.
   ///
   /// In en, this message translates to:

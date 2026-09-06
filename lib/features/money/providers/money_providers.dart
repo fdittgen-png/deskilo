@@ -30,6 +30,7 @@ import '../domain/statement.dart';
 import '../domain/subscription_levels.dart';
 import '../domain/vat_rate.dart';
 import '../../../core/time/clock.dart';
+import '../domain/number_sequence.dart';
 
 part 'money_providers.g.dart';
 
@@ -450,3 +451,11 @@ Future<PriceNegotiation> priceNegotiation(Ref ref, String memberId) =>
 bool sellerIsAssociation(Ref ref) => InvoiceLegal.fromJson(
       ref.watch(currentWorkspaceProvider).value?.invoiceLegal ?? const {},
     ).isAssociation;
+
+/// #925 — every number series of the active workspace, one per journal.
+@riverpod
+Future<List<NumberSequence>> numberSequences(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  return ref.read(moneyRepositoryProvider).fetchNumberSequences(workspace.id);
+}
