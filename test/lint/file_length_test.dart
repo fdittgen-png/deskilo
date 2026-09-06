@@ -165,7 +165,9 @@ const Map<String, int> _baseline = {
   // 800→810 (2026-08-31): #763 the report editor's header help dot.
   'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 1180, // 2026-09-06 #966 the guide, the caret
   'lib/features/money/presentation/widgets/report_field_picker.dart': 420, // 2026-09-06 #966 meanings + topic groups // 2026-09-02 #822 the page, undo/redo, guards // 2026-09-04 #875 layout drafts per kind, the panel mount and its three handlers — the panel and the actions themselves live in their own files // 2026-09-05 #880 the owner-texts drafts per language, merged into every preview/export, and the Texts panel mount
-  'lib/features/workspace/domain/workspace_xml.dart': 960, // 2026-09-06 #916 schema v3: plan attributes + the configuration section
+  'lib/features/workspace/domain/workspace_xml.dart': 960,
+  'lib/features/profile/presentation/screens/new_instance_screen.dart': 560, // 2026-09-06 #977 six wizard steps
+  'lib/features/profile/presentation/screens/backend_screen.dart': 470, // 2026-09-06 #977 the wizard button // 2026-09-06 #916 schema v3: plan attributes + the configuration section
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.
   // 780→810 (2026-09-01): #814 closed columns.

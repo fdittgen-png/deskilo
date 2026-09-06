@@ -5429,6 +5429,210 @@ abstract class AppLocalizations {
   /// **'your own server'**
   String get helpTopicServer;
 
+  /// #977 instance wizard: featureInstanceWizard
+  ///
+  /// In en, this message translates to:
+  /// **'Instance wizard'**
+  String get featureInstanceWizard;
+
+  /// #977 instance wizard: featureInstanceWizardDesc
+  ///
+  /// In en, this message translates to:
+  /// **'On the Server screen, a wizard that creates a new Supabase project, installs the app\'s schema, deploys its functions and points this device at it — one access token, no terminal. Off: the manual steps only.'**
+  String get featureInstanceWizardDesc;
+
+  /// #977 instance wizard: instanceCreateButton
+  ///
+  /// In en, this message translates to:
+  /// **'Create a new instance'**
+  String get instanceCreateButton;
+
+  /// #977 instance wizard: instanceWizardTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Create a new instance'**
+  String get instanceWizardTitle;
+
+  /// #977 instance wizard: instanceStepAccount
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get instanceStepAccount;
+
+  /// #977 instance wizard: instanceStepProject
+  ///
+  /// In en, this message translates to:
+  /// **'Project'**
+  String get instanceStepProject;
+
+  /// #977 instance wizard: instanceStepSchema
+  ///
+  /// In en, this message translates to:
+  /// **'Schema'**
+  String get instanceStepSchema;
+
+  /// #977 instance wizard: instanceStepFunctions
+  ///
+  /// In en, this message translates to:
+  /// **'Functions'**
+  String get instanceStepFunctions;
+
+  /// #977 instance wizard: instanceStepSignIn
+  ///
+  /// In en, this message translates to:
+  /// **'Sign-in'**
+  String get instanceStepSignIn;
+
+  /// #977 instance wizard: instanceStepDone
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get instanceStepDone;
+
+  /// #977 instance wizard: instanceAccountIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Create a free account at supabase.com, then make a personal access token (Account → Access Tokens) and paste it here. The wizard uses it to create and set up the project; it is never stored.'**
+  String get instanceAccountIntro;
+
+  /// #977 instance wizard: instanceTokenLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Personal access token'**
+  String get instanceTokenLabel;
+
+  /// #977 instance wizard: instanceCheckToken
+  ///
+  /// In en, this message translates to:
+  /// **'Check the token'**
+  String get instanceCheckToken;
+
+  /// #977 instance wizard: instanceTokenRefused
+  ///
+  /// In en, this message translates to:
+  /// **'Supabase refused the token. Create one at Account → Access Tokens and paste it whole.'**
+  String get instanceTokenRefused;
+
+  /// #977 instance wizard: instanceOrganisationLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Organisation'**
+  String get instanceOrganisationLabel;
+
+  /// #977 instance wizard: instanceProjectName
+  ///
+  /// In en, this message translates to:
+  /// **'Project name'**
+  String get instanceProjectName;
+
+  /// #977 instance wizard: instanceRegion
+  ///
+  /// In en, this message translates to:
+  /// **'Region (the nearest to the space)'**
+  String get instanceRegion;
+
+  /// #977 instance wizard: instanceDatabasePassword
+  ///
+  /// In en, this message translates to:
+  /// **'Database password, chosen for you — copy it somewhere safe; the app never needs it again.'**
+  String get instanceDatabasePassword;
+
+  /// #977 instance wizard: instanceCreateProject
+  ///
+  /// In en, this message translates to:
+  /// **'Create the project'**
+  String get instanceCreateProject;
+
+  /// #977 instance wizard: instanceProjectStatus
+  ///
+  /// In en, this message translates to:
+  /// **'Project status: {status}'**
+  String instanceProjectStatus(String status);
+
+  /// #977 instance wizard: instanceProjectReady
+  ///
+  /// In en, this message translates to:
+  /// **'Project ready: {ref}'**
+  String instanceProjectReady(String ref);
+
+  /// #977 instance wizard: instanceUseExisting
+  ///
+  /// In en, this message translates to:
+  /// **'Or use an existing project:'**
+  String get instanceUseExisting;
+
+  /// #977 instance wizard: instanceInstallSchema
+  ///
+  /// In en, this message translates to:
+  /// **'Install the schema: every migration of the app, in order ({count}).'**
+  String instanceInstallSchema(int count);
+
+  /// #977 instance wizard: instanceDeployFunctions
+  ///
+  /// In en, this message translates to:
+  /// **'Deploy the functions: payments, e-invoices, push, badges ({count}).'**
+  String instanceDeployFunctions(int count);
+
+  /// #977 instance wizard: instanceProgress
+  ///
+  /// In en, this message translates to:
+  /// **'{done} / {total} · {current}'**
+  String instanceProgress(int done, int total, String current);
+
+  /// #977 instance wizard: instanceStepFailed
+  ///
+  /// In en, this message translates to:
+  /// **'Stopped at {item}: {message}'**
+  String instanceStepFailed(String item, String message);
+
+  /// #977 instance wizard: instanceRetry
+  ///
+  /// In en, this message translates to:
+  /// **'Retry from where it stopped'**
+  String get instanceRetry;
+
+  /// #977 instance wizard: instanceSignInExplain
+  ///
+  /// In en, this message translates to:
+  /// **'Sign-in settings: e-mail confirmation on (a sign-up must click the link in its mail), and the app\'s links allowed for password resets and magic links.'**
+  String get instanceSignInExplain;
+
+  /// #977 instance wizard: instanceApplySignIn
+  ///
+  /// In en, this message translates to:
+  /// **'Apply the sign-in settings'**
+  String get instanceApplySignIn;
+
+  /// #977 instance wizard: instanceDoneIntro
+  ///
+  /// In en, this message translates to:
+  /// **'The instance is ready. Use it on this device, then share the server QR from the Server screen so members join the same one.'**
+  String get instanceDoneIntro;
+
+  /// #977 instance wizard: instanceUseHere
+  ///
+  /// In en, this message translates to:
+  /// **'Use this instance on this device'**
+  String get instanceUseHere;
+
+  /// #977 instance wizard: commonStart
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get commonStart;
+
+  /// #977 instance wizard: commonDone
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get commonDone;
+
+  /// #977 instance wizard: commonCopy
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get commonCopy;
+
   /// No description provided for @inviteSectionTitle.
   ///
   /// In en, this message translates to:

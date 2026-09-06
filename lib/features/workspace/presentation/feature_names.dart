@@ -133,6 +133,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.siteDocuments =>
         l10n?.featureSiteDocuments ?? 'Sites on documents',
       WorkspaceFeature.demoMode => l10n?.featureDemoMode ?? 'Demo mode',
+      WorkspaceFeature.instanceWizard =>
+        l10n?.featureInstanceWizard ?? 'Instance wizard',
       WorkspaceFeature.navigationStyle =>
         l10n?.featureNavigationStyle ?? 'Navigation choice',
       WorkspaceFeature.configurationTransfer =>

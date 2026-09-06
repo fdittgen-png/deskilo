@@ -166,7 +166,10 @@ enum WorkspaceFeature {
 
   /// #970 — demo mode: a per-device switch that replaces every name,
   /// e-mail and address on screen by invented ones.
-  demoMode;
+  demoMode,
+
+  /// #977 — the wizard that creates and configures a new instance.
+  instanceWizard;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -491,6 +494,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // #970 — demo mode; off hides the switch and nothing is invented.
   WorkspaceFeature.demoMode: FeatureManifestEntry(
     feature: WorkspaceFeature.demoMode,
+  ),
+  // #977 — the instance wizard on the Server screen; off leaves the
+  // manual how-to alone.
+  WorkspaceFeature.instanceWizard: FeatureManifestEntry(
+    feature: WorkspaceFeature.instanceWizard,
   ),
   // #719 — "who accessed my data": the server-written log of reads of
   // another member's finances, shown to the subject. OFF hides the row;

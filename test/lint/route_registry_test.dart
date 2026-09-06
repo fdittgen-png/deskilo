@@ -48,7 +48,8 @@ import 'package:flutter_test/flutter_test.dart';
 // 53→54 (2026-09-06): #925 /settings/number-sequences.
 // 54→56 (2026-09-06): #934 /money/status, /money/repartition-wizard.
 // 56→57 (2026-09-06): #945 /settings/sites.
-const int _expectedRouteCount = 57;
+const int _expectedRouteCount = 58;
+// 57→58 (2026-09-06): #977 /server/new-instance.
 
 void main() {
   test('router carries exactly $_expectedRouteCount GoRoutes', () {

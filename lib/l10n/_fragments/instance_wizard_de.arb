@@ -1,0 +1,178 @@
+{
+  "@@locale": "de",
+  "featureInstanceWizard": "Instanz-Assistent",
+  "@featureInstanceWizard": {
+    "description": "#977 instance wizard: featureInstanceWizard"
+  },
+  "featureInstanceWizardDesc": "Auf dem Server-Bildschirm ein Assistent, der ein neues Supabase-Projekt anlegt, das Schema der App installiert, ihre Funktionen bereitstellt und dieses Gerät darauf zeigen lässt — ein Zugriffstoken, kein Terminal. Aus: nur die manuellen Schritte.",
+  "@featureInstanceWizardDesc": {
+    "description": "#977 instance wizard: featureInstanceWizardDesc"
+  },
+  "instanceCreateButton": "Neue Instanz anlegen",
+  "@instanceCreateButton": {
+    "description": "#977 instance wizard: instanceCreateButton"
+  },
+  "instanceWizardTitle": "Neue Instanz anlegen",
+  "@instanceWizardTitle": {
+    "description": "#977 instance wizard: instanceWizardTitle"
+  },
+  "instanceStepAccount": "Konto",
+  "@instanceStepAccount": {
+    "description": "#977 instance wizard: instanceStepAccount"
+  },
+  "instanceStepProject": "Projekt",
+  "@instanceStepProject": {
+    "description": "#977 instance wizard: instanceStepProject"
+  },
+  "instanceStepSchema": "Schema",
+  "@instanceStepSchema": {
+    "description": "#977 instance wizard: instanceStepSchema"
+  },
+  "instanceStepFunctions": "Funktionen",
+  "@instanceStepFunctions": {
+    "description": "#977 instance wizard: instanceStepFunctions"
+  },
+  "instanceStepSignIn": "Anmeldung",
+  "@instanceStepSignIn": {
+    "description": "#977 instance wizard: instanceStepSignIn"
+  },
+  "instanceStepDone": "Fertig",
+  "@instanceStepDone": {
+    "description": "#977 instance wizard: instanceStepDone"
+  },
+  "instanceAccountIntro": "Legen Sie ein kostenloses Konto auf supabase.com an, erstellen Sie dann ein persönliches Zugriffstoken (Account → Access Tokens) und fügen Sie es hier ein. Der Assistent nutzt es, um das Projekt anzulegen und einzurichten; es wird nie gespeichert.",
+  "@instanceAccountIntro": {
+    "description": "#977 instance wizard: instanceAccountIntro"
+  },
+  "instanceTokenLabel": "Persönliches Zugriffstoken",
+  "@instanceTokenLabel": {
+    "description": "#977 instance wizard: instanceTokenLabel"
+  },
+  "instanceCheckToken": "Token prüfen",
+  "@instanceCheckToken": {
+    "description": "#977 instance wizard: instanceCheckToken"
+  },
+  "instanceTokenRefused": "Supabase hat das Token abgelehnt. Erstellen Sie eines unter Account → Access Tokens und fügen Sie es vollständig ein.",
+  "@instanceTokenRefused": {
+    "description": "#977 instance wizard: instanceTokenRefused"
+  },
+  "instanceOrganisationLabel": "Organisation",
+  "@instanceOrganisationLabel": {
+    "description": "#977 instance wizard: instanceOrganisationLabel"
+  },
+  "instanceProjectName": "Projektname",
+  "@instanceProjectName": {
+    "description": "#977 instance wizard: instanceProjectName"
+  },
+  "instanceRegion": "Region (die nächste zum Raum)",
+  "@instanceRegion": {
+    "description": "#977 instance wizard: instanceRegion"
+  },
+  "instanceDatabasePassword": "Datenbank-Passwort, für Sie gewählt — kopieren Sie es an einen sicheren Ort; die App braucht es nie wieder.",
+  "@instanceDatabasePassword": {
+    "description": "#977 instance wizard: instanceDatabasePassword"
+  },
+  "instanceCreateProject": "Projekt anlegen",
+  "@instanceCreateProject": {
+    "description": "#977 instance wizard: instanceCreateProject"
+  },
+  "instanceProjectStatus": "Projektstatus: {status}",
+  "@instanceProjectStatus": {
+    "description": "#977 instance wizard: instanceProjectStatus",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceProjectReady": "Projekt bereit: {ref}",
+  "@instanceProjectReady": {
+    "description": "#977 instance wizard: instanceProjectReady",
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceUseExisting": "Oder ein bestehendes Projekt verwenden:",
+  "@instanceUseExisting": {
+    "description": "#977 instance wizard: instanceUseExisting"
+  },
+  "instanceInstallSchema": "Schema installieren: jede Migration der App, in Reihenfolge ({count}).",
+  "@instanceInstallSchema": {
+    "description": "#977 instance wizard: instanceInstallSchema",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDeployFunctions": "Funktionen bereitstellen: Zahlungen, E-Rechnungen, Push, Badges ({count}).",
+  "@instanceDeployFunctions": {
+    "description": "#977 instance wizard: instanceDeployFunctions",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceProgress": "{done} / {total} · {current}",
+  "@instanceProgress": {
+    "description": "#977 instance wizard: instanceProgress",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "current": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceStepFailed": "Gestoppt bei {item}: {message}",
+  "@instanceStepFailed": {
+    "description": "#977 instance wizard: instanceStepFailed",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceRetry": "Dort weitermachen, wo es stoppte",
+  "@instanceRetry": {
+    "description": "#977 instance wizard: instanceRetry"
+  },
+  "instanceSignInExplain": "Anmeldeeinstellungen: E-Mail-Bestätigung an (eine Registrierung muss den Link in der Mail anklicken), und die Links der App für Passwort-Resets und Magic Links erlaubt.",
+  "@instanceSignInExplain": {
+    "description": "#977 instance wizard: instanceSignInExplain"
+  },
+  "instanceApplySignIn": "Anmeldeeinstellungen anwenden",
+  "@instanceApplySignIn": {
+    "description": "#977 instance wizard: instanceApplySignIn"
+  },
+  "instanceDoneIntro": "Die Instanz ist bereit. Verwenden Sie sie auf diesem Gerät und teilen Sie dann den Server-QR vom Server-Bildschirm, damit Mitglieder derselben beitreten.",
+  "@instanceDoneIntro": {
+    "description": "#977 instance wizard: instanceDoneIntro"
+  },
+  "instanceUseHere": "Diese Instanz auf diesem Gerät verwenden",
+  "@instanceUseHere": {
+    "description": "#977 instance wizard: instanceUseHere"
+  },
+  "commonStart": "Starten",
+  "@commonStart": {
+    "description": "#977 instance wizard: commonStart"
+  },
+  "commonDone": "Fertig",
+  "@commonDone": {
+    "description": "#977 instance wizard: commonDone"
+  },
+  "commonCopy": "Kopieren",
+  "@commonCopy": {
+    "description": "#977 instance wizard: commonCopy"
+  }
+}

@@ -35,6 +35,7 @@ import '../features/plan/presentation/screens/accessories_screen.dart';
 import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/backend_screen.dart';
+import '../features/profile/presentation/screens/new_instance_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
 import '../features/workspace/presentation/screens/inbox_screen.dart';
 import '../features/workspace/presentation/widgets/conversation_thread.dart';
@@ -309,6 +310,13 @@ GoRouter router(Ref ref) {
       // #780 — which Supabase instance this device talks to. Outside the
       // workspace shell on purpose: it must be reachable when no
       // workspace can be loaded, which is exactly when it is needed.
+      // #977 — the instance wizard, beside the server screen it serves.
+      GoRoute(
+        path: '/server/new-instance',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.instanceWizard) ? null : '/server',
+        builder: (context, state) => const NewInstanceScreen(),
+      ),
       GoRoute(
         path: '/server',
         builder: (context, state) => const BackendScreen(),

@@ -1836,6 +1836,181 @@
   "helpTopicBookingLimits": "Límites de reserva",
   "helpTopicScheduledExpenses": "Gastos programados",
   "helpTopicServer": "tu propio servidor",
+  "featureInstanceWizard": "Asistente de instancia",
+  "@featureInstanceWizard": {
+    "description": "#977 instance wizard: featureInstanceWizard"
+  },
+  "featureInstanceWizardDesc": "En la pantalla Servidor, un asistente crea un nuevo proyecto Supabase, instala el esquema de la app, despliega sus funciones y apunta este dispositivo a él — un token de acceso, sin terminal. Desactivado: solo los pasos manuales.",
+  "@featureInstanceWizardDesc": {
+    "description": "#977 instance wizard: featureInstanceWizardDesc"
+  },
+  "instanceCreateButton": "Crear una nueva instancia",
+  "@instanceCreateButton": {
+    "description": "#977 instance wizard: instanceCreateButton"
+  },
+  "instanceWizardTitle": "Crear una nueva instancia",
+  "@instanceWizardTitle": {
+    "description": "#977 instance wizard: instanceWizardTitle"
+  },
+  "instanceStepAccount": "Cuenta",
+  "@instanceStepAccount": {
+    "description": "#977 instance wizard: instanceStepAccount"
+  },
+  "instanceStepProject": "Proyecto",
+  "@instanceStepProject": {
+    "description": "#977 instance wizard: instanceStepProject"
+  },
+  "instanceStepSchema": "Esquema",
+  "@instanceStepSchema": {
+    "description": "#977 instance wizard: instanceStepSchema"
+  },
+  "instanceStepFunctions": "Funciones",
+  "@instanceStepFunctions": {
+    "description": "#977 instance wizard: instanceStepFunctions"
+  },
+  "instanceStepSignIn": "Inicio de sesión",
+  "@instanceStepSignIn": {
+    "description": "#977 instance wizard: instanceStepSignIn"
+  },
+  "instanceStepDone": "Listo",
+  "@instanceStepDone": {
+    "description": "#977 instance wizard: instanceStepDone"
+  },
+  "instanceAccountIntro": "Cree una cuenta gratuita en supabase.com, luego un token de acceso personal (Account → Access Tokens) y péguelo aquí. El asistente lo usa para crear y configurar el proyecto; nunca se guarda.",
+  "@instanceAccountIntro": {
+    "description": "#977 instance wizard: instanceAccountIntro"
+  },
+  "instanceTokenLabel": "Token de acceso personal",
+  "@instanceTokenLabel": {
+    "description": "#977 instance wizard: instanceTokenLabel"
+  },
+  "instanceCheckToken": "Comprobar el token",
+  "@instanceCheckToken": {
+    "description": "#977 instance wizard: instanceCheckToken"
+  },
+  "instanceTokenRefused": "Supabase rechazó el token. Cree uno en Account → Access Tokens y péguelo entero.",
+  "@instanceTokenRefused": {
+    "description": "#977 instance wizard: instanceTokenRefused"
+  },
+  "instanceOrganisationLabel": "Organización",
+  "@instanceOrganisationLabel": {
+    "description": "#977 instance wizard: instanceOrganisationLabel"
+  },
+  "instanceProjectName": "Nombre del proyecto",
+  "@instanceProjectName": {
+    "description": "#977 instance wizard: instanceProjectName"
+  },
+  "instanceRegion": "Región (la más cercana al espacio)",
+  "@instanceRegion": {
+    "description": "#977 instance wizard: instanceRegion"
+  },
+  "instanceDatabasePassword": "Contraseña de la base de datos, elegida por usted — cópiela en un lugar seguro; la app no vuelve a necesitarla.",
+  "@instanceDatabasePassword": {
+    "description": "#977 instance wizard: instanceDatabasePassword"
+  },
+  "instanceCreateProject": "Crear el proyecto",
+  "@instanceCreateProject": {
+    "description": "#977 instance wizard: instanceCreateProject"
+  },
+  "instanceProjectStatus": "Estado del proyecto: {status}",
+  "@instanceProjectStatus": {
+    "description": "#977 instance wizard: instanceProjectStatus",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceProjectReady": "Proyecto listo: {ref}",
+  "@instanceProjectReady": {
+    "description": "#977 instance wizard: instanceProjectReady",
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceUseExisting": "O usar un proyecto existente:",
+  "@instanceUseExisting": {
+    "description": "#977 instance wizard: instanceUseExisting"
+  },
+  "instanceInstallSchema": "Instalar el esquema: cada migración de la app, en orden ({count}).",
+  "@instanceInstallSchema": {
+    "description": "#977 instance wizard: instanceInstallSchema",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDeployFunctions": "Desplegar las funciones: pagos, facturas electrónicas, push, tarjetas ({count}).",
+  "@instanceDeployFunctions": {
+    "description": "#977 instance wizard: instanceDeployFunctions",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceProgress": "{done} / {total} · {current}",
+  "@instanceProgress": {
+    "description": "#977 instance wizard: instanceProgress",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "current": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceStepFailed": "Detenido en {item}: {message}",
+  "@instanceStepFailed": {
+    "description": "#977 instance wizard: instanceStepFailed",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceRetry": "Reintentar desde donde se detuvo",
+  "@instanceRetry": {
+    "description": "#977 instance wizard: instanceRetry"
+  },
+  "instanceSignInExplain": "Ajustes de inicio de sesión: confirmación por correo activada (un registro debe pulsar el enlace del correo), y los enlaces de la app permitidos para restablecer contraseñas y enlaces mágicos.",
+  "@instanceSignInExplain": {
+    "description": "#977 instance wizard: instanceSignInExplain"
+  },
+  "instanceApplySignIn": "Aplicar los ajustes de inicio de sesión",
+  "@instanceApplySignIn": {
+    "description": "#977 instance wizard: instanceApplySignIn"
+  },
+  "instanceDoneIntro": "La instancia está lista. Úsela en este dispositivo y comparta luego el QR del servidor desde la pantalla Servidor para que los miembros se unan a la misma.",
+  "@instanceDoneIntro": {
+    "description": "#977 instance wizard: instanceDoneIntro"
+  },
+  "instanceUseHere": "Usar esta instancia en este dispositivo",
+  "@instanceUseHere": {
+    "description": "#977 instance wizard: instanceUseHere"
+  },
+  "commonStart": "Empezar",
+  "@commonStart": {
+    "description": "#977 instance wizard: commonStart"
+  },
+  "commonDone": "Listo",
+  "@commonDone": {
+    "description": "#977 instance wizard: commonDone"
+  },
+  "commonCopy": "Copiar",
+  "@commonCopy": {
+    "description": "#977 instance wizard: commonCopy"
+  },
   "inviteSectionTitle": "Invitar a alguien",
   "inviteViaWhatsapp": "WhatsApp",
   "inviteViaSms": "SMS",

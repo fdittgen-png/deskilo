@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../workspace/providers/workspace_providers.dart';
+import '../../../workspace/domain/workspace_feature.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../../core/backend/backend_settings.dart';
@@ -373,14 +376,17 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
 /// The four steps, on the screen rather than in a manual: a coworking
 /// owner setting this up has the Supabase dashboard open in the other
 /// hand.
-class _HowTo extends StatelessWidget {
+class _HowTo extends ConsumerWidget {
   const _HowTo({required this.topic});
 
   final String topic;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final featureOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.instanceWizard);
     final steps = [
       l10n?.backendStep1 ??
           'Create a project at supabase.com (the free tier is enough to '
@@ -395,7 +401,21 @@ class _HowTo extends StatelessWidget {
           'Paste them below, test the connection, and save. Members join '
               'the same instance by scanning the QR above.',
     ];
-    return Card(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // #977 — the wizard does the four steps for you.
+        if (featureOn)
+          Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+            child: FilledButton.icon(
+              key: const ValueKey('backend-new-instance'),
+              onPressed: () => context.push('/server/new-instance'),
+              icon: const Icon(Icons.auto_fix_high_outlined),
+              label: Text(l10n?.instanceCreateButton ?? 'Create a new instance'),
+            ),
+          ),
+        Card(
       child: ExpansionTile(
         key: const ValueKey('backend-howto'),
         leading: const Icon(Icons.help_outline),
@@ -431,6 +451,8 @@ class _HowTo extends StatelessWidget {
             ),
         ],
       ),
+    ),
+      ],
     );
   }
 }

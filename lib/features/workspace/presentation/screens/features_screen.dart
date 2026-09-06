@@ -264,6 +264,12 @@ class FeaturesScreen extends ConsumerWidget {
                   'its own address and registration, each member a home '
                   'site, and documents name the site they concern. Off: one '
                   'address for the whole workspace.',
+        WorkspaceFeature.instanceWizard =>
+          l10n?.featureInstanceWizardDesc ??
+              'On the Server screen, a wizard that creates a new Supabase '
+                  'project, installs the app\'s schema, deploys its functions '
+                  'and points this device at it — one access token, no '
+                  'terminal. Off: the manual steps only.',
         WorkspaceFeature.demoMode =>
           l10n?.featureDemoModeDesc ??
               'A switch in each member\'s settings: while it is on, every '
