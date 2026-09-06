@@ -6,12 +6,27 @@
 // reproduce the same document.
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 
+import 'package:deskilo/features/money/domain/address_window.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
+import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
+import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/presentation/invoice_line_text.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pdf/widgets.dart' as pw;
+
+/// A REAL engine-encoded PNG: the image codec refuses hand-rolled bytes,
+/// so the picture is painted and read back rather than invented.
+Future<Uint8List> _pngBytes() async {
+  final recorder = ui.PictureRecorder();
+  ui.Canvas(recorder).drawRect(const ui.Rect.fromLTWH(0, 0, 120, 48),
+      ui.Paint()..color = const ui.Color(0xFFB2432F));
+  final image = await recorder.endRecording().toImage(120, 48);
+  final data = await image.toByteData(format: ui.ImageByteFormat.png);
+  return data!.buffer.asUint8List();
+}
 
 pw.Font _ttf(String path) => pw.Font.ttf(
       ByteData.sublistView(File(path).readAsBytesSync()),
@@ -296,6 +311,88 @@ void main() {
       boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
     );
     expect(String.fromCharCodes(plain), isNot(contains('factur-x.xml')));
+  });
+
+  testWidgets('#923 — the letterhead LOGO survives the envelope window: the '
+      'sender band is fixed at 25 mm and a letterhead with a logo is '
+      'taller, so it scales instead of being clipped away',
+      (tester) async {
+    // The engine encodes the PNG and the pdf package decodes it: both
+    // need the real async zone, not the fake one a widget test pumps.
+    await tester.runAsync(() async {
+    final invoice = Invoice(
+      id: 'inv-logo',
+      workspaceId: 'ws-1',
+      memberId: 'member-1',
+      number: 'INV-2026-0004',
+      issuedAt: DateTime(2026, 9, 6),
+      period: '2026-09',
+      title: 'INV-2026-0004',
+      lines: const [
+        InvoiceLine(kind: 'service', label: 'Participation', amountCents: 10000),
+      ],
+      totalCents: 10000,
+      currency: 'EUR',
+      memberName: 'SASU KaloA',
+      memberAddress: '209 rue Jean Bart\n31670 LABÈGE',
+      workspaceName: 'COWORKONTI',
+      workspaceAddress: '4 avenue de Castelnau, 34120 Pézenas',
+      issuerName: 'Flo',
+      signature: 'c' * 64,
+    );
+    // A real engine-encoded PNG: the codec refuses hand-rolled bytes.
+    final logo = await _pngBytes();
+    final report = renderReportBands(
+      bands: const ReportBands(
+        header: '![logo]\nAssociation loi 1901\n4 avenue de Castelnau',
+        body: '{% for line in lines %}{{ line.label }} | {{ line.amount }}\n'
+            '{% endfor %}',
+        footer: '> {{ workspace }}',
+      ),
+      data: const {
+        'workspace': 'COWORKONTI',
+        'lines': [
+          {'label': 'Participation', 'amount': '100,00 €'},
+        ],
+      },
+    );
+    expect(report, isNotNull);
+    expect(reportImageRefs(report!), contains('logo'));
+
+    final bytes = await buildInvoicePdf(
+      invoice: invoice,
+      strings: _strings,
+      money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
+      lineText: (line) => invoiceLineText(null, line),
+      activityText: (entry) => annexEntryText(null, entry),
+      dateLabel: 'Sep 6, 2026',
+      report: report,
+      reportImages: {'logo': logo},
+      // The window ON is the case that used to lose it.
+      addressWindow: AddressWindow.left,
+      baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+    );
+    final raw = String.fromCharCodes(bytes);
+    expect(raw, contains('/Subtype/Image'),
+        reason: 'the logo must reach the page, not be clipped out of it');
+
+    // And with the window OFF it was always there — the guard must not
+    // have traded one case for the other.
+    final plain = await buildInvoicePdf(
+      invoice: invoice,
+      strings: _strings,
+      money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
+      lineText: (line) => invoiceLineText(null, line),
+      activityText: (entry) => annexEntryText(null, entry),
+      dateLabel: 'Sep 6, 2026',
+      report: report,
+      reportImages: {'logo': logo},
+      baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+    );
+    expect(String.fromCharCodes(plain), contains('/Subtype/Image'));
+    });
   });
 
   test(

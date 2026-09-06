@@ -54,6 +54,12 @@ const double addressWindowFlowResume = 90 * _mm;
 /// between it and [addressWindowTop] to work in.
 const double pageMargin = 20 * _mm;
 
+/// #923 — the tallest a letterhead PICTURE may be inside the sender
+/// band. The band itself is 25 mm (20 → 45); a logo of 12 mm leaves
+/// room for the three or four lines of identity that sit under it, and
+/// a design that states its own size still wins.
+const double senderLogoMaxHeight = 12 * _mm;
+
 extension AddressWindowGeometry on AddressWindow {
   /// Distance from the LEFT PAGE EDGE to the address field.
   ///
