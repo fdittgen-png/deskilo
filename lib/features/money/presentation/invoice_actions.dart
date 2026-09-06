@@ -205,6 +205,7 @@ Map<String, Object?> legalMentionData(
     // #482 — the client's own identifiers on B2B documents.
     'client_vat_id': buyer?.vatId ?? '',
     'client_legal_id': buyer?.legalId ?? '',
+    'client_member_number': buyer?.memberNumber ?? '',
     // #881 — whether anything printed is the member's own condition.
     'payment_terms_source': memberTerms == null ? 'workspace' : 'member',
     'payment_terms': orDefault(

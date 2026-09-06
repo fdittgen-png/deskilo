@@ -30,7 +30,7 @@
     <text style="heading">{% if proforma %}PROFORMA{% else %}FACTURE{% endif %} {{ number }}</text>
     <text style="small">Date d'émission : {{ issued }}</text>
     <text style="small">Prestation : {{ period }}</text>
-    {% if client_legal_id != "" %}<text style="small">N° Adhérent : {{ client_legal_id }}</text>{% endif %}
+    {% if client_member_number != "" %}<text style="small">N° Adhérent : {{ client_member_number }}</text>{% endif %}
     <spacer size="4mm"/>
 
     <table>

@@ -264,6 +264,7 @@ class InvoicePdfTemplate {
     'client_address',
     'client_vat_id',
     'client_legal_id',
+    'client_member_number',
     // #873 — the consumption report's figures and its records loop.
     'usage_paid',
     'usage_included_half_days',

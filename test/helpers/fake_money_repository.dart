@@ -264,7 +264,7 @@ class FakeMoneyRepository implements MoneyRepository {
   @override
   Future<List<NumberSequence>> fetchNumberSequences(String workspaceId) async => [
     for (final j in NumberSequence.journals)
-      numberSequences[j] ?? NumberSequence(journal: j),
+      numberSequences[j] ?? NumberSequence.defaultsFor(j),
   ];
 
   @override
@@ -290,7 +290,7 @@ class FakeMoneyRepository implements MoneyRepository {
     String workspaceId,
     String journal,
   ) async {
-    final s = numberSequences[journal] ?? NumberSequence(journal: journal);
+    final s = numberSequences[journal] ?? NumberSequence.defaultsFor(journal);
     return s.format(s.nextValue, kTestNow);
   }
 

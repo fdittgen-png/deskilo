@@ -343,7 +343,7 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
     // PostgREST cannot embed — two queries, joined client-side.
     final memberRows = await _client
         .from('members')
-        .select('id, user_id, managed_identity, managed_name')
+        .select('id, user_id, managed_identity, managed_name, member_number')
         .eq('workspace_id', workspaceId);
     // #887 — a managed member has no profile: its name is the identity
     // the admin typed (company when the person is nameless).
@@ -927,6 +927,7 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         // #914/#915 — the name is a column now, and the rule rides
         // beside it; the contact fields arrive through the RPC.
         managedName: row['managed_name'] as String? ?? '',
+        memberNumber: row['member_number'] as String? ?? '',
         managedAccess:
             (row['managed_access'] as Map?)?.cast<String, dynamic>() ??
                 const {},

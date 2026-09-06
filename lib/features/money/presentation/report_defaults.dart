@@ -83,6 +83,7 @@ ${l10n?.invoicePdfBilledTo ?? 'Billed to'}
 {{ member }}
 {% if client_address != "" %}> {{ client_address }}{% endif %}
 {% if client_legal_id != "" %}> {{ client_legal_id }}{% endif %}
+{% if client_member_number != "" %}> ${l10n?.memberNumberLabel ?? 'Member no.'}: {{ client_member_number }}{% endif %}
 {% if client_vat_id != "" %}> ${l10n?.legalIdentityVatId ?? 'VAT number'}: {{ client_vat_id }}{% endif %}
 > {{ period }}
 :::''';

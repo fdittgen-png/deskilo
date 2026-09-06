@@ -75,7 +75,13 @@ void main() {
     });
 
     test('every journal the app knows is listed side by side', () {
-      expect(NumberSequence.journals, ['invoice', 'credit_note']);
+      expect(NumberSequence.journals, [
+        'invoice',
+        'credit_note',
+        'vat_declaration',
+        'member',
+        'payment',
+      ]);
     });
   });
 

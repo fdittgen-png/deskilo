@@ -102,6 +102,11 @@ sealed class Member with _$Member {
   /// member because the directory needs a name.
   @Default('') String managedName,
 
+  /// #928 — "N° adhérent": drawn from the workspace's `member` series
+  /// when the membership is created, never changed, frozen into every
+  /// invoice's buyer party. '' only for rows older than 0165's backfill.
+  @Default('') String memberNumber,
+
   /// #914 — who may administer this profile: roles, named members, or
   /// both. Empty = the rule nobody narrowed (owner and admin).
   @Default(<String, dynamic>{}) Map<String, dynamic> managedAccess,

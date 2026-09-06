@@ -112,6 +112,10 @@ class _SequenceCardState extends ConsumerState<_SequenceCard> {
     final journalLabel = switch (_draft.journal) {
       'invoice' => l10n?.numberSequenceJournalInvoice ?? 'Invoices',
       'credit_note' => l10n?.numberSequenceJournalCreditNote ?? 'Credit notes',
+      'vat_declaration' =>
+        l10n?.numberSequenceJournalVatDeclaration ?? 'VAT declarations',
+      'member' => l10n?.numberSequenceJournalMember ?? 'Members',
+      'payment' => l10n?.numberSequenceJournalPayment ?? 'Payments',
       _ => _draft.journal,
     };
     return Card(

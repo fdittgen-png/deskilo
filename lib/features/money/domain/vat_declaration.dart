@@ -58,6 +58,7 @@ class VatDeclaration {
     this.submittedAt,
     this.submittedChannel = '',
     this.submittedReceipt = '',
+    this.number = '',
   });
 
   final String id;
@@ -78,6 +79,8 @@ class VatDeclaration {
   /// 'platform' | 'export' | 'manual' once submitted.
   final String submittedChannel;
   final String submittedReceipt;
+  /// #928 — DECL-2026-0001, drawn when the declaration is filed; '' for a draft.
+  final String number;
 
   bool get isSubmitted => status == 'submitted';
 
@@ -102,6 +105,7 @@ class VatDeclaration {
             : DateTime.parse(row['submitted_at'] as String).toUtc(),
         submittedChannel: row['submitted_channel'] as String? ?? '',
         submittedReceipt: row['submitted_receipt'] as String? ?? '',
+        number: row['number'] as String? ?? '',
       );
 }
 
