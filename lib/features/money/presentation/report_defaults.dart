@@ -370,8 +370,14 @@ ReportBands defaultPaymentsBands(AppLocalizations? l10n) =>
     _simpleDocPresetBands(
         l10n, 'classic', l10n?.reportDocPayments ?? 'Payments report',
         subtitle: '{{ member }} — {{ period }}',
+        // #955 — the period's payments and the balance are two figures;
+        // the template names both, and pending payments apart from
+        // pending expense submissions.
         totalsLine:
-            '= {{ payments }} | {% if pending_total != "" %}{{ pending_total }}{% endif %}');
+            '= ${l10n?.reportPaymentsPeriodTotal ?? 'Payments this period'} | {{ validated_total }}\n'
+            '{% if pending_payments_total != "" %}${l10n?.reportPendingPayments ?? 'Pending payments'} | {{ pending_payments_total }}\n{% endif %}'
+            '{% if pending_expenses_total != "" %}${l10n?.reportPendingExpenses ?? 'Pending expenses'} | {{ pending_expenses_total }}\n{% endif %}'
+            '= ${l10n?.billBalance ?? 'Balance'} | {{ total }}');
 
 /// The WORKSPACE STATUS (#934): what the workspace invoiced, collected,
 /// reimbursed and shared out over a range of months, then the same per

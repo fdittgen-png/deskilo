@@ -112,6 +112,7 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
       'vat_period': '2026-09',
       // #934 — the workspace status.
       'site_name': '', 'site_address': '', 'usage_sites': '',
+      'pending_payments_total': '', 'pending_expenses_total': '',
       'status_from': '2026-07', 'status_to': '2026-09',
       'status_invoiced': '1 850,00 €', 'status_credit_notes': '120,00 €',
       'status_payments': '1 600,00 €', 'status_reimbursed': '86,40 €',

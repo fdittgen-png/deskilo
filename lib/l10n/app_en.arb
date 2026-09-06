@@ -98,6 +98,30 @@
   "@legalIdentityAssociationRegime": {
     "description": "#919 association regime: legalIdentityAssociationRegime"
   },
+  "reportPaymentsPeriodTotal": "Payments this period",
+  "@reportPaymentsPeriodTotal": {
+    "description": "#955/#956 audit follow-ups: reportPaymentsPeriodTotal"
+  },
+  "reportPendingPayments": "Pending payments",
+  "@reportPendingPayments": {
+    "description": "#955/#956 audit follow-ups: reportPendingPayments"
+  },
+  "reportPendingExpenses": "Pending expenses",
+  "@reportPendingExpenses": {
+    "description": "#955/#956 audit follow-ups: reportPendingExpenses"
+  },
+  "invoiceIntegrityVerified": "Integrity verified",
+  "@invoiceIntegrityVerified": {
+    "description": "#955/#956 audit follow-ups: invoiceIntegrityVerified"
+  },
+  "invoiceIntegrityAltered": "Altered since issue",
+  "@invoiceIntegrityAltered": {
+    "description": "#955/#956 audit follow-ups: invoiceIntegrityAltered"
+  },
+  "invoiceIntegrityUnverifiable": "Issued before integrity checks",
+  "@invoiceIntegrityUnverifiable": {
+    "description": "#955/#956 audit follow-ups: invoiceIntegrityUnverifiable"
+  },
   "authSignInTitle": "Sign in",
   "@authSignInTitle": {
     "description": "Heading on the auth screen in sign-in mode"

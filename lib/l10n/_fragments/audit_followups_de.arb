@@ -1,0 +1,27 @@
+{
+  "@@locale": "de",
+  "reportPaymentsPeriodTotal": "Zahlungen im Zeitraum",
+  "@reportPaymentsPeriodTotal": {
+    "description": "#955/#956 audit follow-ups: reportPaymentsPeriodTotal"
+  },
+  "reportPendingPayments": "Ausstehende Zahlungen",
+  "@reportPendingPayments": {
+    "description": "#955/#956 audit follow-ups: reportPendingPayments"
+  },
+  "reportPendingExpenses": "Ausstehende Auslagen",
+  "@reportPendingExpenses": {
+    "description": "#955/#956 audit follow-ups: reportPendingExpenses"
+  },
+  "invoiceIntegrityVerified": "Integrität geprüft",
+  "@invoiceIntegrityVerified": {
+    "description": "#955/#956 audit follow-ups: invoiceIntegrityVerified"
+  },
+  "invoiceIntegrityAltered": "Seit Ausstellung verändert",
+  "@invoiceIntegrityAltered": {
+    "description": "#955/#956 audit follow-ups: invoiceIntegrityAltered"
+  },
+  "invoiceIntegrityUnverifiable": "Vor den Integritätsprüfungen ausgestellt",
+  "@invoiceIntegrityUnverifiable": {
+    "description": "#955/#956 audit follow-ups: invoiceIntegrityUnverifiable"
+  }
+}

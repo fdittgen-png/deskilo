@@ -19,6 +19,7 @@ import '../accounting_export.dart';
 import '../invoice_status.dart';
 import '../period_label.dart';
 import '../widgets/invoice_detail_sheet.dart';
+import '../widgets/invoice_integrity_chip.dart';
 
 /// The REGISTER: every invoice on one line — date, name, amount, status —
 /// sorted by date, newest or oldest first.
@@ -279,6 +280,8 @@ class _InvoiceRegisterScreenState
                           style: theme.textTheme.bodySmall
                               ?.copyWith(color: muted),
                         ),
+                        // #956 — the fingerprint, checked on demand.
+                        InvoiceIntegrityChip(invoiceId: invoice.id),
                       ],
                     ),
                   ),

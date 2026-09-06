@@ -83,6 +83,25 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein gemeinnütziger Verein ohne wirtschaftliche Tätigkeit unterliegt nicht der Umsatzsteuer: Wählen Sie „Nicht steuerbar“, nicht „Steuerbefreit“. Die Befreiung verlangt eine USt-IdNr., die Sie nicht haben, und die E-Rechnung würde abgelehnt. Nicht steuerbar identifiziert Ihre Registernummer den Verein.';
 
   @override
+  String get reportPaymentsPeriodTotal => 'Zahlungen im Zeitraum';
+
+  @override
+  String get reportPendingPayments => 'Ausstehende Zahlungen';
+
+  @override
+  String get reportPendingExpenses => 'Ausstehende Auslagen';
+
+  @override
+  String get invoiceIntegrityVerified => 'Integrität geprüft';
+
+  @override
+  String get invoiceIntegrityAltered => 'Seit Ausstellung verändert';
+
+  @override
+  String get invoiceIntegrityUnverifiable =>
+      'Vor den Integritätsprüfungen ausgestellt';
+
+  @override
   String get authSignInTitle => 'Anmelden';
 
   @override

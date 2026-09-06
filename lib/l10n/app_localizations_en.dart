@@ -83,6 +83,24 @@ class AppLocalizationsEn extends AppLocalizations {
       'A non-profit association with no trading activity is not subject to VAT: choose \"Outside the scope of VAT\", not \"Exempt\". The exempt scheme requires a VAT number you do not have, and the e-invoice would be rejected. Outside the scope, your registration number identifies the association.';
 
   @override
+  String get reportPaymentsPeriodTotal => 'Payments this period';
+
+  @override
+  String get reportPendingPayments => 'Pending payments';
+
+  @override
+  String get reportPendingExpenses => 'Pending expenses';
+
+  @override
+  String get invoiceIntegrityVerified => 'Integrity verified';
+
+  @override
+  String get invoiceIntegrityAltered => 'Altered since issue';
+
+  @override
+  String get invoiceIntegrityUnverifiable => 'Issued before integrity checks';
+
+  @override
   String get authSignInTitle => 'Sign in';
 
   @override

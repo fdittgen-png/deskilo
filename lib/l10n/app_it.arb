@@ -63,6 +63,30 @@
   "@legalIdentityAssociationRegime": {
     "description": "#919 association regime: legalIdentityAssociationRegime"
   },
+  "reportPaymentsPeriodTotal": "Pagamenti del periodo",
+  "@reportPaymentsPeriodTotal": {
+    "description": "#955/#956 audit follow-ups: reportPaymentsPeriodTotal"
+  },
+  "reportPendingPayments": "Pagamenti in attesa",
+  "@reportPendingPayments": {
+    "description": "#955/#956 audit follow-ups: reportPendingPayments"
+  },
+  "reportPendingExpenses": "Spese in attesa",
+  "@reportPendingExpenses": {
+    "description": "#955/#956 audit follow-ups: reportPendingExpenses"
+  },
+  "invoiceIntegrityVerified": "Integrità verificata",
+  "@invoiceIntegrityVerified": {
+    "description": "#955/#956 audit follow-ups: invoiceIntegrityVerified"
+  },
+  "invoiceIntegrityAltered": "Modificata dopo l'emissione",
+  "@invoiceIntegrityAltered": {
+    "description": "#955/#956 audit follow-ups: invoiceIntegrityAltered"
+  },
+  "invoiceIntegrityUnverifiable": "Emessa prima dei controlli di integrità",
+  "@invoiceIntegrityUnverifiable": {
+    "description": "#955/#956 audit follow-ups: invoiceIntegrityUnverifiable"
+  },
   "authSignInTitle": "Accedi",
   "authSignUpTitle": "Crea account",
   "authEmailLabel": "E-mail",
