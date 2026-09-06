@@ -731,6 +731,20 @@ class SettingsScreen extends ConsumerWidget {
           // #917 — is this space real? Owner-only, and the one setting
           // that changes what every document says about itself.
           const WorkspaceEnvironmentTile(),
+          // #945 — the workspace's sites, for those who manage it.
+          if ((ref.watch(myMemberProvider).value?.isAdmin ?? false) &&
+              ref
+                  .watch(enabledFeaturesSyncProvider)
+                  .contains(WorkspaceFeature.multiSite))
+            ListTile(
+              key: const ValueKey('settings-sites'),
+              leading: const Icon(Icons.location_city_outlined),
+              title: Text(l10n?.sitesTitle ?? 'Sites'),
+              subtitle: Text(l10n?.sitesSubtitle ??
+                  'Addresses, the levels at each, and who calls which home'),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () => context.push('/settings/sites'),
+            ),
           // #925 — one screen for every number series, owner-only.
           if ((ref.watch(myMemberProvider).value?.isOwner ?? false) &&
               ref

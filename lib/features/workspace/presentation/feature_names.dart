@@ -129,6 +129,7 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureWorkspaceStatus ?? 'Workspace status',
       WorkspaceFeature.expenseRepartitionWizard =>
         l10n?.featureExpenseRepartitionWizard ?? 'Repartition wizard',
+      WorkspaceFeature.multiSite => l10n?.featureMultiSite ?? 'Sites',
       WorkspaceFeature.managedProfileAccess =>
         l10n?.featureManagedProfileAccess ?? 'Who administers a profile',
       WorkspaceFeature.seatDayTimeline =>

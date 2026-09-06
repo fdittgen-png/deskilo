@@ -67,6 +67,7 @@ import 'shell/shell_screen.dart';
 import '../features/money/presentation/screens/number_sequences_screen.dart';
 import '../features/money/presentation/screens/workspace_status_screen.dart';
 import '../features/money/presentation/screens/repartition_wizard_screen.dart';
+import '../features/workspace/presentation/screens/sites_screen.dart';
 
 part 'router.g.dart';
 
@@ -530,6 +531,13 @@ GoRouter router(Ref ref) {
                 ? null
                 : '/settings',
         builder: (context, state) => const MyPaymentTermsScreen(),
+      ),
+      // #945 — the workspace's sites.
+      GoRoute(
+        path: '/settings/sites',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.multiSite) ? null : '/settings',
+        builder: (context, state) => const SitesScreen(),
       ),
       // #934 — the treasurer's view, and the guided repartition.
       GoRoute(

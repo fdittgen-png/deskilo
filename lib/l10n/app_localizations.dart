@@ -13237,6 +13237,120 @@ abstract class AppLocalizations {
   /// **'Active'**
   String get servicesActive;
 
+  /// #945 sites: featureMultiSite
+  ///
+  /// In en, this message translates to:
+  /// **'Sites'**
+  String get featureMultiSite;
+
+  /// #945 sites: featureMultiSiteDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Several addresses: levels are grouped by site, each site has its own address and registration, each member a home site, and documents name the site they concern. Off: one address for the whole workspace.'**
+  String get featureMultiSiteDesc;
+
+  /// #945 sites: sitesTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Sites'**
+  String get sitesTitle;
+
+  /// #945 sites: sitesSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Addresses, the levels at each, and who calls which home'**
+  String get sitesSubtitle;
+
+  /// #945 sites: sitesIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Every level belongs to a site; the default site carries the workspace\'s address. A member has a home site: that is the address on their documents.'**
+  String get sitesIntro;
+
+  /// #945 sites: sitesAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Add a site'**
+  String get sitesAdd;
+
+  /// #945 sites: sitesDefault
+  ///
+  /// In en, this message translates to:
+  /// **'Default site'**
+  String get sitesDefault;
+
+  /// #945 sites: sitesLevels
+  ///
+  /// In en, this message translates to:
+  /// **'Levels'**
+  String get sitesLevels;
+
+  /// #945 sites: siteName
+  ///
+  /// In en, this message translates to:
+  /// **'Site name'**
+  String get siteName;
+
+  /// #945 sites: siteStreet
+  ///
+  /// In en, this message translates to:
+  /// **'Street'**
+  String get siteStreet;
+
+  /// #945 sites: sitePostalCode
+  ///
+  /// In en, this message translates to:
+  /// **'Post code'**
+  String get sitePostalCode;
+
+  /// #945 sites: siteCity
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get siteCity;
+
+  /// #945 sites: siteCountry
+  ///
+  /// In en, this message translates to:
+  /// **'Country (code)'**
+  String get siteCountry;
+
+  /// #945 sites: siteLegalId
+  ///
+  /// In en, this message translates to:
+  /// **'Establishment registration (SIRET)'**
+  String get siteLegalId;
+
+  /// #945 sites: siteDelete
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this site'**
+  String get siteDelete;
+
+  /// #945 sites: siteDeleteHint
+  ///
+  /// In en, this message translates to:
+  /// **'Its levels and members go back to the default site.'**
+  String get siteDeleteHint;
+
+  /// #945 sites: siteSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Site saved.'**
+  String get siteSaved;
+
+  /// #945 sites: memberHomeSiteLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Home site'**
+  String get memberHomeSiteLabel;
+
+  /// #945 sites: memberHomeSiteDefault
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace address'**
+  String get memberHomeSiteDefault;
+
   /// No description provided for @authContinueWith.
   ///
   /// In en, this message translates to:

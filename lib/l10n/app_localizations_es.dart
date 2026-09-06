@@ -7577,6 +7577,67 @@ class AppLocalizationsEs extends AppLocalizations {
   String get servicesActive => 'Activo';
 
   @override
+  String get featureMultiSite => 'Sedes';
+
+  @override
+  String get featureMultiSiteDesc =>
+      'Varias direcciones: las plantas se agrupan por sede, cada sede tiene su dirección y su registro, cada socio una sede de referencia, y los documentos nombran la sede a la que se refieren. Desactivado: una sola dirección para todo el espacio.';
+
+  @override
+  String get sitesTitle => 'Sedes';
+
+  @override
+  String get sitesSubtitle =>
+      'Direcciones, las plantas de cada una y la sede de cada socio';
+
+  @override
+  String get sitesIntro =>
+      'Cada planta pertenece a una sede; la sede por defecto lleva la dirección del espacio. Un socio tiene una sede de referencia: es la dirección de sus documentos.';
+
+  @override
+  String get sitesAdd => 'Añadir una sede';
+
+  @override
+  String get sitesDefault => 'Sede por defecto';
+
+  @override
+  String get sitesLevels => 'Plantas';
+
+  @override
+  String get siteName => 'Nombre de la sede';
+
+  @override
+  String get siteStreet => 'Calle';
+
+  @override
+  String get sitePostalCode => 'Código postal';
+
+  @override
+  String get siteCity => 'Ciudad';
+
+  @override
+  String get siteCountry => 'País (código)';
+
+  @override
+  String get siteLegalId => 'Registro del establecimiento';
+
+  @override
+  String get siteDelete => 'Eliminar esta sede';
+
+  @override
+  String get siteDeleteHint =>
+      'Sus plantas y socios vuelven a la sede por defecto.';
+
+  @override
+  String get siteSaved => 'Sede guardada.';
+
+  @override
+  String get memberHomeSiteLabel => 'Sede de referencia';
+
+  @override
+  String get memberHomeSiteDefault => 'Dirección del espacio';
+
+  @override
   String get authContinueWith => 'o continuar con';
 
   @override

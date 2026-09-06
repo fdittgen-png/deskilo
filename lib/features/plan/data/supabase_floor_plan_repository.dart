@@ -82,6 +82,12 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   }
 
   @override
+  Future<void> setLevelSite(String levelId, String? siteId) async {
+    await _client.rpc<dynamic>('set_level_site',
+        params: {'p_level_id': levelId, 'p_site_id': siteId});
+  }
+
+  @override
   Future<void> renameLevel(String levelId, String name) async {
     await _client.from('levels').update({'name': name}).eq('id', levelId);
     await _bust();
@@ -560,6 +566,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         workspaceId: row['workspace_id'] as String,
         name: row['name'] as String,
         sortOrder: row['sort_order'] as int,
+        siteId: row['site_id'] as String?,
         backgroundPath: row['background_path'] as String?,
         bookableAsWhole: row['bookable_as_whole'] as bool? ?? false,
         priceCents: (row['price_cents'] as num?)?.toInt() ?? 0,

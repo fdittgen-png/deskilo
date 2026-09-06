@@ -1316,3 +1316,46 @@ final class AllWorkspacesProvider
 }
 
 String _$allWorkspacesHash() => r'1464cdc4bc158fc330ce9e7d0988e9087dd49f9e';
+
+/// #945 — the workspace's sites, default first.
+
+@ProviderFor(sites)
+final sitesProvider = SitesProvider._();
+
+/// #945 — the workspace's sites, default first.
+
+final class SitesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Site>>,
+          List<Site>,
+          FutureOr<List<Site>>
+        >
+    with $FutureModifier<List<Site>>, $FutureProvider<List<Site>> {
+  /// #945 — the workspace's sites, default first.
+  SitesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'sitesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$sitesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Site>> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Site>> create(Ref ref) {
+    return sites(ref);
+  }
+}
+
+String _$sitesHash() => r'7d7f89dd27e5500c73fa2c91ad2af2769b569dff';

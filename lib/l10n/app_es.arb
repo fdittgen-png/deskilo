@@ -4742,6 +4742,82 @@
   "servicesPrice": "Precio",
   "servicesInactive": "Inactivo",
   "servicesActive": "Activo",
+  "featureMultiSite": "Sedes",
+  "@featureMultiSite": {
+    "description": "#945 sites: featureMultiSite"
+  },
+  "featureMultiSiteDesc": "Varias direcciones: las plantas se agrupan por sede, cada sede tiene su dirección y su registro, cada socio una sede de referencia, y los documentos nombran la sede a la que se refieren. Desactivado: una sola dirección para todo el espacio.",
+  "@featureMultiSiteDesc": {
+    "description": "#945 sites: featureMultiSiteDesc"
+  },
+  "sitesTitle": "Sedes",
+  "@sitesTitle": {
+    "description": "#945 sites: sitesTitle"
+  },
+  "sitesSubtitle": "Direcciones, las plantas de cada una y la sede de cada socio",
+  "@sitesSubtitle": {
+    "description": "#945 sites: sitesSubtitle"
+  },
+  "sitesIntro": "Cada planta pertenece a una sede; la sede por defecto lleva la dirección del espacio. Un socio tiene una sede de referencia: es la dirección de sus documentos.",
+  "@sitesIntro": {
+    "description": "#945 sites: sitesIntro"
+  },
+  "sitesAdd": "Añadir una sede",
+  "@sitesAdd": {
+    "description": "#945 sites: sitesAdd"
+  },
+  "sitesDefault": "Sede por defecto",
+  "@sitesDefault": {
+    "description": "#945 sites: sitesDefault"
+  },
+  "sitesLevels": "Plantas",
+  "@sitesLevels": {
+    "description": "#945 sites: sitesLevels"
+  },
+  "siteName": "Nombre de la sede",
+  "@siteName": {
+    "description": "#945 sites: siteName"
+  },
+  "siteStreet": "Calle",
+  "@siteStreet": {
+    "description": "#945 sites: siteStreet"
+  },
+  "sitePostalCode": "Código postal",
+  "@sitePostalCode": {
+    "description": "#945 sites: sitePostalCode"
+  },
+  "siteCity": "Ciudad",
+  "@siteCity": {
+    "description": "#945 sites: siteCity"
+  },
+  "siteCountry": "País (código)",
+  "@siteCountry": {
+    "description": "#945 sites: siteCountry"
+  },
+  "siteLegalId": "Registro del establecimiento",
+  "@siteLegalId": {
+    "description": "#945 sites: siteLegalId"
+  },
+  "siteDelete": "Eliminar esta sede",
+  "@siteDelete": {
+    "description": "#945 sites: siteDelete"
+  },
+  "siteDeleteHint": "Sus plantas y socios vuelven a la sede por defecto.",
+  "@siteDeleteHint": {
+    "description": "#945 sites: siteDeleteHint"
+  },
+  "siteSaved": "Sede guardada.",
+  "@siteSaved": {
+    "description": "#945 sites: siteSaved"
+  },
+  "memberHomeSiteLabel": "Sede de referencia",
+  "@memberHomeSiteLabel": {
+    "description": "#945 sites: memberHomeSiteLabel"
+  },
+  "memberHomeSiteDefault": "Dirección del espacio",
+  "@memberHomeSiteDefault": {
+    "description": "#945 sites: memberHomeSiteDefault"
+  },
   "authContinueWith": "o continuar con",
   "authSocialUnavailable": "El inicio de sesión con {provider} aún no está disponible — el servidor no lo ha activado.",
   "linkedAccountsTitle": "Cuentas vinculadas",

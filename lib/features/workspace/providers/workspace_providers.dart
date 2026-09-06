@@ -20,6 +20,7 @@ import '../domain/workspace_repository.dart';
 import '../domain/workspace_document.dart';
 import '../../profile/domain/personal_info.dart';
 import '../domain/workspace_overview.dart';
+import '../domain/site.dart';
 
 part 'workspace_providers.g.dart';
 
@@ -364,4 +365,12 @@ Future<bool> isPlatformOwner(Ref ref) async {
 Future<List<WorkspaceOverview>> allWorkspaces(Ref ref) async {
   if (!(await ref.watch(isPlatformOwnerProvider.future))) return const [];
   return ref.watch(workspaceRepositoryProvider).fetchAllWorkspaces();
+}
+
+/// #945 — the workspace's sites, default first.
+@riverpod
+Future<List<Site>> sites(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  return ref.watch(workspaceRepositoryProvider).fetchSites(workspace.id);
 }

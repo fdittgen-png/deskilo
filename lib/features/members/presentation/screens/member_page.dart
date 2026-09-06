@@ -39,6 +39,7 @@ import '../widgets/member_contact_card.dart';
 import '../widgets/member_money_card.dart';
 import '../../../profile/presentation/courtesy_words.dart';
 import '../../../profile/domain/personal_info.dart';
+import '../../../workspace/domain/site.dart';
 
 /// #825 — ONE page per person (`/member/:id`): who they are and whether
 /// they are here, what they have booked, how to reach them, their money
@@ -367,6 +368,19 @@ class _MemberPageBody extends ConsumerWidget {
               : '${member.maxSimultaneousReservations}',
           onTap: () => pickMemberSimultaneousLimit(context, ref, member),
         ),
+        // #945 — the site whose address this member's documents carry.
+        if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.multiSite))
+          _ManageTile(
+            tileKey: const ValueKey('member-page-home-site'),
+            icon: Icons.location_city_outlined,
+            title: l10n?.memberHomeSiteLabel ?? 'Home site',
+            subtitle: (ref.watch(sitesProvider).value ?? const <Site>[])
+                    .where((s) => member.homeSiteId == null ? s.isDefault : s.id == member.homeSiteId)
+                    .map((s) => s.name)
+                    .firstOrNull ??
+                (l10n?.memberHomeSiteDefault ?? 'Workspace address'),
+            onTap: () => pickMemberHomeSite(context, ref, member),
+          ),
         if (levelOn)
           SwitchListTile(
             key: const ValueKey('member-page-level'),

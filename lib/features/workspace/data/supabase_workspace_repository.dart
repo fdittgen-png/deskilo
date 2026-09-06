@@ -17,6 +17,7 @@ import 'conversation_api.dart';
 import '../domain/workspace_document.dart';
 import '../domain/managed_access.dart';
 import '../domain/workspace_overview.dart';
+import '../domain/site.dart';
 
 class SupabaseWorkspaceRepository
     with ConversationApi
@@ -32,6 +33,45 @@ class SupabaseWorkspaceRepository
   Future<List<Workspace>> fetchMyWorkspaces() async {
     final rows = await _client.from('workspaces').select();
     return rows.map(_workspaceFromRow).toList();
+  }
+
+  @override
+  Future<List<Site>> fetchSites(String workspaceId) async {
+    final rows = await _client
+        .from('sites')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('is_default', ascending: false)
+        .order('sort_order')
+        .order('name');
+    return rows.map((r) => Site.fromRow(Map<String, dynamic>.from(r))).toList();
+  }
+
+  @override
+  Future<String> upsertSite(String workspaceId, Site site, {bool isNew = false}) async {
+    final r = await _client.rpc<dynamic>('upsert_site', params: {
+      'p_workspace_id': workspaceId,
+      'p_id': isNew ? null : site.id,
+      'p_name': site.name,
+      'p_street': site.street,
+      'p_postal_code': site.postalCode,
+      'p_city': site.city,
+      'p_country_code': site.countryCode,
+      'p_legal_id': site.legalId,
+      'p_sort_order': site.sortOrder,
+    });
+    return r as String;
+  }
+
+  @override
+  Future<void> deleteSite(String siteId) async {
+    await _client.rpc<dynamic>('delete_site', params: {'p_site_id': siteId});
+  }
+
+  @override
+  Future<void> setMemberHomeSite(String memberId, String? siteId) async {
+    await _client.rpc<dynamic>('set_member_home_site',
+        params: {'p_member_id': memberId, 'p_site_id': siteId});
   }
 
   @override
@@ -371,7 +411,7 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
     // PostgREST cannot embed — two queries, joined client-side.
     final memberRows = await _client
         .from('members')
-        .select('id, user_id, managed_identity, managed_name, member_number')
+        .select('id, user_id, managed_identity, managed_name, member_number, home_site_id')
         .eq('workspace_id', workspaceId);
     // #887 — a managed member has no profile: its name is the identity
     // the admin typed (company when the person is nameless).
@@ -956,6 +996,7 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         // beside it; the contact fields arrive through the RPC.
         managedName: row['managed_name'] as String? ?? '',
         memberNumber: row['member_number'] as String? ?? '',
+        homeSiteId: row['home_site_id'] as String?,
         managedAccess:
             (row['managed_access'] as Map?)?.cast<String, dynamic>() ??
                 const {},

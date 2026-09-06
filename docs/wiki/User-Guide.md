@@ -1048,3 +1048,7 @@ The account that operates the installation sees, under *Profiles*, **every works
 ### Complete accounting exports (#936)
 
 The FEC and the DATEV file now carry, beside sales and bank, a **purchases journal**: expenses reimbursed to members and shared costs split over them. A **credit note** is booked as a reversed sale (it was absent). The expense account is asked at export time like the others. A development workspace produces a file marked **DEV**: it is not the real books.
+
+### Sites (#945)
+
+A workspace can have **several addresses**. *Settings → Sites*: the default site carries the workspace's address; add a site per additional address (street, post code, city, the establishment's registration) and assign its levels. Every member has a **home site** (member page): that is the address their documents will carry. Deleting a site returns its levels and members to the default site.

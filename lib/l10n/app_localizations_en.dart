@@ -7528,6 +7528,67 @@ class AppLocalizationsEn extends AppLocalizations {
   String get servicesActive => 'Active';
 
   @override
+  String get featureMultiSite => 'Sites';
+
+  @override
+  String get featureMultiSiteDesc =>
+      'Several addresses: levels are grouped by site, each site has its own address and registration, each member a home site, and documents name the site they concern. Off: one address for the whole workspace.';
+
+  @override
+  String get sitesTitle => 'Sites';
+
+  @override
+  String get sitesSubtitle =>
+      'Addresses, the levels at each, and who calls which home';
+
+  @override
+  String get sitesIntro =>
+      'Every level belongs to a site; the default site carries the workspace\'s address. A member has a home site: that is the address on their documents.';
+
+  @override
+  String get sitesAdd => 'Add a site';
+
+  @override
+  String get sitesDefault => 'Default site';
+
+  @override
+  String get sitesLevels => 'Levels';
+
+  @override
+  String get siteName => 'Site name';
+
+  @override
+  String get siteStreet => 'Street';
+
+  @override
+  String get sitePostalCode => 'Post code';
+
+  @override
+  String get siteCity => 'City';
+
+  @override
+  String get siteCountry => 'Country (code)';
+
+  @override
+  String get siteLegalId => 'Establishment registration (SIRET)';
+
+  @override
+  String get siteDelete => 'Delete this site';
+
+  @override
+  String get siteDeleteHint =>
+      'Its levels and members go back to the default site.';
+
+  @override
+  String get siteSaved => 'Site saved.';
+
+  @override
+  String get memberHomeSiteLabel => 'Home site';
+
+  @override
+  String get memberHomeSiteDefault => 'Workspace address';
+
+  @override
   String get authContinueWith => 'or continue with';
 
   @override

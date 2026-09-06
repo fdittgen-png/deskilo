@@ -258,6 +258,12 @@ class FeaturesScreen extends ConsumerWidget {
                   'members by subscription share, each share adjustable, '
                   'and the adjusted rule remembered for next month. '
                   'Off: the one-expense repartition sheet only.',
+        WorkspaceFeature.multiSite =>
+          l10n?.featureMultiSiteDesc ??
+              'Several addresses: levels are grouped by site, each site has '
+                  'its own address and registration, each member a home '
+                  'site, and documents name the site they concern. Off: one '
+                  'address for the whole workspace.',
         WorkspaceFeature.managedProfileAccess =>
           l10n?.featureManagedProfileAccessDesc ??
               'Each managed profile says who may administer it — by role, '

@@ -107,6 +107,10 @@ sealed class Member with _$Member {
   /// invoice's buyer party. '' only for rows older than 0165's backfill.
   @Default('') String memberNumber,
 
+  /// #945 — the site whose address this member's documents carry; null
+  /// is the workspace's default site.
+  String? homeSiteId,
+
   /// #914 — who may administer this profile: roles, named members, or
   /// both. Empty = the rule nobody narrowed (owner and admin).
   @Default(<String, dynamic>{}) Map<String, dynamic> managedAccess,

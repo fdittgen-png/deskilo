@@ -697,3 +697,46 @@ Future<void> requestMemberRoleChange(
     l10n?.memberRoleChangeRequested ?? 'Role change sent for validation.',
   );
 }
+
+/// #945 — which site a member calls home: the address their documents
+/// carry. Null is the workspace's default site.
+Future<void> pickMemberHomeSite(
+  BuildContext context,
+  WidgetRef ref,
+  Member member,
+) async {
+  final l10n = AppLocalizations.of(context);
+  final sites = await ref.read(sitesProvider.future);
+  if (!context.mounted) return;
+  final chosen = await showDialog<String>(
+    context: context,
+    builder: (context) => SimpleDialog(
+      title: Text(l10n?.memberHomeSiteLabel ?? 'Home site'),
+      children: [
+        for (final site in sites)
+          ListTile(
+            key: ValueKey('home-site-${site.id}'),
+            leading: Icon(
+              (member.homeSiteId ?? '') == (site.isDefault ? '' : site.id)
+                  ? Icons.radio_button_checked
+                  : Icons.radio_button_off,
+            ),
+            title: Text(site.name),
+            subtitle: site.hasAddress ? Text(site.postalBlock) : null,
+            onTap: () => Navigator.of(context).pop(site.isDefault ? '' : site.id),
+          ),
+      ],
+    ),
+  );
+  if (chosen == null || !context.mounted) return;
+  await runGuarded(
+    context,
+    domain: 'workspace',
+    message: 'home site change failed',
+    errorText: l10n?.workspaceGenericError ?? 'Something went wrong. Please try again.',
+    action: () => ref
+        .read(workspaceRepositoryProvider)
+        .setMemberHomeSite(member.id, chosen.isEmpty ? null : chosen),
+  );
+  ref.invalidate(workspaceMembersProvider);
+}
