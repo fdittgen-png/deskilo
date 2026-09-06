@@ -21,6 +21,10 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.adminInvoicing,
   WorkspaceFeature.autoCheckInOut,
   WorkspaceFeature.badgeSignIn,
+  // #914 — narrowing WHO administers a managed profile is opt-in: the
+  // rule nobody narrowed is what #887 already did, so a space that
+  // never needs to restrict anything is not shown the control.
+  WorkspaceFeature.managedProfileAccess,
 };
 
 /// Every other feature ships ON.
@@ -68,6 +72,7 @@ void main() {
       'adminInvoicing': true,
       'autoCheckInOut': true,
       'badgeSignIn': true,
+      'managedProfileAccess': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

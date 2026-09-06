@@ -15,6 +15,7 @@ import '../domain/workspace.dart';
 import '../domain/workspace_repository.dart';
 import 'conversation_api.dart';
 import '../domain/workspace_document.dart';
+import '../domain/managed_access.dart';
 
 class SupabaseWorkspaceRepository
     with ConversationApi
@@ -87,13 +88,35 @@ class SupabaseWorkspaceRepository
 
   @override
   Future<String> createManagedMember(
-      String workspaceId, PersonalInfo identity) async {
+    String workspaceId,
+    PersonalInfo identity, {
+    ManagedAccess access = ManagedAccess.unnarrowed,
+  }) async {
     final result =
         await _client.rpc<dynamic>('create_managed_member', params: {
       'p_workspace_id': workspaceId,
       'p_identity': identity.normalized().toDb(),
+      'p_access': access.toJson(),
     });
     return result as String;
+  }
+
+  @override
+  Future<PersonalInfo> managedIdentityOf(String memberId) async {
+    final result = await _client.rpc<dynamic>('managed_identity_of', params: {
+      'p_member_id': memberId,
+    });
+    return PersonalInfo.fromDb(
+      (result as Map?)?.cast<String, dynamic>() ?? const {},
+    );
+  }
+
+  @override
+  Future<void> setManagedAccess(String memberId, ManagedAccess access) async {
+    await _client.rpc<dynamic>('set_managed_access', params: {
+      'p_member_id': memberId,
+      'p_access': access.toJson(),
+    });
   }
 
   @override
@@ -320,11 +343,16 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
     // PostgREST cannot embed — two queries, joined client-side.
     final memberRows = await _client
         .from('members')
-        .select('id, user_id, managed_identity')
+        .select('id, user_id, managed_identity, managed_name')
         .eq('workspace_id', workspaceId);
     // #887 — a managed member has no profile: its name is the identity
     // the admin typed (company when the person is nameless).
     String managedName(Map<String, dynamic> r) {
+      // #914 — the server derives the addressee line and stores it on
+      // the row: the members list needs a name and may not read the
+      // identity behind the rule.
+      final derived = (r['managed_name'] as String? ?? '').trim();
+      if (derived.isNotEmpty) return derived;
       final identity = PersonalInfo.fromDb(
           (r['managed_identity'] as Map?)?.cast<String, dynamic>() ??
               const {});
@@ -896,6 +924,12 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
           (row['managed_identity'] as Map?)?.cast<String, dynamic>() ??
               const {},
         ),
+        // #914/#915 — the name is a column now, and the rule rides
+        // beside it; the contact fields arrive through the RPC.
+        managedName: row['managed_name'] as String? ?? '',
+        managedAccess:
+            (row['managed_access'] as Map?)?.cast<String, dynamic>() ??
+                const {},
         paymentTerms: row['payment_terms'] is Map
             ? PaymentTerms.fromJson(row['payment_terms'] as Map)
             : null,

@@ -16,6 +16,8 @@ import '../../../profile/domain/personal_info.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../profile/presentation/widgets/personal_info_form.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../widgets/managed_access_editor.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 
 class ManagedProfileScreen extends ConsumerStatefulWidget {
   const ManagedProfileScreen({super.key, this.memberId});
@@ -89,10 +91,18 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 560),
-            child: PersonalInfoForm(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                PersonalInfoForm(
               // Rebuilt when the member arrives so the fields prefill.
               key: ValueKey('managed-form-${existing?.id}'),
-              initial: existing?.managedIdentity ?? PersonalInfo.empty,
+              // #915 — the identity comes from behind the access rule;
+              // an admin the rule does not name edits nothing.
+              initial: existing == null
+                  ? PersonalInfo.empty
+                  : (ref.watch(managedIdentityProvider(existing.id)).value ??
+                      PersonalInfo.empty),
               workspaceCountry: workspaceCountry,
               saving: _saving,
               intro:
@@ -100,6 +110,15 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
                   'This person has no account yet. You book, invoice and '
                       'manage for them; hand the profile over when they join.',
               onSave: _save,
+                ),
+                // #914 — who may administer this one, once the profile
+                // exists to be administered.
+                if (existing != null &&
+                    ref
+                        .watch(enabledFeaturesSyncProvider)
+                        .contains(WorkspaceFeature.managedProfileAccess))
+                  ManagedAccessEditor(member: existing),
+              ],
             ),
           ),
         ),

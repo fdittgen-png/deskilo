@@ -1115,3 +1115,117 @@ final class MyMemberProvider
 }
 
 String _$myMemberHash() => r'4490381a6cf73ba9a3eb496d8d705538aaddcc41';
+
+/// #915 — one managed profile's identity, from behind the access rule.
+///
+/// Reading it is an ACCESS: the server refuses when the rule does not
+/// name the caller, and writes the read down when it does, so the person
+/// sees who looked once they claim the profile. That is why this is a
+/// call and not a field on the member row — the row carries only the
+/// name a co-member legitimately sees.
+
+@ProviderFor(managedIdentity)
+final managedIdentityProvider = ManagedIdentityFamily._();
+
+/// #915 — one managed profile's identity, from behind the access rule.
+///
+/// Reading it is an ACCESS: the server refuses when the rule does not
+/// name the caller, and writes the read down when it does, so the person
+/// sees who looked once they claim the profile. That is why this is a
+/// call and not a field on the member row — the row carries only the
+/// name a co-member legitimately sees.
+
+final class ManagedIdentityProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<PersonalInfo>,
+          PersonalInfo,
+          FutureOr<PersonalInfo>
+        >
+    with $FutureModifier<PersonalInfo>, $FutureProvider<PersonalInfo> {
+  /// #915 — one managed profile's identity, from behind the access rule.
+  ///
+  /// Reading it is an ACCESS: the server refuses when the rule does not
+  /// name the caller, and writes the read down when it does, so the person
+  /// sees who looked once they claim the profile. That is why this is a
+  /// call and not a field on the member row — the row carries only the
+  /// name a co-member legitimately sees.
+  ManagedIdentityProvider._({
+    required ManagedIdentityFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'managedIdentityProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$managedIdentityHash();
+
+  @override
+  String toString() {
+    return r'managedIdentityProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<PersonalInfo> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<PersonalInfo> create(Ref ref) {
+    final argument = this.argument as String;
+    return managedIdentity(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ManagedIdentityProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$managedIdentityHash() => r'601854decf45c40345fb40983fa29a7edcfdb54b';
+
+/// #915 — one managed profile's identity, from behind the access rule.
+///
+/// Reading it is an ACCESS: the server refuses when the rule does not
+/// name the caller, and writes the read down when it does, so the person
+/// sees who looked once they claim the profile. That is why this is a
+/// call and not a field on the member row — the row carries only the
+/// name a co-member legitimately sees.
+
+final class ManagedIdentityFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<PersonalInfo>, String> {
+  ManagedIdentityFamily._()
+    : super(
+        retry: null,
+        name: r'managedIdentityProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #915 — one managed profile's identity, from behind the access rule.
+  ///
+  /// Reading it is an ACCESS: the server refuses when the rule does not
+  /// name the caller, and writes the read down when it does, so the person
+  /// sees who looked once they claim the profile. That is why this is a
+  /// call and not a field on the member row — the row carries only the
+  /// name a co-member legitimately sees.
+
+  ManagedIdentityProvider call(String memberId) =>
+      ManagedIdentityProvider._(argument: memberId, from: this);
+
+  @override
+  String toString() => r'managedIdentityProvider';
+}

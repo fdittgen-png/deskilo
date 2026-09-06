@@ -1,0 +1,43 @@
+{
+  "@@locale": "it",
+  "featureManagedProfileAccess": "Chi amministra un profilo",
+  "@featureManagedProfileAccess": {
+    "description": "#914 managed profile access: name"
+  },
+  "featureManagedProfileAccessDesc": "Ogni profilo gestito indica chi può amministrarlo — per ruolo, per persone indicate, o entrambi. Disattivato: ogni proprietario e ogni admin può, come prima. L'identità è protetta in entrambi i casi, e ogni consultazione è registrata per la persona che riprenderà il profilo.",
+  "@featureManagedProfileAccessDesc": {
+    "description": "#914 managed profile access: description"
+  },
+  "managedAccessTitle": "Chi può amministrare questo profilo",
+  "@managedAccessTitle": {
+    "description": "#914 managed profile access: managedAccessTitle"
+  },
+  "managedAccessHint": "Predefinito: ogni proprietario e ogni admin. Restringete per ruolo, per persona o entrambi. Il proprietario può sempre cambiare questa regola — altrimenti un profilo diventerebbe inamministrabile — ma accede ai dati solo se la regola lo nomina.",
+  "@managedAccessHint": {
+    "description": "#914 managed profile access: managedAccessHint"
+  },
+  "managedAccessOwners": "Proprietari",
+  "@managedAccessOwners": {
+    "description": "#914 managed profile access: managedAccessOwners"
+  },
+  "managedAccessAdmins": "Admin",
+  "@managedAccessAdmins": {
+    "description": "#914 managed profile access: managedAccessAdmins"
+  },
+  "managedAccessPeople": "Persone indicate",
+  "@managedAccessPeople": {
+    "description": "#914 managed profile access: managedAccessPeople"
+  },
+  "managedAccessDefault": "Ogni proprietario e ogni admin",
+  "@managedAccessDefault": {
+    "description": "#914 managed profile access: managedAccessDefault"
+  },
+  "managedAccessSaved": "Regola salvata.",
+  "@managedAccessSaved": {
+    "description": "#914 managed profile access: managedAccessSaved"
+  },
+  "accessKindProfile": "il vostro profilo",
+  "@accessKindProfile": {
+    "description": "#914 managed profile access: accessKindProfile"
+  }
+}

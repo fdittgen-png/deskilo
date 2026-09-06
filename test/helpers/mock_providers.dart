@@ -59,6 +59,7 @@ import 'package:deskilo/features/reservations/domain/reservation_repository.dart
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_document.dart';
+import 'package:deskilo/features/workspace/domain/managed_access.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show AuthException, PostgrestException;
@@ -560,7 +561,10 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   @override
   Future<String> createManagedMember(
-      String workspaceId, PersonalInfo identity) async {
+    String workspaceId,
+    PersonalInfo identity, {
+    ManagedAccess access = ManagedAccess.unnarrowed,
+  }) async {
     final id = 'managed-${_nextManagedId++}';
     otherMembers.add(Member(
       id: id,
@@ -569,9 +573,39 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       isAdmin: false,
       isOwner: false,
       status: MemberStatus.active,
-      managedIdentity: identity.normalized(),
+      // #915 — the row carries the PUBLIC half only, as the server does.
+      managedIdentity: PersonalInfo(
+        courtesy: identity.courtesy,
+        firstName: identity.firstName.trim(),
+        lastName: identity.lastName.trim(),
+        company: identity.company.trim(),
+        countryCode: identity.countryCode.trim().toUpperCase(),
+      ),
+      managedName: identity.normalized().fullName,
+      managedAccess: access.toJson(),
     ));
+    managedIdentities[id] = identity.normalized();
     return id;
+  }
+
+  /// #915 — the identities behind the rule, as the gated table holds them.
+  final managedIdentities = <String, PersonalInfo>{};
+
+  /// #914 — the last rule written, for assertions.
+  ManagedAccess? lastManagedAccess;
+
+  @override
+  Future<PersonalInfo> managedIdentityOf(String memberId) async =>
+      managedIdentities[memberId] ?? PersonalInfo.empty;
+
+  @override
+  Future<void> setManagedAccess(String memberId, ManagedAccess access) async {
+    lastManagedAccess = access;
+    final i = otherMembers.indexWhere((m) => m.id == memberId);
+    if (i >= 0) {
+      otherMembers[i] =
+          otherMembers[i].copyWith(managedAccess: access.toJson());
+    }
   }
 
   @override

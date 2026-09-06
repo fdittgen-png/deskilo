@@ -38,6 +38,7 @@ import '../../providers/directory_providers.dart';
 import '../widgets/member_contact_card.dart';
 import '../widgets/member_money_card.dart';
 import '../../../profile/presentation/courtesy_words.dart';
+import '../../../profile/domain/personal_info.dart';
 
 /// #825 — ONE page per person (`/member/:id`): who they are and whether
 /// they are here, what they have booked, how to reach them, their money
@@ -228,13 +229,20 @@ class _MemberPageBody extends ConsumerWidget {
           tileKey: const ValueKey('member-page-managed-edit'),
           icon: Icons.contact_mail_outlined,
           title: l10n?.managedProfileEdit ?? 'Edit identity',
-          subtitle: member.managedIdentity
+          // #915 — the address comes from BEHIND the rule, and asking
+          // for it is written down. An admin the rule does not name sees
+          // the name on the tile and nothing under it.
+          subtitle: (ref.watch(managedIdentityProvider(member.id)).value ??
+                  PersonalInfo.empty)
               .postalBlock(
                 workspaceCountry: workspace?.countryCode ?? '',
                 // #912 — the title the person asked for, in the reader's
                 // language, exactly as the document will print it.
-                courtesyWord:
-                    courtesyWord(l10n, member.managedIdentity.courtesy),
+                courtesyWord: courtesyWord(
+                    l10n,
+                    (ref.watch(managedIdentityProvider(member.id)).value ??
+                            PersonalInfo.empty)
+                        .courtesy),
               )
               .replaceAll('\n', ', '),
           onTap: () => context.push('/members/managed?member=${member.id}'),

@@ -92,7 +92,19 @@ sealed class Member with _$Member {
     /// #887 — the identity of a MANAGED member (no account yet): what
     /// the admin typed, carried until the person claims the profile.
     /// Empty once claimed — the data then lives on their profile.
-    @Default(PersonalInfo.empty) PersonalInfo managedIdentity,
+    /// The PUBLIC half of a managed identity (0161): name, company and
+  /// country — what a co-member legitimately sees. The contact and tax
+  /// fields live behind [ManagedProfileAccess] and arrive only through
+  /// `managed_identity_of`, which logs the read.
+  @Default(PersonalInfo.empty) PersonalInfo managedIdentity,
+
+  /// #914 — the addressee line, derived server-side, readable by every
+  /// member because the directory needs a name.
+  @Default('') String managedName,
+
+  /// #914 — who may administer this profile: roles, named members, or
+  /// both. Empty = the rule nobody narrowed (owner and admin).
+  @Default(<String, dynamic>{}) Map<String, dynamic> managedAccess,
 
     /// #887 — when the person took the profile over; null while managed
     /// and for members who joined by themselves.

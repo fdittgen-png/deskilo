@@ -7,6 +7,7 @@
 // element embeds exactly that markup, and must draw it EXACTLY the same
 // way, or a design that moves one element at a time into a layout
 // would change its look on every step. One renderer, two callers.
+import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:pdf/widgets.dart' as pw;
@@ -17,13 +18,27 @@ import 'report_style.dart';
 List<pw.Widget> reportBlockWidgets(
   List<ReportBlock> blocks, {
   Map<String, Uint8List> images = const {},
+
+  /// #923 — the tallest an unsized image may be here.
+  ///
+  /// The envelope standard fixes the sender block at 25 mm, and a
+  /// letterhead with a logo in it is taller than that: left alone the
+  /// band overflowed and was clipped, and the logo — first in the band —
+  /// was what disappeared, while the text lines under it survived. So a
+  /// caller with a hard band says how tall a picture may be there.
+  /// Null anywhere else: outside such a band an image keeps its size.
+  double? maxImageHeight,
 }) =>
-    [for (final block in blocks) reportBlockWidget(block, images)];
+    [
+      for (final block in blocks)
+        reportBlockWidget(block, images, maxImageHeight: maxImageHeight),
+    ];
 
 pw.Widget reportBlockWidget(
   ReportBlock block,
-  Map<String, Uint8List> images,
-) =>
+  Map<String, Uint8List> images, {
+  double? maxImageHeight,
+}) =>
     switch (block) {
       ReportHeading(:final text) => pw.Padding(
           padding: const pw.EdgeInsets.only(bottom: 4),
@@ -93,7 +108,8 @@ pw.Widget reportBlockWidget(
                   padding: pw.EdgeInsets.only(left: i == 0 ? 0 : 16),
                   child: pw.Column(
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    children: reportBlockWidgets(columns[i], images: images),
+                    children: reportBlockWidgets(columns[i],
+                        images: images, maxImageHeight: maxImageHeight),
                   ),
                 ),
               ),
@@ -107,8 +123,13 @@ pw.Widget reportBlockWidget(
                 padding: const pw.EdgeInsets.symmetric(vertical: 4),
                 child: pw.Image(
                   pw.MemoryImage(images[name]!),
-                  // #822 — `![name|size|align]`.
-                  height: size.height,
+                  // #822 — `![name|size|align]`. #923 — a band with a
+                  // fixed height CAPS it: the default medium is 64 pt,
+                  // which alone overruns the envelope's 25 mm sender
+                  // band before a single line of identity is under it.
+                  height: maxImageHeight == null
+                      ? size.height
+                      : math.min(size.height, maxImageHeight),
                   fit: pw.BoxFit.contain,
                   alignment: switch (align) {
                     ReportImageAlign.left => pw.Alignment.centerLeft,

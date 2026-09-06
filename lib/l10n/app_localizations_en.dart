@@ -9,6 +9,11 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String accessRuleManagedProfile(String people) {
+    return 'While this profile was managed for you: $people. Every time one of them opened or changed it is on the record below.';
+  }
+
+  @override
   String get accessoriesTitle => 'Accessories';
 
   @override
@@ -5223,6 +5228,38 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get bookingSameDayError =>
       'A booking ends on the day it starts — book the next day separately.';
+
+  @override
+  String get featureManagedProfileAccess => 'Who administers a profile';
+
+  @override
+  String get featureManagedProfileAccessDesc =>
+      'Each managed profile says who may administer it — by role, by named people, or both. Off: every owner and admin may, as before. The identity itself is protected either way, and every read is written down for the person who takes the profile over.';
+
+  @override
+  String get managedAccessTitle => 'Who may administer this profile';
+
+  @override
+  String get managedAccessHint =>
+      'By default: every owner and every admin. Narrow it by role, by person, or both. The owner may always change this rule — otherwise a profile could become unadministrable — but only reaches the data when the rule names them.';
+
+  @override
+  String get managedAccessOwners => 'Owners';
+
+  @override
+  String get managedAccessAdmins => 'Admins';
+
+  @override
+  String get managedAccessPeople => 'Named people';
+
+  @override
+  String get managedAccessDefault => 'Every owner and every admin';
+
+  @override
+  String get managedAccessSaved => 'Rule saved.';
+
+  @override
+  String get accessKindProfile => 'your profile';
 
   @override
   String get featureManagedProfiles => 'Managed profiles';

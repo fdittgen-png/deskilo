@@ -1,0 +1,43 @@
+{
+  "@@locale": "es",
+  "featureManagedProfileAccess": "Quién administra un perfil",
+  "@featureManagedProfileAccess": {
+    "description": "#914 managed profile access: name"
+  },
+  "featureManagedProfileAccessDesc": "Cada perfil gestionado indica quién puede administrarlo: por rol, por personas nombradas o ambos. Desactivado: todo propietario y todo admin puede, como antes. La identidad está protegida en ambos casos, y cada consulta queda registrada para la persona que reciba el perfil.",
+  "@featureManagedProfileAccessDesc": {
+    "description": "#914 managed profile access: description"
+  },
+  "managedAccessTitle": "Quién puede administrar este perfil",
+  "@managedAccessTitle": {
+    "description": "#914 managed profile access: managedAccessTitle"
+  },
+  "managedAccessHint": "Por defecto: todo propietario y todo admin. Restrinja por rol, por persona o ambos. El propietario siempre puede cambiar esta regla — si no, un perfil quedaría inadministrable — pero solo accede a los datos si la regla lo nombra.",
+  "@managedAccessHint": {
+    "description": "#914 managed profile access: managedAccessHint"
+  },
+  "managedAccessOwners": "Propietarios",
+  "@managedAccessOwners": {
+    "description": "#914 managed profile access: managedAccessOwners"
+  },
+  "managedAccessAdmins": "Admins",
+  "@managedAccessAdmins": {
+    "description": "#914 managed profile access: managedAccessAdmins"
+  },
+  "managedAccessPeople": "Personas nombradas",
+  "@managedAccessPeople": {
+    "description": "#914 managed profile access: managedAccessPeople"
+  },
+  "managedAccessDefault": "Todo propietario y todo admin",
+  "@managedAccessDefault": {
+    "description": "#914 managed profile access: managedAccessDefault"
+  },
+  "managedAccessSaved": "Regla guardada.",
+  "@managedAccessSaved": {
+    "description": "#914 managed profile access: managedAccessSaved"
+  },
+  "accessKindProfile": "su perfil",
+  "@accessKindProfile": {
+    "description": "#914 managed profile access: accessKindProfile"
+  }
+}

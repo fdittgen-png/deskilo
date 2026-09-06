@@ -18,6 +18,7 @@ import '../domain/workspace_feature.dart';
 import '../domain/workspace_permission.dart';
 import '../domain/workspace_repository.dart';
 import '../domain/workspace_document.dart';
+import '../../profile/domain/personal_info.dart';
 
 part 'workspace_providers.g.dart';
 
@@ -319,4 +320,31 @@ Future<Member?> myMember(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return null;
   return ref.watch(workspaceRepositoryProvider).fetchMyMember(workspace.id);
+}
+
+/// #915 — one managed profile's identity, from behind the access rule.
+///
+/// Reading it is an ACCESS: the server refuses when the rule does not
+/// name the caller, and writes the read down when it does, so the person
+/// sees who looked once they claim the profile. That is why this is a
+/// call and not a field on the member row — the row carries only the
+/// name a co-member legitimately sees.
+@riverpod
+Future<PersonalInfo> managedIdentity(Ref ref, String memberId) async {
+  if (memberId.isEmpty) return PersonalInfo.empty;
+  try {
+    return await ref
+        .watch(workspaceRepositoryProvider)
+        .managedIdentityOf(memberId);
+  } catch (e, st) {
+    // Refused is a legitimate answer, not a failure to report: an admin
+    // the rule does not name simply does not see the contact details.
+    TraceLogger.instance.warn(
+      'workspace',
+      'managed identity not readable',
+      error: e,
+      stackTrace: st,
+    );
+    return PersonalInfo.empty;
+  }
 }

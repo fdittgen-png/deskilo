@@ -321,6 +321,14 @@ Future<Uint8List> buildInvoicePdf({
         ]
         : reportBlockWidgets(report.header, images: reportImages);
 
+    // #923 — inside the envelope's 25 mm sender band a picture the design
+    // did not size gets a ceiling, so the letterhead fits instead of
+    // being cut off at the top where the logo lives.
+    final List<pw.Widget> windowHeaderWidgets = report == null
+        ? headerWidgets
+        : reportBlockWidgets(report.header,
+            images: reportImages, maxImageHeight: senderLogoMaxHeight);
+
     final List<pw.Widget> footerWidgets = report == null
         ? const <pw.Widget>[]
         : reportBlockWidgets(report.footer, images: reportImages);
@@ -445,11 +453,21 @@ Future<Uint8List> buildInvoicePdf({
                     // The sender block owns 20 mm → 45 mm, and the flow
                     // resumes at 90 mm: below the 85 × 40 mm aperture
                     // AND below the tolerance band under it.
+                    //
+                    // #923 — 25 mm is not much, and a letterhead with a
+                    // LOGO in it is taller than that. Left to overflow,
+                    // the column was clipped and the logo — the first
+                    // thing in the band — vanished, while the text lines
+                    // under it survived: the owner saw their mark in the
+                    // quick view and the designer, and never on the
+                    // document. The band is fixed by the envelope spec
+                    // and cannot grow, so the letterhead SCALES to fit
+                    // it instead of being cut off.
                     pw.SizedBox(
                       height: addressWindowTop - pageMargin,
                       child: pw.Column(
                         crossAxisAlignment: pw.CrossAxisAlignment.stretch,
-                        children: headerWidgets,
+                        children: windowHeaderWidgets,
                       ),
                     )
                   else
