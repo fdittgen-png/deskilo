@@ -110,6 +110,9 @@ String buildInvoiceUbl({
         ? '381'
         : invoice.replacesNumber.isNotEmpty ? '384' : '380');
     cbc('DocumentCurrencyCode', currency);
+    // #922 — BT-10, the buyer reference (Chorus Pro: code service). The
+    // schema orders it here, after the currency and before the period.
+    if (buyer.reference.isNotEmpty) cbc('BuyerReference', buyer.reference);
     // BT-73/74 — the invoiced month as the norm states a period, not as
     // free-text prose in a note.
     final period = _periodDates(invoice.period);
@@ -117,6 +120,13 @@ String buildInvoiceUbl({
       builder.element('cac:InvoicePeriod', nest: () {
         cbc('StartDate', period.start);
         cbc('EndDate', period.end);
+      });
+    }
+    // #922 — BT-13, the purchase-order reference (Chorus Pro: numéro
+    // d'engagement). After the period, before any billing reference.
+    if (buyer.orderReference.isNotEmpty) {
+      builder.element('cac:OrderReference', nest: () {
+        cbc('ID', buyer.orderReference);
       });
     }
     if (invoice.replacesNumber.isNotEmpty) {

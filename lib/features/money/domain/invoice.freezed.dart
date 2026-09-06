@@ -1120,7 +1120,11 @@ mixin _$InvoiceParty {
  String get legalId;/// Wire value of [VatRegime]; seller only.
  String get vatRegime;/// Free-text exemption reason (BT-120); seller only.
  String get taxExemptionReason;/// #886 — the contact the document is sent to (BT-43 / BT-42).
- String get email; String get phone;
+ String get email; String get phone;/// #922 — BT-10, the buyer reference: Chorus Pro's *code service
+/// exécutant*. Buyer only; frozen at issue.
+ String get reference;/// #922 — BT-13, the purchase-order reference: the *numéro
+/// d'engagement*. Buyer only; frozen at issue.
+ String get orderReference;
 /// Create a copy of InvoiceParty
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1131,16 +1135,16 @@ $InvoicePartyCopyWith<InvoiceParty> get copyWith => _$InvoicePartyCopyWithImpl<I
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is InvoiceParty&&(identical(other.name, name) || other.name == name)&&(identical(other.company, company) || other.company == company)&&(identical(other.courtesy, courtesy) || other.courtesy == courtesy)&&(identical(other.person, person) || other.person == person)&&(identical(other.street, street) || other.street == street)&&(identical(other.city, city) || other.city == city)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.country, country) || other.country == country)&&(identical(other.vatId, vatId) || other.vatId == vatId)&&(identical(other.legalId, legalId) || other.legalId == legalId)&&(identical(other.vatRegime, vatRegime) || other.vatRegime == vatRegime)&&(identical(other.taxExemptionReason, taxExemptionReason) || other.taxExemptionReason == taxExemptionReason)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is InvoiceParty&&(identical(other.name, name) || other.name == name)&&(identical(other.company, company) || other.company == company)&&(identical(other.courtesy, courtesy) || other.courtesy == courtesy)&&(identical(other.person, person) || other.person == person)&&(identical(other.street, street) || other.street == street)&&(identical(other.city, city) || other.city == city)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.country, country) || other.country == country)&&(identical(other.vatId, vatId) || other.vatId == vatId)&&(identical(other.legalId, legalId) || other.legalId == legalId)&&(identical(other.vatRegime, vatRegime) || other.vatRegime == vatRegime)&&(identical(other.taxExemptionReason, taxExemptionReason) || other.taxExemptionReason == taxExemptionReason)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.reference, reference) || other.reference == reference)&&(identical(other.orderReference, orderReference) || other.orderReference == orderReference));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,company,courtesy,person,street,city,postalCode,country,vatId,legalId,vatRegime,taxExemptionReason,email,phone);
+int get hashCode => Object.hash(runtimeType,name,company,courtesy,person,street,city,postalCode,country,vatId,legalId,vatRegime,taxExemptionReason,email,phone,reference,orderReference);
 
 @override
 String toString() {
-  return 'InvoiceParty(name: $name, company: $company, courtesy: $courtesy, person: $person, street: $street, city: $city, postalCode: $postalCode, country: $country, vatId: $vatId, legalId: $legalId, vatRegime: $vatRegime, taxExemptionReason: $taxExemptionReason, email: $email, phone: $phone)';
+  return 'InvoiceParty(name: $name, company: $company, courtesy: $courtesy, person: $person, street: $street, city: $city, postalCode: $postalCode, country: $country, vatId: $vatId, legalId: $legalId, vatRegime: $vatRegime, taxExemptionReason: $taxExemptionReason, email: $email, phone: $phone, reference: $reference, orderReference: $orderReference)';
 }
 
 
@@ -1151,7 +1155,7 @@ abstract mixin class $InvoicePartyCopyWith<$Res>  {
   factory $InvoicePartyCopyWith(InvoiceParty value, $Res Function(InvoiceParty) _then) = _$InvoicePartyCopyWithImpl;
 @useResult
 $Res call({
- String name, String company, String courtesy, String person, String street, String city, String postalCode, String country, String vatId, String legalId, String vatRegime, String taxExemptionReason, String email, String phone
+ String name, String company, String courtesy, String person, String street, String city, String postalCode, String country, String vatId, String legalId, String vatRegime, String taxExemptionReason, String email, String phone, String reference, String orderReference
 });
 
 
@@ -1168,7 +1172,7 @@ class _$InvoicePartyCopyWithImpl<$Res>
 
 /// Create a copy of InvoiceParty
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? company = null,Object? courtesy = null,Object? person = null,Object? street = null,Object? city = null,Object? postalCode = null,Object? country = null,Object? vatId = null,Object? legalId = null,Object? vatRegime = null,Object? taxExemptionReason = null,Object? email = null,Object? phone = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? company = null,Object? courtesy = null,Object? person = null,Object? street = null,Object? city = null,Object? postalCode = null,Object? country = null,Object? vatId = null,Object? legalId = null,Object? vatRegime = null,Object? taxExemptionReason = null,Object? email = null,Object? phone = null,Object? reference = null,Object? orderReference = null,}) {
   return _then(_self.copyWith(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,company: null == company ? _self.company : company // ignore: cast_nullable_to_non_nullable
@@ -1184,6 +1188,8 @@ as String,vatRegime: null == vatRegime ? _self.vatRegime : vatRegime // ignore: 
 as String,taxExemptionReason: null == taxExemptionReason ? _self.taxExemptionReason : taxExemptionReason // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,phone: null == phone ? _self.phone : phone // ignore: cast_nullable_to_non_nullable
+as String,reference: null == reference ? _self.reference : reference // ignore: cast_nullable_to_non_nullable
+as String,orderReference: null == orderReference ? _self.orderReference : orderReference // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -1266,10 +1272,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String company,  String courtesy,  String person,  String street,  String city,  String postalCode,  String country,  String vatId,  String legalId,  String vatRegime,  String taxExemptionReason,  String email,  String phone)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String company,  String courtesy,  String person,  String street,  String city,  String postalCode,  String country,  String vatId,  String legalId,  String vatRegime,  String taxExemptionReason,  String email,  String phone,  String reference,  String orderReference)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _InvoiceParty() when $default != null:
-return $default(_that.name,_that.company,_that.courtesy,_that.person,_that.street,_that.city,_that.postalCode,_that.country,_that.vatId,_that.legalId,_that.vatRegime,_that.taxExemptionReason,_that.email,_that.phone);case _:
+return $default(_that.name,_that.company,_that.courtesy,_that.person,_that.street,_that.city,_that.postalCode,_that.country,_that.vatId,_that.legalId,_that.vatRegime,_that.taxExemptionReason,_that.email,_that.phone,_that.reference,_that.orderReference);case _:
   return orElse();
 
 }
@@ -1287,10 +1293,10 @@ return $default(_that.name,_that.company,_that.courtesy,_that.person,_that.stree
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String company,  String courtesy,  String person,  String street,  String city,  String postalCode,  String country,  String vatId,  String legalId,  String vatRegime,  String taxExemptionReason,  String email,  String phone)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String company,  String courtesy,  String person,  String street,  String city,  String postalCode,  String country,  String vatId,  String legalId,  String vatRegime,  String taxExemptionReason,  String email,  String phone,  String reference,  String orderReference)  $default,) {final _that = this;
 switch (_that) {
 case _InvoiceParty():
-return $default(_that.name,_that.company,_that.courtesy,_that.person,_that.street,_that.city,_that.postalCode,_that.country,_that.vatId,_that.legalId,_that.vatRegime,_that.taxExemptionReason,_that.email,_that.phone);}
+return $default(_that.name,_that.company,_that.courtesy,_that.person,_that.street,_that.city,_that.postalCode,_that.country,_that.vatId,_that.legalId,_that.vatRegime,_that.taxExemptionReason,_that.email,_that.phone,_that.reference,_that.orderReference);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -1304,10 +1310,10 @@ return $default(_that.name,_that.company,_that.courtesy,_that.person,_that.stree
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String company,  String courtesy,  String person,  String street,  String city,  String postalCode,  String country,  String vatId,  String legalId,  String vatRegime,  String taxExemptionReason,  String email,  String phone)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String company,  String courtesy,  String person,  String street,  String city,  String postalCode,  String country,  String vatId,  String legalId,  String vatRegime,  String taxExemptionReason,  String email,  String phone,  String reference,  String orderReference)?  $default,) {final _that = this;
 switch (_that) {
 case _InvoiceParty() when $default != null:
-return $default(_that.name,_that.company,_that.courtesy,_that.person,_that.street,_that.city,_that.postalCode,_that.country,_that.vatId,_that.legalId,_that.vatRegime,_that.taxExemptionReason,_that.email,_that.phone);case _:
+return $default(_that.name,_that.company,_that.courtesy,_that.person,_that.street,_that.city,_that.postalCode,_that.country,_that.vatId,_that.legalId,_that.vatRegime,_that.taxExemptionReason,_that.email,_that.phone,_that.reference,_that.orderReference);case _:
   return null;
 
 }
@@ -1319,7 +1325,7 @@ return $default(_that.name,_that.company,_that.courtesy,_that.person,_that.stree
 
 
 class _InvoiceParty implements InvoiceParty {
-  const _InvoiceParty({this.name = '', this.company = '', this.courtesy = '', this.person = '', this.street = '', this.city = '', this.postalCode = '', this.country = '', this.vatId = '', this.legalId = '', this.vatRegime = 'not_subject', this.taxExemptionReason = '', this.email = '', this.phone = ''});
+  const _InvoiceParty({this.name = '', this.company = '', this.courtesy = '', this.person = '', this.street = '', this.city = '', this.postalCode = '', this.country = '', this.vatId = '', this.legalId = '', this.vatRegime = 'not_subject', this.taxExemptionReason = '', this.email = '', this.phone = '', this.reference = '', this.orderReference = ''});
   
 
 @override@JsonKey() final  String name;
@@ -1352,6 +1358,12 @@ class _InvoiceParty implements InvoiceParty {
 /// #886 — the contact the document is sent to (BT-43 / BT-42).
 @override@JsonKey() final  String email;
 @override@JsonKey() final  String phone;
+/// #922 — BT-10, the buyer reference: Chorus Pro's *code service
+/// exécutant*. Buyer only; frozen at issue.
+@override@JsonKey() final  String reference;
+/// #922 — BT-13, the purchase-order reference: the *numéro
+/// d'engagement*. Buyer only; frozen at issue.
+@override@JsonKey() final  String orderReference;
 
 /// Create a copy of InvoiceParty
 /// with the given fields replaced by the non-null parameter values.
@@ -1363,16 +1375,16 @@ _$InvoicePartyCopyWith<_InvoiceParty> get copyWith => __$InvoicePartyCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InvoiceParty&&(identical(other.name, name) || other.name == name)&&(identical(other.company, company) || other.company == company)&&(identical(other.courtesy, courtesy) || other.courtesy == courtesy)&&(identical(other.person, person) || other.person == person)&&(identical(other.street, street) || other.street == street)&&(identical(other.city, city) || other.city == city)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.country, country) || other.country == country)&&(identical(other.vatId, vatId) || other.vatId == vatId)&&(identical(other.legalId, legalId) || other.legalId == legalId)&&(identical(other.vatRegime, vatRegime) || other.vatRegime == vatRegime)&&(identical(other.taxExemptionReason, taxExemptionReason) || other.taxExemptionReason == taxExemptionReason)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InvoiceParty&&(identical(other.name, name) || other.name == name)&&(identical(other.company, company) || other.company == company)&&(identical(other.courtesy, courtesy) || other.courtesy == courtesy)&&(identical(other.person, person) || other.person == person)&&(identical(other.street, street) || other.street == street)&&(identical(other.city, city) || other.city == city)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.country, country) || other.country == country)&&(identical(other.vatId, vatId) || other.vatId == vatId)&&(identical(other.legalId, legalId) || other.legalId == legalId)&&(identical(other.vatRegime, vatRegime) || other.vatRegime == vatRegime)&&(identical(other.taxExemptionReason, taxExemptionReason) || other.taxExemptionReason == taxExemptionReason)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.reference, reference) || other.reference == reference)&&(identical(other.orderReference, orderReference) || other.orderReference == orderReference));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,company,courtesy,person,street,city,postalCode,country,vatId,legalId,vatRegime,taxExemptionReason,email,phone);
+int get hashCode => Object.hash(runtimeType,name,company,courtesy,person,street,city,postalCode,country,vatId,legalId,vatRegime,taxExemptionReason,email,phone,reference,orderReference);
 
 @override
 String toString() {
-  return 'InvoiceParty(name: $name, company: $company, courtesy: $courtesy, person: $person, street: $street, city: $city, postalCode: $postalCode, country: $country, vatId: $vatId, legalId: $legalId, vatRegime: $vatRegime, taxExemptionReason: $taxExemptionReason, email: $email, phone: $phone)';
+  return 'InvoiceParty(name: $name, company: $company, courtesy: $courtesy, person: $person, street: $street, city: $city, postalCode: $postalCode, country: $country, vatId: $vatId, legalId: $legalId, vatRegime: $vatRegime, taxExemptionReason: $taxExemptionReason, email: $email, phone: $phone, reference: $reference, orderReference: $orderReference)';
 }
 
 
@@ -1383,7 +1395,7 @@ abstract mixin class _$InvoicePartyCopyWith<$Res> implements $InvoicePartyCopyWi
   factory _$InvoicePartyCopyWith(_InvoiceParty value, $Res Function(_InvoiceParty) _then) = __$InvoicePartyCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String company, String courtesy, String person, String street, String city, String postalCode, String country, String vatId, String legalId, String vatRegime, String taxExemptionReason, String email, String phone
+ String name, String company, String courtesy, String person, String street, String city, String postalCode, String country, String vatId, String legalId, String vatRegime, String taxExemptionReason, String email, String phone, String reference, String orderReference
 });
 
 
@@ -1400,7 +1412,7 @@ class __$InvoicePartyCopyWithImpl<$Res>
 
 /// Create a copy of InvoiceParty
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? company = null,Object? courtesy = null,Object? person = null,Object? street = null,Object? city = null,Object? postalCode = null,Object? country = null,Object? vatId = null,Object? legalId = null,Object? vatRegime = null,Object? taxExemptionReason = null,Object? email = null,Object? phone = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? company = null,Object? courtesy = null,Object? person = null,Object? street = null,Object? city = null,Object? postalCode = null,Object? country = null,Object? vatId = null,Object? legalId = null,Object? vatRegime = null,Object? taxExemptionReason = null,Object? email = null,Object? phone = null,Object? reference = null,Object? orderReference = null,}) {
   return _then(_InvoiceParty(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,company: null == company ? _self.company : company // ignore: cast_nullable_to_non_nullable
@@ -1416,6 +1428,8 @@ as String,vatRegime: null == vatRegime ? _self.vatRegime : vatRegime // ignore: 
 as String,taxExemptionReason: null == taxExemptionReason ? _self.taxExemptionReason : taxExemptionReason // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,phone: null == phone ? _self.phone : phone // ignore: cast_nullable_to_non_nullable
+as String,reference: null == reference ? _self.reference : reference // ignore: cast_nullable_to_non_nullable
+as String,orderReference: null == orderReference ? _self.orderReference : orderReference // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

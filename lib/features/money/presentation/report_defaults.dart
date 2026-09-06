@@ -66,6 +66,8 @@ ReportBands _invoicePresetBands(AppLocalizations? l10n, String id) {
 {{ number }}
 > ${l10n?.invoicePdfIssuedOn ?? 'Issued on'} {{ issued }} · {{ issued_by }}
 {% if due_date != "" %}> ${l10n?.invoicePdfDueOn ?? 'Due on'} {{ due_date }}
+{% endif %}{% if purchase_order != "" %}> ${l10n?.invoicePdfPurchaseOrder ?? 'Order'} {{ purchase_order }}
+{% endif %}{% if buyer_reference != "" %}> ${l10n?.invoicePdfBuyerReference ?? 'Service'} {{ buyer_reference }}
 {% endif %}
 {% if replaces != "" %}> ${l10n?.invoicePdfReplaces ?? 'Replaces'} {{ replaces }}{% endif %}
 :::''';

@@ -207,6 +207,11 @@ abstract class MoneyRepository {
     String? replacesId,
     bool detailed = false,
     InvoiceKind kind = InvoiceKind.full,
+
+    /// #922 — BT-10 and BT-13, for a public-sector buyer (Chorus Pro).
+    /// Frozen on the document; empty for everyone else.
+    String buyerReference = '',
+    String purchaseOrder = '',
   });
 
   /// What [createInvoice] would issue for [period], without issuing

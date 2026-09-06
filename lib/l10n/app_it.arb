@@ -925,6 +925,38 @@
   "calendarValidationRefused": "Rifiutato: {what}",
   "calendarEventActionValidated": "convalidato",
   "calendarEventActionRefused": "rifiutato",
+  "invoicePurchaseOrder": "N. impegno",
+  "@invoicePurchaseOrder": {
+    "description": "#922 chorus pro: invoicePurchaseOrder"
+  },
+  "invoicePurchaseOrderHint": "Acquirente pubblico (Chorus Pro): il numéro d'engagement.",
+  "@invoicePurchaseOrderHint": {
+    "description": "#922 chorus pro: invoicePurchaseOrderHint"
+  },
+  "invoiceBuyerReference": "Codice servizio",
+  "@invoiceBuyerReference": {
+    "description": "#922 chorus pro: invoiceBuyerReference"
+  },
+  "invoiceBuyerReferenceHint": "Acquirente pubblico (Chorus Pro): il code service exécutant.",
+  "@invoiceBuyerReferenceHint": {
+    "description": "#922 chorus pro: invoiceBuyerReferenceHint"
+  },
+  "invoiceGapPublicSectorRefs": "Destinata a una piattaforma pubblica senza numero di impegno né codice servizio — Chorus Pro rifiuta la maggior parte dei depositi senza uno dei due.",
+  "@invoiceGapPublicSectorRefs": {
+    "description": "#922 chorus pro: invoiceGapPublicSectorRefs"
+  },
+  "invoicePdfPurchaseOrder": "Riferimento d'ordine",
+  "@invoicePdfPurchaseOrder": {
+    "description": "#922 chorus pro: invoicePdfPurchaseOrder"
+  },
+  "invoicePdfBuyerReference": "Servizio",
+  "@invoicePdfBuyerReference": {
+    "description": "#922 chorus pro: invoicePdfBuyerReference"
+  },
+  "invoicePublicBuyer": "Acquirente pubblico (Chorus Pro)",
+  "@invoicePublicBuyer": {
+    "description": "#922 chorus pro: invoicePublicBuyer"
+  },
   "appTitle": "DesKilo",
   "tabPlan": "Piantina",
   "tabCalendar": "Calendario",

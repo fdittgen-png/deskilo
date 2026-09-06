@@ -31,6 +31,8 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       'period' ||
       'issued' ||
       'due_date' ||
+      'purchase_order' ||
+      'buyer_reference' ||
       'issued_by' ||
       'replaces' ||
       'voided' ||

@@ -55,6 +55,12 @@ enum EInvoiceGap {
   /// #895 — a reverse-charged supply must name the customer's VAT
   /// identifier (BT-48): it is what proves the tax is theirs.
   missingBuyerVatId,
+
+  /// #922 — bound for a GOVERNMENT platform with neither a purchase-order
+  /// reference (BT-13, the engagement number) nor a buyer reference
+  /// (BT-10, the service code). The norm does not require them; Chorus
+  /// Pro does, for most public entities. A warning, not a refusal.
+  missingPublicSectorReferences,
 }
 
 extension EInvoiceGapKind on EInvoiceGap {
@@ -62,7 +68,8 @@ extension EInvoiceGapKind on EInvoiceGap {
   bool get isBlocking => switch (this) {
         EInvoiceGap.missingSellerCity ||
         EInvoiceGap.missingSellerPostalCode ||
-        EInvoiceGap.buyerVatIdFormat =>
+        EInvoiceGap.buyerVatIdFormat ||
+        EInvoiceGap.missingPublicSectorReferences =>
           false,
         _ => true,
       };
@@ -107,6 +114,9 @@ EInvoiceReadiness checkEInvoiceReadiness({
   required Invoice invoice,
   required InvoiceParty seller,
   required InvoiceParty buyer,
+  /// #922 — where the document is bound: 'government' asks for the
+  /// public-sector references. Anything else does not.
+  String destination = '',
 }) {
   final regime = vatRegimeFromWire(seller.vatRegime);
   final hasExemptionReason = seller.taxExemptionReason.isNotEmpty ||
@@ -132,5 +142,9 @@ EInvoiceReadiness checkEInvoiceReadiness({
       EInvoiceGap.noChargeLines,
     if (seller.city.isEmpty) EInvoiceGap.missingSellerCity,
     if (seller.postalCode.isEmpty) EInvoiceGap.missingSellerPostalCode,
+    if (destination == 'government' &&
+        buyer.reference.trim().isEmpty &&
+        buyer.orderReference.trim().isEmpty)
+      EInvoiceGap.missingPublicSectorReferences,
   ]);
 }

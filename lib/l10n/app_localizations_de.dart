@@ -1325,6 +1325,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get calendarEventActionRefused => 'abgelehnt';
 
   @override
+  String get invoicePurchaseOrder => 'Auftragsnummer';
+
+  @override
+  String get invoicePurchaseOrderHint =>
+      'Öffentlicher Auftraggeber (Chorus Pro): die numéro d\'engagement.';
+
+  @override
+  String get invoiceBuyerReference => 'Dienststellencode';
+
+  @override
+  String get invoiceBuyerReferenceHint =>
+      'Öffentlicher Auftraggeber (Chorus Pro): der code service exécutant.';
+
+  @override
+  String get invoiceGapPublicSectorRefs =>
+      'Für eine öffentliche Plattform bestimmt, ohne Auftragsnummer und ohne Dienststellencode — Chorus Pro lehnt die meisten Einreichungen ohne eines von beiden ab.';
+
+  @override
+  String get invoicePdfPurchaseOrder => 'Auftragsreferenz';
+
+  @override
+  String get invoicePdfBuyerReference => 'Dienststelle';
+
+  @override
+  String get invoicePublicBuyer => 'Öffentlicher Auftraggeber (Chorus Pro)';
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
