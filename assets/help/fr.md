@@ -1101,3 +1101,7 @@ L'onglet **Messages** est la messagerie de votre espace : toutes les conversatio
 ![](assets/help/images/messages-conversation-links.jpg)
 
 *Un message de groupe portant un lien de réservation et un lien d'espace — tous deux actifs, chacun avec un saut Voir sur le plan.*
+
+### Opérateur de la plateforme
+
+Le compte qui exploite l'installation voit, dans *Profils*, **tous les espaces** de la base : les siens comme d'habitude, les autres **grisés** avec leur environnement et leur nombre de membres. Toucher un espace grisé affiche ses **propriétaires** avec leur e-mail — et cette consultation est enregistrée, visible par les propriétaires de l'espace concerné. Un propriétaire a toujours une adresse e-mail : l'application refuse de créer un espace ou de nommer un copropriétaire sans.

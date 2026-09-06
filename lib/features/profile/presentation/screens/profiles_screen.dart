@@ -10,6 +10,8 @@ import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../workspace/domain/workspace.dart';
+import '../../../workspace/domain/workspace_overview.dart';
+import '../widgets/workspace_owners_sheet.dart';
 
 /// Profile switcher à la tankstellen (#89): each membership is a profile —
 /// a workspace plus the role held there. The active profile shapes the
@@ -142,6 +144,41 @@ class ProfilesScreen extends ConsumerWidget {
                 );
               },
             ),
+          // #937 — the platform owner sees every other workspace in the
+          // database, greyed out: not theirs to enter, but theirs to
+          // know about. Tapping one names its owners.
+          if (ref.watch(isPlatformOwnerProvider).value ?? false) ...[
+            Padding(
+              padding: const EdgeInsets.only(
+                top: AppSpacing.lg,
+                bottom: AppSpacing.sm,
+              ),
+              child: Text(
+                l10n?.profilesAllWorkspaces ?? 'Every workspace (platform owner)',
+                key: const ValueKey('profiles-platform-section'),
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ),
+            for (final overview
+                in (ref.watch(allWorkspacesProvider).value ??
+                        const <WorkspaceOverview>[])
+                    .where((w) => !w.isMember))
+              Opacity(
+                opacity: 0.55,
+                child: Card(
+                  child: ListTile(
+                    key: ValueKey('platform-workspace-${overview.id}'),
+                    leading: const Icon(Icons.lock_outline),
+                    title: Text(overview.name),
+                    subtitle: Text(
+                      '${overview.isDevelopment ? (l10n?.environmentDev ?? 'Development') : (l10n?.environmentProd ?? 'Production')}'
+                      ' · ${l10n?.profilesNotMember(overview.memberCount) ?? 'Not a member · ${overview.memberCount} members'}',
+                    ),
+                    onTap: () => showWorkspaceOwnersSheet(context, ref, overview),
+                  ),
+                ),
+              ),
+          ],
         ],
       ),
     );

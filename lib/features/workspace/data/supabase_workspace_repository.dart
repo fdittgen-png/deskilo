@@ -16,6 +16,7 @@ import '../domain/workspace_repository.dart';
 import 'conversation_api.dart';
 import '../domain/workspace_document.dart';
 import '../domain/managed_access.dart';
+import '../domain/workspace_overview.dart';
 
 class SupabaseWorkspaceRepository
     with ConversationApi
@@ -31,6 +32,33 @@ class SupabaseWorkspaceRepository
   Future<List<Workspace>> fetchMyWorkspaces() async {
     final rows = await _client.from('workspaces').select();
     return rows.map(_workspaceFromRow).toList();
+  }
+
+  @override
+  Future<bool> isPlatformOwner() async {
+    final r = await _client.rpc<dynamic>('is_platform_owner');
+    return r == true;
+  }
+
+  @override
+  Future<List<WorkspaceOverview>> fetchAllWorkspaces() async {
+    final rows = await _client.rpc<dynamic>('list_all_workspaces') as List;
+    return [
+      for (final r in rows)
+        WorkspaceOverview.fromRow(Map<String, dynamic>.from(r as Map)),
+    ];
+  }
+
+  @override
+  Future<List<WorkspaceOwner>> fetchWorkspaceOwners(String workspaceId) async {
+    final rows = await _client.rpc<dynamic>(
+      'workspace_owners',
+      params: {'p_workspace_id': workspaceId},
+    ) as List;
+    return [
+      for (final r in rows)
+        WorkspaceOwner.fromRow(Map<String, dynamic>.from(r as Map)),
+    ];
   }
 
   @override

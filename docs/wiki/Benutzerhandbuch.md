@@ -1032,3 +1032,7 @@ Der Tab **Nachrichten** ist die Messaging-Zentrale Ihres Bereichs: alle Unterhal
 <p><img src="images/messages-conversation-links.jpg" width="240"></p>
 
 *Eine Gruppennachricht mit einem Reservierungs- und einem Raum-Link — beide aktiv, beide mit dem Sprung „Auf dem Plan zeigen".*
+
+### Plattformbetreiber
+
+Das Konto, das die Installation betreibt, sieht unter *Profile* **alle Arbeitsbereiche** der Datenbank: die eigenen wie gewohnt, die anderen **ausgegraut** mit Umgebung und Mitgliederzahl. Ein Tipp auf einen ausgegrauten Bereich zeigt dessen **Inhaber** mit E-Mail — und dieser Zugriff wird protokolliert, sichtbar für die Inhaber des betroffenen Bereichs. Ein Inhaber hat immer eine E-Mail-Adresse: Die App verweigert das Anlegen eines Bereichs oder die Ernennung eines Mitinhabers ohne eine.

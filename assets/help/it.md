@@ -1101,3 +1101,7 @@ La scheda **Messaggi** è il centro di messaggistica del tuo spazio: tutte le co
 ![](assets/help/images/messages-conversation-links.jpg)
 
 *Un messaggio di gruppo con un link di prenotazione e un link di spazio — entrambi attivi, entrambi con il salto Mostra sulla piantina.*
+
+### Operatore della piattaforma
+
+L'account che gestisce l'installazione vede, in *Profili*, **tutti gli spazi** del database: i propri come sempre, gli altri **in grigio** con ambiente e numero di membri. Toccando uno spazio in grigio compaiono i suoi **proprietari** con l'e-mail — e quella lettura è registrata, visibile ai proprietari dello spazio. Un proprietario ha sempre un indirizzo e-mail: l'app rifiuta di creare uno spazio o nominare un comproprietario senza.

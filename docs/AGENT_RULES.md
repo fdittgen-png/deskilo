@@ -188,6 +188,19 @@ real" is the fact a reader needs first — and only the OWNER may declare
 a space production, enforced in `set_workspace_environment`, so an admin
 cannot take the mark off the documents they issue.
 
+
+## The platform-owner overview has no feature flag (#937)
+
+The second exception, for the same reason as the first: a `WorkspaceFeature`
+is a workspace's decision about itself, and the platform owner's overview
+of EVERY workspace is not any workspace's decision. It is gated
+server-side — `platform_admins` (never an e-mail check in a client), and
+definer RPCs (`list_all_workspaces`, `workspace_owners`) that REFUSE anyone
+else rather than answer emptily. Every read of another workspace's owners
+is written to `platform_access_log`, readable by that workspace's owners.
+An owner must always have an e-mail address (`user_has_email`, enforced at
+`create_workspace` and `activate_co_owner`). Do not "fix" the missing flag.
+
 ## Validation domains grow in FOUR places (#767/#769)
 
 A new server-side validation domain (`events_type_check` +

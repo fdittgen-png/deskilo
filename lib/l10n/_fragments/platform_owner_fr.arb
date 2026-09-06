@@ -1,0 +1,37 @@
+{
+  "@@locale": "fr",
+  "profilesAllWorkspaces": "Tous les espaces (opérateur de la plateforme)",
+  "@profilesAllWorkspaces": {
+    "description": "#937 platform owner: profilesAllWorkspaces"
+  },
+  "profilesNotMember": "Non membre · {count} membres",
+  "@profilesNotMember": {
+    "description": "#937 platform owner: profilesNotMember",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "profilesOwnersOf": "Propriétaires de {name}",
+  "@profilesOwnersOf": {
+    "description": "#937 platform owner: profilesOwnersOf",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profilesOwnersNone": "Aucun propriétaire.",
+  "@profilesOwnersNone": {
+    "description": "#937 platform owner: profilesOwnersNone"
+  },
+  "profilesCopyEmail": "Copier l'e-mail",
+  "@profilesCopyEmail": {
+    "description": "#937 platform owner: profilesCopyEmail"
+  },
+  "profilesEmailCopied": "E-mail copié.",
+  "@profilesEmailCopied": {
+    "description": "#937 platform owner: profilesEmailCopied"
+  }
+}

@@ -1085,3 +1085,7 @@ The **Messages** tab is your workspace's messaging centre: every conversation in
 ![](assets/help/images/messages-conversation-links.jpg)
 
 *A group message carrying a reservation link and a space link — both live, both with a Show-on-plan jump.*
+
+### Platform owner
+
+The account that operates the installation sees, under *Profiles*, **every workspace** in the database: its own as usual, the others **greyed out** with their environment and member count. Tapping a greyed-out workspace shows its **owners** with their e-mail — and that read is logged, visible to the owners of the workspace concerned. An owner always has an e-mail address: the app refuses to create a workspace or to name a co-owner without one.
