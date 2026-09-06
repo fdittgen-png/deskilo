@@ -24,6 +24,8 @@ const _configModels = <String>[
   'lib/features/workspace/domain/booking_policies.dart',
   // #925 — every field of a series is set on the Number sequences screen.
   'lib/features/money/domain/number_sequence.dart',
+  // #945 — every field of a site is set on the Sites screen.
+  'lib/features/workspace/domain/site.dart',
 ];
 
 /// Fields that legitimately have no control, each with its reason. A new

@@ -1112,3 +1112,7 @@ Le compte qui exploite l'installation voit, dans *Profils*, **tous les espaces**
 ### Exports comptables complets (#936)
 
 Le FEC et le fichier DATEV portent désormais, en plus des ventes et de la banque, un **journal d'achats** : les frais remboursés aux adhérents et les dépenses communes réparties. Un **avoir** y est comptabilisé comme une vente extournée (il en était absent). Le compte de charges est demandé à l'export comme les autres. Un espace de développement produit un fichier marqué **DEV** : ce n'est pas la comptabilité réelle.
+
+### Sites (#945)
+
+Un espace peut avoir **plusieurs adresses**. *Réglages → Sites* : le site par défaut porte l'adresse de l'espace ; ajoutez un site par adresse supplémentaire (rue, code postal, ville, SIRET de l'établissement) et rattachez-y ses étages. Chaque adhérent a un **site de rattachement** (page de l'adhérent) : c'est l'adresse que porteront ses documents. Supprimer un site renvoie ses étages et ses adhérents au site par défaut.

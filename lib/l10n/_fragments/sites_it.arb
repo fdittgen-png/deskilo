@@ -1,0 +1,79 @@
+{
+  "@@locale": "it",
+  "featureMultiSite": "Sedi",
+  "@featureMultiSite": {
+    "description": "#945 sites: featureMultiSite"
+  },
+  "featureMultiSiteDesc": "Più indirizzi: i piani sono raggruppati per sede, ogni sede ha il proprio indirizzo e la propria registrazione, ogni socio una sede di riferimento, e i documenti indicano la sede interessata. Disattivato: un solo indirizzo per tutto lo spazio.",
+  "@featureMultiSiteDesc": {
+    "description": "#945 sites: featureMultiSiteDesc"
+  },
+  "sitesTitle": "Sedi",
+  "@sitesTitle": {
+    "description": "#945 sites: sitesTitle"
+  },
+  "sitesSubtitle": "Indirizzi, i piani di ciascuna e la sede di ogni socio",
+  "@sitesSubtitle": {
+    "description": "#945 sites: sitesSubtitle"
+  },
+  "sitesIntro": "Ogni piano appartiene a una sede; la sede predefinita porta l'indirizzo dello spazio. Un socio ha una sede di riferimento: è l'indirizzo sui suoi documenti.",
+  "@sitesIntro": {
+    "description": "#945 sites: sitesIntro"
+  },
+  "sitesAdd": "Aggiungi una sede",
+  "@sitesAdd": {
+    "description": "#945 sites: sitesAdd"
+  },
+  "sitesDefault": "Sede predefinita",
+  "@sitesDefault": {
+    "description": "#945 sites: sitesDefault"
+  },
+  "sitesLevels": "Piani",
+  "@sitesLevels": {
+    "description": "#945 sites: sitesLevels"
+  },
+  "siteName": "Nome della sede",
+  "@siteName": {
+    "description": "#945 sites: siteName"
+  },
+  "siteStreet": "Via",
+  "@siteStreet": {
+    "description": "#945 sites: siteStreet"
+  },
+  "sitePostalCode": "CAP",
+  "@sitePostalCode": {
+    "description": "#945 sites: sitePostalCode"
+  },
+  "siteCity": "Città",
+  "@siteCity": {
+    "description": "#945 sites: siteCity"
+  },
+  "siteCountry": "Paese (codice)",
+  "@siteCountry": {
+    "description": "#945 sites: siteCountry"
+  },
+  "siteLegalId": "Registrazione dell'unità locale",
+  "@siteLegalId": {
+    "description": "#945 sites: siteLegalId"
+  },
+  "siteDelete": "Elimina questa sede",
+  "@siteDelete": {
+    "description": "#945 sites: siteDelete"
+  },
+  "siteDeleteHint": "I suoi piani e soci tornano alla sede predefinita.",
+  "@siteDeleteHint": {
+    "description": "#945 sites: siteDeleteHint"
+  },
+  "siteSaved": "Sede salvata.",
+  "@siteSaved": {
+    "description": "#945 sites: siteSaved"
+  },
+  "memberHomeSiteLabel": "Sede di riferimento",
+  "@memberHomeSiteLabel": {
+    "description": "#945 sites: memberHomeSiteLabel"
+  },
+  "memberHomeSiteDefault": "Indirizzo dello spazio",
+  "@memberHomeSiteDefault": {
+    "description": "#945 sites: memberHomeSiteDefault"
+  }
+}

@@ -7589,6 +7589,67 @@ class AppLocalizationsDe extends AppLocalizations {
   String get servicesActive => 'Aktiv';
 
   @override
+  String get featureMultiSite => 'Standorte';
+
+  @override
+  String get featureMultiSiteDesc =>
+      'Mehrere Adressen: Ebenen werden nach Standort gruppiert, jeder Standort hat eigene Adresse und Registrierung, jedes Mitglied einen Heimatstandort, und Belege nennen den betroffenen Standort. Aus: eine Adresse für den ganzen Arbeitsbereich.';
+
+  @override
+  String get sitesTitle => 'Standorte';
+
+  @override
+  String get sitesSubtitle =>
+      'Adressen, die Ebenen je Standort, und wer wo zu Hause ist';
+
+  @override
+  String get sitesIntro =>
+      'Jede Ebene gehört zu einem Standort; der Standard-Standort trägt die Adresse des Arbeitsbereichs. Ein Mitglied hat einen Heimatstandort: das ist die Adresse auf seinen Belegen.';
+
+  @override
+  String get sitesAdd => 'Standort hinzufügen';
+
+  @override
+  String get sitesDefault => 'Standard-Standort';
+
+  @override
+  String get sitesLevels => 'Ebenen';
+
+  @override
+  String get siteName => 'Name des Standorts';
+
+  @override
+  String get siteStreet => 'Straße';
+
+  @override
+  String get sitePostalCode => 'Postleitzahl';
+
+  @override
+  String get siteCity => 'Ort';
+
+  @override
+  String get siteCountry => 'Land (Code)';
+
+  @override
+  String get siteLegalId => 'Registrierung der Betriebsstätte';
+
+  @override
+  String get siteDelete => 'Diesen Standort löschen';
+
+  @override
+  String get siteDeleteHint =>
+      'Seine Ebenen und Mitglieder fallen an den Standard-Standort zurück.';
+
+  @override
+  String get siteSaved => 'Standort gespeichert.';
+
+  @override
+  String get memberHomeSiteLabel => 'Heimatstandort';
+
+  @override
+  String get memberHomeSiteDefault => 'Adresse des Arbeitsbereichs';
+
+  @override
   String get authContinueWith => 'oder weiter mit';
 
   @override

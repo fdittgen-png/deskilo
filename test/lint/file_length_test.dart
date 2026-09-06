@@ -72,7 +72,8 @@ const Map<String, int> _baseline = {
   // 1000→1020 (2026-08-05): #486 Payment methods admin entry.
   // 1040→1140 (2026-08-13): #560 the About section (author, licence,
   // privacy, bug link, support tiles).
-  'lib/features/profile/presentation/screens/settings_screen.dart': 1260, // 2026-08 #586 default-period tile + dialog // 2026-09-05 #886 the personal-information tile beside the legacy address dialog it replaces // 2026-09-05 #902 the payment-conditions tile
+  // 1260→1308 (2026-09-06): #945 sites.
+  'lib/features/profile/presentation/screens/settings_screen.dart': 1308, // 2026-08 #586 default-period tile + dialog // 2026-09-05 #886 the personal-information tile beside the legacy address dialog it replaces // 2026-09-05 #902 the payment-conditions tile
   // 1020→1040 (2026-08-06): #513 the Role management tile.
   // 980→1030 (2026-08-05): #476 the statement export honors the
   // owner's report template (#478 Invoices button joins the grid).
@@ -145,8 +146,10 @@ const Map<String, int> _baseline = {
   // new→840 (2026-08-05): #498 the WYSIWYG design surface — styled
   // band rendering, column groups, token palette, in-place editor.
   // #825 (2026-09-02): the member page and the shared admin actions.
-  'lib/features/members/presentation/screens/member_page.dart': 900, // 2026-09-05 #887 the managed-member tiles (edit identity, hand over, revoke) + chip
-  'lib/features/workspace/presentation/member_admin_actions.dart': 720,
+  // 900→948 (2026-09-06): #945 sites.
+  'lib/features/members/presentation/screens/member_page.dart': 948, // 2026-09-05 #887 the managed-member tiles (edit identity, hand over, revoke) + chip
+  // 720→779 (2026-09-06): #945 sites.
+  'lib/features/workspace/presentation/member_admin_actions.dart': 779,
   // #828 (2026-09-02): the expense_repartition flag and repository methods.
   // 2026-09-04 #864: one more flag. This file is the feature
   // registry — it grows by ~5 lines per flag by design, and

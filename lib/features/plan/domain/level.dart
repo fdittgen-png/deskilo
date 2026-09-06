@@ -25,6 +25,9 @@ sealed class Level with _$Level {
     /// Price of a whole-level reservation per half-day, in cents (0050);
     /// 0 = the level books free of supplement.
     @Default(0) int priceCents,
+
+    /// #945 — the site this level stands at; null is the default site.
+    String? siteId,
   }) = _Level;
 
   /// Whether a background image is set for this level.

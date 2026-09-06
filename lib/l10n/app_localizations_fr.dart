@@ -7602,6 +7602,67 @@ class AppLocalizationsFr extends AppLocalizations {
   String get servicesActive => 'Actif';
 
   @override
+  String get featureMultiSite => 'Sites';
+
+  @override
+  String get featureMultiSiteDesc =>
+      'Plusieurs adresses : les étages sont regroupés par site, chaque site a son adresse et son SIRET, chaque adhérent un site de rattachement, et les documents nomment le site concerné. Désactivé : une seule adresse pour l\'espace.';
+
+  @override
+  String get sitesTitle => 'Sites';
+
+  @override
+  String get sitesSubtitle =>
+      'Adresses, étages de chaque site, et site de rattachement de chacun';
+
+  @override
+  String get sitesIntro =>
+      'Chaque étage appartient à un site ; le site par défaut porte l\'adresse de l\'espace. Un adhérent a un site de rattachement : c\'est son adresse sur ses documents.';
+
+  @override
+  String get sitesAdd => 'Ajouter un site';
+
+  @override
+  String get sitesDefault => 'Site par défaut';
+
+  @override
+  String get sitesLevels => 'Étages';
+
+  @override
+  String get siteName => 'Nom du site';
+
+  @override
+  String get siteStreet => 'Rue';
+
+  @override
+  String get sitePostalCode => 'Code postal';
+
+  @override
+  String get siteCity => 'Ville';
+
+  @override
+  String get siteCountry => 'Pays (code)';
+
+  @override
+  String get siteLegalId => 'SIRET de l\'établissement';
+
+  @override
+  String get siteDelete => 'Supprimer ce site';
+
+  @override
+  String get siteDeleteHint =>
+      'Ses étages et ses adhérents reviennent au site par défaut.';
+
+  @override
+  String get siteSaved => 'Site enregistré.';
+
+  @override
+  String get memberHomeSiteLabel => 'Site de rattachement';
+
+  @override
+  String get memberHomeSiteDefault => 'Adresse de l\'espace';
+
+  @override
   String get authContinueWith => 'ou continuer avec';
 
   @override

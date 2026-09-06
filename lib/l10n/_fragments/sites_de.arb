@@ -1,0 +1,79 @@
+{
+  "@@locale": "de",
+  "featureMultiSite": "Standorte",
+  "@featureMultiSite": {
+    "description": "#945 sites: featureMultiSite"
+  },
+  "featureMultiSiteDesc": "Mehrere Adressen: Ebenen werden nach Standort gruppiert, jeder Standort hat eigene Adresse und Registrierung, jedes Mitglied einen Heimatstandort, und Belege nennen den betroffenen Standort. Aus: eine Adresse für den ganzen Arbeitsbereich.",
+  "@featureMultiSiteDesc": {
+    "description": "#945 sites: featureMultiSiteDesc"
+  },
+  "sitesTitle": "Standorte",
+  "@sitesTitle": {
+    "description": "#945 sites: sitesTitle"
+  },
+  "sitesSubtitle": "Adressen, die Ebenen je Standort, und wer wo zu Hause ist",
+  "@sitesSubtitle": {
+    "description": "#945 sites: sitesSubtitle"
+  },
+  "sitesIntro": "Jede Ebene gehört zu einem Standort; der Standard-Standort trägt die Adresse des Arbeitsbereichs. Ein Mitglied hat einen Heimatstandort: das ist die Adresse auf seinen Belegen.",
+  "@sitesIntro": {
+    "description": "#945 sites: sitesIntro"
+  },
+  "sitesAdd": "Standort hinzufügen",
+  "@sitesAdd": {
+    "description": "#945 sites: sitesAdd"
+  },
+  "sitesDefault": "Standard-Standort",
+  "@sitesDefault": {
+    "description": "#945 sites: sitesDefault"
+  },
+  "sitesLevels": "Ebenen",
+  "@sitesLevels": {
+    "description": "#945 sites: sitesLevels"
+  },
+  "siteName": "Name des Standorts",
+  "@siteName": {
+    "description": "#945 sites: siteName"
+  },
+  "siteStreet": "Straße",
+  "@siteStreet": {
+    "description": "#945 sites: siteStreet"
+  },
+  "sitePostalCode": "Postleitzahl",
+  "@sitePostalCode": {
+    "description": "#945 sites: sitePostalCode"
+  },
+  "siteCity": "Ort",
+  "@siteCity": {
+    "description": "#945 sites: siteCity"
+  },
+  "siteCountry": "Land (Code)",
+  "@siteCountry": {
+    "description": "#945 sites: siteCountry"
+  },
+  "siteLegalId": "Registrierung der Betriebsstätte",
+  "@siteLegalId": {
+    "description": "#945 sites: siteLegalId"
+  },
+  "siteDelete": "Diesen Standort löschen",
+  "@siteDelete": {
+    "description": "#945 sites: siteDelete"
+  },
+  "siteDeleteHint": "Seine Ebenen und Mitglieder fallen an den Standard-Standort zurück.",
+  "@siteDeleteHint": {
+    "description": "#945 sites: siteDeleteHint"
+  },
+  "siteSaved": "Standort gespeichert.",
+  "@siteSaved": {
+    "description": "#945 sites: siteSaved"
+  },
+  "memberHomeSiteLabel": "Heimatstandort",
+  "@memberHomeSiteLabel": {
+    "description": "#945 sites: memberHomeSiteLabel"
+  },
+  "memberHomeSiteDefault": "Adresse des Arbeitsbereichs",
+  "@memberHomeSiteDefault": {
+    "description": "#945 sites: memberHomeSiteDefault"
+  }
+}

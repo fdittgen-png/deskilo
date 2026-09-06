@@ -22,6 +22,9 @@ abstract class FloorPlanRepository {
   Future<Level> createLevel(String workspaceId, String name, int sortOrder);
   Future<void> renameLevel(String levelId, String name);
 
+  /// #945 — the site a level stands at; null for the default site.
+  Future<void> setLevelSite(String levelId, String? siteId);
+
   /// Owner-only (0050): mark a level bookable as a whole and price it per
   /// half-day (cents, >= 0).
   Future<void> setLevelBooking(

@@ -69,6 +69,16 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
     );
   }
 
+  /// #945 — level → site as the fake records it.
+  final levelSites = <String, String?>{};
+
+  @override
+  Future<void> setLevelSite(String levelId, String? siteId) async {
+    levelSites[levelId] = siteId;
+    final i = levels.indexWhere((l) => l.id == levelId);
+    if (i >= 0) levels[i] = levels[i].copyWith(siteId: siteId);
+  }
+
   @override
   Future<List<Level>> fetchLevels(String workspaceId) async =>
       levels.where((l) => l.workspaceId == workspaceId).toList()

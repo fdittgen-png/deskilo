@@ -1,0 +1,79 @@
+{
+  "@@locale": "en",
+  "featureMultiSite": "Sites",
+  "@featureMultiSite": {
+    "description": "#945 sites: featureMultiSite"
+  },
+  "featureMultiSiteDesc": "Several addresses: levels are grouped by site, each site has its own address and registration, each member a home site, and documents name the site they concern. Off: one address for the whole workspace.",
+  "@featureMultiSiteDesc": {
+    "description": "#945 sites: featureMultiSiteDesc"
+  },
+  "sitesTitle": "Sites",
+  "@sitesTitle": {
+    "description": "#945 sites: sitesTitle"
+  },
+  "sitesSubtitle": "Addresses, the levels at each, and who calls which home",
+  "@sitesSubtitle": {
+    "description": "#945 sites: sitesSubtitle"
+  },
+  "sitesIntro": "Every level belongs to a site; the default site carries the workspace's address. A member has a home site: that is the address on their documents.",
+  "@sitesIntro": {
+    "description": "#945 sites: sitesIntro"
+  },
+  "sitesAdd": "Add a site",
+  "@sitesAdd": {
+    "description": "#945 sites: sitesAdd"
+  },
+  "sitesDefault": "Default site",
+  "@sitesDefault": {
+    "description": "#945 sites: sitesDefault"
+  },
+  "sitesLevels": "Levels",
+  "@sitesLevels": {
+    "description": "#945 sites: sitesLevels"
+  },
+  "siteName": "Site name",
+  "@siteName": {
+    "description": "#945 sites: siteName"
+  },
+  "siteStreet": "Street",
+  "@siteStreet": {
+    "description": "#945 sites: siteStreet"
+  },
+  "sitePostalCode": "Post code",
+  "@sitePostalCode": {
+    "description": "#945 sites: sitePostalCode"
+  },
+  "siteCity": "City",
+  "@siteCity": {
+    "description": "#945 sites: siteCity"
+  },
+  "siteCountry": "Country (code)",
+  "@siteCountry": {
+    "description": "#945 sites: siteCountry"
+  },
+  "siteLegalId": "Establishment registration (SIRET)",
+  "@siteLegalId": {
+    "description": "#945 sites: siteLegalId"
+  },
+  "siteDelete": "Delete this site",
+  "@siteDelete": {
+    "description": "#945 sites: siteDelete"
+  },
+  "siteDeleteHint": "Its levels and members go back to the default site.",
+  "@siteDeleteHint": {
+    "description": "#945 sites: siteDeleteHint"
+  },
+  "siteSaved": "Site saved.",
+  "@siteSaved": {
+    "description": "#945 sites: siteSaved"
+  },
+  "memberHomeSiteLabel": "Home site",
+  "@memberHomeSiteLabel": {
+    "description": "#945 sites: memberHomeSiteLabel"
+  },
+  "memberHomeSiteDefault": "Workspace address",
+  "@memberHomeSiteDefault": {
+    "description": "#945 sites: memberHomeSiteDefault"
+  }
+}

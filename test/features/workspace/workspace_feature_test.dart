@@ -30,6 +30,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   // #934 — the status view and the guided repartition are opt-in.
   WorkspaceFeature.workspaceStatus,
   WorkspaceFeature.expenseRepartitionWizard,
+  // #945 — a second address is opt-in.
+  WorkspaceFeature.multiSite,
 };
 
 /// Every other feature ships ON.
@@ -81,6 +83,7 @@ void main() {
       'numberSequences': true,
       'workspaceStatus': true,
       'expenseRepartitionWizard': true,
+      'multiSite': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

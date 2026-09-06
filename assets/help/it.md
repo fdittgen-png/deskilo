@@ -1112,3 +1112,7 @@ L'account che gestisce l'installazione vede, in *Profili*, **tutti gli spazi** d
 ### Esportazioni contabili complete (#936)
 
 Il FEC e il file DATEV riportano ora, oltre a vendite e banca, un **giornale acquisti**: spese rimborsate ai soci e costi comuni ripartiti. Una **nota di credito** è registrata come vendita stornata (mancava). Il conto spese è chiesto all'esportazione come gli altri. Uno spazio di sviluppo produce un file contrassegnato **DEV**: non è la contabilità reale.
+
+### Sedi (#945)
+
+Uno spazio può avere **più indirizzi**. *Impostazioni → Sedi*: la sede predefinita porta l'indirizzo dello spazio; aggiungi una sede per ogni indirizzo in più (via, CAP, città, registrazione dell'unità locale) e assegnale i suoi piani. Ogni socio ha una **sede di riferimento** (pagina del socio): è l'indirizzo che porteranno i suoi documenti. Eliminare una sede riporta piani e soci alla sede predefinita.

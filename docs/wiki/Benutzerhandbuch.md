@@ -1043,3 +1043,7 @@ Das Konto, das die Installation betreibt, sieht unter *Profile* **alle Arbeitsbe
 ### Vollständige Buchhaltungsexporte (#936)
 
 FEC und DATEV-Datei führen neben Verkauf und Bank nun ein **Einkaufsjournal**: an Mitglieder erstattete Auslagen und umgelegte gemeinsame Kosten. Eine **Gutschrift** wird als stornierter Verkauf gebucht (sie fehlte). Das Aufwandskonto wird beim Export abgefragt wie die anderen. Ein Entwicklungs-Arbeitsbereich erzeugt eine mit **DEV** markierte Datei: das ist nicht die echte Buchhaltung.
+
+### Standorte (#945)
+
+Ein Arbeitsbereich kann **mehrere Adressen** haben. *Einstellungen → Standorte*: der Standard-Standort trägt die Adresse des Arbeitsbereichs; fügen Sie je weiterer Adresse einen Standort hinzu (Straße, PLZ, Ort, Registrierung der Betriebsstätte) und ordnen Sie ihm seine Ebenen zu. Jedes Mitglied hat einen **Heimatstandort** (Mitgliedsseite): diese Adresse tragen seine Belege. Das Löschen eines Standorts gibt Ebenen und Mitglieder an den Standard-Standort zurück.

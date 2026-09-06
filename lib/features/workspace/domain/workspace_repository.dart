@@ -14,6 +14,7 @@ import 'workspace_document.dart';
 import '../../profile/domain/personal_info.dart';
 import 'managed_access.dart';
 import 'workspace_overview.dart';
+import 'site.dart';
 
 /// Pure-Dart workspace boundary. Supabase impl in data/, fake in tests.
 abstract class WorkspaceRepository {
@@ -22,6 +23,19 @@ abstract class WorkspaceRepository {
 
   /// #937 — whether the caller operates the deployment (`platform_admins`).
   Future<bool> isPlatformOwner();
+
+  /// #945 — the workspace's sites, default first.
+  Future<List<Site>> fetchSites(String workspaceId);
+
+  /// #945 — create (null id) or edit a site (RPC `upsert_site`, admins).
+  Future<String> upsertSite(String workspaceId, Site site, {bool isNew = false});
+
+  /// #945 — delete a non-default site; its levels and members fall back
+  /// to the default (RPC `delete_site`).
+  Future<void> deleteSite(String siteId);
+
+  /// #945 — a member's home site; null for the default.
+  Future<void> setMemberHomeSite(String memberId, String? siteId);
 
   /// #937 — every workspace in the database, for the platform owner only
   /// (RPC `list_all_workspaces`, refuses anyone else).

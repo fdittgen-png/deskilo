@@ -4742,6 +4742,82 @@
   "servicesPrice": "Prix",
   "servicesInactive": "Inactif",
   "servicesActive": "Actif",
+  "featureMultiSite": "Sites",
+  "@featureMultiSite": {
+    "description": "#945 sites: featureMultiSite"
+  },
+  "featureMultiSiteDesc": "Plusieurs adresses : les étages sont regroupés par site, chaque site a son adresse et son SIRET, chaque adhérent un site de rattachement, et les documents nomment le site concerné. Désactivé : une seule adresse pour l'espace.",
+  "@featureMultiSiteDesc": {
+    "description": "#945 sites: featureMultiSiteDesc"
+  },
+  "sitesTitle": "Sites",
+  "@sitesTitle": {
+    "description": "#945 sites: sitesTitle"
+  },
+  "sitesSubtitle": "Adresses, étages de chaque site, et site de rattachement de chacun",
+  "@sitesSubtitle": {
+    "description": "#945 sites: sitesSubtitle"
+  },
+  "sitesIntro": "Chaque étage appartient à un site ; le site par défaut porte l'adresse de l'espace. Un adhérent a un site de rattachement : c'est son adresse sur ses documents.",
+  "@sitesIntro": {
+    "description": "#945 sites: sitesIntro"
+  },
+  "sitesAdd": "Ajouter un site",
+  "@sitesAdd": {
+    "description": "#945 sites: sitesAdd"
+  },
+  "sitesDefault": "Site par défaut",
+  "@sitesDefault": {
+    "description": "#945 sites: sitesDefault"
+  },
+  "sitesLevels": "Étages",
+  "@sitesLevels": {
+    "description": "#945 sites: sitesLevels"
+  },
+  "siteName": "Nom du site",
+  "@siteName": {
+    "description": "#945 sites: siteName"
+  },
+  "siteStreet": "Rue",
+  "@siteStreet": {
+    "description": "#945 sites: siteStreet"
+  },
+  "sitePostalCode": "Code postal",
+  "@sitePostalCode": {
+    "description": "#945 sites: sitePostalCode"
+  },
+  "siteCity": "Ville",
+  "@siteCity": {
+    "description": "#945 sites: siteCity"
+  },
+  "siteCountry": "Pays (code)",
+  "@siteCountry": {
+    "description": "#945 sites: siteCountry"
+  },
+  "siteLegalId": "SIRET de l'établissement",
+  "@siteLegalId": {
+    "description": "#945 sites: siteLegalId"
+  },
+  "siteDelete": "Supprimer ce site",
+  "@siteDelete": {
+    "description": "#945 sites: siteDelete"
+  },
+  "siteDeleteHint": "Ses étages et ses adhérents reviennent au site par défaut.",
+  "@siteDeleteHint": {
+    "description": "#945 sites: siteDeleteHint"
+  },
+  "siteSaved": "Site enregistré.",
+  "@siteSaved": {
+    "description": "#945 sites: siteSaved"
+  },
+  "memberHomeSiteLabel": "Site de rattachement",
+  "@memberHomeSiteLabel": {
+    "description": "#945 sites: memberHomeSiteLabel"
+  },
+  "memberHomeSiteDefault": "Adresse de l'espace",
+  "@memberHomeSiteDefault": {
+    "description": "#945 sites: memberHomeSiteDefault"
+  },
   "authContinueWith": "ou continuer avec",
   "authSocialUnavailable": "La connexion {provider} n'est pas encore disponible — le serveur ne l'a pas activée.",
   "linkedAccountsTitle": "Comptes liés",

@@ -1064,3 +1064,7 @@ La cuenta que opera la instalación ve, en *Perfiles*, **todos los espacios** de
 ### Exportaciones contables completas (#936)
 
 El FEC y el archivo DATEV incluyen ahora, junto a ventas y banco, un **diario de compras**: gastos reembolsados a los socios y costes comunes repartidos. Un **abono** se contabiliza como venta revertida (faltaba). La cuenta de gastos se pide al exportar como las demás. Un espacio de desarrollo produce un archivo marcado **DEV**: no es la contabilidad real.
+
+### Sedes (#945)
+
+Un espacio puede tener **varias direcciones**. *Ajustes → Sedes*: la sede por defecto lleva la dirección del espacio; añada una sede por cada dirección adicional (calle, código postal, ciudad, registro del establecimiento) y asígnele sus plantas. Cada socio tiene una **sede de referencia** (página del socio): es la dirección que llevarán sus documentos. Eliminar una sede devuelve sus plantas y socios a la sede por defecto.

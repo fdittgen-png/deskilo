@@ -167,6 +167,7 @@ const FEATURES=[
  ['personalInfo','Informations personnelles',"Nom, adresse postale, téléphone, e-mail et identifiants saisis par le membre ; imprimés dans le bloc adresse normalisé des factures et courriers.",1],
  ['memberPaymentTerms','Conditions de paiement par membre',"L'espace définit les conditions par défaut ; un membre peut avoir les siennes, visibles par lui, modifiées uniquement par une demande validée d'un admin autorisé.",1],
  ['letterStandard','Standard lettre pour chaque document',"Factures, proformas, relevés, accords, rapports de paiements et de consommation, rappels sans maquette s'impriment en lettre normalisée : en-tête, destinataire dans la fenêtre, corps à 90 mm, pied fixe.",1],
+ ['multiSite','Sites',"Plusieurs adresses : les étages sont regroupés par site, chaque site a son adresse et son SIRET, chaque adhérent un site de rattachement, et les documents nomment le site concerné.",0],
  ['workspaceStatus','Situation de l\'espace',"Ce que l\'espace a facturé, encaissé, remboursé et réparti sur une période, adhérent par adhérent — à l\'écran pour les propriétaires et admins, et en rapport imprimable.",0],
  ['expenseRepartitionWizard','Assistant de répartition',"Une répartition guidée : une dépense commune proposée au prorata de l\'abonnement, chaque part ajustable, et la règle ajustée mémorisée pour le mois suivant.",0],
  ['numberSequences','Séquences de numérotation',"Comment chaque journal numérote ses documents — préfixe, année ou mois, nombre de chiffres, remise à zéro — sur un seul écran. Les numéros sont attribués dans la base, sans trou, que ce soit activé ou non.",0],
@@ -256,7 +257,7 @@ const DEFAULTS={
            customerUrl:'',customerToken:'',customerHeader:'',customerField:''},
  vatPeriod:'quarter',
  features:Object.fromEntries(FEATURES.map(f=>[f[0],!!f[3]])),
- levels:[{name:'1er étage',offices:[{name:'Bureau 1',bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]}]}],
+ sites:[],levels:[{name:'1er étage',offices:[{name:'Bureau 1',bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]}]}],
  accessories:[],services:[],tiers:[{from:0,to:100,fee:'',over:''}],subLevels:['25','50','75','100'],freeLevel:false,packages:[],
  pay:{iban:'',paypal_me:'',wero:'',lydia:'',wise:'',reference:'',bank_name:'',account_number:'',bank_code:'',bic:''},
  org:'association',vatRegime:'not_subject',vatExigibility:'invoice',numbering:{prefix:'INV-',datePart:'year',digits:'4',reset:'yearly'},memberNumbering:{prefix:'M-',digits:'4'},regNumber:'',vatId:'',exemption:'',street:'',postal:'',city:'',vatRates:[],
@@ -465,10 +466,14 @@ const STEPS=[
      whole?h('div',{},lbl('Réservable en entier','whole'),(()=>{const s=h('select');s.append(h('option',{value:'no'},'Non'),h('option',{value:'yes'},'Oui'));s.value=of.bookable?'yes':'no';s.onchange=()=>{of.bookable=s.value==='yes';save();render()};return s})()):null,
      whole&&of.bookable?h('div',{},lbl('Prix / demi-journée ('+S.currency+')','whole'),bind(of,'price','number')):h('div')),desks,
      h('button',{class:'del',type:'button',onclick:()=>{lv.offices.splice(oi,1);save();render()}},'✕ Supprimer ce bureau')))});
-   body.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},lbl("Nom de l'étage",'plan'),bind(lv,'name')),
+   body.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},lbl("Nom de l'étage",'plan'),bind(lv,'name')),on('multiSite')&&S.sites.length?h('div',{},lbl('Site','plan'),(()=>{const sel=h('select');sel.append(h('option',{value:''},'Site par défaut'));S.sites.forEach(st=>sel.append(h('option',{value:st.name},st.name)));sel.value=lv.site||'';sel.onchange=()=>{lv.site=sel.value;save()};return sel})()):h('div'),
     whole?h('div',{},lbl('Étage réservable en entier ?','whole'),(()=>{const s=h('select');s.append(h('option',{value:'no'},'Non'),h('option',{value:'yes'},'Oui'));s.value=lv.bookable?'yes':'no';s.onchange=()=>{lv.bookable=s.value==='yes';save()};return s})()):null),
     ...offices,h('button',{class:'add',type:'button',onclick:()=>{lv.offices.push({name:'Bureau '+(lv.offices.length+1),bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]});save();render()}},'+ Ajouter un bureau'),
     h('button',{class:'del',type:'button',onclick:()=>{S.levels.splice(li,1);save();render()}},'✕ Supprimer cet étage')))});
+  if(on('multiSite')){body.push(lbl('Sites (adresses)','plan'),h('p',{class:'hint'},"Le site par défaut porte l'adresse de l'espace. Ajoutez un site pour chaque autre adresse, puis rattachez-y ses étages."));
+   S.sites.forEach((st,si)=>{body.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},lbl('Nom du site','plan'),bind(st,'name')),h('div',{},lbl('Rue','plan'),bind(st,'street')),h('div',{},lbl('Code postal','plan'),bind(st,'postal')),h('div',{},lbl('Ville','plan'),bind(st,'city')),h('div',{},lbl('SIRET','plan'),bind(st,'legalId'))),
+    h('button',{class:'del',type:'button',onclick:()=>{S.sites.splice(si,1);S.levels.forEach(l=>{if(l.site===st.name)l.site=''});save();render()}},'✕ Supprimer ce site')))});
+   body.push(h('button',{class:'add',type:'button',onclick:()=>{S.sites.push({name:'Site '+(S.sites.length+2),street:'',postal:'',city:'',legalId:''});save();render()}},'+ Ajouter un site'));}
   body.push(h('button',{class:'add',type:'button',onclick:()=>{S.levels.push({name:(S.levels.length+1)+'e étage',offices:[{name:'Bureau 1',bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]}]});save();render()}},'+ Ajouter un étage'));
   if(!whole)body.push(needs('levelBooking'),h('p',{class:'hint'},'Bureaux et étages ne seront pas réservables en entier ; les tables et places, si.'),help('whole'));
   return body},
@@ -732,7 +737,7 @@ function exportXml(){
  // floor plan — app-importable, auto-layout (seat footprint 6x4, ADR 0005)
  push('  <floor-plan>');
  S.levels.forEach((lv,li)=>{
-  push(`    <level name="${esc(lv.name||('Étage '+(li+1)))}" sort-order="${li}">`);
+  push(`    <level name="${esc(lv.name||('Étage '+(li+1)))}" sort-order="${li}"${lv.site?` site="${esc(lv.site)}"`:``}>`);
   let ox=1;
   lv.offices.forEach(of=>{
    const desks=of.desks.filter(d=>(parseInt(d.seats)||0)>0);
@@ -774,6 +779,7 @@ function exportXml(){
  if(on('vatDeclarations')&&registered())push(`      <vat-declaration period="${S.vatPeriod}"/>`);
  push(`      <numbering journal="invoice" prefix="${esc(S.numbering.prefix)}" date-part="${S.numbering.datePart}" digits="${S.numbering.digits}" reset="${S.numbering.reset}"/>`);
  push(`      <numbering journal="member" prefix="${esc(S.memberNumbering.prefix)}" date-part="none" digits="${S.memberNumbering.digits}" reset="never"/>`);
+ if(on('multiSite'))S.sites.forEach(st=>push(`      <site name="${esc(st.name)}" street="${esc(st.street)}" postal-code="${esc(st.postal)}" city="${esc(st.city)}" legal-id="${esc(st.legalId)}"/>`));
  const ei=S.einvoice;
  if(on('invoicing')&&isEU()&&Object.values(ei).some(v=>String(v).trim()))
   push(`      <einvoice url="${esc(ei.url)}" token="${esc(ei.token)}" auth-header="${esc(ei.header)}" file-field="${esc(ei.field)}" uat-url="${esc(ei.uatUrl)}" uat-token="${esc(ei.uatToken)}" dev-url="${esc(ei.devUrl)}" dev-token="${esc(ei.devToken)}" customer-url="${esc(ei.customerUrl)}" customer-token="${esc(ei.customerToken)}" customer-auth-header="${esc(ei.customerHeader)}" customer-file-field="${esc(ei.customerField)}"/>`);
@@ -807,7 +813,7 @@ function parseBack(text){
   Object.keys(S.pay).forEach(k=>S.pay[k]='');st.querySelectorAll('payment-instruction').forEach(p=>{S.pay[p.getAttribute('key')]=p.getAttribute('value')||''});}
  S.accessories=[...root.querySelectorAll('accessories > accessory')].map(a=>({name:a.getAttribute('name'),supp:String((parseInt(a.getAttribute('supplement-cents'))||0)/100)}));
  const lvls=[...root.querySelectorAll('floor-plan > level')];
- if(lvls.length)S.levels=lvls.map(l=>({name:l.getAttribute('name'),offices:[...l.querySelectorAll('office')].map(o=>({name:o.getAttribute('name'),bookable:o.getAttribute('bookable-as-whole')==='true',price:'',desks:[...o.querySelectorAll('desk')].map(d=>{const seats=[...d.querySelectorAll('seat')];const first=seats[0]?.getAttribute('name')||'Place 1';return{name:d.getAttribute('name'),seats:seats.length,prefix:first.replace(/\s*\d+$/,'')||'Place'}})}))}));
+ if(lvls.length)S.levels=lvls.map(l=>({name:l.getAttribute('name'),site:l.getAttribute('site')||'',offices:[...l.querySelectorAll('office')].map(o=>({name:o.getAttribute('name'),bookable:o.getAttribute('bookable-as-whole')==='true',price:'',desks:[...o.querySelectorAll('desk')].map(d=>{const seats=[...d.querySelectorAll('seat')];const first=seats[0]?.getAttribute('name')||'Place 1';return{name:d.getAttribute('name'),seats:seats.length,prefix:first.replace(/\s*\d+$/,'')||'Place'}})}))}));
  const su=root.querySelector('setup');if(!su)return;
  const av=su.querySelector('availability');if(av){S.granularity=av.getAttribute('granularity')||S.granularity;S.dayStart=av.getAttribute('day-start')||S.dayStart;S.boundary=av.getAttribute('half-boundary')||S.boundary;S.dayEnd=av.getAttribute('day-end')||S.dayEnd;S.weekdays=(av.getAttribute('open-weekdays')||'1,2,3,4,5').split(',');S.closures=[...av.querySelectorAll('closure')].map(c=>c.getAttribute('day'));S.policies={allowPast:av.getAttribute('allow-past-bookings')==='true',adminCheckout:(av.getAttribute('admin-check-out')??av.getAttribute('admin-checkout'))==='true',outsideHours:av.getAttribute('outside-hours-mode')||(av.getAttribute('grid-within-hours')==='true'?'walkup_only':'charged'),simultaneous:av.getAttribute('simultaneous-reservations')||'1'};
   S.horizonDays=av.getAttribute('advance-horizon-days')||S.horizonDays;
@@ -819,6 +825,7 @@ function parseBack(text){
  const bi=su.querySelector('billing');if(bi){S.tiers=[...bi.querySelectorAll('tier')].map(t=>({from:t.getAttribute('from-pct'),to:t.getAttribute('to-pct'),fee:String((parseInt(t.getAttribute('fee-cents'))||0)/100),over:String((parseInt(t.getAttribute('overage-cents'))||0)/100)}));const sl=bi.querySelector('subscription-levels');if(sl){S.subLevels=(sl.getAttribute('values')||'').split(',').filter(Boolean);S.freeLevel=sl.getAttribute('free-value')==='true'}S.packages=[...bi.querySelectorAll('package')].map(p=>({name:p.getAttribute('name'),days:p.getAttribute('days'),price:String((parseInt(p.getAttribute('price-cents'))||0)/100)}))}
  S.services=[...su.querySelectorAll('services > service')].map(s=>({name:s.getAttribute('name'),price:String((parseInt(s.getAttribute('price-cents'))||0)/100),vat:s.getAttribute('vat-percent')??''}));
  const le=su.querySelector('legal');if(le){S.org=le.getAttribute('organization')||S.org;S.vatRegime=le.getAttribute('vat-regime')||S.vatRegime;S.vatExigibility=le.getAttribute('vat-exigibility')||S.vatExigibility;le.querySelectorAll('numbering').forEach(nu=>{const j=nu.getAttribute('journal')||'invoice';if(j==='member'){S.memberNumbering={prefix:nu.getAttribute('prefix')||'M-',digits:nu.getAttribute('digits')||'4'}}else if(j==='invoice'){S.numbering={prefix:nu.getAttribute('prefix')||'INV-',datePart:nu.getAttribute('date-part')||'year',digits:nu.getAttribute('digits')||'4',reset:nu.getAttribute('reset')||'yearly'}}});S.regNumber=le.getAttribute('registration')||'';S.vatId=le.getAttribute('vat-id')||'';S.exemption=le.getAttribute('exemption-reason')||'';S.street=le.getAttribute('street')||'';S.postal=le.getAttribute('postal-code')||'';S.city=le.getAttribute('city')||'';S.vatRates=[...le.querySelectorAll('vat-rate')].map(r=>({label:r.getAttribute('label')||'',percent:r.getAttribute('percent')||''}));le.querySelectorAll('mention').forEach(m=>S.mentions[m.getAttribute('key')]=m.getAttribute('value')||'');const rm=le.querySelector('reminders');if(rm){S.reminders={levels:rm.getAttribute('levels'),firstDays:rm.getAttribute('first-days'),betweenDays:rm.getAttribute('between-days'),automatic:rm.getAttribute('automatic')!=='false'}}
+S.sites=[...le.querySelectorAll('site')].map(st=>({name:st.getAttribute('name')||'',street:st.getAttribute('street')||'',postal:st.getAttribute('postal-code')||'',city:st.getAttribute('city')||'',legalId:st.getAttribute('legal-id')||''}));
   const vd=le.querySelector('vat-declaration');if(vd)S.vatPeriod=vd.getAttribute('period')||S.vatPeriod;
   const ei=le.querySelector('einvoice');if(ei)S.einvoice={url:ei.getAttribute('url')||'',token:ei.getAttribute('token')||'',header:ei.getAttribute('auth-header')||'',field:ei.getAttribute('file-field')||'',uatUrl:ei.getAttribute('uat-url')||'',uatToken:ei.getAttribute('uat-token')||'',devUrl:ei.getAttribute('dev-url')||'',devToken:ei.getAttribute('dev-token')||'',customerUrl:ei.getAttribute('customer-url')||'',customerToken:ei.getAttribute('customer-token')||'',customerHeader:ei.getAttribute('customer-auth-header')||'',customerField:ei.getAttribute('customer-file-field')||''}}
  su.querySelectorAll('roles > role').forEach(r=>S.perms[r.getAttribute('name')]=(r.getAttribute('permissions')||'').split(',').filter(Boolean));

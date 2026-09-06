@@ -74,6 +74,7 @@ import 'fake_profile_repository.dart';
 import 'fake_reservation_repository.dart';
 import 'in_memory_default_level_store.dart';
 import 'package:deskilo/features/workspace/domain/workspace_overview.dart';
+import 'package:deskilo/features/workspace/domain/site.dart';
 
 /// In-memory [AuthRepository] for widget/unit tests (fakes over mocks).
 class FakeAuthRepository implements AuthRepository {
@@ -364,6 +365,41 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   final allWorkspaces = <WorkspaceOverview>[];
   final ownersByWorkspace = <String, List<WorkspaceOwner>>{};
   final ownerReads = <String>[];
+
+  /// #945 — the sites as the fake holds them.
+  final sites = <Site>[];
+  final siteWrites = <String>[];
+  final homeSites = <String, String?>{};
+
+  @override
+  Future<List<Site>> fetchSites(String workspaceId) async => [
+        ...sites.where((s) => s.workspaceId == workspaceId && s.isDefault),
+        ...sites.where((s) => s.workspaceId == workspaceId && !s.isDefault),
+      ];
+
+  @override
+  Future<String> upsertSite(String workspaceId, Site site, {bool isNew = false}) async {
+    final id = isNew ? 'site-${sites.length + 1}' : site.id;
+    sites.removeWhere((s) => s.id == id);
+    sites.add(Site(
+      id: id, workspaceId: workspaceId, name: site.name, street: site.street,
+      postalCode: site.postalCode, city: site.city, countryCode: site.countryCode,
+      legalId: site.legalId, isDefault: site.isDefault, sortOrder: site.sortOrder,
+    ));
+    siteWrites.add('${isNew ? 'new' : 'edit'}:${site.name}');
+    return id;
+  }
+
+  @override
+  Future<void> deleteSite(String siteId) async {
+    sites.removeWhere((s) => s.id == siteId && !s.isDefault);
+    siteWrites.add('delete:$siteId');
+  }
+
+  @override
+  Future<void> setMemberHomeSite(String memberId, String? siteId) async {
+    homeSites[memberId] = siteId;
+  }
 
   @override
   Future<bool> isPlatformOwner() async => platformOwner;

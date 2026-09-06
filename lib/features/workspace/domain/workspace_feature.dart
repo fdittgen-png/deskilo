@@ -71,6 +71,7 @@ enum WorkspaceFeature {
   numberSequences,
   workspaceStatus,
   expenseRepartitionWizard,
+  multiSite,
   seatDayTimeline,
   memberPaymentTerms,
   reportTexts,
@@ -564,6 +565,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.expenseRepartitionWizard,
     defaultOn: false,
     requires: WorkspaceFeature.expenseRepartition,
+  ),
+  // #945 — sites: levels grouped by address, a member's home site, the
+  // document naming the site it concerns (#946). Off, the workspace has
+  // its one address as before.
+  WorkspaceFeature.multiSite: FeatureManifestEntry(
+    feature: WorkspaceFeature.multiSite,
+    defaultOn: false,
   ),
   WorkspaceFeature.managedProfileAccess: FeatureManifestEntry(
     feature: WorkspaceFeature.managedProfileAccess,
