@@ -8099,6 +8099,53 @@ class AppLocalizationsDe extends AppLocalizations {
       'Grundlage: vereinbarte Entgelte (Steuer auf im Zeitraum gestellte Rechnungen).';
 
   @override
+  String get featureVatGroups => 'USt-Gruppen';
+
+  @override
+  String get featureVatGroupsDesc =>
+      'Jeder USt-Satz trägt die steuerliche Gruppe dessen, was er besteuert — Regel-, Zwischen-, ermäßigter, stark ermäßigter, Null-Satz, steuerfrei, nicht steuerbar, Pfand, verbrauchsteuerpflichtig — mit der Kategorie und dem Befreiungsvermerk, den die Gruppe impliziert. Aus: bloße Prozentsätze.';
+
+  @override
+  String get vatGroupLabel => 'Gruppe';
+
+  @override
+  String get vatGroupStandard => 'Regelsatz';
+
+  @override
+  String get vatGroupIntermediate => 'Zwischensatz';
+
+  @override
+  String get vatGroupReduced => 'Ermäßigt';
+
+  @override
+  String get vatGroupSuperReduced => 'Stark ermäßigt';
+
+  @override
+  String get vatGroupZero => 'Nullsatz';
+
+  @override
+  String get vatGroupExempt => 'Steuerfrei';
+
+  @override
+  String get vatGroupNotSubject => 'Nicht steuerbar';
+
+  @override
+  String get vatGroupDeposit => 'Pfand (außerhalb der USt)';
+
+  @override
+  String get vatGroupExcise => 'Verbrauchsteuerpflichtig';
+
+  @override
+  String get vatGroupExamples => 'Was in welche Gruppe fällt';
+
+  @override
+  String get vatExemptionReasonField => 'Befreiungsvermerk';
+
+  @override
+  String get eInvoiceGapMixedNotSubjectLines =>
+      'Eine nicht steuerbare Zeile (Pfand) steht neben besteuerten Zeilen — EN 16931 lehnt die Mischung ab; stellen Sie das Pfand gesondert in Rechnung.';
+
+  @override
   String get featureVatReport => 'MwSt-Bericht';
 
   @override

@@ -208,3 +208,36 @@ String? vatCatalogueNote(String countryCode) => switch (countryCode.toUpperCase(
         'The 3.8 % special rate applies to accommodation only.',
       _ => null,
     };
+
+
+/// #947 — what falls in each group, country by country: starting points
+/// for the owner, not tax advice. A country with no entry gets the
+/// EU-wide shape.
+List<({VatGroup group, String example})> vatGroupExamples(String countryCode) =>
+    switch (countryCode.toUpperCase()) {
+      'FR' => const [
+          (group: VatGroup.standard, example: 'Prestations, boissons alcoolisées, sodas (taxe soda en sus)'),
+          (group: VatGroup.intermediate, example: 'Repas et boissons sans alcool consommés sur place'),
+          (group: VatGroup.reduced, example: 'Livres, boissons sans alcool à emporter, produits alimentaires'),
+          (group: VatGroup.superReduced, example: 'Presse'),
+          (group: VatGroup.excise, example: 'Bière, spiritueux : accises dans le prix, TVA 20 %'),
+          (group: VatGroup.deposit, example: 'Consigne remboursable — hors champ de la TVA'),
+          (group: VatGroup.exempt, example: 'Formation, opérations exonérées (art. 261 CGI)'),
+          (group: VatGroup.notSubject, example: 'Association non assujettie (art. 293 B CGI)'),
+        ],
+      'DE' || 'AT' => const [
+          (group: VatGroup.standard, example: 'Dienstleistungen, Getränke, Pfand (mit der Ware besteuert)'),
+          (group: VatGroup.reduced, example: 'Bücher, Zeitungen, Lebensmittel zum Mitnehmen'),
+          (group: VatGroup.excise, example: 'Bier, Spirituosen: Verbrauchsteuer im Preis, Regelsatz'),
+          (group: VatGroup.exempt, example: 'Steuerfreie Umsätze (§ 4 UStG)'),
+          (group: VatGroup.notSubject, example: 'Kleinunternehmer (§ 19 UStG)'),
+        ],
+      _ => const [
+          (group: VatGroup.standard, example: 'Services, alcoholic and sugar drinks'),
+          (group: VatGroup.reduced, example: 'Books, periodicals, food, non-alcoholic drinks'),
+          (group: VatGroup.excise, example: 'Beer, spirits: excise inside the price, standard VAT'),
+          (group: VatGroup.deposit, example: 'Refundable deposit'),
+          (group: VatGroup.exempt, example: 'Exempt supplies'),
+          (group: VatGroup.notSubject, example: 'Not subject to VAT'),
+        ],
+    };

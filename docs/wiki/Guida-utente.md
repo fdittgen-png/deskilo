@@ -1075,3 +1075,7 @@ Con più sedi, una fattura porta **l'indirizzo e la registrazione della sede di 
 ### Numeri per sede (#948)
 
 In Francia la partita IVA e l'esenzione appartengono all'entità giuridica; ogni unità locale ha il proprio **SIRET**, che la sede porta. Una sede che è un'**entità giuridica distinta** può portare inoltre la propria partita IVA e la propria dicitura di esenzione — i documenti emessi in quella sede le riprendono. Di solito è il segno di uno spazio separato; la schermata lo ricorda.
+
+### Gruppi IVA (#947)
+
+Ogni aliquota porta ora il **gruppo fiscale** di ciò che tassa: ordinaria, intermedia, ridotta, super-ridotta, zero, esente, non soggetta, **cauzione** (fuori IVA) o **con accise** (birra, liquori, bevande zuccherate: accise nel prezzo, IVA ordinaria). *Impostazioni → IVA* mostra cosa rientra in ogni gruppo nel tuo paese e la dicitura di esenzione che implica. Un'associazione non soggetta mantiene la categoria O. Una cauzione accanto a righe tassate non può uscire come fattura elettronica (EN 16931): l'app lo segnala e la emetti a parte.

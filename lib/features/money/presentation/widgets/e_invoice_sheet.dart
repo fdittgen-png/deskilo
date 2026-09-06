@@ -47,6 +47,10 @@ String eInvoiceGapText(AppLocalizations? l10n, EInvoiceGap gap) =>
           "The customer's country is missing.",
       EInvoiceGap.missingBuyerVatId => l10n?.invoiceGapMissingBuyerVatId ??
           "The customer's VAT number is missing — a reverse-charged invoice must name it.",
+      EInvoiceGap.mixedNotSubjectLines =>
+        l10n?.eInvoiceGapMixedNotSubjectLines ??
+            'A not-subject line (a refundable deposit) sits beside taxed lines — '
+                'EN 16931 refuses the mix; issue the deposit on its own document.',
       EInvoiceGap.missingBuyerLegalId =>
         l10n?.eInvoiceGapMissingBuyerLegalId ??
             'The buyer is a French business without a SIREN — fill in its '

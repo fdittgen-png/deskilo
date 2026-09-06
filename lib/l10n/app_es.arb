@@ -5028,6 +5028,66 @@
   "@vatDeclarationBasisInvoice": {
     "description": "#896 vat exigibility: vatDeclarationBasisInvoice"
   },
+  "featureVatGroups": "Grupos de IVA",
+  "@featureVatGroups": {
+    "description": "#947 VAT groups: featureVatGroups"
+  },
+  "featureVatGroupsDesc": "Cada tipo de IVA lleva el grupo fiscal de lo que grava — general, intermedio, reducido, superreducido, cero, exento, no sujeto, envase retornable, con impuestos especiales — con la categoría y la mención de exención que el grupo implica. Desactivado: simples porcentajes.",
+  "@featureVatGroupsDesc": {
+    "description": "#947 VAT groups: featureVatGroupsDesc"
+  },
+  "vatGroupLabel": "Grupo",
+  "@vatGroupLabel": {
+    "description": "#947 VAT groups: vatGroupLabel"
+  },
+  "vatGroupStandard": "General",
+  "@vatGroupStandard": {
+    "description": "#947 VAT groups: vatGroupStandard"
+  },
+  "vatGroupIntermediate": "Intermedio",
+  "@vatGroupIntermediate": {
+    "description": "#947 VAT groups: vatGroupIntermediate"
+  },
+  "vatGroupReduced": "Reducido",
+  "@vatGroupReduced": {
+    "description": "#947 VAT groups: vatGroupReduced"
+  },
+  "vatGroupSuperReduced": "Superreducido",
+  "@vatGroupSuperReduced": {
+    "description": "#947 VAT groups: vatGroupSuperReduced"
+  },
+  "vatGroupZero": "Tipo cero",
+  "@vatGroupZero": {
+    "description": "#947 VAT groups: vatGroupZero"
+  },
+  "vatGroupExempt": "Exento",
+  "@vatGroupExempt": {
+    "description": "#947 VAT groups: vatGroupExempt"
+  },
+  "vatGroupNotSubject": "No sujeto",
+  "@vatGroupNotSubject": {
+    "description": "#947 VAT groups: vatGroupNotSubject"
+  },
+  "vatGroupDeposit": "Envase retornable (fuera del IVA)",
+  "@vatGroupDeposit": {
+    "description": "#947 VAT groups: vatGroupDeposit"
+  },
+  "vatGroupExcise": "Con impuestos especiales",
+  "@vatGroupExcise": {
+    "description": "#947 VAT groups: vatGroupExcise"
+  },
+  "vatGroupExamples": "Qué entra en cada grupo",
+  "@vatGroupExamples": {
+    "description": "#947 VAT groups: vatGroupExamples"
+  },
+  "vatExemptionReasonField": "Mención de exención",
+  "@vatExemptionReasonField": {
+    "description": "#947 VAT groups: vatExemptionReasonField"
+  },
+  "eInvoiceGapMixedNotSubjectLines": "Una línea no sujeta (envase retornable) figura junto a líneas gravadas — la norma EN 16931 rechaza la mezcla; emita el envase en un documento aparte.",
+  "@eInvoiceGapMixedNotSubjectLines": {
+    "description": "#947 VAT groups: eInvoiceGapMixedNotSubjectLines"
+  },
   "featureVatReport": "Informe de IVA",
   "@featureVatReport": {
     "description": "#878 VAT review / report: featureVatReport"

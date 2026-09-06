@@ -2,6 +2,51 @@
 
 /// One VAT rate a workspace charges (0072). A "reduced" rate is not a
 /// different EN 16931 category — it is still `S` with its own percentage.
+/// #947 — the fiscal GROUP a supply belongs to. The law reasons in
+/// groups, not percentages: a rate change by law is one edit on the
+/// group, and the EN 16931 category and the outside-base rule follow.
+enum VatGroup {
+  standard('standard', 'S', false),
+  intermediate('intermediate', 'S', false),
+  reduced('reduced', 'S', false),
+  superReduced('super_reduced', 'S', false),
+  zero('zero', 'Z', false),
+  exempt('exempt', 'E', false),
+  notSubject('not_subject', 'O', false),
+
+  /// A refundable deposit (consigne, Pfand): outside the VAT base where
+  /// the law puts it there; on a taxed invoice it cannot be e-invoiced
+  /// under EN 16931 beside taxed lines (BR-O-11) — the readiness check
+  /// says so.
+  deposit('deposit', 'O', true),
+
+  /// Alcohol, sugar drinks: the excise is inside the price and the VAT is
+  /// the standard rate — a group because the accountant books it apart.
+  excise('excise', 'S', false);
+
+  const VatGroup(this.wire, this.category, this.outsideBase);
+  final String wire;
+
+  /// The EN 16931 VAT category code the group carries.
+  final String category;
+  final bool outsideBase;
+
+  static VatGroup fromWire(String? wire) =>
+      values.where((g) => g.wire == wire).firstOrNull ?? VatGroup.standard;
+}
+
+/// #947 — the group a bare percentage falls in, by the same rule the
+/// database used to back-fill existing rates (0170).
+VatGroup vatGroupForPercent(double percent, {String category = 'S'}) {
+  if (category == 'E') return VatGroup.exempt;
+  if (category == 'O') return VatGroup.notSubject;
+  if (percent == 0) return VatGroup.zero;
+  if (percent >= 15) return VatGroup.standard;
+  if (percent >= 8) return VatGroup.intermediate;
+  if (percent >= 4) return VatGroup.reduced;
+  return VatGroup.superReduced;
+}
+
 class VatRate {
   const VatRate({
     this.id = '',
@@ -10,6 +55,9 @@ class VatRate {
     this.category = 'S',
     this.isDefault = false,
     this.active = true,
+    this.groupKey = 'standard',
+    this.outsideBase = false,
+    this.exemptionReason = '',
   });
 
   /// '' for a rate the owner has just added and not saved yet.
@@ -32,12 +80,26 @@ class VatRate {
 
   final bool active;
 
+  /// #947 — the fiscal group ([VatGroup.wire]).
+  final String groupKey;
+
+  /// #947 — outside the VAT base (a refundable deposit).
+  final bool outsideBase;
+
+  /// #947 — the reason an exempt or not-subject group prints.
+  final String exemptionReason;
+
+  VatGroup get group => VatGroup.fromWire(groupKey);
+
   VatRate copyWith({
     String? label,
     double? percent,
     String? category,
     bool? isDefault,
     bool? active,
+    String? groupKey,
+    bool? outsideBase,
+    String? exemptionReason,
   }) =>
       VatRate(
         id: id,
@@ -46,6 +108,9 @@ class VatRate {
         category: category ?? this.category,
         isDefault: isDefault ?? this.isDefault,
         active: active ?? this.active,
+        groupKey: groupKey ?? this.groupKey,
+        outsideBase: outsideBase ?? this.outsideBase,
+        exemptionReason: exemptionReason ?? this.exemptionReason,
       );
 
   factory VatRate.fromRow(Map<String, dynamic> row) => VatRate(
@@ -54,6 +119,9 @@ class VatRate {
         percent: (row['percent'] as num?)?.toDouble() ?? 0,
         category: row['category'] as String? ?? 'S',
         isDefault: row['is_default'] as bool? ?? false,
+        groupKey: row['group_key'] as String? ?? 'standard',
+        outsideBase: row['outside_base'] as bool? ?? false,
+        exemptionReason: row['exemption_reason'] as String? ?? '',
         active: row['active'] as bool? ?? true,
       );
 
@@ -63,6 +131,9 @@ class VatRate {
         'percent': percent,
         'category': category,
         'is_default': isDefault,
+        'group_key': groupKey,
+        'outside_base': outsideBase,
+        'exemption_reason': exemptionReason,
         'active': active,
       };
 }

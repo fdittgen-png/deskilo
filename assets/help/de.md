@@ -1102,3 +1102,7 @@ Mit mehreren Standorten trägt eine Rechnung **Adresse und Registrierung des Hei
 ### Nummern je Standort (#948)
 
 In Frankreich gehören USt-Nummer und Befreiung zur juristischen Person; jede Betriebsstätte hat ihre eigene **SIRET**, die der Standort trägt. Ein Standort, der eine **eigene juristische Person** ist, kann zusätzlich eigene USt-Nummer und Befreiungsvermerk tragen — Belege an diesem Standort übernehmen sie. Das ist meist das Zeichen für einen eigenen Arbeitsbereich; der Bildschirm sagt es.
+
+### USt-Gruppen (#947)
+
+Jeder Satz trägt jetzt die **steuerliche Gruppe** dessen, was er besteuert: Regel-, Zwischen-, ermäßigter, stark ermäßigter, Null-Satz, steuerfrei, nicht steuerbar, **Pfand** (in Deutschland mit der Ware besteuert, andernorts außerhalb der USt) oder **verbrauchsteuerpflichtig** (Bier, Spirituosen, Zuckergetränke: Verbrauchsteuer im Preis, Regelsatz). *Einstellungen → USt* zeigt, was in Ihrem Land in welche Gruppe fällt. Ein nicht steuerbarer Verein behält Kategorie O. Ein nicht steuerbares Pfand neben besteuerten Zeilen kann nicht als E-Rechnung gehen (EN 16931): die App sagt es, Sie stellen es gesondert.

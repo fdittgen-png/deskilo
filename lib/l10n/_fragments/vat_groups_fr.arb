@@ -1,0 +1,63 @@
+{
+  "@@locale": "fr",
+  "featureVatGroups": "Groupes de TVA",
+  "@featureVatGroups": {
+    "description": "#947 VAT groups: featureVatGroups"
+  },
+  "featureVatGroupsDesc": "Chaque taux de TVA porte le groupe fiscal de ce qu'il taxe — normal, intermédiaire, réduit, super-réduit, zéro, exonéré, non assujetti, consigne remboursable, produit à accises — avec la catégorie et la mention d'exonération que le groupe implique. Désactivé : de simples pourcentages.",
+  "@featureVatGroupsDesc": {
+    "description": "#947 VAT groups: featureVatGroupsDesc"
+  },
+  "vatGroupLabel": "Groupe",
+  "@vatGroupLabel": {
+    "description": "#947 VAT groups: vatGroupLabel"
+  },
+  "vatGroupStandard": "Normal",
+  "@vatGroupStandard": {
+    "description": "#947 VAT groups: vatGroupStandard"
+  },
+  "vatGroupIntermediate": "Intermédiaire",
+  "@vatGroupIntermediate": {
+    "description": "#947 VAT groups: vatGroupIntermediate"
+  },
+  "vatGroupReduced": "Réduit",
+  "@vatGroupReduced": {
+    "description": "#947 VAT groups: vatGroupReduced"
+  },
+  "vatGroupSuperReduced": "Super-réduit",
+  "@vatGroupSuperReduced": {
+    "description": "#947 VAT groups: vatGroupSuperReduced"
+  },
+  "vatGroupZero": "Taux zéro",
+  "@vatGroupZero": {
+    "description": "#947 VAT groups: vatGroupZero"
+  },
+  "vatGroupExempt": "Exonéré",
+  "@vatGroupExempt": {
+    "description": "#947 VAT groups: vatGroupExempt"
+  },
+  "vatGroupNotSubject": "Non assujetti",
+  "@vatGroupNotSubject": {
+    "description": "#947 VAT groups: vatGroupNotSubject"
+  },
+  "vatGroupDeposit": "Consigne (hors TVA)",
+  "@vatGroupDeposit": {
+    "description": "#947 VAT groups: vatGroupDeposit"
+  },
+  "vatGroupExcise": "Produit à accises",
+  "@vatGroupExcise": {
+    "description": "#947 VAT groups: vatGroupExcise"
+  },
+  "vatGroupExamples": "Ce qui relève de chaque groupe",
+  "@vatGroupExamples": {
+    "description": "#947 VAT groups: vatGroupExamples"
+  },
+  "vatExemptionReasonField": "Mention d'exonération",
+  "@vatExemptionReasonField": {
+    "description": "#947 VAT groups: vatExemptionReasonField"
+  },
+  "eInvoiceGapMixedNotSubjectLines": "Une ligne hors champ (consigne) figure à côté de lignes taxées — la norme EN 16931 refuse ce mélange ; émettez la consigne sur un document séparé.",
+  "@eInvoiceGapMixedNotSubjectLines": {
+    "description": "#947 VAT groups: eInvoiceGapMixedNotSubjectLines"
+  }
+}

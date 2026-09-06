@@ -270,6 +270,13 @@ class FeaturesScreen extends ConsumerWidget {
                   'site\'s address and registration as the seller, and the '
                   'other sites the month stood at in the details. Off: the '
                   'workspace address on every document.',
+        WorkspaceFeature.vatGroups =>
+          l10n?.featureVatGroupsDesc ??
+              'Each VAT rate carries the fiscal group of what it taxes — '
+                  'standard, intermediate, reduced, super-reduced, zero, exempt, '
+                  'not subject, refundable deposit, excise-bearing — with the '
+                  'category and the exemption reason the group implies. Off: '
+                  'bare percentages.',
         WorkspaceFeature.managedProfileAccess =>
           l10n?.featureManagedProfileAccessDesc ??
               'Each managed profile says who may administer it — by role, '

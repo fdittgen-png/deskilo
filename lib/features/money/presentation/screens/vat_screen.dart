@@ -41,15 +41,23 @@ class _RateDraft {
       : label = TextEditingController(text: rate.label),
         percent = TextEditingController(
           text: rate.percent == 0 ? '' : _percentText(rate.percent),
-        );
+        ),
+        group = rate.group,
+        exemption = TextEditingController(text: rate.exemptionReason);
 
   final VatRate rate;
   final TextEditingController label;
   final TextEditingController percent;
 
+  /// #947 — the fiscal group; the category and the outside-base rule
+  /// follow it at save time.
+  VatGroup group;
+  final TextEditingController exemption;
+
   void dispose() {
     label.dispose();
     percent.dispose();
+    exemption.dispose();
   }
 }
 

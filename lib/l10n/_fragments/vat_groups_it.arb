@@ -1,0 +1,63 @@
+{
+  "@@locale": "it",
+  "featureVatGroups": "Gruppi IVA",
+  "@featureVatGroups": {
+    "description": "#947 VAT groups: featureVatGroups"
+  },
+  "featureVatGroupsDesc": "Ogni aliquota IVA porta il gruppo fiscale di ciò che tassa — ordinaria, intermedia, ridotta, super-ridotta, zero, esente, non soggetta, cauzione rimborsabile, con accise — con la categoria e la dicitura di esenzione che il gruppo implica. Disattivato: semplici percentuali.",
+  "@featureVatGroupsDesc": {
+    "description": "#947 VAT groups: featureVatGroupsDesc"
+  },
+  "vatGroupLabel": "Gruppo",
+  "@vatGroupLabel": {
+    "description": "#947 VAT groups: vatGroupLabel"
+  },
+  "vatGroupStandard": "Ordinaria",
+  "@vatGroupStandard": {
+    "description": "#947 VAT groups: vatGroupStandard"
+  },
+  "vatGroupIntermediate": "Intermedia",
+  "@vatGroupIntermediate": {
+    "description": "#947 VAT groups: vatGroupIntermediate"
+  },
+  "vatGroupReduced": "Ridotta",
+  "@vatGroupReduced": {
+    "description": "#947 VAT groups: vatGroupReduced"
+  },
+  "vatGroupSuperReduced": "Super-ridotta",
+  "@vatGroupSuperReduced": {
+    "description": "#947 VAT groups: vatGroupSuperReduced"
+  },
+  "vatGroupZero": "Aliquota zero",
+  "@vatGroupZero": {
+    "description": "#947 VAT groups: vatGroupZero"
+  },
+  "vatGroupExempt": "Esente",
+  "@vatGroupExempt": {
+    "description": "#947 VAT groups: vatGroupExempt"
+  },
+  "vatGroupNotSubject": "Non soggetta",
+  "@vatGroupNotSubject": {
+    "description": "#947 VAT groups: vatGroupNotSubject"
+  },
+  "vatGroupDeposit": "Cauzione (fuori IVA)",
+  "@vatGroupDeposit": {
+    "description": "#947 VAT groups: vatGroupDeposit"
+  },
+  "vatGroupExcise": "Con accise",
+  "@vatGroupExcise": {
+    "description": "#947 VAT groups: vatGroupExcise"
+  },
+  "vatGroupExamples": "Cosa rientra in ogni gruppo",
+  "@vatGroupExamples": {
+    "description": "#947 VAT groups: vatGroupExamples"
+  },
+  "vatExemptionReasonField": "Dicitura di esenzione",
+  "@vatExemptionReasonField": {
+    "description": "#947 VAT groups: vatExemptionReasonField"
+  },
+  "eInvoiceGapMixedNotSubjectLines": "Una riga non soggetta (cauzione) compare accanto a righe tassate — la norma EN 16931 rifiuta la combinazione; emetti la cauzione su un documento separato.",
+  "@eInvoiceGapMixedNotSubjectLines": {
+    "description": "#947 VAT groups: eInvoiceGapMixedNotSubjectLines"
+  }
+}

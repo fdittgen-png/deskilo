@@ -8089,6 +8089,53 @@ class AppLocalizationsEs extends AppLocalizations {
       'Base: facturas (IVA sobre los documentos emitidos durante el periodo).';
 
   @override
+  String get featureVatGroups => 'Grupos de IVA';
+
+  @override
+  String get featureVatGroupsDesc =>
+      'Cada tipo de IVA lleva el grupo fiscal de lo que grava — general, intermedio, reducido, superreducido, cero, exento, no sujeto, envase retornable, con impuestos especiales — con la categoría y la mención de exención que el grupo implica. Desactivado: simples porcentajes.';
+
+  @override
+  String get vatGroupLabel => 'Grupo';
+
+  @override
+  String get vatGroupStandard => 'General';
+
+  @override
+  String get vatGroupIntermediate => 'Intermedio';
+
+  @override
+  String get vatGroupReduced => 'Reducido';
+
+  @override
+  String get vatGroupSuperReduced => 'Superreducido';
+
+  @override
+  String get vatGroupZero => 'Tipo cero';
+
+  @override
+  String get vatGroupExempt => 'Exento';
+
+  @override
+  String get vatGroupNotSubject => 'No sujeto';
+
+  @override
+  String get vatGroupDeposit => 'Envase retornable (fuera del IVA)';
+
+  @override
+  String get vatGroupExcise => 'Con impuestos especiales';
+
+  @override
+  String get vatGroupExamples => 'Qué entra en cada grupo';
+
+  @override
+  String get vatExemptionReasonField => 'Mención de exención';
+
+  @override
+  String get eInvoiceGapMixedNotSubjectLines =>
+      'Una línea no sujeta (envase retornable) figura junto a líneas gravadas — la norma EN 16931 rechaza la mezcla; emita el envase en un documento aparte.';
+
+  @override
   String get featureVatReport => 'Informe de IVA';
 
   @override

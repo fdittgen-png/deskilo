@@ -1,0 +1,63 @@
+{
+  "@@locale": "en",
+  "featureVatGroups": "VAT groups",
+  "@featureVatGroups": {
+    "description": "#947 VAT groups: featureVatGroups"
+  },
+  "featureVatGroupsDesc": "Each VAT rate carries the fiscal group of what it taxes — standard, intermediate, reduced, super-reduced, zero, exempt, not subject, refundable deposit, excise-bearing — with the category and the exemption reason the group implies. Off: bare percentages.",
+  "@featureVatGroupsDesc": {
+    "description": "#947 VAT groups: featureVatGroupsDesc"
+  },
+  "vatGroupLabel": "Group",
+  "@vatGroupLabel": {
+    "description": "#947 VAT groups: vatGroupLabel"
+  },
+  "vatGroupStandard": "Standard",
+  "@vatGroupStandard": {
+    "description": "#947 VAT groups: vatGroupStandard"
+  },
+  "vatGroupIntermediate": "Intermediate",
+  "@vatGroupIntermediate": {
+    "description": "#947 VAT groups: vatGroupIntermediate"
+  },
+  "vatGroupReduced": "Reduced",
+  "@vatGroupReduced": {
+    "description": "#947 VAT groups: vatGroupReduced"
+  },
+  "vatGroupSuperReduced": "Super-reduced",
+  "@vatGroupSuperReduced": {
+    "description": "#947 VAT groups: vatGroupSuperReduced"
+  },
+  "vatGroupZero": "Zero rate",
+  "@vatGroupZero": {
+    "description": "#947 VAT groups: vatGroupZero"
+  },
+  "vatGroupExempt": "Exempt",
+  "@vatGroupExempt": {
+    "description": "#947 VAT groups: vatGroupExempt"
+  },
+  "vatGroupNotSubject": "Not subject",
+  "@vatGroupNotSubject": {
+    "description": "#947 VAT groups: vatGroupNotSubject"
+  },
+  "vatGroupDeposit": "Deposit (outside VAT)",
+  "@vatGroupDeposit": {
+    "description": "#947 VAT groups: vatGroupDeposit"
+  },
+  "vatGroupExcise": "Excise-bearing",
+  "@vatGroupExcise": {
+    "description": "#947 VAT groups: vatGroupExcise"
+  },
+  "vatGroupExamples": "What falls in each group",
+  "@vatGroupExamples": {
+    "description": "#947 VAT groups: vatGroupExamples"
+  },
+  "vatExemptionReasonField": "Exemption reason",
+  "@vatExemptionReasonField": {
+    "description": "#947 VAT groups: vatExemptionReasonField"
+  },
+  "eInvoiceGapMixedNotSubjectLines": "A not-subject line (a refundable deposit) sits beside taxed lines — EN 16931 refuses the mix; issue the deposit on its own document.",
+  "@eInvoiceGapMixedNotSubjectLines": {
+    "description": "#947 VAT groups: eInvoiceGapMixedNotSubjectLines"
+  }
+}

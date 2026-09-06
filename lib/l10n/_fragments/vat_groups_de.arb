@@ -1,0 +1,63 @@
+{
+  "@@locale": "de",
+  "featureVatGroups": "USt-Gruppen",
+  "@featureVatGroups": {
+    "description": "#947 VAT groups: featureVatGroups"
+  },
+  "featureVatGroupsDesc": "Jeder USt-Satz trägt die steuerliche Gruppe dessen, was er besteuert — Regel-, Zwischen-, ermäßigter, stark ermäßigter, Null-Satz, steuerfrei, nicht steuerbar, Pfand, verbrauchsteuerpflichtig — mit der Kategorie und dem Befreiungsvermerk, den die Gruppe impliziert. Aus: bloße Prozentsätze.",
+  "@featureVatGroupsDesc": {
+    "description": "#947 VAT groups: featureVatGroupsDesc"
+  },
+  "vatGroupLabel": "Gruppe",
+  "@vatGroupLabel": {
+    "description": "#947 VAT groups: vatGroupLabel"
+  },
+  "vatGroupStandard": "Regelsatz",
+  "@vatGroupStandard": {
+    "description": "#947 VAT groups: vatGroupStandard"
+  },
+  "vatGroupIntermediate": "Zwischensatz",
+  "@vatGroupIntermediate": {
+    "description": "#947 VAT groups: vatGroupIntermediate"
+  },
+  "vatGroupReduced": "Ermäßigt",
+  "@vatGroupReduced": {
+    "description": "#947 VAT groups: vatGroupReduced"
+  },
+  "vatGroupSuperReduced": "Stark ermäßigt",
+  "@vatGroupSuperReduced": {
+    "description": "#947 VAT groups: vatGroupSuperReduced"
+  },
+  "vatGroupZero": "Nullsatz",
+  "@vatGroupZero": {
+    "description": "#947 VAT groups: vatGroupZero"
+  },
+  "vatGroupExempt": "Steuerfrei",
+  "@vatGroupExempt": {
+    "description": "#947 VAT groups: vatGroupExempt"
+  },
+  "vatGroupNotSubject": "Nicht steuerbar",
+  "@vatGroupNotSubject": {
+    "description": "#947 VAT groups: vatGroupNotSubject"
+  },
+  "vatGroupDeposit": "Pfand (außerhalb der USt)",
+  "@vatGroupDeposit": {
+    "description": "#947 VAT groups: vatGroupDeposit"
+  },
+  "vatGroupExcise": "Verbrauchsteuerpflichtig",
+  "@vatGroupExcise": {
+    "description": "#947 VAT groups: vatGroupExcise"
+  },
+  "vatGroupExamples": "Was in welche Gruppe fällt",
+  "@vatGroupExamples": {
+    "description": "#947 VAT groups: vatGroupExamples"
+  },
+  "vatExemptionReasonField": "Befreiungsvermerk",
+  "@vatExemptionReasonField": {
+    "description": "#947 VAT groups: vatExemptionReasonField"
+  },
+  "eInvoiceGapMixedNotSubjectLines": "Eine nicht steuerbare Zeile (Pfand) steht neben besteuerten Zeilen — EN 16931 lehnt die Mischung ab; stellen Sie das Pfand gesondert in Rechnung.",
+  "@eInvoiceGapMixedNotSubjectLines": {
+    "description": "#947 VAT groups: eInvoiceGapMixedNotSubjectLines"
+  }
+}

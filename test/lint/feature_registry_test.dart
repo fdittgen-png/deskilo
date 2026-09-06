@@ -99,7 +99,8 @@ import 'package:flutter_test/flutter_test.dart';
 // 85→87 (2026-09-06): #934 workspaceStatus + expenseRepartitionWizard.
 // 87→88 (2026-09-06): #945 multiSite.
 // 88→89 (2026-09-06): #946 siteDocuments.
-const int _expectedFeatureCount = 89;
+// 89→90 (2026-09-06): #947 vatGroups.
+const int _expectedFeatureCount = 90;
 
 void main() {
   test('every functionality is registered — the pin', () {
