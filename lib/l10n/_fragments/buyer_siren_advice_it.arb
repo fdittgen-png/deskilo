@@ -1,0 +1,7 @@
+{
+  "@@locale": "it",
+  "eInvoiceGapBuyerLegalIdAdvisable": "Manca il SIREN dell'acquirente. Una piattaforma francese instrada in base ad esso: inseritelo nel profilo del membro prima di trasmettere. Non è un rifiuto — il file è valido senza.",
+  "@eInvoiceGapBuyerLegalIdAdvisable": {
+    "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
+  }
+}

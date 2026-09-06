@@ -55,6 +55,8 @@ String eInvoiceGapText(AppLocalizations? l10n, EInvoiceGap gap) =>
         l10n?.eInvoiceGapMissingBuyerLegalId ??
             'The buyer is a French business without a SIREN — fill in its '
                 'legal id on the member\'s profile.',
+      EInvoiceGap.buyerLegalIdAdvisable =>
+        l10n?.eInvoiceGapBuyerLegalIdAdvisable ?? 'The buyer\'s SIREN is missing. A French platform routes by it: enter it on the member\'s profile before transmitting. Not a refusal — the file is valid without it.',
       EInvoiceGap.missingPublicSectorReferences =>
           l10n?.invoiceGapPublicSectorRefs ??
               'Bound for a public-sector platform with no engagement number and no service code — Chorus Pro refuses most deposits without one.',

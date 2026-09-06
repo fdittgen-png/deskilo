@@ -1068,6 +1068,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get eInvoiceGapBuyerLegalIdAdvisable =>
+      'Le SIREN de l\'acheteur manque. Une plateforme agréée l\'utilise pour acheminer la facture : renseignez-le sur le profil de l\'adhérent avant de transmettre. Ce n\'est pas un refus — le fichier est valide sans lui.';
+
+  @override
   String get reservationExtendButton => 'Rester plus longtemps';
 
   @override
@@ -1542,6 +1546,24 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get courtesyMrs => 'Madame';
+
+  @override
+  String get featureDemoMode => 'Mode démo';
+
+  @override
+  String get featureDemoModeDesc =>
+      'Un interrupteur dans les réglages de chaque membre : tant qu\'il est activé, chaque nom, courriel, téléphone et adresse postale à l\'écran est remplacé par un inventé, pour des captures et vidéos sans données personnelles. Désactivé : l\'interrupteur est masqué.';
+
+  @override
+  String get demoModeTitle => 'Mode démo';
+
+  @override
+  String get demoModeSubtitle =>
+      'Noms, courriels, téléphones et adresses sont remplacés par des inventés sur cet appareil — pour les captures d\'écran et les vidéos.';
+
+  @override
+  String get demoModeEditBlocked =>
+      'Le mode démo est activé : désactivez-le dans les Réglages pour modifier des informations personnelles.';
 
   @override
   String get developerMode => 'Mode développeur';

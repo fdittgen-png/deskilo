@@ -62,11 +62,18 @@ enum EInvoiceGap {
   /// Pro does, for most public entities. A warning, not a refusal.
   missingPublicSectorReferences,
 
-  /// #941 — a French business buyer without a SIREN. The 2026 B2B
-  /// e-invoicing reform makes BT-47 mandatory between French businesses;
-  /// a platform refuses the document without it. The member's own data,
-  /// not a setting.
+  /// #941 — a French business buyer without a SIREN, from a VAT-
+  /// registered French seller: the 2026 B2B e-invoicing reform makes
+  /// BT-47 mandatory between French businesses and a platform refuses
+  /// the document without it. The member's own data, not a setting.
   missingBuyerLegalId,
+
+  /// #972 — the same missing SIREN, but the seller is NOT subject to
+  /// VAT (an association, a franchise): the reform does not bind it and
+  /// EN 16931 never required BT-47, so no validator refuses the file.
+  /// The platform still routes by the SIREN — worth entering, never a
+  /// refusal.
+  buyerLegalIdAdvisable,
 
   /// #947 — BR-O-11: a not-subject line (a refundable deposit, an
   /// out-of-scope item) beside taxed lines. EN 16931 refuses the mix;
@@ -80,7 +87,8 @@ extension EInvoiceGapKind on EInvoiceGap {
         EInvoiceGap.missingSellerCity ||
         EInvoiceGap.missingSellerPostalCode ||
         EInvoiceGap.buyerVatIdFormat ||
-        EInvoiceGap.missingPublicSectorReferences =>
+        EInvoiceGap.missingPublicSectorReferences ||
+        EInvoiceGap.buyerLegalIdAdvisable =>
           false,
         _ => true,
       };
@@ -157,11 +165,16 @@ EInvoiceReadiness checkEInvoiceReadiness({
         buyer.reference.trim().isEmpty &&
         buyer.orderReference.trim().isEmpty)
       EInvoiceGap.missingPublicSectorReferences,
+    // #972 — the buyer's SIREN: a refusal between two VAT-registered
+    // French businesses (the reform), advice from a seller the reform
+    // does not bind (EN 16931 never required BT-47).
     if (seller.country.trim().toUpperCase() == 'FR' &&
         buyer.country.trim().toUpperCase() == 'FR' &&
         buyer.company.trim().isNotEmpty &&
         buyer.legalId.trim().isEmpty)
-      EInvoiceGap.missingBuyerLegalId,
+      regime == VatRegime.vatRegistered
+          ? EInvoiceGap.missingBuyerLegalId
+          : EInvoiceGap.buyerLegalIdAdvisable,
     if (invoice.vatTotals.any((t) => t.category == 'O') &&
         invoice.vatTotals.any((t) => t.category != 'O'))
       EInvoiceGap.mixedNotSubjectLines,

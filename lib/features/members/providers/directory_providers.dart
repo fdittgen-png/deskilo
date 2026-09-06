@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/demo/demo_mode.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../profile/domain/profile.dart';
@@ -26,7 +27,9 @@ Future<Map<String, Profile>> memberProfiles(Ref ref) async {
   if (ids.isEmpty) return const {};
   final profiles =
       await ref.watch(profileRepositoryProvider).fetchProfiles(ids);
-  return {for (final p in profiles) p.id: p};
+  // #970 — demo mode: invented names and contact details.
+  final demo = await ref.watch(demoModeControllerProvider.future);
+  return {for (final p in profiles) p.id: demo ? scrubProfile(p) : p};
 }
 
 /// All reservations feeding the directory's reservation chips (#237):
