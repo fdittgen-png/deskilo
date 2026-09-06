@@ -82,8 +82,10 @@ void main() {
         .length;
     // Default-off owner decisions: adminSeatBlocking, accessorySupplements,
     // onlinePayments, levelBooking, adminLevelAssign, adminInvoicing,
-    // autoCheckInOut (#396) and badgeSignIn (#662).
-    expect(onCount, featureManifest.length - 8);
+    // autoCheckInOut (#396), badgeSignIn (#662) and, since #914,
+    // managedProfileAccess — narrowing who administers a profile is
+    // opt-in, because the rule nobody narrowed is what #887 already did.
+    expect(onCount, featureManifest.length - 9);
   });
 
   testWidgets('toggling a feature persists the full map and flips the switch',
@@ -105,7 +107,9 @@ void main() {
         ['moneyTab', 'badgeSignIn', 'adminSeatBlocking',
           'accessorySupplements',
           'onlinePayments', 'levelBooking', 'adminLevelAssign',
-          'adminInvoicing', 'autoCheckInOut'],
+          'adminInvoicing', 'autoCheckInOut',
+          // #914 — narrowing who administers a managed profile is opt-in.
+          'managedProfileAccess'],
       ),
     );
     expect(switchTitled(tester, 'Money tab').value, isFalse);

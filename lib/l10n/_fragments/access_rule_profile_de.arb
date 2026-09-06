@@ -1,0 +1,12 @@
+{
+  "@@locale": "de",
+  "accessRuleManagedProfile": "Solange dieses Profil für Sie verwaltet wurde: {people}. Jede Einsicht und jede Änderung durch eine dieser Personen steht unten.",
+  "@accessRuleManagedProfile": {
+    "description": "#914 access rule: profile",
+    "placeholders": {
+      "people": {
+        "type": "String"
+      }
+    }
+  }
+}

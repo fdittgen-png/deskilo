@@ -1,5 +1,14 @@
 {
   "@@locale": "fr",
+  "accessRuleManagedProfile": "Tant que ce profil était géré pour vous : {people}. Chaque consultation ou modification par l'un d'eux figure ci-dessous.",
+  "@accessRuleManagedProfile": {
+    "description": "#914 access rule: profile",
+    "placeholders": {
+      "people": {
+        "type": "String"
+      }
+    }
+  },
   "accessoriesTitle": "Accessoires",
   "accessoriesEmpty": "Aucun accessoire pour l’instant.",
   "accessoriesNew": "Nouvel accessoire",
@@ -3105,6 +3114,46 @@
   "bookingOutsideOffError": "Les réservations en dehors des heures d'ouverture ne sont pas autorisées.",
   "bookingOutsideWalkUpError": "En dehors des heures d'ouverture, seul un check-in spontané est possible — pas une réservation à l'avance.",
   "bookingSameDayError": "Une réservation se termine le jour où elle commence — réservez le lendemain séparément.",
+  "featureManagedProfileAccess": "Qui administre un profil",
+  "@featureManagedProfileAccess": {
+    "description": "#914 managed profile access: name"
+  },
+  "featureManagedProfileAccessDesc": "Chaque profil géré indique qui peut l'administrer — par rôle, par personnes nommées, ou les deux. Désactivé : tout propriétaire et tout admin le peuvent, comme avant. L'identité elle-même est protégée dans les deux cas, et chaque consultation est consignée pour la personne qui reprendra le profil.",
+  "@featureManagedProfileAccessDesc": {
+    "description": "#914 managed profile access: description"
+  },
+  "managedAccessTitle": "Qui peut administrer ce profil",
+  "@managedAccessTitle": {
+    "description": "#914 managed profile access: managedAccessTitle"
+  },
+  "managedAccessHint": "Par défaut : tout propriétaire et tout admin. Restreignez par rôle, par personne, ou les deux. Le propriétaire peut toujours modifier cette règle — sinon un profil deviendrait inadministrable — mais n'accède aux données que si la règle le nomme.",
+  "@managedAccessHint": {
+    "description": "#914 managed profile access: managedAccessHint"
+  },
+  "managedAccessOwners": "Les propriétaires",
+  "@managedAccessOwners": {
+    "description": "#914 managed profile access: managedAccessOwners"
+  },
+  "managedAccessAdmins": "Les admins",
+  "@managedAccessAdmins": {
+    "description": "#914 managed profile access: managedAccessAdmins"
+  },
+  "managedAccessPeople": "Personnes nommées",
+  "@managedAccessPeople": {
+    "description": "#914 managed profile access: managedAccessPeople"
+  },
+  "managedAccessDefault": "Tout propriétaire et tout admin",
+  "@managedAccessDefault": {
+    "description": "#914 managed profile access: managedAccessDefault"
+  },
+  "managedAccessSaved": "Règle enregistrée.",
+  "@managedAccessSaved": {
+    "description": "#914 managed profile access: managedAccessSaved"
+  },
+  "accessKindProfile": "votre fiche",
+  "@accessKindProfile": {
+    "description": "#914 managed profile access: accessKindProfile"
+  },
   "featureManagedProfiles": "Profils gérés",
   "@featureManagedProfiles": {
     "description": "#887 managed profiles: featureManagedProfiles"

@@ -67,6 +67,7 @@ enum WorkspaceFeature {
   reportLayouts,
   personalInfo,
   managedProfiles,
+  managedProfileAccess,
   seatDayTimeline,
   memberPaymentTerms,
   reportTexts,
@@ -532,6 +533,19 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.managedProfiles: FeatureManifestEntry(
     feature: WorkspaceFeature.managedProfiles,
     requires: WorkspaceFeature.membersDirectory,
+  ),
+  // #914 — narrowing WHO may administer one managed profile. Off, every
+  // owner and admin may, which is what #887 shipped; the identity is
+  // protected either way (#915), because a protection you can switch
+  // off protects nobody.
+  WorkspaceFeature.managedProfileAccess: FeatureManifestEntry(
+    feature: WorkspaceFeature.managedProfileAccess,
+    // OFF by default: the rule nobody narrowed is exactly what #887
+    // shipped, so a space that never needs to restrict anything is not
+    // shown a control it would have to think about. Turning it on is
+    // what says "several admins here, and not all of them for this".
+    defaultOn: false,
+    requires: WorkspaceFeature.managedProfiles,
   ),
   // #903 — a part-booked seat looks part-booked, and a shared one opens
   // its day: who has it, when, what is still free.

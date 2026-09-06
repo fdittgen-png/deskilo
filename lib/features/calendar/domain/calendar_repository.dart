@@ -36,6 +36,7 @@ class AccessMap {
     required this.finances,
     required this.membersAdmin,
     this.negotiations = const [],
+    this.profile = const [],
   });
 
   final List<String> finances;
@@ -44,6 +45,10 @@ class AccessMap {
   /// #739 — who may read my price negotiations besides me.
   final List<String> negotiations;
 
+  /// #914 — who may administer my profile while it is a MANAGED one.
+  /// Empty once it is mine: nobody administers it but me.
+  final List<String> profile;
+
   factory AccessMap.fromJson(Map<String, dynamic> json) => AccessMap(
         finances: [for (final id in (json['finances'] as List? ?? const [])) id as String],
         membersAdmin: [
@@ -51,6 +56,9 @@ class AccessMap {
         ],
         negotiations: [
           for (final id in (json['negotiations'] as List? ?? const [])) id as String
+        ],
+        profile: [
+          for (final id in (json['profile'] as List? ?? const [])) id as String
         ],
       );
 

@@ -239,6 +239,13 @@ class FeaturesScreen extends ConsumerWidget {
               'Members enter their name, postal address, phone, e-mail '
                   'and legal ids in Settings; invoices and letters print '
                   'them in the standard postal block.',
+        WorkspaceFeature.managedProfileAccess =>
+          l10n?.featureManagedProfileAccessDesc ??
+              'Each managed profile says who may administer it — by role, '
+                  'by named people, or both. Off: every owner and admin '
+                  'may, as before. The identity itself is protected '
+                  'either way, and every read is written down for the '
+                  'person who takes the profile over.',
         WorkspaceFeature.managedProfiles =>
           l10n?.featureManagedProfilesDesc ??
               'Admins create members who have no account yet, book and '

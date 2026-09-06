@@ -91,6 +91,23 @@ class AccessSheet extends ConsumerWidget {
                         'You, and those with the finance permission: '
                             '${people(value.finances)}.',
                   ),
+                  // #914 — who administers my profile, while it is
+                  // still a managed one. Once it is mine the list is
+                  // empty and the row says so, which is the answer.
+                  if (value.profile.isNotEmpty)
+                    ListTile(
+                      key: const ValueKey('access-rule-profile'),
+                      leading: const Icon(Icons.contact_mail_outlined),
+                      title: Text(l10n?.accessKindProfile ?? 'Your profile'),
+                      subtitle: Text(
+                        l10n?.accessRuleManagedProfile(
+                                people(value.profile)) ??
+                            'While this profile was managed for you: '
+                                '${people(value.profile)}. Every time one '
+                                'of them opened or changed it is on the '
+                                'record below.',
+                      ),
+                    ),
                   if (negotiationsOn)
                     ListTile(
                       key: const ValueKey('access-rule-negotiations'),
@@ -145,9 +162,13 @@ class AccessSheet extends ConsumerWidget {
                         title: Text(
                           l10n?.accessLogRow(
                                 names[e.actorMemberId] ?? '',
-                                e.category == 'negotiations'
-                                    ? l10n.accessKindNegotiations
-                                    : e.category,
+                                switch (e.category) {
+                                  'negotiations' =>
+                                    l10n.accessKindNegotiations,
+                                  // #914 — a read of a managed profile.
+                                  'profile' => l10n.accessKindProfile,
+                                  _ => e.category,
+                                },
                                 names[e.subjectMemberId] ?? '',
                               ) ??
                               '${names[e.actorMemberId] ?? ''} read '

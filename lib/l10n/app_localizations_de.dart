@@ -9,6 +9,11 @@ class AppLocalizationsDe extends AppLocalizations {
   AppLocalizationsDe([String locale = 'de']) : super(locale);
 
   @override
+  String accessRuleManagedProfile(String people) {
+    return 'Solange dieses Profil für Sie verwaltet wurde: $people. Jede Einsicht und jede Änderung durch eine dieser Personen steht unten.';
+  }
+
+  @override
   String get accessoriesTitle => 'Zubehör';
 
   @override
@@ -5267,6 +5272,38 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get bookingSameDayError =>
       'Eine Buchung endet an dem Tag, an dem sie beginnt — den nächsten Tag separat buchen.';
+
+  @override
+  String get featureManagedProfileAccess => 'Wer ein Profil verwaltet';
+
+  @override
+  String get featureManagedProfileAccessDesc =>
+      'Jedes verwaltete Profil nennt, wer es verwalten darf — nach Rolle, nach benannten Personen oder beides. Aus: jede Inhaberin und jeder Admin darf, wie bisher. Die Identität selbst ist in beiden Fällen geschützt, und jeder Zugriff wird für die Person festgehalten, die das Profil übernimmt.';
+
+  @override
+  String get managedAccessTitle => 'Wer dieses Profil verwalten darf';
+
+  @override
+  String get managedAccessHint =>
+      'Standard: jede Inhaberin und jeder Admin. Grenzen Sie nach Rolle, nach Person oder beidem ein. Die Inhaberin darf diese Regel immer ändern — sonst könnte ein Profil unverwaltbar werden — erreicht die Daten aber nur, wenn die Regel sie nennt.';
+
+  @override
+  String get managedAccessOwners => 'Inhaber';
+
+  @override
+  String get managedAccessAdmins => 'Admins';
+
+  @override
+  String get managedAccessPeople => 'Benannte Personen';
+
+  @override
+  String get managedAccessDefault => 'Jede Inhaberin und jeder Admin';
+
+  @override
+  String get managedAccessSaved => 'Regel gespeichert.';
+
+  @override
+  String get accessKindProfile => 'Ihr Profil';
 
   @override
   String get featureManagedProfiles => 'Verwaltete Profile';

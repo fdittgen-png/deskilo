@@ -9,6 +9,11 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
+  String accessRuleManagedProfile(String people) {
+    return 'Tant que ce profil était géré pour vous : $people. Chaque consultation ou modification par l\'un d\'eux figure ci-dessous.';
+  }
+
+  @override
   String get accessoriesTitle => 'Accessoires';
 
   @override
@@ -5278,6 +5283,38 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get bookingSameDayError =>
       'Une réservation se termine le jour où elle commence — réservez le lendemain séparément.';
+
+  @override
+  String get featureManagedProfileAccess => 'Qui administre un profil';
+
+  @override
+  String get featureManagedProfileAccessDesc =>
+      'Chaque profil géré indique qui peut l\'administrer — par rôle, par personnes nommées, ou les deux. Désactivé : tout propriétaire et tout admin le peuvent, comme avant. L\'identité elle-même est protégée dans les deux cas, et chaque consultation est consignée pour la personne qui reprendra le profil.';
+
+  @override
+  String get managedAccessTitle => 'Qui peut administrer ce profil';
+
+  @override
+  String get managedAccessHint =>
+      'Par défaut : tout propriétaire et tout admin. Restreignez par rôle, par personne, ou les deux. Le propriétaire peut toujours modifier cette règle — sinon un profil deviendrait inadministrable — mais n\'accède aux données que si la règle le nomme.';
+
+  @override
+  String get managedAccessOwners => 'Les propriétaires';
+
+  @override
+  String get managedAccessAdmins => 'Les admins';
+
+  @override
+  String get managedAccessPeople => 'Personnes nommées';
+
+  @override
+  String get managedAccessDefault => 'Tout propriétaire et tout admin';
+
+  @override
+  String get managedAccessSaved => 'Règle enregistrée.';
+
+  @override
+  String get accessKindProfile => 'votre fiche';
 
   @override
   String get featureManagedProfiles => 'Profils gérés';

@@ -92,7 +92,9 @@ import 'package:flutter_test/flutter_test.dart';
 //   every person-facing document.
 // 82→83 (2026-09-05): #903 seatDayTimeline — a part-booked seat looks
 //   part-booked; a shared one opens its day.
-const int _expectedFeatureCount = 83;
+// 83→84 (2026-09-06): #914 managedProfileAccess — a managed profile
+//   says who may administer it.
+const int _expectedFeatureCount = 84;
 
 void main() {
   test('every functionality is registered — the pin', () {

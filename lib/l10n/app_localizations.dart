@@ -104,6 +104,12 @@ abstract class AppLocalizations {
     Locale('it'),
   ];
 
+  /// #914 access rule: profile
+  ///
+  /// In en, this message translates to:
+  /// **'While this profile was managed for you: {people}. Every time one of them opened or changed it is on the record below.'**
+  String accessRuleManagedProfile(String people);
+
   /// App-bar title of the owner/admin accessory-catalog editor and its settings tile (#167)
   ///
   /// In en, this message translates to:
@@ -9132,6 +9138,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A booking ends on the day it starts — book the next day separately.'**
   String get bookingSameDayError;
+
+  /// #914 managed profile access: name
+  ///
+  /// In en, this message translates to:
+  /// **'Who administers a profile'**
+  String get featureManagedProfileAccess;
+
+  /// #914 managed profile access: description
+  ///
+  /// In en, this message translates to:
+  /// **'Each managed profile says who may administer it — by role, by named people, or both. Off: every owner and admin may, as before. The identity itself is protected either way, and every read is written down for the person who takes the profile over.'**
+  String get featureManagedProfileAccessDesc;
+
+  /// #914 managed profile access: managedAccessTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Who may administer this profile'**
+  String get managedAccessTitle;
+
+  /// #914 managed profile access: managedAccessHint
+  ///
+  /// In en, this message translates to:
+  /// **'By default: every owner and every admin. Narrow it by role, by person, or both. The owner may always change this rule — otherwise a profile could become unadministrable — but only reaches the data when the rule names them.'**
+  String get managedAccessHint;
+
+  /// #914 managed profile access: managedAccessOwners
+  ///
+  /// In en, this message translates to:
+  /// **'Owners'**
+  String get managedAccessOwners;
+
+  /// #914 managed profile access: managedAccessAdmins
+  ///
+  /// In en, this message translates to:
+  /// **'Admins'**
+  String get managedAccessAdmins;
+
+  /// #914 managed profile access: managedAccessPeople
+  ///
+  /// In en, this message translates to:
+  /// **'Named people'**
+  String get managedAccessPeople;
+
+  /// #914 managed profile access: managedAccessDefault
+  ///
+  /// In en, this message translates to:
+  /// **'Every owner and every admin'**
+  String get managedAccessDefault;
+
+  /// #914 managed profile access: managedAccessSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Rule saved.'**
+  String get managedAccessSaved;
+
+  /// #914 managed profile access: accessKindProfile
+  ///
+  /// In en, this message translates to:
+  /// **'your profile'**
+  String get accessKindProfile;
 
   /// #887 managed profiles: featureManagedProfiles
   ///

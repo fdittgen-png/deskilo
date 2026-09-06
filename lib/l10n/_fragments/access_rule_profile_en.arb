@@ -1,0 +1,12 @@
+{
+  "@@locale": "en",
+  "accessRuleManagedProfile": "While this profile was managed for you: {people}. Every time one of them opened or changed it is on the record below.",
+  "@accessRuleManagedProfile": {
+    "description": "#914 access rule: profile",
+    "placeholders": {
+      "people": {
+        "type": "String"
+      }
+    }
+  }
+}

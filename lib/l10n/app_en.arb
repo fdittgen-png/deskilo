@@ -1,5 +1,14 @@
 {
   "@@locale": "en",
+  "accessRuleManagedProfile": "While this profile was managed for you: {people}. Every time one of them opened or changed it is on the record below.",
+  "@accessRuleManagedProfile": {
+    "description": "#914 access rule: profile",
+    "placeholders": {
+      "people": {
+        "type": "String"
+      }
+    }
+  },
   "accessoriesTitle": "Accessories",
   "@accessoriesTitle": {
     "description": "App-bar title of the owner/admin accessory-catalog editor and its settings tile (#167)"
@@ -5339,6 +5348,46 @@
     "description": "#634 - refusal under the walkup_only outside-hours mode"
   },
   "bookingSameDayError": "A booking ends on the day it starts — book the next day separately.",
+  "featureManagedProfileAccess": "Who administers a profile",
+  "@featureManagedProfileAccess": {
+    "description": "#914 managed profile access: name"
+  },
+  "featureManagedProfileAccessDesc": "Each managed profile says who may administer it — by role, by named people, or both. Off: every owner and admin may, as before. The identity itself is protected either way, and every read is written down for the person who takes the profile over.",
+  "@featureManagedProfileAccessDesc": {
+    "description": "#914 managed profile access: description"
+  },
+  "managedAccessTitle": "Who may administer this profile",
+  "@managedAccessTitle": {
+    "description": "#914 managed profile access: managedAccessTitle"
+  },
+  "managedAccessHint": "By default: every owner and every admin. Narrow it by role, by person, or both. The owner may always change this rule — otherwise a profile could become unadministrable — but only reaches the data when the rule names them.",
+  "@managedAccessHint": {
+    "description": "#914 managed profile access: managedAccessHint"
+  },
+  "managedAccessOwners": "Owners",
+  "@managedAccessOwners": {
+    "description": "#914 managed profile access: managedAccessOwners"
+  },
+  "managedAccessAdmins": "Admins",
+  "@managedAccessAdmins": {
+    "description": "#914 managed profile access: managedAccessAdmins"
+  },
+  "managedAccessPeople": "Named people",
+  "@managedAccessPeople": {
+    "description": "#914 managed profile access: managedAccessPeople"
+  },
+  "managedAccessDefault": "Every owner and every admin",
+  "@managedAccessDefault": {
+    "description": "#914 managed profile access: managedAccessDefault"
+  },
+  "managedAccessSaved": "Rule saved.",
+  "@managedAccessSaved": {
+    "description": "#914 managed profile access: managedAccessSaved"
+  },
+  "accessKindProfile": "your profile",
+  "@accessKindProfile": {
+    "description": "#914 managed profile access: accessKindProfile"
+  },
   "featureManagedProfiles": "Managed profiles",
   "@featureManagedProfiles": {
     "description": "#887 managed profiles: featureManagedProfiles"
