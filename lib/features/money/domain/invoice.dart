@@ -134,6 +134,8 @@ sealed class InvoiceParty with _$InvoiceParty {
     /// BT-30, the company register number — the seller identifier a
     /// category-O invoice is allowed to carry.
     @Default('') String legalId,
+    /// #928 — the buyer's member number ("N° adhérent"), frozen at issue.
+    @Default('') String memberNumber,
 
     /// Wire value of [VatRegime]; seller only.
     @Default('not_subject') String vatRegime,
@@ -168,6 +170,7 @@ sealed class InvoiceParty with _$InvoiceParty {
     country: json['country'] as String? ?? '',
     vatId: json['vat_id'] as String? ?? '',
     legalId: json['legal_id'] as String? ?? '',
+    memberNumber: json['member_number'] as String? ?? '',
     reference: json['reference'] as String? ?? '',
     orderReference: json['order'] as String? ?? '',
     vatRegime: json['vat_regime'] as String? ?? 'not_subject',

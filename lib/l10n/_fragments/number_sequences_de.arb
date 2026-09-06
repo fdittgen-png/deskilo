@@ -83,5 +83,21 @@
   "numberSequenceSaved": "Nummernkreis gespeichert.",
   "@numberSequenceSaved": {
     "description": "#925 number sequences: numberSequenceSaved"
+  },
+  "numberSequenceJournalVatDeclaration": "USt-Voranmeldungen",
+  "@numberSequenceJournalVatDeclaration": {
+    "description": "#928 number-sequence adopters: numberSequenceJournalVatDeclaration"
+  },
+  "numberSequenceJournalMember": "Mitglieder",
+  "@numberSequenceJournalMember": {
+    "description": "#928 number-sequence adopters: numberSequenceJournalMember"
+  },
+  "numberSequenceJournalPayment": "Zahlungen",
+  "@numberSequenceJournalPayment": {
+    "description": "#928 number-sequence adopters: numberSequenceJournalPayment"
+  },
+  "memberNumberLabel": "Mitgliedsnummer",
+  "@memberNumberLabel": {
+    "description": "#928 number-sequence adopters: memberNumberLabel"
   }
 }

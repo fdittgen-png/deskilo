@@ -336,8 +336,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
     // never touched is still visible beside the ones that were.
     return [
       for (final j in NumberSequence.journals)
-        byJournal[j] ??
-            NumberSequence(journal: j, prefix: j == 'invoice' ? 'INV-' : ''),
+        byJournal[j] ?? NumberSequence.defaultsFor(j),
     ];
   }
 

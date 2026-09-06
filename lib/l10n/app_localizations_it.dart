@@ -6442,6 +6442,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get numberSequenceSaved => 'Serie salvata.';
 
   @override
+  String get numberSequenceJournalVatDeclaration => 'Dichiarazioni IVA';
+
+  @override
+  String get numberSequenceJournalMember => 'Soci';
+
+  @override
+  String get numberSequenceJournalPayment => 'Pagamenti';
+
+  @override
+  String get memberNumberLabel => 'N. socio';
+
+  @override
   String billParticipation(int pct) {
     return 'Partecipazione $pct %';
   }

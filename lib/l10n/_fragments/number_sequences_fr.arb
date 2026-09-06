@@ -83,5 +83,21 @@
   "numberSequenceSaved": "Séquence enregistrée.",
   "@numberSequenceSaved": {
     "description": "#925 number sequences: numberSequenceSaved"
+  },
+  "numberSequenceJournalVatDeclaration": "Déclarations de TVA",
+  "@numberSequenceJournalVatDeclaration": {
+    "description": "#928 number-sequence adopters: numberSequenceJournalVatDeclaration"
+  },
+  "numberSequenceJournalMember": "Adhérents",
+  "@numberSequenceJournalMember": {
+    "description": "#928 number-sequence adopters: numberSequenceJournalMember"
+  },
+  "numberSequenceJournalPayment": "Paiements",
+  "@numberSequenceJournalPayment": {
+    "description": "#928 number-sequence adopters: numberSequenceJournalPayment"
+  },
+  "memberNumberLabel": "N° adhérent",
+  "@memberNumberLabel": {
+    "description": "#928 number-sequence adopters: memberNumberLabel"
   }
 }

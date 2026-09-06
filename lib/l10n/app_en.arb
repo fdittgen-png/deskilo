@@ -6546,6 +6546,22 @@
   "@numberSequenceSaved": {
     "description": "#925 number sequences: numberSequenceSaved"
   },
+  "numberSequenceJournalVatDeclaration": "VAT declarations",
+  "@numberSequenceJournalVatDeclaration": {
+    "description": "#928 number-sequence adopters: numberSequenceJournalVatDeclaration"
+  },
+  "numberSequenceJournalMember": "Members",
+  "@numberSequenceJournalMember": {
+    "description": "#928 number-sequence adopters: numberSequenceJournalMember"
+  },
+  "numberSequenceJournalPayment": "Payments",
+  "@numberSequenceJournalPayment": {
+    "description": "#928 number-sequence adopters: numberSequenceJournalPayment"
+  },
+  "memberNumberLabel": "Member no.",
+  "@memberNumberLabel": {
+    "description": "#928 number-sequence adopters: memberNumberLabel"
+  },
   "billParticipation": "Participation {pct}%",
   "@billParticipation": {
     "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.",

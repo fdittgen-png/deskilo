@@ -310,7 +310,26 @@ Deno.serve(async (req: Request): Promise<Response> => {
     return json({ error: "not_your_bill" }, 403);
   }
 
-  const reference = `${workspaceId}:${memberId}:${period}`;
+  // #928 — a readable per-workspace reference (PAY-2026-0117) drawn by
+  // the number-sequence framework inside the intent's own insert; the
+  // provider's order id is patched in once the provider has answered.
+  const { data: opened, error: openError } = await admin.rpc(
+    "open_payment_intent",
+    {
+      p_workspace_id: workspaceId,
+      p_member_id: memberId,
+      p_provider: provider,
+      p_period: period,
+      p_amount_cents: amountCents,
+      p_currency: currency,
+    },
+  );
+  const intent = Array.isArray(opened) ? opened[0] : opened;
+  if (openError || !intent?.reference) {
+    console.error("payment intent open failed", openError?.message);
+    return json({ error: "intent_open_failed" }, 500);
+  }
+  const reference: string = intent.reference;
   try {
     const order = provider === "paypal"
       ? await createPaypalOrder(cfg, amountCents, currency, reference)
@@ -320,17 +339,12 @@ Deno.serve(async (req: Request): Promise<Response> => {
       ? await createMolliePayment(cfg, amountCents, currency, reference, "wero")
       : await createMolliePayment(cfg, amountCents, currency, reference);
 
-    const { error: insertError } = await admin.from("payment_intents").insert({
-      workspace_id: workspaceId,
-      member_id: memberId,
-      provider,
-      order_id: order.orderId,
-      period,
-      amount_cents: amountCents,
-      currency,
-    });
+    const { error: insertError } = await admin
+      .from("payment_intents")
+      .update({ order_id: order.orderId })
+      .eq("id", intent.id);
     if (insertError) {
-      console.error("payment intent insert failed", insertError.message);
+      console.error("payment intent update failed", insertError.message);
       return json({ error: "intent_insert_failed" }, 500);
     }
     console.log("payment order created", {
@@ -347,6 +361,9 @@ Deno.serve(async (req: Request): Promise<Response> => {
       approve_url: order.approveUrl,
     });
   } catch (e) {
+    // The provider refused or timed out: the intent stays as the honest
+    // record of a failed attempt — its number is not reused.
+    await admin.from("payment_intents").update({ status: "failed" }).eq("id", intent.id);
     const detail = e instanceof Error ? e.message : String(e);
     console.error("payment order failed", { provider, detail });
     return json({ error: "provider_error", provider, detail }, 502);

@@ -471,6 +471,7 @@ class _VatDeclarationsScreenState
                                   ),
                                   if (declaration.isSubmitted)
                                     Text(
+                                      '${declaration.number.isEmpty ? '' : '${declaration.number} · '}'
                                       '${declaration.submittedChannel}'
                                       '${declaration.submittedReceipt.isEmpty ? '' : ' · ${declaration.submittedReceipt}'}',
                                       style: theme.textTheme.bodySmall,

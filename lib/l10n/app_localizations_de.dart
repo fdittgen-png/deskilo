@@ -6439,6 +6439,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get numberSequenceSaved => 'Nummernkreis gespeichert.';
 
   @override
+  String get numberSequenceJournalVatDeclaration => 'USt-Voranmeldungen';
+
+  @override
+  String get numberSequenceJournalMember => 'Mitglieder';
+
+  @override
+  String get numberSequenceJournalPayment => 'Zahlungen';
+
+  @override
+  String get memberNumberLabel => 'Mitgliedsnummer';
+
+  @override
   String billParticipation(int pct) {
     return 'Beitrag $pct %';
   }

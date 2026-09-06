@@ -83,5 +83,21 @@
   "numberSequenceSaved": "Serie guardada.",
   "@numberSequenceSaved": {
     "description": "#925 number sequences: numberSequenceSaved"
+  },
+  "numberSequenceJournalVatDeclaration": "Declaraciones de IVA",
+  "@numberSequenceJournalVatDeclaration": {
+    "description": "#928 number-sequence adopters: numberSequenceJournalVatDeclaration"
+  },
+  "numberSequenceJournalMember": "Socios",
+  "@numberSequenceJournalMember": {
+    "description": "#928 number-sequence adopters: numberSequenceJournalMember"
+  },
+  "numberSequenceJournalPayment": "Pagos",
+  "@numberSequenceJournalPayment": {
+    "description": "#928 number-sequence adopters: numberSequenceJournalPayment"
+  },
+  "memberNumberLabel": "N.º de socio",
+  "@memberNumberLabel": {
+    "description": "#928 number-sequence adopters: memberNumberLabel"
   }
 }

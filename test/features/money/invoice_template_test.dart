@@ -131,6 +131,8 @@ void main() {
         'client_name', 'client_company', 'client_phone', 'client_email',
         'client_address', 'client_vat_id',
         'client_legal_id',
+        // #928 — the member number, under the label the pilot already prints.
+        'client_member_number',
         // #873 — the consumption report.
         'usage_paid', 'usage_included_half_days', 'usage_used_half_days',
         'usage_remaining_half_days', 'usage_extra_half_days', 'usage_overage',

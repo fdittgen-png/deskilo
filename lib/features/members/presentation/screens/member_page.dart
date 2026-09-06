@@ -630,6 +630,13 @@ class _HeaderCard extends StatelessWidget {
                         : name,
                     style: theme.textTheme.titleLarge,
                   ),
+                  // #928 — the member number, as the invoice prints it.
+                  if (member.memberNumber.isNotEmpty)
+                    Text(
+                      member.memberNumber,
+                      key: const ValueKey('member-page-number'),
+                      style: theme.textTheme.bodySmall,
+                    ),
                   if (chips.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(top: AppSpacing.xs),

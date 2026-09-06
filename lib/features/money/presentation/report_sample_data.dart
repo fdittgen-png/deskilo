@@ -96,6 +96,7 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
       'client_address': 'Atelier Dupont SARL\n3 Avenue de la Liberté\n35000 RENNES',
       'client_vat_id': 'FR 79 849 149 108',
       'client_legal_id': '849 149 108',
+      'client_member_number': 'M-0042',
       'payment_terms_source': 'workspace',
       'usage_paid': '100,00 €',
       'usage_included_half_days': '22',

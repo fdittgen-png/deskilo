@@ -42,7 +42,30 @@ class NumberSequence {
 
   /// The journals every workspace has a series for; the settings screen
   /// lists them side by side so nobody can miss that two share one.
-  static const List<String> journals = ['invoice', 'credit_note'];
+  static const List<String> journals = [
+    'invoice',
+    'credit_note',
+    'vat_declaration',
+    'member',
+    'payment',
+  ];
+
+  /// #928 — what an untouched series looks like, journal by journal;
+  /// mirrors `number_sequence_defaults` (0165) and is pinned equal to it
+  /// by test. A member number never resets and carries no year.
+  static NumberSequence defaultsFor(String journal) => NumberSequence(
+    journal: journal,
+    prefix: switch (journal) {
+      'invoice' => 'INV-',
+      'credit_note' => 'CN-',
+      'vat_declaration' => 'DECL-',
+      'member' => 'M-',
+      'payment' => 'PAY-',
+      _ => '',
+    },
+    datePart: journal == 'member' ? NumberDatePart.none : NumberDatePart.year,
+    reset: journal == 'member' ? NumberReset.never : NumberReset.yearly,
+  );
 
   static const String keyJournal = 'journal';
   static const String keyPrefix = 'prefix';

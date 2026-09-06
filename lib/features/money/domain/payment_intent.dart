@@ -15,6 +15,7 @@ class PaymentIntent {
     required this.status,
     required this.createdAt,
     this.captureId = '',
+    this.reference = '',
   });
 
   final String id;
@@ -26,6 +27,9 @@ class PaymentIntent {
 
   /// Set on capture; the idempotency handle of settlement.
   final String captureId;
+  /// #928 — PAY-2026-0117: what the payer saw at checkout and what the
+  /// bank statement carries.
+  final String reference;
   final String period;
   final int amountCents;
 
@@ -39,6 +43,7 @@ class PaymentIntent {
         provider: row['provider'] as String,
         orderId: row['order_id'] as String,
         captureId: row['capture_id'] as String? ?? '',
+        reference: row['reference'] as String? ?? '',
         period: row['period'] as String,
         amountCents: row['amount_cents'] as int,
         status: row['status'] as String,

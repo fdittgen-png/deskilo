@@ -11245,6 +11245,30 @@ abstract class AppLocalizations {
   /// **'Sequence saved.'**
   String get numberSequenceSaved;
 
+  /// #928 number-sequence adopters: numberSequenceJournalVatDeclaration
+  ///
+  /// In en, this message translates to:
+  /// **'VAT declarations'**
+  String get numberSequenceJournalVatDeclaration;
+
+  /// #928 number-sequence adopters: numberSequenceJournalMember
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get numberSequenceJournalMember;
+
+  /// #928 number-sequence adopters: numberSequenceJournalPayment
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get numberSequenceJournalPayment;
+
+  /// #928 number-sequence adopters: memberNumberLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Member no.'**
+  String get memberNumberLabel;
+
   /// The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.
   ///
   /// In en, this message translates to:
