@@ -588,6 +588,8 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
             period: period, memberName: names[me.id] ?? '');
       case 'workspace':
         return workspaceReportData(context, ref);
+      case 'status':
+        return null; // #934 — sample data; the live view prints from its screen.
       case 'coa':
       case 'badges':
       case 'space_codes':

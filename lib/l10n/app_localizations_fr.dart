@@ -8672,6 +8672,113 @@ class AppLocalizationsFr extends AppLocalizations {
   String get permManageNegotiations => 'Gérer les accords commerciaux';
 
   @override
+  String get featureWorkspaceStatus => 'Situation de l\'espace';
+
+  @override
+  String get featureWorkspaceStatusDesc =>
+      'Ce que l\'espace a facturé, encaissé, remboursé et réparti sur une période, adhérent par adhérent — à l\'écran pour les propriétaires et admins, et en rapport imprimable. Désactivé : pas de vue de situation.';
+
+  @override
+  String get featureExpenseRepartitionWizard => 'Assistant de répartition';
+
+  @override
+  String get featureExpenseRepartitionWizardDesc =>
+      'Une répartition guidée : une dépense commune proposée au prorata de l\'abonnement, chaque part ajustable, et la règle ajustée mémorisée pour le mois suivant. Désactivé : seule la fiche de répartition d\'une dépense.';
+
+  @override
+  String get reportDocStatus => 'Situation de l\'espace';
+
+  @override
+  String get statusTitle => 'Situation de l\'espace';
+
+  @override
+  String get statusSubtitle =>
+      'Recettes, dépenses et adhérents sur une période';
+
+  @override
+  String get statusFrom => 'Du';
+
+  @override
+  String get statusTo => 'Au';
+
+  @override
+  String get statusInvoiced => 'Facturé';
+
+  @override
+  String get statusCreditNotes => 'Avoirs';
+
+  @override
+  String get statusPaymentsMatched => 'Paiements lettrés';
+
+  @override
+  String get statusPaymentsReceived => 'Paiements reçus';
+
+  @override
+  String get statusReimbursed => 'Dépenses remboursées';
+
+  @override
+  String get statusRepartitioned => 'Dépenses réparties';
+
+  @override
+  String get statusAwaiting => 'En attente';
+
+  @override
+  String get statusCredits => 'Crédits accordés';
+
+  @override
+  String get statusNet => 'Net';
+
+  @override
+  String get statusMembers => 'Adhérents';
+
+  @override
+  String get statusPrint => 'Imprimer la situation';
+
+  @override
+  String get repartitionWizardTitle => 'Répartir une dépense';
+
+  @override
+  String get repartitionWizardSubtitle =>
+      'Proposer au prorata de l\'abonnement, ajuster, comptabiliser';
+
+  @override
+  String get repartitionStepCost => 'La dépense';
+
+  @override
+  String get repartitionStepRule => 'La règle';
+
+  @override
+  String get repartitionStepBook => 'Comptabiliser';
+
+  @override
+  String get repartitionTitleLabel => 'Intitulé';
+
+  @override
+  String get repartitionAmountLabel => 'Montant';
+
+  @override
+  String get repartitionPeriodLabel => 'Mois';
+
+  @override
+  String get repartitionRuleHint =>
+      'Chaque part est proposée au prorata de l\'abonnement. Décochez un adhérent pour l\'exclure ; en méthode « clé », saisissez son poids. La règle ajustée sera proposée le mois prochain.';
+
+  @override
+  String get repartitionExclude => 'Exclure';
+
+  @override
+  String get repartitionWizardWeight => 'Poids';
+
+  @override
+  String get repartitionSharesTotal => 'Total des parts';
+
+  @override
+  String get repartitionBooked => 'Répartition comptabilisée.';
+
+  @override
+  String get repartitionRememberRule => 'Mémoriser cette règle';
+
+  @override
   String get workspaceXmlExport => 'Exporter l\'espace (XML)';
 
   @override

@@ -26,6 +26,7 @@ import '../domain/vat_rate.dart';
 import '../domain/subscription_levels.dart';
 import '../domain/payment_intent.dart';
 import '../domain/number_sequence.dart';
+import '../domain/workspace_status.dart';
 
 class SupabaseMoneyRepository implements MoneyRepository {
   @override
@@ -253,6 +254,38 @@ class SupabaseMoneyRepository implements MoneyRepository {
     return BillingRules.fromJson(
       row['billing_rules'] as Map<String, dynamic>? ?? const {},
     );
+  }
+
+  @override
+  Future<WorkspaceStatus> fetchWorkspaceStatus(
+      String workspaceId, String from, String to) async {
+    final r = await _client.rpc<dynamic>('workspace_status', params: {
+      'p_workspace_id': workspaceId,
+      'p_from': from,
+      'p_to': to,
+    });
+    return WorkspaceStatus.fromJson(Map<String, dynamic>.from(r as Map));
+  }
+
+  @override
+  Future<RepartitionRule> fetchRepartitionRule(String workspaceId) async {
+    final row = await _client
+        .from('workspaces')
+        .select('billing_rules')
+        .eq('id', workspaceId)
+        .single();
+    final rules = (row['billing_rules'] as Map?)?.cast<String, dynamic>();
+    return RepartitionRule.fromJson(
+        (rules?['repartition'] as Map?)?.cast<String, dynamic>());
+  }
+
+  @override
+  Future<void> setRepartitionRule(
+      String workspaceId, RepartitionRule rule) async {
+    await _client.rpc<dynamic>('set_repartition_rule', params: {
+      'p_workspace_id': workspaceId,
+      'p_rule': rule.toJson(),
+    });
   }
 
   @override

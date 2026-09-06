@@ -31,6 +31,7 @@ import '../domain/subscription_levels.dart';
 import '../domain/vat_rate.dart';
 import '../../../core/time/clock.dart';
 import '../domain/number_sequence.dart';
+import '../domain/workspace_status.dart';
 
 part 'money_providers.g.dart';
 
@@ -458,4 +459,24 @@ Future<List<NumberSequence>> numberSequences(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   return ref.read(moneyRepositoryProvider).fetchNumberSequences(workspace.id);
+}
+
+/// #934 — the workspace's status over a range of months.
+@riverpod
+Future<WorkspaceStatus> workspaceStatus(Ref ref, String from, String to) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) {
+    return WorkspaceStatus(from: from, to: to, currency: 'EUR');
+  }
+  return ref
+      .read(moneyRepositoryProvider)
+      .fetchWorkspaceStatus(workspace.id, from, to);
+}
+
+/// #934 — the remembered repartition rule.
+@riverpod
+Future<RepartitionRule> repartitionRule(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const RepartitionRule();
+  return ref.read(moneyRepositoryProvider).fetchRepartitionRule(workspace.id);
 }

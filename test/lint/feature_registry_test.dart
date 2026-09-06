@@ -96,7 +96,8 @@ import 'package:flutter_test/flutter_test.dart';
 //   says who may administer it.
 // 84→85 (2026-09-06): #925 numberSequences — one screen for every series
 //   a workspace issues.
-const int _expectedFeatureCount = 85;
+// 85→87 (2026-09-06): #934 workspaceStatus + expenseRepartitionWizard.
+const int _expectedFeatureCount = 87;
 
 void main() {
   test('every functionality is registered — the pin', () {

@@ -19,6 +19,7 @@ class LetterStrings {
     this.agreement = 'Financial agreement',
     this.payments = 'Payments report',
     this.usage = 'Consumption report',
+    this.status = 'Workspace status',
     this.reminder = 'Reminder',
     this.issuedOn = 'Issued on',
     this.dueOn = 'Due on',
@@ -35,7 +36,7 @@ class LetterStrings {
     this.records = 'What was consumed',
   });
 
-  final String invoice, proforma, statement, agreement, payments, usage,
+  final String invoice, proforma, statement, agreement, payments, usage, status,
       reminder, issuedOn, dueOn, orderRef, serviceRef, description, qty, unitPrice, total,
       paymentsLabel,
       balance, regards, page, records;
@@ -43,7 +44,7 @@ class LetterStrings {
 
 /// The kinds a person receives — the ones the standard binds.
 bool isPersonFacingKind(String kindId) =>
-    const {'invoice', 'proforma', 'statement', 'agreement', 'payments', 'usage'}
+    const {'invoice', 'proforma', 'statement', 'agreement', 'payments', 'usage', 'status'}
         .contains(kindId) ||
     RegExp(r'^r\d+$').hasMatch(kindId);
 
@@ -87,6 +88,7 @@ String defaultLetterLayoutXml(String kindId, LetterStrings s) {
     'agreement' => s.agreement,
     'payments' => s.payments,
     'usage' => s.usage,
+    'status' => s.status,
     _ => '${s.reminder} $level',
   });
   final issuedOn = _esc(s.issuedOn);
@@ -185,6 +187,23 @@ $simpleLines
     <table>
       <col w="70%"/><col w="30%" align="right"/>
       <row bold="true"><cell>$payments</cell><cell>{{ payments }}</cell></row>
+    </table>''',
+    'status' => '''
+    <text style="heading">$title — {{ status_from }} → {{ status_to }}</text>
+    <text style="small">{{ workspace }} · {{ issued }}</text>
+    <spacer size="4mm"/>
+$simpleLines
+    <rule/>
+    <table>
+      <col w="70%"/><col w="30%" align="right"/>
+      <row bold="true"><cell>$balance</cell><cell>{{ status_net }}</cell></row>
+    </table>
+    <spacer size="4mm"/>
+    <table>
+      <col w="15%"/><col w="45%"/><col w="20%" align="right"/><col w="20%" align="right"/>
+      {% for m in status_members %}
+      <row><cell>{{ m.number }}</cell><cell>{{ m.name }} ({{ m.pct }} %)</cell><cell>{{ m.invoiced }}</cell><cell>{{ m.paid }}</cell></row>
+      {% endfor %}
     </table>''',
     'usage' => '''
     <text style="heading">$title — {{ period }}</text>

@@ -1089,3 +1089,6 @@ The **Messages** tab is your workspace's messaging centre: every conversation in
 ### Platform owner
 
 The account that operates the installation sees, under *Profiles*, **every workspace** in the database: its own as usual, the others **greyed out** with their environment and member count. Tapping a greyed-out workspace shows its **owners** with their e-mail — and that read is logged, visible to the owners of the workspace concerned. An owner always has an e-mail address: the app refuses to create a workspace or to name a co-owner without one.
+### Workspace status and guided repartition (#934)
+
+*Money → Workspace status* shows owners and admins, over a period of their choice, what the workspace **invoiced** (net of credit notes), **collected**, **reimbursed** and **shared out**, then the same member by member with their subscription percentage — and prints it as a report. *Share a cost* proposes each member's share **by subscription percentage**, lets you leave a member out or adjust a weight, books the shares as today (lines on the next usage invoice) and **remembers the rule** for next month.

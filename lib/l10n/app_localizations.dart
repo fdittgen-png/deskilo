@@ -15193,6 +15193,210 @@ abstract class AppLocalizations {
   /// **'Manage commercial agreements'**
   String get permManageNegotiations;
 
+  /// #934 workspace status / repartition wizard: featureWorkspaceStatus
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace status'**
+  String get featureWorkspaceStatus;
+
+  /// #934 workspace status / repartition wizard: featureWorkspaceStatusDesc
+  ///
+  /// In en, this message translates to:
+  /// **'What the workspace invoiced, collected, reimbursed and shared out over a range of months, member by member — on screen for owners and admins, and as a printable report. Off: no status view.'**
+  String get featureWorkspaceStatusDesc;
+
+  /// #934 workspace status / repartition wizard: featureExpenseRepartitionWizard
+  ///
+  /// In en, this message translates to:
+  /// **'Repartition wizard'**
+  String get featureExpenseRepartitionWizard;
+
+  /// #934 workspace status / repartition wizard: featureExpenseRepartitionWizardDesc
+  ///
+  /// In en, this message translates to:
+  /// **'A guided repartition: a shared cost proposed over the members by subscription share, each share adjustable, and the adjusted rule remembered for next month. Off: the one-expense repartition sheet only.'**
+  String get featureExpenseRepartitionWizardDesc;
+
+  /// #934 workspace status / repartition wizard: reportDocStatus
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace status'**
+  String get reportDocStatus;
+
+  /// #934 workspace status / repartition wizard: statusTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace status'**
+  String get statusTitle;
+
+  /// #934 workspace status / repartition wizard: statusSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Revenues, expenses and members over a period'**
+  String get statusSubtitle;
+
+  /// #934 workspace status / repartition wizard: statusFrom
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get statusFrom;
+
+  /// #934 workspace status / repartition wizard: statusTo
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get statusTo;
+
+  /// #934 workspace status / repartition wizard: statusInvoiced
+  ///
+  /// In en, this message translates to:
+  /// **'Invoiced'**
+  String get statusInvoiced;
+
+  /// #934 workspace status / repartition wizard: statusCreditNotes
+  ///
+  /// In en, this message translates to:
+  /// **'Credit notes'**
+  String get statusCreditNotes;
+
+  /// #934 workspace status / repartition wizard: statusPaymentsMatched
+  ///
+  /// In en, this message translates to:
+  /// **'Payments matched'**
+  String get statusPaymentsMatched;
+
+  /// #934 workspace status / repartition wizard: statusPaymentsReceived
+  ///
+  /// In en, this message translates to:
+  /// **'Payments received'**
+  String get statusPaymentsReceived;
+
+  /// #934 workspace status / repartition wizard: statusReimbursed
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses reimbursed'**
+  String get statusReimbursed;
+
+  /// #934 workspace status / repartition wizard: statusRepartitioned
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses shared out'**
+  String get statusRepartitioned;
+
+  /// #934 workspace status / repartition wizard: statusAwaiting
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting'**
+  String get statusAwaiting;
+
+  /// #934 workspace status / repartition wizard: statusCredits
+  ///
+  /// In en, this message translates to:
+  /// **'Credits granted'**
+  String get statusCredits;
+
+  /// #934 workspace status / repartition wizard: statusNet
+  ///
+  /// In en, this message translates to:
+  /// **'Net'**
+  String get statusNet;
+
+  /// #934 workspace status / repartition wizard: statusMembers
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get statusMembers;
+
+  /// #934 workspace status / repartition wizard: statusPrint
+  ///
+  /// In en, this message translates to:
+  /// **'Print the status'**
+  String get statusPrint;
+
+  /// #934 workspace status / repartition wizard: repartitionWizardTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Share a cost'**
+  String get repartitionWizardTitle;
+
+  /// #934 workspace status / repartition wizard: repartitionWizardSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Propose a split by subscription share, adjust, book'**
+  String get repartitionWizardSubtitle;
+
+  /// #934 workspace status / repartition wizard: repartitionStepCost
+  ///
+  /// In en, this message translates to:
+  /// **'The cost'**
+  String get repartitionStepCost;
+
+  /// #934 workspace status / repartition wizard: repartitionStepRule
+  ///
+  /// In en, this message translates to:
+  /// **'The rule'**
+  String get repartitionStepRule;
+
+  /// #934 workspace status / repartition wizard: repartitionStepBook
+  ///
+  /// In en, this message translates to:
+  /// **'Book'**
+  String get repartitionStepBook;
+
+  /// #934 workspace status / repartition wizard: repartitionTitleLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get repartitionTitleLabel;
+
+  /// #934 workspace status / repartition wizard: repartitionAmountLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get repartitionAmountLabel;
+
+  /// #934 workspace status / repartition wizard: repartitionPeriodLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get repartitionPeriodLabel;
+
+  /// #934 workspace status / repartition wizard: repartitionRuleHint
+  ///
+  /// In en, this message translates to:
+  /// **'Each share is proposed by subscription percentage. Untick a member to leave them out; with the custom method, type their weight. The adjusted rule is proposed again next month.'**
+  String get repartitionRuleHint;
+
+  /// #934 workspace status / repartition wizard: repartitionExclude
+  ///
+  /// In en, this message translates to:
+  /// **'Leave out'**
+  String get repartitionExclude;
+
+  /// #934 workspace status / repartition wizard: repartitionWeight
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get repartitionWizardWeight;
+
+  /// #934 workspace status / repartition wizard: repartitionSharesTotal
+  ///
+  /// In en, this message translates to:
+  /// **'Total of the shares'**
+  String get repartitionSharesTotal;
+
+  /// #934 workspace status / repartition wizard: repartitionBooked
+  ///
+  /// In en, this message translates to:
+  /// **'Repartition booked.'**
+  String get repartitionBooked;
+
+  /// #934 workspace status / repartition wizard: repartitionRememberRule
+  ///
+  /// In en, this message translates to:
+  /// **'Remember this rule'**
+  String get repartitionRememberRule;
+
   /// Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)
   ///
   /// In en, this message translates to:

@@ -1,0 +1,139 @@
+{
+  "@@locale": "en",
+  "featureWorkspaceStatus": "Workspace status",
+  "@featureWorkspaceStatus": {
+    "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"
+  },
+  "featureWorkspaceStatusDesc": "What the workspace invoiced, collected, reimbursed and shared out over a range of months, member by member — on screen for owners and admins, and as a printable report. Off: no status view.",
+  "@featureWorkspaceStatusDesc": {
+    "description": "#934 workspace status / repartition wizard: featureWorkspaceStatusDesc"
+  },
+  "featureExpenseRepartitionWizard": "Repartition wizard",
+  "@featureExpenseRepartitionWizard": {
+    "description": "#934 workspace status / repartition wizard: featureExpenseRepartitionWizard"
+  },
+  "featureExpenseRepartitionWizardDesc": "A guided repartition: a shared cost proposed over the members by subscription share, each share adjustable, and the adjusted rule remembered for next month. Off: the one-expense repartition sheet only.",
+  "@featureExpenseRepartitionWizardDesc": {
+    "description": "#934 workspace status / repartition wizard: featureExpenseRepartitionWizardDesc"
+  },
+  "reportDocStatus": "Workspace status",
+  "@reportDocStatus": {
+    "description": "#934 workspace status / repartition wizard: reportDocStatus"
+  },
+  "statusTitle": "Workspace status",
+  "@statusTitle": {
+    "description": "#934 workspace status / repartition wizard: statusTitle"
+  },
+  "statusSubtitle": "Revenues, expenses and members over a period",
+  "@statusSubtitle": {
+    "description": "#934 workspace status / repartition wizard: statusSubtitle"
+  },
+  "statusFrom": "From",
+  "@statusFrom": {
+    "description": "#934 workspace status / repartition wizard: statusFrom"
+  },
+  "statusTo": "To",
+  "@statusTo": {
+    "description": "#934 workspace status / repartition wizard: statusTo"
+  },
+  "statusInvoiced": "Invoiced",
+  "@statusInvoiced": {
+    "description": "#934 workspace status / repartition wizard: statusInvoiced"
+  },
+  "statusCreditNotes": "Credit notes",
+  "@statusCreditNotes": {
+    "description": "#934 workspace status / repartition wizard: statusCreditNotes"
+  },
+  "statusPaymentsMatched": "Payments matched",
+  "@statusPaymentsMatched": {
+    "description": "#934 workspace status / repartition wizard: statusPaymentsMatched"
+  },
+  "statusPaymentsReceived": "Payments received",
+  "@statusPaymentsReceived": {
+    "description": "#934 workspace status / repartition wizard: statusPaymentsReceived"
+  },
+  "statusReimbursed": "Expenses reimbursed",
+  "@statusReimbursed": {
+    "description": "#934 workspace status / repartition wizard: statusReimbursed"
+  },
+  "statusRepartitioned": "Expenses shared out",
+  "@statusRepartitioned": {
+    "description": "#934 workspace status / repartition wizard: statusRepartitioned"
+  },
+  "statusAwaiting": "Awaiting",
+  "@statusAwaiting": {
+    "description": "#934 workspace status / repartition wizard: statusAwaiting"
+  },
+  "statusCredits": "Credits granted",
+  "@statusCredits": {
+    "description": "#934 workspace status / repartition wizard: statusCredits"
+  },
+  "statusNet": "Net",
+  "@statusNet": {
+    "description": "#934 workspace status / repartition wizard: statusNet"
+  },
+  "statusMembers": "Members",
+  "@statusMembers": {
+    "description": "#934 workspace status / repartition wizard: statusMembers"
+  },
+  "statusPrint": "Print the status",
+  "@statusPrint": {
+    "description": "#934 workspace status / repartition wizard: statusPrint"
+  },
+  "repartitionWizardTitle": "Share a cost",
+  "@repartitionWizardTitle": {
+    "description": "#934 workspace status / repartition wizard: repartitionWizardTitle"
+  },
+  "repartitionWizardSubtitle": "Propose a split by subscription share, adjust, book",
+  "@repartitionWizardSubtitle": {
+    "description": "#934 workspace status / repartition wizard: repartitionWizardSubtitle"
+  },
+  "repartitionStepCost": "The cost",
+  "@repartitionStepCost": {
+    "description": "#934 workspace status / repartition wizard: repartitionStepCost"
+  },
+  "repartitionStepRule": "The rule",
+  "@repartitionStepRule": {
+    "description": "#934 workspace status / repartition wizard: repartitionStepRule"
+  },
+  "repartitionStepBook": "Book",
+  "@repartitionStepBook": {
+    "description": "#934 workspace status / repartition wizard: repartitionStepBook"
+  },
+  "repartitionTitleLabel": "Title",
+  "@repartitionTitleLabel": {
+    "description": "#934 workspace status / repartition wizard: repartitionTitleLabel"
+  },
+  "repartitionAmountLabel": "Amount",
+  "@repartitionAmountLabel": {
+    "description": "#934 workspace status / repartition wizard: repartitionAmountLabel"
+  },
+  "repartitionPeriodLabel": "Month",
+  "@repartitionPeriodLabel": {
+    "description": "#934 workspace status / repartition wizard: repartitionPeriodLabel"
+  },
+  "repartitionRuleHint": "Each share is proposed by subscription percentage. Untick a member to leave them out; with the custom method, type their weight. The adjusted rule is proposed again next month.",
+  "@repartitionRuleHint": {
+    "description": "#934 workspace status / repartition wizard: repartitionRuleHint"
+  },
+  "repartitionExclude": "Leave out",
+  "@repartitionExclude": {
+    "description": "#934 workspace status / repartition wizard: repartitionExclude"
+  },
+  "repartitionWizardWeight": "Weight",
+  "@repartitionWizardWeight": {
+    "description": "#934 workspace status / repartition wizard: repartitionWeight"
+  },
+  "repartitionSharesTotal": "Total of the shares",
+  "@repartitionSharesTotal": {
+    "description": "#934 workspace status / repartition wizard: repartitionSharesTotal"
+  },
+  "repartitionBooked": "Repartition booked.",
+  "@repartitionBooked": {
+    "description": "#934 workspace status / repartition wizard: repartitionBooked"
+  },
+  "repartitionRememberRule": "Remember this rule",
+  "@repartitionRememberRule": {
+    "description": "#934 workspace status / repartition wizard: repartitionRememberRule"
+  }
+}

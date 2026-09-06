@@ -23,6 +23,7 @@ import 'service_item.dart';
 import 'statement.dart';
 import 'subscription_levels.dart';
 import 'number_sequence.dart';
+import 'workspace_status.dart';
 
 /// Money boundary (spec §7). Payments are only *recorded* — the pending
 /// event created by [recordPayment] must be confirmed by the other side
@@ -121,6 +122,17 @@ abstract class MoneyRepository {
 
   /// #802 — when the two automatic invoice runs happen.
   Future<BillingRules> fetchBillingRules(String workspaceId);
+
+  /// #934 — the workspace's status over [from]..[to] (YYYY-MM), admins
+  /// and owners only (RPC `workspace_status`).
+  Future<WorkspaceStatus> fetchWorkspaceStatus(
+      String workspaceId, String from, String to);
+
+  /// #934 — the remembered repartition rule (`billing_rules.repartition`).
+  Future<RepartitionRule> fetchRepartitionRule(String workspaceId);
+
+  /// #934 — remember the rule the wizard was adjusted to.
+  Future<void> setRepartitionRule(String workspaceId, RepartitionRule rule);
 
   /// Owner/admin only, server-enforced.
   Future<void> setBillingRules(String workspaceId, BillingRules rules);

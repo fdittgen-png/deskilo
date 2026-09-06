@@ -110,6 +110,16 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
         {'date': '2026-09-04', 'space': 'A1', 'counted': '8 h 00'},
       ],
       'vat_period': '2026-09',
+      // #934 — the workspace status.
+      'status_from': '2026-07', 'status_to': '2026-09',
+      'status_invoiced': '1 850,00 €', 'status_credit_notes': '120,00 €',
+      'status_payments': '1 600,00 €', 'status_reimbursed': '86,40 €',
+      'status_repartitioned': '240,00 €', 'status_credits': '0,00 €',
+      'status_net': '1 643,60 €',
+      'status_members': [
+        {'number': 'M-0001', 'name': 'Ma Petite Entreprise', 'pct': 50, 'invoiced': '300,00 €', 'paid': '300,00 €'},
+        {'number': 'M-0003', 'name': 'Guilhem MARTIN', 'pct': 100, 'invoiced': '600,00 €', 'paid': '500,00 €'},
+      ],
       'vat_period_net': '1 000,00 €',
       'vat_period_vat': '200,00 €',
       'vat_period_gross': '1 200,00 €',

@@ -1,0 +1,139 @@
+{
+  "@@locale": "de",
+  "featureWorkspaceStatus": "Lage des Arbeitsbereichs",
+  "@featureWorkspaceStatus": {
+    "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"
+  },
+  "featureWorkspaceStatusDesc": "Was der Arbeitsbereich über einen Zeitraum in Rechnung gestellt, eingenommen, erstattet und umgelegt hat, Mitglied für Mitglied — am Bildschirm für Inhaber und Admins und als druckbarer Bericht. Aus: keine Lageansicht.",
+  "@featureWorkspaceStatusDesc": {
+    "description": "#934 workspace status / repartition wizard: featureWorkspaceStatusDesc"
+  },
+  "featureExpenseRepartitionWizard": "Umlage-Assistent",
+  "@featureExpenseRepartitionWizard": {
+    "description": "#934 workspace status / repartition wizard: featureExpenseRepartitionWizard"
+  },
+  "featureExpenseRepartitionWizardDesc": "Eine geführte Umlage: gemeinsame Kosten anteilig zum Abonnement vorgeschlagen, jeder Anteil anpassbar, die angepasste Regel für den nächsten Monat gemerkt. Aus: nur das Umlage-Formular für eine Ausgabe.",
+  "@featureExpenseRepartitionWizardDesc": {
+    "description": "#934 workspace status / repartition wizard: featureExpenseRepartitionWizardDesc"
+  },
+  "reportDocStatus": "Lage des Arbeitsbereichs",
+  "@reportDocStatus": {
+    "description": "#934 workspace status / repartition wizard: reportDocStatus"
+  },
+  "statusTitle": "Lage des Arbeitsbereichs",
+  "@statusTitle": {
+    "description": "#934 workspace status / repartition wizard: statusTitle"
+  },
+  "statusSubtitle": "Einnahmen, Ausgaben und Mitglieder über einen Zeitraum",
+  "@statusSubtitle": {
+    "description": "#934 workspace status / repartition wizard: statusSubtitle"
+  },
+  "statusFrom": "Von",
+  "@statusFrom": {
+    "description": "#934 workspace status / repartition wizard: statusFrom"
+  },
+  "statusTo": "Bis",
+  "@statusTo": {
+    "description": "#934 workspace status / repartition wizard: statusTo"
+  },
+  "statusInvoiced": "In Rechnung gestellt",
+  "@statusInvoiced": {
+    "description": "#934 workspace status / repartition wizard: statusInvoiced"
+  },
+  "statusCreditNotes": "Gutschriften",
+  "@statusCreditNotes": {
+    "description": "#934 workspace status / repartition wizard: statusCreditNotes"
+  },
+  "statusPaymentsMatched": "Zugeordnete Zahlungen",
+  "@statusPaymentsMatched": {
+    "description": "#934 workspace status / repartition wizard: statusPaymentsMatched"
+  },
+  "statusPaymentsReceived": "Eingegangene Zahlungen",
+  "@statusPaymentsReceived": {
+    "description": "#934 workspace status / repartition wizard: statusPaymentsReceived"
+  },
+  "statusReimbursed": "Erstattete Ausgaben",
+  "@statusReimbursed": {
+    "description": "#934 workspace status / repartition wizard: statusReimbursed"
+  },
+  "statusRepartitioned": "Umgelegte Ausgaben",
+  "@statusRepartitioned": {
+    "description": "#934 workspace status / repartition wizard: statusRepartitioned"
+  },
+  "statusAwaiting": "Offen",
+  "@statusAwaiting": {
+    "description": "#934 workspace status / repartition wizard: statusAwaiting"
+  },
+  "statusCredits": "Gewährte Gutschriften",
+  "@statusCredits": {
+    "description": "#934 workspace status / repartition wizard: statusCredits"
+  },
+  "statusNet": "Netto",
+  "@statusNet": {
+    "description": "#934 workspace status / repartition wizard: statusNet"
+  },
+  "statusMembers": "Mitglieder",
+  "@statusMembers": {
+    "description": "#934 workspace status / repartition wizard: statusMembers"
+  },
+  "statusPrint": "Lage drucken",
+  "@statusPrint": {
+    "description": "#934 workspace status / repartition wizard: statusPrint"
+  },
+  "repartitionWizardTitle": "Kosten umlegen",
+  "@repartitionWizardTitle": {
+    "description": "#934 workspace status / repartition wizard: repartitionWizardTitle"
+  },
+  "repartitionWizardSubtitle": "Anteilig zum Abonnement vorschlagen, anpassen, buchen",
+  "@repartitionWizardSubtitle": {
+    "description": "#934 workspace status / repartition wizard: repartitionWizardSubtitle"
+  },
+  "repartitionStepCost": "Die Kosten",
+  "@repartitionStepCost": {
+    "description": "#934 workspace status / repartition wizard: repartitionStepCost"
+  },
+  "repartitionStepRule": "Die Regel",
+  "@repartitionStepRule": {
+    "description": "#934 workspace status / repartition wizard: repartitionStepRule"
+  },
+  "repartitionStepBook": "Buchen",
+  "@repartitionStepBook": {
+    "description": "#934 workspace status / repartition wizard: repartitionStepBook"
+  },
+  "repartitionTitleLabel": "Bezeichnung",
+  "@repartitionTitleLabel": {
+    "description": "#934 workspace status / repartition wizard: repartitionTitleLabel"
+  },
+  "repartitionAmountLabel": "Betrag",
+  "@repartitionAmountLabel": {
+    "description": "#934 workspace status / repartition wizard: repartitionAmountLabel"
+  },
+  "repartitionPeriodLabel": "Monat",
+  "@repartitionPeriodLabel": {
+    "description": "#934 workspace status / repartition wizard: repartitionPeriodLabel"
+  },
+  "repartitionRuleHint": "Jeder Anteil wird anteilig zum Abonnement vorgeschlagen. Ein Mitglied abwählen, um es auszunehmen; bei der Methode „Schlüssel“ das Gewicht eintragen. Die angepasste Regel wird nächsten Monat wieder vorgeschlagen.",
+  "@repartitionRuleHint": {
+    "description": "#934 workspace status / repartition wizard: repartitionRuleHint"
+  },
+  "repartitionExclude": "Ausnehmen",
+  "@repartitionExclude": {
+    "description": "#934 workspace status / repartition wizard: repartitionExclude"
+  },
+  "repartitionWizardWeight": "Gewicht",
+  "@repartitionWizardWeight": {
+    "description": "#934 workspace status / repartition wizard: repartitionWeight"
+  },
+  "repartitionSharesTotal": "Summe der Anteile",
+  "@repartitionSharesTotal": {
+    "description": "#934 workspace status / repartition wizard: repartitionSharesTotal"
+  },
+  "repartitionBooked": "Umlage gebucht.",
+  "@repartitionBooked": {
+    "description": "#934 workspace status / repartition wizard: repartitionBooked"
+  },
+  "repartitionRememberRule": "Diese Regel merken",
+  "@repartitionRememberRule": {
+    "description": "#934 workspace status / repartition wizard: repartitionRememberRule"
+  }
+}

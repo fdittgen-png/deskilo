@@ -5454,6 +5454,142 @@
   },
   "permViewNegotiations": "Consulter les accords commerciaux",
   "permManageNegotiations": "Gérer les accords commerciaux",
+  "featureWorkspaceStatus": "Situation de l'espace",
+  "@featureWorkspaceStatus": {
+    "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"
+  },
+  "featureWorkspaceStatusDesc": "Ce que l'espace a facturé, encaissé, remboursé et réparti sur une période, adhérent par adhérent — à l'écran pour les propriétaires et admins, et en rapport imprimable. Désactivé : pas de vue de situation.",
+  "@featureWorkspaceStatusDesc": {
+    "description": "#934 workspace status / repartition wizard: featureWorkspaceStatusDesc"
+  },
+  "featureExpenseRepartitionWizard": "Assistant de répartition",
+  "@featureExpenseRepartitionWizard": {
+    "description": "#934 workspace status / repartition wizard: featureExpenseRepartitionWizard"
+  },
+  "featureExpenseRepartitionWizardDesc": "Une répartition guidée : une dépense commune proposée au prorata de l'abonnement, chaque part ajustable, et la règle ajustée mémorisée pour le mois suivant. Désactivé : seule la fiche de répartition d'une dépense.",
+  "@featureExpenseRepartitionWizardDesc": {
+    "description": "#934 workspace status / repartition wizard: featureExpenseRepartitionWizardDesc"
+  },
+  "reportDocStatus": "Situation de l'espace",
+  "@reportDocStatus": {
+    "description": "#934 workspace status / repartition wizard: reportDocStatus"
+  },
+  "statusTitle": "Situation de l'espace",
+  "@statusTitle": {
+    "description": "#934 workspace status / repartition wizard: statusTitle"
+  },
+  "statusSubtitle": "Recettes, dépenses et adhérents sur une période",
+  "@statusSubtitle": {
+    "description": "#934 workspace status / repartition wizard: statusSubtitle"
+  },
+  "statusFrom": "Du",
+  "@statusFrom": {
+    "description": "#934 workspace status / repartition wizard: statusFrom"
+  },
+  "statusTo": "Au",
+  "@statusTo": {
+    "description": "#934 workspace status / repartition wizard: statusTo"
+  },
+  "statusInvoiced": "Facturé",
+  "@statusInvoiced": {
+    "description": "#934 workspace status / repartition wizard: statusInvoiced"
+  },
+  "statusCreditNotes": "Avoirs",
+  "@statusCreditNotes": {
+    "description": "#934 workspace status / repartition wizard: statusCreditNotes"
+  },
+  "statusPaymentsMatched": "Paiements lettrés",
+  "@statusPaymentsMatched": {
+    "description": "#934 workspace status / repartition wizard: statusPaymentsMatched"
+  },
+  "statusPaymentsReceived": "Paiements reçus",
+  "@statusPaymentsReceived": {
+    "description": "#934 workspace status / repartition wizard: statusPaymentsReceived"
+  },
+  "statusReimbursed": "Dépenses remboursées",
+  "@statusReimbursed": {
+    "description": "#934 workspace status / repartition wizard: statusReimbursed"
+  },
+  "statusRepartitioned": "Dépenses réparties",
+  "@statusRepartitioned": {
+    "description": "#934 workspace status / repartition wizard: statusRepartitioned"
+  },
+  "statusAwaiting": "En attente",
+  "@statusAwaiting": {
+    "description": "#934 workspace status / repartition wizard: statusAwaiting"
+  },
+  "statusCredits": "Crédits accordés",
+  "@statusCredits": {
+    "description": "#934 workspace status / repartition wizard: statusCredits"
+  },
+  "statusNet": "Net",
+  "@statusNet": {
+    "description": "#934 workspace status / repartition wizard: statusNet"
+  },
+  "statusMembers": "Adhérents",
+  "@statusMembers": {
+    "description": "#934 workspace status / repartition wizard: statusMembers"
+  },
+  "statusPrint": "Imprimer la situation",
+  "@statusPrint": {
+    "description": "#934 workspace status / repartition wizard: statusPrint"
+  },
+  "repartitionWizardTitle": "Répartir une dépense",
+  "@repartitionWizardTitle": {
+    "description": "#934 workspace status / repartition wizard: repartitionWizardTitle"
+  },
+  "repartitionWizardSubtitle": "Proposer au prorata de l'abonnement, ajuster, comptabiliser",
+  "@repartitionWizardSubtitle": {
+    "description": "#934 workspace status / repartition wizard: repartitionWizardSubtitle"
+  },
+  "repartitionStepCost": "La dépense",
+  "@repartitionStepCost": {
+    "description": "#934 workspace status / repartition wizard: repartitionStepCost"
+  },
+  "repartitionStepRule": "La règle",
+  "@repartitionStepRule": {
+    "description": "#934 workspace status / repartition wizard: repartitionStepRule"
+  },
+  "repartitionStepBook": "Comptabiliser",
+  "@repartitionStepBook": {
+    "description": "#934 workspace status / repartition wizard: repartitionStepBook"
+  },
+  "repartitionTitleLabel": "Intitulé",
+  "@repartitionTitleLabel": {
+    "description": "#934 workspace status / repartition wizard: repartitionTitleLabel"
+  },
+  "repartitionAmountLabel": "Montant",
+  "@repartitionAmountLabel": {
+    "description": "#934 workspace status / repartition wizard: repartitionAmountLabel"
+  },
+  "repartitionPeriodLabel": "Mois",
+  "@repartitionPeriodLabel": {
+    "description": "#934 workspace status / repartition wizard: repartitionPeriodLabel"
+  },
+  "repartitionRuleHint": "Chaque part est proposée au prorata de l'abonnement. Décochez un adhérent pour l'exclure ; en méthode « clé », saisissez son poids. La règle ajustée sera proposée le mois prochain.",
+  "@repartitionRuleHint": {
+    "description": "#934 workspace status / repartition wizard: repartitionRuleHint"
+  },
+  "repartitionExclude": "Exclure",
+  "@repartitionExclude": {
+    "description": "#934 workspace status / repartition wizard: repartitionExclude"
+  },
+  "repartitionWizardWeight": "Poids",
+  "@repartitionWizardWeight": {
+    "description": "#934 workspace status / repartition wizard: repartitionWeight"
+  },
+  "repartitionSharesTotal": "Total des parts",
+  "@repartitionSharesTotal": {
+    "description": "#934 workspace status / repartition wizard: repartitionSharesTotal"
+  },
+  "repartitionBooked": "Répartition comptabilisée.",
+  "@repartitionBooked": {
+    "description": "#934 workspace status / repartition wizard: repartitionBooked"
+  },
+  "repartitionRememberRule": "Mémoriser cette règle",
+  "@repartitionRememberRule": {
+    "description": "#934 workspace status / repartition wizard: repartitionRememberRule"
+  },
   "workspaceXmlExport": "Exporter l'espace (XML)",
   "workspaceXmlExportSubtitle": "Paramètres et plan des locaux dans un fichier partageable. Sans membres, réservations ni données financières.",
   "workspaceXmlImport": "Importer l'espace (XML)",

@@ -65,6 +65,8 @@ import '../features/money/presentation/screens/payment_config_screen.dart';
 import '../features/workspace/presentation/screens/nfc_config_screen.dart';
 import 'shell/shell_screen.dart';
 import '../features/money/presentation/screens/number_sequences_screen.dart';
+import '../features/money/presentation/screens/workspace_status_screen.dart';
+import '../features/money/presentation/screens/repartition_wizard_screen.dart';
 
 part 'router.g.dart';
 
@@ -528,6 +530,21 @@ GoRouter router(Ref ref) {
                 ? null
                 : '/settings',
         builder: (context, state) => const MyPaymentTermsScreen(),
+      ),
+      // #934 — the treasurer's view, and the guided repartition.
+      GoRoute(
+        path: '/money/status',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.workspaceStatus) ? null : '/money',
+        builder: (context, state) => const WorkspaceStatusScreen(),
+      ),
+      GoRoute(
+        path: '/money/repartition-wizard',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.expenseRepartitionWizard)
+                ? null
+                : '/money',
+        builder: (context, state) => const RepartitionWizardScreen(),
       ),
       // #925 — how every journal numbers its documents, one screen.
       GoRoute(

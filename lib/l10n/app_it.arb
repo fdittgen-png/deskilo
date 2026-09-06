@@ -5454,6 +5454,142 @@
   },
   "permViewNegotiations": "Consultare gli accordi commerciali",
   "permManageNegotiations": "Gestire gli accordi commerciali",
+  "featureWorkspaceStatus": "Situazione dello spazio",
+  "@featureWorkspaceStatus": {
+    "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"
+  },
+  "featureWorkspaceStatusDesc": "Ciò che lo spazio ha fatturato, incassato, rimborsato e ripartito in un periodo, socio per socio — a schermo per proprietari e admin, e come rapporto stampabile. Disattivato: nessuna vista della situazione.",
+  "@featureWorkspaceStatusDesc": {
+    "description": "#934 workspace status / repartition wizard: featureWorkspaceStatusDesc"
+  },
+  "featureExpenseRepartitionWizard": "Assistente di ripartizione",
+  "@featureExpenseRepartitionWizard": {
+    "description": "#934 workspace status / repartition wizard: featureExpenseRepartitionWizard"
+  },
+  "featureExpenseRepartitionWizardDesc": "Una ripartizione guidata: una spesa comune proposta in base alla percentuale di abbonamento, ogni quota modificabile, e la regola modificata ricordata per il mese successivo. Disattivato: solo la scheda di ripartizione di una spesa.",
+  "@featureExpenseRepartitionWizardDesc": {
+    "description": "#934 workspace status / repartition wizard: featureExpenseRepartitionWizardDesc"
+  },
+  "reportDocStatus": "Situazione dello spazio",
+  "@reportDocStatus": {
+    "description": "#934 workspace status / repartition wizard: reportDocStatus"
+  },
+  "statusTitle": "Situazione dello spazio",
+  "@statusTitle": {
+    "description": "#934 workspace status / repartition wizard: statusTitle"
+  },
+  "statusSubtitle": "Entrate, spese e soci in un periodo",
+  "@statusSubtitle": {
+    "description": "#934 workspace status / repartition wizard: statusSubtitle"
+  },
+  "statusFrom": "Dal",
+  "@statusFrom": {
+    "description": "#934 workspace status / repartition wizard: statusFrom"
+  },
+  "statusTo": "Al",
+  "@statusTo": {
+    "description": "#934 workspace status / repartition wizard: statusTo"
+  },
+  "statusInvoiced": "Fatturato",
+  "@statusInvoiced": {
+    "description": "#934 workspace status / repartition wizard: statusInvoiced"
+  },
+  "statusCreditNotes": "Note di credito",
+  "@statusCreditNotes": {
+    "description": "#934 workspace status / repartition wizard: statusCreditNotes"
+  },
+  "statusPaymentsMatched": "Pagamenti abbinati",
+  "@statusPaymentsMatched": {
+    "description": "#934 workspace status / repartition wizard: statusPaymentsMatched"
+  },
+  "statusPaymentsReceived": "Pagamenti ricevuti",
+  "@statusPaymentsReceived": {
+    "description": "#934 workspace status / repartition wizard: statusPaymentsReceived"
+  },
+  "statusReimbursed": "Spese rimborsate",
+  "@statusReimbursed": {
+    "description": "#934 workspace status / repartition wizard: statusReimbursed"
+  },
+  "statusRepartitioned": "Spese ripartite",
+  "@statusRepartitioned": {
+    "description": "#934 workspace status / repartition wizard: statusRepartitioned"
+  },
+  "statusAwaiting": "In attesa",
+  "@statusAwaiting": {
+    "description": "#934 workspace status / repartition wizard: statusAwaiting"
+  },
+  "statusCredits": "Crediti concessi",
+  "@statusCredits": {
+    "description": "#934 workspace status / repartition wizard: statusCredits"
+  },
+  "statusNet": "Netto",
+  "@statusNet": {
+    "description": "#934 workspace status / repartition wizard: statusNet"
+  },
+  "statusMembers": "Soci",
+  "@statusMembers": {
+    "description": "#934 workspace status / repartition wizard: statusMembers"
+  },
+  "statusPrint": "Stampa la situazione",
+  "@statusPrint": {
+    "description": "#934 workspace status / repartition wizard: statusPrint"
+  },
+  "repartitionWizardTitle": "Ripartire una spesa",
+  "@repartitionWizardTitle": {
+    "description": "#934 workspace status / repartition wizard: repartitionWizardTitle"
+  },
+  "repartitionWizardSubtitle": "Proporre in base all'abbonamento, modificare, registrare",
+  "@repartitionWizardSubtitle": {
+    "description": "#934 workspace status / repartition wizard: repartitionWizardSubtitle"
+  },
+  "repartitionStepCost": "La spesa",
+  "@repartitionStepCost": {
+    "description": "#934 workspace status / repartition wizard: repartitionStepCost"
+  },
+  "repartitionStepRule": "La regola",
+  "@repartitionStepRule": {
+    "description": "#934 workspace status / repartition wizard: repartitionStepRule"
+  },
+  "repartitionStepBook": "Registrare",
+  "@repartitionStepBook": {
+    "description": "#934 workspace status / repartition wizard: repartitionStepBook"
+  },
+  "repartitionTitleLabel": "Descrizione",
+  "@repartitionTitleLabel": {
+    "description": "#934 workspace status / repartition wizard: repartitionTitleLabel"
+  },
+  "repartitionAmountLabel": "Importo",
+  "@repartitionAmountLabel": {
+    "description": "#934 workspace status / repartition wizard: repartitionAmountLabel"
+  },
+  "repartitionPeriodLabel": "Mese",
+  "@repartitionPeriodLabel": {
+    "description": "#934 workspace status / repartition wizard: repartitionPeriodLabel"
+  },
+  "repartitionRuleHint": "Ogni quota è proposta in base alla percentuale di abbonamento. Deseleziona un socio per escluderlo; con il metodo «chiave», indica il suo peso. La regola modificata sarà proposta il mese prossimo.",
+  "@repartitionRuleHint": {
+    "description": "#934 workspace status / repartition wizard: repartitionRuleHint"
+  },
+  "repartitionExclude": "Escludere",
+  "@repartitionExclude": {
+    "description": "#934 workspace status / repartition wizard: repartitionExclude"
+  },
+  "repartitionWizardWeight": "Peso",
+  "@repartitionWizardWeight": {
+    "description": "#934 workspace status / repartition wizard: repartitionWeight"
+  },
+  "repartitionSharesTotal": "Totale delle quote",
+  "@repartitionSharesTotal": {
+    "description": "#934 workspace status / repartition wizard: repartitionSharesTotal"
+  },
+  "repartitionBooked": "Ripartizione registrata.",
+  "@repartitionBooked": {
+    "description": "#934 workspace status / repartition wizard: repartitionBooked"
+  },
+  "repartitionRememberRule": "Ricorda questa regola",
+  "@repartitionRememberRule": {
+    "description": "#934 workspace status / repartition wizard: repartitionRememberRule"
+  },
   "workspaceXmlExport": "Esporta lo spazio (XML)",
   "workspaceXmlExportSubtitle": "Impostazioni e planimetria in un file condivisibile. Senza membri, prenotazioni o dati finanziari.",
   "workspaceXmlImport": "Importa lo spazio (XML)",

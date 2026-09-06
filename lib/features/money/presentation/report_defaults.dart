@@ -372,6 +372,26 @@ ReportBands defaultPaymentsBands(AppLocalizations? l10n) =>
         totalsLine:
             '= {{ payments }} | {% if pending_total != "" %}{{ pending_total }}{% endif %}');
 
+/// The WORKSPACE STATUS (#934): what the workspace invoiced, collected,
+/// reimbursed and shared out over a range of months, then the same per
+/// member. Owners and admins only; the numbers are the database's.
+ReportBands defaultStatusBands(AppLocalizations? l10n) => ReportBands(
+      header: '''
+# {{ workspace }}
+> {{ workspace_address }}
+> {{ issued }}
+
+## ${l10n?.reportDocStatus ?? 'Workspace status'} — {{ status_from }} → {{ status_to }}''',
+      body: '''
+{% for line in lines %}{{ line.label }} | {{ line.amount }}
+{% endfor %}= ${l10n?.statusNet ?? 'Net'} | {{ status_net }}
+
+### ${l10n?.statusMembers ?? 'Members'}
+{% for m in status_members %}{{ m.number }} {{ m.name }} ({{ m.pct }} %) | {{ m.invoiced }} / {{ m.paid }}
+{% endfor %}''',
+      footer: '> {{ workspace }}',
+    );
+
 /// The CONSUMPTION REPORT (#873): what the month's participation paid
 /// for, what was actually consumed, what is left or exceeded — and the
 /// records behind the numbers. Sent to the member at month end.
@@ -591,6 +611,7 @@ ReportBands defaultBandsForDoc(String docId, AppLocalizations? l10n) {
   if (docId == 'payments') return defaultPaymentsBands(l10n);
   if (docId == 'usage') return defaultUsageBands(l10n);
   if (docId == 'workspace') return defaultWorkspaceBands(l10n);
+  if (docId == 'status') return defaultStatusBands(l10n);
   if (docId == 'vat') return defaultVatBands(l10n);
   if (docId == 'coa') return defaultCoaBands(l10n);
   if (docId == 'badges') return defaultBadgeSheetBands(l10n);

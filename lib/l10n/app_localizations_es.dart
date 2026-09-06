@@ -8644,6 +8644,112 @@ class AppLocalizationsEs extends AppLocalizations {
   String get permManageNegotiations => 'Gestionar los acuerdos comerciales';
 
   @override
+  String get featureWorkspaceStatus => 'Situación del espacio';
+
+  @override
+  String get featureWorkspaceStatusDesc =>
+      'Lo que el espacio facturó, cobró, reembolsó y repartió en un periodo, socio por socio — en pantalla para propietarios y admins, y como informe imprimible. Desactivado: sin vista de situación.';
+
+  @override
+  String get featureExpenseRepartitionWizard => 'Asistente de reparto';
+
+  @override
+  String get featureExpenseRepartitionWizardDesc =>
+      'Un reparto guiado: un gasto común propuesto según el porcentaje de suscripción, cada parte ajustable, y la regla ajustada recordada para el mes siguiente. Desactivado: solo la ficha de reparto de un gasto.';
+
+  @override
+  String get reportDocStatus => 'Situación del espacio';
+
+  @override
+  String get statusTitle => 'Situación del espacio';
+
+  @override
+  String get statusSubtitle => 'Ingresos, gastos y socios en un periodo';
+
+  @override
+  String get statusFrom => 'Desde';
+
+  @override
+  String get statusTo => 'Hasta';
+
+  @override
+  String get statusInvoiced => 'Facturado';
+
+  @override
+  String get statusCreditNotes => 'Abonos';
+
+  @override
+  String get statusPaymentsMatched => 'Pagos conciliados';
+
+  @override
+  String get statusPaymentsReceived => 'Pagos recibidos';
+
+  @override
+  String get statusReimbursed => 'Gastos reembolsados';
+
+  @override
+  String get statusRepartitioned => 'Gastos repartidos';
+
+  @override
+  String get statusAwaiting => 'Pendiente';
+
+  @override
+  String get statusCredits => 'Créditos concedidos';
+
+  @override
+  String get statusNet => 'Neto';
+
+  @override
+  String get statusMembers => 'Socios';
+
+  @override
+  String get statusPrint => 'Imprimir la situación';
+
+  @override
+  String get repartitionWizardTitle => 'Repartir un gasto';
+
+  @override
+  String get repartitionWizardSubtitle =>
+      'Proponer según la suscripción, ajustar, contabilizar';
+
+  @override
+  String get repartitionStepCost => 'El gasto';
+
+  @override
+  String get repartitionStepRule => 'La regla';
+
+  @override
+  String get repartitionStepBook => 'Contabilizar';
+
+  @override
+  String get repartitionTitleLabel => 'Concepto';
+
+  @override
+  String get repartitionAmountLabel => 'Importe';
+
+  @override
+  String get repartitionPeriodLabel => 'Mes';
+
+  @override
+  String get repartitionRuleHint =>
+      'Cada parte se propone según el porcentaje de suscripción. Desmarque un socio para excluirlo; con el método «clave», indique su peso. La regla ajustada se propondrá el mes que viene.';
+
+  @override
+  String get repartitionExclude => 'Excluir';
+
+  @override
+  String get repartitionWizardWeight => 'Peso';
+
+  @override
+  String get repartitionSharesTotal => 'Total de las partes';
+
+  @override
+  String get repartitionBooked => 'Reparto contabilizado.';
+
+  @override
+  String get repartitionRememberRule => 'Recordar esta regla';
+
+  @override
   String get workspaceXmlExport => 'Exportar el espacio (XML)';
 
   @override

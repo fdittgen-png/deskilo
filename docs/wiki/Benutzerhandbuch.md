@@ -1036,3 +1036,6 @@ Der Tab **Nachrichten** ist die Messaging-Zentrale Ihres Bereichs: alle Unterhal
 ### Plattformbetreiber
 
 Das Konto, das die Installation betreibt, sieht unter *Profile* **alle Arbeitsbereiche** der Datenbank: die eigenen wie gewohnt, die anderen **ausgegraut** mit Umgebung und Mitgliederzahl. Ein Tipp auf einen ausgegrauten Bereich zeigt dessen **Inhaber** mit E-Mail — und dieser Zugriff wird protokolliert, sichtbar für die Inhaber des betroffenen Bereichs. Ein Inhaber hat immer eine E-Mail-Adresse: Die App verweigert das Anlegen eines Bereichs oder die Ernennung eines Mitinhabers ohne eine.
+### Lage des Arbeitsbereichs und geführte Umlage (#934)
+
+*Geld → Lage des Arbeitsbereichs* zeigt Inhabern und Admins über einen frei gewählten Zeitraum, was der Arbeitsbereich **in Rechnung gestellt** (netto nach Gutschriften), **eingenommen**, **erstattet** und **umgelegt** hat, dann dasselbe Mitglied für Mitglied mit Abonnementanteil — und druckt es als Bericht. *Kosten umlegen* schlägt jeden Anteil **anteilig zum Abonnement** vor, erlaubt Ausnahmen und Gewichte, bucht die Anteile wie bisher (Zeilen auf der nächsten Verbrauchsrechnung) und **merkt sich die Regel** für den nächsten Monat.

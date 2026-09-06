@@ -140,6 +140,10 @@ void main() {
         // #878 — the VAT report.
         'vat_period', 'vat_period_net', 'vat_period_vat', 'vat_period_gross',
         'vat_basis_note',
+        // #934 — the workspace status.
+        'status_from', 'status_to', 'status_invoiced', 'status_credit_notes',
+        'status_payments', 'status_reimbursed', 'status_repartitioned',
+        'status_credits', 'status_net', 'status_members',
         'vat_positions', 'vat_rate_totals',
         'payment_terms', 'payment_terms_source',
         'late_penalty', 'recovery_indemnity', 'escompte', 'insurance',
