@@ -1072,3 +1072,6 @@ Un espace peut avoir **plusieurs adresses**. *Réglages → Sites* : le site par
 ### Sites sur les documents (#946)
 
 Avec plusieurs sites, une facture porte **l'adresse et le SIRET du site de rattachement** de l'adhérent côté vendeur (le site par défaut garde l'adresse de l'espace), nomme le site sous l'en-tête, et — quand le détail des passages est imprimé — indique les **autres sites** où l'adhérent a travaillé dans le mois. La facture électronique suit la même adresse.
+### Numéros par site (#948)
+
+En France, le numéro de TVA et l'exonération appartiennent à l'entité juridique ; chaque établissement a son **SIRET**, que le site porte. Un site qui est une **entité juridique distincte** peut en plus porter son propre numéro de TVA et sa propre mention d'exonération — les documents émis à ce site les reprennent. C'est en général le signe qu'il s'agit d'un espace séparé ; l'écran le rappelle.

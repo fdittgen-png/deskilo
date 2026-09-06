@@ -4742,6 +4742,7 @@
   "servicesPrice": "Prezzo",
   "servicesInactive": "Inattivo",
   "servicesActive": "Attivo",
+<<<<<<< HEAD
   "featureSiteDocuments": "Sedi sui documenti",
   "@featureSiteDocuments": {
     "description": "#946 site documents: featureSiteDocuments"
@@ -4749,6 +4750,19 @@
   "featureSiteDocumentsDesc": "I documenti indicano la sede interessata: l'indirizzo e la registrazione della sede di riferimento del socio come venditore, e le altre sedi frequentate nel mese nel dettaglio. Disattivato: l'indirizzo dello spazio su tutti i documenti.",
   "@featureSiteDocumentsDesc": {
     "description": "#946 site documents: featureSiteDocumentsDesc"
+=======
+  "siteVatId": "Partita IVA (questa entità)",
+  "@siteVatId": {
+    "description": "#948 site registrations: siteVatId"
+  },
+  "siteExemptionReason": "Dicitura di esenzione (questa entità)",
+  "@siteExemptionReason": {
+    "description": "#948 site registrations: siteExemptionReason"
+  },
+  "siteRegistrationHint": "Solo se la sede è un'entità giuridica distinta — di solito è uno spazio separato. Vuoto: valgono i numeri dello spazio.",
+  "@siteRegistrationHint": {
+    "description": "#948 site registrations: siteRegistrationHint"
+>>>>>>> 65ce5d59 (feat(workspace): a site that is a distinct legal entity carries its own VAT number and exemption (#948))
   },
   "featureMultiSite": "Sedi",
   "@featureMultiSite": {

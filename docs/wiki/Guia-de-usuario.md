@@ -1072,3 +1072,6 @@ Un espacio puede tener **varias direcciones**. *Ajustes → Sedes*: la sede por 
 ### Sedes en los documentos (#946)
 
 Con varias sedes, una factura lleva **la dirección y el registro de la sede de referencia** del socio como vendedor (la sede por defecto conserva la dirección del espacio), nombra la sede bajo el encabezado y — cuando se imprime el detalle de asistencia — indica las **otras sedes** donde el socio trabajó en el mes. La factura electrónica sigue la misma dirección.
+### Números por sede (#948)
+
+En Francia el número de IVA y la exención pertenecen a la entidad jurídica; cada establecimiento tiene su **SIRET**, que la sede lleva. Una sede que es una **entidad jurídica distinta** puede llevar además su propio número de IVA y su mención de exención — los documentos emitidos en esa sede los toman. Suele ser señal de un espacio aparte; la pantalla lo recuerda.

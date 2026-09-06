@@ -7590,11 +7590,22 @@ class AppLocalizationsIt extends AppLocalizations {
   String get servicesActive => 'Attivo';
 
   @override
+<<<<<<< HEAD
   String get featureSiteDocuments => 'Sedi sui documenti';
 
   @override
   String get featureSiteDocumentsDesc =>
       'I documenti indicano la sede interessata: l\'indirizzo e la registrazione della sede di riferimento del socio come venditore, e le altre sedi frequentate nel mese nel dettaglio. Disattivato: l\'indirizzo dello spazio su tutti i documenti.';
+=======
+  String get siteVatId => 'Partita IVA (questa entità)';
+
+  @override
+  String get siteExemptionReason => 'Dicitura di esenzione (questa entità)';
+
+  @override
+  String get siteRegistrationHint =>
+      'Solo se la sede è un\'entità giuridica distinta — di solito è uno spazio separato. Vuoto: valgono i numeri dello spazio.';
+>>>>>>> 65ce5d59 (feat(workspace): a site that is a distinct legal entity carries its own VAT number and exemption (#948))
 
   @override
   String get featureMultiSite => 'Sedi';

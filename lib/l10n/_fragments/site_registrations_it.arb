@@ -1,0 +1,15 @@
+{
+  "@@locale": "it",
+  "siteVatId": "Partita IVA (questa entità)",
+  "@siteVatId": {
+    "description": "#948 site registrations: siteVatId"
+  },
+  "siteExemptionReason": "Dicitura di esenzione (questa entità)",
+  "@siteExemptionReason": {
+    "description": "#948 site registrations: siteExemptionReason"
+  },
+  "siteRegistrationHint": "Solo se la sede è un'entità giuridica distinta — di solito è uno spazio separato. Vuoto: valgono i numeri dello spazio.",
+  "@siteRegistrationHint": {
+    "description": "#948 site registrations: siteRegistrationHint"
+  }
+}

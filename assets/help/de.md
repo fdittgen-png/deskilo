@@ -1099,3 +1099,6 @@ Ein Arbeitsbereich kann **mehrere Adressen** haben. *Einstellungen → Standorte
 ### Standorte auf Belegen (#946)
 
 Mit mehreren Standorten trägt eine Rechnung **Adresse und Registrierung des Heimatstandorts** des Mitglieds auf der Verkäuferseite (der Standard-Standort behält die Adresse des Arbeitsbereichs), nennt den Standort unter der Kopfzeile und führt — wenn die Anwesenheitsdetails gedruckt werden — die **anderen Standorte** auf, an denen das Mitglied im Monat gearbeitet hat. Die E-Rechnung folgt derselben Adresse.
+### Nummern je Standort (#948)
+
+In Frankreich gehören USt-Nummer und Befreiung zur juristischen Person; jede Betriebsstätte hat ihre eigene **SIRET**, die der Standort trägt. Ein Standort, der eine **eigene juristische Person** ist, kann zusätzlich eigene USt-Nummer und Befreiungsvermerk tragen — Belege an diesem Standort übernehmen sie. Das ist meist das Zeichen für einen eigenen Arbeitsbereich; der Bildschirm sagt es.

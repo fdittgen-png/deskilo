@@ -1072,3 +1072,6 @@ Uno spazio può avere **più indirizzi**. *Impostazioni → Sedi*: la sede prede
 ### Sedi sui documenti (#946)
 
 Con più sedi, una fattura porta **l'indirizzo e la registrazione della sede di riferimento** del socio come venditore (la sede predefinita mantiene l'indirizzo dello spazio), indica la sede sotto l'intestazione e — quando si stampa il dettaglio delle presenze — elenca le **altre sedi** in cui il socio ha lavorato nel mese. La fattura elettronica segue lo stesso indirizzo.
+### Numeri per sede (#948)
+
+In Francia la partita IVA e l'esenzione appartengono all'entità giuridica; ogni unità locale ha il proprio **SIRET**, che la sede porta. Una sede che è un'**entità giuridica distinta** può portare inoltre la propria partita IVA e la propria dicitura di esenzione — i documenti emessi in quella sede le riprendono. Di solito è il segno di uno spazio separato; la schermata lo ricorda.

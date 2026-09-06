@@ -21,6 +21,19 @@ void main() {
     expect(s.postalBlock, '12 quai du Port\n34300 AGDE');
     expect(s.hasAddress, isTrue);
     expect(Site.fromRow(const {'id': 'x'}).hasAddress, isFalse);
+    // #948 — a distinct legal entity's own numbers ride on the site.
+    final entity = Site.fromRow({'id': 'e', 'vat_id': 'FR12901234567', 'tax_exemption_reason': 'art. 293 B'});
+    expect((entity.vatId, entity.taxExemptionReason), ('FR12901234567', 'art. 293 B'));
+    expect(entity.copyWith(vatId: '').vatId, '');
+  });
+
+  test('the SQL twin (0171): one upsert_site survives with the two defaulted '
+      'parameters, and the seller party takes the site\'s numbers only when set', () {
+    final sql = File('supabase/migrations/0171_site_registrations.sql').readAsStringSync();
+    expect(sql, contains('drop function if exists public.upsert_site(uuid, uuid, text, text, text, text, text, text, int);'));
+    expect(sql, contains("p_vat_id text default '', p_tax_exemption_reason text default ''"));
+    expect(sql, contains("v_site.vat_id <> '''' then v_site.vat_id else coalesce(v_workspace.vat_id, '''')"));
+    expect(sql, contains("raise exception '0171: anchor B missing'"));
   });
 
   test('the SQL twin (0168): a default site per workspace, the default '

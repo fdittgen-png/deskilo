@@ -14,6 +14,8 @@ class Site {
     this.city = '',
     this.countryCode = '',
     this.legalId = '',
+    this.vatId = '',
+    this.taxExemptionReason = '',
     this.isDefault = false,
     this.sortOrder = 0,
   });
@@ -31,6 +33,12 @@ class Site {
   /// The establishment's registration — a SIRET in France — under the
   /// entity's SIREN. The VAT number and the exemption stay the entity's.
   final String legalId;
+
+  /// #948 — only for a site that is a DISTINCT legal entity: its own VAT
+  /// number and exemption reason, printed on documents at that site.
+  /// Empty inherits the workspace's.
+  final String vatId;
+  final String taxExemptionReason;
   final bool isDefault;
   final int sortOrder;
 
@@ -53,6 +61,8 @@ class Site {
         city: row['city'] as String? ?? '',
         countryCode: row['country_code'] as String? ?? '',
         legalId: row['legal_id'] as String? ?? '',
+        vatId: row['vat_id'] as String? ?? '',
+        taxExemptionReason: row['tax_exemption_reason'] as String? ?? '',
         isDefault: row['is_default'] as bool? ?? false,
         sortOrder: (row['sort_order'] as num?)?.toInt() ?? 0,
       );
@@ -64,6 +74,8 @@ class Site {
     String? city,
     String? countryCode,
     String? legalId,
+    String? vatId,
+    String? taxExemptionReason,
     int? sortOrder,
   }) =>
       Site(
@@ -75,6 +87,8 @@ class Site {
         city: city ?? this.city,
         countryCode: countryCode ?? this.countryCode,
         legalId: legalId ?? this.legalId,
+        vatId: vatId ?? this.vatId,
+        taxExemptionReason: taxExemptionReason ?? this.taxExemptionReason,
         isDefault: isDefault,
         sortOrder: sortOrder ?? this.sortOrder,
       );

@@ -59,6 +59,8 @@ class SupabaseWorkspaceRepository
       'p_country_code': site.countryCode,
       'p_legal_id': site.legalId,
       'p_sort_order': site.sortOrder,
+      'p_vat_id': site.vatId,
+      'p_tax_exemption_reason': site.taxExemptionReason,
     });
     return r as String;
   }
