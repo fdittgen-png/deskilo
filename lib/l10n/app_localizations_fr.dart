@@ -7286,6 +7286,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profilesMakeDefault => 'Utiliser par défaut au démarrage';
 
   @override
+  String profilesSiteLine(String site) {
+    return 'Site : $site';
+  }
+
+  @override
+  String get profilesSitePick => 'Changer de site';
+
+  @override
   String get eventTypeRoleChange => 'Changement de rôle';
 
   @override

@@ -7273,6 +7273,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get profilesMakeDefault => 'Beim Start als Standard verwenden';
 
   @override
+  String profilesSiteLine(String site) {
+    return 'Standort: $site';
+  }
+
+  @override
+  String get profilesSitePick => 'Standort wechseln';
+
+  @override
   String get eventTypeRoleChange => 'Rollenwechsel';
 
   @override

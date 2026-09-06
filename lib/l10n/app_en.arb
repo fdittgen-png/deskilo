@@ -7449,6 +7449,19 @@
   "backendCopyLink": "Copy",
   "profilesDefault": "Default at startup",
   "profilesMakeDefault": "Use as default at startup",
+  "profilesSiteLine": "Site: {site}",
+  "@profilesSiteLine": {
+    "description": "#974 profiles site: profilesSiteLine",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      }
+    }
+  },
+  "profilesSitePick": "Change your site",
+  "@profilesSitePick": {
+    "description": "#974 profiles site: profilesSitePick"
+  },
   "eventTypeRoleChange": "Role change",
   "@eventTypeRoleChange": {
     "description": "Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card"

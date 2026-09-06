@@ -388,3 +388,9 @@ Future<List<Site>> sites(Ref ref) async {
   if (workspace == null) return const [];
   return ref.watch(workspaceRepositoryProvider).fetchSites(workspace.id);
 }
+
+/// #974 — the sites of one workspace the person belongs to, for the
+/// profiles list (which spans every workspace, not only the active one).
+@riverpod
+Future<List<Site>> sitesOf(Ref ref, String workspaceId) =>
+    ref.watch(workspaceRepositoryProvider).fetchSites(workspaceId);

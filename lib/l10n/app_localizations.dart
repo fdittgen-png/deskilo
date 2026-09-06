@@ -12695,6 +12695,18 @@ abstract class AppLocalizations {
   /// **'Use as default at startup'**
   String get profilesMakeDefault;
 
+  /// #974 profiles site: profilesSiteLine
+  ///
+  /// In en, this message translates to:
+  /// **'Site: {site}'**
+  String profilesSiteLine(String site);
+
+  /// #974 profiles site: profilesSitePick
+  ///
+  /// In en, this message translates to:
+  /// **'Change your site'**
+  String get profilesSitePick;
+
   /// Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card
   ///
   /// In en, this message translates to:
