@@ -7584,6 +7584,16 @@ class AppLocalizationsEs extends AppLocalizations {
       'Los documentos nombran la sede a la que se refieren: la dirección y el registro de la sede de referencia del socio como vendedor, y las demás sedes utilizadas en el mes en el detalle. Desactivado: la dirección del espacio en todos los documentos.';
 
   @override
+  String get siteVatId => 'Número de IVA (esta entidad)';
+
+  @override
+  String get siteExemptionReason => 'Mención de exención (esta entidad)';
+
+  @override
+  String get siteRegistrationHint =>
+      'Solo si la sede es una entidad jurídica distinta — normalmente eso es un espacio aparte. Vacío: se aplican los números del espacio.';
+
+  @override
   String get featureMultiSite => 'Sedes';
 
   @override

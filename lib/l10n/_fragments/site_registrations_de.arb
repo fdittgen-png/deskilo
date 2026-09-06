@@ -1,0 +1,15 @@
+{
+  "@@locale": "de",
+  "siteVatId": "USt-IdNr. (diese Einheit)",
+  "@siteVatId": {
+    "description": "#948 site registrations: siteVatId"
+  },
+  "siteExemptionReason": "Befreiungsvermerk (diese Einheit)",
+  "@siteExemptionReason": {
+    "description": "#948 site registrations: siteExemptionReason"
+  },
+  "siteRegistrationHint": "Nur wenn der Standort eine eigene juristische Person ist — das ist meist ein eigener Arbeitsbereich. Leer: die Nummern des Arbeitsbereichs gelten.",
+  "@siteRegistrationHint": {
+    "description": "#948 site registrations: siteRegistrationHint"
+  }
+}

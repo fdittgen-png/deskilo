@@ -7596,6 +7596,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Belege nennen den betroffenen Standort: Adresse und Registrierung des Heimatstandorts des Mitglieds als Verkäufer, und die anderen im Monat genutzten Standorte im Detail. Aus: die Adresse des Arbeitsbereichs auf jedem Beleg.';
 
   @override
+  String get siteVatId => 'USt-IdNr. (diese Einheit)';
+
+  @override
+  String get siteExemptionReason => 'Befreiungsvermerk (diese Einheit)';
+
+  @override
+  String get siteRegistrationHint =>
+      'Nur wenn der Standort eine eigene juristische Person ist — das ist meist ein eigener Arbeitsbereich. Leer: die Nummern des Arbeitsbereichs gelten.';
+
+  @override
   String get featureMultiSite => 'Standorte';
 
   @override

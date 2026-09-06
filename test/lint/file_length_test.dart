@@ -285,7 +285,8 @@ const Map<String, int> _baseline = {
   // 890→900 (2026-08-25): #628 setSimultaneousReservations (through the
   // SAME _mergeBookingRule helper) + setMemberSimultaneousLimit.
   // 970→1020 (2026-09-06): #937 three platform-owner RPC readers.
-  'lib/features/workspace/data/supabase_workspace_repository.dart': 1020, // 2026-09-06 #914/#915 the managed identity moves behind its rule: managedIdentityOf + setManagedAccess // 2026-09-05 #887 managed members: identity parse, names from managed_identity, three handover RPCs
+  // 1020→1062 (2026-09-06): #948 the entity's numbers on the site sheet.
+  'lib/features/workspace/data/supabase_workspace_repository.dart': 1062, // 2026-09-06 #914/#915 the managed identity moves behind its rule: managedIdentityOf + setManagedAccess // 2026-09-05 #887 managed members: identity parse, names from managed_identity, three handover RPCs
   // 600→660 (2026-08-23): #600 the Booking policies section — three
   // switches + one write handler on the existing availability screen.
   // 660→730 (2026-08-25): #624 the outside-hours segmented control +

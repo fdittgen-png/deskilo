@@ -1,0 +1,15 @@
+{
+  "@@locale": "es",
+  "siteVatId": "Número de IVA (esta entidad)",
+  "@siteVatId": {
+    "description": "#948 site registrations: siteVatId"
+  },
+  "siteExemptionReason": "Mención de exención (esta entidad)",
+  "@siteExemptionReason": {
+    "description": "#948 site registrations: siteExemptionReason"
+  },
+  "siteRegistrationHint": "Solo si la sede es una entidad jurídica distinta — normalmente eso es un espacio aparte. Vacío: se aplican los números del espacio.",
+  "@siteRegistrationHint": {
+    "description": "#948 site registrations: siteRegistrationHint"
+  }
+}

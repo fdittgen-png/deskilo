@@ -384,7 +384,8 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     sites.add(Site(
       id: id, workspaceId: workspaceId, name: site.name, street: site.street,
       postalCode: site.postalCode, city: site.city, countryCode: site.countryCode,
-      legalId: site.legalId, isDefault: site.isDefault, sortOrder: site.sortOrder,
+      legalId: site.legalId, vatId: site.vatId, taxExemptionReason: site.taxExemptionReason,
+      isDefault: site.isDefault, sortOrder: site.sortOrder,
     ));
     siteWrites.add('${isNew ? 'new' : 'edit'}:${site.name}');
     return id;

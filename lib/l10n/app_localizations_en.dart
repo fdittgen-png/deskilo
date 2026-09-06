@@ -7535,6 +7535,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'Documents name the site they concern: the member\'s home site\'s address and registration as the seller, and the other sites the month stood at in the details. Off: the workspace address on every document.';
 
   @override
+  String get siteVatId => 'VAT number (this entity)';
+
+  @override
+  String get siteExemptionReason => 'VAT exemption mention (this entity)';
+
+  @override
+  String get siteRegistrationHint =>
+      'Only for a site that is a distinct legal entity — usually that is a separate workspace. Empty inherits the workspace\'s numbers.';
+
+  @override
   String get featureMultiSite => 'Sites';
 
   @override

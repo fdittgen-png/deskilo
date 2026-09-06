@@ -117,6 +117,8 @@ class SitesScreen extends ConsumerWidget {
     final country = TextEditingController(
         text: site?.countryCode ?? workspace.countryCode);
     final legal = TextEditingController(text: site?.legalId ?? '');
+    final vat = TextEditingController(text: site?.vatId ?? '');
+    final exemption = TextEditingController(text: site?.taxExemptionReason ?? '');
     Widget field(String key, TextEditingController c, String label) => TextField(
           key: ValueKey(key),
           controller: c,
@@ -137,6 +139,19 @@ class SitesScreen extends ConsumerWidget {
             field('site-country', country, l10n?.siteCountry ?? 'Country (code)'),
             field('site-legal', legal,
                 l10n?.siteLegalId ?? 'Establishment registration (SIRET)'),
+            if (site != null && !site.isDefault) ...[
+              const SizedBox(height: AppSpacing.md),
+              Text(
+                l10n?.siteRegistrationHint ??
+                    'Only for a site that is a distinct legal entity — usually '
+                        'that is a separate workspace. Empty inherits the '
+                        'workspace\'s numbers.',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              field('site-vat', vat, l10n?.siteVatId ?? 'VAT number (this entity)'),
+              field('site-exemption', exemption,
+                  l10n?.siteExemptionReason ?? 'VAT exemption mention (this entity)'),
+            ],
             if (site != null && !site.isDefault) ...[
               const SizedBox(height: AppSpacing.md),
               Text(l10n?.siteDeleteHint ??
@@ -185,6 +200,8 @@ class SitesScreen extends ConsumerWidget {
           city: city.text.trim(),
           countryCode: country.text.trim().toUpperCase(),
           legalId: legal.text.trim(),
+          vatId: vat.text.trim(),
+          taxExemptionReason: exemption.text.trim(),
           isDefault: site?.isDefault ?? false,
           sortOrder: site?.sortOrder ?? 0,
         );

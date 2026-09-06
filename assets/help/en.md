@@ -1104,3 +1104,6 @@ A workspace can have **several addresses**. *Settings → Sites*: the default si
 ### Sites on documents (#946)
 
 With several sites, an invoice carries **the address and registration of the member's home site** on the seller side (the default site keeps the workspace address), names the site under the header, and — when the attendance details are printed — lists the **other sites** the member worked from during the month. The e-invoice follows the same address.
+### Numbers per site (#948)
+
+In France the VAT number and the exemption belong to the legal entity; each establishment has its own **SIRET**, which the site carries. A site that is a **distinct legal entity** may also carry its own VAT number and exemption mention — documents issued at that site take them. That is usually the sign of a separate workspace; the screen says so.

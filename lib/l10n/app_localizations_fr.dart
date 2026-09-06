@@ -7609,6 +7609,16 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les documents nomment le site concerné : l\'adresse et le SIRET du site de rattachement de l\'adhérent côté vendeur, et les autres sites fréquentés dans le mois dans le détail. Désactivé : l\'adresse de l\'espace sur tous les documents.';
 
   @override
+  String get siteVatId => 'Numéro de TVA (cette entité)';
+
+  @override
+  String get siteExemptionReason => 'Mention d\'exonération (cette entité)';
+
+  @override
+  String get siteRegistrationHint =>
+      'Seulement si le site est une entité juridique distincte — c\'est en général un espace séparé. Vide : les numéros de l\'espace s\'appliquent.';
+
+  @override
   String get featureMultiSite => 'Sites';
 
   @override

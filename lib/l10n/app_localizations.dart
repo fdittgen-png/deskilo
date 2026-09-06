@@ -13249,6 +13249,24 @@ abstract class AppLocalizations {
   /// **'Documents name the site they concern: the member\'s home site\'s address and registration as the seller, and the other sites the month stood at in the details. Off: the workspace address on every document.'**
   String get featureSiteDocumentsDesc;
 
+  /// #948 site registrations: siteVatId
+  ///
+  /// In en, this message translates to:
+  /// **'VAT number (this entity)'**
+  String get siteVatId;
+
+  /// #948 site registrations: siteExemptionReason
+  ///
+  /// In en, this message translates to:
+  /// **'VAT exemption mention (this entity)'**
+  String get siteExemptionReason;
+
+  /// #948 site registrations: siteRegistrationHint
+  ///
+  /// In en, this message translates to:
+  /// **'Only for a site that is a distinct legal entity — usually that is a separate workspace. Empty inherits the workspace\'s numbers.'**
+  String get siteRegistrationHint;
+
   /// #945 sites: featureMultiSite
   ///
   /// In en, this message translates to:

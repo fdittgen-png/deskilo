@@ -7597,6 +7597,16 @@ class AppLocalizationsIt extends AppLocalizations {
       'I documenti indicano la sede interessata: l\'indirizzo e la registrazione della sede di riferimento del socio come venditore, e le altre sedi frequentate nel mese nel dettaglio. Disattivato: l\'indirizzo dello spazio su tutti i documenti.';
 
   @override
+  String get siteVatId => 'Partita IVA (questa entità)';
+
+  @override
+  String get siteExemptionReason => 'Dicitura di esenzione (questa entità)';
+
+  @override
+  String get siteRegistrationHint =>
+      'Solo se la sede è un\'entità giuridica distinta — di solito è uno spazio separato. Vuoto: valgono i numeri dello spazio.';
+
+  @override
   String get featureMultiSite => 'Sedi';
 
   @override

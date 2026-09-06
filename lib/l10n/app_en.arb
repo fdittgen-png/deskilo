@@ -7883,6 +7883,18 @@
   "@featureSiteDocumentsDesc": {
     "description": "#946 site documents: featureSiteDocumentsDesc"
   },
+  "siteVatId": "VAT number (this entity)",
+  "@siteVatId": {
+    "description": "#948 site registrations: siteVatId"
+  },
+  "siteExemptionReason": "VAT exemption mention (this entity)",
+  "@siteExemptionReason": {
+    "description": "#948 site registrations: siteExemptionReason"
+  },
+  "siteRegistrationHint": "Only for a site that is a distinct legal entity — usually that is a separate workspace. Empty inherits the workspace's numbers.",
+  "@siteRegistrationHint": {
+    "description": "#948 site registrations: siteRegistrationHint"
+  },
   "featureMultiSite": "Sites",
   "@featureMultiSite": {
     "description": "#945 sites: featureMultiSite"
