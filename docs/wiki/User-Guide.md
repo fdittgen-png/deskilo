@@ -1059,3 +1059,7 @@ With several sites, an invoice carries **the address and registration of the mem
 ### Numbers per site (#948)
 
 In France the VAT number and the exemption belong to the legal entity; each establishment has its own **SIRET**, which the site carries. A site that is a **distinct legal entity** may also carry its own VAT number and exemption mention — documents issued at that site take them. That is usually the sign of a separate workspace; the screen says so.
+
+### VAT groups (#947)
+
+Each rate now carries the **fiscal group** of what it taxes: standard, intermediate, reduced, super-reduced, zero, exempt, not subject, **deposit** (outside the VAT base) or **excise-bearing** (beer, spirits, sugar drinks: excise inside the price, standard VAT). *Settings → VAT* shows what falls in each group in your country and the exemption reason a group implies. An association not subject to VAT keeps category O on its documents. A deposit beside taxed lines cannot go out as an e-invoice (EN 16931): the app says so and you issue it separately.

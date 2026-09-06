@@ -1123,3 +1123,7 @@ Avec plusieurs sites, une facture porte **l'adresse et le SIRET du site de ratta
 ### Numéros par site (#948)
 
 En France, le numéro de TVA et l'exonération appartiennent à l'entité juridique ; chaque établissement a son **SIRET**, que le site porte. Un site qui est une **entité juridique distincte** peut en plus porter son propre numéro de TVA et sa propre mention d'exonération — les documents émis à ce site les reprennent. C'est en général le signe qu'il s'agit d'un espace séparé ; l'écran le rappelle.
+
+### Groupes de TVA (#947)
+
+Chaque taux porte désormais le **groupe fiscal** de ce qu'il taxe : normal, intermédiaire, réduit, super-réduit, zéro, exonéré, non assujetti, **consigne** (hors champ de la TVA) ou **produit à accises** (bière, spiritueux, sodas : accises dans le prix, TVA au taux normal). *Réglages → TVA* montre ce qui relève de chaque groupe dans votre pays et la mention d'exonération qu'un groupe implique. Une association non assujettie garde ses documents en catégorie O. Une consigne à côté de lignes taxées ne peut pas partir en facture électronique (norme EN 16931) : l'app le signale et vous l'émettez à part.

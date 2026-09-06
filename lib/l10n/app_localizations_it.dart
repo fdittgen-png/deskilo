@@ -8102,6 +8102,53 @@ class AppLocalizationsIt extends AppLocalizations {
       'Base: fatture (IVA sui documenti emessi nel periodo).';
 
   @override
+  String get featureVatGroups => 'Gruppi IVA';
+
+  @override
+  String get featureVatGroupsDesc =>
+      'Ogni aliquota IVA porta il gruppo fiscale di ciò che tassa — ordinaria, intermedia, ridotta, super-ridotta, zero, esente, non soggetta, cauzione rimborsabile, con accise — con la categoria e la dicitura di esenzione che il gruppo implica. Disattivato: semplici percentuali.';
+
+  @override
+  String get vatGroupLabel => 'Gruppo';
+
+  @override
+  String get vatGroupStandard => 'Ordinaria';
+
+  @override
+  String get vatGroupIntermediate => 'Intermedia';
+
+  @override
+  String get vatGroupReduced => 'Ridotta';
+
+  @override
+  String get vatGroupSuperReduced => 'Super-ridotta';
+
+  @override
+  String get vatGroupZero => 'Aliquota zero';
+
+  @override
+  String get vatGroupExempt => 'Esente';
+
+  @override
+  String get vatGroupNotSubject => 'Non soggetta';
+
+  @override
+  String get vatGroupDeposit => 'Cauzione (fuori IVA)';
+
+  @override
+  String get vatGroupExcise => 'Con accise';
+
+  @override
+  String get vatGroupExamples => 'Cosa rientra in ogni gruppo';
+
+  @override
+  String get vatExemptionReasonField => 'Dicitura di esenzione';
+
+  @override
+  String get eInvoiceGapMixedNotSubjectLines =>
+      'Una riga non soggetta (cauzione) compare accanto a righe tassate — la norma EN 16931 rifiuta la combinazione; emetti la cauzione su un documento separato.';
+
+  @override
   String get featureVatReport => 'Report IVA';
 
   @override

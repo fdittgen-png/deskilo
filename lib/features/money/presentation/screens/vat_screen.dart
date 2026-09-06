@@ -41,15 +41,23 @@ class _RateDraft {
       : label = TextEditingController(text: rate.label),
         percent = TextEditingController(
           text: rate.percent == 0 ? '' : _percentText(rate.percent),
-        );
+        ),
+        group = rate.group,
+        exemption = TextEditingController(text: rate.exemptionReason);
 
   final VatRate rate;
   final TextEditingController label;
   final TextEditingController percent;
 
+  /// #947 — the fiscal group; the category and the outside-base rule
+  /// follow it at save time.
+  VatGroup group;
+  final TextEditingController exemption;
+
   void dispose() {
     label.dispose();
     percent.dispose();
+    exemption.dispose();
   }
 }
 
@@ -126,7 +134,11 @@ class _VatScreenState extends ConsumerState<VatScreen> {
         percent: percent,
         // A zero-percent rate is not category S; which zero category it is
         // follows the workspace's regime, which the server already knows.
-        category: percent > 0 ? 'S' : draft.rate.category,
+        // #947 — the group decides the category and the base rule.
+        category: draft.group.category,
+        groupKey: draft.group.wire,
+        outsideBase: draft.group.outsideBase,
+        exemptionReason: draft.exemption.text.trim(),
         isDefault: index == _default,
         active: true,
       ));
@@ -161,6 +173,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
+    final groupsOn = ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.vatGroups);
     final ratesAsync = ref.watch(vatRatesProvider);
     final title = Text(l10n?.vatTitle ?? 'VAT');
     if (workspace == null || ratesAsync.isLoading) {
@@ -248,6 +261,29 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                       ),
                     ),
                   ),
+                  if (groupsOn) ...[
+                    const SizedBox(width: AppSpacing.sm),
+                    SizedBox(
+                      width: 150,
+                      child: DropdownButtonFormField<VatGroup>(
+                        key: ValueKey('vat-rate-group-$index'),
+                        initialValue: draft.group,
+                        isExpanded: true,
+                        decoration: InputDecoration(
+                          labelText: l10n?.vatGroupLabel ?? 'Group',
+                        ),
+                        items: [
+                          for (final g in VatGroup.values)
+                            DropdownMenuItem(
+                              value: g,
+                              child: Text(vatGroupName(l10n, g)),
+                            ),
+                        ],
+                        onChanged: (g) =>
+                            setState(() => draft.group = g ?? draft.group),
+                      ),
+                    ),
+                  ],
                   // A star rather than a radio: it reads as "this is the
                   // one" at a glance and stays one tap either way.
                   IconButton(
@@ -281,6 +317,36 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                 ),
           ),
           const SizedBox(height: AppSpacing.sm),
+          if (groupsOn) ...[
+            for (final (index, draft) in _drafts.indexed)
+              if (draft.group.category == 'E' || draft.group.category == 'O')
+                Padding(
+                  key: ValueKey('vat-rate-exemption-$index'),
+                  padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                  child: TextField(
+                    controller: draft.exemption,
+                    decoration: InputDecoration(
+                      labelText: '${draft.label.text} · ${l10n?.vatExemptionReasonField ?? 'Exemption reason'}',
+                    ),
+                  ),
+                ),
+            Padding(
+              key: const ValueKey('vat-group-examples'),
+              padding: const EdgeInsets.only(top: AppSpacing.sm, bottom: AppSpacing.md),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(l10n?.vatGroupExamples ?? 'What falls in each group',
+                      style: Theme.of(context).textTheme.titleSmall),
+                  for (final line in [
+                    for (final e in vatGroupExamples(workspace.countryCode))
+                      '${vatGroupName(l10n, e.group)} — ${e.example}',
+                  ])
+                    Text(line, style: Theme.of(context).textTheme.bodySmall),
+                ],
+              ),
+            ),
+          ],
           Row(children: [
             TextButton.icon(
               key: const ValueKey('vat-add-rate'),
@@ -341,3 +407,16 @@ class _VatScreenState extends ConsumerState<VatScreen> {
     );
   }
 }
+
+/// #947 — the group's name in the reader's language.
+String vatGroupName(AppLocalizations? l10n, VatGroup g) => switch (g) {
+      VatGroup.standard => l10n?.vatGroupStandard ?? 'Standard',
+      VatGroup.intermediate => l10n?.vatGroupIntermediate ?? 'Intermediate',
+      VatGroup.reduced => l10n?.vatGroupReduced ?? 'Reduced',
+      VatGroup.superReduced => l10n?.vatGroupSuperReduced ?? 'Super-reduced',
+      VatGroup.zero => l10n?.vatGroupZero ?? 'Zero rate',
+      VatGroup.exempt => l10n?.vatGroupExempt ?? 'Exempt',
+      VatGroup.notSubject => l10n?.vatGroupNotSubject ?? 'Not subject',
+      VatGroup.deposit => l10n?.vatGroupDeposit ?? 'Deposit (outside VAT)',
+      VatGroup.excise => l10n?.vatGroupExcise ?? 'Excise-bearing',
+    };

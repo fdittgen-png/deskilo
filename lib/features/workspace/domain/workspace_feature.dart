@@ -73,6 +73,7 @@ enum WorkspaceFeature {
   expenseRepartitionWizard,
   multiSite,
   siteDocuments,
+  vatGroups,
   seatDayTimeline,
   memberPaymentTerms,
   reportTexts,
@@ -581,6 +582,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.siteDocuments,
     defaultOn: false,
     requires: WorkspaceFeature.multiSite,
+  ),
+  // #947 — each rate carries its fiscal group: the law's category, the
+  // outside-base rule, the exemption reason. Off: bare percentages.
+  WorkspaceFeature.vatGroups: FeatureManifestEntry(
+    feature: WorkspaceFeature.vatGroups,
+    defaultOn: false,
+    requires: WorkspaceFeature.vatManagement,
   ),
   WorkspaceFeature.managedProfileAccess: FeatureManifestEntry(
     feature: WorkspaceFeature.managedProfileAccess,

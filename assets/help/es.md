@@ -1123,3 +1123,7 @@ Con varias sedes, una factura lleva **la dirección y el registro de la sede de 
 ### Números por sede (#948)
 
 En Francia el número de IVA y la exención pertenecen a la entidad jurídica; cada establecimiento tiene su **SIRET**, que la sede lleva. Una sede que es una **entidad jurídica distinta** puede llevar además su propio número de IVA y su mención de exención — los documentos emitidos en esa sede los toman. Suele ser señal de un espacio aparte; la pantalla lo recuerda.
+
+### Grupos de IVA (#947)
+
+Cada tipo lleva ahora el **grupo fiscal** de lo que grava: general, intermedio, reducido, superreducido, cero, exento, no sujeto, **envase retornable** (fuera del IVA) o **con impuestos especiales** (cerveza, licores, bebidas azucaradas: impuesto dentro del precio, IVA general). *Ajustes → IVA* muestra qué entra en cada grupo en su país y la mención de exención que implica. Una asociación no sujeta mantiene la categoría O. Un envase junto a líneas gravadas no puede salir como factura electrónica (EN 16931): la app lo avisa y se emite aparte.

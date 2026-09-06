@@ -67,6 +67,11 @@ enum EInvoiceGap {
   /// a platform refuses the document without it. The member's own data,
   /// not a setting.
   missingBuyerLegalId,
+
+  /// #947 — BR-O-11: a not-subject line (a refundable deposit, an
+  /// out-of-scope item) beside taxed lines. EN 16931 refuses the mix;
+  /// the deposit must be issued on its own document.
+  mixedNotSubjectLines,
 }
 
 extension EInvoiceGapKind on EInvoiceGap {
@@ -157,5 +162,8 @@ EInvoiceReadiness checkEInvoiceReadiness({
         buyer.company.trim().isNotEmpty &&
         buyer.legalId.trim().isEmpty)
       EInvoiceGap.missingBuyerLegalId,
+    if (invoice.vatTotals.any((t) => t.category == 'O') &&
+        invoice.vatTotals.any((t) => t.category != 'O'))
+      EInvoiceGap.mixedNotSubjectLines,
   ]);
 }

@@ -8035,6 +8035,53 @@ class AppLocalizationsEn extends AppLocalizations {
       'Basis: invoices (VAT on documents issued during the period).';
 
   @override
+  String get featureVatGroups => 'VAT groups';
+
+  @override
+  String get featureVatGroupsDesc =>
+      'Each VAT rate carries the fiscal group of what it taxes — standard, intermediate, reduced, super-reduced, zero, exempt, not subject, refundable deposit, excise-bearing — with the category and the exemption reason the group implies. Off: bare percentages.';
+
+  @override
+  String get vatGroupLabel => 'Group';
+
+  @override
+  String get vatGroupStandard => 'Standard';
+
+  @override
+  String get vatGroupIntermediate => 'Intermediate';
+
+  @override
+  String get vatGroupReduced => 'Reduced';
+
+  @override
+  String get vatGroupSuperReduced => 'Super-reduced';
+
+  @override
+  String get vatGroupZero => 'Zero rate';
+
+  @override
+  String get vatGroupExempt => 'Exempt';
+
+  @override
+  String get vatGroupNotSubject => 'Not subject';
+
+  @override
+  String get vatGroupDeposit => 'Deposit (outside VAT)';
+
+  @override
+  String get vatGroupExcise => 'Excise-bearing';
+
+  @override
+  String get vatGroupExamples => 'What falls in each group';
+
+  @override
+  String get vatExemptionReasonField => 'Exemption reason';
+
+  @override
+  String get eInvoiceGapMixedNotSubjectLines =>
+      'A not-subject line (a refundable deposit) sits beside taxed lines — EN 16931 refuses the mix; issue the deposit on its own document.';
+
+  @override
   String get featureVatReport => 'VAT report';
 
   @override

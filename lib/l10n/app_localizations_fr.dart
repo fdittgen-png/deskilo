@@ -8115,6 +8115,53 @@ class AppLocalizationsFr extends AppLocalizations {
       'Base : débits (TVA sur les factures émises pendant la période).';
 
   @override
+  String get featureVatGroups => 'Groupes de TVA';
+
+  @override
+  String get featureVatGroupsDesc =>
+      'Chaque taux de TVA porte le groupe fiscal de ce qu\'il taxe — normal, intermédiaire, réduit, super-réduit, zéro, exonéré, non assujetti, consigne remboursable, produit à accises — avec la catégorie et la mention d\'exonération que le groupe implique. Désactivé : de simples pourcentages.';
+
+  @override
+  String get vatGroupLabel => 'Groupe';
+
+  @override
+  String get vatGroupStandard => 'Normal';
+
+  @override
+  String get vatGroupIntermediate => 'Intermédiaire';
+
+  @override
+  String get vatGroupReduced => 'Réduit';
+
+  @override
+  String get vatGroupSuperReduced => 'Super-réduit';
+
+  @override
+  String get vatGroupZero => 'Taux zéro';
+
+  @override
+  String get vatGroupExempt => 'Exonéré';
+
+  @override
+  String get vatGroupNotSubject => 'Non assujetti';
+
+  @override
+  String get vatGroupDeposit => 'Consigne (hors TVA)';
+
+  @override
+  String get vatGroupExcise => 'Produit à accises';
+
+  @override
+  String get vatGroupExamples => 'Ce qui relève de chaque groupe';
+
+  @override
+  String get vatExemptionReasonField => 'Mention d\'exonération';
+
+  @override
+  String get eInvoiceGapMixedNotSubjectLines =>
+      'Une ligne hors champ (consigne) figure à côté de lignes taxées — la norme EN 16931 refuse ce mélange ; émettez la consigne sur un document séparé.';
+
+  @override
   String get featureVatReport => 'Rapport de TVA';
 
   @override

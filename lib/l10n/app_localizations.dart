@@ -14143,6 +14143,96 @@ abstract class AppLocalizations {
   /// **'Basis: invoices (VAT on documents issued during the period).'**
   String get vatDeclarationBasisInvoice;
 
+  /// #947 VAT groups: featureVatGroups
+  ///
+  /// In en, this message translates to:
+  /// **'VAT groups'**
+  String get featureVatGroups;
+
+  /// #947 VAT groups: featureVatGroupsDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Each VAT rate carries the fiscal group of what it taxes — standard, intermediate, reduced, super-reduced, zero, exempt, not subject, refundable deposit, excise-bearing — with the category and the exemption reason the group implies. Off: bare percentages.'**
+  String get featureVatGroupsDesc;
+
+  /// #947 VAT groups: vatGroupLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get vatGroupLabel;
+
+  /// #947 VAT groups: vatGroupStandard
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get vatGroupStandard;
+
+  /// #947 VAT groups: vatGroupIntermediate
+  ///
+  /// In en, this message translates to:
+  /// **'Intermediate'**
+  String get vatGroupIntermediate;
+
+  /// #947 VAT groups: vatGroupReduced
+  ///
+  /// In en, this message translates to:
+  /// **'Reduced'**
+  String get vatGroupReduced;
+
+  /// #947 VAT groups: vatGroupSuperReduced
+  ///
+  /// In en, this message translates to:
+  /// **'Super-reduced'**
+  String get vatGroupSuperReduced;
+
+  /// #947 VAT groups: vatGroupZero
+  ///
+  /// In en, this message translates to:
+  /// **'Zero rate'**
+  String get vatGroupZero;
+
+  /// #947 VAT groups: vatGroupExempt
+  ///
+  /// In en, this message translates to:
+  /// **'Exempt'**
+  String get vatGroupExempt;
+
+  /// #947 VAT groups: vatGroupNotSubject
+  ///
+  /// In en, this message translates to:
+  /// **'Not subject'**
+  String get vatGroupNotSubject;
+
+  /// #947 VAT groups: vatGroupDeposit
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit (outside VAT)'**
+  String get vatGroupDeposit;
+
+  /// #947 VAT groups: vatGroupExcise
+  ///
+  /// In en, this message translates to:
+  /// **'Excise-bearing'**
+  String get vatGroupExcise;
+
+  /// #947 VAT groups: vatGroupExamples
+  ///
+  /// In en, this message translates to:
+  /// **'What falls in each group'**
+  String get vatGroupExamples;
+
+  /// #947 VAT groups: vatExemptionReasonField
+  ///
+  /// In en, this message translates to:
+  /// **'Exemption reason'**
+  String get vatExemptionReasonField;
+
+  /// #947 VAT groups: eInvoiceGapMixedNotSubjectLines
+  ///
+  /// In en, this message translates to:
+  /// **'A not-subject line (a refundable deposit) sits beside taxed lines — EN 16931 refuses the mix; issue the deposit on its own document.'**
+  String get eInvoiceGapMixedNotSubjectLines;
+
   /// #878 VAT review / report: featureVatReport
   ///
   /// In en, this message translates to:
