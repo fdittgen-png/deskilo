@@ -87,14 +87,14 @@ void main() {
               'VAT tells it to book something that does not exist',
         );
         // The other three still stand.
-        expect(c.accounts.length, 3);
+        expect(c.accounts.length, 4);
       }
     });
 
     test('a VAT-registered workspace gets it', () {
       final c = chart('FR', VatRegime.vatRegistered);
       expect(c.accounts.any((a) => a.role == CoaAccountRole.vat), isTrue);
-      expect(c.accounts.length, 4);
+      expect(c.accounts.length, 5);
     });
   });
 
