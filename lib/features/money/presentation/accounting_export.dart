@@ -26,6 +26,7 @@ import 'invoice_actions.dart';
 import 'invoice_line_text.dart';
 import 'widgets/accounting_export_sheet.dart';
 import 'widgets/export_accounts_dialogs.dart';
+import '../../reservations/providers/reservation_providers.dart';
 
 /// THE ACCOUNTING EXPORT (0074, extended by #669).
 ///
@@ -93,6 +94,23 @@ Future<void> exportAccountingFile(
   final now = ref.read(clockProvider).now();
   // The fiscal year closes on 31 December of the latest invoiced year —
   // the only close date the app can know.
+  // #936 — the purchases side travels with the sales side, and a
+  // development workspace's books are marked as such.
+  final development = workspace.environment != 'prod';
+  final repo = ref.read(moneyRepositoryProvider);
+  final ledger = await repo.fetchWorkspaceLedger(workspace.id);
+  final repartitions = await repo.fetchExpenseRepartitions(workspace.id);
+  final memberNames =
+      ref.read(memberNamesProvider).value ?? const <String, String>{};
+  if (!context.mounted) return;
+  if (development) {
+    AppSnack.info(
+      context,
+      l10n?.accountingExportDevelopment ??
+          'Development workspace: the file is marked DEV and is not the '
+              'real books.',
+    );
+  }
   final year = invoices
       .map((invoice) => invoice.issuedAt.year)
       .reduce((a, b) => a > b ? a : b);
@@ -135,8 +153,13 @@ Future<void> exportAccountingFile(
             revenueLabel: l10n?.fecAccountRevenue ?? 'Ventes',
             bankLabel: l10n?.fecAccountBank ?? 'Banque',
             vatLabel: l10n?.fecAccountVat ?? 'TVA collectée',
+            ledger: ledger,
+            memberNames: memberNames,
+            repartitions: repartitions,
+            expensesLabel: l10n?.fecAccountExpenses ?? 'Achats et charges',
           ),
-          fecFileName(company.legalId, DateTime(year, 12, 31)),
+          fecFileName(company.legalId, DateTime(year, 12, 31),
+              development: development),
         ),
       );
 
@@ -163,6 +186,9 @@ Future<void> exportAccountingFile(
             generatedAt: now,
             consultantNumber: datev.consultantNumber,
             clientNumber: datev.clientNumber,
+            ledger: ledger,
+            repartitions: repartitions,
+            development: development,
             currency: workspace.currencyCode,
             batchName: workspace.name,
           ),

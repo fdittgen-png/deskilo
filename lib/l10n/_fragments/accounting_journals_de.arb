@@ -1,0 +1,11 @@
+{
+  "@@locale": "de",
+  "fecAccountExpenses": "Aufwendungen",
+  "@fecAccountExpenses": {
+    "description": "#936 accounting exports: fecAccountExpenses"
+  },
+  "accountingExportDevelopment": "Entwicklungs-Arbeitsbereich: die Datei ist als DEV markiert und nicht die echte Buchhaltung.",
+  "@accountingExportDevelopment": {
+    "description": "#936 accounting exports: accountingExportDevelopment"
+  }
+}

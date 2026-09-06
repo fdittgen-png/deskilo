@@ -46,6 +46,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get accessoriesActive => 'Activo';
 
   @override
+  String get fecAccountExpenses => 'Gastos';
+
+  @override
+  String get accountingExportDevelopment =>
+      'Espacio de desarrollo: el archivo lleva la marca DEV y no es la contabilidad real.';
+
+  @override
   String get featureInvoiceAddressWindow => 'Ventanilla de dirección';
 
   @override

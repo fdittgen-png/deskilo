@@ -1060,3 +1060,7 @@ L'account che gestisce l'installazione vede, in *Profili*, **tutti gli spazi** d
 ### Situazione dello spazio e ripartizione guidata (#934)
 
 *Denaro → Situazione dello spazio* mostra a proprietari e admin, nel periodo scelto, ciò che lo spazio ha **fatturato** (al netto delle note di credito), **incassato**, **rimborsato** e **ripartito**, poi lo stesso socio per socio con la percentuale di abbonamento — e lo stampa come rapporto. *Ripartire una spesa* propone la quota di ciascuno **in base all'abbonamento**, permette di escludere un socio o modificare un peso, registra le quote come oggi (righe della prossima fattura di consumo) e **ricorda la regola** per il mese successivo.
+
+### Esportazioni contabili complete (#936)
+
+Il FEC e il file DATEV riportano ora, oltre a vendite e banca, un **giornale acquisti**: spese rimborsate ai soci e costi comuni ripartiti. Una **nota di credito** è registrata come vendita stornata (mancava). Il conto spese è chiesto all'esportazione come gli altri. Uno spazio di sviluppo produce un file contrassegnato **DEV**: non è la contabilità reale.

@@ -1108,3 +1108,7 @@ La cuenta que opera la instalación ve, en *Perfiles*, **todos los espacios** de
 ### Situación del espacio y reparto guiado (#934)
 
 *Dinero → Situación del espacio* muestra a propietarios y admins, en el periodo que elijan, lo que el espacio **facturó** (neto de abonos), **cobró**, **reembolsó** y **repartió**, y lo mismo socio por socio con su porcentaje de suscripción — y lo imprime como informe. *Repartir un gasto* propone la parte de cada uno **según la suscripción**, permite excluir a un socio o ajustar un peso, contabiliza las partes como hoy (líneas de la próxima factura de consumo) y **recuerda la regla** para el mes siguiente.
+
+### Exportaciones contables completas (#936)
+
+El FEC y el archivo DATEV incluyen ahora, junto a ventas y banco, un **diario de compras**: gastos reembolsados a los socios y costes comunes repartidos. Un **abono** se contabiliza como venta revertida (faltaba). La cuenta de gastos se pide al exportar como las demás. Un espacio de desarrollo produce un archivo marcado **DEV**: no es la contabilidad real.

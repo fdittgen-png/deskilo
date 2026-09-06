@@ -1092,3 +1092,7 @@ The account that operates the installation sees, under *Profiles*, **every works
 ### Workspace status and guided repartition (#934)
 
 *Money → Workspace status* shows owners and admins, over a period of their choice, what the workspace **invoiced** (net of credit notes), **collected**, **reimbursed** and **shared out**, then the same member by member with their subscription percentage — and prints it as a report. *Share a cost* proposes each member's share **by subscription percentage**, lets you leave a member out or adjust a weight, books the shares as today (lines on the next usage invoice) and **remembers the rule** for next month.
+
+### Complete accounting exports (#936)
+
+The FEC and the DATEV file now carry, beside sales and bank, a **purchases journal**: expenses reimbursed to members and shared costs split over them. A **credit note** is booked as a reversed sale (it was absent). The expense account is asked at export time like the others. A development workspace produces a file marked **DEV**: it is not the real books.

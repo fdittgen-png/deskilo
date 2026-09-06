@@ -1060,3 +1060,7 @@ Le compte qui exploite l'installation voit, dans *Profils*, **tous les espaces**
 ### Situation de l'espace et répartition guidée (#934)
 
 *Argent → Situation de l'espace* montre aux propriétaires et admins, sur une période au choix, ce que l'espace a **facturé** (net des avoirs), **encaissé**, **remboursé** et **réparti**, puis la même chose adhérent par adhérent avec leur pourcentage d'abonnement — et l'imprime comme rapport. *Répartir une dépense* propose la part de chacun **au prorata de l'abonnement**, laisse exclure un adhérent ou ajuster un poids, comptabilise les parts comme aujourd'hui (lignes de la prochaine facture de consommation) et **mémorise la règle** pour le mois suivant.
+
+### Exports comptables complets (#936)
+
+Le FEC et le fichier DATEV portent désormais, en plus des ventes et de la banque, un **journal d'achats** : les frais remboursés aux adhérents et les dépenses communes réparties. Un **avoir** y est comptabilisé comme une vente extournée (il en était absent). Le compte de charges est demandé à l'export comme les autres. Un espace de développement produit un fichier marqué **DEV** : ce n'est pas la comptabilité réelle.

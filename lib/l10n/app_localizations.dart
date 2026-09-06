@@ -170,6 +170,18 @@ abstract class AppLocalizations {
   /// **'Active'**
   String get accessoriesActive;
 
+  /// #936 accounting exports: fecAccountExpenses
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
+  String get fecAccountExpenses;
+
+  /// #936 accounting exports: accountingExportDevelopment
+  ///
+  /// In en, this message translates to:
+  /// **'Development workspace: the file is marked DEV and is not the real books.'**
+  String get accountingExportDevelopment;
+
   /// Features screen name for the #869 window-envelope address placement flag
   ///
   /// In en, this message translates to:

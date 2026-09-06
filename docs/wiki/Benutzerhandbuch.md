@@ -1039,3 +1039,7 @@ Das Konto, das die Installation betreibt, sieht unter *Profile* **alle Arbeitsbe
 ### Lage des Arbeitsbereichs und geführte Umlage (#934)
 
 *Geld → Lage des Arbeitsbereichs* zeigt Inhabern und Admins über einen frei gewählten Zeitraum, was der Arbeitsbereich **in Rechnung gestellt** (netto nach Gutschriften), **eingenommen**, **erstattet** und **umgelegt** hat, dann dasselbe Mitglied für Mitglied mit Abonnementanteil — und druckt es als Bericht. *Kosten umlegen* schlägt jeden Anteil **anteilig zum Abonnement** vor, erlaubt Ausnahmen und Gewichte, bucht die Anteile wie bisher (Zeilen auf der nächsten Verbrauchsrechnung) und **merkt sich die Regel** für den nächsten Monat.
+
+### Vollständige Buchhaltungsexporte (#936)
+
+FEC und DATEV-Datei führen neben Verkauf und Bank nun ein **Einkaufsjournal**: an Mitglieder erstattete Auslagen und umgelegte gemeinsame Kosten. Eine **Gutschrift** wird als stornierter Verkauf gebucht (sie fehlte). Das Aufwandskonto wird beim Export abgefragt wie die anderen. Ein Entwicklungs-Arbeitsbereich erzeugt eine mit **DEV** markierte Datei: das ist nicht die echte Buchhaltung.

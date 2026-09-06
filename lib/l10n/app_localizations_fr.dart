@@ -46,6 +46,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get accessoriesActive => 'Actif';
 
   @override
+  String get fecAccountExpenses => 'Achats et charges';
+
+  @override
+  String get accountingExportDevelopment =>
+      'Espace de développement : le fichier est marqué DEV et n\'est pas la comptabilité réelle.';
+
+  @override
   String get featureInvoiceAddressWindow => 'Fenêtre d\'adresse';
 
   @override

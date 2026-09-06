@@ -19,6 +19,14 @@
   "accessoriesNoSupplement": "Sin suplemento",
   "accessoriesInactive": "Inactivo",
   "accessoriesActive": "Activo",
+  "fecAccountExpenses": "Gastos",
+  "@fecAccountExpenses": {
+    "description": "#936 accounting exports: fecAccountExpenses"
+  },
+  "accountingExportDevelopment": "Espacio de desarrollo: el archivo lleva la marca DEV y no es la contabilidad real.",
+  "@accountingExportDevelopment": {
+    "description": "#936 accounting exports: accountingExportDevelopment"
+  },
   "featureInvoiceAddressWindow": "Ventanilla de dirección",
   "@featureInvoiceAddressWindow": {
     "description": "Features screen name for the #869 window-envelope address placement flag"

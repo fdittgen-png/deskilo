@@ -46,6 +46,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get accessoriesActive => 'Aktiv';
 
   @override
+  String get fecAccountExpenses => 'Aufwendungen';
+
+  @override
+  String get accountingExportDevelopment =>
+      'Entwicklungs-Arbeitsbereich: die Datei ist als DEV markiert und nicht die echte Buchhaltung.';
+
+  @override
   String get featureInvoiceAddressWindow => 'Adressfenster';
 
   @override
