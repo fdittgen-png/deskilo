@@ -132,6 +132,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.multiSite => l10n?.featureMultiSite ?? 'Sites',
       WorkspaceFeature.siteDocuments =>
         l10n?.featureSiteDocuments ?? 'Sites on documents',
+      WorkspaceFeature.navigationStyle =>
+        l10n?.featureNavigationStyle ?? 'Navigation choice',
       WorkspaceFeature.configurationTransfer =>
         l10n?.featureConfigurationTransfer ?? 'Configuration in the space file',
       WorkspaceFeature.vatGroups => l10n?.featureVatGroups ?? 'VAT groups',

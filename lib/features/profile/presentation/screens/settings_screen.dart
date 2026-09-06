@@ -13,6 +13,7 @@ import '../../../../core/links/link_launcher.dart';
 import '../../../../core/locale/locale_controller.dart';
 import '../../../../core/scan/front_camera.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/navigation/navigation_style.dart';
 import '../../../../core/theme/theme_controller.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -700,6 +701,33 @@ class SettingsScreen extends ConsumerWidget {
               builder: (_) => const _ThemeDialog(),
             ),
           ),
+          // #969 — how the app navigates: the classic bar or the menu.
+          // Never on the web, which has the menu and only the menu.
+          if (!ref.watch(platformIsWebProvider) &&
+              ref
+                  .watch(enabledFeaturesSyncProvider)
+                  .contains(WorkspaceFeature.navigationStyle))
+            ListTile(
+              key: const ValueKey('settings-navigation'),
+              leading: const Icon(Icons.menu_open_outlined),
+              title: HelpDotTitle(
+                l10n?.navigationTitle ?? 'Navigation',
+                l10n?.helpTopicSettings ?? 'Settings & profile',
+              ),
+              subtitle: Text(switch (
+                  ref.watch(navigationStyleControllerProvider).value) {
+                NavigationStyle.classic =>
+                  l10n?.navigationClassic ??
+                      'Classic: the bottom bar and the round button',
+                NavigationStyle.menu =>
+                  l10n?.navigationMenu ?? 'Menu: the hamburger, like the web',
+                _ => l10n?.navigationDefault ?? 'Default for this device',
+              }),
+              onTap: () => showDialog<void>(
+                context: context,
+                builder: (_) => const _NavigationDialog(),
+              ),
+            ),
           // Which camera reads badge QR codes: front by default (a
           // wall-mounted kiosk's back lens faces the wall). Device-local
           // preference, like language and theme.
@@ -1265,4 +1293,55 @@ String? _identitySummary(Profile? profile) {
     profile.postalBlock().replaceAll('\n', ', '),
   ].where((p) => p.isNotEmpty);
   return parts.isEmpty ? null : parts.join(' · ');
+}
+
+/// #969 — radio picker for the shell's navigation. Null (the first
+/// option) is the platform's default; a choice applies instantly, the
+/// shell watches the controller.
+class _NavigationDialog extends ConsumerWidget {
+  const _NavigationDialog();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final current = ref.watch(navigationStyleControllerProvider).value;
+    return SimpleDialog(
+      title: HelpDotTitle(
+        l10n?.navigationTitle ?? 'Navigation',
+        l10n?.helpTopicSettings ?? 'Settings & profile',
+      ),
+      children: [
+        RadioGroup<NavigationStyle?>(
+          groupValue: current,
+          onChanged: (style) {
+            ref.read(navigationStyleControllerProvider.notifier).set(style);
+            Navigator.of(context).pop();
+          },
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RadioListTile<NavigationStyle?>(
+                key: const ValueKey('navigation-default'),
+                value: null,
+                title: Text(
+                    l10n?.navigationDefault ?? 'Default for this device'),
+              ),
+              RadioListTile<NavigationStyle?>(
+                key: const ValueKey('navigation-classic'),
+                value: NavigationStyle.classic,
+                title: Text(l10n?.navigationClassic ??
+                    'Classic: the bottom bar and the round button'),
+              ),
+              RadioListTile<NavigationStyle?>(
+                key: const ValueKey('navigation-menu'),
+                value: NavigationStyle.menu,
+                title: Text(l10n?.navigationMenu ??
+                    'Menu: the hamburger, like the web'),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 }

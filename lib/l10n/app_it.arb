@@ -3963,6 +3963,30 @@
   "scheduleUnitMonths": "mesi",
   "scheduleUnitYears": "anni",
   "moneyFaceUsage": "Utilizzo",
+  "featureNavigationStyle": "Scelta della navigazione",
+  "@featureNavigationStyle": {
+    "description": "#969 navigation style: featureNavigationStyle"
+  },
+  "featureNavigationStyleDesc": "Ogni membro sceglie nelle impostazioni come naviga l'app: la barra inferiore classica con il pulsante rotondo Prenota, o il menu come sul web. Disattivato: ogni dispositivo mantiene il valore predefinito della sua piattaforma.",
+  "@featureNavigationStyleDesc": {
+    "description": "#969 navigation style: featureNavigationStyleDesc"
+  },
+  "navigationTitle": "Navigazione",
+  "@navigationTitle": {
+    "description": "#969 navigation style: navigationTitle"
+  },
+  "navigationDefault": "Predefinito per questo dispositivo",
+  "@navigationDefault": {
+    "description": "#969 navigation style: navigationDefault"
+  },
+  "navigationClassic": "Classica: la barra inferiore e il pulsante rotondo",
+  "@navigationClassic": {
+    "description": "#969 navigation style: navigationClassic"
+  },
+  "navigationMenu": "Menu: l'hamburger, come sul web",
+  "@navigationMenu": {
+    "description": "#969 navigation style: navigationMenu"
+  },
   "featureNumberSequences": "Serie di numerazione",
   "@featureNumberSequences": {
     "description": "#925 number sequences: featureNumberSequences"

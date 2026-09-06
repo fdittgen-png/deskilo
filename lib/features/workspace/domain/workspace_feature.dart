@@ -158,7 +158,11 @@ enum WorkspaceFeature {
   /// #916 — the space file carries the whole configuration (tariffs,
   /// legal identity, rules, governance, document designs, sites) and
   /// importing it applies it, even on a space with bookings.
-  configurationTransfer;
+  configurationTransfer,
+
+  /// #969 — the user picks the shell's navigation: the classic bottom
+  /// bar with the round button, or the menu the web uses.
+  navigationStyle;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -474,6 +478,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.configurationTransfer: FeatureManifestEntry(
     feature: WorkspaceFeature.configurationTransfer,
     requires: WorkspaceFeature.dataExport,
+  ),
+  // #969 — a per-device preference in Settings; off hides the choice
+  // and every device keeps its platform's default.
+  WorkspaceFeature.navigationStyle: FeatureManifestEntry(
+    feature: WorkspaceFeature.navigationStyle,
   ),
   // #719 — "who accessed my data": the server-written log of reads of
   // another member's finances, shown to the subject. OFF hides the row;

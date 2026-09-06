@@ -6426,6 +6426,26 @@ class AppLocalizationsDe extends AppLocalizations {
   String get moneyFaceUsage => 'Nutzung';
 
   @override
+  String get featureNavigationStyle => 'Navigationswahl';
+
+  @override
+  String get featureNavigationStyleDesc =>
+      'Jedes Mitglied wählt in seinen Einstellungen, wie die App navigiert: die klassische untere Leiste mit dem runden Reservieren-Knopf oder das Menü wie im Web. Aus: jedes Gerät behält den Standard seiner Plattform.';
+
+  @override
+  String get navigationTitle => 'Navigation';
+
+  @override
+  String get navigationDefault => 'Standard für dieses Gerät';
+
+  @override
+  String get navigationClassic =>
+      'Klassisch: die untere Leiste und der runde Knopf';
+
+  @override
+  String get navigationMenu => 'Menü: das Hamburger-Menü wie im Web';
+
+  @override
   String get featureNumberSequences => 'Nummernkreise';
 
   @override

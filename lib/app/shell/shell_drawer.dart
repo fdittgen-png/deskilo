@@ -6,20 +6,24 @@
 // drawer keeps the whole height for content and puts EVERY destination
 // — the tabs, the Reserve hub, the administration screens, the account
 // — one tap away. Native platforms keep the bar untouched.
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/navigation/navigation_style.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../router.dart';
 
-/// Whether the shell navigates through the drawer — the web build, and
-/// tests that ask for it.
-final webShellProvider = Provider<bool>((_) => kIsWeb);
+/// Whether the shell navigates through the drawer — the web build
+/// always, native when the user chose the menu (#969), and tests that
+/// ask for it.
+final webShellProvider = Provider<bool>((ref) => shellUsesMenu(
+      platformIsWeb: ref.watch(platformIsWebProvider),
+      override: ref.watch(navigationStyleControllerProvider).value,
+    ));
 
 /// One destination of the drawer.
 class _Entry {

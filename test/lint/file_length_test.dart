@@ -73,7 +73,7 @@ const Map<String, int> _baseline = {
   // 1040→1140 (2026-08-13): #560 the About section (author, licence,
   // privacy, bug link, support tiles).
   // 1260→1308 (2026-09-06): #945 sites.
-  'lib/features/profile/presentation/screens/settings_screen.dart': 1308, // 2026-08 #586 default-period tile + dialog // 2026-09-05 #886 the personal-information tile beside the legacy address dialog it replaces // 2026-09-05 #902 the payment-conditions tile
+  'lib/features/profile/presentation/screens/settings_screen.dart': 1360, // 2026-09-06 #969 the navigation tile and its dialog // 2026-08 #586 default-period tile + dialog // 2026-09-05 #886 the personal-information tile beside the legacy address dialog it replaces // 2026-09-05 #902 the payment-conditions tile
   // 1020→1040 (2026-08-06): #513 the Role management tile.
   // 980→1030 (2026-08-05): #476 the statement export honors the
   // owner's report template (#478 Invoices button joins the grid).

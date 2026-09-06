@@ -6430,6 +6430,26 @@ class AppLocalizationsIt extends AppLocalizations {
   String get moneyFaceUsage => 'Utilizzo';
 
   @override
+  String get featureNavigationStyle => 'Scelta della navigazione';
+
+  @override
+  String get featureNavigationStyleDesc =>
+      'Ogni membro sceglie nelle impostazioni come naviga l\'app: la barra inferiore classica con il pulsante rotondo Prenota, o il menu come sul web. Disattivato: ogni dispositivo mantiene il valore predefinito della sua piattaforma.';
+
+  @override
+  String get navigationTitle => 'Navigazione';
+
+  @override
+  String get navigationDefault => 'Predefinito per questo dispositivo';
+
+  @override
+  String get navigationClassic =>
+      'Classica: la barra inferiore e il pulsante rotondo';
+
+  @override
+  String get navigationMenu => 'Menu: l\'hamburger, come sul web';
+
+  @override
   String get featureNumberSequences => 'Serie di numerazione';
 
   @override

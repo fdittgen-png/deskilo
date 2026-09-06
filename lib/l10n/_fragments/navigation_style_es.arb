@@ -1,0 +1,27 @@
+{
+  "@@locale": "es",
+  "featureNavigationStyle": "Elección de navegación",
+  "@featureNavigationStyle": {
+    "description": "#969 navigation style: featureNavigationStyle"
+  },
+  "featureNavigationStyleDesc": "Cada miembro elige en sus ajustes cómo navega la app: la barra inferior clásica con el botón redondo Reservar, o el menú como en la web. Desactivado: cada dispositivo conserva el valor por defecto de su plataforma.",
+  "@featureNavigationStyleDesc": {
+    "description": "#969 navigation style: featureNavigationStyleDesc"
+  },
+  "navigationTitle": "Navegación",
+  "@navigationTitle": {
+    "description": "#969 navigation style: navigationTitle"
+  },
+  "navigationDefault": "Por defecto para este dispositivo",
+  "@navigationDefault": {
+    "description": "#969 navigation style: navigationDefault"
+  },
+  "navigationClassic": "Clásica: la barra inferior y el botón redondo",
+  "@navigationClassic": {
+    "description": "#969 navigation style: navigationClassic"
+  },
+  "navigationMenu": "Menú: la hamburguesa, como en la web",
+  "@navigationMenu": {
+    "description": "#969 navigation style: navigationMenu"
+  }
+}
