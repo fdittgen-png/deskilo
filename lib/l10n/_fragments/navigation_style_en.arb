@@ -1,0 +1,27 @@
+{
+  "@@locale": "en",
+  "featureNavigationStyle": "Navigation choice",
+  "@featureNavigationStyle": {
+    "description": "#969 navigation style: featureNavigationStyle"
+  },
+  "featureNavigationStyleDesc": "Each member picks in their settings how the app navigates: the classic bottom bar with the round Reserve button, or the menu the web uses. Off: every device keeps its platform's default.",
+  "@featureNavigationStyleDesc": {
+    "description": "#969 navigation style: featureNavigationStyleDesc"
+  },
+  "navigationTitle": "Navigation",
+  "@navigationTitle": {
+    "description": "#969 navigation style: navigationTitle"
+  },
+  "navigationDefault": "Default for this device",
+  "@navigationDefault": {
+    "description": "#969 navigation style: navigationDefault"
+  },
+  "navigationClassic": "Classic: the bottom bar and the round button",
+  "@navigationClassic": {
+    "description": "#969 navigation style: navigationClassic"
+  },
+  "navigationMenu": "Menu: the hamburger, like the web",
+  "@navigationMenu": {
+    "description": "#969 navigation style: navigationMenu"
+  }
+}

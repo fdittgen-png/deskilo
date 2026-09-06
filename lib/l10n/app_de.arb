@@ -3963,6 +3963,30 @@
   "scheduleUnitMonths": "Monate",
   "scheduleUnitYears": "Jahre",
   "moneyFaceUsage": "Nutzung",
+  "featureNavigationStyle": "Navigationswahl",
+  "@featureNavigationStyle": {
+    "description": "#969 navigation style: featureNavigationStyle"
+  },
+  "featureNavigationStyleDesc": "Jedes Mitglied wählt in seinen Einstellungen, wie die App navigiert: die klassische untere Leiste mit dem runden Reservieren-Knopf oder das Menü wie im Web. Aus: jedes Gerät behält den Standard seiner Plattform.",
+  "@featureNavigationStyleDesc": {
+    "description": "#969 navigation style: featureNavigationStyleDesc"
+  },
+  "navigationTitle": "Navigation",
+  "@navigationTitle": {
+    "description": "#969 navigation style: navigationTitle"
+  },
+  "navigationDefault": "Standard für dieses Gerät",
+  "@navigationDefault": {
+    "description": "#969 navigation style: navigationDefault"
+  },
+  "navigationClassic": "Klassisch: die untere Leiste und der runde Knopf",
+  "@navigationClassic": {
+    "description": "#969 navigation style: navigationClassic"
+  },
+  "navigationMenu": "Menü: das Hamburger-Menü wie im Web",
+  "@navigationMenu": {
+    "description": "#969 navigation style: navigationMenu"
+  },
   "featureNumberSequences": "Nummernkreise",
   "@featureNumberSequences": {
     "description": "#925 number sequences: featureNumberSequences"

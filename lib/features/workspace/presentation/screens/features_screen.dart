@@ -264,6 +264,12 @@ class FeaturesScreen extends ConsumerWidget {
                   'its own address and registration, each member a home '
                   'site, and documents name the site they concern. Off: one '
                   'address for the whole workspace.',
+        WorkspaceFeature.navigationStyle =>
+          l10n?.featureNavigationStyleDesc ??
+              'Each member picks in their settings how the app navigates: '
+                  'the classic bottom bar with the round Reserve button, or '
+                  'the menu the web uses. Off: every device keeps its '
+                  'platform\'s default.',
         WorkspaceFeature.configurationTransfer =>
           l10n?.featureConfigurationTransferDesc ??
               'The space file (XML) carries the whole configuration — '

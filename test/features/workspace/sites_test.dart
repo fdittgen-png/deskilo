@@ -61,6 +61,8 @@ void main() {
     await tester.pumpAndSettle();
     final tile = find.byKey(const ValueKey('settings-sites'));
     await tester.scrollUntilVisible(tile, 300, scrollable: find.byType(Scrollable).first);
+    await tester.ensureVisible(tile);
+    await tester.pumpAndSettle();
     await tester.tap(tile);
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('site-default')), findsOneWidget);

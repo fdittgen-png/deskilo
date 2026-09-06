@@ -6416,6 +6416,26 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moneyFaceUsage => 'Uso';
 
   @override
+  String get featureNavigationStyle => 'Elección de navegación';
+
+  @override
+  String get featureNavigationStyleDesc =>
+      'Cada miembro elige en sus ajustes cómo navega la app: la barra inferior clásica con el botón redondo Reservar, o el menú como en la web. Desactivado: cada dispositivo conserva el valor por defecto de su plataforma.';
+
+  @override
+  String get navigationTitle => 'Navegación';
+
+  @override
+  String get navigationDefault => 'Por defecto para este dispositivo';
+
+  @override
+  String get navigationClassic =>
+      'Clásica: la barra inferior y el botón redondo';
+
+  @override
+  String get navigationMenu => 'Menú: la hamburguesa, como en la web';
+
+  @override
   String get featureNumberSequences => 'Series de numeración';
 
   @override

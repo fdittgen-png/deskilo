@@ -11207,6 +11207,42 @@ abstract class AppLocalizations {
   /// **'Usage'**
   String get moneyFaceUsage;
 
+  /// #969 navigation style: featureNavigationStyle
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation choice'**
+  String get featureNavigationStyle;
+
+  /// #969 navigation style: featureNavigationStyleDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Each member picks in their settings how the app navigates: the classic bottom bar with the round Reserve button, or the menu the web uses. Off: every device keeps its platform\'s default.'**
+  String get featureNavigationStyleDesc;
+
+  /// #969 navigation style: navigationTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation'**
+  String get navigationTitle;
+
+  /// #969 navigation style: navigationDefault
+  ///
+  /// In en, this message translates to:
+  /// **'Default for this device'**
+  String get navigationDefault;
+
+  /// #969 navigation style: navigationClassic
+  ///
+  /// In en, this message translates to:
+  /// **'Classic: the bottom bar and the round button'**
+  String get navigationClassic;
+
+  /// #969 navigation style: navigationMenu
+  ///
+  /// In en, this message translates to:
+  /// **'Menu: the hamburger, like the web'**
+  String get navigationMenu;
+
   /// #925 number sequences: featureNumberSequences
   ///
   /// In en, this message translates to:

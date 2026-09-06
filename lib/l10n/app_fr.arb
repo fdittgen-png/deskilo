@@ -3963,6 +3963,30 @@
   "scheduleUnitMonths": "mois",
   "scheduleUnitYears": "ans",
   "moneyFaceUsage": "Usage",
+  "featureNavigationStyle": "Choix de la navigation",
+  "@featureNavigationStyle": {
+    "description": "#969 navigation style: featureNavigationStyle"
+  },
+  "featureNavigationStyleDesc": "Chaque membre choisit dans ses réglages comment l'application navigue : la barre classique avec le bouton rond Réserver, ou le menu comme sur le web. Désactivé : chaque appareil garde le défaut de sa plateforme.",
+  "@featureNavigationStyleDesc": {
+    "description": "#969 navigation style: featureNavigationStyleDesc"
+  },
+  "navigationTitle": "Navigation",
+  "@navigationTitle": {
+    "description": "#969 navigation style: navigationTitle"
+  },
+  "navigationDefault": "Par défaut pour cet appareil",
+  "@navigationDefault": {
+    "description": "#969 navigation style: navigationDefault"
+  },
+  "navigationClassic": "Classique : la barre du bas et le bouton rond",
+  "@navigationClassic": {
+    "description": "#969 navigation style: navigationClassic"
+  },
+  "navigationMenu": "Menu : le hamburger, comme sur le web",
+  "@navigationMenu": {
+    "description": "#969 navigation style: navigationMenu"
+  },
   "featureNumberSequences": "Séquences de numérotation",
   "@featureNumberSequences": {
     "description": "#925 number sequences: featureNumberSequences"
