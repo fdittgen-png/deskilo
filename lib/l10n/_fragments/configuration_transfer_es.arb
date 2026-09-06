@@ -1,0 +1,30 @@
+{
+  "@@locale": "es",
+  "featureConfigurationTransfer": "Configuración en el archivo del espacio",
+  "@featureConfigurationTransfer": {
+    "description": "#916 configuration transfer: featureConfigurationTransfer"
+  },
+  "featureConfigurationTransferDesc": "El archivo del espacio (XML) lleva toda la configuración — tarifas, identidad legal, reglas de reserva y validación, roles, diseños de documentos, sedes, días de cierre — y la importación la aplica, incluso en un espacio que ya tiene reservas. Desactivado: el archivo solo lleva ajustes y plano.",
+  "@featureConfigurationTransferDesc": {
+    "description": "#916 configuration transfer: featureConfigurationTransferDesc"
+  },
+  "workspaceXmlImportPreviewConfiguration": "Configuración: {settings} ajustes, {rows} filas en {tables} tablas",
+  "@workspaceXmlImportPreviewConfiguration": {
+    "description": "#916 configuration transfer: workspaceXmlImportPreviewConfiguration",
+    "placeholders": {
+      "settings": {
+        "type": "int"
+      },
+      "tables": {
+        "type": "int"
+      },
+      "rows": {
+        "type": "int"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationOnly": "La configuración se aplicó. El plano se conservó: este espacio ya tiene reservas, así que su plano no puede reemplazarse.",
+  "@workspaceXmlImportConfigurationOnly": {
+    "description": "#916 configuration transfer: workspaceXmlImportConfigurationOnly"
+  }
+}

@@ -264,6 +264,14 @@ class FeaturesScreen extends ConsumerWidget {
                   'its own address and registration, each member a home '
                   'site, and documents name the site they concern. Off: one '
                   'address for the whole workspace.',
+        WorkspaceFeature.configurationTransfer =>
+          l10n?.featureConfigurationTransferDesc ??
+              'The space file (XML) carries the whole configuration — '
+                  'tariffs, legal identity, booking and validation rules, '
+                  'roles, document designs, sites, closure days — and '
+                  'importing it applies it, even on a space that already '
+                  'has bookings. Off: the file carries settings and floor '
+                  'plan only.',
         WorkspaceFeature.siteDocuments =>
           l10n?.featureSiteDocumentsDesc ??
               'Documents name the site they concern: the member\'s home '

@@ -153,7 +153,12 @@ enum WorkspaceFeature {
 
   /// #831 — settled sources fold under their settlement: documentation
   /// only, a stamped PDF the one affordance left.
-  settlementFold;
+  settlementFold,
+
+  /// #916 — the space file carries the whole configuration (tariffs,
+  /// legal identity, rules, governance, document designs, sites) and
+  /// importing it applies it, even on a space with bookings.
+  configurationTransfer;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -462,6 +467,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.settlementFold: FeatureManifestEntry(
     feature: WorkspaceFeature.settlementFold,
     requires: WorkspaceFeature.invoiceSettlement,
+  ),
+  // #916 — the exported space IS the space: the file's <configuration>
+  // section and the plan attributes travel with the export and apply on
+  // import. Child of the data export it extends.
+  WorkspaceFeature.configurationTransfer: FeatureManifestEntry(
+    feature: WorkspaceFeature.configurationTransfer,
+    requires: WorkspaceFeature.dataExport,
   ),
   // #719 — "who accessed my data": the server-written log of reads of
   // another member's finances, shown to the subject. OFF hides the row;

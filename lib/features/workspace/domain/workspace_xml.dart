@@ -7,6 +7,7 @@ import '../../plan/domain/grid_geometry.dart';
 import '../../plan/domain/level.dart';
 import '../../plan/domain/seat.dart';
 import 'workspace.dart';
+import 'workspace_xml_configuration.dart';
 
 /// Versioned XML interchange format for a workspace configuration
 /// (#164, Epic #162): the owner-editable settings plus the full floor
@@ -52,13 +53,28 @@ import 'workspace.dart';
 /// All timestamps are ISO-8601 UTC. Grid coordinates are absolute cells
 /// exactly as stored (ADR 0005); a seat's x/y is its footprint's
 /// top-left cell.
+///
+/// Schema v3 (#916 — the exported space IS the space): v2 plus
+/// - a `<configuration>` section carrying every configuration domain
+///   the settings block does not (tariffs, legal identity, booking and
+///   validation rules, governance, document designs, sites, closure
+///   days, document links) as a typed tree — see
+///   `workspace_xml_configuration.dart`; absent in a v1/v2 file;
+/// - the plan attributes v2 dropped: `price-cents` and
+///   `bookable-as-whole` on levels and desks, `price-cents` on offices,
+///   `site` (the site's name) on levels, `nfc-uid` on seats, `vat-rate`
+///   (the rate's label) on catalogue accessories — every one optional,
+///   so a v2 document is a valid v3 document.
+/// Secrets never travel: the invite code, the e-invoice and payment
+/// provider credentials. Neither does anything transactional.
 abstract final class WorkspaceXmlSchema {
   /// The version the app EXPORTS.
-  static const int version = 2;
+  static const int version = 3;
 
-  /// The versions the parser ACCEPTS: v1 (pre-accessories, #164) and v2
-  /// (#180). Anything else was exported by a newer app → unsupported.
-  static const Set<int> supportedVersions = {1, 2};
+  /// The versions the parser ACCEPTS: v1 (pre-accessories, #164), v2
+  /// (#180) and v3 (#916). Anything else was exported by a newer app →
+  /// unsupported.
+  static const Set<int> supportedVersions = {1, 2, 3};
 
   static const String rootElement = 'deskilo-workspace';
   static const String versionAttr = 'version';
@@ -98,6 +114,14 @@ abstract final class WorkspaceXmlSchema {
   static const String accessoryElement = 'accessory';
   static const String supplementCentsAttr = 'supplement-cents';
   static const String activeAttr = 'active';
+
+  // v3 (#916): plan attributes and the configuration section.
+  static const String priceCentsAttr = 'price-cents';
+  static const String siteAttr = 'site';
+  static const String nfcUidAttr = 'nfc-uid';
+  static const String vatRateAttr = 'vat-rate';
+  static const String configurationElement =
+      WorkspaceXmlConfigurationSchema.element;
 }
 
 /// Why a document was rejected. #165 maps each value to a localized
@@ -188,6 +212,7 @@ class WorkspaceXmlAccessory {
     this.supplementCents = 0,
     this.active = true,
     this.sortOrder = 0,
+    this.vatRate = '',
   });
 
   final String name;
@@ -195,16 +220,22 @@ class WorkspaceXmlAccessory {
   final bool active;
   final int sortOrder;
 
+  /// The VAT rate's LABEL (v3, #916) — empty when the accessory carries
+  /// none or the file predates v3.
+  final String vatRate;
+
   @override
   bool operator ==(Object other) =>
       other is WorkspaceXmlAccessory &&
       other.name == name &&
       other.supplementCents == supplementCents &&
       other.active == active &&
-      other.sortOrder == sortOrder;
+      other.sortOrder == sortOrder &&
+      other.vatRate == vatRate;
 
   @override
-  int get hashCode => Object.hash(name, supplementCents, active, sortOrder);
+  int get hashCode =>
+      Object.hash(name, supplementCents, active, sortOrder, vatRate);
 }
 
 /// A `<seat>`: THE bookable unit. x/y is the footprint's top-left cell.
@@ -219,6 +250,7 @@ class WorkspaceXmlSeat {
     this.accessoryNames = const [],
     this.blockedFrom,
     this.blockedTo,
+    this.nfcUid = '',
   });
 
   final String name;
@@ -233,6 +265,9 @@ class WorkspaceXmlSeat {
   final DateTime? blockedFrom;
   final DateTime? blockedTo;
 
+  /// The seat's NFC tag identifier (v3, #916), empty when untagged.
+  final String nfcUid;
+
   @override
   bool operator ==(Object other) =>
       other is WorkspaceXmlSeat &&
@@ -244,12 +279,13 @@ class WorkspaceXmlSeat {
       _listEquals(other.amenities, amenities) &&
       _listEquals(other.accessoryNames, accessoryNames) &&
       other.blockedFrom == blockedFrom &&
-      other.blockedTo == blockedTo;
+      other.blockedTo == blockedTo &&
+      other.nfcUid == nfcUid;
 
   @override
   int get hashCode => Object.hash(name, x, y, orientation, chair,
       Object.hashAll(amenities), Object.hashAll(accessoryNames), blockedFrom,
-      blockedTo);
+      blockedTo, nfcUid);
 }
 
 /// A `<desk>` with its seats nested inside.
@@ -258,21 +294,30 @@ class WorkspaceXmlDesk {
     required this.name,
     required this.rect,
     this.seats = const [],
+    this.priceCents = 0,
+    this.bookableAsWhole = false,
   });
 
   final String name;
   final GridRect rect;
   final List<WorkspaceXmlSeat> seats;
 
+  /// v3 (#916): the desk's own price and whether it books as a whole.
+  final int priceCents;
+  final bool bookableAsWhole;
+
   @override
   bool operator ==(Object other) =>
       other is WorkspaceXmlDesk &&
       other.name == name &&
       other.rect == rect &&
-      _listEquals(other.seats, seats);
+      _listEquals(other.seats, seats) &&
+      other.priceCents == priceCents &&
+      other.bookableAsWhole == bookableAsWhole;
 
   @override
-  int get hashCode => Object.hash(name, rect, Object.hashAll(seats));
+  int get hashCode => Object.hash(
+      name, rect, Object.hashAll(seats), priceCents, bookableAsWhole);
 }
 
 /// An `<office>` with its desks nested inside.
@@ -283,6 +328,7 @@ class WorkspaceXmlOffice {
     required this.bookableAsWhole,
     required this.rect,
     this.desks = const [],
+    this.priceCents = 0,
   });
 
   final String name;
@@ -291,6 +337,9 @@ class WorkspaceXmlOffice {
   final GridRect rect;
   final List<WorkspaceXmlDesk> desks;
 
+  /// v3 (#916): the office's own price.
+  final int priceCents;
+
   @override
   bool operator ==(Object other) =>
       other is WorkspaceXmlOffice &&
@@ -298,11 +347,12 @@ class WorkspaceXmlOffice {
       other.color == color &&
       other.bookableAsWhole == bookableAsWhole &&
       other.rect == rect &&
-      _listEquals(other.desks, desks);
+      _listEquals(other.desks, desks) &&
+      other.priceCents == priceCents;
 
   @override
-  int get hashCode =>
-      Object.hash(name, color, bookableAsWhole, rect, Object.hashAll(desks));
+  int get hashCode => Object.hash(name, color, bookableAsWhole, rect,
+      Object.hashAll(desks), priceCents);
 }
 
 /// A `<level>` (floor) with its offices nested inside.
@@ -311,21 +361,34 @@ class WorkspaceXmlLevel {
     required this.name,
     required this.sortOrder,
     this.offices = const [],
+    this.priceCents = 0,
+    this.bookableAsWhole = false,
+    this.site = '',
   });
 
   final String name;
   final int sortOrder;
   final List<WorkspaceXmlOffice> offices;
 
+  /// v3 (#916): the level's price, whether it books as a whole, and the
+  /// NAME of the site it belongs to ('' = the workspace's default).
+  final int priceCents;
+  final bool bookableAsWhole;
+  final String site;
+
   @override
   bool operator ==(Object other) =>
       other is WorkspaceXmlLevel &&
       other.name == name &&
       other.sortOrder == sortOrder &&
-      _listEquals(other.offices, offices);
+      _listEquals(other.offices, offices) &&
+      other.priceCents == priceCents &&
+      other.bookableAsWhole == bookableAsWhole &&
+      other.site == site;
 
   @override
-  int get hashCode => Object.hash(name, sortOrder, Object.hashAll(offices));
+  int get hashCode => Object.hash(name, sortOrder, Object.hashAll(offices),
+      priceCents, bookableAsWhole, site);
 }
 
 /// The whole parsed document: settings + accessory catalog + floor-plan
@@ -335,22 +398,28 @@ class WorkspaceXmlData {
     required this.settings,
     this.accessories = const [],
     this.levels = const [],
+    this.configuration,
   });
 
   final WorkspaceXmlSettings settings;
   final List<WorkspaceXmlAccessory> accessories;
   final List<WorkspaceXmlLevel> levels;
 
+  /// The v3 `<configuration>` tree (#916); null for a v1/v2 document or
+  /// a v3 document without one. Compared structurally.
+  final Map<String, Object?>? configuration;
+
   @override
   bool operator ==(Object other) =>
       other is WorkspaceXmlData &&
       other.settings == settings &&
       _listEquals(other.accessories, accessories) &&
-      _listEquals(other.levels, levels);
+      _listEquals(other.levels, levels) &&
+      _deepEquals(other.configuration, configuration);
 
   @override
-  int get hashCode => Object.hash(
-      settings, Object.hashAll(accessories), Object.hashAll(levels));
+  int get hashCode => Object.hash(settings, Object.hashAll(accessories),
+      Object.hashAll(levels), configuration == null ? 0 : 1);
 }
 
 // ---------------------------------------------------------------------------
@@ -366,11 +435,19 @@ class WorkspaceXmlData {
 /// be complete, #180) and [seatAccessories] the seat id → accessory ids
 /// assignments; both serialize id-free, seats referencing accessories by
 /// name in catalog order.
+///
+/// v3 (#916): [configuration] is the server's configuration tree and
+/// becomes the `<configuration>` section when given; [siteNames] (site
+/// id → name) and [vatRateLabels] (rate id → label) resolve the plan's
+/// references, which the document carries by name.
 String buildWorkspaceXml({
   required Workspace workspace,
   required List<({Level level, FloorPlan plan})> levels,
   List<Accessory> accessories = const [],
   Map<String, Set<String>> seatAccessories = const {},
+  Map<String, Object?>? configuration,
+  Map<String, String> siteNames = const {},
+  Map<String, String> vatRateLabels = const {},
 }) {
   final sortedLevels = List.of(levels)
     ..sort((a, b) => a.level.sortOrder.compareTo(b.level.sortOrder));
@@ -425,6 +502,10 @@ String buildWorkspaceXml({
               WorkspaceXmlSchema.activeAttr, '${accessory.active}');
           builder.attribute(
               WorkspaceXmlSchema.sortOrderAttr, '${accessory.sortOrder}');
+          final vatRate = vatRateLabels[accessory.vatRateId];
+          if (vatRate != null && vatRate.isNotEmpty) {
+            builder.attribute(WorkspaceXmlSchema.vatRateAttr, vatRate);
+          }
         });
       }
     });
@@ -434,6 +515,12 @@ String buildWorkspaceXml({
           builder.attribute(WorkspaceXmlSchema.nameAttr, entry.level.name);
           builder.attribute(
               WorkspaceXmlSchema.sortOrderAttr, '${entry.level.sortOrder}');
+          _priceAttributes(builder, entry.level.priceCents,
+              bookableAsWhole: entry.level.bookableAsWhole);
+          final site = siteNames[entry.level.siteId];
+          if (site != null && site.isNotEmpty) {
+            builder.attribute(WorkspaceXmlSchema.siteAttr, site);
+          }
           for (final office in entry.plan.offices) {
             builder.element(WorkspaceXmlSchema.officeElement, nest: () {
               builder.attribute(WorkspaceXmlSchema.nameAttr, office.name);
@@ -442,10 +529,13 @@ String buildWorkspaceXml({
               builder.attribute(WorkspaceXmlSchema.bookableAsWholeAttr,
                   '${office.bookableAsWhole}');
               _rectAttributes(builder, office.rect);
+              _priceAttributes(builder, office.priceCents);
               for (final desk in entry.plan.desksOf(office.id)) {
                 builder.element(WorkspaceXmlSchema.deskElement, nest: () {
                   builder.attribute(WorkspaceXmlSchema.nameAttr, desk.name);
                   _rectAttributes(builder, desk.rect);
+                  _priceAttributes(builder, desk.priceCents,
+                      bookableAsWhole: desk.bookableAsWhole);
                   for (final seat in entry.plan.seatsOf(desk.id)) {
                     // Assigned catalog entries, referenced by NAME in
                     // catalog order — ids never enter the document.
@@ -463,8 +553,21 @@ String buildWorkspaceXml({
         });
       }
     });
+    if (configuration != null) writeConfigurationXml(builder, configuration);
   });
   return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
+}
+
+/// v3 plan attributes, written only when they say something: a v3 file
+/// of a plain plan reads like a v2 file.
+void _priceAttributes(XmlBuilder builder, int priceCents,
+    {bool? bookableAsWhole}) {
+  if (priceCents != 0) {
+    builder.attribute(WorkspaceXmlSchema.priceCentsAttr, '$priceCents');
+  }
+  if (bookableAsWhole == true) {
+    builder.attribute(WorkspaceXmlSchema.bookableAsWholeAttr, 'true');
+  }
 }
 
 /// `deskilo-<slugified name>.xml` — the file name handed to the share
@@ -493,6 +596,10 @@ void _seatElement(
     builder.attribute(
         WorkspaceXmlSchema.orientationAttr, seat.orientation.name);
     builder.attribute(WorkspaceXmlSchema.chairAttr, seat.chair);
+    final nfcUid = seat.nfcUid;
+    if (nfcUid != null && nfcUid.isNotEmpty) {
+      builder.attribute(WorkspaceXmlSchema.nfcUidAttr, nfcUid);
+    }
     final from = seat.blockedFrom;
     if (from != null) {
       builder.attribute(WorkspaceXmlSchema.blockedFromAttr,
@@ -564,8 +671,14 @@ WorkspaceXmlData parseWorkspaceXml(String input) {
   final accessoriesElement =
       root.getElement(WorkspaceXmlSchema.accessoriesElement);
 
+  final configurationElement =
+      root.getElement(WorkspaceXmlSchema.configurationElement);
+
   final data = WorkspaceXmlData(
     settings: _parseSettings(settingsElement),
+    configuration: configurationElement == null
+        ? null
+        : parseConfigurationXml(configurationElement),
     accessories: [
       if (accessoriesElement != null)
         for (final accessory in accessoriesElement
@@ -619,6 +732,7 @@ WorkspaceXmlAccessory _parseAccessory(XmlElement element) =>
       active: _requireBool(element, WorkspaceXmlSchema.activeAttr),
       sortOrder:
           _requireInt(element, WorkspaceXmlSchema.sortOrderAttr, min: 0),
+      vatRate: element.getAttribute(WorkspaceXmlSchema.vatRateAttr) ?? '',
     );
 
 WorkspaceXmlSettings _parseSettings(XmlElement element) {
@@ -649,6 +763,10 @@ WorkspaceXmlLevel _parseLevel(XmlElement element) => WorkspaceXmlLevel(
       name: _requireAttribute(element, WorkspaceXmlSchema.nameAttr),
       sortOrder:
           _requireInt(element, WorkspaceXmlSchema.sortOrderAttr, min: 0),
+      priceCents: _optionalInt(element, WorkspaceXmlSchema.priceCentsAttr),
+      bookableAsWhole:
+          _optionalBool(element, WorkspaceXmlSchema.bookableAsWholeAttr),
+      site: element.getAttribute(WorkspaceXmlSchema.siteAttr) ?? '',
       offices: [
         for (final office
             in element.findElements(WorkspaceXmlSchema.officeElement))
@@ -662,6 +780,7 @@ WorkspaceXmlOffice _parseOffice(XmlElement element) => WorkspaceXmlOffice(
       bookableAsWhole:
           _requireBool(element, WorkspaceXmlSchema.bookableAsWholeAttr),
       rect: _parseRect(element),
+      priceCents: _optionalInt(element, WorkspaceXmlSchema.priceCentsAttr),
       desks: [
         for (final desk
             in element.findElements(WorkspaceXmlSchema.deskElement))
@@ -672,6 +791,9 @@ WorkspaceXmlOffice _parseOffice(XmlElement element) => WorkspaceXmlOffice(
 WorkspaceXmlDesk _parseDesk(XmlElement element) => WorkspaceXmlDesk(
       name: _requireAttribute(element, WorkspaceXmlSchema.nameAttr),
       rect: _parseRect(element),
+      priceCents: _optionalInt(element, WorkspaceXmlSchema.priceCentsAttr),
+      bookableAsWhole:
+          _optionalBool(element, WorkspaceXmlSchema.bookableAsWholeAttr),
       seats: [
         for (final seat
             in element.findElements(WorkspaceXmlSchema.seatElement))
@@ -710,8 +832,18 @@ WorkspaceXmlSeat _parseSeat(XmlElement element) {
     ],
     blockedFrom: _optionalUtc(element, WorkspaceXmlSchema.blockedFromAttr),
     blockedTo: _optionalUtc(element, WorkspaceXmlSchema.blockedToAttr),
+    nfcUid: element.getAttribute(WorkspaceXmlSchema.nfcUidAttr) ?? '',
   );
 }
+
+/// v3 optional attributes: absent means the default (0 / false).
+int _optionalInt(XmlElement element, String name) =>
+    element.getAttribute(name) == null
+        ? 0
+        : _requireInt(element, name, min: 0);
+
+bool _optionalBool(XmlElement element, String name) =>
+    element.getAttribute(name) == null ? false : _requireBool(element, name);
 
 GridRect _parseRect(XmlElement element) => GridRect(
       x: _requireInt(element, WorkspaceXmlSchema.xAttr, min: 0),
@@ -790,3 +922,22 @@ bool _mapEquals<V>(Map<String, V> a, Map<String, V> b) {
 
 int _mapHash<V>(Map<String, V> map) => Object.hashAllUnordered(
     map.entries.map((e) => Object.hash(e.key, e.value)));
+
+/// Structural equality of two configuration trees (maps, lists, scalars).
+bool _deepEquals(Object? a, Object? b) {
+  if (a is Map && b is Map) {
+    if (a.length != b.length) return false;
+    for (final key in a.keys) {
+      if (!b.containsKey(key) || !_deepEquals(a[key], b[key])) return false;
+    }
+    return true;
+  }
+  if (a is List && b is List) {
+    if (a.length != b.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (!_deepEquals(a[i], b[i])) return false;
+    }
+    return true;
+  }
+  return a == b;
+}

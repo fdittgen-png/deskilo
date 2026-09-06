@@ -2588,6 +2588,34 @@ abstract class AppLocalizations {
   /// **'This app is free, open source and ad-free. If you find it useful, support the developer.'**
   String get aboutSupportBody;
 
+  /// #916 configuration transfer: featureConfigurationTransfer
+  ///
+  /// In en, this message translates to:
+  /// **'Configuration in the space file'**
+  String get featureConfigurationTransfer;
+
+  /// #916 configuration transfer: featureConfigurationTransferDesc
+  ///
+  /// In en, this message translates to:
+  /// **'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.'**
+  String get featureConfigurationTransferDesc;
+
+  /// #916 configuration transfer: workspaceXmlImportPreviewConfiguration
+  ///
+  /// In en, this message translates to:
+  /// **'Configuration: {settings} settings, {rows} rows in {tables} tables'**
+  String workspaceXmlImportPreviewConfiguration(
+    int settings,
+    int tables,
+    int rows,
+  );
+
+  /// #916 configuration transfer: workspaceXmlImportConfigurationOnly
+  ///
+  /// In en, this message translates to:
+  /// **'The configuration was applied. The floor plan was kept: this space already has reservations, so its plan cannot be replaced.'**
+  String get workspaceXmlImportConfigurationOnly;
+
   /// Button + sheet title recording my own consumed services (#129)
   ///
   /// In en, this message translates to:

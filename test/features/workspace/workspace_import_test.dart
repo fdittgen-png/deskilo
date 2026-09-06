@@ -125,6 +125,8 @@ void main() {
         {
           'name': 'Ground floor',
           'sort_order': 0,
+          'price_cents': 0,
+          'bookable_as_whole': false,
           'offices': [
             {
               'name': 'Main room',
@@ -134,6 +136,7 @@ void main() {
               'y': 2,
               'w': 30,
               'h': 20,
+              'price_cents': 0,
               'desks': [
                 {
                   'name': 'Window desk',
@@ -141,6 +144,8 @@ void main() {
                   'y': 3,
                   'w': 14,
                   'h': 10,
+                  'price_cents': 0,
+                  'bookable_as_whole': false,
                   'seats': [
                     {
                       'name': 'A1',

@@ -100,7 +100,8 @@ import 'package:flutter_test/flutter_test.dart';
 // 87→88 (2026-09-06): #945 multiSite.
 // 88→89 (2026-09-06): #946 siteDocuments.
 // 89→90 (2026-09-06): #947 vatGroups.
-const int _expectedFeatureCount = 90;
+const int _expectedFeatureCount = 91;
+// 90→91 (2026-09-06): #916 configurationTransfer.
 
 void main() {
   test('every functionality is registered — the pin', () {

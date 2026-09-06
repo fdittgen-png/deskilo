@@ -463,11 +463,28 @@ Future<Uint8List> buildInvoicePdf({
                     // document. The band is fixed by the envelope spec
                     // and cannot grow, so the letterhead SCALES to fit
                     // it instead of being cut off.
+                    //
+                    // #965 — capping the picture was not enough: a
+                    // heading, a blank line, the logo and three lines of
+                    // identity still overran the band, and this time the
+                    // logo AND the lines under it vanished while the
+                    // heading survived. The band now really scales: the
+                    // whole letterhead is laid out at page width and
+                    // shrunk uniformly until it fits, so everything the
+                    // design says is on the page, smaller if it must be.
                     pw.SizedBox(
                       height: addressWindowTop - pageMargin,
-                      child: pw.Column(
-                        crossAxisAlignment: pw.CrossAxisAlignment.stretch,
-                        children: windowHeaderWidgets,
+                      child: pw.FittedBox(
+                        fit: pw.BoxFit.scaleDown,
+                        alignment: pw.Alignment.topLeft,
+                        child: pw.SizedBox(
+                          width: context.page.pageFormat.availableWidth,
+                          child: pw.Column(
+                            crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+                            mainAxisSize: pw.MainAxisSize.min,
+                            children: windowHeaderWidgets,
+                          ),
+                        ),
                       ),
                     )
                   else

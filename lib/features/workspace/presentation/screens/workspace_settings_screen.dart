@@ -42,7 +42,9 @@ import '../../domain/workspace.dart';
 import '../../domain/workspace_config_pdf.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_import.dart';
+import '../../domain/workspace_xml_configuration.dart';
 import '../../domain/workspace_xml.dart';
+import '../../../money/providers/money_providers.dart';
 import '../../providers/workspace_import_providers.dart';
 import '../../../money/presentation/widgets/billing_rules_dialog.dart';
 import '../../../money/presentation/widgets/dunning_rules_dialog.dart';
@@ -224,7 +226,26 @@ class _WorkspaceSettingsScreenState
           final accessories =
               await ref.read(accessoriesProvider(includeInactive: true).future);
           final seatAccessories = await ref.read(seatAccessoriesProvider.future);
+          // #916 — the configuration section and the plan's references
+          // by name, when the feature is on.
+          Map<String, Object?>? configuration;
+          var siteNames = const <String, String>{};
+          var vatRateLabels = const <String, String>{};
+          if (ref
+              .read(enabledFeaturesSyncProvider)
+              .contains(WorkspaceFeature.configurationTransfer)) {
+            configuration = await ref
+                .read(workspaceImportRepositoryProvider)
+                .exportConfiguration(workspace.id);
+            final sites = await ref.read(sitesProvider.future);
+            siteNames = {for (final site in sites) site.id: site.name};
+            final rates = await ref.read(vatRatesProvider.future);
+            vatRateLabels = {for (final rate in rates) rate.id: rate.label};
+          }
           final xml = buildWorkspaceXml(
+            configuration: configuration,
+            siteNames: siteNames,
+            vatRateLabels: vatRateLabels,
             workspace: workspace,
             levels: plans,
             accessories: accessories,
@@ -715,6 +736,15 @@ class _WorkspaceSettingsScreenState
       }
 
       final counts = workspaceXmlPlanCounts(data);
+      // #916 — the configuration section applies when the feature is on;
+      // a v1/v2 file has none.
+      final configuration = data.configuration;
+      final applyConfiguration = configuration != null &&
+          ref
+              .read(enabledFeaturesSyncProvider)
+              .contains(WorkspaceFeature.configurationTransfer);
+      final configurationCount =
+          applyConfiguration ? configurationCounts(configuration) : null;
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (dialogContext) {
@@ -741,6 +771,16 @@ class _WorkspaceSettingsScreenState
                           counts.accessories) ??
                       'Accessories: ${counts.accessories}',
                 ),
+                if (configurationCount != null)
+                  Text(
+                    l10n?.workspaceXmlImportPreviewConfiguration(
+                            configurationCount.settings,
+                            configurationCount.tables,
+                            configurationCount.rows) ??
+                        'Configuration: ${configurationCount.settings} '
+                            'settings, ${configurationCount.rows} rows in '
+                            '${configurationCount.tables} tables',
+                  ),
                 const SizedBox(height: 12),
                 Text(
                   l10n?.workspaceXmlImportPreviewWarning ??
@@ -775,11 +815,29 @@ class _WorkspaceSettingsScreenState
       if (confirmed != true) return;
       if (!mounted) return;
 
-      // Floor plan first — the RPC is the step that can refuse (owner
-      // check, reservations); nothing else is touched when it does.
-      await ref
-          .read(workspaceImportRepositoryProvider)
-          .importFloorPlan(workspace.id, data);
+      final importRepository = ref.read(workspaceImportRepositoryProvider);
+      // #916 — the configuration first: it has no reservation hazard and
+      // must land even when the plan below is refused.
+      if (applyConfiguration) {
+        await importRepository.importConfiguration(
+            workspace.id, configuration);
+      }
+      // The floor plan is the step that can refuse (owner check,
+      // reservations). With a configuration already applied the refusal
+      // is reported as "plan kept", not as a failure.
+      var planKept = false;
+      try {
+        await importRepository.importFloorPlan(workspace.id, data);
+      } on PostgrestException catch (e, st) {
+        if (!applyConfiguration ||
+            !e.message.contains(kWorkspaceHasReservationsError)) {
+          rethrow;
+        }
+        TraceLogger.instance.warn(
+            'workspace', 'workspace XML import: plan kept (reservations)',
+            error: e, stackTrace: st);
+        planKept = true;
+      }
       // Settings ride the EXISTING owner writers (#153/#155/#146). The
       // workspace NAME has no update path yet and is deliberately skipped.
       final repository = ref.read(workspaceRepositoryProvider);
@@ -803,13 +861,27 @@ class _WorkspaceSettingsScreenState
       // every seat assignment.
       ref.invalidate(accessoriesProvider);
       ref.invalidate(seatAccessoriesProvider);
+      if (applyConfiguration) {
+        ref.invalidate(sitesProvider);
+        ref.invalidate(vatRatesProvider);
+      }
       if (!mounted) return;
       // Re-seed the form so the imported settings show immediately.
       setState(() => _seeded = false);
-      AppSnack.success(
-        context,
-        l10n?.workspaceXmlImportSuccess ?? 'Workspace imported.',
-      );
+      if (planKept) {
+        AppSnack.info(
+          context,
+          l10n?.workspaceXmlImportConfigurationOnly ??
+              'The configuration was applied. The floor plan was kept: '
+                  'this space already has reservations, so its plan cannot '
+                  'be replaced.',
+        );
+      } else {
+        AppSnack.success(
+          context,
+          l10n?.workspaceXmlImportSuccess ?? 'Workspace imported.',
+        );
+      }
     } on PostgrestException catch (e, st) {
       debugPrint('workspace XML import failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'workspace XML import failed',
