@@ -33,6 +33,7 @@ Future<FecAccounts?> showFecAccountsDialog(
   final revenue = TextEditingController(text: initial.revenue);
   final bank = TextEditingController(text: initial.bank);
   final vat = TextEditingController(text: initial.vat);
+  final expenses = TextEditingController(text: initial.expenses);
   return showDialog<FecAccounts>(
     context: context,
     builder: (context) => AlertDialog(
@@ -78,6 +79,14 @@ Future<FecAccounts?> showFecAccountsDialog(
               labelText: l10n?.fecAccountBank ?? 'Bank',
             ),
           ),
+          TextField(
+            key: const ValueKey('fec-account-expenses'),
+            controller: expenses,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              labelText: l10n?.fecAccountExpenses ?? 'Expenses',
+            ),
+          ),
         ]),
       ),
       actions: [
@@ -92,6 +101,7 @@ Future<FecAccounts?> showFecAccountsDialog(
             revenue: revenue.text.trim(),
             bank: bank.text.trim(),
             vat: vat.text.trim(),
+            expenses: expenses.text.trim(),
           )),
           child: Text(l10n?.commonSave ?? 'Save'),
         ),
@@ -129,6 +139,7 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
   final customers = TextEditingController(text: initial.customers);
   final revenue = TextEditingController(text: initial.revenue);
   final bank = TextEditingController(text: initial.bank);
+  final expenses = TextEditingController(text: initial.expenses);
   final vat = TextEditingController(text: initial.vat);
 
   Widget field(String key, TextEditingController controller, String label) =>
@@ -166,6 +177,8 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
           field('datev-account-vat', vat,
               l10n?.fecAccountVat ?? 'Umsatzsteuer'),
           field('datev-account-bank', bank, l10n?.fecAccountBank ?? 'Bank'),
+          field('datev-account-expenses', expenses,
+              l10n?.fecAccountExpenses ?? 'Expenses'),
         ]),
       ),
       actions: [
@@ -183,6 +196,7 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
               revenue: revenue.text.trim(),
               bank: bank.text.trim(),
               vat: vat.text.trim(),
+              expenses: expenses.text.trim(),
             ),
           )),
           child: Text(l10n?.commonSave ?? 'Save'),

@@ -1,0 +1,11 @@
+{
+  "@@locale": "fr",
+  "fecAccountExpenses": "Achats et charges",
+  "@fecAccountExpenses": {
+    "description": "#936 accounting exports: fecAccountExpenses"
+  },
+  "accountingExportDevelopment": "Espace de développement : le fichier est marqué DEV et n'est pas la comptabilité réelle.",
+  "@accountingExportDevelopment": {
+    "description": "#936 accounting exports: accountingExportDevelopment"
+  }
+}

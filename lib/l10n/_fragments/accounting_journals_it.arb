@@ -1,0 +1,11 @@
+{
+  "@@locale": "it",
+  "fecAccountExpenses": "Spese",
+  "@fecAccountExpenses": {
+    "description": "#936 accounting exports: fecAccountExpenses"
+  },
+  "accountingExportDevelopment": "Spazio di sviluppo: il file è contrassegnato DEV e non è la contabilità reale.",
+  "@accountingExportDevelopment": {
+    "description": "#936 accounting exports: accountingExportDevelopment"
+  }
+}

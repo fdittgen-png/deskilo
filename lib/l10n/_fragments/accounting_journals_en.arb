@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "fecAccountExpenses": "Expenses",
+  "@fecAccountExpenses": {
+    "description": "#936 accounting exports: fecAccountExpenses"
+  },
+  "accountingExportDevelopment": "Development workspace: the file is marked DEV and is not the real books.",
+  "@accountingExportDevelopment": {
+    "description": "#936 accounting exports: accountingExportDevelopment"
+  }
+}

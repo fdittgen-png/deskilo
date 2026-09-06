@@ -46,6 +46,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accessoriesActive => 'Active';
 
   @override
+  String get fecAccountExpenses => 'Expenses';
+
+  @override
+  String get accountingExportDevelopment =>
+      'Development workspace: the file is marked DEV and is not the real books.';
+
+  @override
   String get featureInvoiceAddressWindow => 'Envelope address window';
 
   @override

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: 0BSD
 import 'billing_rules.dart';
+import 'expense_repartition.dart';
 import 'invoice.dart';
+import 'ledger_entry.dart';
 
 /// DATEV-Format **EXTF Buchungsstapel** (#669) — the file a German or
 /// Austrian *Steuerberater* imports into DATEV Rechnungswesen. It is an
@@ -42,6 +44,7 @@ class DatevAccounts {
     this.bank = '1200',
     this.vat = '1776',
     this.chart = 'SKR03',
+    this.expenses = '4900',
   });
 
   /// SKR03 debtor range starts at 10000. A real chart numbers each
@@ -63,6 +66,10 @@ class DatevAccounts {
   /// Named on the export sheet so the accountant can see which chart the
   /// numbers belong to before importing.
   final String chart;
+
+  /// #936 — reimbursed expenses and shared costs; 4900 "sonstige
+  /// betriebliche Aufwendungen" in SKR03.
+  final String expenses;
 }
 
 /// DATEV expects `EXTF_<something>.csv`; the name is free-form after the
@@ -89,8 +96,12 @@ String buildDatevFile({
   String batchName = 'DesKilo',
   /// Length of the account numbers in the target chart (DATEV field 14).
   int accountLength = 4,
+  // #936 — the purchases side, and the development mark.
+  List<LedgerEntry> ledger = const [],
+  List<ExpenseRepartition> repartitions = const [],
+  bool development = false,
 }) {
-  // DATEV is CSV with ';' and quoted text. A ';' or a newline inside a
+  // DATEV is CSV with ');' and quoted text. A ';' or a newline inside a
   // label would shift every following column.
   String clean(String text) =>
       text.replaceAll(RegExp(r'[;\r\n]+'), ' ').trim();
@@ -122,7 +133,7 @@ String buildDatevFile({
     consultantNumber, clientNumber,
     ymd(fiscalYearStart), '$accountLength',
     ymd(from), ymd(to),
-    q(batchName), '""', '1', '', '0', q(currency),
+    q((development ? 'ENTWICKLUNG ' : '') + batchName), '""', '1', '', '0', q(currency),
     '', '', '', '', '', '', '', '', '',
   ].join(';');
 
@@ -162,6 +173,19 @@ String buildDatevFile({
     if (invoice.isVoided) continue; // a cancelled invoice was never booked
     // #831 — a settlement regroups booked revenue; booking it again doubles it.
     if (invoice.kind == InvoiceKind.settlement) continue;
+    // #936 — a credit note is a sale reversed: the accounts swap and the
+    // amount is positive, as a Buchungsstapel wants it.
+    if (invoice.isCreditNote) {
+      book(
+        cents: -invoice.totalCents,
+        debit: accounts.revenue,
+        credit: accounts.customers,
+        date: invoice.issuedAt,
+        documentRef: invoice.number,
+        text: 'Gutschrift ${invoice.number}',
+      );
+      continue;
+    }
     // Receivable against revenue, at the GROSS amount — DATEV derives
     // the tax split from the BU-Schlüssel/Steuersatz on the revenue
     // account, which is the accountant's configuration, not ours.
@@ -193,5 +217,33 @@ String buildDatevFile({
 
   // CRLF: DATEV's importer is a Windows tool and a bare LF has been seen
   // to fold the last two lines together.
+  // #936 — the purchases side.
+  for (final entry in [...ledger]..sort((a, b) => a.on.compareTo(b.on))) {
+    if (entry.kind != LedgerKind.credit ||
+        entry.category != LedgerCategory.expense) {
+      continue;
+    }
+    book(
+      cents: entry.amountCents,
+      debit: accounts.expenses,
+      credit: accounts.customers,
+      date: entry.on,
+      documentRef: entry.id,
+      text: entry.description.isEmpty
+          ? 'Auslagenerstattung'
+          : 'Auslagen ${entry.description}',
+    );
+  }
+  for (final r in repartitions) {
+    if (r.status != 'confirmed' || r.amountCents <= 0) continue;
+    book(
+      cents: r.amountCents,
+      debit: accounts.expenses,
+      credit: accounts.bank,
+      date: r.appliedAt ?? r.createdAt,
+      documentRef: r.id,
+      text: r.title,
+    );
+  }
   return '$header\r\n$columns\r\n${rows.join('\r\n')}\r\n';
 }
