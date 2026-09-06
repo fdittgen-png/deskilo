@@ -1030,6 +1030,8 @@ By default the app talks to its own server, and nothing here needs your attentio
 3. **Copy the credentials**: in the Supabase dashboard, *Project Settings → API keys* holds the **Project URL** and the **publishable key** (the publishable key is meant to ship in a client; the server's row-level security is what protects the data).
 4. **Enter them** in Settings → Server — paste each field, press **Test the connection**, then **Save**.
 
+**Create a new instance (#977).** The Server screen also carries a wizard for people who run a coworking space, not a database. Create a free account at supabase.com, make a personal access token there (Account → Access Tokens) and paste it into the wizard: it lists your organisations, creates the project in the region nearest to your space (or takes an existing empty one), installs every migration of the app in order with a progress bar, deploys every function, switches e-mail confirmation on with the app's links allowed, and finally points this device at the new server — the QR on the Server screen then brings the members. Every step can be retried on its own; the token is never stored. People who prefer a terminal get the same builder as `dart run tool/instance.dart create --token … --org … --name …`.
+
 The test says which part is wrong rather than just failing: *could not reach that address*, *the key was refused*, or *the tables are missing* — that last one means the project answered but step 2 has not been done yet.
 
 **Members don't type any of this.** Once the owner's device is on the community's server, the **QR button** on that screen shows a code; every member scans it in their own Settings → Server and lands on the same instance.

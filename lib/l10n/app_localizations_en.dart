@@ -3096,6 +3096,126 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpTopicServer => 'your own server';
 
   @override
+  String get featureInstanceWizard => 'Instance wizard';
+
+  @override
+  String get featureInstanceWizardDesc =>
+      'On the Server screen, a wizard that creates a new Supabase project, installs the app\'s schema, deploys its functions and points this device at it — one access token, no terminal. Off: the manual steps only.';
+
+  @override
+  String get instanceCreateButton => 'Create a new instance';
+
+  @override
+  String get instanceWizardTitle => 'Create a new instance';
+
+  @override
+  String get instanceStepAccount => 'Account';
+
+  @override
+  String get instanceStepProject => 'Project';
+
+  @override
+  String get instanceStepSchema => 'Schema';
+
+  @override
+  String get instanceStepFunctions => 'Functions';
+
+  @override
+  String get instanceStepSignIn => 'Sign-in';
+
+  @override
+  String get instanceStepDone => 'Done';
+
+  @override
+  String get instanceAccountIntro =>
+      'Create a free account at supabase.com, then make a personal access token (Account → Access Tokens) and paste it here. The wizard uses it to create and set up the project; it is never stored.';
+
+  @override
+  String get instanceTokenLabel => 'Personal access token';
+
+  @override
+  String get instanceCheckToken => 'Check the token';
+
+  @override
+  String get instanceTokenRefused =>
+      'Supabase refused the token. Create one at Account → Access Tokens and paste it whole.';
+
+  @override
+  String get instanceOrganisationLabel => 'Organisation';
+
+  @override
+  String get instanceProjectName => 'Project name';
+
+  @override
+  String get instanceRegion => 'Region (the nearest to the space)';
+
+  @override
+  String get instanceDatabasePassword =>
+      'Database password, chosen for you — copy it somewhere safe; the app never needs it again.';
+
+  @override
+  String get instanceCreateProject => 'Create the project';
+
+  @override
+  String instanceProjectStatus(String status) {
+    return 'Project status: $status';
+  }
+
+  @override
+  String instanceProjectReady(String ref) {
+    return 'Project ready: $ref';
+  }
+
+  @override
+  String get instanceUseExisting => 'Or use an existing project:';
+
+  @override
+  String instanceInstallSchema(int count) {
+    return 'Install the schema: every migration of the app, in order ($count).';
+  }
+
+  @override
+  String instanceDeployFunctions(int count) {
+    return 'Deploy the functions: payments, e-invoices, push, badges ($count).';
+  }
+
+  @override
+  String instanceProgress(int done, int total, String current) {
+    return '$done / $total · $current';
+  }
+
+  @override
+  String instanceStepFailed(String item, String message) {
+    return 'Stopped at $item: $message';
+  }
+
+  @override
+  String get instanceRetry => 'Retry from where it stopped';
+
+  @override
+  String get instanceSignInExplain =>
+      'Sign-in settings: e-mail confirmation on (a sign-up must click the link in its mail), and the app\'s links allowed for password resets and magic links.';
+
+  @override
+  String get instanceApplySignIn => 'Apply the sign-in settings';
+
+  @override
+  String get instanceDoneIntro =>
+      'The instance is ready. Use it on this device, then share the server QR from the Server screen so members join the same one.';
+
+  @override
+  String get instanceUseHere => 'Use this instance on this device';
+
+  @override
+  String get commonStart => 'Start';
+
+  @override
+  String get commonDone => 'Done';
+
+  @override
+  String get commonCopy => 'Copy';
+
+  @override
   String get inviteSectionTitle => 'Invite someone';
 
   @override

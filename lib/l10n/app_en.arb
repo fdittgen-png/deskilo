@@ -3110,6 +3110,181 @@
   "helpTopicBookingLimits": "Booking limits",
   "helpTopicScheduledExpenses": "Scheduled expenses",
   "helpTopicServer": "your own server",
+  "featureInstanceWizard": "Instance wizard",
+  "@featureInstanceWizard": {
+    "description": "#977 instance wizard: featureInstanceWizard"
+  },
+  "featureInstanceWizardDesc": "On the Server screen, a wizard that creates a new Supabase project, installs the app's schema, deploys its functions and points this device at it — one access token, no terminal. Off: the manual steps only.",
+  "@featureInstanceWizardDesc": {
+    "description": "#977 instance wizard: featureInstanceWizardDesc"
+  },
+  "instanceCreateButton": "Create a new instance",
+  "@instanceCreateButton": {
+    "description": "#977 instance wizard: instanceCreateButton"
+  },
+  "instanceWizardTitle": "Create a new instance",
+  "@instanceWizardTitle": {
+    "description": "#977 instance wizard: instanceWizardTitle"
+  },
+  "instanceStepAccount": "Account",
+  "@instanceStepAccount": {
+    "description": "#977 instance wizard: instanceStepAccount"
+  },
+  "instanceStepProject": "Project",
+  "@instanceStepProject": {
+    "description": "#977 instance wizard: instanceStepProject"
+  },
+  "instanceStepSchema": "Schema",
+  "@instanceStepSchema": {
+    "description": "#977 instance wizard: instanceStepSchema"
+  },
+  "instanceStepFunctions": "Functions",
+  "@instanceStepFunctions": {
+    "description": "#977 instance wizard: instanceStepFunctions"
+  },
+  "instanceStepSignIn": "Sign-in",
+  "@instanceStepSignIn": {
+    "description": "#977 instance wizard: instanceStepSignIn"
+  },
+  "instanceStepDone": "Done",
+  "@instanceStepDone": {
+    "description": "#977 instance wizard: instanceStepDone"
+  },
+  "instanceAccountIntro": "Create a free account at supabase.com, then make a personal access token (Account → Access Tokens) and paste it here. The wizard uses it to create and set up the project; it is never stored.",
+  "@instanceAccountIntro": {
+    "description": "#977 instance wizard: instanceAccountIntro"
+  },
+  "instanceTokenLabel": "Personal access token",
+  "@instanceTokenLabel": {
+    "description": "#977 instance wizard: instanceTokenLabel"
+  },
+  "instanceCheckToken": "Check the token",
+  "@instanceCheckToken": {
+    "description": "#977 instance wizard: instanceCheckToken"
+  },
+  "instanceTokenRefused": "Supabase refused the token. Create one at Account → Access Tokens and paste it whole.",
+  "@instanceTokenRefused": {
+    "description": "#977 instance wizard: instanceTokenRefused"
+  },
+  "instanceOrganisationLabel": "Organisation",
+  "@instanceOrganisationLabel": {
+    "description": "#977 instance wizard: instanceOrganisationLabel"
+  },
+  "instanceProjectName": "Project name",
+  "@instanceProjectName": {
+    "description": "#977 instance wizard: instanceProjectName"
+  },
+  "instanceRegion": "Region (the nearest to the space)",
+  "@instanceRegion": {
+    "description": "#977 instance wizard: instanceRegion"
+  },
+  "instanceDatabasePassword": "Database password, chosen for you — copy it somewhere safe; the app never needs it again.",
+  "@instanceDatabasePassword": {
+    "description": "#977 instance wizard: instanceDatabasePassword"
+  },
+  "instanceCreateProject": "Create the project",
+  "@instanceCreateProject": {
+    "description": "#977 instance wizard: instanceCreateProject"
+  },
+  "instanceProjectStatus": "Project status: {status}",
+  "@instanceProjectStatus": {
+    "description": "#977 instance wizard: instanceProjectStatus",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceProjectReady": "Project ready: {ref}",
+  "@instanceProjectReady": {
+    "description": "#977 instance wizard: instanceProjectReady",
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceUseExisting": "Or use an existing project:",
+  "@instanceUseExisting": {
+    "description": "#977 instance wizard: instanceUseExisting"
+  },
+  "instanceInstallSchema": "Install the schema: every migration of the app, in order ({count}).",
+  "@instanceInstallSchema": {
+    "description": "#977 instance wizard: instanceInstallSchema",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDeployFunctions": "Deploy the functions: payments, e-invoices, push, badges ({count}).",
+  "@instanceDeployFunctions": {
+    "description": "#977 instance wizard: instanceDeployFunctions",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceProgress": "{done} / {total} · {current}",
+  "@instanceProgress": {
+    "description": "#977 instance wizard: instanceProgress",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "current": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceStepFailed": "Stopped at {item}: {message}",
+  "@instanceStepFailed": {
+    "description": "#977 instance wizard: instanceStepFailed",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceRetry": "Retry from where it stopped",
+  "@instanceRetry": {
+    "description": "#977 instance wizard: instanceRetry"
+  },
+  "instanceSignInExplain": "Sign-in settings: e-mail confirmation on (a sign-up must click the link in its mail), and the app's links allowed for password resets and magic links.",
+  "@instanceSignInExplain": {
+    "description": "#977 instance wizard: instanceSignInExplain"
+  },
+  "instanceApplySignIn": "Apply the sign-in settings",
+  "@instanceApplySignIn": {
+    "description": "#977 instance wizard: instanceApplySignIn"
+  },
+  "instanceDoneIntro": "The instance is ready. Use it on this device, then share the server QR from the Server screen so members join the same one.",
+  "@instanceDoneIntro": {
+    "description": "#977 instance wizard: instanceDoneIntro"
+  },
+  "instanceUseHere": "Use this instance on this device",
+  "@instanceUseHere": {
+    "description": "#977 instance wizard: instanceUseHere"
+  },
+  "commonStart": "Start",
+  "@commonStart": {
+    "description": "#977 instance wizard: commonStart"
+  },
+  "commonDone": "Done",
+  "@commonDone": {
+    "description": "#977 instance wizard: commonDone"
+  },
+  "commonCopy": "Copy",
+  "@commonCopy": {
+    "description": "#977 instance wizard: commonCopy"
+  },
   "inviteSectionTitle": "Invite someone",
   "inviteViaWhatsapp": "WhatsApp",
   "inviteViaSms": "SMS",

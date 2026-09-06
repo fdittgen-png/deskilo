@@ -1,0 +1,178 @@
+{
+  "@@locale": "fr",
+  "featureInstanceWizard": "Assistant d'instance",
+  "@featureInstanceWizard": {
+    "description": "#977 instance wizard: featureInstanceWizard"
+  },
+  "featureInstanceWizardDesc": "Sur l'écran Serveur, un assistant crée un nouveau projet Supabase, installe le schéma de l'app, déploie ses fonctions et y connecte l'appareil — un jeton d'accès, pas de terminal. Désactivé : les étapes manuelles seulement.",
+  "@featureInstanceWizardDesc": {
+    "description": "#977 instance wizard: featureInstanceWizardDesc"
+  },
+  "instanceCreateButton": "Créer une nouvelle instance",
+  "@instanceCreateButton": {
+    "description": "#977 instance wizard: instanceCreateButton"
+  },
+  "instanceWizardTitle": "Créer une nouvelle instance",
+  "@instanceWizardTitle": {
+    "description": "#977 instance wizard: instanceWizardTitle"
+  },
+  "instanceStepAccount": "Compte",
+  "@instanceStepAccount": {
+    "description": "#977 instance wizard: instanceStepAccount"
+  },
+  "instanceStepProject": "Projet",
+  "@instanceStepProject": {
+    "description": "#977 instance wizard: instanceStepProject"
+  },
+  "instanceStepSchema": "Schéma",
+  "@instanceStepSchema": {
+    "description": "#977 instance wizard: instanceStepSchema"
+  },
+  "instanceStepFunctions": "Fonctions",
+  "@instanceStepFunctions": {
+    "description": "#977 instance wizard: instanceStepFunctions"
+  },
+  "instanceStepSignIn": "Connexion",
+  "@instanceStepSignIn": {
+    "description": "#977 instance wizard: instanceStepSignIn"
+  },
+  "instanceStepDone": "Terminé",
+  "@instanceStepDone": {
+    "description": "#977 instance wizard: instanceStepDone"
+  },
+  "instanceAccountIntro": "Créez un compte gratuit sur supabase.com, puis un jeton d'accès personnel (Account → Access Tokens) et collez-le ici. L'assistant s'en sert pour créer et configurer le projet ; il n'est jamais enregistré.",
+  "@instanceAccountIntro": {
+    "description": "#977 instance wizard: instanceAccountIntro"
+  },
+  "instanceTokenLabel": "Jeton d'accès personnel",
+  "@instanceTokenLabel": {
+    "description": "#977 instance wizard: instanceTokenLabel"
+  },
+  "instanceCheckToken": "Vérifier le jeton",
+  "@instanceCheckToken": {
+    "description": "#977 instance wizard: instanceCheckToken"
+  },
+  "instanceTokenRefused": "Supabase a refusé le jeton. Créez-en un dans Account → Access Tokens et collez-le en entier.",
+  "@instanceTokenRefused": {
+    "description": "#977 instance wizard: instanceTokenRefused"
+  },
+  "instanceOrganisationLabel": "Organisation",
+  "@instanceOrganisationLabel": {
+    "description": "#977 instance wizard: instanceOrganisationLabel"
+  },
+  "instanceProjectName": "Nom du projet",
+  "@instanceProjectName": {
+    "description": "#977 instance wizard: instanceProjectName"
+  },
+  "instanceRegion": "Région (la plus proche de l'espace)",
+  "@instanceRegion": {
+    "description": "#977 instance wizard: instanceRegion"
+  },
+  "instanceDatabasePassword": "Mot de passe de la base, choisi pour vous — copiez-le en lieu sûr ; l'app n'en a plus jamais besoin.",
+  "@instanceDatabasePassword": {
+    "description": "#977 instance wizard: instanceDatabasePassword"
+  },
+  "instanceCreateProject": "Créer le projet",
+  "@instanceCreateProject": {
+    "description": "#977 instance wizard: instanceCreateProject"
+  },
+  "instanceProjectStatus": "État du projet : {status}",
+  "@instanceProjectStatus": {
+    "description": "#977 instance wizard: instanceProjectStatus",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceProjectReady": "Projet prêt : {ref}",
+  "@instanceProjectReady": {
+    "description": "#977 instance wizard: instanceProjectReady",
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceUseExisting": "Ou utiliser un projet existant :",
+  "@instanceUseExisting": {
+    "description": "#977 instance wizard: instanceUseExisting"
+  },
+  "instanceInstallSchema": "Installer le schéma : chaque migration de l'app, dans l'ordre ({count}).",
+  "@instanceInstallSchema": {
+    "description": "#977 instance wizard: instanceInstallSchema",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDeployFunctions": "Déployer les fonctions : paiements, factures électroniques, notifications, badges ({count}).",
+  "@instanceDeployFunctions": {
+    "description": "#977 instance wizard: instanceDeployFunctions",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceProgress": "{done} / {total} · {current}",
+  "@instanceProgress": {
+    "description": "#977 instance wizard: instanceProgress",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "current": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceStepFailed": "Arrêt à {item} : {message}",
+  "@instanceStepFailed": {
+    "description": "#977 instance wizard: instanceStepFailed",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceRetry": "Reprendre là où ça s'est arrêté",
+  "@instanceRetry": {
+    "description": "#977 instance wizard: instanceRetry"
+  },
+  "instanceSignInExplain": "Réglages de connexion : confirmation par courriel activée (une inscription doit cliquer le lien reçu), et les liens de l'app autorisés pour les réinitialisations de mot de passe et les liens magiques.",
+  "@instanceSignInExplain": {
+    "description": "#977 instance wizard: instanceSignInExplain"
+  },
+  "instanceApplySignIn": "Appliquer les réglages de connexion",
+  "@instanceApplySignIn": {
+    "description": "#977 instance wizard: instanceApplySignIn"
+  },
+  "instanceDoneIntro": "L'instance est prête. Utilisez-la sur cet appareil, puis partagez le QR du serveur depuis l'écran Serveur pour que les membres rejoignent la même.",
+  "@instanceDoneIntro": {
+    "description": "#977 instance wizard: instanceDoneIntro"
+  },
+  "instanceUseHere": "Utiliser cette instance sur cet appareil",
+  "@instanceUseHere": {
+    "description": "#977 instance wizard: instanceUseHere"
+  },
+  "commonStart": "Démarrer",
+  "@commonStart": {
+    "description": "#977 instance wizard: commonStart"
+  },
+  "commonDone": "Terminé",
+  "@commonDone": {
+    "description": "#977 instance wizard: commonDone"
+  },
+  "commonCopy": "Copier",
+  "@commonCopy": {
+    "description": "#977 instance wizard: commonCopy"
+  }
+}

@@ -3125,6 +3125,126 @@ class AppLocalizationsFr extends AppLocalizations {
   String get helpTopicServer => 'votre propre serveur';
 
   @override
+  String get featureInstanceWizard => 'Assistant d\'instance';
+
+  @override
+  String get featureInstanceWizardDesc =>
+      'Sur l\'écran Serveur, un assistant crée un nouveau projet Supabase, installe le schéma de l\'app, déploie ses fonctions et y connecte l\'appareil — un jeton d\'accès, pas de terminal. Désactivé : les étapes manuelles seulement.';
+
+  @override
+  String get instanceCreateButton => 'Créer une nouvelle instance';
+
+  @override
+  String get instanceWizardTitle => 'Créer une nouvelle instance';
+
+  @override
+  String get instanceStepAccount => 'Compte';
+
+  @override
+  String get instanceStepProject => 'Projet';
+
+  @override
+  String get instanceStepSchema => 'Schéma';
+
+  @override
+  String get instanceStepFunctions => 'Fonctions';
+
+  @override
+  String get instanceStepSignIn => 'Connexion';
+
+  @override
+  String get instanceStepDone => 'Terminé';
+
+  @override
+  String get instanceAccountIntro =>
+      'Créez un compte gratuit sur supabase.com, puis un jeton d\'accès personnel (Account → Access Tokens) et collez-le ici. L\'assistant s\'en sert pour créer et configurer le projet ; il n\'est jamais enregistré.';
+
+  @override
+  String get instanceTokenLabel => 'Jeton d\'accès personnel';
+
+  @override
+  String get instanceCheckToken => 'Vérifier le jeton';
+
+  @override
+  String get instanceTokenRefused =>
+      'Supabase a refusé le jeton. Créez-en un dans Account → Access Tokens et collez-le en entier.';
+
+  @override
+  String get instanceOrganisationLabel => 'Organisation';
+
+  @override
+  String get instanceProjectName => 'Nom du projet';
+
+  @override
+  String get instanceRegion => 'Région (la plus proche de l\'espace)';
+
+  @override
+  String get instanceDatabasePassword =>
+      'Mot de passe de la base, choisi pour vous — copiez-le en lieu sûr ; l\'app n\'en a plus jamais besoin.';
+
+  @override
+  String get instanceCreateProject => 'Créer le projet';
+
+  @override
+  String instanceProjectStatus(String status) {
+    return 'État du projet : $status';
+  }
+
+  @override
+  String instanceProjectReady(String ref) {
+    return 'Projet prêt : $ref';
+  }
+
+  @override
+  String get instanceUseExisting => 'Ou utiliser un projet existant :';
+
+  @override
+  String instanceInstallSchema(int count) {
+    return 'Installer le schéma : chaque migration de l\'app, dans l\'ordre ($count).';
+  }
+
+  @override
+  String instanceDeployFunctions(int count) {
+    return 'Déployer les fonctions : paiements, factures électroniques, notifications, badges ($count).';
+  }
+
+  @override
+  String instanceProgress(int done, int total, String current) {
+    return '$done / $total · $current';
+  }
+
+  @override
+  String instanceStepFailed(String item, String message) {
+    return 'Arrêt à $item : $message';
+  }
+
+  @override
+  String get instanceRetry => 'Reprendre là où ça s\'est arrêté';
+
+  @override
+  String get instanceSignInExplain =>
+      'Réglages de connexion : confirmation par courriel activée (une inscription doit cliquer le lien reçu), et les liens de l\'app autorisés pour les réinitialisations de mot de passe et les liens magiques.';
+
+  @override
+  String get instanceApplySignIn => 'Appliquer les réglages de connexion';
+
+  @override
+  String get instanceDoneIntro =>
+      'L\'instance est prête. Utilisez-la sur cet appareil, puis partagez le QR du serveur depuis l\'écran Serveur pour que les membres rejoignent la même.';
+
+  @override
+  String get instanceUseHere => 'Utiliser cette instance sur cet appareil';
+
+  @override
+  String get commonStart => 'Démarrer';
+
+  @override
+  String get commonDone => 'Terminé';
+
+  @override
+  String get commonCopy => 'Copier';
+
+  @override
   String get inviteSectionTitle => 'Inviter quelqu\'un';
 
   @override
