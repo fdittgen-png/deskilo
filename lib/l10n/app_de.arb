@@ -4252,6 +4252,40 @@
   "a11ySeatOccupied": "besetzt",
   "a11ySeatMine": "dein Platz",
   "a11ySeatBlocked": "nicht verfügbar",
+  "profilesAllWorkspaces": "Alle Arbeitsbereiche (Plattformbetreiber)",
+  "@profilesAllWorkspaces": {
+    "description": "#937 platform owner: profilesAllWorkspaces"
+  },
+  "profilesNotMember": "Kein Mitglied · {count} Mitglieder",
+  "@profilesNotMember": {
+    "description": "#937 platform owner: profilesNotMember",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "profilesOwnersOf": "Inhaber von {name}",
+  "@profilesOwnersOf": {
+    "description": "#937 platform owner: profilesOwnersOf",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profilesOwnersNone": "Kein Inhaber.",
+  "@profilesOwnersNone": {
+    "description": "#937 platform owner: profilesOwnersNone"
+  },
+  "profilesCopyEmail": "E-Mail kopieren",
+  "@profilesCopyEmail": {
+    "description": "#937 platform owner: profilesCopyEmail"
+  },
+  "profilesEmailCopied": "E-Mail kopiert.",
+  "@profilesEmailCopied": {
+    "description": "#937 platform owner: profilesEmailCopied"
+  },
   "whatsappTitle": "WhatsApp",
   "whatsappNotShared": "Nicht geteilt",
   "whatsappFieldLabel": "WhatsApp-Nummer",

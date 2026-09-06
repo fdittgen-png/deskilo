@@ -7070,6 +7070,40 @@
   "@a11ySeatBlocked": {
     "description": "Screen-reader state of a blocked seat."
   },
+  "profilesAllWorkspaces": "Every workspace (platform owner)",
+  "@profilesAllWorkspaces": {
+    "description": "#937 platform owner: profilesAllWorkspaces"
+  },
+  "profilesNotMember": "Not a member · {count} members",
+  "@profilesNotMember": {
+    "description": "#937 platform owner: profilesNotMember",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "profilesOwnersOf": "Owners of {name}",
+  "@profilesOwnersOf": {
+    "description": "#937 platform owner: profilesOwnersOf",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profilesOwnersNone": "No owner.",
+  "@profilesOwnersNone": {
+    "description": "#937 platform owner: profilesOwnersNone"
+  },
+  "profilesCopyEmail": "Copy e-mail",
+  "@profilesCopyEmail": {
+    "description": "#937 platform owner: profilesCopyEmail"
+  },
+  "profilesEmailCopied": "E-mail copied.",
+  "@profilesEmailCopied": {
+    "description": "#937 platform owner: profilesEmailCopied"
+  },
   "whatsappTitle": "WhatsApp",
   "@whatsappTitle": {
     "description": "Settings tile and dialog title of the opt-in WhatsApp number on my profile (#223)"

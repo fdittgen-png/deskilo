@@ -1101,3 +1101,7 @@ La pestaña **Mensajes** es el centro de mensajería de su espacio: todas las co
 ![](assets/help/images/messages-conversation-links.jpg)
 
 *Un mensaje de grupo con un enlace de reserva y un enlace de espacio — ambos activos, ambos con su salto Ver en el plano.*
+
+### Operador de la plataforma
+
+La cuenta que opera la instalación ve, en *Perfiles*, **todos los espacios** de la base de datos: los suyos como siempre, los demás **atenuados** con su entorno y su número de miembros. Al tocar un espacio atenuado se muestran sus **propietarios** con su correo — y esa consulta queda registrada, visible para los propietarios del espacio. Un propietario siempre tiene una dirección de correo: la app rehúsa crear un espacio o nombrar un copropietario sin ella.

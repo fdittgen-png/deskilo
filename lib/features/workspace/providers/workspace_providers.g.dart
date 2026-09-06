@@ -1229,3 +1229,90 @@ final class ManagedIdentityFamily extends $Family
   @override
   String toString() => r'managedIdentityProvider';
 }
+
+/// #937 — whether the signed-in user operates the deployment.
+
+@ProviderFor(isPlatformOwner)
+final isPlatformOwnerProvider = IsPlatformOwnerProvider._();
+
+/// #937 — whether the signed-in user operates the deployment.
+
+final class IsPlatformOwnerProvider
+    extends $FunctionalProvider<AsyncValue<bool>, bool, FutureOr<bool>>
+    with $FutureModifier<bool>, $FutureProvider<bool> {
+  /// #937 — whether the signed-in user operates the deployment.
+  IsPlatformOwnerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'isPlatformOwnerProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$isPlatformOwnerHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<bool> create(Ref ref) {
+    return isPlatformOwner(ref);
+  }
+}
+
+String _$isPlatformOwnerHash() => r'4df8df63bc163ded458557e8d9f0c02773f64cbb';
+
+/// #937 — every workspace in the database; empty for anyone who is not
+/// the platform owner (the RPC would refuse, so it is not even asked).
+
+@ProviderFor(allWorkspaces)
+final allWorkspacesProvider = AllWorkspacesProvider._();
+
+/// #937 — every workspace in the database; empty for anyone who is not
+/// the platform owner (the RPC would refuse, so it is not even asked).
+
+final class AllWorkspacesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<WorkspaceOverview>>,
+          List<WorkspaceOverview>,
+          FutureOr<List<WorkspaceOverview>>
+        >
+    with
+        $FutureModifier<List<WorkspaceOverview>>,
+        $FutureProvider<List<WorkspaceOverview>> {
+  /// #937 — every workspace in the database; empty for anyone who is not
+  /// the platform owner (the RPC would refuse, so it is not even asked).
+  AllWorkspacesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'allWorkspacesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$allWorkspacesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<WorkspaceOverview>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<WorkspaceOverview>> create(Ref ref) {
+    return allWorkspaces(ref);
+  }
+}
+
+String _$allWorkspacesHash() => r'1464cdc4bc158fc330ce9e7d0988e9087dd49f9e';

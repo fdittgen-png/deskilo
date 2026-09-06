@@ -11911,6 +11911,42 @@ abstract class AppLocalizations {
   /// **'not available'**
   String get a11ySeatBlocked;
 
+  /// #937 platform owner: profilesAllWorkspaces
+  ///
+  /// In en, this message translates to:
+  /// **'Every workspace (platform owner)'**
+  String get profilesAllWorkspaces;
+
+  /// #937 platform owner: profilesNotMember
+  ///
+  /// In en, this message translates to:
+  /// **'Not a member · {count} members'**
+  String profilesNotMember(int count);
+
+  /// #937 platform owner: profilesOwnersOf
+  ///
+  /// In en, this message translates to:
+  /// **'Owners of {name}'**
+  String profilesOwnersOf(String name);
+
+  /// #937 platform owner: profilesOwnersNone
+  ///
+  /// In en, this message translates to:
+  /// **'No owner.'**
+  String get profilesOwnersNone;
+
+  /// #937 platform owner: profilesCopyEmail
+  ///
+  /// In en, this message translates to:
+  /// **'Copy e-mail'**
+  String get profilesCopyEmail;
+
+  /// #937 platform owner: profilesEmailCopied
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail copied.'**
+  String get profilesEmailCopied;
+
   /// Settings tile and dialog title of the opt-in WhatsApp number on my profile (#223)
   ///
   /// In en, this message translates to:

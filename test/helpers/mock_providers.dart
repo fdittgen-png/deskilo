@@ -73,6 +73,7 @@ import 'fake_notification_service.dart';
 import 'fake_profile_repository.dart';
 import 'fake_reservation_repository.dart';
 import 'in_memory_default_level_store.dart';
+import 'package:deskilo/features/workspace/domain/workspace_overview.dart';
 
 /// In-memory [AuthRepository] for widget/unit tests (fakes over mocks).
 class FakeAuthRepository implements AuthRepository {
@@ -357,6 +358,28 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   @override
   Future<List<Workspace>> fetchMyWorkspaces() async => List.of(workspaces);
+
+  /// #937 — the platform-owner view as the fake holds it.
+  bool platformOwner = false;
+  final allWorkspaces = <WorkspaceOverview>[];
+  final ownersByWorkspace = <String, List<WorkspaceOwner>>{};
+  final ownerReads = <String>[];
+
+  @override
+  Future<bool> isPlatformOwner() async => platformOwner;
+
+  @override
+  Future<List<WorkspaceOverview>> fetchAllWorkspaces() async {
+    if (!platformOwner) throw StateError('platform owners only');
+    return List.of(allWorkspaces);
+  }
+
+  @override
+  Future<List<WorkspaceOwner>> fetchWorkspaceOwners(String workspaceId) async {
+    if (!platformOwner) throw StateError('platform owners only');
+    ownerReads.add(workspaceId);
+    return List.of(ownersByWorkspace[workspaceId] ?? const []);
+  }
 
   @override
   Future<String> createWorkspace({

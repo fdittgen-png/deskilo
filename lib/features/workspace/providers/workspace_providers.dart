@@ -19,6 +19,7 @@ import '../domain/workspace_permission.dart';
 import '../domain/workspace_repository.dart';
 import '../domain/workspace_document.dart';
 import '../../profile/domain/personal_info.dart';
+import '../domain/workspace_overview.dart';
 
 part 'workspace_providers.g.dart';
 
@@ -347,4 +348,20 @@ Future<PersonalInfo> managedIdentity(Ref ref, String memberId) async {
     );
     return PersonalInfo.empty;
   }
+}
+
+/// #937 — whether the signed-in user operates the deployment.
+@riverpod
+Future<bool> isPlatformOwner(Ref ref) async {
+  final signedIn = ref.watch(authStateProvider).value != null;
+  if (!signedIn) return false;
+  return ref.watch(workspaceRepositoryProvider).isPlatformOwner();
+}
+
+/// #937 — every workspace in the database; empty for anyone who is not
+/// the platform owner (the RPC would refuse, so it is not even asked).
+@riverpod
+Future<List<WorkspaceOverview>> allWorkspaces(Ref ref) async {
+  if (!(await ref.watch(isPlatformOwnerProvider.future))) return const [];
+  return ref.watch(workspaceRepositoryProvider).fetchAllWorkspaces();
 }

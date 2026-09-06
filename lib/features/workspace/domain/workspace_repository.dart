@@ -13,11 +13,23 @@ import 'workspace.dart';
 import 'workspace_document.dart';
 import '../../profile/domain/personal_info.dart';
 import 'managed_access.dart';
+import 'workspace_overview.dart';
 
 /// Pure-Dart workspace boundary. Supabase impl in data/, fake in tests.
 abstract class WorkspaceRepository {
   /// Workspaces the signed-in user is a non-exited member of.
   Future<List<Workspace>> fetchMyWorkspaces();
+
+  /// #937 — whether the caller operates the deployment (`platform_admins`).
+  Future<bool> isPlatformOwner();
+
+  /// #937 — every workspace in the database, for the platform owner only
+  /// (RPC `list_all_workspaces`, refuses anyone else).
+  Future<List<WorkspaceOverview>> fetchAllWorkspaces();
+
+  /// #937 — the owners of a workspace, name and e-mail, for the platform
+  /// owner only; the read is logged (RPC `workspace_owners`).
+  Future<List<WorkspaceOwner>> fetchWorkspaceOwners(String workspaceId);
 
   /// Creates a workspace; the caller becomes its owner. Returns the id.
   Future<String> createWorkspace({

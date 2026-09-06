@@ -6825,6 +6825,29 @@ class AppLocalizationsIt extends AppLocalizations {
   String get a11ySeatBlocked => 'non disponibile';
 
   @override
+  String get profilesAllWorkspaces =>
+      'Tutti gli spazi (operatore della piattaforma)';
+
+  @override
+  String profilesNotMember(int count) {
+    return 'Non membro · $count membri';
+  }
+
+  @override
+  String profilesOwnersOf(String name) {
+    return 'Proprietari di $name';
+  }
+
+  @override
+  String get profilesOwnersNone => 'Nessun proprietario.';
+
+  @override
+  String get profilesCopyEmail => 'Copia e-mail';
+
+  @override
+  String get profilesEmailCopied => 'E-mail copiata.';
+
+  @override
   String get whatsappTitle => 'WhatsApp';
 
   @override
