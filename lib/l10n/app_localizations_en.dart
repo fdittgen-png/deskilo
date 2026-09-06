@@ -1848,6 +1848,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Delete this level? All offices, desks and seats on it are removed. Bookings that reference them keep a text snapshot for audits; open bookings are cancelled.';
 
   @override
+  String get eInvoiceGapMissingBuyerLegalId =>
+      'The buyer is a French business without a SIREN — fill in its legal id on the member\'s profile.';
+
+  @override
   String get developmentBanner =>
       'Development workspace — nothing here is real';
 

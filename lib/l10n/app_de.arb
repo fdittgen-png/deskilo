@@ -1224,6 +1224,10 @@
   "@editorDeleteLevelConfirmAudit": {
     "description": "#587 delete despite reservations — audit substitution warning"
   },
+  "eInvoiceGapMissingBuyerLegalId": "Der Käufer ist ein französisches Unternehmen ohne SIREN — tragen Sie die Registernummer im Profil des Mitglieds ein.",
+  "@eInvoiceGapMissingBuyerLegalId": {
+    "description": "#941 e-invoice audit: eInvoiceGapMissingBuyerLegalId"
+  },
   "developmentBanner": "Entwicklungs-Space — nichts hier ist echt",
   "@developmentBanner": {
     "description": "#917 workspace environment: developmentBanner"

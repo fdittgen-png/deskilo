@@ -29,6 +29,10 @@ String buildInvoiceCii({
   required InvoiceParty buyer,
   required String Function(InvoiceLine line) lineText,
   String iban = '',
+  // #941 — BT-9 / BT-20: when the money is due and on what terms.
+  // BR-CO-25 wants one of them on any document with an amount due.
+  DateTime? dueDate,
+  String paymentTerms = '',
 }) {
   String amount(int cents) => (cents / 100).toStringAsFixed(2);
   /// CII dates are `format="102"` — YYYYMMDD, no separators.
@@ -158,9 +162,15 @@ String buildInvoiceCii({
           ram('Name', p.name);
           // BT-30 — the identifier a category-O seller is allowed to carry
           // (BR-O-02 forbids the tax registration below).
-          if (isSeller && p.legalId.isNotEmpty) {
+          // #941 — BT-30 / BT-47: the legal registration of EITHER party,
+          // with the scheme a reader needs to interpret it — SIREN (9
+          // digits, ISO 6523 ICD 0002) or SIRET (14, ICD 0009). The
+          // buyer's was never emitted, and the seller's had no scheme.
+          if (p.legalId.isNotEmpty) {
             builder.element('ram:SpecifiedLegalOrganization', nest: () {
-              ram('ID', p.legalId);
+              final scheme = legalIdScheme(p.legalId, p.country);
+              ram('ID', p.legalId.replaceAll(' ', ''),
+                  scheme.isEmpty ? const {} : {'schemeID': scheme});
             });
           }
           builder.element('ram:PostalTradeAddress', nest: () {
@@ -236,6 +246,14 @@ String buildInvoiceCii({
             date('EndDateTime', period.end);
           });
         }
+        if (dueDate != null || paymentTerms.trim().isNotEmpty) {
+          builder.element('ram:SpecifiedTradePaymentTerms', nest: () {
+            if (paymentTerms.trim().isNotEmpty) {
+              ram('Description', paymentTerms.trim());
+            }
+            if (dueDate != null) date('DueDateDateTime', dueDate);
+          });
+        }
         builder.element('ram:SpecifiedTradeSettlementHeaderMonetarySummation',
             nest: () {
           money('LineTotalAmount', netCents);
@@ -272,4 +290,18 @@ String _percent(double percent) => percent == percent.roundToDouble()
   final month = int.tryParse(parts[1]);
   if (year == null || month == null) return null;
   return (start: DateTime(year, month), end: DateTime(year, month + 1, 0));
+}
+
+/// #941 — the ISO 6523 scheme of a French legal registration, by its
+/// digit count: 9 is a SIREN (0002), 14 a SIRET (0009). Anything else,
+/// or another country, carries no scheme — a reader then treats the id
+/// as plain text, which is honest.
+String legalIdScheme(String legalId, String country) {
+  if (country.trim().toUpperCase() != 'FR') return '';
+  final compact = legalId.replaceAll(' ', '');
+  final digits = compact.replaceAll(RegExp('[^0-9]'), '');
+  if (digits != compact) return '';
+  if (digits.length == 9) return '0002';
+  if (digits.length == 14) return '0009';
+  return '';
 }

@@ -61,6 +61,12 @@ enum EInvoiceGap {
   /// (BT-10, the service code). The norm does not require them; Chorus
   /// Pro does, for most public entities. A warning, not a refusal.
   missingPublicSectorReferences,
+
+  /// #941 — a French business buyer without a SIREN. The 2026 B2B
+  /// e-invoicing reform makes BT-47 mandatory between French businesses;
+  /// a platform refuses the document without it. The member's own data,
+  /// not a setting.
+  missingBuyerLegalId,
 }
 
 extension EInvoiceGapKind on EInvoiceGap {
@@ -146,5 +152,10 @@ EInvoiceReadiness checkEInvoiceReadiness({
         buyer.reference.trim().isEmpty &&
         buyer.orderReference.trim().isEmpty)
       EInvoiceGap.missingPublicSectorReferences,
+    if (seller.country.trim().toUpperCase() == 'FR' &&
+        buyer.country.trim().toUpperCase() == 'FR' &&
+        buyer.company.trim().isNotEmpty &&
+        buyer.legalId.trim().isEmpty)
+      EInvoiceGap.missingBuyerLegalId,
   ]);
 }

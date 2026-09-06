@@ -1326,6 +1326,9 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
     buyer: buyer,
     iban: iban,
     lineText: (line) => invoiceLineText(l10n, line, association: association),
+    // #941 — the same due date and terms the PDF prints.
+    dueDate: invoiceDueAt(ref, invoice),
+    paymentTerms: memberTermsFor(ref, invoice.memberId)?.paymentTerms ?? '',
   );
   // PDF/A-3 cannot exist without an embedded output intent.
   final icc = await rootBundle.load('assets/pdf/sRGB2014.icc');

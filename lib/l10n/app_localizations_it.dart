@@ -1860,6 +1860,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Eliminare questo piano? Tutti gli uffici, i tavoli e i posti su di esso vengono rimossi. Le prenotazioni che vi fanno riferimento conservano un\'istantanea di testo per gli audit; le prenotazioni aperte vengono annullate.';
 
   @override
+  String get eInvoiceGapMissingBuyerLegalId =>
+      'L\'acquirente è un\'impresa francese senza SIREN — inserisci il suo identificativo legale nel profilo del socio.';
+
+  @override
   String get developmentBanner => 'Spazio di sviluppo — qui nulla è reale';
 
   @override

@@ -1860,6 +1860,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Supprimer ce niveau ? Tous les bureaux, tables et places qui s\'y trouvent sont retirés. Les réservations qui y font référence gardent un instantané texte pour les audits ; les réservations ouvertes sont annulées.';
 
   @override
+  String get eInvoiceGapMissingBuyerLegalId =>
+      'L\'acheteur est une entreprise française sans SIREN — renseignez son identifiant légal sur le profil de l\'adhérent.';
+
+  @override
   String get developmentBanner =>
       'Espace de développement — rien ici n\'est réel';
 

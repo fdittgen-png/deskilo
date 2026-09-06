@@ -27,10 +27,12 @@
   <recipient window="fr"/>
 
   <body y="90mm">
-    <text style="heading">{% if proforma %}PROFORMA{% else %}FACTURE{% endif %} {{ number }}</text>
+    <text style="heading">{% if credit_note %}AVOIR{% elsif proforma %}PROFORMA{% else %}FACTURE{% endif %} {{ number }}</text>
     <text style="small">Date d'émission : {{ issued }}</text>
+    {% if due_date != "" %}<text style="small">Échéance : {{ due_date }}</text>{% endif %}
     <text style="small">Prestation : {{ period }}</text>
     {% if client_member_number != "" %}<text style="small">N° Adhérent : {{ client_member_number }}</text>{% endif %}
+    {% if client_legal_id != "" %}<text style="small">SIREN : {{ client_legal_id }}</text>{% endif %}
     <spacer size="4mm"/>
 
     <table>
