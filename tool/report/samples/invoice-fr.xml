@@ -27,7 +27,7 @@
   <recipient window="fr"/>
 
   <body y="90mm">
-    <text style="heading">{% if proforma %}PROFORMA{% else %}FACTURE{% endif %} {{ number }}</text>
+    <text style="heading">{% if credit_note %}AVOIR{% elsif proforma %}PROFORMA{% else %}FACTURE{% endif %} {{ number }}</text>
     <text style="small">Date d'émission : {{ issued }}</text>
     {% if due_date != "" %}<text style="small">Échéance : {{ due_date }}</text>{% endif %}
     <text style="small">Prestation : {{ period }}</text>
