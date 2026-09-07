@@ -1127,6 +1127,174 @@
   "@demoModeSubtitle": {
     "description": "#970 demo mode: demoModeSubtitle"
   },
+  "featureDeployments": "Distribuzioni",
+  "@featureDeployments": {
+    "description": "#988/#990 deployments: featureDeployments"
+  },
+  "featureDeploymentsDesc": "Configurazione e dati anagrafici distribuiti tra i due lati di una coppia, entità per entità, con un'anteprima di ciò che cambia e un giornale che sa tornare indietro. Disattivato: i gemelli si regolano a mano, ciascuno per sé.",
+  "@featureDeploymentsDesc": {
+    "description": "#988/#990 deployments: featureDeploymentsDesc"
+  },
+  "deploymentTitle": "Distribuzione",
+  "@deploymentTitle": {
+    "description": "#988/#990 deployments: deploymentTitle"
+  },
+  "deploymentIntroToProd": "Sei sul lato sviluppo. Ciò che spunti qui sotto viene distribuito al gemello di produzione, dopo un'anteprima di ciò che cambia.",
+  "@deploymentIntroToProd": {
+    "description": "#988/#990 deployments: deploymentIntroToProd"
+  },
+  "deploymentIntroToDev": "Sei sul lato produzione. Ciò che spunti qui sotto viene distribuito al gemello di sviluppo, dopo un'anteprima di ciò che cambia.",
+  "@deploymentIntroToDev": {
+    "description": "#988/#990 deployments: deploymentIntroToDev"
+  },
+  "deploymentNoTwin": "Questo spazio non ha un gemello di cui tu sia membro.",
+  "@deploymentNoTwin": {
+    "description": "#988/#990 deployments: deploymentNoTwin"
+  },
+  "deploymentNeedsProdPermission": "Distribuire in produzione richiede il permesso «Distribuire in produzione».",
+  "@deploymentNeedsProdPermission": {
+    "description": "#988/#990 deployments: deploymentNeedsProdPermission"
+  },
+  "deploymentNeedsDevPermission": "Distribuire in sviluppo richiede il permesso «Distribuire in sviluppo».",
+  "@deploymentNeedsDevPermission": {
+    "description": "#988/#990 deployments: deploymentNeedsDevPermission"
+  },
+  "deploymentKindMasterData": "Dati anagrafici",
+  "@deploymentKindMasterData": {
+    "description": "#988/#990 deployments: deploymentKindMasterData"
+  },
+  "deploymentKindConfiguration": "Configurazione",
+  "@deploymentKindConfiguration": {
+    "description": "#988/#990 deployments: deploymentKindConfiguration"
+  },
+  "deploymentRequires": "richiede",
+  "@deploymentRequires": {
+    "description": "#988/#990 deployments: deploymentRequires"
+  },
+  "deploymentToProd": "Distribuisci in PROD…",
+  "@deploymentToProd": {
+    "description": "#988/#990 deployments: deploymentToProd"
+  },
+  "deploymentToDev": "Distribuisci in DEV…",
+  "@deploymentToDev": {
+    "description": "#988/#990 deployments: deploymentToDev"
+  },
+  "deploymentJournal": "Giornale",
+  "@deploymentJournal": {
+    "description": "#988/#990 deployments: deploymentJournal"
+  },
+  "deploymentJournalEmpty": "Nulla è ancora stato distribuito.",
+  "@deploymentJournalEmpty": {
+    "description": "#988/#990 deployments: deploymentJournalEmpty"
+  },
+  "deploymentDirectionToProd": "In produzione",
+  "@deploymentDirectionToProd": {
+    "description": "#988/#990 deployments: deploymentDirectionToProd"
+  },
+  "deploymentDirectionToDev": "In sviluppo",
+  "@deploymentDirectionToDev": {
+    "description": "#988/#990 deployments: deploymentDirectionToDev"
+  },
+  "deploymentRolledBackLabel": "annullata",
+  "@deploymentRolledBackLabel": {
+    "description": "#988/#990 deployments: deploymentRolledBackLabel"
+  },
+  "deploymentRollback": "Torna indietro",
+  "@deploymentRollback": {
+    "description": "#988/#990 deployments: deploymentRollback"
+  },
+  "deploymentPreviewToProd": "Cosa cambia sul lato produzione",
+  "@deploymentPreviewToProd": {
+    "description": "#988/#990 deployments: deploymentPreviewToProd"
+  },
+  "deploymentPreviewToDev": "Cosa cambia sul lato sviluppo",
+  "@deploymentPreviewToDev": {
+    "description": "#988/#990 deployments: deploymentPreviewToDev"
+  },
+  "deploymentNoChange": "Nessuna modifica",
+  "@deploymentNoChange": {
+    "description": "#988/#990 deployments: deploymentNoChange"
+  },
+  "deploymentNothingToDo": "I due lati concordano già su queste entità.",
+  "@deploymentNothingToDo": {
+    "description": "#988/#990 deployments: deploymentNothingToDo"
+  },
+  "deploymentConfirm": "Distribuisci",
+  "@deploymentConfirm": {
+    "description": "#988/#990 deployments: deploymentConfirm"
+  },
+  "deploymentDone": "Distribuito. È nel giornale.",
+  "@deploymentDone": {
+    "description": "#988/#990 deployments: deploymentDone"
+  },
+  "deploymentRolledBack": "Annullata.",
+  "@deploymentRolledBack": {
+    "description": "#988/#990 deployments: deploymentRolledBack"
+  },
+  "deployEntityIdentity": "Identità e dati legali",
+  "@deployEntityIdentity": {
+    "description": "#988/#990 deployments: deployEntityIdentity"
+  },
+  "deployEntityVat": "IVA",
+  "@deployEntityVat": {
+    "description": "#988/#990 deployments: deployEntityVat"
+  },
+  "deployEntityTariffs": "Tariffe",
+  "@deployEntityTariffs": {
+    "description": "#988/#990 deployments: deployEntityTariffs"
+  },
+  "deployEntityServices": "Servizi",
+  "@deployEntityServices": {
+    "description": "#988/#990 deployments: deployEntityServices"
+  },
+  "deployEntityPackages": "Pacchetti",
+  "@deployEntityPackages": {
+    "description": "#988/#990 deployments: deployEntityPackages"
+  },
+  "deployEntityAccessories": "Accessori",
+  "@deployEntityAccessories": {
+    "description": "#988/#990 deployments: deployEntityAccessories"
+  },
+  "deployEntitySites": "Sedi",
+  "@deployEntitySites": {
+    "description": "#988/#990 deployments: deployEntitySites"
+  },
+  "deployEntityBookingRules": "Regole di prenotazione",
+  "@deployEntityBookingRules": {
+    "description": "#988/#990 deployments: deployEntityBookingRules"
+  },
+  "deployEntityValidationRules": "Regole di convalida",
+  "@deployEntityValidationRules": {
+    "description": "#988/#990 deployments: deployEntityValidationRules"
+  },
+  "deployEntityRoles": "Matrice dei ruoli",
+  "@deployEntityRoles": {
+    "description": "#988/#990 deployments: deployEntityRoles"
+  },
+  "deployEntityReminders": "Regole di sollecito",
+  "@deployEntityReminders": {
+    "description": "#988/#990 deployments: deployEntityReminders"
+  },
+  "deployEntityDocumentDesign": "Modelli di documento",
+  "@deployEntityDocumentDesign": {
+    "description": "#988/#990 deployments: deployEntityDocumentDesign"
+  },
+  "deployEntityDocumentLinks": "Collegamenti ai documenti",
+  "@deployEntityDocumentLinks": {
+    "description": "#988/#990 deployments: deployEntityDocumentLinks"
+  },
+  "deployEntityClosureDays": "Giorni di chiusura",
+  "@deployEntityClosureDays": {
+    "description": "#988/#990 deployments: deployEntityClosureDays"
+  },
+  "deployEntityInvitations": "Modelli di invito",
+  "@deployEntityInvitations": {
+    "description": "#988/#990 deployments: deployEntityInvitations"
+  },
+  "deployEntityFeatures": "Funzionalità",
+  "@deployEntityFeatures": {
+    "description": "#988/#990 deployments: deployEntityFeatures"
+  },
   "developerMode": "Modalità sviluppatore",
   "developerModeWorkspaceHint": "Vale per tutti i membri di questo spazio.",
   "developerTitle": "Sviluppatore",

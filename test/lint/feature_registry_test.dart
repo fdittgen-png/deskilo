@@ -100,7 +100,7 @@ import 'package:flutter_test/flutter_test.dart';
 // 87→88 (2026-09-06): #945 multiSite.
 // 88→89 (2026-09-06): #946 siteDocuments.
 // 89→90 (2026-09-06): #947 vatGroups.
-const int _expectedFeatureCount = 97;
+const int _expectedFeatureCount = 98;
 // 93→94 (2026-09-06): #977 instanceWizard.
 // 92→93 (2026-09-06): #970 demoMode.
 // 91→92 (2026-09-06): #969 navigationStyle.

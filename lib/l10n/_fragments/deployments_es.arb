@@ -1,0 +1,171 @@
+{
+  "@@locale": "es",
+  "featureDeployments": "Despliegues",
+  "@featureDeployments": {
+    "description": "#988/#990 deployments: featureDeployments"
+  },
+  "featureDeploymentsDesc": "Configuración y datos maestros desplegados entre los dos lados de una pareja, entidad por entidad, con una vista previa de lo que cambia y un diario que sabe deshacer. Desactivado: los gemelos se ajustan a mano, cada uno por su lado.",
+  "@featureDeploymentsDesc": {
+    "description": "#988/#990 deployments: featureDeploymentsDesc"
+  },
+  "deploymentTitle": "Despliegue",
+  "@deploymentTitle": {
+    "description": "#988/#990 deployments: deploymentTitle"
+  },
+  "deploymentIntroToProd": "Está en el lado de desarrollo. Lo que marque abajo se despliega al gemelo de producción, tras una vista previa de lo que cambia.",
+  "@deploymentIntroToProd": {
+    "description": "#988/#990 deployments: deploymentIntroToProd"
+  },
+  "deploymentIntroToDev": "Está en el lado de producción. Lo que marque abajo se despliega al gemelo de desarrollo, tras una vista previa de lo que cambia.",
+  "@deploymentIntroToDev": {
+    "description": "#988/#990 deployments: deploymentIntroToDev"
+  },
+  "deploymentNoTwin": "Este espacio no tiene un gemelo del que usted sea miembro.",
+  "@deploymentNoTwin": {
+    "description": "#988/#990 deployments: deploymentNoTwin"
+  },
+  "deploymentNeedsProdPermission": "Desplegar en producción requiere el permiso «Desplegar en producción».",
+  "@deploymentNeedsProdPermission": {
+    "description": "#988/#990 deployments: deploymentNeedsProdPermission"
+  },
+  "deploymentNeedsDevPermission": "Desplegar en desarrollo requiere el permiso «Desplegar en desarrollo».",
+  "@deploymentNeedsDevPermission": {
+    "description": "#988/#990 deployments: deploymentNeedsDevPermission"
+  },
+  "deploymentKindMasterData": "Datos maestros",
+  "@deploymentKindMasterData": {
+    "description": "#988/#990 deployments: deploymentKindMasterData"
+  },
+  "deploymentKindConfiguration": "Configuración",
+  "@deploymentKindConfiguration": {
+    "description": "#988/#990 deployments: deploymentKindConfiguration"
+  },
+  "deploymentRequires": "necesita",
+  "@deploymentRequires": {
+    "description": "#988/#990 deployments: deploymentRequires"
+  },
+  "deploymentToProd": "Desplegar en PROD…",
+  "@deploymentToProd": {
+    "description": "#988/#990 deployments: deploymentToProd"
+  },
+  "deploymentToDev": "Desplegar en DEV…",
+  "@deploymentToDev": {
+    "description": "#988/#990 deployments: deploymentToDev"
+  },
+  "deploymentJournal": "Diario",
+  "@deploymentJournal": {
+    "description": "#988/#990 deployments: deploymentJournal"
+  },
+  "deploymentJournalEmpty": "Todavía no se ha desplegado nada.",
+  "@deploymentJournalEmpty": {
+    "description": "#988/#990 deployments: deploymentJournalEmpty"
+  },
+  "deploymentDirectionToProd": "A producción",
+  "@deploymentDirectionToProd": {
+    "description": "#988/#990 deployments: deploymentDirectionToProd"
+  },
+  "deploymentDirectionToDev": "A desarrollo",
+  "@deploymentDirectionToDev": {
+    "description": "#988/#990 deployments: deploymentDirectionToDev"
+  },
+  "deploymentRolledBackLabel": "deshecho",
+  "@deploymentRolledBackLabel": {
+    "description": "#988/#990 deployments: deploymentRolledBackLabel"
+  },
+  "deploymentRollback": "Deshacer",
+  "@deploymentRollback": {
+    "description": "#988/#990 deployments: deploymentRollback"
+  },
+  "deploymentPreviewToProd": "Lo que cambia en el lado de producción",
+  "@deploymentPreviewToProd": {
+    "description": "#988/#990 deployments: deploymentPreviewToProd"
+  },
+  "deploymentPreviewToDev": "Lo que cambia en el lado de desarrollo",
+  "@deploymentPreviewToDev": {
+    "description": "#988/#990 deployments: deploymentPreviewToDev"
+  },
+  "deploymentNoChange": "Sin cambios",
+  "@deploymentNoChange": {
+    "description": "#988/#990 deployments: deploymentNoChange"
+  },
+  "deploymentNothingToDo": "Los dos lados ya coinciden en estas entidades.",
+  "@deploymentNothingToDo": {
+    "description": "#988/#990 deployments: deploymentNothingToDo"
+  },
+  "deploymentConfirm": "Desplegar",
+  "@deploymentConfirm": {
+    "description": "#988/#990 deployments: deploymentConfirm"
+  },
+  "deploymentDone": "Desplegado. Está en el diario.",
+  "@deploymentDone": {
+    "description": "#988/#990 deployments: deploymentDone"
+  },
+  "deploymentRolledBack": "Deshecho.",
+  "@deploymentRolledBack": {
+    "description": "#988/#990 deployments: deploymentRolledBack"
+  },
+  "deployEntityIdentity": "Identidad y datos legales",
+  "@deployEntityIdentity": {
+    "description": "#988/#990 deployments: deployEntityIdentity"
+  },
+  "deployEntityVat": "IVA",
+  "@deployEntityVat": {
+    "description": "#988/#990 deployments: deployEntityVat"
+  },
+  "deployEntityTariffs": "Tarifas",
+  "@deployEntityTariffs": {
+    "description": "#988/#990 deployments: deployEntityTariffs"
+  },
+  "deployEntityServices": "Servicios",
+  "@deployEntityServices": {
+    "description": "#988/#990 deployments: deployEntityServices"
+  },
+  "deployEntityPackages": "Paquetes",
+  "@deployEntityPackages": {
+    "description": "#988/#990 deployments: deployEntityPackages"
+  },
+  "deployEntityAccessories": "Accesorios",
+  "@deployEntityAccessories": {
+    "description": "#988/#990 deployments: deployEntityAccessories"
+  },
+  "deployEntitySites": "Sedes",
+  "@deployEntitySites": {
+    "description": "#988/#990 deployments: deployEntitySites"
+  },
+  "deployEntityBookingRules": "Reglas de reserva",
+  "@deployEntityBookingRules": {
+    "description": "#988/#990 deployments: deployEntityBookingRules"
+  },
+  "deployEntityValidationRules": "Reglas de validación",
+  "@deployEntityValidationRules": {
+    "description": "#988/#990 deployments: deployEntityValidationRules"
+  },
+  "deployEntityRoles": "Matriz de roles",
+  "@deployEntityRoles": {
+    "description": "#988/#990 deployments: deployEntityRoles"
+  },
+  "deployEntityReminders": "Reglas de recordatorio",
+  "@deployEntityReminders": {
+    "description": "#988/#990 deployments: deployEntityReminders"
+  },
+  "deployEntityDocumentDesign": "Diseños de documentos",
+  "@deployEntityDocumentDesign": {
+    "description": "#988/#990 deployments: deployEntityDocumentDesign"
+  },
+  "deployEntityDocumentLinks": "Enlaces de documentos",
+  "@deployEntityDocumentLinks": {
+    "description": "#988/#990 deployments: deployEntityDocumentLinks"
+  },
+  "deployEntityClosureDays": "Días de cierre",
+  "@deployEntityClosureDays": {
+    "description": "#988/#990 deployments: deployEntityClosureDays"
+  },
+  "deployEntityInvitations": "Plantillas de invitación",
+  "@deployEntityInvitations": {
+    "description": "#988/#990 deployments: deployEntityInvitations"
+  },
+  "deployEntityFeatures": "Funciones",
+  "@deployEntityFeatures": {
+    "description": "#988/#990 deployments: deployEntityFeatures"
+  }
+}

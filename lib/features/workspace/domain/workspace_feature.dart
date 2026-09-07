@@ -77,6 +77,7 @@ enum WorkspaceFeature {
   vatRateHistory,
   vatCounterparty,
   environmentPairs,
+  deployments,
   seatDayTimeline,
   memberPaymentTerms,
   reportTexts,
@@ -649,6 +650,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.environmentPairs: FeatureManifestEntry(
     feature: WorkspaceFeature.environmentPairs,
     defaultOn: true,
+  ),
+  // #988/#990 — entities deployed between the two sides of a pair, with
+  // a preview and a journal. Off: the twins stay separate hands.
+  WorkspaceFeature.deployments: FeatureManifestEntry(
+    feature: WorkspaceFeature.deployments,
+    defaultOn: true,
+    requires: WorkspaceFeature.environmentPairs,
   ),
   WorkspaceFeature.managedProfileAccess: FeatureManifestEntry(
     feature: WorkspaceFeature.managedProfileAccess,

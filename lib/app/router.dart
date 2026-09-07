@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../features/workspace/presentation/screens/deployment_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -605,6 +606,21 @@ GoRouter router(Ref ref) {
       // they belong to.
       // Periodic VAT declarations (#534) — owner-only, needs invoicing
       // AND the vatDeclarations feature; the screen gates the regime.
+      // #988/#990 — the deployment between the two sides of a pair:
+      // the feature, a deploy permission, and a twin to deploy to.
+      GoRoute(
+        path: '/deployment',
+        redirect: (context, state) {
+          final perms = ref.read(myPermissionsProvider);
+          final workspace = ref.read(currentWorkspaceProvider).value;
+          return featureEnabled(WorkspaceFeature.deployments) &&
+                  perms.contains(WorkspacePermission.deployToDev) &&
+                  (workspace?.pairId.isNotEmpty ?? false)
+              ? null
+              : '/settings';
+        },
+        builder: (context, state) => const DeploymentScreen(),
+      ),
       GoRoute(
         path: '/vat-declarations',
         redirect: (context, state) {

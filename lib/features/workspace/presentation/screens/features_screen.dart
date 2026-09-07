@@ -320,6 +320,12 @@ class FeaturesScreen extends ConsumerWidget {
                   'production side — as one couple: one card in Profiles '
                   'with a switch, and the twin created on demand with the '
                   'configuration copied. Off: two unrelated entries.',
+        WorkspaceFeature.deployments =>
+          l10n?.featureDeploymentsDesc ??
+              'Configuration and master data deployed between the two '
+                  'sides of a pair, entity by entity, with a preview of what '
+                  'changes and a journal that can roll back. Off: the twins '
+                  'are edited by hand, each on its own.',
         WorkspaceFeature.managedProfileAccess =>
           l10n?.featureManagedProfileAccessDesc ??
               'Each managed profile says who may administer it — by role, '

@@ -1554,6 +1554,139 @@ class AppLocalizationsEn extends AppLocalizations {
       'Names, e-mails, phones and addresses are blurred on this device\'s screen — for screenshots and videos.';
 
   @override
+  String get featureDeployments => 'Deployments';
+
+  @override
+  String get featureDeploymentsDesc =>
+      'Configuration and master data deployed between the two sides of a pair, entity by entity, with a preview of what changes and a journal that can roll back. Off: the twins are edited by hand, each on its own.';
+
+  @override
+  String get deploymentTitle => 'Deployment';
+
+  @override
+  String get deploymentIntroToProd =>
+      'You stand on the development side. What you tick below is deployed to the production twin, after a preview of what changes.';
+
+  @override
+  String get deploymentIntroToDev =>
+      'You stand on the production side. What you tick below is deployed to the development twin, after a preview of what changes.';
+
+  @override
+  String get deploymentNoTwin =>
+      'This workspace has no twin you are a member of.';
+
+  @override
+  String get deploymentNeedsProdPermission =>
+      'Deploying to production needs the \"Deploy to production\" permission.';
+
+  @override
+  String get deploymentNeedsDevPermission =>
+      'Deploying to development needs the \"Deploy to development\" permission.';
+
+  @override
+  String get deploymentKindMasterData => 'Master data';
+
+  @override
+  String get deploymentKindConfiguration => 'Configuration';
+
+  @override
+  String get deploymentRequires => 'needs';
+
+  @override
+  String get deploymentToProd => 'Deploy to PROD…';
+
+  @override
+  String get deploymentToDev => 'Deploy to DEV…';
+
+  @override
+  String get deploymentJournal => 'Journal';
+
+  @override
+  String get deploymentJournalEmpty => 'Nothing deployed yet.';
+
+  @override
+  String get deploymentDirectionToProd => 'To production';
+
+  @override
+  String get deploymentDirectionToDev => 'To development';
+
+  @override
+  String get deploymentRolledBackLabel => 'rolled back';
+
+  @override
+  String get deploymentRollback => 'Roll back';
+
+  @override
+  String get deploymentPreviewToProd => 'What changes on the production side';
+
+  @override
+  String get deploymentPreviewToDev => 'What changes on the development side';
+
+  @override
+  String get deploymentNoChange => 'No change';
+
+  @override
+  String get deploymentNothingToDo =>
+      'The two sides already agree on these entities.';
+
+  @override
+  String get deploymentConfirm => 'Deploy';
+
+  @override
+  String get deploymentDone => 'Deployed. The journal has it.';
+
+  @override
+  String get deploymentRolledBack => 'Rolled back.';
+
+  @override
+  String get deployEntityIdentity => 'Identity & legal';
+
+  @override
+  String get deployEntityVat => 'VAT';
+
+  @override
+  String get deployEntityTariffs => 'Tariffs';
+
+  @override
+  String get deployEntityServices => 'Services';
+
+  @override
+  String get deployEntityPackages => 'Packages';
+
+  @override
+  String get deployEntityAccessories => 'Accessories';
+
+  @override
+  String get deployEntitySites => 'Sites';
+
+  @override
+  String get deployEntityBookingRules => 'Booking rules';
+
+  @override
+  String get deployEntityValidationRules => 'Validation rules';
+
+  @override
+  String get deployEntityRoles => 'Role matrix';
+
+  @override
+  String get deployEntityReminders => 'Reminder rules';
+
+  @override
+  String get deployEntityDocumentDesign => 'Document designs';
+
+  @override
+  String get deployEntityDocumentLinks => 'Document links';
+
+  @override
+  String get deployEntityClosureDays => 'Closure days';
+
+  @override
+  String get deployEntityInvitations => 'Invitation templates';
+
+  @override
+  String get deployEntityFeatures => 'Features';
+
+  @override
   String get developerMode => 'Developer mode';
 
   @override

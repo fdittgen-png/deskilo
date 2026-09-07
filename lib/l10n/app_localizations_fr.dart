@@ -1562,6 +1562,139 @@ class AppLocalizationsFr extends AppLocalizations {
       'Noms, courriels, téléphones et adresses sont floutés à l\'écran de cet appareil — pour les captures d\'écran et les vidéos.';
 
   @override
+  String get featureDeployments => 'Déploiements';
+
+  @override
+  String get featureDeploymentsDesc =>
+      'Configuration et données de base déployées entre les deux côtés d\'une paire, entité par entité, avec un aperçu de ce qui change et un journal qui sait revenir en arrière. Désactivé : les jumeaux se règlent à la main, chacun de son côté.';
+
+  @override
+  String get deploymentTitle => 'Déploiement';
+
+  @override
+  String get deploymentIntroToProd =>
+      'Vous êtes du côté développement. Ce que vous cochez ci-dessous est déployé vers le jumeau de production, après un aperçu de ce qui change.';
+
+  @override
+  String get deploymentIntroToDev =>
+      'Vous êtes du côté production. Ce que vous cochez ci-dessous est déployé vers le jumeau de développement, après un aperçu de ce qui change.';
+
+  @override
+  String get deploymentNoTwin =>
+      'Cet espace n\'a pas de jumeau dont vous soyez membre.';
+
+  @override
+  String get deploymentNeedsProdPermission =>
+      'Déployer en production demande la permission « Déployer en production ».';
+
+  @override
+  String get deploymentNeedsDevPermission =>
+      'Déployer en développement demande la permission « Déployer en développement ».';
+
+  @override
+  String get deploymentKindMasterData => 'Données de base';
+
+  @override
+  String get deploymentKindConfiguration => 'Configuration';
+
+  @override
+  String get deploymentRequires => 'nécessite';
+
+  @override
+  String get deploymentToProd => 'Déployer en PROD…';
+
+  @override
+  String get deploymentToDev => 'Déployer en DEV…';
+
+  @override
+  String get deploymentJournal => 'Journal';
+
+  @override
+  String get deploymentJournalEmpty => 'Rien n\'a encore été déployé.';
+
+  @override
+  String get deploymentDirectionToProd => 'Vers la production';
+
+  @override
+  String get deploymentDirectionToDev => 'Vers le développement';
+
+  @override
+  String get deploymentRolledBackLabel => 'annulé';
+
+  @override
+  String get deploymentRollback => 'Revenir en arrière';
+
+  @override
+  String get deploymentPreviewToProd => 'Ce qui change côté production';
+
+  @override
+  String get deploymentPreviewToDev => 'Ce qui change côté développement';
+
+  @override
+  String get deploymentNoChange => 'Aucun changement';
+
+  @override
+  String get deploymentNothingToDo =>
+      'Les deux côtés sont déjà d\'accord sur ces entités.';
+
+  @override
+  String get deploymentConfirm => 'Déployer';
+
+  @override
+  String get deploymentDone => 'Déployé. Le journal l\'a.';
+
+  @override
+  String get deploymentRolledBack => 'Retour arrière effectué.';
+
+  @override
+  String get deployEntityIdentity => 'Identité et mentions légales';
+
+  @override
+  String get deployEntityVat => 'TVA';
+
+  @override
+  String get deployEntityTariffs => 'Tarifs';
+
+  @override
+  String get deployEntityServices => 'Services';
+
+  @override
+  String get deployEntityPackages => 'Forfaits';
+
+  @override
+  String get deployEntityAccessories => 'Accessoires';
+
+  @override
+  String get deployEntitySites => 'Sites';
+
+  @override
+  String get deployEntityBookingRules => 'Règles de réservation';
+
+  @override
+  String get deployEntityValidationRules => 'Règles de validation';
+
+  @override
+  String get deployEntityRoles => 'Matrice des rôles';
+
+  @override
+  String get deployEntityReminders => 'Règles de relance';
+
+  @override
+  String get deployEntityDocumentDesign => 'Conception des documents';
+
+  @override
+  String get deployEntityDocumentLinks => 'Liens de documents';
+
+  @override
+  String get deployEntityClosureDays => 'Jours de fermeture';
+
+  @override
+  String get deployEntityInvitations => 'Modèles d\'invitation';
+
+  @override
+  String get deployEntityFeatures => 'Fonctionnalités';
+
+  @override
   String get developerMode => 'Mode développeur';
 
   @override

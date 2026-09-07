@@ -1563,6 +1563,139 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nomi, e-mail, telefoni e indirizzi sono sfocati sullo schermo di questo dispositivo — per screenshot e video.';
 
   @override
+  String get featureDeployments => 'Distribuzioni';
+
+  @override
+  String get featureDeploymentsDesc =>
+      'Configurazione e dati anagrafici distribuiti tra i due lati di una coppia, entità per entità, con un\'anteprima di ciò che cambia e un giornale che sa tornare indietro. Disattivato: i gemelli si regolano a mano, ciascuno per sé.';
+
+  @override
+  String get deploymentTitle => 'Distribuzione';
+
+  @override
+  String get deploymentIntroToProd =>
+      'Sei sul lato sviluppo. Ciò che spunti qui sotto viene distribuito al gemello di produzione, dopo un\'anteprima di ciò che cambia.';
+
+  @override
+  String get deploymentIntroToDev =>
+      'Sei sul lato produzione. Ciò che spunti qui sotto viene distribuito al gemello di sviluppo, dopo un\'anteprima di ciò che cambia.';
+
+  @override
+  String get deploymentNoTwin =>
+      'Questo spazio non ha un gemello di cui tu sia membro.';
+
+  @override
+  String get deploymentNeedsProdPermission =>
+      'Distribuire in produzione richiede il permesso «Distribuire in produzione».';
+
+  @override
+  String get deploymentNeedsDevPermission =>
+      'Distribuire in sviluppo richiede il permesso «Distribuire in sviluppo».';
+
+  @override
+  String get deploymentKindMasterData => 'Dati anagrafici';
+
+  @override
+  String get deploymentKindConfiguration => 'Configurazione';
+
+  @override
+  String get deploymentRequires => 'richiede';
+
+  @override
+  String get deploymentToProd => 'Distribuisci in PROD…';
+
+  @override
+  String get deploymentToDev => 'Distribuisci in DEV…';
+
+  @override
+  String get deploymentJournal => 'Giornale';
+
+  @override
+  String get deploymentJournalEmpty => 'Nulla è ancora stato distribuito.';
+
+  @override
+  String get deploymentDirectionToProd => 'In produzione';
+
+  @override
+  String get deploymentDirectionToDev => 'In sviluppo';
+
+  @override
+  String get deploymentRolledBackLabel => 'annullata';
+
+  @override
+  String get deploymentRollback => 'Torna indietro';
+
+  @override
+  String get deploymentPreviewToProd => 'Cosa cambia sul lato produzione';
+
+  @override
+  String get deploymentPreviewToDev => 'Cosa cambia sul lato sviluppo';
+
+  @override
+  String get deploymentNoChange => 'Nessuna modifica';
+
+  @override
+  String get deploymentNothingToDo =>
+      'I due lati concordano già su queste entità.';
+
+  @override
+  String get deploymentConfirm => 'Distribuisci';
+
+  @override
+  String get deploymentDone => 'Distribuito. È nel giornale.';
+
+  @override
+  String get deploymentRolledBack => 'Annullata.';
+
+  @override
+  String get deployEntityIdentity => 'Identità e dati legali';
+
+  @override
+  String get deployEntityVat => 'IVA';
+
+  @override
+  String get deployEntityTariffs => 'Tariffe';
+
+  @override
+  String get deployEntityServices => 'Servizi';
+
+  @override
+  String get deployEntityPackages => 'Pacchetti';
+
+  @override
+  String get deployEntityAccessories => 'Accessori';
+
+  @override
+  String get deployEntitySites => 'Sedi';
+
+  @override
+  String get deployEntityBookingRules => 'Regole di prenotazione';
+
+  @override
+  String get deployEntityValidationRules => 'Regole di convalida';
+
+  @override
+  String get deployEntityRoles => 'Matrice dei ruoli';
+
+  @override
+  String get deployEntityReminders => 'Regole di sollecito';
+
+  @override
+  String get deployEntityDocumentDesign => 'Modelli di documento';
+
+  @override
+  String get deployEntityDocumentLinks => 'Collegamenti ai documenti';
+
+  @override
+  String get deployEntityClosureDays => 'Giorni di chiusura';
+
+  @override
+  String get deployEntityInvitations => 'Modelli di invito';
+
+  @override
+  String get deployEntityFeatures => 'Funzionalità';
+
+  @override
   String get developerMode => 'Modalità sviluppatore';
 
   @override

@@ -146,6 +146,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureVatCounterparty ?? 'VAT by counterparty',
       WorkspaceFeature.environmentPairs =>
         l10n?.featureEnvironmentPairs ?? 'Environment pairs',
+      WorkspaceFeature.deployments =>
+        l10n?.featureDeployments ?? 'Deployments',
       WorkspaceFeature.managedProfileAccess =>
         l10n?.featureManagedProfileAccess ?? 'Who administers a profile',
       WorkspaceFeature.seatDayTimeline =>

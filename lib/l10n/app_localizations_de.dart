@@ -1561,6 +1561,141 @@ class AppLocalizationsDe extends AppLocalizations {
       'Namen, E-Mails, Telefonnummern und Adressen werden auf dem Bildschirm dieses Geräts unscharf gemacht — für Screenshots und Videos.';
 
   @override
+  String get featureDeployments => 'Ausrollungen';
+
+  @override
+  String get featureDeploymentsDesc =>
+      'Konfiguration und Stammdaten zwischen den beiden Seiten eines Paars ausgerollt, Entität für Entität, mit einer Vorschau der Änderungen und einem Journal, das zurückrollen kann. Aus: die Zwillinge werden von Hand gepflegt, jeder für sich.';
+
+  @override
+  String get deploymentTitle => 'Ausrollung';
+
+  @override
+  String get deploymentIntroToProd =>
+      'Sie stehen auf der Entwicklungsseite. Was Sie unten ankreuzen, wird nach einer Vorschau der Änderungen auf den Produktionszwilling ausgerollt.';
+
+  @override
+  String get deploymentIntroToDev =>
+      'Sie stehen auf der Produktionsseite. Was Sie unten ankreuzen, wird nach einer Vorschau der Änderungen auf den Entwicklungszwilling ausgerollt.';
+
+  @override
+  String get deploymentNoTwin =>
+      'Dieser Raum hat keinen Zwilling, dessen Mitglied Sie sind.';
+
+  @override
+  String get deploymentNeedsProdPermission =>
+      'Für die Ausrollung in die Produktion braucht es die Berechtigung „In die Produktion ausrollen“.';
+
+  @override
+  String get deploymentNeedsDevPermission =>
+      'Für die Ausrollung in die Entwicklung braucht es die Berechtigung „In die Entwicklung ausrollen“.';
+
+  @override
+  String get deploymentKindMasterData => 'Stammdaten';
+
+  @override
+  String get deploymentKindConfiguration => 'Konfiguration';
+
+  @override
+  String get deploymentRequires => 'braucht';
+
+  @override
+  String get deploymentToProd => 'In die PROD ausrollen…';
+
+  @override
+  String get deploymentToDev => 'In die DEV ausrollen…';
+
+  @override
+  String get deploymentJournal => 'Journal';
+
+  @override
+  String get deploymentJournalEmpty => 'Noch nichts ausgerollt.';
+
+  @override
+  String get deploymentDirectionToProd => 'In die Produktion';
+
+  @override
+  String get deploymentDirectionToDev => 'In die Entwicklung';
+
+  @override
+  String get deploymentRolledBackLabel => 'zurückgerollt';
+
+  @override
+  String get deploymentRollback => 'Zurückrollen';
+
+  @override
+  String get deploymentPreviewToProd =>
+      'Was sich auf der Produktionsseite ändert';
+
+  @override
+  String get deploymentPreviewToDev =>
+      'Was sich auf der Entwicklungsseite ändert';
+
+  @override
+  String get deploymentNoChange => 'Keine Änderung';
+
+  @override
+  String get deploymentNothingToDo =>
+      'Beide Seiten stimmen bei diesen Entitäten schon überein.';
+
+  @override
+  String get deploymentConfirm => 'Ausrollen';
+
+  @override
+  String get deploymentDone => 'Ausgerollt. Das Journal hat es.';
+
+  @override
+  String get deploymentRolledBack => 'Zurückgerollt.';
+
+  @override
+  String get deployEntityIdentity => 'Identität & Rechtliches';
+
+  @override
+  String get deployEntityVat => 'USt';
+
+  @override
+  String get deployEntityTariffs => 'Tarife';
+
+  @override
+  String get deployEntityServices => 'Services';
+
+  @override
+  String get deployEntityPackages => 'Pakete';
+
+  @override
+  String get deployEntityAccessories => 'Zubehör';
+
+  @override
+  String get deployEntitySites => 'Standorte';
+
+  @override
+  String get deployEntityBookingRules => 'Buchungsregeln';
+
+  @override
+  String get deployEntityValidationRules => 'Freigaberegeln';
+
+  @override
+  String get deployEntityRoles => 'Rollenmatrix';
+
+  @override
+  String get deployEntityReminders => 'Mahnregeln';
+
+  @override
+  String get deployEntityDocumentDesign => 'Dokumentvorlagen';
+
+  @override
+  String get deployEntityDocumentLinks => 'Dokumentlinks';
+
+  @override
+  String get deployEntityClosureDays => 'Schließtage';
+
+  @override
+  String get deployEntityInvitations => 'Einladungsvorlagen';
+
+  @override
+  String get deployEntityFeatures => 'Funktionen';
+
+  @override
   String get developerMode => 'Entwicklermodus';
 
   @override
