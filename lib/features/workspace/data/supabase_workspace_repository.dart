@@ -112,6 +112,7 @@ class SupabaseWorkspaceRepository
     required String currencyCode,
     required String timezone,
     WorkspaceEnvironment environment = WorkspaceEnvironment.development,
+    bool withTwin = true,
   }) async {
     final result = await _client.rpc<dynamic>('create_workspace', params: {
       'p_name': name,
@@ -119,6 +120,17 @@ class SupabaseWorkspaceRepository
       'p_currency_code': currencyCode,
       'p_timezone': timezone,
       'p_environment': environment.wire,
+      // #987 — the dev and the prod, created together.
+      'p_with_twin': withTwin,
+    });
+    return result as String;
+  }
+
+  @override
+  Future<String> createWorkspaceTwin(String workspaceId) async {
+    // #987 — the missing side of a lone workspace, configuration copied.
+    final result = await _client.rpc<dynamic>('create_workspace_twin', params: {
+      'p_workspace_id': workspaceId,
     });
     return result as String;
   }
@@ -493,6 +505,7 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         // #917 — a row without the column is a space that predates
         // 0160, and those are development spaces.
         environment: row['environment'] as String? ?? 'dev',
+        pairId: row['pair_id'] as String? ?? '',
         paymentInstructions:
             row['payment_instructions'] as Map<String, dynamic>? ?? const {},
         whatsappGroup: row['whatsapp_group'] as String? ?? '',

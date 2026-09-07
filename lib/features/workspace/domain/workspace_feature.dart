@@ -76,6 +76,7 @@ enum WorkspaceFeature {
   vatGroups,
   vatRateHistory,
   vatCounterparty,
+  environmentPairs,
   seatDayTimeline,
   memberPaymentTerms,
   reportTexts,
@@ -642,6 +643,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.vatCounterparty,
     defaultOn: false,
     requires: WorkspaceFeature.vatManagement,
+  ),
+  // #987 — a workspace and its twin as one couple: the paired card in
+  // Profiles and the twin action. Off: two unrelated entries.
+  WorkspaceFeature.environmentPairs: FeatureManifestEntry(
+    feature: WorkspaceFeature.environmentPairs,
+    defaultOn: true,
   ),
   WorkspaceFeature.managedProfileAccess: FeatureManifestEntry(
     feature: WorkspaceFeature.managedProfileAccess,

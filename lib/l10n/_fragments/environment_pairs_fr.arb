@@ -1,0 +1,59 @@
+{
+  "@@locale": "fr",
+  "permDeployToProd": "Déployer en production",
+  "@permDeployToProd": {
+    "description": "#987/#989 environment pairs: permDeployToProd"
+  },
+  "permDeployToDev": "Déployer en développement",
+  "@permDeployToDev": {
+    "description": "#987/#989 environment pairs: permDeployToDev"
+  },
+  "permAccessProd": "Entrer dans l'espace de production",
+  "@permAccessProd": {
+    "description": "#987/#989 environment pairs: permAccessProd"
+  },
+  "featureEnvironmentPairs": "Paires d'environnements",
+  "@featureEnvironmentPairs": {
+    "description": "#987/#989 environment pairs: featureEnvironmentPairs"
+  },
+  "featureEnvironmentPairsDesc": "Un espace et son jumeau — le côté développement et le côté production — comme un couple : une carte dans Profils avec un interrupteur, et le jumeau créé à la demande avec la configuration copiée. Désactivé : deux entrées sans lien.",
+  "@featureEnvironmentPairsDesc": {
+    "description": "#987/#989 environment pairs: featureEnvironmentPairsDesc"
+  },
+  "onboardingWithTwin": "Créer la paire développement et production",
+  "@onboardingWithTwin": {
+    "description": "#987/#989 environment pairs: onboardingWithTwin"
+  },
+  "onboardingWithTwinHint": "Deux espaces du même nom : un pour essayer, un qui est réel. Vous possédez les deux.",
+  "@onboardingWithTwinHint": {
+    "description": "#987/#989 environment pairs: onboardingWithTwinHint"
+  },
+  "environmentPairsCreateTwin": "Créer son jumeau",
+  "@environmentPairsCreateTwin": {
+    "description": "#987/#989 environment pairs: environmentPairsCreateTwin"
+  },
+  "environmentPairsCreateTwinDesc": "Un espace de développement et un de production du même nom ; la configuration est copiée une fois.",
+  "@environmentPairsCreateTwinDesc": {
+    "description": "#987/#989 environment pairs: environmentPairsCreateTwinDesc"
+  },
+  "environmentPairsPairedDev": "Apparié à son jumeau de développement",
+  "@environmentPairsPairedDev": {
+    "description": "#987/#989 environment pairs: environmentPairsPairedDev"
+  },
+  "environmentPairsPairedProd": "Apparié à son jumeau de production",
+  "@environmentPairsPairedProd": {
+    "description": "#987/#989 environment pairs: environmentPairsPairedProd"
+  },
+  "environmentPairsTwinCreated": "Le jumeau est créé.",
+  "@environmentPairsTwinCreated": {
+    "description": "#987/#989 environment pairs: environmentPairsTwinCreated"
+  },
+  "profilesPairDev": "DEV",
+  "@profilesPairDev": {
+    "description": "#987/#989 environment pairs: profilesPairDev"
+  },
+  "profilesPairProd": "PROD",
+  "@profilesPairProd": {
+    "description": "#987/#989 environment pairs: profilesPairProd"
+  }
+}

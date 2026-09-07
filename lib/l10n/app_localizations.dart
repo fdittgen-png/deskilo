@@ -3474,6 +3474,90 @@ abstract class AppLocalizations {
   /// **'Declare production'**
   String get environmentProdConfirmAction;
 
+  /// #987/#989 environment pairs: permDeployToProd
+  ///
+  /// In en, this message translates to:
+  /// **'Deploy to production'**
+  String get permDeployToProd;
+
+  /// #987/#989 environment pairs: permDeployToDev
+  ///
+  /// In en, this message translates to:
+  /// **'Deploy to development'**
+  String get permDeployToDev;
+
+  /// #987/#989 environment pairs: permAccessProd
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the production workspace'**
+  String get permAccessProd;
+
+  /// #987/#989 environment pairs: featureEnvironmentPairs
+  ///
+  /// In en, this message translates to:
+  /// **'Environment pairs'**
+  String get featureEnvironmentPairs;
+
+  /// #987/#989 environment pairs: featureEnvironmentPairsDesc
+  ///
+  /// In en, this message translates to:
+  /// **'A workspace and its twin — the development and the production side — as one couple: one card in Profiles with a switch, and the twin created on demand with the configuration copied. Off: two unrelated entries.'**
+  String get featureEnvironmentPairsDesc;
+
+  /// #987/#989 environment pairs: onboardingWithTwin
+  ///
+  /// In en, this message translates to:
+  /// **'Create the development and production pair'**
+  String get onboardingWithTwin;
+
+  /// #987/#989 environment pairs: onboardingWithTwinHint
+  ///
+  /// In en, this message translates to:
+  /// **'Two workspaces with the same name: one to try things out, one that is real. You own both.'**
+  String get onboardingWithTwinHint;
+
+  /// #987/#989 environment pairs: environmentPairsCreateTwin
+  ///
+  /// In en, this message translates to:
+  /// **'Create its twin'**
+  String get environmentPairsCreateTwin;
+
+  /// #987/#989 environment pairs: environmentPairsCreateTwinDesc
+  ///
+  /// In en, this message translates to:
+  /// **'A development and a production workspace with the same name; the configuration is copied once.'**
+  String get environmentPairsCreateTwinDesc;
+
+  /// #987/#989 environment pairs: environmentPairsPairedDev
+  ///
+  /// In en, this message translates to:
+  /// **'Paired with its development twin'**
+  String get environmentPairsPairedDev;
+
+  /// #987/#989 environment pairs: environmentPairsPairedProd
+  ///
+  /// In en, this message translates to:
+  /// **'Paired with its production twin'**
+  String get environmentPairsPairedProd;
+
+  /// #987/#989 environment pairs: environmentPairsTwinCreated
+  ///
+  /// In en, this message translates to:
+  /// **'The twin is created.'**
+  String get environmentPairsTwinCreated;
+
+  /// #987/#989 environment pairs: profilesPairDev
+  ///
+  /// In en, this message translates to:
+  /// **'DEV'**
+  String get profilesPairDev;
+
+  /// #987/#989 environment pairs: profilesPairProd
+  ///
+  /// In en, this message translates to:
+  /// **'PROD'**
+  String get profilesPairProd;
+
   /// Header above pinned pending-confirmation cards (spec §8)
   ///
   /// In en, this message translates to:

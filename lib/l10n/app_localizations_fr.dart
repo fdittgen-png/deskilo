@@ -1959,6 +1959,52 @@ class AppLocalizationsFr extends AppLocalizations {
   String get environmentProdConfirmAction => 'Déclarer en production';
 
   @override
+  String get permDeployToProd => 'Déployer en production';
+
+  @override
+  String get permDeployToDev => 'Déployer en développement';
+
+  @override
+  String get permAccessProd => 'Entrer dans l\'espace de production';
+
+  @override
+  String get featureEnvironmentPairs => 'Paires d\'environnements';
+
+  @override
+  String get featureEnvironmentPairsDesc =>
+      'Un espace et son jumeau — le côté développement et le côté production — comme un couple : une carte dans Profils avec un interrupteur, et le jumeau créé à la demande avec la configuration copiée. Désactivé : deux entrées sans lien.';
+
+  @override
+  String get onboardingWithTwin => 'Créer la paire développement et production';
+
+  @override
+  String get onboardingWithTwinHint =>
+      'Deux espaces du même nom : un pour essayer, un qui est réel. Vous possédez les deux.';
+
+  @override
+  String get environmentPairsCreateTwin => 'Créer son jumeau';
+
+  @override
+  String get environmentPairsCreateTwinDesc =>
+      'Un espace de développement et un de production du même nom ; la configuration est copiée une fois.';
+
+  @override
+  String get environmentPairsPairedDev =>
+      'Apparié à son jumeau de développement';
+
+  @override
+  String get environmentPairsPairedProd => 'Apparié à son jumeau de production';
+
+  @override
+  String get environmentPairsTwinCreated => 'Le jumeau est créé.';
+
+  @override
+  String get profilesPairDev => 'DEV';
+
+  @override
+  String get profilesPairProd => 'PROD';
+
+  @override
   String get eventsPendingHeader => 'En attente de votre confirmation';
 
   @override

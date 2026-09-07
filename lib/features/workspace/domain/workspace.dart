@@ -58,6 +58,10 @@ sealed class Workspace with _$Workspace implements SystemStamped {
     /// invoices leaving here are owed.
     @Default('dev') String environment,
 
+    /// #987 — the pair this workspace belongs to: its dev and its prod
+    /// share it. Empty for a lone workspace.
+    @Default('') String pairId,
+
     /// Owner-configured payment instructions (#155) as stored — decode
     /// with [PaymentInstructions.fromDb]. Empty = none configured.
     @Default(<String, dynamic>{}) Map<String, dynamic> paymentInstructions,

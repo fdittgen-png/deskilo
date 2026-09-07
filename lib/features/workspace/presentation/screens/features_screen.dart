@@ -314,6 +314,12 @@ class FeaturesScreen extends ConsumerWidget {
               'Who the buyer is for VAT, set on each member: domestic VAT, '
                   'reverse charge, outside the EU, or exempt with a printed '
                   'reason. Off: the automatic rule only.',
+        WorkspaceFeature.environmentPairs =>
+          l10n?.featureEnvironmentPairsDesc ??
+              'A workspace and its twin — the development and the '
+                  'production side — as one couple: one card in Profiles '
+                  'with a switch, and the twin created on demand with the '
+                  'configuration copied. Off: two unrelated entries.',
         WorkspaceFeature.managedProfileAccess =>
           l10n?.featureManagedProfileAccessDesc ??
               'Each managed profile says who may administer it — by role, '

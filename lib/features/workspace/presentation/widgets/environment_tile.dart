@@ -16,6 +16,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace.dart';
+import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
 
 class WorkspaceEnvironmentTile extends ConsumerWidget {
@@ -27,7 +28,11 @@ class WorkspaceEnvironmentTile extends ConsumerWidget {
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final isOwner = ref.watch(myMemberProvider).value?.isOwner ?? false;
     if (workspace == null || !isOwner) return const SizedBox.shrink();
-    return ListTile(
+    final pairsOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.environmentPairs);
+    return Column(children: [
+      ListTile(
       key: const ValueKey('workspace-environment'),
       leading: Icon(workspace.isDevelopment
           ? Icons.construction_outlined
@@ -44,7 +49,52 @@ class WorkspaceEnvironmentTile extends ConsumerWidget {
         onChanged: (toProduction) =>
             _set(context, ref, workspace, toProduction: toProduction),
       ),
-    );
+      ),
+      // #987 — the other side of the pair.
+      if (pairsOn)
+        ListTile(
+          key: const ValueKey('workspace-create-twin'),
+          leading: const Icon(Icons.copy_all_outlined),
+          title: Text(workspace.pairId.isEmpty
+              ? (l10n?.environmentPairsCreateTwin ?? 'Create its twin')
+              : workspace.isDevelopment
+                  ? (l10n?.environmentPairsPairedProd ??
+                      'Paired with its production twin')
+                  : (l10n?.environmentPairsPairedDev ??
+                      'Paired with its development twin')),
+          subtitle: workspace.pairId.isEmpty
+              ? Text(l10n?.environmentPairsCreateTwinDesc ??
+                  'A development and a production workspace with the '
+                      'same name; the configuration is copied once.')
+              : null,
+          enabled: workspace.pairId.isEmpty,
+          onTap: workspace.pairId.isEmpty
+              ? () => _createTwin(context, ref, workspace)
+              : null,
+        ),
+    ]);
+  }
+
+  Future<void> _createTwin(
+      BuildContext context, WidgetRef ref, Workspace workspace) async {
+    final l10n = AppLocalizations.of(context);
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'twin creation failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () => ref
+          .read(workspaceRepositoryProvider)
+          .createWorkspaceTwin(workspace.id),
+    )) {
+      return;
+    }
+    ref.invalidate(myWorkspacesProvider);
+    ref.invalidate(currentWorkspaceProvider);
+    if (!context.mounted) return;
+    AppSnack.success(
+        context, l10n?.environmentPairsTwinCreated ?? 'The twin is created.');
   }
 
   Future<void> _set(

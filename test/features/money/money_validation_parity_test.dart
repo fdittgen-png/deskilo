@@ -154,12 +154,15 @@ void main() {
     test('the catalog carries every permission the client can grant', () {
       // #881 — the catalog moved to 0155 with paymentTermsEdit; #982 — to
       // 0180 with the nine permissions.
+      // #989 — 0185 extends that array by anchor.
       final latestCatalog =
           File('supabase/migrations/0180_permission_catalog_nine.sql')
               .readAsStringSync();
       final catalog = RegExp(r"v_catalog text\[\] := array\[([^\]]+)\]")
-          .firstMatch(latestCatalog)!
-          .group(1)!;
+              .firstMatch(latestCatalog)!
+              .group(1)! +
+          File('supabase/migrations/0185_environment_pairs.sql')
+              .readAsStringSync();
       for (final permission in WorkspacePermission.values) {
         expect(catalog, contains("'${permission.wireName}'"),
             reason: permission.wireName);

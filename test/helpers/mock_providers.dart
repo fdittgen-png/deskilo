@@ -428,6 +428,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     required String currencyCode,
     required String timezone,
     WorkspaceEnvironment environment = WorkspaceEnvironment.development,
+    bool withTwin = true,
   }) async {
     final workspace = Workspace(
       id: 'ws-created-${_nextId++}',
@@ -445,6 +446,29 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   /// #917 — the last environment written, for assertions.
   String? lastEnvironment;
+
+  /// #987 — the twin the fake created last, and how many.
+  final List<String> twinsCreated = [];
+
+  @override
+  Future<String> createWorkspaceTwin(String workspaceId) async {
+    final index = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (index < 0) throw StateError('unknown workspace');
+    final source = workspaces[index];
+    if (source.pairId.isNotEmpty) {
+      throw StateError('this workspace already has its twin');
+    }
+    final pair = 'pair-${twinsCreated.length + 1}';
+    workspaces[index] = source.copyWith(pairId: pair);
+    final twin = source.copyWith(
+      id: '${source.id}-twin',
+      pairId: pair,
+      environment: source.environment == 'prod' ? 'dev' : 'prod',
+    );
+    workspaces.add(twin);
+    twinsCreated.add(twin.id);
+    return twin.id;
+  }
 
   @override
   Future<void> setWorkspaceEnvironment(

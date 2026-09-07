@@ -1957,6 +1957,54 @@ class AppLocalizationsDe extends AppLocalizations {
   String get environmentProdConfirmAction => 'Zur Produktion erklären';
 
   @override
+  String get permDeployToProd => 'In die Produktion ausrollen';
+
+  @override
+  String get permDeployToDev => 'In die Entwicklung ausrollen';
+
+  @override
+  String get permAccessProd => 'Den Produktionsraum betreten';
+
+  @override
+  String get featureEnvironmentPairs => 'Umgebungspaare';
+
+  @override
+  String get featureEnvironmentPairsDesc =>
+      'Ein Raum und sein Zwilling — die Entwicklungs- und die Produktionsseite — als ein Paar: eine Karte in Profile mit Umschalter, und der Zwilling auf Wunsch mit kopierter Konfiguration. Aus: zwei Einträge ohne Bezug.';
+
+  @override
+  String get onboardingWithTwin =>
+      'Das Paar Entwicklung und Produktion anlegen';
+
+  @override
+  String get onboardingWithTwinHint =>
+      'Zwei Räume gleichen Namens: einer zum Ausprobieren, einer, der echt ist. Beide gehören Ihnen.';
+
+  @override
+  String get environmentPairsCreateTwin => 'Zwilling anlegen';
+
+  @override
+  String get environmentPairsCreateTwinDesc =>
+      'Ein Entwicklungs- und ein Produktionsraum gleichen Namens; die Konfiguration wird einmal kopiert.';
+
+  @override
+  String get environmentPairsPairedDev =>
+      'Gepaart mit seinem Entwicklungszwilling';
+
+  @override
+  String get environmentPairsPairedProd =>
+      'Gepaart mit seinem Produktionszwilling';
+
+  @override
+  String get environmentPairsTwinCreated => 'Der Zwilling ist angelegt.';
+
+  @override
+  String get profilesPairDev => 'DEV';
+
+  @override
+  String get profilesPairProd => 'PROD';
+
+  @override
   String get eventsPendingHeader => 'Wartet auf deine Bestätigung';
 
   @override

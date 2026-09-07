@@ -37,6 +37,8 @@ void main() {
       find.byType(TextFormField).first,
       'Kraftwerk Coworking',
     );
+    // #987 — the pair checkbox pushed the button below the fold.
+    await tester.ensureVisible(find.text('Create workspace'));
     await tester.tap(find.text('Create workspace'));
     await tester.pumpAndSettle();
 

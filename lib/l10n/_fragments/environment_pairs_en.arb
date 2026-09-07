@@ -1,0 +1,59 @@
+{
+  "@@locale": "en",
+  "permDeployToProd": "Deploy to production",
+  "@permDeployToProd": {
+    "description": "#987/#989 environment pairs: permDeployToProd"
+  },
+  "permDeployToDev": "Deploy to development",
+  "@permDeployToDev": {
+    "description": "#987/#989 environment pairs: permDeployToDev"
+  },
+  "permAccessProd": "Enter the production workspace",
+  "@permAccessProd": {
+    "description": "#987/#989 environment pairs: permAccessProd"
+  },
+  "featureEnvironmentPairs": "Environment pairs",
+  "@featureEnvironmentPairs": {
+    "description": "#987/#989 environment pairs: featureEnvironmentPairs"
+  },
+  "featureEnvironmentPairsDesc": "A workspace and its twin — the development and the production side — as one couple: one card in Profiles with a switch, and the twin created on demand with the configuration copied. Off: two unrelated entries.",
+  "@featureEnvironmentPairsDesc": {
+    "description": "#987/#989 environment pairs: featureEnvironmentPairsDesc"
+  },
+  "onboardingWithTwin": "Create the development and production pair",
+  "@onboardingWithTwin": {
+    "description": "#987/#989 environment pairs: onboardingWithTwin"
+  },
+  "onboardingWithTwinHint": "Two workspaces with the same name: one to try things out, one that is real. You own both.",
+  "@onboardingWithTwinHint": {
+    "description": "#987/#989 environment pairs: onboardingWithTwinHint"
+  },
+  "environmentPairsCreateTwin": "Create its twin",
+  "@environmentPairsCreateTwin": {
+    "description": "#987/#989 environment pairs: environmentPairsCreateTwin"
+  },
+  "environmentPairsCreateTwinDesc": "A development and a production workspace with the same name; the configuration is copied once.",
+  "@environmentPairsCreateTwinDesc": {
+    "description": "#987/#989 environment pairs: environmentPairsCreateTwinDesc"
+  },
+  "environmentPairsPairedDev": "Paired with its development twin",
+  "@environmentPairsPairedDev": {
+    "description": "#987/#989 environment pairs: environmentPairsPairedDev"
+  },
+  "environmentPairsPairedProd": "Paired with its production twin",
+  "@environmentPairsPairedProd": {
+    "description": "#987/#989 environment pairs: environmentPairsPairedProd"
+  },
+  "environmentPairsTwinCreated": "The twin is created.",
+  "@environmentPairsTwinCreated": {
+    "description": "#987/#989 environment pairs: environmentPairsTwinCreated"
+  },
+  "profilesPairDev": "DEV",
+  "@profilesPairDev": {
+    "description": "#987/#989 environment pairs: profilesPairDev"
+  },
+  "profilesPairProd": "PROD",
+  "@profilesPairProd": {
+    "description": "#987/#989 environment pairs: profilesPairProd"
+  }
+}

@@ -31,6 +31,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   // #917 — a new space is for trying things out until its owner
   // says otherwise. The safe answer to "is this real?" is no.
   WorkspaceEnvironment _environment = WorkspaceEnvironment.development;
+  // #987 — the other side of the pair, created at the same time.
+  bool _withTwin = true;
   final _inviteCode = TextEditingController();
   String _countryCode = 'DE';
   bool _joinMode = false;
@@ -77,6 +79,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             currencyCode: _currency.text.trim().toUpperCase(),
             timezone: _timezone.text.trim(),
             environment: _environment,
+            withTwin: _withTwin,
           ),
     );
   }
@@ -233,6 +236,23 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                               ? null
                               : (v) => setState(
                                   () => _environment = v ?? _environment),
+                        ),
+                        // #987 — the pair: one to try things out, one
+                        // that is real, both yours from the start.
+                        CheckboxListTile(
+                          key: const ValueKey('onboarding-with-twin'),
+                          value: _withTwin,
+                          contentPadding: EdgeInsets.zero,
+                          controlAffinity: ListTileControlAffinity.leading,
+                          title: Text(l10n?.onboardingWithTwin ??
+                              'Create the development and production pair'),
+                          subtitle: Text(l10n?.onboardingWithTwinHint ??
+                              'Two workspaces with the same name: one to '
+                                  'try things out, one that is real. You '
+                                  'own both.'),
+                          onChanged: _busy
+                              ? null
+                              : (v) => setState(() => _withTwin = v ?? true),
                         ),
                         const SizedBox(height: 24),
                         FilledButton(
