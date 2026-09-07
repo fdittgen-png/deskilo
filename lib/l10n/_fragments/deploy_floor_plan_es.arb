@@ -1,0 +1,7 @@
+{
+  "@@locale": "es",
+  "deployEntityFloorPlan": "Planos (plantas, puestos, imágenes)",
+  "@deployEntityFloorPlan": {
+    "description": "#1004 deploy entity: floor plan"
+  }
+}

@@ -1560,6 +1560,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Nombres, correos, teléfonos y direcciones se difuminan en la pantalla de este dispositivo — para capturas de pantalla y vídeos.';
 
   @override
+  String get deployEntityFloorPlan => 'Planos (plantas, puestos, imágenes)';
+
+  @override
   String get deploymentFlowToProd => 'A PROD';
 
   @override

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import '../domain/deployment.dart';
 
 /// #988 — the deployment engine over the RPCs of migration 0186.
@@ -37,7 +38,23 @@ class SupabaseDeploymentRepository implements DeploymentRepository {
       'p_to': toWorkspaceId,
       'p_entities': entities,
     });
-    return '${(result as Map)['id'] ?? ''}';
+    final answer = result as Map;
+    // #1004 — the plan's images and backgrounds: the rows already point
+    // at the target's path; the bytes are copied here, one job each.
+    // A copy that already exists is not a failure.
+    for (final job in answer['copy_jobs'] as List? ?? const []) {
+      final from = '${(job as Map)['from'] ?? ''}';
+      final to = '${job['to'] ?? ''}';
+      if (from.isEmpty || to.isEmpty) continue;
+      try {
+        await _client.storage.from('floor-plans').copy(from, to);
+      } catch (e, st) {
+        TraceLogger.instance.warn(
+            'workspace', 'plan image copy $from -> $to failed',
+            error: e, stackTrace: st);
+      }
+    }
+    return '${answer['id'] ?? ''}';
   }
 
   @override

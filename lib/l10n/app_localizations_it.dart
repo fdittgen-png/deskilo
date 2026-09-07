@@ -1563,6 +1563,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nomi, e-mail, telefoni e indirizzi sono sfocati sullo schermo di questo dispositivo — per screenshot e video.';
 
   @override
+  String get deployEntityFloorPlan =>
+      'Planimetrie (piani, postazioni, immagini)';
+
+  @override
   String get deploymentFlowToProd => 'In PROD';
 
   @override

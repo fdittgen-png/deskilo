@@ -1,0 +1,7 @@
+{
+  "@@locale": "de",
+  "deployEntityFloorPlan": "Grundrisse (Ebenen, Plätze, Bilder)",
+  "@deployEntityFloorPlan": {
+    "description": "#1004 deploy entity: floor plan"
+  }
+}

@@ -1561,6 +1561,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Namen, E-Mails, Telefonnummern und Adressen werden auf dem Bildschirm dieses Geräts unscharf gemacht — für Screenshots und Videos.';
 
   @override
+  String get deployEntityFloorPlan => 'Grundrisse (Ebenen, Plätze, Bilder)';
+
+  @override
   String get deploymentFlowToProd => 'In die PROD';
 
   @override
