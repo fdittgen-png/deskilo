@@ -1132,6 +1132,12 @@ In Francia la partita IVA e l'esenzione appartengono all'entità giuridica; ogni
 ### Gruppi IVA (#947)
 
 Ogni aliquota porta ora il **gruppo fiscale** di ciò che tassa: ordinaria, intermedia, ridotta, super-ridotta, zero, esente, non soggetta, **cauzione** (fuori IVA) o **con accise** (birra, liquori, bevande zuccherate: accise nel prezzo, IVA ordinaria). *Impostazioni → IVA* mostra cosa rientra in ogni gruppo nel tuo paese e la dicitura di esenzione che implica. Un'associazione non soggetta mantiene la categoria O. Una cauzione accanto a righe tassate non può uscire come fattura elettronica (EN 16931): l'app lo segnala e la emetti a parte.
+### Coppie di ambienti e permessi di distribuzione (#987, #989)
+
+Uno spazio ora viene creato **insieme al suo gemello**: il lato sviluppo e il lato produzione condividono nome, paese, valuta e fuso orario, li possiedi entrambi, e **Profili** mostra la coppia come **una sola scheda con due chip, DEV e PROD** — tocca un chip per cambiare lato. Uno spazio creato prima delle coppie, o creato da solo (deseleziona *Crea la coppia sviluppo e produzione*), riceve il suo gemello su richiesta in **Impostazioni → Avanzate → Crea il suo gemello**: la configurazione è copiata una volta, e nient'altro. La coppia si disattiva con la funzionalità *Coppie di ambienti*, che lascia due voci ordinarie.
+
+Tre permessi entrano nella matrice dei ruoli: **Distribuire in produzione**, **Distribuire in sviluppo** e **Entrare nello spazio di produzione**. Chi può distribuire in produzione può sempre distribuire in sviluppo. Proprietari e comproprietari hanno tutti e tre; gli admin hanno *Distribuire in sviluppo* e *Entrare nello spazio di produzione*; i membri nulla finché non lo concedi. Ne seguono due regole: **un membro del lato produzione è sempre membro del lato sviluppo** (l'adesione è rispecchiata, ruolo e stato compresi), e **un ruolo entra in produzione solo finché detiene quel permesso** — un invito, un'adesione o una rivendicazione verso la prod viene rifiutata altrimenti, e l'app dice perché.
+
 ### L'IVA come in un ERP — versioni datate delle aliquote, un momento impositivo, il cliente (#985)
 
 Due funzionalità sotto *Gestione IVA* fanno delle aliquote ciò che un ERP chiama una **configurazione di registrazione**.

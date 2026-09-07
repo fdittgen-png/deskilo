@@ -14,6 +14,7 @@ import '../../../workspace/domain/site.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/presentation/member_admin_actions.dart';
 import '../../../workspace/domain/workspace_overview.dart';
+import '../widgets/pair_card.dart';
 import '../widgets/workspace_owners_sheet.dart';
 
 /// Profile switcher à la tankstellen (#89): each membership is a profile —
@@ -52,7 +53,27 @@ class ProfilesScreen extends ConsumerWidget {
       body: ListView(
         padding: AppSpacing.mdAll,
         children: [
+          // #987 — a paired workspace renders once, as the couple, at
+          // the dev's place; the prod row steps aside.
           for (final workspace in workspaces)
+            if (_pairedTwin(workspaces, workspace) case final twin?)
+              if (workspace.isDevelopment)
+                WorkspacePairCard(
+                  dev: workspace,
+                  prod: twin,
+                  activeId: active?.id,
+                  roleLabel: memberships
+                      .where((m) =>
+                          m.workspaceId == (active?.id == twin.id ? twin.id : workspace.id))
+                      .map((m) => _roleLabel(l10n, m))
+                      .firstOrNull,
+                  onSelect: (id) => ref
+                      .read(activeWorkspaceIdProvider.notifier)
+                      .select(id),
+                )
+              else
+                const SizedBox.shrink()
+            else
             Builder(
               builder: (context) {
                 final member = memberships
@@ -224,4 +245,17 @@ class _HomeSiteLine extends ConsumerWidget {
       onPressed: () => pickOwnHomeSite(context, ref, member),
     );
   }
+}
+
+/// #987 — the other side of [workspace]'s pair when it is in the list
+/// and the couple is switched on; null for a lone workspace.
+Workspace? _pairedTwin(List<Workspace> all, Workspace workspace) {
+  if (workspace.pairId.isEmpty) return null;
+  if (!effectiveFeatures(resolveEnabledFeatures(workspace.featureFlags))
+      .contains(WorkspaceFeature.environmentPairs)) {
+    return null;
+  }
+  return all
+      .where((w) => w.pairId == workspace.pairId && w.id != workspace.id)
+      .firstOrNull;
 }

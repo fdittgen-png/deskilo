@@ -1132,6 +1132,12 @@ En France, le numéro de TVA et l'exonération appartiennent à l'entité juridi
 ### Groupes de TVA (#947)
 
 Chaque taux porte désormais le **groupe fiscal** de ce qu'il taxe : normal, intermédiaire, réduit, super-réduit, zéro, exonéré, non assujetti, **consigne** (hors champ de la TVA) ou **produit à accises** (bière, spiritueux, sodas : accises dans le prix, TVA au taux normal). *Réglages → TVA* montre ce qui relève de chaque groupe dans votre pays et la mention d'exonération qu'un groupe implique. Une association non assujettie garde ses documents en catégorie O. Une consigne à côté de lignes taxées ne peut pas partir en facture électronique (norme EN 16931) : l'app le signale et vous l'émettez à part.
+### Paires d'environnements et permissions de déploiement (#987, #989)
+
+Un espace est désormais créé **avec son jumeau** : le côté développement et le côté production partagent le nom, le pays, la devise et le fuseau, vous possédez les deux, et **Profils** montre le couple comme **une seule carte à deux puces, DEV et PROD** — touchez une puce pour changer de côté. Un espace créé avant les paires, ou créé seul (décochez *Créer la paire développement et production*), reçoit son jumeau à la demande sous **Réglages → Avancé → Créer son jumeau** : la configuration est copiée une fois, et rien d'autre. Le couple se désactive avec la fonctionnalité *Paires d'environnements*, qui laisse deux entrées ordinaires.
+
+Trois permissions rejoignent la matrice des rôles : **Déployer en production**, **Déployer en développement** et **Entrer dans l'espace de production**. Qui peut déployer en production peut toujours déployer en développement. Propriétaires et copropriétaires détiennent les trois ; les admins détiennent *Déployer en développement* et *Entrer dans l'espace de production* ; les membres rien tant que vous ne le donnez pas. Deux règles en découlent : **un membre du côté production est toujours membre du côté développement** (l'adhésion est reflétée, rôle et statut compris), et **un rôle n'entre en production que s'il détient cette permission** — une invitation, une adhésion ou une réclamation vers la prod est refusée sinon, et l'app dit pourquoi.
+
 ### La TVA comme dans un ERP — versions datées des taux, un fait générateur, le client (#985)
 
 Deux fonctionnalités sous *Gestion de la TVA* font des taux ce qu'un ERP appelle un **paramétrage de taxe**.

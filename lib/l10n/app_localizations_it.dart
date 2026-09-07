@@ -1958,6 +1958,53 @@ class AppLocalizationsIt extends AppLocalizations {
   String get environmentProdConfirmAction => 'Dichiarare di produzione';
 
   @override
+  String get permDeployToProd => 'Distribuire in produzione';
+
+  @override
+  String get permDeployToDev => 'Distribuire in sviluppo';
+
+  @override
+  String get permAccessProd => 'Entrare nello spazio di produzione';
+
+  @override
+  String get featureEnvironmentPairs => 'Coppie di ambienti';
+
+  @override
+  String get featureEnvironmentPairsDesc =>
+      'Uno spazio e il suo gemello — il lato sviluppo e il lato produzione — come una coppia: una scheda in Profili con un interruttore, e il gemello creato su richiesta con la configurazione copiata. Disattivato: due voci senza legame.';
+
+  @override
+  String get onboardingWithTwin => 'Crea la coppia sviluppo e produzione';
+
+  @override
+  String get onboardingWithTwinHint =>
+      'Due spazi con lo stesso nome: uno per provare, uno reale. Entrambi sono tuoi.';
+
+  @override
+  String get environmentPairsCreateTwin => 'Crea il suo gemello';
+
+  @override
+  String get environmentPairsCreateTwinDesc =>
+      'Uno spazio di sviluppo e uno di produzione con lo stesso nome; la configurazione è copiata una volta.';
+
+  @override
+  String get environmentPairsPairedDev =>
+      'Accoppiato al suo gemello di sviluppo';
+
+  @override
+  String get environmentPairsPairedProd =>
+      'Accoppiato al suo gemello di produzione';
+
+  @override
+  String get environmentPairsTwinCreated => 'Il gemello è creato.';
+
+  @override
+  String get profilesPairDev => 'DEV';
+
+  @override
+  String get profilesPairProd => 'PROD';
+
+  @override
   String get eventsPendingHeader => 'In attesa della tua conferma';
 
   @override

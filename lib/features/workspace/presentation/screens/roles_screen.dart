@@ -65,6 +65,12 @@ class RolesScreen extends ConsumerWidget {
           l10n?.permManageIntegrations ?? 'Manage integrations',
         WorkspacePermission.manageConfiguration =>
           l10n?.permManageConfiguration ?? 'Manage the configuration',
+        WorkspacePermission.deployToProd =>
+          l10n?.permDeployToProd ?? 'Deploy to production',
+        WorkspacePermission.deployToDev =>
+          l10n?.permDeployToDev ?? 'Deploy to development',
+        WorkspacePermission.accessProd =>
+          l10n?.permAccessProd ?? 'Enter the production workspace',
       };
 
   String _roleLabel(AppLocalizations? l10n, PermissionRole role) =>

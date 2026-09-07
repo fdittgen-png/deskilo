@@ -1,0 +1,59 @@
+{
+  "@@locale": "es",
+  "permDeployToProd": "Desplegar en producción",
+  "@permDeployToProd": {
+    "description": "#987/#989 environment pairs: permDeployToProd"
+  },
+  "permDeployToDev": "Desplegar en desarrollo",
+  "@permDeployToDev": {
+    "description": "#987/#989 environment pairs: permDeployToDev"
+  },
+  "permAccessProd": "Entrar en el espacio de producción",
+  "@permAccessProd": {
+    "description": "#987/#989 environment pairs: permAccessProd"
+  },
+  "featureEnvironmentPairs": "Pares de entornos",
+  "@featureEnvironmentPairs": {
+    "description": "#987/#989 environment pairs: featureEnvironmentPairs"
+  },
+  "featureEnvironmentPairsDesc": "Un espacio y su gemelo — el lado de desarrollo y el de producción — como una pareja: una tarjeta en Perfiles con un interruptor, y el gemelo creado a demanda con la configuración copiada. Desactivado: dos entradas sin relación.",
+  "@featureEnvironmentPairsDesc": {
+    "description": "#987/#989 environment pairs: featureEnvironmentPairsDesc"
+  },
+  "onboardingWithTwin": "Crear la pareja desarrollo y producción",
+  "@onboardingWithTwin": {
+    "description": "#987/#989 environment pairs: onboardingWithTwin"
+  },
+  "onboardingWithTwinHint": "Dos espacios con el mismo nombre: uno para probar, otro que es real. Ambos son suyos.",
+  "@onboardingWithTwinHint": {
+    "description": "#987/#989 environment pairs: onboardingWithTwinHint"
+  },
+  "environmentPairsCreateTwin": "Crear su gemelo",
+  "@environmentPairsCreateTwin": {
+    "description": "#987/#989 environment pairs: environmentPairsCreateTwin"
+  },
+  "environmentPairsCreateTwinDesc": "Un espacio de desarrollo y uno de producción con el mismo nombre; la configuración se copia una vez.",
+  "@environmentPairsCreateTwinDesc": {
+    "description": "#987/#989 environment pairs: environmentPairsCreateTwinDesc"
+  },
+  "environmentPairsPairedDev": "Emparejado con su gemelo de desarrollo",
+  "@environmentPairsPairedDev": {
+    "description": "#987/#989 environment pairs: environmentPairsPairedDev"
+  },
+  "environmentPairsPairedProd": "Emparejado con su gemelo de producción",
+  "@environmentPairsPairedProd": {
+    "description": "#987/#989 environment pairs: environmentPairsPairedProd"
+  },
+  "environmentPairsTwinCreated": "El gemelo está creado.",
+  "@environmentPairsTwinCreated": {
+    "description": "#987/#989 environment pairs: environmentPairsTwinCreated"
+  },
+  "profilesPairDev": "DEV",
+  "@profilesPairDev": {
+    "description": "#987/#989 environment pairs: profilesPairDev"
+  },
+  "profilesPairProd": "PROD",
+  "@profilesPairProd": {
+    "description": "#987/#989 environment pairs: profilesPairProd"
+  }
+}

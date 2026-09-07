@@ -1063,6 +1063,12 @@ In Frankreich gehören USt-Nummer und Befreiung zur juristischen Person; jede Be
 ### USt-Gruppen (#947)
 
 Jeder Satz trägt jetzt die **steuerliche Gruppe** dessen, was er besteuert: Regel-, Zwischen-, ermäßigter, stark ermäßigter, Null-Satz, steuerfrei, nicht steuerbar, **Pfand** (in Deutschland mit der Ware besteuert, andernorts außerhalb der USt) oder **verbrauchsteuerpflichtig** (Bier, Spirituosen, Zuckergetränke: Verbrauchsteuer im Preis, Regelsatz). *Einstellungen → USt* zeigt, was in Ihrem Land in welche Gruppe fällt. Ein nicht steuerbarer Verein behält Kategorie O. Ein nicht steuerbares Pfand neben besteuerten Zeilen kann nicht als E-Rechnung gehen (EN 16931): die App sagt es, Sie stellen es gesondert.
+### Umgebungspaare und die Ausroll-Berechtigungen (#987, #989)
+
+Ein Raum wird jetzt **zusammen mit seinem Zwilling** angelegt: Entwicklungs- und Produktionsseite teilen Name, Land, Währung und Zeitzone, Sie besitzen beide, und **Profile** zeigt das Paar als **eine Karte mit zwei Chips, DEV und PROD** — ein Tipp auf einen Chip wechselt die Seite. Ein Raum von vor den Paaren, oder allein angelegt (*Das Paar Entwicklung und Produktion anlegen* abwählen), bekommt seinen Zwilling auf Wunsch unter **Einstellungen → Erweitert → Zwilling anlegen**: die Konfiguration wird einmal kopiert, sonst nichts. Das Paar lässt sich mit der Funktion *Umgebungspaare* abschalten; dann bleiben zwei gewöhnliche Einträge.
+
+Drei Berechtigungen kommen in die Rollenmatrix: **In die Produktion ausrollen**, **In die Entwicklung ausrollen** und **Den Produktionsraum betreten**. Wer in die Produktion ausrollen darf, darf immer in die Entwicklung ausrollen. Inhaber und Mitinhaber halten alle drei; Admins halten *In die Entwicklung ausrollen* und *Den Produktionsraum betreten*; Mitglieder nichts, bis Sie es geben. Daraus folgen zwei Regeln: **ein Mitglied der Produktionsseite ist immer Mitglied der Entwicklungsseite** (die Mitgliedschaft wird gespiegelt, Rolle und Status eingeschlossen), und **eine Rolle betritt die Produktionsseite nur, solange sie diese Berechtigung hält** — eine Einladung, ein Beitritt oder eine Übernahme in die Prod wird sonst abgelehnt, und die App sagt warum.
+
 ### USt wie in einem ERP — datierte Satzversionen, ein Steuerzeitpunkt, der Kunde (#985)
 
 Zwei Funktionen unter *USt-Verwaltung* machen aus den Sätzen, was ein ERP eine **Buchungseinrichtung** nennt.

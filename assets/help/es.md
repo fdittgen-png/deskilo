@@ -1132,6 +1132,12 @@ En Francia el número de IVA y la exención pertenecen a la entidad jurídica; c
 ### Grupos de IVA (#947)
 
 Cada tipo lleva ahora el **grupo fiscal** de lo que grava: general, intermedio, reducido, superreducido, cero, exento, no sujeto, **envase retornable** (fuera del IVA) o **con impuestos especiales** (cerveza, licores, bebidas azucaradas: impuesto dentro del precio, IVA general). *Ajustes → IVA* muestra qué entra en cada grupo en su país y la mención de exención que implica. Una asociación no sujeta mantiene la categoría O. Un envase junto a líneas gravadas no puede salir como factura electrónica (EN 16931): la app lo avisa y se emite aparte.
+### Pares de entornos y permisos de despliegue (#987, #989)
+
+Un espacio se crea ahora **junto con su gemelo**: el lado de desarrollo y el de producción comparten nombre, país, moneda y zona horaria, usted posee ambos, y **Perfiles** muestra la pareja como **una sola tarjeta con dos chips, DEV y PROD** — toque un chip para cambiar de lado. Un espacio creado antes de los pares, o creado solo (desmarque *Crear la pareja desarrollo y producción*), recibe su gemelo a demanda en **Ajustes → Avanzado → Crear su gemelo**: la configuración se copia una vez, y nada más. La pareja se desactiva con la función *Pares de entornos*, que deja dos entradas ordinarias.
+
+Tres permisos se suman a la matriz de roles: **Desplegar en producción**, **Desplegar en desarrollo** y **Entrar en el espacio de producción**. Quien puede desplegar en producción siempre puede desplegar en desarrollo. Propietarios y copropietarios tienen los tres; los admins tienen *Desplegar en desarrollo* y *Entrar en el espacio de producción*; los miembros ninguno hasta que usted lo conceda. De ahí dos reglas: **un miembro del lado de producción es siempre miembro del lado de desarrollo** (la membresía se refleja, rol y estado incluidos), y **un rol entra en producción solo mientras tiene ese permiso** — una invitación, una adhesión o una reclamación hacia la prod se rechaza si no, y la app dice por qué.
+
 ### El IVA como en un ERP — versiones fechadas de los tipos, un devengo, el cliente (#985)
 
 Dos funciones bajo *Gestión del IVA* convierten los tipos en lo que un ERP llama una **configuración de registro**.

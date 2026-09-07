@@ -1343,6 +1343,62 @@
   "@environmentProdConfirmAction": {
     "description": "#917 workspace environment: environmentProdConfirmAction"
   },
+  "permDeployToProd": "In die Produktion ausrollen",
+  "@permDeployToProd": {
+    "description": "#987/#989 environment pairs: permDeployToProd"
+  },
+  "permDeployToDev": "In die Entwicklung ausrollen",
+  "@permDeployToDev": {
+    "description": "#987/#989 environment pairs: permDeployToDev"
+  },
+  "permAccessProd": "Den Produktionsraum betreten",
+  "@permAccessProd": {
+    "description": "#987/#989 environment pairs: permAccessProd"
+  },
+  "featureEnvironmentPairs": "Umgebungspaare",
+  "@featureEnvironmentPairs": {
+    "description": "#987/#989 environment pairs: featureEnvironmentPairs"
+  },
+  "featureEnvironmentPairsDesc": "Ein Raum und sein Zwilling — die Entwicklungs- und die Produktionsseite — als ein Paar: eine Karte in Profile mit Umschalter, und der Zwilling auf Wunsch mit kopierter Konfiguration. Aus: zwei Einträge ohne Bezug.",
+  "@featureEnvironmentPairsDesc": {
+    "description": "#987/#989 environment pairs: featureEnvironmentPairsDesc"
+  },
+  "onboardingWithTwin": "Das Paar Entwicklung und Produktion anlegen",
+  "@onboardingWithTwin": {
+    "description": "#987/#989 environment pairs: onboardingWithTwin"
+  },
+  "onboardingWithTwinHint": "Zwei Räume gleichen Namens: einer zum Ausprobieren, einer, der echt ist. Beide gehören Ihnen.",
+  "@onboardingWithTwinHint": {
+    "description": "#987/#989 environment pairs: onboardingWithTwinHint"
+  },
+  "environmentPairsCreateTwin": "Zwilling anlegen",
+  "@environmentPairsCreateTwin": {
+    "description": "#987/#989 environment pairs: environmentPairsCreateTwin"
+  },
+  "environmentPairsCreateTwinDesc": "Ein Entwicklungs- und ein Produktionsraum gleichen Namens; die Konfiguration wird einmal kopiert.",
+  "@environmentPairsCreateTwinDesc": {
+    "description": "#987/#989 environment pairs: environmentPairsCreateTwinDesc"
+  },
+  "environmentPairsPairedDev": "Gepaart mit seinem Entwicklungszwilling",
+  "@environmentPairsPairedDev": {
+    "description": "#987/#989 environment pairs: environmentPairsPairedDev"
+  },
+  "environmentPairsPairedProd": "Gepaart mit seinem Produktionszwilling",
+  "@environmentPairsPairedProd": {
+    "description": "#987/#989 environment pairs: environmentPairsPairedProd"
+  },
+  "environmentPairsTwinCreated": "Der Zwilling ist angelegt.",
+  "@environmentPairsTwinCreated": {
+    "description": "#987/#989 environment pairs: environmentPairsTwinCreated"
+  },
+  "profilesPairDev": "DEV",
+  "@profilesPairDev": {
+    "description": "#987/#989 environment pairs: profilesPairDev"
+  },
+  "profilesPairProd": "PROD",
+  "@profilesPairProd": {
+    "description": "#987/#989 environment pairs: profilesPairProd"
+  },
   "eventsPendingHeader": "Wartet auf deine Bestätigung",
   "eventAccept": "Annehmen",
   "eventReject": "Ablehnen",

@@ -1945,6 +1945,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String get environmentProdConfirmAction => 'Declare production';
 
   @override
+  String get permDeployToProd => 'Deploy to production';
+
+  @override
+  String get permDeployToDev => 'Deploy to development';
+
+  @override
+  String get permAccessProd => 'Enter the production workspace';
+
+  @override
+  String get featureEnvironmentPairs => 'Environment pairs';
+
+  @override
+  String get featureEnvironmentPairsDesc =>
+      'A workspace and its twin — the development and the production side — as one couple: one card in Profiles with a switch, and the twin created on demand with the configuration copied. Off: two unrelated entries.';
+
+  @override
+  String get onboardingWithTwin => 'Create the development and production pair';
+
+  @override
+  String get onboardingWithTwinHint =>
+      'Two workspaces with the same name: one to try things out, one that is real. You own both.';
+
+  @override
+  String get environmentPairsCreateTwin => 'Create its twin';
+
+  @override
+  String get environmentPairsCreateTwinDesc =>
+      'A development and a production workspace with the same name; the configuration is copied once.';
+
+  @override
+  String get environmentPairsPairedDev => 'Paired with its development twin';
+
+  @override
+  String get environmentPairsPairedProd => 'Paired with its production twin';
+
+  @override
+  String get environmentPairsTwinCreated => 'The twin is created.';
+
+  @override
+  String get profilesPairDev => 'DEV';
+
+  @override
+  String get profilesPairProd => 'PROD';
+
+  @override
   String get eventsPendingHeader => 'Waiting for your confirmation';
 
   @override

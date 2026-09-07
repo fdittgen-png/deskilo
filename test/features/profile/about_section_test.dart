@@ -18,7 +18,7 @@ void main() {
       'and the support tiles open PayPal/Revolut through the launcher',
       (tester) async {
     // #719 added the Privacy & data tile; 2700 no longer reached Revolut.
-    tester.view.physicalSize = const Size(800, 3100);
+    tester.view.physicalSize = const Size(800, 3300);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     final launched = <Uri>[];

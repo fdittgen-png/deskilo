@@ -56,7 +56,15 @@ abstract class WorkspaceRepository {
     /// default: the safe answer to "is this real?" is no until somebody
     /// says otherwise.
     WorkspaceEnvironment environment = WorkspaceEnvironment.development,
+
+    /// #987 — create the other side of the pair at the same time.
+    bool withTwin = true,
   });
+
+  /// #987 (RPC `create_workspace_twin`, migration 0185): the missing side
+  /// of a lone workspace — same name, country, currency and timezone,
+  /// the caller owner of both, the configuration copied once. Owner only.
+  Future<String> createWorkspaceTwin(String workspaceId);
 
   /// Joins via invite code. Returns the workspace id. The granted role is
   /// derived server-side from which code matched: the workspace ID joins

@@ -1116,6 +1116,12 @@ In France the VAT number and the exemption belong to the legal entity; each esta
 ### VAT groups (#947)
 
 Each rate now carries the **fiscal group** of what it taxes: standard, intermediate, reduced, super-reduced, zero, exempt, not subject, **deposit** (outside the VAT base) or **excise-bearing** (beer, spirits, sugar drinks: excise inside the price, standard VAT). *Settings → VAT* shows what falls in each group in your country and the exemption reason a group implies. An association not subject to VAT keeps category O on its documents. A deposit beside taxed lines cannot go out as an e-invoice (EN 16931): the app says so and you issue it separately.
+### Environment pairs and the deploy permissions (#987, #989)
+
+A workspace is now created **together with its twin**: the development side and the production side share the same name, country, currency and time zone, you own both, and **Profiles** shows the couple as **one card with two chips, DEV and PROD** — tap a chip to switch sides. A workspace created before the pairs, or created alone (untick *Create the development and production pair*), gets its twin on demand under **Settings → Advanced → Create its twin**: the configuration is copied once, and nothing else. The couple is switched off with the *Environment pairs* feature, which leaves two ordinary entries.
+
+Three permissions join the role matrix: **Deploy to production**, **Deploy to development** and **Enter the production workspace**. Whoever may deploy to production may always deploy to development. Owners and co-owners hold all three; admins hold *Deploy to development* and *Enter the production workspace*; members hold none until you give it. Two rules follow: **a member of the production side is always a member of the development side** (the membership is mirrored, role and status included), and **a role enters the production side only while it holds that permission** — an invitation, a join or a claim into the prod is refused otherwise, and the app says why.
+
 ### VAT like an ERP — dated rate versions, one tax point, the counterparty (#985)
 
 Two flags under *VAT management* turn the rates into what an ERP calls a **posting setup**.

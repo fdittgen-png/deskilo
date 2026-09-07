@@ -1343,6 +1343,62 @@
   "@environmentProdConfirmAction": {
     "description": "#917 workspace environment: environmentProdConfirmAction"
   },
+  "permDeployToProd": "Distribuire in produzione",
+  "@permDeployToProd": {
+    "description": "#987/#989 environment pairs: permDeployToProd"
+  },
+  "permDeployToDev": "Distribuire in sviluppo",
+  "@permDeployToDev": {
+    "description": "#987/#989 environment pairs: permDeployToDev"
+  },
+  "permAccessProd": "Entrare nello spazio di produzione",
+  "@permAccessProd": {
+    "description": "#987/#989 environment pairs: permAccessProd"
+  },
+  "featureEnvironmentPairs": "Coppie di ambienti",
+  "@featureEnvironmentPairs": {
+    "description": "#987/#989 environment pairs: featureEnvironmentPairs"
+  },
+  "featureEnvironmentPairsDesc": "Uno spazio e il suo gemello — il lato sviluppo e il lato produzione — come una coppia: una scheda in Profili con un interruttore, e il gemello creato su richiesta con la configurazione copiata. Disattivato: due voci senza legame.",
+  "@featureEnvironmentPairsDesc": {
+    "description": "#987/#989 environment pairs: featureEnvironmentPairsDesc"
+  },
+  "onboardingWithTwin": "Crea la coppia sviluppo e produzione",
+  "@onboardingWithTwin": {
+    "description": "#987/#989 environment pairs: onboardingWithTwin"
+  },
+  "onboardingWithTwinHint": "Due spazi con lo stesso nome: uno per provare, uno reale. Entrambi sono tuoi.",
+  "@onboardingWithTwinHint": {
+    "description": "#987/#989 environment pairs: onboardingWithTwinHint"
+  },
+  "environmentPairsCreateTwin": "Crea il suo gemello",
+  "@environmentPairsCreateTwin": {
+    "description": "#987/#989 environment pairs: environmentPairsCreateTwin"
+  },
+  "environmentPairsCreateTwinDesc": "Uno spazio di sviluppo e uno di produzione con lo stesso nome; la configurazione è copiata una volta.",
+  "@environmentPairsCreateTwinDesc": {
+    "description": "#987/#989 environment pairs: environmentPairsCreateTwinDesc"
+  },
+  "environmentPairsPairedDev": "Accoppiato al suo gemello di sviluppo",
+  "@environmentPairsPairedDev": {
+    "description": "#987/#989 environment pairs: environmentPairsPairedDev"
+  },
+  "environmentPairsPairedProd": "Accoppiato al suo gemello di produzione",
+  "@environmentPairsPairedProd": {
+    "description": "#987/#989 environment pairs: environmentPairsPairedProd"
+  },
+  "environmentPairsTwinCreated": "Il gemello è creato.",
+  "@environmentPairsTwinCreated": {
+    "description": "#987/#989 environment pairs: environmentPairsTwinCreated"
+  },
+  "profilesPairDev": "DEV",
+  "@profilesPairDev": {
+    "description": "#987/#989 environment pairs: profilesPairDev"
+  },
+  "profilesPairProd": "PROD",
+  "@profilesPairProd": {
+    "description": "#987/#989 environment pairs: profilesPairProd"
+  },
   "eventsPendingHeader": "In attesa della tua conferma",
   "eventAccept": "Accetta",
   "eventReject": "Rifiuta",

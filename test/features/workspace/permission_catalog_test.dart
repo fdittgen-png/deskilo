@@ -6,9 +6,9 @@ import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('the catalog carries 21 permissions, wire names equal to Dart names',
+  test('the catalog carries 24 permissions, wire names equal to Dart names',
       () {
-    expect(WorkspacePermission.values, hasLength(21));
+    expect(WorkspacePermission.values, hasLength(24));
     for (final p in WorkspacePermission.values) {
       expect(p.wireName, p.name);
     }
@@ -29,6 +29,9 @@ void main() {
       WorkspacePermission.designDocuments,
       WorkspacePermission.manageIntegrations,
       WorkspacePermission.manageConfiguration,
+      // #989 — pushing to production stays with the owner; refreshing
+      // the dev and entering the prod are an admin's.
+      WorkspacePermission.deployToProd,
     ]) {
       expect(admin, isNot(contains(p)), reason: '$p stays with the owner');
     }

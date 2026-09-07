@@ -75,7 +75,17 @@ enum WorkspacePermission {
   manageIntegrations,
 
   /// Features, environment, workspace code, imports, reset.
-  manageConfiguration;
+  manageConfiguration,
+
+  /// #989 — push configuration and master data from the dev to the
+  /// prod of a pair. Implies [deployToDev] (server and client alike).
+  deployToProd,
+
+  /// #989 — refresh the dev of a pair from its prod.
+  deployToDev,
+
+  /// #989 — enter the production side of a pair at all.
+  accessProd;
 
   /// The wire name — identical to the Dart name, pinned by test.
   String get wireName => name;
@@ -118,6 +128,9 @@ Set<WorkspacePermission> defaultPermissionsFor(PermissionRole role) =>
           WorkspacePermission.operateKiosk,
           WorkspacePermission.exportData,
           WorkspacePermission.viewPersonalData,
+          // #989 — an admin refreshes the dev and enters the prod.
+          WorkspacePermission.deployToDev,
+          WorkspacePermission.accessProd,
         },
       PermissionRole.member => <WorkspacePermission>{},
     };
@@ -151,6 +164,10 @@ Set<WorkspacePermission> permissionsForRole(
       workspace != null &&
       workspace.featureFlags[WorkspaceFeature.adminInvoicing.name] == true) {
     granted = {...granted, WorkspacePermission.issueInvoices};
+  }
+  // #989 — deployToProd implies deployToDev, as on the server.
+  if (granted.contains(WorkspacePermission.deployToProd)) {
+    granted = {...granted, WorkspacePermission.deployToDev};
   }
   return granted;
 }
