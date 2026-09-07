@@ -340,3 +340,19 @@ the first and merge them in order. Never run several registry-touching
 PRs side by side (2026-09-05: five did, and each landed only after a
 hand-merged rebase).
 
+
+## System columns on every table (#992) — no exceptions
+
+Every table of the public schema carries six technical columns the
+core relies on: `created_datetime`, `modified_datetime`, `company_id`
+(the workspace), `site_id`, `created_by_user`, `modified_by_user`. One
+trigger, `system_columns_stamp()`, stamps them on every write; one
+helper, `ensure_system_columns('<table>')`, adds the columns, the
+trigger and the backfill (migration 0183 ran it over every table that
+existed). **Every `create table` from now on is followed, in the same
+migration, by `select public.ensure_system_columns('<table>');`** —
+`test/lint/system_columns_test.dart` refuses a migration that forgets.
+The existing columns (`created_at`, `workspace_id`, `created_by`…) stay:
+the six are additions, never replacements, and readers keep working.
+The rule is not specific to DesKilo: any new project starts with these
+six columns on its first table.
