@@ -6953,6 +6953,42 @@
   "@paymentTermsNone": {
     "description": "#881 member payment conditions: paymentTermsNone"
   },
+  "permManageSites": "Manage sites and levels",
+  "@permManageSites": {
+    "description": "#982 permission catalog: permManageSites"
+  },
+  "permManageBilling": "Manage tariffs and billing rules",
+  "@permManageBilling": {
+    "description": "#982 permission catalog: permManageBilling"
+  },
+  "permManageReservations": "Manage reservations of others",
+  "@permManageReservations": {
+    "description": "#982 permission catalog: permManageReservations"
+  },
+  "permOperateKiosk": "Operate the kiosk and badges",
+  "@permOperateKiosk": {
+    "description": "#982 permission catalog: permOperateKiosk"
+  },
+  "permExportData": "Export accounting and data",
+  "@permExportData": {
+    "description": "#982 permission catalog: permExportData"
+  },
+  "permDesignDocuments": "Design the documents",
+  "@permDesignDocuments": {
+    "description": "#982 permission catalog: permDesignDocuments"
+  },
+  "permViewPersonalData": "Read members' personal data",
+  "@permViewPersonalData": {
+    "description": "#982 permission catalog: permViewPersonalData"
+  },
+  "permManageIntegrations": "Manage integrations",
+  "@permManageIntegrations": {
+    "description": "#982 permission catalog: permManageIntegrations"
+  },
+  "permManageConfiguration": "Manage the configuration",
+  "@permManageConfiguration": {
+    "description": "#982 permission catalog: permManageConfiguration"
+  },
   "featurePersonalInfo": "Personal information",
   "@featurePersonalInfo": {
     "description": "#886 personal-information form / feature: featurePersonalInfo"

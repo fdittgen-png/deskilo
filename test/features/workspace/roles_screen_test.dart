@@ -21,7 +21,7 @@ Future<FakeWorkspaceRepository> _pumpRoles(
   WidgetTester tester, {
   FakeWorkspaceRepository? workspace,
 }) async {
-  tester.view.physicalSize = const Size(800, 1600);
+  tester.view.physicalSize = const Size(800, 2800);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
   workspace ??= FakeWorkspaceRepository.withWorkspace();
@@ -58,6 +58,12 @@ void main() {
           WorkspacePermission.manageNegotiations,
           // #881 — admins may request payment-condition changes.
           WorkspacePermission.paymentTermsEdit,
+          // #982 — what admins always could, now as permissions.
+          WorkspacePermission.manageSites,
+          WorkspacePermission.manageReservations,
+          WorkspacePermission.operateKiosk,
+          WorkspacePermission.exportData,
+          WorkspacePermission.viewPersonalData,
         },
       );
       expect(defaultPermissionsFor(PermissionRole.member), isEmpty);
@@ -174,6 +180,8 @@ void main() {
         File('supabase/migrations/0154_member_payment_terms.sql')
             .readAsStringSync() +
         File('supabase/migrations/0155_payment_terms_permission_catalog.sql')
+            .readAsStringSync() +
+        File('supabase/migrations/0180_permission_catalog_nine.sql')
             .readAsStringSync();
     expect(sql, contains('role_permissions jsonb'));
     expect(sql, contains('has_permission'));
@@ -183,8 +191,9 @@ void main() {
     // lacked the two negotiation permissions while the file text
     // mentioned them elsewhere, and the RPC refused the client's own
     // payload with "unknown permission").
+    // #982 — the nine permissions arrive with 0180, the latest catalog.
     final latest =
-        File('supabase/migrations/0155_payment_terms_permission_catalog.sql')
+        File('supabase/migrations/0180_permission_catalog_nine.sql')
             .readAsStringSync();
     final catalog = RegExp(r"v_catalog text\[\] := array\[([^\]]+)\]")
         .firstMatch(latest)!

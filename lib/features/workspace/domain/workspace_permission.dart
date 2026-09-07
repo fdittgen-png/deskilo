@@ -44,7 +44,38 @@ enum WorkspacePermission {
 
   /// #881 — request a change of a member's payment conditions (the
   /// change itself goes through validation).
-  paymentTermsEdit;
+  paymentTermsEdit,
+
+  // #982 — what "is admin" and "is owner" guarded, as permissions.
+
+  /// Sites, level assignment, other members' home site.
+  manageSites,
+
+  /// Fee bands, VAT rates, number sequences, billing and reminder rules.
+  manageBilling,
+
+  /// Book for others, cancel, check in and out, block seats, everyone's
+  /// calendar.
+  manageReservations,
+
+  /// Kiosk assignment, badges.
+  operateKiosk,
+
+  /// Accounting exports, the archive bundle, Excel, the configuration
+  /// export.
+  exportData,
+
+  /// Templates, texts, layouts of the documents.
+  designDocuments,
+
+  /// E-mails, managed identities, postal data of members.
+  viewPersonalData,
+
+  /// Payment providers, e-invoice credentials, the WhatsApp channel.
+  manageIntegrations,
+
+  /// Features, environment, workspace code, imports, reset.
+  manageConfiguration;
 
   /// The wire name — identical to the Dart name, pinned by test.
   String get wireName => name;
@@ -81,6 +112,12 @@ Set<WorkspacePermission> defaultPermissionsFor(PermissionRole role) =>
           WorkspacePermission.viewNegotiations,
           WorkspacePermission.manageNegotiations,
           WorkspacePermission.paymentTermsEdit,
+          // #982 — what admins could always do, now as permissions.
+          WorkspacePermission.manageSites,
+          WorkspacePermission.manageReservations,
+          WorkspacePermission.operateKiosk,
+          WorkspacePermission.exportData,
+          WorkspacePermission.viewPersonalData,
         },
       PermissionRole.member => <WorkspacePermission>{},
     };

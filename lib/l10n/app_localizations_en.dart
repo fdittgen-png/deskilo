@@ -6689,6 +6689,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paymentTermsNone => 'No conditions written yet';
 
   @override
+  String get permManageSites => 'Manage sites and levels';
+
+  @override
+  String get permManageBilling => 'Manage tariffs and billing rules';
+
+  @override
+  String get permManageReservations => 'Manage reservations of others';
+
+  @override
+  String get permOperateKiosk => 'Operate the kiosk and badges';
+
+  @override
+  String get permExportData => 'Export accounting and data';
+
+  @override
+  String get permDesignDocuments => 'Design the documents';
+
+  @override
+  String get permViewPersonalData => 'Read members\' personal data';
+
+  @override
+  String get permManageIntegrations => 'Manage integrations';
+
+  @override
+  String get permManageConfiguration => 'Manage the configuration';
+
+  @override
   String get featurePersonalInfo => 'Personal information';
 
   @override

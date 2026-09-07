@@ -138,10 +138,12 @@ class SupabaseMoneyRepository implements MoneyRepository {
     String workspaceId,
     InvoicePdfTemplate template,
   ) async {
-    await _client
-        .from('workspaces')
-        .update({'invoice_pdf_template': template.toJson()})
-        .eq('id', workspaceId);
+    // #982 — through the matrix (designDocuments), not the owner-only
+    // row update.
+    await _client.rpc<dynamic>('set_invoice_pdf_template', params: {
+      'p_workspace_id': workspaceId,
+      'p_template': template.toJson(),
+    });
   }
 
   @override

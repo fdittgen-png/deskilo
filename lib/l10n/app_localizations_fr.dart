@@ -6755,6 +6755,34 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paymentTermsNone => 'Aucune condition rédigée';
 
   @override
+  String get permManageSites => 'Gérer les sites et les étages';
+
+  @override
+  String get permManageBilling => 'Gérer les tarifs et règles de facturation';
+
+  @override
+  String get permManageReservations => 'Gérer les réservations des autres';
+
+  @override
+  String get permOperateKiosk => 'Opérer le kiosque et les badges';
+
+  @override
+  String get permExportData => 'Exporter la comptabilité et les données';
+
+  @override
+  String get permDesignDocuments => 'Concevoir les documents';
+
+  @override
+  String get permViewPersonalData =>
+      'Consulter les données personnelles des membres';
+
+  @override
+  String get permManageIntegrations => 'Gérer les intégrations';
+
+  @override
+  String get permManageConfiguration => 'Gérer la configuration';
+
+  @override
   String get featurePersonalInfo => 'Informations personnelles';
 
   @override

@@ -1,0 +1,39 @@
+{
+  "@@locale": "es",
+  "permManageSites": "Gestionar sedes y plantas",
+  "@permManageSites": {
+    "description": "#982 permission catalog: permManageSites"
+  },
+  "permManageBilling": "Gestionar tarifas y reglas de facturación",
+  "@permManageBilling": {
+    "description": "#982 permission catalog: permManageBilling"
+  },
+  "permManageReservations": "Gestionar reservas de otros",
+  "@permManageReservations": {
+    "description": "#982 permission catalog: permManageReservations"
+  },
+  "permOperateKiosk": "Operar el quiosco y las tarjetas",
+  "@permOperateKiosk": {
+    "description": "#982 permission catalog: permOperateKiosk"
+  },
+  "permExportData": "Exportar contabilidad y datos",
+  "@permExportData": {
+    "description": "#982 permission catalog: permExportData"
+  },
+  "permDesignDocuments": "Diseñar los documentos",
+  "@permDesignDocuments": {
+    "description": "#982 permission catalog: permDesignDocuments"
+  },
+  "permViewPersonalData": "Consultar los datos personales de los miembros",
+  "@permViewPersonalData": {
+    "description": "#982 permission catalog: permViewPersonalData"
+  },
+  "permManageIntegrations": "Gestionar integraciones",
+  "@permManageIntegrations": {
+    "description": "#982 permission catalog: permManageIntegrations"
+  },
+  "permManageConfiguration": "Gestionar la configuración",
+  "@permManageConfiguration": {
+    "description": "#982 permission catalog: permManageConfiguration"
+  }
+}

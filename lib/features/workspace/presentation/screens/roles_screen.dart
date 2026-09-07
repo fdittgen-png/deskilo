@@ -47,6 +47,24 @@ class RolesScreen extends ConsumerWidget {
           l10n?.permManageNegotiations ?? 'Manage commercial agreements',
         WorkspacePermission.paymentTermsEdit =>
           l10n?.permPaymentTermsEdit ?? 'Request payment-condition changes',
+        WorkspacePermission.manageSites =>
+          l10n?.permManageSites ?? 'Manage sites and levels',
+        WorkspacePermission.manageBilling =>
+          l10n?.permManageBilling ?? 'Manage tariffs and billing rules',
+        WorkspacePermission.manageReservations =>
+          l10n?.permManageReservations ?? 'Manage reservations of others',
+        WorkspacePermission.operateKiosk =>
+          l10n?.permOperateKiosk ?? 'Operate the kiosk and badges',
+        WorkspacePermission.exportData =>
+          l10n?.permExportData ?? 'Export accounting and data',
+        WorkspacePermission.designDocuments =>
+          l10n?.permDesignDocuments ?? 'Design the documents',
+        WorkspacePermission.viewPersonalData =>
+          l10n?.permViewPersonalData ?? 'Read members\' personal data',
+        WorkspacePermission.manageIntegrations =>
+          l10n?.permManageIntegrations ?? 'Manage integrations',
+        WorkspacePermission.manageConfiguration =>
+          l10n?.permManageConfiguration ?? 'Manage the configuration',
       };
 
   String _roleLabel(AppLocalizations? l10n, PermissionRole role) =>

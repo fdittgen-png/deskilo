@@ -328,7 +328,10 @@ class _MemberPageBody extends ConsumerWidget {
           title: l10n?.coOwnerActivate ?? 'Promote to owner now',
           onTap: () => activateMemberCoOwner(context, ref, member),
         ),
-      if (isOwner && !member.isOwner && active && (member.isKiosk || kioskOn))
+      if (perms.contains(WorkspacePermission.operateKiosk) &&
+          !member.isOwner &&
+          active &&
+          (member.isKiosk || kioskOn))
         _ManageTile(
           tileKey: const ValueKey('member-page-kiosk'),
           icon: member.isKiosk ? Icons.tablet_mac : Icons.tablet_mac_outlined,
