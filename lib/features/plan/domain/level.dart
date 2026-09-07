@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'level.freezed.dart';
 
 /// A floor of the workspace (spec §3).
 @freezed
-sealed class Level with _$Level {
+sealed class Level with _$Level implements SystemStamped {
   const Level._();
 
   const factory Level({
@@ -28,6 +29,8 @@ sealed class Level with _$Level {
 
     /// #945 — the site this level stands at; null is the default site.
     String? siteId,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _Level;
 
   /// Whether a background image is set for this level.

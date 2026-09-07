@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'event_decision.freezed.dart';
 
@@ -7,7 +8,7 @@ part 'event_decision.freezed.dart';
 /// accept/decline — human or sweep — leaves exactly one row, so the audit
 /// trail shows WHO decided WHAT and WHEN without gaps.
 @freezed
-sealed class EventDecision with _$EventDecision {
+sealed class EventDecision with _$EventDecision implements SystemStamped {
   const EventDecision._();
 
   const factory EventDecision({
@@ -18,5 +19,7 @@ sealed class EventDecision with _$EventDecision {
     required bool accept,
     required bool decidedBySystem,
     required DateTime decidedAt,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _EventDecision;
 }

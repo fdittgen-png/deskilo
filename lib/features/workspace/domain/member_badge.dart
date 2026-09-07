@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'member_badge.freezed.dart';
 
@@ -22,7 +23,7 @@ enum BadgeKind {
 /// themselves. The server stores only the token's SHA-256 hash — the raw
 /// token exists client-side exactly once, in [IssuedBadge.token].
 @freezed
-sealed class MemberBadge with _$MemberBadge {
+sealed class MemberBadge with _$MemberBadge implements SystemStamped {
   const MemberBadge._();
 
   const factory MemberBadge({
@@ -39,9 +40,12 @@ sealed class MemberBadge with _$MemberBadge {
     /// door should not become the card that opens the account by
     /// default.
     @Default(false) bool authEnabled,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _MemberBadge;
 
   factory MemberBadge.fromRow(Map<String, dynamic> row) => MemberBadge(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         memberId: row['member_id'] as String,

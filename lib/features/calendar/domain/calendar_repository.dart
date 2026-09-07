@@ -1,15 +1,21 @@
 // SPDX-License-Identifier: 0BSD
 import '../../../core/calendar/calendar_item.dart';
+import '../../../core/data/system_columns.dart';
 
 /// One entry in the access log (#719): who read what about whom, when.
-class DataAccessEntry {
+class DataAccessEntry implements SystemStamped {
   const DataAccessEntry({
     required this.id,
     required this.actorMemberId,
     required this.subjectMemberId,
     required this.category,
     required this.at,
+    this.system = SystemColumns.none,
   });
+
+  /// #992 — the server's stamp on this row.
+  @override
+  final SystemColumns system;
 
   final String id;
   final String actorMemberId;
@@ -20,6 +26,7 @@ class DataAccessEntry {
   final DateTime at;
 
   factory DataAccessEntry.fromRow(Map<String, dynamic> row) => DataAccessEntry(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         actorMemberId: row['actor_member_id'] as String,
         subjectMemberId: row['subject_member_id'] as String,

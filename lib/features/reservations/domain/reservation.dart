@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../core/time/workspace_time.dart';
 import '../../workspace/domain/booking_granularity.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'reservation.freezed.dart';
 
@@ -30,7 +31,7 @@ String reservationStatusToDb(ReservationStatus status) => switch (status) {
 /// A booking of one seat — or one whole office, or one whole level
 /// (spec §3, 0050).
 @freezed
-sealed class Reservation with _$Reservation {
+sealed class Reservation with _$Reservation implements SystemStamped {
   const Reservation._();
 
   const factory Reservation({
@@ -60,6 +61,8 @@ sealed class Reservation with _$Reservation {
     /// target's depth) written when an OWNER deleted the plan object
     /// this reservation pointed at. Null while the target lives.
     String? spaceLabel,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _Reservation;
 
   /// How early check-in opens before the start (spec §4.3, #408).

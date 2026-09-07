@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'billing_rules.dart';
 import 'vat_rate.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'invoice.freezed.dart';
 
@@ -238,7 +239,7 @@ sealed class SettledSource with _$SettledSource {
 /// replacement carrying [replacesInvoiceId] (technical reference) and
 /// [replacesNumber] (snapshot for display and the PDF).
 @freezed
-sealed class Invoice with _$Invoice {
+sealed class Invoice with _$Invoice implements SystemStamped {
   const Invoice._();
 
   const factory Invoice({
@@ -288,6 +289,8 @@ sealed class Invoice with _$Invoice {
 
     /// #804 — on a settlement, what it consolidated.
     @Default([]) List<SettledSource> settles,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _Invoice;
 
   /// Sum of the positive positions — the gross the invoice charges before
@@ -363,6 +366,7 @@ sealed class Invoice with _$Invoice {
         ], zeroCategory: zeroCategory);
 
   factory Invoice.fromRow(Map<String, dynamic> row) => Invoice(
+    system: SystemColumns.fromRow(row),
     id: row['id'] as String,
     workspaceId: row['workspace_id'] as String,
     memberId: row['member_id'] as String,

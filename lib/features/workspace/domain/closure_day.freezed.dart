@@ -14,7 +14,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ClosureDay {
 
- String get id; String get workspaceId; DateTime get day; String get reason;
+ String get id; String get workspaceId; DateTime get day; String get reason;/// #992 — the server's stamp on this row.
+ SystemColumns get system;
 /// Create a copy of ClosureDay
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +26,16 @@ $ClosureDayCopyWith<ClosureDay> get copyWith => _$ClosureDayCopyWithImpl<Closure
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ClosureDay&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.day, day) || other.day == day)&&(identical(other.reason, reason) || other.reason == reason));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ClosureDay&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.day, day) || other.day == day)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,day,reason);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,day,reason,system);
 
 @override
 String toString() {
-  return 'ClosureDay(id: $id, workspaceId: $workspaceId, day: $day, reason: $reason)';
+  return 'ClosureDay(id: $id, workspaceId: $workspaceId, day: $day, reason: $reason, system: $system)';
 }
 
 
@@ -45,7 +46,7 @@ abstract mixin class $ClosureDayCopyWith<$Res>  {
   factory $ClosureDayCopyWith(ClosureDay value, $Res Function(ClosureDay) _then) = _$ClosureDayCopyWithImpl;
 @useResult
 $Res call({
- String id, String workspaceId, DateTime day, String reason
+ String id, String workspaceId, DateTime day, String reason, SystemColumns system
 });
 
 
@@ -62,13 +63,14 @@ class _$ClosureDayCopyWithImpl<$Res>
 
 /// Create a copy of ClosureDay
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? day = null,Object? reason = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? day = null,Object? reason = null,Object? system = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
 as String,day: null == day ? _self.day : day // ignore: cast_nullable_to_non_nullable
 as DateTime,reason: null == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
-as String,
+as String,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as SystemColumns,
   ));
 }
 
@@ -150,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  DateTime day,  String reason)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  DateTime day,  String reason,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ClosureDay() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.day,_that.reason);case _:
+return $default(_that.id,_that.workspaceId,_that.day,_that.reason,_that.system);case _:
   return orElse();
 
 }
@@ -171,10 +173,10 @@ return $default(_that.id,_that.workspaceId,_that.day,_that.reason);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  DateTime day,  String reason)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  DateTime day,  String reason,  SystemColumns system)  $default,) {final _that = this;
 switch (_that) {
 case _ClosureDay():
-return $default(_that.id,_that.workspaceId,_that.day,_that.reason);}
+return $default(_that.id,_that.workspaceId,_that.day,_that.reason,_that.system);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -188,10 +190,10 @@ return $default(_that.id,_that.workspaceId,_that.day,_that.reason);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  DateTime day,  String reason)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  DateTime day,  String reason,  SystemColumns system)?  $default,) {final _that = this;
 switch (_that) {
 case _ClosureDay() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.day,_that.reason);case _:
+return $default(_that.id,_that.workspaceId,_that.day,_that.reason,_that.system);case _:
   return null;
 
 }
@@ -203,13 +205,15 @@ return $default(_that.id,_that.workspaceId,_that.day,_that.reason);case _:
 
 
 class _ClosureDay implements ClosureDay {
-  const _ClosureDay({required this.id, required this.workspaceId, required this.day, required this.reason});
+  const _ClosureDay({required this.id, required this.workspaceId, required this.day, required this.reason, this.system = SystemColumns.none});
   
 
 @override final  String id;
 @override final  String workspaceId;
 @override final  DateTime day;
 @override final  String reason;
+/// #992 — the server's stamp on this row.
+@override@JsonKey() final  SystemColumns system;
 
 /// Create a copy of ClosureDay
 /// with the given fields replaced by the non-null parameter values.
@@ -221,16 +225,16 @@ _$ClosureDayCopyWith<_ClosureDay> get copyWith => __$ClosureDayCopyWithImpl<_Clo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ClosureDay&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.day, day) || other.day == day)&&(identical(other.reason, reason) || other.reason == reason));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ClosureDay&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.day, day) || other.day == day)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,day,reason);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,day,reason,system);
 
 @override
 String toString() {
-  return 'ClosureDay(id: $id, workspaceId: $workspaceId, day: $day, reason: $reason)';
+  return 'ClosureDay(id: $id, workspaceId: $workspaceId, day: $day, reason: $reason, system: $system)';
 }
 
 
@@ -241,7 +245,7 @@ abstract mixin class _$ClosureDayCopyWith<$Res> implements $ClosureDayCopyWith<$
   factory _$ClosureDayCopyWith(_ClosureDay value, $Res Function(_ClosureDay) _then) = __$ClosureDayCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String workspaceId, DateTime day, String reason
+ String id, String workspaceId, DateTime day, String reason, SystemColumns system
 });
 
 
@@ -258,13 +262,14 @@ class __$ClosureDayCopyWithImpl<$Res>
 
 /// Create a copy of ClosureDay
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? day = null,Object? reason = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? day = null,Object? reason = null,Object? system = null,}) {
   return _then(_ClosureDay(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
 as String,day: null == day ? _self.day : day // ignore: cast_nullable_to_non_nullable
 as DateTime,reason: null == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
-as String,
+as String,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as SystemColumns,
   ));
 }
 

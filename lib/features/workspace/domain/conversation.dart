@@ -9,6 +9,8 @@
 /// one enum away.
 library;
 
+import '../../../core/data/system_columns.dart';
+
 enum ConversationKind {
   /// Exactly two people, no name, no photo, created the moment someone
   /// opens the other's profile. Nobody names or leaves a direct thread.
@@ -23,7 +25,7 @@ ConversationKind conversationKindFromWire(String value) =>
 
 /// One row of the conversation list, as `my_conversations` returns it:
 /// the thread plus the per-viewer parts (last message, unread count).
-class Conversation {
+class Conversation implements SystemStamped {
   const Conversation({
     required this.id,
     required this.kind,
@@ -38,9 +40,15 @@ class Conversation {
     this.pinnedAt,
     this.muted = false,
     this.archivedAt,
+    this.system = SystemColumns.none,
   });
 
+  /// #992 — the server's stamp on this row.
+  @override
+  final SystemColumns system;
+
   factory Conversation.fromRow(Map<String, dynamic> row) => Conversation(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         kind: conversationKindFromWire(row['kind'] as String? ?? 'direct'),
         title: row['title'] as String?,

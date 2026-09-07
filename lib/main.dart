@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'core/data/system_columns.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,6 +24,9 @@ Future<void> main() async {
   // below land in the trace.
   final trace = TraceLogger.instance = createAppTraceLogger();
   installGlobalTraceHooks(trace);
+  // #992 — a row whose system columns break the server's invariants is
+  // reported to the trace, never trusted silently.
+  SystemColumns.onBreach = (detail) => trace.warn('data', detail);
 
   // Defensive boot (#86): nothing that runs before the first frame is
   // allowed to kill the app. A failed Supabase init degrades to the auth

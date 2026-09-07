@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/accessory.dart';
 import '../domain/accessory_repository.dart';
+import '../../../core/data/system_columns.dart';
 
 class SupabaseAccessoryRepository implements AccessoryRepository {
   SupabaseAccessoryRepository(this._client);
@@ -10,6 +11,7 @@ class SupabaseAccessoryRepository implements AccessoryRepository {
   final SupabaseClient _client;
 
   Accessory _accessoryFromRow(Map<String, dynamic> row) => Accessory(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         name: row['name'] as String,

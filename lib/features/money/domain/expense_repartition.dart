@@ -1,3 +1,4 @@
+import '../../../core/data/system_columns.dart';
 // SPDX-License-Identifier: 0BSD
 
 // #828 — distributing ONE shared amount over the members: the key that
@@ -110,7 +111,7 @@ List<RepartitionShare> distributeExpense({
 
 /// A distribution as the server keeps it (0147): what was split, how,
 /// onto which period, and where its decision stands.
-class ExpenseRepartition {
+class ExpenseRepartition implements SystemStamped {
   const ExpenseRepartition({
     required this.id,
     required this.title,
@@ -121,10 +122,16 @@ class ExpenseRepartition {
     required this.status,
     required this.createdAt,
     this.appliedAt,
+    this.system = SystemColumns.none,
   });
+
+  /// #992 — the server's stamp on this row.
+  @override
+  final SystemColumns system;
 
   factory ExpenseRepartition.fromJson(Map<String, dynamic> json) =>
       ExpenseRepartition(
+        system: SystemColumns.fromRow(json),
         id: json['id'] as String,
         title: json['title'] as String? ?? '',
         amountCents: (json['amount_cents'] as num?)?.toInt() ?? 0,

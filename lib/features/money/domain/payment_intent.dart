@@ -1,10 +1,11 @@
+import '../../../core/data/system_columns.dart';
 // SPDX-License-Identifier: 0BSD
 
 /// One online-payment attempt (migration 0045): the provider order the
 /// app started and what became of it. Admin-readable for diagnostics and
 /// for the payments tab of the data export (#395) — the ONLINE third of
 /// confirmed / unconfirmed / online.
-class PaymentIntent {
+class PaymentIntent implements SystemStamped {
   const PaymentIntent({
     required this.id,
     required this.memberId,
@@ -16,7 +17,12 @@ class PaymentIntent {
     required this.createdAt,
     this.captureId = '',
     this.reference = '',
+    this.system = SystemColumns.none,
   });
+
+  /// #992 — the server's stamp on this row.
+  @override
+  final SystemColumns system;
 
   final String id;
   final String memberId;
@@ -38,6 +44,7 @@ class PaymentIntent {
   final DateTime createdAt;
 
   factory PaymentIntent.fromRow(Map<String, dynamic> row) => PaymentIntent(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         memberId: row['member_id'] as String,
         provider: row['provider'] as String,

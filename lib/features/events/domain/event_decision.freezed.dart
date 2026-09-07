@@ -15,7 +15,8 @@ T _$identity<T>(T value) => value;
 mixin _$EventDecision {
 
  String get id; String get eventId;/// Null when the timeout sweep decided (see [decidedBySystem]).
- String? get memberId; bool get accept; bool get decidedBySystem; DateTime get decidedAt;
+ String? get memberId; bool get accept; bool get decidedBySystem; DateTime get decidedAt;/// #992 — the server's stamp on this row.
+ SystemColumns get system;
 /// Create a copy of EventDecision
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +27,16 @@ $EventDecisionCopyWith<EventDecision> get copyWith => _$EventDecisionCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EventDecision&&(identical(other.id, id) || other.id == id)&&(identical(other.eventId, eventId) || other.eventId == eventId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.accept, accept) || other.accept == accept)&&(identical(other.decidedBySystem, decidedBySystem) || other.decidedBySystem == decidedBySystem)&&(identical(other.decidedAt, decidedAt) || other.decidedAt == decidedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EventDecision&&(identical(other.id, id) || other.id == id)&&(identical(other.eventId, eventId) || other.eventId == eventId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.accept, accept) || other.accept == accept)&&(identical(other.decidedBySystem, decidedBySystem) || other.decidedBySystem == decidedBySystem)&&(identical(other.decidedAt, decidedAt) || other.decidedAt == decidedAt)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,eventId,memberId,accept,decidedBySystem,decidedAt);
+int get hashCode => Object.hash(runtimeType,id,eventId,memberId,accept,decidedBySystem,decidedAt,system);
 
 @override
 String toString() {
-  return 'EventDecision(id: $id, eventId: $eventId, memberId: $memberId, accept: $accept, decidedBySystem: $decidedBySystem, decidedAt: $decidedAt)';
+  return 'EventDecision(id: $id, eventId: $eventId, memberId: $memberId, accept: $accept, decidedBySystem: $decidedBySystem, decidedAt: $decidedAt, system: $system)';
 }
 
 
@@ -46,7 +47,7 @@ abstract mixin class $EventDecisionCopyWith<$Res>  {
   factory $EventDecisionCopyWith(EventDecision value, $Res Function(EventDecision) _then) = _$EventDecisionCopyWithImpl;
 @useResult
 $Res call({
- String id, String eventId, String? memberId, bool accept, bool decidedBySystem, DateTime decidedAt
+ String id, String eventId, String? memberId, bool accept, bool decidedBySystem, DateTime decidedAt, SystemColumns system
 });
 
 
@@ -63,7 +64,7 @@ class _$EventDecisionCopyWithImpl<$Res>
 
 /// Create a copy of EventDecision
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? eventId = null,Object? memberId = freezed,Object? accept = null,Object? decidedBySystem = null,Object? decidedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? eventId = null,Object? memberId = freezed,Object? accept = null,Object? decidedBySystem = null,Object? decidedAt = null,Object? system = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,eventId: null == eventId ? _self.eventId : eventId // ignore: cast_nullable_to_non_nullable
@@ -71,7 +72,8 @@ as String,memberId: freezed == memberId ? _self.memberId : memberId // ignore: c
 as String?,accept: null == accept ? _self.accept : accept // ignore: cast_nullable_to_non_nullable
 as bool,decidedBySystem: null == decidedBySystem ? _self.decidedBySystem : decidedBySystem // ignore: cast_nullable_to_non_nullable
 as bool,decidedAt: null == decidedAt ? _self.decidedAt : decidedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as DateTime,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as SystemColumns,
   ));
 }
 
@@ -153,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String eventId,  String? memberId,  bool accept,  bool decidedBySystem,  DateTime decidedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String eventId,  String? memberId,  bool accept,  bool decidedBySystem,  DateTime decidedAt,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _EventDecision() when $default != null:
-return $default(_that.id,_that.eventId,_that.memberId,_that.accept,_that.decidedBySystem,_that.decidedAt);case _:
+return $default(_that.id,_that.eventId,_that.memberId,_that.accept,_that.decidedBySystem,_that.decidedAt,_that.system);case _:
   return orElse();
 
 }
@@ -174,10 +176,10 @@ return $default(_that.id,_that.eventId,_that.memberId,_that.accept,_that.decided
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String eventId,  String? memberId,  bool accept,  bool decidedBySystem,  DateTime decidedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String eventId,  String? memberId,  bool accept,  bool decidedBySystem,  DateTime decidedAt,  SystemColumns system)  $default,) {final _that = this;
 switch (_that) {
 case _EventDecision():
-return $default(_that.id,_that.eventId,_that.memberId,_that.accept,_that.decidedBySystem,_that.decidedAt);}
+return $default(_that.id,_that.eventId,_that.memberId,_that.accept,_that.decidedBySystem,_that.decidedAt,_that.system);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -191,10 +193,10 @@ return $default(_that.id,_that.eventId,_that.memberId,_that.accept,_that.decided
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String eventId,  String? memberId,  bool accept,  bool decidedBySystem,  DateTime decidedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String eventId,  String? memberId,  bool accept,  bool decidedBySystem,  DateTime decidedAt,  SystemColumns system)?  $default,) {final _that = this;
 switch (_that) {
 case _EventDecision() when $default != null:
-return $default(_that.id,_that.eventId,_that.memberId,_that.accept,_that.decidedBySystem,_that.decidedAt);case _:
+return $default(_that.id,_that.eventId,_that.memberId,_that.accept,_that.decidedBySystem,_that.decidedAt,_that.system);case _:
   return null;
 
 }
@@ -206,7 +208,7 @@ return $default(_that.id,_that.eventId,_that.memberId,_that.accept,_that.decided
 
 
 class _EventDecision extends EventDecision {
-  const _EventDecision({required this.id, required this.eventId, this.memberId, required this.accept, required this.decidedBySystem, required this.decidedAt}): super._();
+  const _EventDecision({required this.id, required this.eventId, this.memberId, required this.accept, required this.decidedBySystem, required this.decidedAt, this.system = SystemColumns.none}): super._();
   
 
 @override final  String id;
@@ -216,6 +218,8 @@ class _EventDecision extends EventDecision {
 @override final  bool accept;
 @override final  bool decidedBySystem;
 @override final  DateTime decidedAt;
+/// #992 — the server's stamp on this row.
+@override@JsonKey() final  SystemColumns system;
 
 /// Create a copy of EventDecision
 /// with the given fields replaced by the non-null parameter values.
@@ -227,16 +231,16 @@ _$EventDecisionCopyWith<_EventDecision> get copyWith => __$EventDecisionCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EventDecision&&(identical(other.id, id) || other.id == id)&&(identical(other.eventId, eventId) || other.eventId == eventId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.accept, accept) || other.accept == accept)&&(identical(other.decidedBySystem, decidedBySystem) || other.decidedBySystem == decidedBySystem)&&(identical(other.decidedAt, decidedAt) || other.decidedAt == decidedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EventDecision&&(identical(other.id, id) || other.id == id)&&(identical(other.eventId, eventId) || other.eventId == eventId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.accept, accept) || other.accept == accept)&&(identical(other.decidedBySystem, decidedBySystem) || other.decidedBySystem == decidedBySystem)&&(identical(other.decidedAt, decidedAt) || other.decidedAt == decidedAt)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,eventId,memberId,accept,decidedBySystem,decidedAt);
+int get hashCode => Object.hash(runtimeType,id,eventId,memberId,accept,decidedBySystem,decidedAt,system);
 
 @override
 String toString() {
-  return 'EventDecision(id: $id, eventId: $eventId, memberId: $memberId, accept: $accept, decidedBySystem: $decidedBySystem, decidedAt: $decidedAt)';
+  return 'EventDecision(id: $id, eventId: $eventId, memberId: $memberId, accept: $accept, decidedBySystem: $decidedBySystem, decidedAt: $decidedAt, system: $system)';
 }
 
 
@@ -247,7 +251,7 @@ abstract mixin class _$EventDecisionCopyWith<$Res> implements $EventDecisionCopy
   factory _$EventDecisionCopyWith(_EventDecision value, $Res Function(_EventDecision) _then) = __$EventDecisionCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String eventId, String? memberId, bool accept, bool decidedBySystem, DateTime decidedAt
+ String id, String eventId, String? memberId, bool accept, bool decidedBySystem, DateTime decidedAt, SystemColumns system
 });
 
 
@@ -264,7 +268,7 @@ class __$EventDecisionCopyWithImpl<$Res>
 
 /// Create a copy of EventDecision
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? eventId = null,Object? memberId = freezed,Object? accept = null,Object? decidedBySystem = null,Object? decidedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? eventId = null,Object? memberId = freezed,Object? accept = null,Object? decidedBySystem = null,Object? decidedAt = null,Object? system = null,}) {
   return _then(_EventDecision(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,eventId: null == eventId ? _self.eventId : eventId // ignore: cast_nullable_to_non_nullable
@@ -272,7 +276,8 @@ as String,memberId: freezed == memberId ? _self.memberId : memberId // ignore: c
 as String?,accept: null == accept ? _self.accept : accept // ignore: cast_nullable_to_non_nullable
 as bool,decidedBySystem: null == decidedBySystem ? _self.decidedBySystem : decidedBySystem // ignore: cast_nullable_to_non_nullable
 as bool,decidedAt: null == decidedAt ? _self.decidedAt : decidedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as DateTime,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as SystemColumns,
   ));
 }
 

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'workspace.freezed.dart';
 
@@ -20,7 +21,7 @@ abstract final class WhatsappGroupRules {
 /// One coworking community (spec §3). Currency defaults from the country;
 /// the owner may override it (decided 2026-07-07).
 @freezed
-sealed class Workspace with _$Workspace {
+sealed class Workspace with _$Workspace implements SystemStamped {
   const Workspace._();
 
   const factory Workspace({
@@ -124,6 +125,8 @@ sealed class Workspace with _$Workspace {
     /// Per-locale CUSTOM invitation templates (0096): language code →
     /// template. Absent key → legacy [invitationTemplate] → built-in.
     @Default(<String, dynamic>{}) Map<String, dynamic> invitationTemplates,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _Workspace;
 
   /// Desk fill opacity as a 0..1 fraction for the painter.

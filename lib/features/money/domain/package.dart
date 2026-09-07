@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'package.freezed.dart';
 
@@ -8,7 +9,7 @@ part 'package.freezed.dart';
 /// [priceCents] once their monthly entitlement is used up. Buying raises
 /// the member's cap by `days × 2` half-days for the current period.
 @freezed
-sealed class Package with _$Package {
+sealed class Package with _$Package implements SystemStamped {
   const factory Package({
     required String id,
     required String workspaceId,
@@ -20,9 +21,12 @@ sealed class Package with _$Package {
     /// Which VAT rate this package is taxed at (0072); '' = the
     /// workspace's default rate.
     @Default('') String vatRateId,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _Package;
 
   factory Package.fromRow(Map<String, dynamic> row) => Package(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         name: row['name'] as String,

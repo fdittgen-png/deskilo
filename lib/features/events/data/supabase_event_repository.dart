@@ -6,6 +6,7 @@ import '../domain/event_decision.dart';
 import '../domain/event_repository.dart';
 import '../domain/validation_policy.dart';
 import '../domain/workspace_event.dart';
+import '../../../core/data/system_columns.dart';
 
 class SupabaseEventRepository implements EventRepository {
   SupabaseEventRepository(this._client);
@@ -161,6 +162,7 @@ class SupabaseEventRepository implements EventRepository {
   }
 
   WorkspaceEvent _fromRow(Map<String, dynamic> row) => WorkspaceEvent(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         type: EventType.fromDb(row['type'] as String),
@@ -177,6 +179,7 @@ class SupabaseEventRepository implements EventRepository {
       );
 
   EventDecision _decisionFromRow(Map<String, dynamic> row) => EventDecision(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         eventId: row['event_id'] as String,
         memberId: row['member_id'] as String?,
@@ -187,6 +190,7 @@ class SupabaseEventRepository implements EventRepository {
 
   ValidationPolicy _policyFromRow(Map<String, dynamic> row) =>
       ValidationPolicy(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         eventType: row['event_type'] as String?,

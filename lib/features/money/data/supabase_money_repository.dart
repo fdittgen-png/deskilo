@@ -28,6 +28,7 @@ import '../domain/subscription_levels.dart';
 import '../domain/payment_intent.dart';
 import '../domain/number_sequence.dart';
 import '../domain/workspace_status.dart';
+import '../../../core/data/system_columns.dart';
 
 class SupabaseMoneyRepository implements MoneyRepository {
   @override
@@ -669,6 +670,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
   }
 
   LedgerEntry _ledgerFromRow(Map<String, dynamic> row) => LedgerEntry(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         memberId: row['member_id'] as String,
         kind: LedgerKind.values.byName(row['kind'] as String),
@@ -854,6 +856,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
     return rows
         .map(
           (row) => FeeBand(
+            system: SystemColumns.fromRow(row),
             id: row['id'] as String,
             workspaceId: row['workspace_id'] as String,
             fromPct: row['from_pct'] as int,
@@ -912,6 +915,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
   }
 
   ServiceItem _serviceFromRow(Map<String, dynamic> row) => ServiceItem(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         name: row['name'] as String,

@@ -2,6 +2,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'grid_geometry.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'office.freezed.dart';
 
@@ -10,7 +11,7 @@ part 'office.freezed.dart';
 /// half-day of a whole-office reservation on the bill (0057, the 0050
 /// level shape).
 @freezed
-sealed class Office with _$Office {
+sealed class Office with _$Office implements SystemStamped {
   const factory Office({
     required String id,
     required String workspaceId,
@@ -20,5 +21,7 @@ sealed class Office with _$Office {
     required bool bookableAsWhole,
     @Default(0) int priceCents,
     required GridRect rect,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _Office;
 }

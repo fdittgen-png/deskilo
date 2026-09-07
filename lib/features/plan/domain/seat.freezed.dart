@@ -16,7 +16,8 @@ mixin _$Seat {
 
  String get id; String get workspaceId; String get deskId; String get name; int get x; int get y; SeatOrientation get orientation; String get chair; List<String> get amenities; DateTime? get blockedFrom; DateTime? get blockedTo;/// #585 — the chair's physical NFC/RFID tag uid (normalized
 /// lowercase hex); tapping it resolves to this seat like its QR.
- String? get nfcUid;
+ String? get nfcUid;/// #992 — the server's stamp on this row.
+ SystemColumns get system;
 /// Create a copy of Seat
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,16 +28,16 @@ $SeatCopyWith<Seat> get copyWith => _$SeatCopyWithImpl<Seat>(this as Seat, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Seat&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.deskId, deskId) || other.deskId == deskId)&&(identical(other.name, name) || other.name == name)&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y)&&(identical(other.orientation, orientation) || other.orientation == orientation)&&(identical(other.chair, chair) || other.chair == chair)&&const DeepCollectionEquality().equals(other.amenities, amenities)&&(identical(other.blockedFrom, blockedFrom) || other.blockedFrom == blockedFrom)&&(identical(other.blockedTo, blockedTo) || other.blockedTo == blockedTo)&&(identical(other.nfcUid, nfcUid) || other.nfcUid == nfcUid));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Seat&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.deskId, deskId) || other.deskId == deskId)&&(identical(other.name, name) || other.name == name)&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y)&&(identical(other.orientation, orientation) || other.orientation == orientation)&&(identical(other.chair, chair) || other.chair == chair)&&const DeepCollectionEquality().equals(other.amenities, amenities)&&(identical(other.blockedFrom, blockedFrom) || other.blockedFrom == blockedFrom)&&(identical(other.blockedTo, blockedTo) || other.blockedTo == blockedTo)&&(identical(other.nfcUid, nfcUid) || other.nfcUid == nfcUid)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,deskId,name,x,y,orientation,chair,const DeepCollectionEquality().hash(amenities),blockedFrom,blockedTo,nfcUid);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,deskId,name,x,y,orientation,chair,const DeepCollectionEquality().hash(amenities),blockedFrom,blockedTo,nfcUid,system);
 
 @override
 String toString() {
-  return 'Seat(id: $id, workspaceId: $workspaceId, deskId: $deskId, name: $name, x: $x, y: $y, orientation: $orientation, chair: $chair, amenities: $amenities, blockedFrom: $blockedFrom, blockedTo: $blockedTo, nfcUid: $nfcUid)';
+  return 'Seat(id: $id, workspaceId: $workspaceId, deskId: $deskId, name: $name, x: $x, y: $y, orientation: $orientation, chair: $chair, amenities: $amenities, blockedFrom: $blockedFrom, blockedTo: $blockedTo, nfcUid: $nfcUid, system: $system)';
 }
 
 
@@ -47,7 +48,7 @@ abstract mixin class $SeatCopyWith<$Res>  {
   factory $SeatCopyWith(Seat value, $Res Function(Seat) _then) = _$SeatCopyWithImpl;
 @useResult
 $Res call({
- String id, String workspaceId, String deskId, String name, int x, int y, SeatOrientation orientation, String chair, List<String> amenities, DateTime? blockedFrom, DateTime? blockedTo, String? nfcUid
+ String id, String workspaceId, String deskId, String name, int x, int y, SeatOrientation orientation, String chair, List<String> amenities, DateTime? blockedFrom, DateTime? blockedTo, String? nfcUid, SystemColumns system
 });
 
 
@@ -64,7 +65,7 @@ class _$SeatCopyWithImpl<$Res>
 
 /// Create a copy of Seat
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? deskId = null,Object? name = null,Object? x = null,Object? y = null,Object? orientation = null,Object? chair = null,Object? amenities = null,Object? blockedFrom = freezed,Object? blockedTo = freezed,Object? nfcUid = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? deskId = null,Object? name = null,Object? x = null,Object? y = null,Object? orientation = null,Object? chair = null,Object? amenities = null,Object? blockedFrom = freezed,Object? blockedTo = freezed,Object? nfcUid = freezed,Object? system = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -78,7 +79,8 @@ as String,amenities: null == amenities ? _self.amenities : amenities // ignore: 
 as List<String>,blockedFrom: freezed == blockedFrom ? _self.blockedFrom : blockedFrom // ignore: cast_nullable_to_non_nullable
 as DateTime?,blockedTo: freezed == blockedTo ? _self.blockedTo : blockedTo // ignore: cast_nullable_to_non_nullable
 as DateTime?,nfcUid: freezed == nfcUid ? _self.nfcUid : nfcUid // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as SystemColumns,
   ));
 }
 
@@ -160,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String deskId,  String name,  int x,  int y,  SeatOrientation orientation,  String chair,  List<String> amenities,  DateTime? blockedFrom,  DateTime? blockedTo,  String? nfcUid)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String deskId,  String name,  int x,  int y,  SeatOrientation orientation,  String chair,  List<String> amenities,  DateTime? blockedFrom,  DateTime? blockedTo,  String? nfcUid,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Seat() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.deskId,_that.name,_that.x,_that.y,_that.orientation,_that.chair,_that.amenities,_that.blockedFrom,_that.blockedTo,_that.nfcUid);case _:
+return $default(_that.id,_that.workspaceId,_that.deskId,_that.name,_that.x,_that.y,_that.orientation,_that.chair,_that.amenities,_that.blockedFrom,_that.blockedTo,_that.nfcUid,_that.system);case _:
   return orElse();
 
 }
@@ -181,10 +183,10 @@ return $default(_that.id,_that.workspaceId,_that.deskId,_that.name,_that.x,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String deskId,  String name,  int x,  int y,  SeatOrientation orientation,  String chair,  List<String> amenities,  DateTime? blockedFrom,  DateTime? blockedTo,  String? nfcUid)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String deskId,  String name,  int x,  int y,  SeatOrientation orientation,  String chair,  List<String> amenities,  DateTime? blockedFrom,  DateTime? blockedTo,  String? nfcUid,  SystemColumns system)  $default,) {final _that = this;
 switch (_that) {
 case _Seat():
-return $default(_that.id,_that.workspaceId,_that.deskId,_that.name,_that.x,_that.y,_that.orientation,_that.chair,_that.amenities,_that.blockedFrom,_that.blockedTo,_that.nfcUid);}
+return $default(_that.id,_that.workspaceId,_that.deskId,_that.name,_that.x,_that.y,_that.orientation,_that.chair,_that.amenities,_that.blockedFrom,_that.blockedTo,_that.nfcUid,_that.system);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -198,10 +200,10 @@ return $default(_that.id,_that.workspaceId,_that.deskId,_that.name,_that.x,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String deskId,  String name,  int x,  int y,  SeatOrientation orientation,  String chair,  List<String> amenities,  DateTime? blockedFrom,  DateTime? blockedTo,  String? nfcUid)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String deskId,  String name,  int x,  int y,  SeatOrientation orientation,  String chair,  List<String> amenities,  DateTime? blockedFrom,  DateTime? blockedTo,  String? nfcUid,  SystemColumns system)?  $default,) {final _that = this;
 switch (_that) {
 case _Seat() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.deskId,_that.name,_that.x,_that.y,_that.orientation,_that.chair,_that.amenities,_that.blockedFrom,_that.blockedTo,_that.nfcUid);case _:
+return $default(_that.id,_that.workspaceId,_that.deskId,_that.name,_that.x,_that.y,_that.orientation,_that.chair,_that.amenities,_that.blockedFrom,_that.blockedTo,_that.nfcUid,_that.system);case _:
   return null;
 
 }
@@ -213,7 +215,7 @@ return $default(_that.id,_that.workspaceId,_that.deskId,_that.name,_that.x,_that
 
 
 class _Seat extends Seat {
-  const _Seat({required this.id, required this.workspaceId, required this.deskId, required this.name, required this.x, required this.y, required this.orientation, required this.chair, required final  List<String> amenities, this.blockedFrom, this.blockedTo, this.nfcUid}): _amenities = amenities,super._();
+  const _Seat({required this.id, required this.workspaceId, required this.deskId, required this.name, required this.x, required this.y, required this.orientation, required this.chair, required final  List<String> amenities, this.blockedFrom, this.blockedTo, this.nfcUid, this.system = SystemColumns.none}): _amenities = amenities,super._();
   
 
 @override final  String id;
@@ -236,6 +238,8 @@ class _Seat extends Seat {
 /// #585 — the chair's physical NFC/RFID tag uid (normalized
 /// lowercase hex); tapping it resolves to this seat like its QR.
 @override final  String? nfcUid;
+/// #992 — the server's stamp on this row.
+@override@JsonKey() final  SystemColumns system;
 
 /// Create a copy of Seat
 /// with the given fields replaced by the non-null parameter values.
@@ -247,16 +251,16 @@ _$SeatCopyWith<_Seat> get copyWith => __$SeatCopyWithImpl<_Seat>(this, _$identit
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Seat&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.deskId, deskId) || other.deskId == deskId)&&(identical(other.name, name) || other.name == name)&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y)&&(identical(other.orientation, orientation) || other.orientation == orientation)&&(identical(other.chair, chair) || other.chair == chair)&&const DeepCollectionEquality().equals(other._amenities, _amenities)&&(identical(other.blockedFrom, blockedFrom) || other.blockedFrom == blockedFrom)&&(identical(other.blockedTo, blockedTo) || other.blockedTo == blockedTo)&&(identical(other.nfcUid, nfcUid) || other.nfcUid == nfcUid));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Seat&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.deskId, deskId) || other.deskId == deskId)&&(identical(other.name, name) || other.name == name)&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y)&&(identical(other.orientation, orientation) || other.orientation == orientation)&&(identical(other.chair, chair) || other.chair == chair)&&const DeepCollectionEquality().equals(other._amenities, _amenities)&&(identical(other.blockedFrom, blockedFrom) || other.blockedFrom == blockedFrom)&&(identical(other.blockedTo, blockedTo) || other.blockedTo == blockedTo)&&(identical(other.nfcUid, nfcUid) || other.nfcUid == nfcUid)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,deskId,name,x,y,orientation,chair,const DeepCollectionEquality().hash(_amenities),blockedFrom,blockedTo,nfcUid);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,deskId,name,x,y,orientation,chair,const DeepCollectionEquality().hash(_amenities),blockedFrom,blockedTo,nfcUid,system);
 
 @override
 String toString() {
-  return 'Seat(id: $id, workspaceId: $workspaceId, deskId: $deskId, name: $name, x: $x, y: $y, orientation: $orientation, chair: $chair, amenities: $amenities, blockedFrom: $blockedFrom, blockedTo: $blockedTo, nfcUid: $nfcUid)';
+  return 'Seat(id: $id, workspaceId: $workspaceId, deskId: $deskId, name: $name, x: $x, y: $y, orientation: $orientation, chair: $chair, amenities: $amenities, blockedFrom: $blockedFrom, blockedTo: $blockedTo, nfcUid: $nfcUid, system: $system)';
 }
 
 
@@ -267,7 +271,7 @@ abstract mixin class _$SeatCopyWith<$Res> implements $SeatCopyWith<$Res> {
   factory _$SeatCopyWith(_Seat value, $Res Function(_Seat) _then) = __$SeatCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String workspaceId, String deskId, String name, int x, int y, SeatOrientation orientation, String chair, List<String> amenities, DateTime? blockedFrom, DateTime? blockedTo, String? nfcUid
+ String id, String workspaceId, String deskId, String name, int x, int y, SeatOrientation orientation, String chair, List<String> amenities, DateTime? blockedFrom, DateTime? blockedTo, String? nfcUid, SystemColumns system
 });
 
 
@@ -284,7 +288,7 @@ class __$SeatCopyWithImpl<$Res>
 
 /// Create a copy of Seat
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? deskId = null,Object? name = null,Object? x = null,Object? y = null,Object? orientation = null,Object? chair = null,Object? amenities = null,Object? blockedFrom = freezed,Object? blockedTo = freezed,Object? nfcUid = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? deskId = null,Object? name = null,Object? x = null,Object? y = null,Object? orientation = null,Object? chair = null,Object? amenities = null,Object? blockedFrom = freezed,Object? blockedTo = freezed,Object? nfcUid = freezed,Object? system = null,}) {
   return _then(_Seat(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -298,7 +302,8 @@ as String,amenities: null == amenities ? _self._amenities : amenities // ignore:
 as List<String>,blockedFrom: freezed == blockedFrom ? _self.blockedFrom : blockedFrom // ignore: cast_nullable_to_non_nullable
 as DateTime?,blockedTo: freezed == blockedTo ? _self.blockedTo : blockedTo // ignore: cast_nullable_to_non_nullable
 as DateTime?,nfcUid: freezed == nfcUid ? _self.nfcUid : nfcUid // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as SystemColumns,
   ));
 }
 

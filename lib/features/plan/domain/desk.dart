@@ -2,6 +2,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'grid_geometry.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'desk.freezed.dart';
 
@@ -9,7 +10,7 @@ part 'desk.freezed.dart';
 /// `bookableAsWhole` + `priceCents` make the desk itself a reservable
 /// unit (0059, the 0050/0057 shape).
 @freezed
-sealed class Desk with _$Desk {
+sealed class Desk with _$Desk implements SystemStamped {
   const factory Desk({
     required String id,
     required String workspaceId,
@@ -18,5 +19,7 @@ sealed class Desk with _$Desk {
     @Default(false) bool bookableAsWhole,
     @Default(0) int priceCents,
     required GridRect rect,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _Desk;
 }

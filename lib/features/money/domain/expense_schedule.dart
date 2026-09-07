@@ -9,6 +9,8 @@
 /// expense validation, and a reject hands it back for a resend.
 library;
 
+import '../../../core/data/system_columns.dart';
+
 enum ScheduleUnit {
   day,
   week,
@@ -42,7 +44,7 @@ enum OccurrenceStatus {
       .firstWhere((s) => s.dbValue == value, orElse: () => awaitingMember);
 }
 
-class ExpenseSchedule {
+class ExpenseSchedule implements SystemStamped {
   const ExpenseSchedule({
     required this.id,
     required this.workspaceId,
@@ -58,7 +60,12 @@ class ExpenseSchedule {
     this.status = ScheduleStatus.pending,
     this.occurrencesDone = 0,
     this.nextDue,
+    this.system = SystemColumns.none,
   });
+
+  /// #992 — the server's stamp on this row.
+  @override
+  final SystemColumns system;
 
   final String id;
   final String workspaceId;
@@ -79,6 +86,7 @@ class ExpenseSchedule {
   final DateTime? nextDue;
 
   factory ExpenseSchedule.fromDb(Map<String, dynamic> row) => ExpenseSchedule(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         memberId: row['member_id'] as String,
@@ -100,7 +108,7 @@ class ExpenseSchedule {
       );
 }
 
-class ExpenseOccurrence {
+class ExpenseOccurrence implements SystemStamped {
   const ExpenseOccurrence({
     required this.id,
     required this.scheduleId,
@@ -113,7 +121,12 @@ class ExpenseOccurrence {
     this.status = OccurrenceStatus.awaitingMember,
     this.scheduleTitle = '',
     this.scheduledAmountCents,
+    this.system = SystemColumns.none,
   });
+
+  /// #992 — the server's stamp on this row.
+  @override
+  final SystemColumns system;
 
   final String id;
   final String scheduleId;
@@ -133,6 +146,7 @@ class ExpenseOccurrence {
   factory ExpenseOccurrence.fromDb(Map<String, dynamic> row) {
     final schedule = row['expense_schedules'] as Map<String, dynamic>?;
     return ExpenseOccurrence(
+      system: SystemColumns.fromRow(row),
       id: row['id'] as String,
       scheduleId: row['schedule_id'] as String,
       workspaceId: row['workspace_id'] as String,

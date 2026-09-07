@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'service_item.freezed.dart';
 
 /// A consumable service of the workspace catalog (#123) — coffee,
 /// printing, meeting room, ... Owner-priced; deactivated, never deleted.
 @freezed
-sealed class ServiceItem with _$ServiceItem {
+sealed class ServiceItem with _$ServiceItem implements SystemStamped {
   const factory ServiceItem({
     required String id,
     required String workspaceId,
@@ -20,5 +21,7 @@ sealed class ServiceItem with _$ServiceItem {
     /// #731 — units on the shelf; null = not tracked (a service, not a
     /// supply).
     int? stock,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _ServiceItem;
 }

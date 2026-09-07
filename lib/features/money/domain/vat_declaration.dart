@@ -4,6 +4,7 @@ import 'package:xml/xml.dart';
 import 'billing_rules.dart';
 import 'invoice.dart';
 import 'vat_rate.dart';
+import '../../../core/data/system_columns.dart';
 
 /// One per-rate line of a VAT declaration (#534): everything the period's
 /// issued invoices taxed at [percent].
@@ -42,7 +43,7 @@ class VatDeclarationLine {
 
 /// A periodic VAT declaration (0107): the per-rate output-VAT summary of
 /// one filing period, with its draft → submitted lifecycle.
-class VatDeclaration {
+class VatDeclaration implements SystemStamped {
   const VatDeclaration({
     required this.id,
     required this.workspaceId,
@@ -59,7 +60,12 @@ class VatDeclaration {
     this.submittedChannel = '',
     this.submittedReceipt = '',
     this.number = '',
+    this.system = SystemColumns.none,
   });
+
+  /// #992 — the server's stamp on this row.
+  @override
+  final SystemColumns system;
 
   final String id;
   final String workspaceId;
@@ -85,6 +91,7 @@ class VatDeclaration {
   bool get isSubmitted => status == 'submitted';
 
   factory VatDeclaration.fromRow(Map<String, dynamic> row) => VatDeclaration(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         periodStart: DateTime.parse(row['period_start'] as String),

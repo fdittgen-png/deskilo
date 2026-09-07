@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'closure_day.freezed.dart';
 
@@ -7,11 +8,13 @@ part 'closure_day.freezed.dart';
 /// (local midnight, no time component) in the workspace's calendar;
 /// the server rejects reservations and check-ins touching it.
 @freezed
-sealed class ClosureDay with _$ClosureDay {
+sealed class ClosureDay with _$ClosureDay implements SystemStamped {
   const factory ClosureDay({
     required String id,
     required String workspaceId,
     required DateTime day,
     required String reason,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _ClosureDay;
 }

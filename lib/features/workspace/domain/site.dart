@@ -1,10 +1,11 @@
+import '../../../core/data/system_columns.dart';
 // SPDX-License-Identifier: 0BSD
 //
 // #945 — a site: the unit of address. Levels belong to a site, a member
 // has a home site, and a document names the site it concerns (#946).
 // Every workspace has a default site carrying the address it always
 // had; a null `Level.siteId` or `Member.homeSiteId` means that one.
-class Site {
+class Site implements SystemStamped {
   const Site({
     required this.id,
     required this.workspaceId,
@@ -18,7 +19,12 @@ class Site {
     this.taxExemptionReason = '',
     this.isDefault = false,
     this.sortOrder = 0,
+    this.system = SystemColumns.none,
   });
+
+  /// #992 — the server's stamp on this row.
+  @override
+  final SystemColumns system;
 
   final String id;
   final String workspaceId;
@@ -53,6 +59,7 @@ class Site {
   bool get hasAddress => street.isNotEmpty || city.isNotEmpty;
 
   factory Site.fromRow(Map<String, dynamic> row) => Site(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String? ?? '',
         name: row['name'] as String? ?? '',

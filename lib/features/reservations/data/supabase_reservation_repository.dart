@@ -8,6 +8,7 @@ import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
 import '../../../core/trace/act_trace.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/data/system_columns.dart';
 
 class SupabaseReservationRepository implements ReservationRepository {
   SupabaseReservationRepository(this._client, this._cache);
@@ -329,6 +330,7 @@ class SupabaseReservationRepository implements ReservationRepository {
   }
 
   Reservation _fromRow(Map<String, dynamic> row) => Reservation(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         seatId: row['seat_id'] as String?,

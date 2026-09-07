@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'ledger_entry.freezed.dart';
 
@@ -17,7 +18,7 @@ enum LedgerCategory {
 
 /// One line on a member's ledger (spec §7.3).
 @freezed
-sealed class LedgerEntry with _$LedgerEntry {
+sealed class LedgerEntry with _$LedgerEntry implements SystemStamped {
   const LedgerEntry._();
 
   const factory LedgerEntry({
@@ -36,6 +37,8 @@ sealed class LedgerEntry with _$LedgerEntry {
     /// and recorded on the 26th is dated the 3rd; null on entries booked
     /// before 0070 and on those where booking IS the event.
     DateTime? occurredOn,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _LedgerEntry;
 
   /// The date to SHOW and to sort by: what happened, falling back to when

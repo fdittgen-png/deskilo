@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import '../../../core/i18n/format_prefs.dart';
 import 'personal_info.dart';
+import '../../../core/data/system_columns.dart';
 
 /// Rules for the self-set status line (#231). The cap is enforced three
 /// times with this single constant: the editor's `maxLength`, the
@@ -14,7 +15,7 @@ abstract final class StatusTextRules {
 /// #223, and by 0029 with the status line, #231). Cross-workspace: one
 /// profile per auth user, visible to every member sharing a workspace
 /// (profiles_select RLS).
-class Profile {
+class Profile implements SystemStamped {
   const Profile({
     required this.id,
     this.displayName = '',
@@ -30,7 +31,12 @@ class Profile {
     this.privacyAcceptedVersion,
     this.privacyAcceptedAt,
     this.identity = PersonalInfo.empty,
+    this.system = SystemColumns.none,
   });
+
+  /// #992 — the server's stamp on this row.
+  @override
+  final SystemColumns system;
 
   /// auth.users id (uuid).
   final String id;
@@ -116,6 +122,7 @@ class Profile {
   bool get hasStatus => statusText.isNotEmpty;
 
   factory Profile.fromDb(Map<String, dynamic> db) => Profile(
+    system: SystemColumns.fromRow(db),
     id: db['id'] as String,
     displayName: db['display_name'] as String? ?? '',
     whatsapp: db['whatsapp'] as String? ?? '',
