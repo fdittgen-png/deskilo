@@ -150,7 +150,9 @@ void main() {
         'vat_positions', 'vat_rate_totals',
         'payment_terms', 'payment_terms_source',
         'late_penalty', 'recovery_indemnity', 'escompte', 'insurance',
-        'special_mentions', //
+        'special_mentions',
+        // #1002 — the month name and the year of the period.
+        'period_month', 'period_year', //
       ]);
     });
 

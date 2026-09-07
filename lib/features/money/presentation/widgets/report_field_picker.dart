@@ -44,6 +44,8 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       // #880 — the owner's own texts.
       String f when f.startsWith('text.') => ReportFieldGroup.texts,
       'number' ||
+      'period_month' ||
+      'period_year' ||
       'period' ||
       'issued' ||
       'due_date' ||
@@ -130,6 +132,10 @@ String reportFieldMeaning(String field, AppLocalizations? l10n) =>
       'workspace' => l10n?.reportFieldMeaningWorkspace ?? 'The workspace\'s name',
       'workspace_address' => l10n?.reportFieldMeaningWorkspaceAddress ?? 'The workspace\'s address, or the document site\'s',
       'period' => l10n?.reportFieldMeaningPeriod ?? 'The month the document covers',
+      // #1002 — the month by name, and the year, for a designed label.
+      'period_month' => l10n?.reportFieldMeaningPeriodMonth ??
+          'The month of the period, by name (« September »)',
+      'period_year' => l10n?.reportFieldMeaningPeriodYear ?? 'The year of the period',
       'issued' => l10n?.reportFieldMeaningIssued ?? 'The issue date',
       'due_date' => l10n?.reportFieldMeaningDueDate ?? 'The settlement date',
       'purchase_order' => l10n?.reportFieldMeaningPurchaseOrder ?? 'The buyer\'s purchase-order reference',
@@ -234,8 +240,10 @@ String reportFieldGroupName(ReportFieldGroup group, AppLocalizations? l10n) =>
 /// What a field inserts: a token, or for the two loops the scaffold
 /// that iterates them — one table row per item, ready to edit.
 String reportFieldMarkup(String field) => switch (field) {
+      // #1002 — a subscription row composes its own wording from the
+      // month and the percentage; every other kind keeps its label.
       'lines' =>
-        '{% for line in lines %}{{ line.label }} | {{ line.amount }}{% endfor %}',
+        '{% for line in lines %}{% if line.kind == "subscription" %}{{ line.month }} {{ line.pct }} %{% else %}{{ line.label }}{% endif %} | {{ line.amount }}{% endfor %}',
       'vat' =>
         '{% for v in vat %}{{ v.rate }} | {{ v.net }} | {{ v.amount }}{% endfor %}',
       'usage_records' =>

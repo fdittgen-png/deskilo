@@ -21,6 +21,8 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
       'member': 'Alex Sample',
       'number': 'INV-2026-0042',
       'period': 'July 2026',
+      'period_month': 'July',
+      'period_year': '2026',
       'due_date': '19 sept. 2026',
       'purchase_order': 'ENG-2026-0009',
       'buyer_reference': 'SERVICE-42',
@@ -41,6 +43,9 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
       'lines': [
         {
           'label': l10n?.invoicePdfDescription ?? 'Subscription',
+          'kind': 'subscription',
+          'pct': '100',
+          'month': 'July',
           'amount': '120,00 €',
           'negative': false,
           'qty': '1',

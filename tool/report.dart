@@ -211,6 +211,8 @@ Map<String, Object?> _sampleData(String kind) {
     'workspace': 'COWORKONTI',
     'workspace_address': '4 avenue de Castelnau, 34120 Pézenas',
     'period': 'septembre 2026',
+    'period_month': 'Septembre',
+    'period_year': '2026',
     'issued': '30 sept. 2026',
     'issued_by': 'Mathieu',
     'total': '100,00 €',
@@ -220,7 +222,8 @@ Map<String, Object?> _sampleData(String kind) {
     'vat_total': '0,00 €',
     'refund_total': '0,00 €',
     'lines': [
-      {'label': 'Participation 100 %', 'qty': '1', 'unit_price': '100,00 €',
+      {'label': 'Septembre 100 %', 'kind': 'subscription', 'pct': '100', 'month': 'Septembre',
+       'qty': '1', 'unit_price': '100,00 €',
        'net': '100,00 €', 'vat_rate': '', 'amount': '100,00 €', 'negative': false},
     ],
     'vat': <Object?>[],
@@ -279,6 +282,7 @@ LIQUID: {{ field }}, {% if field != "" %}…{% endif %}, {% for line in lines %}
 PLACEHOLDERS
   ${InvoicePdfTemplate.placeholders.join(', ')}
   text.<key>   the owner's texts (#880): the file's <texts> element, or "text" in --data
+  lines        each row: label, kind, pct, month, qty, unit_price, net, vat_rate, amount, negative (#1002)
 ''');
   return 0;
 }

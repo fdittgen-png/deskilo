@@ -6786,6 +6786,13 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get reportFieldMeaningPeriodMonth =>
+      'Der Monat der Periode, mit Namen („September“)';
+
+  @override
+  String get reportFieldMeaningPeriodYear => 'Das Jahr der Periode';
+
+  @override
   String get featureNavigationStyle => 'Navigationswahl';
 
   @override

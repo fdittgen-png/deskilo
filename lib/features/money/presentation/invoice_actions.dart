@@ -328,6 +328,10 @@ Map<String, Object?> invoiceReportData(
     'member': invoice.clientName,
     'number': invoice.number,
     'period': invoicePeriodLabel(context, invoice),
+    // #1002 — the month's name and the year on their own, for a designed
+    // label such as « {{ period_month }} 100 % ».
+    'period_month': monthNameOf(l10n?.localeName, invoice.period),
+    'period_year': invoice.period?.split('-').first ?? '',
     'issued': dateFormat.format(invoice.issuedAt),
     // #910 — the settlement date, on the document itself.
     'due_date': dueAt == null || invoice.number.isEmpty
@@ -360,6 +364,11 @@ Map<String, Object?> invoiceReportData(
         {
           'label': invoiceLineText(l10n, line,
               association: association, period: invoice.period),
+          // #1002 — what the line IS, its percentage and its month, so
+          // a design composes its own wording for the recurring position.
+          'kind': line.kind,
+          'pct': line.kind == 'subscription' ? line.label : '',
+          'month': monthNameOf(l10n?.localeName, invoice.period),
           'amount': money(line.amountCents),
           'negative': line.amountCents < 0,
           // #480 — quantity, unit price and per-line VAT so a template
