@@ -6984,6 +6984,30 @@
   "@moneyFaceUsage": {
     "description": "#833 - the Money tab face showing usage records"
   },
+  "billParticipationMonth": "{month} {pct}%",
+  "@billParticipationMonth": {
+    "description": "#1000 the recurring position names its month: billParticipationMonth",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "billSubscriptionMonth": "Subscription {month} {pct}%",
+  "@billSubscriptionMonth": {
+    "description": "#1000 the recurring position names its month: billSubscriptionMonth",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
   "featureNavigationStyle": "Navigation choice",
   "@featureNavigationStyle": {
     "description": "#969 navigation style: featureNavigationStyle"

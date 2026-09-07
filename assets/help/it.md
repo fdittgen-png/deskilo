@@ -169,7 +169,7 @@ Ogni postazione, tavolo, ufficio e piano può avere una **scheda QR** stampata (
 
 Tutti gli orari qui sotto sono locali dello spazio, e gli esempi assumono la giornata lavorativa predefinita (08:00 – 12:00 – 17:00).
 
-**Prenotare in anticipo.** La forma possibile di una finestra dipende dalla granularità dello spazio (§8 Disponibilità):
+**Prenotare in anticipo.** La forma possibile di una finestra dipende dalla granularità dello spazio (§8 Disponibilità): Dal #1000 la riga nomina il suo mese — «Settembre 100 %» — così ogni fattura si legge come il mese a cui si riferisce.
 
 | Chiedi | Mezze giornate | Giornate intere | Griglia di minuti (5/15/30/60 min) | Orari reali / orari liberi |
 |---|---|---|---|---|

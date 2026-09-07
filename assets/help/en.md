@@ -714,7 +714,7 @@ The list of your schedules (state, rule, next due date) and the *Schedule a recu
 
 ### 9i. The consumption report
 
-Since the participation is **billed ahead of its month** and **consumed** during it, the month deserves a closing word. **Month consumption report** — on the Usage face and among the Documents — is a letter to the member: what the participation paid for (the fee, the included half-days), what was actually consumed (half-days, supplements), what is left or exceeded, and, beneath, **every usage record** of the month with its counted time. The figures are the statement's and the records' — nothing is recomputed. Like every letter it is viewed, saved or shared, printed with the workspace's letterhead and, once designed, its own layout (the designer lists it as *Consumption report*).
+Since the participation is **billed ahead of its month** and **consumed** during it, the month deserves a closing word. **Month consumption report** — on the Usage face and among the Documents — is a letter to the member: what the participation paid for (the fee, the included half-days), what was actually consumed (half-days, supplements), what is left or exceeded, and, beneath, **every usage record** of the month with its counted time. The figures are the statement's and the records' — nothing is recomputed. Like every letter it is viewed, saved or shared, printed with the workspace's letterhead and, once designed, its own layout (the designer lists it as *Consumption report*). Since #1000 the line names its month — « Septembre 100 % » — so every invoice reads as the month it is for.
 
 ## 10. Kiosk mode (wall tablet)
 

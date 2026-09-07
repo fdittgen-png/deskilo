@@ -180,7 +180,7 @@ void main() {
 
     // The read-only preview: subscription 50% (150.00), overage ×2
     // (16.00), the service line — and their total. No text fields.
-    expect(find.text('Subscription 50%'), findsOneWidget);
+    expect(find.textContaining(RegExp(r'^Subscription \w+ 50%$')), findsOneWidget);
     expect(find.textContaining('extra half-day'), findsOneWidget);
     expect(find.text('Coffee ×3'), findsOneWidget);
     expect(find.textContaining('Payment'), findsOneWidget,
@@ -273,7 +273,7 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('invoice-period-next')));
     await tester.pumpAndSettle();
-    expect(find.text('Subscription 50%'), findsOneWidget,
+    expect(find.textContaining(RegExp(r'^Subscription \w+ 50%$')), findsOneWidget,
         reason: 'the preview follows the picked month');
     // The current month cannot be exceeded.
     final next = tester.widget<IconButton>(
@@ -394,7 +394,7 @@ void main() {
       find.byKey(const ValueKey('invoice-replaces-banner')),
       findsOneWidget,
     );
-    expect(find.text('Subscription 50%'), findsOneWidget);
+    expect(find.textContaining(RegExp(r'^Subscription \w+ 50%$')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('invoice-submit')));
     await tester.pumpAndSettle();
 
@@ -786,7 +786,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('invoice-issue-member-1')));
     await tester.pumpAndSettle();
     // The issue sheet opens PREFILLED on the member and the month.
-    expect(find.text('Subscription 50%'), findsOneWidget);
+    expect(find.textContaining(RegExp(r'^Subscription \w+ 50%$')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('invoice-submit')));
     await tester.pumpAndSettle();
 
@@ -1117,7 +1117,7 @@ void main() {
 
     expect(find.byKey(const ValueKey('invoice-detail-number')),
         findsOneWidget);
-    expect(find.text('Subscription 50%'), findsOneWidget,
+    expect(find.textContaining(RegExp(r'^Subscription \w+ 50%$')), findsOneWidget,
         reason: 'reading an invoice no longer requires downloading a PDF');
     expect(find.text('Balance due'), findsOneWidget);
     expect(find.byKey(const ValueKey('invoice-detail-total')),

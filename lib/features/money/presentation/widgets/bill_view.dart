@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../period_label.dart';
 import '../invoice_line_text.dart';
 import '../../../../core/i18n/money_format.dart';
 import 'how_to_pay_tiles.dart';
@@ -500,7 +501,8 @@ class _SubscriptionCard extends StatelessWidget {
           children: [
             _BillLine(
               label: subscriptionLabel(l10n, statement.subscriptionPct,
-                  association: association),
+                  association: association,
+                  month: monthNameOf(l10n?.localeName, statement.period)),
               value: '−${money(statement.feeCents)}',
               emphasized: true,
             ),

@@ -6777,6 +6777,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get moneyFaceUsage => 'Utilizzo';
 
   @override
+  String billParticipationMonth(String month, int pct) {
+    return '$month $pct %';
+  }
+
+  @override
+  String billSubscriptionMonth(String month, int pct) {
+    return 'Abbonamento $month $pct %';
+  }
+
+  @override
   String get featureNavigationStyle => 'Scelta della navigazione';
 
   @override

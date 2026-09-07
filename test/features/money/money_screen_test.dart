@@ -83,7 +83,7 @@ void main() {
       find.text(DateFormat.yMMMM('en').format(kTestNow)),
       findsOneWidget,
     );
-    expect(find.text('Subscription 50%'), findsOneWidget);
+    expect(find.textContaining(RegExp(r'^Subscription \w+ 50%$')), findsOneWidget);
     expect(
       find.text('24 of 22 half-days used (22 open days)'),
       findsOneWidget,
@@ -404,7 +404,7 @@ void main() {
     expect(find.text('Open positions'), findsNothing);
     expect(find.text('Payments & credits'), findsNothing);
     // The subscription block and balance footer always render.
-    expect(find.text('Subscription 50%'), findsOneWidget);
+    expect(find.textContaining(RegExp(r'^Subscription \w+ 50%$')), findsOneWidget);
     expect(find.text('Balance'), findsOneWidget);
   });
 
@@ -430,7 +430,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(money.fetchedPeriods, contains(previous));
-    expect(find.text('Subscription 25%'), findsOneWidget);
+    expect(find.textContaining(RegExp(r'^Subscription \w+ 25%$')), findsOneWidget);
     final year = int.parse(previous.substring(0, 4));
     final month = int.parse(previous.substring(5));
     expect(
@@ -441,7 +441,7 @@ void main() {
     // Going forward again returns to the current period.
     await tester.tap(find.byIcon(Icons.chevron_right));
     await tester.pumpAndSettle();
-    expect(find.text('Subscription 50%'), findsOneWidget);
+    expect(find.textContaining(RegExp(r'^Subscription \w+ 50%$')), findsOneWidget);
   });
 
   testWidgets(

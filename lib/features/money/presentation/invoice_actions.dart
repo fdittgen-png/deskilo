@@ -358,7 +358,8 @@ Map<String, Object?> invoiceReportData(
     'lines': [
       for (final line in invoice.lines)
         {
-          'label': invoiceLineText(l10n, line, association: association),
+          'label': invoiceLineText(l10n, line,
+              association: association, period: invoice.period),
           'amount': money(line.amountCents),
           'negative': line.amountCents < 0,
           // #480 — quantity, unit price and per-line VAT so a template
@@ -1312,7 +1313,8 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     addressWindow: addressWindow,
     invoice: invoice,
     reportImages: reportImages,
-    lineText: (line) => invoiceLineText(l10n, line, association: association),
+    lineText: (line) => invoiceLineText(l10n, line,
+        association: association, period: invoice.period),
     activityText: (entry) => annexEntryText(l10n, entry),
     strings: strings,
     money: (cents) => currency.formatMinor(cents),
@@ -1351,7 +1353,8 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
     seller: seller,
     buyer: buyer,
     iban: iban,
-    lineText: (line) => invoiceLineText(l10n, line, association: association),
+    lineText: (line) => invoiceLineText(l10n, line,
+        association: association, period: invoice.period),
     // #941 — the same due date and terms the PDF prints.
     dueDate: invoiceDueAt(ref, invoice),
     paymentTerms: memberTermsFor(ref, invoice.memberId)?.paymentTerms ?? '',
@@ -2122,8 +2125,8 @@ Future<void> exportEInvoice(
         seller: seller,
         buyer: buyer,
         iban: workspaceIban(workspace),
-        lineText: (line) =>
-            invoiceLineText(l10n, line, association: association),
+        lineText: (line) => invoiceLineText(l10n, line,
+            association: association, period: invoice.period),
       );
       final bytes = Uint8List.fromList(utf8.encode(xml));
       final fileName = '${safeFileSlug(invoice.number)}.xml';

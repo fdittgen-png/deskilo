@@ -704,7 +704,7 @@ La liste de vos programmations (état, règle, prochaine échéance) et le formu
 
 ### 9i. Le rapport de consommation
 
-Puisque la participation est **facturée avant son mois** et **consommée** pendant, le mois mérite un mot de clôture. **Rapport de consommation du mois** — sur la face Utilisation et parmi les Documents — est une lettre au membre : ce que la participation a payé (la cotisation, les demi-journées incluses), ce qui a réellement été consommé (demi-journées, suppléments), ce qui reste ou dépasse, et, dessous, **chaque relevé d'utilisation** du mois avec son temps compté. Les chiffres sont ceux du relevé et des enregistrements — rien n'est recalculé. Comme toute lettre, il se consulte, s'enregistre ou se partage, imprimé avec l'en-tête de l'espace et, une fois conçu, sa propre maquette (le concepteur le liste sous *Rapport de consommation*).
+Puisque la participation est **facturée avant son mois** et **consommée** pendant, le mois mérite un mot de clôture. **Rapport de consommation du mois** — sur la face Utilisation et parmi les Documents — est une lettre au membre : ce que la participation a payé (la cotisation, les demi-journées incluses), ce qui a réellement été consommé (demi-journées, suppléments), ce qui reste ou dépasse, et, dessous, **chaque relevé d'utilisation** du mois avec son temps compté. Les chiffres sont ceux du relevé et des enregistrements — rien n'est recalculé. Comme toute lettre, il se consulte, s'enregistre ou se partage, imprimé avec l'en-tête de l'espace et, une fois conçu, sa propre maquette (le concepteur le liste sous *Rapport de consommation*). Depuis #1000 la ligne nomme son mois — « Septembre 100 % » — pour que chaque facture se lise comme le mois qu'elle couvre.
 
 ## 10. Mode borne (tablette murale)
 

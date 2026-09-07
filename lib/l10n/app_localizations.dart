@@ -11831,6 +11831,18 @@ abstract class AppLocalizations {
   /// **'Usage'**
   String get moneyFaceUsage;
 
+  /// #1000 the recurring position names its month: billParticipationMonth
+  ///
+  /// In en, this message translates to:
+  /// **'{month} {pct}%'**
+  String billParticipationMonth(String month, int pct);
+
+  /// #1000 the recurring position names its month: billSubscriptionMonth
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription {month} {pct}%'**
+  String billSubscriptionMonth(String month, int pct);
+
   /// #969 navigation style: featureNavigationStyle
   ///
   /// In en, this message translates to:
