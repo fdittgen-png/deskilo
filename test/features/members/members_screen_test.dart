@@ -119,16 +119,19 @@ void main() {
           status: MemberStatus.active,
         ),
       );
-    // The viewer is an admin, NOT the owner: every kiosk-row action is
-    // owner-gated, which used to collapse into showing nothing at all.
+    // The viewer is an admin, NOT the owner. Once every kiosk-row action
+    // was owner-gated and the sheet collapsed into nothing; since #982
+    // the admin row holds operateKiosk by default, so the sheet offers
+    // the kiosk action itself — never a silent nothing either way.
     workspace.myMember = workspace.myMember.copyWith(isOwner: false);
     await pumpMembersWith(tester, workspace);
 
     await openSheet(tester, 'Ana');
 
+    expect(find.text('Revert kiosk to member'), findsOneWidget);
     expect(
       find.text('Only the workspace owner can change this member.'),
-      findsOneWidget,
+      findsNothing,
     );
   });
 
@@ -488,7 +491,9 @@ void main() {
     expect(find.text('Badges'), findsOneWidget);
     expect(find.text('Subscription'), findsNothing);
     expect(find.text('Make admin'), findsNothing);
-    expect(find.text('Make kiosk device'), findsNothing);
+    // #982 — the admin row holds operateKiosk by default: the kiosk
+    // action is theirs now; the owner-only ones below stay hidden.
+    expect(find.text('Make kiosk device'), findsOneWidget);
     expect(find.text('When days run out'), findsNothing);
     expect(find.text('Pause membership'), findsNothing);
 

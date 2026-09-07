@@ -233,7 +233,10 @@ class MembersScreen extends ConsumerWidget {
           label: l10n?.coOwnerActivate ?? 'Promote to owner now',
           onTap: () => activateMemberCoOwner(context, ref, member),
         ),
+      // #982 — the kiosk is operateKiosk's; a kiosk viewing ITSELF keeps
+      // the one self-revert action below, not this one as well.
       if (perms.contains(WorkspacePermission.operateKiosk) &&
+          !isSelf &&
           !member.isOwner &&
           active &&
           (member.isKiosk || kioskOn))
