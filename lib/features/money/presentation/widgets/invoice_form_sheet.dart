@@ -331,7 +331,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
                 key: ValueKey('invoice-preview-line-$i'),
                 children: [
                   Expanded(child: Text(invoiceLineText(l10n, line,
-                      association: widget.association))),
+                      association: widget.association, period: _period))),
                   Text(widget.currency.formatMinor(line.amountCents)),
                 ],
               ),

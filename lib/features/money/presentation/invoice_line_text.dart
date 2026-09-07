@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import '../../../l10n/app_localizations.dart';
 import '../domain/invoice.dart';
+import 'period_label.dart';
 
 /// Localized wording for one DERIVED invoice position (0062): the kind
 /// names the tracked source, the label carries its data. Reuses the
@@ -15,24 +16,38 @@ import '../domain/invoice.dart';
 /// supply and is exactly the wording that argues the association into
 /// the VAT-liable trading sector. So the word follows the seller kind,
 /// and every surface that names the position uses this one function.
+///
+/// #1000 — with [month] the position names the month it covers
+/// ('Septembre 100 %'), so every invoice reads as the month it is for.
 String subscriptionLabel(
   AppLocalizations? l10n,
   int pct, {
   required bool association,
-}) =>
-    association
-        ? (l10n?.billParticipation(pct) ?? 'Participation $pct%')
-        : (l10n?.billSubscription(pct) ?? 'Subscription $pct%');
+  String month = '',
+}) {
+  if (month.isNotEmpty) {
+    return association
+        ? (l10n?.billParticipationMonth(month, pct) ?? '$month $pct%')
+        : (l10n?.billSubscriptionMonth(month, pct) ??
+            'Subscription $month $pct%');
+  }
+  return association
+      ? (l10n?.billParticipation(pct) ?? 'Participation $pct%')
+      : (l10n?.billSubscription(pct) ?? 'Subscription $pct%');
+}
 
 String invoiceLineText(
   AppLocalizations? l10n,
   InvoiceLine line, {
   bool association = false,
+  /// #1000 — the invoice's period, so the recurring line names its month.
+  String? period,
 }) =>
     switch (line.kind) {
       'subscription' => subscriptionLabel(
           l10n, int.tryParse(line.label) ?? 0,
-          association: association),
+          association: association,
+          month: monthNameOf(l10n?.localeName, period)),
       'overage' =>
         l10n?.billOverage(line.quantity) ?? '${line.quantity} extra half-days',
       'accessories' =>

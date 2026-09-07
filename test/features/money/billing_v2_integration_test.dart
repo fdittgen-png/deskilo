@@ -287,7 +287,7 @@ void main() {
         );
       await pumpMoney(tester, money: money);
 
-      expect(find.text('Subscription 25%'), findsOneWidget);
+      expect(find.textContaining(RegExp(r'^Subscription \w+ 25%$')), findsOneWidget);
       expect(
         find.text('12 of 12 half-days used (23 open days)'),
         findsOneWidget,

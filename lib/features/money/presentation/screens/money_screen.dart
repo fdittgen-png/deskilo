@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../period_label.dart';
 import '../invoice_line_text.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/i18n/money_format.dart';
@@ -219,7 +220,10 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     final strings = BillPdfStrings(
       title: l10n?.billPdfTitle ?? 'Monthly bill',
       subscription: subscriptionLabel(l10n, statement.subscriptionPct,
-          association: ref.watch(sellerIsAssociationProvider)),
+          association: ref.watch(sellerIsAssociationProvider),
+          // #1000 — the bill's position names its month too.
+          month: monthNameOf(locale,
+              '${_month.year}-${_month.month.toString().padLeft(2, '0')}')),
       entitlement: l10n?.billEntitlement(
             statement.usedHalfDays,
             statement.includedHalfDays,

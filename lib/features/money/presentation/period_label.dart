@@ -17,6 +17,21 @@ String monthLabel(BuildContext context, String period) {
   ).format(DateTime(year, month));
 }
 
+/// #1000 — the month's NAME alone ('Septembre', 'September'), for the
+/// recurring position that must say which month it covers. Pure: the
+/// locale comes in, so the PDF, the e-invoice and the exports can call
+/// it without a BuildContext. '' for anything that is not 'yyyy-MM'.
+String monthNameOf(String? locale, String? period) {
+  if (period == null) return '';
+  final parts = period.split('-');
+  if (parts.length < 2) return '';
+  final year = int.tryParse(parts[0]);
+  final month = int.tryParse(parts[1]);
+  if (year == null || month == null) return '';
+  final name = DateFormat.MMMM(locale).format(DateTime(year, month));
+  return name.isEmpty ? '' : name[0].toUpperCase() + name.substring(1);
+}
+
 /// What an invoice COVERS, in words. The server stores the raw period as
 /// the title ('2026-07'), which no user should ever read — so the period
 /// wins and [Invoice.title] only serves legacy free-form invoices (0060).

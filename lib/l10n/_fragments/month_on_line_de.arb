@@ -1,0 +1,27 @@
+{
+  "@@locale": "de",
+  "billParticipationMonth": "{month} {pct} %",
+  "@billParticipationMonth": {
+    "description": "#1000 the recurring position names its month: billParticipationMonth",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "billSubscriptionMonth": "Abonnement {month} {pct} %",
+  "@billSubscriptionMonth": {
+    "description": "#1000 the recurring position names its month: billSubscriptionMonth",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "pct": {
+        "type": "int"
+      }
+    }
+  }
+}

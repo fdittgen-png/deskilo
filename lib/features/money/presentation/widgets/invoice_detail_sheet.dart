@@ -253,7 +253,10 @@ class _InvoiceDetailBody extends ConsumerWidget {
                   key: ValueKey('invoice-detail-line-$i'),
                   padding: const EdgeInsets.symmetric(vertical: 2),
                   child: Row(children: [
-                    Expanded(child: Text(invoiceLineText(l10n, position, association: association))),
+                    Expanded(
+                        child: Text(invoiceLineText(l10n, position,
+                            association: association,
+                            period: invoice.period))),
                     const SizedBox(width: AppSpacing.sm),
                     Text(currency.formatMinor(position.amountCents)),
                   ]),
@@ -335,7 +338,8 @@ class _InvoiceDetailBody extends ConsumerWidget {
                               Expanded(
                                 child: Text(
                                   invoiceLineText(l10n, position,
-                                      association: association),
+                                      association: association,
+                                      period: source.period),
                                   style: theme.textTheme.bodySmall
                                       ?.copyWith(color: muted),
                                 ),

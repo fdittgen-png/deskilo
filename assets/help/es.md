@@ -201,7 +201,7 @@ Todo ello se aplica en **un único sitio compartido del servidor**, y por eso el
 | Posición | Una reserva (o un registro espontáneo) fuera de horario |
 |---|---|
 | **Prohibido** | ❌ rechazada en todas las granularidades — incluida la prórroga vespertina que las granularidades por jornadas permiten siempre, e incluida una reserva que simplemente **se pasa** del fin de la jornada (16:00–20:00) o empieza antes de abrir |
-| **Solo espontáneo** | ✅ el registro espontáneo, en **cualquiera de los dos extremos del día** — la llegada temprana de las 6:00 tanto como la prórroga vespertina hasta medianoche — ❌ reservar esa ventana **por adelantado**, y ❌ una reserva que se pasa del fin de la jornada |
+| **Solo espontáneo** | ✅ el registro espontáneo, en **cualquiera de los dos extremos del día** — la llegada temprana de las 6:00 tanto como la prórroga vespertina hasta medianoche — ❌ reservar esa ventana **por adelantado**, y ❌ una reserva que se pasa del fin de la jornada | Desde #1000 la línea nombra su mes — «Septiembre 100 %» — para que cada factura se lea como el mes al que corresponde.
 | **Gratis** | ✅ permitida, pero nunca contada ni facturada: la reserva es pura información — los demás ven que el espacio está ocupado, y un registro dice dónde encontrar a la persona |
 | **De pago** (el defecto) | ✅ permitida y contada como uso ordinario — **salvo** un día en el que ya mantienes una reserva normal dentro del horario: la parte de fuera viaja entonces gratis |
 
