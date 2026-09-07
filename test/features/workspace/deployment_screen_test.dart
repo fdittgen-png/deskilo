@@ -55,6 +55,11 @@ void main() {
     expect(picked, {'tariffs', 'vat'});
     expect(withRequirements(['roles'], FakeDeploymentRepository.defaultRegistry),
         {'roles'});
+    // #1004 — the plan needs the accessories it names and the sites it
+    // stands on, and accessories need the VAT rates.
+    expect(
+        withRequirements(['floor_plan'], FakeDeploymentRepository.defaultRegistry),
+        {'floor_plan', 'accessories', 'sites', 'vat'});
   });
 
   testWidgets('from the dev, an owner previews and deploys to the prod; the '

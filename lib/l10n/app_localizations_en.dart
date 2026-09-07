@@ -1554,6 +1554,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Names, e-mails, phones and addresses are blurred on this device\'s screen — for screenshots and videos.';
 
   @override
+  String get deployEntityFloorPlan => 'Floor plans (levels, places, images)';
+
+  @override
   String get deploymentFlowToProd => 'To PROD';
 
   @override

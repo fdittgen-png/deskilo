@@ -410,6 +410,8 @@ String deploymentEntityName(AppLocalizations? l10n, String key) =>
       'packages' => l10n?.deployEntityPackages ?? 'Packages',
       'accessories' => l10n?.deployEntityAccessories ?? 'Accessories',
       'sites' => l10n?.deployEntitySites ?? 'Sites',
+      'floor_plan' =>
+        l10n?.deployEntityFloorPlan ?? 'Floor plans (levels, places, images)',
       'booking_rules' => l10n?.deployEntityBookingRules ?? 'Booking rules',
       'validation_rules' =>
         l10n?.deployEntityValidationRules ?? 'Validation rules',

@@ -2772,6 +2772,12 @@ abstract class AppLocalizations {
   /// **'Names, e-mails, phones and addresses are blurred on this device\'s screen — for screenshots and videos.'**
   String get demoModeSubtitle;
 
+  /// #1004 deploy entity: floor plan
+  ///
+  /// In en, this message translates to:
+  /// **'Floor plans (levels, places, images)'**
+  String get deployEntityFloorPlan;
+
   /// #998 deployment pull: deploymentFlowToProd
   ///
   /// In en, this message translates to:

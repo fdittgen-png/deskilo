@@ -15,6 +15,8 @@ class FakeDeploymentRepository implements DeploymentRepository {
     DeployableEntity(key: 'packages', kind: 'master_data', requires: ['vat']),
     DeployableEntity(
         key: 'accessories', kind: 'master_data', requires: ['vat']),
+    DeployableEntity(
+        key: 'floor_plan', kind: 'master_data', requires: ['accessories', 'sites']),
     DeployableEntity(key: 'sites', kind: 'master_data'),
     DeployableEntity(key: 'booking_rules', kind: 'configuration'),
     DeployableEntity(key: 'validation_rules', kind: 'configuration'),

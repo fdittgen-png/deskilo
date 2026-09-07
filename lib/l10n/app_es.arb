@@ -1127,6 +1127,10 @@
   "@demoModeSubtitle": {
     "description": "#970 demo mode: demoModeSubtitle"
   },
+  "deployEntityFloorPlan": "Planos (plantas, puestos, imágenes)",
+  "@deployEntityFloorPlan": {
+    "description": "#1004 deploy entity: floor plan"
+  },
   "deploymentFlowToProd": "A PROD",
   "@deploymentFlowToProd": {
     "description": "#998 deployment pull: deploymentFlowToProd"

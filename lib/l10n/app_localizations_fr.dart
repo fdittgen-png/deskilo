@@ -1562,6 +1562,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Noms, courriels, téléphones et adresses sont floutés à l\'écran de cet appareil — pour les captures d\'écran et les vidéos.';
 
   @override
+  String get deployEntityFloorPlan => 'Plans (étages, places, images)';
+
+  @override
   String get deploymentFlowToProd => 'Vers la PROD';
 
   @override
