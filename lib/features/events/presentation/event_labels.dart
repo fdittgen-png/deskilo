@@ -27,6 +27,15 @@ String eventTypeLabel(AppLocalizations? l10n, EventType type) {
       l10n?.eventTypeUsageRecordDelete ?? 'Usage record removal',
     EventType.paymentTermsChange =>
       l10n?.eventTypePaymentTermsChange ?? 'Payment conditions',
+    EventType.invoiceIssue => l10n?.eventTypeInvoiceIssue ?? 'Invoice issue',
+    EventType.invoiceVoid => l10n?.eventTypeInvoiceVoid ?? 'Invoice cancellation',
+    EventType.refund => l10n?.eventTypeRefund ?? 'Refund',
+    EventType.memberStatusChange =>
+      l10n?.eventTypeMemberStatusChange ?? 'Membership change',
+    EventType.subscriptionChange =>
+      l10n?.eventTypeSubscriptionChange ?? 'Subscription change',
+    EventType.matrixChange =>
+      l10n?.eventTypeMatrixChange ?? 'Permission matrix change',
     EventType.invoiceWriteoff =>
       l10n?.eventTypeInvoiceWriteoff ?? 'Outstanding write-off',
     EventType.invoiceReminder =>

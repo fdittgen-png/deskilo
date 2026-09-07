@@ -45,6 +45,10 @@ sealed class ValidationPolicy with _$ValidationPolicy {
     /// one open quorum: the second is requested once the first passed,
     /// and the trail numbers the step each decision answered.
     @Default(false) bool sequential,
+
+    /// #982 — the amount threshold: below it the act applies at once;
+    /// 0 means every amount. Only the money domains read it.
+    @Default(0) int minAmountCents,
   }) = _ValidationPolicy;
 
   /// Pre-quorum behavior for workspaces/types without a stored row:

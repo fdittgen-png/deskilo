@@ -1,0 +1,39 @@
+{
+  "@@locale": "en",
+  "eventTypeInvoiceIssue": "Invoice issue",
+  "@eventTypeInvoiceIssue": {
+    "description": "#982 validation domains: eventTypeInvoiceIssue"
+  },
+  "eventTypeInvoiceVoid": "Invoice cancellation",
+  "@eventTypeInvoiceVoid": {
+    "description": "#982 validation domains: eventTypeInvoiceVoid"
+  },
+  "eventTypeRefund": "Refund",
+  "@eventTypeRefund": {
+    "description": "#982 validation domains: eventTypeRefund"
+  },
+  "eventTypeMemberStatusChange": "Membership change",
+  "@eventTypeMemberStatusChange": {
+    "description": "#982 validation domains: eventTypeMemberStatusChange"
+  },
+  "eventTypeSubscriptionChange": "Subscription change",
+  "@eventTypeSubscriptionChange": {
+    "description": "#982 validation domains: eventTypeSubscriptionChange"
+  },
+  "eventTypeMatrixChange": "Permission matrix change",
+  "@eventTypeMatrixChange": {
+    "description": "#982 validation domains: eventTypeMatrixChange"
+  },
+  "validationSentForApproval": "Sent for validation — it applies once approved.",
+  "@validationSentForApproval": {
+    "description": "#982 validation domains: validationSentForApproval"
+  },
+  "validationMinAmount": "Only above this amount",
+  "@validationMinAmount": {
+    "description": "#982 validation domains: validationMinAmount"
+  },
+  "validationMinAmountDesc": "Below it the act applies at once. Empty: every amount.",
+  "@validationMinAmountDesc": {
+    "description": "#982 validation domains: validationMinAmountDesc"
+  }
+}

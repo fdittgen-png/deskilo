@@ -8611,6 +8611,36 @@ class AppLocalizationsFr extends AppLocalizations {
       'La validation suivante est demandée une fois la précédente passée, et l\'historique numérote chaque étape.';
 
   @override
+  String get eventTypeInvoiceIssue => 'Émission de facture';
+
+  @override
+  String get eventTypeInvoiceVoid => 'Annulation de facture';
+
+  @override
+  String get eventTypeRefund => 'Remboursement';
+
+  @override
+  String get eventTypeMemberStatusChange => 'Changement d\'adhésion';
+
+  @override
+  String get eventTypeSubscriptionChange => 'Changement d\'abonnement';
+
+  @override
+  String get eventTypeMatrixChange =>
+      'Changement de la matrice des permissions';
+
+  @override
+  String get validationSentForApproval =>
+      'Envoyé en validation — appliqué une fois approuvé.';
+
+  @override
+  String get validationMinAmount => 'Seulement au-delà de ce montant';
+
+  @override
+  String get validationMinAmountDesc =>
+      'En dessous, l\'acte s\'applique aussitôt. Vide : tout montant.';
+
+  @override
   String get vatTitle => 'TVA';
 
   @override

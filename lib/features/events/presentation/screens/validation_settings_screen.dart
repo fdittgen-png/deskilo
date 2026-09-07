@@ -48,6 +48,13 @@ const _cardTypes = [
   EventType.usageRecordDelete,
   // #881 — a member's payment conditions, changed by request.
   EventType.paymentTermsChange,
+  // #982 — the six domains that had no policy.
+  EventType.invoiceIssue,
+  EventType.invoiceVoid,
+  EventType.refund,
+  EventType.memberStatusChange,
+  EventType.subscriptionChange,
+  EventType.matrixChange,
 ];
 
 /// A pickable validator: an active non-owner admin (owners always may

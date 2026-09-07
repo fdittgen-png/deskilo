@@ -153,6 +153,8 @@ class SupabaseEventRepository implements EventRepository {
         // #840 — the owner's own-act exception, and one-at-a-time asking.
         'owner_may_self_validate': policy.ownerMaySelfValidate,
         'sequential': policy.sequential,
+        // #982 — the amount threshold.
+        'min_amount_cents': policy.minAmountCents,
       },
       onConflict: 'workspace_id,event_type',
     );
@@ -199,5 +201,6 @@ class SupabaseEventRepository implements EventRepository {
         ownerMaySelfValidate:
             row['owner_may_self_validate'] as bool? ?? false,
         sequential: row['sequential'] as bool? ?? false,
+        minAmountCents: row['min_amount_cents'] as int? ?? 0,
       );
 }

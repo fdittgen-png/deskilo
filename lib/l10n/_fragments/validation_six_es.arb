@@ -1,0 +1,39 @@
+{
+  "@@locale": "es",
+  "eventTypeInvoiceIssue": "Emisión de factura",
+  "@eventTypeInvoiceIssue": {
+    "description": "#982 validation domains: eventTypeInvoiceIssue"
+  },
+  "eventTypeInvoiceVoid": "Anulación de factura",
+  "@eventTypeInvoiceVoid": {
+    "description": "#982 validation domains: eventTypeInvoiceVoid"
+  },
+  "eventTypeRefund": "Reembolso",
+  "@eventTypeRefund": {
+    "description": "#982 validation domains: eventTypeRefund"
+  },
+  "eventTypeMemberStatusChange": "Cambio de membresía",
+  "@eventTypeMemberStatusChange": {
+    "description": "#982 validation domains: eventTypeMemberStatusChange"
+  },
+  "eventTypeSubscriptionChange": "Cambio de suscripción",
+  "@eventTypeSubscriptionChange": {
+    "description": "#982 validation domains: eventTypeSubscriptionChange"
+  },
+  "eventTypeMatrixChange": "Cambio de la matriz de permisos",
+  "@eventTypeMatrixChange": {
+    "description": "#982 validation domains: eventTypeMatrixChange"
+  },
+  "validationSentForApproval": "Enviado a validación — se aplica una vez aprobado.",
+  "@validationSentForApproval": {
+    "description": "#982 validation domains: validationSentForApproval"
+  },
+  "validationMinAmount": "Solo por encima de este importe",
+  "@validationMinAmount": {
+    "description": "#982 validation domains: validationMinAmount"
+  },
+  "validationMinAmountDesc": "Por debajo, el acto se aplica de inmediato. Vacío: cualquier importe.",
+  "@validationMinAmountDesc": {
+    "description": "#982 validation domains: validationMinAmountDesc"
+  }
+}

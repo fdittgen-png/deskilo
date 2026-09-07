@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+import '../../l10n/app_localizations.dart';
+import '../validation/pending_validation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../ui/app_snack.dart';
@@ -29,6 +31,20 @@ Future<bool> runGuarded(
   try {
     await action();
     return true;
+  } on PendingValidationException catch (e, st) {
+    // #982 — not a failure: the policy holds the act for a decision. One
+    // notice, the same everywhere, and the caller treats it as "not
+    // done" (the feed shows the pending request).
+    TraceLogger.instance.log(TraceLevel.info, domain, '$message: pending validation ${e.eventId}');
+    debugPrint('$message: pending validation $st');
+    if (context.mounted) {
+      AppSnack.info(
+        context,
+        AppLocalizations.of(context)?.validationSentForApproval ??
+            'Sent for validation — it applies once approved.',
+      );
+    }
+    return false;
   } catch (e, st) {
     debugPrint('$message: $e\n$st');
     TraceLogger.instance.error(domain, message, error: e, stackTrace: st);

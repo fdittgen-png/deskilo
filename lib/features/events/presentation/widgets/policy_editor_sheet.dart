@@ -51,7 +51,18 @@ class PolicyEditorSheet extends StatefulWidget {
 class PolicyEditorSheetState extends State<PolicyEditorSheet> {
   static const _maxRequired = 10;
 
+  /// The domains where an amount exists to compare with.
+  bool get _amountDomain => const {
+        'payment', 'expense', 'service_charge', 'invoice_issue', 'invoice_void',
+        'refund', 'invoice_payment', 'invoice_writeoff',
+      }.contains(widget.initial.eventType);
+
   late int _requiredCount = widget.initial.requiredCount.clamp(1, _maxRequired);
+  // #982 — the amount threshold, in whole currency units on screen.
+  late final TextEditingController _minAmount = TextEditingController(
+      text: widget.initial.minAmountCents == 0
+          ? ''
+          : (widget.initial.minAmountCents ~/ 100).toString());
   late bool _adminsMayValidate = widget.initial.adminsMayValidate;
   late bool _ownerRequired = widget.initial.ownerRequired;
 
@@ -111,6 +122,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
     Navigator.of(context).pop(
       widget.initial.copyWith(
         requiredCount: _requiredCount,
+        minAmountCents: (int.tryParse(_minAmount.text.trim()) ?? 0) * 100,
         adminsMayValidate: _adminsMayValidate,
         eligibleAdminIds: switch (_scope) {
           'listed' => _selectedPeople.toList()..sort(),
@@ -297,6 +309,23 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                   onChanged: (value) =>
                       setState(() => _ownerMaySelfValidate = value),
                 ),
+                // #982 — only above this amount does the policy hold the act;
+                // empty means every amount.
+                if (_amountDomain)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: TextField(
+                      key: const Key('validation-min-amount'),
+                      controller: _minAmount,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: l10n?.validationMinAmount ?? 'Only above this amount',
+                        helperText: l10n?.validationMinAmountDesc ??
+                            'Below it the act applies at once. Empty: every amount.',
+                        border: const OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
                 SwitchListTile(
                   key: const Key('validation-sequential'),
                   contentPadding: EdgeInsets.zero,

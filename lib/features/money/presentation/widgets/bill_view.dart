@@ -663,6 +663,12 @@ class _OpenPositionsCard extends StatelessWidget {
       case EventType.reservation:
       case EventType.spaceReservation:
       case EventType.invoicePayment:
+      case EventType.invoiceIssue:
+      case EventType.invoiceVoid:
+      case EventType.refund:
+      case EventType.memberStatusChange:
+      case EventType.subscriptionChange:
+      case EventType.matrixChange:
       case EventType.adjustment:
         return l10n?.eventTypeAdjustment ?? 'Adjustment';
     }

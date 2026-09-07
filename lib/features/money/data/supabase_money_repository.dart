@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/validation/pending_validation.dart';
 import 'dart:convert' show base64Encode;
 import 'dart:typed_data';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -191,10 +192,12 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override
   Future<void> settleCreditInvoice(String invoiceId,
       {String note = ''}) async {
-    await _client.rpc<void>('settle_credit_invoice', params: {
+    // #982 — through the refund policy.
+    final answer = await _client.rpc<dynamic>('request_refund', params: {
       'p_invoice_id': invoiceId,
       'p_note': note,
     });
+    applyOrPending(answer as Map);
   }
 
   @override
@@ -505,18 +508,33 @@ class SupabaseMoneyRepository implements MoneyRepository {
     String buyerReference = '',
     String purchaseOrder = '',
   }) async {
-    final id = await _client.rpc<dynamic>('create_invoice', params: {
+    // #982 — a replacement is a correction of a document of record and
+    // issues directly; a new invoice goes through the policy, which
+    // holds it (pending) or applies it at once.
+    if (replacesId != null) {
+      final id = await _client.rpc<dynamic>('create_invoice', params: {
+        'p_workspace_id': workspaceId,
+        'p_member_id': memberId,
+        'p_period': period,
+        'p_replaces': replacesId,
+        'p_detailed': detailed,
+        'p_buyer_reference': buyerReference,
+        'p_purchase_order': purchaseOrder,
+        'p_kind': kind.name,
+      });
+      return id as String;
+    }
+    final answer = await _client.rpc<dynamic>('request_invoice_issue', params: {
       'p_workspace_id': workspaceId,
       'p_member_id': memberId,
       'p_period': period,
-      'p_replaces': replacesId,
-      'p_detailed': detailed,
-      // #827 — the kind (0142); full stays the default.
-      'p_buyer_reference': buyerReference,
-      'p_purchase_order': purchaseOrder,
       'p_kind': kind.name,
+      'p_detailed': detailed,
+      'p_allow_zero': false,
+      'p_buyer_reference': buyerReference.isEmpty ? null : buyerReference,
+      'p_purchase_order': purchaseOrder.isEmpty ? null : purchaseOrder,
     });
-    return id as String;
+    return applyOrPending(answer as Map);
   }
 
   @override
@@ -550,7 +568,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override
   Future<void> voidInvoice(String invoiceId) async {
     await _client
-        .rpc<void>('void_invoice', params: {'p_invoice_id': invoiceId});
+        .rpc<dynamic>('request_invoice_void', params: {'p_invoice_id': invoiceId})
+        .then((answer) => applyOrPending(answer as Map, idKey: 'invoice_id'));
   }
 
   @override
