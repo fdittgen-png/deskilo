@@ -6730,6 +6730,34 @@ class AppLocalizationsEs extends AppLocalizations {
   String get paymentTermsNone => 'Sin condiciones redactadas';
 
   @override
+  String get permManageSites => 'Gestionar sedes y plantas';
+
+  @override
+  String get permManageBilling => 'Gestionar tarifas y reglas de facturación';
+
+  @override
+  String get permManageReservations => 'Gestionar reservas de otros';
+
+  @override
+  String get permOperateKiosk => 'Operar el quiosco y las tarjetas';
+
+  @override
+  String get permExportData => 'Exportar contabilidad y datos';
+
+  @override
+  String get permDesignDocuments => 'Diseñar los documentos';
+
+  @override
+  String get permViewPersonalData =>
+      'Consultar los datos personales de los miembros';
+
+  @override
+  String get permManageIntegrations => 'Gestionar integraciones';
+
+  @override
+  String get permManageConfiguration => 'Gestionar la configuración';
+
+  @override
   String get featurePersonalInfo => 'Datos personales';
 
   @override

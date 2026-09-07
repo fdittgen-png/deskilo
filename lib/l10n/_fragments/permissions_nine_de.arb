@@ -1,0 +1,39 @@
+{
+  "@@locale": "de",
+  "permManageSites": "Standorte und Ebenen verwalten",
+  "@permManageSites": {
+    "description": "#982 permission catalog: permManageSites"
+  },
+  "permManageBilling": "Tarife und Abrechnungsregeln verwalten",
+  "@permManageBilling": {
+    "description": "#982 permission catalog: permManageBilling"
+  },
+  "permManageReservations": "Reservierungen anderer verwalten",
+  "@permManageReservations": {
+    "description": "#982 permission catalog: permManageReservations"
+  },
+  "permOperateKiosk": "Kiosk und Badges bedienen",
+  "@permOperateKiosk": {
+    "description": "#982 permission catalog: permOperateKiosk"
+  },
+  "permExportData": "Buchhaltung und Daten exportieren",
+  "@permExportData": {
+    "description": "#982 permission catalog: permExportData"
+  },
+  "permDesignDocuments": "Dokumente gestalten",
+  "@permDesignDocuments": {
+    "description": "#982 permission catalog: permDesignDocuments"
+  },
+  "permViewPersonalData": "Persönliche Daten der Mitglieder lesen",
+  "@permViewPersonalData": {
+    "description": "#982 permission catalog: permViewPersonalData"
+  },
+  "permManageIntegrations": "Integrationen verwalten",
+  "@permManageIntegrations": {
+    "description": "#982 permission catalog: permManageIntegrations"
+  },
+  "permManageConfiguration": "Konfiguration verwalten",
+  "@permManageConfiguration": {
+    "description": "#982 permission catalog: permManageConfiguration"
+  }
+}

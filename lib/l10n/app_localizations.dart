@@ -11765,6 +11765,60 @@ abstract class AppLocalizations {
   /// **'No conditions written yet'**
   String get paymentTermsNone;
 
+  /// #982 permission catalog: permManageSites
+  ///
+  /// In en, this message translates to:
+  /// **'Manage sites and levels'**
+  String get permManageSites;
+
+  /// #982 permission catalog: permManageBilling
+  ///
+  /// In en, this message translates to:
+  /// **'Manage tariffs and billing rules'**
+  String get permManageBilling;
+
+  /// #982 permission catalog: permManageReservations
+  ///
+  /// In en, this message translates to:
+  /// **'Manage reservations of others'**
+  String get permManageReservations;
+
+  /// #982 permission catalog: permOperateKiosk
+  ///
+  /// In en, this message translates to:
+  /// **'Operate the kiosk and badges'**
+  String get permOperateKiosk;
+
+  /// #982 permission catalog: permExportData
+  ///
+  /// In en, this message translates to:
+  /// **'Export accounting and data'**
+  String get permExportData;
+
+  /// #982 permission catalog: permDesignDocuments
+  ///
+  /// In en, this message translates to:
+  /// **'Design the documents'**
+  String get permDesignDocuments;
+
+  /// #982 permission catalog: permViewPersonalData
+  ///
+  /// In en, this message translates to:
+  /// **'Read members\' personal data'**
+  String get permViewPersonalData;
+
+  /// #982 permission catalog: permManageIntegrations
+  ///
+  /// In en, this message translates to:
+  /// **'Manage integrations'**
+  String get permManageIntegrations;
+
+  /// #982 permission catalog: permManageConfiguration
+  ///
+  /// In en, this message translates to:
+  /// **'Manage the configuration'**
+  String get permManageConfiguration;
+
   /// #886 personal-information form / feature: featurePersonalInfo
   ///
   /// In en, this message translates to:

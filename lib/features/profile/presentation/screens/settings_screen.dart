@@ -29,6 +29,7 @@ import '../../../reservations/domain/default_booking_period.dart';
 import '../../../reservations/providers/default_period_controller.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../auth/presentation/widgets/badge_pin_tile.dart';
 import '../../../workspace/presentation/widgets/my_badge_tile.dart';
@@ -255,6 +256,8 @@ class SettingsScreen extends ConsumerWidget {
     final isOwner = myMember?.actsAsOwner ?? false;
     final canAdminister =
         ref.watch(myMemberProvider).value?.canAdminister ?? false;
+    // #982 — the matrix decides what an owner used to decide alone.
+    final perms = ref.watch(myPermissionsProvider);
     final devMode = ref.watch(devModeProvider).value ?? false;
     final localeOverride = ref.watch(localeControllerProvider).value;
     final themeOverride = ref.watch(themeControllerProvider).value;
@@ -559,7 +562,7 @@ class SettingsScreen extends ConsumerWidget {
               l10n?.settingsSectionAdministration ?? 'Administration',
             ),
           ],
-          if (isOwner)
+          if (perms.contains(WorkspacePermission.workspaceSettings))
             ListTile(
               leading: const Icon(Icons.business_outlined),
               title: Text(l10n?.workspaceSettingsTitle ?? 'Workspace'),
@@ -571,7 +574,7 @@ class SettingsScreen extends ConsumerWidget {
               title: Text(l10n?.membersTitle ?? 'Members & plans'),
               onTap: () => context.push('/members'),
             ),
-          if (isOwner)
+          if (perms.contains(WorkspacePermission.workspaceSettings))
             ListTile(
               leading: const Icon(Icons.event_busy_outlined),
               title: Text(l10n?.availabilityTitle ?? 'Availability'),
@@ -603,7 +606,7 @@ class SettingsScreen extends ConsumerWidget {
             ),
           // #486 — the manual payment methods members see on an unpaid
           // statement, beside the online-payment providers.
-          if (isOwner)
+          if (perms.contains(WorkspacePermission.manageIntegrations))
             ListTile(
               key: const ValueKey('settings-payment-methods'),
               leading: const Icon(Icons.account_balance_wallet_outlined),
@@ -612,19 +615,19 @@ class SettingsScreen extends ConsumerWidget {
               ),
               onTap: () => context.push('/payment-methods'),
             ),
-          if (isOwner && features.contains(WorkspaceFeature.onlinePayments))
+          if (perms.contains(WorkspacePermission.manageIntegrations) && features.contains(WorkspaceFeature.onlinePayments))
             ListTile(
               leading: const Icon(Icons.credit_card_outlined),
               title: Text(l10n?.payConfigTitle ?? 'Online payments'),
               onTap: () => context.push('/payment-config'),
             ),
-          if (isOwner && features.contains(WorkspaceFeature.nfcBadges))
+          if (perms.contains(WorkspacePermission.operateKiosk) && features.contains(WorkspaceFeature.nfcBadges))
             ListTile(
               leading: const Icon(Icons.contactless_outlined),
               title: Text(l10n?.nfcConfigTitle ?? 'RFID / NFC badges'),
               onTap: () => context.push('/nfc-config'),
             ),
-          if (isOwner && features.contains(WorkspaceFeature.services))
+          if (perms.contains(WorkspacePermission.manageServices) && features.contains(WorkspaceFeature.services))
             ListTile(
               leading: const Icon(Icons.local_cafe_outlined),
               title: Text(l10n?.servicesTitle ?? 'Services'),
@@ -641,25 +644,25 @@ class SettingsScreen extends ConsumerWidget {
               title: Text(l10n?.accessoriesTitle ?? 'Accessories'),
               onTap: () => context.push('/accessories'),
             ),
-          if (isOwner)
+          if (perms.contains(WorkspacePermission.manageBilling))
             ListTile(
               leading: const Icon(Icons.payments_outlined),
               title: Text(l10n?.billingTitle ?? 'Billing'),
               onTap: () => context.push('/billing'),
             ),
-          if (isOwner)
+          if (perms.contains(WorkspacePermission.manageConfiguration))
             ListTile(
               leading: const Icon(Icons.toggle_on_outlined),
               title: Text(l10n?.featuresTitle ?? 'Features'),
               onTap: () => context.push('/features'),
             ),
-          if (isOwner)
+          if (perms.contains(WorkspacePermission.manageValidation))
             ListTile(
               leading: const Icon(Icons.fact_check_outlined),
               title: Text(l10n?.validationTitle ?? 'Validation rules'),
               onTap: () => context.push('/validation'),
             ),
-          if (isOwner)
+          if (perms.contains(WorkspacePermission.manageConfiguration))
             ListTile(
               leading: const Icon(Icons.qr_code_2),
               title: Text(l10n?.workspaceCodeTitle ?? 'Workspace ID & QR'),
@@ -780,7 +783,7 @@ class SettingsScreen extends ConsumerWidget {
           // that changes what every document says about itself.
           const WorkspaceEnvironmentTile(),
           // #945 — the workspace's sites, for those who manage it.
-          if ((ref.watch(myMemberProvider).value?.isAdmin ?? false) &&
+          if (perms.contains(WorkspacePermission.manageSites) &&
               ref
                   .watch(enabledFeaturesSyncProvider)
                   .contains(WorkspaceFeature.multiSite))
@@ -794,7 +797,7 @@ class SettingsScreen extends ConsumerWidget {
               onTap: () => context.push('/settings/sites'),
             ),
           // #925 — one screen for every number series, owner-only.
-          if ((ref.watch(myMemberProvider).value?.isOwner ?? false) &&
+          if (perms.contains(WorkspacePermission.manageBilling) &&
               ref
                   .watch(enabledFeaturesSyncProvider)
                   .contains(WorkspaceFeature.numberSequences))

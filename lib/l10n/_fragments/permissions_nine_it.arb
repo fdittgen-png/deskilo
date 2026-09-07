@@ -1,0 +1,39 @@
+{
+  "@@locale": "it",
+  "permManageSites": "Gestire sedi e piani",
+  "@permManageSites": {
+    "description": "#982 permission catalog: permManageSites"
+  },
+  "permManageBilling": "Gestire tariffe e regole di fatturazione",
+  "@permManageBilling": {
+    "description": "#982 permission catalog: permManageBilling"
+  },
+  "permManageReservations": "Gestire le prenotazioni degli altri",
+  "@permManageReservations": {
+    "description": "#982 permission catalog: permManageReservations"
+  },
+  "permOperateKiosk": "Operare il chiosco e i badge",
+  "@permOperateKiosk": {
+    "description": "#982 permission catalog: permOperateKiosk"
+  },
+  "permExportData": "Esportare contabilità e dati",
+  "@permExportData": {
+    "description": "#982 permission catalog: permExportData"
+  },
+  "permDesignDocuments": "Progettare i documenti",
+  "@permDesignDocuments": {
+    "description": "#982 permission catalog: permDesignDocuments"
+  },
+  "permViewPersonalData": "Consultare i dati personali dei membri",
+  "@permViewPersonalData": {
+    "description": "#982 permission catalog: permViewPersonalData"
+  },
+  "permManageIntegrations": "Gestire le integrazioni",
+  "@permManageIntegrations": {
+    "description": "#982 permission catalog: permManageIntegrations"
+  },
+  "permManageConfiguration": "Gestire la configurazione",
+  "@permManageConfiguration": {
+    "description": "#982 permission catalog: permManageConfiguration"
+  }
+}

@@ -152,9 +152,10 @@ void main() {
     });
 
     test('the catalog carries every permission the client can grant', () {
-      // #881 — the catalog moved to 0155 with paymentTermsEdit.
+      // #881 — the catalog moved to 0155 with paymentTermsEdit; #982 — to
+      // 0180 with the nine permissions.
       final latestCatalog =
-          File('supabase/migrations/0155_payment_terms_permission_catalog.sql')
+          File('supabase/migrations/0180_permission_catalog_nine.sql')
               .readAsStringSync();
       final catalog = RegExp(r"v_catalog text\[\] := array\[([^\]]+)\]")
           .firstMatch(latestCatalog)!
