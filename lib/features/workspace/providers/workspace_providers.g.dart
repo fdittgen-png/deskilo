@@ -133,7 +133,7 @@ final class ActiveWorkspaceIdProvider
   ActiveWorkspaceId create() => ActiveWorkspaceId();
 }
 
-String _$activeWorkspaceIdHash() => r'a20b1251dc4ecb22f7d4d06c42ba829907901984';
+String _$activeWorkspaceIdHash() => r'192060469f57531a2822f3cb705f72a6b3a74096';
 
 /// The persisted active-profile choice (#89). At START-UP the user's
 /// DEFAULT profile wins when one is checked (#322); in-session switches
@@ -208,7 +208,7 @@ final class DefaultWorkspaceIdProvider
 }
 
 String _$defaultWorkspaceIdHash() =>
-    r'ca36be9bb7271ac5f009a2c531e9ce328acb18bd';
+    r'33a0efae5d3f102c9c1816be7383ce2e0c100db6';
 
 /// The user-checked default profile (#322); null = none. Radio
 /// semantics: checking one replaces the previous; re-checking the

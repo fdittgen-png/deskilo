@@ -49,7 +49,7 @@ C'est une simple page web. Rien à installer, aucun compte, rien n'est envoyé n
 
 ### Profils — un compte, plusieurs espaces
 
-Un compte peut appartenir à plusieurs espaces. **Réglages → Profils** les liste tous : chaque ligne montre le nom de l'espace, **votre rôle** (Membre, Admin, Propriétaire) et son ID. La **coche** marque le profil actif ; l'**étoile** marque votre profil **par défaut** — celui avec lequel l'app s'ouvre, sur chaque appareil et même après réinstallation (le choix est stocké avec votre compte). Touchez une ligne pour changer, **+ Ajouter un profil** pour rejoindre un espace de plus. Tout dans l'app est limité à l'espace actif.
+Un compte peut appartenir à plusieurs espaces. **Réglages → Profils** les liste tous : chaque ligne montre le nom de l'espace, **votre rôle** (Membre, Admin, Propriétaire) et son ID. La **coche** marque le profil actif ; l'**étoile** marque votre profil **par défaut** — celui avec lequel l'app s'ouvre, sur chaque appareil et même après réinstallation (le choix est stocké avec votre compte). Touchez une ligne pour changer, **+ Ajouter un profil** pour rejoindre un espace de plus. Tout dans l'app est limité à l'espace actif. Depuis #996, **le changement est retenu** : toucher un autre profil, ou l'autre côté d'une paire, en fait le profil par défaut au démarrage — l'étoile suit, et vous ne revenez jamais, après un redémarrage, sur un espace ou un environnement que vous aviez quitté.
 
 ![](assets/help/images/profiles.jpg)
 
