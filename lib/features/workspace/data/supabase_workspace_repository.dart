@@ -582,6 +582,17 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   }
 
   @override
+  Future<void> setMemberVatTreatment(
+      String memberId, String treatment, String reason) async {
+    // #985 — the counterparty dimension, by whoever may issue invoices.
+    await _client.rpc<dynamic>('set_member_vat_treatment', params: {
+      'p_member_id': memberId,
+      'p_treatment': treatment,
+      'p_reason': reason,
+    });
+  }
+
+  @override
   Future<void> setMemberLevelPermission(
     String memberId, {
     required bool allowed,
@@ -1028,5 +1039,7 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         maxSimultaneousReservations:
             row['max_simultaneous_reservations'] as int?,
         canReserveLevel: row['can_reserve_level'] as bool? ?? false,
+        vatTreatment: row['vat_treatment'] as String? ?? 'auto',
+        vatExemptionReason: row['vat_exemption_reason'] as String? ?? '',
       );
 }

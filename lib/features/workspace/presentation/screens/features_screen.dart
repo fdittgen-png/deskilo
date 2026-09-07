@@ -303,6 +303,17 @@ class FeaturesScreen extends ConsumerWidget {
                   'not subject, refundable deposit, excise-bearing — with the '
                   'category and the exemption reason the group implies. Off: '
                   'bare percentages.',
+        WorkspaceFeature.vatRateHistory =>
+          l10n?.featureVatRateHistoryDesc ??
+              'A rate is a family of dated versions: a change by law adds '
+                  'the new value from its date, the old value stays on every '
+                  'supply before it, and nothing is re-pointed. Off: one '
+                  'value per rate.',
+        WorkspaceFeature.vatCounterparty =>
+          l10n?.featureVatCounterpartyDesc ??
+              'Who the buyer is for VAT, set on each member: domestic VAT, '
+                  'reverse charge, outside the EU, or exempt with a printed '
+                  'reason. Off: the automatic rule only.',
         WorkspaceFeature.managedProfileAccess =>
           l10n?.featureManagedProfileAccessDesc ??
               'Each managed profile says who may administer it — by role, '

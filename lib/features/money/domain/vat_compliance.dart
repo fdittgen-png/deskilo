@@ -144,9 +144,45 @@ String exemptionCodeForCategory(
   String sellerCountry,
   VatRegime regime,
 ) =>
-    category == 'AE'
-        ? 'VATEX-EU-AE'
-        : regime.exemptionReasonCode(sellerCountry);
+    switch (category) {
+      'AE' => 'VATEX-EU-AE',
+      // #985 — outside the EU.
+      'G' => 'VATEX-EU-G',
+      _ => regime.exemptionReasonCode(sellerCountry),
+    };
+
+/// #985 — the mention a supply outside the EU prints.
+String exportMention(String sellerCountry) =>
+    switch (sellerCountry.trim().toUpperCase()) {
+      'FR' => 'TVA non applicable — opération située hors de l\'Union '
+          'européenne (art. 259 du CGI).',
+      'DE' || 'AT' => 'Nicht im Inland steuerbare Leistung — Leistungsort '
+          'außerhalb der EU (§ 3a UStG).',
+      'ES' => 'Operación no sujeta — localizada fuera de la Unión Europea '
+          '(art. 69 Ley 37/1992).',
+      'IT' => 'Operazione non soggetta — territorialmente fuori '
+          "dall'Unione europea (art. 7-ter DPR 633/72).",
+      _ => 'VAT not applicable — supply outside the European Union.',
+    };
+
+/// #985 — the exemption text a document prints for [category]: the
+/// statutory mention for AE and G, the buyer's own reason for an exempt
+/// buyer of a VAT-charging seller, the seller's text otherwise.
+String exemptionMentionFor({
+  required String category,
+  required String sellerCountry,
+  required String sellerReason,
+  required String buyerReason,
+  required VatRegime regime,
+}) =>
+    switch (category) {
+      'AE' => reverseChargeMention(sellerCountry),
+      'G' => exportMention(sellerCountry),
+      'E' when regime == VatRegime.vatRegistered &&
+              buyerReason.trim().isNotEmpty =>
+        buyerReason.trim(),
+      _ => sellerReason,
+    };
 
 /// #896 — the mention a seller must print about WHEN its tax falls due.
 /// France asks for it explicitly (« TVA acquittée sur les encaissements /

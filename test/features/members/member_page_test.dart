@@ -295,4 +295,26 @@ void main() {
     expect(find.byKey(const ValueKey('directory-sheet-status-member-5')),
         findsOneWidget);
   });
+
+  testWidgets('#985 — the VAT treatment row rides its flag, and a choice '
+      'lands on the member at once', (tester) async {
+    await _pumpPage(tester, 'member-3');
+    expect(find.byKey(const ValueKey('member-page-vat-treatment')),
+        findsNothing);
+
+    await _pumpPage(tester, 'member-3',
+        flags: const {'vatCounterparty': true});
+    await tester.ensureVisible(
+        find.byKey(const ValueKey('member-page-vat-treatment')));
+    expect(_subtitle(tester, 'member-page-vat-treatment'), 'Automatic');
+    await tester.tap(find.byKey(const ValueKey('member-page-vat-treatment')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('vat-treatment-exempt')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+        find.byKey(const Key('vat-treatment-reason')), 'Exonération art. 261');
+    await tester.tap(find.byKey(const Key('vat-treatment-save')));
+    await tester.pumpAndSettle();
+    expect(_subtitle(tester, 'member-page-vat-treatment'), 'Exempt buyer');
+  });
 }

@@ -36,7 +36,7 @@ Future<FakeWorkspaceRepository> pumpFeatures(
   // features — 7200 px stopped fitting the last two switches. #821–#831
   // added five more with long descriptions; 9600 px dropped the last.
   // 2026-09-05 — 82 manifest features (#874) outgrow 12000 px.
-  tester.view.physicalSize = const Size(800, 16000);
+  tester.view.physicalSize = const Size(800, 17000);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final workspace =
@@ -85,7 +85,8 @@ void main() {
     // autoCheckInOut (#396), badgeSignIn (#662) and, since #914,
     // managedProfileAccess — narrowing who administers a profile is
     // opt-in, because the rule nobody narrowed is what #887 already did.
-    expect(onCount, featureManifest.length - 15);
+    // #985 — vatRateHistory and vatCounterparty are opt-in too.
+    expect(onCount, featureManifest.length - 17);
   });
 
   testWidgets(

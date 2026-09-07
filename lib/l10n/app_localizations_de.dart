@@ -8789,6 +8789,74 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die USt-IdNr. des Kunden hat nicht die Form ihres Landes — bitte prüfen.';
 
   @override
+  String get featureVatRateHistory => 'USt-Satzversionen';
+
+  @override
+  String get featureVatRateHistoryDesc =>
+      'Ein Satz ist eine Familie datierter Versionen: eine Änderung per Gesetz fügt den neuen Wert ab seinem Datum hinzu, der alte bleibt auf jeder Leistung davor, nichts wird umgehängt. Aus: ein Wert je Satz.';
+
+  @override
+  String get featureVatCounterparty => 'USt nach Kunde';
+
+  @override
+  String get featureVatCounterpartyDesc =>
+      'Wer der Käufer für die USt ist, je Mitglied: Inlands-USt, Steuerschuldnerschaft des Empfängers, außerhalb der EU oder befreit mit gedrucktem Grund. Aus: nur die automatische Regel.';
+
+  @override
+  String get vatSince => 'ab';
+
+  @override
+  String get vatUntil => 'bis';
+
+  @override
+  String get vatChangeByLaw => 'Änderung per Gesetz';
+
+  @override
+  String get vatChangeByLawExplainer =>
+      'Ein neuer Wert ab einem Datum: der alte bleibt auf jeder Leistung davor, der neue gilt ab diesem Tag. Nichts wird umgehängt.';
+
+  @override
+  String get vatNewPercent => 'Neuer Satz %';
+
+  @override
+  String get vatEffectiveDate => 'Wirksam ab (JJJJ-MM-TT)';
+
+  @override
+  String get vatChangeNeedsSave =>
+      'Speichern Sie den Satz zuerst; dann ändern Sie ihn per Gesetz.';
+
+  @override
+  String get vatChangeInvalid =>
+      'Nötig sind ein Prozentsatz zwischen 0 und 99,99 und ein Datum nach dem Beginn des Satzes.';
+
+  @override
+  String get memberVatTreatmentLabel => 'USt-Behandlung';
+
+  @override
+  String get memberVatTreatmentExplainer =>
+      'Wer dieses Mitglied für die USt ist: die automatische Regel (Steuerschuldnerschaft des Empfängers für ein Unternehmen in einem anderen EU-Staat), Inlands-USt in jedem Fall, Steuerschuldnerschaft des Empfängers, außerhalb der EU oder ein befreiter Käufer mit dem auf der Rechnung gedruckten Grund.';
+
+  @override
+  String get vatTreatmentAuto => 'Automatisch';
+
+  @override
+  String get vatTreatmentDomestic => 'Inlands-USt';
+
+  @override
+  String get vatTreatmentReverseCharge =>
+      'Steuerschuldnerschaft des Empfängers';
+
+  @override
+  String get vatTreatmentExport => 'Außerhalb der EU';
+
+  @override
+  String get vatTreatmentExempt => 'Befreiter Käufer';
+
+  @override
+  String get vatTreatmentReasonField =>
+      'Befreiungsgrund (auf der Rechnung gedruckt)';
+
+  @override
   String get assistantPrefix => 'Assistent';
 
   @override

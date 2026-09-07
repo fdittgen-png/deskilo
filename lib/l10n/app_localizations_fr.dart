@@ -8811,6 +8811,73 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le numéro de TVA du client n\'a pas la forme de son pays — vérifiez-le.';
 
   @override
+  String get featureVatRateHistory => 'Versions des taux de TVA';
+
+  @override
+  String get featureVatRateHistoryDesc =>
+      'Un taux est une famille de versions datées : un changement par la loi ajoute la nouvelle valeur à sa date, l\'ancienne reste sur toute prestation antérieure, rien n\'est repointé. Désactivé : une valeur par taux.';
+
+  @override
+  String get featureVatCounterparty => 'TVA selon le client';
+
+  @override
+  String get featureVatCounterpartyDesc =>
+      'Qui est l\'acheteur pour la TVA, réglé sur chaque membre : TVA nationale, autoliquidation, hors UE, ou exonéré avec le motif imprimé. Désactivé : la règle automatique seule.';
+
+  @override
+  String get vatSince => 'depuis le';
+
+  @override
+  String get vatUntil => 'jusqu\'au';
+
+  @override
+  String get vatChangeByLaw => 'Changement par la loi';
+
+  @override
+  String get vatChangeByLawExplainer =>
+      'Une nouvelle valeur à partir d\'une date : l\'ancienne reste sur toute prestation antérieure, la nouvelle s\'applique à partir de ce jour. Rien n\'est repointé.';
+
+  @override
+  String get vatNewPercent => 'Nouveau taux %';
+
+  @override
+  String get vatEffectiveDate => 'Date d\'effet (AAAA-MM-JJ)';
+
+  @override
+  String get vatChangeNeedsSave =>
+      'Enregistrez d\'abord le taux ; puis changez-le par la loi.';
+
+  @override
+  String get vatChangeInvalid =>
+      'Il faut un pourcentage entre 0 et 99,99 et une date postérieure au début du taux.';
+
+  @override
+  String get memberVatTreatmentLabel => 'Traitement TVA';
+
+  @override
+  String get memberVatTreatmentExplainer =>
+      'Qui est ce membre pour la TVA : la règle automatique (autoliquidation pour une entreprise d\'un autre État de l\'UE), la TVA nationale quoi qu\'il arrive, l\'autoliquidation, hors UE, ou un acheteur exonéré avec le motif imprimé sur la facture.';
+
+  @override
+  String get vatTreatmentAuto => 'Automatique';
+
+  @override
+  String get vatTreatmentDomestic => 'TVA nationale';
+
+  @override
+  String get vatTreatmentReverseCharge => 'Autoliquidation';
+
+  @override
+  String get vatTreatmentExport => 'Hors UE';
+
+  @override
+  String get vatTreatmentExempt => 'Acheteur exonéré';
+
+  @override
+  String get vatTreatmentReasonField =>
+      'Motif d\'exonération (imprimé sur la facture)';
+
+  @override
   String get assistantPrefix => 'Assistant';
 
   @override

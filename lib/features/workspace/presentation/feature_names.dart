@@ -140,6 +140,10 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.configurationTransfer =>
         l10n?.featureConfigurationTransfer ?? 'Configuration in the space file',
       WorkspaceFeature.vatGroups => l10n?.featureVatGroups ?? 'VAT groups',
+      WorkspaceFeature.vatRateHistory =>
+        l10n?.featureVatRateHistory ?? 'VAT rate versions',
+      WorkspaceFeature.vatCounterparty =>
+        l10n?.featureVatCounterparty ?? 'VAT by counterparty',
       WorkspaceFeature.managedProfileAccess =>
         l10n?.featureManagedProfileAccess ?? 'Who administers a profile',
       WorkspaceFeature.seatDayTimeline =>

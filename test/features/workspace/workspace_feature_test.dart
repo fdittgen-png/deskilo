@@ -34,6 +34,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.multiSite,
   WorkspaceFeature.siteDocuments,
   WorkspaceFeature.vatGroups,
+  WorkspaceFeature.vatRateHistory,
+  WorkspaceFeature.vatCounterparty,
 };
 
 /// Every other feature ships ON.
@@ -88,6 +90,8 @@ void main() {
       'multiSite': true,
       'siteDocuments': true,
       'vatGroups': true,
+      'vatRateHistory': true,
+      'vatCounterparty': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

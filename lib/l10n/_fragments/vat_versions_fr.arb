@@ -1,0 +1,83 @@
+{
+  "@@locale": "fr",
+  "featureVatRateHistory": "Versions des taux de TVA",
+  "@featureVatRateHistory": {
+    "description": "#985 VAT versions and counterparty: featureVatRateHistory"
+  },
+  "featureVatRateHistoryDesc": "Un taux est une famille de versions datées : un changement par la loi ajoute la nouvelle valeur à sa date, l'ancienne reste sur toute prestation antérieure, rien n'est repointé. Désactivé : une valeur par taux.",
+  "@featureVatRateHistoryDesc": {
+    "description": "#985 VAT versions and counterparty: featureVatRateHistoryDesc"
+  },
+  "featureVatCounterparty": "TVA selon le client",
+  "@featureVatCounterparty": {
+    "description": "#985 VAT versions and counterparty: featureVatCounterparty"
+  },
+  "featureVatCounterpartyDesc": "Qui est l'acheteur pour la TVA, réglé sur chaque membre : TVA nationale, autoliquidation, hors UE, ou exonéré avec le motif imprimé. Désactivé : la règle automatique seule.",
+  "@featureVatCounterpartyDesc": {
+    "description": "#985 VAT versions and counterparty: featureVatCounterpartyDesc"
+  },
+  "vatSince": "depuis le",
+  "@vatSince": {
+    "description": "#985 VAT versions and counterparty: vatSince"
+  },
+  "vatUntil": "jusqu'au",
+  "@vatUntil": {
+    "description": "#985 VAT versions and counterparty: vatUntil"
+  },
+  "vatChangeByLaw": "Changement par la loi",
+  "@vatChangeByLaw": {
+    "description": "#985 VAT versions and counterparty: vatChangeByLaw"
+  },
+  "vatChangeByLawExplainer": "Une nouvelle valeur à partir d'une date : l'ancienne reste sur toute prestation antérieure, la nouvelle s'applique à partir de ce jour. Rien n'est repointé.",
+  "@vatChangeByLawExplainer": {
+    "description": "#985 VAT versions and counterparty: vatChangeByLawExplainer"
+  },
+  "vatNewPercent": "Nouveau taux %",
+  "@vatNewPercent": {
+    "description": "#985 VAT versions and counterparty: vatNewPercent"
+  },
+  "vatEffectiveDate": "Date d'effet (AAAA-MM-JJ)",
+  "@vatEffectiveDate": {
+    "description": "#985 VAT versions and counterparty: vatEffectiveDate"
+  },
+  "vatChangeNeedsSave": "Enregistrez d'abord le taux ; puis changez-le par la loi.",
+  "@vatChangeNeedsSave": {
+    "description": "#985 VAT versions and counterparty: vatChangeNeedsSave"
+  },
+  "vatChangeInvalid": "Il faut un pourcentage entre 0 et 99,99 et une date postérieure au début du taux.",
+  "@vatChangeInvalid": {
+    "description": "#985 VAT versions and counterparty: vatChangeInvalid"
+  },
+  "memberVatTreatmentLabel": "Traitement TVA",
+  "@memberVatTreatmentLabel": {
+    "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
+  },
+  "memberVatTreatmentExplainer": "Qui est ce membre pour la TVA : la règle automatique (autoliquidation pour une entreprise d'un autre État de l'UE), la TVA nationale quoi qu'il arrive, l'autoliquidation, hors UE, ou un acheteur exonéré avec le motif imprimé sur la facture.",
+  "@memberVatTreatmentExplainer": {
+    "description": "#985 VAT versions and counterparty: memberVatTreatmentExplainer"
+  },
+  "vatTreatmentAuto": "Automatique",
+  "@vatTreatmentAuto": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentAuto"
+  },
+  "vatTreatmentDomestic": "TVA nationale",
+  "@vatTreatmentDomestic": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentDomestic"
+  },
+  "vatTreatmentReverseCharge": "Autoliquidation",
+  "@vatTreatmentReverseCharge": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentReverseCharge"
+  },
+  "vatTreatmentExport": "Hors UE",
+  "@vatTreatmentExport": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentExport"
+  },
+  "vatTreatmentExempt": "Acheteur exonéré",
+  "@vatTreatmentExempt": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentExempt"
+  },
+  "vatTreatmentReasonField": "Motif d'exonération (imprimé sur la facture)",
+  "@vatTreatmentReasonField": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentReasonField"
+  }
+}

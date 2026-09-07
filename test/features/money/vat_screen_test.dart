@@ -286,4 +286,70 @@ void main() {
     expect(find.byKey(const ValueKey('legal-identity-vat-rates')),
         findsNothing);
   });
+
+  testWidgets(
+      '#985 — a change by law adds a dated successor, closes the old '
+      'version, keeps the family link and moves the default', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+      featureFlags: const {'vatRateHistory': true},
+    );
+    workspace.workspaces[0] =
+        workspace.workspaces[0].copyWith(vatRegime: 'vat_registered');
+    final money = FakeMoneyRepository()
+      ..vatRates = [
+        const VatRate(
+            id: 'vat-1', label: 'Standard 20 %', percent: 20, isDefault: true),
+        const VatRate(id: 'vat-2', label: 'Réduit 5,5 %', percent: 5.5),
+      ];
+    await pumpVat(tester, money: money, workspace: workspace);
+
+    expect(find.byKey(const ValueKey('vat-rate-law-0')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('vat-rate-law-0')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const ValueKey('vat-law-percent')), '21');
+    await tester.enterText(
+        find.byKey(const ValueKey('vat-law-date')), '2026-10-01');
+    await tester.tap(find.byKey(const ValueKey('vat-law-confirm')));
+    await tester.pumpAndSettle();
+
+    // A third row, dated, and the windows printed.
+    expect(find.byKey(const ValueKey('vat-rate-label-2')), findsOneWidget);
+    expect(find.byKey(const ValueKey('vat-rate-validity-0')), findsOneWidget);
+    expect(find.byKey(const ValueKey('vat-rate-validity-2')), findsOneWidget);
+    expect(find.textContaining('until 2026-10-01'), findsOneWidget);
+    expect(find.textContaining('since 2026-10-01'), findsOneWidget);
+
+    await tester.ensureVisible(find.byKey(const ValueKey('vat-save')));
+    await tester.tap(find.byKey(const ValueKey('vat-save')));
+    await tester.pumpAndSettle();
+
+    final saved = money.vatRates;
+    expect(saved, hasLength(3));
+    final old = saved.firstWhere((r) => r.id == 'vat-1');
+    final successor = saved.firstWhere((r) => r.supersedesId == 'vat-1');
+    expect(old.validTo, '2026-10-01');
+    expect(old.isDefault, isFalse);
+    expect(successor.percent, 21);
+    expect(successor.label, 'Standard 21 %');
+    expect(successor.validFrom, '2026-10-01');
+    expect(successor.isDefault, isTrue);
+    expect(successor.groupKey, old.groupKey);
+    // The family resolves either way.
+    expect(vatPercentAt(saved, 'vat-1', DateTime(2026, 10, 15)), 21);
+    expect(vatPercentAt(saved, successor.id, DateTime(2026, 9, 15)), 20);
+  });
+
+  testWidgets('#985 — without the flag the rows carry no change-by-law action',
+      (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.workspaces[0] =
+        workspace.workspaces[0].copyWith(vatRegime: 'vat_registered');
+    final money = FakeMoneyRepository()
+      ..vatRates = [
+        const VatRate(
+            id: 'vat-1', label: 'Standard 20 %', percent: 20, isDefault: true),
+      ];
+    await pumpVat(tester, money: money, workspace: workspace);
+    expect(find.byKey(const ValueKey('vat-rate-law-0')), findsNothing);
+  });
 }

@@ -1396,6 +1396,12 @@ class FakeMoneyRepository implements MoneyRepository {
                 category: rates[i].category,
                 isDefault: rates[i].isDefault,
                 active: rates[i].active,
+                groupKey: rates[i].groupKey,
+                outsideBase: rates[i].outsideBase,
+                exemptionReason: rates[i].exemptionReason,
+                validFrom: rates[i].validFrom,
+                validTo: rates[i].validTo,
+                supersedesId: rates[i].supersedesId,
               )
             : rates[i],
     ];

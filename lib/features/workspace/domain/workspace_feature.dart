@@ -74,6 +74,8 @@ enum WorkspaceFeature {
   multiSite,
   siteDocuments,
   vatGroups,
+  vatRateHistory,
+  vatCounterparty,
   seatDayTimeline,
   memberPaymentTerms,
   reportTexts,
@@ -624,6 +626,20 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // outside-base rule, the exemption reason. Off: bare percentages.
   WorkspaceFeature.vatGroups: FeatureManifestEntry(
     feature: WorkspaceFeature.vatGroups,
+    defaultOn: false,
+    requires: WorkspaceFeature.vatManagement,
+  ),
+  // #985 — a rate is a family of dated versions: a change by law is a
+  // new value from a date, never an edit. Off: one value per rate.
+  WorkspaceFeature.vatRateHistory: FeatureManifestEntry(
+    feature: WorkspaceFeature.vatRateHistory,
+    defaultOn: false,
+    requires: WorkspaceFeature.vatManagement,
+  ),
+  // #985 — who the buyer is for VAT, set per member: domestic, reverse
+  // charge, outside the EU, exempt. Off: the automatic rule only.
+  WorkspaceFeature.vatCounterparty: FeatureManifestEntry(
+    feature: WorkspaceFeature.vatCounterparty,
     defaultOn: false,
     requires: WorkspaceFeature.vatManagement,
   ),

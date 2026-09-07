@@ -43,10 +43,19 @@ String buildInvoiceCii({
   final regime = vatRegimeFromWire(seller.vatRegime);
   // #895 — a reverse-charged document is category AE whatever the
   // seller's own regime says: the tax is the customer's.
-  final category =
-      invoice.isReverseCharged ? 'AE' : regime.taxCategoryCode;
+  // #985 — or the counterparty's category (G, E) when it decided.
+  final category = invoice.counterpartyCategory.isNotEmpty
+      ? invoice.counterpartyCategory
+      : regime.taxCategoryCode;
   final exemptionCode =
       exemptionCodeForCategory(category, seller.country, regime);
+  final exemptionText = exemptionMentionFor(
+    category: category,
+    sellerCountry: seller.country,
+    sellerReason: seller.taxExemptionReason,
+    buyerReason: buyer.taxExemptionReason,
+    regime: regime,
+  );
   final charges =
       invoice.lines.where((l) => l.amountCents > 0).toList(growable: false);
   final chargesCents = charges.fold(0, (sum, l) => sum + l.amountCents);
@@ -225,9 +234,8 @@ String buildInvoiceCii({
           builder.element('ram:ApplicableTradeTax', nest: () {
             money('CalculatedAmount', total.vatCents);
             ram('TypeCode', 'VAT');
-            if (total.category != 'S' &&
-                seller.taxExemptionReason.isNotEmpty) {
-              ram('ExemptionReason', seller.taxExemptionReason);
+            if (total.category != 'S' && exemptionText.isNotEmpty) {
+              ram('ExemptionReason', exemptionText);
             }
             money('BasisAmount', total.netCents);
             ram('CategoryCode', total.category);

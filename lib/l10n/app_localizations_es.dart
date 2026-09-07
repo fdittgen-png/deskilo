@@ -8783,6 +8783,73 @@ class AppLocalizationsEs extends AppLocalizations {
       'El NIF-IVA del cliente no tiene la forma de su país — compruébelo.';
 
   @override
+  String get featureVatRateHistory => 'Versiones de los tipos de IVA';
+
+  @override
+  String get featureVatRateHistoryDesc =>
+      'Un tipo es una familia de versiones fechadas: un cambio por ley añade el nuevo valor desde su fecha, el antiguo permanece en toda prestación anterior y nada se reasigna. Desactivado: un valor por tipo.';
+
+  @override
+  String get featureVatCounterparty => 'IVA según el cliente';
+
+  @override
+  String get featureVatCounterpartyDesc =>
+      'Quién es el comprador a efectos de IVA, fijado en cada miembro: IVA nacional, inversión del sujeto pasivo, fuera de la UE o exento con el motivo impreso. Desactivado: solo la regla automática.';
+
+  @override
+  String get vatSince => 'desde el';
+
+  @override
+  String get vatUntil => 'hasta el';
+
+  @override
+  String get vatChangeByLaw => 'Cambio por ley';
+
+  @override
+  String get vatChangeByLawExplainer =>
+      'Un nuevo valor desde una fecha: el antiguo permanece en toda prestación anterior, el nuevo se aplica desde ese día. Nada se reasigna.';
+
+  @override
+  String get vatNewPercent => 'Nuevo tipo %';
+
+  @override
+  String get vatEffectiveDate => 'Fecha de efecto (AAAA-MM-DD)';
+
+  @override
+  String get vatChangeNeedsSave =>
+      'Guarde primero el tipo; después cámbielo por ley.';
+
+  @override
+  String get vatChangeInvalid =>
+      'Hacen falta un porcentaje entre 0 y 99,99 y una fecha posterior al inicio del tipo.';
+
+  @override
+  String get memberVatTreatmentLabel => 'Tratamiento del IVA';
+
+  @override
+  String get memberVatTreatmentExplainer =>
+      'Quién es este miembro a efectos de IVA: la regla automática (inversión del sujeto pasivo para una empresa de otro Estado de la UE), IVA nacional en todo caso, inversión del sujeto pasivo, fuera de la UE o un comprador exento con el motivo impreso en la factura.';
+
+  @override
+  String get vatTreatmentAuto => 'Automático';
+
+  @override
+  String get vatTreatmentDomestic => 'IVA nacional';
+
+  @override
+  String get vatTreatmentReverseCharge => 'Inversión del sujeto pasivo';
+
+  @override
+  String get vatTreatmentExport => 'Fuera de la UE';
+
+  @override
+  String get vatTreatmentExempt => 'Comprador exento';
+
+  @override
+  String get vatTreatmentReasonField =>
+      'Motivo de exención (impreso en la factura)';
+
+  @override
   String get assistantPrefix => 'Asistente';
 
   @override

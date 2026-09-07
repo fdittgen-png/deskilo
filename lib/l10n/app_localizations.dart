@@ -15377,6 +15377,126 @@ abstract class AppLocalizations {
   /// **'The customer\'s VAT number does not have its country\'s shape — check it.'**
   String get invoiceGapBuyerVatIdFormat;
 
+  /// #985 VAT versions and counterparty: featureVatRateHistory
+  ///
+  /// In en, this message translates to:
+  /// **'VAT rate versions'**
+  String get featureVatRateHistory;
+
+  /// #985 VAT versions and counterparty: featureVatRateHistoryDesc
+  ///
+  /// In en, this message translates to:
+  /// **'A rate is a family of dated versions: a change by law adds the new value from its date, the old value stays on every supply before it, and nothing is re-pointed. Off: one value per rate.'**
+  String get featureVatRateHistoryDesc;
+
+  /// #985 VAT versions and counterparty: featureVatCounterparty
+  ///
+  /// In en, this message translates to:
+  /// **'VAT by counterparty'**
+  String get featureVatCounterparty;
+
+  /// #985 VAT versions and counterparty: featureVatCounterpartyDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Who the buyer is for VAT, set on each member: domestic VAT, reverse charge, outside the EU, or exempt with a printed reason. Off: the automatic rule only.'**
+  String get featureVatCounterpartyDesc;
+
+  /// #985 VAT versions and counterparty: vatSince
+  ///
+  /// In en, this message translates to:
+  /// **'since'**
+  String get vatSince;
+
+  /// #985 VAT versions and counterparty: vatUntil
+  ///
+  /// In en, this message translates to:
+  /// **'until'**
+  String get vatUntil;
+
+  /// #985 VAT versions and counterparty: vatChangeByLaw
+  ///
+  /// In en, this message translates to:
+  /// **'Change by law'**
+  String get vatChangeByLaw;
+
+  /// #985 VAT versions and counterparty: vatChangeByLawExplainer
+  ///
+  /// In en, this message translates to:
+  /// **'A new value from a date: the old value stays on every supply before it, the new one applies from that day. Nothing is re-pointed.'**
+  String get vatChangeByLawExplainer;
+
+  /// #985 VAT versions and counterparty: vatNewPercent
+  ///
+  /// In en, this message translates to:
+  /// **'New rate %'**
+  String get vatNewPercent;
+
+  /// #985 VAT versions and counterparty: vatEffectiveDate
+  ///
+  /// In en, this message translates to:
+  /// **'Effective date (YYYY-MM-DD)'**
+  String get vatEffectiveDate;
+
+  /// #985 VAT versions and counterparty: vatChangeNeedsSave
+  ///
+  /// In en, this message translates to:
+  /// **'Save the rate first; then change it by law.'**
+  String get vatChangeNeedsSave;
+
+  /// #985 VAT versions and counterparty: vatChangeInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'A percentage between 0 and 99.99 and a date after the rate\'s start are needed.'**
+  String get vatChangeInvalid;
+
+  /// #985 VAT versions and counterparty: memberVatTreatmentLabel
+  ///
+  /// In en, this message translates to:
+  /// **'VAT treatment'**
+  String get memberVatTreatmentLabel;
+
+  /// #985 VAT versions and counterparty: memberVatTreatmentExplainer
+  ///
+  /// In en, this message translates to:
+  /// **'Who this member is for VAT: the automatic rule (reverse charge for a business in another EU state), domestic VAT regardless, reverse charge, outside the EU, or an exempt buyer with the reason printed on the invoice.'**
+  String get memberVatTreatmentExplainer;
+
+  /// #985 VAT versions and counterparty: vatTreatmentAuto
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic'**
+  String get vatTreatmentAuto;
+
+  /// #985 VAT versions and counterparty: vatTreatmentDomestic
+  ///
+  /// In en, this message translates to:
+  /// **'Domestic VAT'**
+  String get vatTreatmentDomestic;
+
+  /// #985 VAT versions and counterparty: vatTreatmentReverseCharge
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse charge'**
+  String get vatTreatmentReverseCharge;
+
+  /// #985 VAT versions and counterparty: vatTreatmentExport
+  ///
+  /// In en, this message translates to:
+  /// **'Outside the EU'**
+  String get vatTreatmentExport;
+
+  /// #985 VAT versions and counterparty: vatTreatmentExempt
+  ///
+  /// In en, this message translates to:
+  /// **'Exempt buyer'**
+  String get vatTreatmentExempt;
+
+  /// #985 VAT versions and counterparty: vatTreatmentReasonField
+  ///
+  /// In en, this message translates to:
+  /// **'Exemption reason (printed on the invoice)'**
+  String get vatTreatmentReasonField;
+
   /// #872 one wizard idiom: assistantPrefix
   ///
   /// In en, this message translates to:
