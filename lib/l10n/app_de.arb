@@ -1127,6 +1127,174 @@
   "@demoModeSubtitle": {
     "description": "#970 demo mode: demoModeSubtitle"
   },
+  "featureDeployments": "Ausrollungen",
+  "@featureDeployments": {
+    "description": "#988/#990 deployments: featureDeployments"
+  },
+  "featureDeploymentsDesc": "Konfiguration und Stammdaten zwischen den beiden Seiten eines Paars ausgerollt, Entität für Entität, mit einer Vorschau der Änderungen und einem Journal, das zurückrollen kann. Aus: die Zwillinge werden von Hand gepflegt, jeder für sich.",
+  "@featureDeploymentsDesc": {
+    "description": "#988/#990 deployments: featureDeploymentsDesc"
+  },
+  "deploymentTitle": "Ausrollung",
+  "@deploymentTitle": {
+    "description": "#988/#990 deployments: deploymentTitle"
+  },
+  "deploymentIntroToProd": "Sie stehen auf der Entwicklungsseite. Was Sie unten ankreuzen, wird nach einer Vorschau der Änderungen auf den Produktionszwilling ausgerollt.",
+  "@deploymentIntroToProd": {
+    "description": "#988/#990 deployments: deploymentIntroToProd"
+  },
+  "deploymentIntroToDev": "Sie stehen auf der Produktionsseite. Was Sie unten ankreuzen, wird nach einer Vorschau der Änderungen auf den Entwicklungszwilling ausgerollt.",
+  "@deploymentIntroToDev": {
+    "description": "#988/#990 deployments: deploymentIntroToDev"
+  },
+  "deploymentNoTwin": "Dieser Raum hat keinen Zwilling, dessen Mitglied Sie sind.",
+  "@deploymentNoTwin": {
+    "description": "#988/#990 deployments: deploymentNoTwin"
+  },
+  "deploymentNeedsProdPermission": "Für die Ausrollung in die Produktion braucht es die Berechtigung „In die Produktion ausrollen“.",
+  "@deploymentNeedsProdPermission": {
+    "description": "#988/#990 deployments: deploymentNeedsProdPermission"
+  },
+  "deploymentNeedsDevPermission": "Für die Ausrollung in die Entwicklung braucht es die Berechtigung „In die Entwicklung ausrollen“.",
+  "@deploymentNeedsDevPermission": {
+    "description": "#988/#990 deployments: deploymentNeedsDevPermission"
+  },
+  "deploymentKindMasterData": "Stammdaten",
+  "@deploymentKindMasterData": {
+    "description": "#988/#990 deployments: deploymentKindMasterData"
+  },
+  "deploymentKindConfiguration": "Konfiguration",
+  "@deploymentKindConfiguration": {
+    "description": "#988/#990 deployments: deploymentKindConfiguration"
+  },
+  "deploymentRequires": "braucht",
+  "@deploymentRequires": {
+    "description": "#988/#990 deployments: deploymentRequires"
+  },
+  "deploymentToProd": "In die PROD ausrollen…",
+  "@deploymentToProd": {
+    "description": "#988/#990 deployments: deploymentToProd"
+  },
+  "deploymentToDev": "In die DEV ausrollen…",
+  "@deploymentToDev": {
+    "description": "#988/#990 deployments: deploymentToDev"
+  },
+  "deploymentJournal": "Journal",
+  "@deploymentJournal": {
+    "description": "#988/#990 deployments: deploymentJournal"
+  },
+  "deploymentJournalEmpty": "Noch nichts ausgerollt.",
+  "@deploymentJournalEmpty": {
+    "description": "#988/#990 deployments: deploymentJournalEmpty"
+  },
+  "deploymentDirectionToProd": "In die Produktion",
+  "@deploymentDirectionToProd": {
+    "description": "#988/#990 deployments: deploymentDirectionToProd"
+  },
+  "deploymentDirectionToDev": "In die Entwicklung",
+  "@deploymentDirectionToDev": {
+    "description": "#988/#990 deployments: deploymentDirectionToDev"
+  },
+  "deploymentRolledBackLabel": "zurückgerollt",
+  "@deploymentRolledBackLabel": {
+    "description": "#988/#990 deployments: deploymentRolledBackLabel"
+  },
+  "deploymentRollback": "Zurückrollen",
+  "@deploymentRollback": {
+    "description": "#988/#990 deployments: deploymentRollback"
+  },
+  "deploymentPreviewToProd": "Was sich auf der Produktionsseite ändert",
+  "@deploymentPreviewToProd": {
+    "description": "#988/#990 deployments: deploymentPreviewToProd"
+  },
+  "deploymentPreviewToDev": "Was sich auf der Entwicklungsseite ändert",
+  "@deploymentPreviewToDev": {
+    "description": "#988/#990 deployments: deploymentPreviewToDev"
+  },
+  "deploymentNoChange": "Keine Änderung",
+  "@deploymentNoChange": {
+    "description": "#988/#990 deployments: deploymentNoChange"
+  },
+  "deploymentNothingToDo": "Beide Seiten stimmen bei diesen Entitäten schon überein.",
+  "@deploymentNothingToDo": {
+    "description": "#988/#990 deployments: deploymentNothingToDo"
+  },
+  "deploymentConfirm": "Ausrollen",
+  "@deploymentConfirm": {
+    "description": "#988/#990 deployments: deploymentConfirm"
+  },
+  "deploymentDone": "Ausgerollt. Das Journal hat es.",
+  "@deploymentDone": {
+    "description": "#988/#990 deployments: deploymentDone"
+  },
+  "deploymentRolledBack": "Zurückgerollt.",
+  "@deploymentRolledBack": {
+    "description": "#988/#990 deployments: deploymentRolledBack"
+  },
+  "deployEntityIdentity": "Identität & Rechtliches",
+  "@deployEntityIdentity": {
+    "description": "#988/#990 deployments: deployEntityIdentity"
+  },
+  "deployEntityVat": "USt",
+  "@deployEntityVat": {
+    "description": "#988/#990 deployments: deployEntityVat"
+  },
+  "deployEntityTariffs": "Tarife",
+  "@deployEntityTariffs": {
+    "description": "#988/#990 deployments: deployEntityTariffs"
+  },
+  "deployEntityServices": "Services",
+  "@deployEntityServices": {
+    "description": "#988/#990 deployments: deployEntityServices"
+  },
+  "deployEntityPackages": "Pakete",
+  "@deployEntityPackages": {
+    "description": "#988/#990 deployments: deployEntityPackages"
+  },
+  "deployEntityAccessories": "Zubehör",
+  "@deployEntityAccessories": {
+    "description": "#988/#990 deployments: deployEntityAccessories"
+  },
+  "deployEntitySites": "Standorte",
+  "@deployEntitySites": {
+    "description": "#988/#990 deployments: deployEntitySites"
+  },
+  "deployEntityBookingRules": "Buchungsregeln",
+  "@deployEntityBookingRules": {
+    "description": "#988/#990 deployments: deployEntityBookingRules"
+  },
+  "deployEntityValidationRules": "Freigaberegeln",
+  "@deployEntityValidationRules": {
+    "description": "#988/#990 deployments: deployEntityValidationRules"
+  },
+  "deployEntityRoles": "Rollenmatrix",
+  "@deployEntityRoles": {
+    "description": "#988/#990 deployments: deployEntityRoles"
+  },
+  "deployEntityReminders": "Mahnregeln",
+  "@deployEntityReminders": {
+    "description": "#988/#990 deployments: deployEntityReminders"
+  },
+  "deployEntityDocumentDesign": "Dokumentvorlagen",
+  "@deployEntityDocumentDesign": {
+    "description": "#988/#990 deployments: deployEntityDocumentDesign"
+  },
+  "deployEntityDocumentLinks": "Dokumentlinks",
+  "@deployEntityDocumentLinks": {
+    "description": "#988/#990 deployments: deployEntityDocumentLinks"
+  },
+  "deployEntityClosureDays": "Schließtage",
+  "@deployEntityClosureDays": {
+    "description": "#988/#990 deployments: deployEntityClosureDays"
+  },
+  "deployEntityInvitations": "Einladungsvorlagen",
+  "@deployEntityInvitations": {
+    "description": "#988/#990 deployments: deployEntityInvitations"
+  },
+  "deployEntityFeatures": "Funktionen",
+  "@deployEntityFeatures": {
+    "description": "#988/#990 deployments: deployEntityFeatures"
+  },
   "developerMode": "Entwicklermodus",
   "developerModeWorkspaceHint": "Gilt für alle Mitglieder dieses Workspace.",
   "developerTitle": "Entwickler",

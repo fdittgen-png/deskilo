@@ -1560,6 +1560,140 @@ class AppLocalizationsEs extends AppLocalizations {
       'Nombres, correos, teléfonos y direcciones se difuminan en la pantalla de este dispositivo — para capturas de pantalla y vídeos.';
 
   @override
+  String get featureDeployments => 'Despliegues';
+
+  @override
+  String get featureDeploymentsDesc =>
+      'Configuración y datos maestros desplegados entre los dos lados de una pareja, entidad por entidad, con una vista previa de lo que cambia y un diario que sabe deshacer. Desactivado: los gemelos se ajustan a mano, cada uno por su lado.';
+
+  @override
+  String get deploymentTitle => 'Despliegue';
+
+  @override
+  String get deploymentIntroToProd =>
+      'Está en el lado de desarrollo. Lo que marque abajo se despliega al gemelo de producción, tras una vista previa de lo que cambia.';
+
+  @override
+  String get deploymentIntroToDev =>
+      'Está en el lado de producción. Lo que marque abajo se despliega al gemelo de desarrollo, tras una vista previa de lo que cambia.';
+
+  @override
+  String get deploymentNoTwin =>
+      'Este espacio no tiene un gemelo del que usted sea miembro.';
+
+  @override
+  String get deploymentNeedsProdPermission =>
+      'Desplegar en producción requiere el permiso «Desplegar en producción».';
+
+  @override
+  String get deploymentNeedsDevPermission =>
+      'Desplegar en desarrollo requiere el permiso «Desplegar en desarrollo».';
+
+  @override
+  String get deploymentKindMasterData => 'Datos maestros';
+
+  @override
+  String get deploymentKindConfiguration => 'Configuración';
+
+  @override
+  String get deploymentRequires => 'necesita';
+
+  @override
+  String get deploymentToProd => 'Desplegar en PROD…';
+
+  @override
+  String get deploymentToDev => 'Desplegar en DEV…';
+
+  @override
+  String get deploymentJournal => 'Diario';
+
+  @override
+  String get deploymentJournalEmpty => 'Todavía no se ha desplegado nada.';
+
+  @override
+  String get deploymentDirectionToProd => 'A producción';
+
+  @override
+  String get deploymentDirectionToDev => 'A desarrollo';
+
+  @override
+  String get deploymentRolledBackLabel => 'deshecho';
+
+  @override
+  String get deploymentRollback => 'Deshacer';
+
+  @override
+  String get deploymentPreviewToProd =>
+      'Lo que cambia en el lado de producción';
+
+  @override
+  String get deploymentPreviewToDev => 'Lo que cambia en el lado de desarrollo';
+
+  @override
+  String get deploymentNoChange => 'Sin cambios';
+
+  @override
+  String get deploymentNothingToDo =>
+      'Los dos lados ya coinciden en estas entidades.';
+
+  @override
+  String get deploymentConfirm => 'Desplegar';
+
+  @override
+  String get deploymentDone => 'Desplegado. Está en el diario.';
+
+  @override
+  String get deploymentRolledBack => 'Deshecho.';
+
+  @override
+  String get deployEntityIdentity => 'Identidad y datos legales';
+
+  @override
+  String get deployEntityVat => 'IVA';
+
+  @override
+  String get deployEntityTariffs => 'Tarifas';
+
+  @override
+  String get deployEntityServices => 'Servicios';
+
+  @override
+  String get deployEntityPackages => 'Paquetes';
+
+  @override
+  String get deployEntityAccessories => 'Accesorios';
+
+  @override
+  String get deployEntitySites => 'Sedes';
+
+  @override
+  String get deployEntityBookingRules => 'Reglas de reserva';
+
+  @override
+  String get deployEntityValidationRules => 'Reglas de validación';
+
+  @override
+  String get deployEntityRoles => 'Matriz de roles';
+
+  @override
+  String get deployEntityReminders => 'Reglas de recordatorio';
+
+  @override
+  String get deployEntityDocumentDesign => 'Diseños de documentos';
+
+  @override
+  String get deployEntityDocumentLinks => 'Enlaces de documentos';
+
+  @override
+  String get deployEntityClosureDays => 'Días de cierre';
+
+  @override
+  String get deployEntityInvitations => 'Plantillas de invitación';
+
+  @override
+  String get deployEntityFeatures => 'Funciones';
+
+  @override
   String get developerMode => 'Modo desarrollador';
 
   @override

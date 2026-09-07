@@ -597,6 +597,18 @@ class SettingsScreen extends ConsumerWidget {
               title: Text(l10n?.rolesTitle ?? 'Role management'),
               onTap: () => context.push('/roles'),
             ),
+          // #990 — deploying between the two sides of the pair.
+          if (showAdminSection &&
+              features.contains(WorkspaceFeature.deployments) &&
+              perms.contains(WorkspacePermission.deployToDev) &&
+              (ref.watch(currentWorkspaceProvider).value?.pairId.isNotEmpty ??
+                  false))
+            ListTile(
+              key: const ValueKey('settings-deployment'),
+              leading: const Icon(Icons.rocket_launch_outlined),
+              title: Text(l10n?.deploymentTitle ?? 'Deployment'),
+              onTap: () => context.push('/deployment'),
+            ),
           if (showAdminSection && features.contains(WorkspaceFeature.invoicing))
             ListTile(
               key: const ValueKey('settings-billing-reports'),

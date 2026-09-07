@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+import 'package:deskilo/features/workspace/domain/deployment.dart';
+import 'package:deskilo/features/workspace/providers/deployment_providers.dart';
+import 'fake_deployment_repository.dart';
 import 'package:deskilo/core/demo/demo_mode.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'dart:async';
@@ -1661,6 +1664,7 @@ List<Override> standardTestOverrides({
   HelpHintStore? helpHints,
   DemoModeStore? demoMode,
   NavigationStyleStore? navigationStyle,
+  DeploymentRepository? deployment,
 }) {
   return [
     // #969/#970 — the per-device preferences, in memory by default.
@@ -1684,6 +1688,9 @@ List<Override> standardTestOverrides({
     }()),
     floorPlanRepositoryProvider
         .overrideWithValue(floorPlan ?? FakeFloorPlanRepository()),
+    // #988 — the deployment engine, in memory.
+    deploymentRepositoryProvider
+        .overrideWithValue(deployment ?? FakeDeploymentRepository()),
     accessoryRepositoryProvider
         .overrideWithValue(accessories ?? FakeAccessoryRepository()),
     reservationRepositoryProvider

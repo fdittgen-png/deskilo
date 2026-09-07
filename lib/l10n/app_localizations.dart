@@ -2772,6 +2772,258 @@ abstract class AppLocalizations {
   /// **'Names, e-mails, phones and addresses are blurred on this device\'s screen — for screenshots and videos.'**
   String get demoModeSubtitle;
 
+  /// #988/#990 deployments: featureDeployments
+  ///
+  /// In en, this message translates to:
+  /// **'Deployments'**
+  String get featureDeployments;
+
+  /// #988/#990 deployments: featureDeploymentsDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Configuration and master data deployed between the two sides of a pair, entity by entity, with a preview of what changes and a journal that can roll back. Off: the twins are edited by hand, each on its own.'**
+  String get featureDeploymentsDesc;
+
+  /// #988/#990 deployments: deploymentTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Deployment'**
+  String get deploymentTitle;
+
+  /// #988/#990 deployments: deploymentIntroToProd
+  ///
+  /// In en, this message translates to:
+  /// **'You stand on the development side. What you tick below is deployed to the production twin, after a preview of what changes.'**
+  String get deploymentIntroToProd;
+
+  /// #988/#990 deployments: deploymentIntroToDev
+  ///
+  /// In en, this message translates to:
+  /// **'You stand on the production side. What you tick below is deployed to the development twin, after a preview of what changes.'**
+  String get deploymentIntroToDev;
+
+  /// #988/#990 deployments: deploymentNoTwin
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace has no twin you are a member of.'**
+  String get deploymentNoTwin;
+
+  /// #988/#990 deployments: deploymentNeedsProdPermission
+  ///
+  /// In en, this message translates to:
+  /// **'Deploying to production needs the \"Deploy to production\" permission.'**
+  String get deploymentNeedsProdPermission;
+
+  /// #988/#990 deployments: deploymentNeedsDevPermission
+  ///
+  /// In en, this message translates to:
+  /// **'Deploying to development needs the \"Deploy to development\" permission.'**
+  String get deploymentNeedsDevPermission;
+
+  /// #988/#990 deployments: deploymentKindMasterData
+  ///
+  /// In en, this message translates to:
+  /// **'Master data'**
+  String get deploymentKindMasterData;
+
+  /// #988/#990 deployments: deploymentKindConfiguration
+  ///
+  /// In en, this message translates to:
+  /// **'Configuration'**
+  String get deploymentKindConfiguration;
+
+  /// #988/#990 deployments: deploymentRequires
+  ///
+  /// In en, this message translates to:
+  /// **'needs'**
+  String get deploymentRequires;
+
+  /// #988/#990 deployments: deploymentToProd
+  ///
+  /// In en, this message translates to:
+  /// **'Deploy to PROD…'**
+  String get deploymentToProd;
+
+  /// #988/#990 deployments: deploymentToDev
+  ///
+  /// In en, this message translates to:
+  /// **'Deploy to DEV…'**
+  String get deploymentToDev;
+
+  /// #988/#990 deployments: deploymentJournal
+  ///
+  /// In en, this message translates to:
+  /// **'Journal'**
+  String get deploymentJournal;
+
+  /// #988/#990 deployments: deploymentJournalEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing deployed yet.'**
+  String get deploymentJournalEmpty;
+
+  /// #988/#990 deployments: deploymentDirectionToProd
+  ///
+  /// In en, this message translates to:
+  /// **'To production'**
+  String get deploymentDirectionToProd;
+
+  /// #988/#990 deployments: deploymentDirectionToDev
+  ///
+  /// In en, this message translates to:
+  /// **'To development'**
+  String get deploymentDirectionToDev;
+
+  /// #988/#990 deployments: deploymentRolledBackLabel
+  ///
+  /// In en, this message translates to:
+  /// **'rolled back'**
+  String get deploymentRolledBackLabel;
+
+  /// #988/#990 deployments: deploymentRollback
+  ///
+  /// In en, this message translates to:
+  /// **'Roll back'**
+  String get deploymentRollback;
+
+  /// #988/#990 deployments: deploymentPreviewToProd
+  ///
+  /// In en, this message translates to:
+  /// **'What changes on the production side'**
+  String get deploymentPreviewToProd;
+
+  /// #988/#990 deployments: deploymentPreviewToDev
+  ///
+  /// In en, this message translates to:
+  /// **'What changes on the development side'**
+  String get deploymentPreviewToDev;
+
+  /// #988/#990 deployments: deploymentNoChange
+  ///
+  /// In en, this message translates to:
+  /// **'No change'**
+  String get deploymentNoChange;
+
+  /// #988/#990 deployments: deploymentNothingToDo
+  ///
+  /// In en, this message translates to:
+  /// **'The two sides already agree on these entities.'**
+  String get deploymentNothingToDo;
+
+  /// #988/#990 deployments: deploymentConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'Deploy'**
+  String get deploymentConfirm;
+
+  /// #988/#990 deployments: deploymentDone
+  ///
+  /// In en, this message translates to:
+  /// **'Deployed. The journal has it.'**
+  String get deploymentDone;
+
+  /// #988/#990 deployments: deploymentRolledBack
+  ///
+  /// In en, this message translates to:
+  /// **'Rolled back.'**
+  String get deploymentRolledBack;
+
+  /// #988/#990 deployments: deployEntityIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'Identity & legal'**
+  String get deployEntityIdentity;
+
+  /// #988/#990 deployments: deployEntityVat
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get deployEntityVat;
+
+  /// #988/#990 deployments: deployEntityTariffs
+  ///
+  /// In en, this message translates to:
+  /// **'Tariffs'**
+  String get deployEntityTariffs;
+
+  /// #988/#990 deployments: deployEntityServices
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get deployEntityServices;
+
+  /// #988/#990 deployments: deployEntityPackages
+  ///
+  /// In en, this message translates to:
+  /// **'Packages'**
+  String get deployEntityPackages;
+
+  /// #988/#990 deployments: deployEntityAccessories
+  ///
+  /// In en, this message translates to:
+  /// **'Accessories'**
+  String get deployEntityAccessories;
+
+  /// #988/#990 deployments: deployEntitySites
+  ///
+  /// In en, this message translates to:
+  /// **'Sites'**
+  String get deployEntitySites;
+
+  /// #988/#990 deployments: deployEntityBookingRules
+  ///
+  /// In en, this message translates to:
+  /// **'Booking rules'**
+  String get deployEntityBookingRules;
+
+  /// #988/#990 deployments: deployEntityValidationRules
+  ///
+  /// In en, this message translates to:
+  /// **'Validation rules'**
+  String get deployEntityValidationRules;
+
+  /// #988/#990 deployments: deployEntityRoles
+  ///
+  /// In en, this message translates to:
+  /// **'Role matrix'**
+  String get deployEntityRoles;
+
+  /// #988/#990 deployments: deployEntityReminders
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder rules'**
+  String get deployEntityReminders;
+
+  /// #988/#990 deployments: deployEntityDocumentDesign
+  ///
+  /// In en, this message translates to:
+  /// **'Document designs'**
+  String get deployEntityDocumentDesign;
+
+  /// #988/#990 deployments: deployEntityDocumentLinks
+  ///
+  /// In en, this message translates to:
+  /// **'Document links'**
+  String get deployEntityDocumentLinks;
+
+  /// #988/#990 deployments: deployEntityClosureDays
+  ///
+  /// In en, this message translates to:
+  /// **'Closure days'**
+  String get deployEntityClosureDays;
+
+  /// #988/#990 deployments: deployEntityInvitations
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation templates'**
+  String get deployEntityInvitations;
+
+  /// #988/#990 deployments: deployEntityFeatures
+  ///
+  /// In en, this message translates to:
+  /// **'Features'**
+  String get deployEntityFeatures;
+
   /// Settings toggle enabling the local diagnostics screen
   ///
   /// In en, this message translates to:

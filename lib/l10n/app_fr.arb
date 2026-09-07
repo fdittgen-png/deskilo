@@ -1127,6 +1127,174 @@
   "@demoModeSubtitle": {
     "description": "#970 demo mode: demoModeSubtitle"
   },
+  "featureDeployments": "Déploiements",
+  "@featureDeployments": {
+    "description": "#988/#990 deployments: featureDeployments"
+  },
+  "featureDeploymentsDesc": "Configuration et données de base déployées entre les deux côtés d'une paire, entité par entité, avec un aperçu de ce qui change et un journal qui sait revenir en arrière. Désactivé : les jumeaux se règlent à la main, chacun de son côté.",
+  "@featureDeploymentsDesc": {
+    "description": "#988/#990 deployments: featureDeploymentsDesc"
+  },
+  "deploymentTitle": "Déploiement",
+  "@deploymentTitle": {
+    "description": "#988/#990 deployments: deploymentTitle"
+  },
+  "deploymentIntroToProd": "Vous êtes du côté développement. Ce que vous cochez ci-dessous est déployé vers le jumeau de production, après un aperçu de ce qui change.",
+  "@deploymentIntroToProd": {
+    "description": "#988/#990 deployments: deploymentIntroToProd"
+  },
+  "deploymentIntroToDev": "Vous êtes du côté production. Ce que vous cochez ci-dessous est déployé vers le jumeau de développement, après un aperçu de ce qui change.",
+  "@deploymentIntroToDev": {
+    "description": "#988/#990 deployments: deploymentIntroToDev"
+  },
+  "deploymentNoTwin": "Cet espace n'a pas de jumeau dont vous soyez membre.",
+  "@deploymentNoTwin": {
+    "description": "#988/#990 deployments: deploymentNoTwin"
+  },
+  "deploymentNeedsProdPermission": "Déployer en production demande la permission « Déployer en production ».",
+  "@deploymentNeedsProdPermission": {
+    "description": "#988/#990 deployments: deploymentNeedsProdPermission"
+  },
+  "deploymentNeedsDevPermission": "Déployer en développement demande la permission « Déployer en développement ».",
+  "@deploymentNeedsDevPermission": {
+    "description": "#988/#990 deployments: deploymentNeedsDevPermission"
+  },
+  "deploymentKindMasterData": "Données de base",
+  "@deploymentKindMasterData": {
+    "description": "#988/#990 deployments: deploymentKindMasterData"
+  },
+  "deploymentKindConfiguration": "Configuration",
+  "@deploymentKindConfiguration": {
+    "description": "#988/#990 deployments: deploymentKindConfiguration"
+  },
+  "deploymentRequires": "nécessite",
+  "@deploymentRequires": {
+    "description": "#988/#990 deployments: deploymentRequires"
+  },
+  "deploymentToProd": "Déployer en PROD…",
+  "@deploymentToProd": {
+    "description": "#988/#990 deployments: deploymentToProd"
+  },
+  "deploymentToDev": "Déployer en DEV…",
+  "@deploymentToDev": {
+    "description": "#988/#990 deployments: deploymentToDev"
+  },
+  "deploymentJournal": "Journal",
+  "@deploymentJournal": {
+    "description": "#988/#990 deployments: deploymentJournal"
+  },
+  "deploymentJournalEmpty": "Rien n'a encore été déployé.",
+  "@deploymentJournalEmpty": {
+    "description": "#988/#990 deployments: deploymentJournalEmpty"
+  },
+  "deploymentDirectionToProd": "Vers la production",
+  "@deploymentDirectionToProd": {
+    "description": "#988/#990 deployments: deploymentDirectionToProd"
+  },
+  "deploymentDirectionToDev": "Vers le développement",
+  "@deploymentDirectionToDev": {
+    "description": "#988/#990 deployments: deploymentDirectionToDev"
+  },
+  "deploymentRolledBackLabel": "annulé",
+  "@deploymentRolledBackLabel": {
+    "description": "#988/#990 deployments: deploymentRolledBackLabel"
+  },
+  "deploymentRollback": "Revenir en arrière",
+  "@deploymentRollback": {
+    "description": "#988/#990 deployments: deploymentRollback"
+  },
+  "deploymentPreviewToProd": "Ce qui change côté production",
+  "@deploymentPreviewToProd": {
+    "description": "#988/#990 deployments: deploymentPreviewToProd"
+  },
+  "deploymentPreviewToDev": "Ce qui change côté développement",
+  "@deploymentPreviewToDev": {
+    "description": "#988/#990 deployments: deploymentPreviewToDev"
+  },
+  "deploymentNoChange": "Aucun changement",
+  "@deploymentNoChange": {
+    "description": "#988/#990 deployments: deploymentNoChange"
+  },
+  "deploymentNothingToDo": "Les deux côtés sont déjà d'accord sur ces entités.",
+  "@deploymentNothingToDo": {
+    "description": "#988/#990 deployments: deploymentNothingToDo"
+  },
+  "deploymentConfirm": "Déployer",
+  "@deploymentConfirm": {
+    "description": "#988/#990 deployments: deploymentConfirm"
+  },
+  "deploymentDone": "Déployé. Le journal l'a.",
+  "@deploymentDone": {
+    "description": "#988/#990 deployments: deploymentDone"
+  },
+  "deploymentRolledBack": "Retour arrière effectué.",
+  "@deploymentRolledBack": {
+    "description": "#988/#990 deployments: deploymentRolledBack"
+  },
+  "deployEntityIdentity": "Identité et mentions légales",
+  "@deployEntityIdentity": {
+    "description": "#988/#990 deployments: deployEntityIdentity"
+  },
+  "deployEntityVat": "TVA",
+  "@deployEntityVat": {
+    "description": "#988/#990 deployments: deployEntityVat"
+  },
+  "deployEntityTariffs": "Tarifs",
+  "@deployEntityTariffs": {
+    "description": "#988/#990 deployments: deployEntityTariffs"
+  },
+  "deployEntityServices": "Services",
+  "@deployEntityServices": {
+    "description": "#988/#990 deployments: deployEntityServices"
+  },
+  "deployEntityPackages": "Forfaits",
+  "@deployEntityPackages": {
+    "description": "#988/#990 deployments: deployEntityPackages"
+  },
+  "deployEntityAccessories": "Accessoires",
+  "@deployEntityAccessories": {
+    "description": "#988/#990 deployments: deployEntityAccessories"
+  },
+  "deployEntitySites": "Sites",
+  "@deployEntitySites": {
+    "description": "#988/#990 deployments: deployEntitySites"
+  },
+  "deployEntityBookingRules": "Règles de réservation",
+  "@deployEntityBookingRules": {
+    "description": "#988/#990 deployments: deployEntityBookingRules"
+  },
+  "deployEntityValidationRules": "Règles de validation",
+  "@deployEntityValidationRules": {
+    "description": "#988/#990 deployments: deployEntityValidationRules"
+  },
+  "deployEntityRoles": "Matrice des rôles",
+  "@deployEntityRoles": {
+    "description": "#988/#990 deployments: deployEntityRoles"
+  },
+  "deployEntityReminders": "Règles de relance",
+  "@deployEntityReminders": {
+    "description": "#988/#990 deployments: deployEntityReminders"
+  },
+  "deployEntityDocumentDesign": "Conception des documents",
+  "@deployEntityDocumentDesign": {
+    "description": "#988/#990 deployments: deployEntityDocumentDesign"
+  },
+  "deployEntityDocumentLinks": "Liens de documents",
+  "@deployEntityDocumentLinks": {
+    "description": "#988/#990 deployments: deployEntityDocumentLinks"
+  },
+  "deployEntityClosureDays": "Jours de fermeture",
+  "@deployEntityClosureDays": {
+    "description": "#988/#990 deployments: deployEntityClosureDays"
+  },
+  "deployEntityInvitations": "Modèles d'invitation",
+  "@deployEntityInvitations": {
+    "description": "#988/#990 deployments: deployEntityInvitations"
+  },
+  "deployEntityFeatures": "Fonctionnalités",
+  "@deployEntityFeatures": {
+    "description": "#988/#990 deployments: deployEntityFeatures"
+  },
   "developerMode": "Mode développeur",
   "developerModeWorkspaceHint": "S'applique à tous les membres de cet espace.",
   "developerTitle": "Développeur",
