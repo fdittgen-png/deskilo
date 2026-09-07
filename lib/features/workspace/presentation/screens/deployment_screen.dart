@@ -28,11 +28,7 @@ class DeploymentScreen extends ConsumerStatefulWidget {
   ConsumerState<DeploymentScreen> createState() => _DeploymentScreenState();
 }
 
-/// #998 — push to the twin, or pull from it. Started from either side.
-enum _Flow { push, pull }
-
 class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
-  _Flow _flow = _Flow.push;
   List<DeployableEntity>? _registry;
   List<Deployment> _journal = const [];
   final Set<String> _selected = {};
@@ -100,6 +96,32 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
       ),
     );
     if (confirmed != true || !mounted) return;
+    // #1006 — the last word: which side is written, and that it is this one.
+    final sure = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(to.isDevelopment
+            ? (l10n?.deploymentConfirmTitleDev ?? 'Deploy into this DEV?')
+            : (l10n?.deploymentConfirmTitleProd ?? 'Deploy into this PROD?')),
+        content: Text(
+          '${l10n?.deploymentConfirmBody ?? 'What this workspace holds for the ticked entities is replaced by the twin\'s. The journal keeps the way back.'}\n\n'
+          '${entities.map((e) => deploymentEntityName(l10n, e)).join(', ')}',
+        ),
+        actions: [
+          TextButton(
+            key: const ValueKey('deploy-final-cancel'),
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(l10n?.commonCancel ?? 'Cancel'),
+          ),
+          FilledButton(
+            key: const ValueKey('deploy-final-confirm'),
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(l10n?.deploymentConfirm ?? 'Deploy'),
+          ),
+        ],
+      ),
+    );
+    if (sure != true || !mounted) return;
     setState(() => _busy = true);
     final deployed = await runGuarded(
       context,
@@ -149,14 +171,15 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
     }
     final twin = _twinOf(workspace);
     final perms = ref.watch(myPermissionsProvider);
-    // The target is the twin on a push, this side on a pull; the
-    // permission is the target's direction, whichever side we stand on.
-    final toProd = _flow == _Flow.push ? workspace.isDevelopment : !workspace.isDevelopment;
+    // #1006 — the deployment is always INTO the side you stand on: the
+    // twin is the source, this workspace the target. Nothing can be
+    // pushed onto the other side by mistake.
+    final toProd = !workspace.isDevelopment;
     final allowed = toProd
         ? perms.contains(WorkspacePermission.deployToProd)
         : perms.contains(WorkspacePermission.deployToDev);
-    final from = _flow == _Flow.push ? workspace : twin;
-    final to = _flow == _Flow.push ? twin : workspace;
+    final from = twin;
+    final to = workspace;
     final registry = _registry;
     final theme = Theme.of(context);
     return Scaffold(
@@ -166,54 +189,16 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
           : ListView(
               padding: AppSpacing.gutterAll,
               children: [
-                // #998 — which way: to the twin, or from it into here.
-                SegmentedButton<_Flow>(
-                  key: const ValueKey('deploy-flow'),
-                  segments: [
-                    ButtonSegment(
-                      value: _Flow.push,
-                      label: Text(workspace.isDevelopment
-                          ? (l10n?.deploymentFlowToProd ?? 'To PROD')
-                          : (l10n?.deploymentFlowToDev ?? 'To DEV')),
-                      icon: const Icon(Icons.upload_outlined),
-                    ),
-                    ButtonSegment(
-                      value: _Flow.pull,
-                      label: Text(workspace.isDevelopment
-                          ? (l10n?.deploymentFlowFromProd ?? 'From PROD')
-                          : (l10n?.deploymentFlowFromDev ?? 'From DEV')),
-                      icon: const Icon(Icons.download_outlined),
-                    ),
-                  ],
-                  selected: {_flow},
-                  onSelectionChanged: _busy
-                      ? null
-                      : (v) => setState(() {
-                            _flow = v.first;
-                            _selected.clear();
-                          }),
-                ),
-                const SizedBox(height: AppSpacing.sm),
                 Text(
-                  _flow == _Flow.pull
-                      ? (workspace.isDevelopment
-                          ? (l10n?.deploymentIntroFromProd ??
-                              'You stand on the development side. What you '
-                                  'tick below is pulled from the production '
-                                  'twin into this workspace, after a preview.')
-                          : (l10n?.deploymentIntroFromDev ??
-                              'You stand on the production side. What you '
-                                  'tick below is pulled from the development '
-                                  'twin into this workspace, after a preview.'))
-                      : toProd
-                      ? (l10n?.deploymentIntroToProd ??
-                          'You stand on the development side. What you tick '
-                              'below is deployed to the production twin, after '
-                              'a preview of what changes.')
-                      : (l10n?.deploymentIntroToDev ??
-                          'You stand on the production side. What you tick '
-                              'below is deployed to the development twin, '
-                              'after a preview of what changes.'),
+                  workspace.isDevelopment
+                      ? (l10n?.deploymentIntroFromProd ??
+                          'You stand on the development side. What you '
+                              'tick below is pulled from the production '
+                              'twin into this workspace, after a preview.')
+                      : (l10n?.deploymentIntroFromDev ??
+                          'You stand on the production side. What you '
+                              'tick below is pulled from the development '
+                              'twin into this workspace, after a preview.'),
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                 ),
@@ -271,21 +256,14 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
                   key: const ValueKey('deploy-preview'),
                   onPressed: _busy ||
                           from == null ||
-                          to == null ||
                           !allowed ||
                           _selected.isEmpty
                       ? null
                       : () => _previewAndDeploy(from, to),
-                  icon: Icon(_flow == _Flow.pull
-                      ? Icons.download_outlined
-                      : Icons.rocket_launch_outlined),
-                  label: Text(_flow == _Flow.pull
-                      ? (workspace.isDevelopment
-                          ? (l10n?.deploymentPullFromProd ?? 'Pull from PROD…')
-                          : (l10n?.deploymentPullFromDev ?? 'Pull from DEV…'))
-                      : toProd
-                          ? (l10n?.deploymentToProd ?? 'Deploy to PROD…')
-                          : (l10n?.deploymentToDev ?? 'Deploy to DEV…')),
+                  icon: const Icon(Icons.download_outlined),
+                  label: Text(workspace.isDevelopment
+                      ? (l10n?.deploymentPullFromProd ?? 'Pull from PROD…')
+                      : (l10n?.deploymentPullFromDev ?? 'Pull from DEV…')),
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 Text(l10n?.deploymentJournal ?? 'Journal',

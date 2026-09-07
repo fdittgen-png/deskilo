@@ -1,0 +1,15 @@
+{
+  "@@locale": "fr",
+  "deploymentConfirmTitleDev": "Déployer dans cette DEV ?",
+  "@deploymentConfirmTitleDev": {
+    "description": "#1006 deployment confirmation: deploymentConfirmTitleDev"
+  },
+  "deploymentConfirmTitleProd": "Déployer dans cette PROD ?",
+  "@deploymentConfirmTitleProd": {
+    "description": "#1006 deployment confirmation: deploymentConfirmTitleProd"
+  },
+  "deploymentConfirmBody": "Ce que cet espace contient pour les entités cochées est remplacé par ce qu'a le jumeau. Le journal garde le retour arrière.",
+  "@deploymentConfirmBody": {
+    "description": "#1006 deployment confirmation: deploymentConfirmBody"
+  }
+}

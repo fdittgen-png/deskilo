@@ -1561,6 +1561,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Namen, E-Mails, Telefonnummern und Adressen werden auf dem Bildschirm dieses Geräts unscharf gemacht — für Screenshots und Videos.';
 
   @override
+  String get deploymentConfirmTitleDev => 'In diese DEV ausrollen?';
+
+  @override
+  String get deploymentConfirmTitleProd => 'In diese PROD ausrollen?';
+
+  @override
+  String get deploymentConfirmBody =>
+      'Was dieser Raum für die angekreuzten Entitäten hält, wird durch das des Zwillings ersetzt. Das Journal behält den Weg zurück.';
+
+  @override
   String get deployEntityFloorPlan => 'Grundrisse (Ebenen, Plätze, Bilder)';
 
   @override

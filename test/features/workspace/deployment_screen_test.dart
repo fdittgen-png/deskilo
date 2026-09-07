@@ -62,11 +62,14 @@ void main() {
         {'floor_plan', 'accessories', 'sites', 'vat'});
   });
 
-  testWidgets('from the dev, an owner previews and deploys to the prod; the '
-      'journal takes it and offers the way back', (tester) async {
-    final (_, deployment) = await _pump(tester);
+  testWidgets('from the dev, an owner pulls the prod in — preview, the last '
+      'word, the journal with the way back', (tester) async {
+    final (workspace, deployment) = await _pump(tester);
+    final devId = workspace.workspaces.first.id;
     expect(find.byKey(const ValueKey('deploy-entity-vat')), findsOneWidget);
     expect(find.byKey(const ValueKey('deploy-journal-empty')), findsOneWidget);
+    expect(find.text('Pull from PROD…'), findsOneWidget);
+    expect(find.text('Deploy to PROD…'), findsNothing);
 
     // Ticking services ticks VAT along.
     await tester.tap(find.byKey(const ValueKey('deploy-entity-services')));
@@ -86,8 +89,22 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('deploy-confirm')));
     await tester.pumpAndSettle();
 
+    // #1006 — the last word: cancel writes nothing.
+    expect(find.byKey(const ValueKey('deploy-final-confirm')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('deploy-final-cancel')));
+    await tester.pumpAndSettle();
+    expect(deployment.deployed, isEmpty);
+
+    await tester.tap(find.byKey(const ValueKey('deploy-preview')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('deploy-confirm')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('deploy-final-confirm')));
+    await tester.pumpAndSettle();
+
     expect(deployment.deployed, hasLength(1));
-    expect(deployment.deployed.single.to, 'ws-prod');
+    expect(deployment.deployed.single.to, devId);
+    expect(deployment.deployed.single.from, 'ws-prod');
     expect(deployment.deployed.single.entities, ['services', 'vat']);
     expect(find.byKey(const ValueKey('deploy-journal-dep-1')), findsOneWidget);
 
@@ -97,39 +114,20 @@ void main() {
     expect(find.byKey(const ValueKey('deploy-rollback-dep-1')), findsNothing);
   });
 
-  testWidgets('an admin on the dev may not push to the prod — the reason is '
-      'on screen and the button stays off', (tester) async {
-    await _pump(tester, viewerOwner: false);
-    expect(find.byKey(const ValueKey('deploy-not-allowed')), findsOneWidget);
-    expect(
-        tester
-            .widget<FilledButton>(find.byKey(const ValueKey('deploy-preview')))
-            .onPressed,
-        isNull);
-  });
-
-  testWidgets('the same admin on the prod may refresh the dev', (tester) async {
-    await _pump(tester, viewerOwner: false, onDev: false);
-    expect(find.byKey(const ValueKey('deploy-not-allowed')), findsNothing);
-    expect(find.text('Deploy to DEV…'), findsOneWidget);
-  });
-
-  testWidgets('with the feature off the route bounces to settings',
+  testWidgets('an admin on the dev may pull the prod in (deployToDev)',
       (tester) async {
-    await _pump(tester, flags: const {'deployments': false});
-    expect(find.byKey(const ValueKey('deploy-entity-vat')), findsNothing);
+    await _pump(tester, viewerOwner: false);
+    expect(find.byKey(const ValueKey('deploy-not-allowed')), findsNothing);
+    expect(find.text('Pull from PROD…'), findsOneWidget);
   });
 
-  testWidgets('#998 — from the prod, the dev-to-prod role pulls the dev '
-      'into this production; the groups name configuration, master data '
-      'and reports', (tester) async {
+  testWidgets('on the prod, the dev-to-prod role pulls the dev into this '
+      'production; the groups name configuration, master data and reports',
+      (tester) async {
     final (_, deployment) = await _pump(tester, onDev: false);
     expect(find.byKey(const ValueKey('deploy-group-configuration')), findsOneWidget);
     expect(find.byKey(const ValueKey('deploy-group-master_data')), findsOneWidget);
     expect(find.byKey(const ValueKey('deploy-group-reports')), findsOneWidget);
-
-    await tester.tap(find.text('From DEV'));
-    await tester.pumpAndSettle();
     expect(find.text('Pull from DEV…'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('deploy-entity-document_design')));
     await tester.pumpAndSettle();
@@ -138,21 +136,27 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('deploy-confirm')));
     await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('deploy-final-confirm')));
+    await tester.pumpAndSettle();
     expect(deployment.deployed, hasLength(1));
     expect(deployment.deployed.single.to, 'ws-prod');
     expect(deployment.deployed.single.entities, ['document_design']);
   });
 
-  testWidgets('#998 — an admin on the prod (no dev-to-prod role) cannot pull; '
-      'the reason is on screen', (tester) async {
+  testWidgets('an admin on the prod (no dev-to-prod role) cannot pull; the '
+      'reason is on screen and the button stays off', (tester) async {
     await _pump(tester, onDev: false, viewerOwner: false);
-    await tester.tap(find.text('From DEV'));
-    await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('deploy-not-allowed')), findsOneWidget);
     expect(
         tester
             .widget<FilledButton>(find.byKey(const ValueKey('deploy-preview')))
             .onPressed,
         isNull);
+  });
+
+  testWidgets('with the feature off the route bounces to settings',
+      (tester) async {
+    await _pump(tester, flags: const {'deployments': false});
+    expect(find.byKey(const ValueKey('deploy-entity-vat')), findsNothing);
   });
 }
