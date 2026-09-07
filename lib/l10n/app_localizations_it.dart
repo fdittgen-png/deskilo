@@ -1563,6 +1563,35 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nomi, e-mail, telefoni e indirizzi sono sfocati sullo schermo di questo dispositivo — per screenshot e video.';
 
   @override
+  String get deploymentFlowToProd => 'In PROD';
+
+  @override
+  String get deploymentFlowToDev => 'In DEV';
+
+  @override
+  String get deploymentFlowFromProd => 'Da PROD';
+
+  @override
+  String get deploymentFlowFromDev => 'Da DEV';
+
+  @override
+  String get deploymentIntroFromProd =>
+      'Sei sul lato sviluppo. Ciò che spunti qui sotto viene tirato dal gemello di produzione in questo spazio, dopo un\'anteprima.';
+
+  @override
+  String get deploymentIntroFromDev =>
+      'Sei sul lato produzione. Ciò che spunti qui sotto viene tirato dal gemello di sviluppo in questo spazio, dopo un\'anteprima.';
+
+  @override
+  String get deploymentPullFromProd => 'Tira da PROD…';
+
+  @override
+  String get deploymentPullFromDev => 'Tira da DEV…';
+
+  @override
+  String get deploymentKindReports => 'Report';
+
+  @override
   String get featureDeployments => 'Distribuzioni';
 
   @override

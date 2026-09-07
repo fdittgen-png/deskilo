@@ -1127,6 +1127,42 @@
   "@demoModeSubtitle": {
     "description": "#970 demo mode: demoModeSubtitle"
   },
+  "deploymentFlowToProd": "In die PROD",
+  "@deploymentFlowToProd": {
+    "description": "#998 deployment pull: deploymentFlowToProd"
+  },
+  "deploymentFlowToDev": "In die DEV",
+  "@deploymentFlowToDev": {
+    "description": "#998 deployment pull: deploymentFlowToDev"
+  },
+  "deploymentFlowFromProd": "Aus der PROD",
+  "@deploymentFlowFromProd": {
+    "description": "#998 deployment pull: deploymentFlowFromProd"
+  },
+  "deploymentFlowFromDev": "Aus der DEV",
+  "@deploymentFlowFromDev": {
+    "description": "#998 deployment pull: deploymentFlowFromDev"
+  },
+  "deploymentIntroFromProd": "Sie stehen auf der Entwicklungsseite. Was Sie unten ankreuzen, wird nach einer Vorschau aus dem Produktionszwilling in diesen Raum geholt.",
+  "@deploymentIntroFromProd": {
+    "description": "#998 deployment pull: deploymentIntroFromProd"
+  },
+  "deploymentIntroFromDev": "Sie stehen auf der Produktionsseite. Was Sie unten ankreuzen, wird nach einer Vorschau aus dem Entwicklungszwilling in diesen Raum geholt.",
+  "@deploymentIntroFromDev": {
+    "description": "#998 deployment pull: deploymentIntroFromDev"
+  },
+  "deploymentPullFromProd": "Aus der PROD holen…",
+  "@deploymentPullFromProd": {
+    "description": "#998 deployment pull: deploymentPullFromProd"
+  },
+  "deploymentPullFromDev": "Aus der DEV holen…",
+  "@deploymentPullFromDev": {
+    "description": "#998 deployment pull: deploymentPullFromDev"
+  },
+  "deploymentKindReports": "Berichte",
+  "@deploymentKindReports": {
+    "description": "#998 deployment pull: deploymentKindReports"
+  },
   "featureDeployments": "Ausrollungen",
   "@featureDeployments": {
     "description": "#988/#990 deployments: featureDeployments"

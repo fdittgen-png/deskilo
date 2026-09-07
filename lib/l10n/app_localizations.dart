@@ -2772,6 +2772,60 @@ abstract class AppLocalizations {
   /// **'Names, e-mails, phones and addresses are blurred on this device\'s screen — for screenshots and videos.'**
   String get demoModeSubtitle;
 
+  /// #998 deployment pull: deploymentFlowToProd
+  ///
+  /// In en, this message translates to:
+  /// **'To PROD'**
+  String get deploymentFlowToProd;
+
+  /// #998 deployment pull: deploymentFlowToDev
+  ///
+  /// In en, this message translates to:
+  /// **'To DEV'**
+  String get deploymentFlowToDev;
+
+  /// #998 deployment pull: deploymentFlowFromProd
+  ///
+  /// In en, this message translates to:
+  /// **'From PROD'**
+  String get deploymentFlowFromProd;
+
+  /// #998 deployment pull: deploymentFlowFromDev
+  ///
+  /// In en, this message translates to:
+  /// **'From DEV'**
+  String get deploymentFlowFromDev;
+
+  /// #998 deployment pull: deploymentIntroFromProd
+  ///
+  /// In en, this message translates to:
+  /// **'You stand on the development side. What you tick below is pulled from the production twin into this workspace, after a preview.'**
+  String get deploymentIntroFromProd;
+
+  /// #998 deployment pull: deploymentIntroFromDev
+  ///
+  /// In en, this message translates to:
+  /// **'You stand on the production side. What you tick below is pulled from the development twin into this workspace, after a preview.'**
+  String get deploymentIntroFromDev;
+
+  /// #998 deployment pull: deploymentPullFromProd
+  ///
+  /// In en, this message translates to:
+  /// **'Pull from PROD…'**
+  String get deploymentPullFromProd;
+
+  /// #998 deployment pull: deploymentPullFromDev
+  ///
+  /// In en, this message translates to:
+  /// **'Pull from DEV…'**
+  String get deploymentPullFromDev;
+
+  /// #998 deployment pull: deploymentKindReports
+  ///
+  /// In en, this message translates to:
+  /// **'Reports'**
+  String get deploymentKindReports;
+
   /// #988/#990 deployments: featureDeployments
   ///
   /// In en, this message translates to:

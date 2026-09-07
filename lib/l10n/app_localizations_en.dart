@@ -1554,6 +1554,35 @@ class AppLocalizationsEn extends AppLocalizations {
       'Names, e-mails, phones and addresses are blurred on this device\'s screen — for screenshots and videos.';
 
   @override
+  String get deploymentFlowToProd => 'To PROD';
+
+  @override
+  String get deploymentFlowToDev => 'To DEV';
+
+  @override
+  String get deploymentFlowFromProd => 'From PROD';
+
+  @override
+  String get deploymentFlowFromDev => 'From DEV';
+
+  @override
+  String get deploymentIntroFromProd =>
+      'You stand on the development side. What you tick below is pulled from the production twin into this workspace, after a preview.';
+
+  @override
+  String get deploymentIntroFromDev =>
+      'You stand on the production side. What you tick below is pulled from the development twin into this workspace, after a preview.';
+
+  @override
+  String get deploymentPullFromProd => 'Pull from PROD…';
+
+  @override
+  String get deploymentPullFromDev => 'Pull from DEV…';
+
+  @override
+  String get deploymentKindReports => 'Reports';
+
+  @override
   String get featureDeployments => 'Deployments';
 
   @override

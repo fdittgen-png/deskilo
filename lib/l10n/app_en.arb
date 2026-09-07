@@ -1838,6 +1838,42 @@
   "@demoModeSubtitle": {
     "description": "#970 demo mode: demoModeSubtitle"
   },
+  "deploymentFlowToProd": "To PROD",
+  "@deploymentFlowToProd": {
+    "description": "#998 deployment pull: deploymentFlowToProd"
+  },
+  "deploymentFlowToDev": "To DEV",
+  "@deploymentFlowToDev": {
+    "description": "#998 deployment pull: deploymentFlowToDev"
+  },
+  "deploymentFlowFromProd": "From PROD",
+  "@deploymentFlowFromProd": {
+    "description": "#998 deployment pull: deploymentFlowFromProd"
+  },
+  "deploymentFlowFromDev": "From DEV",
+  "@deploymentFlowFromDev": {
+    "description": "#998 deployment pull: deploymentFlowFromDev"
+  },
+  "deploymentIntroFromProd": "You stand on the development side. What you tick below is pulled from the production twin into this workspace, after a preview.",
+  "@deploymentIntroFromProd": {
+    "description": "#998 deployment pull: deploymentIntroFromProd"
+  },
+  "deploymentIntroFromDev": "You stand on the production side. What you tick below is pulled from the development twin into this workspace, after a preview.",
+  "@deploymentIntroFromDev": {
+    "description": "#998 deployment pull: deploymentIntroFromDev"
+  },
+  "deploymentPullFromProd": "Pull from PROD…",
+  "@deploymentPullFromProd": {
+    "description": "#998 deployment pull: deploymentPullFromProd"
+  },
+  "deploymentPullFromDev": "Pull from DEV…",
+  "@deploymentPullFromDev": {
+    "description": "#998 deployment pull: deploymentPullFromDev"
+  },
+  "deploymentKindReports": "Reports",
+  "@deploymentKindReports": {
+    "description": "#998 deployment pull: deploymentKindReports"
+  },
   "featureDeployments": "Deployments",
   "@featureDeployments": {
     "description": "#988/#990 deployments: featureDeployments"

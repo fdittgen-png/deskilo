@@ -28,7 +28,11 @@ class DeploymentScreen extends ConsumerStatefulWidget {
   ConsumerState<DeploymentScreen> createState() => _DeploymentScreenState();
 }
 
+/// #998 — push to the twin, or pull from it. Started from either side.
+enum _Flow { push, pull }
+
 class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
+  _Flow _flow = _Flow.push;
   List<DeployableEntity>? _registry;
   List<Deployment> _journal = const [];
   final Set<String> _selected = {};
@@ -145,10 +149,14 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
     }
     final twin = _twinOf(workspace);
     final perms = ref.watch(myPermissionsProvider);
-    final toProd = workspace.isDevelopment;
+    // The target is the twin on a push, this side on a pull; the
+    // permission is the target's direction, whichever side we stand on.
+    final toProd = _flow == _Flow.push ? workspace.isDevelopment : !workspace.isDevelopment;
     final allowed = toProd
         ? perms.contains(WorkspacePermission.deployToProd)
         : perms.contains(WorkspacePermission.deployToDev);
+    final from = _flow == _Flow.push ? workspace : twin;
+    final to = _flow == _Flow.push ? twin : workspace;
     final registry = _registry;
     final theme = Theme.of(context);
     return Scaffold(
@@ -158,8 +166,46 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
           : ListView(
               padding: AppSpacing.gutterAll,
               children: [
+                // #998 — which way: to the twin, or from it into here.
+                SegmentedButton<_Flow>(
+                  key: const ValueKey('deploy-flow'),
+                  segments: [
+                    ButtonSegment(
+                      value: _Flow.push,
+                      label: Text(workspace.isDevelopment
+                          ? (l10n?.deploymentFlowToProd ?? 'To PROD')
+                          : (l10n?.deploymentFlowToDev ?? 'To DEV')),
+                      icon: const Icon(Icons.upload_outlined),
+                    ),
+                    ButtonSegment(
+                      value: _Flow.pull,
+                      label: Text(workspace.isDevelopment
+                          ? (l10n?.deploymentFlowFromProd ?? 'From PROD')
+                          : (l10n?.deploymentFlowFromDev ?? 'From DEV')),
+                      icon: const Icon(Icons.download_outlined),
+                    ),
+                  ],
+                  selected: {_flow},
+                  onSelectionChanged: _busy
+                      ? null
+                      : (v) => setState(() {
+                            _flow = v.first;
+                            _selected.clear();
+                          }),
+                ),
+                const SizedBox(height: AppSpacing.sm),
                 Text(
-                  toProd
+                  _flow == _Flow.pull
+                      ? (workspace.isDevelopment
+                          ? (l10n?.deploymentIntroFromProd ??
+                              'You stand on the development side. What you '
+                                  'tick below is pulled from the production '
+                                  'twin into this workspace, after a preview.')
+                          : (l10n?.deploymentIntroFromDev ??
+                              'You stand on the production side. What you '
+                                  'tick below is pulled from the development '
+                                  'twin into this workspace, after a preview.'))
+                      : toProd
                       ? (l10n?.deploymentIntroToProd ??
                           'You stand on the development side. What you tick '
                               'below is deployed to the production twin, after '
@@ -191,37 +237,55 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
                             'Deploying to development needs the "Deploy to '
                                 'development" permission.'),
                   ),
-                for (final entity in registry)
-                  CheckboxListTile(
-                    key: ValueKey('deploy-entity-${entity.key}'),
-                    value: _selected.contains(entity.key),
-                    title: Text(deploymentEntityName(l10n, entity.key)),
-                    subtitle: Text([
-                      entity.isMasterData
-                          ? (l10n?.deploymentKindMasterData ?? 'Master data')
-                          : (l10n?.deploymentKindConfiguration ??
-                              'Configuration'),
-                      if (entity.requires.isNotEmpty)
-                        '${l10n?.deploymentRequires ?? 'needs'} '
-                            '${entity.requires.map((r) => deploymentEntityName(l10n, r)).join(', ')}',
-                    ].join(' · ')),
-                    onChanged: _busy || twin == null || !allowed
-                        ? null
-                        : (v) => _toggle(entity.key, v ?? false),
-                  ),
+                // #998 — grouped: configuration, master data, reports.
+                for (final (kind, label) in [
+                  ('configuration',
+                      l10n?.deploymentKindConfiguration ?? 'Configuration'),
+                  ('master_data',
+                      l10n?.deploymentKindMasterData ?? 'Master data'),
+                  ('reports', l10n?.deploymentKindReports ?? 'Reports'),
+                ])
+                  if (registry.any((e) => e.kind == kind)) ...[
+                    Padding(
+                      key: ValueKey('deploy-group-$kind'),
+                      padding: const EdgeInsets.only(top: AppSpacing.md),
+                      child: Text(label, style: theme.textTheme.titleSmall),
+                    ),
+                    for (final entity in registry.where((e) => e.kind == kind))
+                      CheckboxListTile(
+                        key: ValueKey('deploy-entity-${entity.key}'),
+                        value: _selected.contains(entity.key),
+                        title: Text(deploymentEntityName(l10n, entity.key)),
+                        subtitle: entity.requires.isEmpty
+                            ? null
+                            : Text(
+                                '${l10n?.deploymentRequires ?? 'needs'} '
+                                '${entity.requires.map((r) => deploymentEntityName(l10n, r)).join(', ')}'),
+                        onChanged: _busy || twin == null || !allowed
+                            ? null
+                            : (v) => _toggle(entity.key, v ?? false),
+                      ),
+                  ],
                 const SizedBox(height: AppSpacing.md),
                 FilledButton.icon(
                   key: const ValueKey('deploy-preview'),
                   onPressed: _busy ||
-                          twin == null ||
+                          from == null ||
+                          to == null ||
                           !allowed ||
                           _selected.isEmpty
                       ? null
-                      : () => _previewAndDeploy(workspace, twin),
-                  icon: const Icon(Icons.rocket_launch_outlined),
-                  label: Text(toProd
-                      ? (l10n?.deploymentToProd ?? 'Deploy to PROD…')
-                      : (l10n?.deploymentToDev ?? 'Deploy to DEV…')),
+                      : () => _previewAndDeploy(from, to),
+                  icon: Icon(_flow == _Flow.pull
+                      ? Icons.download_outlined
+                      : Icons.rocket_launch_outlined),
+                  label: Text(_flow == _Flow.pull
+                      ? (workspace.isDevelopment
+                          ? (l10n?.deploymentPullFromProd ?? 'Pull from PROD…')
+                          : (l10n?.deploymentPullFromDev ?? 'Pull from DEV…'))
+                      : toProd
+                          ? (l10n?.deploymentToProd ?? 'Deploy to PROD…')
+                          : (l10n?.deploymentToDev ?? 'Deploy to DEV…')),
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 Text(l10n?.deploymentJournal ?? 'Journal',

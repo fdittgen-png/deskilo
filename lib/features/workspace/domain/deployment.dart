@@ -34,6 +34,9 @@ class DeployableEntity {
 
   bool get isMasterData => kind == 'master_data';
 
+  /// #998 — the document designs: every report kind, preset, language.
+  bool get isReports => kind == 'reports';
+
   factory DeployableEntity.fromJson(Map<dynamic, dynamic> json) =>
       DeployableEntity(
         key: json['key'] as String? ?? '',

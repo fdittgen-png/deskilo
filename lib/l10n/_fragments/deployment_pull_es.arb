@@ -1,0 +1,39 @@
+{
+  "@@locale": "es",
+  "deploymentFlowToProd": "A PROD",
+  "@deploymentFlowToProd": {
+    "description": "#998 deployment pull: deploymentFlowToProd"
+  },
+  "deploymentFlowToDev": "A DEV",
+  "@deploymentFlowToDev": {
+    "description": "#998 deployment pull: deploymentFlowToDev"
+  },
+  "deploymentFlowFromProd": "Desde PROD",
+  "@deploymentFlowFromProd": {
+    "description": "#998 deployment pull: deploymentFlowFromProd"
+  },
+  "deploymentFlowFromDev": "Desde DEV",
+  "@deploymentFlowFromDev": {
+    "description": "#998 deployment pull: deploymentFlowFromDev"
+  },
+  "deploymentIntroFromProd": "Está en el lado de desarrollo. Lo que marque abajo se trae del gemelo de producción a este espacio, tras una vista previa.",
+  "@deploymentIntroFromProd": {
+    "description": "#998 deployment pull: deploymentIntroFromProd"
+  },
+  "deploymentIntroFromDev": "Está en el lado de producción. Lo que marque abajo se trae del gemelo de desarrollo a este espacio, tras una vista previa.",
+  "@deploymentIntroFromDev": {
+    "description": "#998 deployment pull: deploymentIntroFromDev"
+  },
+  "deploymentPullFromProd": "Traer desde PROD…",
+  "@deploymentPullFromProd": {
+    "description": "#998 deployment pull: deploymentPullFromProd"
+  },
+  "deploymentPullFromDev": "Traer desde DEV…",
+  "@deploymentPullFromDev": {
+    "description": "#998 deployment pull: deploymentPullFromDev"
+  },
+  "deploymentKindReports": "Informes",
+  "@deploymentKindReports": {
+    "description": "#998 deployment pull: deploymentKindReports"
+  }
+}
