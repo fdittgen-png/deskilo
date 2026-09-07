@@ -19,6 +19,7 @@ import '../domain/workspace_document.dart';
 import '../domain/managed_access.dart';
 import '../domain/workspace_overview.dart';
 import '../domain/site.dart';
+import '../../../core/data/system_columns.dart';
 
 class SupabaseWorkspaceRepository
     with ConversationApi
@@ -477,6 +478,7 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   }
 
   Workspace _workspaceFromRow(Map<String, dynamic> row) => Workspace(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         name: row['name'] as String,
         countryCode: row['country_code'] as String,
@@ -995,6 +997,7 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
       '${day.day.toString().padLeft(2, '0')}';
 
   ClosureDay _closureDayFromRow(Map<String, dynamic> row) => ClosureDay(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         day: DateTime.parse(row['day'] as String),
@@ -1002,6 +1005,7 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
       );
 
   Member _memberFromRow(Map<String, dynamic> row) => Member(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         // #887 — a managed member has no user yet.

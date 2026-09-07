@@ -1,10 +1,11 @@
+import '../../../core/data/system_columns.dart';
 // SPDX-License-Identifier: 0BSD
 
 /// One entry of the workspace document library (#500, 0099): a LINK to
 /// a document living in whatever system the workspace already uses.
 /// The provider only decides the icon and the wording — authentication
 /// is the linked system's own business, in the browser.
-class WorkspaceDocument {
+class WorkspaceDocument implements SystemStamped {
   const WorkspaceDocument({
     required this.id,
     required this.workspaceId,
@@ -13,7 +14,12 @@ class WorkspaceDocument {
     this.provider = 'link',
     required this.url,
     this.minRole = 'member',
+    this.system = SystemColumns.none,
   });
+
+  /// #992 — the server's stamp on this row.
+  @override
+  final SystemColumns system;
 
   final String id;
   final String workspaceId;
@@ -53,6 +59,7 @@ class WorkspaceDocument {
 
   factory WorkspaceDocument.fromRow(Map<String, dynamic> row) =>
       WorkspaceDocument(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         title: row['title'] as String,

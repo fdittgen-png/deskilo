@@ -16,7 +16,8 @@ mixin _$Package {
 
  String get id; String get workspaceId; String get name; int get days; int get priceCents; bool get active;/// Which VAT rate this package is taxed at (0072); '' = the
 /// workspace's default rate.
- String get vatRateId;
+ String get vatRateId;/// #992 — the server's stamp on this row.
+ SystemColumns get system;
 /// Create a copy of Package
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,16 +28,16 @@ $PackageCopyWith<Package> get copyWith => _$PackageCopyWithImpl<Package>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Package&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.days, days) || other.days == days)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.active, active) || other.active == active)&&(identical(other.vatRateId, vatRateId) || other.vatRateId == vatRateId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Package&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.days, days) || other.days == days)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.active, active) || other.active == active)&&(identical(other.vatRateId, vatRateId) || other.vatRateId == vatRateId)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,name,days,priceCents,active,vatRateId);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,name,days,priceCents,active,vatRateId,system);
 
 @override
 String toString() {
-  return 'Package(id: $id, workspaceId: $workspaceId, name: $name, days: $days, priceCents: $priceCents, active: $active, vatRateId: $vatRateId)';
+  return 'Package(id: $id, workspaceId: $workspaceId, name: $name, days: $days, priceCents: $priceCents, active: $active, vatRateId: $vatRateId, system: $system)';
 }
 
 
@@ -47,7 +48,7 @@ abstract mixin class $PackageCopyWith<$Res>  {
   factory $PackageCopyWith(Package value, $Res Function(Package) _then) = _$PackageCopyWithImpl;
 @useResult
 $Res call({
- String id, String workspaceId, String name, int days, int priceCents, bool active, String vatRateId
+ String id, String workspaceId, String name, int days, int priceCents, bool active, String vatRateId, SystemColumns system
 });
 
 
@@ -64,7 +65,7 @@ class _$PackageCopyWithImpl<$Res>
 
 /// Create a copy of Package
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? days = null,Object? priceCents = null,Object? active = null,Object? vatRateId = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? days = null,Object? priceCents = null,Object? active = null,Object? vatRateId = null,Object? system = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -73,7 +74,8 @@ as String,days: null == days ? _self.days : days // ignore: cast_nullable_to_non
 as int,priceCents: null == priceCents ? _self.priceCents : priceCents // ignore: cast_nullable_to_non_nullable
 as int,active: null == active ? _self.active : active // ignore: cast_nullable_to_non_nullable
 as bool,vatRateId: null == vatRateId ? _self.vatRateId : vatRateId // ignore: cast_nullable_to_non_nullable
-as String,
+as String,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as SystemColumns,
   ));
 }
 
@@ -155,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int days,  int priceCents,  bool active,  String vatRateId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int days,  int priceCents,  bool active,  String vatRateId,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Package() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.name,_that.days,_that.priceCents,_that.active,_that.vatRateId);case _:
+return $default(_that.id,_that.workspaceId,_that.name,_that.days,_that.priceCents,_that.active,_that.vatRateId,_that.system);case _:
   return orElse();
 
 }
@@ -176,10 +178,10 @@ return $default(_that.id,_that.workspaceId,_that.name,_that.days,_that.priceCent
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int days,  int priceCents,  bool active,  String vatRateId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int days,  int priceCents,  bool active,  String vatRateId,  SystemColumns system)  $default,) {final _that = this;
 switch (_that) {
 case _Package():
-return $default(_that.id,_that.workspaceId,_that.name,_that.days,_that.priceCents,_that.active,_that.vatRateId);}
+return $default(_that.id,_that.workspaceId,_that.name,_that.days,_that.priceCents,_that.active,_that.vatRateId,_that.system);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -193,10 +195,10 @@ return $default(_that.id,_that.workspaceId,_that.name,_that.days,_that.priceCent
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String name,  int days,  int priceCents,  bool active,  String vatRateId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String name,  int days,  int priceCents,  bool active,  String vatRateId,  SystemColumns system)?  $default,) {final _that = this;
 switch (_that) {
 case _Package() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.name,_that.days,_that.priceCents,_that.active,_that.vatRateId);case _:
+return $default(_that.id,_that.workspaceId,_that.name,_that.days,_that.priceCents,_that.active,_that.vatRateId,_that.system);case _:
   return null;
 
 }
@@ -208,7 +210,7 @@ return $default(_that.id,_that.workspaceId,_that.name,_that.days,_that.priceCent
 
 
 class _Package implements Package {
-  const _Package({required this.id, required this.workspaceId, required this.name, required this.days, required this.priceCents, this.active = true, this.vatRateId = ''});
+  const _Package({required this.id, required this.workspaceId, required this.name, required this.days, required this.priceCents, this.active = true, this.vatRateId = '', this.system = SystemColumns.none});
   
 
 @override final  String id;
@@ -220,6 +222,8 @@ class _Package implements Package {
 /// Which VAT rate this package is taxed at (0072); '' = the
 /// workspace's default rate.
 @override@JsonKey() final  String vatRateId;
+/// #992 — the server's stamp on this row.
+@override@JsonKey() final  SystemColumns system;
 
 /// Create a copy of Package
 /// with the given fields replaced by the non-null parameter values.
@@ -231,16 +235,16 @@ _$PackageCopyWith<_Package> get copyWith => __$PackageCopyWithImpl<_Package>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Package&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.days, days) || other.days == days)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.active, active) || other.active == active)&&(identical(other.vatRateId, vatRateId) || other.vatRateId == vatRateId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Package&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.days, days) || other.days == days)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.active, active) || other.active == active)&&(identical(other.vatRateId, vatRateId) || other.vatRateId == vatRateId)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,name,days,priceCents,active,vatRateId);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,name,days,priceCents,active,vatRateId,system);
 
 @override
 String toString() {
-  return 'Package(id: $id, workspaceId: $workspaceId, name: $name, days: $days, priceCents: $priceCents, active: $active, vatRateId: $vatRateId)';
+  return 'Package(id: $id, workspaceId: $workspaceId, name: $name, days: $days, priceCents: $priceCents, active: $active, vatRateId: $vatRateId, system: $system)';
 }
 
 
@@ -251,7 +255,7 @@ abstract mixin class _$PackageCopyWith<$Res> implements $PackageCopyWith<$Res> {
   factory _$PackageCopyWith(_Package value, $Res Function(_Package) _then) = __$PackageCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String workspaceId, String name, int days, int priceCents, bool active, String vatRateId
+ String id, String workspaceId, String name, int days, int priceCents, bool active, String vatRateId, SystemColumns system
 });
 
 
@@ -268,7 +272,7 @@ class __$PackageCopyWithImpl<$Res>
 
 /// Create a copy of Package
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? days = null,Object? priceCents = null,Object? active = null,Object? vatRateId = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? days = null,Object? priceCents = null,Object? active = null,Object? vatRateId = null,Object? system = null,}) {
   return _then(_Package(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -277,7 +281,8 @@ as String,days: null == days ? _self.days : days // ignore: cast_nullable_to_non
 as int,priceCents: null == priceCents ? _self.priceCents : priceCents // ignore: cast_nullable_to_non_nullable
 as int,active: null == active ? _self.active : active // ignore: cast_nullable_to_non_nullable
 as bool,vatRateId: null == vatRateId ? _self.vatRateId : vatRateId // ignore: cast_nullable_to_non_nullable
-as String,
+as String,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as SystemColumns,
   ));
 }
 

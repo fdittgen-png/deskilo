@@ -1,3 +1,4 @@
+import '../../../core/data/system_columns.dart';
 // SPDX-License-Identifier: 0BSD
 //
 // #937 — what the PLATFORM owner sees of a workspace they are not in:
@@ -7,7 +8,7 @@
 // owners to see.
 
 /// One row of `list_all_workspaces`.
-class WorkspaceOverview {
+class WorkspaceOverview implements SystemStamped {
   const WorkspaceOverview({
     required this.id,
     required this.name,
@@ -15,7 +16,12 @@ class WorkspaceOverview {
     this.memberCount = 0,
     this.ownerCount = 0,
     this.isMember = false,
+    this.system = SystemColumns.none,
   });
+
+  /// #992 — the server's stamp on this row.
+  @override
+  final SystemColumns system;
 
   final String id;
   final String name;
@@ -33,6 +39,7 @@ class WorkspaceOverview {
 
   factory WorkspaceOverview.fromRow(Map<String, dynamic> row) =>
       WorkspaceOverview(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         name: row['name'] as String? ?? '',
         environment: row['environment'] as String? ?? 'dev',

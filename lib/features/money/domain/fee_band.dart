@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'fee_band.freezed.dart';
 
@@ -8,7 +9,7 @@ part 'fee_band.freezed.dart';
 /// `(fromPct, toPct]` (inclusive-upper). Bands tile (0, 100] contiguously —
 /// enforced server-side and by the band editor.
 @freezed
-sealed class FeeBand with _$FeeBand {
+sealed class FeeBand with _$FeeBand implements SystemStamped {
   const factory FeeBand({
     required String id,
     required String workspaceId,
@@ -16,5 +17,7 @@ sealed class FeeBand with _$FeeBand {
     required int toPct,
     required int feeCents,
     required int overageFeeCents,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _FeeBand;
 }

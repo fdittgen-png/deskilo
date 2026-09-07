@@ -18,7 +18,8 @@ mixin _$LedgerEntry {
  DateTime get createdAt;/// When the money actually moved (0070). A transfer made on the 3rd
 /// and recorded on the 26th is dated the 3rd; null on entries booked
 /// before 0070 and on those where booking IS the event.
- DateTime? get occurredOn;
+ DateTime? get occurredOn;/// #992 — the server's stamp on this row.
+ SystemColumns get system;
 /// Create a copy of LedgerEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +30,16 @@ $LedgerEntryCopyWith<LedgerEntry> get copyWith => _$LedgerEntryCopyWithImpl<Ledg
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LedgerEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.category, category) || other.category == category)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents)&&(identical(other.description, description) || other.description == description)&&(identical(other.period, period) || other.period == period)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.occurredOn, occurredOn) || other.occurredOn == occurredOn));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LedgerEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.category, category) || other.category == category)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents)&&(identical(other.description, description) || other.description == description)&&(identical(other.period, period) || other.period == period)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.occurredOn, occurredOn) || other.occurredOn == occurredOn)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,memberId,kind,category,amountCents,description,period,createdAt,occurredOn);
+int get hashCode => Object.hash(runtimeType,id,memberId,kind,category,amountCents,description,period,createdAt,occurredOn,system);
 
 @override
 String toString() {
-  return 'LedgerEntry(id: $id, memberId: $memberId, kind: $kind, category: $category, amountCents: $amountCents, description: $description, period: $period, createdAt: $createdAt, occurredOn: $occurredOn)';
+  return 'LedgerEntry(id: $id, memberId: $memberId, kind: $kind, category: $category, amountCents: $amountCents, description: $description, period: $period, createdAt: $createdAt, occurredOn: $occurredOn, system: $system)';
 }
 
 
@@ -49,7 +50,7 @@ abstract mixin class $LedgerEntryCopyWith<$Res>  {
   factory $LedgerEntryCopyWith(LedgerEntry value, $Res Function(LedgerEntry) _then) = _$LedgerEntryCopyWithImpl;
 @useResult
 $Res call({
- String id, String memberId, LedgerKind kind, LedgerCategory category, int amountCents, String description, String period, DateTime createdAt, DateTime? occurredOn
+ String id, String memberId, LedgerKind kind, LedgerCategory category, int amountCents, String description, String period, DateTime createdAt, DateTime? occurredOn, SystemColumns system
 });
 
 
@@ -66,7 +67,7 @@ class _$LedgerEntryCopyWithImpl<$Res>
 
 /// Create a copy of LedgerEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? memberId = null,Object? kind = null,Object? category = null,Object? amountCents = null,Object? description = null,Object? period = null,Object? createdAt = null,Object? occurredOn = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? memberId = null,Object? kind = null,Object? category = null,Object? amountCents = null,Object? description = null,Object? period = null,Object? createdAt = null,Object? occurredOn = freezed,Object? system = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,memberId: null == memberId ? _self.memberId : memberId // ignore: cast_nullable_to_non_nullable
@@ -77,7 +78,8 @@ as int,description: null == description ? _self.description : description // ign
 as String,period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,occurredOn: freezed == occurredOn ? _self.occurredOn : occurredOn // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as SystemColumns,
   ));
 }
 
@@ -159,10 +161,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String memberId,  LedgerKind kind,  LedgerCategory category,  int amountCents,  String description,  String period,  DateTime createdAt,  DateTime? occurredOn)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String memberId,  LedgerKind kind,  LedgerCategory category,  int amountCents,  String description,  String period,  DateTime createdAt,  DateTime? occurredOn,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LedgerEntry() when $default != null:
-return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCents,_that.description,_that.period,_that.createdAt,_that.occurredOn);case _:
+return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCents,_that.description,_that.period,_that.createdAt,_that.occurredOn,_that.system);case _:
   return orElse();
 
 }
@@ -180,10 +182,10 @@ return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCe
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String memberId,  LedgerKind kind,  LedgerCategory category,  int amountCents,  String description,  String period,  DateTime createdAt,  DateTime? occurredOn)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String memberId,  LedgerKind kind,  LedgerCategory category,  int amountCents,  String description,  String period,  DateTime createdAt,  DateTime? occurredOn,  SystemColumns system)  $default,) {final _that = this;
 switch (_that) {
 case _LedgerEntry():
-return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCents,_that.description,_that.period,_that.createdAt,_that.occurredOn);}
+return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCents,_that.description,_that.period,_that.createdAt,_that.occurredOn,_that.system);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -197,10 +199,10 @@ return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCe
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String memberId,  LedgerKind kind,  LedgerCategory category,  int amountCents,  String description,  String period,  DateTime createdAt,  DateTime? occurredOn)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String memberId,  LedgerKind kind,  LedgerCategory category,  int amountCents,  String description,  String period,  DateTime createdAt,  DateTime? occurredOn,  SystemColumns system)?  $default,) {final _that = this;
 switch (_that) {
 case _LedgerEntry() when $default != null:
-return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCents,_that.description,_that.period,_that.createdAt,_that.occurredOn);case _:
+return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCents,_that.description,_that.period,_that.createdAt,_that.occurredOn,_that.system);case _:
   return null;
 
 }
@@ -212,7 +214,7 @@ return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCe
 
 
 class _LedgerEntry extends LedgerEntry {
-  const _LedgerEntry({required this.id, required this.memberId, required this.kind, required this.category, required this.amountCents, required this.description, required this.period, required this.createdAt, this.occurredOn}): super._();
+  const _LedgerEntry({required this.id, required this.memberId, required this.kind, required this.category, required this.amountCents, required this.description, required this.period, required this.createdAt, this.occurredOn, this.system = SystemColumns.none}): super._();
   
 
 @override final  String id;
@@ -228,6 +230,8 @@ class _LedgerEntry extends LedgerEntry {
 /// and recorded on the 26th is dated the 3rd; null on entries booked
 /// before 0070 and on those where booking IS the event.
 @override final  DateTime? occurredOn;
+/// #992 — the server's stamp on this row.
+@override@JsonKey() final  SystemColumns system;
 
 /// Create a copy of LedgerEntry
 /// with the given fields replaced by the non-null parameter values.
@@ -239,16 +243,16 @@ _$LedgerEntryCopyWith<_LedgerEntry> get copyWith => __$LedgerEntryCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LedgerEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.category, category) || other.category == category)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents)&&(identical(other.description, description) || other.description == description)&&(identical(other.period, period) || other.period == period)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.occurredOn, occurredOn) || other.occurredOn == occurredOn));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LedgerEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.category, category) || other.category == category)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents)&&(identical(other.description, description) || other.description == description)&&(identical(other.period, period) || other.period == period)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.occurredOn, occurredOn) || other.occurredOn == occurredOn)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,memberId,kind,category,amountCents,description,period,createdAt,occurredOn);
+int get hashCode => Object.hash(runtimeType,id,memberId,kind,category,amountCents,description,period,createdAt,occurredOn,system);
 
 @override
 String toString() {
-  return 'LedgerEntry(id: $id, memberId: $memberId, kind: $kind, category: $category, amountCents: $amountCents, description: $description, period: $period, createdAt: $createdAt, occurredOn: $occurredOn)';
+  return 'LedgerEntry(id: $id, memberId: $memberId, kind: $kind, category: $category, amountCents: $amountCents, description: $description, period: $period, createdAt: $createdAt, occurredOn: $occurredOn, system: $system)';
 }
 
 
@@ -259,7 +263,7 @@ abstract mixin class _$LedgerEntryCopyWith<$Res> implements $LedgerEntryCopyWith
   factory _$LedgerEntryCopyWith(_LedgerEntry value, $Res Function(_LedgerEntry) _then) = __$LedgerEntryCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String memberId, LedgerKind kind, LedgerCategory category, int amountCents, String description, String period, DateTime createdAt, DateTime? occurredOn
+ String id, String memberId, LedgerKind kind, LedgerCategory category, int amountCents, String description, String period, DateTime createdAt, DateTime? occurredOn, SystemColumns system
 });
 
 
@@ -276,7 +280,7 @@ class __$LedgerEntryCopyWithImpl<$Res>
 
 /// Create a copy of LedgerEntry
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? memberId = null,Object? kind = null,Object? category = null,Object? amountCents = null,Object? description = null,Object? period = null,Object? createdAt = null,Object? occurredOn = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? memberId = null,Object? kind = null,Object? category = null,Object? amountCents = null,Object? description = null,Object? period = null,Object? createdAt = null,Object? occurredOn = freezed,Object? system = null,}) {
   return _then(_LedgerEntry(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,memberId: null == memberId ? _self.memberId : memberId // ignore: cast_nullable_to_non_nullable
@@ -287,7 +291,8 @@ as int,description: null == description ? _self.description : description // ign
 as String,period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,occurredOn: freezed == occurredOn ? _self.occurredOn : occurredOn // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as SystemColumns,
   ));
 }
 

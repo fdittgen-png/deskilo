@@ -1,3 +1,4 @@
+import '../../../core/data/system_columns.dart';
 // SPDX-License-Identifier: 0BSD
 //
 // #833 — what a check-out leaves behind.
@@ -19,7 +20,7 @@ enum UsageBasis {
       values.where((b) => b.name == wire).firstOrNull ?? UsageBasis.reserved;
 }
 
-class UsageRecord {
+class UsageRecord implements SystemStamped {
   const UsageRecord({
     required this.id,
     required this.memberId,
@@ -36,7 +37,12 @@ class UsageRecord {
     this.correctedFromMinutes,
     this.correctedAt,
     this.spaceLabel = '',
+    this.system = SystemColumns.none,
   });
+
+  /// #992 — the server's stamp on this row.
+  @override
+  final SystemColumns system;
 
   final String id;
   final String memberId;
@@ -79,6 +85,7 @@ class UsageRecord {
       leftEarly ? reservedMinutes - actualMinutes! : 0;
 
   static UsageRecord fromJson(Map<String, dynamic> json) => UsageRecord(
+        system: SystemColumns.fromRow(json),
         id: json['id'] as String,
         memberId: json['member_id'] as String,
         reservationId: json['reservation_id'] as String?,

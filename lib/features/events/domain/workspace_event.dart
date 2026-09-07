@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../workspace/domain/member.dart';
 import 'validation_policy.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'workspace_event.freezed.dart';
 
@@ -99,7 +100,7 @@ enum EventStatus { applied, pending, confirmed, rejected, expired }
 /// The unifying auditable record of the Events space (spec §8). When actor
 /// and subject differ the event runs through the confirmation protocol.
 @freezed
-sealed class WorkspaceEvent with _$WorkspaceEvent {
+sealed class WorkspaceEvent with _$WorkspaceEvent implements SystemStamped {
   const WorkspaceEvent._();
 
   const factory WorkspaceEvent({
@@ -114,6 +115,8 @@ sealed class WorkspaceEvent with _$WorkspaceEvent {
     required EventStatus status,
     required DateTime createdAt,
     DateTime? decidedAt,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _WorkspaceEvent;
 
   bool get isPending => status == EventStatus.pending;

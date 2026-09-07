@@ -14,7 +14,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$FeeBand {
 
- String get id; String get workspaceId; int get fromPct; int get toPct; int get feeCents; int get overageFeeCents;
+ String get id; String get workspaceId; int get fromPct; int get toPct; int get feeCents; int get overageFeeCents;/// #992 — the server's stamp on this row.
+ SystemColumns get system;
 /// Create a copy of FeeBand
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +26,16 @@ $FeeBandCopyWith<FeeBand> get copyWith => _$FeeBandCopyWithImpl<FeeBand>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeeBand&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.fromPct, fromPct) || other.fromPct == fromPct)&&(identical(other.toPct, toPct) || other.toPct == toPct)&&(identical(other.feeCents, feeCents) || other.feeCents == feeCents)&&(identical(other.overageFeeCents, overageFeeCents) || other.overageFeeCents == overageFeeCents));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeeBand&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.fromPct, fromPct) || other.fromPct == fromPct)&&(identical(other.toPct, toPct) || other.toPct == toPct)&&(identical(other.feeCents, feeCents) || other.feeCents == feeCents)&&(identical(other.overageFeeCents, overageFeeCents) || other.overageFeeCents == overageFeeCents)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,fromPct,toPct,feeCents,overageFeeCents);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,fromPct,toPct,feeCents,overageFeeCents,system);
 
 @override
 String toString() {
-  return 'FeeBand(id: $id, workspaceId: $workspaceId, fromPct: $fromPct, toPct: $toPct, feeCents: $feeCents, overageFeeCents: $overageFeeCents)';
+  return 'FeeBand(id: $id, workspaceId: $workspaceId, fromPct: $fromPct, toPct: $toPct, feeCents: $feeCents, overageFeeCents: $overageFeeCents, system: $system)';
 }
 
 
@@ -45,7 +46,7 @@ abstract mixin class $FeeBandCopyWith<$Res>  {
   factory $FeeBandCopyWith(FeeBand value, $Res Function(FeeBand) _then) = _$FeeBandCopyWithImpl;
 @useResult
 $Res call({
- String id, String workspaceId, int fromPct, int toPct, int feeCents, int overageFeeCents
+ String id, String workspaceId, int fromPct, int toPct, int feeCents, int overageFeeCents, SystemColumns system
 });
 
 
@@ -62,7 +63,7 @@ class _$FeeBandCopyWithImpl<$Res>
 
 /// Create a copy of FeeBand
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? fromPct = null,Object? toPct = null,Object? feeCents = null,Object? overageFeeCents = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? fromPct = null,Object? toPct = null,Object? feeCents = null,Object? overageFeeCents = null,Object? system = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -70,7 +71,8 @@ as String,fromPct: null == fromPct ? _self.fromPct : fromPct // ignore: cast_nul
 as int,toPct: null == toPct ? _self.toPct : toPct // ignore: cast_nullable_to_non_nullable
 as int,feeCents: null == feeCents ? _self.feeCents : feeCents // ignore: cast_nullable_to_non_nullable
 as int,overageFeeCents: null == overageFeeCents ? _self.overageFeeCents : overageFeeCents // ignore: cast_nullable_to_non_nullable
-as int,
+as int,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as SystemColumns,
   ));
 }
 
@@ -152,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  int fromPct,  int toPct,  int feeCents,  int overageFeeCents)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  int fromPct,  int toPct,  int feeCents,  int overageFeeCents,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FeeBand() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.fromPct,_that.toPct,_that.feeCents,_that.overageFeeCents);case _:
+return $default(_that.id,_that.workspaceId,_that.fromPct,_that.toPct,_that.feeCents,_that.overageFeeCents,_that.system);case _:
   return orElse();
 
 }
@@ -173,10 +175,10 @@ return $default(_that.id,_that.workspaceId,_that.fromPct,_that.toPct,_that.feeCe
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  int fromPct,  int toPct,  int feeCents,  int overageFeeCents)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  int fromPct,  int toPct,  int feeCents,  int overageFeeCents,  SystemColumns system)  $default,) {final _that = this;
 switch (_that) {
 case _FeeBand():
-return $default(_that.id,_that.workspaceId,_that.fromPct,_that.toPct,_that.feeCents,_that.overageFeeCents);}
+return $default(_that.id,_that.workspaceId,_that.fromPct,_that.toPct,_that.feeCents,_that.overageFeeCents,_that.system);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -190,10 +192,10 @@ return $default(_that.id,_that.workspaceId,_that.fromPct,_that.toPct,_that.feeCe
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  int fromPct,  int toPct,  int feeCents,  int overageFeeCents)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  int fromPct,  int toPct,  int feeCents,  int overageFeeCents,  SystemColumns system)?  $default,) {final _that = this;
 switch (_that) {
 case _FeeBand() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.fromPct,_that.toPct,_that.feeCents,_that.overageFeeCents);case _:
+return $default(_that.id,_that.workspaceId,_that.fromPct,_that.toPct,_that.feeCents,_that.overageFeeCents,_that.system);case _:
   return null;
 
 }
@@ -205,7 +207,7 @@ return $default(_that.id,_that.workspaceId,_that.fromPct,_that.toPct,_that.feeCe
 
 
 class _FeeBand implements FeeBand {
-  const _FeeBand({required this.id, required this.workspaceId, required this.fromPct, required this.toPct, required this.feeCents, required this.overageFeeCents});
+  const _FeeBand({required this.id, required this.workspaceId, required this.fromPct, required this.toPct, required this.feeCents, required this.overageFeeCents, this.system = SystemColumns.none});
   
 
 @override final  String id;
@@ -214,6 +216,8 @@ class _FeeBand implements FeeBand {
 @override final  int toPct;
 @override final  int feeCents;
 @override final  int overageFeeCents;
+/// #992 — the server's stamp on this row.
+@override@JsonKey() final  SystemColumns system;
 
 /// Create a copy of FeeBand
 /// with the given fields replaced by the non-null parameter values.
@@ -225,16 +229,16 @@ _$FeeBandCopyWith<_FeeBand> get copyWith => __$FeeBandCopyWithImpl<_FeeBand>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeeBand&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.fromPct, fromPct) || other.fromPct == fromPct)&&(identical(other.toPct, toPct) || other.toPct == toPct)&&(identical(other.feeCents, feeCents) || other.feeCents == feeCents)&&(identical(other.overageFeeCents, overageFeeCents) || other.overageFeeCents == overageFeeCents));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeeBand&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.fromPct, fromPct) || other.fromPct == fromPct)&&(identical(other.toPct, toPct) || other.toPct == toPct)&&(identical(other.feeCents, feeCents) || other.feeCents == feeCents)&&(identical(other.overageFeeCents, overageFeeCents) || other.overageFeeCents == overageFeeCents)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,fromPct,toPct,feeCents,overageFeeCents);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,fromPct,toPct,feeCents,overageFeeCents,system);
 
 @override
 String toString() {
-  return 'FeeBand(id: $id, workspaceId: $workspaceId, fromPct: $fromPct, toPct: $toPct, feeCents: $feeCents, overageFeeCents: $overageFeeCents)';
+  return 'FeeBand(id: $id, workspaceId: $workspaceId, fromPct: $fromPct, toPct: $toPct, feeCents: $feeCents, overageFeeCents: $overageFeeCents, system: $system)';
 }
 
 
@@ -245,7 +249,7 @@ abstract mixin class _$FeeBandCopyWith<$Res> implements $FeeBandCopyWith<$Res> {
   factory _$FeeBandCopyWith(_FeeBand value, $Res Function(_FeeBand) _then) = __$FeeBandCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String workspaceId, int fromPct, int toPct, int feeCents, int overageFeeCents
+ String id, String workspaceId, int fromPct, int toPct, int feeCents, int overageFeeCents, SystemColumns system
 });
 
 
@@ -262,7 +266,7 @@ class __$FeeBandCopyWithImpl<$Res>
 
 /// Create a copy of FeeBand
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? fromPct = null,Object? toPct = null,Object? feeCents = null,Object? overageFeeCents = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? fromPct = null,Object? toPct = null,Object? feeCents = null,Object? overageFeeCents = null,Object? system = null,}) {
   return _then(_FeeBand(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -270,7 +274,8 @@ as String,fromPct: null == fromPct ? _self.fromPct : fromPct // ignore: cast_nul
 as int,toPct: null == toPct ? _self.toPct : toPct // ignore: cast_nullable_to_non_nullable
 as int,feeCents: null == feeCents ? _self.feeCents : feeCents // ignore: cast_nullable_to_non_nullable
 as int,overageFeeCents: null == overageFeeCents ? _self.overageFeeCents : overageFeeCents // ignore: cast_nullable_to_non_nullable
-as int,
+as int,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as SystemColumns,
   ));
 }
 

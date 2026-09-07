@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'accessory.freezed.dart';
 
@@ -9,7 +10,7 @@ part 'accessory.freezed.dart';
 /// unit), summed per accessory on a seat; whether it is invoiced is a
 /// later feature toggle (#170).
 @freezed
-sealed class Accessory with _$Accessory {
+sealed class Accessory with _$Accessory implements SystemStamped {
   const factory Accessory({
     required String id,
     required String workspaceId,
@@ -21,5 +22,7 @@ sealed class Accessory with _$Accessory {
     /// The accessory's own VAT rate (#542), or '' for the workspace
     /// default — the services/packages resolution.
     @Default('') String vatRateId,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _Accessory;
 }

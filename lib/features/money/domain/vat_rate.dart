@@ -1,3 +1,4 @@
+import '../../../core/data/system_columns.dart';
 // SPDX-License-Identifier: 0BSD
 
 /// One VAT rate a workspace charges (0072). A "reduced" rate is not a
@@ -47,7 +48,7 @@ VatGroup vatGroupForPercent(double percent, {String category = 'S'}) {
   return VatGroup.superReduced;
 }
 
-class VatRate {
+class VatRate implements SystemStamped {
   const VatRate({
     this.id = '',
     required this.label,
@@ -61,7 +62,12 @@ class VatRate {
     this.validFrom = '1900-01-01',
     this.validTo,
     this.supersedesId = '',
+    this.system = SystemColumns.none,
   });
+
+  /// #992 — the server's stamp on this row.
+  @override
+  final SystemColumns system;
 
   /// '' for a rate the owner has just added and not saved yet.
   final String id;
@@ -140,6 +146,7 @@ class VatRate {
       );
 
   factory VatRate.fromRow(Map<String, dynamic> row) => VatRate(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         label: row['label'] as String? ?? '',
         percent: (row['percent'] as num?)?.toDouble() ?? 0,

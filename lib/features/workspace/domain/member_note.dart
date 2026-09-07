@@ -1,8 +1,9 @@
+import '../../../core/data/system_columns.dart';
 // SPDX-License-Identifier: 0BSD
 
 /// A short member-to-member notification (#456, migration 0089).
 /// [toMemberId] null = broadcast to all admins incl. the owner.
-class MemberNote {
+class MemberNote implements SystemStamped {
   const MemberNote({
     required this.id,
     required this.workspaceId,
@@ -12,9 +13,15 @@ class MemberNote {
     required this.createdAt,
     this.readAt,
     this.conversationId,
+    this.system = SystemColumns.none,
   });
 
+  /// #992 — the server's stamp on this row.
+  @override
+  final SystemColumns system;
+
   factory MemberNote.fromRow(Map<String, dynamic> row) => MemberNote(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         fromMemberId: row['from_member_id'] as String,

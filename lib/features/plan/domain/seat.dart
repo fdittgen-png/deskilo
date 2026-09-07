@@ -2,6 +2,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'grid_geometry.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'seat.freezed.dart';
 
@@ -18,7 +19,7 @@ abstract final class SeatFootprint {
 /// THE bookable unit (spec §3). `x`/`y` is the footprint's top-left cell;
 /// the footprint size follows from [orientation].
 @freezed
-sealed class Seat with _$Seat {
+sealed class Seat with _$Seat implements SystemStamped {
   const Seat._();
 
   const factory Seat({
@@ -36,6 +37,8 @@ sealed class Seat with _$Seat {
     /// #585 — the chair's physical NFC/RFID tag uid (normalized
     /// lowercase hex); tapping it resolves to this seat like its QR.
     String? nfcUid,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _Seat;
 
   /// 6×4 for n/s (sitting edge horizontal), 4×6 for e/w.

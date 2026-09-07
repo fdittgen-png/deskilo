@@ -14,6 +14,7 @@ import '../domain/office.dart';
 import '../domain/plan_image.dart';
 import '../domain/seat.dart';
 import '../domain/seat_context.dart';
+import '../../../core/data/system_columns.dart';
 
 class SupabaseFloorPlanRepository implements FloorPlanRepository {
   SupabaseFloorPlanRepository(this._client, this._cache);
@@ -385,6 +386,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   }
 
   PlanImage _planImageFromRow(Map<String, dynamic> row) => PlanImage(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         levelId: row['level_id'] as String,
         rect: _rectFromRow(row),
@@ -562,6 +564,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   }
 
   Level _levelFromRow(Map<String, dynamic> row) => Level(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         name: row['name'] as String,
@@ -580,6 +583,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       );
 
   Office _officeFromRow(Map<String, dynamic> row) => Office(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         levelId: row['level_id'] as String,
@@ -591,6 +595,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       );
 
   Desk _deskFromRow(Map<String, dynamic> row) => Desk(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         officeId: row['office_id'] as String,
@@ -601,6 +606,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       );
 
   Seat _seatFromRow(Map<String, dynamic> row) => Seat(
+        system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         deskId: row['desk_id'] as String,

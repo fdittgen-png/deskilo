@@ -14,7 +14,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$WorkspaceEvent {
 
- String get id; String get workspaceId; EventType get type; EventAction get action; String get actorMemberId; String get subjectMemberId; String? get reservationId; Map<String, dynamic> get payload; EventStatus get status; DateTime get createdAt; DateTime? get decidedAt;
+ String get id; String get workspaceId; EventType get type; EventAction get action; String get actorMemberId; String get subjectMemberId; String? get reservationId; Map<String, dynamic> get payload; EventStatus get status; DateTime get createdAt; DateTime? get decidedAt;/// #992 — the server's stamp on this row.
+ SystemColumns get system;
 /// Create a copy of WorkspaceEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +26,16 @@ $WorkspaceEventCopyWith<WorkspaceEvent> get copyWith => _$WorkspaceEventCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkspaceEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.type, type) || other.type == type)&&(identical(other.action, action) || other.action == action)&&(identical(other.actorMemberId, actorMemberId) || other.actorMemberId == actorMemberId)&&(identical(other.subjectMemberId, subjectMemberId) || other.subjectMemberId == subjectMemberId)&&(identical(other.reservationId, reservationId) || other.reservationId == reservationId)&&const DeepCollectionEquality().equals(other.payload, payload)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.decidedAt, decidedAt) || other.decidedAt == decidedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkspaceEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.type, type) || other.type == type)&&(identical(other.action, action) || other.action == action)&&(identical(other.actorMemberId, actorMemberId) || other.actorMemberId == actorMemberId)&&(identical(other.subjectMemberId, subjectMemberId) || other.subjectMemberId == subjectMemberId)&&(identical(other.reservationId, reservationId) || other.reservationId == reservationId)&&const DeepCollectionEquality().equals(other.payload, payload)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.decidedAt, decidedAt) || other.decidedAt == decidedAt)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,type,action,actorMemberId,subjectMemberId,reservationId,const DeepCollectionEquality().hash(payload),status,createdAt,decidedAt);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,type,action,actorMemberId,subjectMemberId,reservationId,const DeepCollectionEquality().hash(payload),status,createdAt,decidedAt,system);
 
 @override
 String toString() {
-  return 'WorkspaceEvent(id: $id, workspaceId: $workspaceId, type: $type, action: $action, actorMemberId: $actorMemberId, subjectMemberId: $subjectMemberId, reservationId: $reservationId, payload: $payload, status: $status, createdAt: $createdAt, decidedAt: $decidedAt)';
+  return 'WorkspaceEvent(id: $id, workspaceId: $workspaceId, type: $type, action: $action, actorMemberId: $actorMemberId, subjectMemberId: $subjectMemberId, reservationId: $reservationId, payload: $payload, status: $status, createdAt: $createdAt, decidedAt: $decidedAt, system: $system)';
 }
 
 
@@ -45,7 +46,7 @@ abstract mixin class $WorkspaceEventCopyWith<$Res>  {
   factory $WorkspaceEventCopyWith(WorkspaceEvent value, $Res Function(WorkspaceEvent) _then) = _$WorkspaceEventCopyWithImpl;
 @useResult
 $Res call({
- String id, String workspaceId, EventType type, EventAction action, String actorMemberId, String subjectMemberId, String? reservationId, Map<String, dynamic> payload, EventStatus status, DateTime createdAt, DateTime? decidedAt
+ String id, String workspaceId, EventType type, EventAction action, String actorMemberId, String subjectMemberId, String? reservationId, Map<String, dynamic> payload, EventStatus status, DateTime createdAt, DateTime? decidedAt, SystemColumns system
 });
 
 
@@ -62,7 +63,7 @@ class _$WorkspaceEventCopyWithImpl<$Res>
 
 /// Create a copy of WorkspaceEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? type = null,Object? action = null,Object? actorMemberId = null,Object? subjectMemberId = null,Object? reservationId = freezed,Object? payload = null,Object? status = null,Object? createdAt = null,Object? decidedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? type = null,Object? action = null,Object? actorMemberId = null,Object? subjectMemberId = null,Object? reservationId = freezed,Object? payload = null,Object? status = null,Object? createdAt = null,Object? decidedAt = freezed,Object? system = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -75,7 +76,8 @@ as String?,payload: null == payload ? _self.payload : payload // ignore: cast_nu
 as Map<String, dynamic>,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as EventStatus,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,decidedAt: freezed == decidedAt ? _self.decidedAt : decidedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as SystemColumns,
   ));
 }
 
@@ -157,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  EventType type,  EventAction action,  String actorMemberId,  String subjectMemberId,  String? reservationId,  Map<String, dynamic> payload,  EventStatus status,  DateTime createdAt,  DateTime? decidedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  EventType type,  EventAction action,  String actorMemberId,  String subjectMemberId,  String? reservationId,  Map<String, dynamic> payload,  EventStatus status,  DateTime createdAt,  DateTime? decidedAt,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _WorkspaceEvent() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.type,_that.action,_that.actorMemberId,_that.subjectMemberId,_that.reservationId,_that.payload,_that.status,_that.createdAt,_that.decidedAt);case _:
+return $default(_that.id,_that.workspaceId,_that.type,_that.action,_that.actorMemberId,_that.subjectMemberId,_that.reservationId,_that.payload,_that.status,_that.createdAt,_that.decidedAt,_that.system);case _:
   return orElse();
 
 }
@@ -178,10 +180,10 @@ return $default(_that.id,_that.workspaceId,_that.type,_that.action,_that.actorMe
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  EventType type,  EventAction action,  String actorMemberId,  String subjectMemberId,  String? reservationId,  Map<String, dynamic> payload,  EventStatus status,  DateTime createdAt,  DateTime? decidedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  EventType type,  EventAction action,  String actorMemberId,  String subjectMemberId,  String? reservationId,  Map<String, dynamic> payload,  EventStatus status,  DateTime createdAt,  DateTime? decidedAt,  SystemColumns system)  $default,) {final _that = this;
 switch (_that) {
 case _WorkspaceEvent():
-return $default(_that.id,_that.workspaceId,_that.type,_that.action,_that.actorMemberId,_that.subjectMemberId,_that.reservationId,_that.payload,_that.status,_that.createdAt,_that.decidedAt);}
+return $default(_that.id,_that.workspaceId,_that.type,_that.action,_that.actorMemberId,_that.subjectMemberId,_that.reservationId,_that.payload,_that.status,_that.createdAt,_that.decidedAt,_that.system);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -195,10 +197,10 @@ return $default(_that.id,_that.workspaceId,_that.type,_that.action,_that.actorMe
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  EventType type,  EventAction action,  String actorMemberId,  String subjectMemberId,  String? reservationId,  Map<String, dynamic> payload,  EventStatus status,  DateTime createdAt,  DateTime? decidedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  EventType type,  EventAction action,  String actorMemberId,  String subjectMemberId,  String? reservationId,  Map<String, dynamic> payload,  EventStatus status,  DateTime createdAt,  DateTime? decidedAt,  SystemColumns system)?  $default,) {final _that = this;
 switch (_that) {
 case _WorkspaceEvent() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.type,_that.action,_that.actorMemberId,_that.subjectMemberId,_that.reservationId,_that.payload,_that.status,_that.createdAt,_that.decidedAt);case _:
+return $default(_that.id,_that.workspaceId,_that.type,_that.action,_that.actorMemberId,_that.subjectMemberId,_that.reservationId,_that.payload,_that.status,_that.createdAt,_that.decidedAt,_that.system);case _:
   return null;
 
 }
@@ -210,7 +212,7 @@ return $default(_that.id,_that.workspaceId,_that.type,_that.action,_that.actorMe
 
 
 class _WorkspaceEvent extends WorkspaceEvent {
-  const _WorkspaceEvent({required this.id, required this.workspaceId, required this.type, required this.action, required this.actorMemberId, required this.subjectMemberId, this.reservationId, required final  Map<String, dynamic> payload, required this.status, required this.createdAt, this.decidedAt}): _payload = payload,super._();
+  const _WorkspaceEvent({required this.id, required this.workspaceId, required this.type, required this.action, required this.actorMemberId, required this.subjectMemberId, this.reservationId, required final  Map<String, dynamic> payload, required this.status, required this.createdAt, this.decidedAt, this.system = SystemColumns.none}): _payload = payload,super._();
   
 
 @override final  String id;
@@ -230,6 +232,8 @@ class _WorkspaceEvent extends WorkspaceEvent {
 @override final  EventStatus status;
 @override final  DateTime createdAt;
 @override final  DateTime? decidedAt;
+/// #992 — the server's stamp on this row.
+@override@JsonKey() final  SystemColumns system;
 
 /// Create a copy of WorkspaceEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -241,16 +245,16 @@ _$WorkspaceEventCopyWith<_WorkspaceEvent> get copyWith => __$WorkspaceEventCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkspaceEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.type, type) || other.type == type)&&(identical(other.action, action) || other.action == action)&&(identical(other.actorMemberId, actorMemberId) || other.actorMemberId == actorMemberId)&&(identical(other.subjectMemberId, subjectMemberId) || other.subjectMemberId == subjectMemberId)&&(identical(other.reservationId, reservationId) || other.reservationId == reservationId)&&const DeepCollectionEquality().equals(other._payload, _payload)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.decidedAt, decidedAt) || other.decidedAt == decidedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkspaceEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.type, type) || other.type == type)&&(identical(other.action, action) || other.action == action)&&(identical(other.actorMemberId, actorMemberId) || other.actorMemberId == actorMemberId)&&(identical(other.subjectMemberId, subjectMemberId) || other.subjectMemberId == subjectMemberId)&&(identical(other.reservationId, reservationId) || other.reservationId == reservationId)&&const DeepCollectionEquality().equals(other._payload, _payload)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.decidedAt, decidedAt) || other.decidedAt == decidedAt)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,type,action,actorMemberId,subjectMemberId,reservationId,const DeepCollectionEquality().hash(_payload),status,createdAt,decidedAt);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,type,action,actorMemberId,subjectMemberId,reservationId,const DeepCollectionEquality().hash(_payload),status,createdAt,decidedAt,system);
 
 @override
 String toString() {
-  return 'WorkspaceEvent(id: $id, workspaceId: $workspaceId, type: $type, action: $action, actorMemberId: $actorMemberId, subjectMemberId: $subjectMemberId, reservationId: $reservationId, payload: $payload, status: $status, createdAt: $createdAt, decidedAt: $decidedAt)';
+  return 'WorkspaceEvent(id: $id, workspaceId: $workspaceId, type: $type, action: $action, actorMemberId: $actorMemberId, subjectMemberId: $subjectMemberId, reservationId: $reservationId, payload: $payload, status: $status, createdAt: $createdAt, decidedAt: $decidedAt, system: $system)';
 }
 
 
@@ -261,7 +265,7 @@ abstract mixin class _$WorkspaceEventCopyWith<$Res> implements $WorkspaceEventCo
   factory _$WorkspaceEventCopyWith(_WorkspaceEvent value, $Res Function(_WorkspaceEvent) _then) = __$WorkspaceEventCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String workspaceId, EventType type, EventAction action, String actorMemberId, String subjectMemberId, String? reservationId, Map<String, dynamic> payload, EventStatus status, DateTime createdAt, DateTime? decidedAt
+ String id, String workspaceId, EventType type, EventAction action, String actorMemberId, String subjectMemberId, String? reservationId, Map<String, dynamic> payload, EventStatus status, DateTime createdAt, DateTime? decidedAt, SystemColumns system
 });
 
 
@@ -278,7 +282,7 @@ class __$WorkspaceEventCopyWithImpl<$Res>
 
 /// Create a copy of WorkspaceEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? type = null,Object? action = null,Object? actorMemberId = null,Object? subjectMemberId = null,Object? reservationId = freezed,Object? payload = null,Object? status = null,Object? createdAt = null,Object? decidedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? type = null,Object? action = null,Object? actorMemberId = null,Object? subjectMemberId = null,Object? reservationId = freezed,Object? payload = null,Object? status = null,Object? createdAt = null,Object? decidedAt = freezed,Object? system = null,}) {
   return _then(_WorkspaceEvent(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -291,7 +295,8 @@ as String?,payload: null == payload ? _self._payload : payload // ignore: cast_n
 as Map<String, dynamic>,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as EventStatus,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,decidedAt: freezed == decidedAt ? _self.decidedAt : decidedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as SystemColumns,
   ));
 }
 

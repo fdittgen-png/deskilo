@@ -21,7 +21,8 @@ mixin _$Level {
  bool get bookableAsWhole;/// Price of a whole-level reservation per half-day, in cents (0050);
 /// 0 = the level books free of supplement.
  int get priceCents;/// #945 — the site this level stands at; null is the default site.
- String? get siteId;
+ String? get siteId;/// #992 — the server's stamp on this row.
+ SystemColumns get system;
 /// Create a copy of Level
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -32,16 +33,16 @@ $LevelCopyWith<Level> get copyWith => _$LevelCopyWithImpl<Level>(this as Level, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Level&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder)&&(identical(other.backgroundPath, backgroundPath) || other.backgroundPath == backgroundPath)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.siteId, siteId) || other.siteId == siteId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Level&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder)&&(identical(other.backgroundPath, backgroundPath) || other.backgroundPath == backgroundPath)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.siteId, siteId) || other.siteId == siteId)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,name,sortOrder,backgroundPath,bookableAsWhole,priceCents,siteId);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,name,sortOrder,backgroundPath,bookableAsWhole,priceCents,siteId,system);
 
 @override
 String toString() {
-  return 'Level(id: $id, workspaceId: $workspaceId, name: $name, sortOrder: $sortOrder, backgroundPath: $backgroundPath, bookableAsWhole: $bookableAsWhole, priceCents: $priceCents, siteId: $siteId)';
+  return 'Level(id: $id, workspaceId: $workspaceId, name: $name, sortOrder: $sortOrder, backgroundPath: $backgroundPath, bookableAsWhole: $bookableAsWhole, priceCents: $priceCents, siteId: $siteId, system: $system)';
 }
 
 
@@ -52,7 +53,7 @@ abstract mixin class $LevelCopyWith<$Res>  {
   factory $LevelCopyWith(Level value, $Res Function(Level) _then) = _$LevelCopyWithImpl;
 @useResult
 $Res call({
- String id, String workspaceId, String name, int sortOrder, String? backgroundPath, bool bookableAsWhole, int priceCents, String? siteId
+ String id, String workspaceId, String name, int sortOrder, String? backgroundPath, bool bookableAsWhole, int priceCents, String? siteId, SystemColumns system
 });
 
 
@@ -69,7 +70,7 @@ class _$LevelCopyWithImpl<$Res>
 
 /// Create a copy of Level
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? sortOrder = null,Object? backgroundPath = freezed,Object? bookableAsWhole = null,Object? priceCents = null,Object? siteId = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? sortOrder = null,Object? backgroundPath = freezed,Object? bookableAsWhole = null,Object? priceCents = null,Object? siteId = freezed,Object? system = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -79,7 +80,8 @@ as int,backgroundPath: freezed == backgroundPath ? _self.backgroundPath : backgr
 as String?,bookableAsWhole: null == bookableAsWhole ? _self.bookableAsWhole : bookableAsWhole // ignore: cast_nullable_to_non_nullable
 as bool,priceCents: null == priceCents ? _self.priceCents : priceCents // ignore: cast_nullable_to_non_nullable
 as int,siteId: freezed == siteId ? _self.siteId : siteId // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as SystemColumns,
   ));
 }
 
@@ -161,10 +163,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int sortOrder,  String? backgroundPath,  bool bookableAsWhole,  int priceCents,  String? siteId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int sortOrder,  String? backgroundPath,  bool bookableAsWhole,  int priceCents,  String? siteId,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Level() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder,_that.backgroundPath,_that.bookableAsWhole,_that.priceCents,_that.siteId);case _:
+return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder,_that.backgroundPath,_that.bookableAsWhole,_that.priceCents,_that.siteId,_that.system);case _:
   return orElse();
 
 }
@@ -182,10 +184,10 @@ return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder,_that.back
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int sortOrder,  String? backgroundPath,  bool bookableAsWhole,  int priceCents,  String? siteId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int sortOrder,  String? backgroundPath,  bool bookableAsWhole,  int priceCents,  String? siteId,  SystemColumns system)  $default,) {final _that = this;
 switch (_that) {
 case _Level():
-return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder,_that.backgroundPath,_that.bookableAsWhole,_that.priceCents,_that.siteId);}
+return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder,_that.backgroundPath,_that.bookableAsWhole,_that.priceCents,_that.siteId,_that.system);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -199,10 +201,10 @@ return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder,_that.back
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String name,  int sortOrder,  String? backgroundPath,  bool bookableAsWhole,  int priceCents,  String? siteId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String name,  int sortOrder,  String? backgroundPath,  bool bookableAsWhole,  int priceCents,  String? siteId,  SystemColumns system)?  $default,) {final _that = this;
 switch (_that) {
 case _Level() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder,_that.backgroundPath,_that.bookableAsWhole,_that.priceCents,_that.siteId);case _:
+return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder,_that.backgroundPath,_that.bookableAsWhole,_that.priceCents,_that.siteId,_that.system);case _:
   return null;
 
 }
@@ -214,7 +216,7 @@ return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder,_that.back
 
 
 class _Level extends Level {
-  const _Level({required this.id, required this.workspaceId, required this.name, required this.sortOrder, this.backgroundPath, this.bookableAsWhole = false, this.priceCents = 0, this.siteId}): super._();
+  const _Level({required this.id, required this.workspaceId, required this.name, required this.sortOrder, this.backgroundPath, this.bookableAsWhole = false, this.priceCents = 0, this.siteId, this.system = SystemColumns.none}): super._();
   
 
 @override final  String id;
@@ -232,6 +234,8 @@ class _Level extends Level {
 @override@JsonKey() final  int priceCents;
 /// #945 — the site this level stands at; null is the default site.
 @override final  String? siteId;
+/// #992 — the server's stamp on this row.
+@override@JsonKey() final  SystemColumns system;
 
 /// Create a copy of Level
 /// with the given fields replaced by the non-null parameter values.
@@ -243,16 +247,16 @@ _$LevelCopyWith<_Level> get copyWith => __$LevelCopyWithImpl<_Level>(this, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Level&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder)&&(identical(other.backgroundPath, backgroundPath) || other.backgroundPath == backgroundPath)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.siteId, siteId) || other.siteId == siteId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Level&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder)&&(identical(other.backgroundPath, backgroundPath) || other.backgroundPath == backgroundPath)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.siteId, siteId) || other.siteId == siteId)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,name,sortOrder,backgroundPath,bookableAsWhole,priceCents,siteId);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,name,sortOrder,backgroundPath,bookableAsWhole,priceCents,siteId,system);
 
 @override
 String toString() {
-  return 'Level(id: $id, workspaceId: $workspaceId, name: $name, sortOrder: $sortOrder, backgroundPath: $backgroundPath, bookableAsWhole: $bookableAsWhole, priceCents: $priceCents, siteId: $siteId)';
+  return 'Level(id: $id, workspaceId: $workspaceId, name: $name, sortOrder: $sortOrder, backgroundPath: $backgroundPath, bookableAsWhole: $bookableAsWhole, priceCents: $priceCents, siteId: $siteId, system: $system)';
 }
 
 
@@ -263,7 +267,7 @@ abstract mixin class _$LevelCopyWith<$Res> implements $LevelCopyWith<$Res> {
   factory _$LevelCopyWith(_Level value, $Res Function(_Level) _then) = __$LevelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String workspaceId, String name, int sortOrder, String? backgroundPath, bool bookableAsWhole, int priceCents, String? siteId
+ String id, String workspaceId, String name, int sortOrder, String? backgroundPath, bool bookableAsWhole, int priceCents, String? siteId, SystemColumns system
 });
 
 
@@ -280,7 +284,7 @@ class __$LevelCopyWithImpl<$Res>
 
 /// Create a copy of Level
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? sortOrder = null,Object? backgroundPath = freezed,Object? bookableAsWhole = null,Object? priceCents = null,Object? siteId = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? sortOrder = null,Object? backgroundPath = freezed,Object? bookableAsWhole = null,Object? priceCents = null,Object? siteId = freezed,Object? system = null,}) {
   return _then(_Level(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -290,7 +294,8 @@ as int,backgroundPath: freezed == backgroundPath ? _self.backgroundPath : backgr
 as String?,bookableAsWhole: null == bookableAsWhole ? _self.bookableAsWhole : bookableAsWhole // ignore: cast_nullable_to_non_nullable
 as bool,priceCents: null == priceCents ? _self.priceCents : priceCents // ignore: cast_nullable_to_non_nullable
 as int,siteId: freezed == siteId ? _self.siteId : siteId // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as SystemColumns,
   ));
 }
 

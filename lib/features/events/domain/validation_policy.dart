@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'validation_policy.freezed.dart';
 
@@ -7,7 +8,7 @@ part 'validation_policy.freezed.dart';
 /// A null [eventType] row is the workspace default; absent rows behave
 /// exactly like the pre-quorum protocol (see [ValidationPolicy.defaults]).
 @freezed
-sealed class ValidationPolicy with _$ValidationPolicy {
+sealed class ValidationPolicy with _$ValidationPolicy implements SystemStamped {
   const ValidationPolicy._();
 
   const factory ValidationPolicy({
@@ -49,6 +50,8 @@ sealed class ValidationPolicy with _$ValidationPolicy {
     /// #982 — the amount threshold: below it the act applies at once;
     /// 0 means every amount. Only the money domains read it.
     @Default(0) int minAmountCents,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _ValidationPolicy;
 
   /// Pre-quorum behavior for workspaces/types without a stored row:

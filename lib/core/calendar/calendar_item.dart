@@ -1,3 +1,4 @@
+import '../data/system_columns.dart';
 // SPDX-License-Identifier: 0BSD
 
 /// The kinds of dated fact the calendar hub shows (#718). Wire names
@@ -101,7 +102,7 @@ class LedgerLink extends CalendarLink {
 }
 
 /// One dated fact, whatever its source.
-class CalendarItem {
+class CalendarItem implements SystemStamped {
   const CalendarItem({
     required this.kind,
     required this.id,
@@ -115,7 +116,12 @@ class CalendarItem {
     this.currency,
     this.category = '',
     this.link,
+    this.system = SystemColumns.none,
   });
+
+  /// #992 — the server's stamp on this row.
+  @override
+  final SystemColumns system;
 
   final CalendarKind kind;
   final String id;
@@ -131,6 +137,7 @@ class CalendarItem {
   final CalendarLink? link;
 
   factory CalendarItem.fromRow(Map<String, dynamic> row) => CalendarItem(
+            system: SystemColumns.fromRow(row),
         kind: CalendarKind.fromWire(row['kind'] as String?) ??
             CalendarKind.event,
         id: row['id'] as String,

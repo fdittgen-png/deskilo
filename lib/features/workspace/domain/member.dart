@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../money/domain/payment_terms.dart';
 import '../../profile/domain/personal_info.dart';
 import 'overage_policy.dart';
+import '../../../core/data/system_columns.dart';
 
 part 'member.freezed.dart';
 
@@ -37,7 +38,7 @@ enum CoOwnerStatus {
 /// A user's participation in one workspace. Roles are additive flags
 /// (spec §2): every member is a worker; admin/owner add capabilities.
 @freezed
-sealed class Member with _$Member {
+sealed class Member with _$Member implements SystemStamped {
   const Member._();
 
   const factory Member({
@@ -130,6 +131,8 @@ sealed class Member with _$Member {
     /// workspace's); null = inherit everything. Changed only through a
     /// validated payment_terms_change request.
     PaymentTerms? paymentTerms,
+    /// #992 — the server's stamp on this row.
+    @Default(SystemColumns.none) SystemColumns system,
   }) = _Member;
 
   /// #887 — a member an admin runs on the person's behalf: no account
