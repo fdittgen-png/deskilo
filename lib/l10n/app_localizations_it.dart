@@ -1577,6 +1577,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Planimetrie (piani, postazioni, immagini)';
 
   @override
+  String get deployEntityPaymentInstructions => 'Istruzioni di pagamento';
+
+  @override
   String get deploymentFlowToProd => 'In PROD';
 
   @override

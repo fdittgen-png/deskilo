@@ -408,6 +408,8 @@ String deploymentEntityName(AppLocalizations? l10n, String key) =>
       'validation_rules' =>
         l10n?.deployEntityValidationRules ?? 'Validation rules',
       'roles' => l10n?.deployEntityRoles ?? 'Role matrix',
+      'payment_instructions' =>
+        l10n?.deployEntityPaymentInstructions ?? 'Payment instructions',
       'reminders' => l10n?.deployEntityReminders ?? 'Reminder rules',
       'document_design' =>
         l10n?.deployEntityDocumentDesign ?? 'Document designs',

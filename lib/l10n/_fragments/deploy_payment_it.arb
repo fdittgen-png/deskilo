@@ -1,0 +1,7 @@
+{
+  "@@locale": "it",
+  "deployEntityPaymentInstructions": "Istruzioni di pagamento",
+  "@deployEntityPaymentInstructions": {
+    "description": "#1010 deploy entity: payment instructions"
+  }
+}

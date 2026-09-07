@@ -21,6 +21,7 @@ class FakeDeploymentRepository implements DeploymentRepository {
     DeployableEntity(key: 'booking_rules', kind: 'configuration'),
     DeployableEntity(key: 'validation_rules', kind: 'configuration'),
     DeployableEntity(key: 'roles', kind: 'configuration'),
+    DeployableEntity(key: 'payment_instructions', kind: 'configuration'),
     DeployableEntity(key: 'reminders', kind: 'configuration'),
     DeployableEntity(key: 'document_design', kind: 'reports'),
     DeployableEntity(key: 'document_links', kind: 'configuration'),

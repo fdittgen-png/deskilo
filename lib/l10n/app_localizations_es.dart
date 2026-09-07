@@ -1573,6 +1573,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get deployEntityFloorPlan => 'Planos (plantas, puestos, imágenes)';
 
   @override
+  String get deployEntityPaymentInstructions => 'Instrucciones de pago';
+
+  @override
   String get deploymentFlowToProd => 'A PROD';
 
   @override

@@ -2796,6 +2796,12 @@ abstract class AppLocalizations {
   /// **'Floor plans (levels, places, images)'**
   String get deployEntityFloorPlan;
 
+  /// #1010 deploy entity: payment instructions
+  ///
+  /// In en, this message translates to:
+  /// **'Payment instructions'**
+  String get deployEntityPaymentInstructions;
+
   /// #998 deployment pull: deploymentFlowToProd
   ///
   /// In en, this message translates to:

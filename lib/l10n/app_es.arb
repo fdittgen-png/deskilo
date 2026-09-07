@@ -1143,6 +1143,10 @@
   "@deployEntityFloorPlan": {
     "description": "#1004 deploy entity: floor plan"
   },
+  "deployEntityPaymentInstructions": "Instrucciones de pago",
+  "@deployEntityPaymentInstructions": {
+    "description": "#1010 deploy entity: payment instructions"
+  },
   "deploymentFlowToProd": "A PROD",
   "@deploymentFlowToProd": {
     "description": "#998 deployment pull: deploymentFlowToProd"
