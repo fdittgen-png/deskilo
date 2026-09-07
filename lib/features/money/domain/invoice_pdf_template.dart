@@ -299,6 +299,11 @@ class InvoicePdfTemplate {
     'escompte',
     'insurance',
     'special_mentions',
+    // #1002 — the period's month name and year, so a designed label can
+    // read « Septembre 100 % » without the engine deciding the wording;
+    // each line of `lines` also carries `kind`, `pct` and `month`.
+    'period_month',
+    'period_year',
   ];
 
   /// #875 — the VALUE an absent placeholder takes.

@@ -4442,6 +4442,14 @@
       }
     }
   },
+  "reportFieldMeaningPeriodMonth": "Il mese del periodo, per nome («Settembre»)",
+  "@reportFieldMeaningPeriodMonth": {
+    "description": "#1002 report placeholders: reportFieldMeaningPeriodMonth"
+  },
+  "reportFieldMeaningPeriodYear": "L'anno del periodo",
+  "@reportFieldMeaningPeriodYear": {
+    "description": "#1002 report placeholders: reportFieldMeaningPeriodYear"
+  },
   "featureNavigationStyle": "Scelta della navigazione",
   "@featureNavigationStyle": {
     "description": "#969 navigation style: featureNavigationStyle"

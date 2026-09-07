@@ -1,0 +1,11 @@
+{
+  "@@locale": "fr",
+  "reportFieldMeaningPeriodMonth": "Le mois de la période, par son nom (« Septembre »)",
+  "@reportFieldMeaningPeriodMonth": {
+    "description": "#1002 report placeholders: reportFieldMeaningPeriodMonth"
+  },
+  "reportFieldMeaningPeriodYear": "L'année de la période",
+  "@reportFieldMeaningPeriodYear": {
+    "description": "#1002 report placeholders: reportFieldMeaningPeriodYear"
+  }
+}

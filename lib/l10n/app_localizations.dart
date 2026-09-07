@@ -11843,6 +11843,18 @@ abstract class AppLocalizations {
   /// **'Subscription {month} {pct}%'**
   String billSubscriptionMonth(String month, int pct);
 
+  /// #1002 report placeholders: reportFieldMeaningPeriodMonth
+  ///
+  /// In en, this message translates to:
+  /// **'The month of the period, by name (« September »)'**
+  String get reportFieldMeaningPeriodMonth;
+
+  /// #1002 report placeholders: reportFieldMeaningPeriodYear
+  ///
+  /// In en, this message translates to:
+  /// **'The year of the period'**
+  String get reportFieldMeaningPeriodYear;
+
   /// #969 navigation style: featureNavigationStyle
   ///
   /// In en, this message translates to:
