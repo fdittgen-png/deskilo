@@ -159,4 +159,33 @@ void main() {
     await _pump(tester, flags: const {'deployments': false});
     expect(find.byKey(const ValueKey('deploy-entity-vat')), findsNothing);
   });
+
+  testWidgets('on a phone, eight entities in the preview: the list scrolls '
+      'and the confirm stays on screen', (tester) async {
+    final (_, deployment) = await _pump(tester, onDev: false);
+    for (final key in ['floor_plan', 'tariffs', 'roles', 'features', 'document_design']) {
+      await tester.tap(find.byKey(ValueKey('deploy-entity-$key')));
+      await tester.pumpAndSettle();
+    }
+    await tester.binding.setSurfaceSize(const Size(400, 560));
+    await tester.pumpAndSettle();
+    final list = find.descendant(
+        of: find.byKey(const ValueKey('deploy-list')),
+        matching: find.byType(Scrollable));
+    await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('deploy-preview')), 200,
+        scrollable: list.first);
+    await tester.tap(find.byKey(const ValueKey('deploy-preview')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('deploy-preview-list')), findsOneWidget);
+    final confirm = find.byKey(const ValueKey('deploy-confirm'));
+    expect(confirm, findsOneWidget);
+    expect(tester.getRect(confirm).bottom, lessThanOrEqualTo(560));
+    await tester.tap(confirm);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('deploy-final-confirm')));
+    await tester.pumpAndSettle();
+    expect(deployment.deployed, hasLength(1));
+    expect(deployment.deployed.single.entities.length, 8);
+  });
 }

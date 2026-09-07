@@ -90,6 +90,11 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
     final confirmed = await showModalBottomSheet<bool>(
       context: context,
       showDragHandle: true,
+      // #1006 — seventeen entities do not fit a phone: the sheet takes
+      // the height it needs, its list scrolls, the buttons stay put.
+      isScrollControlled: true,
+      constraints: BoxConstraints(
+          maxHeight: MediaQuery.sizeOf(context).height * 0.85),
       builder: (context) => _PreviewSheet(
         preview: preview!,
         target: to,
@@ -187,6 +192,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
       body: registry == null
           ? const LoadingView()
           : ListView(
+              key: const ValueKey('deploy-list'),
               padding: AppSpacing.gutterAll,
               children: [
                 Text(
@@ -335,24 +341,32 @@ class _PreviewSheet extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: AppSpacing.sm),
-            for (final e in preview.entries)
-              ListTile(
-                key: ValueKey('deploy-preview-${e.key}'),
-                dense: true,
-                title: Text(deploymentEntityName(l10n, e.key)),
-                subtitle: Text(e.isNoop
-                    ? (l10n?.deploymentNoChange ?? 'No change')
-                    : '+${e.added} · ~${e.changed} · −${e.removed}'),
+            Flexible(
+              child: ListView(
+                key: const ValueKey('deploy-preview-list'),
+                shrinkWrap: true,
+                children: [
+                  for (final e in preview.entries)
+                    ListTile(
+                      key: ValueKey('deploy-preview-${e.key}'),
+                      dense: true,
+                      title: Text(deploymentEntityName(l10n, e.key)),
+                      subtitle: Text(e.isNoop
+                          ? (l10n?.deploymentNoChange ?? 'No change')
+                          : '+${e.added} · ~${e.changed} · −${e.removed}'),
+                    ),
+                  if (preview.isNoop)
+                    Padding(
+                      padding: const EdgeInsets.only(top: AppSpacing.sm),
+                      child: Text(
+                        l10n?.deploymentNothingToDo ??
+                            'The two sides already agree on these entities.',
+                        key: const ValueKey('deploy-preview-noop'),
+                      ),
+                    ),
+                ],
               ),
-            if (preview.isNoop)
-              Padding(
-                padding: const EdgeInsets.only(top: AppSpacing.sm),
-                child: Text(
-                  l10n?.deploymentNothingToDo ??
-                      'The two sides already agree on these entities.',
-                  key: const ValueKey('deploy-preview-noop'),
-                ),
-              ),
+            ),
             const SizedBox(height: AppSpacing.md),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
