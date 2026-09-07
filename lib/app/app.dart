@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../core/ui/system_insets_guard.dart';
 import '../core/demo/demo_blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -62,7 +63,9 @@ class DeskiloApp extends ConsumerWidget {
       builder: (context, child) => MotionSettings(
         animationsEnabled: animations,
         child: DemoBlurLayer(
-          child: DevelopmentBanner(child: BootSplash(child: child)),
+          child: DevelopmentBanner(
+            child: BootSplash(child: SystemInsetsGuard(child: child)),
+          ),
         ),
       ),
       routerConfig: router,
