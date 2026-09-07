@@ -1560,6 +1560,16 @@ class AppLocalizationsEs extends AppLocalizations {
       'Nombres, correos, teléfonos y direcciones se difuminan en la pantalla de este dispositivo — para capturas de pantalla y vídeos.';
 
   @override
+  String get deploymentConfirmTitleDev => '¿Desplegar en este DEV?';
+
+  @override
+  String get deploymentConfirmTitleProd => '¿Desplegar en este PROD?';
+
+  @override
+  String get deploymentConfirmBody =>
+      'Lo que este espacio contiene para las entidades marcadas se sustituye por lo del gemelo. El diario conserva la vuelta atrás.';
+
+  @override
   String get deployEntityFloorPlan => 'Planos (plantas, puestos, imágenes)';
 
   @override

@@ -1,0 +1,15 @@
+{
+  "@@locale": "de",
+  "deploymentConfirmTitleDev": "In diese DEV ausrollen?",
+  "@deploymentConfirmTitleDev": {
+    "description": "#1006 deployment confirmation: deploymentConfirmTitleDev"
+  },
+  "deploymentConfirmTitleProd": "In diese PROD ausrollen?",
+  "@deploymentConfirmTitleProd": {
+    "description": "#1006 deployment confirmation: deploymentConfirmTitleProd"
+  },
+  "deploymentConfirmBody": "Was dieser Raum für die angekreuzten Entitäten hält, wird durch das des Zwillings ersetzt. Das Journal behält den Weg zurück.",
+  "@deploymentConfirmBody": {
+    "description": "#1006 deployment confirmation: deploymentConfirmBody"
+  }
+}

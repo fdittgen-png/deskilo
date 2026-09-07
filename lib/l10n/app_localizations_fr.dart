@@ -1562,6 +1562,16 @@ class AppLocalizationsFr extends AppLocalizations {
       'Noms, courriels, téléphones et adresses sont floutés à l\'écran de cet appareil — pour les captures d\'écran et les vidéos.';
 
   @override
+  String get deploymentConfirmTitleDev => 'Déployer dans cette DEV ?';
+
+  @override
+  String get deploymentConfirmTitleProd => 'Déployer dans cette PROD ?';
+
+  @override
+  String get deploymentConfirmBody =>
+      'Ce que cet espace contient pour les entités cochées est remplacé par ce qu\'a le jumeau. Le journal garde le retour arrière.';
+
+  @override
   String get deployEntityFloorPlan => 'Plans (étages, places, images)';
 
   @override

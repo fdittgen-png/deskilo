@@ -1127,6 +1127,18 @@
   "@demoModeSubtitle": {
     "description": "#970 demo mode: demoModeSubtitle"
   },
+  "deploymentConfirmTitleDev": "Distribuire in questo DEV?",
+  "@deploymentConfirmTitleDev": {
+    "description": "#1006 deployment confirmation: deploymentConfirmTitleDev"
+  },
+  "deploymentConfirmTitleProd": "Distribuire in questo PROD?",
+  "@deploymentConfirmTitleProd": {
+    "description": "#1006 deployment confirmation: deploymentConfirmTitleProd"
+  },
+  "deploymentConfirmBody": "Ciò che questo spazio contiene per le entità spuntate viene sostituito da ciò che ha il gemello. Il giornale conserva la via del ritorno.",
+  "@deploymentConfirmBody": {
+    "description": "#1006 deployment confirmation: deploymentConfirmBody"
+  },
   "deployEntityFloorPlan": "Planimetrie (piani, postazioni, immagini)",
   "@deployEntityFloorPlan": {
     "description": "#1004 deploy entity: floor plan"

@@ -1,0 +1,15 @@
+{
+  "@@locale": "es",
+  "deploymentConfirmTitleDev": "¿Desplegar en este DEV?",
+  "@deploymentConfirmTitleDev": {
+    "description": "#1006 deployment confirmation: deploymentConfirmTitleDev"
+  },
+  "deploymentConfirmTitleProd": "¿Desplegar en este PROD?",
+  "@deploymentConfirmTitleProd": {
+    "description": "#1006 deployment confirmation: deploymentConfirmTitleProd"
+  },
+  "deploymentConfirmBody": "Lo que este espacio contiene para las entidades marcadas se sustituye por lo del gemelo. El diario conserva la vuelta atrás.",
+  "@deploymentConfirmBody": {
+    "description": "#1006 deployment confirmation: deploymentConfirmBody"
+  }
+}

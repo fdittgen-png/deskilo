@@ -2772,6 +2772,24 @@ abstract class AppLocalizations {
   /// **'Names, e-mails, phones and addresses are blurred on this device\'s screen — for screenshots and videos.'**
   String get demoModeSubtitle;
 
+  /// #1006 deployment confirmation: deploymentConfirmTitleDev
+  ///
+  /// In en, this message translates to:
+  /// **'Deploy into this DEV?'**
+  String get deploymentConfirmTitleDev;
+
+  /// #1006 deployment confirmation: deploymentConfirmTitleProd
+  ///
+  /// In en, this message translates to:
+  /// **'Deploy into this PROD?'**
+  String get deploymentConfirmTitleProd;
+
+  /// #1006 deployment confirmation: deploymentConfirmBody
+  ///
+  /// In en, this message translates to:
+  /// **'What this workspace holds for the ticked entities is replaced by the twin\'s. The journal keeps the way back.'**
+  String get deploymentConfirmBody;
+
   /// #1004 deploy entity: floor plan
   ///
   /// In en, this message translates to:

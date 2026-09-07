@@ -1563,6 +1563,16 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nomi, e-mail, telefoni e indirizzi sono sfocati sullo schermo di questo dispositivo — per screenshot e video.';
 
   @override
+  String get deploymentConfirmTitleDev => 'Distribuire in questo DEV?';
+
+  @override
+  String get deploymentConfirmTitleProd => 'Distribuire in questo PROD?';
+
+  @override
+  String get deploymentConfirmBody =>
+      'Ciò che questo spazio contiene per le entità spuntate viene sostituito da ciò che ha il gemello. Il giornale conserva la via del ritorno.';
+
+  @override
   String get deployEntityFloorPlan =>
       'Planimetrie (piani, postazioni, immagini)';
 

@@ -1,0 +1,15 @@
+{
+  "@@locale": "en",
+  "deploymentConfirmTitleDev": "Deploy into this DEV?",
+  "@deploymentConfirmTitleDev": {
+    "description": "#1006 deployment confirmation: deploymentConfirmTitleDev"
+  },
+  "deploymentConfirmTitleProd": "Deploy into this PROD?",
+  "@deploymentConfirmTitleProd": {
+    "description": "#1006 deployment confirmation: deploymentConfirmTitleProd"
+  },
+  "deploymentConfirmBody": "What this workspace holds for the ticked entities is replaced by the twin's. The journal keeps the way back.",
+  "@deploymentConfirmBody": {
+    "description": "#1006 deployment confirmation: deploymentConfirmBody"
+  }
+}
