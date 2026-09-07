@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../../core/vat/vat_treatment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -27,6 +28,7 @@ import '../../../workspace/domain/overage_policy.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/presentation/member_admin_actions.dart';
+import '../../../workspace/presentation/member_vat_treatment.dart';
 import '../../../workspace/presentation/widgets/open_conversation.dart';
 import '../../../workspace/presentation/widgets/invite_sheet.dart';
 import '../../../workspace/domain/invite_uri.dart';
@@ -371,6 +373,18 @@ class _MemberPageBody extends ConsumerWidget {
               : '${member.maxSimultaneousReservations}',
           onTap: () => pickMemberSimultaneousLimit(context, ref, member),
         ),
+        // #985 — who this member is for VAT.
+        if (ref
+            .watch(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.vatCounterparty))
+          _ManageTile(
+            tileKey: const ValueKey('member-page-vat-treatment'),
+            icon: Icons.account_balance_outlined,
+            title: l10n?.memberVatTreatmentLabel ?? 'VAT treatment',
+            subtitle: vatTreatmentName(
+                l10n, VatTreatment.fromWire(member.vatTreatment)),
+            onTap: () => pickMemberVatTreatment(context, ref, member),
+          ),
         // #945 — the site whose address this member's documents carry.
         if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.multiSite))
           _ManageTile(

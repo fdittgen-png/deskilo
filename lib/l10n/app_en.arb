@@ -9384,6 +9384,86 @@
   "@invoiceGapBuyerVatIdFormat": {
     "description": "#878 VAT review / report: invoiceGapBuyerVatIdFormat"
   },
+  "featureVatRateHistory": "VAT rate versions",
+  "@featureVatRateHistory": {
+    "description": "#985 VAT versions and counterparty: featureVatRateHistory"
+  },
+  "featureVatRateHistoryDesc": "A rate is a family of dated versions: a change by law adds the new value from its date, the old value stays on every supply before it, and nothing is re-pointed. Off: one value per rate.",
+  "@featureVatRateHistoryDesc": {
+    "description": "#985 VAT versions and counterparty: featureVatRateHistoryDesc"
+  },
+  "featureVatCounterparty": "VAT by counterparty",
+  "@featureVatCounterparty": {
+    "description": "#985 VAT versions and counterparty: featureVatCounterparty"
+  },
+  "featureVatCounterpartyDesc": "Who the buyer is for VAT, set on each member: domestic VAT, reverse charge, outside the EU, or exempt with a printed reason. Off: the automatic rule only.",
+  "@featureVatCounterpartyDesc": {
+    "description": "#985 VAT versions and counterparty: featureVatCounterpartyDesc"
+  },
+  "vatSince": "since",
+  "@vatSince": {
+    "description": "#985 VAT versions and counterparty: vatSince"
+  },
+  "vatUntil": "until",
+  "@vatUntil": {
+    "description": "#985 VAT versions and counterparty: vatUntil"
+  },
+  "vatChangeByLaw": "Change by law",
+  "@vatChangeByLaw": {
+    "description": "#985 VAT versions and counterparty: vatChangeByLaw"
+  },
+  "vatChangeByLawExplainer": "A new value from a date: the old value stays on every supply before it, the new one applies from that day. Nothing is re-pointed.",
+  "@vatChangeByLawExplainer": {
+    "description": "#985 VAT versions and counterparty: vatChangeByLawExplainer"
+  },
+  "vatNewPercent": "New rate %",
+  "@vatNewPercent": {
+    "description": "#985 VAT versions and counterparty: vatNewPercent"
+  },
+  "vatEffectiveDate": "Effective date (YYYY-MM-DD)",
+  "@vatEffectiveDate": {
+    "description": "#985 VAT versions and counterparty: vatEffectiveDate"
+  },
+  "vatChangeNeedsSave": "Save the rate first; then change it by law.",
+  "@vatChangeNeedsSave": {
+    "description": "#985 VAT versions and counterparty: vatChangeNeedsSave"
+  },
+  "vatChangeInvalid": "A percentage between 0 and 99.99 and a date after the rate's start are needed.",
+  "@vatChangeInvalid": {
+    "description": "#985 VAT versions and counterparty: vatChangeInvalid"
+  },
+  "memberVatTreatmentLabel": "VAT treatment",
+  "@memberVatTreatmentLabel": {
+    "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
+  },
+  "memberVatTreatmentExplainer": "Who this member is for VAT: the automatic rule (reverse charge for a business in another EU state), domestic VAT regardless, reverse charge, outside the EU, or an exempt buyer with the reason printed on the invoice.",
+  "@memberVatTreatmentExplainer": {
+    "description": "#985 VAT versions and counterparty: memberVatTreatmentExplainer"
+  },
+  "vatTreatmentAuto": "Automatic",
+  "@vatTreatmentAuto": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentAuto"
+  },
+  "vatTreatmentDomestic": "Domestic VAT",
+  "@vatTreatmentDomestic": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentDomestic"
+  },
+  "vatTreatmentReverseCharge": "Reverse charge",
+  "@vatTreatmentReverseCharge": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentReverseCharge"
+  },
+  "vatTreatmentExport": "Outside the EU",
+  "@vatTreatmentExport": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentExport"
+  },
+  "vatTreatmentExempt": "Exempt buyer",
+  "@vatTreatmentExempt": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentExempt"
+  },
+  "vatTreatmentReasonField": "Exemption reason (printed on the invoice)",
+  "@vatTreatmentReasonField": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentReasonField"
+  },
   "assistantPrefix": "Assistant",
   "@assistantPrefix": {
     "description": "#872 one wizard idiom: assistantPrefix"

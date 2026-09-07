@@ -139,6 +139,8 @@ Map<String, Object?> legalMentionData(
   /// #895 — the document is an intra-EU B2B supply: the customer owes
   /// the tax and the mention says so.
   bool reverseCharged = false,
+  /// #985 — the counterparty's category when it decided (G, E).
+  String counterpartyCategory = '',
   // #881 — the member's own conditions on top of the workspace's.
   PaymentTerms? memberTerms,
 }) {
@@ -186,7 +188,12 @@ Map<String, Object?> legalMentionData(
     // that mention is statutory: it wins over the seller's own text.
     'exemption_reason': reverseCharged
         ? reverseChargeMention(seller?.country ?? workspace?.countryCode ?? '')
-        : orDefault(
+        : counterpartyCategory == 'G'
+            ? exportMention(seller?.country ?? workspace?.countryCode ?? '')
+            : counterpartyCategory == 'E' &&
+                    (buyer?.taxExemptionReason.trim().isNotEmpty ?? false)
+                ? buyer!.taxExemptionReason.trim()
+                : orDefault(
             seller?.taxExemptionReason ?? workspace?.taxExemptionReason ?? '',
             defaultExemptionMention(
               seller?.country ?? workspace?.countryCode ?? '',
@@ -382,6 +389,7 @@ Map<String, Object?> invoiceReportData(
       clientAddress: _clientAddressOf(invoice, workspace, l10n),
       clientName: _clientNameOf(invoice),
       reverseCharged: invoice.isReverseCharged,
+      counterpartyCategory: invoice.counterpartyCategory,
       memberTerms: memberTerms,
     ),
   };
@@ -1119,6 +1127,7 @@ Map<String, Object?> reminderReportData(
       clientAddress: _clientAddressOf(invoice, workspace, l10n),
       clientName: _clientNameOf(invoice),
       reverseCharged: invoice.isReverseCharged,
+      counterpartyCategory: invoice.counterpartyCategory,
       memberTerms: memberTermsFor(ref, invoice.memberId),
     ),
   };

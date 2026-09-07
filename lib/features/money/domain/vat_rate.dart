@@ -58,6 +58,9 @@ class VatRate {
     this.groupKey = 'standard',
     this.outsideBase = false,
     this.exemptionReason = '',
+    this.validFrom = '1900-01-01',
+    this.validTo,
+    this.supersedesId = '',
   });
 
   /// '' for a rate the owner has just added and not saved yet.
@@ -89,7 +92,23 @@ class VatRate {
   /// #947 — the reason an exempt or not-subject group prints.
   final String exemptionReason;
 
+  /// #985 — the first day this version is in force (ISO date). Every
+  /// rate that never changed starts in 1900.
+  final String validFrom;
+
+  /// #985 — the day the next version takes over (ISO date), null while
+  /// this one is current.
+  final String? validTo;
+
+  /// #985 — the version this one replaced: the family link a change by
+  /// law creates. Items keep pointing at the old row; the lookup walks
+  /// the family.
+  final String supersedesId;
+
   VatGroup get group => VatGroup.fromWire(groupKey);
+
+  /// Whether this version is dated at all — what the screen prints.
+  bool get isDated => validFrom != '1900-01-01' || validTo != null;
 
   VatRate copyWith({
     String? label,
@@ -100,6 +119,10 @@ class VatRate {
     String? groupKey,
     bool? outsideBase,
     String? exemptionReason,
+    String? validFrom,
+    String? validTo,
+    bool clearValidTo = false,
+    String? supersedesId,
   }) =>
       VatRate(
         id: id,
@@ -111,6 +134,9 @@ class VatRate {
         groupKey: groupKey ?? this.groupKey,
         outsideBase: outsideBase ?? this.outsideBase,
         exemptionReason: exemptionReason ?? this.exemptionReason,
+        validFrom: validFrom ?? this.validFrom,
+        validTo: clearValidTo ? null : (validTo ?? this.validTo),
+        supersedesId: supersedesId ?? this.supersedesId,
       );
 
   factory VatRate.fromRow(Map<String, dynamic> row) => VatRate(
@@ -123,6 +149,9 @@ class VatRate {
         outsideBase: row['outside_base'] as bool? ?? false,
         exemptionReason: row['exemption_reason'] as String? ?? '',
         active: row['active'] as bool? ?? true,
+        validFrom: row['valid_from'] as String? ?? '1900-01-01',
+        validTo: row['valid_to'] as String?,
+        supersedesId: row['supersedes_id'] as String? ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -135,7 +164,62 @@ class VatRate {
         'outside_base': outsideBase,
         'exemption_reason': exemptionReason,
         'active': active,
+        'valid_from': validFrom,
+        'valid_to': validTo,
+        'supersedes_id': supersedesId,
       };
+}
+
+/// #985 — the value of [rateId]'s family in force on [date]: the Dart
+/// twin of `vat_rate_percent_at` (0182). A family is every version
+/// linked through [VatRate.supersedesId], either way. Null when the
+/// family has no active version at all — the caller falls back to the
+/// workspace default.
+double? vatPercentAt(List<VatRate> rates, String rateId, DateTime date) {
+  final byId = {for (final r in rates) r.id: r};
+  final family = <String>{};
+  final queue = [rateId];
+  while (queue.isNotEmpty) {
+    final id = queue.removeLast();
+    if (!family.add(id)) continue;
+    final me = byId[id];
+    if (me != null && me.supersedesId.isNotEmpty) queue.add(me.supersedesId);
+    for (final r in rates) {
+      if (r.supersedesId == id) queue.add(r.id);
+    }
+  }
+  final day = DateTime(date.year, date.month, date.day);
+  bool inWindow(VatRate r) {
+    final from = DateTime.tryParse(r.validFrom) ?? DateTime(1900);
+    final to = r.validTo == null ? null : DateTime.tryParse(r.validTo!);
+    return !from.isAfter(day) && (to == null || to.isAfter(day));
+  }
+
+  final candidates = [
+    for (final id in family)
+      if (byId[id] case final r? when r.active && inWindow(r)) r,
+  ];
+  if (candidates.isEmpty) {
+    final self = byId[rateId];
+    return self != null && self.active ? self.percent : null;
+  }
+  candidates.sort((a, b) {
+    final byStart = b.validFrom.compareTo(a.validFrom);
+    if (byStart != 0) return byStart;
+    return (b.id == rateId ? 1 : 0) - (a.id == rateId ? 1 : 0);
+  });
+  return candidates.first.percent;
+}
+
+/// #985 — the tax point of a billed month (`vat_tax_point`): its last
+/// day, or [today] when the month is billed ahead — the prepayment rule.
+DateTime vatTaxPoint(String period, DateTime today) {
+  final parts = period.split('-');
+  final year = int.tryParse(parts[0]) ?? today.year;
+  final month = parts.length > 1 ? int.tryParse(parts[1]) ?? today.month : today.month;
+  final last = DateTime(year, month + 1, 0);
+  final day = DateTime(today.year, today.month, today.day);
+  return last.isBefore(day) ? last : day;
 }
 
 /// The VAT contained in a gross amount.

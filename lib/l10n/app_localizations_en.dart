@@ -8719,6 +8719,73 @@ class AppLocalizationsEn extends AppLocalizations {
       'The customer\'s VAT number does not have its country\'s shape — check it.';
 
   @override
+  String get featureVatRateHistory => 'VAT rate versions';
+
+  @override
+  String get featureVatRateHistoryDesc =>
+      'A rate is a family of dated versions: a change by law adds the new value from its date, the old value stays on every supply before it, and nothing is re-pointed. Off: one value per rate.';
+
+  @override
+  String get featureVatCounterparty => 'VAT by counterparty';
+
+  @override
+  String get featureVatCounterpartyDesc =>
+      'Who the buyer is for VAT, set on each member: domestic VAT, reverse charge, outside the EU, or exempt with a printed reason. Off: the automatic rule only.';
+
+  @override
+  String get vatSince => 'since';
+
+  @override
+  String get vatUntil => 'until';
+
+  @override
+  String get vatChangeByLaw => 'Change by law';
+
+  @override
+  String get vatChangeByLawExplainer =>
+      'A new value from a date: the old value stays on every supply before it, the new one applies from that day. Nothing is re-pointed.';
+
+  @override
+  String get vatNewPercent => 'New rate %';
+
+  @override
+  String get vatEffectiveDate => 'Effective date (YYYY-MM-DD)';
+
+  @override
+  String get vatChangeNeedsSave =>
+      'Save the rate first; then change it by law.';
+
+  @override
+  String get vatChangeInvalid =>
+      'A percentage between 0 and 99.99 and a date after the rate\'s start are needed.';
+
+  @override
+  String get memberVatTreatmentLabel => 'VAT treatment';
+
+  @override
+  String get memberVatTreatmentExplainer =>
+      'Who this member is for VAT: the automatic rule (reverse charge for a business in another EU state), domestic VAT regardless, reverse charge, outside the EU, or an exempt buyer with the reason printed on the invoice.';
+
+  @override
+  String get vatTreatmentAuto => 'Automatic';
+
+  @override
+  String get vatTreatmentDomestic => 'Domestic VAT';
+
+  @override
+  String get vatTreatmentReverseCharge => 'Reverse charge';
+
+  @override
+  String get vatTreatmentExport => 'Outside the EU';
+
+  @override
+  String get vatTreatmentExempt => 'Exempt buyer';
+
+  @override
+  String get vatTreatmentReasonField =>
+      'Exemption reason (printed on the invoice)';
+
+  @override
   String get assistantPrefix => 'Assistant';
 
   @override

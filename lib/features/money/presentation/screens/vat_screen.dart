@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -43,6 +44,9 @@ class _RateDraft {
           text: rate.percent == 0 ? '' : _percentText(rate.percent),
         ),
         group = rate.group,
+        validFrom = rate.validFrom,
+        validTo = rate.validTo,
+        supersedesId = rate.supersedesId,
         exemption = TextEditingController(text: rate.exemptionReason);
 
   final VatRate rate;
@@ -52,7 +56,15 @@ class _RateDraft {
   /// #947 — the fiscal group; the category and the outside-base rule
   /// follow it at save time.
   VatGroup group;
+
+  /// #985 — the version window and the family link; a change by law
+  /// closes this one and opens the next.
+  String validFrom;
+  String? validTo;
+  String supersedesId;
   final TextEditingController exemption;
+
+  bool get isDated => validFrom != '1900-01-01' || validTo != null;
 
   void dispose() {
     label.dispose();
@@ -107,6 +119,116 @@ class _VatScreenState extends ConsumerState<VatScreen> {
     });
   }
 
+  /// #985 — a change by law: the new value from a date. The old version
+  /// closes on that date, the successor opens on it, the family link
+  /// carries the items along, and the star moves with the family.
+  Future<void> _changeByLaw(int index) async {
+    final l10n = AppLocalizations.of(context);
+    final draft = _drafts[index];
+    if (draft.rate.id.isEmpty) {
+      AppSnack.error(
+        context,
+        l10n?.vatChangeNeedsSave ??
+            'Save the rate first; then change it by law.',
+      );
+      return;
+    }
+    final now = ref.read(clockProvider).now();
+    final nextMonth = DateTime(now.year, now.month + 1, 1);
+    final percent = TextEditingController();
+    final date = TextEditingController(
+        text: nextMonth.toIso8601String().substring(0, 10));
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n?.vatChangeByLaw ?? 'Change by law'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              l10n?.vatChangeByLawExplainer ??
+                  'A new value from a date: the old value stays on every '
+                      'supply before it, the new one applies from that day. '
+                      'Nothing is re-pointed.',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            TextField(
+              key: const ValueKey('vat-law-percent'),
+              controller: percent,
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              decoration: InputDecoration(
+                labelText: l10n?.vatNewPercent ?? 'New rate %',
+              ),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            TextField(
+              key: const ValueKey('vat-law-date'),
+              controller: date,
+              decoration: InputDecoration(
+                labelText:
+                    l10n?.vatEffectiveDate ?? 'Effective date (YYYY-MM-DD)',
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(l10n?.commonCancel ?? 'Cancel'),
+          ),
+          FilledButton(
+            key: const ValueKey('vat-law-confirm'),
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(l10n?.commonSave ?? 'Save'),
+          ),
+        ],
+      ),
+    );
+    if (ok != true || !mounted) return;
+    final pct = double.tryParse(percent.text.trim().replaceAll(',', '.'));
+    final day = date.text.trim();
+    final parsed = RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(day)
+        ? DateTime.tryParse(day)
+        : null;
+    if (pct == null ||
+        pct < 0 ||
+        pct > 99.99 ||
+        parsed == null ||
+        day.compareTo(draft.validFrom) <= 0) {
+      AppSnack.error(
+        context,
+        l10n?.vatChangeInvalid ??
+            'A percentage between 0 and 99.99 and a date after the '
+                'rate\'s start are needed.',
+      );
+      return;
+    }
+    final pctText = _percentText(pct);
+    final relabelled = draft.label.text
+        .replaceFirst(RegExp(r'\d+([.,]\d+)?\s*%'), '$pctText %');
+    final label = relabelled == draft.label.text
+        ? '${draft.label.text} $pctText %'
+        : relabelled;
+    setState(() {
+      draft.validTo = day;
+      final successor = _RateDraft(VatRate(
+        label: label,
+        percent: pct,
+        category: draft.group.category,
+        groupKey: draft.group.wire,
+        outsideBase: draft.group.outsideBase,
+        exemptionReason: draft.exemption.text.trim(),
+        validFrom: day,
+        supersedesId: draft.rate.id,
+      ));
+      _drafts = [..._drafts, successor];
+      if (_default == index) _default = _drafts.length - 1;
+    });
+  }
+
   Future<void> _save() async {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
@@ -139,6 +261,10 @@ class _VatScreenState extends ConsumerState<VatScreen> {
         groupKey: draft.group.wire,
         outsideBase: draft.group.outsideBase,
         exemptionReason: draft.exemption.text.trim(),
+        validFrom: draft.validFrom,
+        validTo: draft.validTo,
+        clearValidTo: draft.validTo == null,
+        supersedesId: draft.supersedesId,
         isDefault: index == _default,
         active: true,
       ));
@@ -174,6 +300,9 @@ class _VatScreenState extends ConsumerState<VatScreen> {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final groupsOn = ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.vatGroups);
+    final historyOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.vatRateHistory);
     final ratesAsync = ref.watch(vatRatesProvider);
     final title = Text(l10n?.vatTitle ?? 'VAT');
     if (workspace == null || ratesAsync.isLoading) {
@@ -284,6 +413,14 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                       ),
                     ),
                   ],
+                  // #985 — the new value from a date, as a new version.
+                  if (historyOn)
+                    IconButton(
+                      key: ValueKey('vat-rate-law-$index'),
+                      tooltip: l10n?.vatChangeByLaw ?? 'Change by law',
+                      icon: const Icon(Icons.update_outlined),
+                      onPressed: () => _changeByLaw(index),
+                    ),
                   // A star rather than a radio: it reads as "this is the
                   // one" at a glance and stays one tap either way.
                   IconButton(
@@ -308,6 +445,24 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                 ],
               ),
             ),
+          // #985 — the version windows, only where a rate has one.
+          if (historyOn)
+            for (final (index, draft) in _drafts.indexed)
+              if (draft.isDated)
+                Padding(
+                  key: ValueKey('vat-rate-validity-$index'),
+                  padding: const EdgeInsets.only(bottom: 4),
+                  child: Text(
+                    [
+                      draft.label.text,
+                      if (draft.validFrom != '1900-01-01')
+                        '${l10n?.vatSince ?? 'since'} ${draft.validFrom}',
+                      if (draft.validTo != null)
+                        '${l10n?.vatUntil ?? 'until'} ${draft.validTo}',
+                    ].join(' · '),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ),
           Text(
             l10n?.vatKeptRate ??
                 'A rate still used by an invoice or a service is kept, '

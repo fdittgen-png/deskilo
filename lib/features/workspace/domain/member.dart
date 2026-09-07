@@ -74,6 +74,13 @@ sealed class Member with _$Member {
     /// owner/admins for OTHERS only, never self-service.
     int? maxSimultaneousReservations,
 
+    /// #985 — who this member is for VAT (`members.vat_treatment`,
+    /// 0182): the wire of `VatTreatment`. 'auto' is today's rule.
+    @Default('auto') String vatTreatment,
+
+    /// #985 — the reason printed when the buyer is exempt.
+    @Default('') String vatExemptionReason,
+
     /// Whether this member may reserve/check into a WHOLE level (0050);
     /// granted by the owner or an admin, never self-set.
     @Default(false) bool canReserveLevel,

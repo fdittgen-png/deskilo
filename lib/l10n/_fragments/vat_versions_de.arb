@@ -1,0 +1,83 @@
+{
+  "@@locale": "de",
+  "featureVatRateHistory": "USt-Satzversionen",
+  "@featureVatRateHistory": {
+    "description": "#985 VAT versions and counterparty: featureVatRateHistory"
+  },
+  "featureVatRateHistoryDesc": "Ein Satz ist eine Familie datierter Versionen: eine Änderung per Gesetz fügt den neuen Wert ab seinem Datum hinzu, der alte bleibt auf jeder Leistung davor, nichts wird umgehängt. Aus: ein Wert je Satz.",
+  "@featureVatRateHistoryDesc": {
+    "description": "#985 VAT versions and counterparty: featureVatRateHistoryDesc"
+  },
+  "featureVatCounterparty": "USt nach Kunde",
+  "@featureVatCounterparty": {
+    "description": "#985 VAT versions and counterparty: featureVatCounterparty"
+  },
+  "featureVatCounterpartyDesc": "Wer der Käufer für die USt ist, je Mitglied: Inlands-USt, Steuerschuldnerschaft des Empfängers, außerhalb der EU oder befreit mit gedrucktem Grund. Aus: nur die automatische Regel.",
+  "@featureVatCounterpartyDesc": {
+    "description": "#985 VAT versions and counterparty: featureVatCounterpartyDesc"
+  },
+  "vatSince": "ab",
+  "@vatSince": {
+    "description": "#985 VAT versions and counterparty: vatSince"
+  },
+  "vatUntil": "bis",
+  "@vatUntil": {
+    "description": "#985 VAT versions and counterparty: vatUntil"
+  },
+  "vatChangeByLaw": "Änderung per Gesetz",
+  "@vatChangeByLaw": {
+    "description": "#985 VAT versions and counterparty: vatChangeByLaw"
+  },
+  "vatChangeByLawExplainer": "Ein neuer Wert ab einem Datum: der alte bleibt auf jeder Leistung davor, der neue gilt ab diesem Tag. Nichts wird umgehängt.",
+  "@vatChangeByLawExplainer": {
+    "description": "#985 VAT versions and counterparty: vatChangeByLawExplainer"
+  },
+  "vatNewPercent": "Neuer Satz %",
+  "@vatNewPercent": {
+    "description": "#985 VAT versions and counterparty: vatNewPercent"
+  },
+  "vatEffectiveDate": "Wirksam ab (JJJJ-MM-TT)",
+  "@vatEffectiveDate": {
+    "description": "#985 VAT versions and counterparty: vatEffectiveDate"
+  },
+  "vatChangeNeedsSave": "Speichern Sie den Satz zuerst; dann ändern Sie ihn per Gesetz.",
+  "@vatChangeNeedsSave": {
+    "description": "#985 VAT versions and counterparty: vatChangeNeedsSave"
+  },
+  "vatChangeInvalid": "Nötig sind ein Prozentsatz zwischen 0 und 99,99 und ein Datum nach dem Beginn des Satzes.",
+  "@vatChangeInvalid": {
+    "description": "#985 VAT versions and counterparty: vatChangeInvalid"
+  },
+  "memberVatTreatmentLabel": "USt-Behandlung",
+  "@memberVatTreatmentLabel": {
+    "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
+  },
+  "memberVatTreatmentExplainer": "Wer dieses Mitglied für die USt ist: die automatische Regel (Steuerschuldnerschaft des Empfängers für ein Unternehmen in einem anderen EU-Staat), Inlands-USt in jedem Fall, Steuerschuldnerschaft des Empfängers, außerhalb der EU oder ein befreiter Käufer mit dem auf der Rechnung gedruckten Grund.",
+  "@memberVatTreatmentExplainer": {
+    "description": "#985 VAT versions and counterparty: memberVatTreatmentExplainer"
+  },
+  "vatTreatmentAuto": "Automatisch",
+  "@vatTreatmentAuto": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentAuto"
+  },
+  "vatTreatmentDomestic": "Inlands-USt",
+  "@vatTreatmentDomestic": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentDomestic"
+  },
+  "vatTreatmentReverseCharge": "Steuerschuldnerschaft des Empfängers",
+  "@vatTreatmentReverseCharge": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentReverseCharge"
+  },
+  "vatTreatmentExport": "Außerhalb der EU",
+  "@vatTreatmentExport": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentExport"
+  },
+  "vatTreatmentExempt": "Befreiter Käufer",
+  "@vatTreatmentExempt": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentExempt"
+  },
+  "vatTreatmentReasonField": "Befreiungsgrund (auf der Rechnung gedruckt)",
+  "@vatTreatmentReasonField": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentReasonField"
+  }
+}

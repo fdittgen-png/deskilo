@@ -1,0 +1,83 @@
+{
+  "@@locale": "es",
+  "featureVatRateHistory": "Versiones de los tipos de IVA",
+  "@featureVatRateHistory": {
+    "description": "#985 VAT versions and counterparty: featureVatRateHistory"
+  },
+  "featureVatRateHistoryDesc": "Un tipo es una familia de versiones fechadas: un cambio por ley añade el nuevo valor desde su fecha, el antiguo permanece en toda prestación anterior y nada se reasigna. Desactivado: un valor por tipo.",
+  "@featureVatRateHistoryDesc": {
+    "description": "#985 VAT versions and counterparty: featureVatRateHistoryDesc"
+  },
+  "featureVatCounterparty": "IVA según el cliente",
+  "@featureVatCounterparty": {
+    "description": "#985 VAT versions and counterparty: featureVatCounterparty"
+  },
+  "featureVatCounterpartyDesc": "Quién es el comprador a efectos de IVA, fijado en cada miembro: IVA nacional, inversión del sujeto pasivo, fuera de la UE o exento con el motivo impreso. Desactivado: solo la regla automática.",
+  "@featureVatCounterpartyDesc": {
+    "description": "#985 VAT versions and counterparty: featureVatCounterpartyDesc"
+  },
+  "vatSince": "desde el",
+  "@vatSince": {
+    "description": "#985 VAT versions and counterparty: vatSince"
+  },
+  "vatUntil": "hasta el",
+  "@vatUntil": {
+    "description": "#985 VAT versions and counterparty: vatUntil"
+  },
+  "vatChangeByLaw": "Cambio por ley",
+  "@vatChangeByLaw": {
+    "description": "#985 VAT versions and counterparty: vatChangeByLaw"
+  },
+  "vatChangeByLawExplainer": "Un nuevo valor desde una fecha: el antiguo permanece en toda prestación anterior, el nuevo se aplica desde ese día. Nada se reasigna.",
+  "@vatChangeByLawExplainer": {
+    "description": "#985 VAT versions and counterparty: vatChangeByLawExplainer"
+  },
+  "vatNewPercent": "Nuevo tipo %",
+  "@vatNewPercent": {
+    "description": "#985 VAT versions and counterparty: vatNewPercent"
+  },
+  "vatEffectiveDate": "Fecha de efecto (AAAA-MM-DD)",
+  "@vatEffectiveDate": {
+    "description": "#985 VAT versions and counterparty: vatEffectiveDate"
+  },
+  "vatChangeNeedsSave": "Guarde primero el tipo; después cámbielo por ley.",
+  "@vatChangeNeedsSave": {
+    "description": "#985 VAT versions and counterparty: vatChangeNeedsSave"
+  },
+  "vatChangeInvalid": "Hacen falta un porcentaje entre 0 y 99,99 y una fecha posterior al inicio del tipo.",
+  "@vatChangeInvalid": {
+    "description": "#985 VAT versions and counterparty: vatChangeInvalid"
+  },
+  "memberVatTreatmentLabel": "Tratamiento del IVA",
+  "@memberVatTreatmentLabel": {
+    "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
+  },
+  "memberVatTreatmentExplainer": "Quién es este miembro a efectos de IVA: la regla automática (inversión del sujeto pasivo para una empresa de otro Estado de la UE), IVA nacional en todo caso, inversión del sujeto pasivo, fuera de la UE o un comprador exento con el motivo impreso en la factura.",
+  "@memberVatTreatmentExplainer": {
+    "description": "#985 VAT versions and counterparty: memberVatTreatmentExplainer"
+  },
+  "vatTreatmentAuto": "Automático",
+  "@vatTreatmentAuto": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentAuto"
+  },
+  "vatTreatmentDomestic": "IVA nacional",
+  "@vatTreatmentDomestic": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentDomestic"
+  },
+  "vatTreatmentReverseCharge": "Inversión del sujeto pasivo",
+  "@vatTreatmentReverseCharge": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentReverseCharge"
+  },
+  "vatTreatmentExport": "Fuera de la UE",
+  "@vatTreatmentExport": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentExport"
+  },
+  "vatTreatmentExempt": "Comprador exento",
+  "@vatTreatmentExempt": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentExempt"
+  },
+  "vatTreatmentReasonField": "Motivo de exención (impreso en la factura)",
+  "@vatTreatmentReasonField": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentReasonField"
+  }
+}

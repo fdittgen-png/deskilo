@@ -739,6 +739,16 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setMemberVatTreatment(
+      String memberId, String treatment, String reason) async {
+    final i = otherMembers.indexWhere((m) => m.id == memberId);
+    if (i >= 0) {
+      otherMembers[i] = otherMembers[i]
+          .copyWith(vatTreatment: treatment, vatExemptionReason: reason);
+    }
+  }
+
+  @override
   Future<void> setMemberSimultaneousLimit(String memberId, int? limit) async {
     // #628 — the 0119 RPC mirrors 0044's governance: never for oneself.
     if (myMember.id == memberId) {

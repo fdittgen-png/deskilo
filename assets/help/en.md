@@ -1116,6 +1116,15 @@ In France the VAT number and the exemption belong to the legal entity; each esta
 ### VAT groups (#947)
 
 Each rate now carries the **fiscal group** of what it taxes: standard, intermediate, reduced, super-reduced, zero, exempt, not subject, **deposit** (outside the VAT base) or **excise-bearing** (beer, spirits, sugar drinks: excise inside the price, standard VAT). *Settings → VAT* shows what falls in each group in your country and the exemption reason a group implies. An association not subject to VAT keeps category O on its documents. A deposit beside taxed lines cannot go out as an e-invoice (EN 16931): the app says so and you issue it separately.
+### VAT like an ERP — dated rate versions, one tax point, the counterparty (#985)
+
+Two flags under *VAT management* turn the rates into what an ERP calls a **posting setup**.
+
+- **VAT rate versions.** A rate is a **family of dated versions**. When the law changes a rate, tap **Change by law** on the row, type the new percentage and the effective date: the old value closes on that date, the successor opens on it, and every service, package, accessory or subscription that pointed at the old row keeps pointing at it — the app walks the family and applies **the value in force on the tax point date**. Nothing is edited in place, nothing is re-pointed. The **tax point** of a billed month is its last day, or the invoice date when the month is billed ahead (the prepayment rule); a charge stamped at booking (a service, a package) keeps its stamp. So a month that ended before the change is taxed at the old value even when its invoice is issued — or re-issued — after it, and only the supplies dated after the change use the new value. The configuration export carries the versions and the family.
+- **VAT by counterparty.** On a member's page, **VAT treatment** says who this buyer is for tax: *Automatic* (today's rule: reverse charge for a business in another EU state), *Domestic VAT* whatever the country (a desk is a service connected with immovable property), *Reverse charge* (category AE), *Outside the EU* (category G, with the statutory mention), or *Exempt buyer* with the reason printed on the invoice (category E). The invoice applies the matrix buyer × product: an exempt or not-subject group stays what it is; a taxable group takes the buyer's category. The e-invoice carries the category and its VATEX code.
+
+The country catalogue names the **group** of every rate it proposes (standard, intermediate, reduced, super-reduced), so seeding a workspace yields one row per legal group in every country, and the change-by-law action is the same everywhere.
+
 ### Year archive (#957)
 
 *Accounting exports → Year archive* downloads one zip named after the registration number and the year: every invoice as PDF/A-3 with its embedded e-invoice, the **invoice register** (number, date, amount, status and each document's integrity word), the FEC on the default accounts and the audit trail. A development workspace produces a file marked DEV.

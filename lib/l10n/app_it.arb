@@ -5908,6 +5908,86 @@
   "@invoiceGapBuyerVatIdFormat": {
     "description": "#878 VAT review / report: invoiceGapBuyerVatIdFormat"
   },
+  "featureVatRateHistory": "Versioni delle aliquote IVA",
+  "@featureVatRateHistory": {
+    "description": "#985 VAT versions and counterparty: featureVatRateHistory"
+  },
+  "featureVatRateHistoryDesc": "Un'aliquota è una famiglia di versioni datate: una modifica per legge aggiunge il nuovo valore dalla sua data, il vecchio resta su ogni prestazione precedente e nulla viene riassegnato. Disattivato: un valore per aliquota.",
+  "@featureVatRateHistoryDesc": {
+    "description": "#985 VAT versions and counterparty: featureVatRateHistoryDesc"
+  },
+  "featureVatCounterparty": "IVA secondo il cliente",
+  "@featureVatCounterparty": {
+    "description": "#985 VAT versions and counterparty: featureVatCounterparty"
+  },
+  "featureVatCounterpartyDesc": "Chi è l'acquirente ai fini IVA, impostato su ogni membro: IVA nazionale, inversione contabile, fuori UE o esente con il motivo stampato. Disattivato: solo la regola automatica.",
+  "@featureVatCounterpartyDesc": {
+    "description": "#985 VAT versions and counterparty: featureVatCounterpartyDesc"
+  },
+  "vatSince": "dal",
+  "@vatSince": {
+    "description": "#985 VAT versions and counterparty: vatSince"
+  },
+  "vatUntil": "fino al",
+  "@vatUntil": {
+    "description": "#985 VAT versions and counterparty: vatUntil"
+  },
+  "vatChangeByLaw": "Modifica per legge",
+  "@vatChangeByLaw": {
+    "description": "#985 VAT versions and counterparty: vatChangeByLaw"
+  },
+  "vatChangeByLawExplainer": "Un nuovo valore da una data: il vecchio resta su ogni prestazione precedente, il nuovo si applica da quel giorno. Nulla viene riassegnato.",
+  "@vatChangeByLawExplainer": {
+    "description": "#985 VAT versions and counterparty: vatChangeByLawExplainer"
+  },
+  "vatNewPercent": "Nuova aliquota %",
+  "@vatNewPercent": {
+    "description": "#985 VAT versions and counterparty: vatNewPercent"
+  },
+  "vatEffectiveDate": "Data di effetto (AAAA-MM-GG)",
+  "@vatEffectiveDate": {
+    "description": "#985 VAT versions and counterparty: vatEffectiveDate"
+  },
+  "vatChangeNeedsSave": "Salva prima l'aliquota; poi modificala per legge.",
+  "@vatChangeNeedsSave": {
+    "description": "#985 VAT versions and counterparty: vatChangeNeedsSave"
+  },
+  "vatChangeInvalid": "Servono una percentuale tra 0 e 99,99 e una data successiva all'inizio dell'aliquota.",
+  "@vatChangeInvalid": {
+    "description": "#985 VAT versions and counterparty: vatChangeInvalid"
+  },
+  "memberVatTreatmentLabel": "Trattamento IVA",
+  "@memberVatTreatmentLabel": {
+    "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
+  },
+  "memberVatTreatmentExplainer": "Chi è questo membro ai fini IVA: la regola automatica (inversione contabile per un'impresa di un altro Stato UE), IVA nazionale in ogni caso, inversione contabile, fuori UE o un acquirente esente con il motivo stampato sulla fattura.",
+  "@memberVatTreatmentExplainer": {
+    "description": "#985 VAT versions and counterparty: memberVatTreatmentExplainer"
+  },
+  "vatTreatmentAuto": "Automatico",
+  "@vatTreatmentAuto": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentAuto"
+  },
+  "vatTreatmentDomestic": "IVA nazionale",
+  "@vatTreatmentDomestic": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentDomestic"
+  },
+  "vatTreatmentReverseCharge": "Inversione contabile",
+  "@vatTreatmentReverseCharge": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentReverseCharge"
+  },
+  "vatTreatmentExport": "Fuori UE",
+  "@vatTreatmentExport": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentExport"
+  },
+  "vatTreatmentExempt": "Acquirente esente",
+  "@vatTreatmentExempt": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentExempt"
+  },
+  "vatTreatmentReasonField": "Motivo di esenzione (stampato sulla fattura)",
+  "@vatTreatmentReasonField": {
+    "description": "#985 VAT versions and counterparty: vatTreatmentReasonField"
+  },
   "assistantPrefix": "Assistente",
   "@assistantPrefix": {
     "description": "#872 one wizard idiom: assistantPrefix"

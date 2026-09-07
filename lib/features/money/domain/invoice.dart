@@ -314,6 +314,13 @@ sealed class Invoice with _$Invoice {
   bool get isReverseCharged =>
       vatTotals.any((total) => total.category == 'AE');
 
+  /// #985 — the category the counterparty decided, when it did: AE
+  /// (reverse charge), G (outside the EU), E (an exempt buyer). '' when
+  /// the seller's regime decides.
+  String get counterpartyCategory => vatTotals
+      .map((total) => total.category)
+      .firstWhere((c) => c == 'AE' || c == 'G' || c == 'E', orElse: () => '');
+
   /// #894 — a document that gives money back: the month's credits
   /// outweigh its charges (#508's avoir). EN 16931 types it 381, and
   /// the VAT it carries is the VAT it reverses.

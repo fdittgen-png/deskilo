@@ -242,6 +242,12 @@ abstract class WorkspaceRepository {
   /// self-setting, exactly like [setMemberReservationLimit].
   Future<void> setMemberSimultaneousLimit(String memberId, int? limit);
 
+  /// #985 (RPC `set_member_vat_treatment`, migration 0182): who this
+  /// member is for VAT — the wire of `VatTreatment` — and the reason an
+  /// exempt buyer prints. Whoever may issue invoices.
+  Future<void> setMemberVatTreatment(
+      String memberId, String treatment, String reason);
+
   /// Admin/owner (RPC `set_member_level_permission`, migration 0050):
   /// grant or revoke another member's right to reserve a whole level.
   /// The server refuses self-setting.
