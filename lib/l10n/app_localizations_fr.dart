@@ -1562,6 +1562,35 @@ class AppLocalizationsFr extends AppLocalizations {
       'Noms, courriels, téléphones et adresses sont floutés à l\'écran de cet appareil — pour les captures d\'écran et les vidéos.';
 
   @override
+  String get deploymentFlowToProd => 'Vers la PROD';
+
+  @override
+  String get deploymentFlowToDev => 'Vers la DEV';
+
+  @override
+  String get deploymentFlowFromProd => 'Depuis la PROD';
+
+  @override
+  String get deploymentFlowFromDev => 'Depuis la DEV';
+
+  @override
+  String get deploymentIntroFromProd =>
+      'Vous êtes du côté développement. Ce que vous cochez ci-dessous est tiré du jumeau de production vers cet espace, après un aperçu.';
+
+  @override
+  String get deploymentIntroFromDev =>
+      'Vous êtes du côté production. Ce que vous cochez ci-dessous est tiré du jumeau de développement vers cet espace, après un aperçu.';
+
+  @override
+  String get deploymentPullFromProd => 'Tirer depuis la PROD…';
+
+  @override
+  String get deploymentPullFromDev => 'Tirer depuis la DEV…';
+
+  @override
+  String get deploymentKindReports => 'Rapports';
+
+  @override
   String get featureDeployments => 'Déploiements';
 
   @override

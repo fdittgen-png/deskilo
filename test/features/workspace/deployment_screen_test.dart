@@ -33,7 +33,7 @@ Future<(FakeWorkspaceRepository, FakeDeploymentRepository)> _pump(
   }
   final deployment = FakeDeploymentRepository()
     ..environments = {dev.id: 'dev', 'ws-prod': 'prod'}
-    ..diffs = {'services': (1, 0, 0), 'vat': (0, 0, 0)};
+    ..diffs = {'services': (1, 0, 0), 'vat': (0, 0, 0), 'document_design': (0, 1, 0)};
   await tester.binding.setSurfaceSize(const Size(900, 2200));
   addTearDown(() => tester.binding.setSurfaceSize(null));
   await tester.pumpWidget(ProviderScope(
@@ -113,5 +113,41 @@ void main() {
       (tester) async {
     await _pump(tester, flags: const {'deployments': false});
     expect(find.byKey(const ValueKey('deploy-entity-vat')), findsNothing);
+  });
+
+  testWidgets('#998 — from the prod, the dev-to-prod role pulls the dev '
+      'into this production; the groups name configuration, master data '
+      'and reports', (tester) async {
+    final (_, deployment) = await _pump(tester, onDev: false);
+    expect(find.byKey(const ValueKey('deploy-group-configuration')), findsOneWidget);
+    expect(find.byKey(const ValueKey('deploy-group-master_data')), findsOneWidget);
+    expect(find.byKey(const ValueKey('deploy-group-reports')), findsOneWidget);
+
+    await tester.tap(find.text('From DEV'));
+    await tester.pumpAndSettle();
+    expect(find.text('Pull from DEV…'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('deploy-entity-document_design')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const ValueKey('deploy-preview')));
+    await tester.tap(find.byKey(const ValueKey('deploy-preview')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('deploy-confirm')));
+    await tester.pumpAndSettle();
+    expect(deployment.deployed, hasLength(1));
+    expect(deployment.deployed.single.to, 'ws-prod');
+    expect(deployment.deployed.single.entities, ['document_design']);
+  });
+
+  testWidgets('#998 — an admin on the prod (no dev-to-prod role) cannot pull; '
+      'the reason is on screen', (tester) async {
+    await _pump(tester, onDev: false, viewerOwner: false);
+    await tester.tap(find.text('From DEV'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('deploy-not-allowed')), findsOneWidget);
+    expect(
+        tester
+            .widget<FilledButton>(find.byKey(const ValueKey('deploy-preview')))
+            .onPressed,
+        isNull);
   });
 }

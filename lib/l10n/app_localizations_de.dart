@@ -1561,6 +1561,35 @@ class AppLocalizationsDe extends AppLocalizations {
       'Namen, E-Mails, Telefonnummern und Adressen werden auf dem Bildschirm dieses Geräts unscharf gemacht — für Screenshots und Videos.';
 
   @override
+  String get deploymentFlowToProd => 'In die PROD';
+
+  @override
+  String get deploymentFlowToDev => 'In die DEV';
+
+  @override
+  String get deploymentFlowFromProd => 'Aus der PROD';
+
+  @override
+  String get deploymentFlowFromDev => 'Aus der DEV';
+
+  @override
+  String get deploymentIntroFromProd =>
+      'Sie stehen auf der Entwicklungsseite. Was Sie unten ankreuzen, wird nach einer Vorschau aus dem Produktionszwilling in diesen Raum geholt.';
+
+  @override
+  String get deploymentIntroFromDev =>
+      'Sie stehen auf der Produktionsseite. Was Sie unten ankreuzen, wird nach einer Vorschau aus dem Entwicklungszwilling in diesen Raum geholt.';
+
+  @override
+  String get deploymentPullFromProd => 'Aus der PROD holen…';
+
+  @override
+  String get deploymentPullFromDev => 'Aus der DEV holen…';
+
+  @override
+  String get deploymentKindReports => 'Berichte';
+
+  @override
   String get featureDeployments => 'Ausrollungen';
 
   @override

@@ -1,0 +1,39 @@
+{
+  "@@locale": "fr",
+  "deploymentFlowToProd": "Vers la PROD",
+  "@deploymentFlowToProd": {
+    "description": "#998 deployment pull: deploymentFlowToProd"
+  },
+  "deploymentFlowToDev": "Vers la DEV",
+  "@deploymentFlowToDev": {
+    "description": "#998 deployment pull: deploymentFlowToDev"
+  },
+  "deploymentFlowFromProd": "Depuis la PROD",
+  "@deploymentFlowFromProd": {
+    "description": "#998 deployment pull: deploymentFlowFromProd"
+  },
+  "deploymentFlowFromDev": "Depuis la DEV",
+  "@deploymentFlowFromDev": {
+    "description": "#998 deployment pull: deploymentFlowFromDev"
+  },
+  "deploymentIntroFromProd": "Vous êtes du côté développement. Ce que vous cochez ci-dessous est tiré du jumeau de production vers cet espace, après un aperçu.",
+  "@deploymentIntroFromProd": {
+    "description": "#998 deployment pull: deploymentIntroFromProd"
+  },
+  "deploymentIntroFromDev": "Vous êtes du côté production. Ce que vous cochez ci-dessous est tiré du jumeau de développement vers cet espace, après un aperçu.",
+  "@deploymentIntroFromDev": {
+    "description": "#998 deployment pull: deploymentIntroFromDev"
+  },
+  "deploymentPullFromProd": "Tirer depuis la PROD…",
+  "@deploymentPullFromProd": {
+    "description": "#998 deployment pull: deploymentPullFromProd"
+  },
+  "deploymentPullFromDev": "Tirer depuis la DEV…",
+  "@deploymentPullFromDev": {
+    "description": "#998 deployment pull: deploymentPullFromDev"
+  },
+  "deploymentKindReports": "Rapports",
+  "@deploymentKindReports": {
+    "description": "#998 deployment pull: deploymentKindReports"
+  }
+}

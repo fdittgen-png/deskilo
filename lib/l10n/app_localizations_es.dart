@@ -1560,6 +1560,35 @@ class AppLocalizationsEs extends AppLocalizations {
       'Nombres, correos, teléfonos y direcciones se difuminan en la pantalla de este dispositivo — para capturas de pantalla y vídeos.';
 
   @override
+  String get deploymentFlowToProd => 'A PROD';
+
+  @override
+  String get deploymentFlowToDev => 'A DEV';
+
+  @override
+  String get deploymentFlowFromProd => 'Desde PROD';
+
+  @override
+  String get deploymentFlowFromDev => 'Desde DEV';
+
+  @override
+  String get deploymentIntroFromProd =>
+      'Está en el lado de desarrollo. Lo que marque abajo se trae del gemelo de producción a este espacio, tras una vista previa.';
+
+  @override
+  String get deploymentIntroFromDev =>
+      'Está en el lado de producción. Lo que marque abajo se trae del gemelo de desarrollo a este espacio, tras una vista previa.';
+
+  @override
+  String get deploymentPullFromProd => 'Traer desde PROD…';
+
+  @override
+  String get deploymentPullFromDev => 'Traer desde DEV…';
+
+  @override
+  String get deploymentKindReports => 'Informes';
+
+  @override
   String get featureDeployments => 'Despliegues';
 
   @override

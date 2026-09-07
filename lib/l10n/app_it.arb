@@ -1127,6 +1127,42 @@
   "@demoModeSubtitle": {
     "description": "#970 demo mode: demoModeSubtitle"
   },
+  "deploymentFlowToProd": "In PROD",
+  "@deploymentFlowToProd": {
+    "description": "#998 deployment pull: deploymentFlowToProd"
+  },
+  "deploymentFlowToDev": "In DEV",
+  "@deploymentFlowToDev": {
+    "description": "#998 deployment pull: deploymentFlowToDev"
+  },
+  "deploymentFlowFromProd": "Da PROD",
+  "@deploymentFlowFromProd": {
+    "description": "#998 deployment pull: deploymentFlowFromProd"
+  },
+  "deploymentFlowFromDev": "Da DEV",
+  "@deploymentFlowFromDev": {
+    "description": "#998 deployment pull: deploymentFlowFromDev"
+  },
+  "deploymentIntroFromProd": "Sei sul lato sviluppo. Ciò che spunti qui sotto viene tirato dal gemello di produzione in questo spazio, dopo un'anteprima.",
+  "@deploymentIntroFromProd": {
+    "description": "#998 deployment pull: deploymentIntroFromProd"
+  },
+  "deploymentIntroFromDev": "Sei sul lato produzione. Ciò che spunti qui sotto viene tirato dal gemello di sviluppo in questo spazio, dopo un'anteprima.",
+  "@deploymentIntroFromDev": {
+    "description": "#998 deployment pull: deploymentIntroFromDev"
+  },
+  "deploymentPullFromProd": "Tira da PROD…",
+  "@deploymentPullFromProd": {
+    "description": "#998 deployment pull: deploymentPullFromProd"
+  },
+  "deploymentPullFromDev": "Tira da DEV…",
+  "@deploymentPullFromDev": {
+    "description": "#998 deployment pull: deploymentPullFromDev"
+  },
+  "deploymentKindReports": "Report",
+  "@deploymentKindReports": {
+    "description": "#998 deployment pull: deploymentKindReports"
+  },
   "featureDeployments": "Distribuzioni",
   "@featureDeployments": {
     "description": "#988/#990 deployments: featureDeployments"
