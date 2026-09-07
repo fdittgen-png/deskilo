@@ -70,7 +70,16 @@ enum EventType {
 
   /// #881 — an authorised admin asks to change a member's payment
   /// conditions; confirmed → the override is written by trigger.
-  paymentTermsChange('payment_terms_change');
+  paymentTermsChange('payment_terms_change'),
+
+  // #982 — the six domains that had no policy: money acts of record,
+  // memberships, subscriptions and the matrix itself.
+  invoiceIssue('invoice_issue'),
+  invoiceVoid('invoice_void'),
+  refund('refund'),
+  memberStatusChange('member_status_change'),
+  subscriptionChange('subscription_change'),
+  matrixChange('matrix_change');
 
   const EventType([String? dbName]) : _dbName = dbName;
 

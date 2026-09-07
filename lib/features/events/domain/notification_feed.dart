@@ -145,9 +145,17 @@ NotificationCategory categoryOfEvent(WorkspaceEvent event) {
     case EventType.invoiceWriteoff:
     case EventType.invoiceReminder:
     case EventType.priceNegotiation:
+    // #982 — acts of record on money.
+    case EventType.invoiceIssue:
+    case EventType.invoiceVoid:
+    case EventType.refund:
       return NotificationCategory.money;
     case EventType.roleChange:
     case EventType.memberJoin:
+    // #982 — acts on a membership or on the matrix.
+    case EventType.memberStatusChange:
+    case EventType.subscriptionChange:
+    case EventType.matrixChange:
       return NotificationCategory.members;
   }
 }

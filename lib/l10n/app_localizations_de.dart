@@ -8590,6 +8590,35 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die nächste Freigabe wird erst angefragt, wenn die vorige durch ist, und der Verlauf nummeriert jede Stufe.';
 
   @override
+  String get eventTypeInvoiceIssue => 'Rechnungsstellung';
+
+  @override
+  String get eventTypeInvoiceVoid => 'Rechnungsstorno';
+
+  @override
+  String get eventTypeRefund => 'Erstattung';
+
+  @override
+  String get eventTypeMemberStatusChange => 'Mitgliedschaftsänderung';
+
+  @override
+  String get eventTypeSubscriptionChange => 'Abonnementänderung';
+
+  @override
+  String get eventTypeMatrixChange => 'Änderung der Berechtigungsmatrix';
+
+  @override
+  String get validationSentForApproval =>
+      'Zur Freigabe gesendet — wirkt nach der Genehmigung.';
+
+  @override
+  String get validationMinAmount => 'Nur über diesem Betrag';
+
+  @override
+  String get validationMinAmountDesc =>
+      'Darunter wirkt der Vorgang sofort. Leer: jeder Betrag.';
+
+  @override
   String get vatTitle => 'Mehrwertsteuer';
 
   @override

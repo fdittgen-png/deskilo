@@ -8521,6 +8521,35 @@ class AppLocalizationsEn extends AppLocalizations {
       'The next validation is asked for once the previous one passed, and the trail numbers each step.';
 
   @override
+  String get eventTypeInvoiceIssue => 'Invoice issue';
+
+  @override
+  String get eventTypeInvoiceVoid => 'Invoice cancellation';
+
+  @override
+  String get eventTypeRefund => 'Refund';
+
+  @override
+  String get eventTypeMemberStatusChange => 'Membership change';
+
+  @override
+  String get eventTypeSubscriptionChange => 'Subscription change';
+
+  @override
+  String get eventTypeMatrixChange => 'Permission matrix change';
+
+  @override
+  String get validationSentForApproval =>
+      'Sent for validation — it applies once approved.';
+
+  @override
+  String get validationMinAmount => 'Only above this amount';
+
+  @override
+  String get validationMinAmountDesc =>
+      'Below it the act applies at once. Empty: every amount.';
+
+  @override
   String get vatTitle => 'VAT';
 
   @override

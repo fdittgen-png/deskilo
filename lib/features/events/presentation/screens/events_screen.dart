@@ -360,6 +360,12 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     EventType.usageCorrection => Icons.timelapse_outlined,
     EventType.usageRecordDelete => Icons.playlist_remove_outlined,
     EventType.paymentTermsChange => Icons.request_quote_outlined,
+    EventType.invoiceIssue => Icons.receipt_long_outlined,
+    EventType.invoiceVoid => Icons.cancel_presentation_outlined,
+    EventType.refund => Icons.undo_outlined,
+    EventType.memberStatusChange => Icons.person_off_outlined,
+    EventType.subscriptionChange => Icons.percent_outlined,
+    EventType.matrixChange => Icons.admin_panel_settings_outlined,
     };
   }
 

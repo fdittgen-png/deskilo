@@ -8598,6 +8598,35 @@ class AppLocalizationsIt extends AppLocalizations {
       'La convalida successiva è chiesta quando la precedente è passata, e la cronologia numera ogni passo.';
 
   @override
+  String get eventTypeInvoiceIssue => 'Emissione fattura';
+
+  @override
+  String get eventTypeInvoiceVoid => 'Annullamento fattura';
+
+  @override
+  String get eventTypeRefund => 'Rimborso';
+
+  @override
+  String get eventTypeMemberStatusChange => 'Cambio di adesione';
+
+  @override
+  String get eventTypeSubscriptionChange => 'Cambio di abbonamento';
+
+  @override
+  String get eventTypeMatrixChange => 'Modifica della matrice dei permessi';
+
+  @override
+  String get validationSentForApproval =>
+      'Inviato in convalida — si applica una volta approvato.';
+
+  @override
+  String get validationMinAmount => 'Solo oltre questo importo';
+
+  @override
+  String get validationMinAmountDesc =>
+      'Al di sotto, l\'atto si applica subito. Vuoto: qualsiasi importo.';
+
+  @override
   String get vatTitle => 'IVA';
 
   @override

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/validation/pending_validation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/time/work_hours.dart';
@@ -466,11 +467,13 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
     String role,
     List<String> permissions,
   ) async {
-    await _client.rpc<void>('set_role_permissions', params: {
+    // #982 — through the matrix_change policy: held or applied at once.
+    final answer = await _client.rpc<dynamic>('request_matrix_change', params: {
       'p_workspace_id': workspaceId,
       'p_role': role,
       'p_permissions': permissions,
     });
+    applyOrPending(answer as Map);
   }
 
   Workspace _workspaceFromRow(Map<String, dynamic> row) => Workspace(
@@ -544,9 +547,12 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
 
   @override
   Future<void> updateMemberSubscription(String memberId, int pct) async {
-    await _client
-        .from('members')
-        .update({'subscription_pct': pct}).eq('id', memberId);
+    // #982 — through the subscription_change policy.
+    final answer = await _client.rpc<dynamic>('request_subscription_change', params: {
+      'p_member_id': memberId,
+      'p_pct': pct,
+    });
+    applyOrPending(answer as Map);
   }
 
   @override
@@ -709,9 +715,12 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
 
   @override
   Future<void> updateMemberStatus(String memberId, MemberStatus status) async {
-    await _client
-        .from('members')
-        .update({'status': status.name}).eq('id', memberId);
+    // #982 — through the member_status_change policy.
+    final answer = await _client.rpc<dynamic>('request_member_status_change', params: {
+      'p_member_id': memberId,
+      'p_status': status.name,
+    });
+    applyOrPending(answer as Map);
   }
 
   @override

@@ -1,0 +1,39 @@
+{
+  "@@locale": "de",
+  "eventTypeInvoiceIssue": "Rechnungsstellung",
+  "@eventTypeInvoiceIssue": {
+    "description": "#982 validation domains: eventTypeInvoiceIssue"
+  },
+  "eventTypeInvoiceVoid": "Rechnungsstorno",
+  "@eventTypeInvoiceVoid": {
+    "description": "#982 validation domains: eventTypeInvoiceVoid"
+  },
+  "eventTypeRefund": "Erstattung",
+  "@eventTypeRefund": {
+    "description": "#982 validation domains: eventTypeRefund"
+  },
+  "eventTypeMemberStatusChange": "Mitgliedschaftsänderung",
+  "@eventTypeMemberStatusChange": {
+    "description": "#982 validation domains: eventTypeMemberStatusChange"
+  },
+  "eventTypeSubscriptionChange": "Abonnementänderung",
+  "@eventTypeSubscriptionChange": {
+    "description": "#982 validation domains: eventTypeSubscriptionChange"
+  },
+  "eventTypeMatrixChange": "Änderung der Berechtigungsmatrix",
+  "@eventTypeMatrixChange": {
+    "description": "#982 validation domains: eventTypeMatrixChange"
+  },
+  "validationSentForApproval": "Zur Freigabe gesendet — wirkt nach der Genehmigung.",
+  "@validationSentForApproval": {
+    "description": "#982 validation domains: validationSentForApproval"
+  },
+  "validationMinAmount": "Nur über diesem Betrag",
+  "@validationMinAmount": {
+    "description": "#982 validation domains: validationMinAmount"
+  },
+  "validationMinAmountDesc": "Darunter wirkt der Vorgang sofort. Leer: jeder Betrag.",
+  "@validationMinAmountDesc": {
+    "description": "#982 validation domains: validationMinAmountDesc"
+  }
+}

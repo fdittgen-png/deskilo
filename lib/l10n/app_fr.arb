@@ -5730,6 +5730,42 @@
   "validationOwnerSelfShort": "Le propriétaire peut valider le sien",
   "validationSequential": "L'une après l'autre",
   "validationSequentialDesc": "La validation suivante est demandée une fois la précédente passée, et l'historique numérote chaque étape.",
+  "eventTypeInvoiceIssue": "Émission de facture",
+  "@eventTypeInvoiceIssue": {
+    "description": "#982 validation domains: eventTypeInvoiceIssue"
+  },
+  "eventTypeInvoiceVoid": "Annulation de facture",
+  "@eventTypeInvoiceVoid": {
+    "description": "#982 validation domains: eventTypeInvoiceVoid"
+  },
+  "eventTypeRefund": "Remboursement",
+  "@eventTypeRefund": {
+    "description": "#982 validation domains: eventTypeRefund"
+  },
+  "eventTypeMemberStatusChange": "Changement d'adhésion",
+  "@eventTypeMemberStatusChange": {
+    "description": "#982 validation domains: eventTypeMemberStatusChange"
+  },
+  "eventTypeSubscriptionChange": "Changement d'abonnement",
+  "@eventTypeSubscriptionChange": {
+    "description": "#982 validation domains: eventTypeSubscriptionChange"
+  },
+  "eventTypeMatrixChange": "Changement de la matrice des permissions",
+  "@eventTypeMatrixChange": {
+    "description": "#982 validation domains: eventTypeMatrixChange"
+  },
+  "validationSentForApproval": "Envoyé en validation — appliqué une fois approuvé.",
+  "@validationSentForApproval": {
+    "description": "#982 validation domains: validationSentForApproval"
+  },
+  "validationMinAmount": "Seulement au-delà de ce montant",
+  "@validationMinAmount": {
+    "description": "#982 validation domains: validationMinAmount"
+  },
+  "validationMinAmountDesc": "En dessous, l'acte s'applique aussitôt. Vide : tout montant.",
+  "@validationMinAmountDesc": {
+    "description": "#982 validation domains: validationMinAmountDesc"
+  },
   "vatExigibilityTitle": "Exigibilité de la TVA",
   "@vatExigibilityTitle": {
     "description": "#896 vat exigibility: vatExigibilityTitle"

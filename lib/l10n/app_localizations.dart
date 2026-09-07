@@ -15011,6 +15011,60 @@ abstract class AppLocalizations {
   /// **'The next validation is asked for once the previous one passed, and the trail numbers each step.'**
   String get validationSequentialDesc;
 
+  /// #982 validation domains: eventTypeInvoiceIssue
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice issue'**
+  String get eventTypeInvoiceIssue;
+
+  /// #982 validation domains: eventTypeInvoiceVoid
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice cancellation'**
+  String get eventTypeInvoiceVoid;
+
+  /// #982 validation domains: eventTypeRefund
+  ///
+  /// In en, this message translates to:
+  /// **'Refund'**
+  String get eventTypeRefund;
+
+  /// #982 validation domains: eventTypeMemberStatusChange
+  ///
+  /// In en, this message translates to:
+  /// **'Membership change'**
+  String get eventTypeMemberStatusChange;
+
+  /// #982 validation domains: eventTypeSubscriptionChange
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription change'**
+  String get eventTypeSubscriptionChange;
+
+  /// #982 validation domains: eventTypeMatrixChange
+  ///
+  /// In en, this message translates to:
+  /// **'Permission matrix change'**
+  String get eventTypeMatrixChange;
+
+  /// #982 validation domains: validationSentForApproval
+  ///
+  /// In en, this message translates to:
+  /// **'Sent for validation — it applies once approved.'**
+  String get validationSentForApproval;
+
+  /// #982 validation domains: validationMinAmount
+  ///
+  /// In en, this message translates to:
+  /// **'Only above this amount'**
+  String get validationMinAmount;
+
+  /// #982 validation domains: validationMinAmountDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Below it the act applies at once. Empty: every amount.'**
+  String get validationMinAmountDesc;
+
   /// VAT settings screen title
   ///
   /// In en, this message translates to:
