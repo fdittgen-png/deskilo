@@ -54,6 +54,16 @@ class ActiveWorkspaceId extends _$ActiveWorkspaceId {
   Future<void> select(String workspaceId) async {
     await ref.read(activeWorkspaceStoreProvider).write(workspaceId);
     state = AsyncData(workspaceId);
+    // #996 — a switch is the new default: the next start lands where
+    // the user left, on the same side of the pair. Offline, the active
+    // store already moved; the default follows at the next switch.
+    try {
+      await ref.read(defaultWorkspaceIdProvider.notifier).set(workspaceId);
+    } catch (e, st) {
+      TraceLogger.instance.warn(
+          'workspace', 'default-workspace write failed — active kept',
+          error: e, stackTrace: st);
+    }
   }
 }
 
@@ -88,6 +98,16 @@ class DefaultWorkspaceId extends _$DefaultWorkspaceId {
 
   Future<void> toggle(String workspaceId) async {
     final next = state.value == workspaceId ? null : workspaceId;
+    await _write(next);
+  }
+
+  /// #996 — the default follows every switch; no toggle, no clearing.
+  Future<void> set(String workspaceId) async {
+    if (state.value == workspaceId) return;
+    await _write(workspaceId);
+  }
+
+  Future<void> _write(String? next) async {
     await ref
         .read(workspaceRepositoryProvider)
         .setDefaultWorkspaceId(next);

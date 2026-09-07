@@ -61,6 +61,9 @@ void main() {
     final container =
         ProviderScope.containerOf(tester.element(find.byType(DeskiloApp)));
     expect(container.read(activeWorkspaceIdProvider).value, 'ws-prod');
+    // #996 — the switch is the new default: the next start lands here.
+    expect(workspace.serverDefaultWorkspaceId, 'ws-prod');
+    expect(container.read(defaultWorkspaceIdProvider).value, 'ws-prod');
   });
 
   testWidgets('with the flag off the two sides are two ordinary entries',

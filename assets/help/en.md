@@ -49,7 +49,7 @@ It is a single web page. Nothing to install, no account, nothing sent anywhere: 
 
 ### Profiles — one account, several spaces
 
-One account can belong to several workspaces. **Settings → Profiles** lists them all: each row shows the space's name, **your role there** (Member, Admin, Owner) and its workspace ID. The **check mark** marks the profile you are currently in; the **star** marks your **default** — the profile the app opens with, on every device and even after a reinstall (the choice is stored with your account). Tap a row to switch, **+ Add a profile** to join yet another space. Everything in the app is scoped to the active workspace.
+One account can belong to several workspaces. **Settings → Profiles** lists them all: each row shows the space's name, **your role there** (Member, Admin, Owner) and its workspace ID. The **check mark** marks the profile you are currently in; the **star** marks your **default** — the profile the app opens with, on every device and even after a reinstall (the choice is stored with your account). Tap a row to switch, **+ Add a profile** to join yet another space. Everything in the app is scoped to the active workspace. Since #996, **switching is remembered**: tapping another profile, or the other side of a pair, makes it the default at start-up — the star follows, and you never come back after a restart to a workspace or an environment you had left.
 
 ![](assets/help/images/profiles.jpg)
 
