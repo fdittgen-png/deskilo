@@ -85,7 +85,8 @@ void main() {
     // autoCheckInOut (#396), badgeSignIn (#662) and, since #914,
     // managedProfileAccess — narrowing who administers a profile is
     // opt-in, because the rule nobody narrowed is what #887 already did.
-    expect(onCount, featureManifest.length - 15);
+    // #985 — vatRateHistory and vatCounterparty are opt-in too.
+    expect(onCount, featureManifest.length - 17);
   });
 
   testWidgets(
