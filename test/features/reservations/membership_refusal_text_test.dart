@@ -64,7 +64,7 @@ void main() {
 
   group('the trace carries what the server answered', () {
     test('code, message, details and hint reach one field', () {
-      final line = ActTrace.serverAnswer(PostgrestException(
+      final line = ActTrace.serverAnswer(const PostgrestException(
         message: 'not an active member',
         code: 'P0001',
         details: 'members.status=paused',
@@ -82,7 +82,7 @@ void main() {
 
     test('no spaces, so key=value parses back apart', () {
       final line = ActTrace.serverAnswer(
-          PostgrestException(message: 'not an active member'));
+          const PostgrestException(message: 'not an active member'));
       expect(line, isNot(contains(' ')),
           reason: 'a trace line is grepped as key=value pairs');
     });
