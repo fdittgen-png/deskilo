@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -367,7 +368,8 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                       decoration: InputDecoration(
                         labelText: l10n?.vatRateLabelField ?? 'Name',
                         counterText: '',
-                        suffixIcon: HelpDot(l10n?.helpTopicVat ?? 'VAT'),
+                        suffixIcon: HelpDot(l10n?.helpTopicVat ?? 'VAT',
+                            anchor: HelpAnchor.moneyVatRates),
                       ),
                     ),
                   ),
@@ -386,7 +388,8 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                       ],
                       decoration: InputDecoration(
                         labelText: l10n?.vatRatePercentField ?? 'Rate %',
-                        suffixIcon: HelpDot(l10n?.helpTopicVat ?? 'VAT'),
+                        suffixIcon: HelpDot(l10n?.helpTopicVat ?? 'VAT',
+                            anchor: HelpAnchor.moneyVatRates),
                       ),
                     ),
                   ),
@@ -400,6 +403,10 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                         isExpanded: true,
                         decoration: InputDecoration(
                           labelText: l10n?.vatGroupLabel ?? 'Group',
+                          // #1016 — the group is its own documented
+                          // object, and its own paragraph in the guide.
+                          suffixIcon: HelpDot(l10n?.helpTopicVat ?? 'VAT',
+                              anchor: HelpAnchor.moneyVatGroups),
                         ),
                         items: [
                           for (final g in VatGroup.values)
@@ -547,8 +554,11 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                 key: const ValueKey('vat-declarations-button'),
                 onPressed: () => context.go('/vat-declarations'),
                 icon: const Icon(Icons.receipt_long_outlined),
-                label: Text(
-                    l10n?.vatDeclTitle ?? 'VAT declaration'),
+                label: Row(mainAxisSize: MainAxisSize.min, children: [
+                  Text(l10n?.vatDeclTitle ?? 'VAT declaration'),
+                  HelpDot(l10n?.helpTopicVat ?? 'VAT',
+                      anchor: HelpAnchor.moneyVatDeclaration),
+                ]),
               ),
             ),
           const SizedBox(height: AppSpacing.md),

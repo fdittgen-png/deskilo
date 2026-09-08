@@ -12,12 +12,17 @@
 //     and keep the text: those pages don't exist inside the app.
 //   - The "other languages" sentence is dropped — in-app help always
 //     follows the app language.
+//   - `<!-- anchor: id -->` above a heading is lifted into
+//     assets/help/<lang>.anchors.json (id -> the heading's text) and
+//     removed from the text, so the help screen can jump to the exact
+//     object a help symbol names (#1016).
 //
 // Usage:
 //   dart run tool/build_help.dart
 //
 // Images are copied from docs/wiki/images/ to assets/help/images/.
 
+import 'dart:convert';
 import 'dart:io';
 
 const guides = <String, String>{
@@ -29,6 +34,11 @@ const guides = <String, String>{
 };
 const wikiDir = 'docs/wiki';
 const outDir = 'assets/help';
+
+/// `<!-- anchor: user.money.vat.rates -->` on the line above a heading.
+/// An HTML comment renders as nothing on GitHub and in the app, so the
+/// same source serves the wiki and the bundled guide (#1016).
+final anchorComment = RegExp(r'<!--\s*anchor:\s*([a-z][a-z0-9]*(?:\.[a-z0-9-]+)+)\s*-->');
 
 /// `<img src="images/x.jpg" width="240">` → capture the file name.
 final htmlImg = RegExp(r'<img\s+src="images/([^"]+)"[^>]*>');
@@ -42,8 +52,29 @@ final wikiLink = RegExp(r'\[([^\]]+)\]\((?![a-z]+://|#|/)[A-Za-z0-9-]+\)');
 final otherLanguages = RegExp(r'\s*\*[^*]*\[[^\]]+\]\(User-Guide\)[^*]*\*|'
     r'\s*\*Autres langues[^*]*\*');
 
+/// anchor -> the text of the heading it names, in this guide's language.
+Map<String, String> anchorsOf(String source) {
+  final anchors = <String, String>{};
+  final lines = source.split('\n');
+  for (var i = 0; i < lines.length - 1; i++) {
+    final match = anchorComment.firstMatch(lines[i]);
+    if (match == null) continue;
+    // The heading it names is the next non-empty line, and it must be one.
+    var j = i + 1;
+    while (j < lines.length && lines[j].trim().isEmpty) {
+      j++;
+    }
+    if (j >= lines.length || !lines[j].startsWith('#')) continue;
+    anchors[match.group(1)!] = lines[j].replaceFirst(RegExp(r'^#+\s*'), '').trim();
+  }
+  return anchors;
+}
+
 String compile(String source) {
   var text = source;
+
+  // The anchors are lifted into their own asset; the text loses them.
+  text = text.replaceAll(anchorComment, '');
 
   // The <details> reference blocks (the giant one-image forms) are a
   // wiki-only affordance: the in-app renderer has no collapsing, and a
@@ -84,9 +115,13 @@ void main() {
       exitCode = 1;
       return;
     }
+    final raw = source.readAsStringSync();
     final out = File('$outDir/${entry.key}.md')
-      ..writeAsStringSync(compile(source.readAsStringSync()));
-    stdout.writeln('wrote ${out.path}');
+      ..writeAsStringSync(compile(raw));
+    final anchors = anchorsOf(raw);
+    File('$outDir/${entry.key}.anchors.json').writeAsStringSync(
+        '${const JsonEncoder.withIndent('  ').convert(anchors)}\n');
+    stdout.writeln('wrote ${out.path} (${anchors.length} anchors)');
   }
 
   var copied = 0;

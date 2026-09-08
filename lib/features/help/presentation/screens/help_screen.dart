@@ -17,16 +17,28 @@ const helpLocales = {'en', 'fr', 'de', 'es', 'it'};
 String helpAssetFor(String languageCode) =>
     'assets/help/${helpLocales.contains(languageCode) ? languageCode : 'en'}.md';
 
+/// #1016 — the anchor map beside that guide.
+String helpAnchorAssetFor(String languageCode) =>
+    'assets/help/${helpLocales.contains(languageCode) ? languageCode : 'en'}'
+    '.anchors.json';
+
 /// In-app help: the wiki user guide, bundled at build time and rendered
 /// natively — fully offline, identical on Android, iOS, and F-Droid.
 /// The outline button opens a table of contents that jumps to a section.
 class HelpScreen extends ConsumerStatefulWidget {
-  const HelpScreen({super.key, this.topic});
+  const HelpScreen({super.key, this.topic, this.anchor});
 
   /// Deep link from a help hint (#606): once the markdown is loaded,
   /// jump to the first heading whose text contains this fragment
   /// (case-insensitive). No match = stay at the top, never crash.
   final String? topic;
+
+  /// #1016 — the exact object to open: `user.money.vat.rates`. Resolved
+  /// through the guide's anchor map to its heading, so the jump lands on
+  /// the paragraph the help symbol names and not on the first heading
+  /// that happens to contain the topic's words. Unknown anchor, or a
+  /// bundle without the map: [topic] still decides.
+  final String? anchor;
 
   @override
   ConsumerState<HelpScreen> createState() => _HelpScreenState();
@@ -43,6 +55,24 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
   }
 
   /// Runs post-frame, after [MarkdownWidget] has generated the toc list.
+  ///
+  /// An anchor names one heading exactly; a topic is a fragment that may
+  /// match several, first one wins. The anchor is tried first.
+  void _jump({String? anchor, String? topic, Map<String, String> anchors = const {}}) {
+    if (!mounted) return;
+    final heading = anchor == null ? null : anchors[anchor];
+    if (heading != null && heading.isNotEmpty) {
+      final wanted = heading.toLowerCase().trim();
+      for (final toc in _toc.tocList) {
+        if (toc.node.childrenSpan.toPlainText().toLowerCase().trim() == wanted) {
+          _toc.jumpToIndex(toc.widgetIndex);
+          return;
+        }
+      }
+    }
+    if (topic != null) _jumpToTopic(topic);
+  }
+
   void _jumpToTopic(String topic) {
     if (!mounted) return;
     final needle = topic.toLowerCase();
@@ -82,16 +112,26 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
       body: Builder(
         builder: (context) {
           final data = ref.watch(helpContentProvider(languageCode)).value;
+          // Watched, not read: the map arrives asynchronously and the
+          // jump must not run before it does.
+          ref.watch(helpAnchorsProvider(languageCode));
           if (data == null) {
             // Asset loads in one frame; a spinner would only flash.
             return const SizedBox.shrink();
           }
           // #606 — the MarkdownWidget below fills the toc during THIS
           // frame's build; the jump must wait for the frame to finish.
-          if (!_jumpScheduled && widget.topic != null) {
+          if (!_jumpScheduled &&
+              (widget.topic != null || widget.anchor != null)) {
             _jumpScheduled = true;
+            final anchors =
+                ref.read(helpAnchorsProvider(languageCode)).value ?? const {};
             WidgetsBinding.instance.addPostFrameCallback(
-              (_) => _jumpToTopic(widget.topic!),
+              (_) => _jump(
+                anchor: widget.anchor,
+                topic: widget.topic,
+                anchors: anchors,
+              ),
             );
           }
           return MarkdownWidget(

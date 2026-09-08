@@ -19,12 +19,17 @@ import '../../l10n/app_localizations.dart';
 /// but the tap target keeps the 48 dp floor via the IconButton's
 /// default constraints being restored on tap area (splash radius).
 class HelpDot extends ConsumerWidget {
-  const HelpDot(this.topic, {super.key});
+  const HelpDot(this.topic, {this.anchor, super.key});
 
   /// Localized needle for the guide jump — take it from an
   /// `AppLocalizations` topic getter, never a hard-coded literal, so it
   /// matches the reader's guide language.
   final String topic;
+
+  /// #1016 — the exact object this symbol documents, from [HelpAnchor].
+  /// With one, the guide opens at that object; without, at the first
+  /// heading containing [topic], which is where the coarse topics land.
+  final String? anchor;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,7 +48,10 @@ class HelpDot extends ConsumerWidget {
       color: scheme.primary.withValues(alpha: .75),
       icon: const Icon(Icons.help_outline),
       onPressed: () => context.push(
-        Uri(path: '/help', queryParameters: {'topic': topic}).toString(),
+        Uri(path: '/help', queryParameters: {
+          'topic': topic,
+          'anchor': ?anchor,
+        }).toString(),
       ),
     );
   }
@@ -53,16 +61,19 @@ class HelpDot extends ConsumerWidget {
 /// text — `title: HelpDotTitle('Label', topic)` keeps `find.text`
 /// working and never steals the row's own tap.
 class HelpDotTitle extends StatelessWidget {
-  const HelpDotTitle(this.text, this.topic, {super.key});
+  const HelpDotTitle(this.text, this.topic, {this.anchor, super.key});
 
   final String text;
   final String topic;
+
+  /// #1016 — see [HelpDot.anchor].
+  final String? anchor;
 
   @override
   Widget build(BuildContext context) => Row(
         children: [
           Flexible(child: Text(text)),
-          HelpDot(topic),
+          HelpDot(topic, anchor: anchor),
         ],
       );
 }
