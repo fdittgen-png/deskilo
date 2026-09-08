@@ -35,3 +35,17 @@ two branches touched the same lines.
 - Web Pages publish is opt-in: `gh workflow run web.yml -f ref=master -f deploy=true`.
 - Never the Play "alpha1"/open testing track; F-Droid is frozen.
 - Owner-side blockers stay listed in memory (BETA_CONTACT_PHONE, logo upload).
+
+## Lessons of 2026-09-07
+- The reliable waiter: `until gh pr checks <n> --json name,bucket | jq -e 'length>0 and all(.bucket!="pending")'; do sleep 30; done`
+  then `gh pr view <n> --json mergeable,mergeStateStatus`. Start it with
+  a leading `sleep 120` right after `pr create`; a force-push restarts
+  the checks — start a NEW waiter, the old one reports the old head.
+- `analyze · l10n gate · test · coverage: cancel` = a runner cancellation:
+  `gh run rerun <run-id>` (find it with `gh run list --commit <sha>`),
+  never a code change.
+- Several merges in a row need ONE train: dispatch after the last merge.
+  Every train + web publish pair is watched with `gh run watch <id> --exit-status`
+  in the background and reported per job.
+- The wiki mirror: clone `deskilo.wiki.git` into the scratchpad once,
+  copy `docs/wiki/*.md` after each merge that touched them, commit, push.

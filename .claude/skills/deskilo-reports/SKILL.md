@@ -49,3 +49,15 @@ dart run tool/report.dart render|sample --kind usage|describe|default --kind r1
 Language chips → base + overlays (`forLocale` merges documents, layouts,
 texts); panels mount LAST in the column; anything that adds height
 must be collapsed by default (tests tap the Markup/Visual toggle).
+
+## Month on the recurring position (#1000/#1002)
+`subscriptionLabel(l10n, pct, association:, month:)` names the month
+when given one; every surface passes `period:` to `invoiceLineText`
+(PDF, CII/UBL, detail sheet, form preview, bill). Placeholders
+`period_month`, `period_year`; each `lines` row carries `kind`, `pct`,
+`month` — the picker's `lines` scaffold shows the wording
+`{% if line.kind == "subscription" %}{{ line.month }} {{ line.pct }} %{% else %}{{ line.label }}{% endif %}`.
+`monthNameOf(locale, period)` is pure (no BuildContext) — the CLI's
+`sample` and `describe` carry every placeholder, or `report_cli_test`
+fails. The FEC/SAF-T builders still receive the line without its
+invoice: their labels keep the old wording until the signature changes.

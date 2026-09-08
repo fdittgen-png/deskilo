@@ -20,6 +20,15 @@ description: The recurring reasons a DesKilo widget or lint test fails for a rea
 | `Crash when compiling … FFI` in a test run | flaky toolchain crash in build hooks | re-run; not the code |
 | fixture documents render in German | the test workspace resolves reader language to DE | assert the German title (`Verbrauchsbericht`) or the preview key `report-quick-preview` |
 | `tester.widget<FilledButton>` on `FilledButton.icon` | works — it IS a FilledButton | keep |
+| `No element` from `scrollUntilVisible` | `find.byType(Scrollable).first` picked another scrollable (a banner, a carousel) | key the ListView (`deploy-list`) and pass `find.descendant(of: byKey, matching: byType(Scrollable)).first` |
+| a sheet's confirm button is off-screen on a phone | the bottom sheet is a plain Column | `showModalBottomSheet(isScrollControlled: true, constraints: maxHeight 85%)` + `Flexible(child: ListView(shrinkWrap: true))`, buttons outside the list; assert `tester.getRect(confirm).bottom <= height` at 400×560 |
+| the system bar covers a button in a test | no inset simulated | `tester.view.viewPadding = tester.view.padding = const FakeViewPadding(bottom: 100)`; the root `SystemInsetsGuard` (#1008) keeps content above it |
+| a pair test finds no DEV side | the fake workspace's default `environment` is `'prod'` (environment_banner_test) | `copyWith(environment: 'dev')` explicitly |
+| `find.text('Subscription 50%')` fails | the line now names its month (#1000) | `find.textContaining(RegExp(r'^Subscription \w+ 50%$'))` |
+| a test appended at EOF lands inside a trailing class | the file ends with a helper class after `main` | insert before `main`'s closing brace, not at EOF |
+| the settings list grew and a tile tap misses | Advanced/Administration gained rows | viewport 3100 → 3300, or `scrollUntilVisible` on the settings list |
+| `expect(find.text('Sign out'))` finds nothing | same growth | same fix |
+| a widget test asserts a toggle that a `finally` never resets | `_busy` stuck after a hang | bound platform calls with `.timeout` so a hang becomes an error |
 
 Quick-view keys: `member-doc-quick` / `-download` / `-share` (one prefix
 for every member letter), `vat-report-*`, `proforma-*`.

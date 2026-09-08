@@ -1,6 +1,6 @@
 ---
 name: deskilo-supabase-migration
-description: Writing and applying a Supabase migration or RPC change for DesKilo — the rolled-back live harness with impersonated JWT claims, patching long function bodies at asserted anchors, dropping an overload before adding a defaulted parameter, the permission catalog in set_role_permissions, SPDX header, apply_migration, live verification. Trigger whenever a task touches supabase/migrations or an RPC.
+description: Writing and applying a Supabase migration or RPC change for DesKilo — the rolled-back live harness with impersonated JWT claims, patching long function bodies at asserted anchors, dropping an overload before adding a defaulted parameter, the permission catalog in set_role_permissions, system columns on every new table, backfills with triggers disabled, transaction-local settings as capability tokens, copy jobs for storage objects, SPDX header, apply_migration, live verification. Trigger whenever a task touches supabase/migrations or an RPC.
 ---
 # Supabase migrations in DesKilo
 
@@ -54,3 +54,47 @@ public.f(uuid, boolean, text, text);` first, then `create function`.
 Wire keys shared with the client are pinned by tests (`personal_info_test`
 pins Dart renderings equal to the SQL harness output). When a rendering
 exists twice (SQL + Dart), change both and keep the pin.
+
+## 6. Lessons of 2026-09-07 (0180–0190)
+- **Every `create table` is followed by `select public.ensure_system_columns('<table>');`**
+  in the same migration (#992, lint `system_columns_test`). The six
+  columns are the server's: the `zz_system_columns_stamp` trigger
+  overwrites whatever a client sends. A guard that compares whole rows
+  (`invoices_immutable`) must subtract `public.system_column_names()`.
+- **Backfills and triggers.** The hosted database refuses
+  `set_config('session_replication_role', …)`. Wrap a backfill in
+  `alter table … disable trigger user` / `enable trigger user` — and do
+  it BEFORE the update: an AFTER trigger that fired queues events and
+  `ALTER TABLE … enable trigger` then fails with "pending trigger
+  events". Creating a trigger after the backfill avoids the dance.
+- **Trigger order is alphabetical.** A stamp that must see the final row
+  is named `zz_…`; a guard that must judge first keeps its name.
+- **Reserved words.** `returns table (key text, row jsonb)` is a syntax
+  error — `row` is reserved; name it `data`. In an `update … set x = …`,
+  `array_agg(x)` over an aliased `x` collides with the column → "aggregate
+  functions are not allowed in UPDATE"; put the aggregate in a helper
+  (`public.jsonb_text_array(jsonb)`).
+- **Harness expressions.** `jsonb_array_elements(x) t` → read `t.value->>`,
+  never `t->>` (that is the row, "text ->> unknown"). `members` has no
+  `created_at`; pick the owner with `status = 'active' … limit 1`.
+  `foreach … in array array[[a,b],[c,d]]` cannot assign to two scalars —
+  use two parallel arrays and an index.
+- **A capability token between functions:** `perform set_config('deskilo.deploying',
+  from || ':' || to, true)` (transaction-local) and a guard
+  `public.deploying_touches(ws)` — lets `deploy_entities` pass the
+  transfer's own `has_permission` checks without granting anything.
+- **Storage objects are not the database's to move.** A function returns
+  `copy_jobs` `[{from, to}]` and the client copies with
+  `storage.from(bucket).copy(from, to)`; paths keep their structure under
+  the target prefix (`regexp_replace(path, '^[^/]+', target)`); the diff
+  compares by file name, never by prefix. `storage.objects` is readable
+  for a preview (`report_image_names`).
+- **Copying rows across workspaces:** `insert into t select (jsonb_populate_record(null::t,
+  (to_jsonb(row) - 'id' - 'workspace_id' - <system columns>) || jsonb_build_object('id', gen_random_uuid(), 'workspace_id', target))).*`.
+- **Anchored catalog extensions and test pins:** a test that extracts
+  `v_catalog text[] := array[…]` by regex from "the latest catalog
+  migration" breaks when the extension is an anchored patch (0185) —
+  concatenate the base file's array with the patch file's text.
+- **Restating vs patching:** an applied migration's file is never
+  rewritten; if a later fix needs a whole-function text (0184's
+  `ensure_system_columns`), it is a new migration.
