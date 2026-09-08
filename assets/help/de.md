@@ -510,6 +510,17 @@ Ganze Module je Workspace ein- oder ausschalten — jeder Schalter trägt seine 
 
 Die Liste ist **hierarchisch**: eine Funktion, die eine andere braucht, sitzt eingerückt darunter mit *Benötigt…*, ausgegraut solange der Elternteil aus ist — *Finanzen* trägt Leistungen, Zubehör-Aufpreise, Online-Zahlungen und Rechnungen; *Rechnungen* die Admin-Delegation, die PDF-Vorlage, das Mahnwesen, die USt-Verwaltung (mit den Voranmeldungen wiederum darunter) und die E-Rechnungszustellung an Kunden; *Kiosk-Modus* gleich drei Kinder — RFID-/NFC-Badges, QR-Badges und Mitgliederfotos am Kiosk; *Tisch-, Büro- & Etagen-Reservierungen* das Zuweisen durch Admins; *Verzeichnis* die WhatsApp-Integration; *Ereignis-Tab* die Feed-Gruppierung. Elternteil aus = ganzer Teilbaum weg; die gespeicherte Wahl des Kindes kehrt unversehrt zurück.
 
+#### Ein Funktionsschalter
+
+Jede Funktionalität ist ein Schalter. Schalte ihn ein und **alle** ihre
+Oberflächen erscheinen — die Kachel, der Reiter, die Schaltfläche, der
+Deep Link; schalte ihn aus und keine bleibt, auch keine gemerkte URL.
+Was ein Schalter nie rückgängig macht, ist bereits angewandte
+Arithmetik: eine Rechnung, die bei eingeschalteter Funktion ausgestellt
+wurde, behält, was sie sagt. Manche Schalter brauchen erst einen
+anderen, und einer, der auf seinen übergeordneten wartet, sagt das,
+statt still zu scheitern.
+
 ### Mitglieder & Tarife
 
 Ein Mitglied antippen öffnet sein **Verwaltungsblatt** — jede Mitglieds-Aktion an einem Ort: **Finanzvereinbarung senden** (§11d), **Nachrichten**, **Service hinzufügen** (Service, Menge, Abrechnungsmonat → *zur Bestätigung einreichen*), **Abonnement** (der Prozentsatz), **Wenn die Tage aufgebraucht sind** (die Überziehungs-Politik, §9), **Reservierungslimit** (wie viele **offene** Reservierungen das Mitglied insgesamt halten darf, wann immer sie liegen), **Gleichzeitige Reservierungen** (wie viele Buchungen sich **zeitlich überschneiden** dürfen — das persönliche Kontingent, das die Zahl des Space sticht, §4b; zwei verschiedene Obergrenzen, also die Beschriftungen lesen), **Darf einen ganzen Tisch, ein Büro oder eine Etage reservieren**, **Badges** (§10), **Zum Admin ernennen** (validiert, §7), **Co-Inhaberschaft**, **Zum Kiosk-Gerät machen** — oder **Kiosk zu Mitglied zurücksetzen** auf einem Gerätekonto —, **Mitgliedschaft bestätigen** bzw. **Ablehnen** bei einem ausstehenden Beitritt, und **Mitgliedschaft pausieren**. Jede Zeile zeigt die **E-Mail** unter dem Namen.
@@ -533,6 +544,59 @@ Ein Mitglied antippen öffnet sein **Verwaltungsblatt** — jede Mitglieds-Aktio
 ![](assets/help/images/member-reservation-limit.jpg)
 
 *Der Abonnement-Dialog (der Prozentsatz des Mitglieds) und der Reservierungslimit-Dialog (die Obergrenze offener Reservierungen).*
+
+#### Das Abonnement eines Mitglieds
+
+Der Prozentsatz der Arbeitshalbtage des Monats, auf den das Mitglied
+Anspruch hat. Er wählt die Preisstufe, und die Stufe entscheidet, was der
+Monat kostet. Ein ausgehandelter Wert außerhalb der Liste geht nur, wo
+der Raum ihn erlaubt.
+
+#### Wenn die Tage aufgebraucht sind
+
+Was jenseits des Kontingents passiert, für dieses Mitglied: weitere
+Buchungen ablehnen, sie zum Überschreitungspreis berechnen, oder ein
+Tagespaket kaufen lassen. Bis du hier etwas setzt, gilt die Vorgabe des
+Raums.
+
+#### Reservierungsgrenze
+
+Wie viele **offene** Reservierungen dieses Mitglied insgesamt halten
+darf. Das begrenzt den Rückstau und ist etwas anderes als die
+Gleichzeitigkeitsgrenze darunter.
+
+#### Gleichzeitige Reservierungen
+
+Wie viele Buchungen dieses Mitglied halten darf, die sich **zeitlich
+überlappen**. Standard ist eine, und sie verhindert, dass jemand zwei
+Plätze für denselben Nachmittag hält. Die eigene kannst du nie setzen.
+
+#### MwSt-Behandlung
+
+Was die Gegenseite aus der Steuer macht: Inland, innergemeinschaftliches
+Unternehmen mit Reverse-Charge, innergemeinschaftliche Verbraucherin
+oder Ausfuhr. Sie ergibt sich aus Land und USt-IdNr. des Mitglieds und
+wird bei Ausstellung auf jedem Dokument eingefroren.
+
+#### Preisverhandlung
+
+Ein mit diesem Mitglied vereinbarter Preis, der vom Katalog abweicht. Er
+wird als Verhandlung festgehalten statt über den Tarif getippt: das
+Dokument sagt, was vereinbart wurde, und der Katalog bleibt wahr.
+
+#### Miteigentum
+
+Hebt ein Mitglied zur Miteigentümerin. Eine Miteigentümerin hat die
+Rechte einer Eigentümerin und zählt überall als eine, wo eine Regel eine
+verlangt — auch bei der Regel, dass die letzte aktive Eigentümerin nie
+entfernt werden kann.
+
+#### Die Handlungen an einem Mitglied
+
+Alles, was eine Administratorin für ein Mitglied tun kann — Abonnement,
+Überschreitung, Vereinbarung, Pause, Grenzen, Ausweise, Rolle — in einem
+Blatt gesammelt, damit nichts auf einem anderen Bildschirm gesucht werden
+muss.
 
 ### Abrechnung
 
@@ -824,6 +888,14 @@ Eine zentrale Matrix entscheidet, **welche Rolle welche Berechtigung hält** —
 ![](assets/help/images/roles-matrix.jpg)
 
 *Rollenverwaltung: die Inhaber-Karte gesperrt, die Mitinhaber-Karte standardmäßig voll gewährt — die Admin- und Mitglied-Karten folgen mit denselben elf Berechtigungen.*
+
+#### Die Rollenmatrix
+
+Rollen an der einen Seite, Berechtigungen an der anderen. Jede Zelle ist
+ein Schalter, außer denen, die eine Eigentümerin immer hat. Eine
+Berechtigung wird über eine einzige Funktion beim Server erfragt: eine
+Zelle zu entziehen entzieht sie überall zugleich — der Bildschirm
+versteckt die Schaltfläche, und der Aufruf dahinter lehnt ohnehin ab.
 
 ### Online-Zahlungen einrichten
 

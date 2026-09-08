@@ -507,6 +507,15 @@ Switch whole modules on or off per workspace — each toggle carries its descrip
 
 The list is **hierarchical**: a feature that needs another sits indented under it with a *Requires…* note, and is greyed out while its parent is off — *Money* carries services, accessory supplements, online payments and invoicing; *Invoices* carries the admin delegation, the PDF template, the payment reminders, VAT management (with the declarations beneath it again) and the customer e-invoice delivery; *Kiosk mode* carries three children — RFID/NFC badges, QR badges and kiosk member photos; *Table/desk & level reservations* carries *admins may assign levels*; *Members directory* carries the WhatsApp integration; *Events tab* carries the feed grouping. Switching a parent off takes its whole subtree out of the app; the child's stored choice comes back untouched when the parent returns.
 
+#### A feature switch
+
+Every functionality is one switch. Turn it on and **all** of its
+surfaces appear — the tile, the tab, the button, the deep link; turn it
+off and none of them remain, including a bookmarked URL. What a switch
+never undoes is arithmetic already applied: an invoice issued while a
+feature was on keeps what it says. Some switches need another switch
+first, and one waiting on its parent says so instead of failing quietly.
+
 ### Members & plans
 
 Tap a member to open their **management sheet** — every per-member action in one place: **Send the financial agreement** (§11d), **Messages**, **Add a service** (service, quantity, billing month → *submit for confirmation*), **Subscription** (their percentage), **When the days run out** (the over-consumption policy, §9), **Reservation limit** (how many **open** reservations the member may hold in total, whenever they fall), **Simultaneous reservations** (how many bookings may **overlap in time** — the personal allowance that overrides the workspace number, §4b; two different caps, so read the labels), **May reserve a whole desk, office or level**, **Badges** (§10), **Name admin** (validated, §7), **Co-ownership**, **Turn into a kiosk** — or **Revert the kiosk to a member** on a device account — **Approve** or **Reject** a pending membership, and **Pause the membership**. Each row shows the member's **email** under the name.
@@ -530,6 +539,56 @@ Tap a member to open their **management sheet** — every per-member action in o
 ![](assets/help/images/member-reservation-limit.jpg)
 
 *The subscription dialog (the member's percentage) and the reservation-limit dialog (the cap on open reservations).*
+
+#### A member's subscription
+
+The percentage of the month's working half-days the member is entitled
+to. It picks the fee band, and the band decides what the month costs.
+A negotiated value off the list is possible only where the space allows
+one.
+
+#### When days run out
+
+What happens past the allowance, for this member: refuse further
+bookings, charge them at the overage price, or let them buy a day
+package. The space's own default applies until you set one here.
+
+#### Reservation limit
+
+How many **open** reservations this member may hold in total. It bounds
+the size of the backlog, and is a different thing from the simultaneous
+limit below.
+
+#### Simultaneous reservations
+
+How many bookings this member may hold that **overlap in time**. One is
+the default, and it is what stops a member holding two desks for the
+same afternoon. You can never set your own.
+
+#### VAT treatment
+
+What the counterparty makes of the tax: domestic, an intra-EU business
+that self-assesses under the reverse charge, an intra-EU consumer, or an
+export. It is decided from the member's country and VAT number, and it
+is frozen on each document at issue.
+
+#### Price negotiation
+
+A price agreed with this member that differs from the catalogue. It is
+recorded as a negotiation rather than typed over the tariff, so the
+document says what was agreed and the catalogue stays true.
+
+#### Co-ownership
+
+Raises a member to co-owner. A co-owner has an owner's permissions and
+counts as an owner wherever a rule asks for one — including the rule
+that the last active owner can never be removed.
+
+#### The member's actions
+
+Everything an administrator can do for one member — subscription,
+overage, agreement, pause, limits, badges, role — gathered in one sheet
+so nothing has to be looked for on another screen.
 
 ### Billing
 
@@ -817,6 +876,13 @@ One central matrix decides **which role holds which permission** — manage role
 ![](assets/help/images/roles-matrix.jpg)
 
 *Role management: the owner card locked, the co-owner card fully granted by default — the admin and member cards follow with the same eleven permissions.*
+
+#### The role matrix
+
+Roles down one side, permissions across. Every cell is a switch, except
+the ones an owner always holds. A permission is asked of the server
+through one function, so revoking a cell revokes it everywhere at once:
+the screen hides the control, and the call behind it refuses anyway.
 
 ### Setting up online payments
 

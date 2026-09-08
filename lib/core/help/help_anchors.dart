@@ -119,6 +119,37 @@ abstract final class HelpAnchor {
   /// When the month is billed — the subscription line goes ahead of it.
   static const billingSchedule = 'user.money.billing.schedule';
 
+  // ── members, roles and features ────────────────────────────────────
+  /// The percentage that picks the fee band.
+  static const membersSubscription = 'user.members.subscription';
+
+  /// What happens past the allowance, per member.
+  static const membersOveragePolicy = 'user.members.overage-policy';
+
+  /// How many OPEN reservations; bounds the backlog.
+  static const membersReservationLimit = 'user.members.reservation-limit';
+
+  /// How many OVERLAP in time; never your own.
+  static const membersSimultaneous = 'user.members.simultaneous';
+
+  /// What the counterparty makes of the tax.
+  static const membersVatTreatment = 'user.members.vat-treatment';
+
+  /// A price recorded as agreed, not typed over the tariff.
+  static const membersNegotiation = 'user.members.negotiation';
+
+  /// A co-owner counts as an owner wherever a rule asks.
+  static const membersCoOwnership = 'user.members.co-ownership';
+
+  /// Everything an administrator can do for one member.
+  static const membersActions = 'user.members.actions';
+
+  /// One function asks it, so revoking a cell revokes it everywhere.
+  static const rolesMatrix = 'user.roles.matrix';
+
+  /// All of a feature or none — but never the arithmetic already applied.
+  static const featuresSwitch = 'user.features.switch';
+
   // ── validation and the document library ────────────────────────────
   /// Each act has its own rule, and every decision is an event.
   static const validationOverview = 'user.validation.overview';
@@ -485,6 +516,16 @@ abstract final class HelpAnchor {
     documentsProvider,
     documentsCategory,
     documentsRole,
+    membersSubscription,
+    membersOveragePolicy,
+    membersReservationLimit,
+    membersSimultaneous,
+    membersVatTreatment,
+    membersNegotiation,
+    membersCoOwnership,
+    membersActions,
+    rolesMatrix,
+    featuresSwitch,
   };
 
   /// The screenshot that documents [anchor], by the naming rule.
