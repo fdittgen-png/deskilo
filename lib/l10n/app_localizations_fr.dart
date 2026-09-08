@@ -1743,6 +1743,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get deployEntityFeatures => 'Fonctionnalités';
 
   @override
+  String get helpTopicDeployment => 'Déployer';
+
+  @override
+  String get helpTopicEnvironments => 'Environnements';
+
+  @override
   String get developerMode => 'Mode développeur';
 
   @override

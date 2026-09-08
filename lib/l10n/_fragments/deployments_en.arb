@@ -167,5 +167,13 @@
   "deployEntityFeatures": "Features",
   "@deployEntityFeatures": {
     "description": "#988/#990 deployments: deployEntityFeatures"
+  },
+  "helpTopicDeployment": "Deploying",
+  "helpTopicEnvironments": "Environments",
+  "@helpTopicDeployment": {
+    "description": "Guide-heading needle for the deployment help symbols (#1022)"
+  },
+  "@helpTopicEnvironments": {
+    "description": "Guide-heading needle for the environments help symbols (#1022)"
   }
 }

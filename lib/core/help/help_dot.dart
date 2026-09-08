@@ -61,7 +61,13 @@ class HelpDot extends ConsumerWidget {
 /// text — `title: HelpDotTitle('Label', topic)` keeps `find.text`
 /// working and never steals the row's own tap.
 class HelpDotTitle extends StatelessWidget {
-  const HelpDotTitle(this.text, this.topic, {this.anchor, super.key});
+  const HelpDotTitle(
+    this.text,
+    this.topic, {
+    this.anchor,
+    this.style,
+    super.key,
+  });
 
   final String text;
   final String topic;
@@ -69,10 +75,15 @@ class HelpDotTitle extends StatelessWidget {
   /// #1016 — see [HelpDot.anchor].
   final String? anchor;
 
+  /// #1022 — a section header carries its own type. Without this the
+  /// widget could only ever replace a tile title, so a `titleSmall`
+  /// header had to choose between its size and its help symbol.
+  final TextStyle? style;
+
   @override
   Widget build(BuildContext context) => Row(
         children: [
-          Flexible(child: Text(text)),
+          Flexible(child: Text(text, style: style)),
           HelpDot(topic, anchor: anchor),
         ],
       );

@@ -1735,6 +1735,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deployEntityFeatures => 'Features';
 
   @override
+  String get helpTopicDeployment => 'Deploying';
+
+  @override
+  String get helpTopicEnvironments => 'Environments';
+
+  @override
   String get developerMode => 'Developer mode';
 
   @override

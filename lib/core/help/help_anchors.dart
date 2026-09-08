@@ -73,6 +73,34 @@ abstract final class HelpAnchor {
   /// Anything else the trade or the country demands.
   static const legalSpecialMentions = 'user.money.legal.special-mentions';
 
+  // ── environments · the pair and the deployment ─────────────────────
+  /// Why a development twin exists at all.
+  static const envPairWhy = 'env.pair.why';
+
+  /// Creating the pair, and the twin a lone workspace gets on demand.
+  static const envPairCreate = 'env.pair.create';
+
+  /// The three permissions, and the two rules that follow from them.
+  static const envPairPermissions = 'env.pair.permissions';
+
+  /// The deployment screen: a deployment writes the side you stand on.
+  static const envDeployScreen = 'env.deploy.screen';
+
+  /// The entity table — what travels, grouped and with its needs.
+  static const envDeployEntities = 'env.deploy.entities';
+
+  /// The floor plan is merged, never replaced.
+  static const envDeployPlan = 'env.deploy.plan';
+
+  /// The preview and the confirmation that name the side being written.
+  static const envDeployPreview = 'env.deploy.preview';
+
+  /// The journal, and the rollback that must be undone in order.
+  static const envDeployJournal = 'env.deploy.journal';
+
+  /// What never travels: members, money, credentials, counters.
+  static const envDeployNever = 'env.deploy.never';
+
   /// Every anchor the app points at — the lint's left-hand side.
   static const all = <String>{
     moneyVatRates,
@@ -93,6 +121,15 @@ abstract final class HelpAnchor {
     legalLegalId,
     legalAddress,
     legalSpecialMentions,
+    envPairWhy,
+    envPairCreate,
+    envPairPermissions,
+    envDeployScreen,
+    envDeployEntities,
+    envDeployPlan,
+    envDeployPreview,
+    envDeployJournal,
+    envDeployNever,
   };
 
   /// The screenshot that documents [anchor], by the naming rule.
