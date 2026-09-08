@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/links/link_launcher.dart';
@@ -62,6 +63,7 @@ class PrivacyScreen extends ConsumerWidget {
           title: HelpDotTitle(
             l10n?.privacyWhoCanSee ?? 'Who can see my data',
             l10n?.helpHintPrivacyTopic ?? 'Privacy',
+            anchor: HelpAnchor.privacyVisibility,
           ),
           subtitle: Text(l10n?.privacyWhoCanSeeHint ??
               'The rule per category, the people it names today, and who '
@@ -75,6 +77,7 @@ class PrivacyScreen extends ConsumerWidget {
             title: HelpDotTitle(
               l10n?.privacyExport ?? 'Export my data',
               l10n?.helpHintPrivacyTopic ?? 'Privacy',
+              anchor: HelpAnchor.privacyExport,
             ),
             subtitle: Text(l10n?.privacyExportHint ??
                 'Everything you are the subject of, as one JSON file (art. 20).'),
@@ -95,7 +98,9 @@ class PrivacyScreen extends ConsumerWidget {
                   style: TextStyle(color: theme.colorScheme.error),
                 ),
               ),
-              HelpDot(l10n?.helpHintPrivacyTopic ?? 'Privacy'),
+              HelpDot(l10n?.helpHintPrivacyTopic ?? 'Privacy',
+                anchor: HelpAnchor.privacyErase,
+              ),
             ]),
             subtitle: Text(isOwner
                 ? (l10n?.privacyEraseOwner ??
@@ -113,6 +118,7 @@ class PrivacyScreen extends ConsumerWidget {
           title: HelpDotTitle(
             l10n?.consentTitle ?? 'Your data, your rights',
             l10n?.helpHintPrivacyTopic ?? 'Privacy',
+            anchor: HelpAnchor.privacyConsent,
           ),
           subtitle: Text(l10n?.consentReviewHint ??
               'The text you accepted, with the date — read it again anytime.'),

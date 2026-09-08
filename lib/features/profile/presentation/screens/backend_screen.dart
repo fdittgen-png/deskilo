@@ -10,6 +10,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/backend/backend_uri.dart';
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -67,7 +68,9 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n?.backendServerTitle ?? 'Server'),
-        actions: [HelpDot(topic)],
+        actions: [HelpDot(topic,
+          anchor: HelpAnchor.backendServer,
+        )],
       ),
       body: ListView(
         padding: AppSpacing.gutterAll,
@@ -217,7 +220,9 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
                 });
               },
             ),
-            HelpDot(topic),
+            HelpDot(topic,
+              anchor: HelpAnchor.backendServer,
+            ),
           ],
         ),
       ),
@@ -423,7 +428,9 @@ class _HowTo extends ConsumerWidget {
           Expanded(
             child: Text(l10n?.backendHowTitle ?? 'Use your own server'),
           ),
-          HelpDot(topic),
+          HelpDot(topic,
+            anchor: HelpAnchor.backendHow,
+          ),
         ]),
         childrenPadding: AppSpacing.mdAll,
         children: [

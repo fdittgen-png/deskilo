@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -115,7 +116,9 @@ class _BillingDialogState extends ConsumerState<_BillingDialog> {
                   style: theme.textTheme.titleSmall,
                 ),
               ),
-              HelpDot(l10n?.billingRulesTitle ?? 'Invoice schedule'),
+              HelpDot(l10n?.billingRulesTitle ?? 'Invoice schedule',
+                anchor: HelpAnchor.billingSchedule,
+              ),
             ]),
             if (!subscriptionOn)
               Text(

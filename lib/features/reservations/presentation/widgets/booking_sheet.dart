@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
@@ -223,6 +224,7 @@ class _BookingSheetState extends State<BookingSheet> {
               if (_hasProviderScope(context))
                 HelpDot(
                   l10n?.helpHintReserveTip4Topic ?? 'How booking behaves',
+                  anchor: HelpAnchor.reservationsBookingSheet,
                 ),
             ]),
             const SizedBox(height: 8),

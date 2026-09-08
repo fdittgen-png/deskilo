@@ -239,6 +239,14 @@ La stessa azione *scrivere al titolare* si trova nella scheda **Piantina** quand
 
 **Approvazioni.** Dove il proprietario ha posto una regola di validazione sulle **prenotazioni di spazi interi** (§7), la prenotazione blocca subito lo spazio e attende il quorum — un rifiuto la annulla; nessuna regola, nessun passaggio di approvazione. Le richieste di eliminazione seguono lo stesso quadro. **Nessuno valida il proprio evento** — con un'eccezione che il proprietario attiva deliberatamente: nelle regole di validazione (§7), due interruttori indipendenti lasciano che gli **admin** e/o i **proprietari** risolvano subito *le proprie* richieste di **eliminazione di prenotazione**, senza attendere un validatore. Entrambi sono **disattivati per impostazione predefinita**, arrivano soltanto alle eliminazioni di prenotazione, e un'eliminazione risolta automaticamente resta segnata come tale nel flusso eventi — sempre distinguibile da una vagliata da altri.
 
+#### Il foglio di prenotazione
+
+Ciò che si apre quando tocchi un posto libero: la finestra, se ti
+registri subito, e per un amministratore, per chi è. Il foglio propone
+soltanto — ogni regola la verifica il server alla conferma, così un
+posto preso un secondo prima viene rifiutato qui anziché prenotato due
+volte.
+
 ## 5. Calendario (scheda Calendario)
 
 Il mese a colpo d'occhio, con due ambiti e due forme:
@@ -394,6 +402,13 @@ I tuoi inviti legati ai ruoli (§2): invito membro = l'ID dello spazio (sostitui
 ![](assets/help/images/workspace-id-qr.jpg)
 
 *ID dello spazio e QR: l'invito membro (QR + ID — copia, cambia, condividi come PNG, invita qualcuno) e la scheda invito admin.*
+
+#### L'identificativo dello spazio
+
+Da quattro a venti lettere o cifre, unico in tutto DesKilo. È insieme il
+nome leggibile dello spazio e l'**invito d'ingresso**: chi ce l'ha può
+chiedere di unirsi, e ogni adesione attende comunque la conferma di un
+amministratore. Cambiarlo ferma il vecchio all'istante — ristampa il QR.
 
 ### Disponibilità
 
@@ -959,6 +974,27 @@ Tieni **ambienti di test e di produzione rigorosamente separati**: ogni fornitor
 | **Adyen** | Enterprise e omnicanale, una sola API per quasi ogni metodo | Non integrato — sarebbe un nuovo fornitore in DesKilo (contributi benvenuti). |
 | **Braintree** | Drop-in UI per mobile e web (di proprietà di PayPal) | Non integrato — l'integrazione PayPal diretta di DesKilo copre già quel terreno. |
 
+#### Il fornitore di pagamento
+
+Quale servizio incassa — PayPal, Stripe, Mollie o Wero tramite Mollie.
+Una sonda riporta quali fornitori sono pronti e quali campi mancano
+ancora: lo scopri qui invece che da un pagamento fallito.
+
+#### Credenziali del fornitore
+
+Le chiavi che il fornitore ti ha rilasciato. Sono **solo in scrittura**:
+puoi sostituire un campo o cancellare un fornitore, ma i valori non
+vengono più mostrati, né a te né a nessun client — lo schermo rilegge
+solo i nomi delle chiavi. Lascia un campo vuoto per conservare ciò che è
+salvato. Vivono sullo spazio e non entrano mai in un file di spazio né in
+una distribuzione.
+
+#### Modalità di pagamento
+
+Quali modi di pagare lo spazio accetta e come si chiama ciascuno su un
+documento — bonifico, carta, contanti, assegno. L'etichetta è ciò che
+stampano una fattura e una ricevuta.
+
 ### Configurare i badge RFID / NFC
 
 Le tessere fisiche permettono il check-in con un tocco — senza telefono.
@@ -1012,6 +1048,13 @@ Il tuo conto risponde a *quanto devo, quanto mi devono* — e *quanto posso anco
 - **Documenti** — **Fatture** (le tue restano sempre leggibili qui: posizioni, saldo, stato — e per chi emette, l'hub di fatturazione, §11), **Le mie condizioni** (che stampa il documento intitolato *Accordo finanziario*) e il **report mensile dei pagamenti**, self-service (§11).
 
 Finanze ha **quattro viste** in alto — **Estratto · Pagamenti · Fatture · Documenti** (§9c–9f) — che condividono il selettore **‹ mese ›** e il pulsante **PDF**; lo scudo, la campana e l'ingranaggio stanno nella barra dell'app come ovunque.
+
+#### Registrazione con badge NFC
+
+Attiva l'avvicinamento di una tessera invece della scansione di un QR.
+L'UID della tessera è conservato come **hash**, mai in chiaro: un badge
+può essere revocato ma mai riletto da DesKilo. Solo Android; altrove il
+badge QR fa lo stesso lavoro.
 
 ### 9a. Una volta fatturato il mese, decide la fattura
 
@@ -1423,6 +1466,14 @@ Con quale progettazione viene stampata una fattura, e i testi che quella
 progettazione porta. Una progettazione esiste per tipo di documento e per
 lingua; chi non ha una lingua propria riceve quella dello spazio.
 
+#### L'editor dei report
+
+Dove si scrive la progettazione di un documento. Due vie d'ingresso: le
+**bande** — testata, corpo, continuazione, piede, un segno per riga — e
+un **layout posizionato** in XML per un documento che deve soddisfare
+una busta a finestra o un modulo ufficiale. Un layout vince sulle bande
+per il tipo su cui è impostato.
+
 ### 11d. La suite di report e la biblioteca documenti
 
 - **Accordo finanziario** — ogni prezzo in vigore che si applica a un membro: abbonamento, mezza giornata extra, servizi, pacchetti, supplementi accessori e i prezzi degli spazi interi, **tavoli compresi**. Proprietari/admin lo inviano dalla scheda azioni di un membro; ogni membro può vedere in anteprima/scaricare/condividere il proprio da *Finanze → Documenti*.
@@ -1475,6 +1526,13 @@ Quanti solleciti riceve una fattura non pagata, a quanto dalla scadenza
 parte ciascuno, e cosa dice ciascuno. Una volta al giorno le fatture
 aperte scadute passano al livello successivo; un livello già raggiunto
 non viene mai rinviato.
+
+#### Solleciti automatici
+
+Spento, i solleciti si inviano a mano. Acceso, una volta al giorno ogni
+fattura aperta scaduta passa al livello successivo e invia ciò che quel
+livello dice. Un livello già raggiunto non viene mai inviato due volte,
+quindi accenderlo non sommerge nessuno con l'arretrato.
 
 ### 11f. Raggruppare fatture (saldo)
 
@@ -1712,6 +1770,71 @@ fai si comporta diversamente.
 
 Usa l'obiettivo anteriore invece del posteriore. Per un tablet a muro la
 cui fotocamera posteriore guarda il muro.
+
+### Profili
+
+Un account, più spazi. Il selettore mostra ogni spazio a cui appartieni,
+una coppia sviluppo/produzione come un'unica scheda con due chip, e
+cambiare diventa la tua impostazione predefinita — un riavvio apre dove
+eri rimasto.
+
+### Numeri e date
+
+Con quali convenzioni numeri e date sono scritti su **questo
+dispositivo**. Separato dalla lingua dell'app di proposito: si può
+volere un'app in inglese che scrive date italiane.
+
+### Orologio
+
+Dodici o ventiquattro ore. Cambia come si scrivono gli orari, mai cosa
+significano.
+
+### Mostrare gli orari nel mio fuso
+
+Spento, gli orari sono quelli dello spazio — ciò che una prenotazione è
+davvero. Acceso, vengono convertiti dove ti trovi. Utile in viaggio, e
+meglio rispegnerlo prima di confrontare uno schermo con quello di un
+collega.
+
+### Il tuo server
+
+Con quale progetto Supabase parla questa app. Per impostazione
+predefinita quello di DesKilo; puntala a un progetto che ospiti tu e
+l'app è tua da capo a fondo. Cambiarlo ti disconnette, perché un account
+esiste su un server, non nell'app.
+
+### Come ospitare il tuo
+
+Il pacchetto costruisce un secondo database da ogni migrazione in
+ordine, dalle edge function, dai bucket e dal seed. È questo a rendere un
+DesKilo autoospitato identico a quello di riferimento anziché una
+diramazione.
+
+### Chi può vedere i miei dati
+
+Cosa ogni ruolo, in ciascuno dei tuoi spazi, può leggere di te. È
+l'enunciato di ciò che il server impone, non una serie di interruttori —
+la risposta è la stessa che questa schermata sia aperta o no.
+
+### Esportare i miei dati
+
+Tutto ciò che DesKilo tiene su di te, come file che conservi. È prodotto
+su richiesta anziché tenuto pronto, quindi dice ciò che è vero nel
+momento in cui lo chiedi.
+
+### Cancellare i miei dati
+
+Toglie te e ciò che è tuo. Ciò che non si può cancellare è quanto la
+legge impone allo **spazio** di conservare: una fattura emessa è un
+documento dell'organizzazione e resta con l'identità di acquirente con
+cui è stata emessa. La schermata dice quali spazi ne sono toccati prima
+che accada qualcosa.
+
+### I tuoi dati, i tuoi diritti
+
+Cosa viene raccolto, perché, su quale base giuridica e per quanto viene
+conservato. Un consenso richiesto è registrato con la sua data, così puoi
+vedere a cosa hai acconsentito e quando.
 
 ## 13. Notifiche
 

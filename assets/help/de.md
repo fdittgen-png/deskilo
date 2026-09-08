@@ -239,6 +239,14 @@ Dieselbe Aktion *dem Inhaber schreiben* liegt auf dem **Plan**, wenn du einen vo
 
 **Freigaben.** Wo die Inhaberin eine Validierungsregel auf **Ganzraum-Reservierungen** gelegt hat (§7), blockiert die Buchung den Raum sofort und wartet auf das Quorum — eine Ablehnung storniert sie; keine Regel, kein Freigabeschritt. Löschanträge fahren im selben Rahmen. **Niemand validiert das eigene Ereignis** — mit einer Ausnahme, die die Inhaberin bewusst einschaltet: in den Validierungsregeln (§7) lassen zwei unabhängige Schalter **Admins** und/oder **Inhaber** *ihre eigenen* Anträge auf **Reservierungslöschung** sofort erledigen, statt auf einen Validierer zu warten. Beide sind **standardmäßig aus**, sie reichen ausschließlich an Reservierungslöschungen, und eine automatisch erledigte Löschung ist im Ereignis-Feed als solche markiert — immer unterscheidbar von einer von anderen geprüften.
 
+#### Das Buchungsblatt
+
+Was sich öffnet, wenn du einen freien Platz antippst: das Fenster, ob du
+sofort eincheckst, und für eine Administratorin, für wen es ist. Das
+Blatt schlägt nur vor — jede Regel prüft der Server beim Bestätigen,
+sodass ein vor einer Sekunde vergebener Platz hier abgelehnt statt
+doppelt gebucht wird.
+
 ## 5. Kalender (Kalender-Tab)
 
 Der Monat auf einen Blick, mit zwei Reichweiten und zwei Formen:
@@ -392,6 +400,14 @@ Die rollengebundenen Einladungen (§2): Mitglieder-Einladung = die Workspace-ID 
 ![](assets/help/images/workspace-id-qr.jpg)
 
 *Workspace-ID & QR: die Mitgliedereinladung (QR + ID — kopieren, ändern, als PNG teilen, jemanden einladen) und der Admin-Einladungs-Tab.*
+
+#### Die Raum-ID
+
+Vier bis zwanzig Buchstaben oder Ziffern, DesKilo-weit eindeutig. Sie ist
+zugleich der lesbare Name des Raums und die **Walk-in-Einladung**: wer
+sie hat, kann um Beitritt bitten, und jeder Beitritt wartet weiterhin auf
+die Bestätigung einer Administratorin. Änderst du sie, hört die alte
+sofort auf zu wirken — drucke den QR neu.
 
 ### Verfügbarkeit
 
@@ -938,6 +954,27 @@ Startet eine Zahlung nicht: **Einstellungen → Erweitert → Entwicklermodus** 
 | **Adyen** | Enterprise | Nicht integriert — wäre ein neuer Anbieter (Beiträge willkommen). |
 | **Braintree** | Drop-in (PayPal) | Nicht integriert — die direkte PayPal-Integration deckt das ab. |
 
+#### Der Zahlungsanbieter
+
+Welcher Dienst kassiert — PayPal, Stripe, Mollie oder Wero über Mollie.
+Eine Sonde meldet, welche Anbieter bereit sind und welche Felder noch
+fehlen; du erfährst es hier statt aus einer fehlgeschlagenen Zahlung.
+
+#### Zugangsdaten des Anbieters
+
+Die Schlüssel, die der Anbieter dir ausgestellt hat. Sie sind **nur
+schreibbar**: du kannst ein Feld ersetzen oder einen Anbieter löschen,
+aber die Werte werden nie wieder angezeigt, weder dir noch irgendeinem
+Client — der Bildschirm liest nur die Schlüsselnamen zurück. Ein leeres
+Feld behält das Gespeicherte. Sie liegen auf dem Raum und gelangen nie in
+eine Raumdatei oder ein Deployment.
+
+#### Zahlungsarten
+
+Welche Zahlungswege der Raum annimmt und wie jeder auf einem Dokument
+heißt — Überweisung, Karte, bar, Scheck. Die Bezeichnung ist das, was
+Rechnung und Quittung drucken.
+
 ### RFID/NFC-Badges einrichten
 
 Physische Karten zum Einchecken per Tap — ohne Telefon.
@@ -991,6 +1028,13 @@ Dein Konto beantwortet *was schulde ich, was schuldet man mir* — und *wie viel
 - **Dokumente** — **Rechnungen** (deine sind hier immer lesbar; für Aussteller der Rechnungs-Hub, §11), **Meine Konditionen** (rendert das Dokument mit dem Titel *Finanzvereinbarung*) und der **monatliche Zahlungsbericht**, Selbstbedienung (§11).
 
 Finanzen hat oben **vier Ansichten** — **Abrechnung · Zahlungen · Rechnungen · Dokumente** (§9c–9f) —, die sich den **‹ Monat ›**-Wähler und die **PDF**-Taste teilen; Schild, Glocke und Zahnrad sitzen wie überall in der App-Leiste.
+
+#### Einchecken per NFC-Ausweis
+
+Schaltet das Auflegen einer Karte statt des QR-Scans frei. Die UID der
+Karte wird als **Hash** gespeichert, nie als sie selbst: ein Ausweis
+kann widerrufen, aber nie wieder aus DesKilo ausgelesen werden. Nur
+Android; anderswo leistet der QR-Ausweis dasselbe.
 
 ### 9a. Sobald der Monat fakturiert ist, entscheidet die Rechnung
 
@@ -1404,6 +1448,14 @@ Mit welcher Gestaltung eine Rechnung gedruckt wird, und die Texte, die
 diese Gestaltung trägt. Eine Gestaltung gibt es je Dokumentart und je
 Sprache; wer keine eigene Sprache hat, bekommt die des Raums.
 
+#### Der Berichtseditor
+
+Wo die Gestaltung eines Dokuments geschrieben wird. Zwei Wege hinein:
+**Bänder** — Kopf, Körper, Fortsetzung, Fuß, ein Zeichen je Zeile — und
+ein **positioniertes Layout** in XML für ein Dokument, das einem
+Fensterumschlag oder einem amtlichen Formular genügen muss. Ein Layout
+gewinnt gegen die Bänder für die Art, auf der es gesetzt ist.
+
 ### 11d. Die Report-Suite & die Dokumentbibliothek
 
 - **Finanzvereinbarung** — jeder für ein Mitglied geltende Preis: Abo, Extra-Halbtag, Services, Pakete, Zubehör-Aufpreise und die Ganzraum-Preise, **Tische und Schreibtische eingeschlossen**. Inhaber/Admins senden sie vom Verwaltungsblatt; jedes Mitglied holt seine unter *Finanzen → Dokumente*.
@@ -1458,6 +1510,13 @@ Wie viele Mahnungen eine offene Rechnung bekommt, wie lange nach
 Fälligkeit jede geht, und was jede sagt. Einmal täglich rücken die
 offenen überfälligen Rechnungen auf ihre nächste Stufe; eine bereits
 erreichte Stufe wird nie erneut versandt.
+
+#### Automatische Mahnungen
+
+Aus werden Mahnungen von Hand versandt. An rückt einmal täglich jede
+offene überfällige Rechnung auf ihre nächste Stufe und sendet, was diese
+Stufe sagt. Eine bereits erreichte Stufe wird nie zweimal gesendet — das
+Einschalten überschwemmt also niemanden mit dem Rückstand.
 
 ### 11f. Rechnungen zusammenfassen (Abrechnung)
 
@@ -1697,6 +1756,69 @@ und nichts, was du tust, verhält sich anders.
 
 Nutzt das vordere statt des hinteren Objektivs. Für ein Wandtablet,
 dessen Rückkamera zur Wand zeigt.
+
+### Profile
+
+Ein Konto, mehrere Räume. Der Umschalter zeigt jeden Raum, zu dem du
+gehörst, ein Entwicklungs-/Produktionspaar als eine Karte mit zwei
+Chips, und ein Wechsel wird zu deiner Voreinstellung — ein Neustart
+öffnet dort, wo du aufgehört hast.
+
+### Zahlen und Daten
+
+Nach welchen Konventionen Zahlen und Daten auf **diesem Gerät**
+geschrieben werden. Bewusst von der Sprache der App getrennt: man mag
+eine englische App wollen, die deutsche Daten schreibt.
+
+### Uhr
+
+Zwölf oder vierundzwanzig Stunden. Es ändert, wie Zeiten geschrieben
+werden, nie was sie bedeuten.
+
+### Zeiten in meiner Zeitzone anzeigen
+
+Aus sind die Zeiten die des Raums — was eine Buchung tatsächlich ist. An
+werden sie dorthin umgerechnet, wo du bist. Nützlich unterwegs, und vor
+dem Vergleich mit dem Bildschirm einer Kollegin besser wieder aus.
+
+### Dein eigener Server
+
+Mit welchem Supabase-Projekt diese App spricht. Voreingestellt ist das
+von DesKilo; richte sie auf ein Projekt, das du selbst betreibst, und die
+App gehört dir von Anfang bis Ende. Ein Wechsel meldet dich ab, denn ein
+Konto existiert auf einem Server, nicht in der App.
+
+### Wie du deinen eigenen betreibst
+
+Das Bündel baut aus jeder Migration in Reihenfolge, den Edge Functions,
+den Buckets und dem Seed eine zweite Datenbank. Das ist es, was ein
+selbst betriebenes DesKilo mit dem Referenz-DesKilo identisch macht statt
+zu einer Abzweigung.
+
+### Wer meine Daten sehen kann
+
+Was jede Rolle in jedem deiner Räume über dich lesen kann. Es ist die
+Aussage darüber, was der Server durchsetzt, kein Satz Schalter — die
+Antwort ist dieselbe, ob dieser Bildschirm offen ist oder nicht.
+
+### Meine Daten exportieren
+
+Alles, was DesKilo über dich hält, als Datei, die du behältst. Sie wird
+auf Anfrage erzeugt statt bereitgehalten und sagt deshalb, was in dem
+Moment wahr ist, in dem du fragst.
+
+### Meine Daten löschen
+
+Entfernt dich und was dir gehört. Nicht löschbar ist, was das Gesetz dem
+**Raum** aufzubewahren vorschreibt: eine ausgestellte Rechnung ist ein
+Dokument der Organisation und bleibt bei der Käuferidentität, mit der sie
+ausgestellt wurde. Der Bildschirm sagt vorher, welche Räume das betrifft.
+
+### Deine Daten, deine Rechte
+
+Was erhoben wird, warum, auf welcher Rechtsgrundlage und wie lange es
+aufbewahrt wird. Eine eingeholte Einwilligung wird mit Datum
+festgehalten, sodass du sehen kannst, wozu du wann zugestimmt hast.
 
 ## 13. Benachrichtigungen
 

@@ -1,18 +1,24 @@
 // SPDX-License-Identifier: 0BSD
 //
-// #1016 — the migration from coarse topics to exact anchors, made
-// measurable. 152 help symbols shared 14 topics; each documented screen
-// moves some of them onto their own object. This number may only fall.
+// #1016/#1019 — the migration from coarse topics to exact anchors,
+// made measurable, and now finished. 152 help symbols shared 14 topics
+// between them; screen by screen each moved onto its own object, and on
+// 2026-09-08 the last one did.
+//
+// The ratchet has therefore become an invariant: EVERY help symbol
+// names the object it sits beside. A new symbol without an `anchor:`
+// fails this test, which is the point — the guide section is written in
+// the same PR as the control it explains, or the control ships pointing
+// at the nearest heading and nobody notices for a year.
 
 import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
 
-/// Help symbols that still open the nearest section instead of their own
-/// object. Lower it in the PR that documents a screen; never raise it.
-///
-/// 2026-09-08 #1016: 152 at the start, VAT's four migrated first.
-const _withoutAnchor = 27;
+/// Help symbols still opening the nearest section instead of their own
+/// object. It reached zero on 2026-09-08 and stays there: raising it
+/// would be undoing #1019, not recording progress.
+const _withoutAnchor = 0;
 
 final _call = RegExp(r'\bHelpDot(?:Title)?\(');
 
@@ -32,7 +38,7 @@ String _callSource(String source, int start) {
 }
 
 void main() {
-  test('every help symbol is moving towards an anchor, never away', () {
+  test('every help symbol names the object it sits beside', () {
     final naked = <String>[];
     var total = 0;
     for (final file in handWrittenDartFiles('lib')) {
@@ -49,13 +55,14 @@ void main() {
       }
     }
     expect(total, greaterThan(100), reason: 'the symbols did not disappear');
-    expect(naked.length, lessThanOrEqualTo(_withoutAnchor),
+    expect(naked, isEmpty,
         reason: 'A help symbol without an anchor opens the nearest section, '
-            'not its own object. ${naked.length} of $total are still coarse; '
-            'the pinned ceiling is $_withoutAnchor and may only go down.');
-    // And when it falls, say so, so the pin follows in the same PR.
-    expect(naked.length, greaterThanOrEqualTo(_withoutAnchor - 8),
-        reason: 'good — ${naked.length} left of $total. Lower _withoutAnchor '
-            'to that number in this PR.');
+            'not its own object — ${naked.length} of $total do. Give it a '
+            'HelpAnchor constant and write the guide section it names, in '
+            'all five languages, in this PR. See '
+            '.claude/skills/deskilo-documentation/SKILL.md.\n'
+            '${naked.join('\n')}');
+    expect(_withoutAnchor, 0,
+        reason: 'the pin is an invariant now, not a ceiling to raise');
   });
 }
