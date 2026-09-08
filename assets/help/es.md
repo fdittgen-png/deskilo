@@ -1468,6 +1468,95 @@ La prueba dice qué parte está mal en lugar de limitarse a fallar: *no se pudo 
 
 Cambiar de servidor cierra tu sesión y surte efecto la próxima vez que abras la app — la sesión pertenecía al otro servidor. **Usar el servidor de la app** vuelve al predeterminado en cualquier momento.
 
+### Su número de WhatsApp
+
+Visible para los miembros de sus espacios en el directorio, para que
+puedan localizarle sin salir de la app. Opcional, y borrarlo lo retira de
+todas partes a la vez.
+
+### Su línea de estado
+
+Una línea corta junto a su nombre en el directorio — *En una llamada ·
+vuelvo a las 14:00*. Usted la pone y usted la borra; nadie más puede
+cambiarla.
+
+### Periodo de reserva por defecto
+
+Qué mitad del día supone una reserva cuando usted no lo dice. Solo
+preselecciona: cada pantalla de reserva le deja elegir, y la granularidad
+del espacio decide qué son las mitades.
+
+### Información personal
+
+Nombre, apellidos, empresa, la dirección estructurada, teléfono y correo.
+Es lo que imprime un documento que le nombra como cliente: una factura
+con un simple nombre de pantalla significa que esta pantalla está vacía.
+
+### Su dirección
+
+La dirección en texto libre impresa en sus facturas. Donde existe
+*Información personal*, la sustituye; el campo permanece para los
+espacios que no han cambiado.
+
+### Su número de IVA
+
+Rellénelo solo si se le factura como empresa. Es lo que decide si una
+factura transfronteriza se emite **sin impuesto** por inversión del
+sujeto pasivo — y la comprobación de factura electrónica se niega a
+enviar tal documento mientras falte.
+
+### Sus condiciones de pago
+
+Las condiciones propias suyas, cuando un administrador ha negociado
+alguna. Vacío, se aplican las del espacio.
+
+### Restaurar los consejos
+
+Devuelve todos los consejos de ayuda que haya ocultado. No se
+restablece nada más.
+
+### Su credencial
+
+La credencial QR o NFC que le identifica en la puerta y en el quiosco. La
+app guarda solo un hash: una credencial puede revocarse pero nunca
+leerse, por eso reemplazar una perdida significa emitir una nueva, no
+recuperar la antigua.
+
+### El PIN de su credencial
+
+Un código corto que se pide junto a la credencial donde un espacio quiere
+dos factores. Protege las acciones que permite la credencial, no la
+credencial en sí.
+
+### Idioma de la app
+
+El idioma de la app en **este dispositivo**, independiente del idioma del
+espacio y del de sus documentos. Déjelo en el ajuste del sistema y sigue
+al teléfono.
+
+### Tema
+
+Claro, oscuro o la mezcla de la marca — también por dispositivo. El
+ajuste del sistema sigue al interruptor claro/oscuro del teléfono.
+
+### Estilo de navegación
+
+Si la app navega con una barra inferior o un raíl lateral. En pantalla
+ancha el raíl da más sitio al plano; en el teléfono la barra queda más a
+mano.
+
+### Modo demostración
+
+Sustituye en pantalla los nombres y los importes por otros verosímiles,
+para enseñar un espacio a una visita sin enseñar los asuntos de nadie.
+Solo cambia lo que se ve: nada se toca en los datos, y nada de lo que
+haga se comporta distinto.
+
+### Cámara frontal para escanear
+
+Usa el objetivo delantero en vez del trasero. Para una tableta de pared
+cuya cámara trasera mira al muro.
+
 ## 13. Notificaciones
 
 Recordatorios de registro, confirmaciones pendientes, decisiones de gastos — y cuando un admin **elimina una de tus reservas** (anulación), tú y los admins recibís aviso. La entrega es local primero; los push del servidor llegan de serie en Android, iPhone/iPad, el navegador y macOS (Firebase Cloud Messaging) — *Ajustes → Avanzado* muestra si el push está activo en este dispositivo. La insignia del icono de la app muestra tus confirmaciones pendientes **más tus mensajes sin leer** — en Android, iPhone/iPad, el Dock de macOS, la barra de tareas de Windows y las web apps instaladas. Los mensajes entre miembros se anuncian **una vez por dispositivo con el remitente y el texto completo** — incluido lo enviado con la app cerrada, anunciado en cuanto la vuelves a abrir. Ese aviso siempre lo genera **la propia app, en local**: el payload push no lleva nunca un nombre, una hora ni una palabra del mensaje (§6), así que lo que viaja por la red solo dice que ha llegado algo. Una conversación **silenciada** (§16) permanece en silencio: no se anuncia nada de ella, aunque sigue contando en su fila y en la insignia.

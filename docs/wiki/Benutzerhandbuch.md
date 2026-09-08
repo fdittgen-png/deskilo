@@ -1478,6 +1478,111 @@ Der Test sagt dir, welcher Teil nicht stimmt, statt einfach fehlzuschlagen: *die
 
 Das Umstellen meldet dich ab und greift beim nächsten Öffnen der App — die Sitzung gehörte zum anderen Server. **Server der App verwenden** kehrt jederzeit zum Standard zurück.
 
+<!-- anchor: user.profile.settings.whatsapp -->
+### Deine WhatsApp-Nummer
+
+Für die Mitglieder deiner Räume im Verzeichnis sichtbar, damit man dich
+erreichen kann, ohne die App zu verlassen. Optional, und sie zu löschen
+entfernt sie überall zugleich.
+
+<!-- anchor: user.profile.settings.status -->
+### Deine Statuszeile
+
+Eine kurze Zeile neben deinem Namen im Verzeichnis — *Im Gespräch ·
+zurück um 14:00*. Du setzt sie und du löschst sie; niemand sonst kann sie
+ändern.
+
+<!-- anchor: user.profile.settings.default-period -->
+### Standard-Buchungszeitraum
+
+Welche Tageshälfte eine Buchung annimmt, wenn du nichts sagst. Sie wählt
+nur vor: jeder Buchungsbildschirm lässt dich wählen, und die Granularität
+des Raums entscheidet, was die Hälften sind.
+
+<!-- anchor: user.profile.settings.personal-info -->
+### Persönliche Angaben
+
+Vorname, Nachname, Firma, die strukturierte Anschrift, Telefon und
+E-Mail. Das ist es, was ein Dokument druckt, das dich als Käuferin nennt
+— eine Rechnung mit bloßem Anzeigenamen heißt, dieser Bildschirm ist
+leer.
+
+<!-- anchor: user.profile.settings.address -->
+### Deine Anschrift
+
+Die frei geschriebene Anschrift auf deinen Rechnungen. Wo es
+*Persönliche Angaben* gibt, lösen sie sie ab; das Feld bleibt für Räume,
+die noch nicht gewechselt haben.
+
+<!-- anchor: user.profile.settings.vat-id -->
+### Deine USt-IdNr.
+
+Nur ausfüllen, wenn du als Unternehmen abgerechnet wirst. Sie entscheidet,
+ob eine grenzüberschreitende Rechnung **ohne Steuer** im Reverse-Charge
+ausgestellt wird — und die E-Rechnungsprüfung verweigert den Versand
+eines solchen Dokuments, solange sie fehlt.
+
+<!-- anchor: user.profile.settings.payment-terms -->
+### Deine Zahlungsbedingungen
+
+Die Bedingungen, die eigens für dich gelten, wenn eine Administratorin
+welche ausgehandelt hat. Leer gelten die des Raums.
+
+<!-- anchor: user.profile.settings.restore-hints -->
+### Hinweise zurückholen
+
+Bringt jeden ausgeblendeten Hilfehinweis zurück. Sonst wird nichts
+zurückgesetzt.
+
+<!-- anchor: user.profile.settings.badge -->
+### Dein Ausweis
+
+Der QR- oder NFC-Ausweis, der dich an der Tür und am Kiosk erkennt. Die
+App speichert nur einen Hash davon: ein Ausweis kann widerrufen, aber nie
+zurückgelesen werden — deshalb heißt einen verlorenen ersetzen, einen
+neuen auszugeben, nicht den alten wiederzubekommen.
+
+<!-- anchor: user.profile.settings.badge-pin -->
+### Deine Ausweis-PIN
+
+Ein kurzer Code, der neben dem Ausweis verlangt wird, wo ein Raum zwei
+Faktoren will. Er schützt die Handlungen, die ein Ausweis erlaubt, nicht
+den Ausweis selbst.
+
+<!-- anchor: user.profile.settings.language -->
+### Sprache der App
+
+Die Sprache der App auf **diesem Gerät**, unabhängig von der Sprache des
+Raums und der deiner Dokumente. Auf der Systemeinstellung folgt sie dem
+Telefon.
+
+<!-- anchor: user.profile.settings.theme -->
+### Design
+
+Hell, dunkel oder die Signaturmischung — auch das je Gerät. Die
+Systemeinstellung folgt dem Hell-Dunkel-Schalter des Telefons.
+
+<!-- anchor: user.profile.settings.navigation -->
+### Navigationsstil
+
+Ob die App über eine untere Leiste oder eine seitliche Schiene
+navigiert. Auf breitem Bildschirm gibt die Schiene dem Plan mehr Raum;
+auf dem Telefon ist die Leiste leichter zu erreichen.
+
+<!-- anchor: user.profile.settings.demo-mode -->
+### Demomodus
+
+Ersetzt Namen und Beträge auf dem Bildschirm durch plausible, damit ein
+Raum einem Besuch gezeigt werden kann, ohne jemandes Geschäfte zu
+zeigen. Es ändert nur die Anzeige: an den Daten wird nichts angefasst,
+und nichts, was du tust, verhält sich anders.
+
+<!-- anchor: user.profile.settings.front-camera -->
+### Frontkamera zum Scannen
+
+Nutzt das vordere statt des hinteren Objektivs. Für ein Wandtablet,
+dessen Rückkamera zur Wand zeigt.
+
 ## 13. Benachrichtigungen
 
 Check-in-Erinnerungen, offene Bestätigungen, Ausgaben-Entscheidungen — und wenn ein Admin **eine deiner Buchungen entfernt** (übersteuern), werden du und die Admins benachrichtigt. Zustellung lokal zuerst; Server-Push kommt fertig auf Android, iPhone/iPad, Browser und macOS (Firebase Cloud Messaging) — *Einstellungen → Erweitert* zeigt den Gerätestatus. Das Icon-Badge zählt offene Bestätigungen **plus ungelesene Nachrichten** — Android, iPhone/iPad, macOS-Dock, Windows-Leiste, installierte Web-Apps. Mitglieder-Nachrichten werden **einmal je Gerät mit Absender und vollem Text** angesagt — auch was bei geschlossener App kam. Diese Ansage erzeugt immer **die App selbst, lokal**: das Push-Payload trägt nie einen Namen, eine Uhrzeit oder ein Wort der Nachricht (§6) — was über das Netz geht, sagt nur, dass etwas angekommen ist. Eine **stummgeschaltete** Unterhaltung (§16) bleibt still: Für sie wird nichts angekündigt, sie zählt aber weiterhin auf ihrer Zeile und auf dem Badge.

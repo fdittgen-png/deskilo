@@ -1473,6 +1473,94 @@ Il test dice quale parte non va invece di limitarsi a fallire: *impossibile ragg
 
 Il cambio ti disconnette e ha effetto alla prossima apertura dell'app — la sessione apparteneva all'altro server. **Usa il server dell'app** riporta al predefinito in qualsiasi momento.
 
+### Il tuo numero WhatsApp
+
+Visibile ai membri dei tuoi spazi nella rubrica, così qualcuno può
+raggiungerti senza uscire dall'app. Facoltativo, e cancellarlo lo toglie
+ovunque in una volta.
+
+### La tua riga di stato
+
+Una riga breve accanto al tuo nome nella rubrica — *In chiamata · torno
+alle 14:00*. La metti tu e la togli tu; nessun altro può cambiarla.
+
+### Periodo di prenotazione predefinito
+
+Quale metà della giornata una prenotazione presume quando non lo dici.
+Preseleziona soltanto: ogni schermata di prenotazione ti lascia
+scegliere, e la granularità dello spazio decide cosa siano le metà.
+
+### Informazioni personali
+
+Nome, cognome, azienda, l'indirizzo strutturato, telefono ed e-mail. È
+ciò che stampa un documento che ti nomina come cliente: una fattura con
+il solo nome visualizzato significa che questa schermata è vuota.
+
+### Il tuo indirizzo
+
+L'indirizzo in testo libero stampato sulle tue fatture. Dove esistono le
+*Informazioni personali*, lo sostituiscono; il campo resta per gli spazi
+che non hanno cambiato.
+
+### La tua partita IVA
+
+Compilala solo se ti viene fatturato come impresa. È ciò che decide se
+una fattura transfrontaliera è emessa **senza imposta** in inversione
+contabile — e il controllo della fattura elettronica rifiuta di inviare
+un tale documento finché manca.
+
+### Le tue condizioni di pagamento
+
+Le condizioni che valgono solo per te, quando un amministratore ne ha
+negoziate. Vuote, valgono quelle dello spazio.
+
+### Ripristinare i suggerimenti
+
+Riporta ogni suggerimento d'aiuto che hai nascosto. Nient'altro viene
+azzerato.
+
+### Il tuo badge
+
+Il badge QR o NFC che ti identifica alla porta e sul chiosco. L'app
+conserva solo un hash: un badge può essere revocato ma mai riletto, per
+questo sostituire un badge perso significa emetterne uno nuovo, non
+recuperare il vecchio.
+
+### Il PIN del tuo badge
+
+Un codice breve chiesto accanto al badge dove uno spazio vuole due
+fattori. Protegge le azioni che il badge permette, non il badge stesso.
+
+### Lingua dell'app
+
+La lingua dell'app su **questo dispositivo**, indipendente dalla lingua
+dello spazio e da quella dei tuoi documenti. Lasciala sull'impostazione
+di sistema e segue il telefono.
+
+### Tema
+
+Chiaro, scuro o la miscela del marchio — anche questo per dispositivo.
+L'impostazione di sistema segue l'interruttore chiaro/scuro del
+telefono.
+
+### Stile di navigazione
+
+Se l'app naviga con una barra in basso o una guida laterale. Su schermo
+largo la guida lascia più spazio alla piantina; sul telefono la barra è
+più facile da raggiungere.
+
+### Modalità dimostrazione
+
+Sostituisce a schermo nomi e importi con altri plausibili, per mostrare
+uno spazio a un visitatore senza mostrare gli affari di nessuno. Cambia
+solo ciò che si vede: nulla viene toccato nei dati, e nulla di ciò che
+fai si comporta diversamente.
+
+### Fotocamera frontale per scansionare
+
+Usa l'obiettivo anteriore invece del posteriore. Per un tablet a muro la
+cui fotocamera posteriore guarda il muro.
+
 ## 13. Notifiche
 
 Promemoria di check-in, conferme in sospeso, decisioni sulle spese — e quando un admin **rimuove una tua prenotazione** (scavalca), tu e gli admin venite avvisati. La consegna è prima locale; i push dal server arrivano senza configurare nulla su Android, iPhone/iPad, browser e macOS (Firebase Cloud Messaging) — *Impostazioni → Avanzate* mostra se il push è attivo su questo dispositivo. Il contatore sull'icona dell'app mostra le tue conferme in attesa **più i tuoi messaggi non letti** — su Android, iPhone/iPad, nel Dock di macOS, nella barra delle applicazioni di Windows e nelle web app installate. I messaggi tra membri vengono annunciati **una volta per dispositivo con il mittente e il testo completo** — compreso ciò che è arrivato ad app chiusa, annunciato alla prossima apertura. Quell'annuncio è sempre generato **in locale, dall'app stessa**: il payload push non trasporta mai un nome, un orario né una parola del messaggio (§6), quindi ciò che viaggia in rete dice soltanto che è arrivato qualcosa. Una conversazione **silenziata** (§16) resta muta: per lei non viene annunciato nulla, anche se conta ancora sulla sua riga e sul badge.
