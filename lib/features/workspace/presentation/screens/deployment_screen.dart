@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -188,7 +190,17 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
     final registry = _registry;
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: title),
+      appBar: AppBar(
+        title: title,
+        // #1022 — the screen's own symbol: a deployment writes
+        // the side you stand on, and the guide says so first.
+        actions: [
+          HelpDot(
+            l10n?.helpTopicDeployment ?? 'Deploying',
+            anchor: HelpAnchor.envDeployScreen,
+          ),
+        ],
+      ),
       body: registry == null
           ? const LoadingView()
           : ListView(
@@ -240,7 +252,12 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
                     Padding(
                       key: ValueKey('deploy-group-$kind'),
                       padding: const EdgeInsets.only(top: AppSpacing.md),
-                      child: Text(label, style: theme.textTheme.titleSmall),
+                      child: HelpDotTitle(
+                        label,
+                        l10n?.helpTopicDeployment ?? 'Deploying',
+                        anchor: HelpAnchor.envDeployEntities,
+                        style: theme.textTheme.titleSmall,
+                      ),
                     ),
                     for (final entity in registry.where((e) => e.kind == kind))
                       CheckboxListTile(
@@ -272,8 +289,12 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
                       : (l10n?.deploymentPullFromDev ?? 'Pull from DEV…')),
                 ),
                 const SizedBox(height: AppSpacing.lg),
-                Text(l10n?.deploymentJournal ?? 'Journal',
-                    style: theme.textTheme.titleSmall),
+                HelpDotTitle(
+                  l10n?.deploymentJournal ?? 'Journal',
+                  l10n?.helpTopicDeployment ?? 'Deploying',
+                  anchor: HelpAnchor.envDeployJournal,
+                  style: theme.textTheme.titleSmall,
+                ),
                 if (_journal.isEmpty)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),

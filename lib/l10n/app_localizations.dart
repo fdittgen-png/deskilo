@@ -3114,6 +3114,18 @@ abstract class AppLocalizations {
   /// **'Features'**
   String get deployEntityFeatures;
 
+  /// Guide-heading needle for the deployment help symbols (#1022)
+  ///
+  /// In en, this message translates to:
+  /// **'Deploying'**
+  String get helpTopicDeployment;
+
+  /// Guide-heading needle for the environments help symbols (#1022)
+  ///
+  /// In en, this message translates to:
+  /// **'Environments'**
+  String get helpTopicEnvironments;
+
   /// Settings toggle enabling the local diagnostics screen
   ///
   /// In en, this message translates to:

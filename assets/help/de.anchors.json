@@ -16,5 +16,16 @@
   "user.money.vat.exemption-reason": "Grund der Steuerbefreiung",
   "user.money.legal.legal-id": "Registernummer",
   "user.money.legal.address": "Strukturierte Anschrift",
-  "user.money.vat.groups": "USt-Gruppen (#947)"
+  "user.money.vat.groups": "USt-Gruppen (#947)",
+  "env.pair.why": "Warum ein Paar",
+  "env.pair.create": "Das Paar anlegen",
+  "env.pair.permissions": "Wer was darf",
+  "env.work.configure": "Auf der Entwicklungsseite arbeiten",
+  "env.deploy.screen": "Deployen",
+  "env.deploy.entities": "Was reist, Entität für Entität",
+  "env.deploy.plan": "Der Grundriss wird zusammengeführt, nie ersetzt",
+  "env.deploy.preview": "Die Vorschau, dann die Bestätigung",
+  "env.deploy.journal": "Das Journal und der Weg zurück",
+  "env.deploy.never": "Was nie reist",
+  "env.instances": "Wenn ein Paar nicht reicht"
 }

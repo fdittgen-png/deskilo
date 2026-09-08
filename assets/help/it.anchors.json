@@ -16,5 +16,16 @@
   "user.money.vat.exemption-reason": "Motivo dell'esenzione",
   "user.money.legal.legal-id": "Numero di iscrizione",
   "user.money.legal.address": "Indirizzo strutturato",
-  "user.money.vat.groups": "Gruppi IVA (#947)"
+  "user.money.vat.groups": "Gruppi IVA (#947)",
+  "env.pair.why": "Perché una coppia",
+  "env.pair.create": "Creare la coppia",
+  "env.pair.permissions": "Chi può fare cosa",
+  "env.work.configure": "Lavorare sul lato sviluppo",
+  "env.deploy.screen": "Distribuire",
+  "env.deploy.entities": "Cosa viaggia, entità per entità",
+  "env.deploy.plan": "La piantina è unita, mai sostituita",
+  "env.deploy.preview": "L'anteprima, poi la conferma",
+  "env.deploy.journal": "Il giornale e la via del ritorno",
+  "env.deploy.never": "Cosa non viaggia mai",
+  "env.instances": "Quando una coppia non basta"
 }

@@ -167,5 +167,7 @@
   "deployEntityFeatures": "Funktionen",
   "@deployEntityFeatures": {
     "description": "#988/#990 deployments: deployEntityFeatures"
-  }
+  },
+  "helpTopicDeployment": "Deployen",
+  "helpTopicEnvironments": "Umgebungen"
 }

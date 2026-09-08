@@ -1355,6 +1355,8 @@
   "@deployEntityFeatures": {
     "description": "#988/#990 deployments: deployEntityFeatures"
   },
+  "helpTopicDeployment": "Deployen",
+  "helpTopicEnvironments": "Umgebungen",
   "developerMode": "Entwicklermodus",
   "developerModeWorkspaceHint": "Gilt für alle Mitglieder dieses Workspace.",
   "developerTitle": "Entwickler",
