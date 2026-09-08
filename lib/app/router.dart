@@ -334,7 +334,10 @@ GoRouter router(Ref ref) {
         // section whose heading contains the fragment.
         path: '/help',
         builder: (context, state) =>
-            HelpScreen(topic: state.uri.queryParameters['topic']),
+            HelpScreen(
+              topic: state.uri.queryParameters['topic'],
+              anchor: state.uri.queryParameters['anchor'],
+            ),
       ),
       GoRoute(
         // #751 — the GDPR consent; ?review=1 reads it without the gate.
