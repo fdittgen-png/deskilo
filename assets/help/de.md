@@ -823,6 +823,66 @@ Die **Anrede** ist ein Feld Ihrer persönlichen Angaben: *Herr*, *Frau* oder *Ke
 **MwSt — die Konformitäts-Checkliste (#878).** Geprüft am 05.09.2026 gegen die Richtlinie 2006/112/EG und EN 16931 (ADR 0015). Was gilt: Das Regime des Verkäufers ist **auf jedem Beleg eingefroren** (ein Verein, der steuerbefreit wird, behält seine früheren nicht steuerbaren Rechnungen wie sie sind); die Aufschlüsselung je Satz ist ebenso eingefroren, je Zeile gerundet wie auf dem Server; die Nummerierung ist fortlaufend und Belege ändern sich nie (storniert und neu ausgestellt). Was die App jetzt für dich tut: Belege eines **befreiten oder nicht steuerbaren Verkäufers drucken den gesetzlichen Hinweis ihres Landes** (FR Art. 293 B CGI, DE § 19 UStG, AT, ES, IT, BE, NL, LU, sonst die Richtlinie), wenn du in *Rechtliche Identität* nichts geschrieben hast; die E-Rechnungsprüfung **warnt, wenn die USt-IdNr. eines Kunden nicht die Form ihres Landes hat**. Was beim Eigentümer bleibt: den Satzkatalog bei einer Satzänderung pflegen; ein steuerpflichtiger Verkäufer braucht eine USt-IdNr. Die drei bei der Prüfung erfassten Grenzen sind geschlossen: Gutschriften stornieren die Steuer (#894), das innergemeinschaftliche Reverse-Charge wird bei der Ausstellung entschieden (#895), und die Ist-Versteuerung ist eine Einstellung des Space (#896).
 **Der MwSt-Bericht (#878).** Unter *MwSt-Voranmeldungen*, für den gewählten Monat oder das Quartal: **MwSt-Bericht (PDF)** — jede steuerbare Position (Beleg, Datum, Kunde, netto, Satz, MwSt, brutto, Kategorie, ggf. das stornierte Original), Zwischensummen je Satz und Kategorie, Summen des Zeitraums — als Brief zum Ansehen, Speichern, Teilen und wie jedes Dokument gestaltbar (*MwSt-Bericht* im Editor); **MwSt-Bericht (CSV)** — dieselben Positionen, semikolongetrennt, für die Buchhaltung.
 
+#### Art der Organisation
+
+*Unternehmen / Firma* oder *Verein (loi 1901)*. Diese Wahl entscheidet, welche Klauseln ein Dokument standardmäßig druckt: Verzugszinsen, Beitreibungspauschale und Skonto sind Pflichten **zwischen Gewerbetreibenden**, also lassen die Rechnungen eines Vereins sie weg. Was du selbst schreibst, wird immer gedruckt, unabhängig von der Art.
+
+#### Rechtsform und Kapital
+
+Was die Organisation rechtlich ist, unter ihrem Namen gedruckt: *GmbH mit Stammkapital 25 000 €*, *Association loi 1901*. Leer gelassen druckt ein Unternehmen nichts und ein Verein seine satzungsmäßige Form.
+
+#### Registereintrag
+
+Der Eintrag, mit dem man dich prüfen kann: **HRB** und Registergericht für eine Gesellschaft, **RNA W…** und die **SIRET**, sofern vergeben, für einen Verein. Danach sucht die Buchhaltung deiner Kundin, und ohne ihn verweigert die E-Rechnungsprüfung den Versand.
+
+#### Zahlungsbedingungen
+
+Wann das Geld fällig ist — *zahlbar bei Rechnungserhalt, innerhalb von 30 Tagen* als Voreinstellung. Es steht auf jeder Rechnung, und die Mahnregeln zählen von dort.
+
+#### Verzugszinsen
+
+Die Zinsen, die eine verspätete Zahlung trägt. Zwischen Gewerbetreibenden ist die Angabe Pflicht; die Voreinstellung nennt den geltenden gesetzlichen Satz. Ein Verein druckt hier nichts, solange du nichts schreibst.
+
+#### Beitreibungspauschale
+
+Die **40 €** pauschal für Beitreibungskosten bei Verzug zwischen Gewerbetreibenden. Gleiche Regel: Pflicht zwischen Gewerbetreibenden, für einen Verein weggelassen, immer gedruckt, wenn du sie schreibst.
+
+#### Skonto
+
+Ob frühe Zahlung einen Abzug bringt. Die meisten Räume gewähren keinen, und die Voreinstellung sagt das in den Worten, die das Gesetz erwartet — *kein Skonto* zu sagen ist zwischen Gewerbetreibenden selbst eine Pflichtangabe.
+
+#### Berufshaftpflicht
+
+Versicherer, Vertrag und räumliche Geltung. Für reglementierte Berufe verlangt; leer wird nichts gedruckt.
+
+#### Besondere Angaben
+
+Alles Weitere, was dein Gewerbe oder dein Land verlangt, nach den anderen gedruckt. Der Platz für eine Mitgliedsnummer, eine Schlichtungsstelle oder eine Klausel, die deine Buchhaltung wünscht.
+
+#### Steuerregime
+
+Ob der Raum **nicht der MwSt unterliegt**, als Kleinunternehmen **befreit** ist oder **MwSt berechnet**. Diese Wahl entscheidet, welche Nummer die Norm EN 16931 von dir verlangt und welchen gesetzlichen Satz ein Dokument druckt. Das Regime wird **bei Ausstellung auf jedem Dokument eingefroren**: eine Änderung schreibt nie eine bereits versandte Rechnung um.
+
+#### Umsatzsteuer-Identifikationsnummer
+
+Die innergemeinschaftliche Nummer, in der Form ihres Landes geprüft. Sie ist die Voraussetzung für den Versand, wenn du MwSt berechnest, und der Beleg dafür, dass die Steuer bei Reverse-Charge der Kundin zufällt.
+
+#### MwSt-Konto
+
+Das Konto im Kontenplan, auf das vereinnahmte MwSt gebucht wird. Buchhaltungsexporte und die Auswertungen der Buchhaltung folgen ihm.
+
+#### Grund der Steuerbefreiung
+
+Der Satz, den ein befreiter oder nicht steuerbarer Verkäufer drucken muss. Leer gelassen druckt DesKilo den gesetzlichen Wortlaut deines Landes — *art. 293 B du CGI* in Frankreich, *§ 19 UStG* in Deutschland, sonst die Richtlinie.
+
+#### Registernummer
+
+SIREN, SIRET, HRB, CIF — die Kennung, die die Norm von einem Verkäufer ohne MwSt verlangt. Ohne sie kann eine E-Rechnung aus einem nicht steuerbaren Raum nicht ausgestellt werden.
+
+#### Strukturierte Anschrift
+
+Straße, Postleitzahl und Ort als drei getrennte Felder, neben der freien Briefkopfanschrift. Der Briefkopf ist, was ein Papierdokument druckt; **die strukturierte Anschrift ist, was die E-Rechnung trägt**, denn eine Maschine kann eine Zeile nicht zuverlässig zerlegen.
+
 ### 11b. Wohin die E-Rechnung muss (EU)
 
 Die Aktion **E-Rechnung (XML)** öffnet ein Blatt, das es fürs Land des Space beantwortet: welcher Kanal für Geschäftskunden, ob eine Plattform dazwischen sitzt, welcher Kanal für öffentliche Käufer. Vier Modelle:

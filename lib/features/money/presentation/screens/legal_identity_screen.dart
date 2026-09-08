@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -157,6 +158,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
     String key,
     TextEditingController controller,
     String label, {
+    required String anchor,
     String? hint,
   }) {
     final l10n = AppLocalizations.of(context);
@@ -173,7 +175,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           helperText: hint,
           helperMaxLines: 3,
           counterText: '',
-          suffixIcon: HelpDot(l10n?.helpTopicLegalIdentity ?? 'Legal identity'),
+          suffixIcon: HelpDot(
+            l10n?.helpTopicLegalIdentity ?? 'Legal identity',
+            anchor: anchor,
+          ),
         ),
       ),
     );
@@ -277,7 +282,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 ),
               ),
             ),
-            HelpDot(l10n?.helpTopicVat ?? 'VAT'),
+            HelpDot(
+              l10n?.helpTopicVat ?? 'VAT',
+              anchor: HelpAnchor.moneyVatRegime,
+            ),
           ]),
           // Only a workspace that charges VAT and has no rate to charge
           // it at is in trouble — the rest is a link, not a warning.
@@ -367,6 +375,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             title: HelpDotTitle(
               l10n?.vatRatesTile ?? 'VAT rates',
               l10n?.helpTopicVat ?? 'VAT',
+              anchor: HelpAnchor.moneyVatRates,
             ),
             subtitle: rates.isEmpty
                 ? Text(l10n?.vatEmpty ?? 'No rate yet — invoices show no VAT.')
@@ -387,7 +396,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 helperText: l10n?.vatAccountHint ??
                     'Where the accounting export books collected VAT. '
                         'Empty = 445710.',
-                suffixIcon: HelpDot(l10n?.helpTopicVat ?? 'VAT'),
+                suffixIcon: HelpDot(
+                  l10n?.helpTopicVat ?? 'VAT',
+                  anchor: HelpAnchor.moneyVatAccount,
+                ),
               ),
             ),
           const SizedBox(height: AppSpacing.md),
@@ -400,7 +412,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               textCapitalization: TextCapitalization.characters,
               decoration: InputDecoration(
                 labelText: l10n?.legalIdentityVatId ?? 'VAT number',
-                suffixIcon: HelpDot(l10n?.helpTopicVat ?? 'VAT'),
+                suffixIcon: HelpDot(
+                  l10n?.helpTopicVat ?? 'VAT',
+                  anchor: HelpAnchor.moneyVatNumber,
+                ),
               ),
             )
           else
@@ -411,7 +426,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 labelText: l10n?.legalIdentityLegalId ??
                     'Company registration number',
                 suffixIcon:
-                    HelpDot(l10n?.helpTopicLegalIdentity ?? 'Legal identity'),
+                    HelpDot(
+                      l10n?.helpTopicLegalIdentity ?? 'Legal identity',
+                      anchor: HelpAnchor.legalLegalId,
+                    ),
               ),
             ),
           const SizedBox(height: AppSpacing.md),
@@ -429,7 +447,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                           '"Exonération de TVA, art. 261, 7-1° du CGI" '
                           'for services to members')
                   : null,
-              suffixIcon: HelpDot(l10n?.helpTopicVat ?? 'VAT'),
+              suffixIcon: HelpDot(
+                l10n?.helpTopicVat ?? 'VAT',
+                anchor: HelpAnchor.moneyVatExemptionReason,
+              ),
             ),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -439,7 +460,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             decoration: InputDecoration(
               labelText: l10n?.legalIdentityStreet ?? 'Street',
               suffixIcon:
-                  HelpDot(l10n?.helpTopicLegalIdentity ?? 'Legal identity'),
+                  HelpDot(
+                    l10n?.helpTopicLegalIdentity ?? 'Legal identity',
+                    anchor: HelpAnchor.legalAddress,
+                  ),
             ),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -453,6 +477,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                   labelText: l10n?.legalIdentityPostalCode ?? 'Post code',
                   suffixIcon: HelpDot(
                     l10n?.helpTopicLegalIdentity ?? 'Legal identity',
+                    anchor: HelpAnchor.legalAddress,
                   ),
                 ),
               ),
@@ -466,6 +491,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                   labelText: l10n?.legalIdentityCity ?? 'City',
                   suffixIcon: HelpDot(
                     l10n?.helpTopicLegalIdentity ?? 'Legal identity',
+                    anchor: HelpAnchor.legalAddress,
                   ),
                 ),
               ),
@@ -525,7 +551,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                     setState(() => _sellerKind = selection.first),
               ),
             ),
-            HelpDot(l10n?.helpTopicLegalIdentity ?? 'Legal identity'),
+            HelpDot(
+              l10n?.helpTopicLegalIdentity ?? 'Legal identity',
+              anchor: HelpAnchor.legalSellerKind,
+            ),
           ]),
           if (_sellerKind == 'association') ...[
             const SizedBox(height: AppSpacing.xs),
@@ -548,6 +577,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 ? (l10n?.invoiceLegalFormHintAssociation ??
                     'e.g. Association loi 1901')
                 : l10n?.invoiceLegalFormHint,
+            anchor: HelpAnchor.legalForm,
           ),
           _mentionField(
             'legal-identity-registration',
@@ -557,40 +587,47 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 ? (l10n?.invoiceLegalRegistrationHintAssociation ??
                     'e.g. RNA W123456789 · SIRET if assigned')
                 : l10n?.invoiceLegalRegistrationHint,
+            anchor: HelpAnchor.legalRegistration,
           ),
           _mentionField(
             'legal-identity-payment-terms',
             _paymentTerms,
             l10n?.invoiceLegalPaymentTermsField ?? 'Payment terms',
             hint: l10n?.invoiceLegalPaymentTermsDefault,
+            anchor: HelpAnchor.legalPaymentTerms,
           ),
           _mentionField(
             'legal-identity-late-penalty',
             _latePenalty,
             l10n?.invoiceLegalLatePenaltyField ?? 'Late-payment penalty',
             hint: l10n?.invoiceLegalLatePenaltyDefault,
+            anchor: HelpAnchor.legalLatePenalty,
           ),
           _mentionField(
             'legal-identity-recovery',
             _recovery,
             l10n?.invoiceLegalRecoveryField ?? 'Recovery indemnity',
             hint: l10n?.invoiceLegalRecoveryDefault,
+            anchor: HelpAnchor.legalRecovery,
           ),
           _mentionField(
             'legal-identity-escompte',
             _escompte,
             l10n?.invoiceLegalEscompteField ?? 'Early-payment discount',
             hint: l10n?.invoiceLegalEscompteDefault,
+            anchor: HelpAnchor.legalEscompte,
           ),
           _mentionField(
             'legal-identity-insurance',
             _insurance,
             l10n?.invoiceLegalInsuranceField ?? 'Professional insurance',
+            anchor: HelpAnchor.legalInsurance,
           ),
           _mentionField(
             'legal-identity-special',
             _special,
             l10n?.invoiceLegalSpecialField ?? 'Special mentions',
+            anchor: HelpAnchor.legalSpecialMentions,
           ),
           const SizedBox(height: AppSpacing.md),
           // #869 — where the sheet is addressed. It sits with the legal

@@ -27,11 +27,72 @@ abstract final class HelpAnchor {
   /// The periodic declaration built from the period's invoices.
   static const moneyVatDeclaration = 'user.money.vat.declaration';
 
+  /// Out of scope, exempt or charging — what the norm then demands.
+  static const moneyVatRegime = 'user.money.vat.regime';
+
+  /// The intra-community number, checked for its country's shape.
+  static const moneyVatNumber = 'user.money.vat.number';
+
+  /// The account collected VAT is posted to.
+  static const moneyVatAccount = 'user.money.vat.account';
+
+  /// The statutory sentence a seller who charges no VAT prints.
+  static const moneyVatExemptionReason = 'user.money.vat.exemption-reason';
+
+  // ── money · legal identity and invoice mentions ────────────────────
+  /// SIREN, SIRET, HRB, CIF — the seller's registration number.
+  static const legalLegalId = 'user.money.legal.legal-id';
+
+  /// Street, post code and city — what the e-invoice carries.
+  static const legalAddress = 'user.money.legal.address';
+
+  /// Company or association — which clause defaults a document prints.
+  static const legalSellerKind = 'user.money.legal.seller-kind';
+
+  /// What the organisation legally is, printed under its name.
+  static const legalForm = 'user.money.legal.legal-form';
+
+  /// The register a reader can check the seller with.
+  static const legalRegistration = 'user.money.legal.registration';
+
+  /// When the money is due, and what the reminders count from.
+  static const legalPaymentTerms = 'user.money.legal.payment-terms';
+
+  /// The interest a late payment carries.
+  static const legalLatePenalty = 'user.money.legal.late-penalty';
+
+  /// The fixed indemnity for collection costs.
+  static const legalRecovery = 'user.money.legal.recovery';
+
+  /// Whether paying early earns a discount.
+  static const legalEscompte = 'user.money.legal.escompte';
+
+  /// Insurer, policy and geographical cover.
+  static const legalInsurance = 'user.money.legal.insurance';
+
+  /// Anything else the trade or the country demands.
+  static const legalSpecialMentions = 'user.money.legal.special-mentions';
+
   /// Every anchor the app points at — the lint's left-hand side.
   static const all = <String>{
     moneyVatRates,
     moneyVatGroups,
     moneyVatDeclaration,
+    legalSellerKind,
+    legalForm,
+    legalRegistration,
+    legalPaymentTerms,
+    legalLatePenalty,
+    legalRecovery,
+    legalEscompte,
+    legalInsurance,
+    moneyVatRegime,
+    moneyVatNumber,
+    moneyVatAccount,
+    moneyVatExemptionReason,
+    legalLegalId,
+    legalAddress,
+    legalSpecialMentions,
   };
 
   /// The screenshot that documents [anchor], by the naming rule.
