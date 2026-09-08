@@ -7,6 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -25,6 +26,7 @@ class MyPaymentTermsScreen extends ConsumerWidget {
         title: HelpDotTitle(
           l10n?.paymentTermsTitle ?? 'Payment conditions',
           l10n?.helpTopicSettings ?? 'Settings & profile',
+          anchor: HelpAnchor.profilePaymentTerms,
         ),
       ),
       body: member == null

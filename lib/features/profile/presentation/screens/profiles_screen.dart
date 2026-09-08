@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -42,7 +43,9 @@ class ProfilesScreen extends ConsumerWidget {
         title: Text(l10n?.profilesTitle ?? 'Profiles'),
         actions: [
           // #763 — one dot for the whole switcher, in the app bar.
-          HelpDot(l10n?.helpTopicSettings ?? 'Settings & profile'),
+          HelpDot(l10n?.helpTopicSettings ?? 'Settings & profile',
+            anchor: HelpAnchor.profileProfiles,
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/profile/providers/profile_providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../help/help_anchors.dart';
 import '../help/help_dot.dart';
 import '../theme/app_spacing.dart';
 import '../time/clock.dart';
@@ -93,6 +94,7 @@ class RegionalFormatsScreen extends ConsumerWidget {
             title: HelpDotTitle(
               l10n?.regionalFormatLocale ?? 'Numbers & dates',
               l10n?.helpTopicSettings ?? 'Settings & profile',
+              anchor: HelpAnchor.profileRegionalFormats,
             ),
             subtitle: Text(localeLabel),
             trailing: const Icon(Icons.chevron_right),
@@ -104,6 +106,7 @@ class RegionalFormatsScreen extends ConsumerWidget {
             title: HelpDotTitle(
               l10n?.regionalClock ?? 'Clock',
               l10n?.helpTopicSettings ?? 'Settings & profile',
+              anchor: HelpAnchor.profileClock,
             ),
           ),
           Padding(
@@ -139,6 +142,7 @@ class RegionalFormatsScreen extends ConsumerWidget {
             title: HelpDotTitle(
               l10n?.regionalDeviceZone ?? 'Show times in my time zone',
               l10n?.helpTopicSettings ?? 'Settings & profile',
+              anchor: HelpAnchor.profileDeviceZone,
             ),
             // Says what the default IS, because "workspace time" only
             // means something once you know the workspace is elsewhere.

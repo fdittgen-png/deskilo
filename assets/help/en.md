@@ -239,6 +239,13 @@ The same *message the holder* action sits on the **plan** when you tap a seat so
 
 **Approvals.** Where the owner put a validation policy on **whole-space reservations** (§7), the booking blocks the space immediately and waits for the quorum — a reject cancels it; no policy, no approval step. Deletion requests ride the same framework. **Nobody validates their own event** — with one exception the owner switches on deliberately: in the validation rules (§7), two independent switches let **admins** and/or **owners** settle *their own* **reservation deletion** requests on the spot instead of waiting for a validator. Both are **off by default**, they reach reservation deletions and nothing else, and an auto-settled deletion is marked as such in the events feed — always distinguishable from a peer-reviewed one.
 
+#### The booking sheet
+
+What opens when you tap a free place: the window, whether you check in
+now, and for an administrator, who it is for. The sheet only proposes —
+every rule is checked by the server when you confirm, so a place that
+was taken a second ago is refused here rather than double-booked.
+
 ## 5. Calendar (Calendar tab)
 
 The month at a glance, with two scopes and two shapes:
@@ -392,6 +399,14 @@ Your role-bound invites (§2): member invite = the workspace ID (replace it with
 ![](assets/help/images/workspace-id-qr.jpg)
 
 *Workspace ID & QR: the member invite (QR + ID — copy, change, share as PNG, invite someone) and the admin-invite tab.*
+
+#### The workspace ID
+
+Four to twenty letters or digits, unique across DesKilo. It is both the
+human-readable name of the space and the **walk-in invite**: anyone with
+it can ask to join, and every join still waits for an administrator to
+confirm. Change it and the old one stops working immediately — print the
+QR again.
 
 ### Availability
 
@@ -942,6 +957,26 @@ Keep **test and live environments strictly apart**: every provider has separate 
 | **Adyen** | Enterprise & omnichannel, one API for nearly every method | Not integrated — would be a new provider in DesKilo (contributions welcome). |
 | **Braintree** | Mobile & web drop-in UI (PayPal-owned) | Not integrated — DesKilo's direct PayPal integration already covers that ground. |
 
+#### The payment provider
+
+Which service takes the money — PayPal, Stripe, Mollie, or Wero through
+Mollie. A probe reports which providers are ready and which fields are
+still missing, so you learn it here rather than from a failed payment.
+
+#### Provider credentials
+
+The keys the provider issued you. They are **write-only**: you can
+replace a field or clear a provider, but the values are never shown
+again, not to you and not to any client — the screen reads back only the
+key names. Leave a field blank to keep what is stored. They live on the
+workspace and never enter a space file or a deployment.
+
+#### Payment methods
+
+Which ways of paying the space accepts and what each one is called on a
+document — transfer, card, cash, cheque. The label is what an invoice
+and a receipt print.
+
 ### Setting up RFID / NFC badges
 
 Physical cards let people check in with a tap — no phone needed.
@@ -995,6 +1030,13 @@ Your ledger answers *what do I owe, what am I owed* — and *how much can I stil
 - **Documents** — **Invoices** (yours are always readable here: positions, balance, status — and for issuers the invoicing hub, §11), **My conditions** (which renders the document titled *Financial agreement*) and the **monthly payments report**, self-service (§11).
 
 Finances has **four faces** along the top — **Statement · Payments · Invoices · Documents** (§9c–9f) — sharing the **‹ month ›** chooser and the **PDF** button; the shield, the bell and the gear sit in the app bar as everywhere else.
+
+#### NFC badge check-in
+
+Turns on tapping a card instead of scanning a QR. The card's UID is
+stored as a **hash**, never as itself, so a badge can be revoked but
+never read back out of DesKilo. Android only; elsewhere the QR badge
+does the same job.
 
 ### 9a. Once the month is invoiced, the invoice decides
 
@@ -1406,6 +1448,13 @@ Which design an invoice is printed with, and the texts that design
 carries. A design is per document kind and per language; a reader with
 no language of their own gets the workspace's.
 
+#### The report editor
+
+Where a document's design is written. Two ways in: **bands** — header,
+body, continuation, footer, one sign per line — and a **positioned
+layout** in XML for a document that must satisfy a window envelope or a
+national form. A layout wins over the bands for the kind it is set on.
+
 ### 11d. The report suite & the document library
 
 - **Financial agreement** — every standing price that applies to a member: subscription, extra half-day, services, packages, accessory supplements and the whole-space prices, **desks and tables included**. Owners/admins send it from a member's action sheet; every member can quick-view/download/share their own from *Finances → Documents*.
@@ -1458,6 +1507,13 @@ How many reminders an unpaid invoice gets, how long after the term each
 one goes, and what each one says. Once a day the open invoices past
 their term move to their next level; a level already reached is never
 re-sent.
+
+#### Automatic reminders
+
+Off, reminders are sent by hand. On, once a day every open invoice past
+its term moves to its next level and sends what that level says. A level
+already reached is never sent twice, so turning this on does not flood
+anybody with the backlog.
 
 ### 11f. Regrouping invoices (settlement)
 
@@ -1678,6 +1734,68 @@ while it is on behaves differently.
 
 Uses the front lens instead of the back one. For a wall-mounted tablet
 whose back camera faces the wall.
+
+### Profiles
+
+One account, several spaces. The switcher shows each space you belong
+to, a development and production pair as one card with two chips, and
+switching becomes your default — a restart opens where you left.
+
+### Numbers and dates
+
+Which conventions numbers and dates are written in on **this device**.
+Separate from the app's language on purpose: someone may want an English
+app writing French dates.
+
+### Clock
+
+Twelve or twenty-four hours. It changes how times are written, never
+what they mean.
+
+### Show times in my time zone
+
+Off, times are the space's own — which is what a booking actually is.
+On, they are converted to where you are. Useful when travelling, and
+worth turning back off before comparing a screen with a colleague's.
+
+### Your own server
+
+Which Supabase project this app talks to. The default is DesKilo's own;
+point it at a project you host and the app is yours end to end. Changing
+it signs you out, because an account exists on a server rather than in
+the app.
+
+### How to run your own
+
+The bundle builds a second database from every migration in order, the
+edge functions, the buckets and the seed. That is what makes a
+self-hosted DesKilo identical to the reference one rather than a fork of
+it.
+
+### Who can see my data
+
+What each role in each of your spaces can read about you. It is a
+statement of what the server enforces, not a set of switches — the
+answer is the same whether or not this screen is open.
+
+### Export my data
+
+Everything DesKilo holds about you, as a file you keep. It is produced
+on request rather than kept ready, so it says what is true at the moment
+you ask.
+
+### Erase my data
+
+Removes you and what is yours. What cannot be erased is what the law
+requires the **space** to keep: an issued invoice is a document of the
+organisation, and it stays with the buyer identity it was issued with.
+The screen says which spaces this affects before anything happens.
+
+### Your data, your rights
+
+What is collected, why, on what legal basis, and how long it is kept.
+Consent that is asked for is recorded with its date, so you can see what
+you agreed to and when.
 
 ## 13. Notifications
 

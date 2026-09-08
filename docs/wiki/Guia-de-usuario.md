@@ -239,6 +239,15 @@ La misma acción *escribir al titular* está en la pestaña **Plano** cuando toc
 
 **Aprobaciones.** Donde el propietario puso una regla de validación sobre las **reservas de espacios enteros** (§7), la reserva bloquea el espacio inmediatamente y espera el quórum — un rechazo la cancela; sin regla, sin paso de aprobación. Las solicitudes de eliminación siguen el mismo marco. **Nadie valida su propio evento** — con una excepción que el propietario activa deliberadamente: en las reglas de validación (§7), dos interruptores independientes permiten a los **admins** y/o a los **propietarios** resolver al instante *sus propias* solicitudes de **eliminación de reserva**, sin esperar a un validador. Ambos están **desactivados por defecto**, alcanzan únicamente a las eliminaciones de reservas, y una eliminación resuelta automáticamente queda marcada como tal en el hilo de eventos — siempre distinguible de una revisada por otra persona.
 
+<!-- anchor: user.reservations.booking-sheet -->
+#### La hoja de reserva
+
+Lo que se abre al tocar una plaza libre: la ventana, si se registra
+ahora, y para un administrador, para quién es. La hoja solo propone —
+cada regla la comprueba el servidor al confirmar, de modo que una plaza
+ocupada un segundo antes se rechaza aquí en vez de reservarse dos
+veces.
+
 ## 5. Calendario (pestaña Calendario)
 
 El mes de un vistazo, con dos alcances y dos formas:
@@ -400,6 +409,15 @@ Tus invitaciones ligadas a rol (§2): invitación de miembro = el propio ID del 
 <p><img src="images/workspace-id-qr.jpg" width="240"></p>
 
 *ID del espacio y QR: la invitación de miembro (QR + ID — copiar, cambiar, compartir como PNG, invitar a alguien) y la pestaña de invitación admin.*
+
+<!-- anchor: user.workspace.code -->
+#### El identificador del espacio
+
+De cuatro a veinte letras o dígitos, único en todo DesKilo. Es a la vez
+el nombre legible del espacio y la **invitación de entrada**: quien lo
+tenga puede pedir unirse, y cada adhesión sigue esperando la
+confirmación de un administrador. Cambiarlo detiene el anterior al
+instante — vuelva a imprimir el QR.
 
 ### Disponibilidad
 
@@ -1004,6 +1022,30 @@ Mantén **los entornos de prueba y de producción estrictamente separados**: cad
 | **Adyen** | Empresas y omnicanal, una API para casi cualquier método | No integrado — sería un nuevo proveedor en DesKilo (las contribuciones son bienvenidas). |
 | **Braintree** | UI drop-in para móvil y web (propiedad de PayPal) | No integrado — la integración directa de DesKilo con PayPal ya cubre ese terreno. |
 
+<!-- anchor: user.money.payments.provider -->
+#### El proveedor de pago
+
+Qué servicio cobra — PayPal, Stripe, Mollie o Wero a través de Mollie.
+Una sonda informa de qué proveedores están listos y qué campos faltan
+todavía: se entera aquí en lugar de por un pago fallido.
+
+<!-- anchor: user.money.payments.credentials -->
+#### Credenciales del proveedor
+
+Las claves que le entregó el proveedor. Son de **solo escritura**: puede
+sustituir un campo o borrar un proveedor, pero los valores no vuelven a
+mostrarse, ni a usted ni a ningún cliente — la pantalla solo relee los
+nombres de las claves. Deje un campo vacío para conservar lo guardado.
+Viven en el espacio y nunca entran en un archivo de espacio ni en un
+despliegue.
+
+<!-- anchor: user.money.payments.methods -->
+#### Formas de pago
+
+Qué formas de pagar acepta el espacio y cómo se llama cada una en un
+documento — transferencia, tarjeta, efectivo, cheque. La etiqueta es lo
+que imprimen una factura y un recibo.
+
 ### Configurar las credenciales RFID / NFC
 
 Las tarjetas físicas permiten registrarse con un toque — sin teléfono.
@@ -1057,6 +1099,14 @@ Tu cuenta responde *qué debo, qué me deben* — y *cuánto puedo reservar aún
 - **Documentos** — **Facturas** (las tuyas siempre están legibles aquí: posiciones, saldo, estado — y para quien emite, el hub de facturación, §11), **Mis condiciones** (que produce el documento titulado *Acuerdo financiero*) y el **informe mensual de pagos**, en autoservicio (§11).
 
 Finanzas tiene **cuatro vistas** arriba — **Extracto · Pagos · Facturas · Documentos** (§9c–9f) — que comparten el selector **‹ mes ›** y el botón **PDF**; el escudo, la campana y la rueda están en la barra de la app como en todas partes.
+
+<!-- anchor: user.badges.nfc -->
+#### Registro con credencial NFC
+
+Activa acercar una tarjeta en vez de escanear un QR. El UID de la
+tarjeta se guarda como **hash**, nunca tal cual: una credencial puede
+revocarse pero jamás volver a leerse desde DesKilo. Solo Android; en
+otros sistemas la credencial QR hace lo mismo.
 
 ### 9a. Una vez facturado el mes, decide la factura
 
@@ -1489,6 +1539,15 @@ Con qué diseño se imprime una factura, y los textos que ese diseño
 lleva. Un diseño existe por tipo de documento y por idioma; quien no
 tiene idioma propio recibe el del espacio.
 
+<!-- anchor: user.money.reports.editor -->
+#### El editor de informes
+
+Donde se escribe el diseño de un documento. Dos entradas: las **bandas**
+— cabecera, cuerpo, continuación, pie, un signo por línea — y un
+**diseño posicionado** en XML para un documento que deba satisfacer un
+sobre con ventana o un formulario oficial. Un diseño gana a las bandas
+para el tipo en el que está puesto.
+
 ### 11d. La suite de informes y la biblioteca de documentos
 
 - **Acuerdo financiero** — cada precio vigente que se aplica a un miembro: suscripción, media jornada extra, servicios, paquetes, suplementos de accesorios y los precios de los espacios enteros, **mesas incluidas**. Propietarios y admins lo envían desde la ficha de acciones de un miembro; cada miembro puede ver/descargar/compartir el suyo en *Finanzas → Documentos*.
@@ -1543,6 +1602,14 @@ Cuántos recordatorios recibe una factura impagada, a qué plazo tras el
 vencimiento sale cada uno, y qué dice cada uno. Una vez al día las
 facturas abiertas vencidas pasan a su siguiente nivel; un nivel ya
 alcanzado no se reenvía nunca.
+
+<!-- anchor: user.money.reminders.automatic -->
+#### Recordatorios automáticos
+
+Desactivado, los recordatorios se envían a mano. Activado, una vez al día
+cada factura abierta vencida pasa a su siguiente nivel y envía lo que ese
+nivel dice. Un nivel ya alcanzado no se envía dos veces, así que
+activarlo no inunda a nadie con el atraso.
 
 ### 11f. Reagrupar facturas (liquidación)
 
@@ -1770,6 +1837,81 @@ haga se comporta distinto.
 
 Usa el objetivo delantero en vez del trasero. Para una tableta de pared
 cuya cámara trasera mira al muro.
+
+<!-- anchor: user.profile.profiles -->
+### Perfiles
+
+Una cuenta, varios espacios. El selector muestra cada espacio al que
+pertenece, una pareja desarrollo/producción como una sola tarjeta con dos
+chips, y cambiar se convierte en su valor por defecto — un reinicio abre
+donde lo dejó.
+
+<!-- anchor: user.profile.settings.regional-formats -->
+### Números y fechas
+
+Con qué convenciones se escriben números y fechas en **este
+dispositivo**. Separado del idioma de la app a propósito: alguien puede
+querer una app en inglés que escriba fechas españolas.
+
+<!-- anchor: user.profile.settings.clock -->
+### Reloj
+
+Doce o veinticuatro horas. Cambia cómo se escriben las horas, nunca lo
+que significan.
+
+<!-- anchor: user.profile.settings.device-zone -->
+### Mostrar las horas en mi zona
+
+Desactivado, las horas son las del espacio — lo que una reserva es en
+realidad. Activado, se convierten a donde usted está. Útil de viaje, y
+conviene volver a desactivarlo antes de comparar una pantalla con la de
+un colega.
+
+<!-- anchor: user.backend.server -->
+### Su propio servidor
+
+Con qué proyecto de Supabase habla esta app. Por defecto el de DesKilo;
+apúntela a un proyecto que aloje usted y la app es suya de principio a
+fin. Cambiarlo le desconecta, porque una cuenta existe en un servidor, no
+en la app.
+
+<!-- anchor: user.backend.how -->
+### Cómo alojar el suyo
+
+El paquete construye una segunda base a partir de cada migración en
+orden, las funciones edge, los buckets y la semilla. Es lo que hace que
+un DesKilo autoalojado sea idéntico al de referencia y no una
+bifurcación.
+
+<!-- anchor: user.privacy.visibility -->
+### Quién puede ver mis datos
+
+Qué puede leer de usted cada rol en cada uno de sus espacios. Es el
+enunciado de lo que el servidor aplica, no un juego de interruptores — la
+respuesta es la misma esté o no abierta esta pantalla.
+
+<!-- anchor: user.privacy.export -->
+### Exportar mis datos
+
+Todo lo que DesKilo guarda sobre usted, como archivo que se queda. Se
+produce a petición en vez de tenerse listo, así que dice lo que es cierto
+en el momento en que lo pide.
+
+<!-- anchor: user.privacy.erase -->
+### Borrar mis datos
+
+Le retira a usted y lo que es suyo. Lo que no puede borrarse es lo que la
+ley obliga al **espacio** a conservar: una factura emitida es un
+documento de la organización y permanece con la identidad de comprador
+con la que se emitió. La pantalla dice a qué espacios afecta antes de que
+ocurra nada.
+
+<!-- anchor: user.privacy.consent -->
+### Sus datos, sus derechos
+
+Qué se recoge, por qué, con qué base legal y cuánto tiempo se conserva.
+Un consentimiento pedido se registra con su fecha, así puede ver a qué
+accedió y cuándo.
 
 ## 13. Notificaciones
 

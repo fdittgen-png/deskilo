@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/backend/backend_settings.dart';
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../l10n/app_localizations.dart';
 
@@ -23,6 +24,7 @@ class BackendSettingsTile extends ConsumerWidget {
       title: HelpDotTitle(
         l10n?.backendServerTitle ?? 'Server',
         l10n?.helpTopicServer ?? 'your own server',
+        anchor: HelpAnchor.backendServer,
       ),
       subtitle: Text(
         endpoint == null

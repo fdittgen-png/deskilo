@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -85,7 +86,9 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
             helperText:
                 l10n?.workspaceCodeHint ?? '4–20 letters or digits, unique',
             suffixIcon:
-                HelpDot(l10n?.helpTopicWorkspaceId ?? 'Workspace ID'),
+                HelpDot(l10n?.helpTopicWorkspaceId ?? 'Workspace ID',
+                  anchor: HelpAnchor.workspaceCode,
+                ),
           ),
         ),
         actions: [
@@ -221,7 +224,9 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                         },
                       ),
                     ),
-                    HelpDot(l10n?.helpTopicWorkspaceId ?? 'Workspace ID'),
+                    HelpDot(l10n?.helpTopicWorkspaceId ?? 'Workspace ID',
+                      anchor: HelpAnchor.workspaceCode,
+                    ),
                   ],
                 ),
               ],

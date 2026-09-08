@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -81,6 +82,7 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
         HelpDot(
           AppLocalizations.of(context)?.helpHintMoneyInvoicesTip2Topic ??
               'Automatic payment reminders',
+          anchor: HelpAnchor.remindersRules,
         ),
         DropdownButton<int>(
           key: ValueKey(key),
@@ -137,6 +139,7 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
               l10n?.dunningAutomatic ?? 'Automatic reminders',
               l10n?.helpHintMoneyInvoicesTip2Topic ??
                   'Automatic payment reminders',
+              anchor: HelpAnchor.remindersAutomatic,
             ),
             subtitle: Text(l10n?.dunningAutomaticHint ??
                 'Once a day, open invoices past the term get their next '

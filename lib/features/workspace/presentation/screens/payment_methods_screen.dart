@@ -3,6 +3,7 @@ import '../../../../core/country/country_catalog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -131,6 +132,7 @@ class _PaymentMethodsScreenState
               labelText: label,
               suffixIcon: HelpDot(
                 l10n?.helpHintMoneyPaymentsTopic ?? 'The Payments face',
+                anchor: HelpAnchor.paymentsMethods,
               ),
             ),
           ),

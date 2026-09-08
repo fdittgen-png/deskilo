@@ -119,6 +119,61 @@ abstract final class HelpAnchor {
   /// When the month is billed — the subscription line goes ahead of it.
   static const billingSchedule = 'user.money.billing.schedule';
 
+  // ── the remaining surfaces ─────────────────────────────────────────
+  /// The sheet only proposes; the server checks on confirm.
+  static const reservationsBookingSheet = 'user.reservations.booking-sheet';
+
+  /// The readable name and the walk-in invite, in one.
+  static const workspaceCode = 'user.workspace.code';
+
+  /// Which service takes the money, and what is still missing.
+  static const paymentsProvider = 'user.money.payments.provider';
+
+  /// Write-only keys that never leave the workspace.
+  static const paymentsCredentials = 'user.money.payments.credentials';
+
+  /// What a document calls each way of paying.
+  static const paymentsMethods = 'user.money.payments.methods';
+
+  /// The card's UID is stored as a hash, never as itself.
+  static const badgesNfc = 'user.badges.nfc';
+
+  /// One account, several spaces; a pair is one card.
+  static const profileProfiles = 'user.profile.profiles';
+
+  /// Number and date conventions, per device.
+  static const profileRegionalFormats = 'user.profile.settings.regional-formats';
+
+  /// Twelve or twenty-four hours.
+  static const profileClock = 'user.profile.settings.clock';
+
+  /// Times as the space's, or converted to yours.
+  static const profileDeviceZone = 'user.profile.settings.device-zone';
+
+  /// Which Supabase project the app talks to.
+  static const backendServer = 'user.backend.server';
+
+  /// The bundle that makes a self-host identical, not a fork.
+  static const backendHow = 'user.backend.how';
+
+  /// What the server enforces, not a set of switches.
+  static const privacyVisibility = 'user.privacy.visibility';
+
+  /// Produced on request, so it says what is true then.
+  static const privacyExport = 'user.privacy.export';
+
+  /// What the law requires the space to keep cannot go.
+  static const privacyErase = 'user.privacy.erase';
+
+  /// What is collected, why, and on what basis.
+  static const privacyConsent = 'user.privacy.consent';
+
+  /// Bands, or a positioned layout that wins over them.
+  static const reportsEditor = 'user.money.reports.editor';
+
+  /// A level already reached is never sent twice.
+  static const remindersAutomatic = 'user.money.reminders.automatic';
+
   // ── members, roles and features ────────────────────────────────────
   /// The percentage that picks the fee band.
   static const membersSubscription = 'user.members.subscription';
@@ -526,6 +581,24 @@ abstract final class HelpAnchor {
     membersActions,
     rolesMatrix,
     featuresSwitch,
+    reservationsBookingSheet,
+    workspaceCode,
+    paymentsProvider,
+    paymentsCredentials,
+    paymentsMethods,
+    badgesNfc,
+    profileProfiles,
+    profileRegionalFormats,
+    profileClock,
+    profileDeviceZone,
+    backendServer,
+    backendHow,
+    privacyVisibility,
+    privacyExport,
+    privacyErase,
+    privacyConsent,
+    reportsEditor,
+    remindersAutomatic,
   };
 
   /// The screenshot that documents [anchor], by the naming rule.

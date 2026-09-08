@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -237,6 +238,7 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
                 ),
                 HelpDot(
                   l10n?.helpHintMoneyPaymentsTip3Topic ?? 'online payments',
+                  anchor: HelpAnchor.paymentsProvider,
                 ),
                 Chip(
                   label: Text(
@@ -298,6 +300,7 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
                           suffixIcon: HelpDot(
                             l10n?.helpHintMoneyPaymentsTip3Topic ??
                                 'online payments',
+                            anchor: HelpAnchor.paymentsCredentials,
                           ),
                         ),
                       ),
