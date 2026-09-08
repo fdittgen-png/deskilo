@@ -1076,6 +1076,60 @@ La acción **Factura electrónica (XML)** abre una hoja que responde a esto para
 
 DesKilo sigue sin transmitir nada por cuenta propia: produce el documento y lo entrega a la plataforma que elegiste. Los calendarios de obligatoriedad siguen moviéndose: consulta a tu propia administración tributaria antes del plazo que te afecte.
 
+<!-- anchor: user.money.einvoice.overview -->
+#### La plataforma de factura electrónica
+
+Adónde se transmite una factura estructurada, y con qué credenciales. Un
+documento puede ir a **dos destinos a la vez**: la plataforma que exige
+su país y el servicio propio del cliente. Cualquiera puede quedar
+vacío. Las credenciales viven en el espacio y nunca entran en un archivo
+de espacio ni en un despliegue: una exportación que envíe a un colega
+lleva la configuración, no las claves.
+
+<!-- anchor: user.money.einvoice.endpoint -->
+#### URL de envío
+
+La dirección a la que se envía la factura. Cópiela de la documentación
+de la plataforma — una barra final o un segmento de versión que falta es
+el motivo habitual de una transmisión que falla sin nada útil que leer.
+
+<!-- anchor: user.money.einvoice.token -->
+#### Token o credencial
+
+El secreto que le identifica ante la plataforma. Una vez guardado no se
+muestra nunca más, ni siquiera a usted: la pantalla dice *definido* y
+nada más. Vuelva a escribirlo para sustituirlo, déjelo vacío para
+conservarlo.
+
+<!-- anchor: user.money.einvoice.auth-header -->
+#### Cabecera de autenticación
+
+La cabecera HTTP en la que viaja el token — `Authorization` en la
+mayoría de plataformas, un nombre propio del proveedor en algunas. Si la
+documentación muestra `Bearer <token>`, ponga aquí el nombre de la
+cabecera y el token desnudo arriba.
+
+<!-- anchor: user.money.einvoice.file-field -->
+#### Nombre del campo de archivo
+
+El nombre del campo de formulario multipart bajo el que se sube el
+documento. Las plataformas difieren (`file`, `invoice`, `document`), y
+equivocarse produce un rechazo que no nombra ningún campo.
+
+<!-- anchor: user.money.einvoice.uat -->
+#### URL y token de UAT
+
+El entorno de aceptación de la plataforma, donde una transmisión real
+puede ensayarse contra una validación real sin emitir nada. Rellénelos
+antes del primer envío real, no después.
+
+<!-- anchor: user.money.einvoice.dev -->
+#### URL y token de desarrollo
+
+El punto de acceso que usa un **espacio de desarrollo**. No puede
+alcanzar una plataforma gubernamental, y eso es lo que hace imposible
+confundir una factura de prueba con una real.
+
 ### 11c. El editor de informes — cada documento, cuatro modelos, cinco idiomas
 
 La **Plantilla del PDF de factura** (icono de lápiz en la cabecera de Facturas, o *Ajustes del espacio*) es una herramienta de informes por bandas para cada documento que imprime la app. Tres **bandas** de informe se renderizan en el PDF — cabecera, cuerpo (las líneas de la factura), pie — mientras que el XML de la factura electrónica nunca se toca.

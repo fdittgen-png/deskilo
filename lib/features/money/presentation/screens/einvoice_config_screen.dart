@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -217,7 +218,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                   keyboardType: TextInputType.url,
                   decoration: InputDecoration(
                     labelText: l10n?.einvoiceConfigEndpoint ?? 'Upload URL',
-                    suffixIcon: HelpDot(l10n?.helpTopicEinvoice ?? 'e-invoice'),
+                    suffixIcon: HelpDot(
+                      l10n?.helpTopicEinvoice ?? 'e-invoice',
+                      anchor: HelpAnchor.einvoiceEndpoint,
+                    ),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -234,7 +238,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                             'A token is stored (type a new one to replace '
                                 'it).')
                         : null,
-                    suffixIcon: HelpDot(l10n?.helpTopicEinvoice ?? 'e-invoice'),
+                    suffixIcon: HelpDot(
+                      l10n?.helpTopicEinvoice ?? 'e-invoice',
+                      anchor: HelpAnchor.einvoiceToken,
+                    ),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -243,7 +250,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                   controller: _header,
                   decoration: InputDecoration(
                     labelText: l10n?.einvoiceConfigHeader ?? 'Auth header',
-                    suffixIcon: HelpDot(l10n?.helpTopicEinvoice ?? 'e-invoice'),
+                    suffixIcon: HelpDot(
+                      l10n?.helpTopicEinvoice ?? 'e-invoice',
+                      anchor: HelpAnchor.einvoiceAuthHeader,
+                    ),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -252,7 +262,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                   controller: _field,
                   decoration: InputDecoration(
                     labelText: l10n?.einvoiceConfigField ?? 'File field name',
-                    suffixIcon: HelpDot(l10n?.helpTopicEinvoice ?? 'e-invoice'),
+                    suffixIcon: HelpDot(
+                      l10n?.helpTopicEinvoice ?? 'e-invoice',
+                      anchor: HelpAnchor.einvoiceFileField,
+                    ),
                   ),
                 ),
                 // #568 — the customer's own delivery service, beside the
@@ -285,7 +298,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                     decoration: InputDecoration(
                       labelText: l10n?.einvoiceConfigEndpoint ?? 'Upload URL',
                       suffixIcon:
-                          HelpDot(l10n?.helpTopicEinvoice ?? 'e-invoice'),
+                          HelpDot(
+                            l10n?.helpTopicEinvoice ?? 'e-invoice',
+                            anchor: HelpAnchor.einvoiceEndpoint,
+                          ),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.md),
@@ -304,7 +320,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                                       'replace it).')
                               : null,
                       suffixIcon:
-                          HelpDot(l10n?.helpTopicEinvoice ?? 'e-invoice'),
+                          HelpDot(
+                            l10n?.helpTopicEinvoice ?? 'e-invoice',
+                            anchor: HelpAnchor.einvoiceToken,
+                          ),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.md),
@@ -314,7 +333,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                     decoration: InputDecoration(
                       labelText: l10n?.einvoiceConfigHeader ?? 'Auth header',
                       suffixIcon:
-                          HelpDot(l10n?.helpTopicEinvoice ?? 'e-invoice'),
+                          HelpDot(
+                            l10n?.helpTopicEinvoice ?? 'e-invoice',
+                            anchor: HelpAnchor.einvoiceAuthHeader,
+                          ),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.md),
@@ -325,7 +347,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                       labelText:
                           l10n?.einvoiceConfigField ?? 'File field name',
                       suffixIcon:
-                          HelpDot(l10n?.helpTopicEinvoice ?? 'e-invoice'),
+                          HelpDot(
+                            l10n?.helpTopicEinvoice ?? 'e-invoice',
+                            anchor: HelpAnchor.einvoiceFileField,
+                          ),
                     ),
                   ),
                 ],
@@ -352,7 +377,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                   keyboardType: TextInputType.url,
                   decoration: InputDecoration(
                     labelText: l10n?.einvoiceUatEndpoint ?? 'UAT upload URL',
-                    suffixIcon: HelpDot(l10n?.helpTopicEinvoice ?? 'e-invoice'),
+                    suffixIcon: HelpDot(
+                      l10n?.helpTopicEinvoice ?? 'e-invoice',
+                      anchor: HelpAnchor.einvoiceUat,
+                    ),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -368,7 +396,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                             'A token is stored (type a new one to replace '
                                 'it).')
                         : null,
-                    suffixIcon: HelpDot(l10n?.helpTopicEinvoice ?? 'e-invoice'),
+                    suffixIcon: HelpDot(
+                      l10n?.helpTopicEinvoice ?? 'e-invoice',
+                      anchor: HelpAnchor.einvoiceUat,
+                    ),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -378,7 +409,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                   keyboardType: TextInputType.url,
                   decoration: InputDecoration(
                     labelText: l10n?.einvoiceDevEndpoint ?? 'Dev upload URL',
-                    suffixIcon: HelpDot(l10n?.helpTopicEinvoice ?? 'e-invoice'),
+                    suffixIcon: HelpDot(
+                      l10n?.helpTopicEinvoice ?? 'e-invoice',
+                      anchor: HelpAnchor.einvoiceDev,
+                    ),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -394,7 +428,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                             'A token is stored (type a new one to replace '
                                 'it).')
                         : null,
-                    suffixIcon: HelpDot(l10n?.helpTopicEinvoice ?? 'e-invoice'),
+                    suffixIcon: HelpDot(
+                      l10n?.helpTopicEinvoice ?? 'e-invoice',
+                      anchor: HelpAnchor.einvoiceDev,
+                    ),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.lg),
