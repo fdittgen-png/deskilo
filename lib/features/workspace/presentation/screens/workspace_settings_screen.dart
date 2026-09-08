@@ -17,6 +17,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/files/file_saver.dart';
+import '../../../../core/share/file_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -207,6 +208,11 @@ class _WorkspaceSettingsScreenState
   Future<void> _exportXml(Workspace workspace) async {
     final l10n = AppLocalizations.of(context);
     setState(() => _busy = true);
+    // #1012 — every export leaves a trace of its start and its end, so a
+    // silent device tells its story; the save is bounded, so a bridge
+    // that never answers becomes an error instead of a frozen screen.
+    TraceLogger.instance.log(TraceLevel.info, 'workspace',
+        'xml export started for ${workspace.id}');
     if (!await runGuarded(
       context,
       domain: 'workspace',
@@ -251,12 +257,26 @@ class _WorkspaceSettingsScreenState
             accessories: accessories,
             seatAccessories: seatAccessories,
           );
-          final path = await ref.read(fileSaverProvider)(
-            bytes: utf8.encode(xml),
-            fileName: workspaceXmlFileName(workspace.name),
-          );
+          final bytes = utf8.encode(xml);
+          final fileName = workspaceXmlFileName(workspace.name);
+          final path = await ref
+              .read(fileSaverProvider)(bytes: bytes, fileName: fileName)
+              .timeout(const Duration(seconds: 30));
+          TraceLogger.instance.log(TraceLevel.info, 'workspace',
+              'xml export saved: ${path ?? '(no path)'} (${bytes.length} bytes)');
           if (!mounted) return;
-          _announceSaved(l10n, path);
+          _announceSaved(
+            l10n,
+            path,
+            action: SnackBarAction(
+              label: l10n?.commonShare ?? 'Share',
+              onPressed: () => ref.read(fileSharerProvider)(
+                bytes: bytes,
+                fileName: fileName,
+                mimeType: 'application/xml',
+              ),
+            ),
+          );
       },
     )) {
       if (mounted) setState(() => _busy = false);
@@ -266,12 +286,14 @@ class _WorkspaceSettingsScreenState
   }
 
   /// Confirms a local export saved (or reports failure) — never a share.
-  void _announceSaved(AppLocalizations? l10n, String? path) {
+  void _announceSaved(AppLocalizations? l10n, String? path,
+      {SnackBarAction? action}) {
     if (path == null) {
       AppSnack.error(context, l10n?.commonSaveFailed ?? 'Could not save.');
       return;
     }
-    AppSnack.success(context, l10n?.commonSavedTo(path) ?? 'Saved to $path');
+    AppSnack.success(context, l10n?.commonSavedTo(path) ?? 'Saved to $path',
+        action: action);
   }
 
   /// Role label for a member — owner outranks admin outranks member.

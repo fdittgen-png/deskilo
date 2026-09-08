@@ -2594,6 +2594,12 @@ abstract class AppLocalizations {
   /// **'This app is free, open source and ad-free. If you find it useful, support the developer.'**
   String get aboutSupportBody;
 
+  /// #1012 the share action on a saved export
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get commonShare;
+
   /// #916 configuration transfer: featureConfigurationTransfer
   ///
   /// In en, this message translates to:

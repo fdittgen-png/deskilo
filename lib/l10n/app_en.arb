@@ -1695,6 +1695,10 @@
   "@aboutSupportBody": {
     "description": "Support block body (#560)"
   },
+  "commonShare": "Share",
+  "@commonShare": {
+    "description": "#1012 the share action on a saved export"
+  },
   "featureConfigurationTransfer": "Configuration in the space file",
   "@featureConfigurationTransfer": {
     "description": "#916 configuration transfer: featureConfigurationTransfer"

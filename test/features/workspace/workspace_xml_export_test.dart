@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
+import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/workspace/domain/workspace_xml.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ Future<void> pumpWorkspaceSettings(
   WidgetTester tester, {
   required FileSaver saver,
   FakeAccessoryRepository? accessories,
+  FileSharer? sharer,
 }) async {
   // The settings form outgrew the 800×600 test viewport long ago (#155);
   // the export tile sits below Save, so keep the whole form built.
@@ -42,6 +44,7 @@ Future<void> pumpWorkspaceSettings(
     ProviderScope(
       overrides: [
         ...standardTestOverrides(
+          fileSharer: sharer,
           floorPlan: floorPlan,
           accessories: accessoryRepository,
         ),
@@ -134,6 +137,28 @@ void main() {
       findsOneWidget,
     );
   });
+  testWidgets('#1012 — the saved export leaves a trace and offers Share; '
+      'nothing is shared until the action is tapped', (tester) async {
+    final shared = <String>[];
+    await pumpWorkspaceSettings(
+      tester,
+      saver: ({required bytes, required fileName}) async => '/local/$fileName',
+      sharer: ({required bytes, required fileName, required mimeType, String? text}) async {
+        shared.add('$fileName:$mimeType');
+      },
+    );
+    final tile = find.byKey(const Key('workspaceSettingsExportXml'));
+    await tester.ensureVisible(tile);
+    await tester.pumpAndSettle();
+    await tester.tap(tile);
+    await tester.pumpAndSettle();
+    expect(find.text('Share'), findsOneWidget);
+    expect(shared, isEmpty);
+    await tester.tap(find.text('Share'));
+    await tester.pumpAndSettle();
+    expect(shared, ['deskilo-test-space.xml:application/xml']);
+  });
+
 }
 
 /// #916 — answers the configuration export with a small tree; the plan

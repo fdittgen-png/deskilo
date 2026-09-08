@@ -1456,6 +1456,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese App ist kostenlos, Open Source und werbefrei. Wenn sie dir nützt, unterstütze den Entwickler.';
 
   @override
+  String get commonShare => 'Teilen';
+
+  @override
   String get featureConfigurationTransfer => 'Konfiguration in der Raumdatei';
 
   @override

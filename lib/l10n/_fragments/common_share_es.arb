@@ -1,0 +1,7 @@
+{
+  "@@locale": "es",
+  "commonShare": "Compartir",
+  "@commonShare": {
+    "description": "#1012 the share action on a saved export"
+  }
+}
