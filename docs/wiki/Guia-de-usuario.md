@@ -532,6 +532,17 @@ La lista es **jerárquica**: una función que necesita otra aparece indentada ba
 
 </details>
 
+<!-- anchor: user.features.switch -->
+#### Un interruptor de funcionalidad
+
+Cada funcionalidad es un interruptor. Actívelo y aparecen **todas** sus
+superficies — la casilla, la pestaña, el botón, el enlace profundo;
+desactívelo y no queda ninguna, ni siquiera una URL guardada. Lo que un
+interruptor nunca deshace es la aritmética ya aplicada: una factura
+emitida con la funcionalidad activa conserva lo que dice. Algunos
+interruptores necesitan otro antes, y el que espera a su padre lo dice
+en vez de fallar en silencio.
+
 ### Miembros y planes
 
 Toca un miembro para abrir su **ficha de gestión** — cada acción por miembro en un solo lugar: **Enviar el acuerdo financiero** (§11d), **Mensajes**, **Añadir un servicio** (servicio, cantidad, mes de facturación → *enviar a confirmación*), **Suscripción** (su porcentaje), **Cuando se acaban los días** (la política de exceso, §9), **Límite de reservas** (cuántas reservas **abiertas** puede mantener el miembro en total, caigan cuando caigan), **Reservas simultáneas** (cuántas reservas pueden **solaparse en el tiempo** — el cupo personal que prevalece sobre el número del espacio, §4b; son dos topes distintos, así que lee las etiquetas), **Puede reservar una mesa, oficina o planta entera**, **Credenciales** (§10), **Nombrar admin** (validado, §7), **Copropiedad**, **Convertir en quiosco** — o **Revertir quiosco a miembro** en una cuenta de dispositivo —, **Aprobar membresía** o **Rechazar membresía** cuando está pendiente, y **Pausar la membresía**. Cada fila muestra el **correo** del miembro bajo el nombre.
@@ -551,6 +562,66 @@ Toca un miembro para abrir su **ficha de gestión** — cada acción por miembro
 <p><img src="images/member-subscription.jpg" width="240"> <img src="images/member-reservation-limit.jpg" width="240"></p>
 
 *El diálogo de suscripción (el porcentaje del miembro) y el diálogo de límite de reservas (el tope de reservas abiertas).*
+
+<!-- anchor: user.members.subscription -->
+#### La suscripción de un miembro
+
+El porcentaje de las medias jornadas laborables del mes al que el miembro
+tiene derecho. Elige el tramo de tarifa, y el tramo decide lo que cuesta
+el mes. Un valor negociado fuera de la lista solo es posible donde el
+espacio lo permite.
+
+<!-- anchor: user.members.overage-policy -->
+#### Cuando se acaban los días
+
+Qué pasa más allá de la asignación, para este miembro: rechazar más
+reservas, cobrarlas al precio de exceso, o dejarle comprar un paquete de
+días. Hasta que fije algo aquí, se aplica el valor por defecto del
+espacio.
+
+<!-- anchor: user.members.reservation-limit -->
+#### Límite de reservas
+
+Cuántas reservas **abiertas** puede tener este miembro en total. Acota el
+tamaño del pendiente, y es cosa distinta del límite de simultaneidad de
+abajo.
+
+<!-- anchor: user.members.simultaneous -->
+#### Reservas simultáneas
+
+Cuántas reservas puede tener este miembro que **se solapen en el
+tiempo**. Una por defecto, y es lo que impide que alguien tenga dos
+plazas para la misma tarde. La suya propia nunca puede fijarla.
+
+<!-- anchor: user.members.vat-treatment -->
+#### Tratamiento de IVA
+
+Qué hace la contraparte con el impuesto: nacional, empresa
+intracomunitaria que se autorrepercute, consumidor intracomunitario, o
+exportación. Se deduce del país y del número de IVA del miembro, y queda
+congelado en cada documento al emitirlo.
+
+<!-- anchor: user.members.negotiation -->
+#### Negociación de precio
+
+Un precio acordado con este miembro y distinto del catálogo. Se registra
+como negociación en vez de escribirse sobre la tarifa: el documento dice
+lo acordado y el catálogo sigue siendo cierto.
+
+<!-- anchor: user.members.co-ownership -->
+#### Copropiedad
+
+Eleva a un miembro a copropietario. Un copropietario tiene los permisos
+de un propietario y cuenta como tal allí donde una regla pide uno —
+incluida la regla de que el último propietario activo no puede
+retirarse.
+
+<!-- anchor: user.members.actions -->
+#### Las acciones sobre un miembro
+
+Todo lo que un administrador puede hacer por un miembro — suscripción,
+exceso, acuerdo, pausa, límites, credenciales, rol — reunido en una sola
+hoja, para que nada haya que buscarlo en otra pantalla.
 
 ### Facturación
 
@@ -865,6 +936,15 @@ Una matriz central decide **qué rol tiene qué permiso** — gestionar roles, g
 <p><img src="images/roles-matrix.jpg" width="240"></p>
 
 *Gestión de roles: la tarjeta del propietario bloqueada, la del copropietario con todo concedido por defecto — las tarjetas de admin y miembro siguen con los mismos once permisos.*
+
+<!-- anchor: user.roles.matrix -->
+#### La matriz de roles
+
+Los roles a un lado, los permisos al otro. Cada casilla es un
+interruptor, salvo las que un propietario tiene siempre. Un permiso se
+pide al servidor por una sola función: quitar una casilla lo quita en
+todas partes a la vez — la pantalla oculta el botón, y la llamada de
+detrás lo rechaza igualmente.
 
 ### Configurar los pagos en línea
 

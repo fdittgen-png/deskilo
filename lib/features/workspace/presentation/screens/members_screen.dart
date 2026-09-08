@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../money/presentation/widgets/negotiation_card.dart';
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -137,7 +138,9 @@ class MembersScreen extends ConsumerWidget {
           ),
           if (negotiationVisible)
             HelpDot(l10n?.helpHintMembersTipNegotiationTopic ??
-                'Price negotiations'),
+                'Price negotiations',
+              anchor: HelpAnchor.membersNegotiation,
+            ),
         ]),
       if (isOwner && !member.isKiosk && active)
         _sheetAction(
@@ -315,7 +318,9 @@ class MembersScreen extends ConsumerWidget {
     return Builder(
       builder: (tileContext) => ListTile(
         leading: Icon(icon),
-        title: topic == null ? Text(label) : HelpDotTitle(label, topic),
+        title: topic == null ? Text(label) : HelpDotTitle(label, topic,
+          anchor: HelpAnchor.membersActions,
+        ),
         onTap: () {
           Navigator.of(tileContext).pop();
           onTap();

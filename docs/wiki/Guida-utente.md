@@ -534,6 +534,17 @@ L'elenco è **gerarchico**: una funzionalità che ne richiede un'altra compare r
 
 </details>
 
+<!-- anchor: user.features.switch -->
+#### Un interruttore di funzionalità
+
+Ogni funzionalità è un interruttore. Accendilo e appaiono **tutte** le
+sue superfici — la scheda, la linguetta, il pulsante, il collegamento
+diretto; spegnilo e non ne resta nessuna, nemmeno un URL nei preferiti.
+Ciò che un interruttore non disfa mai è l'aritmetica già applicata: una
+fattura emessa con la funzionalità accesa mantiene ciò che dice. Alcuni
+interruttori ne richiedono un altro prima, e quello che attende il
+genitore lo dice invece di fallire in silenzio.
+
 ### Membri e piani
 
 Tocca un membro per aprire la sua **scheda di gestione** — ogni azione per membro in un unico posto: **Invia l'accordo finanziario** (§11d), **Messaggi**, **Aggiungi un servizio** (servizio, quantità, mese di fatturazione → *invia per conferma*), **Abbonamento** (la sua percentuale), **Quando i giorni finiscono** (la politica di consumo extra, §9), **Limite di prenotazioni** (quante prenotazioni **aperte** il membro può tenere in tutto, in qualunque momento cadano), **Prenotazioni simultanee** (quante prenotazioni possono **sovrapporsi nel tempo** — la quota personale che prevale sul numero dello spazio, §4b; sono due limiti diversi, quindi leggi le etichette), **Può prenotare un tavolo, ufficio o piano intero**, **Badge** (§10), **Rendi admin** (validato, §7), **Comproprietà**, **Trasforma in chiosco** — o **Riporta il chiosco a membro** su un account dispositivo —, **Approva l'adesione** o **Rifiuta l'adesione** per un'iscrizione in attesa, e **Sospendi l'iscrizione**. Ogni riga mostra l'**email** del membro sotto il nome.
@@ -553,6 +564,67 @@ Tocca un membro per aprire la sua **scheda di gestione** — ogni azione per mem
 <p><img src="images/member-subscription.jpg" width="240"> <img src="images/member-reservation-limit.jpg" width="240"></p>
 
 *Il dialogo dell'abbonamento (la percentuale del membro) e quello del limite di prenotazioni (il tetto alle prenotazioni aperte).*
+
+<!-- anchor: user.members.subscription -->
+#### L'abbonamento di un membro
+
+La percentuale delle mezze giornate lavorative del mese a cui il membro
+ha diritto. Sceglie la fascia tariffaria, e la fascia decide quanto costa
+il mese. Un valore negoziato fuori elenco è possibile solo dove lo spazio
+lo consente.
+
+<!-- anchor: user.members.overage-policy -->
+#### Quando i giorni finiscono
+
+Cosa succede oltre l'assegnazione, per questo membro: rifiutare altre
+prenotazioni, addebitarle al prezzo di eccedenza, o lasciargli comprare
+un pacchetto giornaliero. Finché non imposti nulla qui, vale il valore
+predefinito dello spazio.
+
+<!-- anchor: user.members.reservation-limit -->
+#### Limite di prenotazioni
+
+Quante prenotazioni **aperte** questo membro può tenere in tutto. Limita
+la dimensione dell'arretrato, ed è cosa diversa dal limite di
+contemporaneità qui sotto.
+
+<!-- anchor: user.members.simultaneous -->
+#### Prenotazioni contemporanee
+
+Quante prenotazioni questo membro può tenere che **si sovrappongono nel
+tempo**. Una per impostazione predefinita, ed è ciò che impedisce a
+qualcuno di tenere due posti per lo stesso pomeriggio. La propria non la
+puoi mai impostare.
+
+<!-- anchor: user.members.vat-treatment -->
+#### Trattamento IVA
+
+Cosa fa la controparte dell'imposta: nazionale, impresa
+intracomunitaria in inversione contabile, consumatore intracomunitario,
+o esportazione. Si deduce dal paese e dalla partita IVA del membro, e
+viene congelato su ogni documento all'emissione.
+
+<!-- anchor: user.members.negotiation -->
+#### Negoziazione di prezzo
+
+Un prezzo concordato con questo membro e diverso dal catalogo. È
+registrato come negoziazione anziché digitato sopra la tariffa: il
+documento dice ciò che è stato concordato e il catalogo resta vero.
+
+<!-- anchor: user.members.co-ownership -->
+#### Comproprietà
+
+Eleva un membro a comproprietario. Un comproprietario ha i permessi di un
+proprietario e conta come tale ovunque una regola ne chieda uno —
+compresa la regola per cui l'ultimo proprietario attivo non può essere
+rimosso.
+
+<!-- anchor: user.members.actions -->
+#### Le azioni su un membro
+
+Tutto ciò che un amministratore può fare per un membro — abbonamento,
+eccedenza, accordo, pausa, limiti, badge, ruolo — raccolto in un solo
+foglio, così nulla va cercato su un'altra schermata.
 
 ### Fatturazione
 
@@ -870,6 +942,15 @@ Una matrice centrale decide **quale ruolo detiene quale permesso** — gestire i
 <p><img src="images/roles-matrix.jpg" width="240"></p>
 
 *Gestione dei ruoli: la scheda del proprietario bloccata, quella del comproprietario con tutto concesso per impostazione predefinita — seguono le schede admin e membro con le stesse undici autorizzazioni.*
+
+<!-- anchor: user.roles.matrix -->
+#### La matrice dei ruoli
+
+I ruoli da un lato, i permessi dall'altro. Ogni casella è un
+interruttore, tranne quelle che un proprietario ha sempre. Un permesso è
+chiesto al server da una sola funzione: togliere una casella lo toglie
+ovunque in una volta — lo schermo nasconde il pulsante, e la chiamata
+dietro rifiuta comunque.
 
 ### Configurare i pagamenti online
 

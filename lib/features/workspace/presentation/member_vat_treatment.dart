@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../l10n/app_localizations.dart';
@@ -35,6 +36,7 @@ Future<void> pickMemberVatTreatment(
         title: HelpDotTitle(
           l10n?.memberVatTreatmentLabel ?? 'VAT treatment',
           l10n?.helpTopicVat ?? 'VAT',
+          anchor: HelpAnchor.membersVatTreatment,
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,

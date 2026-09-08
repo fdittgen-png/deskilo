@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -223,6 +224,7 @@ class RolesScreen extends ConsumerWidget {
                                 _ => l10n?.helpHintMembersTip4Topic ??
                                     'Role management',
                               },
+                              anchor: HelpAnchor.rolesMatrix,
                             ),
                           ),
                         ),

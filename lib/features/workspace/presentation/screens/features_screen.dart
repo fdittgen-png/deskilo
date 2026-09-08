@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/trace/guarded.dart';
@@ -597,6 +598,7 @@ class _FeatureTile extends StatelessWidget {
         title: HelpDotTitle(
           name,
           l10n?.helpHintFeaturesTopic ?? 'Features',
+          anchor: HelpAnchor.featuresSwitch,
         ),
         subtitle: Text(
           [description, ...notes].join('\n'),

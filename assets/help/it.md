@@ -513,6 +513,16 @@ Attiva o disattiva interi moduli per spazio — ogni interruttore porta la sua d
 
 L'elenco è **gerarchico**: una funzionalità che ne richiede un'altra compare rientrata sotto di essa con una nota *Richiede…*, ed è in grigio finché la funzionalità madre è disattivata — *Finanze* porta con sé servizi, supplementi accessori, pagamenti online e fatturazione; *Fatture* porta la delega agli admin, il modello PDF, i solleciti di pagamento, la gestione dell'IVA (con le dichiarazioni ancora sotto) e l'invio della fattura elettronica al cliente; *Modalità chiosco* porta tre figlie — badge RFID/NFC, badge QR e foto dei membri al chiosco; le *prenotazioni di tavolo, ufficio e piano* portano *gli admin possono assegnare piani*; *Elenco dei membri* porta l'integrazione WhatsApp; la *scheda Eventi* porta il raggruppamento del feed. Disattivare una funzionalità madre toglie dall'app tutto il suo sottoalbero; la scelta salvata della funzionalità figlia torna intatta quando la madre riappare.
 
+#### Un interruttore di funzionalità
+
+Ogni funzionalità è un interruttore. Accendilo e appaiono **tutte** le
+sue superfici — la scheda, la linguetta, il pulsante, il collegamento
+diretto; spegnilo e non ne resta nessuna, nemmeno un URL nei preferiti.
+Ciò che un interruttore non disfa mai è l'aritmetica già applicata: una
+fattura emessa con la funzionalità accesa mantiene ciò che dice. Alcuni
+interruttori ne richiedono un altro prima, e quello che attende il
+genitore lo dice invece di fallire in silenzio.
+
 ### Membri e piani
 
 Tocca un membro per aprire la sua **scheda di gestione** — ogni azione per membro in un unico posto: **Invia l'accordo finanziario** (§11d), **Messaggi**, **Aggiungi un servizio** (servizio, quantità, mese di fatturazione → *invia per conferma*), **Abbonamento** (la sua percentuale), **Quando i giorni finiscono** (la politica di consumo extra, §9), **Limite di prenotazioni** (quante prenotazioni **aperte** il membro può tenere in tutto, in qualunque momento cadano), **Prenotazioni simultanee** (quante prenotazioni possono **sovrapporsi nel tempo** — la quota personale che prevale sul numero dello spazio, §4b; sono due limiti diversi, quindi leggi le etichette), **Può prenotare un tavolo, ufficio o piano intero**, **Badge** (§10), **Rendi admin** (validato, §7), **Comproprietà**, **Trasforma in chiosco** — o **Riporta il chiosco a membro** su un account dispositivo —, **Approva l'adesione** o **Rifiuta l'adesione** per un'iscrizione in attesa, e **Sospendi l'iscrizione**. Ogni riga mostra l'**email** del membro sotto il nome.
@@ -536,6 +546,59 @@ Tocca un membro per aprire la sua **scheda di gestione** — ogni azione per mem
 ![](assets/help/images/member-reservation-limit.jpg)
 
 *Il dialogo dell'abbonamento (la percentuale del membro) e quello del limite di prenotazioni (il tetto alle prenotazioni aperte).*
+
+#### L'abbonamento di un membro
+
+La percentuale delle mezze giornate lavorative del mese a cui il membro
+ha diritto. Sceglie la fascia tariffaria, e la fascia decide quanto costa
+il mese. Un valore negoziato fuori elenco è possibile solo dove lo spazio
+lo consente.
+
+#### Quando i giorni finiscono
+
+Cosa succede oltre l'assegnazione, per questo membro: rifiutare altre
+prenotazioni, addebitarle al prezzo di eccedenza, o lasciargli comprare
+un pacchetto giornaliero. Finché non imposti nulla qui, vale il valore
+predefinito dello spazio.
+
+#### Limite di prenotazioni
+
+Quante prenotazioni **aperte** questo membro può tenere in tutto. Limita
+la dimensione dell'arretrato, ed è cosa diversa dal limite di
+contemporaneità qui sotto.
+
+#### Prenotazioni contemporanee
+
+Quante prenotazioni questo membro può tenere che **si sovrappongono nel
+tempo**. Una per impostazione predefinita, ed è ciò che impedisce a
+qualcuno di tenere due posti per lo stesso pomeriggio. La propria non la
+puoi mai impostare.
+
+#### Trattamento IVA
+
+Cosa fa la controparte dell'imposta: nazionale, impresa
+intracomunitaria in inversione contabile, consumatore intracomunitario,
+o esportazione. Si deduce dal paese e dalla partita IVA del membro, e
+viene congelato su ogni documento all'emissione.
+
+#### Negoziazione di prezzo
+
+Un prezzo concordato con questo membro e diverso dal catalogo. È
+registrato come negoziazione anziché digitato sopra la tariffa: il
+documento dice ciò che è stato concordato e il catalogo resta vero.
+
+#### Comproprietà
+
+Eleva un membro a comproprietario. Un comproprietario ha i permessi di un
+proprietario e conta come tale ovunque una regola ne chieda uno —
+compresa la regola per cui l'ultimo proprietario attivo non può essere
+rimosso.
+
+#### Le azioni su un membro
+
+Tutto ciò che un amministratore può fare per un membro — abbonamento,
+eccedenza, accordo, pausa, limiti, badge, ruolo — raccolto in un solo
+foglio, così nulla va cercato su un'altra schermata.
 
 ### Fatturazione
 
@@ -829,6 +892,14 @@ Una matrice centrale decide **quale ruolo detiene quale permesso** — gestire i
 ![](assets/help/images/roles-matrix.jpg)
 
 *Gestione dei ruoli: la scheda del proprietario bloccata, quella del comproprietario con tutto concesso per impostazione predefinita — seguono le schede admin e membro con le stesse undici autorizzazioni.*
+
+#### La matrice dei ruoli
+
+I ruoli da un lato, i permessi dall'altro. Ogni casella è un
+interruttore, tranne quelle che un proprietario ha sempre. Un permesso è
+chiesto al server da una sola funzione: togliere una casella lo toglie
+ovunque in una volta — lo schermo nasconde il pulsante, e la chiamata
+dietro rifiuta comunque.
 
 ### Configurare i pagamenti online
 

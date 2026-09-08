@@ -534,6 +534,17 @@ La liste est **hiérarchique** : une fonctionnalité qui en nécessite une autre
 
 </details>
 
+<!-- anchor: user.features.switch -->
+#### Un interrupteur de fonctionnalité
+
+Chaque fonctionnalité est un interrupteur. Activez-le et **toutes** ses
+surfaces apparaissent — la tuile, l'onglet, le bouton, le lien profond ;
+désactivez-le et aucune ne demeure, pas même une URL en favori. Ce qu'un
+interrupteur ne défait jamais, c'est l'arithmétique déjà appliquée : une
+facture émise alors que la fonctionnalité était active garde ce qu'elle
+dit. Certains interrupteurs en exigent un autre d'abord, et celui qui
+attend son parent le dit au lieu d'échouer en silence.
+
 ### Membres et forfaits
 
 Touchez un membre pour sa **feuille de gestion** — chaque action par membre au même endroit : **Envoyer l'accord financier** (§11d), **Messages**, **Ajouter un service** (service, quantité, mois de facturation → *soumettre pour confirmation*), **Abonnement** (son pourcentage), **Quand les jours sont épuisés** (la politique de dépassement, §9), **Limite de réservations** (combien de réservations **ouvertes** le membre peut détenir au total, quelle que soit leur date), **Réservations simultanées** (combien de réservations peuvent **se chevaucher dans le temps** — le quota personnel qui l'emporte sur le nombre de l'espace, §4b ; deux plafonds distincts, lisez donc bien les libellés), **Peut réserver une table, un bureau ou un niveau entier**, **Badges** (§10), **Nommer admin** (validé, §7), **Copropriété**, **Transformer en borne** — ou **Rétablir comme membre** sur un compte d'appareil —, **Approuver l'adhésion** ou **Refuser l'adhésion** pour une demande en attente, et **Mettre l'adhésion en pause**. Chaque ligne montre l'**e-mail** du membre sous son nom.
@@ -553,6 +564,67 @@ Touchez un membre pour sa **feuille de gestion** — chaque action par membre au
 <p><img src="images/member-subscription.jpg" width="240"> <img src="images/member-reservation-limit.jpg" width="240"></p>
 
 *Le dialogue abonnement (le pourcentage du membre) et le dialogue limite de réservations (le plafond de réservations ouvertes).*
+
+<!-- anchor: user.members.subscription -->
+#### L'abonnement d'un membre
+
+Le pourcentage des demi-journées ouvrées du mois auquel le membre a
+droit. Il choisit la tranche tarifaire, et la tranche décide de ce que
+coûte le mois. Une valeur négociée hors liste n'est possible que là où
+l'espace l'autorise.
+
+<!-- anchor: user.members.overage-policy -->
+#### Quand les jours sont épuisés
+
+Ce qui se passe au-delà de l'allocation, pour ce membre : refuser les
+réservations suivantes, les facturer au prix de dépassement, ou le
+laisser acheter un forfait journalier. Le défaut de l'espace s'applique
+tant que vous n'en fixez pas un ici.
+
+<!-- anchor: user.members.reservation-limit -->
+#### Limite de réservations
+
+Combien de réservations **ouvertes** ce membre peut détenir au total.
+Cela borne la taille de l'en-cours, et c'est autre chose que la limite
+de simultanéité ci-dessous.
+
+<!-- anchor: user.members.simultaneous -->
+#### Réservations simultanées
+
+Combien de réservations ce membre peut détenir qui **se chevauchent dans
+le temps**. Une par défaut, et c'est ce qui empêche un membre de tenir
+deux places pour le même après-midi. Vous ne pouvez jamais fixer la
+vôtre.
+
+<!-- anchor: user.members.vat-treatment -->
+#### Traitement TVA
+
+Ce que la contrepartie fait de la taxe : national, entreprise
+intracommunautaire qui autoliquide, consommateur intracommunautaire, ou
+exportation. Il se déduit du pays et du numéro de TVA du membre, et il
+est figé sur chaque document à l'émission.
+
+<!-- anchor: user.members.negotiation -->
+#### Négociation de prix
+
+Un prix convenu avec ce membre et différent du catalogue. Il est
+enregistré comme une négociation plutôt que saisi par-dessus le tarif :
+le document dit ce qui a été convenu et le catalogue reste vrai.
+
+<!-- anchor: user.members.co-ownership -->
+#### Copropriété
+
+Élève un membre au rang de copropriétaire. Un copropriétaire a les
+permissions d'un propriétaire et compte comme tel partout où une règle en
+demande un — y compris la règle qui interdit de retirer le dernier
+propriétaire actif.
+
+<!-- anchor: user.members.actions -->
+#### Les actions sur un membre
+
+Tout ce qu'un administrateur peut faire pour un membre — abonnement,
+dépassement, convention, pause, limites, badges, rôle — rassemblé en une
+seule feuille, pour que rien ne soit à chercher sur un autre écran.
 
 ### Facturation
 
@@ -869,6 +941,15 @@ Une matrice centrale décide **quelle permission revient à quel rôle** — gé
 <p><img src="images/roles-matrix.jpg" width="240"></p>
 
 *Gestion des rôles : la carte propriétaire verrouillée, la carte copropriétaire tout accordé par défaut — les cartes admin et membre suivent avec les mêmes onze permissions.*
+
+<!-- anchor: user.roles.matrix -->
+#### La matrice des rôles
+
+Les rôles d'un côté, les permissions de l'autre. Chaque case est un
+interrupteur, sauf celles qu'un propriétaire détient toujours. Une
+permission est demandée au serveur par une seule fonction : retirer une
+case la retire partout d'un coup — l'écran cache le bouton, et l'appel
+derrière refuse de toute façon.
 
 ### Configurer les paiements en ligne
 

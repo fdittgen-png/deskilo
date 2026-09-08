@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
 import '../../../core/locale/report_language.dart';
 import '../../../core/share/file_sharer.dart';
@@ -66,7 +67,9 @@ Future<void> pickMemberSubscription(
             decoration: InputDecoration(
               labelText: l10n?.memberSubscriptionCustom ?? 'Custom (1–100)',
               suffixIcon: HelpDot(
-                  l10n?.helpHintMembersTopic ?? 'Members & plans'),
+                  l10n?.helpHintMembersTopic ?? 'Members & plans',
+                anchor: HelpAnchor.membersSubscription,
+              ),
             ),
           ),
         ],
@@ -136,6 +139,7 @@ Future<void> pickMemberOveragePolicy(
       title: HelpDotTitle(
         l10n?.memberOveragePolicyLabel ?? 'When days run out',
         l10n?.helpHintMembersTopic ?? 'Members & plans',
+        anchor: HelpAnchor.membersOveragePolicy,
       ),
       children: [
         for (final (policy, label) in options)
@@ -286,6 +290,7 @@ Future<void> pickMemberCoOwner(
       title: HelpDotTitle(
         l10n?.coOwnerAction ?? 'Co-ownership',
         l10n?.helpHintMembersTopic ?? 'Members & plans',
+        anchor: HelpAnchor.membersCoOwnership,
       ),
       children: [
         for (final (status, label) in options)
@@ -429,7 +434,9 @@ Future<void> pickMemberReservationLimit(
               labelText: l10n?.memberReservationLimitCustom ??
                   'Custom (1\u2013100)',
               suffixIcon: HelpDot(
-                  l10n?.helpHintMembersTopic ?? 'Members & plans'),
+                  l10n?.helpHintMembersTopic ?? 'Members & plans',
+                anchor: HelpAnchor.membersReservationLimit,
+              ),
             ),
           ),
         ],
@@ -486,6 +493,7 @@ Future<void> pickMemberSimultaneousLimit(
       title: HelpDotTitle(
         l10n?.memberSimultaneousLimitLabel ?? 'Simultaneous reservations',
         l10n?.helpHintMembersTopic ?? 'Members & plans',
+        anchor: HelpAnchor.membersSimultaneous,
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
