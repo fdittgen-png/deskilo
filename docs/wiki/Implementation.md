@@ -14,7 +14,7 @@ docs/
   SPECIFICATION.md        # the product spec (source of truth for behavior)
   PROJECT_OVERVIEW.md     # consolidated reference across all of the below
   wiki/                   # source of the GitHub wiki pages (this site)
-  decisions/              # ADRs 0001..0010
+  decisions/              # ADRs 0001..0018
   design/                 # design system, payments integration
   guides/                 # e.g. RELEASING.md
   security/               # SUPABASE_RLS_MATRIX.md
@@ -22,7 +22,7 @@ fastlane/ metadata/       # store metadata per locale
 lib/                      # the app (see Architecture page)
 web/                      # browser target (GitHub Pages deploy, opt-in)
 supabase/
-  migrations/             # 0001..0073 — schema, RLS, RPCs (numbered, immutable)
+  migrations/             # 0001..0190 — schema, RLS, RPCs (numbered, immutable)
   functions/              # deployed Edge Functions: create-payment-order,
                           # paypal-webhook, stripe-webhook, mollie-webhook,
                           # send-e-invoice
@@ -81,9 +81,9 @@ When a screen or surface belongs to a `WorkspaceFeature`, gate it at **both** la
 ## Testing
 
 ```bash
-flutter analyze          # zero tolerance
-flutter test             # full suite (1000+ tests)
-flutter test test/features/<feature>/   # one feature
+flutter analyze --fatal-infos lib test tool   # infos are fatal in CI too
+flutter test                                 # full suite (2600+ tests)
+flutter test test/features/<feature>/        # one feature
 ```
 
 Run `flutter test` **bare**. Piping it (`| tail`, `| grep`) hands you the exit code of the pipe, not of the suite, so a red run reads as green — this has shipped a broken commit more than once.
@@ -94,19 +94,46 @@ Run `flutter test` **bare**. Piping it (`| tail`, `| grep`) hands you the exit c
 
 ## CI
 
-Every push/PR runs `ci.yml`: **no-GMS audit · l10n key-parity gate · analyze · full test suite · coverage gate (≥ 45 %)**.
+Every push/PR runs *CI · Analyze, test & coverage*: **l10n key-parity
+gate · analyze · full test suite · coverage gate (≥ 45 %)**. Its job is
+named `analyze · l10n gate · test · coverage`, and that job name is the
+required status check on `master`.
 
-Nine more workflows cover the rest: `android-boot` (release-launch aliveness on a real emulator — the #86 regression guard), `dev-apk` (sideload build), `play-internal` and `play-listing` (Google Play), `ios-testflight` and `ios-testers` (App Store Connect), `macos-app` (signed + notarised DMG), `windows-msi` (WiX v5 installer), and `web` (browser build; also runs on PRs touching `lib/**`, `web/**` or `pubspec.yaml`). `macos-app`, `windows-msi` and `web` also build on PRs touching their target, so a change that only breaks one platform fails there rather than in front of a user.
+Fourteen workflows in all, named `<Group> · <what it does>` so the
+Actions sidebar sorts into gates, releases, publishes, status queries
+and tools — the convention, the table of what exists and the rules are
+in `.github/workflows/README.md`, enforced by
+`test/lint/workflow_naming_test.dart`.
+
+The one thing to know before renaming anything there: **a workflow name
+is free to change, a job name is not.** A job name is a required
+status-check context, so renaming one can block auto-merge until branch
+protection is updated in lockstep.
+
+`Release · macOS DMG`, `Release · Windows MSI`, `Publish · Web app` and
+`CI · F-Droid no-GMS audit` also build on pull requests that touch their
+target, so a change that breaks one platform fails there rather than in
+front of a user.
 
 Git discipline — branch off `master`, PRs only, green CI before merge, squash-merge, delete the head branch — is **server-enforced since 2026-08-01**, and the configuration lives as data in `scripts/branch_protection.sh` (verify / apply / show) rather than in a console nobody can diff. `master` requires the `analyze · l10n gate · test · coverage` check, blocks force-pushes and deletions, and demands linear history. Strict mode is deliberately **off** (no merge queue → strict makes every merge stale every other open PR, quadratic CI for file-disjoint changes); the corollary is a merge discipline: **serialise merges** rather than arming several at once. `enforce_admins` is off, so the maintainer keeps an admin escape hatch — the rules in `AGENT_RULES.md` still apply to its use. An advisory CI step runs `verify` so drift between the committed target and the live configuration is reported, not discovered.
 
 ## Release
 
 - Semver + annotated tag after the release PR merges; release notes generated from PR titles.
-- Android: Play (internal → closed → open → production). F-Droid support was dropped (ADR 0011); FCM is the push transport.
+- Android: Play (internal → closed → open → production). **F-Droid is
+  supported** through the libre flavour (ADR 0012): the app depends on
+  `deskilo_push`, and the F-Droid build swaps in `deskilo_push_foss`,
+  which has no Google dependency. *CI · F-Droid no-GMS audit* proves it
+  on every pull request; *Publish · F-Droid release APKs* ships the
+  binaries F-Droid reproduces against. FCM is the push transport for
+  store builds only.
 - iOS: TestFlight via fastlane (owner-held App Store Connect secrets), internal groups plus an external group with a public link.
 - Desktop: Windows ships as an MSI from the `windows-msi` workflow, macOS as a Developer-ID-signed, Apple-notarised, stapled DMG from `macos-app` — both attached to the release on a `v*` tag. (Spec §12 left the macOS channel open; it is settled as notarised direct download.)
-- Web: an opt-in GitHub Pages deploy from the `web` workflow.
+- Web: an opt-in GitHub Pages deploy from *Publish · Web app*
+  (`-f deploy=true`).
+- One dispatch of *Release · Train (all platforms)* with `-f track=beta`
+  puts iOS and Android on the same commit, which is the point of having
+  a train at all.
 
 ## Adding a feature — checklist
 
@@ -114,6 +141,16 @@ Git discipline — branch off `master`, PRs only, green CI before merge, squash-
 2. Branch `feat/<slug>` off master.
 3. Write the failing test first.
 4. Model in `domain/` (freezed), seam in the repository interface, Supabase impl in `data/`, provider, screen.
-5. New strings → all five ARB files → `flutter gen-l10n`.
-6. New tables/RPCs → numbered migration with RLS + revokes; update the fake repository to mirror the server contract.
-7. `flutter analyze && flutter test` green locally, then PR with the template (What/Why/Testing/Completeness checklist).
+5. New strings → an ARB fragment per locale in `lib/l10n/_fragments/`,
+   then `dart run tool/build_arb.dart && flutter gen-l10n`.
+6. New tables/RPCs → numbered migration with RLS + revokes and the six
+   system columns (`ensure_system_columns`); **harness it first** — run
+   the whole thing inside a rolled-back transaction against the hosted
+   project before `apply_migration`. Update the fake repository to
+   mirror the server contract.
+7. Every functionality goes behind a `WorkspaceFeature`, and
+   `web/setup.html` changes in the *same* PR as any parameter.
+8. Anything a user can see or configure gets a guide section with an
+   `<!-- anchor: … -->`, and the symbol beside it points there.
+9. `flutter analyze --fatal-infos lib test tool && flutter test` green
+   locally, then PR with the template (What/Why/Testing/Completeness).
