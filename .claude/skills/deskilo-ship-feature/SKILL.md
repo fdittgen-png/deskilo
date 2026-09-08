@@ -63,3 +63,29 @@ for a rule the next agent must obey.
 Conventional title with `(#issue)`, body with What/Tests, the session
 footer. Then `deskilo-ci-release`. Record non-obvious lessons in the
 memory file, not in the wiki.
+
+## 6. Lessons of 2026-09-07
+- **Stacking.** Cut the next branch FROM the previous feature branch
+  (`git checkout -B next prev`); after the base PR squash-merges,
+  `git rebase --onto origin/master <old-tip-hash> next` and
+  `push --force-with-lease`; the PR body loses its "stacked on" line.
+- **`Closes #a and #b` closes only the first** — close the others with
+  `gh issue close` and a one-line comment naming the PR.
+- **Default-off flags** are pinned in THREE tests: `workspace_feature_test`
+  (two lists), `features_screen_test` (`featureManifest.length - N`
+  switches on) — and the features screen viewport grows with the list.
+- **Entity registries for deployment** (0186+): a new configuration
+  domain = anchors in `export_workspace_configuration` AND
+  `import_workspace_configuration`, an entry in `deployable_entities()`,
+  a natural key in `entity_row_key` for a new table, a name in
+  `deploymentEntityName` and the fake registry. A key that lives only on
+  `workspaces` (payment_instructions) still needs all of it — the
+  invoice's bank block went missing on the prod for want of it (#1010).
+- **A trigger for user actions:** `runGuarded` logs `<what> — started`
+  and `— done` (#1012); a button "that does nothing" shows a start with no
+  end. Phrase `message:` as `'<what> failed'` so the breadcrumb reads well.
+- **Non-ASCII in a python heredoc** (guides ×5): run with `PYTHONUTF8=1`
+  or the script dies on the first « ».
+- **Register a new fake repository** in `standardTestOverrides`
+  (`deployment:` → `FakeDeploymentRepository`) or every app test that
+  reaches the provider hits Supabase.instance.
