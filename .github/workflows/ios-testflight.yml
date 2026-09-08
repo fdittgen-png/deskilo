@@ -1,7 +1,7 @@
 # Copyright (c) 2026 Florian DITTGEN
 # SPDX-License-Identifier: 0BSD
 
-name: ios-testflight
+name: Release · iOS TestFlight build
 
 # Build a signed iOS IPA on a macOS runner and upload it to TestFlight
 # (internal testers). Mirror of tankstellen's ios-testflight.yml, trimmed to

@@ -1,7 +1,7 @@
 # Copyright (c) 2026 Florian DITTGEN
 # SPDX-License-Identifier: 0BSD
 
-name: android-boot
+name: CI · Android boot check
 
 # App-start validation on a real Android emulator (#86/#87):
 # Installs the R8-shrunk RELEASE apk on an emulator, launches it with
