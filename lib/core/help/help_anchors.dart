@@ -110,6 +110,44 @@ abstract final class HelpAnchor {
   /// The price of the whole package, with its VAT group.
   static const billingPackagePrice = 'user.money.billing.package-price';
 
+  // ── money · scheduled expenses ─────────────────────────────────────
+  /// A cost that comes back, raised on its own due days.
+  static const expenseSchedule = 'user.money.expenses.schedule';
+
+  /// The name every occurrence carries.
+  static const expenseWhat = 'user.money.expenses.what';
+
+  /// What one occurrence costs, and what changing it does not touch.
+  static const expenseAmount = 'user.money.expenses.amount';
+
+  /// The longer text, for whoever validates it.
+  static const expenseDescription = 'user.money.expenses.description';
+
+  /// The date the first one falls due; the series counts from here.
+  static const expenseStartsOn = 'user.money.expenses.starts-on';
+
+  /// The interval between occurrences.
+  static const expenseEvery = 'user.money.expenses.every';
+
+  /// How many occurrences to raise.
+  static const expenseTimes = 'user.money.expenses.times';
+
+  /// The date after which nothing more is raised.
+  static const expenseEndsOn = 'user.money.expenses.ends-on';
+
+  // ── money · services ───────────────────────────────────────────────
+  /// Anything sold that is not a seat.
+  static const serviceOverview = 'user.money.services.overview';
+
+  /// What the invoice line says.
+  static const serviceName = 'user.money.services.name';
+
+  /// One unit's price, with its VAT group.
+  static const servicePrice = 'user.money.services.price';
+
+  /// Whether it can still be sold.
+  static const serviceActive = 'user.money.services.active';
+
   // ── money · electronic invoicing ───────────────────────────────────
   /// Where a structured invoice goes, and with which credentials.
   static const einvoiceOverview = 'user.money.einvoice.overview';
@@ -251,6 +289,18 @@ abstract final class HelpAnchor {
     einvoiceFileField,
     einvoiceUat,
     einvoiceDev,
+    expenseSchedule,
+    expenseWhat,
+    expenseAmount,
+    expenseDescription,
+    expenseStartsOn,
+    expenseEvery,
+    expenseTimes,
+    expenseEndsOn,
+    serviceOverview,
+    serviceName,
+    servicePrice,
+    serviceActive,
   };
 
   /// The screenshot that documents [anchor], by the naming rule.

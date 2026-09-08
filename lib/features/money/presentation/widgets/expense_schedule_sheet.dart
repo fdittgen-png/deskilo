@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/i18n/money_format.dart';
@@ -88,7 +89,10 @@ Future<void> showExpenseSchedulesSheet(
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
-              HelpDot(l10n?.helpTopicScheduledExpenses ?? 'Scheduled expenses'),
+              HelpDot(
+                l10n?.helpTopicScheduledExpenses ?? 'Scheduled expenses',
+                anchor: HelpAnchor.expenseSchedule,
+              ),
             ]),
             const SizedBox(height: AppSpacing.sm),
             if (schedules.isEmpty)
@@ -200,7 +204,10 @@ Future<bool> showCreateExpenseScheduleSheet(
             autofocus: true,
             decoration: InputDecoration(
               labelText: l10n?.scheduleTitleLabel ?? 'What (e.g. Internet)',
-              suffixIcon: HelpDot(topic),
+              suffixIcon: HelpDot(
+                topic,
+                anchor: HelpAnchor.expenseWhat,
+              ),
             ),
           ),
           const SizedBox(height: 12),
@@ -210,7 +217,10 @@ Future<bool> showCreateExpenseScheduleSheet(
             decoration: InputDecoration(
               labelText: l10n?.moneyAmountLabel ?? 'Amount',
               suffixText: currency.currencyName,
-              suffixIcon: HelpDot(topic),
+              suffixIcon: HelpDot(
+                topic,
+                anchor: HelpAnchor.expenseAmount,
+              ),
             ),
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
           ),
@@ -219,7 +229,10 @@ Future<bool> showCreateExpenseScheduleSheet(
             controller: description,
             decoration: InputDecoration(
               labelText: l10n?.moneyDescriptionLabel ?? 'Description',
-              suffixIcon: HelpDot(topic),
+              suffixIcon: HelpDot(
+                topic,
+                anchor: HelpAnchor.expenseDescription,
+              ),
             ),
           ),
           const SizedBox(height: 12),
@@ -227,7 +240,8 @@ Future<bool> showCreateExpenseScheduleSheet(
             key: const ValueKey('schedule-starts'),
             contentPadding: EdgeInsets.zero,
             title: HelpDotTitle(
-                l10n?.scheduleStartsOn ?? 'First occurrence', topic),
+                l10n?.scheduleStartsOn ?? 'First occurrence', topic,
+                anchor: HelpAnchor.expenseStartsOn),
             subtitle: Text(dates.format(startsOn)),
             trailing: const Icon(Icons.edit_calendar_outlined),
             onTap: () async {
@@ -247,7 +261,10 @@ Future<bool> showCreateExpenseScheduleSheet(
                 controller: every,
                 decoration: InputDecoration(
                   labelText: l10n?.scheduleEveryLabel ?? 'Every',
-                  suffixIcon: HelpDot(topic),
+                  suffixIcon: HelpDot(
+                    topic,
+                    anchor: HelpAnchor.expenseEvery,
+                  ),
                 ),
                 keyboardType: TextInputType.number,
               ),
@@ -275,7 +292,10 @@ Future<bool> showCreateExpenseScheduleSheet(
             decoration: InputDecoration(
               labelText: l10n?.scheduleTimesLabel ??
                   'Repetitions (empty = until the end date)',
-              suffixIcon: HelpDot(topic),
+              suffixIcon: HelpDot(
+                topic,
+                anchor: HelpAnchor.expenseTimes,
+              ),
             ),
             keyboardType: TextInputType.number,
           ),
@@ -283,7 +303,8 @@ Future<bool> showCreateExpenseScheduleSheet(
             key: const ValueKey('schedule-ends'),
             contentPadding: EdgeInsets.zero,
             title: HelpDotTitle(
-                l10n?.scheduleEndsOn ?? 'Until (optional)', topic),
+                l10n?.scheduleEndsOn ?? 'Until (optional)', topic,
+                anchor: HelpAnchor.expenseEndsOn),
             subtitle: Text(endsOn == null
                 ? (l10n?.scheduleNoEnd ?? 'No end date')
                 : dates.format(endsOn!)),
@@ -425,7 +446,9 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
                 ),
               ),
               HelpDot(
-                  l10n?.helpTopicScheduledExpenses ?? 'Scheduled expenses'),
+                l10n?.helpTopicScheduledExpenses ?? 'Scheduled expenses',
+                anchor: HelpAnchor.expenseSchedule,
+              ),
             ]),
             if (rejected)
               Padding(

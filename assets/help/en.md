@@ -586,6 +586,29 @@ The catalogs behind §9 — owner-defined extras (lockers, printing…, each wit
 
 **Stock (#731).** A service that came from a supply shows *N in stock* / *Out of stock*; a consumption larger than the shelf is refused.
 
+#### A service
+
+Anything sold that is not a seat: a meeting-room hour, a printing
+bundle, a locker, a coffee subscription. A service can be put on an
+invoice by an administrator or attached to a package.
+
+#### Service name
+
+What the invoice line says. Rename it and only future documents change:
+an issued invoice keeps the name it was sold under.
+
+#### Service price
+
+The price of one unit, with its own VAT group — the rate follows the
+catalogue rather than being typed here, so a rate change never reaches
+back into a document already issued.
+
+#### Active
+
+Whether the service can still be sold. Switching it off stops new sales
+and leaves every invoice that carries it untouched, which is what you
+want for something discontinued rather than mistaken.
+
 ### Workspace settings (Coworking space)
 
 The workspace's own screen, top to bottom:
@@ -838,6 +861,54 @@ Every report in the app — the bill, invoices, proformas, credit notes, your se
 - Confirm it **at a different amount** and a short **explanation is mandatory**; the expense then goes through the normal expense validation. Confirmed → added; **rejected → it comes back to you**, and you can change the amount and/or the description and resend it.
 
 The list of your schedules (state, rule, next due date) and the *Schedule a recurring expense* form live behind **Finances → Payments → Scheduled expenses**; ending a schedule is one tap there. Feature *Scheduled expenses* (under the Finances tab).
+
+#### A scheduled expense
+
+A cost that comes back — the internet bill, the cleaner, the rent. You
+describe it once and the app raises each occurrence on its due day, so
+nobody has to remember it. Each occurrence still goes through whatever
+validation the expense domain asks for; scheduling creates the request,
+it does not approve it.
+
+#### What
+
+The name every occurrence carries. It is what the ledger line and the
+validation request say, so write it the way you would want to read it
+six months later.
+
+#### Amount
+
+What one occurrence costs. Change it and only the occurrences not yet
+raised follow; the ones already in the ledger keep the amount they were
+raised with.
+
+#### Description
+
+The longer text, for whoever validates it. Optional, and the place for a
+contract number or a supplier reference.
+
+#### First occurrence
+
+The date the first one falls due. Every later occurrence is counted from
+here, so moving it moves the whole series.
+
+#### Every
+
+The interval between occurrences — every month, every three months,
+every year. With the first occurrence it decides every due date the
+series will ever have.
+
+#### Number of times
+
+How many occurrences to raise. Leave it empty for a series that does not
+stop, and use *Until* instead when the end is a date rather than a
+count.
+
+#### Until
+
+The date after which nothing more is raised. Optional: without it the
+series runs until you stop it, which is usually right for rent and
+wrong for a twelve-month instalment.
 
 ### 9i. The consumption report
 

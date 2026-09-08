@@ -211,12 +211,22 @@ Single codebase for all targets. Platform-specific behavior degrades gracefully:
 - **Push** is Android-only — `PushConnector` returns `false` elsewhere and
   the app stays on local notifications.
 - **Desktop** (macOS/Windows) runs the full booking/ledger app; the macOS sandbox needs the network-client, camera, and user-selected-file entitlements (see the runner in `macos/`). Windows ships as a WiX-built **MSI** (`windows/installer/deskilo.wxs`, built by the `windows-msi` workflow).
-- **F-Droid is supported**, through the libre flavour above: *CI · F-Droid
-  no-GMS audit* proves the flavour carries no Google dependency, and
-  *Publish · F-Droid release APKs* ships the signed binaries F-Droid
-  reproduces against. (An earlier note in this file said F-Droid support
-  had been dropped; ADR 0012 reversed that, and the workflows are the
-  evidence.)
+- **F-Droid is supported and maintained**, through the libre flavour
+  above: *CI · F-Droid no-GMS audit* proves the flavour carries no Google
+  dependency, and *Publish · F-Droid release APKs* ships the signed
+  binaries F-Droid reproduces against. (An earlier note in this file said
+  F-Droid support had been dropped; ADR 0012 reversed that, and the
+  workflows are the evidence.)
+
+  The route in is **reproducible build, not F-Droid signing**: the recipe
+  in `fdroiddata` MR !47409 carries `binary:` per ABI pointing at the
+  release assets plus `AllowedAPKSigningKeys` with our certificate
+  fingerprint, and the build path is pinned on both sides
+  (`/home/runner/work/deskilo/deskilo`) because Dart's AOT output embeds
+  the directory it compiled in. The publishing job builds each ABI from a
+  clean `build/`, builds arm64 a second time, and **refuses to publish if
+  the two differ outside `META-INF`** — so what F-Droid verifies against
+  is a binary we have already proved reproducible.
 
 ## Shared building blocks
 

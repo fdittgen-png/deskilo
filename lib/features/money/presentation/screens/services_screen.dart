@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/format/cents.dart';
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -260,8 +261,8 @@ class _ServiceSheetState extends State<_ServiceSheet> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               HelpDot(
-                l10n?.helpHintMoneyPaymentsTipSupplyTopic ??
-                    'Services and Accessories',
+                l10n?.helpHintMoneyPaymentsTipSupplyTopic ?? 'Services and Accessories',
+                anchor: HelpAnchor.serviceOverview,
               ),
             ],
           ),
@@ -273,8 +274,8 @@ class _ServiceSheetState extends State<_ServiceSheet> {
             decoration: InputDecoration(
               labelText: l10n?.servicesName ?? 'Name',
               suffixIcon: HelpDot(
-                l10n?.helpHintMoneyPaymentsTipSupplyTopic ??
-                    'Services and Accessories',
+                l10n?.helpHintMoneyPaymentsTipSupplyTopic ?? 'Services and Accessories',
+                anchor: HelpAnchor.serviceName,
               ),
             ),
           ),
@@ -288,8 +289,8 @@ class _ServiceSheetState extends State<_ServiceSheet> {
               helperText: l10n?.priceGrossHint ??
                   'Gross price — what the member pays; VAT is part of it.',
               suffixIcon: HelpDot(
-                l10n?.helpHintMoneyPaymentsTipSupplyTopic ??
-                    'Services and Accessories',
+                l10n?.helpHintMoneyPaymentsTipSupplyTopic ?? 'Services and Accessories',
+                anchor: HelpAnchor.servicePrice,
               ),
             ),
           ),
@@ -307,6 +308,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
                 l10n?.servicesActive ?? 'Active',
                 l10n?.helpHintMoneyPaymentsTipSupplyTopic ??
                     'Services and Accessories',
+                anchor: HelpAnchor.serviceActive,
               ),
               value: _active,
               onChanged: (v) => setState(() => _active = v),

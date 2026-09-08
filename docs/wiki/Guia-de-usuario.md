@@ -601,6 +601,34 @@ Los catálogos detrás del §9 — extras definidos por el propietario (taquilla
 
 **Stock (#731).** Un servicio nacido de un suministro muestra *N en stock* / *Agotado*; un consumo mayor que el estante se rechaza.
 
+<!-- anchor: user.money.services.overview -->
+#### Un servicio
+
+Todo lo que se vende y no es una plaza: una hora de sala de reuniones,
+un paquete de impresión, una taquilla, una suscripción de café. Un
+servicio puede ponerlo en factura un administrador o adjuntarse a un
+paquete.
+
+<!-- anchor: user.money.services.name -->
+#### Nombre del servicio
+
+Lo que dice la línea de factura. Cambiarlo solo afecta a los documentos
+futuros: una factura emitida conserva el nombre con el que se vendió.
+
+<!-- anchor: user.money.services.price -->
+#### Precio del servicio
+
+El precio de una unidad, con su propio grupo de IVA — el tipo sigue al
+catálogo en vez de escribirse aquí, de modo que un cambio de tipo nunca
+vuelve sobre un documento ya emitido.
+
+<!-- anchor: user.money.services.active -->
+#### Activo
+
+Si el servicio todavía puede venderse. Desactivarlo detiene las ventas
+nuevas y deja intactas todas las facturas que lo llevan: es lo que se
+quiere para algo descatalogado, no para algo equivocado.
+
 ### Ajustes del espacio (Espacio de coworking)
 
 La pantalla propia del espacio, de arriba abajo:
@@ -851,6 +879,61 @@ Cada informe de la app — la factura mensual, las facturas, los proformas, las 
 - Confirmada **a un importe distinto**, una breve **explicación es obligatoria**; el gasto pasa entonces la validación normal de gastos. Confirmado → añadido; **rechazado → vuelve a ti**, y puedes cambiar el importe y/o la descripción y reenviarlo.
 
 La lista de tus programaciones (estado, regla, próximo vencimiento) y el formulario *Programar un gasto recurrente* viven tras **Finanzas → Pagos → Gastos programados**; terminar una es un toque. Función *Gastos programados* (bajo la pestaña Finanzas).
+
+<!-- anchor: user.money.expenses.schedule -->
+#### Un gasto programado
+
+Un coste que vuelve — la conexión a internet, la limpieza, el alquiler.
+Lo describe una vez y la app levanta cada vencimiento en su día, sin que
+nadie tenga que recordarlo. Cada vencimiento sigue pasando por la
+validación que pide el dominio de gastos: programar crea la solicitud,
+no la aprueba.
+
+<!-- anchor: user.money.expenses.what -->
+#### Qué
+
+El nombre que lleva cada vencimiento. Es lo que dicen la línea de cuenta
+y la solicitud de validación: escríbalo como querría leerlo seis meses
+después.
+
+<!-- anchor: user.money.expenses.amount -->
+#### Importe
+
+Lo que cuesta un vencimiento. Cambiarlo solo afecta a los vencimientos
+aún no levantados; los que ya están en la cuenta conservan el importe
+con el que se levantaron.
+
+<!-- anchor: user.money.expenses.description -->
+#### Descripción
+
+El texto más largo, para quien valida. Opcional, y el lugar para un
+número de contrato o una referencia de proveedor.
+
+<!-- anchor: user.money.expenses.starts-on -->
+#### Primer vencimiento
+
+La fecha en que vence el primero. Todos los siguientes se cuentan desde
+ahí: moverlo mueve toda la serie.
+
+<!-- anchor: user.money.expenses.every -->
+#### Cada
+
+El intervalo entre dos vencimientos — cada mes, cada trimestre, cada
+año. Con el primer vencimiento decide todas las fechas que la serie
+tendrá jamás.
+
+<!-- anchor: user.money.expenses.times -->
+#### Número de veces
+
+Cuántos vencimientos levantar. Déjelo vacío para una serie que no se
+detiene, y use *Hasta* cuando el final sea una fecha y no un número.
+
+<!-- anchor: user.money.expenses.ends-on -->
+#### Hasta
+
+La fecha después de la cual no se levanta nada más. Opcional: sin ella
+la serie corre hasta que usted la pare, lo que va bien para un alquiler
+y mal para un pago en doce plazos.
 
 ### 9i. El informe de consumo
 
