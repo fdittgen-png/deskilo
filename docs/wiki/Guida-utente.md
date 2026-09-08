@@ -591,6 +591,13 @@ Il prezzo dell'intero pacchetto, con il proprio gruppo IVA. La riga di
 fattura mostra il prezzo e l'aliquota in vigore il giorno della
 vendita.
 
+<!-- anchor: user.money.billing.schedule -->
+#### Calendario di fatturazione
+
+Quando il mese viene fatturato. La riga di abbonamento è emessa **prima**
+del mese che copre e le righe di consumo la seguono: per questo una
+fattura può nominare un mese non ancora avvenuto.
+
 ### Servizi e Accessori
 
 I cataloghi dietro il §9 — extra definiti dal proprietario (armadietti, stampe…, ognuno con un prezzo e un'aliquota IVA facoltativa) e dotazioni per posto con supplementi facoltativi per mezza giornata. Entrambi sono semplici elenchi con un pulsante **+**.
@@ -669,6 +676,104 @@ La schermata propria dello spazio, dall'alto in basso:
 <p><img src="images/workspace-settings-full.jpg" width="240"></p>
 
 </details>
+
+<!-- anchor: user.workspace.settings.country -->
+#### Paese
+
+Dove l'organizzazione ha sede. Decide la valuta predefinita, il catalogo
+di aliquote IVA che ti viene proposto, e la formula di legge che stampa
+un venditore esente o fuori campo quando non ne scrivi nessuna.
+
+<!-- anchor: user.workspace.settings.currency-timezone -->
+#### Valuta e fuso orario
+
+La valuta in cui sono espressi ogni prezzo e ogni documento, e il fuso su
+cui corre l'orologio dello spazio. **Il fuso non è cosmetico**: una
+giornata lavorativa, un confine di mezza giornata e un giorno di chiusura
+si contano lì, così un membro all'estero vede la giornata dello spazio e
+non la propria.
+
+<!-- anchor: user.workspace.settings.language -->
+#### Lingua dello spazio
+
+La lingua che lo spazio parla per impostazione predefinita. Gli inviti
+sono scritti in essa, e un documento vi ricade quando chi legge non ha
+una lingua propria.
+
+<!-- anchor: user.workspace.settings.address -->
+#### Indirizzo della carta intestata
+
+L'indirizzo in testo libero che stampa un documento cartaceo. È distinto
+dall'**indirizzo strutturato** dell'identità legale, che è ciò che porta
+la fattura elettronica — una macchina non sa spezzare una riga in modo
+affidabile, e chi legge una lettera preferisce la riga.
+
+<!-- anchor: user.workspace.settings.whatsapp-group -->
+#### Gruppo WhatsApp
+
+Il gruppo dove può essere pubblicato un avviso. Facoltativo, e senza
+altri effetti: senza di esso un messaggio resta nella posta dell'app.
+
+<!-- anchor: user.workspace.settings.invitation-message -->
+#### Messaggio di invito
+
+Il testo che un invito porta, per lingua. Scrivilo una volta e ogni
+invito in quella lingua lo usa; il codice e il link li aggiunge l'app,
+quindi non incollarne mai uno nel testo.
+
+<!-- anchor: user.workspace.settings.desk-transparency -->
+#### Trasparenza dei tavoli
+
+Quanto l'immagine di sfondo traspare sotto un tavolo nella piantina.
+Alzala quando la piantina è tracciata su una fotografia e l'arredo conta;
+abbassala quando contano più i posti della stanza.
+
+<!-- anchor: user.workspace.export.space-xml -->
+#### Esportare lo spazio (XML)
+
+L'intero spazio in un file: la piantina e — con *Configurazione nel file
+dello spazio* attivo — tariffe, aliquote IVA, l'identità legale e tutte
+le menzioni di fattura, regole di prenotazione e validazione, ruoli,
+regole di sollecito, progettazioni dei documenti, sedi, giorni di
+chiusura e collegamenti ai documenti. **Mai nel file:** il codice di
+invito, le credenziali di fattura elettronica e di pagamento, i membri,
+le prenotazioni, le fatture e i pagamenti.
+
+<!-- anchor: user.workspace.export.space-import -->
+#### Importare lo spazio (XML)
+
+Applica quel file qui. La sezione di configurazione si applica anche a
+uno spazio che ha già prenotazioni; solo la piantina stessa viene
+rifiutata quando esistono prenotazioni, e l'importazione lo dice invece
+di fallire in silenzio.
+
+<!-- anchor: user.workspace.export.config-pdf -->
+#### Esportare la configurazione (PDF)
+
+Ogni parametro dello spazio come documento leggibile, firmabile, da
+consegnare a un commercialista. È un'istantanea, non un backup — l'XML è
+il file che si reimporta.
+
+<!-- anchor: user.workspace.export.workspace-report -->
+#### Report dello spazio
+
+Lo spazio stesso come documento: sedi, piani, posti, tariffe e le regole
+in vigore. Utile come allegato a un contratto d'affitto o a una pratica
+assicurativa.
+
+<!-- anchor: user.workspace.export.space-qr -->
+#### Codici QR dei posti (PDF)
+
+Un foglio stampabile di codici QR, uno per posto. Attaccali sui tavoli e
+un membro può prenotare o registrarsi scansionando il posto davanti al
+quale si trova.
+
+<!-- anchor: user.workspace.export.excel -->
+#### Esportare i dati (Excel)
+
+I dati operativi — membri, prenotazioni, consumo, fatture, pagamenti —
+come foglio di calcolo, per l'analisi che l'app non fa. È
+un'esportazione, non un trasferimento: nulla la rilegge.
 
 ### Codici QR degli spazi e prenotazioni di spazi interi
 
@@ -1240,6 +1345,13 @@ Variabili di modello (famiglia fatture): `{{ number }}`, `{{ member }}`, `{{ wor
 
 *La modalità Visuale — Progettazione modifica le bande etichettate sulla vera pagina A4; Anteprima fonde le bande non salvate con i dati reali tramite il vero motore.*
 
+<!-- anchor: user.money.reports.invoice-template -->
+#### Il modello PDF di fattura
+
+Con quale progettazione viene stampata una fattura, e i testi che quella
+progettazione porta. Una progettazione esiste per tipo di documento e per
+lingua; chi non ha una lingua propria riceve quella dello spazio.
+
 ### 11d. La suite di report e la biblioteca documenti
 
 - **Accordo finanziario** — ogni prezzo in vigore che si applica a un membro: abbonamento, mezza giornata extra, servizi, pacchetti, supplementi accessori e i prezzi degli spazi interi, **tavoli compresi**. Proprietari/admin lo inviano dalla scheda azioni di un membro; ogni membro può vedere in anteprima/scaricare/condividere il proprio da *Finanze → Documenti*.
@@ -1254,6 +1366,14 @@ Variabili di modello (famiglia fatture): `{{ number }}`, `{{ member }}`, `{{ wor
 ### 11e. Solleciti di pagamento automatici
 
 Con **Solleciti di pagamento automatici** attivo (Funzionalità, figlio di *Solleciti di pagamento*) e l'interruttore **Solleciti automatici** nelle regole di sollecito (Fatture → Regole di sollecito), i livelli si applicano da soli: ogni mattina — e ogni volta che un proprietario o un admin apre Finanze — una fattura **aperta** il cui termine è trascorso (i *giorni prima del primo sollecito* dall'emissione, poi i *giorni tra i solleciti* dopo il precedente) riceve il livello successivo. Il membro vede un avviso **Promemoria di pagamento** in Eventi («Sollecito 2: fattura X — importo ancora dovuto») e riceve una notifica; la sua vista Fatture legge *scaduta da N giorni*. I livelli non superano mai il numero configurato; una fattura riconciliata non è mai sollecitata; con l'interruttore spento, sollecitare resta manuale, una fattura alla volta come prima.
+
+<!-- anchor: user.money.reminders.rules -->
+#### Regole di sollecito
+
+Quanti solleciti riceve una fattura non pagata, a quanto dalla scadenza
+parte ciascuno, e cosa dice ciascuno. Una volta al giorno le fatture
+aperte scadute passano al livello successivo; un livello già raggiunto
+non viene mai rinviato.
 
 ### 11f. Raggruppare fatture (saldo)
 

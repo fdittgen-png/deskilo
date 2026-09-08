@@ -564,6 +564,12 @@ they do not expire with the month.
 The price of the whole package, with its own VAT group. The invoice
 line shows the price and the rate that applied on the day it was sold.
 
+#### Invoice schedule
+
+When the month is billed. The subscription line is issued **ahead** of
+the month it covers and the usage lines follow it, which is why an
+invoice can name a month that has not happened yet.
+
 ### Services and Accessories
 
 The catalogs behind §9 — owner-defined extras (lockers, printing…, each with a price and optional VAT rate) and per-seat equipment with optional per-half-day supplements. Both are plain lists with a **+** button.
@@ -643,6 +649,88 @@ The workspace's own screen, top to bottom:
 *The exports block — XML, configuration PDF, workspace report, space QR codes, Excel, XML import — and the danger zone.*
 - **The setup questionnaire** — <https://fdittgen-png.github.io/deskilo/setup.html> (§1 explains it in full): the standalone page that collects a whole configuration *before* the app exists. **Import the space (XML)** above is where its file lands — settings, accessories and floor plan directly; the file's `<setup>` section carries billing, legal identity, roles and members for the screens that own them.
 - **Danger zone** — **Reset the workspace**: deletes all reservations, the accounting and the floor plan; keeps settings and members. Guarded by a typed confirmation.
+
+#### Country
+
+Where the organisation is established. It decides the default currency,
+the VAT rate catalogue offered to you, and the statutory wording an
+exempt or out-of-scope seller prints when you write none yourself.
+
+#### Currency and time zone
+
+The currency every price and document is expressed in, and the zone the
+space's own clock runs on. **The time zone is not cosmetic**: a working
+day, a half-day boundary and a closure day are all counted in it, so a
+member abroad sees the space's day rather than their own.
+
+#### Workspace language
+
+The language the space speaks by default. Invitations are written in it,
+and a document falls back to it when the reader has no language of their
+own.
+
+#### Letterhead address
+
+The free-text address a paper document prints. It is separate from the
+**structured address** on the legal identity, which is what an e-invoice
+carries — a machine cannot split one line reliably, and a person reading
+a letter would rather see the line.
+
+#### WhatsApp group
+
+The group a notice can be posted to. Optional, and it changes nothing
+else: without it a message stays in the app's own inbox.
+
+#### Invitation message
+
+The text an invitation carries, per language. Write it once and every
+invitation in that language uses it; the code and the link are added by
+the app, so never paste one into the text.
+
+#### Desk transparency
+
+How much of the background image shows through a desk on the plan. Turn
+it up when the plan is drawn over a photograph and the furniture matters;
+down when the places matter more than the room.
+
+#### Export the space (XML)
+
+The whole space as one file: the floor plan, and — with *Configuration in
+the space file* on — tariffs, VAT rates, the legal identity and every
+invoice mention, booking and validation rules, roles, reminder rules, the
+document designs, sites, closure days and document links. **Never in the
+file:** the invite code, e-invoice and payment credentials, members,
+reservations, invoices and payments.
+
+#### Import the space (XML)
+
+Applies that file here. The configuration section is applied even to a
+space that already has bookings; only the floor plan itself is refused
+once reservations exist, and the import says so rather than failing
+silently.
+
+#### Export the configuration (PDF)
+
+Every parameter of the space as a document you can read, sign or hand to
+an accountant. It is a snapshot, not a backup — the XML is the file that
+can be imported back.
+
+#### Workspace report
+
+The space itself as a document: sites, levels, places, tariffs and the
+rules in force. Useful as an annex to a lease or an insurance file.
+
+#### Space QR codes (PDF)
+
+One printable sheet of QR codes, one per place. Stick them on the desks
+and a member can book or check in by scanning the place they are standing
+at.
+
+#### Export the data (Excel)
+
+The operational data — members, reservations, usage, invoices, payments —
+as a spreadsheet, for the analysis the app does not do. It is an export,
+not a transfer: nothing reads it back.
 
 ### Space QR codes & whole-space reservations
 
@@ -1194,6 +1282,12 @@ Template variables (invoice family): `{{ number }}`, `{{ member }}`, `{{ workspa
 
 *The Visual mode — Design edits labeled bands on the true A4 page; Preview merges your unsaved bands with live data through the real engine.*
 
+#### The invoice PDF template
+
+Which design an invoice is printed with, and the texts that design
+carries. A design is per document kind and per language; a reader with
+no language of their own gets the workspace's.
+
 ### 11d. The report suite & the document library
 
 - **Financial agreement** — every standing price that applies to a member: subscription, extra half-day, services, packages, accessory supplements and the whole-space prices, **desks and tables included**. Owners/admins send it from a member's action sheet; every member can quick-view/download/share their own from *Finances → Documents*.
@@ -1212,6 +1306,13 @@ Template variables (invoice family): `{{ number }}`, `{{ member }}`, `{{ workspa
 ### 11e. Automatic payment reminders
 
 With **Automatic payment reminders** on (Features, child of *Payment reminders*) and the switch **Automatic reminders** in the reminder rules (Invoices → Reminder rules), the dunning levels apply themselves: every morning — and whenever an owner or admin opens Finances — an **open** invoice whose waiting period has run (the *days until the first reminder* from its issue date, then the *days between reminders* after the previous one) gets its next level recorded. The member sees a **Payment reminder** alert in Événements ("Reminder 2: invoice X — amount still due") and receives a push; their Invoices face reads *overdue by N days*. Levels never exceed the configured count; a matched invoice is never reminded; switching the rule off leaves reminders a manual action, one tap per invoice as before.
+
+#### Reminder rules
+
+How many reminders an unpaid invoice gets, how long after the term each
+one goes, and what each one says. Once a day the open invoices past
+their term move to their next level; a level already reached is never
+re-sent.
 
 ### 11f. Regrouping invoices (settlement)
 

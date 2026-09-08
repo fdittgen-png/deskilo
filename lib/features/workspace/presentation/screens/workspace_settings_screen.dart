@@ -13,6 +13,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 import '../../../../core/country/country_catalog.dart';
 import '../../../../core/i18n/workspace_locale_fields.dart';
 import '../../../../core/format/cents.dart';
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/files/file_picker.dart';
@@ -935,9 +936,12 @@ class _WorkspaceSettingsScreenState
   }
 
   /// #763 — a control with no free suffix slot gets the ? at its side.
-  Widget _withDot(Widget field, String topic) => Row(
+  Widget _withDot(Widget field, String topic, {String? anchor}) => Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [Expanded(child: field), HelpDot(topic)],
+        children: [
+          Expanded(child: field),
+          HelpDot(topic, anchor: anchor),
+        ],
       );
 
   @override
@@ -1005,6 +1009,7 @@ class _WorkspaceSettingsScreenState
                       onChanged: _busy ? null : _onCountryPicked,
                     ),
                     helpTopic,
+                    anchor: HelpAnchor.workspaceCountry,
                   ),
                   const SizedBox(height: 12),
                   // #711 — currency picker and time-zone search, in
@@ -1018,6 +1023,7 @@ class _WorkspaceSettingsScreenState
                           setState(() => _timezone.text = zone),
                     ),
                     helpTopic,
+                    anchor: HelpAnchor.workspaceCurrencyTimezone,
                   ),
                   const SizedBox(height: 12),
                   // #486 — the workspace's own language: invitations
@@ -1052,6 +1058,7 @@ class _WorkspaceSettingsScreenState
                               () => _defaultLocale = value ?? ''),
                     ),
                     helpTopic,
+                    anchor: HelpAnchor.workspaceLanguage,
                   ),
                   const SizedBox(height: 12),
                   // 0060 — the postal address printed as the invoice
@@ -1064,7 +1071,9 @@ class _WorkspaceSettingsScreenState
                     decoration: InputDecoration(
                       labelText: l10n?.workspaceAddressLabel ??
                           'Workspace address',
-                      suffixIcon: HelpDot(helpTopic),
+                      suffixIcon: HelpDot(helpTopic,
+                        anchor: HelpAnchor.workspaceAddress,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -1128,7 +1137,9 @@ class _WorkspaceSettingsScreenState
                     decoration: InputDecoration(
                       labelText: l10n?.workspaceWhatsappGroupLabel ??
                           'WhatsApp group link',
-                      suffixIcon: HelpDot(helpTopic),
+                      suffixIcon: HelpDot(helpTopic,
+                        anchor: HelpAnchor.workspaceWhatsappGroup,
+                      ),
                     ),
                     // Same prefix check as the 0029 column constraint
                     // (WhatsappGroupRules cross-pins both); empty is
@@ -1148,7 +1159,9 @@ class _WorkspaceSettingsScreenState
                       l10n?.invitationTemplateTitle ?? 'Invitation message',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    HelpDot(helpTopic),
+                    HelpDot(helpTopic,
+                      anchor: HelpAnchor.workspaceInvitationMessage,
+                    ),
                   ]),
                   const SizedBox(height: 4),
                   Text(
@@ -1216,7 +1229,9 @@ class _WorkspaceSettingsScreenState
                           'Invitation message',
                       hintText: l10n?.invitationTemplateHint ??
                           'Custom invitation message using the tags above…',
-                      suffixIcon: HelpDot(helpTopic),
+                      suffixIcon: HelpDot(helpTopic,
+                        anchor: HelpAnchor.workspaceInvitationMessage,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -1227,7 +1242,9 @@ class _WorkspaceSettingsScreenState
                           'Desk transparency',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    HelpDot(helpTopic),
+                    HelpDot(helpTopic,
+                      anchor: HelpAnchor.workspaceDeskTransparency,
+                    ),
                   ]),
                   const SizedBox(height: 4),
                   Text(
@@ -1275,6 +1292,7 @@ class _WorkspaceSettingsScreenState
                     title: HelpDotTitle(
                       l10n?.invoiceTemplateTitle ?? 'Invoice PDF template',
                       helpTopic,
+                      anchor: HelpAnchor.reportsInvoiceTemplate,
                     ),
                     subtitle: Text(
                       l10n?.invoiceTemplateHint ??
@@ -1294,6 +1312,7 @@ class _WorkspaceSettingsScreenState
                     title: HelpDotTitle(
                       l10n?.dunningSettingsTitle ?? 'Reminder rules',
                       helpTopic,
+                      anchor: HelpAnchor.remindersRules,
                     ),
                     subtitle: Text(
                       l10n?.dunningLevels ?? 'Number of reminder levels',
@@ -1315,6 +1334,7 @@ class _WorkspaceSettingsScreenState
                       title: HelpDotTitle(
                         l10n?.billingRulesTitle ?? 'Invoice schedule',
                         l10n?.billingRulesTitle ?? 'Invoice schedule',
+                        anchor: HelpAnchor.billingSchedule,
                       ),
                       subtitle: Text(
                         l10n?.billingRulesSubtitle ??
@@ -1333,6 +1353,7 @@ class _WorkspaceSettingsScreenState
                     title: HelpDotTitle(
                       l10n?.workspaceXmlExport ?? 'Export workspace (XML)',
                       helpTopic,
+                      anchor: HelpAnchor.exportSpaceXml,
                     ),
                     subtitle: Text(
                       l10n?.workspaceXmlExportSubtitle ??
@@ -1352,6 +1373,7 @@ class _WorkspaceSettingsScreenState
                       l10n?.workspaceConfigPdfExport ??
                           'Export configuration (PDF)',
                       helpTopic,
+                      anchor: HelpAnchor.exportConfigPdf,
                     ),
                     subtitle: Text(
                       l10n?.workspaceConfigPdfExportSubtitle ??
@@ -1370,6 +1392,7 @@ class _WorkspaceSettingsScreenState
                     title: HelpDotTitle(
                       l10n?.reportDocWorkspace ?? 'Workspace report',
                       helpTopic,
+                      anchor: HelpAnchor.exportWorkspaceReport,
                     ),
                     subtitle: Text(l10n?.reportDocWorkspaceSubtitle ??
                         'Everything about the space — through the '
@@ -1390,6 +1413,7 @@ class _WorkspaceSettingsScreenState
                     title: HelpDotTitle(
                       l10n?.spaceCodesTitle ?? 'Space QR codes (PDF)',
                       helpTopic,
+                      anchor: HelpAnchor.exportSpaceQr,
                     ),
                     subtitle: Text(
                       l10n?.spaceCodesDesc ??
@@ -1414,6 +1438,7 @@ class _WorkspaceSettingsScreenState
                     title: HelpDotTitle(
                       l10n?.workspaceExcelExport ?? 'Export data (Excel)',
                       helpTopic,
+                      anchor: HelpAnchor.exportExcel,
                     ),
                     subtitle: Text(
                       l10n?.workspaceExcelExportSubtitle ??
@@ -1438,6 +1463,7 @@ class _WorkspaceSettingsScreenState
                     title: HelpDotTitle(
                       l10n?.workspaceXmlImport ?? 'Import workspace (XML)',
                       helpTopic,
+                      anchor: HelpAnchor.exportSpaceImport,
                     ),
                     subtitle: Text(
                       l10n?.workspaceXmlImportSubtitle ??
