@@ -28,8 +28,14 @@ Future<bool> runGuarded(
   required Future<void> Function() action,
   String? errorText,
 }) async {
+  // #1012 — every guarded action leaves its start and its end in the
+  // trace, so a button that "does nothing" shows a start with no end,
+  // and a device that pretends shows what it actually did.
+  final what = message.replaceFirst(RegExp(r'\s+failed$'), '');
+  TraceLogger.instance.log(TraceLevel.info, domain, '$what — started');
   try {
     await action();
+    TraceLogger.instance.log(TraceLevel.info, domain, '$what — done');
     return true;
   } on PendingValidationException catch (e, st) {
     // #982 — not a failure: the policy holds the act for a decision. One
