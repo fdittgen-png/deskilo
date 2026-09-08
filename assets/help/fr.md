@@ -1055,6 +1055,55 @@ L'action **Facture électronique (XML)** ouvre une feuille qui répond pour le p
 
 DesKilo ne transmet toujours rien pour son propre compte : il produit le document et le remet à la plateforme choisie. Les calendriers de mandat bougent : vérifiez votre administration fiscale avant l'échéance qui vous concerne.
 
+#### La plateforme de facturation électronique
+
+Où une facture structurée est transmise, et avec quels identifiants. Un
+document peut partir vers **deux destinations à la fois** : la
+plateforme imposée par votre pays et le service propre du client.
+Chacune peut rester vide. Les identifiants vivent sur l'espace et
+n'entrent jamais dans un fichier d'espace ni dans un déploiement : un
+export que vous envoyez à un collègue porte la configuration, pas les
+clés.
+
+#### URL d'envoi
+
+L'adresse à laquelle la facture est postée. Copiez-la depuis la
+documentation de la plateforme — une barre oblique finale ou un segment
+de version manquant est la raison habituelle d'une transmission qui
+échoue sans rien d'utile à lire.
+
+#### Jeton ou identifiant
+
+Le secret qui vous authentifie auprès de la plateforme. Une fois
+enregistré il n'est plus jamais affiché, pas même à vous : l'écran dit
+*renseigné* et rien d'autre. Ressaisissez-le pour le remplacer,
+laissez-le vide pour le conserver.
+
+#### En-tête d'authentification
+
+L'en-tête HTTP dans lequel voyage le jeton — `Authorization` pour la
+plupart des plateformes, un nom propre au fournisseur pour quelques-unes.
+Si la documentation montre `Bearer <token>`, mettez le nom de l'en-tête
+ici et le jeton nu au-dessus.
+
+#### Nom du champ de fichier
+
+Le nom du champ de formulaire multipart sous lequel le document est
+envoyé. Les plateformes diffèrent (`file`, `invoice`, `document`), et se
+tromper produit un rejet qui ne nomme aucun champ.
+
+#### URL et jeton UAT
+
+L'environnement de recette de la plateforme, où une vraie transmission
+peut être répétée face à une vraie validation sans rien émettre.
+Renseignez-les avant le premier envoi réel, pas après.
+
+#### URL et jeton de développement
+
+Le point d'accès qu'utilise un **espace de développement**. Il ne peut
+pas atteindre une plateforme gouvernementale : c'est ce qui rend une
+facture d'essai impossible à confondre avec une vraie.
+
 ### 11c. L'éditeur de rapports — chaque document, quatre modèles, cinq langues
 
 Le **Modèle de PDF de facture** (crayon dans l'en-tête Factures, ou *Réglages de l'espace*) est un outil de rapport à bandes pour chaque document imprimé. Trois **bandes** se rendent sur le PDF — en-tête, corps (les lignes de la facture), pied — et le XML de facture électronique n'est jamais touché.

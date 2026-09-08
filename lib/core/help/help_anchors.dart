@@ -110,6 +110,28 @@ abstract final class HelpAnchor {
   /// The price of the whole package, with its VAT group.
   static const billingPackagePrice = 'user.money.billing.package-price';
 
+  // ── money · electronic invoicing ───────────────────────────────────
+  /// Where a structured invoice goes, and with which credentials.
+  static const einvoiceOverview = 'user.money.einvoice.overview';
+
+  /// The address the document is posted to.
+  static const einvoiceEndpoint = 'user.money.einvoice.endpoint';
+
+  /// The secret, never shown again once saved.
+  static const einvoiceToken = 'user.money.einvoice.token';
+
+  /// The HTTP header the token travels in.
+  static const einvoiceAuthHeader = 'user.money.einvoice.auth-header';
+
+  /// The multipart field name the document is uploaded under.
+  static const einvoiceFileField = 'user.money.einvoice.file-field';
+
+  /// The platform's acceptance environment.
+  static const einvoiceUat = 'user.money.einvoice.uat';
+
+  /// The endpoint a development workspace uses, which reaches no state.
+  static const einvoiceDev = 'user.money.einvoice.dev';
+
   // ── workspace · availability and booking rules ─────────────────────
   /// Which weekdays the space is open at all.
   static const availabilityOpenWeekdays =
@@ -222,6 +244,13 @@ abstract final class HelpAnchor {
     availabilityAdminCheckout,
     availabilityOutsideHours,
     availabilityLimits,
+    einvoiceOverview,
+    einvoiceEndpoint,
+    einvoiceToken,
+    einvoiceAuthHeader,
+    einvoiceFileField,
+    einvoiceUat,
+    einvoiceDev,
   };
 
   /// The screenshot that documents [anchor], by the naming rule.

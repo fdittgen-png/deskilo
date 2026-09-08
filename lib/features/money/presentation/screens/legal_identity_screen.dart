@@ -506,6 +506,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             title: HelpDotTitle(
               l10n?.einvoiceConfigTitle ?? 'E-invoicing platform',
               l10n?.helpTopicEinvoice ?? 'e-invoice',
+              anchor: HelpAnchor.einvoiceOverview,
             ),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.push('/einvoice-config'),

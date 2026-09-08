@@ -1032,6 +1032,55 @@ Die Aktion **E-Rechnung (XML)** öffnet ein Blatt, das es fürs Land des Space b
 
 DesKilo überträgt nichts auf eigene Rechnung: es produziert das Dokument und übergibt es deiner Plattform. Mandatskalender bewegen sich: prüfe deine Steuerverwaltung.
 
+#### Die E-Rechnungs-Plattform
+
+Wohin eine strukturierte Rechnung übermittelt wird, und mit welchen
+Zugangsdaten. Ein Dokument kann an **zwei Ziele gleichzeitig** gehen: an
+die von deinem Land vorgeschriebene Plattform und an den eigenen Dienst
+der Kundin. Beides darf leer bleiben. Zugangsdaten liegen auf dem Raum
+und gelangen nie in eine Raumdatei oder ein Deployment: ein Export, den
+du weitergibst, trägt die Konfiguration, nicht die Schlüssel.
+
+#### Upload-URL
+
+Die Adresse, an die die Rechnung gesendet wird. Übernimm sie aus der
+Dokumentation der Plattform — ein abschließender Schrägstrich oder ein
+fehlendes Versionssegment ist der übliche Grund für eine Übertragung,
+die ohne verwertbare Meldung scheitert.
+
+#### Token oder Zugangsdaten
+
+Das Geheimnis, das dich gegenüber der Plattform ausweist. Einmal
+gespeichert wird es nie wieder angezeigt, auch dir nicht: der Bildschirm
+sagt *gesetzt* und sonst nichts. Neu eingeben ersetzt es, leer lassen
+behält es.
+
+#### Auth-Header
+
+Der HTTP-Header, in dem das Token reist — bei den meisten Plattformen
+`Authorization`, bei einigen ein herstellereigener Name. Zeigt die
+Dokumentation `Bearer <token>`, gehört der Headername hierhin und das
+nackte Token darüber.
+
+#### Name des Dateifelds
+
+Der Name des Multipart-Formularfelds, unter dem das Dokument
+hochgeladen wird. Die Plattformen unterscheiden sich (`file`, `invoice`,
+`document`), und ein falscher Name erzeugt eine Ablehnung, die gar kein
+Feld nennt.
+
+#### UAT-URL und -Token
+
+Die Abnahmeumgebung der Plattform, in der eine echte Übertragung gegen
+echte Prüfung geprobt werden kann, ohne etwas auszustellen. Fülle sie
+vor dem ersten Echtversand aus, nicht danach.
+
+#### Entwicklungs-URL und -Token
+
+Der Endpunkt, den ein **Entwicklungsraum** benutzt. Er kann keine
+staatliche Plattform erreichen — das ist es, was eine Testrechnung
+unverwechselbar macht.
+
 ### 11c. Der Report-Editor — jedes Dokument, vier Vorlagen, fünf Sprachen
 
 Die **Rechnungs-PDF-Vorlage** (Stift in der Kopfzeile, oder *Workspace-Einstellungen*) ist ein Banden-Reporting für jedes gedruckte Dokument. Drei **Banden** rendern aufs PDF — Kopf, Körper (die Rechnungszeilen), Fuß — das E-Rechnungs-XML bleibt unberührt.

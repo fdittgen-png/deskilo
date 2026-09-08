@@ -1050,6 +1050,52 @@ The **e-invoice (XML)** action opens a sheet that answers this for the workspace
 
 DesKilo still transmits nothing on its own account: it produces the document and hands it to the platform you chose. Mandate calendars keep moving: check your own tax administration before the deadline that concerns you.
 
+#### The e-invoicing platform
+
+Where a structured invoice is transmitted, and with which credentials.
+A document can go to **two destinations at once**: the platform your
+country mandates, and the customer's own service. Either may be left
+off. Credentials live on the workspace and never enter a space file or
+a deployment, so an export you send to a colleague carries the
+configuration and not the keys.
+
+#### Upload URL
+
+The address the invoice is posted to. Copy it from the platform's own
+documentation — a trailing slash or a missing version segment is the
+usual reason a transmission fails with nothing useful to read.
+
+#### Token or credential
+
+The secret that authenticates you to the platform. Once saved it is
+never shown again, not even to you: the screen says *set* and nothing
+more. Re-enter it to replace it, leave it blank to keep it.
+
+#### Auth header
+
+The HTTP header the token travels in — `Authorization` for most
+platforms, a vendor-specific name for a few. If the platform's
+documentation shows `Bearer <token>`, put the header name here and the
+bare token above.
+
+#### File field name
+
+The name of the multipart form field the document is uploaded under.
+Platforms differ (`file`, `invoice`, `document`), and getting it wrong
+produces a rejection that names no field at all.
+
+#### UAT endpoint and token
+
+The platform's acceptance environment, where a real transmission can be
+rehearsed against real validation without issuing anything. Fill these
+before the first live send, not after.
+
+#### Dev endpoint and token
+
+The endpoint a **development workspace** uses. It cannot reach a
+government platform, which is what makes a test invoice impossible to
+mistake for a real one.
+
 ### 11c. The report editor — every document, four presets, five languages
 
 The **Invoice PDF template** (pencil icon in the Invoices header, or *Workspace settings*) is a banded reporting tool for every document the app prints. Three report **bands** render onto the PDF — header, body (the invoice lines), footer — while the e-invoice XML is never touched.
