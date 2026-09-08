@@ -437,6 +437,77 @@ Tap a member to open their **management sheet** — every per-member action in o
 
 *Day packages: a number of days for a price, each with its own enable toggle.*
 
+#### Fee bands
+
+The price ladder behind percentage subscriptions. Each band covers a
+stretch of the percentage scale and says what a month inside it costs.
+A member's tariff picks a band; the band decides the fee and the
+overage price, never the other way round.
+
+#### Up to %
+
+The top of the band. The next band starts where this one ends, so the
+ladder has no gaps and no overlaps — a percentage always lands in
+exactly one band.
+
+#### Monthly fee
+
+What a month in this band costs, whether or not the allowance is used.
+It carries its own VAT group, so the rate follows the catalogue rather
+than being typed here.
+
+#### Overage
+
+The price of one half-day past the allowance. Leave it empty and extra
+half-days are refused instead of charged; set it and they are billed at
+this price on the same invoice.
+
+#### Subscription levels
+
+Which percentages a member may choose — the chips a member sees when
+picking a tariff. Add your own values beside the usual 25 · 50 · 75 ·
+100.
+
+#### Level value
+
+One percentage, 1 to 100. It is a share of the working half-days in a
+month, which is what makes the allowance follow the calendar instead of
+a fixed number of days.
+
+#### Allow a negotiated value
+
+Lets an administrator set a percentage that is not on the list, for one
+member. Off by default: a value nobody else can see is a value nobody
+else can check.
+
+#### Day packages
+
+A number of days sold for one price, bought when the days are needed
+rather than subscribed to monthly. Each package has its own enable
+toggle, so an old one can stop being sold without disappearing from the
+invoices that carry it.
+
+#### New package
+
+Name, days and price, then add. A package becomes buyable as soon as it
+is active.
+
+#### Package name
+
+What a member sees in the shop and what the invoice line says. Rename
+it and only future documents change: an issued invoice keeps the name
+it was sold under.
+
+#### Package days
+
+How many days the package grants. They are spent as they are used and
+they do not expire with the month.
+
+#### Package price
+
+The price of the whole package, with its own VAT group. The invoice
+line shows the price and the rate that applied on the day it was sold.
+
 ### Services and Accessories
 
 The catalogs behind §9 — owner-defined extras (lockers, printing…, each with a price and optional VAT rate) and per-seat equipment with optional per-half-day supplements. Both are plain lists with a **+** button.

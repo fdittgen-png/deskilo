@@ -435,6 +435,77 @@ Ein Mitglied antippen öffnet sein **Verwaltungsblatt** — jede Mitglieds-Aktio
 
 *Tagespakete: Tage für einen Preis, je mit eigenem Aktivierungs-Schalter.*
 
+#### Preisstufen
+
+Die Preisleiter hinter den prozentualen Abonnements. Jede Stufe deckt
+einen Abschnitt der Skala ab und sagt, was ein Monat darin kostet. Der
+Tarif eines Mitglieds wählt eine Stufe; die Stufe entscheidet über
+Grundpreis und Überschreitungspreis, nie umgekehrt.
+
+#### Bis %
+
+Die Obergrenze der Stufe. Die nächste beginnt, wo diese endet: die
+Leiter hat weder Lücke noch Überlappung, und ein Prozentsatz fällt
+immer in genau eine Stufe.
+
+#### Monatlicher Grundpreis
+
+Was ein Monat in dieser Stufe kostet, ob das Kontingent genutzt wird
+oder nicht. Er trägt seine eigene MwSt-Gruppe: der Satz folgt dem
+Katalog, statt hier eingetippt zu werden.
+
+#### Überschreitung
+
+Der Preis eines halben Tages über dem Kontingent. Leer gelassen werden
+zusätzliche Halbtage abgelehnt statt berechnet; gesetzt werden sie zu
+diesem Preis auf derselben Rechnung abgerechnet.
+
+#### Abo-Stufen
+
+Welche Prozentsätze ein Mitglied wählen darf — die Chips, die es beim
+Tarif sieht. Ergänze eigene Werte neben den üblichen 25 · 50 · 75 ·
+100.
+
+#### Wert der Stufe
+
+Ein Prozentsatz von 1 bis 100. Er ist ein Anteil der Arbeitshalbtage
+des Monats — deshalb folgt das Kontingent dem Kalender und nicht einer
+festen Tageszahl.
+
+#### Ausgehandelten Wert erlauben
+
+Lässt eine Administratorin für ein Mitglied einen Prozentsatz setzen,
+der nicht in der Liste steht. Standardmäßig aus: ein Wert, den sonst
+niemand sieht, ist ein Wert, den sonst niemand prüfen kann.
+
+#### Tagespakete
+
+Eine Anzahl Tage zu einem Preis, gekauft wenn die Tage gebraucht
+werden, statt monatlich abonniert. Jedes Paket hat seinen eigenen
+Schalter: ein altes kann aufhören verkauft zu werden, ohne aus den
+Rechnungen zu verschwinden, die es tragen.
+
+#### Neues Paket
+
+Name, Tage und Preis, dann hinzufügen. Ein Paket ist kaufbar, sobald es
+aktiv ist.
+
+#### Paketname
+
+Was ein Mitglied im Verkauf sieht und was die Rechnungszeile sagt.
+Benenne es um, und nur künftige Dokumente ändern sich: eine
+ausgestellte Rechnung behält den Namen, unter dem verkauft wurde.
+
+#### Tage des Pakets
+
+Wie viele Tage das Paket gewährt. Sie werden bei Nutzung verbraucht und
+verfallen nicht mit dem Monat.
+
+#### Preis des Pakets
+
+Der Preis des ganzen Pakets, mit eigener MwSt-Gruppe. Die
+Rechnungszeile zeigt den Preis und den Satz, der am Verkaufstag galt.
+
 ### Services und Zubehör
 
 Die Kataloge hinter §9 — Extras der Inhaberin (Schließfächer, Druck…, je mit Preis und optionalem MwSt-Satz) und Platz-Ausstattung mit optionalen Halbtags-Aufpreisen. Zwei einfache Listen mit **+**.

@@ -208,7 +208,7 @@ const Map<String, int> _baseline = {
   // (picker, resolution with inactive-rate fallback, immediate save).
   // 700→740 (2026-08-31): #763 thirteen help dots across bands, levels
   // and packages — each beside the field it explains.
-  'lib/features/money/presentation/screens/billing_screen.dart': 740,
+  'lib/features/money/presentation/screens/billing_screen.dart': 770, // 2026-09-08 #1019 thirteen help symbols now name the exact field they document (HelpAnchor), one named argument per symbol
   // 750→880 (2026-08-05): #510 the month-invoice card + settlement-
   // driven balance footer (the invoice decides settled/outstanding).
   'lib/features/money/presentation/widgets/bill_view.dart': 901, // 2026-09-05 #881 member payment conditions: effective terms threaded to every document

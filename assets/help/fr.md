@@ -437,6 +437,78 @@ Touchez un membre pour sa **feuille de gestion** — chaque action par membre au
 
 *Forfaits de jours : un nombre de jours pour un prix, chacun avec son interrupteur d'activation.*
 
+#### Tranches tarifaires
+
+L'échelle de prix derrière les abonnements en pourcentage. Chaque
+tranche couvre une portion de l'échelle et dit ce que coûte un mois à
+l'intérieur. Le tarif d'un membre choisit une tranche ; la tranche
+décide du forfait et du prix du dépassement, jamais l'inverse.
+
+#### Jusqu'à %
+
+Le haut de la tranche. La suivante commence là où celle-ci finit :
+l'échelle n'a ni trou ni recouvrement, et un pourcentage tombe toujours
+dans exactement une tranche.
+
+#### Forfait mensuel
+
+Ce que coûte un mois dans cette tranche, que l'allocation soit
+consommée ou non. Il porte son propre groupe de TVA : le taux suit le
+catalogue au lieu d'être saisi ici.
+
+#### Dépassement
+
+Le prix d'une demi-journée au-delà de l'allocation. Laissez-le vide et
+les demi-journées supplémentaires sont refusées au lieu d'être
+facturées ; renseignez-le et elles sont facturées à ce prix sur la même
+facture.
+
+#### Niveaux d'abonnement
+
+Les pourcentages qu'un membre peut choisir — les puces qu'il voit au
+moment de prendre un tarif. Ajoutez vos propres valeurs à côté des
+habituels 25 · 50 · 75 · 100.
+
+#### Valeur du niveau
+
+Un pourcentage, de 1 à 100. C'est une part des demi-journées ouvrées du
+mois : l'allocation suit donc le calendrier au lieu d'un nombre de
+jours figé.
+
+#### Autoriser une valeur négociée
+
+Permet à un administrateur de fixer, pour un membre, un pourcentage qui
+n'est pas dans la liste. Désactivé par défaut : une valeur que personne
+d'autre ne voit est une valeur que personne d'autre ne peut vérifier.
+
+#### Forfaits journaliers
+
+Un nombre de jours vendu à un prix, acheté quand les jours sont
+nécessaires plutôt qu'abonné au mois. Chaque forfait a son propre
+interrupteur : on peut cesser d'en vendre un sans le faire disparaître
+des factures qui le portent.
+
+#### Nouveau forfait
+
+Nom, jours et prix, puis ajouter. Un forfait devient achetable dès
+qu'il est actif.
+
+#### Nom du forfait
+
+Ce qu'un membre voit à la vente et ce que dit la ligne de facture.
+Renommez-le et seuls les documents futurs changent : une facture émise
+garde le nom sous lequel elle a été vendue.
+
+#### Jours du forfait
+
+Combien de jours le forfait accorde. Ils se consomment à l'usage et
+n'expirent pas avec le mois.
+
+#### Prix du forfait
+
+Le prix du forfait entier, avec son propre groupe de TVA. La ligne de
+facture montre le prix et le taux qui s'appliquait le jour de la vente.
+
 ### Services et Accessoires
 
 Les catalogues derrière le §9 — extras définis par le propriétaire (casiers, impression…, chacun avec un prix et un taux de TVA optionnel) et équipements de place avec suppléments optionnels par demi-journée. Deux listes simples avec un bouton **+**.

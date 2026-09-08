@@ -437,6 +437,79 @@ Tocca un membro per aprire la sua **scheda di gestione** — ogni azione per mem
 
 *I pacchetti di giorni: un numero di giorni a un prezzo, ognuno con il proprio interruttore di attivazione.*
 
+#### Fasce tariffarie
+
+La scala dei prezzi dietro gli abbonamenti a percentuale. Ogni fascia
+copre un tratto della scala e dice quanto costa un mese al suo interno.
+La tariffa di un membro sceglie una fascia; la fascia decide il canone
+e il prezzo dell'eccedenza, mai il contrario.
+
+#### Fino a %
+
+Il tetto della fascia. La successiva comincia dove questa finisce: la
+scala non ha buchi né sovrapposizioni, e una percentuale cade sempre in
+esattamente una fascia.
+
+#### Canone mensile
+
+Quanto costa un mese in questa fascia, che l'assegnazione sia usata o
+no. Porta il proprio gruppo IVA: l'aliquota segue il catalogo invece di
+essere digitata qui.
+
+#### Eccedenza
+
+Il prezzo di una mezza giornata oltre l'assegnazione. Lascialo vuoto e
+le mezze giornate in più vengono rifiutate anziché addebitate;
+compilalo e vengono fatturate a questo prezzo sulla stessa fattura.
+
+#### Livelli di abbonamento
+
+Quali percentuali un membro può scegliere — i chip che vede quando
+prende una tariffa. Aggiungi i tuoi valori accanto ai soliti 25 · 50 ·
+75 · 100.
+
+#### Valore del livello
+
+Una percentuale, da 1 a 100. È una quota delle mezze giornate
+lavorative del mese: per questo l'assegnazione segue il calendario e
+non un numero fisso di giorni.
+
+#### Consentire un valore negoziato
+
+Permette a un amministratore di fissare, per un membro, una percentuale
+che non è in elenco. Disattivato per impostazione predefinita: un
+valore che nessun altro vede è un valore che nessun altro può
+verificare.
+
+#### Pacchetti giornalieri
+
+Un numero di giorni venduto a un prezzo, comprato quando i giorni
+servono anziché sottoscritto al mese. Ogni pacchetto ha il suo
+interruttore: uno vecchio può smettere di essere venduto senza sparire
+dalle fatture che lo portano.
+
+#### Nuovo pacchetto
+
+Nome, giorni e prezzo, poi aggiungi. Un pacchetto è acquistabile appena
+è attivo.
+
+#### Nome del pacchetto
+
+Ciò che un membro vede in vendita e ciò che dice la riga di fattura.
+Rinominalo e cambiano solo i documenti futuri: una fattura emessa
+mantiene il nome con cui è stata venduta.
+
+#### Giorni del pacchetto
+
+Quanti giorni concede il pacchetto. Si consumano con l'uso e non
+scadono con il mese.
+
+#### Prezzo del pacchetto
+
+Il prezzo dell'intero pacchetto, con il proprio gruppo IVA. La riga di
+fattura mostra il prezzo e l'aliquota in vigore il giorno della
+vendita.
+
 ### Servizi e Accessori
 
 I cataloghi dietro il §9 — extra definiti dal proprietario (armadietti, stampe…, ognuno con un prezzo e un'aliquota IVA facoltativa) e dotazioni per posto con supplementi facoltativi per mezza giornata. Entrambi sono semplici elenchi con un pulsante **+**.
