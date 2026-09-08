@@ -1472,6 +1472,108 @@ The test says which part is wrong rather than just failing: *could not reach tha
 
 Switching signs you out and takes effect when the app is next opened — the session belonged to the other server. **Use the app's server** returns to the default at any time.
 
+<!-- anchor: user.profile.settings.whatsapp -->
+### Your WhatsApp number
+
+Shown to the members of your spaces in the directory, so someone can
+reach you without leaving the app. Optional, and clearing it removes it
+everywhere at once.
+
+<!-- anchor: user.profile.settings.status -->
+### Your status line
+
+One short line beside your name in the directory — *In a call · back at
+14:00*. It is yours to set and yours to clear; nobody else can change
+it.
+
+<!-- anchor: user.profile.settings.default-period -->
+### Default booking period
+
+Which half of the day a booking assumes when you do not say. It only
+pre-selects: every booking screen still lets you choose, and the space's
+granularity decides what the halves are.
+
+<!-- anchor: user.profile.settings.personal-info -->
+### Personal information
+
+First name, family name, company, the structured address, telephone and
+e-mail. This is what a document naming you as the buyer prints, which is
+why an invoice with a bare display name means this screen is empty.
+
+<!-- anchor: user.profile.settings.address -->
+### Your address
+
+The free-text address printed on your invoices. Where *Personal
+information* exists it supersedes this; the field stays for spaces that
+have not switched.
+
+<!-- anchor: user.profile.settings.vat-id -->
+### Your VAT number
+
+Fill it only if you are invoiced as a business. It is what decides
+whether a cross-border invoice is issued **without tax** under the
+reverse charge — and the e-invoice check refuses to send such a document
+until it is there.
+
+<!-- anchor: user.profile.settings.payment-terms -->
+### Your payment terms
+
+The terms that apply to you specifically, when an administrator has
+negotiated any. Empty means the space's own terms apply.
+
+<!-- anchor: user.profile.settings.restore-hints -->
+### Restore the hints
+
+Brings back every help hint you have dismissed. Nothing else is reset.
+
+<!-- anchor: user.profile.settings.badge -->
+### Your badge
+
+The QR or NFC badge that identifies you at the door and on the kiosk.
+The app stores only a hash of it: a badge can be revoked but never read
+back, which is why replacing a lost one means issuing a new badge rather
+than recovering the old.
+
+<!-- anchor: user.profile.settings.badge-pin -->
+### Your badge PIN
+
+A short code asked for beside the badge where a space wants two factors.
+It protects the actions a badge can take, not the badge itself.
+
+<!-- anchor: user.profile.settings.language -->
+### App language
+
+The language of the app on **this device**, independent of the space's
+own language and of the language your documents come in. Leave it on the
+system setting and it follows the phone.
+
+<!-- anchor: user.profile.settings.theme -->
+### Theme
+
+Light, dark, or the signature blend — again per device. The system
+setting follows the phone's own light and dark switch.
+
+<!-- anchor: user.profile.settings.navigation -->
+### Navigation style
+
+Whether the app navigates by a bottom bar or a side rail. On a wide
+screen the rail gives the plan more room; on a phone the bar is easier
+to reach.
+
+<!-- anchor: user.profile.settings.demo-mode -->
+### Demo mode
+
+Replaces the names and amounts on screen with plausible ones, so a space
+can be shown to a visitor without showing anybody's business. It changes
+the display only: nothing in the data is touched, and nothing you do
+while it is on behaves differently.
+
+<!-- anchor: user.profile.settings.front-camera -->
+### Front camera for scanning
+
+Uses the front lens instead of the back one. For a wall-mounted tablet
+whose back camera faces the wall.
+
 ## 13. Notifications
 
 Check-in reminders, pending confirmations, expense decisions — and when an admin **removes one of your reservations** (overrule), you and the admins are notified. Delivery is local-first; server pushes arrive out of the box on Android, iPhone/iPad, the browser and macOS (Firebase Cloud Messaging) — *Settings → Advanced* shows whether push is active on this device. The app-icon badge shows your pending-confirmations count **plus your unread messages** — on Android, iPhone/iPad, the macOS Dock, the Windows taskbar, and installed web apps. Member messages are announced **once per device with the sender and the full text** — including anything sent while the app was closed, announced the moment you next open it. That announcement is always raised **locally, by the app itself**: the pushed payload never carries a name, a time or a word of the message (§6), so what travels over the network says only that something arrived. A conversation you **muted** (§16) stays silent: nothing is announced for it, though it still counts on its row and on the badge.

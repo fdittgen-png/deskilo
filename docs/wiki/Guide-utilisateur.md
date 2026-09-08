@@ -1500,6 +1500,111 @@ Le test dit quelle partie ne va pas au lieu d'échouer simplement : *impossible 
 
 Basculer vous déconnecte et prend effet à la prochaine ouverture de l'app — la session appartenait à l'autre serveur. **Utiliser le serveur de l'app** revient au défaut à tout moment.
 
+<!-- anchor: user.profile.settings.whatsapp -->
+### Votre numéro WhatsApp
+
+Visible des membres de vos espaces dans l'annuaire, pour qu'on puisse
+vous joindre sans quitter l'application. Facultatif, et l'effacer le
+retire partout d'un coup.
+
+<!-- anchor: user.profile.settings.status -->
+### Votre ligne de statut
+
+Une courte ligne à côté de votre nom dans l'annuaire — *En appel ·
+retour à 14 h*. À vous de la mettre et de l'effacer ; personne d'autre ne
+peut la changer.
+
+<!-- anchor: user.profile.settings.default-period -->
+### Période de réservation par défaut
+
+Quelle moitié de journée une réservation suppose quand vous ne dites
+rien. Elle ne fait que présélectionner : chaque écran de réservation vous
+laisse choisir, et la granularité de l'espace décide de ce que sont les
+moitiés.
+
+<!-- anchor: user.profile.settings.personal-info -->
+### Informations personnelles
+
+Prénom, nom, société, adresse structurée, téléphone et courriel. C'est ce
+qu'imprime un document qui vous nomme comme client : une facture avec un
+simple nom d'affichage signifie que cet écran est vide.
+
+<!-- anchor: user.profile.settings.address -->
+### Votre adresse
+
+L'adresse en texte libre imprimée sur vos factures. Là où existent les
+*Informations personnelles*, elles la remplacent ; le champ demeure pour
+les espaces qui n'ont pas basculé.
+
+<!-- anchor: user.profile.settings.vat-id -->
+### Votre numéro de TVA
+
+À renseigner seulement si vous êtes facturé en tant que professionnel.
+C'est lui qui décide si une facture transfrontalière est émise **sans
+taxe** en autoliquidation — et le contrôle de facture électronique
+refuse d'envoyer un tel document tant qu'il manque.
+
+<!-- anchor: user.profile.settings.payment-terms -->
+### Vos conditions de paiement
+
+Les conditions qui vous sont propres, quand un administrateur en a
+négocié. Vide, ce sont celles de l'espace qui s'appliquent.
+
+<!-- anchor: user.profile.settings.restore-hints -->
+### Restaurer les astuces
+
+Ramène toutes les astuces d'aide que vous avez masquées. Rien d'autre
+n'est réinitialisé.
+
+<!-- anchor: user.profile.settings.badge -->
+### Votre badge
+
+Le badge QR ou NFC qui vous identifie à la porte et sur la borne.
+L'application n'en garde qu'une empreinte : un badge peut être révoqué
+mais jamais relu, c'est pourquoi remplacer un badge perdu veut dire en
+émettre un nouveau, pas récupérer l'ancien.
+
+<!-- anchor: user.profile.settings.badge-pin -->
+### Le code de votre badge
+
+Un code court demandé à côté du badge là où un espace veut deux facteurs.
+Il protège les actions que le badge permet, pas le badge lui-même.
+
+<!-- anchor: user.profile.settings.language -->
+### Langue de l'application
+
+La langue de l'application sur **cet appareil**, indépendante de la
+langue de l'espace et de celle de vos documents. Laissez-la sur le
+réglage système et elle suit le téléphone.
+
+<!-- anchor: user.profile.settings.theme -->
+### Thème
+
+Clair, sombre, ou le mélange signature — là encore par appareil. Le
+réglage système suit le commutateur clair/sombre du téléphone.
+
+<!-- anchor: user.profile.settings.navigation -->
+### Style de navigation
+
+Si l'application navigue par une barre en bas ou un rail latéral. Sur
+grand écran le rail laisse plus de place au plan ; sur téléphone la barre
+est plus facile à atteindre.
+
+<!-- anchor: user.profile.settings.demo-mode -->
+### Mode démonstration
+
+Remplace à l'écran les noms et les montants par des équivalents
+plausibles, pour montrer un espace à un visiteur sans montrer les
+affaires de personne. Cela ne change que l'affichage : rien n'est touché
+dans les données, et rien de ce que vous faites ne se comporte
+différemment.
+
+<!-- anchor: user.profile.settings.front-camera -->
+### Caméra frontale pour scanner
+
+Utilise l'objectif avant plutôt que l'arrière. Pour une tablette murale
+dont la caméra arrière fait face au mur.
+
 ## 13. Notifications
 
 Rappels de pointage, confirmations en attente, décisions de dépense — et quand un admin **retire une de vos réservations** (passer outre), vous et les admins êtes notifiés. La livraison est locale d'abord ; les push serveur arrivent d'office sur Android, iPhone/iPad, navigateur et macOS (Firebase Cloud Messaging) — *Réglages → Avancé* montre si le push est actif sur cet appareil. Le badge d'icône montre vos confirmations en attente **plus vos messages non lus** — Android, iPhone/iPad, Dock macOS, barre Windows, web installé. Les messages de membres sont annoncés **une fois par appareil avec l'expéditeur et le texte complet** — y compris ceux envoyés app fermée, annoncés à la prochaine ouverture. Cette annonce est toujours produite **localement, par l'app elle-même** : le push, lui, ne porte ni nom, ni horaire, ni un mot du message (§6) — ce qui circule sur le réseau dit seulement que quelque chose est arrivé. Une conversation **en sourdine** (§16) reste silencieuse : rien n'est annoncé pour elle, même si elle compte toujours sur sa ligne et sur le badge.

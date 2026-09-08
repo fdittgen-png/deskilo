@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/app_info.dart';
 import '../../../../core/files/file_picker.dart';
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint_providers.dart';
 import '../../../../core/push/push_status_tile.dart';
@@ -320,6 +321,7 @@ class SettingsScreen extends ConsumerWidget {
               title: HelpDotTitle(
                 l10n?.whatsappTitle ?? 'WhatsApp',
                 l10n?.helpTopicSettings ?? 'Settings & profile',
+                anchor: HelpAnchor.profileWhatsapp,
               ),
               subtitle: Text(
                 (myProfile?.sharesWhatsapp ?? false)
@@ -339,6 +341,7 @@ class SettingsScreen extends ConsumerWidget {
             title: HelpDotTitle(
               l10n?.profileStatusTitle ?? 'Status',
               l10n?.helpTopicSettings ?? 'Settings & profile',
+              anchor: HelpAnchor.profileStatus,
             ),
             subtitle: Text(
               (myProfile?.hasStatus ?? false)
@@ -362,6 +365,7 @@ class SettingsScreen extends ConsumerWidget {
               title: HelpDotTitle(
                 l10n?.defaultPeriodTitle ?? 'Default booking period',
                 l10n?.helpTopicSettings ?? 'Settings & profile',
+                anchor: HelpAnchor.profileDefaultPeriod,
               ),
               subtitle: Text(switch (ref.watch(defaultPeriodProvider).value) {
                 DefaultBookingPeriod.morning =>
@@ -378,6 +382,7 @@ class SettingsScreen extends ConsumerWidget {
                   title: HelpDotTitle(
                     l10n?.defaultPeriodTitle ?? 'Default booking period',
                     l10n?.helpTopicSettings ?? 'Settings & profile',
+                    anchor: HelpAnchor.profileDefaultPeriod,
                   ),
                   children: [
                     for (final (period, label) in [
@@ -423,6 +428,7 @@ class SettingsScreen extends ConsumerWidget {
               title: HelpDotTitle(
                 l10n?.personalInfoTitle ?? 'Personal information',
                 l10n?.helpTopicSettings ?? 'Settings & profile',
+                anchor: HelpAnchor.profilePersonalInfo,
               ),
               subtitle: Text(
                 _identitySummary(myProfile) ??
@@ -440,6 +446,7 @@ class SettingsScreen extends ConsumerWidget {
               title: HelpDotTitle(
                 l10n?.addressTitle ?? 'Address',
                 l10n?.helpTopicSettings ?? 'Settings & profile',
+                anchor: HelpAnchor.profileAddress,
               ),
               subtitle: Text(
                 (myProfile?.address.isNotEmpty ?? false)
@@ -465,6 +472,7 @@ class SettingsScreen extends ConsumerWidget {
               title: HelpDotTitle(
                 l10n?.paymentTermsTitle ?? 'Payment conditions',
                 l10n?.helpTopicSettings ?? 'Settings & profile',
+                anchor: HelpAnchor.profilePaymentTerms,
               ),
               subtitle: Text(myMember.paymentTerms == null
                   ? (l10n?.paymentTermsInherited ?? 'Workspace default')
@@ -490,6 +498,7 @@ class SettingsScreen extends ConsumerWidget {
               title: HelpDotTitle(
                 l10n?.helpHintRestoreTitle ?? 'Show help hints again',
                 l10n?.helpTopicSettings ?? 'Settings & profile',
+                anchor: HelpAnchor.profileRestoreHints,
               ),
               onTap: () async {
                 await ref
@@ -529,13 +538,17 @@ class SettingsScreen extends ConsumerWidget {
             Row(
               children: [
                 const Expanded(child: MyBadgeTile()),
-                HelpDot(l10n?.helpHintBadgesTopic ?? 'NFC badges'),
+                HelpDot(l10n?.helpHintBadgesTopic ?? 'NFC badges',
+                  anchor: HelpAnchor.profileBadge,
+                ),
               ],
             ),
             Row(
               children: [
                 const Expanded(child: BadgePinTile()),
-                HelpDot(l10n?.helpHintBadgesTopic ?? 'NFC badges'),
+                HelpDot(l10n?.helpHintBadgesTopic ?? 'NFC badges',
+                  anchor: HelpAnchor.profileBadgePin,
+                ),
               ],
             ),
           ],
@@ -688,6 +701,7 @@ class SettingsScreen extends ConsumerWidget {
             title: HelpDotTitle(
               l10n?.languageTitle ?? 'Language',
               l10n?.helpTopicSettings ?? 'Settings & profile',
+              anchor: HelpAnchor.profileLanguage,
             ),
             subtitle: Text(
               localeOverride == null
@@ -706,6 +720,7 @@ class SettingsScreen extends ConsumerWidget {
             title: HelpDotTitle(
               l10n?.themeTitle ?? 'Theme',
               l10n?.helpTopicSettings ?? 'Settings & profile',
+              anchor: HelpAnchor.profileTheme,
             ),
             subtitle: Text(switch (themeOverride) {
               ThemeMode.light => l10n?.themeLight ?? 'Light',
@@ -729,6 +744,7 @@ class SettingsScreen extends ConsumerWidget {
               title: HelpDotTitle(
                 l10n?.navigationTitle ?? 'Navigation',
                 l10n?.helpTopicSettings ?? 'Settings & profile',
+                anchor: HelpAnchor.profileNavigation,
               ),
               subtitle: Text(switch (
                   ref.watch(navigationStyleControllerProvider).value) {
@@ -755,6 +771,7 @@ class SettingsScreen extends ConsumerWidget {
               title: HelpDotTitle(
                 l10n?.demoModeTitle ?? 'Demo mode',
                 l10n?.helpTopicSettings ?? 'Settings & profile',
+                anchor: HelpAnchor.profileDemoMode,
               ),
               subtitle: Text(l10n?.demoModeSubtitle ??
                   'Names, e-mails, phones and addresses are blurred on '
@@ -772,6 +789,7 @@ class SettingsScreen extends ConsumerWidget {
             title: HelpDotTitle(
               l10n?.settingsFrontCamera ?? 'Scan with the front camera',
               l10n?.helpTopicSettings ?? 'Settings & profile',
+              anchor: HelpAnchor.profileFrontCamera,
             ),
             subtitle: Text(
               l10n?.settingsFrontCameraDesc ??
@@ -1000,6 +1018,7 @@ class _LanguageDialog extends ConsumerWidget {
       title: HelpDotTitle(
         l10n?.languageTitle ?? 'Language',
         l10n?.helpTopicSettings ?? 'Settings & profile',
+        anchor: HelpAnchor.profileLanguage,
       ),
       children: [
         RadioGroup<String>(
@@ -1109,6 +1128,7 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
       title: HelpDotTitle(
         l10n?.addressTitle ?? 'Address',
         l10n?.helpTopicSettings ?? 'Settings & profile',
+        anchor: HelpAnchor.profileAddress,
       ),
       content: SingleChildScrollView(
         child: Column(
@@ -1123,6 +1143,7 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
                 labelText: l10n?.addressTitle ?? 'Address',
                 suffixIcon: HelpDot(
                   l10n?.helpTopicSettings ?? 'Settings & profile',
+                  anchor: HelpAnchor.profileAddress,
                 ),
               ),
             ),
@@ -1154,6 +1175,7 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
                 labelText: l10n?.addressVatIdLabel ?? 'VAT number',
                 suffixIcon: HelpDot(
                   l10n?.helpTopicSettings ?? 'Settings & profile',
+                  anchor: HelpAnchor.profileVatId,
                 ),
               ),
             ),
@@ -1245,7 +1267,9 @@ class _StatusDialogState extends ConsumerState<_StatusDialog> {
               'Optional. Visible to members of your workspaces in the '
                   'member directory. Leave empty to clear it.',
           helperMaxLines: 3,
-          suffixIcon: HelpDot(l10n?.helpTopicSettings ?? 'Settings & profile'),
+          suffixIcon: HelpDot(l10n?.helpTopicSettings ?? 'Settings & profile',
+            anchor: HelpAnchor.profileStatus,
+          ),
         ),
       ),
       actions: [
@@ -1278,6 +1302,7 @@ class _ThemeDialog extends ConsumerWidget {
       title: HelpDotTitle(
         l10n?.themeTitle ?? 'Theme',
         l10n?.helpTopicSettings ?? 'Settings & profile',
+        anchor: HelpAnchor.profileTheme,
       ),
       children: [
         RadioGroup<ThemeMode>(
@@ -1344,6 +1369,7 @@ class _NavigationDialog extends ConsumerWidget {
       title: HelpDotTitle(
         l10n?.navigationTitle ?? 'Navigation',
         l10n?.helpTopicSettings ?? 'Settings & profile',
+        anchor: HelpAnchor.profileNavigation,
       ),
       children: [
         RadioGroup<NavigationStyle?>(

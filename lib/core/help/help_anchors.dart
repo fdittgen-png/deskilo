@@ -119,6 +119,52 @@ abstract final class HelpAnchor {
   /// When the month is billed — the subscription line goes ahead of it.
   static const billingSchedule = 'user.money.billing.schedule';
 
+  // ── profile · personal settings ────────────────────────────────────
+  /// Your number in the member directory.
+  static const profileWhatsapp = 'user.profile.settings.whatsapp';
+
+  /// One line beside your name; yours alone to set.
+  static const profileStatus = 'user.profile.settings.status';
+
+  /// Which half of the day a booking assumes.
+  static const profileDefaultPeriod = 'user.profile.settings.default-period';
+
+  /// What a document naming you as the buyer prints.
+  static const profilePersonalInfo = 'user.profile.settings.personal-info';
+
+  /// The free-text address on your invoices.
+  static const profileAddress = 'user.profile.settings.address';
+
+  /// What decides a cross-border reverse charge.
+  static const profileVatId = 'user.profile.settings.vat-id';
+
+  /// Terms negotiated for you specifically.
+  static const profilePaymentTerms = 'user.profile.settings.payment-terms';
+
+  /// Brings back every dismissed hint.
+  static const profileRestoreHints = 'user.profile.settings.restore-hints';
+
+  /// The badge, stored only as a hash.
+  static const profileBadge = 'user.profile.settings.badge';
+
+  /// The second factor beside the badge.
+  static const profileBadgePin = 'user.profile.settings.badge-pin';
+
+  /// The app's language on this device.
+  static const profileLanguage = 'user.profile.settings.language';
+
+  /// Light, dark or the signature blend, per device.
+  static const profileTheme = 'user.profile.settings.theme';
+
+  /// Bottom bar or side rail.
+  static const profileNavigation = 'user.profile.settings.navigation';
+
+  /// Plausible names and amounts, display only.
+  static const profileDemoMode = 'user.profile.settings.demo-mode';
+
+  /// The front lens, for a wall tablet.
+  static const profileFrontCamera = 'user.profile.settings.front-camera';
+
   // ── workspace · settings and exports ───────────────────────────────
   /// Where the organisation is established.
   static const workspaceCountry = 'user.workspace.settings.country';
@@ -371,6 +417,21 @@ abstract final class HelpAnchor {
     reportsInvoiceTemplate,
     remindersRules,
     billingSchedule,
+    profileWhatsapp,
+    profileStatus,
+    profileDefaultPeriod,
+    profilePersonalInfo,
+    profileAddress,
+    profileVatId,
+    profilePaymentTerms,
+    profileRestoreHints,
+    profileBadge,
+    profileBadgePin,
+    profileLanguage,
+    profileTheme,
+    profileNavigation,
+    profileDemoMode,
+    profileFrontCamera,
   };
 
   /// The screenshot that documents [anchor], by the naming rule.
