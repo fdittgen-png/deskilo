@@ -13,6 +13,10 @@ Every feature serves at least one of three goals (the *feature filter*):
 | Page | Audience | Content |
 |---|---|---|
 | [Architecture](Architecture) | Developers | Stack, feature-first layout, state management, the Supabase data model, security (RLS + RPCs), feature flags, online payments, i18n, platforms |
+| [Technical reference](Technical-Reference) | Developers | Versions and floors, every dependency and why, the architecture, the server, the patterns, all 31 quality gates, the release trains, the standards implemented, the ADR index |
+| [Configuring the space](Admin-Configuration-Guide) | Owners | Every parameter the questionnaire asks, the master data, the floor plan — including how to turn photographs of the room into a plan image with an AI |
+| [The technical side](Admin-Technical-Guide) | Administrators | Documents and the report designer, e-invoicing, accounting exports, integrations, instances, the trace |
+| [Environments: dev and prod](Environments-Guide) | Owners | Why a pair, creating it, who may deploy, what travels and what never does |
 | [Implementation](Implementation) | Developers / contributors | Repo layout, conventions, codegen, migrations, testing, CI, feature-gating checklist, how to build and run on every platform |
 | [User Guide](User-Guide) | Members, admins, owners | Complete illustrated walkthrough in English: onboarding, booking, roles & invites, money, online payments & NFC configuration, space QR codes, kiosk mode, settings |
 | [Guide utilisateur](Guide-utilisateur) | Membres, admins, propriétaires | Le guide complet en français |
