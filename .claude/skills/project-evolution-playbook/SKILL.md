@@ -44,3 +44,25 @@ description: Project-agnostic method for evolving a codebase with an agent, dist
   next branch on.
 - Report outcomes plainly: what merged, what deployed, what stays
   owner-side, what was filed instead of slipped in.
+
+## Documentation and help (the portable half)
+
+`docs/guides/help-framework.md` holds the method in full. The three rules
+worth carrying to any repository:
+
+- **One anchor names four things** — the help symbol, the guide heading,
+  the screenshot and its crops. It is what makes the symbol open the
+  exact object, and what makes a new screenshot replace the old one for
+  free. Carry it as an invisible HTML comment above the heading, never a
+  visible `{#id}`.
+- **A guide that is not translated yet compiles into its own language
+  only**, and no help symbol may point into it until every language has
+  it. A reader never gets a page that changes language halfway.
+- **Write the text before the screenshot exists**: an `<!-- image: name -->`
+  slot renders as nothing, a tool lists what is waiting, and filling one
+  never touches a sentence.
+
+Adopting it in an app with no help surface: the pipeline, the guides and
+the technical reference first — the wiki becomes real without touching
+the product — then the help screen as ordinary feature work, with a
+ratchet lint counting the symbols that still open the nearest section.
