@@ -591,6 +591,30 @@ Les catalogues derrière le §9 — extras définis par le propriétaire (casier
 
 **Stock (#731).** Un service issu d'une fourniture affiche *N en stock* / *Épuisé* ; une consommation supérieure au stock est refusée.
 
+#### Un service
+
+Tout ce qui se vend et n'est pas une place : une heure de salle de
+réunion, un forfait d'impression, un casier, un abonnement café. Un
+service peut être mis sur une facture par un administrateur ou rattaché
+à un forfait.
+
+#### Nom du service
+
+Ce que dit la ligne de facture. Le renommer ne change que les documents
+futurs : une facture émise garde le nom sous lequel elle a été vendue.
+
+#### Prix du service
+
+Le prix d'une unité, avec son propre groupe de TVA — le taux suit le
+catalogue au lieu d'être saisi ici, si bien qu'un changement de taux ne
+revient jamais sur un document déjà émis.
+
+#### Actif
+
+Si le service peut encore être vendu. Le désactiver arrête les nouvelles
+ventes et laisse intactes toutes les factures qui le portent : c'est ce
+qu'on veut pour quelque chose d'arrêté, pas d'erroné.
+
 ### Réglages de l'espace (Espace de coworking)
 
 L'écran de l'espace, de haut en bas :
@@ -843,6 +867,54 @@ Chaque rapport de l'application — relevé, factures, proformas, avoirs, vos do
 - Confirmée **à un montant différent**, une courte **explication est obligatoire** ; la dépense passe alors la validation normale des dépenses. Confirmée → ajoutée ; **rejetée → elle vous revient**, et vous pouvez changer le montant et/ou la description puis la renvoyer.
 
 La liste de vos programmations (état, règle, prochaine échéance) et le formulaire *Programmer une dépense récurrente* vivent derrière **Finances → Paiements → Dépenses programmées** ; y mettre fin est un geste. Fonctionnalité *Dépenses programmées* (sous l'onglet Finances).
+
+#### Une dépense programmée
+
+Un coût qui revient — l'abonnement internet, le ménage, le loyer. Vous
+le décrivez une fois et l'application lève chaque occurrence à son
+échéance, sans que personne ait à y penser. Chaque occurrence passe
+toujours par la validation que le domaine des dépenses demande :
+programmer crée la demande, cela ne l'approuve pas.
+
+#### Quoi
+
+Le nom que porte chaque occurrence. C'est ce que disent la ligne de
+compte et la demande de validation : écrivez-le comme vous voudriez le
+relire six mois plus tard.
+
+#### Montant
+
+Ce que coûte une occurrence. Le modifier n'affecte que les occurrences
+pas encore levées ; celles déjà au compte gardent le montant avec lequel
+elles ont été levées.
+
+#### Description
+
+Le texte plus long, pour qui valide. Facultatif, et la place d'un numéro
+de contrat ou d'une référence fournisseur.
+
+#### Première occurrence
+
+La date à laquelle la première est due. Toutes les suivantes se comptent
+à partir de là : la déplacer déplace toute la série.
+
+#### Tous les
+
+L'intervalle entre deux occurrences — chaque mois, chaque trimestre,
+chaque année. Avec la première occurrence, il décide de toutes les
+échéances que la série aura jamais.
+
+#### Nombre de fois
+
+Combien d'occurrences lever. Laissez vide pour une série qui ne s'arrête
+pas, et utilisez plutôt *Jusqu'au* quand la fin est une date et non un
+nombre.
+
+#### Jusqu'au
+
+La date après laquelle plus rien n'est levé. Facultative : sans elle la
+série court jusqu'à ce que vous l'arrêtiez, ce qui convient à un loyer
+et pas à un paiement en douze fois.
 
 ### 9i. Le rapport de consommation
 

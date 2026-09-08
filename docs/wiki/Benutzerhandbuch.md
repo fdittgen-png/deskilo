@@ -600,6 +600,34 @@ Die Kataloge hinter §9 — Extras der Inhaberin (Schließfächer, Druck…, je 
 
 **Bestand (#731).** Eine Leistung aus einem Vorrat zeigt *N auf Lager* / *Ausverkauft*; ein Verbrauch über den Bestand hinaus wird abgelehnt.
 
+<!-- anchor: user.money.services.overview -->
+#### Eine Leistung
+
+Alles Verkaufte, das kein Platz ist: eine Stunde Besprechungsraum, ein
+Druckpaket, ein Schließfach, ein Kaffee-Abo. Eine Leistung kann von
+einer Administratorin auf eine Rechnung gesetzt oder an ein Paket
+gehängt werden.
+
+<!-- anchor: user.money.services.name -->
+#### Name der Leistung
+
+Was die Rechnungszeile sagt. Umbenennen ändert nur künftige Dokumente:
+eine ausgestellte Rechnung behält den Namen, unter dem verkauft wurde.
+
+<!-- anchor: user.money.services.price -->
+#### Preis der Leistung
+
+Der Preis einer Einheit, mit eigener MwSt-Gruppe — der Satz folgt dem
+Katalog statt hier getippt zu werden, sodass eine Satzänderung nie in
+ein bereits ausgestelltes Dokument zurückgreift.
+
+<!-- anchor: user.money.services.active -->
+#### Aktiv
+
+Ob die Leistung noch verkauft werden kann. Ausschalten stoppt neue
+Verkäufe und lässt jede Rechnung, die sie trägt, unberührt — genau das,
+was man für etwas Eingestelltes will, nicht für etwas Falsches.
+
 ### Workspace-Einstellungen (Coworking-Space)
 
 Der Bildschirm des Space, von oben nach unten:
@@ -831,6 +859,61 @@ Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine
 - **Zu einem anderen Betrag** bestätigt, ist eine kurze **Erklärung Pflicht**; die Ausgabe durchläuft dann die normale Ausgaben-Validierung. Bestätigt → hinzugefügt; **abgelehnt → sie kommt zu Ihnen zurück**, Betrag und/oder Beschreibung ändern und erneut senden.
 
 Die Liste Ihrer Pläne (Status, Regel, nächste Fälligkeit) und das Formular *Wiederkehrende Ausgabe planen* liegen hinter **Finanzen → Zahlungen → Geplante Ausgaben**; ein Plan endet dort mit einem Tipp. Funktion *Geplante Ausgaben* (unter dem Finanzen-Tab).
+
+<!-- anchor: user.money.expenses.schedule -->
+#### Eine geplante Ausgabe
+
+Eine Kosten, die wiederkehrt — der Internetanschluss, die Reinigung, die
+Miete. Du beschreibst sie einmal, und die App legt jede Fälligkeit an
+ihrem Tag an, sodass niemand daran denken muss. Jede Fälligkeit geht
+weiterhin durch die Prüfung, die die Ausgaben verlangen: das Planen legt
+die Anfrage an, es genehmigt sie nicht.
+
+<!-- anchor: user.money.expenses.what -->
+#### Was
+
+Der Name, den jede Fälligkeit trägt. Er steht auf der Kontozeile und in
+der Prüfanfrage — schreib ihn so, wie du ihn in sechs Monaten lesen
+möchtest.
+
+<!-- anchor: user.money.expenses.amount -->
+#### Betrag
+
+Was eine Fälligkeit kostet. Eine Änderung wirkt nur auf noch nicht
+angelegte Fälligkeiten; die bereits gebuchten behalten den Betrag, mit
+dem sie angelegt wurden.
+
+<!-- anchor: user.money.expenses.description -->
+#### Beschreibung
+
+Der längere Text für die prüfende Person. Optional, und der Platz für
+eine Vertragsnummer oder eine Lieferantenreferenz.
+
+<!-- anchor: user.money.expenses.starts-on -->
+#### Erste Fälligkeit
+
+Das Datum, an dem die erste fällig wird. Jede spätere zählt von hier —
+sie zu verschieben verschiebt die ganze Reihe.
+
+<!-- anchor: user.money.expenses.every -->
+#### Alle
+
+Der Abstand zwischen zwei Fälligkeiten — jeden Monat, jedes Quartal,
+jedes Jahr. Zusammen mit der ersten Fälligkeit legt er jedes
+Fälligkeitsdatum fest, das die Reihe je haben wird.
+
+<!-- anchor: user.money.expenses.times -->
+#### Anzahl
+
+Wie viele Fälligkeiten angelegt werden. Leer lassen für eine Reihe ohne
+Ende, und *Bis* nehmen, wenn das Ende ein Datum ist und keine Anzahl.
+
+<!-- anchor: user.money.expenses.ends-on -->
+#### Bis
+
+Das Datum, nach dem nichts mehr angelegt wird. Optional: ohne es läuft
+die Reihe, bis du sie stoppst — richtig für eine Miete, falsch für eine
+Ratenzahlung über zwölf Monate.
 
 ### 9i. Der Verbrauchsbericht
 

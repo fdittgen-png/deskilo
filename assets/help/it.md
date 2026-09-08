@@ -592,6 +592,30 @@ I cataloghi dietro il §9 — extra definiti dal proprietario (armadietti, stamp
 
 **Scorta (#731).** Un servizio nato da una scorta mostra *N in scorta* / *Esaurito*; un consumo superiore allo scaffale viene rifiutato.
 
+#### Un servizio
+
+Tutto ciò che si vende e non è un posto: un'ora di sala riunioni, un
+pacchetto di stampe, un armadietto, un abbonamento al caffè. Un servizio
+può essere messo in fattura da un amministratore o legato a un
+pacchetto.
+
+#### Nome del servizio
+
+Ciò che dice la riga di fattura. Rinominarlo cambia solo i documenti
+futuri: una fattura emessa mantiene il nome con cui è stata venduta.
+
+#### Prezzo del servizio
+
+Il prezzo di un'unità, con il proprio gruppo IVA — l'aliquota segue il
+catalogo invece di essere digitata qui, così un cambio di aliquota non
+torna mai su un documento già emesso.
+
+#### Attivo
+
+Se il servizio può ancora essere venduto. Spegnerlo ferma le vendite
+nuove e lascia intatte tutte le fatture che lo portano: è ciò che si
+vuole per qualcosa di dismesso, non per qualcosa di sbagliato.
+
 ### Impostazioni dello spazio (Spazio di coworking)
 
 La schermata propria dello spazio, dall'alto in basso:
@@ -844,6 +868,52 @@ Ogni report dell'app — l'estratto, le fatture, le proforma, le note di credito
 - Confermata **a un importo diverso**, una breve **spiegazione è obbligatoria**; la spesa passa allora la normale validazione delle spese. Confermata → aggiunta; **rifiutata → torna a te**, e puoi cambiare importo e/o descrizione e reinviarla.
 
 L'elenco delle tue programmazioni (stato, regola, prossima scadenza) e il modulo *Programma una spesa ricorrente* stanno dietro **Finanze → Pagamenti → Spese programmate**; terminarne una è un tocco. Funzionalità *Spese programmate* (sotto la scheda Finanze).
+
+#### Una spesa programmata
+
+Un costo che ritorna — la connessione internet, le pulizie, l'affitto.
+La descrivi una volta e l'app crea ogni scadenza il suo giorno, senza
+che nessuno debba ricordarsene. Ogni scadenza passa comunque per la
+validazione che il dominio delle spese richiede: programmare crea la
+richiesta, non la approva.
+
+#### Cosa
+
+Il nome che porta ogni scadenza. È ciò che dicono la riga di conto e la
+richiesta di validazione: scrivilo come vorresti rileggerlo sei mesi
+dopo.
+
+#### Importo
+
+Quanto costa una scadenza. Cambiarlo tocca solo le scadenze non ancora
+create; quelle già a conto mantengono l'importo con cui sono state
+create.
+
+#### Descrizione
+
+Il testo più lungo, per chi valida. Facoltativo, e il posto per un
+numero di contratto o un riferimento fornitore.
+
+#### Prima scadenza
+
+La data in cui scade la prima. Ogni successiva si conta da lì: spostarla
+sposta tutta la serie.
+
+#### Ogni
+
+L'intervallo fra due scadenze — ogni mese, ogni trimestre, ogni anno.
+Con la prima scadenza decide ogni data che la serie avrà mai.
+
+#### Numero di volte
+
+Quante scadenze creare. Lascialo vuoto per una serie che non si ferma, e
+usa *Fino al* quando la fine è una data e non un numero.
+
+#### Fino al
+
+La data dopo la quale non si crea più nulla. Facoltativa: senza, la
+serie corre finché non la fermi — giusto per un affitto, sbagliato per
+un pagamento in dodici rate.
 
 ### 9i. Il report dei consumi
 

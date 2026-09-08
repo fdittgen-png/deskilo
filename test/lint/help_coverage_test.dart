@@ -12,7 +12,7 @@ import 'lint_sources.dart';
 /// object. Lower it in the PR that documents a screen; never raise it.
 ///
 /// 2026-09-08 #1016: 152 at the start, VAT's four migrated first.
-const _withoutAnchor = 102;
+const _withoutAnchor = 89;
 
 final _call = RegExp(r'\bHelpDot(?:Title)?\(');
 
