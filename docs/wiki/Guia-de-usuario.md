@@ -437,6 +437,89 @@ Toca un miembro para abrir su **ficha de gestión** — cada acción por miembro
 
 *Paquetes de días: un número de días por un precio, cada uno con su propio interruptor.*
 
+<!-- anchor: user.money.billing.fee-bands -->
+#### Tramos de tarifa
+
+La escalera de precios detrás de las suscripciones por porcentaje. Cada
+tramo cubre un trozo de la escala y dice lo que cuesta un mes dentro de
+él. La tarifa de un miembro elige un tramo; el tramo decide la cuota y
+el precio del exceso, nunca al revés.
+
+<!-- anchor: user.money.billing.band-to -->
+#### Hasta %
+
+El techo del tramo. El siguiente empieza donde termina este: la
+escalera no tiene huecos ni solapes, y un porcentaje cae siempre en
+exactamente un tramo.
+
+<!-- anchor: user.money.billing.band-fee -->
+#### Cuota mensual
+
+Lo que cuesta un mes en este tramo, se use o no la asignación. Lleva su
+propio grupo de IVA: el tipo sigue al catálogo en vez de escribirse
+aquí.
+
+<!-- anchor: user.money.billing.band-overage -->
+#### Exceso
+
+El precio de media jornada por encima de la asignación. Déjelo vacío y
+las medias jornadas de más se rechazan en lugar de cobrarse; rellénelo
+y se facturan a este precio en la misma factura.
+
+<!-- anchor: user.money.billing.levels -->
+#### Niveles de suscripción
+
+Qué porcentajes puede elegir un miembro — los chips que ve al tomar una
+tarifa. Añada sus propios valores junto a los habituales 25 · 50 · 75 ·
+100.
+
+<!-- anchor: user.money.billing.level-value -->
+#### Valor del nivel
+
+Un porcentaje, de 1 a 100. Es una parte de las medias jornadas
+laborables del mes, y por eso la asignación sigue al calendario en
+lugar de a un número fijo de días.
+
+<!-- anchor: user.money.billing.custom-level -->
+#### Permitir un valor negociado
+
+Deja que un administrador fije, para un miembro, un porcentaje que no
+está en la lista. Desactivado por defecto: un valor que nadie más ve es
+un valor que nadie más puede comprobar.
+
+<!-- anchor: user.money.billing.packages -->
+#### Paquetes de días
+
+Un número de días vendido a un precio, comprado cuando hacen falta en
+vez de suscrito al mes. Cada paquete tiene su propio interruptor: uno
+antiguo puede dejar de venderse sin desaparecer de las facturas que lo
+llevan.
+
+<!-- anchor: user.money.billing.package-new -->
+#### Nuevo paquete
+
+Nombre, días y precio, y añadir. Un paquete se puede comprar en cuanto
+está activo.
+
+<!-- anchor: user.money.billing.package-name -->
+#### Nombre del paquete
+
+Lo que un miembro ve en la venta y lo que dice la línea de factura.
+Cámbielo y solo cambian los documentos futuros: una factura emitida
+conserva el nombre con el que se vendió.
+
+<!-- anchor: user.money.billing.package-days -->
+#### Días del paquete
+
+Cuántos días concede el paquete. Se gastan según se usan y no caducan
+con el mes.
+
+<!-- anchor: user.money.billing.package-price -->
+#### Precio del paquete
+
+El precio del paquete entero, con su propio grupo de IVA. La línea de
+factura muestra el precio y el tipo que se aplicaba el día de la venta.
+
 ### Servicios y Accesorios
 
 Los catálogos detrás del §9 — extras definidos por el propietario (taquillas, impresión…, cada uno con un precio y un tipo de IVA opcional) y equipamiento por puesto con suplementos opcionales por media jornada. Ambos son listas simples con un botón **+**.

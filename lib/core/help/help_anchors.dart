@@ -73,6 +73,43 @@ abstract final class HelpAnchor {
   /// Anything else the trade or the country demands.
   static const legalSpecialMentions = 'user.money.legal.special-mentions';
 
+  // ── money · billing ────────────────────────────────────────────────
+  /// The price ladder behind percentage subscriptions.
+  static const billingFeeBands = 'user.money.billing.fee-bands';
+
+  /// The top of a band; the next one starts where it ends.
+  static const billingBandTo = 'user.money.billing.band-to';
+
+  /// What a month in the band costs, used or not.
+  static const billingBandFee = 'user.money.billing.band-fee';
+
+  /// The price of one half-day past the allowance.
+  static const billingBandOverage = 'user.money.billing.band-overage';
+
+  /// Which percentages a member may pick.
+  static const billingLevels = 'user.money.billing.levels';
+
+  /// One percentage: a share of the month's working half-days.
+  static const billingLevelValue = 'user.money.billing.level-value';
+
+  /// A percentage off the list, for one member.
+  static const billingCustomLevel = 'user.money.billing.custom-level';
+
+  /// Days sold for a price, bought rather than subscribed.
+  static const billingPackages = 'user.money.billing.packages';
+
+  /// Name, days and price, then add.
+  static const billingPackageNew = 'user.money.billing.package-new';
+
+  /// What the shop and the invoice line call it.
+  static const billingPackageName = 'user.money.billing.package-name';
+
+  /// How many days the package grants.
+  static const billingPackageDays = 'user.money.billing.package-days';
+
+  /// The price of the whole package, with its VAT group.
+  static const billingPackagePrice = 'user.money.billing.package-price';
+
   // ── environments · the pair and the deployment ─────────────────────
   /// Why a development twin exists at all.
   static const envPairWhy = 'env.pair.why';
@@ -130,6 +167,18 @@ abstract final class HelpAnchor {
     envDeployPreview,
     envDeployJournal,
     envDeployNever,
+    billingFeeBands,
+    billingBandTo,
+    billingBandFee,
+    billingBandOverage,
+    billingLevels,
+    billingLevelValue,
+    billingCustomLevel,
+    billingPackages,
+    billingPackageNew,
+    billingPackageName,
+    billingPackageDays,
+    billingPackagePrice,
   };
 
   /// The screenshot that documents [anchor], by the naming rule.

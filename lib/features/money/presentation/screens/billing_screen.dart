@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -398,7 +399,10 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: l10n?.billingBandTo ?? 'To %',
-                suffixIcon: HelpDot(l10n?.helpTopicBilling ?? 'Billing'),
+                suffixIcon: HelpDot(
+                  l10n?.helpTopicBilling ?? 'Billing',
+                  anchor: HelpAnchor.billingBandTo,
+                ),
               ),
               // setState so the following rows' derived "from X %" labels
               // track the boundary immediately (#194). The keyed rows keep
@@ -417,7 +421,10 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               decoration: InputDecoration(
                 labelText: l10n?.billingBandFee ?? 'Monthly fee',
                 helperText: _vatShare(l10n, draft.feeCents),
-                suffixIcon: HelpDot(l10n?.helpTopicBilling ?? 'Billing'),
+                suffixIcon: HelpDot(
+                  l10n?.helpTopicBilling ?? 'Billing',
+                  anchor: HelpAnchor.billingBandFee,
+                ),
               ),
               // setState so the VAT-share helper tracks the amount live.
               onChanged: (raw) => setState(
@@ -433,7 +440,10 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               decoration: InputDecoration(
                 labelText: l10n?.billingBandOverage ?? 'Overage',
                 helperText: _vatShare(l10n, draft.overageCents),
-                suffixIcon: HelpDot(l10n?.helpTopicBilling ?? 'Billing'),
+                suffixIcon: HelpDot(
+                  l10n?.helpTopicBilling ?? 'Billing',
+                  anchor: HelpAnchor.billingBandOverage,
+                ),
               ),
               onChanged: (raw) => setState(
                   () => draft.overageCents = parseCentsInput(raw)),
@@ -467,7 +477,10 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               l10n?.billingFeeBands ?? 'Fee bands',
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            HelpDot(l10n?.helpTopicBilling ?? 'Billing'),
+            HelpDot(
+              l10n?.helpTopicBilling ?? 'Billing',
+              anchor: HelpAnchor.billingFeeBands,
+            ),
           ],
         ),
         // #537 — the one VAT fact this whole page's prices share: they
@@ -540,7 +553,10 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               l10n?.billingLevels ?? 'Subscription levels',
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            HelpDot(l10n?.helpTopicBilling ?? 'Billing'),
+            HelpDot(
+              l10n?.helpTopicBilling ?? 'Billing',
+              anchor: HelpAnchor.billingLevels,
+            ),
           ],
         ),
         const SizedBox(height: 8),
@@ -575,8 +591,10 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: l10n?.billingLevelValue ?? 'Level (1–100)',
-                  suffixIcon:
-                      HelpDot(l10n?.helpTopicBilling ?? 'Billing'),
+                  suffixIcon: HelpDot(
+                        l10n?.helpTopicBilling ?? 'Billing',
+                        anchor: HelpAnchor.billingLevelValue,
+                      ),
                 ),
                 onSubmitted: (_) => _addLevel(),
               ),
@@ -593,6 +611,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           title: HelpDotTitle(
             l10n?.billingAllowCustom ?? 'Allow negotiated custom value',
             l10n?.helpTopicBilling ?? 'Billing',
+            anchor: HelpAnchor.billingCustomLevel,
           ),
           value: _allowCustom,
           onChanged: (v) => setState(() => _allowCustom = v),
@@ -611,7 +630,10 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               l10n?.billingPackages ?? 'Day packages',
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            HelpDot(l10n?.helpTopicBilling ?? 'Billing'),
+            HelpDot(
+              l10n?.helpTopicBilling ?? 'Billing',
+              anchor: HelpAnchor.billingPackages,
+            ),
           ],
         ),
         Text(
@@ -628,6 +650,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
             title: HelpDotTitle(
               package.name,
               l10n?.helpTopicBilling ?? 'Billing',
+              anchor: HelpAnchor.billingPackages,
             ),
             // #537 — currency + the pack's own VAT rate on the row:
             // "2 days · 200.00 EUR · incl. VAT 20 %".
@@ -670,7 +693,10 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               l10n?.billingNewPackage ?? 'New package',
               style: Theme.of(context).textTheme.titleSmall,
             ),
-            HelpDot(l10n?.helpTopicBilling ?? 'Billing'),
+            HelpDot(
+              l10n?.helpTopicBilling ?? 'Billing',
+              anchor: HelpAnchor.billingPackageNew,
+            ),
           ],
         ),
         Row(
@@ -682,8 +708,10 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
                 controller: _pkgName,
                 decoration: InputDecoration(
                   labelText: l10n?.billingPackageName ?? 'Name',
-                  suffixIcon:
-                      HelpDot(l10n?.helpTopicBilling ?? 'Billing'),
+                  suffixIcon: HelpDot(
+                        l10n?.helpTopicBilling ?? 'Billing',
+                        anchor: HelpAnchor.billingPackageName,
+                      ),
                 ),
               ),
             ),
@@ -694,8 +722,10 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: l10n?.billingPackageDays ?? 'Days',
-                  suffixIcon:
-                      HelpDot(l10n?.helpTopicBilling ?? 'Billing'),
+                  suffixIcon: HelpDot(
+                        l10n?.helpTopicBilling ?? 'Billing',
+                        anchor: HelpAnchor.billingPackageDays,
+                      ),
                 ),
               ),
             ),
@@ -708,8 +738,10 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
                   labelText: l10n?.billingPackagePrice ?? 'Price',
-                  suffixIcon:
-                      HelpDot(l10n?.helpTopicBilling ?? 'Billing'),
+                  suffixIcon: HelpDot(
+                        l10n?.helpTopicBilling ?? 'Billing',
+                        anchor: HelpAnchor.billingPackagePrice,
+                      ),
                 ),
               ),
             ),
