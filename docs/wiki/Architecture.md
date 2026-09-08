@@ -16,9 +16,15 @@ DesKilo is a Flutter app backed by Supabase. The client is feature-first and ful
 | Networking | `supabase_flutter` (PostgREST + GoTrue); `dio` where raw HTTP is needed | |
 | i18n | ARB, EN canonical + FR/DE/ES/IT | Every user-facing string translatable, lint- and CI-enforced (ADR 0007) |
 | QR | `qr_flutter` (render) + `flutter_zxing` (scan) | Libre, Google-services-free scanning (ADR 0003) |
-| Push | FCM (`unifiedpush`) + `flutter_local_notifications` | No Firebase/GMS anywhere (ADR 0003) |
+| Push | a swappable `deskilo_push` package + `flutter_local_notifications` | Store builds use FCM; the libre flavour swaps in `deskilo_push_foss` (ADR 0011, ADR 0012) |
 
-Forbidden by ADR 0003 / 0004: Google Play Services, Firebase, third-party tracking, GPL dependencies.
+Forbidden outright by ADR 0004: third-party tracking and GPL dependencies.
+**Google Play Services and Firebase are flavour-scoped, not forbidden**
+(ADR 0003 as amended by ADR 0012): the app depends on the local package
+`deskilo_push`, and the F-Droid build swaps in `deskilo_push_foss`, which
+implements the same interface with no Google dependency at all. That
+swap is audited on every pull request by *CI · F-Droid no-GMS audit*, so
+the libre promise is a test result rather than an intention.
 
 ## Client layout (feature-first)
 
@@ -78,6 +84,82 @@ Each feature keeps the same internal shape: `domain/` (freezed models + a pure-D
 - **One outside-hours policy, four answers (0118/0120).** `booking_rules.outside_hours_mode` ∈ `off | walkup_only | free | charged`, resolved once with a read-time legacy fallback (`grid_within_hours = true` ⇒ `walkup_only`) and no data migration. Enforcement uses the wider *touches-outside* predicate so spill is refused under the strict modes; **billing keeps the narrower entirely-outside predicate** (`window_outside_working_hours`, feeding `reservation_counts_for_usage` → `assert_member_quota` and `member_statement`). That asymmetry is deliberate: a window touching the working hours at all is an ordinary counted booking.
 - **Two independent caps (0119/0121).** `member_simultaneous_allowance()` bounds bookings that **overlap in time** (workspace number, default 1; a per-member override wins), enforced in `enforce_one_place`, `check_in_reservation` and `kiosk_act`. Separately, `request_reservation_deletion` carries the owner-configured auto-validation exception, whose two switches are genuinely independent since 0121 — the admin arm excludes owners, because every owner also carries `is_admin`. An auto-settled request is born **confirmed**, with a `decided_by_system` decision row and `payload.auto_validated`, so it never pings a validator about a closed question.
 
+### What came after the booking contract (0123–0190)
+
+The list above stops at 0122 because that is where the *booking* story
+ends. Seven systems were built on top of it, and each is worth naming
+because each introduced an invariant the rest of the schema now relies
+on.
+
+- **Conversations (0125–0130, 0146).** One thread implementation behind
+  every surface — a profile, the directory, the inbox — with realtime,
+  read receipts, and reference links (`[res:…]`, `[space:…]`) that turn
+  a message into a jump. Backfilled rather than migrated twice.
+- **Money made governable (0131–0151).** Finance permission gates,
+  payment reminders with a level lock, price negotiations, expense
+  schedules and repartition, invoice kinds, the settlement fold, and
+  usage records as first-class rows. `0144_money_validation_parity` and
+  `0149_validation_integrity` exist because a validation domain that
+  behaves differently from its siblings is a bug, not a feature.
+- **Identity (0152–0161).** Personal information on the profile
+  (ADR 0014) so a document can name its buyer properly, then **managed
+  members**: a person can be created, booked for and invoiced before
+  they have an account, and the profile is handed over later by a bound
+  invitation that goes through the ordinary join validation.
+- **Numbering and sites (0164–0171).** Number sequences as a format with
+  adopters, several sites under one organisation, per-site
+  registrations and documents.
+- **VAT as an ERP models it (0156, 0157, 0170, 0172, 0182).** Fiscal
+  **groups** say what a supply is, the **treatment** says what the
+  counterparty makes of it (reverse charge, ADR 0016), and **rate
+  versions** carry validity dates. A rate change adds a version; every
+  document already issued keeps the version frozen on it. This is the
+  reason the catalogue stores a group on a service rather than a
+  percentage.
+- **System columns (0183, 0184; ADR 0018).** Six technical columns —
+  `created_datetime`, `modified_datetime`, `company_id`, `site_id`,
+  `created_by_user`, `modified_by_user` — on **every** table, maintained
+  by the core and not by any caller. A `zz_`-prefixed trigger stamps
+  them (the prefix matters: triggers fire in name order, so it runs
+  after the guards), `ensure_system_columns(table)` adds them to a new
+  table, and a lint refuses a table that lacks them. `invoices_immutable`
+  subtracts `system_column_names()` from both row snapshots, so
+  housekeeping does not count as mutating a frozen document.
+- **Environments and deployment (0160, 0179, 0185–0190).** A workspace
+  has an `environment` and a twin. `deployable_entities()` is a registry
+  of what can travel; `export_entities` reads one side,
+  `preview_deployment` says what would change, `deploy_entities` writes,
+  and `deployments` records who, when, which direction, which entities
+  and what the target held before — which is what makes
+  `rollback_deployment` exact. A deployment always writes **the side the
+  caller stands on**, and the capability is carried in a transaction-local
+  token (`deploying_touches()`), so ordinary guards can refuse a write
+  that a deployment is allowed to make without either of them knowing
+  about the other. Floor plans are **merged**, never replaced (0188);
+  payment instructions and design images travel as their own entities
+  (0189, 0190).
+
+### The permission and validation catalogues
+
+`WorkspacePermission` is a flat enum of 23 permissions asked through one
+server function, so a revoked permission is revoked everywhere at once —
+the screen hides the control and the RPC refuses anyway.
+`0180_permission_catalog_nine` and `0181_validation_domains_six` are the
+migrations that made both catalogues data rather than scattered
+conditionals, which is what let the role matrix become a screen.
+
+### Documentation as a subsystem
+
+The guides are not a folder of prose. `docs/wiki/*.md` is compiled by
+`tool/build_help.dart` into `assets/help/<lang>.md` plus
+`assets/help/<lang>.anchors.json`; an HTML comment above a heading
+(`<!-- anchor: user.money.legal.escompte -->`) becomes an id that a help
+symbol in the app can jump to. `HelpAnchor` is the shared vocabulary,
+and three lints hold the whole thing together: every anchor resolves in
+every language that carries its guide, no symbol points into a guide the
+five languages do not all have, and the number of symbols without an
+anchor may only go down.
+
 ### Online payments
 
 Four providers — **PayPal** (Orders v2), **Stripe** (Checkout), **Mollie** (Payments API), and **Wero** (offered *through* Mollie with `method=wero`) — behind one architecture:
@@ -126,9 +208,15 @@ Invite QR codes encode `deskilo://join?role=<user|admin>&code=<CODE>` (`InviteUr
 
 Single codebase for all targets. Platform-specific behavior degrades gracefully:
 
-- **Push** (FCM) is Android-only — `PushConnector` returns `false` elsewhere and the app stays on local notifications.
+- **Push** is Android-only — `PushConnector` returns `false` elsewhere and
+  the app stays on local notifications.
 - **Desktop** (macOS/Windows) runs the full booking/ledger app; the macOS sandbox needs the network-client, camera, and user-selected-file entitlements (see the runner in `macos/`). Windows ships as a WiX-built **MSI** (`windows/installer/deskilo.wxs`, built by the `windows-msi` workflow).
-- Push runs on Firebase Cloud Messaging (ADR 0011); F-Droid support was dropped 2026-08-04.
+- **F-Droid is supported**, through the libre flavour above: *CI · F-Droid
+  no-GMS audit* proves the flavour carries no Google dependency, and
+  *Publish · F-Droid release APKs* ships the signed binaries F-Droid
+  reproduces against. (An earlier note in this file said F-Droid support
+  had been dropped; ADR 0012 reversed that, and the workflows are the
+  evidence.)
 
 ## Shared building blocks
 
