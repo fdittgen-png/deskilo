@@ -134,7 +134,7 @@ const Map<String, int> _baseline = {
   // 1410→1440 (2026-08-05): #496 the language chain on the workspace report.
   // 1440→1465 (2026-09-01): #802 the invoice-schedule entry beside the
   // reminder rules — issuing and chasing are one conversation.
-  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1580, // 2026-09-08 #1012 the export's trace, timeout and Share action // 2026-09-04 #875 the workspace report passes its layout through
+  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1600, // 2026-09-08 #1012 the export's trace, timeout and Share action // 2026-09-04 #875 the workspace report passes its layout through // 2026-09-08 #1019 seventeen help symbols now name the exact setting or export they document (HelpAnchor), one named argument per symbol
   // 600→640 (2026-08-05): #492 the request-deletion dialog + flow.
   // 640→760 (2026-08-22): #574 the running-booking extension flow.
   // 760→880 (2026-08-25): #638 the symmetric END-EARLIER flow — the

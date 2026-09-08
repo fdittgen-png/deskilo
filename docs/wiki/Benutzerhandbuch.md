@@ -586,6 +586,13 @@ verfallen nicht mit dem Monat.
 Der Preis des ganzen Pakets, mit eigener MwSt-Gruppe. Die
 Rechnungszeile zeigt den Preis und den Satz, der am Verkaufstag galt.
 
+<!-- anchor: user.money.billing.schedule -->
+#### Rechnungszeitplan
+
+Wann der Monat abgerechnet wird. Die Abo-Zeile wird **vor** dem Monat
+ausgestellt, den sie abdeckt, und die Nutzungszeilen folgen ihr —
+deshalb kann eine Rechnung einen Monat nennen, der noch nicht war.
+
 ### Services und Zubehör
 
 Die Kataloge hinter §9 — Extras der Inhaberin (Schließfächer, Druck…, je mit Preis und optionalem MwSt-Satz) und Platz-Ausstattung mit optionalen Halbtags-Aufpreisen. Zwei einfache Listen mit **+**.
@@ -664,6 +671,106 @@ Der Bildschirm des Space, von oben nach unten:
 <p><img src="images/workspace-settings-full.jpg" width="240"></p>
 
 </details>
+
+<!-- anchor: user.workspace.settings.country -->
+#### Land
+
+Wo die Organisation ansässig ist. Es entscheidet über die
+Standardwährung, den angebotenen MwSt-Satzkatalog und den gesetzlichen
+Wortlaut, den ein befreiter oder nicht steuerbarer Verkäufer druckt, wenn
+du selbst keinen schreibst.
+
+<!-- anchor: user.workspace.settings.currency-timezone -->
+#### Währung und Zeitzone
+
+Die Währung, in der jeder Preis und jedes Dokument ausgedrückt wird, und
+die Zone, in der die Uhr des Raums läuft. **Die Zeitzone ist nicht
+kosmetisch**: ein Arbeitstag, eine Halbtagsgrenze und ein Schließtag
+zählen in ihr, sodass ein Mitglied im Ausland den Tag des Raums sieht und
+nicht den eigenen.
+
+<!-- anchor: user.workspace.settings.language -->
+#### Sprache des Raums
+
+Die Sprache, die der Raum standardmäßig spricht. Einladungen werden darin
+geschrieben, und ein Dokument fällt darauf zurück, wenn die lesende
+Person keine eigene Sprache hat.
+
+<!-- anchor: user.workspace.settings.address -->
+#### Briefkopfanschrift
+
+Die frei geschriebene Anschrift, die ein Papierdokument druckt. Sie ist
+von der **strukturierten Anschrift** der rechtlichen Identität getrennt,
+die die E-Rechnung trägt — eine Maschine kann eine Zeile nicht
+zuverlässig zerlegen, und wer einen Brief liest, möchte lieber die Zeile.
+
+<!-- anchor: user.workspace.settings.whatsapp-group -->
+#### WhatsApp-Gruppe
+
+Die Gruppe, in der ein Hinweis veröffentlicht werden kann. Optional und
+ohne weitere Wirkung: ohne sie bleibt eine Nachricht im Posteingang der
+App.
+
+<!-- anchor: user.workspace.settings.invitation-message -->
+#### Einladungstext
+
+Der Text, den eine Einladung trägt, je Sprache. Einmal geschrieben nutzt
+ihn jede Einladung in dieser Sprache; Code und Link fügt die App hinzu —
+füge also nie selbst einen in den Text ein.
+
+<!-- anchor: user.workspace.settings.desk-transparency -->
+#### Transparenz der Tische
+
+Wie viel des Hintergrundbildes unter einem Tisch im Plan durchscheint.
+Höher, wenn der Plan über einer Fotografie liegt und die Möblierung
+zählt; niedriger, wenn die Plätze mehr zählen als der Raum.
+
+<!-- anchor: user.workspace.export.space-xml -->
+#### Raum exportieren (XML)
+
+Der ganze Raum als eine Datei: der Grundriss und — mit *Konfiguration in
+der Raumdatei* eingeschaltet — Tarife, MwSt-Sätze, die rechtliche
+Identität und alle Rechnungsangaben, Buchungs- und Prüfregeln, Rollen,
+Mahnregeln, Dokumentgestaltungen, Standorte, Schließtage und
+Dokumentlinks. **Nie in der Datei:** der Einladungscode, E-Rechnungs- und
+Zahlungszugangsdaten, Mitglieder, Reservierungen, Rechnungen und
+Zahlungen.
+
+<!-- anchor: user.workspace.export.space-import -->
+#### Raum importieren (XML)
+
+Wendet diese Datei hier an. Der Konfigurationsteil wird auch auf einen
+Raum angewandt, der bereits Buchungen hat; nur der Grundriss selbst wird
+abgelehnt, sobald Reservierungen existieren, und der Import sagt es,
+statt still zu scheitern.
+
+<!-- anchor: user.workspace.export.config-pdf -->
+#### Konfiguration exportieren (PDF)
+
+Jeder Parameter des Raums als lesbares, unterschreibbares Dokument, das
+man der Buchhaltung geben kann. Es ist eine Momentaufnahme, keine
+Sicherung — die XML-Datei ist die, die sich zurücklesen lässt.
+
+<!-- anchor: user.workspace.export.workspace-report -->
+#### Raumbericht
+
+Der Raum selbst als Dokument: Standorte, Etagen, Plätze, Tarife und die
+geltenden Regeln. Nützlich als Anlage zu einem Mietvertrag oder einer
+Versicherungsakte.
+
+<!-- anchor: user.workspace.export.space-qr -->
+#### Platz-QR-Codes (PDF)
+
+Ein druckbares Blatt mit QR-Codes, einer je Platz. Klebe sie auf die
+Tische, und ein Mitglied kann buchen oder einchecken, indem es den Platz
+scannt, an dem es steht.
+
+<!-- anchor: user.workspace.export.excel -->
+#### Daten exportieren (Excel)
+
+Die Betriebsdaten — Mitglieder, Reservierungen, Nutzung, Rechnungen,
+Zahlungen — als Tabelle, für die Auswertung, die die App nicht macht. Es
+ist ein Export, keine Übertragung: nichts liest ihn zurück.
 
 ### Raum-QR-Codes & Ganzraum-Reservierungen
 
@@ -1218,6 +1325,13 @@ Variablen (Rechnungsfamilie): `{{ number }}`, `{{ member }}`, `{{ workspace }}`,
 
 *Der visuelle Modus — Entwurf editiert beschriftete Bänder auf der echten A4-Seite; Vorschau mischt die ungespeicherten Bänder mit echten Daten durch die echte Engine.*
 
+<!-- anchor: user.money.reports.invoice-template -->
+#### Die Rechnungs-PDF-Vorlage
+
+Mit welcher Gestaltung eine Rechnung gedruckt wird, und die Texte, die
+diese Gestaltung trägt. Eine Gestaltung gibt es je Dokumentart und je
+Sprache; wer keine eigene Sprache hat, bekommt die des Raums.
+
 ### 11d. Die Report-Suite & die Dokumentbibliothek
 
 - **Finanzvereinbarung** — jeder für ein Mitglied geltende Preis: Abo, Extra-Halbtag, Services, Pakete, Zubehör-Aufpreise und die Ganzraum-Preise, **Tische und Schreibtische eingeschlossen**. Inhaber/Admins senden sie vom Verwaltungsblatt; jedes Mitglied holt seine unter *Finanzen → Dokumente*.
@@ -1232,6 +1346,14 @@ Variablen (Rechnungsfamilie): `{{ number }}`, `{{ member }}`, `{{ workspace }}`,
 ### 11e. Automatische Zahlungserinnerungen
 
 Mit **Automatische Zahlungserinnerungen** (Funktionen, Kind von *Zahlungserinnerungen*) und dem Schalter **Automatische Mahnungen** in den Mahnregeln (Rechnungen → Mahnregeln) wenden sich die Mahnstufen von selbst an: jeden Morgen — und immer, wenn ein Inhaber oder Admin Finanzen öffnet — erhält eine **offene** Rechnung, deren Wartezeit abgelaufen ist (die *Tage bis zur ersten Mahnung* ab Ausstellung, dann die *Tage zwischen Mahnungen* nach der vorigen), ihre nächste Stufe. Das Mitglied sieht einen Hinweis **Zahlungserinnerung** unter Ereignisse („Mahnstufe 2: Rechnung X — Betrag noch offen“) und bekommt eine Push-Nachricht; seine Ansicht Rechnungen liest *überfällig seit N Tagen*. Stufen überschreiten nie die eingestellte Zahl; eine zugeordnete Rechnung wird nie gemahnt; Schalter aus, bleibt Mahnen ein manueller Schritt wie bisher.
+
+<!-- anchor: user.money.reminders.rules -->
+#### Mahnregeln
+
+Wie viele Mahnungen eine offene Rechnung bekommt, wie lange nach
+Fälligkeit jede geht, und was jede sagt. Einmal täglich rücken die
+offenen überfälligen Rechnungen auf ihre nächste Stufe; eine bereits
+erreichte Stufe wird nie erneut versandt.
 
 ### 11f. Rechnungen zusammenfassen (Abrechnung)
 

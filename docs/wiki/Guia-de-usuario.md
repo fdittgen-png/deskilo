@@ -587,6 +587,13 @@ con el mes.
 El precio del paquete entero, con su propio grupo de IVA. La línea de
 factura muestra el precio y el tipo que se aplicaba el día de la venta.
 
+<!-- anchor: user.money.billing.schedule -->
+#### Calendario de facturación
+
+Cuándo se factura el mes. La línea de suscripción se emite **antes** del
+mes que cubre y las líneas de consumo la siguen: por eso una factura
+puede nombrar un mes que aún no ha ocurrido.
+
 ### Servicios y Accesorios
 
 Los catálogos detrás del §9 — extras definidos por el propietario (taquillas, impresión…, cada uno con un precio y un tipo de IVA opcional) y equipamiento por puesto con suplementos opcionales por media jornada. Ambos son listas simples con un botón **+**.
@@ -665,6 +672,103 @@ La pantalla propia del espacio, de arriba abajo:
 <p><img src="images/workspace-settings-full.jpg" width="240"></p>
 
 </details>
+
+<!-- anchor: user.workspace.settings.country -->
+#### País
+
+Donde está establecida la organización. Decide la moneda por defecto, el
+catálogo de tipos de IVA que se le ofrece, y la fórmula legal que imprime
+un vendedor exento o no sujeto cuando usted no escribe ninguna.
+
+<!-- anchor: user.workspace.settings.currency-timezone -->
+#### Moneda y zona horaria
+
+La moneda en que se expresan todos los precios y documentos, y la zona en
+que corre el reloj del espacio. **La zona no es cosmética**: una jornada
+laboral, un límite de media jornada y un día de cierre se cuentan en
+ella, de modo que un miembro en el extranjero ve el día del espacio y no
+el suyo.
+
+<!-- anchor: user.workspace.settings.language -->
+#### Idioma del espacio
+
+El idioma que habla el espacio por defecto. Las invitaciones se escriben
+en él, y un documento vuelve a él cuando quien lo lee no tiene idioma
+propio.
+
+<!-- anchor: user.workspace.settings.address -->
+#### Dirección del membrete
+
+La dirección en texto libre que imprime un documento en papel. Es
+distinta de la **dirección estructurada** de la identidad legal, que es
+lo que lleva la factura electrónica — una máquina no sabe partir una
+línea de forma fiable, y quien lee una carta prefiere la línea.
+
+<!-- anchor: user.workspace.settings.whatsapp-group -->
+#### Grupo de WhatsApp
+
+El grupo donde puede publicarse un aviso. Opcional, y sin efecto en lo
+demás: sin él, un mensaje se queda en la bandeja de la app.
+
+<!-- anchor: user.workspace.settings.invitation-message -->
+#### Mensaje de invitación
+
+El texto que lleva una invitación, por idioma. Escríbalo una vez y todas
+las invitaciones en ese idioma lo usan; el código y el enlace los añade
+la app, así que nunca pegue uno en el texto.
+
+<!-- anchor: user.workspace.settings.desk-transparency -->
+#### Transparencia de las mesas
+
+Cuánto se transparenta la imagen de fondo bajo una mesa del plano. Súbala
+cuando el plano está trazado sobre una fotografía y el mobiliario
+importa; bájela cuando importan más las plazas que la sala.
+
+<!-- anchor: user.workspace.export.space-xml -->
+#### Exportar el espacio (XML)
+
+El espacio entero en un archivo: el plano y — con *Configuración en el
+archivo del espacio* activado — tarifas, tipos de IVA, la identidad legal
+y todas las menciones de factura, reglas de reserva y validación, roles,
+reglas de recordatorio, diseños de documentos, sedes, días de cierre y
+enlaces de documentos. **Nunca en el archivo:** el código de invitación,
+las credenciales de factura electrónica y de pago, los miembros, las
+reservas, las facturas y los pagos.
+
+<!-- anchor: user.workspace.export.space-import -->
+#### Importar el espacio (XML)
+
+Aplica ese archivo aquí. La sección de configuración se aplica incluso a
+un espacio que ya tiene reservas; solo el plano en sí se rechaza cuando
+existen reservas, y la importación lo dice en vez de fallar en silencio.
+
+<!-- anchor: user.workspace.export.config-pdf -->
+#### Exportar la configuración (PDF)
+
+Todos los parámetros del espacio como un documento legible, firmable, que
+entregar a un contable. Es una instantánea, no una copia de seguridad —
+el XML es el archivo que se vuelve a importar.
+
+<!-- anchor: user.workspace.export.workspace-report -->
+#### Informe del espacio
+
+El espacio mismo como documento: sedes, plantas, plazas, tarifas y las
+reglas vigentes. Útil como anexo a un arrendamiento o a un expediente de
+seguro.
+
+<!-- anchor: user.workspace.export.space-qr -->
+#### Códigos QR de las plazas (PDF)
+
+Una hoja imprimible de códigos QR, uno por plaza. Péguelos en las mesas y
+un miembro puede reservar o registrarse escaneando la plaza ante la que
+está.
+
+<!-- anchor: user.workspace.export.excel -->
+#### Exportar los datos (Excel)
+
+Los datos de explotación — miembros, reservas, consumo, facturas, pagos —
+como hoja de cálculo, para el análisis que la app no hace. Es una
+exportación, no una transferencia: nada la vuelve a leer.
 
 ### Códigos QR de espacios y reservas de espacios enteros
 
@@ -1236,6 +1340,13 @@ Variables de plantilla (familia de facturas): `{{ number }}`, `{{ member }}`, `{
 
 *El modo Visual — Diseño edita las bandas etiquetadas sobre la verdadera página A4; Vista previa fusiona tus bandas sin guardar con datos reales a través del motor real.*
 
+<!-- anchor: user.money.reports.invoice-template -->
+#### La plantilla PDF de factura
+
+Con qué diseño se imprime una factura, y los textos que ese diseño
+lleva. Un diseño existe por tipo de documento y por idioma; quien no
+tiene idioma propio recibe el del espacio.
+
 ### 11d. La suite de informes y la biblioteca de documentos
 
 - **Acuerdo financiero** — cada precio vigente que se aplica a un miembro: suscripción, media jornada extra, servicios, paquetes, suplementos de accesorios y los precios de los espacios enteros, **mesas incluidas**. Propietarios y admins lo envían desde la ficha de acciones de un miembro; cada miembro puede ver/descargar/compartir el suyo en *Finanzas → Documentos*.
@@ -1250,6 +1361,14 @@ Variables de plantilla (familia de facturas): `{{ number }}`, `{{ member }}`, `{
 ### 11e. Recordatorios de pago automáticos
 
 Con **Recordatorios de pago automáticos** activado (Funciones, hijo de *Recordatorios de pago*) y el interruptor **Recordatorios automáticos** en las reglas de recordatorio (Facturas → Reglas de recordatorio), los niveles se aplican solos: cada mañana — y siempre que un propietario o admin abre Finanzas — una factura **abierta** cuyo plazo ha vencido (los *días hasta el primer recordatorio* desde su emisión, luego los *días entre recordatorios* tras el anterior) recibe su siguiente nivel. El miembro ve un aviso **Recordatorio de pago** en Eventos («Recordatorio 2: factura X — importe pendiente») y recibe una notificación; su vista Facturas lee *vencida hace N días*. Los niveles nunca superan el número configurado; una factura conciliada nunca se recuerda; con el interruptor apagado, recordar sigue siendo manual, una factura cada vez como antes.
+
+<!-- anchor: user.money.reminders.rules -->
+#### Reglas de recordatorio
+
+Cuántos recordatorios recibe una factura impagada, a qué plazo tras el
+vencimiento sale cada uno, y qué dice cada uno. Una vez al día las
+facturas abiertas vencidas pasan a su siguiente nivel; un nivel ya
+alcanzado no se reenvía nunca.
 
 ### 11f. Reagrupar facturas (liquidación)
 

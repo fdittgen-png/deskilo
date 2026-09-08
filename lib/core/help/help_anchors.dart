@@ -110,6 +110,60 @@ abstract final class HelpAnchor {
   /// The price of the whole package, with its VAT group.
   static const billingPackagePrice = 'user.money.billing.package-price';
 
+  /// Which design an invoice prints with, per kind and per language.
+  static const reportsInvoiceTemplate = 'user.money.reports.invoice-template';
+
+  /// How many reminders, how long after the term, and what they say.
+  static const remindersRules = 'user.money.reminders.rules';
+
+  /// When the month is billed — the subscription line goes ahead of it.
+  static const billingSchedule = 'user.money.billing.schedule';
+
+  // ── workspace · settings and exports ───────────────────────────────
+  /// Where the organisation is established.
+  static const workspaceCountry = 'user.workspace.settings.country';
+
+  /// The currency, and the zone the space's own clock runs on.
+  static const workspaceCurrencyTimezone =
+      'user.workspace.settings.currency-timezone';
+
+  /// The language the space speaks by default.
+  static const workspaceLanguage = 'user.workspace.settings.language';
+
+  /// The free-text address a paper document prints.
+  static const workspaceAddress = 'user.workspace.settings.address';
+
+  /// The group a notice can be posted to.
+  static const workspaceWhatsappGroup =
+      'user.workspace.settings.whatsapp-group';
+
+  /// The text an invitation carries, per language.
+  static const workspaceInvitationMessage =
+      'user.workspace.settings.invitation-message';
+
+  /// How much background shows through a desk on the plan.
+  static const workspaceDeskTransparency =
+      'user.workspace.settings.desk-transparency';
+
+  /// The whole space as one file, and what is never in it.
+  static const exportSpaceXml = 'user.workspace.export.space-xml';
+
+  /// Applying that file here, and what an existing booking refuses.
+  static const exportSpaceImport = 'user.workspace.export.space-import';
+
+  /// Every parameter as a readable document.
+  static const exportConfigPdf = 'user.workspace.export.config-pdf';
+
+  /// The space itself as a document.
+  static const exportWorkspaceReport =
+      'user.workspace.export.workspace-report';
+
+  /// One printable QR per place.
+  static const exportSpaceQr = 'user.workspace.export.space-qr';
+
+  /// The operational data as a spreadsheet.
+  static const exportExcel = 'user.workspace.export.excel';
+
   // ── money · scheduled expenses ─────────────────────────────────────
   /// A cost that comes back, raised on its own due days.
   static const expenseSchedule = 'user.money.expenses.schedule';
@@ -301,6 +355,22 @@ abstract final class HelpAnchor {
     serviceName,
     servicePrice,
     serviceActive,
+    workspaceCountry,
+    workspaceCurrencyTimezone,
+    workspaceLanguage,
+    workspaceAddress,
+    workspaceWhatsappGroup,
+    workspaceInvitationMessage,
+    workspaceDeskTransparency,
+    exportSpaceXml,
+    exportSpaceImport,
+    exportConfigPdf,
+    exportWorkspaceReport,
+    exportSpaceQr,
+    exportExcel,
+    reportsInvoiceTemplate,
+    remindersRules,
+    billingSchedule,
   };
 
   /// The screenshot that documents [anchor], by the naming rule.

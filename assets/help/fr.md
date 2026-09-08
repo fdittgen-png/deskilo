@@ -569,6 +569,12 @@ n'expirent pas avec le mois.
 Le prix du forfait entier, avec son propre groupe de TVA. La ligne de
 facture montre le prix et le taux qui s'appliquait le jour de la vente.
 
+#### Calendrier de facturation
+
+Quand le mois est facturé. La ligne d'abonnement est émise **avant** le
+mois qu'elle couvre et les lignes de consommation la suivent : c'est
+pourquoi une facture peut nommer un mois qui n'a pas encore eu lieu.
+
 ### Services et Accessoires
 
 Les catalogues derrière le §9 — extras définis par le propriétaire (casiers, impression…, chacun avec un prix et un taux de TVA optionnel) et équipements de place avec suppléments optionnels par demi-journée. Deux listes simples avec un bouton **+**.
@@ -649,6 +655,91 @@ L'écran de l'espace, de haut en bas :
 *Le bloc des exports — XML, PDF de configuration, rapport de l'espace, codes QR des espaces, Excel, import XML — et la zone de danger.*
 - **Le questionnaire de configuration** — <https://fdittgen-png.github.io/deskilo/setup.html> (le §1 l'explique en détail) : la page autonome qui recueille toute une configuration *avant* que l'app existe. **Importer l'espace (XML)** ci-dessus est l'endroit où atterrit son fichier — réglages, accessoires et plan directement ; la section `<setup>` du fichier porte facturation, identité légale, rôles et membres pour les écrans qui les gèrent.
 - **Zone de danger** — **Réinitialiser l'espace** : supprime toutes les réservations, la comptabilité et le plan ; conserve réglages et membres. Gardé par une confirmation tapée.
+
+#### Pays
+
+Où l'organisation est établie. Ce choix décide de la monnaie par défaut,
+du catalogue de taux de TVA qui vous est proposé, et de la formule légale
+qu'imprime un vendeur exonéré ou hors champ quand vous n'en écrivez
+aucune.
+
+#### Monnaie et fuseau horaire
+
+La monnaie dans laquelle s'expriment tous les prix et documents, et le
+fuseau sur lequel tourne l'horloge de l'espace. **Le fuseau n'est pas
+cosmétique** : une journée de travail, une limite de demi-journée et un
+jour de fermeture s'y comptent, si bien qu'un membre à l'étranger voit la
+journée de l'espace et non la sienne.
+
+#### Langue de l'espace
+
+La langue que parle l'espace par défaut. Les invitations sont écrites
+dedans, et un document y revient quand le lecteur n'a pas de langue à
+lui.
+
+#### Adresse d'en-tête
+
+L'adresse en texte libre qu'imprime un document papier. Elle est
+distincte de l'**adresse structurée** de l'identité légale, qui est ce
+que porte la facture électronique — une machine ne sait pas découper une
+ligne de façon fiable, et une personne qui lit une lettre préfère la
+ligne.
+
+#### Groupe WhatsApp
+
+Le groupe où un avis peut être publié. Facultatif, et sans effet sur le
+reste : sans lui, un message reste dans la boîte de l'application.
+
+#### Message d'invitation
+
+Le texte que porte une invitation, par langue. Écrivez-le une fois et
+toutes les invitations dans cette langue l'utilisent ; le code et le lien
+sont ajoutés par l'application, n'en collez donc jamais un dans le texte.
+
+#### Transparence des tables
+
+Quelle part de l'image de fond transparaît sous une table du plan.
+Montez-la quand le plan est tracé sur une photographie et que le mobilier
+compte ; baissez-la quand les places comptent plus que la pièce.
+
+#### Exporter l'espace (XML)
+
+L'espace entier en un fichier : le plan, et — avec *Configuration dans le
+fichier de l'espace* activé — tarifs, taux de TVA, identité légale et
+toutes les mentions de facture, règles de réservation et de validation,
+rôles, règles de relance, conceptions de documents, sites, jours de
+fermeture et liens de documents. **Jamais dans le fichier :** le code
+d'invitation, les identifiants de facturation électronique et de
+paiement, les membres, les réservations, les factures et les paiements.
+
+#### Importer l'espace (XML)
+
+Applique ce fichier ici. La section de configuration s'applique même à un
+espace qui a déjà des réservations ; seul le plan lui-même est refusé dès
+qu'il en existe, et l'import le dit au lieu d'échouer en silence.
+
+#### Exporter la configuration (PDF)
+
+Tous les paramètres de l'espace en un document lisible, signable, à
+remettre à un comptable. C'est un instantané, pas une sauvegarde : le
+XML est le fichier qui se réimporte.
+
+#### Rapport de l'espace
+
+L'espace lui-même comme document : sites, niveaux, places, tarifs et
+règles en vigueur. Utile en annexe d'un bail ou d'un dossier d'assurance.
+
+#### Codes QR des places (PDF)
+
+Une feuille imprimable de codes QR, un par place. Collez-les sur les
+tables et un membre peut réserver ou pointer en scannant la place devant
+laquelle il se tient.
+
+#### Exporter les données (Excel)
+
+Les données d'exploitation — membres, réservations, consommation,
+factures, paiements — en tableur, pour l'analyse que l'application ne
+fait pas. C'est un export, pas un transfert : rien ne le relit.
 
 ### Codes QR des espaces et réservations d'espaces entiers
 
@@ -1203,6 +1294,12 @@ Variables (famille facture) : `{{ number }}`, `{{ member }}`, `{{ workspace }}`,
 
 *Le mode Visuel — Conception édite les bandes étiquetées sur la vraie page A4 ; Aperçu fusionne vos bandes non enregistrées avec des données réelles via le vrai moteur.*
 
+#### Le modèle PDF de facture
+
+Avec quelle conception une facture est imprimée, et les textes que porte
+cette conception. Une conception existe par type de document et par
+langue ; un lecteur sans langue propre reçoit celle de l'espace.
+
 ### 11d. La suite de rapports et la bibliothèque de documents
 
 - **Accord financier** — chaque prix en vigueur pour un membre : abonnement, demi-journée supplémentaire, services, forfaits, suppléments d'accessoires et les prix des espaces entiers, **tables et bureaux compris**. Propriétaires/admins l'envoient depuis la feuille de gestion d'un membre ; chaque membre consulte/télécharge/partage le sien depuis *Finances → Documents*.
@@ -1221,6 +1318,13 @@ Variables (famille facture) : `{{ number }}`, `{{ member }}`, `{{ workspace }}`,
 ### 11e. Relances de paiement automatiques
 
 Avec **Relances de paiement automatiques** activé (Fonctionnalités, enfant de *Relances de paiement*) et l'interrupteur **Relances automatiques** dans les règles de relance (Factures → Règles de relance), les niveaux de relance s'appliquent d'eux-mêmes : chaque matin — et dès qu'un propriétaire ou un admin ouvre Finances — une facture **ouverte** dont le délai est écoulé (les *jours avant la première relance* depuis son émission, puis les *jours entre les relances* après la précédente) reçoit son niveau suivant. Le membre voit une alerte **Rappel de paiement** dans Événements (« Relance 2 : facture X — montant restant dû ») et reçoit une notification ; son volet Factures lit *en retard de N jours*. Les niveaux ne dépassent jamais le nombre configuré ; une facture rapprochée n'est jamais relancée ; interrupteur désactivé, la relance reste un geste manuel, une facture à la fois comme avant.
+
+#### Règles de relance
+
+Combien de relances reçoit une facture impayée, à quel délai après
+l'échéance part chacune, et ce que chacune dit. Une fois par jour, les
+factures ouvertes dépassant leur échéance passent au niveau suivant ; un
+niveau déjà atteint n'est jamais renvoyé.
 
 ### 11f. Regrouper des factures (règlement)
 
