@@ -387,6 +387,65 @@ Die rollengebundenen Einladungen (§2): Mitglieder-Einladung = die Workspace-ID 
 
   Die beiden **Auto-Validierungs**-Schalter — *Admins löschen ohne Validierung*, *Inhaber löschen ohne Validierung* — stehen nicht hier: sie leben bei den Validierungsregeln (§7), standardmäßig aus, und reichen nur an Reservierungslöschungen.
 
+#### Öffnungstage
+
+An welchen Wochentagen der Raum überhaupt offen ist. Eine Buchung, die
+einen geschlossenen Tag berührt, wird mit diesem Grund abgelehnt, und
+der Plan zeichnet den Tag als geschlossen statt als leer.
+
+#### Granularität
+
+Was eine Buchung sein darf: ein **halber Tag**, ein **ganzer Tag** oder
+ein **Slot** auf einem Raster von N Minuten. Eine Buchung, die nicht auf
+dem Raster liegt, wird abgelehnt und bekommt die Schrittweite genannt,
+damit sie niemand raten muss.
+
+#### Arbeitszeiten
+
+Anfang und Ende des Arbeitstages. Zusammen mit der Granularität
+entscheiden sie, was ein halber Tag ist — die Einheit, in der jedes
+Kontingent, jede Quote und jede Rechnungszeile zählt.
+
+#### Schließtage
+
+Daten, an denen der Raum unabhängig vom Wochentag zu ist: Feiertage,
+eine Woche im August, ein Tag für die Klempnerin. Eine Buchung, die
+einen berührt, wird abgelehnt und sagt es.
+
+#### Buchungsregeln
+
+Die Regeln, die der Server auf jedem Erstellungsweg durchsetzt — App,
+gescannter QR, Wandkiosk — damit eine einmal geschriebene Regel alle
+drei bindet.
+
+#### Vergangene Buchungen erlauben
+
+Aus wird eine Buchung, die ganz in der Vergangenheit liegt, abgelehnt.
+An ist sie erlaubt. Eine rückwirkende Buchung **am selben Tag** bleibt
+in beiden Fällen zulässig: wer sich um neun hingesetzt hat, soll das um
+zehn noch sagen dürfen.
+
+#### Administratorinnen dürfen auschecken
+
+Erlaubt einer Administratorin, die Anwesenheit einer anderen Person zu
+beenden. Nützlich, wenn ein Mitglied ohne Auschecken geht und der Platz
+sonst bis Tagesende belegt bliebe.
+
+#### Außerhalb der Öffnungszeiten
+
+Vier Antworten, jede mit eigenem Ablehnungssatz: **aus** (abgelehnt),
+**nur spontan** (ein spontanes Einchecken geht, im Voraus buchen
+nicht), **frei** oder **berechnet** (erlaubt und gezählt). Eine Buchung,
+die nur überlappt, gilt unter den strengen Modi als außerhalb; die
+Abrechnung zählt nur eine Buchung, die *ganz* draußen liegt.
+
+#### Buchungsgrenzen
+
+Der Vorlaufhorizont (wie weit im Voraus gebucht werden kann), die
+minimale und maximale Dauer einer Buchung, und wie viele zeitlich
+überlappende Buchungen ein Mitglied halten darf. Jede Ablehnung nennt
+die Grenze und ihren Wert: die Meldung ist die Regel.
+
 ### Funktionen
 
 ![](assets/help/images/features-tree.jpg)

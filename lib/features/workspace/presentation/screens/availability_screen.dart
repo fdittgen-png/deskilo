@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -341,7 +342,10 @@ class AvailabilityScreen extends ConsumerWidget {
                     l10n?.availabilityOpenWeekdays ?? 'Open weekdays',
                   ),
                 ),
-                HelpDot(l10n?.helpHintAvailabilityTopic ?? 'Availability'),
+                HelpDot(
+                  l10n?.helpHintAvailabilityTopic ?? 'Availability',
+                  anchor: HelpAnchor.availabilityOpenWeekdays,
+                ),
               ]),
               Padding(
                 padding: AppSpacing.lgH,
@@ -375,7 +379,10 @@ class AvailabilityScreen extends ConsumerWidget {
                         'Booking granularity',
                   ),
                 ),
-                HelpDot(l10n?.helpHintAvailabilityTopic ?? 'Availability'),
+                HelpDot(
+                  l10n?.helpHintAvailabilityTopic ?? 'Availability',
+                  anchor: HelpAnchor.availabilityGranularity,
+                ),
               ]),
               Padding(
                 padding: AppSpacing.lgH,
@@ -458,7 +465,10 @@ class AvailabilityScreen extends ConsumerWidget {
                       l10n?.availabilityWorkHoursTitle ?? 'Working hours',
                     ),
                   ),
-                  HelpDot(l10n?.helpTopicWorkingHours ?? 'Working hours'),
+                  HelpDot(
+                    l10n?.helpTopicWorkingHours ?? 'Working hours',
+                    anchor: HelpAnchor.availabilityWorkingHours,
+                  ),
                 ]),
                 Padding(
                   padding: AppSpacing.lgH,
@@ -541,13 +551,17 @@ class AvailabilityScreen extends ConsumerWidget {
                       l10n?.availabilityPoliciesTitle ?? 'Booking policies',
                     ),
                   ),
-                  HelpDot(l10n?.helpTopicBookingPolicies ?? 'Booking policies'),
+                  HelpDot(
+                    l10n?.helpTopicBookingPolicies ?? 'Booking policies',
+                    anchor: HelpAnchor.availabilityPolicies,
+                  ),
                 ]),
                 SwitchListTile(
                   key: const Key('policy-allow-past'),
                   title: HelpDotTitle(
                     l10n?.policyAllowPastTitle ?? 'Allow past bookings',
                     l10n?.helpTopicBookingPolicies ?? 'Booking policies',
+                    anchor: HelpAnchor.availabilityAllowPast,
                   ),
                   subtitle: Text(l10n?.policyAllowPastDesc ??
                       'Members may record a booking that already '
@@ -562,6 +576,7 @@ class AvailabilityScreen extends ConsumerWidget {
                     l10n?.policyAdminCheckoutTitle ??
                         'Admins may check members out',
                     l10n?.helpTopicBookingPolicies ?? 'Booking policies',
+                    anchor: HelpAnchor.availabilityAdminCheckout,
                   ),
                   subtitle: Text(l10n?.policyAdminCheckoutDesc ??
                       "An admin can end a member's running check-in."),
@@ -578,6 +593,7 @@ class AvailabilityScreen extends ConsumerWidget {
                     l10n?.policyOutsideHoursTitle ??
                         'Outside the opening hours',
                     l10n?.helpTopicBookingPolicies ?? 'Booking policies',
+                    anchor: HelpAnchor.availabilityOutsideHours,
                   ),
                   subtitle: Text(l10n?.policyOutsideHoursDesc ??
                       'What may happen outside the working day — the '
@@ -647,7 +663,10 @@ class AvailabilityScreen extends ConsumerWidget {
                       l10n?.policyLimitsTitle ?? 'Booking limits',
                     ),
                   ),
-                  HelpDot(l10n?.helpTopicBookingLimits ?? 'Booking limits'),
+                  HelpDot(
+                    l10n?.helpTopicBookingLimits ?? 'Booking limits',
+                    anchor: HelpAnchor.availabilityLimits,
+                  ),
                 ]),
                 Padding(
                   padding: AppSpacing.lgH,
@@ -719,7 +738,10 @@ class AvailabilityScreen extends ConsumerWidget {
                     l10n?.availabilityClosureDays ?? 'Closure days',
                   ),
                 ),
-                HelpDot(l10n?.helpTopicWorkingHours ?? 'Working hours'),
+                HelpDot(
+                  l10n?.helpTopicWorkingHours ?? 'Working hours',
+                  anchor: HelpAnchor.availabilityClosureDays,
+                ),
               ]),
               if (closures.isEmpty)
                 Padding(

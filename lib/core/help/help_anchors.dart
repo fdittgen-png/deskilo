@@ -110,6 +110,40 @@ abstract final class HelpAnchor {
   /// The price of the whole package, with its VAT group.
   static const billingPackagePrice = 'user.money.billing.package-price';
 
+  // ── workspace · availability and booking rules ─────────────────────
+  /// Which weekdays the space is open at all.
+  static const availabilityOpenWeekdays =
+      'user.workspace.availability.open-weekdays';
+
+  /// Half day, full day, or a grid of N minutes.
+  static const availabilityGranularity =
+      'user.workspace.availability.granularity';
+
+  /// The working day, which with the granularity defines a half-day.
+  static const availabilityWorkingHours =
+      'user.workspace.availability.working-hours';
+
+  /// Dates the space is shut whatever the weekday.
+  static const availabilityClosureDays =
+      'user.workspace.availability.closure-days';
+
+  /// The rules the server enforces on every creation path.
+  static const availabilityPolicies = 'user.workspace.availability.policies';
+
+  /// Whether a booking wholly in the past is allowed.
+  static const availabilityAllowPast = 'user.workspace.availability.allow-past';
+
+  /// Whether an administrator may end someone else's presence.
+  static const availabilityAdminCheckout =
+      'user.workspace.availability.admin-checkout';
+
+  /// The four answers to a booking outside the opening hours.
+  static const availabilityOutsideHours =
+      'user.workspace.availability.outside-hours';
+
+  /// Horizon, minimum and maximum duration, simultaneous bookings.
+  static const availabilityLimits = 'user.workspace.availability.limits';
+
   // ── environments · the pair and the deployment ─────────────────────
   /// Why a development twin exists at all.
   static const envPairWhy = 'env.pair.why';
@@ -179,6 +213,15 @@ abstract final class HelpAnchor {
     billingPackageName,
     billingPackageDays,
     billingPackagePrice,
+    availabilityOpenWeekdays,
+    availabilityGranularity,
+    availabilityWorkingHours,
+    availabilityClosureDays,
+    availabilityPolicies,
+    availabilityAllowPast,
+    availabilityAdminCheckout,
+    availabilityOutsideHours,
+    availabilityLimits,
   };
 
   /// The screenshot that documents [anchor], by the naming rule.
