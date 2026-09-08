@@ -25,12 +25,41 @@
 import 'dart:convert';
 import 'dart:io';
 
-const guides = <String, String>{
-  'en': 'User-Guide.md',
-  'fr': 'Guide-utilisateur.md',
-  'de': 'Benutzerhandbuch.md',
-  'es': 'Guia-de-usuario.md',
-  'it': 'Guida-utente.md',
+/// The guides, per language, in reading order. A language compiles the
+/// files it HAS: a guide that exists only in English joins the English
+/// bundle and waits for its translations rather than mixing languages in
+/// one document (#1018).
+const guides = <String, List<String>>{
+  'en': [
+    'User-Guide.md',
+    'Admin-Configuration-Guide.md',
+    'Admin-Technical-Guide.md',
+    'Environments-Guide.md',
+  ],
+  'fr': [
+    'Guide-utilisateur.md',
+    'Admin-Configuration-Guide.fr.md',
+    'Admin-Technical-Guide.fr.md',
+    'Environments-Guide.fr.md',
+  ],
+  'de': [
+    'Benutzerhandbuch.md',
+    'Admin-Configuration-Guide.de.md',
+    'Admin-Technical-Guide.de.md',
+    'Environments-Guide.de.md',
+  ],
+  'es': [
+    'Guia-de-usuario.md',
+    'Admin-Configuration-Guide.es.md',
+    'Admin-Technical-Guide.es.md',
+    'Environments-Guide.es.md',
+  ],
+  'it': [
+    'Guida-utente.md',
+    'Admin-Configuration-Guide.it.md',
+    'Admin-Technical-Guide.it.md',
+    'Environments-Guide.it.md',
+  ],
 };
 const wikiDir = 'docs/wiki';
 const outDir = 'assets/help';
@@ -109,19 +138,23 @@ void main() {
   final outImages = Directory('$outDir/images')..createSync(recursive: true);
 
   for (final entry in guides.entries) {
-    final source = File('$wikiDir/${entry.value}');
-    if (!source.existsSync()) {
-      stderr.writeln('Missing ${source.path}');
+    final sources = entry.value
+        .map((name) => File('$wikiDir/$name'))
+        .where((f) => f.existsSync())
+        .toList();
+    if (sources.isEmpty) {
+      stderr.writeln('No guide for ${entry.key} in $wikiDir');
       exitCode = 1;
       return;
     }
-    final raw = source.readAsStringSync();
+    final raw = sources.map((f) => f.readAsStringSync()).join('\n\n');
     final out = File('$outDir/${entry.key}.md')
       ..writeAsStringSync(compile(raw));
     final anchors = anchorsOf(raw);
     File('$outDir/${entry.key}.anchors.json').writeAsStringSync(
         '${const JsonEncoder.withIndent('  ').convert(anchors)}\n');
-    stdout.writeln('wrote ${out.path} (${anchors.length} anchors)');
+    stdout.writeln('wrote ${out.path} — ${sources.length} guide(s), '
+        '${anchors.length} anchors');
   }
 
   var copied = 0;

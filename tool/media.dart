@@ -55,6 +55,7 @@ int main(List<String> argv) {
     'index' => _index(),
     'check' => _check(),
     'list' => _list(),
+    'slots' => _slots(),
     _ => _usage(),
   };
 }
@@ -74,6 +75,7 @@ media — the screenshot pipeline (#1017)
   index                                                rebuild $workbenchDir/index.{json,md}
   check                                                images ↔ guide references ↔ app copies
   list                                                 what exists, per screen
+  slots                                                image slots a guide still waits for
 
 A screen id is the anchor with dots turned into dashes:
   user.money.invoice.detail-sheet  ->  user-money-invoice-detail-sheet
@@ -451,6 +453,34 @@ int _check() {
     stdout.writeln('  ✗ $p');
   }
   return problems.isEmpty ? 0 : 1;
+}
+
+/// `<!-- image: name -->` in a guide is a slot: the text is written, the
+/// screenshot is not taken yet. Filling one is replacing the comment
+/// with the `<img>` tag — never editing a sentence.
+int _slots() {
+  final slot = RegExp(r'<!--\s*image:\s*([a-z0-9-]+)\s*-->');
+  var waiting = 0;
+  var ready = 0;
+  for (final guide in Directory('docs/wiki')
+      .listSync()
+      .whereType<File>()
+      .where((f) => f.path.endsWith('.md'))) {
+    for (final m in slot.allMatches(guide.readAsStringSync())) {
+      final name = m.group(1)!;
+      final have = File('$wikiDir/$name.jpg').existsSync();
+      if (have) {
+        ready++;
+      } else {
+        waiting++;
+      }
+      stdout.writeln('${have ? 'ready ' : 'wanted'}  ${_name(guide.path)}'
+          '  $name');
+    }
+  }
+  stdout.writeln('$waiting slot(s) waiting for a screenshot, '
+      '$ready ready to be filled');
+  return 0;
 }
 
 int _list() {

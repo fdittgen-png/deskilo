@@ -1142,3 +1142,328 @@ The country catalogue names the **group** of every rate it proposes (standard, i
 ### Year archive (#957)
 
 *Accounting exports → Year archive* downloads one zip named after the registration number and the year: every invoice as PDF/A-3 with its embedded e-invoice, the **invoice register** (number, date, amount, status and each document's integrity word), the FEC on the default accounts and the audit trail. A development workspace produces a file marked DEV.
+
+# Admin guide — configuring the space
+
+For the owner who sets the space up: what every parameter decides, in the
+order the questionnaire asks, then the master data, then the floor plan
+and its images. The technical side is in the
+technical guide; moving a configuration between
+a development and a production space is in the
+environments guide.
+
+*This guide is being written; sections carry their outline and grow with
+each release.*
+
+## The setup questionnaire
+
+The web questionnaire asks, in order, only what your earlier answers make
+possible, and produces the space file the app imports. Every question
+there exists as a parameter in the app, and every parameter in the app
+exists there — that symmetry is a rule, not a coincidence.
+
+<!-- image: config-setup-questionnaire -->
+
+## Identity and legal mentions
+
+The organisation's form, its registrations, its addresses, and every
+mention its invoices must print.
+
+## VAT
+
+Regime, rates, groups, dated rate versions, the counterparty dimension,
+declarations. The rate a supply carries is decided by what it is (the
+group), who buys it (the treatment) and when it happened (the tax point).
+
+## Tariffs and billing rules
+
+Subscription percentages and their fee bands, overage, what a half-day
+is, what a month bills, and when it bills it.
+
+## Services
+
+## Day packages
+
+## Accessories
+
+## Sites
+
+Several addresses under one organisation: which one a document names,
+which registration it carries, and how a member is attached to one.
+
+## Availability and booking rules
+
+Opening days and hours, closure days, granularity, horizons, limits, and
+what happens outside the opening hours.
+
+## The floor plan
+
+### Levels
+
+A level is a floor or a room set. It carries its site, its background
+image, its price when it is bookable whole.
+
+### Offices, desks and seats
+
+The three nested shapes, their footprints on the grid, the orientation a
+seat faces, and what makes each of them bookable on its own.
+
+### The background image
+
+A plan reads best over a drawing of the actual room. The image is
+per level, sits under the grid, and never moves once the places are
+traced over it.
+
+<!-- image: config-plan-background -->
+
+### Making that image from photographs, with an AI
+
+You do not need an architect's drawing. Photograph the room, ask an image
+model for a top-down plan, and use its answer as the background.
+
+**Photograph it well.** Stand in each corner, hold the camera at chest
+height, and take one picture per corner plus one along each long wall.
+Include the whole floor in at least two of them. Measure one thing —
+a table's length, a door's width — and write the number down: that is
+what will set the scale.
+
+**Ask for a plan, not a picture.** The prompt that works asks for an
+orthographic top-down view, flat colours, no perspective, no shadows, no
+people, and furniture as simple footprints:
+
+> From these photographs of one room, draw a top-down orthographic floor
+> plan of it. Straight walls, true right angles, no perspective and no
+> shadows. Show only the fixed elements: walls, doors with their swing,
+> windows, radiators, pillars, kitchen and sanitary blocks, and the
+> footprint of each large piece of furniture as a plain outlined shape.
+> Muted, light colours on a white ground; no text, no labels, no
+> dimensions, no people, no decoration. The [table] in the room is
+> [1.60] m long — draw everything to that scale. Output a single image,
+> [4:3], at least 1600 pixels wide.
+
+**Check the scale before you trace.** Import the image as the level's
+background, then measure the object you noted against the grid: a seat
+occupies six cells across and four deep, and a cell is the app's unit of
+placement. Scale the image until the real object matches its true size on
+the grid; everything traced afterwards is then honest.
+
+**Trace, do not draw.** Place offices, desks and seats over the image.
+The background is a guide for the eye; what the app books are the places
+you place.
+
+**What not to accept.*This guide is being written; sections carry their outline and grow with
+each release. Screenshots arrive through the documentation pipeline —
+`<!-- image: … -->` marks a slot whose capture is still missing.*
+
+## Documents and reports
+
+Every printed thing in DesKilo — an invoice, a reminder, a member letter,
+a consumption report, a VAT return, a badge sheet — comes out of one
+engine. A **report kind** names the document; a **design** says how it
+looks; the **data** the app hands it is a fixed vocabulary of
+placeholders.
+
+<!-- image: admin-reports-editor -->
+
+### The kinds, and the four presets
+
+Each kind (invoice, credit note, proforma, statement, agreement,
+payments, usage, VAT, workspace) starts from one of four presets —
+*Simple*, *Classic*, *Verbose*, *Formal* — which differ only in how much
+they say, never in what is legally required.
+
+### Bands: header, body, continuation, footer
+
+The quick way to design: four bands of markup, each rendered per page.
+Text, headings, tables, rules, two-column blocks, and the Liquid a band
+may use.
+
+### Positioned layouts
+
+The exact way: an XML layout that places every element at a millimetre,
+for documents that must satisfy a window envelope or a national form.
+Elements, frame attributes, units, and the page contract.
+
+### The vocabulary
+
+Every placeholder the engine knows, per document family, with the loops
+(`lines`, `vat`, `usage_records`, …) and the fields each row carries.
+`dart run tool/report.dart describe` prints the current list — it is
+generated from the same registry the renderer reads, so it can never be
+out of date.
+
+### Liquid: conditions, loops, filters
+
+`{{ field }}`, `{% if field != "" %}…{% endif %}`,
+`{% for line in lines %}…{% endfor %}`, and the filters a design may use.
+The rule that catches everyone: an absent placeholder is the empty
+string, never nil, so a guard on `!= ""` behaves.
+
+### The window-envelope contract
+
+Sender at 20/20 mm, recipient at 110/45 in an 85×40 mm window, body from
+90 mm, footer on every page, continuation from page two. Proven on the
+rendered PDF, not by eye.
+
+### The command line
+
+`dart run tool/report.dart check <layout.xml>` measures a design against
+the contract and exits non-zero when ink lands in the window band;
+`render`, `sample` and `describe` complete the set.
+
+## Electronic invoicing
+
+### CII, UBL, Factur-X
+
+What the app produces, which standard each satisfies, and how the PDF and
+the XML travel together.
+
+### The readiness gate
+
+What the app refuses to send and why — a missing buyer identifier, an
+exemption without its code, a category the seller's regime cannot carry.
+
+### Platforms and credentials
+
+Configuring a transmission platform, the test endpoint, and what is
+recorded on the invoice's transmission history.
+
+## Accounting exports
+
+FEC, SAF-T and DATEV: what each contains, the accounts they use, and the
+period they cover.
+
+## Integrations
+
+Payment providers, the WhatsApp channel, push. Where the credentials
+live, why none of them is ever in the space file, and what happens when
+one is not configured.
+
+## Instances
+
+Creating a new instance with its own database from the app's wizard or
+from `dart run tool/instance.dart`, what the bundle carries, and how a
+migration reaches an existing instance.
+
+## The trace
+
+Every guarded action writes its start and its end; every provider failure
+and every uncaught error is recorded. Where to read it, what a "started"
+with no "done" means, and how to export it.
+
+# Environments — a space to try things in, a space that is real
+
+Two workspaces, one name. On one you configure, import, print and break
+things; on the other people book seats and receive invoices that are
+owed. What you settle on the first, you deploy to the second.
+
+## Why a pair
+
+A coworking space is configured by the person who runs it, not by an
+integrator, and configuration is where mistakes are cheap to make and
+expensive to discover: a tariff typed twice, a VAT rate on the wrong
+group, a plan whose seats moved after people had booked them. A
+development space costs nothing and absorbs all of that. Every document
+it prints carries the **development watermark**, its e-invoices go to
+the test endpoint, and nothing it produces can be mistaken for a real
+document.
+
+<!-- image: env-pair-profiles -->
+
+## Creating the pair
+
+A new workspace is created **with its twin**: same name, country,
+currency and time zone, both yours from the first second. *Profiles*
+shows the couple as one card with two chips, **DEV** and **PROD**; a tap
+on a chip switches side, and that switch becomes your default, so a
+restart opens where you left.
+
+A workspace created before pairs existed, or created alone, gets its
+twin on demand: *Settings → Advanced → Create its twin*. The
+configuration is copied once at that moment; from then on the two sides
+are independent and only a deployment moves anything between them.
+
+## Who may do what
+
+Three permissions in the role matrix:
+
+- **Enter the production workspace** — without it, a role cannot be a
+  member of the production side at all. Owners and co-owners have it;
+  admins have it; members do not until you give it.
+- **Deploy to development** — pull the production side's configuration
+  into the development one. Admins have it.
+- **Deploy to production** — the sensitive one, owner and co-owner only
+  by default. Whoever holds it also holds *Deploy to development*.
+
+Two rules follow. **A member of the production side is always a member of
+the development side**: the membership is mirrored, role and status
+included, so nobody has to be invited twice. And **a role enters the
+production side only while it holds the access permission** — an
+invitation, a join or a claim into production is refused otherwise, with
+the reason on screen.
+
+## Working on the development side
+
+Configure, import a space file, invite a colleague, issue a test invoice,
+move seats, print. Nothing there is real: the watermark says so on every
+document, and the e-invoice test endpoint refuses to reach a government
+platform.
+
+## Deploying
+
+*Settings → Administration → Deployment*, on the side you want to
+**write**. A deployment always goes **into the side you stand on**: on
+the production side the button reads *Pull from DEV*, on the development
+side *Pull from PROD*. Nothing can be pushed onto the other side by
+mistake.
+
+<!-- image: env-deploy-screen -->
+
+### What travels, entity by entity
+
+Grouped as **Configuration**, **Master data** and **Reports**:
+
+| Group | Entities |
+|---|---|
+| Configuration | Identity & legal · Booking rules · Validation rules · Role matrix · Reminder rules · Payment instructions · Document links · Closure days · Invitation templates · Features |
+| Master data | VAT · Tariffs · Services · Packages · Accessories · Sites · Floor plans |
+| Reports | Document designs, with their images |
+
+Tick one and what it needs is ticked with it — services need the VAT
+rates, a floor plan needs its accessories and its sites.
+
+### The floor plan is merged, never replaced
+
+Levels match by name, offices, desks and seats by name or, unnamed, by
+position. What the other side has is added or updated; what only this
+side has is reported and **kept**, because a seat may already hold a
+booking. Badge tags and blocks never travel. Backgrounds and plan images
+are copied along.
+
+### The preview, then the confirmation
+
+Nothing moves before a preview says, per entity, what would be added,
+changed and removed. A preview with nothing to do says so and deploys
+nothing. Then a confirmation names the side that is about to be written
+and the entities, because that is the moment a mistake becomes expensive.
+
+### The journal and the way back
+
+Every deployment is recorded: who, when, in which direction, which
+entities, and what the target held before. *Roll back* on the latest one
+restores exactly that. A rollback refuses while a later deployment stands
+on the same side — undo them in order.
+
+### What never travels
+
+Members, reservations, ledgers, invoices, payments, events, messages,
+credentials of any kind, and document numbering counters. A number series
+is deployed as a **format**; the next number always belongs to the space
+that issues it.
+
+## When a pair is not enough
+
+Two workspaces share one database. Where personal data or payment
+credentials must be physically separated, pair **instances** instead: the
+new-instance wizard builds a second database from the bundle, and the
+same entities travel between the two through the space file.
