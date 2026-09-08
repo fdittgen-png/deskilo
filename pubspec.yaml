@@ -87,6 +87,10 @@ dependencies:
   package_info_plus: ^10.2.1
 
 dev_dependencies:
+  # #1017 — the documentation screenshot pipeline (tool/media.dart):
+  # merge, crop, downscale. Tool-only; the app never decodes an image
+  # itself.
+  image: ^4.9.2
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
