@@ -832,6 +832,81 @@ The **form of address** is a field in your personal information: *Mr*, *Ms*, or 
 **VAT — the compliance checklist (#878).** Reviewed 2026-09-05 against Directive 2006/112/EC and EN 16931 (ADR 0015). What holds: the seller's regime is **frozen on each document** at issue (an association that becomes exempt keeps its earlier out-of-scope invoices as they were); the per-rate breakdown is frozen too, rounded per line exactly as the server does; numbering is continuous and documents never change (corrections void and reissue). What the app now does for you: an **exempt or out-of-scope seller's documents print the statutory mention of their country** (FR art. 293 B CGI, DE § 19 UStG, AT, ES, IT, BE, NL, LU, else the Directive) when you wrote none in *Legal identity*; the e-invoice check **warns when a customer's VAT number does not have its country's shape**. What stays the owner's: keep the rate catalogue current when a rate changes; a VAT-charging seller must hold a VAT id. The three limits the review recorded are now closed: credit notes reverse VAT (#894), intra-EU reverse charge is decided at issue (#895), and the cash basis is a workspace setting (#896).
 **The VAT report (#878).** On *VAT declarations*, for the selected month or quarter: **VAT report (PDF)** — every taxable position (document, date, customer, net, rate, VAT, gross, category, the reversed original when any), subtotals per rate and category, period totals — as a letter you can view, save or share and design like every document (*VAT report* in the editor); **VAT report (CSV)** — the same positions, semicolon-separated, for the accountant.
 
+<!-- anchor: user.money.legal.seller-kind -->
+#### Organisation type
+
+*Company / business* or *Association (loi 1901)*. It decides which clause defaults a document prints: the late-payment penalty, the recovery indemnity and the early-payment discount are obligations **between professionals**, so an association's invoices drop those defaults. Anything you type yourself always prints, whichever type is set.
+
+<!-- anchor: user.money.legal.legal-form -->
+#### Legal form and capital
+
+What the organisation legally is, printed under its name: *SASU au capital de 1 000 €*, *Association loi 1901*. Left empty, a company prints nothing and an association prints its statutory form.
+
+<!-- anchor: user.money.legal.registration -->
+#### Trade register
+
+The registration a reader can check you with: a company's **RCS** and city, an association's **RNA W…** and its **SIRET** when one has been assigned. It is what a customer's accountant looks for, and what the e-invoice check refuses to send without.
+
+<!-- anchor: user.money.legal.payment-terms -->
+#### Payment terms
+
+When the money is due — *on receipt of invoice, within 30 days* by default. It prints on every invoice and it is what the reminder rules count from.
+
+<!-- anchor: user.money.legal.late-penalty -->
+#### Late-payment penalty
+
+The interest a late payment carries. Between professionals the mention is obligatory; the default states the legal rate in force. An association prints nothing here unless you write something.
+
+<!-- anchor: user.money.legal.recovery -->
+#### Recovery indemnity
+
+The fixed **€40** owed for collection costs on a late professional payment. Same rule: obligatory between professionals, dropped for an association, always printed when you write it.
+
+<!-- anchor: user.money.legal.escompte -->
+#### Early-payment discount
+
+Whether paying early earns a discount. Most spaces grant none, and the default says so in the words the law expects — saying *no discount* is itself a mandatory mention between professionals.
+
+<!-- anchor: user.money.legal.insurance -->
+#### Professional insurance
+
+The insurer, the policy and its geographical cover. Required of regulated trades; left empty it prints nothing.
+
+<!-- anchor: user.money.legal.special-mentions -->
+#### Special mentions
+
+Anything else your trade or your country demands, printed after the others. The place for a membership number, a mediation body, or a clause your accountant asks for.
+
+<!-- anchor: user.money.vat.regime -->
+#### VAT regime
+
+Whether the workspace is **outside the scope of VAT**, **exempt** under a small-business scheme, or **charges VAT**. It decides which number the EN 16931 norm demands from you, and which statutory sentence a document prints. The regime is **frozen on each document at issue**, so changing it never rewrites an invoice already sent.
+
+<!-- anchor: user.money.vat.number -->
+#### VAT number
+
+The intra-community number, checked for the shape its country uses. It is what a document needs before it can be sent when you charge VAT, and what proves the tax is the customer's on a reverse charge.
+
+<!-- anchor: user.money.vat.account -->
+#### VAT account
+
+The account collected VAT is posted to in the chart of accounts. The accounting exports and the accountant's reports follow it.
+
+<!-- anchor: user.money.vat.exemption-reason -->
+#### Reason no VAT is charged
+
+The sentence an exempt or out-of-scope seller must print. Left empty, DesKilo prints your country's statutory wording — *art. 293 B du CGI* in France, *§ 19 UStG* in Germany, and the Directive elsewhere.
+
+<!-- anchor: user.money.legal.legal-id -->
+#### Company registration number
+
+SIREN, SIRET, HRB, CIF — the identifier the norm demands from a seller who charges no VAT. Without it an e-invoice from an out-of-scope workspace cannot be issued.
+
+<!-- anchor: user.money.legal.address -->
+#### Structured address
+
+Street, post code and city as three separate fields, beside the free-text letterhead address. The letterhead is what a paper document prints; **the structured address is what the e-invoice carries**, because a machine cannot split one line reliably.
+
 ### 11b. Where the e-invoice has to go (EU)
 
 The **e-invoice (XML)** action opens a sheet that answers this for the workspace's own country before handing the file over: which channel business customers expect it on, whether a platform sits in the path, and which channel public buyers use. Four models exist in the union:

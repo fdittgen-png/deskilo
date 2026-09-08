@@ -844,6 +844,66 @@ La **formule d'appel** est un champ de vos informations personnelles : *Monsieur
 **TVA — la liste de conformité (#878).** Revue le 05/09/2026 au regard de la directive 2006/112/CE et d'EN 16931 (ADR 0015). Ce qui tient : le régime du vendeur est **figé sur chaque document** à l'émission (une association qui devient exonérée garde ses factures hors champ antérieures telles quelles) ; la ventilation par taux est figée aussi, arrondie par ligne exactement comme le serveur ; la numérotation est continue et les documents ne changent jamais (on annule et on réémet). Ce que l'app fait désormais pour vous : les documents d'un vendeur **exonéré ou hors champ impriment la mention légale de leur pays** (FR art. 293 B CGI, DE § 19 UStG, AT, ES, IT, BE, NL, LU, sinon la directive) quand vous n'avez rien écrit dans *Identité légale* ; le contrôle de facture électronique **avertit quand le numéro de TVA d'un client n'a pas la forme de son pays**. Ce qui reste au propriétaire : tenir le catalogue des taux à jour quand un taux change ; un vendeur assujetti doit avoir un numéro de TVA. Les trois limites relevées à la revue sont désormais levées : les avoirs reversent la TVA (#894), l'autoliquidation intracommunautaire est décidée à l'émission (#895) et la déclaration sur les encaissements est un réglage de l'espace (#896).
 **Le rapport de TVA (#878).** Dans *Déclarations de TVA*, pour le mois ou le trimestre choisi : **Rapport de TVA (PDF)** — chaque position taxable (document, date, client, HT, taux, TVA, TTC, catégorie, l'original corrigé le cas échéant), sous-totaux par taux et catégorie, totaux de la période — en lettre consultable, enregistrable, partageable et modifiable comme tout document (*Rapport de TVA* dans l'éditeur) ; **Rapport de TVA (CSV)** — les mêmes positions, séparées par point-virgule, pour le comptable.
 
+#### Type d'organisation
+
+*Entreprise / société* ou *Association (loi 1901)*. Ce choix décide des clauses qu'un document imprime par défaut : la pénalité de retard, l'indemnité de recouvrement et l'escompte sont des obligations **entre professionnels**, donc les factures d'une association s'en passent. Ce que vous écrivez vous-même s'imprime toujours, quel que soit le type.
+
+#### Forme juridique et capital
+
+Ce que l'organisation est en droit, imprimé sous son nom : *SASU au capital de 1 000 €*, *Association loi 1901*. Laissé vide, une entreprise n'imprime rien et une association imprime sa forme statutaire.
+
+#### Immatriculation
+
+L'immatriculation qui permet de vous vérifier : **RCS** et ville pour une société, **RNA W…** et le **SIRET** s'il a été attribué pour une association. C'est ce que cherche le comptable de votre client, et ce sans quoi le contrôle de facture électronique refuse d'envoyer.
+
+#### Conditions de paiement
+
+Quand l'argent est dû — *paiement à réception de facture, à 30 jours* par défaut. Cela s'imprime sur chaque facture et c'est de là que partent les règles de relance.
+
+#### Pénalité de retard
+
+Les intérêts qu'un paiement en retard porte. Entre professionnels la mention est obligatoire ; le défaut énonce le taux légal en vigueur. Une association n'imprime rien ici tant que vous n'écrivez rien.
+
+#### Indemnité de recouvrement
+
+Les **40 €** forfaitaires dus pour frais de recouvrement sur un retard entre professionnels. Même règle : obligatoire entre professionnels, retirée pour une association, toujours imprimée si vous l'écrivez.
+
+#### Escompte
+
+Si payer d'avance donne droit à une remise. La plupart des espaces n'en accordent aucun, et le défaut le dit dans les termes que la loi attend — dire *aucun escompte* est en soi une mention obligatoire entre professionnels.
+
+#### Assurance professionnelle
+
+L'assureur, le contrat et sa couverture géographique. Exigée des professions réglementées ; vide, rien ne s'imprime.
+
+#### Mentions particulières
+
+Tout ce que votre métier ou votre pays exige d'autre, imprimé après les autres. La place d'un numéro d'adhérent, d'un médiateur de la consommation ou d'une clause demandée par votre comptable.
+
+#### Régime de TVA
+
+Si l'espace est **hors du champ de la TVA**, **en franchise** au titre d'un régime de petite entreprise, ou **assujetti**. Ce choix décide du numéro que la norme EN 16931 exige de vous et de la phrase légale qu'un document imprime. Le régime est **figé sur chaque document à l'émission** : le modifier ne réécrit jamais une facture déjà envoyée.
+
+#### Numéro de TVA
+
+Le numéro intracommunautaire, vérifié dans la forme qu'utilise son pays. C'est ce qu'il faut à un document avant l'envoi quand vous facturez la TVA, et ce qui prouve que la taxe revient au client en cas d'autoliquidation.
+
+#### Compte de TVA
+
+Le compte du plan comptable où la TVA collectée est imputée. Les exports comptables et les états du comptable le suivent.
+
+#### Motif de non-assujettissement
+
+La phrase qu'un vendeur exonéré ou hors champ doit imprimer. Laissée vide, DesKilo imprime la formule légale de votre pays — *art. 293 B du CGI* en France, *§ 19 UStG* en Allemagne, la Directive ailleurs.
+
+#### Numéro d'identification
+
+SIREN, SIRET, HRB, CIF — l'identifiant que la norme exige d'un vendeur qui ne facture pas de TVA. Sans lui, une facture électronique d'un espace hors champ ne peut pas être émise.
+
+#### Adresse structurée
+
+Rue, code postal et ville en trois champs distincts, à côté de l'adresse libre de l'en-tête. L'en-tête est ce qu'imprime un document papier ; **l'adresse structurée est ce que porte la facture électronique**, car une machine ne sait pas découper une ligne de façon fiable.
+
 ### 11b. Où doit aller la facture électronique (UE)
 
 L'action **Facture électronique (XML)** ouvre une feuille qui répond pour le pays de l'espace avant de remettre le fichier : quel canal attendent les clients professionnels, si une plateforme est sur le chemin, et quel canal utilisent les acheteurs publics. Quatre modèles existent dans l'Union :

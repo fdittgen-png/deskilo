@@ -1,5 +1,20 @@
 {
   "user.money.vat.rates": "Sätze setzen",
   "user.money.vat.declaration": "Die periodische USt-Voranmeldung",
+  "user.money.legal.seller-kind": "Art der Organisation",
+  "user.money.legal.legal-form": "Rechtsform und Kapital",
+  "user.money.legal.registration": "Registereintrag",
+  "user.money.legal.payment-terms": "Zahlungsbedingungen",
+  "user.money.legal.late-penalty": "Verzugszinsen",
+  "user.money.legal.recovery": "Beitreibungspauschale",
+  "user.money.legal.escompte": "Skonto",
+  "user.money.legal.insurance": "Berufshaftpflicht",
+  "user.money.legal.special-mentions": "Besondere Angaben",
+  "user.money.vat.regime": "Steuerregime",
+  "user.money.vat.number": "Umsatzsteuer-Identifikationsnummer",
+  "user.money.vat.account": "MwSt-Konto",
+  "user.money.vat.exemption-reason": "Grund der Steuerbefreiung",
+  "user.money.legal.legal-id": "Registernummer",
+  "user.money.legal.address": "Strukturierte Anschrift",
   "user.money.vat.groups": "USt-Gruppen (#947)"
 }

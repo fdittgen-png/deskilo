@@ -1,5 +1,20 @@
 {
   "user.money.vat.rates": "Configurar los tipos",
   "user.money.vat.declaration": "La declaración periódica de IVA",
+  "user.money.legal.seller-kind": "Tipo de organización",
+  "user.money.legal.legal-form": "Forma jurídica y capital",
+  "user.money.legal.registration": "Registro mercantil",
+  "user.money.legal.payment-terms": "Condiciones de pago",
+  "user.money.legal.late-penalty": "Interés de demora",
+  "user.money.legal.recovery": "Indemnización de recobro",
+  "user.money.legal.escompte": "Descuento por pronto pago",
+  "user.money.legal.insurance": "Seguro profesional",
+  "user.money.legal.special-mentions": "Menciones especiales",
+  "user.money.vat.regime": "Régimen de IVA",
+  "user.money.vat.number": "Número de IVA",
+  "user.money.vat.account": "Cuenta de IVA",
+  "user.money.vat.exemption-reason": "Motivo de la exención",
+  "user.money.legal.legal-id": "Número de identificación",
+  "user.money.legal.address": "Dirección estructurada",
   "user.money.vat.groups": "Grupos de IVA (#947)"
 }

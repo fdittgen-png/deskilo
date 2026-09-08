@@ -832,6 +832,81 @@ La **formula di cortesia** è un campo dei vostri dati personali: *Sig.*, *Sig.r
 **IVA — la checklist di conformità (#878).** Rivista il 05/09/2026 rispetto alla direttiva 2006/112/CE e a EN 16931 (ADR 0015). Ciò che regge: il regime del venditore è **fissato su ogni documento** all'emissione (un'associazione che diventa esente mantiene le fatture precedenti fuori campo così com'erano); anche la ripartizione per aliquota è fissata, arrotondata per riga esattamente come il server; la numerazione è continua e i documenti non cambiano mai (si annullano e si riemettono). Ciò che l'app fa ora per te: i documenti di un venditore **esente o fuori campo stampano la dicitura di legge del loro paese** (FR art. 293 B CGI, DE § 19 UStG, AT, ES, IT, BE, NL, LU, altrimenti la direttiva) quando non hai scritto nulla in *Identità legale*; il controllo della fattura elettronica **avvisa quando la partita IVA di un cliente non ha la forma del suo paese**. Ciò che resta al proprietario: tenere aggiornato il catalogo delle aliquote quando cambiano; un venditore soggetto deve avere una partita IVA. I tre limiti annotati dalla revisione sono chiusi: le note di credito stornano l'IVA (#894), l'inversione contabile intracomunitaria è decisa all'emissione (#895) e l'IVA per cassa è un'impostazione dello spazio (#896).
 **Il report IVA (#878).** In *Dichiarazioni IVA*, per il mese o trimestre scelto: **Report IVA (PDF)** — ogni posizione imponibile (documento, data, cliente, imponibile, aliquota, IVA, totale, categoria, l'originale rettificato se presente), subtotali per aliquota e categoria, totali del periodo — come lettera da vedere, salvare, condividere e progettare come ogni documento (*Report IVA* nell'editor); **Report IVA (CSV)** — le stesse posizioni, separate da punto e virgola, per il commercialista.
 
+<!-- anchor: user.money.legal.seller-kind -->
+#### Tipo di organizzazione
+
+*Impresa / società* o *Associazione (loi 1901)*. Decide quali clausole un documento stampa per impostazione predefinita: interessi di mora, indennità di recupero e sconto sono obblighi **tra professionisti**, quindi le fatture di un'associazione ne fanno a meno. Ciò che scrivi tu viene sempre stampato, qualunque sia il tipo.
+
+<!-- anchor: user.money.legal.legal-form -->
+#### Forma giuridica e capitale
+
+Ciò che l'organizzazione è in diritto, stampato sotto il suo nome: *S.r.l. con capitale di 10 000 €*, *Association loi 1901*. Lasciato vuoto, un'impresa non stampa nulla e un'associazione stampa la sua forma statutaria.
+
+<!-- anchor: user.money.legal.registration -->
+#### Registro delle imprese
+
+L'iscrizione con cui si può verificarti: **Registro delle imprese** e città per una società, **RNA W…** e il **SIRET** se assegnato per un'associazione. È ciò che cerca la contabilità del tuo cliente, e senza cui il controllo della fattura elettronica rifiuta di inviare.
+
+<!-- anchor: user.money.legal.payment-terms -->
+#### Condizioni di pagamento
+
+Quando il denaro è dovuto — *pagamento alla ricezione della fattura, a 30 giorni* per impostazione predefinita. Si stampa su ogni fattura ed è il punto di partenza delle regole di sollecito.
+
+<!-- anchor: user.money.legal.late-penalty -->
+#### Interessi di mora
+
+Gli interessi che un pagamento tardivo comporta. Tra professionisti la menzione è obbligatoria; il valore predefinito enuncia il tasso legale in vigore. Un'associazione non stampa nulla qui finché non scrivi qualcosa.
+
+<!-- anchor: user.money.legal.recovery -->
+#### Indennità di recupero
+
+I **40 €** forfettari dovuti per spese di recupero su un ritardo tra professionisti. Stessa regola: obbligatoria tra professionisti, tolta per un'associazione, sempre stampata se la scrivi.
+
+<!-- anchor: user.money.legal.escompte -->
+#### Sconto per pagamento anticipato
+
+Se pagare in anticipo dà diritto a uno sconto. La maggior parte degli spazi non ne concede alcuno, e il valore predefinito lo dice con le parole che la legge si aspetta — dire *nessuno sconto* è di per sé una menzione obbligatoria tra professionisti.
+
+<!-- anchor: user.money.legal.insurance -->
+#### Assicurazione professionale
+
+L'assicuratore, la polizza e la sua copertura geografica. Richiesta alle professioni regolamentate; vuota non stampa nulla.
+
+<!-- anchor: user.money.legal.special-mentions -->
+#### Menzioni particolari
+
+Tutto ciò che il tuo mestiere o il tuo paese esige in più, stampato dopo le altre. Il posto per un numero di socio, un organismo di mediazione o una clausola richiesta dal tuo commercialista.
+
+<!-- anchor: user.money.vat.regime -->
+#### Regime IVA
+
+Se lo spazio è **fuori campo IVA**, **esente** per un regime di piccola impresa, o **soggetto**. Decide quale numero la norma EN 16931 esige da te e quale frase di legge un documento stampa. Il regime è **congelato su ogni documento all'emissione**: modificarlo non riscrive mai una fattura già inviata.
+
+<!-- anchor: user.money.vat.number -->
+#### Partita IVA
+
+Il numero intracomunitario, verificato nella forma usata dal suo paese. È ciò che serve a un documento prima dell'invio quando applichi l'IVA, e ciò che prova che l'imposta spetta al cliente in caso di inversione contabile.
+
+<!-- anchor: user.money.vat.account -->
+#### Conto IVA
+
+Il conto del piano dei conti su cui è imputata l'IVA riscossa. Le esportazioni contabili e i prospetti del commercialista lo seguono.
+
+<!-- anchor: user.money.vat.exemption-reason -->
+#### Motivo dell'esenzione
+
+La frase che un venditore esente o fuori campo deve stampare. Lasciata vuota, DesKilo stampa la formula di legge del tuo paese — *art. 293 B du CGI* in Francia, *§ 19 UStG* in Germania, la Direttiva altrove.
+
+<!-- anchor: user.money.legal.legal-id -->
+#### Numero di iscrizione
+
+SIREN, SIRET, HRB, CIF — l'identificativo che la norma esige da un venditore che non applica l'IVA. Senza di esso una fattura elettronica di uno spazio fuori campo non può essere emessa.
+
+<!-- anchor: user.money.legal.address -->
+#### Indirizzo strutturato
+
+Via, codice postale e città in tre campi distinti, accanto all'indirizzo libero della carta intestata. La carta intestata è ciò che stampa un documento cartaceo; **l'indirizzo strutturato è ciò che porta la fattura elettronica**, perché una macchina non sa spezzare una riga in modo affidabile.
+
 ### 11b. Dove deve andare la fattura elettronica (UE)
 
 L'azione **fattura elettronica (XML)** apre un foglio che risponde alla domanda per il paese dello spazio, prima di consegnarti il file: su quale canale la aspettano i clienti business, se una piattaforma si mette in mezzo e quale canale usano gli acquirenti pubblici. Nell'Unione convivono quattro modelli:

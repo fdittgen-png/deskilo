@@ -844,6 +844,66 @@ El **tratamiento** es un campo de sus datos personales: *Sr.*, *Sra.* o *Ninguno
 **IVA — la lista de conformidad (#878).** Revisado el 05/09/2026 frente a la Directiva 2006/112/CE y EN 16931 (ADR 0015). Lo que se cumple: el régimen del vendedor queda **fijado en cada documento** al emitirse (una asociación que pasa a exenta conserva sus facturas anteriores no sujetas tal cual); el desglose por tipo también queda fijado, redondeado por línea exactamente como el servidor; la numeración es continua y los documentos nunca cambian (se anulan y se reemiten). Lo que la app hace ahora por ti: los documentos de un vendedor **exento o no sujeto imprimen la mención legal de su país** (FR art. 293 B CGI, DE § 19 UStG, AT, ES, IT, BE, NL, LU, si no la Directiva) cuando no escribiste nada en *Identidad legal*; la comprobación de factura electrónica **avisa cuando el NIF-IVA de un cliente no tiene la forma de su país**. Lo que sigue siendo del propietario: mantener el catálogo de tipos al día cuando cambia uno; un vendedor sujeto debe tener NIF-IVA. Los tres límites que anotó la revisión están cerrados: los abonos revierten el IVA (#894), la inversión del sujeto pasivo intracomunitaria se decide al emitir (#895) y el criterio de caja es un ajuste del espacio (#896).
 **El informe de IVA (#878).** En *Declaraciones de IVA*, para el mes o trimestre elegido: **Informe de IVA (PDF)** — cada posición gravable (documento, fecha, cliente, base, tipo, IVA, total, categoría, el original rectificado si lo hay), subtotales por tipo y categoría, totales del periodo — como carta para ver, guardar, compartir y diseñar como cualquier documento (*Informe de IVA* en el editor); **Informe de IVA (CSV)** — las mismas posiciones, separadas por punto y coma, para el contable.
 
+#### Tipo de organización
+
+*Empresa / negocio* o *Asociación (loi 1901)*. Decide qué cláusulas imprime un documento por defecto: el interés de demora, la indemnización de recobro y el descuento por pronto pago son obligaciones **entre profesionales**, así que las facturas de una asociación prescinden de ellas. Lo que escribas tú se imprime siempre, sea cual sea el tipo.
+
+#### Forma jurídica y capital
+
+Lo que la organización es en derecho, impreso bajo su nombre: *S.L. con capital de 3 000 €*, *Association loi 1901*. Vacío, una empresa no imprime nada y una asociación imprime su forma estatutaria.
+
+#### Registro mercantil
+
+La inscripción con la que se le puede verificar: **Registro Mercantil** y localidad para una sociedad, **RNA W…** y el **SIRET** si se le ha asignado para una asociación. Es lo que busca la contabilidad de su cliente, y sin ello la comprobación de factura electrónica se niega a enviar.
+
+#### Condiciones de pago
+
+Cuándo vence el dinero — *pago a la recepción de la factura, a 30 días* por defecto. Se imprime en cada factura y es el punto de partida de las reglas de recordatorio.
+
+#### Interés de demora
+
+El interés que soporta un pago tardío. Entre profesionales la mención es obligatoria; el valor por defecto enuncia el tipo legal vigente. Una asociación no imprime nada aquí mientras no escriba algo.
+
+#### Indemnización de recobro
+
+Los **40 €** fijos debidos por costes de recobro en un retraso entre profesionales. Misma regla: obligatoria entre profesionales, retirada para una asociación, siempre impresa si la escribe.
+
+#### Descuento por pronto pago
+
+Si pagar antes da derecho a un descuento. La mayoría de los espacios no conceden ninguno, y el valor por defecto lo dice con las palabras que la ley espera — decir *ningún descuento* es en sí una mención obligatoria entre profesionales.
+
+#### Seguro profesional
+
+La aseguradora, la póliza y su cobertura geográfica. Exigido a las profesiones reguladas; vacío no imprime nada.
+
+#### Menciones especiales
+
+Todo lo demás que su oficio o su país exija, impreso después de las otras. El lugar para un número de socio, un organismo de mediación o una cláusula que pida su contable.
+
+#### Régimen de IVA
+
+Si el espacio está **fuera del ámbito del IVA**, **exento** por un régimen de pequeña empresa, o **sujeto**. Decide qué número le exige la norma EN 16931 y qué frase legal imprime un documento. El régimen queda **congelado en cada documento en el momento de emitirlo**: cambiarlo nunca reescribe una factura ya enviada.
+
+#### Número de IVA
+
+El número intracomunitario, verificado en la forma que usa su país. Es lo que un documento necesita antes del envío cuando usted repercute IVA, y lo que prueba que el impuesto corresponde al cliente en una inversión del sujeto pasivo.
+
+#### Cuenta de IVA
+
+La cuenta del plan contable donde se imputa el IVA repercutido. Las exportaciones contables y los informes del contable la siguen.
+
+#### Motivo de la exención
+
+La frase que un vendedor exento o no sujeto debe imprimir. Vacía, DesKilo imprime la fórmula legal de su país — *art. 293 B du CGI* en Francia, *§ 19 UStG* en Alemania, la Directiva en los demás casos.
+
+#### Número de identificación
+
+SIREN, SIRET, HRB, CIF — el identificador que la norma exige a un vendedor que no repercute IVA. Sin él, una factura electrónica de un espacio no sujeto no puede emitirse.
+
+#### Dirección estructurada
+
+Calle, código postal y ciudad en tres campos distintos, junto a la dirección libre del membrete. El membrete es lo que imprime un documento en papel; **la dirección estructurada es lo que lleva la factura electrónica**, porque una máquina no sabe partir una línea de forma fiable.
+
 ### 11b. Adónde debe ir la factura electrónica (UE)
 
 La acción **Factura electrónica (XML)** abre una hoja que responde a esto para el país del propio espacio antes de entregarte el archivo: por qué canal la esperan los clientes empresa, si se interpone una plataforma y qué canal usan los compradores públicos. En la Unión coexisten cuatro modelos:

@@ -1,5 +1,20 @@
 {
   "user.money.vat.rates": "Régler les taux",
   "user.money.vat.declaration": "La déclaration périodique de TVA",
+  "user.money.legal.seller-kind": "Type d'organisation",
+  "user.money.legal.legal-form": "Forme juridique et capital",
+  "user.money.legal.registration": "Immatriculation",
+  "user.money.legal.payment-terms": "Conditions de paiement",
+  "user.money.legal.late-penalty": "Pénalité de retard",
+  "user.money.legal.recovery": "Indemnité de recouvrement",
+  "user.money.legal.escompte": "Escompte",
+  "user.money.legal.insurance": "Assurance professionnelle",
+  "user.money.legal.special-mentions": "Mentions particulières",
+  "user.money.vat.regime": "Régime de TVA",
+  "user.money.vat.number": "Numéro de TVA",
+  "user.money.vat.account": "Compte de TVA",
+  "user.money.vat.exemption-reason": "Motif de non-assujettissement",
+  "user.money.legal.legal-id": "Numéro d'identification",
+  "user.money.legal.address": "Adresse structurée",
   "user.money.vat.groups": "Groupes de TVA (#947)"
 }
