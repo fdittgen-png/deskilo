@@ -303,6 +303,60 @@ Die Inhaberin justiert das je **Domäne** unter **Einstellungen → Validierungs
 
 *Die Ereignisse-Seite von Nachrichten: Art-Chips, Ungelesen / Gelesen und Gruppieren nach Typ · Datum · Mitglied.*
 
+### Prüfregeln, Domäne für Domäne
+
+Jede Art von Handlung — ein Beitritt, eine gelöschte Reservierung, eine
+ausgebuchte Rechnung, gewährte Zusatz-Halbtage — hat ihre eigene Regel,
+die sagt, ob ein Mensch entscheiden muss, bevor sie wirkt, und wer. Eine
+Entscheidung ist immer ein Ereignis: wer, wann und worüber. Nichts wird
+still geprüft.
+
+### Erforderliche Bestätigungen
+
+Wie viele Personen bestätigen müssen, bevor die Handlung durchgeht. Eine
+ist der Normalfall; zwei bei Geld. Höher zu setzen als die Zahl derer,
+die bestätigen *dürfen*, wird abgelehnt: eine Regel, die niemand
+erfüllen kann, blockiert die Handlung für immer.
+
+### Wer bestätigen darf
+
+Entweder **jede Administratorin** oder eine benannte Liste, die du
+wählst. Eine benannte Liste überlebt es, wenn jemand später
+Administratorin wird — Administratorin zu sein fügt dich nicht still
+einer Liste hinzu, die jemand bewusst gewählt hat.
+
+### Eine Eigentümerin ist erforderlich
+
+Mindestens eine der Bestätigungen muss von einer Eigentümerin kommen,
+was auch immer die Zahl sagt. Für die Fälle, in denen die Zustimmung
+einer Administratorin allein nicht reichen soll.
+
+### Eine Eigentümerin darf die eigene Anfrage bestätigen
+
+Aus wartet die eigene Anfrage einer Eigentümerin trotzdem auf jemand
+anderen. An gehört sie ihr. Dieser Schalter entscheidet, ob ein Raum mit
+einer einzigen Person überhaupt funktioniert.
+
+### Eine nach der anderen
+
+Bestätigungen werden in der Reihenfolge der Liste gesammelt statt in
+beliebiger. Langsamer, und die richtige Form, wenn die zweite Person die
+Entscheidung der ersten sehen soll.
+
+### Eigene Anfrage einer Eigentümerin automatisch bestätigen
+
+Die Anfrage wird **bereits erledigt** eingetragen statt erst gestellt
+und dann bestätigt — so wird niemand über eine geschlossene Frage
+benachrichtigt. Das Ereignis existiert weiterhin, als vom System
+entschieden markiert, sodass die Prüfspur ungebrochen bleibt.
+
+### Eigene Anfrage einer Administratorin automatisch bestätigen
+
+Dasselbe für Administratorinnen, und bewusst **unabhängig** vom
+Eigentümer-Schalter: jede Eigentümerin trägt auch die
+Administratorenrolle, ein einziger Schalter hätte also nie „Eigentümer
+ja, Admins nein" ausdrücken können.
+
 ## 8. Für Inhaber: Editor & Einstellungen
 
 Alle Administration wohnt unter **Einstellungen → Administration** — *Workspace* (die Workspace-Einstellungen), *Mitglieder & Tarife*, *Verfügbarkeit*, *Rollenverwaltung*, *Abrechnung & Berichte* (der Rechnungs-Hub mit Berichtseditor und Mahnregeln in seiner Kopfzeile), *Zahlungshinweise*, *Online-Zahlungen*, *RFID / NFC-Badges*, *Leistungen*, *Zubehör*, *Abrechnung*, *Funktionen*, *Validierungsregeln* und *Workspace-ID & QR*, in der Reihenfolge des Bildschirms (einige hängen an ihrer Funktion: *Zubehör*, *Online-Zahlungen*, *RFID / NFC-Badges*…). Eine Regel: **der Einstellungs-Eintrag einer Funktion erscheint nur, solange sie aktiviert ist** — *Online-Zahlungen* in **Funktionen** aus, und ihr Konfigurationsbildschirm verschwindet (und kommt beim Reaktivieren zurück). **Funktionen** selbst ist immer da.
@@ -1292,6 +1346,35 @@ Sprache; wer keine eigene Sprache hat, bekommt die des Raums.
 ![](assets/help/images/documents-add-dialog.jpg)
 
 *Die Dokumentenbibliothek und das Hinzufügen eines Dokuments: Titel, Link, Speicherort, Kategorie, sichtbar für.*
+
+#### Titel des Dokuments
+
+Was die Bibliothek zeigt und wonach ein Mitglied sucht. Es ist der
+einzige Teil eines Eintrags, den jemand liest — schreib ihn für diese
+Person.
+
+#### Link
+
+Die `https://…`-Adresse, unter der das Dokument liegt. DesKilo speichert
+den Link, nicht die Datei; deshalb behält das Dokument die Zugriffsregeln,
+die sein eigener Dienst durchsetzt.
+
+#### Abgelegt bei
+
+Welcher Dienst es hält — ein Laufwerk, ein Wiki, ein Dateiserver. Ein
+Etikett für die lesende Person, keine Verbindung: nichts wird für dich
+abgerufen.
+
+#### Kategorie
+
+Wie die Bibliothek den Eintrag gruppiert. Kategorien erfindest du selbst;
+die Liste bietet an, was der Raum schon benutzt.
+
+#### Sichtbar für
+
+Welche Rollen den Eintrag überhaupt sehen dürfen. Das setzt der Server
+durch, es wird nicht nur in der Liste versteckt: ein Mitglied ohne die
+Rolle bekommt die Zeile nicht.
 
 ### 11e. Automatische Zahlungserinnerungen
 

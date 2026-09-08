@@ -119,6 +119,46 @@ abstract final class HelpAnchor {
   /// When the month is billed — the subscription line goes ahead of it.
   static const billingSchedule = 'user.money.billing.schedule';
 
+  // ── validation and the document library ────────────────────────────
+  /// Each act has its own rule, and every decision is an event.
+  static const validationOverview = 'user.validation.overview';
+
+  /// How many must confirm; more than can is refused.
+  static const validationRequiredCount = 'user.validation.required-count';
+
+  /// Any administrator, or a named list.
+  static const validationWhoMay = 'user.validation.who-may';
+
+  /// At least one confirmation from an owner.
+  static const validationOwnerRequired = 'user.validation.owner-required';
+
+  /// Whether a one-person space works at all.
+  static const validationOwnerSelf = 'user.validation.owner-self';
+
+  /// Confirmations collected in list order.
+  static const validationSequential = 'user.validation.sequential';
+
+  /// An owner's own request, born settled.
+  static const validationAutoOwner = 'user.validation.auto-validate-owner';
+
+  /// The same for admins, independently.
+  static const validationAutoAdmin = 'user.validation.auto-validate-admin';
+
+  /// What the library shows and a member searches by.
+  static const documentsTitle = 'user.documents.title';
+
+  /// The link, not the file.
+  static const documentsUrl = 'user.documents.url';
+
+  /// A label for the reader, not a connection.
+  static const documentsProvider = 'user.documents.provider';
+
+  /// How the library groups the entry.
+  static const documentsCategory = 'user.documents.category';
+
+  /// Enforced by the server, not hidden in the list.
+  static const documentsRole = 'user.documents.role';
+
   // ── profile · personal settings ────────────────────────────────────
   /// Your number in the member directory.
   static const profileWhatsapp = 'user.profile.settings.whatsapp';
@@ -432,6 +472,19 @@ abstract final class HelpAnchor {
     profileNavigation,
     profileDemoMode,
     profileFrontCamera,
+    validationOverview,
+    validationRequiredCount,
+    validationWhoMay,
+    validationOwnerRequired,
+    validationOwnerSelf,
+    validationSequential,
+    validationAutoOwner,
+    validationAutoAdmin,
+    documentsTitle,
+    documentsUrl,
+    documentsProvider,
+    documentsCategory,
+    documentsRole,
   };
 
   /// The screenshot that documents [anchor], by the naming rule.

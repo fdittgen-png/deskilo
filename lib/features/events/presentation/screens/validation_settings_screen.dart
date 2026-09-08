@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -297,6 +298,7 @@ class _PolicyCard extends StatelessWidget {
         title: HelpDotTitle(
           label,
           l10n?.helpHintValidationTopic ?? 'confirmations',
+          anchor: HelpAnchor.validationOverview,
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

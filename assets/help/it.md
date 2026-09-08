@@ -305,6 +305,60 @@ Il proprietario regola tutto questo per **dominio** in **Impostazioni → Regole
 
 *Il volto Eventi di Messaggi: chip per tipo, Non letti / Letti, e Raggruppa per Tipo · Data · Membro.*
 
+### Regole di validazione, dominio per dominio
+
+Ogni tipo di atto — un'adesione, una prenotazione cancellata, una
+fattura stralciata, mezze giornate extra concesse — ha la sua regola che
+dice se un umano deve decidere prima che abbia effetto, e chi. Una
+decisione è sempre un evento: chi ha deciso, quando e su cosa. Nulla
+viene validato in silenzio.
+
+### Validazioni richieste
+
+Quante persone devono confermare prima che l'atto passi. Una è il caso
+corrente; due per il denaro. Impostarla oltre il numero di persone che
+*possono* validare viene rifiutato: una regola che nessuno può
+soddisfare blocca l'atto per sempre.
+
+### Chi può validare
+
+O **qualunque amministratore**, o un elenco nominato che scegli tu. Un
+elenco nominato sopravvive a chi diventa amministratore più tardi —
+essere amministratore non ti aggiunge in silenzio a un elenco che
+qualcuno ha scelto di proposito.
+
+### Serve un proprietario
+
+Almeno una delle conferme deve venire da un proprietario, qualunque cosa
+dica il numero. Per i casi in cui il benestare di un amministratore da
+solo non deve bastare.
+
+### Un proprietario può confermare la propria richiesta
+
+Spento, la richiesta di un proprietario attende comunque qualcun altro.
+Acceso, è sua. È l'interruttore che decide se uno spazio di una sola
+persona funziona.
+
+### Una dopo l'altra
+
+Le conferme si raccolgono nell'ordine dell'elenco anziché in ordine
+qualunque. Più lento, e la forma giusta quando il secondo lettore deve
+vedere la decisione del primo.
+
+### Validare d'ufficio la richiesta di un proprietario
+
+La richiesta è registrata **già chiusa** invece che aperta e poi
+confermata — così nessuno viene avvisato di una questione chiusa.
+L'evento esiste comunque, marcato come deciso dal sistema, così la
+traccia di audit resta intera.
+
+### Validare d'ufficio la richiesta di un amministratore
+
+Lo stesso per gli amministratori, e deliberatamente **indipendente**
+dall'interruttore del proprietario: ogni proprietario porta anche il
+ruolo di amministratore, quindi un solo interruttore non avrebbe potuto
+esprimere «proprietari sì, amministratori no».
+
 ## 8. Per i proprietari: editor e impostazioni
 
 Tutta l'amministrazione vive in **Impostazioni → Amministrazione** — *Spazio di coworking* (le impostazioni dello spazio), *Membri e piani*, *Disponibilità*, *Gestione dei ruoli*, *Fatturazione e report* (l'hub di fatturazione con l'editor di report e le regole di sollecito nella sua intestazione), *Istruzioni di pagamento*, *Pagamenti online*, *Badge RFID / NFC*, *Servizi*, *Accessori*, *Fatturazione*, *Funzionalità*, *Regole di validazione* e *ID dello spazio e QR*, nell'ordine in cui la schermata li elenca (alcune legate alla loro funzionalità: *Accessori*, *Pagamenti online*, *Badge RFID / NFC*…). Una sola regola da conoscere: **la voce di impostazioni di una funzionalità appare solo finché quella funzionalità è attiva** — disattiva *Pagamenti online* in **Funzionalità** e la sua schermata di configurazione scompare con essa (e ritorna quando la riattivi). La voce **Funzionalità** è sempre presente, così puoi sempre riattivare un modulo.
@@ -1312,6 +1366,33 @@ lingua; chi non ha una lingua propria riceve quella dello spazio.
 ![](assets/help/images/documents-add-dialog.jpg)
 
 *La biblioteca di documenti, e l'aggiunta di un documento: titolo, link, archiviazione, categoria, visibile da.*
+
+#### Titolo del documento
+
+Ciò che la biblioteca mostra e per cui un membro cerca. È l'unica parte
+di una voce che qualcuno legge: scrivila per lui.
+
+#### Collegamento
+
+L'indirizzo `https://…` dove vive il documento. DesKilo conserva il
+collegamento, non il file: per questo il documento mantiene le regole di
+accesso che impone il suo stesso servizio.
+
+#### Conservato su
+
+Quale servizio lo detiene — un disco, un wiki, un file server. È
+un'etichetta per chi legge, non una connessione: nulla viene scaricato
+per te.
+
+#### Categoria
+
+Come la biblioteca raggruppa la voce. Le categorie le inventi tu;
+l'elenco propone quelle che lo spazio usa già.
+
+#### Visibile a
+
+Quali ruoli possono vedere la voce. Lo impone il server, non è solo
+nascosta nell'elenco: un membro senza il ruolo non riceve la riga.
 
 ### 11e. Solleciti di pagamento automatici
 

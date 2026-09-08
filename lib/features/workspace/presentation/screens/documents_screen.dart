@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -76,7 +77,9 @@ class DocumentsScreen extends ConsumerWidget {
                     labelText: l10n?.documentsTitleLabel ?? 'Title',
                     counterText: '',
                     suffixIcon: HelpDot(l10n?.helpTopicDocumentLibrary ??
-                        'document library'),
+                        'document library',
+                      anchor: HelpAnchor.documentsTitle,
+                    ),
                   ),
                 ),
                 TextField(
@@ -86,7 +89,9 @@ class DocumentsScreen extends ConsumerWidget {
                   decoration: InputDecoration(
                     labelText: l10n?.documentsUrlLabel ?? 'Link (https://…)',
                     suffixIcon: HelpDot(l10n?.helpTopicDocumentLibrary ??
-                        'document library'),
+                        'document library',
+                      anchor: HelpAnchor.documentsUrl,
+                    ),
                     helperMaxLines: 3,
                     helperText: l10n?.documentsUrlHelper ??
                         'Paste the share link from your drive — access '
@@ -119,7 +124,9 @@ class DocumentsScreen extends ConsumerWidget {
                     ),
                   ),
                   HelpDot(l10n?.helpTopicDocumentLibrary ??
-                      'document library'),
+                      'document library',
+                    anchor: HelpAnchor.documentsProvider,
+                  ),
                 ]),
                 Row(children: [
                   Expanded(
@@ -142,7 +149,9 @@ class DocumentsScreen extends ConsumerWidget {
                     ),
                   ),
                   HelpDot(l10n?.helpTopicDocumentLibrary ??
-                      'document library'),
+                      'document library',
+                    anchor: HelpAnchor.documentsCategory,
+                  ),
                 ]),
                 Row(children: [
                   Expanded(
@@ -175,7 +184,9 @@ class DocumentsScreen extends ConsumerWidget {
                     ),
                   ),
                   HelpDot(l10n?.helpTopicDocumentLibrary ??
-                      'document library'),
+                      'document library',
+                    anchor: HelpAnchor.documentsRole,
+                  ),
                 ]),
               ],
             ),
