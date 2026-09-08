@@ -3692,6 +3692,8 @@
   "bookingOutsideOffError": "Buchungen außerhalb der Öffnungszeiten sind nicht erlaubt.",
   "bookingOutsideWalkUpError": "Außerhalb der Öffnungszeiten ist nur ein spontaner Check-in möglich — keine Vorausbuchung.",
   "bookingSameDayError": "Eine Buchung endet an dem Tag, an dem sie beginnt — den nächsten Tag separat buchen.",
+  "bookingMembershipPaused": "Deine Mitgliedschaft ist pausiert — eine Administratorin reaktiviert sie unter Mitglieder.",
+  "bookingNotAMember": "Du bist kein Mitglied dieses Raums mehr — bitte eine Administratorin um eine Einladung.",
   "featureManagedProfileAccess": "Wer ein Profil verwaltet",
   "@featureManagedProfileAccess": {
     "description": "#914 managed profile access: name"

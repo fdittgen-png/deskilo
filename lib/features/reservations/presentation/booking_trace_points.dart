@@ -161,3 +161,32 @@ void traceGateRefusal({
       'refusal': refusal.name,
       'walkUp': walkUp,
     });
+
+/// #1030 — the booking round trip that came back an error.
+///
+/// The catch used to write `booking failed` and the exception's own
+/// sentence, which is where a pilot report died: the server had
+/// answered *not an active member*, the member read "the seat may have
+/// just been taken", and the trace held neither the seat, the window,
+/// nor the server's word for it. Everything the answer depends on goes
+/// on the line, and [ActTrace.serverAnswer] puts the server's code,
+/// message, details and hint in one greppable field.
+void traceBookingFailed({
+  required Object error,
+  required StackTrace stackTrace,
+  required Seat seat,
+  required DateTime start,
+  required DateTime end,
+  required bool checkIn,
+  required bool series,
+  required String? member,
+}) =>
+    ActTrace.booking.failed('booking', error, stackTrace, {
+      'seat': seat.id,
+      'start': start,
+      'end': end,
+      'check-in': checkIn,
+      'series': series,
+      'member': member,
+      'server': ActTrace.serverAnswer(error),
+    });

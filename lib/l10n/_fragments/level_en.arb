@@ -62,5 +62,13 @@
   "@bookingOutsideWalkUpError": {
     "description": "#634 - refusal under the walkup_only outside-hours mode"
   },
-  "bookingSameDayError": "A booking ends on the day it starts — book the next day separately."
+  "bookingSameDayError": "A booking ends on the day it starts — book the next day separately.",
+  "bookingMembershipPaused": "Your membership is paused — an administrator reactivates it in Members.",
+  "@bookingMembershipPaused": {
+    "description": "Refusal when create_reservation answers 'not an active member' (#1030)"
+  },
+  "bookingNotAMember": "You are no longer a member of this space — ask an administrator for an invitation.",
+  "@bookingNotAMember": {
+    "description": "Refusal when an RPC answers 'not a member of this workspace' (#1030)"
+  }
 }

@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
 
 import '../../../l10n/app_localizations.dart';
+import '../../members/domain/membership_errors.dart';
 import '../../money/domain/quota_rules.dart';
 import '../../workspace/domain/workspace_availability.dart';
 import '../../workspace/domain/booking_granularity.dart';
@@ -144,6 +145,21 @@ String bookingErrorText(
       message.contains('reserved as a whole')) {
     return l10n?.levelConflict ??
         'The level has reservations in that period.';
+  }
+  // #1030 — membership refusals. create_reservation raises 'not an
+  // active member' for a paused member and 'not a member of this
+  // workspace' for one who was removed; both used to render as "the
+  // seat may have just been taken", which blames a race the member
+  // cannot win and hides the one thing an administrator can fix.
+  if (message.contains(MembershipPausedError.serverSubstring)) {
+    return l10n?.bookingMembershipPaused ??
+        'Your membership is paused — an administrator reactivates it '
+            'in Members.';
+  }
+  if (message.contains(NotAMemberError.serverSubstring)) {
+    return l10n?.bookingNotAMember ??
+        'You are no longer a member of this space — ask an '
+            'administrator for an invitation.';
   }
   return fallback;
 }

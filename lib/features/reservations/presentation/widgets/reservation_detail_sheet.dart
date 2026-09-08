@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/trace/act_trace.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -399,7 +400,8 @@ class ReservationDetailSheet extends ConsumerWidget {
     } catch (e, st) {
       debugPrint('cancel failed: $e\n$st');
       TraceLogger.instance.error(
-          'reservations', 'reservation cancel failed',
+          'reservations',
+          'reservation cancel failed server=${ActTrace.serverAnswer(e)}',
           error: e, stackTrace: st);
       if (!context.mounted) return;
       AppSnack.error(
@@ -469,7 +471,8 @@ class ReservationDetailSheet extends ConsumerWidget {
     } catch (e, st) {
       debugPrint('reservation edit failed: $e\n$st');
       TraceLogger.instance.error(
-          'reservations', 'reservation edit failed',
+          'reservations',
+          'reservation edit failed server=${ActTrace.serverAnswer(e)}',
           error: e, stackTrace: st);
       if (!context.mounted) return;
       // #574 — the server's own reason (granularity, one-place, quota),
@@ -653,7 +656,8 @@ class ReservationDetailSheet extends ConsumerWidget {
           );
     } catch (e, st) {
       TraceLogger.instance.error(
-          'reservations', 'reservation end change failed',
+          'reservations',
+          'reservation end change failed server=${ActTrace.serverAnswer(e)}',
           error: e, stackTrace: st);
       if (!context.mounted) return;
       AppSnack.error(
@@ -744,7 +748,8 @@ class ReservationDetailSheet extends ConsumerWidget {
     } catch (e, st) {
       debugPrint('convert to series failed: $e\n$st');
       TraceLogger.instance.error(
-          'reservations', 'convert to series failed',
+          'reservations',
+          'convert to series failed server=${ActTrace.serverAnswer(e)}',
           error: e, stackTrace: st);
       if (!context.mounted) return;
       AppSnack.error(

@@ -5723,6 +5723,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine Buchung endet an dem Tag, an dem sie beginnt — den nächsten Tag separat buchen.';
 
   @override
+  String get bookingMembershipPaused =>
+      'Deine Mitgliedschaft ist pausiert — eine Administratorin reaktiviert sie unter Mitglieder.';
+
+  @override
+  String get bookingNotAMember =>
+      'Du bist kein Mitglied dieses Raums mehr — bitte eine Administratorin um eine Einladung.';
+
+  @override
   String get featureManagedProfileAccess => 'Wer ein Profil verwaltet';
 
   @override
