@@ -302,6 +302,66 @@ The owner tunes this per **domain** in **Settings → Validation rules** — fou
 
 *The Events face of Messages: kind chips, Unread / Read, and Group by Type · Date · Member.*
 
+<!-- anchor: user.validation.overview -->
+### Validation rules, domain by domain
+
+Each kind of act — a member joining, a reservation being deleted, an
+invoice written off, extra half-days granted — has its own rule saying
+whether a human must decide before it takes effect, and who. A decision
+is always an event: who decided, when, and on what. Nothing is validated
+silently.
+
+<!-- anchor: user.validation.required-count -->
+### Required validations
+
+How many people must confirm before the act goes through. One is the
+common case; two is for money. Setting it higher than the number of
+people who *may* validate is refused, because a rule nobody can satisfy
+blocks the act forever.
+
+<!-- anchor: user.validation.who-may -->
+### Who may validate
+
+Either **any administrator**, or a named list you pick. A named list
+survives someone becoming an administrator later — being an admin does
+not silently add you to a list somebody chose deliberately.
+
+<!-- anchor: user.validation.owner-required -->
+### An owner is required
+
+At least one of the confirmations must come from an owner, whatever else
+the count says. Use it where an administrator's approval alone should
+not be enough.
+
+<!-- anchor: user.validation.owner-self -->
+### An owner may confirm their own request
+
+Off, an owner's own request still waits for somebody else. On, it is
+theirs to settle. This is the switch that decides whether a one-person
+space works at all.
+
+<!-- anchor: user.validation.sequential -->
+### One after another
+
+Confirmations are collected in the order of the list rather than in any
+order. Slower, and the right shape when the second reader is meant to
+see the first one's decision.
+
+<!-- anchor: user.validation.auto-validate-owner -->
+### Auto-validate an owner's own request
+
+The request is recorded **already settled** rather than raised and then
+confirmed — so nobody is pinged about a closed question. The event still
+exists, marked as decided by the system, so the audit trail is
+unbroken.
+
+<!-- anchor: user.validation.auto-validate-admin -->
+### Auto-validate an administrator's own request
+
+The same for administrators, and deliberately **independent** of the
+owner switch: every owner also carries the administrator role, so one
+switch could not have expressed "owners yes, admins no".
+
 ## 8. For owners: the editor & settings
 
 All administration lives under **Settings → Administration** — *Coworking space* (the workspace settings), *Members & plans*, *Availability*, *Role management*, *Billing & reports* (the invoicing hub with the report editor and reminder rules in its header), *Payment instructions*, *Online payments*, *RFID / NFC badges*, *Services*, *Accessories*, *Billing*, *Features*, *Validation rules* and *Workspace ID & QR*, in the order the screen lists them (some ride their feature: *Accessories*, *Online payments*, *RFID / NFC badges*…). One rule to know: **a feature's settings entry only appears while that feature is enabled** — switch *Online payments* off in **Features** and its configuration screen disappears with it (and comes back when you re-enable it). The **Features** entry itself is always there, so you can always switch a module back on.
@@ -1352,6 +1412,38 @@ no language of their own gets the workspace's.
 <p><img src="images/documents-library.jpg" width="240"> <img src="images/documents-add-dialog.jpg" width="240"></p>
 
 *The document library, and adding a document: title, link, storage, category, visible by.*
+
+<!-- anchor: user.documents.title -->
+#### Document title
+
+What the library shows and what a member searches by. It is the only
+part of a document entry anybody reads, so write it for them.
+
+<!-- anchor: user.documents.url -->
+#### Link
+
+The `https://…` address the document lives at. DesKilo stores the link,
+not the file, which is why the document keeps whatever access rules its
+own service enforces.
+
+<!-- anchor: user.documents.provider -->
+#### Stored on
+
+Which service holds it — a drive, a wiki, a file server. It is a label
+for the reader, not a connection: nothing is fetched on your behalf.
+
+<!-- anchor: user.documents.category -->
+#### Category
+
+How the library groups the entry. Categories are yours to invent; the
+list offers what the space already uses.
+
+<!-- anchor: user.documents.role -->
+#### Visible to
+
+Which roles may see the entry at all. This is enforced by the server,
+not just hidden in the list — a member without the role does not receive
+the row.
 
 ### 11e. Automatic payment reminders
 

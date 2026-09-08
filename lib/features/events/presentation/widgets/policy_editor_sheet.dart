@@ -6,6 +6,7 @@
 // list and the summaries, this file keeps the form.
 import 'package:flutter/material.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -166,6 +167,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                 title: HelpDotTitle(
                   l10n?.validationRequiredCount ?? 'Required validations',
                   l10n?.helpHintValidationTopic ?? 'confirmations',
+                  anchor: HelpAnchor.validationRequiredCount,
                 ),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -217,7 +219,9 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                       }),
                     ),
                   ),
-                  HelpDot(l10n?.helpHintMembersTip4Topic ?? 'Role management'),
+                  HelpDot(l10n?.helpHintMembersTip4Topic ?? 'Role management',
+                    anchor: HelpAnchor.validationWhoMay,
+                  ),
                 ]),
               if (_scope == 'admins')
               SwitchListTile(
@@ -225,6 +229,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                 title: HelpDotTitle(
                   l10n?.validationAdminsMay ?? 'Admins may validate',
                   l10n?.helpHintValidationTopic ?? 'confirmations',
+                  anchor: HelpAnchor.validationWhoMay,
                 ),
                 subtitle: _adminsMayValidate
                     ? null
@@ -263,6 +268,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                         ),
                       HelpDot(
                         l10n?.helpHintValidationTopic ?? 'confirmations',
+                        anchor: HelpAnchor.validationWhoMay,
                       ),
                     ],
                   ),
@@ -273,6 +279,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                   l10n?.validationOwnerRequired ??
                       'Owner must always validate',
                   l10n?.helpHintValidationTopic ?? 'confirmations',
+                  anchor: HelpAnchor.validationOwnerRequired,
                 ),
                 value: _ownerRequired,
                 onChanged: (value) =>
@@ -299,6 +306,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                     l10n?.validationOwnerSelf ??
                         'The owner may validate their own',
                     l10n?.helpHintValidationTopic ?? 'confirmations',
+                    anchor: HelpAnchor.validationOwnerSelf,
                   ),
                   subtitle: Text(
                     l10n?.validationOwnerSelfDesc ??
@@ -332,6 +340,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                   title: HelpDotTitle(
                     l10n?.validationSequential ?? 'One after another',
                     l10n?.helpHintValidationTopic ?? 'confirmations',
+                    anchor: HelpAnchor.validationSequential,
                   ),
                   subtitle: Text(
                     l10n?.validationSequentialDesc ??
@@ -352,6 +361,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                     l10n?.validationAutoValidateOwner ??
                         'Owners delete without validation',
                     l10n?.helpHintValidationTopic ?? 'confirmations',
+                    anchor: HelpAnchor.validationAutoOwner,
                   ),
                   subtitle: Text(
                     l10n?.validationAutoValidateDesc ??
@@ -369,6 +379,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                     l10n?.validationAutoValidateAdmin ??
                         'Admins delete without validation',
                     l10n?.helpHintValidationTopic ?? 'confirmations',
+                    anchor: HelpAnchor.validationAutoAdmin,
                   ),
                   value: _autoValidateAdmin,
                   onChanged: (value) =>

@@ -302,6 +302,68 @@ El propietario afina esto por **dominio** en **Ajustes → Reglas de validación
 
 *La cara Eventos de Mensajes: chips por tipo, No leídos / Leídos, y Agrupar por Tipo · Fecha · Miembro.*
 
+<!-- anchor: user.validation.overview -->
+### Reglas de validación, dominio por dominio
+
+Cada tipo de acto — una adhesión, una reserva eliminada, una factura
+dada de baja, medias jornadas extra concedidas — tiene su regla que dice
+si un humano debe decidir antes de que surta efecto, y quién. Una
+decisión es siempre un evento: quién decidió, cuándo y sobre qué. Nada
+se valida en silencio.
+
+<!-- anchor: user.validation.required-count -->
+### Validaciones requeridas
+
+Cuántas personas deben confirmar antes de que el acto pase. Una es el
+caso corriente; dos, para el dinero. Ponerla por encima del número de
+personas que *pueden* validar se rechaza: una regla que nadie puede
+satisfacer bloquea el acto para siempre.
+
+<!-- anchor: user.validation.who-may -->
+### Quién puede validar
+
+O bien **cualquier administrador**, o bien una lista nombrada que usted
+elige. Una lista nombrada sobrevive a que alguien se vuelva
+administrador más tarde — ser administrador no le añade en silencio a
+una lista que alguien eligió a propósito.
+
+<!-- anchor: user.validation.owner-required -->
+### Se requiere un propietario
+
+Al menos una de las confirmaciones debe venir de un propietario, diga lo
+que diga el número. Para donde el visto bueno de un administrador solo
+no deba bastar.
+
+<!-- anchor: user.validation.owner-self -->
+### Un propietario puede confirmar su propia solicitud
+
+Desactivado, la solicitud de un propietario espera igualmente a otra
+persona. Activado, es suya. Este interruptor decide si un espacio de una
+sola persona funciona.
+
+<!-- anchor: user.validation.sequential -->
+### Una tras otra
+
+Las confirmaciones se recogen en el orden de la lista y no en cualquier
+orden. Más lento, y la forma correcta cuando el segundo lector debe ver
+la decisión del primero.
+
+<!-- anchor: user.validation.auto-validate-owner -->
+### Validar de oficio la solicitud de un propietario
+
+La solicitud se registra **ya resuelta** en vez de levantarse y luego
+confirmarse — así nadie recibe aviso de una cuestión cerrada. El evento
+sigue existiendo, marcado como decidido por el sistema, de modo que el
+rastro de auditoría queda entero.
+
+<!-- anchor: user.validation.auto-validate-admin -->
+### Validar de oficio la solicitud de un administrador
+
+Lo mismo para los administradores, y deliberadamente **independiente**
+del interruptor de propietario: todo propietario lleva también el rol de
+administrador, así que un único interruptor no habría podido expresar
+«propietarios sí, administradores no».
+
 ## 8. Para propietarios: editor y ajustes
 
 Toda la administración vive en **Ajustes → Administración** — *Espacio de coworking* (los ajustes del espacio), *Miembros y planes*, *Disponibilidad*, *Gestión de roles*, *Facturación e informes* (el hub de facturación con el editor de informes y las reglas de recordatorio en su cabecera), *Instrucciones de pago*, *Pagos en línea*, *Credenciales RFID / NFC*, *Servicios*, *Accesorios*, *Facturación*, *Funciones*, *Reglas de validación* e *ID del espacio y QR*, en el orden en que la pantalla los lista (algunas ligadas a su función: *Accesorios*, *Pagos en línea*, *Credenciales RFID / NFC*…). Una regla que conviene conocer: **la entrada de ajustes de una función solo aparece mientras esa función está activada** — desactiva *Pagos en línea* en **Funciones** y su pantalla de configuración desaparece con ella (y vuelve al reactivarla). La entrada **Funciones** siempre está presente, así que siempre puedes volver a activar un módulo.
@@ -1357,6 +1419,38 @@ tiene idioma propio recibe el del espacio.
 <p><img src="images/documents-library.jpg" width="240"> <img src="images/documents-add-dialog.jpg" width="240"></p>
 
 *La biblioteca de documentos, y añadir un documento: título, enlace, almacenamiento, categoría, visible por.*
+
+<!-- anchor: user.documents.title -->
+#### Título del documento
+
+Lo que muestra la biblioteca y por lo que busca un miembro. Es la única
+parte de una entrada que alguien lee: escríbala para él.
+
+<!-- anchor: user.documents.url -->
+#### Enlace
+
+La dirección `https://…` donde vive el documento. DesKilo guarda el
+enlace, no el archivo, por eso el documento conserva las reglas de acceso
+que impone su propio servicio.
+
+<!-- anchor: user.documents.provider -->
+#### Almacenado en
+
+Qué servicio lo tiene — un disco, un wiki, un servidor de archivos. Es
+una etiqueta para quien lee, no una conexión: no se descarga nada en su
+nombre.
+
+<!-- anchor: user.documents.category -->
+#### Categoría
+
+Cómo agrupa la biblioteca la entrada. Las categorías son suyas de
+inventar; la lista ofrece las que el espacio ya usa.
+
+<!-- anchor: user.documents.role -->
+#### Visible para
+
+Qué roles pueden ver la entrada. Lo aplica el servidor, no solo se
+oculta en la lista: un miembro sin el rol no recibe la fila.
 
 ### 11e. Recordatorios de pago automáticos
 
