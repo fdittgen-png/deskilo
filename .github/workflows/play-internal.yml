@@ -1,7 +1,7 @@
 # Copyright (c) 2026 Florian DITTGEN
 # SPDX-License-Identifier: 0BSD
 
-name: play-internal
+name: Release · Play track upload
 
 # Automatic Play publishing (tankstellen daily-beta pattern): builds master
 # daily and on demand, uploads the signed AAB to the chosen Play track via

@@ -1,7 +1,7 @@
 # Copyright (c) 2026 Florian DITTGEN
 # SPDX-License-Identifier: 0BSD
 
-name: Release Train
+name: Release · Train (all platforms)
 
 # #570 — ONE workflow that deploys everything: Android (Play), Apple
 # (TestFlight), macOS (DMG), Windows (MSI) and web (GitHub Pages), on a
