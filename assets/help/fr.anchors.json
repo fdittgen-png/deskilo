@@ -1,4 +1,13 @@
 {
+  "user.workspace.availability.open-weekdays": "Jours d'ouverture",
+  "user.workspace.availability.granularity": "Granularité",
+  "user.workspace.availability.working-hours": "Heures de travail",
+  "user.workspace.availability.closure-days": "Jours de fermeture",
+  "user.workspace.availability.policies": "Règles de réservation",
+  "user.workspace.availability.allow-past": "Autoriser les réservations passées",
+  "user.workspace.availability.admin-checkout": "Les administrateurs peuvent clôturer",
+  "user.workspace.availability.outside-hours": "En dehors des heures d'ouverture",
+  "user.workspace.availability.limits": "Limites de réservation",
   "user.money.billing.fee-bands": "Tranches tarifaires",
   "user.money.billing.band-to": "Jusqu'à %",
   "user.money.billing.band-fee": "Forfait mensuel",

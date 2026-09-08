@@ -142,7 +142,11 @@ void main() {
   test('every declared anchor is in HelpAnchor.all — the lint sees them all',
       () {
     final source = File('lib/core/help/help_anchors.dart').readAsStringSync();
-    final declared = RegExp(r"static const \w+ = '([^']+)';")
+    // #1019 — `\s*` after the `=`: a long anchor wraps onto the next
+    // line, and a wrapped declaration is still a declaration. Matching
+    // only the one-line form silently under-counted, so a constant
+    // missing from [HelpAnchor.all] could hide behind the wrap.
+    final declared = RegExp(r"static const \w+ =\s*'([^']+)';")
         .allMatches(source)
         .map((m) => m.group(1)!)
         .toList();

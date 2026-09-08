@@ -389,6 +389,66 @@ Vos invitations liées au rôle (§2) : invitation membre = l'ID de l'espace (re
 
   Les deux interrupteurs d'**auto-validation** — *les admins suppriment sans validation*, *les propriétaires suppriment sans validation* — ne sont pas ici : ils vivent avec les règles de validation (§7), coupés par défaut, et ne touchent que les suppressions de réservation.
 
+#### Jours d'ouverture
+
+Quels jours de la semaine l'espace est ouvert. Une réservation qui
+touche un jour fermé est refusée avec ce motif, et le plan dessine la
+journée comme fermée plutôt que vide.
+
+#### Granularité
+
+Ce que peut être une réservation : une **demi-journée**, une **journée
+entière**, ou un **créneau** sur une grille de N minutes. Une
+réservation qui ne tombe pas sur la grille est refusée et le pas lui est
+annoncé, pour que personne n'ait à le deviner.
+
+#### Heures de travail
+
+Le début et la fin de la journée de travail. Avec la granularité, elles
+décident de ce qu'est une demi-journée — l'unité dans laquelle comptent
+toute allocation, tout quota et toute ligne de facture.
+
+#### Jours de fermeture
+
+Des dates où l'espace est fermé quel que soit le jour de la semaine :
+jours fériés, une semaine en août, une journée pour le plombier. Une
+réservation qui en touche une est refusée et le dit.
+
+#### Règles de réservation
+
+Les règles que le serveur applique sur tous les chemins de création —
+l'application, un QR scanné, la borne murale — pour qu'une règle écrite
+une fois les lie tous les trois.
+
+#### Autoriser les réservations passées
+
+Désactivé, une réservation entièrement dans le passé est refusée.
+Activé, elle est permise. Une réservation rétroactive **du jour même**
+reste légale dans les deux cas : qui s'est installé à neuf heures doit
+pouvoir le dire à dix.
+
+#### Les administrateurs peuvent clôturer
+
+Permet à un administrateur de mettre fin à la présence de quelqu'un
+d'autre. Utile quand un membre part sans se déclarer sorti et que la
+place resterait occupée jusqu'à la fin de la journée.
+
+#### En dehors des heures d'ouverture
+
+Quatre réponses, chacune avec sa phrase de refus : **interdit**,
+**arrivée spontanée seulement** (un pointage sur place est possible,
+réserver à l'avance non), **libre**, ou **facturé** (autorisé et
+compté). Une réservation qui ne fait que déborder est traitée comme
+extérieure sous les modes stricts ; la facturation ne compte que celle
+qui est *entièrement* dehors.
+
+#### Limites de réservation
+
+L'horizon d'ouverture (jusqu'où l'on peut réserver à l'avance), la durée
+minimale et maximale d'une réservation, et combien de réservations
+simultanées un membre peut détenir. Chaque refus nomme la limite et sa
+valeur : le message est la règle.
+
 ### Fonctionnalités
 
 ![](assets/help/images/features-tree.jpg)

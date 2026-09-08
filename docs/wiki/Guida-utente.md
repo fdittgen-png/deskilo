@@ -387,6 +387,75 @@ I tuoi inviti legati ai ruoli (§2): invito membro = l'ID dello spazio (sostitui
 
   I due interruttori di **auto-validazione** — *gli admin eliminano senza validazione*, *i proprietari eliminano senza validazione* — non stanno qui: vivono con le regole di validazione (§7), disattivati per impostazione predefinita, e arrivano soltanto alle eliminazioni di prenotazione.
 
+<!-- anchor: user.workspace.availability.open-weekdays -->
+#### Giorni di apertura
+
+In quali giorni della settimana lo spazio è aperto. Una prenotazione che
+tocca un giorno chiuso viene rifiutata con quel motivo, e la piantina
+disegna la giornata come chiusa anziché vuota.
+
+<!-- anchor: user.workspace.availability.granularity -->
+#### Granularità
+
+Cosa può essere una prenotazione: **mezza giornata**, **giornata
+intera** o uno **slot** su una griglia di N minuti. Una prenotazione che
+non cade sulla griglia viene rifiutata e le viene detto il passo, così
+nessuno deve indovinarlo.
+
+<!-- anchor: user.workspace.availability.working-hours -->
+#### Orario di lavoro
+
+L'inizio e la fine della giornata lavorativa. Insieme alla granularità
+decidono cos'è una mezza giornata — l'unità in cui contano ogni
+assegnazione, ogni quota e ogni riga di fattura.
+
+<!-- anchor: user.workspace.availability.closure-days -->
+#### Giorni di chiusura
+
+Date in cui lo spazio è chiuso qualunque sia il giorno della settimana:
+festività, una settimana ad agosto, un giorno per l'idraulico. Una
+prenotazione che ne tocca una viene rifiutata e lo dice.
+
+<!-- anchor: user.workspace.availability.policies -->
+#### Regole di prenotazione
+
+Le regole che il server applica su ogni percorso di creazione — l'app,
+un QR scansionato, il chiosco a muro — così che una regola scritta una
+volta li leghi tutti e tre.
+
+<!-- anchor: user.workspace.availability.allow-past -->
+#### Consentire prenotazioni passate
+
+Spento, una prenotazione interamente nel passato viene rifiutata.
+Acceso, è permessa. Una prenotazione retroattiva **dello stesso giorno**
+resta lecita in entrambi i casi: chi si è seduto alle nove deve poterlo
+dire alle dieci.
+
+<!-- anchor: user.workspace.availability.admin-checkout -->
+#### Gli amministratori possono chiudere la presenza
+
+Permette a un amministratore di terminare la presenza di un'altra
+persona. Utile quando un membro se ne va senza chiudere e il posto
+resterebbe occupato fino a fine giornata.
+
+<!-- anchor: user.workspace.availability.outside-hours -->
+#### Fuori dall'orario di apertura
+
+Quattro risposte, ciascuna con la propria frase di rifiuto: **no**
+(rifiutato), **solo presenza spontanea** (registrarsi sul posto sì,
+prenotare in anticipo no), **libero** o **addebitato** (permesso e
+contato). Una prenotazione che sconfina soltanto è trattata come
+esterna nei modi severi; la fatturazione conta solo quella *interamente*
+fuori.
+
+<!-- anchor: user.workspace.availability.limits -->
+#### Limiti di prenotazione
+
+L'orizzonte di apertura (quanto in anticipo si può prenotare), la durata
+minima e massima di una prenotazione, e quante prenotazioni sovrapposte
+un membro può tenere. Ogni rifiuto nomina il limite e il suo valore: il
+messaggio è la regola.
+
 ### Funzionalità
 
 <p><img src="images/features-tree.jpg" width="240"></p>

@@ -387,6 +387,73 @@ Tus invitaciones ligadas a rol (§2): invitación de miembro = el propio ID del 
 
   Los dos interruptores de **autovalidación** — *los admins eliminan sin validación*, *los propietarios eliminan sin validación* — no están aquí: viven con las reglas de validación (§7), desactivados por defecto, y solo alcanzan a las eliminaciones de reserva.
 
+<!-- anchor: user.workspace.availability.open-weekdays -->
+#### Días de apertura
+
+Qué días de la semana está abierto el espacio. Una reserva que toca un
+día cerrado se rechaza con ese motivo, y el plano dibuja la jornada como
+cerrada en vez de vacía.
+
+<!-- anchor: user.workspace.availability.granularity -->
+#### Granularidad
+
+Qué puede ser una reserva: **media jornada**, **jornada completa** o un
+**tramo** en una rejilla de N minutos. Una reserva que no cae en la
+rejilla se rechaza y se le indica el paso, para que nadie tenga que
+adivinarlo.
+
+<!-- anchor: user.workspace.availability.working-hours -->
+#### Horario laboral
+
+El principio y el final de la jornada. Junto con la granularidad deciden
+qué es media jornada — la unidad en la que cuentan toda asignación, toda
+cuota y toda línea de factura.
+
+<!-- anchor: user.workspace.availability.closure-days -->
+#### Días de cierre
+
+Fechas en que el espacio está cerrado sea cual sea el día de la semana:
+festivos, una semana en agosto, un día para el fontanero. Una reserva
+que toca una se rechaza y lo dice.
+
+<!-- anchor: user.workspace.availability.policies -->
+#### Reglas de reserva
+
+Las reglas que el servidor aplica en todos los caminos de creación —
+la app, un QR escaneado, el quiosco de pared — para que una regla
+escrita una vez los ate a los tres.
+
+<!-- anchor: user.workspace.availability.allow-past -->
+#### Permitir reservas pasadas
+
+Desactivado, una reserva enteramente en el pasado se rechaza. Activado,
+se permite. Una reserva retroactiva **del mismo día** es legal en ambos
+casos: quien se sentó a las nueve debe poder decirlo a las diez.
+
+<!-- anchor: user.workspace.availability.admin-checkout -->
+#### Los administradores pueden cerrar la presencia
+
+Permite a un administrador terminar la presencia de otra persona. Útil
+cuando un miembro se va sin cerrar y la plaza quedaría ocupada hasta el
+final del día.
+
+<!-- anchor: user.workspace.availability.outside-hours -->
+#### Fuera del horario de apertura
+
+Cuatro respuestas, cada una con su frase de rechazo: **no** (rechazado),
+**solo presencia espontánea** (registrarse en el sitio sí, reservar por
+adelantado no), **libre** o **cobrado** (permitido y contado). Una
+reserva que solo se desborda se trata como exterior en los modos
+estrictos; la facturación solo cuenta la que queda *enteramente* fuera.
+
+<!-- anchor: user.workspace.availability.limits -->
+#### Límites de reserva
+
+El horizonte de apertura (hasta dónde se puede reservar por
+adelantado), la duración mínima y máxima de una reserva, y cuántas
+reservas solapadas puede tener un miembro. Cada rechazo nombra el límite
+y su valor: el mensaje es la regla.
+
 ### Funciones
 
 <p><img src="images/features-tree.jpg" width="240"></p>

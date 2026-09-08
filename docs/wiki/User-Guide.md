@@ -387,6 +387,71 @@ Your role-bound invites (§2): member invite = the workspace ID (replace it with
 
   The two **auto-validation** switches — *admins delete without validation*, *owners delete without validation* — are not here: they live with the validation rules (§7), off by default, and reach reservation deletions only.
 
+<!-- anchor: user.workspace.availability.open-weekdays -->
+#### Open weekdays
+
+Which days of the week the space is open at all. A booking that touches
+a closed weekday is refused with that reason, and the plan draws the day
+as shut rather than empty.
+
+<!-- anchor: user.workspace.availability.granularity -->
+#### Granularity
+
+What a booking may be: a **half day**, a **full day**, or a **slot** on
+a grid of N minutes. A booking that does not sit on the grid is refused
+and told the step, so nobody has to guess it.
+
+<!-- anchor: user.workspace.availability.working-hours -->
+#### Working hours
+
+The start and end of the working day. With the granularity, they decide
+what a half-day is — which is the unit every allowance, every quota and
+every invoice line counts in.
+
+<!-- anchor: user.workspace.availability.closure-days -->
+#### Closure days
+
+Dates the space is shut regardless of the weekday: holidays, a week in
+August, a day for the plumber. A booking touching one is refused and
+says so.
+
+<!-- anchor: user.workspace.availability.policies -->
+#### Booking policies
+
+The rules the server enforces on every creation path — the app, a
+scanned QR, the wall kiosk — so a rule written once binds all three.
+
+<!-- anchor: user.workspace.availability.allow-past -->
+#### Allow past bookings
+
+Off, a booking lying entirely in the past is refused. On, it is allowed.
+A **same-day** retroactive booking is legal either way: someone who sat
+down at nine should be able to say so at ten.
+
+<!-- anchor: user.workspace.availability.admin-checkout -->
+#### Administrators may check out
+
+Lets an administrator end someone else's presence. Useful when a member
+leaves without checking out and the seat would otherwise stay occupied
+until the day ends.
+
+<!-- anchor: user.workspace.availability.outside-hours -->
+#### Outside the opening hours
+
+Four answers, each with its own refusal sentence: **off** (refused),
+**walk-up only** (a spontaneous check-in is possible, booking ahead is
+not), **free**, or **charged** (allowed and counted). A booking that
+merely spills over the edge is treated as outside under the strict
+modes; billing counts only a booking lying *entirely* outside.
+
+<!-- anchor: user.workspace.availability.limits -->
+#### Booking limits
+
+The advance horizon (how far ahead booking opens), the minimum and
+maximum duration of one booking, and how many bookings a member may hold
+that overlap in time. Each refusal names the limit and its value, so the
+message is the rule.
+
 ### Features
 
 <p><img src="images/features-tree.jpg" width="240"></p>

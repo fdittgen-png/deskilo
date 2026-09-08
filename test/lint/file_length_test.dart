@@ -300,7 +300,7 @@ const Map<String, int> _baseline = {
   // 800→810 (2026-08-25): #634 the outside-hours control becomes FOUR
   // radio rows with per-mode subtitles (a four-way SegmentedButton does
   // not fit 360dp) — net of the deleted grid_within_hours switch.
-  'lib/features/workspace/presentation/screens/availability_screen.dart': 810,
+  'lib/features/workspace/presentation/screens/availability_screen.dart': 835, // 2026-09-08 #1019 nine help symbols now name the exact rule they document (HelpAnchor), one named argument per symbol
   // 770→790 (2026-08-06): #513 setRolePermissions + role_permissions row.
   // 630→640 (2026-08-10): two-dot month markers (mine + others per day)
   // — a dozen lines of dot layout, no new concern worth a split.
