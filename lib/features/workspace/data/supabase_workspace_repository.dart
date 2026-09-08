@@ -444,9 +444,13 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
           ? identity.fullName
           : identity.company;
     }
+    // #962/#1030 — an empty id is not a uuid, and PostgREST answers
+    // 22P02 for the WHOLE request: one managed member would blank every
+    // name on the list. Null and empty are dropped the same way.
     final userIds = memberRows
         .map((r) => r['user_id'] as String?)
         .whereType<String>()
+        .where((id) => id.isNotEmpty)
         .toSet()
         .toList();
     final profileRows = userIds.isEmpty

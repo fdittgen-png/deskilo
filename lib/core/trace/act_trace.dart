@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
+
 import 'trace_logger.dart';
 
 /// #791 — the acts a member performs narrate themselves, not just their
@@ -73,6 +75,28 @@ class ActTrace {
     if (value is DateTime) return value.toIso8601String();
     // Spaces would break `key=value` parsing back apart.
     return value.toString().replaceAll(' ', '_');
+  }
+
+  /// #1030 — what the SERVER answered, in one greppable field.
+  ///
+  /// A `PostgrestException` prints as a sentence with spaces, and its
+  /// `code`, `details` and `hint` never reach `toString()` at all. A
+  /// booking that failed with *not an active member* therefore reached
+  /// the trace as an unsearchable blob, while the one word that names
+  /// the cause sat in a field nobody logged.
+  ///
+  /// The result is always `key=value`-safe, so `grep 'server=' ` reads
+  /// every server refusal in a trace, and `grep 'server=.*active_member'`
+  /// reads one kind.
+  static String serverAnswer(Object? error) {
+    if (error is! PostgrestException) return _value(error);
+    final parts = <String>[
+      if (error.code != null && error.code!.isNotEmpty) error.code!,
+      error.message,
+      if (error.details != null) '${error.details}',
+      if (error.hint != null) error.hint!,
+    ];
+    return _value(parts.join('/'));
   }
 
   /// What a scanned payload IS, never what it says.

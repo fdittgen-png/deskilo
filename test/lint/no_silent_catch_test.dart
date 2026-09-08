@@ -5,7 +5,8 @@
 //  - every `catch (e)` must capture the stack trace: `catch (e, st)`.
 //    A rethrow-only block may carry `// ignore: catch_no_st`.
 //  - every catch block must trace (#145): its body has to contain
-//    `TraceLogger`, a provider-injected `logger.error(`/`logger.warn(`,
+//    `TraceLogger`, an `ActTrace.` call, a named `traceX(...)` trace
+//    point, a provider-injected `logger.error(`/`logger.warn(`,
 //    `rethrow`, `throw `, or the marker `// trace-exempt: <reason>`.
 //    lib/core/trace/ is excluded — the logger's own IO guards must never
 //    call the logger recursively.
@@ -19,8 +20,20 @@ final _singleParamCatch = RegExp(r'catch\s*\(\s*(\w+)\s*\)');
 final _catchKeyword = RegExp(r'\bcatch\s*\(');
 // `logger.`/`trace.` cover the injected/aliased TraceLogger call sites
 // (developer_screen's provider-read logger, main.dart's bootstrap alias).
+//
+// #1030 — `ActTrace` and the named `traceX(...)` helpers in the
+// `*_trace_points.dart` files also satisfy this: both write through
+// `TraceLogger`, and both exist BECAUSE an inline call could not carry
+// the context (the seat, the window, the server's own answer) that made
+// a field report answerable. Requiring the literal word `TraceLogger`
+// in the catch pushed those calls back inline, which is the thing the
+// helpers were extracted to stop.
 final _tracedBody = RegExp(
-  r'TraceLogger|\b(?:logger|trace)\.(?:error|warn|log)\(|\brethrow\b|\bthrow |// trace-exempt:',
+  r'TraceLogger'
+  r'|\bActTrace\.'
+  r'|\btrace[A-Z]\w*\('
+  r'|\b(?:logger|trace)\.(?:error|warn|log)\('
+  r'|\brethrow\b|\bthrow |// trace-exempt:',
 );
 
 /// The `{...}` block body following the catch clause that starts at

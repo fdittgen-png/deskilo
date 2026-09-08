@@ -5673,6 +5673,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'A booking ends on the day it starts — book the next day separately.';
 
   @override
+  String get bookingMembershipPaused =>
+      'Your membership is paused — an administrator reactivates it in Members.';
+
+  @override
+  String get bookingNotAMember =>
+      'You are no longer a member of this space — ask an administrator for an invitation.';
+
+  @override
   String get featureManagedProfileAccess => 'Who administers a profile';
 
   @override

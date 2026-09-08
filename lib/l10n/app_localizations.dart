@@ -9935,6 +9935,18 @@ abstract class AppLocalizations {
   /// **'A booking ends on the day it starts — book the next day separately.'**
   String get bookingSameDayError;
 
+  /// Refusal when create_reservation answers 'not an active member' (#1030)
+  ///
+  /// In en, this message translates to:
+  /// **'Your membership is paused — an administrator reactivates it in Members.'**
+  String get bookingMembershipPaused;
+
+  /// Refusal when an RPC answers 'not a member of this workspace' (#1030)
+  ///
+  /// In en, this message translates to:
+  /// **'You are no longer a member of this space — ask an administrator for an invitation.'**
+  String get bookingNotAMember;
+
   /// #914 managed profile access: name
   ///
   /// In en, this message translates to:

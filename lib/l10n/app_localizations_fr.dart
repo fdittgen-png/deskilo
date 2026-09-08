@@ -5731,6 +5731,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Une réservation se termine le jour où elle commence — réservez le lendemain séparément.';
 
   @override
+  String get bookingMembershipPaused =>
+      'Votre adhésion est suspendue — un administrateur la réactive dans Membres.';
+
+  @override
+  String get bookingNotAMember =>
+      'Vous n\'êtes plus membre de cet espace — demandez une invitation à un administrateur.';
+
+  @override
   String get featureManagedProfileAccess => 'Qui administre un profil';
 
   @override

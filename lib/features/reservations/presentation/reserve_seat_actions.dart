@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../../core/trace/guarded.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/act_trace.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../plan/domain/floor_plan.dart';
@@ -378,12 +378,13 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         _ => repo.cancel(mine.id),
       };
     } catch (e, st) {
-      TraceLogger.instance.error(
-        'reservations',
-        'reservation $action failed',
-        error: e,
-        stackTrace: st,
-      );
+      // #1030 — the server's own code/message/details/hint, so an
+      // action that renders a generic sentence still names its cause.
+      ActTrace.booking.failed('reservation-action', e, st, {
+        'action': action,
+        'reservation': mine.id,
+        'server': ActTrace.serverAnswer(e),
+      });
       if (!mounted) return;
       // MAPPED, not generic. #186 — the check-in RPC also asserts the
       // workspace is open (migration 0013), and a closed day, a seat
@@ -656,8 +657,18 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       }
     } catch (e, st) {
       debugPrint('reserve hub booking failed: $e\n$st');
-      TraceLogger.instance
-          .error('reserve', 'booking failed', error: e, stackTrace: st);
+      // #1030 — the seat, the window and the SERVER'S OWN answer, so a
+      // refusal the app renders generically is still diagnosable.
+      traceBookingFailed(
+        error: e,
+        stackTrace: st,
+        seat: seat,
+        start: choice.start,
+        end: choice.end,
+        checkIn: walkUp || choice.checkInNow,
+        series: choice.pattern != null,
+        member: ref.read(myMemberProvider).value?.id,
+      );
       if (!mounted) return;
       AppSnack.error(
         context,
