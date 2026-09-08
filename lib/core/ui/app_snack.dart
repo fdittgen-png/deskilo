@@ -41,6 +41,8 @@ abstract final class AppSnack {
     BuildContext context,
     String text, {
     bool replace = false,
+    /// #1012 — a follow-up the notice offers ("Share" on a saved export).
+    SnackBarAction? action,
   }) {
     final brightness = Theme.of(context).brightness;
     final foreground = AppStatusColors.onSuccessOf(brightness);
@@ -51,6 +53,7 @@ abstract final class AppSnack {
       foreground: foreground,
       leading: _ScaleInCheck(color: foreground),
       replace: replace,
+      action: action,
     );
   }
 
@@ -70,6 +73,7 @@ abstract final class AppSnack {
     Color? foreground,
     Widget? leading,
     required bool replace,
+    SnackBarAction? action,
   }) {
     final messenger = ScaffoldMessenger.of(context);
     // `replace` keeps the pre-#209 `clearSnackBars` pattern of rapid-fire
@@ -85,6 +89,7 @@ abstract final class AppSnack {
       SnackBar(
         behavior: SnackBarBehavior.floating,
         backgroundColor: background,
+        action: action,
         content: leading == null
             ? message
             : Row(children: [
