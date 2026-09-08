@@ -35,3 +35,9 @@ key.properties
 
 # macOS
 .DS_Store
+
+# #1017 — the documentation media workbench: the index of what each
+# screenshot shows, and the intermediates. Deliberately NOT tracked; the
+# originals in docs/media/source/ carry the same identity, so
+# `dart run tool/media.dart index` rebuilds it.
+.media-workbench/
