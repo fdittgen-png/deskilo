@@ -6,12 +6,18 @@
 //   dart run tool/instance.dart orgs     --token <personal access token>
 //   dart run tool/instance.dart create   --token … --org <organisation id> --name <project name> [--region eu-west-3]
 //   dart run tool/instance.dart install  --token … --ref <project ref> [--skip N]
+//   dart run tool/instance.dart auth     --token … --ref <project ref>
 //
 // `create` makes the project, waits for it, installs the schema and the
 // functions from the repository (not the asset — the repository is the
 // source), applies the sign-in settings and prints the endpoint.
-// `install` does the same on an existing project. The token is read
-// from --token or the SUPABASE_ACCESS_TOKEN environment variable.
+// `install` does the same on an existing project. `auth` applies ONLY
+// the sign-in settings: an instance created before the wizard (#977)
+// still carries Supabase's default Site URL, `http://localhost:3000`,
+// and every confirmation e-mail it sends points at a server the new
+// member does not run (#1050). Reinstalling the schema to repair one
+// setting would be absurd, so this is the door for it. The token is
+// read from --token or the SUPABASE_ACCESS_TOKEN environment variable.
 import 'dart:io';
 
 import 'package:deskilo/core/instance/instance_builder.dart';
@@ -24,7 +30,7 @@ Future<int> main(List<String> argv) async {
   final args = _Args(argv);
   final token = args.option('token') ?? Platform.environment['SUPABASE_ACCESS_TOKEN'];
   if (args.command.isEmpty || token == null || token.isEmpty) {
-    stderr.writeln('usage: dart run tool/instance.dart orgs|create|install --token … [--org … --name … --region … --ref … --skip N]');
+    stderr.writeln('usage: dart run tool/instance.dart orgs|create|install|auth --token … [--org … --name … --region … --ref … --skip N]');
     return 2;
   }
   final api = DioSupabaseManagement(token);
@@ -64,6 +70,17 @@ Future<int> main(List<String> argv) async {
         }
         await builder.waitUntilReady(ref, onStatus: (s) => stdout.writeln('project: $s'));
         return _install(builder, ref, int.tryParse(args.option('skip') ?? '0') ?? 0);
+      case 'auth':
+        final ref = args.option('ref');
+        if (ref == null) {
+          stderr.writeln('auth needs --ref');
+          return 2;
+        }
+        await builder.configureAuth(ref);
+        stdout.writeln('site URL:      ${InstanceAuthConfig.siteUrl}');
+        stdout.writeln('redirect URLs: ${InstanceAuthConfig.redirectAllowList}');
+        stdout.writeln('sign-in settings applied to $ref');
+        return 0;
       default:
         stderr.writeln('unknown command ${args.command}');
         return 2;
