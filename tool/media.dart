@@ -170,6 +170,11 @@ int _merge(_Args a) {
   return 0;
 }
 
+/// The `<n>` of `<date>--<screen>--<n>.jpg`; 0 when it cannot be read,
+/// which keeps an unexpected name at the front rather than crashing.
+int _captureIndex(String path) =>
+    int.tryParse(_name(path).split('--').last.split('.').first) ?? 0;
+
 List<String> _capturesOf(String screen) {
   final dir = Directory(sourceDir);
   if (!dir.existsSync()) return const [];
@@ -179,7 +184,15 @@ List<String> _capturesOf(String screen) {
       .map((f) => f.path)
       .where((p) => _isImage(p) && _name(p).contains('--$screen--'))
       .toList()
-    ..sort();
+    // Sort by the capture INDEX, not the string: a screen with ten or
+    // more captures put `--10` before `--2` and stitched the form in a
+    // scrambled order. The index is what the scroll order means.
+    ..sort((x, y) {
+      final dx = _name(x).split('--').first;
+      final dy = _name(y).split('--').first;
+      if (dx != dy) return dx.compareTo(dy);
+      return _captureIndex(x).compareTo(_captureIndex(y));
+    });
   if (all.isEmpty) return const [];
   // The newest capture session wins: same date prefix as the last file.
   final date = _name(all.last).split('--').first;
