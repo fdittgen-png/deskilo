@@ -1,6 +1,8 @@
 # DesKilo
 
-**Free, privacy-first coworking community app** — visual desk booking plus the community money layer, mobile-first. Android, iOS, Windows, macOS, and the browser. Sibling of [Sparkilo](https://github.com/fdittgen-png/tankstellen).
+**Coworking management for community-run spaces** — booking, membership, money and governance in one app you host yourself. Free, privacy-first, 0BSD.
+
+The desk-booking tools stop at the desk. DesKilo carries the part that decides whether a community can actually run itself: memberships and quotas, a shared ledger, expenses, invoices with VAT and e-invoicing, payment reconciliation, and an approval trail that records who agreed to what. Mobile-first — Android, iOS, Windows, macOS and the browser. Sibling of [Sparkilo](https://github.com/fdittgen-png/tankstellen).
 
 [![CI](https://github.com/fdittgen-png/deskilo/actions/workflows/ci.yml/badge.svg)](https://github.com/fdittgen-png/deskilo/actions/workflows/ci.yml)
 [![License: 0BSD](https://img.shields.io/badge/License-0BSD-green.svg)](LICENSE)
