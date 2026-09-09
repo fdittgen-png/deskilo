@@ -40,6 +40,10 @@ class SupabaseAuthRepository implements AuthRepository {
       email: email,
       password: password,
       data: {'display_name': displayName},
+      // Without this the confirmation link carries the project's Site
+      // URL, which on an instance predating the wizard is still
+      // `http://localhost:3000` — nobody's server. #1050.
+      emailRedirectTo: _redirect,
     );
   }
 
@@ -71,7 +75,8 @@ class SupabaseAuthRepository implements AuthRepository {
         SocialProvider.google => OAuthProvider.google,
       };
 
-  /// Where the provider sends the browser back to.
+  /// Where a sign-in sends the person back to: the provider's callback,
+  /// and the link in the confirmation e-mail.
   ///
   /// Every NATIVE platform returns over the deskilo:// scheme, registered
   /// in the Android manifest, the iOS and macOS Info.plists and (via the
@@ -81,10 +86,15 @@ class SupabaseAuthRepository implements AuthRepository {
   /// It used to be null off mobile, which let Supabase fall back to the
   /// project's Site URL — `http://localhost:3000`, a server that exists on
   /// nobody's machine. The sign-in ended on "Safari cannot connect".
+  /// #1050 was the same wound in the signup e-mail: asking for nothing
+  /// gets you the Site URL, and the new member's confirmation link went
+  /// to a localhost that was never theirs.
   ///
   /// Every value here must also be listed under Authentication → URL
   /// Configuration → Redirect URLs in the Supabase project, or the
-  /// provider refuses the redirect.
+  /// provider refuses the redirect and Supabase quietly substitutes the
+  /// Site URL — the very address we are trying to escape. The instance
+  /// wizard writes both (InstanceAuthConfig, #977).
   static String get _redirect => kIsWeb
       // Origin + path, so a deploy under /deskilo/ returns to /deskilo/
       // rather than to the domain root.

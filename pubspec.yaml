@@ -100,6 +100,9 @@ dev_dependencies:
   riverpod_generator: ^4.0.2
   riverpod_lint: ^3.1.3
   mocktail: ^1.0.4
+  # #1050 — MockClient (package:http/testing.dart) is the seam the auth
+  # repository test reads the outgoing gotrue request through.
+  http: ^1.6.0
   integration_test:
     sdk: flutter
   flutter_launcher_icons: ^0.14.4
