@@ -18,6 +18,7 @@
 // Pure Dart: no Flutter, no l10n — the pipeline runs in CI and from a
 // bare `dart run`.
 import 'dart:convert';
+import 'dart:typed_data';
 import 'dart:io';
 import 'dart:math' as math;
 
@@ -205,25 +206,41 @@ List<String> _capturesOf(String screen) {
 /// over two short vectors instead of two bitmaps. A band with no
 /// contrast matches everything, so its variance is what disqualifies it.
 Overlap findOverlap(img.Image a, img.Image b, {int minOverlap = 60}) {
+  final ba = _rowBands(a);
+  final bb = _rowBands(b);
   final sa = _rowSignature(a);
-  final sb = _rowSignature(b);
   final maxOverlap = math.min(a.height, b.height);
   var best = const Overlap(0, double.infinity, double.infinity);
   var second = double.infinity;
+  final diffs = Float64List(maxOverlap);
   for (var o = minOverlap; o <= maxOverlap; o++) {
-    var sum = 0.0;
     var min = 255.0;
     var max = 0.0;
     for (var i = 0; i < o; i++) {
-      final va = sa[a.height - o + i];
-      final vb = sb[i];
-      sum += (va - vb).abs();
-      min = math.min(min, va);
-      max = math.max(max, va);
+      final ra = ba[a.height - o + i];
+      final rb = bb[i];
+      var sum = 0.0;
+      for (var k = 0; k < ra.length; k++) {
+        sum += (ra[k] - rb[k]).abs();
+      }
+      diffs[i] = sum / ra.length;
+      final v = sa[a.height - o + i];
+      min = math.min(min, v);
+      max = math.max(max, v);
     }
     // A flat band (a blank scroll gap) is not evidence of an overlap.
     if (max - min < 6) continue;
-    final score = sum / o;
+    // Score the best three quarters of the rows. A rotating hint card, a
+    // floating button or a tooltip corrupts a minority of rows outright,
+    // and a plain mean lets those few outweigh hundreds of rows of
+    // matching text — flattening the true minimum away entirely.
+    final rows = diffs.sublist(0, o)..sort();
+    final keep = math.max(1, (o * 3) ~/ 4);
+    var sum = 0.0;
+    for (var i = 0; i < keep; i++) {
+      sum += rows[i];
+    }
+    final score = sum / keep;
     if (score < best.score) {
       second = best.score;
       best = Overlap(o, score, second);
@@ -233,7 +250,15 @@ Overlap findOverlap(img.Image a, img.Image b, {int minOverlap = 60}) {
     }
   }
   // Nothing agreed: the captures do not overlap, so they simply follow.
-  if (best.score > 12) return Overlap(0, best.score, second);
+  //
+  // The threshold belongs to the scoring. Scoring the whole width, a true
+  // overlap is almost exact — the 2026-09-09 Features batch matched 25 of
+  // its 27 junctions between 0.00 and 0.36. The other two were a capture
+  // pair with a REAL gap in it, and they scored 3.50 and 4.22: plausible
+  // to a matcher that must return something, nonsense on the page. Butting
+  // them together loses the rows nobody photographed; pretending to have
+  // found an overlap loses rows that WERE photographed, silently.
+  if (best.score > 1.5) return Overlap(0, best.score, second);
   return best;
 }
 
@@ -251,6 +276,8 @@ img.Image stitch(img.Image a, img.Image b, int overlap) {
   return out;
 }
 
+/// One brightness per row — the cheap texture probe that tells a blank
+/// scroll gap (which matches at any delta) from real content.
 List<double> _rowSignature(img.Image im, {int step = 8}) {
   final sig = List<double>.filled(im.height, 0);
   for (var y = 0; y < im.height; y++) {
@@ -264,6 +291,35 @@ List<double> _rowSignature(img.Image im, {int step = 8}) {
     sig[y] = n == 0 ? 0 : sum / n;
   }
   return sig;
+}
+
+/// Every row reduced to [bands] averages across the width.
+///
+/// The matcher used to compare ONE number per row, which is a strip: a card
+/// edge, or a run of look-alike list rows, scores well anywhere on the page,
+/// so a candidate delta could win far from the truth and the stitch swallowed
+/// a whole capture without changing the output's dimensions. Comparing across
+/// the width instead misaligns every band when the delta is wrong, and the
+/// false minimum disappears.
+List<Float64List> _rowBands(img.Image im, {int bands = 48}) {
+  final out = <Float64List>[];
+  final counts = Int32List(bands);
+  for (var x = 0; x < im.width; x++) {
+    counts[(x * bands) ~/ im.width]++;
+  }
+  for (var y = 0; y < im.height; y++) {
+    final row = Float64List(bands);
+    for (var x = 0; x < im.width; x++) {
+      final p = im.getPixel(x, y);
+      row[(x * bands) ~/ im.width] +=
+          0.299 * p.r + 0.587 * p.g + 0.114 * p.b;
+    }
+    for (var k = 0; k < bands; k++) {
+      if (counts[k] != 0) row[k] /= counts[k];
+    }
+    out.add(row);
+  }
+  return out;
 }
 
 /// How far the second capture slides up over the first, and how sure.
