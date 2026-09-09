@@ -24,4 +24,5 @@ Global skills that also apply: `git-pr-workflow`, `flutter-dart-best-practices`,
 One registry-touching branch at a time. Harness a migration before you apply it.
 Every user-facing string in ARB ×5. Every functionality behind a `WorkspaceFeature`.
 `web/setup.html` in the same PR as any parameter. `flutter analyze --fatal-infos lib test tool`
-and the full suite before a push. Never format whole directories. Never use the alpha track.
+and the full suite before a push. Never format whole directories. Never use the `alpha1`
+track — `alpha` is the closed test the testers are enrolled in, and the train ships to it.
