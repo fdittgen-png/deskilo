@@ -89,3 +89,37 @@ memory file, not in the wiki.
 - **Register a new fake repository** in `standardTestOverrides`
   (`deployment:` → `FakeDeploymentRepository`) or every app test that
   reaches the provider hits Supabase.instance.
+
+## 7. Lessons of 2026-09-09
+
+- **Never `dart format` a file you are editing.** The repository is not
+  format-clean, so formatting one file to tidy four inserted lines
+  produced a 208-line diff that buried the change. Hand-place the edit
+  at the surrounding indentation instead; `flutter analyze` does not
+  care, and the reviewer does.
+- **Adding a named argument to many call sites in one file: make ONE
+  ordered forward pass.** Searching per marker gets the wrong call twice
+  over — `rindex` walks backwards past a `suffixIcon:` into an unrelated
+  helper, and a marker that appears twice matches the first occurrence
+  both times. Collect the anchors in file order, then walk the file once,
+  advancing the cursor past each insertion. Two duplicate-argument
+  compile errors before this was obvious.
+- **Route pins are positional: append a new route LAST.** Sparkilo's
+  `profile_routes_test` asserts "route 5 path is /loyalty-settings";
+  inserting `/help` after `/theme-settings` moved ten of them and failed
+  ten assertions that were describing the right thing. Appending moves
+  only the count. Same shape as DesKilo's route registry.
+- **A shared helper that embeds one help symbol serves many fields.**
+  `_mentionField` and `_withDot` each fed eight and three controls from
+  one `HelpDot`. Give the helper an `anchor` parameter and pass one per
+  call site — the fix is a parameter, never a copy of the helper.
+- **When a lint refuses a legitimate new idiom, widen the lint, do not
+  exempt the file.** `no_silent_catch` demanded the literal word
+  `TraceLogger`, which pushed `ActTrace` calls back inline — the exact
+  thing the trace points were extracted to stop. It now accepts
+  `ActTrace.` and `traceX(…)`, with the reason in the test.
+- **A ratchet that reaches zero should become an invariant.** When the
+  uncovered-symbol count hit 0 of 155, the test stopped asking "did it go
+  down" and started asserting `isEmpty`, so a new symbol without an
+  anchor fails. A ratchet at zero that still only compares is a gate
+  nothing can trip.
