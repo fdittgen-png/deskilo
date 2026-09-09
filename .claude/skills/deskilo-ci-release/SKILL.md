@@ -49,3 +49,28 @@ two branches touched the same lines.
   in the background and reported per job.
 - The wiki mirror: clone `deskilo.wiki.git` into the scratchpad once,
   copy `docs/wiki/*.md` after each merge that touched them, commit, push.
+
+## Lessons of 2026-09-09
+
+- **Workflow names follow `<Group> · <what it does>`** — CI, Nightly,
+  Release, Publish, Status, Tools — the same convention as Sparkilo, so
+  one habit reads both sidebars. `.github/workflows/README.md` has the
+  table and the rules; `test/lint/workflow_naming_test.dart` enforces
+  the shape, uniqueness and sentence case.
+- **A workflow name is free to change; a JOB name is not.** A job name
+  is a required status-check context, so renaming one can block
+  auto-merge until branch protection is updated in lockstep. Rename the
+  workflow, leave `analyze · l10n gate · test · coverage` alone.
+- **Android deploy, in one line each.**
+  `gh workflow run release-train.yml -f track=beta -f release_notes="…"`
+  puts iOS and Android on the same commit — that is the point of the
+  train. `play-internal.yml -f track=internal` is the Android leg alone.
+- **A commit pushed by `GITHUB_TOKEN` starts no workflow run.** The
+  lockfile-regeneration workflow pushes as the bot, and every check on
+  its commit then sits at `action_required` for ever. Re-author that
+  commit (`git commit --amend` from a real user, force-with-lease) and
+  the runs start. Waiting is not a strategy — nothing is coming.
+- **Another agent may hold the working tree.** Mid-task the checkout
+  switched branches under me. Commits already pushed are safe; finish
+  from a fresh `git clone --depth 3 --branch <b>` in the scratchpad
+  rather than fighting over the directory.

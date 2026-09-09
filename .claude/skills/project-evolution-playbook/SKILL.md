@@ -66,3 +66,40 @@ Adopting it in an app with no help surface: the pipeline, the guides and
 the technical reference first — the wiki becomes real without touching
 the product — then the help screen as ordinary feature work, with a
 ratchet lint counting the symbols that still open the nearest section.
+
+## Reviewing, and the discipline around a live finding
+
+- **Fix a live exposure before you write it up, if the repository is
+  public.** A review that publishes an unauthenticated hole in a public
+  issue is an advisory with a working address in it. Close the grant,
+  verify it, then describe it in the past tense. `gh repo view --json
+  visibility` costs nothing and decides how you write.
+- **Quantify, root-cause, and name the worst case.** "Some functions are
+  over-permissioned" moves nobody. "99 of 260, because `CREATE OR
+  REPLACE` preserves the ACL, and here is the one with no internal
+  check" gets fixed the same afternoon.
+- **Verify before reporting a hole.** Two functions looked equally
+  exposed; one guarded itself one call deeper (`my_active_member` →
+  `auth.uid()`) and was fine. Reporting it would have cost the review
+  its credibility. Read the body, not the name.
+- **Say what is already right.** RLS on every table, four policy-less
+  tables that are the deliberate deny-all secrets tables, a coverage
+  gate whose own comment explains why it moved. A review that is only
+  faults reads as a list of grievances; one that says what holds is
+  trusted about what does not.
+- **Measure the cost of a recommendation before making it.** "Turn on
+  the strict analyzer modes" is an opinion; "12 findings across 177 000
+  lines, 3 of them errors, all one idiom" is a decision someone can take
+  in an afternoon.
+- **Decline the findings you did not measure.** Eleven sorts inside
+  `build()` look like a finding and are probably nothing at that size.
+  Writing "no task, deliberately — profile it first if a list ever feels
+  janky" is worth more than a task nobody can justify.
+
+## Handing work to another agent
+
+One issue, not a tree. Ordered tasks with the dependencies stated, one
+PR each, acceptance criteria per task, the gates spelled out — and an
+explicit **what not to do**: do not open child issues, do not mass-fix
+the harmless instances of a pattern (the diff buries the ones that
+mattered), do not refactor for a line count alone.

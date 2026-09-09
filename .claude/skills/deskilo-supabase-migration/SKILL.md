@@ -98,3 +98,52 @@ exists twice (SQL + Dart), change both and keep the pin.
 - **Restating vs patching:** an applied migration's file is never
   rewritten; if a later fix needs a whole-function text (0184's
   `ensure_system_columns`), it is a new migration.
+
+## 7. Lessons of 2026-09-09 (0191, and the workspace delete)
+
+- **`CREATE OR REPLACE FUNCTION` preserves the existing ACL.** So a
+  missing `revoke execute … from public, anon` is decided by the
+  migration that FIRST creates a function, and never corrects itself: a
+  later version inherits whatever the first one had. This is how 99 of
+  260 functions ended up executable by `anon` (#1048) while the rule had
+  been written since 0004. Put the revoke in the same file as the
+  `create`, every time — the reviewer of migration 0250 cannot see 0110.
+- **`anon` having execute is usually harmless and never acceptable.**
+  Those bodies re-check `auth.uid()` / `has_permission()` / `is_member_of()`
+  and `anon` has no uid, so they refuse. That is the SECOND line of
+  defence; the grant is the first. It takes one function that forgets
+  its internal check — `export_floor_plan` was that function.
+- **Deleting a workspace: three guards refuse, in this order.**
+  `protect_last_owner` on the members cascade, then `invoices are
+  immutable`, then a RESTRICT foreign key from `event_decisions` →
+  `members`. RESTRICT is checked immediately, so the workspace's own
+  `on delete cascade` can never reach through it. The order that works:
+
+  ```sql
+  alter table members  disable trigger user;   -- and invoices,
+  alter table invoices disable trigger user;   -- reservations,
+  -- … ledger_entries, events
+  delete from event_decisions where event_id in (select id from events where workspace_id = any(ids));
+  -- then the workspace-scoped children that reference events with
+  -- NO ACTION or SET NULL: invoice_match_payments, invoice_matches,
+  -- invoice_reminders, invoice_transmissions, expense_repartitions,
+  -- expense_occurrences, expense_schedules, price_negotiations,
+  -- quota_extensions, usage_records, ledger_entries, events
+  delete from reservations where workspace_id = any(ids);
+  update invoices set replaces_invoice_id = null, settled_by_invoice_id = null
+    where workspace_id = any(ids);        -- the self-referencing chain
+  delete from invoices where workspace_id = any(ids);
+  delete from members  where workspace_id = any(ids);
+  delete from workspaces where id = any(ids);   -- the rest cascades
+  ```
+
+  The guards protect a row inside a LIVE workspace; they have no opinion
+  about one being removed entirely. Stand them down for the delete and
+  bring them straight back.
+- **Read the FK graph before writing the delete**, not after the third
+  failure: `select conrelid::regclass, confdeltype from pg_constraint
+  where contype='f' and confrelid='members'::regclass` — `c` cascades,
+  `r` RESTRICTs immediately, `a` defers to end of statement, `n` nulls.
+- **`profiles.default_workspace_id` is SET NULL**, so someone whose
+  default was deleted lands on the profiles switcher rather than
+  nowhere. Count them in the harness and say so in the report.
