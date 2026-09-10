@@ -251,7 +251,7 @@ const Map<String, int> _baseline = {
   // 600→615 (2026-08-31): #771 the kiosk consent exemption and its
   // rationale live where the gate lives.
   // 700→751 (2026-09-06): #934 two routes / three repository methods.
-  'lib/app/router.dart': 751, // 2026-09-02 #821/#822/#825/#827 the conversation, report-editor, member and wizard routes // 2026-09-05 #902 /settings/payment-terms
+  'lib/app/router.dart': 730, // 2026-09-02 #821/#822/#825/#827 the conversation, report-editor, member and wizard routes // 2026-09-05 #902 /settings/payment-terms // 2026-09-10 #1085 751→730: the nine repeated owner-guard closures became one `needs(...)` helper
   // default→660 (2026-09-06): #934 the status report kind / two flags.
   'lib/features/money/presentation/report_defaults.dart': 660,
   // 600→620 (2026-09-01): #791 the tap dispatcher records the branch it

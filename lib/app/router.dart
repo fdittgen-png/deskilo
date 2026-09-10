@@ -115,6 +115,23 @@ GoRouter router(Ref ref) {
   bool featureEnabled(WorkspaceFeature feature) =>
       ref.read(enabledFeaturesSyncProvider).contains(feature);
 
+  /// #1085 — a permission-gated route. The door asks EXACTLY what the
+  /// entry point's tile asks: `myPermissions` is the one client-side
+  /// gate, and a route that reads a role flag instead drifts from its
+  /// own menu entry the moment an owner delegates. A redirect is not a
+  /// refusal message, so the drift showed up as a tap that silently
+  /// bounced to /messages.
+  GoRouterRedirect needs(
+    WorkspacePermission permission, {
+    WorkspaceFeature? feature,
+    String to = '/messages',
+  }) =>
+      (context, state) =>
+          ref.read(myPermissionsProvider).contains(permission) &&
+                  (feature == null || featureEnabled(feature))
+              ? null
+              : to;
+
   final router = GoRouter(
     // The Reserve hub is the app's home (the centre button's form): it
     // is what opens on start, after sign-in and after onboarding.
@@ -416,11 +433,7 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: '/workspace-code',
-        redirect: (context, state) {
-          final isOwner =
-              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner ? null : '/messages';
-        },
+        redirect: needs(WorkspacePermission.manageConfiguration),
         builder: (context, state) => const WorkspaceCodeScreen(),
       ),
       GoRoute(
@@ -429,33 +442,19 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: '/nfc-config',
-        redirect: (context, state) {
-          final isOwner =
-              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner && featureEnabled(WorkspaceFeature.nfcBadges)
-              ? null
-              : '/messages';
-        },
+        redirect: needs(WorkspacePermission.operateKiosk,
+            feature: WorkspaceFeature.nfcBadges),
         builder: (context, state) => const NfcConfigScreen(),
       ),
       GoRoute(
         path: '/payment-config',
-        redirect: (context, state) {
-          final isOwner =
-              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner && featureEnabled(WorkspaceFeature.onlinePayments)
-              ? null
-              : '/messages';
-        },
+        redirect: needs(WorkspacePermission.manageIntegrations,
+            feature: WorkspaceFeature.onlinePayments),
         builder: (context, state) => const PaymentConfigScreen(),
       ),
       GoRoute(
         path: '/billing',
-        redirect: (context, state) {
-          final isOwner =
-              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner ? null : '/messages';
-        },
+        redirect: needs(WorkspacePermission.manageBilling),
         builder: (context, state) => const BillingScreen(),
       ),
       GoRoute(
@@ -585,11 +584,7 @@ GoRouter router(Ref ref) {
       // The workspace's manual payment methods (#486) — owner-only.
       GoRoute(
         path: '/payment-methods',
-        redirect: (context, state) {
-          final isOwner =
-              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner ? null : '/money';
-        },
+        redirect: needs(WorkspacePermission.manageIntegrations, to: '/money'),
         builder: (context, state) => const PaymentMethodsScreen(),
       ),
       // The workspace's legal identity (0069) — owner-only, and only
@@ -650,13 +645,8 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: '/services',
-        redirect: (context, state) {
-          final isOwner =
-              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner && featureEnabled(WorkspaceFeature.services)
-              ? null
-              : '/messages';
-        },
+        redirect: needs(WorkspacePermission.manageServices,
+            feature: WorkspaceFeature.services),
         builder: (context, state) => const ServicesScreen(),
       ),
       GoRoute(
@@ -675,20 +665,12 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: '/features',
-        redirect: (context, state) {
-          final isOwner =
-              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner ? null : '/messages';
-        },
+        redirect: needs(WorkspacePermission.manageConfiguration),
         builder: (context, state) => const FeaturesScreen(),
       ),
       GoRoute(
         path: '/workspace-settings',
-        redirect: (context, state) {
-          final isOwner =
-              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner ? null : '/messages';
-        },
+        redirect: needs(WorkspacePermission.workspaceSettings),
         builder: (context, state) => const WorkspaceSettingsScreen(),
       ),
       GoRoute(
@@ -705,11 +687,7 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: '/availability',
-        redirect: (context, state) {
-          final isOwner =
-              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner ? null : '/messages';
-        },
+        redirect: needs(WorkspacePermission.workspaceSettings),
         builder: (context, state) => const AvailabilityScreen(),
       ),
       GoRoute(
