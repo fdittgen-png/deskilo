@@ -311,6 +311,7 @@ Future<bool> showCreateExpenseScheduleSheet(
             trailing: endsOn == null
                 ? const Icon(Icons.edit_calendar_outlined)
                 : IconButton(
+                  tooltip: l10n?.a11yClearDate ?? 'Clear the date',
                     icon: const Icon(Icons.clear),
                     onPressed: () => setSheetState(() => endsOn = null),
                   ),

@@ -1,5 +1,29 @@
 {
   "@@locale": "en",
+  "a11yDecrease": "Decrease",
+  "@a11yDecrease": {
+    "description": "Tooltip on a stepper button that lowers a number by one."
+  },
+  "a11yIncrease": "Increase",
+  "@a11yIncrease": {
+    "description": "Tooltip on a stepper button that raises a number by one."
+  },
+  "a11yClearDate": "Clear the date",
+  "@a11yClearDate": {
+    "description": "Tooltip on the button that removes a chosen date, leaving the field empty."
+  },
+  "a11yMoveUp": "Move up",
+  "@a11yMoveUp": {
+    "description": "Tooltip on the button that moves a report line one place earlier."
+  },
+  "a11yMoveDown": "Move down",
+  "@a11yMoveDown": {
+    "description": "Tooltip on the button that moves a report line one place later."
+  },
+  "a11yFinishEditing": "Finish editing",
+  "@a11yFinishEditing": {
+    "description": "Tooltip on the tick that closes the inline editor for a report line."
+  },
   "accessRuleManagedProfile": "While this profile was managed for you: {people}. Every time one of them opened or changed it is on the record below.",
   "@accessRuleManagedProfile": {
     "description": "#914 access rule: profile",

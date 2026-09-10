@@ -209,6 +209,7 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
                   style: theme.textTheme.labelLarge),
               const Spacer(),
               IconButton(
+                tooltip: MaterialLocalizations.of(context).previousMonthTooltip,
                 key: const ValueKey('repartition-period-prev'),
                 icon: const Icon(Icons.chevron_left),
                 onPressed: () =>
@@ -217,6 +218,7 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
               Text(monthLabel(context, _period),
                   key: const ValueKey('repartition-period')),
               IconButton(
+                tooltip: MaterialLocalizations.of(context).nextMonthTooltip,
                 key: const ValueKey('repartition-period-next'),
                 icon: const Icon(Icons.chevron_right),
                 onPressed: () =>

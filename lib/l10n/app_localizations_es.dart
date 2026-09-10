@@ -9,6 +9,24 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
+  String get a11yDecrease => 'Disminuir';
+
+  @override
+  String get a11yIncrease => 'Aumentar';
+
+  @override
+  String get a11yClearDate => 'Borrar la fecha';
+
+  @override
+  String get a11yMoveUp => 'Subir';
+
+  @override
+  String get a11yMoveDown => 'Bajar';
+
+  @override
+  String get a11yFinishEditing => 'Terminar la edición';
+
+  @override
   String accessRuleManagedProfile(String people) {
     return 'Mientras este perfil se gestionó para usted: $people. Cada consulta o cambio por alguno de ellos consta abajo.';
   }

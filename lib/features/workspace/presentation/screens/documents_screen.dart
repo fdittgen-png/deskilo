@@ -344,6 +344,7 @@ class DocumentsScreen extends ConsumerWidget {
                           ]),
                           trailing: canCurate
                               ? IconButton(
+                                tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
                                   key: ValueKey(
                                       'document-delete-${document.id}'),
                                   icon: const Icon(Icons.delete_outline),

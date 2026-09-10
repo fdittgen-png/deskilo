@@ -104,6 +104,42 @@ abstract class AppLocalizations {
     Locale('it'),
   ];
 
+  /// Tooltip on a stepper button that lowers a number by one.
+  ///
+  /// In en, this message translates to:
+  /// **'Decrease'**
+  String get a11yDecrease;
+
+  /// Tooltip on a stepper button that raises a number by one.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase'**
+  String get a11yIncrease;
+
+  /// Tooltip on the button that removes a chosen date, leaving the field empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the date'**
+  String get a11yClearDate;
+
+  /// Tooltip on the button that moves a report line one place earlier.
+  ///
+  /// In en, this message translates to:
+  /// **'Move up'**
+  String get a11yMoveUp;
+
+  /// Tooltip on the button that moves a report line one place later.
+  ///
+  /// In en, this message translates to:
+  /// **'Move down'**
+  String get a11yMoveDown;
+
+  /// Tooltip on the tick that closes the inline editor for a report line.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish editing'**
+  String get a11yFinishEditing;
+
   /// #914 access rule: profile
   ///
   /// In en, this message translates to:

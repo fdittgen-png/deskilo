@@ -167,12 +167,14 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
             Row(
               children: [
                 IconButton(
+                  tooltip: MaterialLocalizations.of(context).previousMonthTooltip,
                   key: const ValueKey('wizard-period-prev'),
                   icon: const Icon(Icons.chevron_left),
                   onPressed: () => setState(() => _period = _shift(_period, -1)),
                 ),
                 Expanded(child: Center(child: Text(_period, style: theme.textTheme.titleMedium))),
                 IconButton(
+                  tooltip: MaterialLocalizations.of(context).nextMonthTooltip,
                   key: const ValueKey('wizard-period-next'),
                   icon: const Icon(Icons.chevron_right),
                   onPressed: () => setState(() => _period = _shift(_period, 1)),

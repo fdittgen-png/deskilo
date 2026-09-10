@@ -287,6 +287,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
         ),
         if (!widget.asPage)
           IconButton(
+            tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.of(context).pop(),
           ),

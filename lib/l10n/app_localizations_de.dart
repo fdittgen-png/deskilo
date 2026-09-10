@@ -9,6 +9,24 @@ class AppLocalizationsDe extends AppLocalizations {
   AppLocalizationsDe([String locale = 'de']) : super(locale);
 
   @override
+  String get a11yDecrease => 'Verringern';
+
+  @override
+  String get a11yIncrease => 'Erhöhen';
+
+  @override
+  String get a11yClearDate => 'Datum löschen';
+
+  @override
+  String get a11yMoveUp => 'Nach oben';
+
+  @override
+  String get a11yMoveDown => 'Nach unten';
+
+  @override
+  String get a11yFinishEditing => 'Bearbeitung beenden';
+
+  @override
   String accessRuleManagedProfile(String people) {
     return 'Solange dieses Profil für Sie verwaltet wurde: $people. Jede Einsicht und jede Änderung durch eine dieser Personen steht unten.';
   }

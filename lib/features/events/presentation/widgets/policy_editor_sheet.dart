@@ -173,6 +173,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
+                      tooltip: l10n?.a11yDecrease ?? 'Decrease',
                       icon: const Icon(Icons.remove),
                       onPressed: _requiredCount > 1
                           ? () => setState(() {
@@ -186,6 +187,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                       style: theme.textTheme.titleMedium,
                     ),
                     IconButton(
+                      tooltip: l10n?.a11yIncrease ?? 'Increase',
                       icon: const Icon(Icons.add),
                       onPressed: _requiredCount < _maxRequired
                           ? () => setState(() {

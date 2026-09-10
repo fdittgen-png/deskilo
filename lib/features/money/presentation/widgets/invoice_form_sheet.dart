@@ -265,6 +265,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
         const SizedBox(height: 8),
         Row(children: [
           IconButton(
+            tooltip: MaterialLocalizations.of(context).previousMonthTooltip,
             key: const ValueKey('invoice-period-prev'),
             icon: const Icon(Icons.chevron_left),
             onPressed: () => _shiftMonth(-1),
@@ -278,6 +279,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             ),
           ),
           IconButton(
+            tooltip: MaterialLocalizations.of(context).nextMonthTooltip,
             key: const ValueKey('invoice-period-next'),
             icon: const Icon(Icons.chevron_right),
             onPressed: atCurrent ? null : () => _shiftMonth(1),

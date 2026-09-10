@@ -1,5 +1,11 @@
 {
   "@@locale": "es",
+  "a11yDecrease": "Disminuir",
+  "a11yIncrease": "Aumentar",
+  "a11yClearDate": "Borrar la fecha",
+  "a11yMoveUp": "Subir",
+  "a11yMoveDown": "Bajar",
+  "a11yFinishEditing": "Terminar la edición",
   "accessRuleManagedProfile": "Mientras este perfil se gestionó para usted: {people}. Cada consulta o cambio por alguno de ellos consta abajo.",
   "@accessRuleManagedProfile": {
     "description": "#914 access rule: profile",

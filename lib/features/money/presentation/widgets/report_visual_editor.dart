@@ -666,12 +666,14 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
                   size: 20, color: theme.colorScheme.primary),
             ),
             IconButton(
+              tooltip: l10n?.a11yMoveUp ?? 'Move up',
               key: ValueKey('${widget.bandKey}-up-$index'),
               icon: const Icon(Icons.arrow_upward, size: 16),
               visualDensity: VisualDensity.compact,
               onPressed: () => _move(index, -1),
             ),
             IconButton(
+              tooltip: l10n?.a11yMoveDown ?? 'Move down',
               key: ValueKey('${widget.bandKey}-down-$index'),
               icon: const Icon(Icons.arrow_downward, size: 16),
               visualDensity: VisualDensity.compact,
@@ -715,12 +717,14 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
                 ),
               ),
             IconButton(
+              tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
               key: ValueKey('${widget.bandKey}-delete-$index'),
               icon: const Icon(Icons.delete_outline, size: 16),
               visualDensity: VisualDensity.compact,
               onPressed: () => _delete(index),
             ),
             IconButton(
+              tooltip: l10n?.a11yFinishEditing ?? 'Finish editing',
               key: ValueKey('${widget.bandKey}-done-$index'),
               icon: const Icon(Icons.check, size: 16),
               visualDensity: VisualDensity.compact,
