@@ -135,7 +135,6 @@ Deno.serve(async (req) => {
 
   const url = Deno.env.get("SUPABASE_URL")!;
   const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-  const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
   const authorization = req.headers.get("Authorization") ?? "";
 
   let payload: {
@@ -159,6 +158,39 @@ Deno.serve(async (req) => {
   if (!workspaceId) return json({ error: "workspace_id required" }, 400);
 
   const admin: SupabaseClient = createClient(url, serviceKey);
+
+  // #1078 — WHO is asking, BEFORE anything answers. This check used to
+  // sit below the `action:"config"` branch, which meant anyone holding a
+  // workspace UUID — no membership, no relationship to the space —
+  // learned whether e-invoicing was configured, its provider, which
+  // fields were missing and which environments and destinations were
+  // wired. A workspace id is not a secret: it travels in links, in
+  // exported questionnaires, in invitation flows. `create-payment-order`
+  // documents closing this exact hole; the fix was never carried across.
+  //
+  // And it is scoped by user_id. Without that, `members_select` lets a
+  // member read every row of their workspace, so PostgREST returned as
+  // many rows as the workspace had members, `maybeSingle()` treated more
+  // than one as an error, and EVERY send was refused with "not an admin
+  // of this workspace" — to the owner. A one-member fixture is why the
+  // tests never saw it.
+  const { data: userData, error: userError } = await admin.auth.getUser(
+    authorization.replace("Bearer ", ""),
+  );
+  if (userError || !userData?.user) {
+    console.error("send-e-invoice auth failed", userError?.message);
+    return json({ error: "unauthorized" }, 401);
+  }
+  const { data: me } = await admin
+    .from("members")
+    .select("id, is_admin, is_owner, status")
+    .eq("workspace_id", workspaceId)
+    .eq("user_id", userData.user.id)
+    .maybeSingle();
+  if (!me || me.status !== "active" || !(me.is_admin || me.is_owner)) {
+    return json({ error: "not an admin of this workspace" }, 403);
+  }
+
   const { data: credentials } = await admin
     .from("einvoice_credentials")
     .select("provider, config")
@@ -234,20 +266,6 @@ Deno.serve(async (req) => {
 
   if (missing.length > 0) {
     return json({ error: "not_configured", missing, environment }, 409);
-  }
-
-  // WHO is asking: the caller's own JWT, checked against the workspace.
-  // The service role must never send on behalf of a stranger.
-  const caller = createClient(url, anonKey, {
-    global: { headers: { Authorization: authorization } },
-  });
-  const { data: me } = await caller
-    .from("members")
-    .select("id, is_admin, is_owner, status")
-    .eq("workspace_id", workspaceId)
-    .maybeSingle();
-  if (!me || me.status !== "active" || !(me.is_admin || me.is_owner)) {
-    return json({ error: "not an admin of this workspace" }, 403);
   }
 
   // #534 — VAT declarations ride the SAME configured channel: the owner
