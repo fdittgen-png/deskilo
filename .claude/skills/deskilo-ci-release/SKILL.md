@@ -74,3 +74,20 @@ two branches touched the same lines.
   switched branches under me. Commits already pushed are safe; finish
   from a fresh `git clone --depth 3 --branch <b>` in the scratchpad
   rather than fighting over the directory.
+
+## Lessons of 2026-09-10
+
+- **The train's input IS the Play track (#1073).** `-f track=alpha` (the
+  default) or `-f track=production`. It used to be `-f track=beta`
+  resolving to `alpha`, which is where CLAUDE.md's "never use the alpha
+  track" came from. Alpha is the CLOSED test whose 12-tester / 14-day
+  countdown gates production; Play's open beta is not a track this
+  project ships to, and the train no longer offers it.
+- **A run that ends `CANCELLED` is usually the concurrency group**, not a
+  failure — a newer push superseded it. `gh run rerun <id>` and wait
+  again; do not go hunting for a test that never ran.
+- **The alpha countdown is not advanced by shipping.** Twelve testers
+  must each opt in at `play.google.com/apps/testing/de.deskilo.app`, and
+  only then do the 14 continuous days start. Uploading another build
+  changes nothing about it, so do not read a green train as progress
+  toward production.

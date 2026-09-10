@@ -1,6 +1,6 @@
 ---
 name: deskilo-ship-feature
-description: The end-to-end ritual for shipping a functionality in DesKilo — issue, ONE branch at a time, the feature-flag registries (enum, manifest, names, description, ARB ×5, setup.html, pin = enum size, file budgets), migration harness, tests, wiki ×5 + build_help, PR, CI, squash-merge, beta train. Trigger at the start of any feature or fix, and whenever a PR touches the flag/placeholder registries.
+description: The end-to-end ritual for shipping a functionality in DesKilo — issue, ONE branch at a time, the feature-flag registries (enum, manifest, names, description, ARB ×5, setup.html, pin = enum size, file budgets), migration harness, tests, wiki ×5 + build_help, PR, CI, squash-merge, alpha train. Trigger at the start of any feature or fix, and whenever a PR touches the flag/placeholder registries.
 ---
 # Ship a feature in DesKilo
 
@@ -123,3 +123,37 @@ memory file, not in the wiki.
   down" and started asserting `isEmpty`, so a new symbol without an
   anchor fails. A ratchet at zero that still only compares is a gate
   nothing can trip.
+
+## 8. Lessons of 2026-09-10
+
+- **`lib/l10n/app_<locale>.arb` is GENERATED. Edit
+  `lib/l10n/_fragments/<feature>_<locale>.arb`.** Editing the aggregate
+  passes locally, because `flutter gen-l10n` reads it and the app then
+  shows the new string — and CI fails, because the l10n gate re-runs
+  `dart run tool/build_arb.dart` from the fragments and finds the old
+  wording. The whole diff comes back at you as "lib/l10n drift". Cost one
+  red PR before it was obvious. `dart run tool/build_arb.dart && flutter
+  gen-l10n` after every fragment edit, and commit what they write.
+- **Material already translates the generic actions — reach for it
+  before inventing an ARB key.** `MaterialLocalizations.of(context)`
+  carries `closeButtonTooltip`, `deleteButtonTooltip`,
+  `previousMonthTooltip`, `nextMonthTooltip`, `showMenuTooltip`. 15 of
+  the 25 unlabelled icon buttons in #1055 needed no new string at all,
+  in five languages, for free. A new key is for an action Material has no
+  word for.
+- **When a change pushes a file over its length budget, extract — then
+  LOWER the baseline.** The house rule allows raising it with a reason,
+  but the file that fails is usually the one already known to be too big.
+  #1056's overflow menu put `invoice_template_sheet.dart` 19 lines over;
+  moving the pair into `report_history_controls.dart` left it 20 lines
+  UNDER, so the baseline went 1180→1160. The ratchet only shrinks if
+  somebody makes it shrink.
+- **Three analyzer strict modes are on now** (`strict-casts`,
+  `strict-inference`, `strict-raw-types`, #1060). `?? const []` no longer
+  passes: write `?? const <Event>[]`. They caught three latent dynamic
+  dispatches on the way in — `event.isPending && …` was a non-`bool`
+  operand because `event` was `dynamic`.
+- **A one-line string fix still needs the ×5 sweep and a pin.** "My
+  badge" appeared twice in Settings because two keys held the same value
+  in all five locales — perfectly parallel, so `l10n_completeness_test`
+  was satisfied. Parallel is not correct.
