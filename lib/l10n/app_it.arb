@@ -4411,6 +4411,7 @@
   "scheduledExpensesTitle": "Spese programmate",
   "scheduledExpensesIntro": "Gli abbonamenti che lo spazio paga — internet, telefono, elettricità. La programmazione è validata una volta; ogni scadenza ti viene presentata prima di contare.",
   "scheduledExpensesEmpty": "Nessuna spesa programmata per ora.",
+  "scheduledExpensesFinished": "Terminate e rifiutate ({count})",
   "scheduleNew": "Programma una spesa ricorrente",
   "scheduleCancel": "Termina questa programmazione",
   "scheduleTitleLabel": "Cosa (es. Internet)",

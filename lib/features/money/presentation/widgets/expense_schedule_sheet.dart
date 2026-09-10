@@ -102,7 +102,15 @@ Future<void> showExpenseSchedulesSheet(
                   l10n?.scheduledExpensesEmpty ?? 'No scheduled expense yet.',
                 ),
               ),
-            for (final s in schedules)
+            // #1059 — the list answers "what does the space pay for", and a
+            // rejected or ended schedule is not something the space pays
+            // for: it can never produce another due date. Left in place it
+            // sat beside the live one, same title, same amount, differing
+            // only by a cadence you had to read carefully.
+            //
+            // Hidden, not destroyed: a rejection is a decision with a
+            // validator behind it and belongs in the record.
+            for (final s in schedules.where(_stillFires))
               ListTile(
                 key: ValueKey('schedule-${s.id}'),
                 contentPadding: EdgeInsets.zero,
@@ -153,12 +161,46 @@ Future<void> showExpenseSchedulesSheet(
                 }
               },
             ),
+            if (schedules.where((s) => !_stillFires(s)).isNotEmpty)
+              ExpansionTile(
+                key: const ValueKey('schedule-finished'),
+                tilePadding: EdgeInsets.zero,
+                title: Text(
+                  l10n?.scheduledExpensesFinished(
+                          schedules.where((s) => !_stillFires(s)).length) ??
+                      'Ended and rejected '
+                          '(${schedules.where((s) => !_stillFires(s)).length})',
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+                children: [
+                  for (final s in schedules.where((s) => !_stillFires(s)))
+                    ListTile(
+                      key: ValueKey('schedule-${s.id}'),
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(s.title),
+                      subtitle: Text(
+                        '${currency.formatMinor(s.amountCents)} · '
+                        '${scheduleRuleText(l10n, s, dates)}\n'
+                        '${_statusText(l10n, s.status)}',
+                      ),
+                      isThreeLine: true,
+                    ),
+                ],
+              ),
           ],
         );
       },
     ),
   );
 }
+
+/// Whether [s] can still produce a due date.
+///
+/// `rejected` and `ended` never will: the first was refused by the
+/// validators, the second was stopped. Both belong in the record and
+/// neither belongs in the list of what the space pays for.
+bool _stillFires(ExpenseSchedule s) =>
+    s.status == ScheduleStatus.pending || s.status == ScheduleStatus.active;
 
 String _statusText(AppLocalizations? l10n, ScheduleStatus status) =>
     switch (status) {

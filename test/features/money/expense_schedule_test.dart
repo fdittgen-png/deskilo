@@ -127,6 +127,58 @@ void main() {
     expect(money.confirmedOccurrences.single.reason, 'as billed');
   });
 
+  testWidgets('a finished schedule leaves the live list but stays reachable',
+      (tester) async {
+    // #1059 — the list answers "what does the space pay for". A rejected
+    // schedule can never produce another due date, and it sat beside the
+    // live one with the same title and the same amount, differing only by
+    // a cadence you had to read carefully.
+    final money = await pumpMoney(tester);
+    money.expenseSchedules.addAll([
+      ExpenseSchedule(
+        id: 'sched-live',
+        workspaceId: 'w1',
+        memberId: 'm1',
+        title: 'internet',
+        amountCents: 2990,
+        startsOn: DateTime(2026, 9, 9),
+        unit: ScheduleUnit.month,
+        every: 1,
+        status: ScheduleStatus.pending,
+      ),
+      ExpenseSchedule(
+        id: 'sched-dead',
+        workspaceId: 'w1',
+        memberId: 'm1',
+        title: 'internet',
+        amountCents: 2990,
+        startsOn: DateTime(2026, 9, 9),
+        unit: ScheduleUnit.month,
+        every: 5,
+        status: ScheduleStatus.rejected,
+      ),
+    ]);
+
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('scheduled-expenses-button')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byKey(const ValueKey('scheduled-expenses-button')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('schedule-sched-live')), findsOneWidget);
+    expect(find.byKey(const ValueKey('schedule-sched-dead')), findsNothing,
+        reason: 'a rejected schedule is not something the space pays for');
+
+    // Hidden, not destroyed: the rejection is a decision with a validator
+    // behind it, and it stays in the record.
+    expect(find.byKey(const ValueKey('schedule-finished')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('schedule-finished')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('schedule-sched-dead')), findsOneWidget);
+  });
+
   testWidgets('the create sheet scrolls its tail above a keyboard (#769)',
       (tester) async {
     await pumpMoney(tester);
