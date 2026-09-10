@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show Supabase;
 
 import '../../features/plan/providers/floor_plan_providers.dart';
+import '../trace/trace_logger.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'invalidation_map.dart';
 import 'realtime_sync.dart';
@@ -105,23 +106,36 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
     _pending.clear();
     if (!ref.mounted) return;
     // A resync subsumes every per-table signal in the batch.
-    if (tables.contains(kResyncSignal)) {
-      for (final table in mappedTables) {
-        _apply(invalidationFor(table));
-      }
-      return;
-    }
-    for (final table in tables) {
-      _apply(invalidationFor(table));
-    }
+    final entries = tables.contains(kResyncSignal)
+        ? mappedTables.map(invalidationFor)
+        : tables.map(invalidationFor);
+    unawaited(_applyAll(entries.toList(growable: false)));
   }
 
-  void _apply(TableInvalidation entry) {
-    if (entry.bustsPlanCache) {
-      unawaited(ref.read(floorPlanRepositoryProvider).invalidateCache());
+  /// #1084 — the disk cache is busted ONCE and, crucially, BEFORE the
+  /// providers are invalidated. Firing the bust unawaited and
+  /// invalidating synchronously let the refetch win the race and land
+  /// back on the entry that was about to be deleted.
+  Future<void> _applyAll(List<TableInvalidation> entries) async {
+    if (entries.any((e) => e.bustsPlanCache)) {
+      try {
+        await ref.read(floorPlanRepositoryProvider).invalidateCache();
+      } catch (e, st) {
+        // A cache that refuses to clear must not stop the repaint — the
+        // refetch may still be network-true.
+        TraceLogger.instance.warn(
+          'realtime',
+          'plan cache bust failed before invalidation',
+          error: e,
+          stackTrace: st,
+        );
+      }
     }
-    for (final provider in entry.providers) {
-      ref.invalidate(provider);
+    if (!ref.mounted) return;
+    for (final entry in entries) {
+      for (final provider in entry.providers) {
+        ref.invalidate(provider);
+      }
     }
   }
 }

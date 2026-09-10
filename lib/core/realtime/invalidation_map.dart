@@ -112,12 +112,20 @@ TableInvalidation invalidationFor(String table) => switch (table) {
           // #458: the default-workspace choice rides the profile row.
           defaultWorkspaceIdProvider,
         ]),
+      // #1084 — these ARE the plan. Both providers read `cacheFirst` off
+      // a 10-minute disk entry, so invalidating the provider without
+      // busting the cache refetches straight back into the stale bundle:
+      // the editing device repaints (its mutation busts locally), every
+      // other device shows the old plan until the TTL expires.
       'levels' ||
       'offices' ||
       'desks' ||
       'seats' ||
       'plan_images' =>
-        TableInvalidation([levelsProvider, floorPlanProvider]),
+        TableInvalidation(
+          [levelsProvider, floorPlanProvider],
+          bustsPlanCache: true,
+        ),
       // #702 — a MESSAGE lands live, or it does not land at all until
       // someone pulls to refresh. This mapped only the old bell feed:
       // the messaging centre's list, its unread badge and any open
@@ -168,9 +176,10 @@ TableInvalidation invalidationFor(String table) => switch (table) {
         ]),
       'validation_policies' =>
         TableInvalidation([validationPoliciesProvider]),
-      // Seat accessory data rides the floor plan fetch.
+      // Seat accessory data rides the floor plan fetch — and therefore
+      // the floor plan CACHE (#1084).
       'accessories' ||
       'seat_accessories' =>
-        TableInvalidation([floorPlanProvider]),
+        TableInvalidation([floorPlanProvider], bustsPlanCache: true),
       _ => TableInvalidation([]),
     };
