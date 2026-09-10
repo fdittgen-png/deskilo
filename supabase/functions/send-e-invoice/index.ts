@@ -369,10 +369,12 @@ Deno.serve(async (req) => {
     };
   }
 
+  // #1078 — the caller was already resolved at the top; this used to
+  // build a second client and ask again.
   const { data: profile } = await admin
     .from("profiles")
     .select("display_name")
-    .eq("id", (await caller.auth.getUser()).data.user?.id ?? "")
+    .eq("id", userData.user.id)
     .maybeSingle();
 
   await admin.from("invoice_transmissions").insert({

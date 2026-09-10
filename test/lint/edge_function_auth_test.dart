@@ -86,6 +86,30 @@ void main() {
       final source =
           File('supabase/functions/$name/index.ts').readAsStringSync();
 
+      // Nothing in CI typechecks Deno, so a deleted binding that is still
+      // referenced ships silently. Removing the second `caller` client in
+      // #1078 left one `caller.auth.getUser()` behind — a ReferenceError
+      // on every real invoice send, invisible to 2 660 Dart tests and to
+      // the auth lint below, and caught only by reading the DEPLOYED
+      // function side by side with the local one.
+      test('every identifier it uses is declared', () {
+        final lines = source.split('\n');
+        for (final id in const ['caller', 'anonKey', 'admin', 'userData']) {
+          final word = RegExp('\\b$id\\b');
+          // A declaration is any const/let line naming it — which covers
+          // `const admin: X = …` and `const { data: userData } = …` alike.
+          final declared = lines.any((l) =>
+              (l.contains('const ') || l.contains('let ')) &&
+              word.hasMatch(l));
+          // A use is a member access that is not itself a property.
+          final used = RegExp('(?<![\\w.])$id\\.').hasMatch(source);
+          expect(used && !declared, isFalse,
+              reason: '`$id` is used in $name but never declared — the '
+                  'binding was removed and a reference left behind. Deno '
+                  'is not typechecked here, so this ships.');
+        }
+      });
+
       test('the BUNDLED copy is guarded too', () {
         _assertGuarded(name, _bundled(name), 'assets/instance/bundle.json');
       });
