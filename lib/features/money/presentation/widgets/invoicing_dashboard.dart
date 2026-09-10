@@ -300,7 +300,8 @@ class OpenInvoicesTab extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final overview = ref.watch(invoicingOverviewProvider).value;
     final reminders =
-        ref.watch(invoiceRemindersProvider).value ?? const {};
+        ref.watch(invoiceRemindersProvider).value ??
+            const <String, ({int count, DateTime last})>{};
     // Mahnwesen (#472): the rules say when a reminder is DUE — the card
     // flags it and the bell icon fills. A human still sends.
     final dunningOn = ref
@@ -308,7 +309,7 @@ class OpenInvoicesTab extends ConsumerWidget {
         .contains(WorkspaceFeature.dunning);
     // #504 — write-offs already filed and awaiting their quorum.
     final pendingWriteoffs = {
-      for (final event in ref.watch(eventsProvider).value ?? const [])
+      for (final event in ref.watch(eventsProvider).value ?? const <WorkspaceEvent>[])
         if (event.isPending && event.type == EventType.invoiceWriteoff)
           event.payload['invoice_id'] as String? ?? '',
     };

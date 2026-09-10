@@ -7,6 +7,7 @@ import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
+import '../../../plan/domain/level.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../domain/reservation.dart';
 import '../../../../core/time/clock.dart';
@@ -74,7 +75,7 @@ class MonthGrid extends ConsumerWidget {
     final deskSeats = <String, List<String>>{};
     final officeSeats = <String, List<String>>{};
     final levelSeats = <String, List<String>>{};
-    for (final level in levels ?? const []) {
+    for (final level in levels ?? const <Level>[]) {
       final plan = ref.watch(floorPlanProvider(level.id)).value;
       if (plan == null) {
         plansReady = false;

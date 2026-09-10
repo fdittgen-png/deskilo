@@ -70,7 +70,8 @@ void main() {
     expect(defaults['text'], isA<OwnerTexts>());
     for (final entry in defaults.entries) {
       if (entry.key == 'text') continue;
-      expect(entry.value, anyOf(isA<String>(), isA<bool>(), isA<List>()),
+      expect(entry.value,
+          anyOf(isA<String>(), isA<bool>(), isA<List<dynamic>>()),
           reason: entry.key);
     }
   });

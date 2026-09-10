@@ -49,8 +49,8 @@ void main() {
         'continuation': _bands.continuation,
       });
       final howTo = json['howToEdit'] as Map<String, dynamic>;
-      expect(howTo['bands'], isA<Map>());
-      expect(howTo['markup'], isA<Map>());
+      expect(howTo['bands'], isA<Map<dynamic, dynamic>>());
+      expect(howTo['markup'], isA<Map<dynamic, dynamic>>());
       expect(howTo['placeholders'], contains('payment_terms'));
       expect(howTo['summary'], contains('import the file back'));
     });

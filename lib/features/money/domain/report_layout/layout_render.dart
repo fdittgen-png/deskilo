@@ -61,8 +61,10 @@ Object? _escapeValue(Object? v) => switch (v) {
           .replaceAll('<', '&lt;')
           .replaceAll('>', '&gt;')
           .replaceAll('"', '&quot;'),
-      List l => [for (final x in l) _escapeValue(x)],
-      Map m => {for (final e in m.entries) '${e.key}': _escapeValue(e.value)},
+      List<dynamic> l => [for (final x in l) _escapeValue(x)],
+      Map<dynamic, dynamic> m => {
+          for (final e in m.entries) '${e.key}': _escapeValue(e.value),
+        },
       _ => v,
     };
 

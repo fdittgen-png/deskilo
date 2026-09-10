@@ -164,7 +164,7 @@ void main() {
             .subtract(const Duration(days: 2))
             .millisecondsSinceEpoch,
         'ttlMs': 60000,
-        'payload': {},
+        'payload': <String, dynamic>{},
       }));
 
       expect(await store.evictExpired(), 1);

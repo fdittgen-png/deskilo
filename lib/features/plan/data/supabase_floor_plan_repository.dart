@@ -112,7 +112,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   Future<void> deleteLevel(String levelId) async {
     // #587 — the owner-only RPC snapshots referencing reservations into
     // their audit substitution text before the delete cascades.
-    await _client.rpc('delete_plan_object',
+    await _client.rpc<void>('delete_plan_object',
         params: {'p_kind': 'level', 'p_id': levelId});
     await _bust();
   }
@@ -438,7 +438,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
 
   @override
   Future<void> deleteOffice(String officeId) async {
-    await _client.rpc('delete_plan_object',
+    await _client.rpc<void>('delete_plan_object',
         params: {'p_kind': 'office', 'p_id': officeId});
     await _bust();
   }
@@ -483,7 +483,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
 
   @override
   Future<void> deleteDesk(String deskId) async {
-    await _client.rpc('delete_plan_object',
+    await _client.rpc<void>('delete_plan_object',
         params: {'p_kind': 'desk', 'p_id': deskId});
     await _bust();
   }
@@ -544,7 +544,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
 
   @override
   Future<void> deleteSeat(String seatId) async {
-    await _client.rpc('delete_plan_object',
+    await _client.rpc<void>('delete_plan_object',
         params: {'p_kind': 'seat', 'p_id': seatId});
     await _bust();
   }
