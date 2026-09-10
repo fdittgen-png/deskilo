@@ -1,0 +1,114 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: 0BSD
+
+name: Publish · Edge functions
+
+# #1078 — merging a function fix does not fix the function.
+#
+# `supabase/functions/` is deployed by nothing. The repository, the
+# bundle and the tests can all agree on a corrected function while the
+# live one is still the old version — which is exactly what happened
+# with the e-invoicing authorisation fix: the code was right, the bundle
+# was right, 2 670 tests were green, and production kept refusing every
+# send AND answering strangers, because the last deploy was version 4.
+#
+# It also closes the other half of that story. The fix that was ready to
+# deploy had a ReferenceError in it — a client removed, one call to it
+# left behind 375 lines later. Nothing caught it: the Dart suite does
+# not compile TypeScript and there is no Deno in CI. So this workflow
+# TYPECHECKS before it deploys, and typechecks on every pull request
+# that touches a function, whether or not it deploys anything.
+#
+# Deployment is deliberately manual (workflow_dispatch). An edge function
+# holds credentials and talks to a government platform; it is not the
+# kind of thing that should follow a merge automatically.
+
+on:
+  pull_request:
+    paths:
+      - 'supabase/functions/**'
+      - '.github/workflows/edge-functions.yml'
+  workflow_dispatch:
+    inputs:
+      function:
+        description: Function slug to deploy, or "all"
+        required: true
+        default: all
+      deploy:
+        description: Actually deploy (off = typecheck only)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  functions:
+    name: typecheck · deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      # The guard that would have caught the ReferenceError. `deno check`
+      # resolves every import and every identifier; a deleted binding
+      # with a use left behind fails here instead of at 3 a.m. on a real
+      # invoice send.
+      - name: Typecheck every function
+        run: |
+          failed=0
+          for fn in supabase/functions/*/index.ts; do
+            echo "::group::$fn"
+            if ! deno check --allow-import "$fn"; then failed=1; fi
+            echo "::endgroup::"
+          done
+          if [ "$failed" -ne 0 ]; then
+            echo "## Edge functions do not typecheck" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          echo "## Edge functions typecheck" >> "$GITHUB_STEP_SUMMARY"
+
+      # Owner-configurable, like the doctor's: without the secrets this
+      # says so in the summary rather than failing a run nobody asked to
+      # deploy.
+      - name: Are the deploy secrets there
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy
+        id: gate
+        env:
+          TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+        run: |
+          if [ -z "$TOKEN" ] || [ -z "$REF" ]; then
+            {
+              echo "## Not configured"
+              echo
+              echo "Set **SUPABASE_ACCESS_TOKEN** and **SUPABASE_PROJECT_REF**"
+              echo "in the repository secrets to deploy from here."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Deploy
+        if: steps.gate.outputs.ready == 'true'
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+          FN: ${{ inputs.function }}
+        run: |
+          curl -fsSL https://github.com/supabase/cli/releases/latest/download/supabase_linux_amd64.tar.gz \
+            | tar -xz -C /usr/local/bin supabase
+          if [ "$FN" = "all" ]; then
+            supabase functions deploy --project-ref "$REF"
+          else
+            supabase functions deploy "$FN" --project-ref "$REF"
+          fi
+          {
+            echo "## Deployed"
+            echo
+            echo "\`$FN\` to \`$REF\`."
+          } >> "$GITHUB_STEP_SUMMARY"
