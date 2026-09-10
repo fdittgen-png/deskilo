@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/notifications/reminder_sync.dart';
 import '../../core/trace/trace_logger.dart';
 
 import 'package:intl/intl.dart';
@@ -193,31 +194,45 @@ class ShellScreen extends ConsumerWidget {
     WorkHours.install(ref.watch(workHoursProvider).value);
 
     // Keep the local check-in reminders in sync with my upcoming bookings
-    // (spec §4.3). Best-effort; failures never disturb the UI.
+    // (spec §4.3). Best-effort; failures never disturb the UI — but they
+    // are traced rather than swallowed (#1094), and the whole body is
+    // guarded because the two provider reads can fail too.
     ref.listen(myUpcomingReservationsProvider, (_, next) async {
       final upcoming = next.value;
       if (upcoming == null) return;
-      final member = await ref.read(myMemberProvider.future);
-      if (member == null) return;
-      final targets = await ref.read(targetNamesProvider.future);
-      final timeFormat = DateFormat.Hm();
-      final reminders = upcomingCheckInReminders(
-        reservations: upcoming,
-        myMemberId: member.id,
-        now: ref.read(clockProvider).now(),
-        targetNames: targets,
-        titleOf: (target, startsAt) =>
-            l10n?.reminderTitle ?? 'Check in soon',
-        bodyOf: (target, startsAt) =>
-            l10n?.reminderBody(
-              target,
-              timeFormat.format(startsAt.toLocal()),
-            ) ??
-            '$target starts at ${timeFormat.format(startsAt.toLocal())}',
-      );
-      ref
-          .read(notificationServiceProvider)
-          .rescheduleCheckInReminders(reminders);
+      try {
+        final member = await ref.read(myMemberProvider.future);
+        if (member == null) return;
+        final targets = await ref.read(targetNamesProvider.future);
+        final timeFormat = DateFormat.Hm();
+        final reminders = upcomingCheckInReminders(
+          reservations: upcoming,
+          myMemberId: member.id,
+          now: ref.read(clockProvider).now(),
+          targetNames: targets,
+          titleOf: (target, startsAt) =>
+              l10n?.reminderTitle ?? 'Check in soon',
+          bodyOf: (target, startsAt) =>
+              l10n?.reminderBody(
+                target,
+                timeFormat.format(startsAt.toLocal()),
+              ) ??
+              '$target starts at ${timeFormat.format(startsAt.toLocal())}',
+        );
+        await scheduleCheckInReminders(
+          ref.read(notificationServiceProvider),
+          reminders,
+        );
+      } catch (e, st) {
+        // The two provider reads and the reminder build. The schedule
+        // itself traces its own failure and never throws.
+        TraceLogger.instance.warn(
+          'notifications',
+          'check-in reminders: could not read who I am or what I booked',
+          error: e,
+          stackTrace: st,
+        );
+      }
     });
     final tabTitles = [
       // #687 — the first destination is Messages now; the plan lives on
