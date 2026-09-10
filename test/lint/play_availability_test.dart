@@ -25,6 +25,8 @@ void main() {
       File('.github/workflows/play-availability.yml').readAsStringSync();
   final uploadWorkflow =
       File('.github/workflows/play-internal.yml').readAsStringSync();
+  final releaseTrain =
+      File('.github/workflows/release-train.yml').readAsStringSync();
 
   test('both modes are real flags, not just functions nobody can reach', () {
     // The failure this guards against is not hypothetical: the wiring
@@ -154,6 +156,42 @@ void main() {
     // back, and there would be no way to empty it.
     expect(workflow, contains('alpha1'),
         reason: 'reads and cleanups must still reach a retired track');
+  });
+
+  test('the tester train ships to Alpha — the track the testers are in', () {
+    // #1052: the rule reads "never alpha1", not "never alpha". `alpha`
+    // IS the closed test the testers are enrolled in, and the one whose
+    // 12-tester / 14-day countdown gates production access. This pins the
+    // ONE line that decides which track a `track=beta` dispatch reaches:
+    // edit it to internal, or to a retired track, and testers are told
+    // they are testers and handed nothing.
+    expect(
+      releaseTrain,
+      contains(
+          r"track: ${{ inputs.track == 'production' && 'production' || 'alpha' }}"),
+      reason: 'the Android leg maps beta→alpha and production→production; '
+          'any other mapping sends the tester train somewhere the testers '
+          'are not',
+    );
+    // And it must reach that track through the ONE upload path, so a
+    // second build recipe cannot drift away from the first.
+    expect(releaseTrain, contains('uses: ./.github/workflows/play-internal.yml'),
+        reason: 'one build path for Android, train or no train');
+  });
+
+  test('no workflow can dispatch a retired track', () {
+    // The uploader refuses alpha1 at publish time, which is the guard that
+    // cannot be edited away in a YAML choice list. This is the second
+    // fence: nothing may name it as the track it ships to.
+    for (final (name, yaml) in [
+      ('play-internal.yml', uploadWorkflow),
+      ('release-train.yml', releaseTrain),
+    ]) {
+      expect(yaml, isNot(contains("'alpha1'")),
+          reason: '$name must never pass alpha1 as a track');
+      expect(yaml, isNot(contains('"alpha1"')),
+          reason: '$name must never pass alpha1 as a track');
+    }
   });
 
   test('the workflow reads by default and only writes when asked', () {
