@@ -774,7 +774,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
     DateTime? endsOn,
     String description = '',
   }) async {
-    final id = await _client.rpc('create_expense_schedule', params: {
+    final id = await _client.rpc<dynamic>('create_expense_schedule', params: {
       'p_workspace_id': workspaceId,
       'p_title': title,
       'p_amount_cents': amountCents,
@@ -795,7 +795,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override
   Future<int> sweepExpenseSchedules(String workspaceId) async {
     final n = await _client
-        .rpc('sweep_expense_schedules', params: {'p_workspace_id': workspaceId});
+        .rpc<void>('sweep_expense_schedules',
+            params: {'p_workspace_id': workspaceId});
     return (n as num?)?.toInt() ?? 0;
   }
 
@@ -1249,7 +1250,9 @@ class SupabaseMoneyRepository implements MoneyRepository {
     final data = await _client.rpc<dynamic>('einvoice_status', params: {
       'p_workspace_id': workspaceId,
     });
-    final map = data is Map ? Map<String, dynamic>.from(data) : const {};
+    final map = data is Map
+        ? Map<String, dynamic>.from(data)
+        : const <String, dynamic>{};
     return EInvoiceProviderStatus(
       configured: map['configured'] == true,
       fields: {

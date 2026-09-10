@@ -1378,7 +1378,8 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     removedParticipants
         .add((conversationId: conversationId, memberId: memberId));
     participants[conversationId] = [
-      for (final p in participants[conversationId] ?? const [])
+      for (final p in participants[conversationId] ??
+          const <ConversationParticipant>[])
         if (p.memberId == memberId)
           ConversationParticipant(
             memberId: p.memberId,

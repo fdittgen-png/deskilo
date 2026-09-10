@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../money/domain/member_account.dart';
 import '../../../money/domain/invoice.dart';
 import '../../../money/domain/ledger_entry.dart';
 import '../../../money/presentation/widgets/account_card.dart';
@@ -107,7 +108,7 @@ class MemberMoneyCard extends ConsumerWidget {
     // Remaining per open invoice, so a row can say "partly paid" rather
     // than just "open" — the account RPC already computed it.
     final remaining = {
-      for (final open in account?.openInvoices ?? const [])
+      for (final open in account?.openInvoices ?? const <OpenInvoicePosition>[])
         open.invoiceId: open,
     };
 

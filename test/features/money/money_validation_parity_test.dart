@@ -233,7 +233,8 @@ void main() {
       await container.read(billingInvoiceSweepProvider('ws-1').future);
       expect(money.billingSweeps, isEmpty);
       // The rules object is still the writer's contract.
-      expect(BillingRules.fromJson(const {}).toJson(), isA<Map>());
+      expect(BillingRules.fromJson(const <String, dynamic>{}).toJson(),
+          isA<Map<String, dynamic>>());
     });
   });
 }

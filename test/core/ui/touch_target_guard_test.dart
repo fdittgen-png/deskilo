@@ -69,7 +69,8 @@ void expectTouchTargets(WidgetTester tester, {required String surface}) {
       reason: '$surface: an IconButton is narrower than the Material minimum',
     );
   }
-  for (final element in find.bySubtype<SegmentedButton>().evaluate()) {
+  for (final element
+      in find.bySubtype<SegmentedButton<dynamic>>().evaluate()) {
     expect(
       element.size!.height,
       greaterThanOrEqualTo(kMinInteractiveDimension),

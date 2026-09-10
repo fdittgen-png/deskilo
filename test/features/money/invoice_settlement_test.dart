@@ -34,7 +34,7 @@ Map<String, dynamic> invoiceRow({
       'issued_at': '2026-09-01T10:00:00Z',
       'period': '2026-09',
       'title': '2026-09',
-      'lines': const [],
+      'lines': const <dynamic>[],
       'total_cents': 5000,
       'currency': 'EUR',
       'member_name': 'Flo',
@@ -76,7 +76,7 @@ void main() {
             'period': '2026-08',
             'kind': 'usage',
             'total_cents': 3000,
-            'lines': const [],
+            'lines': const <dynamic>[],
           },
         ],
       ));

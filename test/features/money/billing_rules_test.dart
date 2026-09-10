@@ -132,7 +132,7 @@ void main() {
             'issued_at': '2026-08-29T10:00:00Z',
             'period': '2026-09',
             'title': '2026-09',
-            'lines': const [],
+            'lines': const <dynamic>[],
             'total_cents': 12000,
             'currency': 'EUR',
             'member_name': 'Flo',
