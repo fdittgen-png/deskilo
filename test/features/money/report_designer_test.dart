@@ -140,6 +140,50 @@ void main() {
     expect(find.byKey(const ValueKey('report-designer-pages')), findsOneWidget);
   });
 
+  testWidgets('on a phone the bar folds undo and redo away so the title '
+      'can be read', (tester) async {
+    // #1056 — back + undo + redo + a labelled Save left a 393dp phone
+    // about 115dp for a title wanting 110, so "Report editor" ellipsed to
+    // "Rep…": the one word telling you where you are was the one that
+    // went. Below the breakpoint the two history buttons fold into an
+    // overflow menu; Save stays a labelled button.
+    await pumpInvoices(tester, money: await seededMoney());
+    await openEditor(tester);
+
+    // pumpInvoices pins the surface at 800x1400, so narrow it AFTER the
+    // editor is open — which is also the honest sequence: a phone rotating
+    // to portrait, or a desktop window dragged narrow, must fold too.
+    tester.view.physicalSize = const Size(360, 800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('report-designer-undo')), findsNothing);
+    expect(find.byKey(const ValueKey('report-designer-redo')), findsNothing);
+    expect(find.byKey(const ValueKey('report-designer-history-menu')),
+        findsOneWidget);
+    expect(find.byKey(const ValueKey('invoice-template-save')), findsOneWidget,
+        reason: 'Save is the reason the screen exists; it never folds away');
+
+    // Folded away is not taken away: both are still reachable, and both
+    // still know whether they have anything to undo.
+    await tester.tap(
+        find.byKey(const ValueKey('report-designer-history-menu')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('report-designer-undo-item')),
+        findsOneWidget);
+    expect(find.byKey(const ValueKey('report-designer-redo-item')),
+        findsOneWidget);
+    expect(
+      tester
+          .widget<PopupMenuItem<VoidCallback?>>(
+              find.byKey(const ValueKey('report-designer-undo-item')))
+          .enabled,
+      isFalse,
+      reason: 'nothing has been edited yet, so Undo is offered but inert',
+    );
+  });
+
   testWidgets('Reset and Templates ask before replacing a layout that '
       'exists — and not before an empty one', (tester) async {
     await pumpInvoices(tester, money: await seededMoney());

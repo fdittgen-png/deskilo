@@ -169,7 +169,7 @@ const Map<String, int> _baseline = {
   // 700→800 (2026-08-05): #496 the template-language chips + per-language
   // overlay assembly.
   // 800→810 (2026-08-31): #763 the report editor's header help dot.
-  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 1180, // 2026-09-06 #966 the guide, the caret
+  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 1160, // 1180→1160 (2026-09-10): #1056 the app bar's undo/redo pair left for report_history_controls.dart
   'lib/features/money/presentation/widgets/report_field_picker.dart': 420, // 2026-09-06 #966 meanings + topic groups // 2026-09-02 #822 the page, undo/redo, guards // 2026-09-04 #875 layout drafts per kind, the panel mount and its three handlers — the panel and the actions themselves live in their own files // 2026-09-05 #880 the owner-texts drafts per language, merged into every preview/export, and the Texts panel mount
   'lib/features/workspace/domain/workspace_xml.dart': 960,
   'lib/features/profile/presentation/screens/new_instance_screen.dart': 560, // 2026-09-06 #977 six wizard steps

@@ -37,6 +37,7 @@ import '../report_defaults.dart';
 import '../report_edit_history.dart';
 import '../screens/report_editor_screen.dart';
 import 'report_image_picker.dart';
+import 'report_history_controls.dart';
 import 'report_markup_guide.dart';
 import 'report_page_designer.dart';
 import 'report_preview.dart';
@@ -1124,17 +1125,11 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
             ),
           ]),
           actions: [
-            IconButton(
-              key: const ValueKey('report-designer-undo'),
-              icon: const Icon(Icons.undo),
-              tooltip: l10n?.reportDesignerUndo ?? 'Undo',
-              onPressed: _history.canUndo && !_busy ? _undo : null,
-            ),
-            IconButton(
-              key: const ValueKey('report-designer-redo'),
-              icon: const Icon(Icons.redo),
-              tooltip: l10n?.reportDesignerRedo ?? 'Redo',
-              onPressed: _history.canRedo && !_busy ? _redo : null,
+            ReportHistoryControls(
+              canUndo: _history.canUndo && !_busy,
+              canRedo: _history.canRedo && !_busy,
+              onUndo: _undo,
+              onRedo: _redo,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
