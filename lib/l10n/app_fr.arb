@@ -279,7 +279,7 @@
   "@badgeSignInEntry": {
     "description": "#662 - badge sign-in"
   },
-  "badgePinSectionTitle": "Mon badge",
+  "badgePinSectionTitle": "Mon code",
   "@badgePinSectionTitle": {
     "description": "#662 - badge sign-in"
   },

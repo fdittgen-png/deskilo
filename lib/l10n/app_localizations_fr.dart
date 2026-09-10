@@ -452,7 +452,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get badgeSignInEntry => 'Se connecter avec un badge';
 
   @override
-  String get badgePinSectionTitle => 'Mon badge';
+  String get badgePinSectionTitle => 'Mon code';
 
   @override
   String get badgePinSet => 'Code défini';

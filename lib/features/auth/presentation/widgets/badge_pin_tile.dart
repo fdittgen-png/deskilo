@@ -53,7 +53,7 @@ class _BadgePinTileState extends ConsumerState<BadgePinTile> {
         return ListTile(
           key: const ValueKey('settings-badge-pin'),
           leading: const Icon(Icons.pin_outlined),
-          title: Text(l10n?.badgePinSectionTitle ?? 'My badge'),
+          title: Text(l10n?.badgePinSectionTitle ?? 'My PIN'),
           subtitle: Text(
             has == null
                 ? ''

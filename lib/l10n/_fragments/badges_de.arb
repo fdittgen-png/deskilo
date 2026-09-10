@@ -53,7 +53,7 @@
   "@badgeSignInEntry": {
     "description": "#662 - badge sign-in"
   },
-  "badgePinSectionTitle": "Mein Ausweis",
+  "badgePinSectionTitle": "Meine PIN",
   "@badgePinSectionTitle": {
     "description": "#662 - badge sign-in"
   },

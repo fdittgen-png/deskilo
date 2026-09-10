@@ -451,7 +451,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get badgeSignInEntry => 'Accedi con un badge';
 
   @override
-  String get badgePinSectionTitle => 'Il mio badge';
+  String get badgePinSectionTitle => 'Il mio PIN';
 
   @override
   String get badgePinSet => 'PIN impostato';
