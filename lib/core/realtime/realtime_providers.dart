@@ -49,22 +49,27 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
   ResumeResyncObserver? _observer;
   final _pending = <String>{};
 
+  /// #1093 — which build owns the channel. The notifier is keepAlive, so
+  /// ONE instance is reused across rebuilds and [_sub] is a single shared
+  /// field: two builds overlapping (a workspace switched twice, a resume
+  /// arriving mid-switch) would both tear down, both await, and both
+  /// assign — leaving the loser's channel open, unreferenced, and still
+  /// feeding invalidations for a workspace the member has left.
+  int _generation = 0;
+
   @override
   Future<void> build() async {
-    _sub?.cancel();
-    _debounce?.cancel();
-    if (_observer != null) {
-      WidgetsBinding.instance.removeObserver(_observer!);
-      _observer = null;
-    }
-    ref.onDispose(() {
-      _sub?.cancel();
-      _debounce?.cancel();
-      if (_observer != null) {
-        WidgetsBinding.instance.removeObserver(_observer!);
-      }
-    });
+    final generation = ++_generation;
+    ref.onDispose(_teardown);
     final workspace = await ref.watch(currentWorkspaceProvider.future);
+    // A build superseded while it awaited installs nothing: the build
+    // that superseded it owns the channel and will tear this one's
+    // predecessor down itself.
+    if (generation != _generation) return;
+    // Tear down AFTER the await, not before: the old channel stays live
+    // while the new workspace is being read, so there is no window in
+    // which changes are missed.
+    _teardown();
     if (workspace == null) return;
     _observer = ResumeResyncObserver(() {
       _pending.add(kResyncSignal);
@@ -78,6 +83,20 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
       _pending.add(table);
       _debounce ??= Timer(kRealtimeDebounce, _flush);
     });
+  }
+
+  /// Releases everything a previous build installed. Idempotent — the
+  /// dispose callback and the next build both call it.
+  void _teardown() {
+    _sub?.cancel();
+    _sub = null;
+    _debounce?.cancel();
+    _debounce = null;
+    final observer = _observer;
+    if (observer != null) {
+      WidgetsBinding.instance.removeObserver(observer);
+      _observer = null;
+    }
   }
 
   void _flush() {
