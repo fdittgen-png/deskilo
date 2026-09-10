@@ -2404,6 +2404,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get eventTypeUnknown => 'Actividad';
+
+  @override
   String get featuresTitle => 'Funciones';
 
   @override

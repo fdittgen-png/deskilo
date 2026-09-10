@@ -2870,6 +2870,10 @@
       }
     }
   },
+  "eventTypeUnknown": "Activity",
+  "@eventTypeUnknown": {
+    "description": "#1088 an event type this build does not know: the row still shows"
+  },
   "featuresTitle": "Features",
   "@featuresTitle": {
     "description": "App-bar title of the owner feature-management screen and its settings tile"

@@ -110,5 +110,9 @@
   "eventTypeUsageCorrection": "Früher gegangen",
   "eventTypeUsageRecordDelete": "Nutzungssatz entfernen",
   "eventUsageCorrectionLine": "{actor} bittet um {to} statt {from}",
-  "eventUsageRecordDeleteLine": "{actor} möchte einen Nutzungssatz entfernen ({space})"
+  "eventUsageRecordDeleteLine": "{actor} möchte einen Nutzungssatz entfernen ({space})",
+  "eventTypeUnknown": "Aktivität",
+  "@eventTypeUnknown": {
+    "description": "#1088 an event type this build does not know: the row still shows"
+  }
 }

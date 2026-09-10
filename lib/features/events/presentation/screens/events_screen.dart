@@ -366,6 +366,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     EventType.memberStatusChange => Icons.person_off_outlined,
     EventType.subscriptionChange => Icons.percent_outlined,
     EventType.matrixChange => Icons.admin_panel_settings_outlined,
+    // #1088 — a type this build does not know gets the neutral mark.
+    EventType.unknown => Icons.info_outline,
     };
   }
 
@@ -864,7 +866,11 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                               color:
                                   Theme.of(context).colorScheme.error,
                             ),
-                          EventStatus.expired => null,
+                          // #1088 — an unknown status carries no
+                          // outcome claim, like an expired one.
+                          EventStatus.expired ||
+                          EventStatus.unknown =>
+                            null,
                         },
                       ),
                   },

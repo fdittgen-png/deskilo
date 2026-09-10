@@ -110,5 +110,9 @@
   "eventTypeUsageCorrection": "Uscita anticipata",
   "eventTypeUsageRecordDelete": "Rimozione del rilevamento",
   "eventUsageCorrectionLine": "{actor} chiede di essere fatturato {to} invece di {from}",
-  "eventUsageRecordDeleteLine": "{actor} chiede di rimuovere un rilevamento ({space})"
+  "eventUsageRecordDeleteLine": "{actor} chiede di rimuovere un rilevamento ({space})",
+  "eventTypeUnknown": "Attività",
+  "@eventTypeUnknown": {
+    "description": "#1088 an event type this build does not know: the row still shows"
+  }
 }

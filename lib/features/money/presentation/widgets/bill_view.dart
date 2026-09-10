@@ -672,6 +672,8 @@ class _OpenPositionsCard extends StatelessWidget {
       case EventType.subscriptionChange:
       case EventType.matrixChange:
       case EventType.adjustment:
+      // #1088 — never an open position; the fallback keeps it exhaustive.
+      case EventType.unknown:
         return l10n?.eventTypeAdjustment ?? 'Adjustment';
     }
   }

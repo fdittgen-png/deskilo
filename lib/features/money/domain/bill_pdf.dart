@@ -293,6 +293,8 @@ String _openPositionLabel(BillPdfStrings strings, WorkspaceEvent event) {
     case EventType.subscriptionChange:
     case EventType.matrixChange:
     case EventType.adjustment:
+    // #1088 — never an open position; the fallback keeps it exhaustive.
+    case EventType.unknown:
       return strings.eventAdjustment;
   }
 }

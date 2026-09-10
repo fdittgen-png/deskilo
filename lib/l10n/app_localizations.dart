@@ -4277,6 +4277,12 @@ abstract class AppLocalizations {
   /// **'{actor} asks to remove a usage record ({space})'**
   String eventUsageRecordDeleteLine(String actor, String space);
 
+  /// #1088 an event type this build does not know: the row still shows
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get eventTypeUnknown;
+
   /// App-bar title of the owner feature-management screen and its settings tile
   ///
   /// In en, this message translates to:
