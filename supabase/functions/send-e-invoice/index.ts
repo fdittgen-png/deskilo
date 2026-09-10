@@ -81,7 +81,13 @@ function missingFor(cfg: Config, env: Environment): string[] {
   return REQUIRED.filter((field) => !scoped[field]);
 }
 
-async function sha256(bytes: Uint8Array): Promise<string> {
+// #1117 — `Uint8Array<ArrayBuffer>`, not the bare `Uint8Array`.
+// TypeScript 5.7 made the type generic over its buffer, and the bare
+// form widens to `ArrayBufferLike`, which admits a SharedArrayBuffer
+// and is therefore not a `BufferSource`. These bytes always come from
+// `Uint8Array.from(atob(...))`, whose buffer is a real ArrayBuffer, so
+// naming it is a narrowing, not a cast.
+async function sha256(bytes: Uint8Array<ArrayBuffer>): Promise<string> {
   const digest = await crypto.subtle.digest("SHA-256", bytes);
   return [...new Uint8Array(digest)]
     .map((b) => b.toString(16).padStart(2, "0"))
@@ -94,7 +100,7 @@ async function submitGeneric(
   cfg: Config,
   fileName: string,
   mimeType: string,
-  bytes: Uint8Array,
+  bytes: Uint8Array<ArrayBuffer>,
 ): Promise<{ status: "accepted" | "rejected"; externalId: string; detail: string }> {
   const form = new FormData();
   form.append(
