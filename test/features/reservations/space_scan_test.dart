@@ -7,6 +7,9 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/features/plan/domain/desk.dart';
+import 'package:deskilo/features/plan/domain/grid_geometry.dart';
+import 'package:deskilo/features/plan/domain/office.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/domain/space_code.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
@@ -287,6 +290,90 @@ void main() {
     );
     expect(checkIn.onPressed, isNull);
     expect(find.text('Taken'), findsOneWidget);
+  });
+
+  // #1087 — the whole-OFFICE conflict test matched any whole-desk
+  // booking in `plan.desks`, without asking whether that desk is in THIS
+  // office. One member booking a whole desk in another office (or on
+  // another floor) made this office read as taken: not a lost seat, a
+  // lost sale, and it looked like ordinary occupancy.
+  testWidgets(
+      'a whole-desk booking in ANOTHER office leaves this office free',
+      (tester) async {
+    tester.view.physicalSize = const Size(800, 1400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    final plans = FakeFloorPlanRepository()..seedSmallPlan();
+    // The scanned office, bookable as a whole and holding no bookings.
+    plans.offices[0] = plans.offices[0]
+        .copyWith(bookableAsWhole: true, priceCents: 2500);
+    // A SECOND office on the same level, with its own desk.
+    final other = Office(
+      id: 'office-other',
+      workspaceId: 'ws-1',
+      levelId: plans.levels.single.id,
+      name: 'Back room',
+      color: 0,
+      bookableAsWhole: false,
+      rect: const GridRect(x: 40, y: 0, w: 30, h: 20),
+    );
+    plans.offices.add(other);
+    final otherDesk = Desk(
+      id: 'desk-other',
+      workspaceId: 'ws-1',
+      officeId: other.id,
+      name: 'Back desk',
+      rect: const GridRect(x: 42, y: 2, w: 12, h: 4),
+    );
+    plans.desks.add(otherDesk);
+
+    final reservations = FakeReservationRepository();
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+      featureFlags: const {'levelBooking': true},
+    )..openWeekdays['ws-1'] = [1, 2, 3, 4, 5, 6, 7];
+    workspace.myMember =
+        workspace.myMember.copyWith(canReserveLevel: true);
+    // SOMEBODY ELSE holds the OTHER office's desk, whole. Seeded
+    // directly: `create` always books as me, and my own booking would
+    // take the "you already hold this" branch instead of the conflict.
+    reservations.reservations.add(
+      Reservation(
+        id: 'res-other',
+        workspaceId: 'ws-1',
+        deskId: otherDesk.id,
+        memberId: 'member-someone-else',
+        startsAt: kTestNow.subtract(const Duration(minutes: 5)),
+        endsAt: kTestNow.add(const Duration(hours: 2)),
+        status: ReservationStatus.reserved,
+      ),
+    );
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          floorPlan: plans,
+          reservations: reservations,
+          workspace: workspace,
+        ),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('reserve-scan-button')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('space-scan-field')),
+      SpaceCodeCodec.encode(
+        workspaceId: 'ws-1',
+        kind: SpaceKind.office,
+        id: plans.offices.first.id,
+      ),
+    );
+    await tester.tap(find.byKey(const ValueKey('space-scan-submit')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('space-conflict')), findsNothing,
+        reason: 'a desk in another office does not take this one');
   });
 
   testWidgets(

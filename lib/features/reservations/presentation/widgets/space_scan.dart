@@ -641,9 +641,14 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
               .where((r) =>
                   (r.officeId == office?.id ||
                       r.levelId == office?.levelId ||
+                      // #1087 — a whole-desk booking blocks this office
+                      // only if the desk IS in this office. Without the
+                      // second half, one desk booked anywhere in the
+                      // workspace made every bookable office read taken.
                       (r.deskId != null &&
-                          (plan?.desks ?? const <Desk>[])
-                              .any((d) => d.id == r.deskId))) &&
+                          (plan?.desks ?? const <Desk>[]).any((d) =>
+                              d.id == r.deskId &&
+                              d.officeId == office?.id))) &&
                   r.coversRange(window.start, window.end))
               .firstOrNull,
       _ => reservations
