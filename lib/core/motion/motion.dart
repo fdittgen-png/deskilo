@@ -138,18 +138,19 @@ class _FadeInOnChangeState extends State<FadeInOnChange>
     }
   }
 
+  /// #1090 — built once, not per rebuild: see [_CanvasControlsState].
+  late final CurvedAnimation _curve =
+      CurvedAnimation(parent: _controller, curve: MotionTokens.enter);
+
   @override
   void dispose() {
+    _curve.dispose();
     _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity:
-          CurvedAnimation(parent: _controller, curve: MotionTokens.enter),
-      child: widget.child,
-    );
+    return FadeTransition(opacity: _curve, child: widget.child);
   }
 }

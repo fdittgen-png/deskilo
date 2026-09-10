@@ -100,6 +100,10 @@ dev_dependencies:
   riverpod_generator: ^4.0.2
   riverpod_lint: ^3.1.3
   mocktail: ^1.0.4
+  # #1090 — the leak tracker is what turns "this object is never
+  # disposed" into a failing test. It ships with flutter_test as a
+  # transitive dependency; naming it here is what lets a test import it.
+  leak_tracker_flutter_testing: ^3.0.10
   # #1050 — MockClient (package:http/testing.dart) is the seam the auth
   # repository test reads the outgoing gotrue request through.
   http: ^1.6.0

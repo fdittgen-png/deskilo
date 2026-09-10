@@ -87,20 +87,27 @@ class _CanvasControlsState extends State<CanvasControls>
   );
   Matrix4Tween? _glideTween;
 
+  /// #1090 — ONE eased view of [_glide], for the widget's whole life.
+  /// A `CurvedAnimation` registers a status listener on its parent in
+  /// its constructor and removes it only in `dispose()`, so building one
+  /// inside the per-frame listener left a listener behind on every frame
+  /// of every glide — permanently, and growing with each zoom.
+  late final CurvedAnimation _glideCurve =
+      CurvedAnimation(parent: _glide, curve: MotionTokens.ease);
+
   @override
   void initState() {
     super.initState();
     _glide.addListener(() {
       final tween = _glideTween;
       if (tween == null) return;
-      widget.controller.value = tween.evaluate(
-        CurvedAnimation(parent: _glide, curve: MotionTokens.ease),
-      );
+      widget.controller.value = tween.evaluate(_glideCurve);
     });
   }
 
   @override
   void dispose() {
+    _glideCurve.dispose();
     _glide.dispose();
     super.dispose();
   }
