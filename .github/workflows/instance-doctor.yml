@@ -1,0 +1,142 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: 0BSD
+
+name: Status · Instance doctor
+
+# #1075 — read the live project every morning and say whether people can
+# actually sign in.
+#
+# The failure this exists for: on 2026-09-06 `mailer_autoconfirm` was
+# switched off. Every account for the previous two months had confirmed
+# itself within two seconds of creation — no mail, no link, nothing to
+# click. From the 7th GoTrue began sending "Confirm your signup" for real,
+# and the link carried the project's Site URL, still http://localhost:3000.
+#
+# Three people signed up over three days. None could confirm. The app was
+# green, CI was green, the store build was fine, and the only thing that
+# eventually said so was one of them asking a human on WhatsApp on the
+# fourth day.
+#
+# Every signal was already in the project. Nothing was reading it.
+#
+# The doctor writes nothing — it reads the auth config and counts rows in
+# auth.users. It exits 1 when a finding needs a human, and this workflow
+# turns that into an issue, because an owner reads issues and does not
+# read a workflow that quietly passed.
+
+on:
+  schedule:
+    # 07:10 UTC, before the working day in the workspace's timezone.
+    - cron: '10 7 * * *'
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Project ref to examine (default SUPABASE_PROJECT_REF)
+        required: false
+        type: string
+        default: ''
+
+concurrency:
+  group: instance-doctor
+  cancel-in-progress: false
+
+env:
+  FLUTTER_VERSION: "3.44.9"
+
+jobs:
+  doctor:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v5
+
+      # Owner-configurable, like the SMTP secrets on the release train:
+      # without them this says so loudly in the summary and stops. A
+      # health check that fails because it was never configured teaches
+      # everyone to ignore it.
+      - name: Are the secrets there
+        id: gate
+        env:
+          TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+        run: |
+          if [ -z "$TOKEN" ] || [ -z "${{ inputs.ref }}$REF" ]; then
+            {
+              echo "## Instance doctor — not configured"
+              echo
+              echo "Set **SUPABASE_ACCESS_TOKEN** (a personal access token)"
+              echo "and **SUPABASE_PROJECT_REF** in the repository secrets."
+              echo "The doctor only reads: auth config and counts in auth.users."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: subosito/flutter-action@v2
+        if: steps.gate.outputs.ready == 'true'
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+      - run: flutter pub get
+        if: steps.gate.outputs.ready == 'true'
+
+      - name: Examine the project
+        id: examine
+        if: steps.gate.outputs.ready == 'true'
+        continue-on-error: true
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          REF: ${{ inputs.ref != '' && inputs.ref || secrets.SUPABASE_PROJECT_REF }}
+        run: |
+          set +e
+          dart run tool/instance.dart doctor --ref "$REF" > doctor.txt 2>&1
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+          {
+            echo "## Instance doctor"
+            echo
+            echo '```'
+            cat doctor.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          cat doctor.txt
+
+      # One open issue at a time: a daily check that opens a duplicate
+      # every morning is a check nobody reads by Thursday.
+      - name: Say so where the owner will see it
+        if: steps.gate.outputs.ready == 'true' && steps.examine.outputs.code != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Instance doctor: sign-in health needs a look"
+          EXISTING=$(gh issue list --repo "$GITHUB_REPOSITORY" \
+            --state open --search "$TITLE in:title" \
+            --json number --jq '.[0].number // empty')
+          {
+            echo "The daily check found something that stops people signing in."
+            echo
+            echo '```'
+            cat doctor.txt
+            echo '```'
+            echo
+            echo "Run: \`dart run tool/instance.dart doctor --ref <project>\`"
+            echo "Fix the configuration half with: \`dart run tool/instance.dart auth --ref <project>\`"
+            echo
+            echo "_[run](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})_"
+          } > body.md
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --repo "$GITHUB_REPOSITORY" --body-file body.md
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" \
+              --title "$TITLE" --body-file body.md
+          fi
+
+      # The check itself failing is different from the project being
+      # unhealthy, and must not be swallowed by continue-on-error.
+      - name: The doctor itself must run
+        if: steps.gate.outputs.ready == 'true' && steps.examine.outputs.code == '2'
+        run: |
+          echo "::error::the doctor could not run (bad arguments or no project)"
+          exit 1

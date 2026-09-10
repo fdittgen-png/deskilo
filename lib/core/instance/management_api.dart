@@ -46,6 +46,13 @@ abstract class SupabaseManagement {
   /// Runs [sql] against the project's database as the postgres role.
   Future<void> runSql(String ref, String sql);
 
+  /// [sql]'s rows. `runSql` discards the answer; the doctor needs it.
+  Future<List<Map<String, Object?>>> query(String ref, String sql);
+
+  /// The project's live auth settings — the read beside [patchAuthConfig],
+  /// so a check can compare what IS configured with what should be.
+  Future<Map<String, Object?>> authConfig(String ref);
+
   /// Deploys one edge function from its sources.
   Future<void> deployFunction(
     String ref, {
@@ -144,6 +151,23 @@ class DioSupabaseManagement implements SupabaseManagement {
   @override
   Future<void> runSql(String ref, String sql) => _call<dynamic>(() =>
       _dio.post('/v1/projects/$ref/database/query', data: {'query': sql}));
+
+  @override
+  Future<List<Map<String, Object?>>> query(String ref, String sql) async {
+    final rows = await _call<List<dynamic>>(() => _dio
+        .post('/v1/projects/$ref/database/query', data: {'query': sql}));
+    return [
+      for (final row in rows.cast<Map<dynamic, dynamic>>())
+        {for (final e in row.entries) '${e.key}': e.value as Object?},
+    ];
+  }
+
+  @override
+  Future<Map<String, Object?>> authConfig(String ref) async {
+    final config = await _call<Map<dynamic, dynamic>>(
+        () => _dio.get('/v1/projects/$ref/config/auth'));
+    return {for (final e in config.entries) '${e.key}': e.value as Object?};
+  }
 
   @override
   Future<void> deployFunction(
