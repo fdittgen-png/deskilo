@@ -2389,6 +2389,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get eventTypeUnknown => 'Activity';
+
+  @override
   String get featuresTitle => 'Features';
 
   @override

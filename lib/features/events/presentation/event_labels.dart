@@ -36,6 +36,9 @@ String eventTypeLabel(AppLocalizations? l10n, EventType type) {
       l10n?.eventTypeSubscriptionChange ?? 'Subscription change',
     EventType.matrixChange =>
       l10n?.eventTypeMatrixChange ?? 'Permission matrix change',
+    // #1088 — a type this build does not know still names itself as
+    // something that happened, rather than emptying the feed.
+    EventType.unknown => l10n?.eventTypeUnknown ?? 'Activity',
     EventType.invoiceWriteoff =>
       l10n?.eventTypeInvoiceWriteoff ?? 'Outstanding write-off',
     EventType.invoiceReminder =>

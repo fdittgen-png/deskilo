@@ -80,7 +80,13 @@ enum EventType {
   refund('refund'),
   memberStatusChange('member_status_change'),
   subscriptionChange('subscription_change'),
-  matrixChange('matrix_change');
+  matrixChange('matrix_change'),
+
+  /// #1088 — a wire word THIS build does not know. The `events.type`
+  /// constraint has been widened six times; a client that has not been
+  /// updated yet must still show the rest of the feed, and must still
+  /// show that something happened. Never written by the client.
+  unknown;
 
   const EventType([String? dbName]) : _dbName = dbName;
 
@@ -89,13 +95,41 @@ enum EventType {
   /// The value stored in events.type (snake_case where Dart camelCases).
   String get dbName => _dbName ?? name;
 
+  /// An unrecognised wire word degrades to [unknown] — it never throws.
+  /// One row the server has learned to write must not cost the reader
+  /// the whole feed.
   static EventType fromDb(String value) =>
-      values.firstWhere((t) => t.dbName == value);
+      values.firstWhere((t) => t.dbName == value, orElse: () => unknown);
 }
 
-enum EventAction { created, modified, cancelled, submitted, approved, rejected }
+enum EventAction {
+  created,
+  modified,
+  cancelled,
+  submitted,
+  approved,
+  rejected,
 
-enum EventStatus { applied, pending, confirmed, rejected, expired }
+  /// #1088 — see [EventType.unknown].
+  unknown;
+
+  static EventAction fromDb(String value) =>
+      values.firstWhere((a) => a.name == value, orElse: () => unknown);
+}
+
+enum EventStatus {
+  applied,
+  pending,
+  confirmed,
+  rejected,
+  expired,
+
+  /// #1088 — see [EventType.unknown].
+  unknown;
+
+  static EventStatus fromDb(String value) =>
+      values.firstWhere((s) => s.name == value, orElse: () => unknown);
+}
 
 /// The unifying auditable record of the Events space (spec §8). When actor
 /// and subject differ the event runs through the confirmation protocol.

@@ -110,5 +110,9 @@
   "eventTypeUsageCorrection": "Salida anticipada",
   "eventTypeUsageRecordDelete": "Eliminar registro de uso",
   "eventUsageCorrectionLine": "{actor} pide que se facture {to} en lugar de {from}",
-  "eventUsageRecordDeleteLine": "{actor} pide eliminar un registro de uso ({space})"
+  "eventUsageRecordDeleteLine": "{actor} pide eliminar un registro de uso ({space})",
+  "eventTypeUnknown": "Actividad",
+  "@eventTypeUnknown": {
+    "description": "#1088 an event type this build does not know: the row still shows"
+  }
 }

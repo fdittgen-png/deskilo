@@ -166,12 +166,12 @@ class SupabaseEventRepository implements EventRepository {
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         type: EventType.fromDb(row['type'] as String),
-        action: EventAction.values.byName(row['action'] as String),
+        action: EventAction.fromDb(row['action'] as String),
         actorMemberId: row['actor_member_id'] as String,
         subjectMemberId: row['subject_member_id'] as String,
         reservationId: row['reservation_id'] as String?,
         payload: (row['payload'] as Map).cast<String, dynamic>(),
-        status: EventStatus.values.byName(row['status'] as String),
+        status: EventStatus.fromDb(row['status'] as String),
         createdAt: DateTime.parse(row['created_at'] as String),
         decidedAt: row['decided_at'] == null
             ? null

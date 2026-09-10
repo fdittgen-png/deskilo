@@ -243,5 +243,9 @@
         "type": "String"
       }
     }
+  },
+  "eventTypeUnknown": "Activity",
+  "@eventTypeUnknown": {
+    "description": "#1088 an event type this build does not know: the row still shows"
   }
 }
