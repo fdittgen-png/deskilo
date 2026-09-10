@@ -5,6 +5,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/booking_gate.dart';
+import '../../domain/picked_time.dart';
 import '../../domain/walk_up_window.dart';
 import 'booking_range_text.dart';
 
@@ -177,13 +178,10 @@ class SpaceActFormState extends State<SpaceActForm> {
     // Snap DOWN to the workspace grid, then keep the window inside
     // today and after now — the act books the day you are standing in.
     final minutes = (picked.hour * 60 + picked.minute) ~/ _snap * _snap;
-    var at = DateTime(
-      now.year,
-      now.month,
-      now.day,
-      minutes ~/ 60,
-      minutes % 60,
-    );
+    // #1082 — on the WORKSPACE clock. A bare DateTime here is the
+    // device's, and it was then compared against `now` and assigned to
+    // `_start`/`_end`, which are workspace instants.
+    var at = pickedInstantAt(now, minutes ~/ 60, minutes % 60);
     setState(() {
       if (isStart) {
         if (at.isBefore(now)) at = now;

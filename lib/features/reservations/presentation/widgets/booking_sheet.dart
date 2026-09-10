@@ -12,6 +12,7 @@ import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/booking_gate.dart';
+import '../../domain/picked_time.dart';
 import '../../domain/reservation_repository.dart';
 import 'booking_range_text.dart';
 
@@ -252,9 +253,7 @@ class _BookingSheetState extends State<BookingSheet> {
                 label: l10n?.planFromLabel ?? 'From',
                 value: _start,
                 onPicked: (t) {
-                  final local = _day;
-                  var start = _snap(DateTime(local.year, local.month,
-                      local.day, t.hour, t.minute));
+                  var start = _snap(pickedInstantAt(_day, t.hour, t.minute));
                   var end = _end;
                   if (!end.isAfter(start)) end = start.add(_slot);
                   setState(() {
@@ -268,9 +267,7 @@ class _BookingSheetState extends State<BookingSheet> {
                 label: l10n?.planUntilLabel ?? 'Until',
                 value: _end,
                 onPicked: (t) {
-                  final local = _day;
-                  var end = _snap(DateTime(local.year, local.month,
-                      local.day, t.hour, t.minute));
+                  var end = _snap(pickedInstantAt(_day, t.hour, t.minute));
                   if (!end.isAfter(_start)) {
                     end = end.add(const Duration(days: 1));
                   }
@@ -318,9 +315,7 @@ class _BookingSheetState extends State<BookingSheet> {
                 label: l10n?.planUntilLabel ?? 'Until',
                 value: _end,
                 onPicked: (t) {
-                  final local = _day;
-                  var end = _snap(DateTime(local.year, local.month,
-                      local.day, t.hour, t.minute));
+                  var end = _snap(pickedInstantAt(_day, t.hour, t.minute));
                   if (!end.isAfter(_start)) {
                     end = end.add(const Duration(days: 1));
                   }
@@ -488,8 +483,11 @@ class _BookingSheetState extends State<BookingSheet> {
 
   DateTime _snap(DateTime t) {
     // #638 — the shared grid rule; no surface snaps on its own any more.
+    // #1082 — and it snaps ON THE WORKSPACE CLOCK: `t` is a workspace
+    // instant, so its components are workspace wall-clock and the
+    // snapped result must be rebuilt in that zone, not the device's.
     final m = widget.granularity.snapMinutesOfDay(t.hour * 60 + t.minute);
-    return DateTime(t.year, t.month, t.day, m ~/ 60, m % 60);
+    return pickedInstantAt(t, m ~/ 60, m % 60);
   }
 
   /// Morning / Afternoon / Full day under half-day granularity — the same
