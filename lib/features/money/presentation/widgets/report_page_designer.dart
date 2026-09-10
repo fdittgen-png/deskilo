@@ -270,8 +270,18 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
+        // #1056 — a Row here overflowed by 194 px on a 360 dp phone: the
+        // segmented button, the page count and the zoom menu do not fit on
+        // one line, and Flex answers that by clipping. A Wrap puts the zoom
+        // on its own line instead. On a wide screen spaceBetween lays it out
+        // exactly as the Row did.
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 8,
+          runSpacing: 4,
           children: [
+            Row(mainAxisSize: MainAxisSize.min, children: [
             // Design ↔ Preview: the Docentric loop — same page, fields
             // or merged data. Side by side, both are always there.
             if (!widget.sideBySide)
@@ -297,14 +307,16 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
                 onSelectionChanged: (selection) =>
                     setState(() => _preview = selection.first),
               ),
-            const SizedBox(width: 8),
+            ]),
+            // Its own Wrap child, not part of the group: on a phone the
+            // segmented button alone fills the line, and the page count is
+            // the one thing here that reads perfectly well underneath.
             Text(
               l10n?.reportDesignerPages(_pages) ??
                   (_pages == 1 ? '1 page' : '$_pages pages'),
               key: const ValueKey('report-designer-pages'),
               style: theme.textTheme.labelSmall,
             ),
-            const Spacer(),
             // A null-valued PopupMenuItem never reaches onSelected —
             // fit-width travels as the 0 sentinel instead.
             PopupMenuButton<double>(
