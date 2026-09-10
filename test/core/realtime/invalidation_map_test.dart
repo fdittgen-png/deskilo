@@ -48,10 +48,33 @@ void main() {
     expect(reached, contains(myUpcomingReservationsProvider));
   });
 
-  test('only a members change busts the floor-plan disk cache (#572)',
-      () {
-    expect(invalidationFor('members').bustsPlanCache, isTrue);
-    for (final table in realtimeTables.where((t) => t != 'members')) {
+  // #572 gave `members` the bust because a membership change widens what
+  // RLS lets this user read. #1084 is the other half of the same rule and
+  // the more obvious one: a table whose ROWS the plan cache stores must
+  // bust it, or the editing device is the only one that sees the change
+  // for the next ten minutes.
+  //
+  // The tables deliberately NOT on this list are the high-frequency ones
+  // — reservations above all. Those never enter the plan cache, so
+  // busting on them would be pure thrash.
+  const bustingTables = {
+    'members',
+    'levels',
+    'offices',
+    'desks',
+    'seats',
+    'plan_images',
+    'accessories',
+    'seat_accessories',
+  };
+
+  test('every table the plan cache holds busts it (#572, #1084)', () {
+    for (final table in bustingTables) {
+      expect(invalidationFor(table).bustsPlanCache, isTrue,
+          reason: '$table is cached in the plan bundle — a change to it '
+              'must not stay invisible for the TTL');
+    }
+    for (final table in realtimeTables.where((t) => !bustingTables.contains(t))) {
       expect(invalidationFor(table).bustsPlanCache, isFalse,
           reason: '$table must not thrash the plan disk cache');
     }
