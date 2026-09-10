@@ -55,6 +55,56 @@ of the same screen, ingest it under the same screen id, merge — the same
 language keeps working. The old original stays in `docs/media/source/`
 under its own date.
 
+## Stitching a scrolled form — what 2026-09-10 cost
+
+The pipeline works, but four things sink a batch silently:
+
+- **Measure the trims per batch, never as a constant.** `--trim-top` must
+  remove the status bar AND the orange dev banner AND the app bar — on
+  that device 390 px, not the 130 of the status bar alone. Leave the app
+  bar in and every junction carries a repeated "← Features" band, the
+  matcher matches the band instead of the content, and the stitch splices
+  two unrelated paragraphs on top of each other. `--trim-bottom` is the
+  navigation bar, 120 there.
+- **The matcher scores the WHOLE overlap with a trimmed mean** (fixed in
+  `findOverlap`, #1053). A one-number-per-row signature is a strip, and a
+  strip matches a card edge anywhere on the page: it put capture 10 at an
+  overlap of 644 instead of 150 and **swallowed 494 rows** without
+  changing the output's dimensions. The trimmed mean matters because the
+  rotating help-hint card corrupts a minority of rows outright and a
+  plain mean lets those few outweigh hundreds of rows of matching text.
+- **Trust the render, not the score.** Whole-width, a true overlap scores
+  ~0.00–0.36. Anything above ~1.5 is not an overlap. Crop each junction
+  out of the merged image and LOOK at it — every stitching bug in that
+  session was caught by looking, none by the number.
+- **Real gaps exist, and butt-joining is the honest answer.** Two of the
+  Features form's 27 junctions had nothing in common: nobody photographed
+  between "Member notifications" and "E-invoice delivery to customers",
+  nor between "Number sequences" and "VAT groups". A matcher that must
+  return something invents an overlap there. Losing the rows nobody
+  photographed beats losing rows that WERE photographed, silently.
+- **`ingest` and `merge` order by the capture INDEX** — that was a bug
+  until #1053 sorted them as strings and handed `merge` 1, 10, 11, … 2.
+  Stage the originals under zero-padded names in scroll order anyway; it
+  costs nothing and the order is then visible in the directory.
+
+## Screenshots carry personal data, and `docs/media/source/` is in git
+
+Demo mode exists for exactly this — *"Names, e-mails, phones and
+addresses are blurred on this device's screen — for screenshots and
+videos"* — and a batch shot with it OFF cannot be published: it reaches
+the public wiki AND `assets/help/images/` inside every store build.
+
+The 2026-09-09 batch carried a full IBAN, a customer's business address,
+five people's names, three e-mail addresses and a live join QR. Note that
+**`ingest` alone is already too late**: the originals are tracked, so
+committing them writes the data into repository history, where removing
+it means a force-pushed rewrite rather than a follow-up commit.
+
+Ask before ingesting: re-shoot with Demo mode on, or redact first. A
+rendered PDF may defeat Demo mode — put a placeholder IBAN in Payment
+instructions before shooting the invoice screens.
+
 ## The text
 Written from the app, not from memory of the app: the ARB fragments give
 every label verbatim, the registries give every field, flag, permission,

@@ -28,6 +28,10 @@ description: The recurring reasons a DesKilo widget or lint test fails for a rea
 | a test appended at EOF lands inside a trailing class | the file ends with a helper class after `main` | insert before `main`'s closing brace, not at EOF |
 | the settings list grew and a tile tap misses | Advanced/Administration gained rows | viewport 3100 → 3300, or `scrollUntilVisible` on the settings list |
 | `expect(find.text('Sign out'))` finds nothing | same growth | same fix |
+| a narrow-width test still sees the wide layout | the pump helper pins the view — `pumpInvoices` sets 800×1400 and `addTearDown(reset)` | set the size AFTER the helper, then `pumpAndSettle()`; it is also the honest sequence (a window dragged narrow must fold too) |
+| `find.text('Report editor')` passes on a title that reads "Rep…" | an ellipsised `Text` still holds the full string in the tree | assert the STRUCTURE that makes room — the overflow menu present, the icon buttons absent — never the string |
+| a new width surfaces an overflow in an unrelated widget | it was always too wide; nothing had rendered it that narrow before | fix it in the same PR — shipping the bar while the body clips is half a fix (#1056: the app bar, then a 194 px Row in the designer's own toolbar) |
+| a `Row` of chips/buttons overflows on a phone | `Flex` answers "too wide" by clipping | `Wrap` with `WrapAlignment.spaceBetween`; on a wide screen it lays out exactly as the Row did, and there is no breakpoint to guess at |
 | a widget test asserts a toggle that a `finally` never resets | `_busy` stuck after a hang | bound platform calls with `.timeout` so a hang becomes an error |
 
 Quick-view keys: `member-doc-quick` / `-download` / `-share` (one prefix

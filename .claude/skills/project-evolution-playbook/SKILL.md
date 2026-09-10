@@ -96,6 +96,43 @@ ratchet lint counting the symbols that still open the nearest section.
   Writing "no task, deliberately — profile it first if a list ever feels
   janky" is worth more than a task nobody can justify.
 
+## Designing the lint that stops the regression
+
+The ratchet idea is in Principles; these are the shapes that make one
+actually hold, learned writing three of them on 2026-09-10.
+
+- **Prefer a forward-looking cutoff to a baseline list.** The sweep
+  migration that fixed 99 bad grants is the cutoff: everything up to it
+  is covered BY it, so the rule only checks what comes after, and there
+  is no allow-list to maintain, no historical file to relitigate, and
+  nothing to argue about in review. A baseline is for debt you intend to
+  pay down; a cutoff is for debt that is already paid.
+- **A rule whose corpus is at zero is untested.** Both the grant lint and
+  the icon-button lint match nothing today — that is the point of them.
+  So drive the rule directly with three or four synthetic cases, and
+  prove it red once against a probe you then delete. A green lint that
+  has never gone red is a comment.
+- **Parse the shape, not the first delimiter.** The icon-button rule
+  counts parens: a mute button otherwise hides behind its own callback,
+  `onPressed: () => Navigator.of(context).pop()`, because a naive regex
+  ends the match at the first `)`.
+- **Strip placeholders before matching message text.** `{used}` contains
+  the word "used", so `contains('used')` finds the verb in every message
+  that takes that argument, including the ones that never say it. Cost a
+  false failure on the first run.
+- **Two copies of a rule drift, and the copy an agent reads first is the
+  one that matters.** Correcting "never use the alpha track" in CLAUDE.md
+  left the identical sentence in a skill's frontmatter — the text loaded
+  *before* CLAUDE.md. When you fix a rule, grep the whole repository for
+  its wording, skills and workflow comments included.
+- **When two names exist for one thing, delete one.** The release train
+  took `-f track=beta` and shipped to Play's `alpha`; the log read
+  `TRACK: beta` three lines above `--track "alpha"`. That mismatch
+  produced a wrong rule in CLAUDE.md and, later, an owner having to
+  explain their own deployment target. The fix was not a clearer comment:
+  it was making the input BE the track, so there is no mapping left to
+  get wrong.
+
 ## Handing work to another agent
 
 One issue, not a tree. Ordered tasks with the dependencies stated, one
