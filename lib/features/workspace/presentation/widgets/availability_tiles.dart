@@ -145,6 +145,7 @@ class SimultaneousTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
+            tooltip: l10n?.a11yDecrease ?? 'Decrease',
             key: const Key('policy-simultaneous-minus'),
             icon: const Icon(Icons.remove),
             onPressed: value > BookingPolicies.defaultSimultaneous
@@ -158,6 +159,7 @@ class SimultaneousTile extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           IconButton(
+            tooltip: l10n?.a11yIncrease ?? 'Increase',
             key: const Key('policy-simultaneous-plus'),
             icon: const Icon(Icons.add),
             onPressed: value < BookingPolicies.maxSimultaneous

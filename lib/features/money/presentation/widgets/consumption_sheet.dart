@@ -117,6 +117,7 @@ Future<void> showConsumptionSheet(
                   child: Text(l10n?.consumptionQuantity ?? 'Quantity'),
                 ),
                 IconButton(
+                  tooltip: l10n?.a11yDecrease ?? 'Decrease',
                   icon: const Icon(Icons.remove),
                   onPressed: quantity <= 1
                       ? null
@@ -127,6 +128,7 @@ Future<void> showConsumptionSheet(
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 IconButton(
+                  tooltip: l10n?.a11yIncrease ?? 'Increase',
                   icon: const Icon(Icons.add),
                   onPressed: quantity >= 999
                       ? null

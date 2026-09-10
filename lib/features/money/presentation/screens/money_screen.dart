@@ -467,11 +467,13 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 ),
                 trailing: Row(mainAxisSize: MainAxisSize.min, children: [
                   IconButton(
+                    tooltip: MaterialLocalizations.of(context).previousMonthTooltip,
                     key: const ValueKey('payment-period-prev'),
                     icon: const Icon(Icons.chevron_left),
                     onPressed: () => shiftPeriod(setSheetState, -1),
                   ),
                   IconButton(
+                    tooltip: MaterialLocalizations.of(context).nextMonthTooltip,
                     key: const ValueKey('payment-period-next'),
                     icon: const Icon(Icons.chevron_right),
                     onPressed: monthOf(period).isAfter(
@@ -905,6 +907,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     final periodHeader = Row(
       children: [
         IconButton(
+          tooltip: MaterialLocalizations.of(context).previousMonthTooltip,
           icon: const Icon(Icons.chevron_left),
           onPressed: () => _shiftMonth(-1),
         ),
@@ -916,6 +919,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
           ),
         ),
         IconButton(
+          tooltip: MaterialLocalizations.of(context).nextMonthTooltip,
           icon: const Icon(Icons.chevron_right),
           onPressed: _isCurrentPeriod ? null : () => _shiftMonth(1),
         ),
