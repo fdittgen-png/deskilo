@@ -128,6 +128,9 @@ String buildFecFile({
   String expensesLabel = 'Achats et charges',
 }) {
   String money(int cents) =>
+      // #1077 — two decimals is CORRECT here: the FEC is a French tax
+      // filing format and the French tax authority denominates it in
+      // euro. Not a hardcoded-euro bug; do not "fix" it.
       (cents / 100).toStringAsFixed(2).replaceAll('.', ',');
   String stamp(DateTime date) => '${date.year}'
       '${date.month.toString().padLeft(2, '0')}'

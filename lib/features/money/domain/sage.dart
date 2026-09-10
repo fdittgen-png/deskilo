@@ -77,6 +77,8 @@ String buildSageFile({
 
   String q(String value) =>
       '"${value.replaceAll(RegExp(r'[\r\n]+'), ' ').replaceAll('"', "'")}"';
+  // #1077 — two decimals is CORRECT here: Sage 50's audit-trail CSV is
+  // the British and Irish shape, and both GBP and EUR carry two.
   String money(int cents) => (cents / 100).toStringAsFixed(2);
   // Sage 50 is a UK product and reads DD/MM/YYYY. An ISO date imports as
   // a different day for the first twelve of every month, which is the

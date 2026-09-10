@@ -92,20 +92,20 @@ class InvoicingSummaryBar extends ConsumerWidget {
               alert: overdue,
               text: l10n?.invoiceSummaryOpen(
                     collectable.length,
-                    currency.format(toCollect / 100),
+                    currency.formatMinor(toCollect),
                   ) ??
                   '${collectable.length} open · '
-                      '${currency.format(toCollect / 100)} outstanding',
+                      '${currency.formatMinor(toCollect)} outstanding',
             ),
           if (refundable.isNotEmpty)
             _Pill(
               icon: Icons.replay_outlined,
               text: l10n?.invoiceSummaryToRefund(
                     refundable.length,
-                    currency.format(toRefund / 100),
+                    currency.formatMinor(toRefund),
                   ) ??
                   '${refundable.length} to refund · '
-                      '${currency.format(toRefund / 100)}',
+                      '${currency.formatMinor(toRefund)}',
             ),
         ],
       ),
@@ -207,7 +207,7 @@ class ToInvoiceTab extends ConsumerWidget {
                 ),
                 // What the sweep is worth, before it runs.
                 Text(
-                  currency.format(total / 100),
+                  currency.formatMinor(total),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
@@ -228,7 +228,7 @@ class ToInvoiceTab extends ConsumerWidget {
             child: ListTile(
               key: ValueKey('invoice-todo-${entry.memberId}'),
               title: Text(entry.name),
-              subtitle: Text(currency.format(entry.totalCents / 100)),
+              subtitle: Text(currency.formatMinor(entry.totalCents)),
               trailing: Row(mainAxisSize: MainAxisSize.min, children: [
                 IconButton(
                   key: ValueKey('invoice-proforma-${entry.memberId}'),
@@ -384,7 +384,7 @@ class OpenInvoicesTab extends ConsumerWidget {
                       ),
                     ),
                     Text(
-                      currency.format(entry.invoice.totalCents / 100),
+                      currency.formatMinor(entry.invoice.totalCents),
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall
@@ -428,7 +428,7 @@ class OpenInvoicesTab extends ConsumerWidget {
                           padding: const EdgeInsets.only(right: 8),
                           child: Text(
                             '${l10n?.invoiceRefundLabel ?? 'To refund'}: '
-                            '${currency.format(-entry.invoice.totalCents / 100)}',
+                            '${currency.formatMinor(-entry.invoice.totalCents)}',
                             style: Theme.of(context)
                                 .textTheme
                                 .labelMedium
@@ -469,7 +469,7 @@ class OpenInvoicesTab extends ConsumerWidget {
                           padding: const EdgeInsets.only(right: 8),
                           child: Text(
                             '${l10n?.invoiceRemainingLabel ?? 'Remaining'}: '
-                            '${currency.format((entry.invoice.totalCents - entry.pendingMatch!.paidCents) / 100)}',
+                            '${currency.formatMinor(entry.invoice.totalCents - entry.pendingMatch!.paidCents)}',
                             style: Theme.of(context)
                                 .textTheme
                                 .labelMedium
@@ -766,7 +766,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
                         contentPadding: EdgeInsets.zero,
                         dense: true,
                         title: Text(
-                          '${widget.currency.format(entry.amountCents / 100)}'
+                          '${widget.currency.formatMinor(entry.amountCents)}'
                           ' · ${dateFormat.format(entry.on)}'
                           '${entry.description.isEmpty ? '' : ' · ${entry.description}'}',
                         ),
@@ -778,9 +778,9 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
               const SizedBox(height: 8),
               Text(
                 l10n?.invoiceMatchOver(widget.currency
-                        .format((paid - widget.dueCents) / 100)) ??
+                        .formatMinor(paid - widget.dueCents)) ??
                     'The member paid '
-                        '${widget.currency.format((paid - widget.dueCents) / 100)}'
+                        '${widget.currency.formatMinor(paid - widget.dueCents)}'
                         ' more.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
@@ -810,9 +810,9 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
               const SizedBox(height: 8),
               Text(
                 l10n?.invoiceMatchUnder(widget.currency
-                        .format((widget.dueCents - paid) / 100)) ??
+                        .formatMinor(widget.dueCents - paid)) ??
                     'The member paid '
-                        '${widget.currency.format((widget.dueCents - paid) / 100)}'
+                        '${widget.currency.formatMinor(widget.dueCents - paid)}'
                         ' less — accepting requires a note.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),

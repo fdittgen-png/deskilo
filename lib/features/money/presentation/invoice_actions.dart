@@ -814,10 +814,10 @@ Future<void> settleCreditInvoiceDialog(
         children: [
           Text(
             l10n?.invoiceRefundExplain(
-                  currency.format(-invoice.totalCents / 100),
+                  currency.formatMinor(-invoice.totalCents),
                 ) ??
                 'This credit note means the WORKSPACE owes the member '
-                    '${currency.format(-invoice.totalCents / 100)}. '
+                    '${currency.formatMinor(-invoice.totalCents)}. '
                     'Record that the refund was paid out — the amount is '
                     'booked against the member\'s balance and the '
                     'document closes as Refunded.',

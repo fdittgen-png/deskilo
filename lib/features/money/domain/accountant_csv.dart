@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/i18n/currencies.dart';
 import 'billing_rules.dart';
 import 'invoice.dart';
 
@@ -60,7 +61,9 @@ String buildAccountantCsv({
     return '"${value.replaceAll('"', '""').replaceAll(RegExp(r'[\r\n]+'), ' ')}"';
   }
 
-  String money(int cents) => (cents / 100).toStringAsFixed(2);
+  // #1077 — the document's own currency decides the grain.
+  String money(int minor, String code) => Currencies.toMajor(minor, code)
+      .toStringAsFixed(Currencies.minorDigits(code));
   String day(DateTime? d) =>
       d == null ? '' : d.toIso8601String().split('T').first;
 
@@ -96,9 +99,9 @@ String buildAccountantCsv({
       q(invoice.memberId),
       q(invoice.title),
       q(invoice.currency.isEmpty ? currencyFallback : invoice.currency),
-      money(invoice.netCents),
-      money(invoice.vatCents),
-      money(invoice.chargesCents),
+      money(invoice.netCents, invoice.currency),
+      money(invoice.vatCents, invoice.currency),
+      money(invoice.chargesCents, invoice.currency),
       // Which rates, so a reader can see at a glance that a period mixes
       // them — the single most common surprise in a coworking ledger.
       q([
@@ -109,7 +112,7 @@ String buildAccountantCsv({
       day(invoice.voidedAt),
       q(invoice.voidedByName),
       q(invoice.replacesNumber),
-      match == null ? '' : money(match.paidCents),
+      match == null ? '' : money(match.paidCents, invoice.currency),
       match == null ? '' : day(match.matchedAt),
       // The pending/confirmed distinction is exported rather than
       // filtered. The mapped formats drop pending settlements because

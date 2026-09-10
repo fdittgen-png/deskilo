@@ -109,6 +109,8 @@ String buildDatevFile({
 
   /// Always positive, comma decimal — see the header note.
   String money(int cents) =>
+      // #1077 — two decimals is CORRECT here: DATEV EXTF is a German
+      // and Austrian format, both eurozone. Not a hardcoded-euro bug.
       (cents.abs() / 100).toStringAsFixed(2).replaceAll('.', ',');
 
   /// DDMM. The year is the header's, not the booking's.
