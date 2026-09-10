@@ -7,6 +7,7 @@
 //   dart run tool/instance.dart create   --token … --org <organisation id> --name <project name> [--region eu-west-3]
 //   dart run tool/instance.dart install  --token … --ref <project ref> [--skip N]
 //   dart run tool/instance.dart auth     --token … --ref <project ref>
+//   dart run tool/instance.dart doctor   --token … --ref <project ref>
 //
 // `create` makes the project, waits for it, installs the schema and the
 // functions from the repository (not the asset — the repository is the
@@ -18,10 +19,18 @@
 // member does not run (#1050). Reinstalling the schema to repair one
 // setting would be absurd, so this is the door for it. The token is
 // read from --token or the SUPABASE_ACCESS_TOKEN environment variable.
+//
+// `doctor` (#1075) reads a live project and says whether people can
+// actually sign in: Site URL and redirect allow-list against
+// InstanceAuthConfig, whether confirmation mail is even being sent, how
+// many accounts are stuck unconfirmed, and whether ANYBODY has confirmed
+// in the last seven days. It exits 1 when something needs a human, so a
+// schedule can act on it. It writes nothing.
 import 'dart:io';
 
 import 'package:deskilo/core/instance/instance_builder.dart';
 import 'package:deskilo/core/instance/instance_bundle.dart';
+import 'package:deskilo/core/instance/instance_doctor.dart';
 import 'package:deskilo/core/instance/management_api.dart';
 
 import 'build_instance.dart';
@@ -30,7 +39,7 @@ Future<int> main(List<String> argv) async {
   final args = _Args(argv);
   final token = args.option('token') ?? Platform.environment['SUPABASE_ACCESS_TOKEN'];
   if (args.command.isEmpty || token == null || token.isEmpty) {
-    stderr.writeln('usage: dart run tool/instance.dart orgs|create|install|auth --token … [--org … --name … --region … --ref … --skip N]');
+    stderr.writeln('usage: dart run tool/instance.dart orgs|create|install|auth|doctor --token … [--org … --name … --region … --ref … --skip N]');
     return 2;
   }
   final api = DioSupabaseManagement(token);
@@ -81,6 +90,16 @@ Future<int> main(List<String> argv) async {
         stdout.writeln('redirect URLs: ${InstanceAuthConfig.redirectAllowList}');
         stdout.writeln('sign-in settings applied to $ref');
         return 0;
+      case 'doctor':
+        final ref = args.option('ref');
+        if (ref == null) {
+          stderr.writeln('doctor needs --ref');
+          return 2;
+        }
+        final findings = await InstanceDoctor(api).examine(ref);
+        stdout.write(doctorReport(ref, findings));
+        // Exit 1 on a finding so a schedule can act without parsing text.
+        return hasProblem(findings) ? 1 : 0;
       default:
         stderr.writeln('unknown command ${args.command}');
         return 2;

@@ -89,6 +89,21 @@ class FakeSupabaseManagement implements SupabaseManagement {
   @override
   Future<String> publishableKey(String ref) async => 'sb_publishable_${ref}_key';
 
+  /// What `query` hands back; the doctor's tests drive the pure
+  /// functions directly, so this only has to exist and be settable.
+  List<Map<String, Object?>> queryRows = const [];
+  Map<String, Object?> authConfigValue = const {};
+  final queriedSql = <String>[];
+
+  @override
+  Future<List<Map<String, Object?>>> query(String ref, String sql) async {
+    queriedSql.add(sql);
+    return queryRows;
+  }
+
+  @override
+  Future<Map<String, Object?>> authConfig(String ref) async => authConfigValue;
+
   @override
   Future<void> patchAuthConfig(String ref, Map<String, Object?> config) async {
     (authPatches[ref] ??= []).add(config);
