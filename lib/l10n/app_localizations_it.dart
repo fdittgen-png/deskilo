@@ -523,6 +523,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Imposta prima un PIN di accesso — il badge da solo non deve mai bastare.';
 
   @override
+  String get badgePinSaveFailed =>
+      'Server irraggiungibile. Il tuo PIN non è stato modificato — riprova.';
+
+  @override
   String billSubscription(int pct) {
     return 'Abbonamento $pct %';
   }

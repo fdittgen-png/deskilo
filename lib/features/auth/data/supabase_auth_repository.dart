@@ -3,6 +3,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import '../domain/auth_repository.dart';
 import '../domain/badge_sign_in.dart';
 import '../domain/social_provider.dart';
@@ -153,13 +154,19 @@ class SupabaseAuthRepository implements AuthRepository {
       );
       final data = response.data;
       return data is Map ? Map<String, dynamic>.from(data) : null;
-    } on FunctionException catch (e, st) {
-      // A refusal comes back as 200 with ok:false, so ANY exception here
-      // is infrastructure, not judgement.
-      // trace-exempt: the status is the whole diagnosis and it is
-      // reported to the caller as `unavailable`.
-      if (e.status == 404) return null;
-      Error.throwWithStackTrace(e, st);
+    } catch (e, st) {
+      // A refusal comes back as 200 with ok:false, so ANY failure here is
+      // infrastructure, not judgement — #1086. This used to rethrow
+      // everything but a 404, which contradicted the contract above and
+      // reached two call sites with no catch: the sheet's spinner stayed
+      // up forever on a 500 or a dropped connection.
+      TraceLogger.instance.warn(
+        'auth',
+        'badge-signin unreachable — answering unavailable',
+        error: e,
+        stackTrace: st,
+      );
+      return null;
     }
   }
 
@@ -201,8 +208,21 @@ class SupabaseAuthRepository implements AuthRepository {
     // The session is minted by GoTrue from a one-time hash, so the
     // tablet never holds a reusable credential. authStateChanges fires
     // on its own; the caller has nothing to store.
-    await _client.auth
-        .verifyOTP(type: OtpType.magiclink, tokenHash: tokenHash);
+    try {
+      await _client.auth
+          .verifyOTP(type: OtpType.magiclink, tokenHash: tokenHash);
+    } catch (e, st) {
+      // #1086 — the badge was judged and accepted; only the exchange
+      // failed. That is infrastructure too, and must not read as a bad
+      // PIN.
+      TraceLogger.instance.warn(
+        'auth',
+        'badge token exchange failed after an accepted badge',
+        error: e,
+        stackTrace: st,
+      );
+      return const BadgeStepResult.failed(BadgeSignInFailure.unavailable);
+    }
     return const BadgeStepResult.ok(null);
   }
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../providers/auth_providers.dart';
@@ -122,15 +123,55 @@ class _BadgePinSheetState extends ConsumerState<_BadgePinSheet> {
       _busy = true;
       _error = null;
     });
-    await ref.read(authRepositoryProvider).setBadgePin(_pin.text);
+    try {
+      await ref.read(authRepositoryProvider).setBadgePin(_pin.text);
+    } catch (e, st) {
+      // #1086 — `_busy` was only ever cleared by the pop, so a failure
+      // here left the spinner up and the button disabled for good.
+      TraceLogger.instance.warn(
+        'auth',
+        'badge PIN save failed',
+        error: e,
+        stackTrace: st,
+      );
+      if (!mounted) return;
+      setState(() {
+        _busy = false;
+        _error = l10n?.badgePinSaveFailed ??
+            'Could not reach the server. Your PIN was not changed — '
+                'try again.';
+      });
+      return;
+    }
     if (!mounted) return;
     AppSnack.success(context, l10n?.badgePinSaved ?? 'PIN saved.');
     Navigator.of(context).pop(true);
   }
 
   Future<void> _clear(AppLocalizations? l10n) async {
-    setState(() => _busy = true);
-    await ref.read(authRepositoryProvider).clearBadgePin();
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
+    try {
+      await ref.read(authRepositoryProvider).clearBadgePin();
+    } catch (e, st) {
+      // #1086 — see [_save].
+      TraceLogger.instance.warn(
+        'auth',
+        'badge PIN clear failed',
+        error: e,
+        stackTrace: st,
+      );
+      if (!mounted) return;
+      setState(() {
+        _busy = false;
+        _error = l10n?.badgePinSaveFailed ??
+            'Could not reach the server. Your PIN was not changed — '
+                'try again.';
+      });
+      return;
+    }
     if (!mounted) return;
     AppSnack.success(
       context,

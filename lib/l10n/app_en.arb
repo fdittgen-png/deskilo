@@ -564,6 +564,10 @@
   "@badgeAuthNeedsPin": {
     "description": "#662 - badge sign-in"
   },
+  "badgePinSaveFailed": "Could not reach the server. Your PIN was not changed — try again.",
+  "@badgePinSaveFailed": {
+    "description": "#1086 the PIN save or clear could not reach the server"
+  },
   "billSubscription": "Subscription {pct}%",
   "@billSubscription": {
     "description": "Bill section header (#132): the member's percentage; the band fee renders as the trailing amount",

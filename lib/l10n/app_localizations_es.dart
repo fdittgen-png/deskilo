@@ -522,6 +522,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Defina primero un PIN de acceso — una credencial sola nunca debe bastar.';
 
   @override
+  String get badgePinSaveFailed =>
+      'No se pudo contactar con el servidor. Tu PIN no ha cambiado: inténtalo de nuevo.';
+
+  @override
   String billSubscription(int pct) {
     return 'Suscripción $pct %';
   }

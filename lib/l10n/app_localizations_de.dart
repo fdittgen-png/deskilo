@@ -523,6 +523,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Setzen Sie zuerst eine Anmelde-PIN — ein Ausweis allein darf nie genügen.';
 
   @override
+  String get badgePinSaveFailed =>
+      'Server nicht erreichbar. Ihre PIN wurde nicht geändert — bitte erneut versuchen.';
+
+  @override
   String billSubscription(int pct) {
     return 'Abo $pct %';
   }

@@ -121,5 +121,9 @@
   "badgeAuthNeedsPin": "Définissez d’abord un code de connexion — un badge seul ne doit jamais suffire.",
   "@badgeAuthNeedsPin": {
     "description": "#662 - badge sign-in"
+  },
+  "badgePinSaveFailed": "Serveur injoignable. Votre code n'a pas été modifié — réessayez.",
+  "@badgePinSaveFailed": {
+    "description": "#1086 the PIN save or clear could not reach the server"
   }
 }
