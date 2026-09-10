@@ -5,6 +5,7 @@
 // accountant's view beside the declaration. Nothing is re-aggregated
 // from lines: a pre-0072 invoice derives its single zero-rated entry
 // exactly as the documents do (vatBreakdown).
+import 'billing_rules.dart';
 import 'invoice.dart';
 import 'vat_declaration.dart';
 import 'vat_rate.dart';
@@ -104,7 +105,17 @@ VatReport buildVatReport(
     final byId = {for (final invoice in invoices) invoice.id: invoice};
     for (final match in matches.values) {
       final invoice = byId[match.invoiceId];
-      if (invoice == null || invoice.isVoided || invoice.isFolded) continue;
+      // #1076 — skip the SETTLEMENT, never its sources. A settlement is
+      // a management document; the revenue and the VAT live on the
+      // invoices it regroups, which were issued, numbered and declared
+      // (see `accountingView`). Skipping `isFolded` here dropped exactly
+      // those, and the caller had already removed the settlement — so
+      // neither document survived and the report read zero.
+      if (invoice == null ||
+          invoice.isVoided ||
+          invoice.kind == InvoiceKind.settlement) {
+        continue;
+      }
       if (match.matchedAt.isBefore(start) ||
           !match.matchedAt.isBefore(endExclusive)) {
         continue;
@@ -136,7 +147,10 @@ VatReport buildVatReport(
     }
   } else {
     for (final invoice in invoices) {
-      if (invoice.isVoided || invoice.isFolded) continue;
+      // #1076 — see the cash-basis branch above.
+      if (invoice.isVoided || invoice.kind == InvoiceKind.settlement) {
+        continue;
+      }
       if (invoice.issuedAt.isBefore(start) ||
           !invoice.issuedAt.isBefore(endExclusive)) {
         continue;

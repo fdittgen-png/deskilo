@@ -7,6 +7,7 @@
 import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
@@ -244,6 +245,82 @@ void main() {
       expect(declaration.invoiceCount, 1);
       expect(
           find.byKey(ValueKey('vat-decl-${declaration.id}')), findsOneWidget);
+    });
+
+    // #1076 — the settlement is not a sale; its sources are. On the cash
+    // basis the screen took its invoices from the accounting view (which
+    // removes the settlement and allocates its payment to the sources)
+    // but its matches RAW, so the settlement's match resolved to no
+    // invoice and was skipped while the sources carried no match of
+    // their own. The declared total came out zero.
+    testWidgets('a regrouped invoice paid in the period is still declared',
+        (tester) async {
+      final workspace = FakeWorkspaceRepository.withWorkspace();
+      workspace.workspaces[0] = workspace.workspaces[0].copyWith(
+        vatRegime: 'vat_registered',
+        invoiceLegal: const {'vat_exigibility': 'payment'},
+      );
+      final money = FakeMoneyRepository();
+      final issued = DateTime(kTestNow.year, kTestNow.month, 3);
+      final a = _invoice('a', issued, const [
+        InvoiceLine(label: 'Desk', amountCents: 12000, vatPercent: 20),
+      ]).copyWith(settledByInvoiceId: 's');
+      final b = _invoice('b', issued, const [
+        InvoiceLine(label: 'Desk', amountCents: 12000, vatPercent: 20),
+      ]).copyWith(settledByInvoiceId: 's');
+      final settlement = _invoice('s', issued, const [
+        InvoiceLine(label: 'Regrouped', amountCents: 24000, vatPercent: 20),
+      ]).copyWith(
+        kind: InvoiceKind.settlement,
+        settles: const [
+          SettledSource(
+            invoiceId: 'a',
+            number: 'INV-a',
+            period: '2026-08',
+            kind: InvoiceKind.full,
+            totalCents: 12000,
+            lines: [],
+          ),
+          SettledSource(
+            invoiceId: 'b',
+            number: 'INV-b',
+            period: '2026-08',
+            kind: InvoiceKind.full,
+            totalCents: 12000,
+            lines: [],
+          ),
+        ],
+      );
+      money.invoices.addAll([a, b, settlement]);
+      money.invoiceMatchesStore['s'] = InvoiceMatch(
+        invoiceId: 's',
+        paidCents: 24000,
+        resolution: 'exact',
+        status: 'confirmed',
+        matchedAt: DateTime(kTestNow.year, kTestNow.month, 10),
+        byName: 'Flo',
+      );
+      await tester.binding.setSurfaceSize(const Size(900, 1600));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides:
+              standardTestOverrides(money: money, workspace: workspace),
+          child: const DeskiloApp(),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final context = tester.element(find.byType(Scaffold).first);
+      GoRouter.of(context).push('/vat-declarations');
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const ValueKey('vat-decl-generate')));
+      await tester.pumpAndSettle();
+
+      final declaration = money.vatDeclarations.single;
+      expect(declaration.totalVatCents, 4000,
+          reason: 'two €120 invoices at 20%, paid through one settlement');
+      expect(declaration.totalNetCents, 20000);
     });
 
     testWidgets('transmit sends through the platform and stamps submitted',

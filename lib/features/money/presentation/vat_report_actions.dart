@@ -30,7 +30,10 @@ Future<VatReport> loadVatReport(
   required DateTime end,
 }) async {
   final workspace = ref.read(currentWorkspaceProvider).value;
-  final matches = ref.read(invoiceMatchesProvider).value ?? const {};
+  // #1076 — awaited, not read synchronously: `.value` is null until
+  // the provider resolves, and a cash-basis report built on a cold
+  // screen would then carry no payments at all.
+  final matches = await ref.read(invoiceMatchesProvider.future);
   final view = accountingView(
     await ref.read(invoicesProvider.future),
     matches,
@@ -46,7 +49,9 @@ Future<VatReport> loadVatReport(
     end: end,
     zeroCategory: vatRegimeFromWire(workspace?.vatRegime ?? 'not_subject')
         .taxCategoryCode,
-    matches: onPayment ? matches : null,
+    // #1076 — the view's matches, not the raw ones: the settlement's
+    // payment has been ALLOCATED to the sources that carry the VAT.
+    matches: onPayment ? view.matches : null,
   );
 }
 
