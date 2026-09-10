@@ -995,7 +995,7 @@ abstract class AppLocalizations {
   /// Entitlement line under the subscription header
   ///
   /// In en, this message translates to:
-  /// **'{used} of {included} half-days used ({openDays} open days)'**
+  /// **'{used} of {included} half-days billed ({openDays} days open)'**
   String billEntitlement(int used, int included, int openDays);
 
   /// Overage line, shown only when extra half-days exist; the amount renders trailing

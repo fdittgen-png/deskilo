@@ -573,7 +573,7 @@
       }
     }
   },
-  "billEntitlement": "{used} of {included} half-days used ({openDays} open days)",
+  "billEntitlement": "{used} of {included} half-days billed ({openDays} days open)",
   "@billEntitlement": {
     "description": "Entitlement line under the subscription header",
     "placeholders": {

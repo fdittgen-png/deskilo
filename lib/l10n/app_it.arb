@@ -355,7 +355,7 @@
     "description": "#662 - badge sign-in"
   },
   "billSubscription": "Abbonamento {pct} %",
-  "billEntitlement": "{used} mezze giornate usate su {included} ({openDays} giorni di apertura)",
+  "billEntitlement": "{used} mezze giornate fatturate su {included} ({openDays} giorni di apertura)",
   "billOverage": "{extra} mezze giornate extra",
   "billServices": "Servizi consumati",
   "billServicesTotal": "Totale servizi",
