@@ -92,6 +92,34 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
       )
       .firstOrNull;
 
+  /// MY live check-in ON THIS SEAT (#1083). The seat predicate is the
+  /// whole point: with `simultaneous_reservations > 1` a member can hold
+  /// two seats at once, and scanning one of them must release THAT one.
+  /// Without it the branch took `firstOrNull` of an unordered list and
+  /// checked the member out of whichever seat came first.
+  ///
+  /// Ordered by check-in time so that even a seat holding two live rows
+  /// — which the server should never allow — resolves the same way twice
+  /// rather than by list order.
+  Reservation? _myActiveCheckIn(
+    List<Reservation> reservations,
+    DateTime now,
+    String? myMemberId,
+  ) {
+    final mine = reservations
+        .where(
+          (r) =>
+              r.memberId == myMemberId &&
+              r.seatId == widget.seat.id &&
+              r.status == ReservationStatus.checkedIn &&
+              r.endsAt.isAfter(now),
+        )
+        .toList()
+      ..sort((a, b) => (a.checkedInAt ?? a.startsAt)
+          .compareTo(b.checkedInAt ?? b.startsAt));
+    return mine.isEmpty ? null : mine.last;
+  }
+
   /// ANOTHER member's reservation holding this seat over the chosen
   /// window — the seat's own booking or a whole desk/office/level one
   /// covering it (space overlays' semantics via [occupantOnSeat]).
@@ -172,14 +200,7 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
                 checkIn: choice.checkInNow,
               );
         case SpaceAction.checkOut:
-          final active = reservations
-              .where(
-                (r) =>
-                    r.memberId == me?.id &&
-                    r.status == ReservationStatus.checkedIn &&
-                    r.endsAt.isAfter(now),
-              )
-              .firstOrNull;
+          final active = _myActiveCheckIn(reservations, now, me?.id);
           if (active == null) {
             setState(() => _busy = false);
             AppSnack.error(
