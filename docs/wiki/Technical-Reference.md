@@ -137,7 +137,7 @@ with coverage (**a floor that may only go up**), and a build.
 
 ## Release
 
-`release-train.yml -f track=beta` fans out to every platform at once:
+`release-train.yml -f track=alpha` fans out to every platform at once:
 Play closed track, TestFlight external, the web build, the macOS DMG and
 the Windows MSI, plus a report job. The web publish is opt-in
 (`web.yml -f deploy=true`). F-Droid builds from a frozen recipe with a

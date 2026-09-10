@@ -1,6 +1,6 @@
 ---
 name: deskilo-ci-release
-description: Watching CI, merging and deploying DesKilo — the JSON check-state idiom (the analyze job is named "analyze · l10n gate · test · coverage"), background watcher loops, cancelled jobs, mergeStateStatus, squash-merge, the beta release train, the opt-in web Pages publish, and what must never be used (alpha track, --admin, force-push to master). Trigger after opening a PR or when asked to deploy.
+description: Watching CI, merging and deploying DesKilo — the JSON check-state idiom (the analyze job is named "analyze · l10n gate · test · coverage"), background watcher loops, cancelled jobs, mergeStateStatus, squash-merge, the alpha release train, the opt-in web Pages publish, and what must never be used (the retired alpha1 track, --admin, force-push to master). Trigger after opening a PR or when asked to deploy.
 ---
 # CI, merge, deploy (DesKilo)
 
@@ -30,7 +30,7 @@ two branches touched the same lines.
 
 ## Deploy
 - Beta train (iOS TestFlight external + Play closed alpha + web + DMG + MSI):
-  `gh workflow run release-train.yml -f track=beta -f release_notes="…"`;
+  `gh workflow run release-train.yml -f track=alpha -f release_notes="…"`;
   watch `gh run view <id> --json status,conclusion`.
 - Web Pages publish is opt-in: `gh workflow run web.yml -f ref=master -f deploy=true`.
 - Never the Play "alpha1"/open testing track; F-Droid is frozen.
@@ -62,7 +62,7 @@ two branches touched the same lines.
   auto-merge until branch protection is updated in lockstep. Rename the
   workflow, leave `analyze · l10n gate · test · coverage` alone.
 - **Android deploy, in one line each.**
-  `gh workflow run release-train.yml -f track=beta -f release_notes="…"`
+  `gh workflow run release-train.yml -f track=alpha -f release_notes="…"`
   puts iOS and Android on the same commit — that is the point of the
   train. `play-internal.yml -f track=internal` is the Android leg alone.
 - **A commit pushed by `GITHUB_TOKEN` starts no workflow run.** The

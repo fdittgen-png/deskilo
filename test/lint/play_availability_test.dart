@@ -159,22 +159,30 @@ void main() {
   });
 
   test('the tester train ships to Alpha — the track the testers are in', () {
-    // #1052: the rule reads "never alpha1", not "never alpha". `alpha`
-    // IS the closed test the testers are enrolled in, and the one whose
-    // 12-tester / 14-day countdown gates production access. This pins the
-    // ONE line that decides which track a `track=beta` dispatch reaches:
-    // edit it to internal, or to a retired track, and testers are told
-    // they are testers and handed nothing.
+    // #1052: the rule reads "never alpha1", not "never alpha". `alpha` IS
+    // the closed test the testers are enrolled in, and the one whose
+    // 12-tester / 14-day countdown gates production access.
+    //
+    // #1073 removed the mapping that used to sit here — the input was
+    // called `beta` and resolved to `alpha`, so a dispatch log read
+    // `TRACK: beta` three lines above `--track "alpha"`. The input is the
+    // Play track now, which is why this asserts a pass-through and the
+    // choice list rather than an expression.
+    expect(releaseTrain, contains(r'track: ${{ inputs.track }}'),
+        reason: 'the input IS the Play track — a mapping is one more place '
+            'to send the tester train somewhere the testers are not');
     expect(
       releaseTrain,
-      contains(
-          r"track: ${{ inputs.track == 'production' && 'production' || 'alpha' }}"),
-      reason: 'the Android leg maps beta→alpha and production→production; '
-          'any other mapping sends the tester train somewhere the testers '
-          'are not',
+      allOf(contains('          - alpha\n'), contains('          - production\n')),
+      reason: 'and those are the only two trains there are',
     );
-    // And it must reach that track through the ONE upload path, so a
-    // second build recipe cannot drift away from the first.
+    expect(releaseTrain, isNot(contains('          - beta\n')),
+        reason: "Play's open 'beta' track is not what this project ships "
+            'to, and offering it invites exactly the confusion #1073 '
+            'removed',
+    );
+    // It must reach that track through the ONE upload path, so a second
+    // build recipe cannot drift away from the first.
     expect(releaseTrain, contains('uses: ./.github/workflows/play-internal.yml'),
         reason: 'one build path for Android, train or no train');
   });
