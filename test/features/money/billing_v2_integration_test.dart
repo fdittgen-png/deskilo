@@ -163,7 +163,7 @@ List<LedgerEntry> crossSurfaceLedger(String period) => [
 const pdfStrings = BillPdfStrings(
   title: 'Monthly bill',
   subscription: 'Subscription 50%',
-  entitlement: '24 of 22 half-days used (22 open days)',
+  entitlement: '24 of 22 half-days billed (22 days open)',
   overage: '2 extra half-days',
   accessorySupplements: 'Accessory supplements',
   services: 'Consumed services',
@@ -289,7 +289,7 @@ void main() {
 
       expect(find.textContaining(RegExp(r'^Subscription \w+ 25%$')), findsOneWidget);
       expect(
-        find.text('12 of 12 half-days used (23 open days)'),
+        find.text('12 of 12 half-days billed (23 days open)'),
         findsOneWidget,
       );
       // The overage LINE ('N extra half-days') must be absent — the
@@ -326,7 +326,7 @@ void main() {
 
       // Fully used entitlement: no overage line yet.
       expect(
-        find.text('44 of 44 half-days used (22 open days)'),
+        find.text('44 of 44 half-days billed (22 days open)'),
         findsOneWidget,
       );
       // The overage LINE ('N extra half-days') must be absent — the
@@ -339,7 +339,7 @@ void main() {
 
       // Two half-days beyond it: the overage line with its charge.
       expect(
-        find.text('46 of 44 half-days used (22 open days)'),
+        find.text('46 of 44 half-days billed (22 days open)'),
         findsOneWidget,
       );
       expect(find.text('2 extra half-days'), findsOneWidget);
@@ -360,7 +360,7 @@ void main() {
       await pumpMoney(tester, money: money);
 
       expect(
-        find.text('3 of 0 half-days used (0 open days)'),
+        find.text('3 of 0 half-days billed (0 days open)'),
         findsOneWidget,
       );
       expect(find.text('3 extra half-days'), findsOneWidget);

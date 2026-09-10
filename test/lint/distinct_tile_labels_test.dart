@@ -22,9 +22,24 @@ const List<(String, String)> _mustDiffer = [
   ('myBadgeTitle', 'badgePinSectionTitle'),
 ];
 
+/// Pairs that appear on ONE card and must not both claim the same verb
+/// while counting in different units (#1058). The statement said
+/// "5 of 11 days used" directly above "10 of 22 half-days used": the same
+/// quantity, written twice, and a reader has to work out that 5 = 10/2
+/// before the card makes sense.
+const List<(String, String, String)> _sameVerbDifferentUnit = [
+  ('entitlementDaysUsed', 'billEntitlement', 'used'),
+];
+
 Map<String, dynamic> _arb(String locale) =>
     json.decode(File('lib/l10n/app_$locale.arb').readAsStringSync())
         as Map<String, dynamic>;
+
+/// The message with its placeholders removed. `{used}` contains the word
+/// "used", so a naive contains() sees the verb in every message that takes
+/// that argument, including the ones that never say it.
+String _verbOf(String s) =>
+    s.replaceAll(RegExp(r'{[^}]*}'), ' ').toLowerCase();
 
 void main() {
   test('adjacent rows never carry the same label, in any locale', () {
@@ -45,6 +60,32 @@ void main() {
       reason: 'These pairs sit next to each other on one screen and read '
           'identically, so nobody can tell which row does what:\n'
           '${clashes.join('\n')}',
+    );
+  });
+
+  test('one card never counts two units under the same verb', () {
+    // English is the canonical locale and the only one whose verb we can
+    // assert on; the others follow it structurally, and the widget test
+    // covers what a reader actually sees.
+    final arb = _arb('en');
+    final muddles = <String>[];
+    for (final (a, b, verb) in _sameVerbDifferentUnit) {
+      final va = _verbOf(arb[a] as String);
+      final vb = _verbOf(arb[b] as String);
+      final aHasHalf = va.contains('half-day');
+      final bHasHalf = vb.contains('half-day');
+      if (aHasHalf == bHasHalf) continue; // same unit — no confusion
+      if (va.contains(verb) && vb.contains(verb)) {
+        muddles.add('$a and $b both say "$verb" but count in '
+            'different units:\n    $a: ${arb[a]}\n    $b: ${arb[b]}');
+      }
+    }
+    expect(
+      muddles,
+      isEmpty,
+      reason: 'On one card, a reader must not have to convert between '
+          'units to see that two lines say the same thing:\n'
+          '${muddles.join('\n')}',
     );
   });
 }

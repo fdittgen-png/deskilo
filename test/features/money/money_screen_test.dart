@@ -85,7 +85,7 @@ void main() {
     );
     expect(find.textContaining(RegExp(r'^Subscription \w+ 50%$')), findsOneWidget);
     expect(
-      find.text('24 of 22 half-days used (22 open days)'),
+      find.text('24 of 22 half-days billed (22 days open)'),
       findsOneWidget,
     );
     expect(find.text('2 extra half-days'), findsOneWidget);

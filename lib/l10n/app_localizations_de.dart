@@ -529,7 +529,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String billEntitlement(int used, int included, int openDays) {
-    return '$used von $included halben Tagen genutzt ($openDays Öffnungstage)';
+    return '$used von $included halben Tagen abgerechnet ($openDays Öffnungstage)';
   }
 
   @override

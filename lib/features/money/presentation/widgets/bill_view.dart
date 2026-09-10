@@ -513,8 +513,8 @@ class _SubscriptionCard extends StatelessWidget {
                     statement.openDays,
                   ) ??
                   '${statement.usedHalfDays} of '
-                      '${statement.includedHalfDays} half-days used '
-                      '(${statement.openDays} open days)',
+                      '${statement.includedHalfDays} half-days billed '
+                      '(${statement.openDays} days open)',
               value: '',
             ),
             if (statement.extraHalfDays > 0)

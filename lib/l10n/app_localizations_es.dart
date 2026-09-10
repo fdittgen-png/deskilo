@@ -528,7 +528,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String billEntitlement(int used, int included, int openDays) {
-    return '$used de $included medias jornadas usadas ($openDays días de apertura)';
+    return '$used de $included medias jornadas facturadas ($openDays días de apertura)';
   }
 
   @override
