@@ -333,6 +333,8 @@
   "scheduledExpensesTitle": "Gastos programados",
   "scheduledExpensesIntro": "Las suscripciones que paga el espacio — internet, teléfono, electricidad. La programación se valida una vez; cada vencimiento se te presenta antes de contar.",
   "scheduledExpensesEmpty": "Aún no hay gastos programados.",
+
+  "scheduledExpensesFinished": "Finalizadas y rechazadas ({count})",
   "scheduleNew": "Programar un gasto recurrente",
   "scheduleCancel": "Terminar esta programación",
   "scheduleTitleLabel": "Qué (p. ej. Internet)",

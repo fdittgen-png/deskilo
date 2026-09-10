@@ -6693,6 +6693,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucune dépense programmée pour le moment.';
 
   @override
+  String scheduledExpensesFinished(int count) {
+    return 'Terminées et refusées ($count)';
+  }
+
+  @override
   String get scheduleNew => 'Programmer une dépense récurrente';
 
   @override

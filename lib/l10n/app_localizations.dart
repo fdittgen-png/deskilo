@@ -11681,6 +11681,12 @@ abstract class AppLocalizations {
   /// **'No scheduled expense yet.'**
   String get scheduledExpensesEmpty;
 
+  /// Header of the collapsed section holding schedules that can never fire again — ended or rejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Ended and rejected ({count})'**
+  String scheduledExpensesFinished(int count);
+
   /// No description provided for @scheduleNew.
   ///
   /// In en, this message translates to:

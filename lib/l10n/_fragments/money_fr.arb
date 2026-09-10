@@ -333,6 +333,8 @@
   "scheduledExpensesTitle": "Dépenses programmées",
   "scheduledExpensesIntro": "Les abonnements que l'espace paie — internet, téléphone, électricité. La programmation est validée une fois ; chaque échéance vous est présentée avant de compter.",
   "scheduledExpensesEmpty": "Aucune dépense programmée pour le moment.",
+
+  "scheduledExpensesFinished": "Terminées et refusées ({count})",
   "scheduleNew": "Programmer une dépense récurrente",
   "scheduleCancel": "Terminer cette programmation",
   "scheduleTitleLabel": "Quoi (ex. Internet)",

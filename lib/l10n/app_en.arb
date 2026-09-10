@@ -7004,6 +7004,15 @@
   "scheduledExpensesTitle": "Scheduled expenses",
   "scheduledExpensesIntro": "Subscriptions the space pays for — internet, phone, electricity. The schedule is validated once; every due date is presented to you before it counts.",
   "scheduledExpensesEmpty": "No scheduled expense yet.",
+  "scheduledExpensesFinished": "Ended and rejected ({count})",
+  "@scheduledExpensesFinished": {
+    "description": "Header of the collapsed section holding schedules that can never fire again — ended or rejected.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "scheduleNew": "Schedule a recurring expense",
   "scheduleCancel": "End this schedule",
   "scheduleTitleLabel": "What (e.g. Internet)",

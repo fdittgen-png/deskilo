@@ -6630,6 +6630,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scheduledExpensesEmpty => 'No scheduled expense yet.';
 
   @override
+  String scheduledExpensesFinished(int count) {
+    return 'Ended and rejected ($count)';
+  }
+
+  @override
   String get scheduleNew => 'Schedule a recurring expense';
 
   @override

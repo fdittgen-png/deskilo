@@ -4411,6 +4411,7 @@
   "scheduledExpensesTitle": "Geplante Ausgaben",
   "scheduledExpensesIntro": "Abos, die der Space bezahlt — Internet, Telefon, Strom. Der Plan wird einmal validiert; jede Fälligkeit wird Ihnen vorgelegt, bevor sie zählt.",
   "scheduledExpensesEmpty": "Noch keine geplante Ausgabe.",
+  "scheduledExpensesFinished": "Beendet und abgelehnt ({count})",
   "scheduleNew": "Wiederkehrende Ausgabe planen",
   "scheduleCancel": "Diesen Plan beenden",
   "scheduleTitleLabel": "Was (z. B. Internet)",
