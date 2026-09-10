@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/i18n/currencies.dart';
 import 'package:xml/xml.dart';
 
 import 'invoice.dart';
@@ -34,7 +35,9 @@ String buildInvoiceCii({
   DateTime? dueDate,
   String paymentTerms = '',
 }) {
-  String amount(int cents) => (cents / 100).toStringAsFixed(2);
+  // #1077 — the currency's own grain, not the euro's.
+  String amount(int minor) => Currencies.toMajor(minor, invoice.currency)
+      .toStringAsFixed(Currencies.minorDigits(invoice.currency));
   /// CII dates are `format="102"` — YYYYMMDD, no separators.
   String stamp(DateTime date) =>
       '${date.year}${date.month.toString().padLeft(2, '0')}'

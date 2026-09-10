@@ -5,6 +5,7 @@
 // accountant's view beside the declaration. Nothing is re-aggregated
 // from lines: a pre-0072 invoice derives its single zero-rated entry
 // exactly as the documents do (vatBreakdown).
+import '../../../core/i18n/currencies.dart';
 import 'billing_rules.dart';
 import 'invoice.dart';
 import 'vat_declaration.dart';
@@ -202,9 +203,18 @@ VatReport buildVatReport(
 /// (what French and German spreadsheets open without an import
 /// dialog), amounts in minor units as decimals with a comma.
 String vatReportCsv(VatReport report, {required String currency}) {
-  String money(int cents) =>
-      '${cents < 0 ? '-' : ''}${(cents.abs() ~/ 100)},'
-      '${(cents.abs() % 100).toString().padLeft(2, '0')}';
+  // #1077 — the declared currency's grain, not the euro's. A comma is
+  // still the separator: that is what French and German spreadsheets
+  // read without an import dialog, whatever the currency.
+  final per = Currencies.minorPerMajor(currency);
+  final digits = Currencies.minorDigits(currency);
+  String money(int minor) {
+    final sign = minor < 0 ? '-' : '';
+    final abs = minor.abs();
+    if (digits == 0) return '$sign${abs ~/ per}';
+    return '$sign${abs ~/ per},'
+        '${(abs % per).toString().padLeft(digits, '0')}';
+  }
   String date(DateTime d) =>
       '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
   String cell(String s) => '"${s.replaceAll('"', '""')}"';

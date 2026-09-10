@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/i18n/currencies.dart';
 import 'package:xml/xml.dart';
 
 import 'invoice.dart';
@@ -105,7 +106,9 @@ String buildSafTFile({
   /// there is no account mapping to invent one from.
   SafTLedgerAccounts? ledgerAccounts,
 }) {
-  String amount(int cents) => (cents / 100).toStringAsFixed(2);
+  // #1077 — the currency's own grain, not the euro's.
+  String amount(int minor) => Currencies.toMajor(minor, currency)
+      .toStringAsFixed(Currencies.minorDigits(currency));
   String day(DateTime date) => date.toIso8601String().split('T').first;
 
   final regime = vatRegimeFromWire(company.vatRegime);

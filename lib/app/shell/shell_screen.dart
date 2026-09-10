@@ -18,6 +18,7 @@ import '../../core/notifications/notification_providers.dart';
 import '../../core/push/push_providers.dart';
 import '../../core/storage/note_seen_store.dart';
 import '../../core/time/work_hours.dart';
+import '../../core/i18n/workspace_currency.dart';
 import '../../core/time/workspace_time.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
@@ -192,6 +193,13 @@ class ShellScreen extends ConsumerWidget {
     // The working day (#446) is ambient for the same reason as the
     // clock: the HalfDayWindows builders travel as function references.
     WorkHours.install(ref.watch(workHoursProvider).value);
+
+    // #1077 — and the currency's GRAIN, for the same reason again: the
+    // major-unit editor helpers are called from three dozen forms, and a
+    // yen has no minor unit at all.
+    WorkspaceCurrency.install(
+      ref.watch(currentWorkspaceProvider).value?.currencyCode,
+    );
 
     // Keep the local check-in reminders in sync with my upcoming bookings
     // (spec §4.3). Best-effort; failures never disturb the UI — but they

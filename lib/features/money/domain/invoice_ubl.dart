@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/i18n/currencies.dart';
 import 'package:xml/xml.dart';
 
 import 'invoice.dart';
@@ -56,7 +57,9 @@ String buildInvoiceUbl({
   /// BT-84, the account the payer must transfer to; '' = omit the group.
   String iban = '',
 }) {
-  String amount(int cents) => (cents / 100).toStringAsFixed(2);
+  // #1077 — the currency's own grain, not the euro's.
+  String amount(int minor) => Currencies.toMajor(minor, invoice.currency)
+      .toStringAsFixed(Currencies.minorDigits(invoice.currency));
   final regime = vatRegimeFromWire(seller.vatRegime);
   // #895 — a reverse-charged document is category AE whatever the
   // seller's own regime says: the tax is the customer's.
