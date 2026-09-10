@@ -1058,7 +1058,19 @@ void main() {
 
   testWidgets('the Afternoon chip during the morning stays a plain '
       'reserve — no check-in switch (#772)', (tester) async {
-    await pumpHub(tester, granularity: BookingGranularity.halfDay);
+    // #1082 — an explicit instant, for the same reason as its sibling
+    // above, and this one was caught by CI rather than locally:
+    // kTestNow's naive fields read as a different workspace hour on
+    // every machine. 10:00 in UTC-7 is 19:00 in Berlin, but on a UTC
+    // runner it is 12:00 — INSIDE the afternoon — so this test passed
+    // here and failed there the moment `windowIsNow` started telling the
+    // truth. 08:00 UTC is 10:00 in Berlin: the morning, so the afternoon
+    // is genuinely not live, on any runner.
+    await pumpHub(
+      tester,
+      granularity: BookingGranularity.halfDay,
+      clock: FixedClock(DateTime.utc(2026, 5, 13, 8)),
+    );
     await tester.tap(find.byKey(_pmChip));
     await tester.pumpAndSettle();
     await tester.tapAt(seatCenter(tester));
