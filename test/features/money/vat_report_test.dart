@@ -133,21 +133,29 @@ void main() {
           replaces: 'INV-OLD'),
     ];
 
-    test('one position per document and rate, inside the period, voided and '
-        'folded ones out; pre-0072 documents derive a zero-rated entry', () {
+    // #1076 — a REGROUPED source (INV-4, `settledBy`) is still a sale and
+    // is still declared. The document that leaves the report is the
+    // SETTLEMENT, which this fixture does not contain: `accountingView`
+    // has already removed it before the report is built, so excluding the
+    // source as well meant neither document was ever declared. What is
+    // excluded here is a voided document and one outside the period.
+    test('one position per document and rate, inside the period, voided ones '
+        'out, regrouped sources IN; pre-0072 documents derive a zero-rated '
+        'entry', () {
       final report = buildVatReport(invoices,
           start: DateTime(2026, 9, 1), end: DateTime(2026, 9, 30),
           zeroCategory: 'E');
       expect(report.positions.map((p) => '${p.number}@${p.percent}'),
-          ['INV-1@20.0', 'INV-2@20.0', 'INV-2@5.5', 'INV-0@0.0']);
+          ['INV-1@20.0', 'INV-2@20.0', 'INV-2@5.5', 'INV-4@20.0',
+           'INV-0@0.0']);
       expect(report.positions.last.category, 'E');
       expect(report.positions.last.reversesNumber, 'INV-OLD');
-      expect(report.documentCount, 3);
+      expect(report.documentCount, 4);
       expect(report.rateTotals.map((t) => t.percent), [20.0, 5.5, 0.0]);
-      expect(report.rateTotals.first.vatCents, 4000);
-      expect(report.rateTotals.first.documentCount, 2);
-      expect(report.vatCents, 4055);
-      expect(report.grossCents, 12000 + 12000 + 1055 + 5000);
+      expect(report.rateTotals.first.vatCents, 6000);
+      expect(report.rateTotals.first.documentCount, 3);
+      expect(report.vatCents, 6055);
+      expect(report.grossCents, 12000 + 12000 + 1055 + 12000 + 5000);
     });
 
     test('the CSV is one semicolon row per position, decimal comma', () {

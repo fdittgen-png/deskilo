@@ -78,14 +78,23 @@ class _VatDeclarationsScreenState
           'Something went wrong. Please try again.',
       action: () async {
         // #831 — declared from the accountant's view: no settlement.
-        final invoices = accountingView(
+        // #1076 — and its matches, from the SAME view: the settlement's
+        // payment is allocated onto the sources that carry the VAT, so
+        // reading the raw map here resolved that payment to no invoice
+        // and declared nothing for a regrouped period.
+        // #1076 — AWAIT the matches. Reading `.value` synchronously
+        // returns null until that provider has resolved, so on the cash
+        // basis a declaration generated on a cold screen silently
+        // declared nothing at all.
+        final view = accountingView(
           await ref.read(invoicesProvider.future),
-          ref.read(invoiceMatchesProvider).value ?? const {},
-        ).invoices;
+          await ref.read(invoiceMatchesProvider.future),
+        );
+        final invoices = view.invoices;
         // #896 — on the cash basis a period holds what was PAID inside
         // it, not what was issued: both the lines and the count of
         // documents behind them follow the payments.
-        final matches = ref.read(invoiceMatchesProvider).value ?? const {};
+        final matches = view.matches;
         final onPayment =
             InvoiceLegal.fromJson(workspace.invoiceLegal).onPaymentBasis;
         final lines = onPayment
