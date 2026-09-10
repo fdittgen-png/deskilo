@@ -23,6 +23,7 @@ import '../../../plan/providers/seat_context_providers.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/picked_time.dart';
 import '../../domain/reservation.dart';
 import '../../domain/reservation_repository.dart';
 import 'booking_range_text.dart';
@@ -824,8 +825,12 @@ class ReservationDetailSheet extends ConsumerWidget {
     if (to == null) return null;
     DateTime snapDown(int hour, int minute) {
       // #638 — the shared grid rule, not a private copy of it.
+      // #1082 — and the result is a WORKSPACE instant. `local` is the
+      // workspace wall clock of the reservation; rebuilding a bare
+      // DateTime from it silently MOVED an existing booking by the
+      // device's offset every time somebody edited its times.
       final m = granularity.snapMinutesOfDay(hour * 60 + minute);
-      return DateTime(local.year, local.month, local.day, m ~/ 60, m % 60);
+      return pickedInstantAt(local, m ~/ 60, m % 60);
     }
 
     final start = snapDown(from.hour, from.minute);

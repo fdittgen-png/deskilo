@@ -220,12 +220,15 @@ class ShellScreen extends ConsumerWidget {
           targetNames: targets,
           titleOf: (target, startsAt) =>
               l10n?.reminderTitle ?? 'Check in soon',
-          bodyOf: (target, startsAt) =>
-              l10n?.reminderBody(
-                target,
-                timeFormat.format(startsAt.toLocal()),
-              ) ??
-              '$target starts at ${timeFormat.format(startsAt.toLocal())}',
+          // #1082 — the reminder names the hour the SPACE opens the
+          // booking, which is what the member read when they booked it
+          // and what the plan shows. `toLocal()` is the device's clock,
+          // and #711 made the workspace's the default everywhere else.
+          bodyOf: (target, startsAt) {
+            final at = timeFormat.format(WorkspaceTime.wall(startsAt));
+            return l10n?.reminderBody(target, at) ??
+                '$target starts at $at';
+          },
         );
         await scheduleCheckInReminders(
           ref.read(notificationServiceProvider),

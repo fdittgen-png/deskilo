@@ -421,14 +421,19 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
   @override
   bool get windowIsNow {
     if (!_selectedDay.isAtSameMomentAs(_today)) return false;
-    final raw = ref.read(clockProvider).now();
-    final now = WorkspaceTime.at(
-      _selectedDay.year,
-      _selectedDay.month,
-      _selectedDay.day,
-      raw.hour,
-      raw.minute,
-    );
+    // #1082 — compare INSTANTS. This used to take `raw.hour`/`.minute`
+    // — the DEVICE's wall clock — and hand them to WorkspaceTime.at as
+    // if they were the space's, so at 09:00 in New York (15:00 in Paris)
+    // the Morning chip read as live and offered "check in right away"
+    // for a half-day that ended three hours ago, while the Afternoon
+    // chip the member was actually sitting in was refused.
+    //
+    // The window bounds are already workspace-anchored absolute
+    // instants, and `now` is an absolute instant, so no wall-clock
+    // reconstruction is needed at all: comparing them directly is right
+    // in every timezone, which is why there is no WorkspaceTime call
+    // left here.
+    final now = ref.read(clockProvider).now();
     final window = _effectiveWindow(_granularity);
     return !now.isBefore(window.start) && now.isBefore(window.end);
   }
