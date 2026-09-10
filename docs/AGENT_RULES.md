@@ -130,6 +130,29 @@ dart pub global activate dart_mcp_server
 Without it the server simply fails to start. That is the price of the `cli_util` conflict
 above; a dev dependency would have travelled with the repo, and cannot.
 
+**And the server's PATH is pinned in `.mcp.json`, not left to the shell (#1111).** The
+commonest way this server is dead is that it never started:
+
+```
+dart (ENOENT): "Executable not found in $PATH: dart"
+```
+
+Flutter bundles Dart at `<flutter>/bin/dart`, and a client launched from the Dock or
+Spotlight inherits launchd's environment, not your interactive shell's — so exporting the
+directory in `~/.zshrc` fixes a terminal launch and nothing else. The `env.PATH` block in
+`.mcp.json` makes the server independent of how the client was started, and travels to a
+fresh clone. Do both layers: the profile export so `dart` and `flutter` work in your own
+shell, the `env` block so the server does not care.
+
+Two things to check BEFORE suspecting your profile, because each points at a fix that is
+not needed: `dart pub global list` (activation), and whether the profile's OTHER exports
+are on the failing session's PATH (if they are, it ran). Reconnecting never helps — a
+server inherits the environment the SESSION was started with, so a restart is required.
+
+The `--exclude-tool dart_format --exclude-tool dart_fix` flags in that file are a **no-op**:
+both tools were removed upstream and are absent from 1.1.1's fourteen. They are kept as a
+statement of intent should a future build reinstate them; they enforce nothing today.
+
 **Supabase.** The tracked allow-list holds read-only tools only (`list_migrations`,
 `list_tables`, `get_advisors`, …). `execute_sql`, `apply_migration` and
 `deploy_edge_function` reach the hosted project, so each developer opts in for themselves
