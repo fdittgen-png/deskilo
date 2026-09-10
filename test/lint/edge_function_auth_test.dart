@@ -22,6 +22,7 @@
 // Deno is not installed in CI, so this reads the source. That is enough
 // for a structural invariant, and it is the only guard these functions
 // have.
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -33,11 +34,61 @@ const _memberScoped = [
   'create-payment-order',
 ];
 
+/// The same function as the self-hoster receives it. `bundle.json` is a
+/// GENERATED artifact committed to the repo, so a branch cut before a
+/// function was fixed regenerates it from the stale source — and merging
+/// that branch afterwards silently reverts the fix for every self-hosted
+/// instance while `supabase/functions/` still reads correct. A security
+/// review caught exactly that on the #1092 branch.
+String _bundled(String slug) {
+  final bundle = jsonDecode(
+    File('assets/instance/bundle.json').readAsStringSync(),
+  ) as Map<String, dynamic>;
+  final entry = (bundle['functions'] as List)
+      .cast<Map<String, dynamic>>()
+      .firstWhere((f) => f['slug'] == slug,
+          orElse: () => throw StateError('$slug is not in the bundle'));
+  return (entry['files'] as List)
+      .cast<Map<String, dynamic>>()
+      .map((f) => f['content'] as String)
+      .join();
+}
+
+void _assertGuarded(String name, String source, String where) {
+  final chains = RegExp(
+    r'\.from\(\s*"members"\s*\)(.*?)(maybeSingle|single)\(\)',
+    dotAll: true,
+  ).allMatches(source);
+  expect(chains, isNotEmpty,
+      reason: '$name ($where) no longer looks members up — retire it');
+  for (final chain in chains) {
+    expect(chain.group(1), contains('user_id'),
+        reason: 'a members lookup in $name ($where) is scoped by '
+            'workspace alone. RLS lets a member read every row of their '
+            'workspace, so this returns one row per member and '
+            'maybeSingle() then refuses the caller.');
+  }
+  final auth = source.indexOf('auth.getUser(');
+  expect(auth, greaterThan(-1),
+      reason: '$name ($where) never resolves the caller');
+  for (final answer in RegExp(r'action === "(\w+)"').allMatches(source)) {
+    expect(auth, lessThan(answer.start),
+        reason: 'the "${answer.group(1)}" branch of $name ($where) '
+            'answers before the caller is known — a workspace id is not '
+            'a secret, so that discloses the workspace\'s setup to '
+            'anyone who has one.');
+  }
+}
+
 void main() {
   for (final name in _memberScoped) {
     group(name, () {
       final source =
           File('supabase/functions/$name/index.ts').readAsStringSync();
+
+      test('the BUNDLED copy is guarded too', () {
+        _assertGuarded(name, _bundled(name), 'assets/instance/bundle.json');
+      });
 
       test('every members lookup is scoped to the calling user', () {
         // Each `.from("members")` chain up to its terminator.
