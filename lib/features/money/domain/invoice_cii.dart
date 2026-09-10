@@ -122,13 +122,14 @@ String buildInvoiceCii({
     builder.element('rsm:SupplyChainTradeTransaction', nest: () {
       // ── Lines ────────────────────────────────────────────────────────
       for (final (i, line) in charges.indexed) {
-        final quantity =
-            line.quantity > 1 && line.amountCents % line.quantity == 0
-                ? line.quantity
-                : 1;
         // BT-131/BT-146 are tax-exclusive: split the gross like the
         // breakdown does.
         final lineNet = vatSplit(line.amountCents, line.vatPercent).netCents;
+        // #1091 — divisibility is tested on the NET, which is what the
+        // unit price is emitted from. See invoice_ubl.dart.
+        final quantity = line.quantity > 1 && lineNet % line.quantity == 0
+            ? line.quantity
+            : 1;
         final unitCents = lineNet ~/ quantity;
         final lineCategory = line.vatPercent > 0 ? 'S' : category;
         builder.element('ram:IncludedSupplyChainTradeLineItem', nest: () {

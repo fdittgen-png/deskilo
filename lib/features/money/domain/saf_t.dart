@@ -427,11 +427,13 @@ String buildSafTFile({
             final netCents = breakdown.fold(0, (sum, t) => sum + t.netCents);
             final taxCents = breakdown.fold(0, (sum, t) => sum + t.vatCents);
             for (final (i, line) in charges.indexed) {
+              final split = vatSplit(line.amountCents, line.vatPercent);
+              // #1091 — the UnitPrice below is the NET per unit, so the
+              // quantity must divide the NET. See invoice_ubl.dart.
               final quantity =
-                  line.quantity > 1 && line.amountCents % line.quantity == 0
+                  line.quantity > 1 && split.netCents % line.quantity == 0
                       ? line.quantity
                       : 1;
-              final split = vatSplit(line.amountCents, line.vatPercent);
               builder.element('Line', nest: () {
                 tag('LineNumber', '${i + 1}');
                 final text = lineText(line);

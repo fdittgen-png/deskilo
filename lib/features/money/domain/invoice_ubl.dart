@@ -233,15 +233,19 @@ String buildInvoiceUbl({
     });
 
     for (final (i, line) in charges.indexed) {
-      // Keep quantity × unit price arithmetically consistent: the real
-      // quantity when the amount divides evenly by it, otherwise one
-      // line at its full amount.
-      final quantity = line.quantity > 1 && line.amountCents % line.quantity == 0
-          ? line.quantity
-          : 1;
       // The norm's line amount is tax-EXCLUSIVE (BT-131), so the gross
       // price is split exactly as the breakdown above splits it.
       final lineNet = vatSplit(line.amountCents, line.vatPercent).netCents;
+      // #1091 — keep quantity × unit price arithmetically consistent on
+      // the amount actually EMITTED. This tested the GROSS for
+      // divisibility and then emitted the NET, so a line whose gross
+      // divides but whose net does not (4 × €10.00 at 20% → net 8.33)
+      // shipped 2.08 × 4 = 8.32 against a stated 8.33, and a strict
+      // EN 16931 validator rejects the document.
+      final quantity =
+          line.quantity > 1 && lineNet % line.quantity == 0
+              ? line.quantity
+              : 1;
       final unitCents = lineNet ~/ quantity;
       final lineCategory = line.vatPercent > 0 ? 'S' : category;
       builder.element('cac:InvoiceLine', nest: () {
