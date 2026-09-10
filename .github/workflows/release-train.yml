@@ -5,7 +5,7 @@ name: Release · Train (all platforms)
 
 # #570 — ONE workflow that deploys everything: Android (Play), Apple
 # (TestFlight), macOS (DMG), Windows (MSI) and web (GitHub Pages), on a
-# beta or a production track. The legs are the EXISTING per-platform
+# the alpha or the production track. The legs are the EXISTING per-platform
 # workflows called verbatim (workflow_call), so the train can never drift
 # from what a solo dispatch builds.
 #
@@ -20,19 +20,26 @@ name: Release · Train (all platforms)
 #     NOTIFY_EMAIL_TO). Without them the e-mail step is skipped with a
 #     loud summary note — never a failure of the report itself.
 #
-# Track mapping (what "beta" and "production" mean per platform).
-# #626 — the BETA train is the TESTER train: it must land exactly where
-# the enrolled testers are, or "test the same build on both" is a lie.
-# On Android that is the CLOSED alpha track (the one whose 12-tester /
-# 14-day countdown gates production access), not the open 'beta' track;
-# on Apple it is the EXTERNAL group behind the public TestFlight link,
-# not the internal-only build.
-#   android  beta → Play 'alpha' (closed)  production → Play 'production'
-#   apple    beta → TestFlight external    production → TestFlight external
-#                     group (public link)      group (the public link)
+# Track mapping (what "alpha" and "production" mean per platform).
+#
+# #1073 — the input used to be called `beta` and it went to Play's ALPHA
+# track, because #626 established that the tester train must land where
+# the enrolled testers actually are. Two names for one thing cost real
+# mistakes: a rule in CLAUDE.md that read "never use the alpha track" —
+# forbidding the only track this project ships to — and a dispatch log
+# that says `TRACK: beta` three lines above `--track "alpha"`.
+#
+# So the input is the Play track. Alpha is the closed test whose
+# 12-tester / 14-day countdown gates production access; it is NOT Play's
+# open 'beta' track, which this project does not use. On Apple, alpha
+# means the EXTERNAL group behind the public TestFlight link, not the
+# internal-only build.
+#   android  alpha → Play 'alpha' (closed)  production → Play 'production'
+#   apple    alpha → TestFlight external    production → TestFlight external
+#                      group (public link)      group (the public link)
 #   macos    DMG artifact (no store channel — same build both tracks)
 #   windows  MSI artifact (no store channel — same build both tracks)
-#   web      beta → build-check only       production → Pages deploy
+#   web      alpha → build-check only       production → Pages deploy
 #
 # Play may refuse a track that is still policy-locked (production access
 # pending): that leg then fails and the report says so in Play's own
@@ -42,13 +49,15 @@ on:
   workflow_dispatch:
     inputs:
       track:
-        description: Which train — beta or production
+        description: >-
+          Which train — alpha (the closed test the testers are enrolled
+          in) or production. The value IS the Play track.
         required: true
         type: choice
         options:
-          - beta
+          - alpha
           - production
-        default: beta
+        default: alpha
       release_notes:
         description: >-
           Changelog for BOTH stores (#626) — one text, one commit, so the
@@ -79,7 +88,8 @@ jobs:
     uses: ./.github/workflows/play-internal.yml
     with:
       # #626 — 'alpha' IS the closed test the testers are enrolled in.
-      track: ${{ inputs.track == 'production' && 'production' || 'alpha' }}
+      # No mapping left to get wrong: the input IS the track.
+      track: ${{ inputs.track }}
       release_notes: ${{ inputs.release_notes }}
     secrets: inherit
 
@@ -88,7 +98,7 @@ jobs:
     with:
       release_notes: ${{ inputs.release_notes != '' && inputs.release_notes
         || (inputs.track == 'production'
-            && 'Production candidate.' || 'Beta build.') }}
+            && 'Production candidate.' || 'Alpha build.') }}
       # #626 — the public-link group is where the testers are; the first
       # external build already cleared Apple's Beta App Review, so later
       # ones reach the group directly.

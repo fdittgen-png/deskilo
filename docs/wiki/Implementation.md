@@ -131,7 +131,7 @@ Git discipline — branch off `master`, PRs only, green CI before merge, squash-
 - Desktop: Windows ships as an MSI from the `windows-msi` workflow, macOS as a Developer-ID-signed, Apple-notarised, stapled DMG from `macos-app` — both attached to the release on a `v*` tag. (Spec §12 left the macOS channel open; it is settled as notarised direct download.)
 - Web: an opt-in GitHub Pages deploy from *Publish · Web app*
   (`-f deploy=true`).
-- One dispatch of *Release · Train (all platforms)* with `-f track=beta`
+- One dispatch of *Release · Train (all platforms)* with `-f track=alpha`
   puts iOS and Android on the same commit, which is the point of having
   a train at all.
 

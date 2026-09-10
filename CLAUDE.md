@@ -12,7 +12,7 @@ identity form, one-branch-at-a-time). This file only indexes the skills.
 | `deskilo-supabase-migration` | writing a migration or RPC: harness first, apply, verify live |
 | `deskilo-widget-test-gotchas` | a widget test fails for a reason that is not the code |
 | `deskilo-reports` | anything printed: kinds, placeholders, layouts, the CLI, the letter standard |
-| `deskilo-ci-release` | watching CI, merging, dispatching the beta train or the web publish |
+| `deskilo-ci-release` | watching CI, merging, dispatching the alpha train or the web publish |
 | `deskilo-documentation` | the guides, the help anchors, the screenshot pipeline: anything under `docs/wiki`, `assets/help` or a help symbol |
 | `project-evolution-playbook` | the project-agnostic method; copy it to other repos |
 

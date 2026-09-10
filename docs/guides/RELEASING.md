@@ -193,12 +193,12 @@ gh workflow run web.yml -f deploy=true      # …and publish to GitHub Pages
 
 The testers are enrolled in TWO places: the Play **closed alpha** track
 (the test whose 12-tester / 14-day countdown gates production access) and
-the **external** TestFlight group behind the public link. The beta train
+the **external** TestFlight group behind the public link. The alpha train
 targets exactly those, from ONE commit, so Android and iOS testers always
 hold the same version:
 
 ```bash
-gh workflow run release-train.yml -f track=beta \
+gh workflow run release-train.yml -f track=alpha \
   -f release_notes="What changed in this build."
 ```
 
