@@ -354,6 +354,10 @@
   "@badgeAuthNeedsPin": {
     "description": "#662 - badge sign-in"
   },
+  "badgePinSaveFailed": "Server nicht erreichbar. Ihre PIN wurde nicht geändert — bitte erneut versuchen.",
+  "@badgePinSaveFailed": {
+    "description": "#1086 the PIN save or clear could not reach the server"
+  },
   "billSubscription": "Abo {pct} %",
   "billEntitlement": "{used} von {included} halben Tagen abgerechnet ({openDays} Öffnungstage)",
   "billOverage": "{extra} zusätzliche halbe Tage",

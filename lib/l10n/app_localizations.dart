@@ -986,6 +986,12 @@ abstract class AppLocalizations {
   /// **'Set a sign-in PIN first — a badge alone must never be enough.'**
   String get badgeAuthNeedsPin;
 
+  /// #1086 the PIN save or clear could not reach the server
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reach the server. Your PIN was not changed — try again.'**
+  String get badgePinSaveFailed;
+
   /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount
   ///
   /// In en, this message translates to:

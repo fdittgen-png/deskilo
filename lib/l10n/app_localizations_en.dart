@@ -519,6 +519,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Set a sign-in PIN first — a badge alone must never be enough.';
 
   @override
+  String get badgePinSaveFailed =>
+      'Could not reach the server. Your PIN was not changed — try again.';
+
+  @override
   String billSubscription(int pct) {
     return 'Subscription $pct%';
   }

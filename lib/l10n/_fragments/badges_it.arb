@@ -121,5 +121,9 @@
   "badgeAuthNeedsPin": "Imposta prima un PIN di accesso — il badge da solo non deve mai bastare.",
   "@badgeAuthNeedsPin": {
     "description": "#662 - badge sign-in"
+  },
+  "badgePinSaveFailed": "Server irraggiungibile. Il tuo PIN non è stato modificato — riprova.",
+  "@badgePinSaveFailed": {
+    "description": "#1086 the PIN save or clear could not reach the server"
   }
 }

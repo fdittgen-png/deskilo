@@ -524,6 +524,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Définissez d’abord un code de connexion — un badge seul ne doit jamais suffire.';
 
   @override
+  String get badgePinSaveFailed =>
+      'Serveur injoignable. Votre code n\'a pas été modifié — réessayez.';
+
+  @override
   String billSubscription(int pct) {
     return 'Abonnement $pct %';
   }
