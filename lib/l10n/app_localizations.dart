@@ -857,7 +857,7 @@ abstract class AppLocalizations {
   /// #662 - badge sign-in
   ///
   /// In en, this message translates to:
-  /// **'My badge'**
+  /// **'My PIN'**
   String get badgePinSectionTitle;
 
   /// #662 - badge sign-in

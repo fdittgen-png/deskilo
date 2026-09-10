@@ -450,7 +450,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get badgeSignInEntry => 'Iniciar sesión con una credencial';
 
   @override
-  String get badgePinSectionTitle => 'Mi credencial';
+  String get badgePinSectionTitle => 'Mi PIN';
 
   @override
   String get badgePinSet => 'PIN definido';
