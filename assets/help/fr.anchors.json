@@ -19,7 +19,7 @@
   "user.workspace.availability.outside-hours": "En dehors des heures d'ouverture",
   "user.workspace.availability.limits": "Limites de réservation",
   "user.features.switch": "Un interrupteur de fonctionnalité",
-  "user.members.subscription": "Comment l'adhésion a commencé",
+  "user.members.subscription": "Les environnements donnés par une invitation",
   "user.members.overage-policy": "Quand les jours sont épuisés",
   "user.members.reservation-limit": "Limite de réservations",
   "user.members.simultaneous": "Réservations simultanées",

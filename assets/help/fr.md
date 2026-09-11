@@ -563,6 +563,25 @@ Touchez un membre pour sa **feuille de gestion** — chaque action par membre au
 
 *Le dialogue abonnement (le pourcentage du membre) et le dialogue limite de réservations (le plafond de réservations ouvertes).*
 
+#### Les environnements donnés par une invitation
+
+Quand votre espace a un jumeau de production, la feuille d'invitation pose
+une question : **Donner aussi accès à la production ?** (#1119)
+
+La personne rejoint l'espace de test dans tous les cas. La production
+s'ajoute par-dessus, jamais à la place — le jumeau de test est l'endroit
+où l'on essaie, et quelqu'un qui n'existerait qu'en production ne
+pourrait pas y être répété.
+
+Le rôle décide toujours. Si le rôle invité ne détient pas *Accès à la
+production*, l'invitation refuse d'être créée et le dit, plutôt que
+d'échouer plus tard au moment où la personne l'utilise. Une invitation
+n'accorde jamais ce que la matrice des rôles refuse.
+
+À activer dans *Réglages → Fonctionnalités → Choisir les environnements
+sur lesquels une personne est activée* ; désactivé par défaut, et les
+invitations créées avant rejoignent l'espace de test comme auparavant.
+
 #### Comment l'adhésion a commencé
 
 Chaque membre porte une ligne discrète indiquant comment il est arrivé

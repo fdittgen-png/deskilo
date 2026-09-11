@@ -40,6 +40,10 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   // people, so a workspace decides to show it rather than finding it
   // already there on the members it already had.
   WorkspaceFeature.memberOrigin,
+  // #1119 — the environment question on an invitation. A workspace with
+  // no twin has nothing to choose between, and the sheet is one people
+  // already know.
+  WorkspaceFeature.memberEnvironments,
 };
 
 /// Every other feature ships ON.
@@ -97,6 +101,7 @@ void main() {
       'vatRateHistory': true,
       'vatCounterparty': true,
       'memberOrigin': true,
+      'memberEnvironments': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

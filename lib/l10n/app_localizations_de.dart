@@ -3555,6 +3555,21 @@ class AppLocalizationsDe extends AppLocalizations {
       'Keine Workspace-ID gefunden — Einladung einfügen oder ID eintippen.';
 
   @override
+  String get inviteAlsoProdTitle => 'Auch Zugang zur Produktion geben';
+
+  @override
+  String get inviteAlsoProdSubtitle =>
+      'Die Person tritt dem Testraum in jedem Fall bei. Die Rolle muss den Produktionszugang trotzdem erlauben.';
+
+  @override
+  String get featureMemberEnvironmentsTitle =>
+      'Die Umgebungen wählen, für die eine Person freigeschaltet wird';
+
+  @override
+  String get featureMemberEnvironmentsDesc =>
+      'Wenn Sie jemanden einladen, wählen Sie, ob er auch den Produktionsraum erreicht. Dem Testraum tritt er in jedem Fall bei, und die Rolle muss den Produktionszugang trotzdem erlauben.';
+
+  @override
   String get invoicePdfDueOn => 'Fällig am';
 
   @override

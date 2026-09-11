@@ -14,5 +14,9 @@
   "invitationTemplateHelp": "Se envía al invitar a alguien por WhatsApp, SMS o compartir. Déjalo vacío para usar el mensaje integrado en el idioma elegido. Etiquetas disponibles:",
   "invitationTemplateHint": "Mensaje de invitación personalizado usando las etiquetas de arriba…",
   "workspaceInvitePasteHint": "Pega el mensaje de invitación completo — el ID se detecta automáticamente.",
-  "workspaceInviteCodeInvalid": "No se encontró ningún ID — pega la invitación o escribe el ID."
+  "workspaceInviteCodeInvalid": "No se encontró ningún ID — pega la invitación o escribe el ID.",
+  "inviteAlsoProdTitle": "Dar también acceso a producción",
+  "inviteAlsoProdSubtitle": "La persona se une al espacio de prueba en cualquier caso. El rol todavía tiene que permitir el acceso a producción.",
+  "featureMemberEnvironmentsTitle": "Elegir los entornos en los que se activa a una persona",
+  "featureMemberEnvironmentsDesc": "Cuando invite a alguien, elija si también llega al espacio de producción. Se une al espacio de prueba en cualquier caso, y el rol todavía tiene que permitir el acceso a producción."
 }

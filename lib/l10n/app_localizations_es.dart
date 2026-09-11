@@ -3555,6 +3555,21 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se encontró ningún ID — pega la invitación o escribe el ID.';
 
   @override
+  String get inviteAlsoProdTitle => 'Dar también acceso a producción';
+
+  @override
+  String get inviteAlsoProdSubtitle =>
+      'La persona se une al espacio de prueba en cualquier caso. El rol todavía tiene que permitir el acceso a producción.';
+
+  @override
+  String get featureMemberEnvironmentsTitle =>
+      'Elegir los entornos en los que se activa a una persona';
+
+  @override
+  String get featureMemberEnvironmentsDesc =>
+      'Cuando invite a alguien, elija si también llega al espacio de producción. Se une al espacio de prueba en cualquier caso, y el rol todavía tiene que permitir el acceso a producción.';
+
+  @override
   String get invoicePdfDueOn => 'Vencimiento';
 
   @override

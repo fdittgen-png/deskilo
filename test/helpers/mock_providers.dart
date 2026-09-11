@@ -329,7 +329,9 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
         bool isAdmin,
         String firstName,
         String lastName,
-        String? memberId
+        String? memberId,
+        // #1119 — whether the invitation also grants the prod twin.
+        bool alsoProd
       })> mintedInvitations = [];
 
   var _nextInviteCode = 1;
@@ -343,6 +345,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     String firstName = '',
     String lastName = '',
     String? memberId,
+    bool alsoProd = false,
   }) async {
     if (isAdmin && !myMember.isOwner) {
       throw Exception('only owners may invite admins');
@@ -357,6 +360,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       firstName: firstName,
       lastName: lastName,
       memberId: memberId,
+      alsoProd: alsoProd,
     ));
     return code;
   }

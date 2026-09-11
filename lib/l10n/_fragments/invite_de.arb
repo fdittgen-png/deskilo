@@ -14,5 +14,9 @@
   "invitationTemplateHelp": "Wird gesendet, wenn du jemanden per WhatsApp, SMS oder Teilen einlädst. Leer lassen für die eingebaute Nachricht in der gewählten Sprache. Verfügbare Tags:",
   "invitationTemplateHint": "Eigene Einladungsnachricht mit den Tags oben…",
   "workspaceInvitePasteHint": "Füge die ganze Einladungsnachricht ein — die ID wird automatisch erkannt.",
-  "workspaceInviteCodeInvalid": "Keine Workspace-ID gefunden — Einladung einfügen oder ID eintippen."
+  "workspaceInviteCodeInvalid": "Keine Workspace-ID gefunden — Einladung einfügen oder ID eintippen.",
+  "inviteAlsoProdTitle": "Auch Zugang zur Produktion geben",
+  "inviteAlsoProdSubtitle": "Die Person tritt dem Testraum in jedem Fall bei. Die Rolle muss den Produktionszugang trotzdem erlauben.",
+  "featureMemberEnvironmentsTitle": "Die Umgebungen wählen, für die eine Person freigeschaltet wird",
+  "featureMemberEnvironmentsDesc": "Wenn Sie jemanden einladen, wählen Sie, ob er auch den Produktionsraum erreicht. Dem Testraum tritt er in jedem Fall bei, und die Rolle muss den Produktionszugang trotzdem erlauben."
 }

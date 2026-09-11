@@ -58,6 +58,18 @@ const _reviewed = {
   'create_workspace@0200',
   'join_workspace@0200',
   'create_managed_member@0200',
+  // #1119/0201 adds the environment choice to create_invitation. Same
+  // method as 0200's three: the body came out of `pg_get_functiondef`
+  // on the live project, not from an older file. The old five-argument
+  // signature is DROPPED in the same migration — an overload whose
+  // extra parameter has a default is ambiguous against an exact-arity
+  // sibling, and leaving both would have broken every existing caller.
+  //
+  // `join_workspace` is NOT in this list for 0201: that one is a
+  // genuine anchored patch, with four asserted anchors and four
+  // post-conditions, precisely so that this function is not re-created
+  // twice in two migrations.
+  'create_invitation@0201',
 };
 
 void main() {

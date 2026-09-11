@@ -3647,6 +3647,10 @@
   },
   "workspaceInvitePasteHint": "Paste the whole invitation message — the ID is found automatically.",
   "workspaceInviteCodeInvalid": "No workspace ID found — paste the invitation or type the ID.",
+  "inviteAlsoProdTitle": "Also give access to production",
+  "inviteAlsoProdSubtitle": "They join the test space either way. The role still has to allow production access.",
+  "featureMemberEnvironmentsTitle": "Choose the environments a person is activated on",
+  "featureMemberEnvironmentsDesc": "When you invite somebody, choose whether they also reach the production space. They join the test space either way, and the role still has to allow production access.",
   "invoicePdfDueOn": "Due on",
   "@invoicePdfDueOn": {
     "description": "#910 invoice due date: invoicePdfDueOn"
