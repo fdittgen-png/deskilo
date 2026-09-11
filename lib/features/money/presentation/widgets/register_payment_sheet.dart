@@ -15,6 +15,7 @@ import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/payment_method.dart';
 import '../../providers/money_providers.dart';
+import '../../../../core/format/cents.dart';
 
 /// #827 — an admin registers a payment that came in FOR a member (a
 /// bank line, cash at the desk): the same `record_payment` RPC members
@@ -60,10 +61,9 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
   }
 
   int? get _cents {
-    final raw = _amount.text.trim().replaceAll(',', '.');
-    final value = double.tryParse(raw);
-    if (value == null || value <= 0) return null;
-    return (value * 100).round();
+    // #1140 — the currency's own minor digits, never a literal 100.
+    final c = parseCentsInput(_amount.text);
+    return (c == null || c <= 0) ? null : c;
   }
 
   Future<void> _submit() async {

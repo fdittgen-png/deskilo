@@ -19,6 +19,7 @@ import '../../domain/reservation.dart';
 import 'booking_range_text.dart';
 import '../../providers/reservation_providers.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// Geometry of the Reserve hub's Week grid (#236). Pinned by test — treat
 /// these as part of the visual contract, not free-floating magic numbers.
@@ -794,7 +795,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     Map<String, String> names,
     AppLocalizations? l10n,
   ) {
-    final range = bookingRangeText(l10n, r.startsAt, r.endsAt);
+    final range = bookingRangeText(appFormatOf(context), l10n, r.startsAt, r.endsAt);
     if (!widget.everyone) return range;
     final name = names[r.memberId] ?? '';
     return name.isEmpty ? range : '$range · $name';

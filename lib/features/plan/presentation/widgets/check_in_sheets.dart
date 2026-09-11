@@ -7,6 +7,7 @@ import '../../../reservations/domain/reservation.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/seat.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// The check-in bottom sheets of the live plan, extracted from
 /// PlanScreen (#408 grew it past its length budget). Pure UI — the
@@ -35,7 +36,7 @@ Future<String?> showMySeatSheet(
   final opensOnAnotherDay = opensWall.year != nowWall.year ||
       opensWall.month != nowWall.month ||
       opensWall.day != nowWall.day;
-  final opensAt = DateFormat.Hm().format(opensWall);
+  final opensAt = appFormatOf(context).time(mine.checkInOpensAt(granularity: granularity));
   final opensOn = DateFormat.MMMd().format(opensWall);
   return showModalBottomSheet<String>(
     context: context,
@@ -53,9 +54,9 @@ Future<String?> showMySeatSheet(
               // #908 — the space's clock (or the member's own, when they
               // asked for it) — never the device's behind its back: the
               // opening time two lines up already reads that way.
-              '${DateFormat.Hm().format(WorkspaceTime.display(mine.startsAt))}'
+              '${appFormatOf(context).time(mine.startsAt)}'
               ' – '
-              '${DateFormat.Hm().format(WorkspaceTime.display(mine.endsAt))}',
+              '${appFormatOf(context).time(mine.endsAt)}',
             ),
           ),
           if (mine.status == ReservationStatus.checkedIn)
@@ -135,9 +136,9 @@ Future<String?> showCheckInOtherSheet(
               title: Text(seat.name.isEmpty ? reservedBy : seat.name),
               subtitle: Text(
                 '$reservedBy · '
-                '${DateFormat.Hm().format(WorkspaceTime.display(other.startsAt))}'
+                '${appFormatOf(context).time(other.startsAt)}'
                 ' – '
-                '${DateFormat.Hm().format(WorkspaceTime.display(other.endsAt))}',
+                '${appFormatOf(context).time(other.endsAt)}',
               ),
             ),
             if (offerCheckIn)

@@ -31,6 +31,7 @@ import 'series_result_dialog.dart';
 import '../../providers/reservation_providers.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// Where is my reserved seat — and what can I do about it? (#182, edit
 /// pass) Time range and status icon, the resolved location chain, the
@@ -124,7 +125,7 @@ class ReservationDetailSheet extends ConsumerWidget {
               // 'Full day', never '00:00 – 00:00' (field report).
               title: Text(
                 '${DateFormat.MMMEd().format(WorkspaceTime.display(r.startsAt))}'
-                ' · ${bookingRangeText(l10n, r.startsAt, r.endsAt)}',
+                ' · ${bookingRangeText(appFormatOf(context), l10n, r.startsAt, r.endsAt)}',
               ),
               subtitle: target == null &&
                       r.seriesId == null &&

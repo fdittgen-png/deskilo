@@ -52,7 +52,7 @@ MoneyFormat currency,
     final cents = parseCentsInput(amount.text) ?? 0;
     final qty = int.tryParse(supplyQty.text) ?? 0;
     if (cents > 0 && qty > 0) {
-      supplyUnit.text = ((cents + qty - 1) ~/ qty / 100).toStringAsFixed(2);
+      supplyUnit.text = centsToMajor((cents + qty - 1) ~/ qty); // #1140
     }
   }
   final submitted = await showModalBottomSheet<bool>(

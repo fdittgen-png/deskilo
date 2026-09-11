@@ -48,6 +48,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../widgets/kiosk_act_sheet.dart';
 import '../../device_pin.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// Server error substring when a presented badge is unknown/revoked
 /// (kiosk_act, migration 0043) — pinned by test like the other guards.
@@ -289,7 +290,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
         hasAvatar: identity.hasAvatar,
         targetName: title,
         rangeText: booksWindow
-            ? bookingRangeText(l10n, request.start, request.end)
+            ? bookingRangeText(appFormatOf(context), l10n, request.start, request.end)
             : null,
       ),
     ));

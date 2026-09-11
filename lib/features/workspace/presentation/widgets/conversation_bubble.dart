@@ -14,6 +14,7 @@ import '../../providers/workspace_providers.dart';
 import 'member_note_actions.dart';
 import 'member_note_body.dart';
 import 'note_check.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// One chat bubble (#687), lifted out of conversation_sheet.dart so the
 /// group thread renders messages exactly as the 1:1 sheet always has.
@@ -144,7 +145,7 @@ class ConversationBubble extends ConsumerWidget {
 
   Widget _bubble(BuildContext context, WidgetRef ref, ThemeData theme) {
     final when = timeOnly
-        ? DateFormat.Hm().format(note.createdAt.toLocal())
+        ? ref.watch(appFormatProvider).time(note.createdAt)
         : DateFormat.MMMd().add_Hm().format(note.createdAt.toLocal());
     final split = splitLeadingQuote(note.body);
     return Align(

@@ -22,6 +22,7 @@ import '../../providers/expense_repartition_providers.dart';
 import '../../providers/money_providers.dart';
 import '../period_label.dart';
 import 'wizard_scaffold.dart';
+import '../../../../core/format/cents.dart';
 
 /// Opens the repartition assistant (kept under its historical name).
 Future<void> showExpenseRepartitionSheet(
@@ -71,9 +72,9 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
   }
 
   int? get _cents {
-    final value = double.tryParse(_amount.text.trim().replaceAll(',', '.'));
-    if (value == null || value <= 0) return null;
-    final cents = (value * 100).round();
+    // #1140 — the currency's own minor digits, never a literal 100.
+    final cents = parseCentsInput(_amount.text);
+    if (cents == null || cents <= 0) return null;
     return _reverse ? -cents : cents;
   }
 

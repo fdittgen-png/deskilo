@@ -3,11 +3,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../core/time/clock.dart';
-import '../../../core/time/workspace_time.dart';
-import '../../../core/trace/guarded.dart';
 import '../../../core/trace/act_trace.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
@@ -38,6 +35,8 @@ import 'booking_trace_points.dart';
 import 'widgets/booking_sheet.dart';
 import 'widgets/message_reserver.dart';
 import 'widgets/series_result_dialog.dart';
+import '../../../core/i18n/format_controller.dart';
+import '../../../core/trace/guarded.dart';
 
 /// ACTING ON A SEAT (#687), lifted out of the Reserve hub.
 ///
@@ -263,7 +262,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         // #908 — display, not wall: a member who asked to read hours in
         // their own timezone must get them here too.
         final until =
-            DateFormat.Hm().format(WorkspaceTime.display(other.endsAt));
+            ref.watch(appFormatProvider).time(other.endsAt);
         final infoLine =
             '$template · ${l10n?.planUntil(until) ?? 'until $until'}';
         // #622 — a REGULAR member can message the holder instead of

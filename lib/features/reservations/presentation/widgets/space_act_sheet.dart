@@ -1,11 +1,8 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/time/clock.dart';
-import '../../../../core/time/workspace_time.dart';
-import '../../../../core/trace/act_trace.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
@@ -23,6 +20,8 @@ import '../booking_gate_scope.dart';
 import '../../providers/reservation_providers.dart';
 import 'message_reserver.dart';
 import 'space_act_form.dart';
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/trace/act_trace.dart';
 
 /// #622 — the authenticated act sheet: scanning a seat's QR card (or
 /// tapping its chair's NFC tag, or picking it in a desk/office space
@@ -329,7 +328,7 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
           const SizedBox(height: 8),
           Text(
             '${blocking.status == ReservationStatus.checkedIn ? (l10n?.planOccupiedBy(name) ?? 'Occupied by $name') : (l10n?.planReservedBy(name) ?? 'Reserved by $name')}'
-            ' · ${l10n?.planUntil(DateFormat.Hm().format(WorkspaceTime.wall(blocking.endsAt))) ?? 'until ${DateFormat.Hm().format(WorkspaceTime.wall(blocking.endsAt))}'}',
+            ' · ${l10n?.planUntil(ref.watch(appFormatProvider).time(blocking.endsAt)) ?? 'until ${ref.watch(appFormatProvider).time(blocking.endsAt)}'}',
             key: const ValueKey('space-act-blocked'),
             style: theme.textTheme.bodySmall,
           ),

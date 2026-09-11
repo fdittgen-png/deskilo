@@ -38,6 +38,7 @@ import '../../domain/walk_up_window.dart';
 import '../../providers/reservation_providers.dart';
 import 'booking_range_text.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// The scan-to-book entry (field request): scan a desk/office/level QR
 /// card → the space sheet shows exactly the actions this member is
@@ -692,7 +693,7 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
       children: [
         const SizedBox(height: 4),
         Text(
-          bookingRangeText(l10n, window.start, window.end),
+          bookingRangeText(appFormatOf(context), l10n, window.start, window.end),
           style: Theme.of(context).textTheme.bodySmall,
         ),
         if (priceLine != null) ...[

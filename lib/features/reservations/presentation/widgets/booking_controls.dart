@@ -5,7 +5,6 @@
 // but grew separate layouts. One implementation each, composed inline
 // into a single compact header row by both screens.
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -13,6 +12,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/level.dart';
 import '../../../workspace/domain/booking_granularity.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// Granularity-aware window picker, inline-compact: Morning/Afternoon/
 /// Full-day chips under day-based rules (#201), from→to clock buttons on
@@ -92,7 +92,7 @@ class WindowControls extends StatelessWidget {
       );
     }
 
-    final timeFormat = DateFormat.Hm();
+    final timeFormat = appFormatOf(context); // #1150
     final style = muted
         ? TextButton.styleFrom(
             foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -141,7 +141,7 @@ class WindowControls extends StatelessWidget {
               key: ValueKey('$keyPrefix-from-chip'),
               style: style,
               onPressed: onPickFrom,
-              child: Text(timeFormat.format(from)),
+              child: Text(timeFormat.time(from)),
             ),
           ),
           Icon(
@@ -155,7 +155,7 @@ class WindowControls extends StatelessWidget {
               key: ValueKey('$keyPrefix-to-chip'),
               style: style,
               onPressed: onPickTo,
-              child: Text(timeFormat.format(to)),
+              child: Text(timeFormat.time(to)),
             ),
           ),
         ],

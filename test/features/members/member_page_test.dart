@@ -12,6 +12,7 @@ import 'package:deskilo/features/reservations/presentation/widgets/reservation_d
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
@@ -130,7 +131,7 @@ Future<void> _pumpPage(
   final s = _seed(viewerOwner: viewerOwner, flags: flags);
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(
+      overrides: standardTestOverrides(timeZoneMode: TimeZoneMode.device, 
         workspace: s.workspace,
         reservations: s.reservations,
         floorPlan: s.floorPlan,
@@ -262,7 +263,7 @@ void main() {
     final s = _seed(viewerOwner: false, flags: {'memberPage': on});
     await tester.pumpWidget(
       ProviderScope(
-        overrides: standardTestOverrides(
+        overrides: standardTestOverrides(timeZoneMode: TimeZoneMode.device, 
           workspace: s.workspace,
           reservations: s.reservations,
           floorPlan: s.floorPlan,

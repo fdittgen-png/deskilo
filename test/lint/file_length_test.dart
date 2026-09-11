@@ -101,7 +101,7 @@ const Map<String, int> _baseline = {
   // extracting it would drag half the file; 15 feature lines instead.
   // 920→960 (2026-08-04): #456 notify affordance threaded through the
   // row and the sheet.
-  'lib/features/members/presentation/screens/directory_screen.dart': 960,
+  'lib/features/members/presentation/screens/directory_screen.dart': 965, // 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed
   // 900→920 (2026-08-01): #393 environment picker threaded through the
   // send flow — feature lines, not accretion; picker itself is its own file.
   // 920→950 (2026-08-04): #454 template lookup + resolution threaded
@@ -195,7 +195,7 @@ const Map<String, int> _baseline = {
   // 980→1020 (2026-08-14): #568 per-destination gateway probe parse.
   // 600→630 (2026-08-22): #585 seatIdForNfcUid + the nfc_uid column in
   // the seat row mapping.
-  'lib/features/plan/data/supabase_floor_plan_repository.dart': 630,
+  'lib/features/plan/data/supabase_floor_plan_repository.dart': 635, // 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed
   // 1040→1130 (2026-08-31): #767 the six scheduled-expense methods live
   // beside the other money RPC wrappers they mirror.
   // 1130→1150 (2026-09-01): #802 the billing-rules read/write pair and
@@ -208,7 +208,7 @@ const Map<String, int> _baseline = {
   // repository implementation in two places for no gain.
   // 1260→1320 (2026-09-06): #925 three number-sequence methods.
   // 1320→1383 (2026-09-06): #934 two routes / three repository methods.
-  'lib/features/money/data/supabase_money_repository.dart': 1383,
+  'lib/features/money/data/supabase_money_repository.dart': 1395, // 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed
   // 600→630 (2026-08-11): #537 VAT price transparency — the gross-price
   // hint + per-pack VAT/currency subtitles (labeling, no new concern).
   // 630→660 (2026-08-11): #537 follow-up — live VAT-share helpers under
@@ -255,7 +255,7 @@ const Map<String, int> _baseline = {
   // 600→615 (2026-08-31): #771 the kiosk consent exemption and its
   // rationale live where the gate lives.
   // 700→751 (2026-09-06): #934 two routes / three repository methods.
-  'lib/app/router.dart': 730, // 2026-09-02 #821/#822/#825/#827 the conversation, report-editor, member and wizard routes // 2026-09-05 #902 /settings/payment-terms // 2026-09-10 #1085 751→730: the nine repeated owner-guard closures became one `needs(...)` helper
+  'lib/app/router.dart': 745, // 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed // 2026-09-02 #821/#822/#825/#827 the conversation, report-editor, member and wizard routes // 2026-09-05 #902 /settings/payment-terms // 2026-09-10 #1085 751→730: the nine repeated owner-guard closures became one `needs(...)` helper
   // default→660 (2026-09-06): #934 the status report kind / two flags.
   'lib/features/money/presentation/report_defaults.dart': 660,
   // 600→620 (2026-09-01): #791 the tap dispatcher records the branch it

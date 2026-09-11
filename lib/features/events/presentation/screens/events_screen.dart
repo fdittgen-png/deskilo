@@ -32,6 +32,7 @@ import '../feed_notes.dart';
 import '../../../money/domain/usage_record.dart';
 import '../widgets/validation_trail.dart';
 import '../widgets/note_row.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// The Events space (spec §8.1): pending confirmations pinned on top,
 /// ONE mixed date-sorted feed below (#581) — messages and workspace
@@ -435,8 +436,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
         );
     if (start == null || end == null) return created;
     final range = '${DateFormat.MMMEd().format(start.toLocal())} '
-        '${DateFormat.Hm().format(start.toLocal())}–'
-        '${DateFormat.Hm().format(end.toLocal())}';
+        '${ref.watch(appFormatProvider).time(start)}–'
+        '${ref.watch(appFormatProvider).time(end)}';
     return '$range · $created';
   }
 

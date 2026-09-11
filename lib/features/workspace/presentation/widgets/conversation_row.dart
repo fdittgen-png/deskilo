@@ -8,6 +8,8 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/conversation.dart';
 import '../../domain/member_note_refs.dart';
 import 'conversation_avatar.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// One row of the conversation list (#687) — the WhatsApp shape the
 /// owner asked for: avatar, name, last-message preview, time, unread
@@ -56,11 +58,11 @@ class ConversationRow extends ConsumerWidget {
 
   /// Relative, and coarse on purpose: a conversation list is scanned, not
   /// read. WhatsApp's own scale — a time today, "yesterday", then a date.
-  String _stamp(AppLocalizations? l10n) {
+  String _stamp(AppFormat format, AppLocalizations? l10n) {
     final at = conversation.lastAt.toLocal();
     final today = DateTime(now.year, now.month, now.day);
     final day = DateTime(at.year, at.month, at.day);
-    if (day == today) return DateFormat.Hm().format(at);
+    if (day == today) return format.time(conversation.lastAt);
     if (day == today.subtract(const Duration(days: 1))) {
       return l10n?.conversationYesterday ?? 'Yesterday';
     }
@@ -149,7 +151,7 @@ class ConversationRow extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(_stamp(l10n), style: theme.textTheme.labelSmall),
+          Text(_stamp(appFormatOf(context), l10n), style: theme.textTheme.labelSmall),
           const SizedBox(height: 4),
           if (unread > 0)
             Badge(
