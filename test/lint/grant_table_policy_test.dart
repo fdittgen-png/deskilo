@@ -121,7 +121,7 @@ void main() {
     // The specific invariant, not just the general rule: 0198 must ship
     // a read policy and nothing else.
     final sql =
-        File('supabase/migrations/0198_template_library.sql').readAsStringSync();
+        File('supabase/migrations/0199_template_library.sql').readAsStringSync();
     final policies = RegExp(
       r'create\s+policy\s+([^\s]+)\s+on\s+public\.workspace_template_grants',
       caseSensitive: false,

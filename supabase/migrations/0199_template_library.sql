@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: 0BSD
--- 0198 — #1120: the template library, written so that a grant can never
+-- 0199 — #1120: the template library, written so that a grant can never
 -- be the thing that proves access.
 --
 -- 0196 shipped `workspace_templates` with the `visibility` column
