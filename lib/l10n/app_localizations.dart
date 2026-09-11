@@ -10055,6 +10055,192 @@ abstract class AppLocalizations {
   /// **'You are no longer a member of this space — ask an administrator for an invitation.'**
   String get bookingNotAMember;
 
+  /// No description provided for @featureWorkspaceLibraryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace library'**
+  String get featureWorkspaceLibraryTitle;
+
+  /// No description provided for @featureWorkspaceLibraryDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Save this space\'s floor plan as a template, choose who may see it, invite people by e-mail, and start from what others offer.'**
+  String get featureWorkspaceLibraryDesc;
+
+  /// No description provided for @libraryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace library'**
+  String get libraryTitle;
+
+  /// No description provided for @libraryStartFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Start from the library'**
+  String get libraryStartFrom;
+
+  /// No description provided for @libraryYours.
+  ///
+  /// In en, this message translates to:
+  /// **'Your templates'**
+  String get libraryYours;
+
+  /// No description provided for @libraryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing here yet. Save this space as a template, or wait for someone to share one with you.'**
+  String get libraryEmpty;
+
+  /// No description provided for @libraryCounts.
+  ///
+  /// In en, this message translates to:
+  /// **'{levels} levels · {desks} desks · {seats} seats'**
+  String libraryCounts(int levels, int desks, int seats);
+
+  /// No description provided for @libraryApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to this space'**
+  String get libraryApply;
+
+  /// No description provided for @libraryApplyConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply « {name} »?'**
+  String libraryApplyConfirmTitle(String name);
+
+  /// No description provided for @libraryApplyConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Levels, rooms, desks and seats are added or updated by name. Nothing you already have is removed.'**
+  String get libraryApplyConfirmBody;
+
+  /// No description provided for @libraryApplied.
+  ///
+  /// In en, this message translates to:
+  /// **'Template applied.'**
+  String get libraryApplied;
+
+  /// No description provided for @librarySave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save this space as a template'**
+  String get librarySave;
+
+  /// No description provided for @librarySaveName.
+  ///
+  /// In en, this message translates to:
+  /// **'Template name'**
+  String get librarySaveName;
+
+  /// No description provided for @librarySaveDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description (optional)'**
+  String get librarySaveDescription;
+
+  /// No description provided for @librarySaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved to your templates.'**
+  String get librarySaved;
+
+  /// No description provided for @libraryVisibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Who may see it'**
+  String get libraryVisibility;
+
+  /// No description provided for @libraryVisibilityPrivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Only me'**
+  String get libraryVisibilityPrivate;
+
+  /// No description provided for @libraryVisibilityShared.
+  ///
+  /// In en, this message translates to:
+  /// **'People I invite'**
+  String get libraryVisibilityShared;
+
+  /// No description provided for @libraryVisibilityPublic.
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone (the library)'**
+  String get libraryVisibilityPublic;
+
+  /// No description provided for @libraryVisibilityBuiltin.
+  ///
+  /// In en, this message translates to:
+  /// **'Built in'**
+  String get libraryVisibilityBuiltin;
+
+  /// No description provided for @libraryShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share…'**
+  String get libraryShare;
+
+  /// No description provided for @libraryShareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share « {name} »'**
+  String libraryShareTitle(String name);
+
+  /// No description provided for @libraryShareHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite by e-mail. The invitation works the moment that address signs in — nothing is revealed about whether it already has an account.'**
+  String get libraryShareHint;
+
+  /// No description provided for @libraryShareEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail address'**
+  String get libraryShareEmail;
+
+  /// No description provided for @libraryShareAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite'**
+  String get libraryShareAdd;
+
+  /// No description provided for @libraryShareNobody.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody invited yet.'**
+  String get libraryShareNobody;
+
+  /// No description provided for @libraryDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete template'**
+  String get libraryDelete;
+
+  /// No description provided for @libraryDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete « {name} »? People you shared it with lose access.'**
+  String libraryDeleteConfirm(String name);
+
+  /// No description provided for @onboardingStartFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Start from'**
+  String get onboardingStartFrom;
+
+  /// No description provided for @onboardingStartEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Empty space'**
+  String get onboardingStartEmpty;
+
+  /// No description provided for @onboardingStartEmptyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Draw your own plan from a blank canvas.'**
+  String get onboardingStartEmptyDesc;
+
   /// #914 managed profile access: name
   ///
   /// In en, this message translates to:

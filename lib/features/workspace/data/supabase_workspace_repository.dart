@@ -22,13 +22,17 @@ import '../domain/workspace_overview.dart';
 import '../domain/site.dart';
 import '../../../core/data/system_columns.dart';
 import '../../../core/data/enum_wire.dart';
+import 'supabase_workspace_templates.dart';
 
 class SupabaseWorkspaceRepository
-    with ConversationApi
+    with ConversationApi, SupabaseWorkspaceTemplates
     implements WorkspaceRepository {
   SupabaseWorkspaceRepository(this._client);
 
   final SupabaseClient _client;
+
+  @override
+  SupabaseClient get client => _client;
 
   @override
   SupabaseClient get conversationClient => _client;
@@ -1066,4 +1070,5 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         vatTreatment: row['vat_treatment'] as String? ?? 'auto',
         vatExemptionReason: row['vat_exemption_reason'] as String? ?? '',
       );
+
 }

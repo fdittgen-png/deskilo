@@ -1,0 +1,68 @@
+{
+  "@@locale": "de",
+  "featureWorkspaceLibraryTitle": "Raumbibliothek",
+  "featureWorkspaceLibraryDesc": "Speichern Sie den Grundriss dieses Raums als Vorlage, wählen Sie, wer sie sehen darf, laden Sie Personen per E-Mail ein und beginnen Sie mit dem, was andere anbieten.",
+  "libraryTitle": "Raumbibliothek",
+  "libraryStartFrom": "Aus der Bibliothek beginnen",
+  "libraryYours": "Ihre Vorlagen",
+  "libraryEmpty": "Noch nichts hier. Speichern Sie diesen Raum als Vorlage oder warten Sie, bis jemand eine mit Ihnen teilt.",
+  "libraryCounts": "{levels} Ebenen · {desks} Tische · {seats} Plätze",
+  "@libraryCounts": {
+    "placeholders": {
+      "levels": {
+        "type": "int"
+      },
+      "desks": {
+        "type": "int"
+      },
+      "seats": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryApply": "Auf diesen Raum anwenden",
+  "libraryApplyConfirmTitle": "« {name} » anwenden?",
+  "@libraryApplyConfirmTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryApplyConfirmBody": "Ebenen, Räume, Tische und Plätze werden nach Namen hinzugefügt oder aktualisiert. Nichts Vorhandenes wird entfernt.",
+  "libraryApplied": "Vorlage angewendet.",
+  "librarySave": "Diesen Raum als Vorlage speichern",
+  "librarySaveName": "Name der Vorlage",
+  "librarySaveDescription": "Beschreibung (optional)",
+  "librarySaved": "In Ihren Vorlagen gespeichert.",
+  "libraryVisibility": "Wer sie sehen darf",
+  "libraryVisibilityPrivate": "Nur ich",
+  "libraryVisibilityShared": "Von mir eingeladene Personen",
+  "libraryVisibilityPublic": "Alle (die Bibliothek)",
+  "libraryVisibilityBuiltin": "Eingebaut",
+  "libraryShare": "Teilen…",
+  "libraryShareTitle": "« {name} » teilen",
+  "@libraryShareTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryShareHint": "Per E-Mail einladen. Die Einladung wirkt, sobald sich diese Adresse anmeldet — ob dort schon ein Konto besteht, wird nicht verraten.",
+  "libraryShareEmail": "E-Mail-Adresse",
+  "libraryShareAdd": "Einladen",
+  "libraryShareNobody": "Noch niemand eingeladen.",
+  "libraryDelete": "Vorlage löschen",
+  "libraryDeleteConfirm": "« {name} » löschen? Personen, mit denen Sie sie geteilt haben, verlieren den Zugang.",
+  "@libraryDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingStartFrom": "Beginnen mit",
+  "onboardingStartEmpty": "Leerer Raum",
+  "onboardingStartEmptyDesc": "Zeichnen Sie Ihren eigenen Plan auf einer leeren Fläche."
+}

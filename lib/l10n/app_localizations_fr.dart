@@ -5799,6 +5799,112 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vous n\'êtes plus membre de cet espace — demandez une invitation à un administrateur.';
 
   @override
+  String get featureWorkspaceLibraryTitle => 'Bibliothèque d\'espaces';
+
+  @override
+  String get featureWorkspaceLibraryDesc =>
+      'Enregistrez le plan de cet espace comme modèle, choisissez qui peut le voir, invitez des personnes par e-mail, et partez de ce que d\'autres proposent.';
+
+  @override
+  String get libraryTitle => 'Bibliothèque d\'espaces';
+
+  @override
+  String get libraryStartFrom => 'Partir de la bibliothèque';
+
+  @override
+  String get libraryYours => 'Vos modèles';
+
+  @override
+  String get libraryEmpty =>
+      'Rien ici pour l\'instant. Enregistrez cet espace comme modèle, ou attendez qu\'on en partage un avec vous.';
+
+  @override
+  String libraryCounts(int levels, int desks, int seats) {
+    return '$levels niveaux · $desks tables · $seats places';
+  }
+
+  @override
+  String get libraryApply => 'Appliquer à cet espace';
+
+  @override
+  String libraryApplyConfirmTitle(String name) {
+    return 'Appliquer « $name » ?';
+  }
+
+  @override
+  String get libraryApplyConfirmBody =>
+      'Niveaux, bureaux, tables et places sont ajoutés ou mis à jour par leur nom. Rien de ce que vous avez déjà n\'est supprimé.';
+
+  @override
+  String get libraryApplied => 'Modèle appliqué.';
+
+  @override
+  String get librarySave => 'Enregistrer cet espace comme modèle';
+
+  @override
+  String get librarySaveName => 'Nom du modèle';
+
+  @override
+  String get librarySaveDescription => 'Description (facultatif)';
+
+  @override
+  String get librarySaved => 'Enregistré dans vos modèles.';
+
+  @override
+  String get libraryVisibility => 'Qui peut le voir';
+
+  @override
+  String get libraryVisibilityPrivate => 'Moi seulement';
+
+  @override
+  String get libraryVisibilityShared => 'Les personnes que j\'invite';
+
+  @override
+  String get libraryVisibilityPublic => 'Tout le monde (la bibliothèque)';
+
+  @override
+  String get libraryVisibilityBuiltin => 'Intégré';
+
+  @override
+  String get libraryShare => 'Partager…';
+
+  @override
+  String libraryShareTitle(String name) {
+    return 'Partager « $name »';
+  }
+
+  @override
+  String get libraryShareHint =>
+      'Invitez par e-mail. L\'invitation fonctionne dès que cette adresse se connecte — rien n\'est révélé sur l\'existence d\'un compte.';
+
+  @override
+  String get libraryShareEmail => 'Adresse e-mail';
+
+  @override
+  String get libraryShareAdd => 'Inviter';
+
+  @override
+  String get libraryShareNobody => 'Personne n\'est invité pour l\'instant.';
+
+  @override
+  String get libraryDelete => 'Supprimer le modèle';
+
+  @override
+  String libraryDeleteConfirm(String name) {
+    return 'Supprimer « $name » ? Les personnes avec qui vous l\'avez partagé perdent l\'accès.';
+  }
+
+  @override
+  String get onboardingStartFrom => 'Partir de';
+
+  @override
+  String get onboardingStartEmpty => 'Espace vide';
+
+  @override
+  String get onboardingStartEmptyDesc =>
+      'Dessinez votre propre plan sur une toile vierge.';
+
+  @override
   String get featureManagedProfileAccess => 'Qui administre un profil';
 
   @override

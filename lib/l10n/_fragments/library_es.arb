@@ -1,0 +1,68 @@
+{
+  "@@locale": "es",
+  "featureWorkspaceLibraryTitle": "Biblioteca de espacios",
+  "featureWorkspaceLibraryDesc": "Guarde el plano de este espacio como plantilla, elija quién puede verla, invite a personas por e-mail y parta de lo que otros ofrecen.",
+  "libraryTitle": "Biblioteca de espacios",
+  "libraryStartFrom": "Partir de la biblioteca",
+  "libraryYours": "Sus plantillas",
+  "libraryEmpty": "Nada aquí todavía. Guarde este espacio como plantilla o espere a que alguien comparta una con usted.",
+  "libraryCounts": "{levels} niveles · {desks} mesas · {seats} plazas",
+  "@libraryCounts": {
+    "placeholders": {
+      "levels": {
+        "type": "int"
+      },
+      "desks": {
+        "type": "int"
+      },
+      "seats": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryApply": "Aplicar a este espacio",
+  "libraryApplyConfirmTitle": "¿Aplicar « {name} »?",
+  "@libraryApplyConfirmTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryApplyConfirmBody": "Niveles, salas, mesas y plazas se añaden o actualizan por nombre. No se elimina nada de lo que ya tiene.",
+  "libraryApplied": "Plantilla aplicada.",
+  "librarySave": "Guardar este espacio como plantilla",
+  "librarySaveName": "Nombre de la plantilla",
+  "librarySaveDescription": "Descripción (opcional)",
+  "librarySaved": "Guardado en sus plantillas.",
+  "libraryVisibility": "Quién puede verla",
+  "libraryVisibilityPrivate": "Solo yo",
+  "libraryVisibilityShared": "Personas que invito",
+  "libraryVisibilityPublic": "Todos (la biblioteca)",
+  "libraryVisibilityBuiltin": "Integrada",
+  "libraryShare": "Compartir…",
+  "libraryShareTitle": "Compartir « {name} »",
+  "@libraryShareTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryShareHint": "Invite por e-mail. La invitación funciona en cuanto esa dirección inicia sesión; no se revela si ya tiene cuenta.",
+  "libraryShareEmail": "Dirección de e-mail",
+  "libraryShareAdd": "Invitar",
+  "libraryShareNobody": "Nadie invitado todavía.",
+  "libraryDelete": "Eliminar plantilla",
+  "libraryDeleteConfirm": "¿Eliminar « {name} »? Las personas con quienes la compartió pierden el acceso.",
+  "@libraryDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingStartFrom": "Partir de",
+  "onboardingStartEmpty": "Espacio vacío",
+  "onboardingStartEmptyDesc": "Dibuje su propio plano desde un lienzo en blanco."
+}

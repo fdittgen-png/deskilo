@@ -575,6 +575,26 @@ Tap a member to open their **management sheet** — every per-member action in o
 
 *The subscription dialog (the member's percentage) and the reservation-limit dialog (the cap on open reservations).*
 
+#### The workspace library
+
+*Settings → Workspace library* (#1120), when the feature is on.
+
+**Start from the library.** Every template you may see — the built-in
+one, the public ones, and the ones somebody shared with your e-mail
+address. *Apply to this space* adds levels, rooms, desks and seats **by
+name**; it never removes what you already have, and it asks first.
+
+**Your templates.** *Save this space as a template* snapshots your floor
+plan. Prices, plan images and your site's address are stripped before it
+is stored — a template is geometry and names, nothing about your money
+or your street. Each template is **Only me** until you say otherwise:
+*People I invite* (by e-mail — the invitation works the moment that
+address signs in, and nothing is revealed about whether it already has
+an account) or *Everyone*, which puts it in the library.
+
+A new space always starts with a room, whatever this feature says:
+onboarding offers *Start from* with the built-in template selected.
+
 #### Core and Platform
 
 The Features screen has two sections (#1063).

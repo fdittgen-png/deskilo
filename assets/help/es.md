@@ -561,6 +561,26 @@ Toca un miembro para abrir su **ficha de gestión** — cada acción por miembro
 
 *El diálogo de suscripción (el porcentaje del miembro) y el diálogo de límite de reservas (el tope de reservas abiertas).*
 
+#### La biblioteca de espacios
+
+*Ajustes → Biblioteca de espacios* (#1120), cuando la función está activa.
+
+**Partir de la biblioteca.** Todas las plantillas que puede ver: la
+integrada, las públicas y las que alguien compartió con su dirección de
+e-mail. *Aplicar a este espacio* añade niveles, salas, mesas y plazas
+**por nombre**; nunca elimina lo que ya tiene, y pregunta antes.
+
+**Sus plantillas.** *Guardar este espacio como plantilla* toma una
+instantánea de su plano. Los precios, las imágenes del plano y la
+dirección de su sede se eliminan antes de guardar. Cada plantilla es
+*Solo yo* hasta que decida lo contrario: *Personas que invito* (por
+e-mail — la invitación funciona en cuanto esa dirección inicia sesión,
+sin revelar si ya tiene cuenta) o *Todos*, que la coloca en la biblioteca.
+
+Un espacio nuevo siempre empieza con una sala, diga lo que diga esta
+función: la bienvenida ofrece *Partir de* con la plantilla integrada
+seleccionada.
+
 #### Qué entornos da una invitación
 
 Cuando su espacio tiene un gemelo de producción, la hoja de invitación

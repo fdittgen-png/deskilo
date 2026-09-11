@@ -582,6 +582,27 @@ Ein Mitglied antippen öffnet sein **Verwaltungsblatt** — jede Mitglieds-Aktio
 *Der Abonnement-Dialog (der Prozentsatz des Mitglieds) und der Reservierungslimit-Dialog (die Obergrenze offener Reservierungen).*
 
 <!-- anchor: user.members.subscription -->
+#### Die Raumbibliothek
+
+*Einstellungen → Raumbibliothek* (#1120), wenn die Funktion aktiv ist.
+
+**Aus der Bibliothek beginnen.** Jede Vorlage, die Sie sehen dürfen — die
+eingebaute, die öffentlichen und die mit Ihrer E-Mail-Adresse geteilten.
+*Auf diesen Raum anwenden* fügt Ebenen, Räume, Tische und Plätze **nach
+Namen** hinzu; Vorhandenes wird nie entfernt, und es wird vorher gefragt.
+
+**Ihre Vorlagen.** *Diesen Raum als Vorlage speichern* nimmt einen
+Schnappschuss Ihres Grundrisses. Preise, Planbilder und die Adresse Ihres
+Standorts werden vor dem Speichern entfernt. Jede Vorlage ist *Nur ich*,
+bis Sie es ändern: *Von mir eingeladene Personen* (per E-Mail — die
+Einladung wirkt, sobald sich diese Adresse anmeldet; ob dort ein Konto
+besteht, wird nicht verraten) oder *Alle*, womit sie in die Bibliothek
+kommt.
+
+Ein neuer Raum beginnt immer mit einem Zimmer, unabhängig von dieser
+Funktion: die Einrichtung bietet *Beginnen mit* an, die eingebaute
+Vorlage vorausgewählt.
+
 #### Welche Umgebungen eine Einladung gibt
 
 Wenn Ihr Raum einen Produktionszwilling hat, stellt das Einladungsblatt

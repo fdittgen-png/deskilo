@@ -5791,6 +5791,112 @@ class AppLocalizationsDe extends AppLocalizations {
       'Du bist kein Mitglied dieses Raums mehr — bitte eine Administratorin um eine Einladung.';
 
   @override
+  String get featureWorkspaceLibraryTitle => 'Raumbibliothek';
+
+  @override
+  String get featureWorkspaceLibraryDesc =>
+      'Speichern Sie den Grundriss dieses Raums als Vorlage, wählen Sie, wer sie sehen darf, laden Sie Personen per E-Mail ein und beginnen Sie mit dem, was andere anbieten.';
+
+  @override
+  String get libraryTitle => 'Raumbibliothek';
+
+  @override
+  String get libraryStartFrom => 'Aus der Bibliothek beginnen';
+
+  @override
+  String get libraryYours => 'Ihre Vorlagen';
+
+  @override
+  String get libraryEmpty =>
+      'Noch nichts hier. Speichern Sie diesen Raum als Vorlage oder warten Sie, bis jemand eine mit Ihnen teilt.';
+
+  @override
+  String libraryCounts(int levels, int desks, int seats) {
+    return '$levels Ebenen · $desks Tische · $seats Plätze';
+  }
+
+  @override
+  String get libraryApply => 'Auf diesen Raum anwenden';
+
+  @override
+  String libraryApplyConfirmTitle(String name) {
+    return '« $name » anwenden?';
+  }
+
+  @override
+  String get libraryApplyConfirmBody =>
+      'Ebenen, Räume, Tische und Plätze werden nach Namen hinzugefügt oder aktualisiert. Nichts Vorhandenes wird entfernt.';
+
+  @override
+  String get libraryApplied => 'Vorlage angewendet.';
+
+  @override
+  String get librarySave => 'Diesen Raum als Vorlage speichern';
+
+  @override
+  String get librarySaveName => 'Name der Vorlage';
+
+  @override
+  String get librarySaveDescription => 'Beschreibung (optional)';
+
+  @override
+  String get librarySaved => 'In Ihren Vorlagen gespeichert.';
+
+  @override
+  String get libraryVisibility => 'Wer sie sehen darf';
+
+  @override
+  String get libraryVisibilityPrivate => 'Nur ich';
+
+  @override
+  String get libraryVisibilityShared => 'Von mir eingeladene Personen';
+
+  @override
+  String get libraryVisibilityPublic => 'Alle (die Bibliothek)';
+
+  @override
+  String get libraryVisibilityBuiltin => 'Eingebaut';
+
+  @override
+  String get libraryShare => 'Teilen…';
+
+  @override
+  String libraryShareTitle(String name) {
+    return '« $name » teilen';
+  }
+
+  @override
+  String get libraryShareHint =>
+      'Per E-Mail einladen. Die Einladung wirkt, sobald sich diese Adresse anmeldet — ob dort schon ein Konto besteht, wird nicht verraten.';
+
+  @override
+  String get libraryShareEmail => 'E-Mail-Adresse';
+
+  @override
+  String get libraryShareAdd => 'Einladen';
+
+  @override
+  String get libraryShareNobody => 'Noch niemand eingeladen.';
+
+  @override
+  String get libraryDelete => 'Vorlage löschen';
+
+  @override
+  String libraryDeleteConfirm(String name) {
+    return '« $name » löschen? Personen, mit denen Sie sie geteilt haben, verlieren den Zugang.';
+  }
+
+  @override
+  String get onboardingStartFrom => 'Beginnen mit';
+
+  @override
+  String get onboardingStartEmpty => 'Leerer Raum';
+
+  @override
+  String get onboardingStartEmptyDesc =>
+      'Zeichnen Sie Ihren eigenen Plan auf einer leeren Fläche.';
+
+  @override
   String get featureManagedProfileAccess => 'Wer ein Profil verwaltet';
 
   @override

@@ -5741,6 +5741,112 @@ class AppLocalizationsEn extends AppLocalizations {
       'You are no longer a member of this space — ask an administrator for an invitation.';
 
   @override
+  String get featureWorkspaceLibraryTitle => 'Workspace library';
+
+  @override
+  String get featureWorkspaceLibraryDesc =>
+      'Save this space\'s floor plan as a template, choose who may see it, invite people by e-mail, and start from what others offer.';
+
+  @override
+  String get libraryTitle => 'Workspace library';
+
+  @override
+  String get libraryStartFrom => 'Start from the library';
+
+  @override
+  String get libraryYours => 'Your templates';
+
+  @override
+  String get libraryEmpty =>
+      'Nothing here yet. Save this space as a template, or wait for someone to share one with you.';
+
+  @override
+  String libraryCounts(int levels, int desks, int seats) {
+    return '$levels levels · $desks desks · $seats seats';
+  }
+
+  @override
+  String get libraryApply => 'Apply to this space';
+
+  @override
+  String libraryApplyConfirmTitle(String name) {
+    return 'Apply « $name »?';
+  }
+
+  @override
+  String get libraryApplyConfirmBody =>
+      'Levels, rooms, desks and seats are added or updated by name. Nothing you already have is removed.';
+
+  @override
+  String get libraryApplied => 'Template applied.';
+
+  @override
+  String get librarySave => 'Save this space as a template';
+
+  @override
+  String get librarySaveName => 'Template name';
+
+  @override
+  String get librarySaveDescription => 'Description (optional)';
+
+  @override
+  String get librarySaved => 'Saved to your templates.';
+
+  @override
+  String get libraryVisibility => 'Who may see it';
+
+  @override
+  String get libraryVisibilityPrivate => 'Only me';
+
+  @override
+  String get libraryVisibilityShared => 'People I invite';
+
+  @override
+  String get libraryVisibilityPublic => 'Everyone (the library)';
+
+  @override
+  String get libraryVisibilityBuiltin => 'Built in';
+
+  @override
+  String get libraryShare => 'Share…';
+
+  @override
+  String libraryShareTitle(String name) {
+    return 'Share « $name »';
+  }
+
+  @override
+  String get libraryShareHint =>
+      'Invite by e-mail. The invitation works the moment that address signs in — nothing is revealed about whether it already has an account.';
+
+  @override
+  String get libraryShareEmail => 'E-mail address';
+
+  @override
+  String get libraryShareAdd => 'Invite';
+
+  @override
+  String get libraryShareNobody => 'Nobody invited yet.';
+
+  @override
+  String get libraryDelete => 'Delete template';
+
+  @override
+  String libraryDeleteConfirm(String name) {
+    return 'Delete « $name »? People you shared it with lose access.';
+  }
+
+  @override
+  String get onboardingStartFrom => 'Start from';
+
+  @override
+  String get onboardingStartEmpty => 'Empty space';
+
+  @override
+  String get onboardingStartEmptyDesc =>
+      'Draw your own plan from a blank canvas.';
+
+  @override
   String get featureManagedProfileAccess => 'Who administers a profile';
 
   @override

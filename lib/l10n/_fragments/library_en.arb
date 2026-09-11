@@ -1,0 +1,68 @@
+{
+  "@@locale": "en",
+  "featureWorkspaceLibraryTitle": "Workspace library",
+  "featureWorkspaceLibraryDesc": "Save this space's floor plan as a template, choose who may see it, invite people by e-mail, and start from what others offer.",
+  "libraryTitle": "Workspace library",
+  "libraryStartFrom": "Start from the library",
+  "libraryYours": "Your templates",
+  "libraryEmpty": "Nothing here yet. Save this space as a template, or wait for someone to share one with you.",
+  "libraryCounts": "{levels} levels · {desks} desks · {seats} seats",
+  "@libraryCounts": {
+    "placeholders": {
+      "levels": {
+        "type": "int"
+      },
+      "desks": {
+        "type": "int"
+      },
+      "seats": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryApply": "Apply to this space",
+  "libraryApplyConfirmTitle": "Apply « {name} »?",
+  "@libraryApplyConfirmTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryApplyConfirmBody": "Levels, rooms, desks and seats are added or updated by name. Nothing you already have is removed.",
+  "libraryApplied": "Template applied.",
+  "librarySave": "Save this space as a template",
+  "librarySaveName": "Template name",
+  "librarySaveDescription": "Description (optional)",
+  "librarySaved": "Saved to your templates.",
+  "libraryVisibility": "Who may see it",
+  "libraryVisibilityPrivate": "Only me",
+  "libraryVisibilityShared": "People I invite",
+  "libraryVisibilityPublic": "Everyone (the library)",
+  "libraryVisibilityBuiltin": "Built in",
+  "libraryShare": "Share…",
+  "libraryShareTitle": "Share « {name} »",
+  "@libraryShareTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryShareHint": "Invite by e-mail. The invitation works the moment that address signs in — nothing is revealed about whether it already has an account.",
+  "libraryShareEmail": "E-mail address",
+  "libraryShareAdd": "Invite",
+  "libraryShareNobody": "Nobody invited yet.",
+  "libraryDelete": "Delete template",
+  "libraryDeleteConfirm": "Delete « {name} »? People you shared it with lose access.",
+  "@libraryDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingStartFrom": "Start from",
+  "onboardingStartEmpty": "Empty space",
+  "onboardingStartEmptyDesc": "Draw your own plan from a blank canvas."
+}

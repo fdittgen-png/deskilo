@@ -12,6 +12,7 @@ import '../../domain/invite_uri.dart';
 import '../../providers/workspace_providers.dart';
 import '../country_names.dart';
 import '../../domain/workspace.dart';
+import '../widgets/template_picker.dart';
 
 /// First-run screen for a signed-in user without a workspace: create one
 /// (become owner) or join via invite code (spec §11 onboarding).
@@ -33,6 +34,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   WorkspaceEnvironment _environment = WorkspaceEnvironment.development;
   // #987 — the other side of the pair, created at the same time.
   bool _withTwin = true;
+
+  /// #1120 — the template the new space starts from; null = empty canvas.
+  /// 'tiny' is the builtin and the default, resolved by key once the list
+  /// arrives.
+  String? _templateId;
+  bool _templateResolved = false;
   final _inviteCode = TextEditingController();
   String _countryCode = 'DE';
   bool _joinMode = false;
@@ -72,16 +79,22 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   Future<void> _create() async {
     if (!(_createFormKey.currentState?.validate() ?? false)) return;
-    await _run(
-      () => ref.read(workspaceRepositoryProvider).createWorkspace(
-            name: _name.text.trim(),
-            countryCode: _countryCode,
-            currencyCode: _currency.text.trim().toUpperCase(),
-            timezone: _timezone.text.trim(),
-            environment: _environment,
-            withTwin: _withTwin,
-          ),
-    );
+    await _run(() async {
+      final repo = ref.read(workspaceRepositoryProvider);
+      final id = await repo.createWorkspace(
+        name: _name.text.trim(),
+        countryCode: _countryCode,
+        currencyCode: _currency.text.trim().toUpperCase(),
+        timezone: _timezone.text.trim(),
+        environment: _environment,
+        withTwin: _withTwin,
+      );
+      // #1120 — a new space starts with a room. Applied to the space just
+      // made; the twin receives it through the deployment refresh, which
+      // is the path every other piece of configuration takes.
+      final template = _templateId;
+      if (template != null) await repo.applyWorkspaceTemplate(id, template);
+    });
   }
 
   Future<void> _join() async {
@@ -255,6 +268,22 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                               : (v) => setState(() => _withTwin = v ?? true),
                         ),
                         const SizedBox(height: 24),
+                        Consumer(builder: (context, ref, _) {
+                          final list = ref.watch(workspaceTemplatesProvider).value;
+                          if (!_templateResolved && list != null) {
+                            _templateResolved = true;
+                            _templateId =
+                                list.where((t) => t.key == 'tiny').map((t) => t.id).firstOrNull;
+                          }
+                          return TemplatePicker(
+                            selectedId: _templateId,
+                            onChanged: (id) => setState(() {
+                              _templateId = id;
+                              _templateResolved = true;
+                            }),
+                          );
+                        }),
+                        const SizedBox(height: AppSpacing.md),
                         FilledButton(
                           onPressed: _busy ? null : _create,
                           child: Text(

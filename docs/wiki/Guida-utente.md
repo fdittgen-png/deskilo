@@ -583,6 +583,29 @@ Tocca un membro per aprire la sua **scheda di gestione** — ogni azione per mem
 *Il dialogo dell'abbonamento (la percentuale del membro) e quello del limite di prenotazioni (il tetto alle prenotazioni aperte).*
 
 <!-- anchor: user.members.subscription -->
+#### La biblioteca degli spazi
+
+*Impostazioni → Biblioteca degli spazi* (#1120), quando la funzione è
+attiva.
+
+**Partire dalla biblioteca.** Ogni modello che potete vedere: quello
+integrato, quelli pubblici e quelli che qualcuno ha condiviso con il
+vostro indirizzo e-mail. *Applica a questo spazio* aggiunge livelli,
+stanze, scrivanie e posti **per nome**; non rimuove mai ciò che avete
+già, e chiede prima.
+
+**I vostri modelli.** *Salva questo spazio come modello* scatta
+un'istantanea della vostra pianta. Prezzi, immagini della pianta e
+indirizzo della sede vengono rimossi prima del salvataggio. Ogni modello
+è *Solo io* finché non decidete altrimenti: *Le persone che invito* (via
+e-mail — l'invito funziona non appena quell'indirizzo accede, senza
+rivelare se esiste già un account) oppure *Tutti*, che lo mette in
+biblioteca.
+
+Un nuovo spazio inizia sempre con una stanza, qualunque cosa dica questa
+funzione: l'accoglienza propone *Partire da* con il modello integrato
+selezionato.
+
 #### Quali ambienti dà un invito
 
 Quando il vostro spazio ha un gemello di produzione, il foglio d'invito
