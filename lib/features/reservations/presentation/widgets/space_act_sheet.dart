@@ -199,7 +199,9 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
           });
           if (mine != null) {
             await ref.read(reservationRepositoryProvider).checkIn(mine.id);
-          } else if (_myLiveCheckInHere(reservations, now, me?.id) != null) {
+          } else if (_myLiveCheckInHere(reservations, now, me?.id)
+                  ?.coversRange(choice.start, choice.end) ??
+              false) {
             // #1135 — the member is already checked in on this seat, so
             // `_myCheckInTarget` found nothing (it only sees `reserved`).
             // Falling through to the walk-up create here is what produced
@@ -364,7 +366,13 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
     final now = ref.read(clockProvider).now();
     final me = ref.read(myMemberProvider).value;
     final live = _myLiveCheckInHere(_dayReservations(now), now, me?.id);
-    if (live == null) return null;
+    // Only a choice that OVERLAPS the live check-in is impossible. A
+    // member sitting here this morning may reserve this seat for the
+    // afternoon; enforce_one_place counts overlaps and nothing else, and
+    // so must this.
+    if (live == null || !live.coversRange(choice.start, choice.end)) {
+      return null;
+    }
     return l10n?.spaceAlreadyCheckedInHere ??
         'You are already checked in here. Choose Check out to leave the '
             'seat.';

@@ -33,8 +33,9 @@ import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
 
 Future<FakeReservationRepository> _openSheetOnMyOccupiedSeat(
-  WidgetTester tester,
-) async {
+  WidgetTester tester, {
+  Duration liveFor = const Duration(hours: 3),
+}) async {
   tester.view.physicalSize = const Size(800, 1400);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
@@ -53,7 +54,7 @@ Future<FakeReservationRepository> _openSheetOnMyOccupiedSeat(
       seatId: seat.id,
       memberId: reservations.myMemberId,
       startsAt: kTestNow.subtract(const Duration(hours: 1)),
-      endsAt: kTestNow.add(const Duration(hours: 3)),
+      endsAt: kTestNow.add(liveFor),
       status: ReservationStatus.checkedIn,
       checkedInAt: kTestNow.subtract(const Duration(hours: 1)),
     ),
@@ -175,5 +176,44 @@ void main() {
     expect(mine.status, ReservationStatus.checkedIn,
         reason: 'it checks into the EXISTING reservation, never creates');
     expect(reservations.createCalls, 0);
+  });
+
+  testWidgets('the refusal is about OVERLAP, not about the seat',
+      (tester) async {
+    // Checked in until 11:30. Reserve opens on a window starting NOW,
+    // which overlaps the live check-in — so the refusal must show. The
+    // non-overlapping half is the pure test below: the sheet asks
+    // exactly `coversRange`, and `enforce_one_place` counts overlaps and
+    // nothing else, so the sheet must not be stricter than the server.
+    await _openSheetOnMyOccupiedSeat(
+      tester,
+      liveFor: const Duration(minutes: 90),
+    );
+    await tester.tap(find.byKey(const ValueKey('space-act-reserve')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('space-act-own-standing')), findsOneWidget,
+        reason: 'a window starting now overlaps my live check-in');
+  });
+
+  test('a later window on the same seat does not overlap the live check-in',
+      () {
+    final live = Reservation(
+      id: 'res-mine',
+      workspaceId: 'ws-1',
+      seatId: 'seat-1',
+      memberId: 'me',
+      startsAt: kTestNow.subtract(const Duration(hours: 1)),
+      endsAt: kTestNow.add(const Duration(minutes: 90)),
+      status: ReservationStatus.checkedIn,
+      checkedInAt: kTestNow.subtract(const Duration(hours: 1)),
+    );
+    // The predicate the sheet's refusal is built on (#184 semantics:
+    // end-exclusive), for the window a member would pick to come back
+    // this afternoon.
+    final afternoon = kTestNow.add(const Duration(hours: 3));
+    expect(live.coversRange(afternoon, afternoon.add(const Duration(hours: 4))),
+        isFalse, reason: 'the seat stays mine to book for later');
+    expect(live.coversRange(kTestNow, kTestNow.add(const Duration(hours: 2))),
+        isTrue, reason: 'and a window starting now is the impossible one');
   });
 }
