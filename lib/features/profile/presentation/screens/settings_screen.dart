@@ -24,7 +24,7 @@ import '../../../../core/country/country_catalog.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/i18n/regional_formats_section.dart';
 import '../../../workspace/presentation/country_names.dart';
-import '../../../auth/providers/auth_providers.dart';
+import '../../../auth/providers/sign_out.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../reservations/domain/default_booking_period.dart';
 import '../../../reservations/providers/default_period_controller.dart';
@@ -965,7 +965,7 @@ class SettingsScreen extends ConsumerWidget {
               style: TextStyle(color: colorScheme.error),
             ),
             onTap: () async {
-              await ref.read(authRepositoryProvider).signOut();
+              await signOutAndForget(ref);
               // The router's auth redirect takes over from here.
             },
           ),

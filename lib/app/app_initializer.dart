@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../core/backend/backend_config.dart';
 import '../core/backend/backend_settings.dart';
+import '../core/cache/cache_scope.dart';
 
 /// One-time async bootstrap before runApp (Sparkilo pattern).
 ///
@@ -16,6 +17,10 @@ import '../core/backend/backend_settings.dart';
 /// defaults.
 Future<void> initializeApp() async {
   final stored = await const PrefsBackendSettingsStore().read();
+  // #1124 — the cache is named after the server the rows came from, and
+  // that is this one for the rest of the process, whatever Settings is
+  // holding by the time somebody reads a row.
+  bootBackendUrl = stored?.url ?? BackendConfig.supabaseUrl;
   await Supabase.initialize(
     url: stored?.url ?? BackendConfig.supabaseUrl,
     publishableKey: stored?.key ?? BackendConfig.supabaseKey,
