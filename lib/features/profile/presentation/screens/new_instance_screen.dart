@@ -13,7 +13,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../auth/providers/auth_providers.dart';
+import '../../../auth/providers/sign_out.dart';
 import '../../../../core/ui/wizard_scaffold.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 
@@ -204,7 +204,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
       await ref
           .read(activeBackendProvider.notifier)
           .setEndpoint(BackendEndpoint(endpoint.url, endpoint.key));
-      await ref.read(authRepositoryProvider).signOut();
+      await signOutAndForget(ref);
     });
     if (!ok || !mounted) return;
     AppSnack.success(

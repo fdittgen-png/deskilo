@@ -7,7 +7,7 @@ import '../../../../core/country/country_catalog.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../auth/providers/auth_providers.dart';
+import '../../../auth/providers/sign_out.dart';
 import '../../domain/invite_uri.dart';
 import '../../providers/workspace_providers.dart';
 import '../country_names.dart';
@@ -106,7 +106,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           IconButton(
             icon: const Icon(Icons.logout),
             tooltip: l10n?.authSignOut ?? 'Sign out',
-            onPressed: () => ref.read(authRepositoryProvider).signOut(),
+            onPressed: () async => signOutAndForget(ref),
           ),
         ],
       ),

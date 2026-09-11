@@ -18,7 +18,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../auth/providers/auth_providers.dart';
+import '../../../auth/providers/sign_out.dart';
 
 /// #780 — Settings → Server: which Supabase instance this device talks
 /// to, configured entirely in the UI.
@@ -352,7 +352,7 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
         // The session was issued by the OTHER instance — keeping it would
         // show a signed-in shell against a server that never heard of
         // this user.
-        await ref.read(authRepositoryProvider).signOut();
+        await signOutAndForget(ref);
       },
     );
     if (!ok || !mounted) return;

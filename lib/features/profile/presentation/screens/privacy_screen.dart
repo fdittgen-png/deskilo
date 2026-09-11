@@ -16,7 +16,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../auth/providers/auth_providers.dart';
+import '../../../auth/providers/sign_out.dart';
 import '../../../calendar/presentation/widgets/access_sheet.dart';
 import '../../../calendar/providers/calendar_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -216,7 +216,7 @@ class PrivacyScreen extends ConsumerWidget {
     );
     if (!ok || !context.mounted) return;
     AppSnack.success(context, l10n?.privacyErased ?? 'Your data has been erased.');
-    await ref.read(authRepositoryProvider).signOut();
+    await signOutAndForget(ref);
     if (context.mounted) context.go('/auth');
   }
 }

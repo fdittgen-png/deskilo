@@ -388,3 +388,30 @@ the client never names one of the six in a payload — both are lints.
 A guard that compares whole rows subtracts `system_column_names()`.
 ADR 0018 has the reasoning. The rule is not specific to DesKilo: any
 new project starts with these six columns on its first table.
+
+## The cache belongs to one person on one server (#1124)
+
+A cached row is a row somebody was allowed to read at the moment it was
+written. Nothing about that permission survives a sign-out, so **every
+cache key is namespaced by the backend the process booted against plus
+the signed-in user**, and the namespacing lives in `ScopedCacheStore`,
+not at the call sites. Read the cache through `cacheStoreProvider` and
+you get the scoped store; a repository that builds a `FileCacheStore` of
+its own walks around the whole rule, and `test/lint/sign_out_test.dart`
+refuses it.
+
+Signed out there is no scope: reads miss and writes are dropped. An
+anonymous session has no rows worth persisting, and anything it did
+persist would be read by whoever signs in next.
+
+**Sign out through `signOutAndForget(ref)`, never
+`authRepository.signOut()`.** It wipes the scope and *then* ends the
+session, in that order, because the scope is resolved from the current
+user — afterwards the sweep is a no-op that reads like a success. The
+same lint pins that ordering and the single entry point.
+
+The general form, from the review that prompted this: **a stored artefact
+must name the context it was made in.** A cache entry, a queued write, a
+pending-deletion journal — each one is a promise made under one identity
+against one server, and replaying it under another is the defect whether
+or not the server would have refused the request.
