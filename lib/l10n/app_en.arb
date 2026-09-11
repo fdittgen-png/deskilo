@@ -7783,7 +7783,7 @@
   "@profilesAllWorkspaces": {
     "description": "#937 platform owner: profilesAllWorkspaces"
   },
-  "profilesNotMember": "Not a member · {count} members",
+  "profilesNotMember": "Not a member · {count, plural, one{1 member} other{{count} members}}",
   "@profilesNotMember": {
     "description": "#937 platform owner: profilesNotMember",
     "placeholders": {

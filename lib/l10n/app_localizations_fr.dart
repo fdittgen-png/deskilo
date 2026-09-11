@@ -7415,7 +7415,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String profilesNotMember(int count) {
-    return 'Non membre · $count membres';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count membres',
+      one: '1 membre',
+    );
+    return 'Non membre · $_temp0';
   }
 
   @override
