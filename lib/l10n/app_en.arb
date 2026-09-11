@@ -6430,6 +6430,12 @@
   "@noteRefNone": {
     "description": "#842 - there is nothing of that kind to reference"
   },
+  "featureMemberOriginTitle": "How each member got here",
+  "featureMemberOriginDesc": "A discreet line on a member saying how their membership began: founded the space, joined by invitation, or had the profile created for them. It is not a status.",
+  "memberOriginFounder": "Founded this space",
+  "memberOriginInvited": "Joined by invitation",
+  "memberOriginDelegated": "Profile created by an admin",
+  "memberOriginHeading": "How this membership began",
   "moneyBaseFee": "Base subscription",
   "@moneyBaseFee": {
     "description": "Statement line for the plan's monthly fee"

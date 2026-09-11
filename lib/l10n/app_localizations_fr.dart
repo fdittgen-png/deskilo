@@ -6173,6 +6173,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get noteRefNone => 'Rien à référencer pour le moment.';
 
   @override
+  String get featureMemberOriginTitle => 'Comment chaque membre est arrivé';
+
+  @override
+  String get featureMemberOriginDesc =>
+      'Une ligne discrète sur un membre indiquant comment son adhésion a commencé : a fondé l\'espace, a rejoint sur invitation, ou a reçu un profil créé par un administrateur. Ce n\'est pas un statut.';
+
+  @override
+  String get memberOriginFounder => 'A fondé cet espace';
+
+  @override
+  String get memberOriginInvited => 'A rejoint sur invitation';
+
+  @override
+  String get memberOriginDelegated => 'Profil créé par un administrateur';
+
+  @override
+  String get memberOriginHeading => 'Comment cette adhésion a commencé';
+
+  @override
   String get moneyBaseFee => 'Abonnement de base';
 
   @override

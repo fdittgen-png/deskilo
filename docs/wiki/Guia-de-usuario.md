@@ -582,6 +582,20 @@ Toca un miembro para abrir su **ficha de gestión** — cada acción por miembro
 *El diálogo de suscripción (el porcentaje del miembro) y el diálogo de límite de reservas (el tope de reservas abiertas).*
 
 <!-- anchor: user.members.subscription -->
+#### Cómo empezó la afiliación
+
+Cada miembro lleva una línea discreta que indica cómo llegó (#1110):
+**Fundó este espacio**, **Se unió por invitación**, o **Perfil creado por
+un administrador**.
+
+Es un hecho, no un estado, y no cambia nada de lo que alguien puede
+hacer. Un perfil que un administrador creó y entregó lo sigue diciendo
+después de la toma de posesión — la fecha de la entrega es otra cosa.
+
+Quién lo ve: el propio miembro y quien gestiona los miembros. Nadie más.
+Se activa en *Ajustes → Funcionalidades → Cómo llegó cada miembro*;
+viene desactivado.
+
 #### La suscripción de un miembro
 
 El porcentaje de las medias jornadas laborables del mes al que el miembro

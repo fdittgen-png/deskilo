@@ -86,7 +86,7 @@ void main() {
     // managedProfileAccess — narrowing who administers a profile is
     // opt-in, because the rule nobody narrowed is what #887 already did.
     // #985 — vatRateHistory and vatCounterparty are opt-in too.
-    expect(onCount, featureManifest.length - 17);
+    expect(onCount, featureManifest.length - 18);
   });
 
   testWidgets(

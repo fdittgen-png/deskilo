@@ -6167,6 +6167,25 @@ class AppLocalizationsIt extends AppLocalizations {
   String get noteRefNone => 'Niente da referenziare per ora.';
 
   @override
+  String get featureMemberOriginTitle => 'Come è arrivato ogni membro';
+
+  @override
+  String get featureMemberOriginDesc =>
+      'Una riga discreta su un membro che dice come è iniziata la sua adesione: ha fondato lo spazio, si è unito su invito, o un amministratore gli ha creato il profilo. Non è uno stato.';
+
+  @override
+  String get memberOriginFounder => 'Ha fondato questo spazio';
+
+  @override
+  String get memberOriginInvited => 'Si è unito su invito';
+
+  @override
+  String get memberOriginDelegated => 'Profilo creato da un amministratore';
+
+  @override
+  String get memberOriginHeading => 'Come è iniziata questa adesione';
+
+  @override
   String get moneyBaseFee => 'Abbonamento base';
 
   @override

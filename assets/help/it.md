@@ -562,6 +562,20 @@ Tocca un membro per aprire la sua **scheda di gestione** — ogni azione per mem
 
 *Il dialogo dell'abbonamento (la percentuale del membro) e quello del limite di prenotazioni (il tetto alle prenotazioni aperte).*
 
+#### Come è iniziata l'adesione
+
+Ogni membro porta una riga discreta che dice come è arrivato (#1110):
+**Ha fondato questo spazio**, **Si è unito su invito**, oppure **Profilo
+creato da un amministratore**.
+
+È un fatto, non uno stato, e non cambia nulla di ciò che una persona può
+fare. Un profilo creato da un amministratore e poi consegnato continua a
+dirlo dopo il passaggio — la data del passaggio è un'altra cosa.
+
+Chi lo vede: il membro stesso e chi gestisce i membri. Nessun altro. Da
+attivare in *Impostazioni → Funzionalità → Come è arrivato ogni membro*;
+disattivato all'avvio.
+
 #### L'abbonamento di un membro
 
 La percentuale delle mezze giornate lavorative del mese a cui il membro

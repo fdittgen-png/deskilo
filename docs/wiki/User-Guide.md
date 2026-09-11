@@ -575,6 +575,20 @@ Tap a member to open their **management sheet** — every per-member action in o
 
 *The subscription dialog (the member's percentage) and the reservation-limit dialog (the cap on open reservations).*
 
+#### How a membership began
+
+Each member carries one discreet line saying how they got here (#1110):
+**Founded this space**, **Joined by invitation**, or **Profile created by
+an admin**.
+
+It is a fact, not a status, and it changes nothing about what somebody
+may do. A profile an admin created and handed over keeps saying so after
+the person takes it over — the date of the handover is a separate thing.
+
+Who sees it: the member themselves, and anyone who manages members.
+Nobody else. Switch it on in *Settings → Features → How each member got
+here*; it ships off.
+
 <!-- anchor: user.members.subscription -->
 #### A member's subscription
 
