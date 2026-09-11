@@ -60,6 +60,18 @@ footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px sol
 .ghost{background:#fff;border:1px solid var(--accent);color:var(--accent)}
 .saved{font-size:.78rem;color:var(--muted);align-self:center}
 /* wizard */
+.req{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:8px;font-size:11px;font-weight:600;background:#f3e2e2;color:var(--err);vertical-align:middle}
+.req.met{background:#e2efe3;color:var(--ok)}
+input.missing,select.missing,textarea.missing{border-color:var(--err);background:#fff6f6}
+.why{font-size:12px;color:var(--err);margin:3px 0 0}
+.why.met{color:var(--muted)}
+.gate{border:1px solid var(--err);background:#fff6f6;border-radius:10px;padding:10px 12px;margin:10px 0}
+.gate.ok{border-color:var(--ok);background:#f2f8f2}
+.gate b{display:block;margin-bottom:4px}
+.gate ul{margin:6px 0 0;padding-left:18px}
+.gate li{margin:2px 0}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.cascade{font-size:12px;color:var(--warn);margin-top:4px}
 .progress{height:6px;background:var(--line);border-radius:3px;margin:12px 0 4px;overflow:hidden}
 .progress>div{height:100%;background:var(--accent);transition:width .2s}
 .rail{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 4px}
@@ -79,7 +91,7 @@ footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px sol
 .finding button{margin-left:auto;white-space:nowrap}
 .summary{display:flex;gap:14px;flex-wrap:wrap;font-size:.9rem;margin:8px 0}
 .summary b.ok{color:var(--ok)}.summary b.warn{color:var(--warn)}.summary b.err{color:var(--err)}
-@media(prefers-color-scheme:dark){:root{--bg:#191310;--card:#231b16;--ink:#f2e9e1;--muted:#a89a8e;--line:#3a2f27;--ok:#7fc383;--warn:#e0b25a;--err:#e08585}.chip,input,select,textarea,td input,.step{background:#2a211b;color:var(--ink)}.card{background:#1f1813}footer{background:#231b16}.dep{background:#1f1813}.help:hover{background:#3a2f27}.step.cur{background:var(--accent);color:#fff}}
+@media(prefers-color-scheme:dark){.req{background:#43272a}.req.met{background:#26331f}input.missing,select.missing,textarea.missing{background:#33201f}.gate{background:#2b1c1c}.gate.ok{background:#1d2a1d}:root{--bg:#191310;--card:#231b16;--ink:#f2e9e1;--muted:#a89a8e;--line:#3a2f27;--ok:#7fc383;--warn:#e0b25a;--err:#e08585}.chip,input,select,textarea,td input,.step{background:#2a211b;color:var(--ink)}.card{background:#1f1813}footer{background:#231b16}.dep{background:#1f1813}.help:hover{background:#3a2f27}.step.cur{background:var(--accent);color:#fff}}
 </style>
 </head>
 <body>
@@ -391,10 +403,61 @@ function help(key){if(!key||!HELP[key])return null;const[app,anchor]=HELP[key];r
 function dep(text,stepId){const d=h('div',{class:'dep'},text+' ');if(stepId!=null){const a=h('a',{href:'#'},'→ étape '+(STEPS.findIndex(s=>s.id===stepId)+1));a.onclick=e=>{e.preventDefault();go(stepId)};d.append(a)}return d}
 const needs=(k,stepId='features')=>dep('Masqué : nécessite la fonctionnalité « '+featureTitle(k)+' ».',stepId);
 
+// ------------------------------------------------------------------ required fields
+// A field that is MANDATORY, and the condition that makes it so.
+//
+// Stated ONCE, keyed by the same path the field widget already takes, and
+// read by three things that must never disagree: the field itself (which
+// marks itself required and says why, as you type), the step's status
+// dot, and the export gate. Before this, a required answer was only
+// discovered at the review step — eleven steps after the question — and
+// the export happened anyway.
+//
+// `when` is the whole point: almost nothing here is required always. It
+// is required BECAUSE of an earlier answer — a feature you switched on, a
+// VAT regime you chose, a country you are in. The field says which, so
+// the way out is never a guess: either fill it, or go back and change the
+// answer that demanded it.
+const REQ={
+ 'name':{when:()=>true,why:"Le nom est imprimé sur chaque document et identifie l'espace dans l'app."},
+ 'street':{when:()=>true,why:"L'adresse du vendeur est obligatoire sur une facture."},
+ 'postal':{when:()=>true,why:"L'adresse du vendeur est obligatoire sur une facture."},
+ 'city':{when:()=>true,why:"L'adresse du vendeur est obligatoire sur une facture."},
+ 'vatId':{when:()=>S.vatRegime!=='not_subject',
+  why:()=>'Vous avez déclaré le régime « '+({exempt:'franchise / exonéré',registered:'assujetti'})[S.vatRegime]+" » : le numéro de TVA doit figurer sur les factures.",
+  fix:{step:'legal',label:'Changer le régime de TVA'}},
+ 'regNumber':{when:()=>S.org==='company',
+  why:"Une société doit porter son numéro d'immatriculation sur ses factures. (Une association n'y est pas tenue.)",
+  fix:{step:'legal',label:"Changer le type d'organisation"}},
+};
+// The condition and the answer, for one path. null when the field is not
+// required under the current answers — which is most of them, most of the
+// time, and is exactly what keeps the page quiet.
+function reqState(path){
+ const r=REQ[path];if(!r||!r.when())return null;
+ const v=get(path);
+ return {met:String(v??'').trim()!=='',why:typeof r.why==='function'?r.why():r.why,fix:r.fix};
+}
+
 // ------------------------------------------------------------------ UI helpers
 const h=(tag,attrs={},...kids)=>{const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==='onclick'||k==='oninput'||k==='onchange')e[k]=v;else if(k==='html')e.innerHTML=v;else e.setAttribute(k,v)}for(const k of kids){if(k!=null)e.append(k)}return e};
 function get(path){const p=path.split('.');let o=S;for(const k of p)o=o[k];return o}
-function input(label,path,hint,type='text',ph='',hk){const i=h('input',{type,placeholder:ph});i.value=get(path)??'';i.oninput=()=>set(path,i.value);const d=h('div',{},h('label',{},label,helpIcon(hk)),i);if(hint)d.append(h('p',{class:'hint'},hint));return d}
+function input(label,path,hint,type='text',ph='',hk){const i=h('input',{type,placeholder:ph});i.value=get(path)??'';
+ const rq=reqState(path);
+ const badge=rq?h('span',{class:'req'+(rq.met?' met':'')},rq.met?'✓ requis':'requis'):null;
+ const why=rq?h('p',{class:'why'+(rq.met?' met':'')},rq.why):null;
+ // Live, not on blur: the badge and the border answer the keystroke that
+ // fixes them, so the field stops nagging the moment it is satisfied.
+ const paint=()=>{if(!rq)return;const met=String(i.value).trim()!=='';
+  i.classList.toggle('missing',!met);badge.classList.toggle('met',met);
+  badge.textContent=met?'✓ requis':'requis';why.classList.toggle('met',met)};
+ i.oninput=()=>{set(path,i.value);paint()};
+ const d=h('div',{},h('label',{},label,badge,helpIcon(hk)),i);
+ if(hint)d.append(h('p',{class:'hint'},hint));
+ if(why)d.append(why);
+ if(rq&&rq.fix)d.append(dep('Requis par un choix précédent.',rq.fix.step));
+ paint();
+ return d}
 function selectEl(label,path,opts,hint,onch,hk){const s=h('select');for(const[v,t]of opts)s.append(h('option',{value:v},t));s.value=get(path);if(s.value!==String(get(path))&&opts.length){s.value=opts[0][0];set(path,opts[0][0])}s.onchange=()=>{set(path,s.value);if(onch)onch(s.value);render()};const d=h('div',{},h('label',{},label,helpIcon(hk)),s);if(hint)d.append(h('p',{class:'hint'},hint));return d}
 function chip(text,on,cb){const c=h('button',{class:'chip'+(on?' on':''),type:'button'},text);c.onclick=()=>{cb(!on);render()};return c}
 function checkbox(label,desc,checked,onch,cls='',hk){const c=h('input',{type:'checkbox'});c.checked=!!checked;c.onchange=()=>{onch(c.checked);render()};return h('label',{class:'check '+cls},c,h('span',{},label,hk?helpIcon(hk):null,desc?h('div',{class:'d'},desc):null))}
@@ -428,8 +491,7 @@ const STEPS=[
   for(const[k,t,d]of FEATURES){const parent=REQUIRES[k];const also=alsoEnabled(k);
    const note=(!S.features[k]&&also.length)?d+' — active aussi « '+also.join(' », « ')+' ».':(S.features[k]&&parent&&!on(parent)?d+' — en attente de « '+featureTitle(parent)+' ».':d);
    kids.push(checkbox(t,note,S.features[k],v=>{if(v)enableWith(k);else S.features[k]=false;save()},(parent?'child':'')));
-   const fh=helpIcon(FEATURE_HELP[k]);if(fh)kids[kids.length-1].querySelector('span').insertBefore(fh,kids[kids.length-1].querySelector('span div'));
-   if(!avail)kids[kids.length-1].querySelector('input').disabled=true}
+   const fh=helpIcon(FEATURE_HELP[k]);if(fh)kids[kids.length-1].querySelector('span').insertBefore(fh,kids[kids.length-1].querySelector('span div'));}
   return kids},
  check(){const f=[];const n=FEATURES.filter(([k])=>on(k)).length;f.push(F.ok(n+' fonctionnalités actives sur '+FEATURES.length+'.'));
   if(!on('moneyTab'))f.push(F.warn("Onglet Finances désactivé : ni abonnements, ni services, ni factures ne seront demandés.",'features'));
@@ -503,7 +565,13 @@ const STEPS=[
   checkbox('Autoriser une valeur libre négociée','',S.freeLevel,v=>{S.freeLevel=v;save()},'','billing'),
   lbl('Forfaits de jours','packages'),h('p',{class:'hint'},"Des packs de jours à acheter (Finances → Paiements → Acheter un forfait). Sans forfait, l'option « Forfaits » de l'étape Membres n'est pas proposée."),help('packages'),
   tableRows(['Nom','Jours','Prix '+S.currency],S.packages,(p)=>[bind(p,'name'),bind(p,'days','number'),bind(p,'price','number')],()=>({name:'',days:'',price:''}),'+ Ajouter un forfait')]},
- check(){const f=[];const tiers=S.tiers.filter(t=>t.fee!=='').map(t=>({from:num(t.from)||0,to:num(t.to)??100,fee:num(t.fee),over:num(t.over)})).sort((a,b)=>a.from-b.from);
+ check(){const f=[];
+  // Same shape: a palier with a bracket and no fee is dropped by the
+  // filter below, so the owner sees a row on screen that never reaches
+  // the app.
+  S.tiers.filter(t=>t.fee===''&&(String(t.from).trim()!==''||String(t.to).trim()!==''))
+   .forEach(t=>f.push(F.err('Palier '+t.from+'–'+t.to+' % sans tarif : la ligne ne serait pas exportée.','billing')));
+  const tiers=S.tiers.filter(t=>t.fee!=='').map(t=>({from:num(t.from)||0,to:num(t.to)??100,fee:num(t.fee),over:num(t.over)})).sort((a,b)=>a.from-b.from);
   if(!tiers.length)f.push(F.warn('Aucun palier tarifaire : les abonnements seront gratuits jusqu\'à ce que vous en ajoutiez dans l\'app.','billing'));
   else{let cover=0,gap=false;for(const t of tiers){if(t.from>cover)gap=true;cover=Math.max(cover,t.to)}if(gap||cover<100)f.push(F.err('Les paliers ne couvrent pas 0–100 % sans trou.','billing'));else f.push(F.ok(tiers.length+' palier(s) couvrant 0–100 %.'));
    for(const lv of S.subLevels){const p=parseInt(lv);if(!tiers.some(t=>p>t.from&&p<=t.to))f.push(F.err('Le niveau '+p+' % ne tombe dans aucun palier.','billing'))}}
@@ -558,8 +626,8 @@ const STEPS=[
   if(on('accessorySupplements'))k.push(lbl('Accessoires de place (écran, bureau debout…)','services'),h('p',{class:'hint'},'Le supplément se facture par demi-journée réservée. 0 = gratuit.'),tableRows(['Nom','Supplément '+S.currency+'/demi-j.'],S.accessories,(a)=>[bind(a,'name'),bind(a,'supp','number')],()=>({name:'',supp:'0'}),'+ Ajouter un accessoire'));else k.push(needs('accessorySupplements'));
   if(!vatCol&&on('services'))k.push(dep(registered()?'Colonne TVA masquée : nécessite « Gestion de la TVA ».':'Colonne TVA masquée : l\'espace n\'est pas assujetti.',registered()?'features':'legal'));
   return k},
- check(){const f=[];if(on('services')){const n=S.services.filter(s=>s.name.trim()).length;if(!n)f.push(F.warn('Services activés mais aucun défini.','services'));else f.push(F.ok(n+' service(s).'));S.services.filter(s=>s.name.trim()&&!(num(s.price)>=0)).forEach(s=>f.push(F.err('Service « '+s.name+' » sans prix.','services')))}
-  if(on('accessorySupplements')){const n=S.accessories.filter(a=>a.name.trim()).length;if(!n)f.push(F.warn('Suppléments d\'accessoires activés mais aucun accessoire.','services'));else f.push(F.ok(n+' accessoire(s).'))}return f}},
+ check(){const f=[];if(on('services')){const n=S.services.filter(s=>s.name.trim()).length;if(!n)f.push(F.err('Services activés mais aucun service défini : la fonctionnalité serait vide dans l\'app.','services'));else f.push(F.ok(n+' service(s).'));S.services.filter(s=>s.name.trim()&&!(num(s.price)>=0)).forEach(s=>f.push(F.err('Service « '+s.name+' » sans prix.','services')))}
+  if(on('accessorySupplements')){const n=S.accessories.filter(a=>a.name.trim()).length;if(!n)f.push(F.err('Suppléments d\'accessoires activés mais aucun accessoire défini : la fonctionnalité serait vide dans l\'app.','services'));else f.push(F.ok(n+' accessoire(s).'))}return f}},
 
 {id:'pay',title:'Instructions de paiement',why:"Ce que voit un membre sur un relevé impayé : comment vous régler. Les champs demandés suivent le système bancaire du pays.",applies(){return on('moneyTab')},
  build(){const sc=scheme();const k=[help('pay'),h('p',{class:'hint'},'Laissez vide pour ne rien afficher. La référence est rappelée au membre pour que le virement se rapproche tout seul.')];
@@ -619,6 +687,11 @@ const STEPS=[
  check(){const f=[];const ms=S.members.filter(m=>m.email.trim());const seen=new Set();
   ms.forEach(m=>{const e=m.email.trim().toLowerCase();if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e))f.push(F.err('E-mail invalide : '+m.email,'members'));if(seen.has(e))f.push(F.err('E-mail en double : '+m.email,'members'));seen.add(e);
    if(!S.freeLevel&&S.subLevels.length&&!S.subLevels.includes(String(m.pct)))f.push(F.err((m.name||m.email)+' : abonnement '+m.pct+' % hors des niveaux proposés.','members'))});
+  // A row with a name and no address is not "no member" — it is a member
+  // the export silently drops, which the owner only discovers when the
+  // invitation never arrives.
+  S.members.filter(m=>String(m.name||'').trim()&&!String(m.email||'').trim())
+   .forEach(m=>f.push(F.err('« '+m.name.trim()+' » n\'a pas d\'e-mail : la ligne ne serait pas exportée.','members')));
   if(!ms.length)f.push(F.warn('Aucun membre à inviter : vous les inviterez depuis l\'app.','members'));else f.push(F.ok(ms.length+' membre(s) à inviter, dont '+ms.filter(m=>m.role==='admin').length+' admin(s).'));
   if(on('whatsappIntegration')&&S.whatsapp.trim()&&!/^https:\/\/chat\.whatsapp\.com\//.test(S.whatsapp.trim()))f.push(F.warn('Le lien WhatsApp ne ressemble pas à un lien de groupe.','members'));return f}},
 
@@ -689,8 +762,11 @@ const STEPS=[
      kids.length?h('div',{class:'d',style:'margin-top:4px'},'Décocher désactive aussi : '+kids.map(featureTitle).join(', ')+'.'):null,
      help(FEATURE_HELP[key])))))}
   if(inactive.length)k.push(h('details',{},h('summary',{},'Fonctionnalités non activées ('+inactive.length+')'),
-   ...inactive.map(([key,t,d])=>{const parent=REQUIRES[key];const avail=true;
-    return checkbox(t,avail?d:d+' — nécessite « '+featureTitle(parent)+' ».',false,v=>{if(avail){S.features[key]=v;save()}},avail?'':'off')})));
+   ...inactive.map(([key,t,d])=>{const also=alsoEnabled(key);
+    // Ticking a child MUST bring its chain, or the row says "on" while
+    // `on()` reads it as off — a contradiction the page used to allow.
+    return checkbox(t,also.length?d+' — active aussi « '+also.join(' », « ')+' ».':d,false,
+     v=>{if(v)enableWith(key);else S.features[key]=false;save()})})));
   return k},
  check(){const active=FEATURES.filter(([k])=>on(k)).length;return[F.ok(active+' fonctionnalité(s) activées, '+(FEATURES.length-active)+' désactivées — chacune avec sa configuration.')]}},
 {id:'review',title:'Vérification et export',why:"Tout ce que l'assistant a vérifié, étape par étape. Les points bloquants sont à corriger ; les avertissements sont des choix à confirmer.",
@@ -698,7 +774,17 @@ const STEPS=[
   const k=[h('div',{class:'summary'},h('b',{class:'ok'},'✓ '+c.ok+' vérifié(s)'),h('b',{class:'warn'},'⚠ '+c.warn+' avertissement(s)'),h('b',{class:'err'},'✕ '+c.err+' bloquant(s)'))];
   for(const st of STEPS){if(st.id==='review')continue;const rows=all.filter(x=>x.from===st.id);if(!rows.length)continue;
    k.push(h('div',{class:'card'},h('label',{},(STEPS.indexOf(st)+1)+' · '+st.title+(st.applies&&!st.applies()?' — sans objet':'')),...rows.map(x=>h('div',{class:'finding '+x.lvl},h('span',{class:'lvl'},x.lvl==='ok'?'✓':x.lvl==='warn'?'⚠':'✕'),h('span',{},x.t),x.lvl!=='ok'&&x.step?h('button',{class:'chip',type:'button',onclick:()=>go(x.step)},'Corriger'):null))))}
-  k.push(h('p',{class:'hint'},c.err?'Corrigez les points bloquants, puis exportez. (Vous pouvez exporter quand même : l\'app refusera ce qui est incohérent.)':'Configuration complète et cohérente : exportez le XML, puis importez-le dans l\'app (Réglages de l\'espace → Importer l\'espace).'),help('identity'));
+  const gate=h('div',{class:'gate'+(c.err?'':' ok')});
+  if(c.err){gate.append(h('b',{},"L'export s'ouvrira quand ces "+c.err+' point(s) seront réglés :'),
+    h('ul',{},...all.filter(x=>x.lvl==='err').map(x=>{const li=h('li',{},x.t+' ');
+     if(x.step)li.append((()=>{const a=h('a',{href:'#'},'→ corriger');a.onclick=e=>{e.preventDefault();go(x.step)};return a})());return li})),
+    h('p',{class:'hint'},"Rien n'est perdu : vos réponses restent enregistrées dans ce navigateur pendant que vous revenez en arrière."))}
+  else{gate.append(h('b',{},'✓ Configuration complète et cohérente.'),
+    h('span',{},"Exportez le XML, puis importez-le dans l'app : Réglages de l'espace → Importer l'espace."))}
+  k.push(gate);
+  const xb=h('button',{class:'btn primary',type:'button',onclick:exportChecked},c.err?'⬇ Exporter — '+c.err+' point(s) à corriger':'⬇ Exporter le XML');
+  if(c.err)xb.disabled=true;
+  k.push(xb,help('identity'));
   return k},check(){return[]}},
 ];
 function findings(){const out=[];for(const st of STEPS){if(st.id==='review')continue;if(st.applies&&!st.applies()){continue}for(const x of st.check())out.push({...x,from:st.id})}return out}
@@ -724,15 +810,38 @@ function render(){
  STEPS.forEach((st,i)=>{const s=stepStatus(st);const b=h('button',{class:'step'+(st.id===cur&&mode==='wizard'?' cur':'')+(s==='na'?' na':''),type:'button',onclick:()=>{if(s!=='na')go(st.id)}},h('span',{class:'dot '+s}),(i+1)+' · '+st.title);rail.append(b)});
  document.getElementById('allmode').checked=mode==='all';
  const show=mode==='all'?list:[list[idx]];
- for(const st of show){const n=STEPS.indexOf(st)+1;BUILDING=st.id;F_.append(section(n+' · '+st.title,h('p',{class:'why'},st.why),...st.build()))}BUILDING='';
+ // A step that throws used to take the WHOLE page with it: the body was
+ // empty, and because render() never reached the end, the navigation was
+ // never drawn either — so the wizard became a dead end with no way
+ // forward and no message. (That is exactly what `avail` did to step 2.)
+ // Now the step says so, and everything else still works.
+ for(const st of show){const n=STEPS.indexOf(st)+1;BUILDING=st.id;
+  let body;
+  try{body=st.build()}
+  catch(e){console.error('setup step "'+st.id+'" failed',e);
+   body=[h('div',{class:'gate'},h('b',{},'Cette étape n\'a pas pu s\'afficher.'),
+    h('span',{},"C'est un défaut de l'assistant, pas de vos réponses — elles sont intactes. Les autres étapes fonctionnent ; signalez-le avec ce détail : "),
+    h('code',{},String(e&&e.message||e)))]}
+  F_.append(section(n+' · '+st.title,h('p',{class:'why'},st.why),...body))}BUILDING='';
  const nav=document.getElementById('nav');nav.textContent='';
  if(mode==='wizard'){const prev=list[idx-1],next=list[idx+1];
-  nav.append(h('button',{class:'btn ghost',type:'button',onclick:()=>prev&&go(prev.id)},'‹ '+(prev?prev.title:'Début')),
-   h('button',{class:'btn primary',type:'button',onclick:()=>next?go(next.id):exportChecked()},next?next.title+' ›':'⬇ Exporter le XML'));
+  const b=blockers().length;
+  const last=h('button',{class:'btn primary',type:'button',onclick:()=>next?go(next.id):exportChecked()},
+   next?next.title+' ›':(b?'⬇ Exporter — '+b+' point(s) à corriger':'⬇ Exporter le XML'));
+  if(!next&&b)last.disabled=true;
+  nav.append(h('button',{class:'btn ghost',type:'button',onclick:()=>prev&&go(prev.id)},'‹ '+(prev?prev.title:'Début')),last);
   nav.firstChild.disabled=!prev}
  save();
 }
-function exportChecked(){const errs=findings().filter(x=>x.lvl==='err');if(errs.length&&!confirm(errs.length+' point(s) bloquant(s) restent :\n\n'+errs.map(e=>'• '+e.t).join('\n')+'\n\nExporter quand même ?'))return;exportXml()}
+// The export is GATED, not warned about.
+//
+// It used to ask "exporter quand même ?" and export on OK, with the
+// review step saying the app would refuse what was incoherent. That put
+// the failure eleven steps and one import later, in an app that can only
+// say no — and a half-configured space is worse than an unconfigured
+// one, because it looks finished.
+const blockers=()=>findings().filter(x=>x.lvl==='err');
+function exportChecked(){if(blockers().length){go('review');return}exportXml()}
 
 // ------------------------------------------------------------------ XML export
 const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
