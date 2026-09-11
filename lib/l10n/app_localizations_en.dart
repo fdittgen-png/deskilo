@@ -2877,6 +2877,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'Every report design can be written out as one self-describing file and read back in. The file carries the design plus what its fields mean, the markup it accepts and the placeholders that exist, so a person or a tool can edit it outside the app and hand it back. A file for another report, or from a newer version, is refused with the reason. Off: designs are only editable in the designer.';
 
   @override
+  String get featureTierCore => 'Core';
+
+  @override
+  String get featureTierCoreDesc =>
+      'What every space needs. On from the first day.';
+
+  @override
+  String get featureTierPlatform => 'Platform';
+
+  @override
+  String get featureTierPlatformDesc =>
+      'Asked for, never assumed. Switch on what this space actually runs.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override

@@ -51,6 +51,8 @@ final Set<WorkspaceFeature> registryDefaults =
     WorkspaceFeature.values.toSet()..removeAll(defaultOffFeatures);
 
 void main() {
+  _existingWorkspacesUnmoved();
+
   test(
       'manifest covers every feature; only adminSeatBlocking, '
       'accessorySupplements, onlinePayments, levelBooking, '
@@ -281,5 +283,67 @@ void main() {
             reason: feature.name);
       }
     });
+  });
+}
+
+// #1063 — the constraint that makes the tier split safe: it changes NO
+// existing workspace.
+//
+// The whole design rests on WHERE the tier is applied. It decides what
+// `defaultFeatureFlagsForNewWorkspace` writes at CREATION, and nothing
+// else. Resolution is untouched, so a workspace created before this
+// keeps resolving its stored flags against the registry defaults exactly
+// as it always did.
+//
+// Had the tier been applied in resolution instead, it would have reached
+// backwards into every live workspace the moment it shipped and switched
+// sixty-four features off in spaces that were using them. That is a
+// data-loss bug wearing a feature flag, and these are the tests that
+// would have caught it.
+void _existingWorkspacesUnmoved() {
+  test('an OLD workspace with no stored flags resolves to the registry '
+      'defaults, not to Core', () {
+    final resolved = resolveEnabledFeatures(const {});
+    expect(resolved, registryDefaults,
+        reason: 'this is the pre-#1063 answer and it must not have moved');
+    // Concretely: a platform feature that shipped ON is still ON for a
+    // workspace that never chose.
+    expect(resolved.contains(WorkspaceFeature.invoicing), isTrue);
+    expect(resolved.contains(WorkspaceFeature.reportDesigner), isTrue);
+  });
+
+  test('an OLD workspace that stored a platform feature keeps it', () {
+    final resolved = resolveEnabledFeatures(const {
+      'moneyTab': true,
+      'invoicing': true,
+      'vatManagement': true,
+      'vatGroups': true,
+    });
+    expect(resolved.contains(WorkspaceFeature.vatGroups), isTrue,
+        reason: 'a space that deliberately switched this on must not lose '
+            'it because a later release decided it was platform');
+  });
+
+  test('a NEW workspace is created with Core only', () {
+    final resolved =
+        resolveEnabledFeatures(defaultFeatureFlagsForNewWorkspace());
+    expect(resolved.contains(WorkspaceFeature.calendarTab), isTrue);
+    expect(resolved.contains(WorkspaceFeature.membersDirectory), isTrue);
+    expect(resolved.contains(WorkspaceFeature.invoicing), isTrue);
+    // And not the ERP end of the registry.
+    expect(resolved.contains(WorkspaceFeature.vatGroups), isFalse);
+    expect(resolved.contains(WorkspaceFeature.deployments), isFalse);
+    expect(resolved.contains(WorkspaceFeature.reportLayouts), isFalse);
+    expect(resolved.contains(WorkspaceFeature.kioskMode), isFalse);
+  });
+
+  test('turning a platform feature on afterwards still works', () {
+    final flags = {
+      ...defaultFeatureFlagsForNewWorkspace(),
+      'vatManagement': true,
+      'vatGroups': true,
+    };
+    final resolved = resolveEnabledFeatures(flags);
+    expect(resolved.contains(WorkspaceFeature.vatGroups), isTrue);
   });
 }

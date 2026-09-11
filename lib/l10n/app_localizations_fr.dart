@@ -2903,6 +2903,20 @@ class AppLocalizationsFr extends AppLocalizations {
       'Chaque maquette de rapport peut être écrite dans un fichier qui se décrit lui-même, puis relue. Le fichier contient la maquette ainsi que le sens de ses champs, le balisage accepté et les variables disponibles : une personne ou un outil peut donc l\'éditer hors de l\'application et la rendre. Un fichier destiné à un autre rapport, ou issu d\'une version plus récente, est refusé avec sa raison. Désactivé : les maquettes ne se modifient que dans l\'éditeur.';
 
   @override
+  String get featureTierCore => 'Essentiel';
+
+  @override
+  String get featureTierCoreDesc =>
+      'Ce dont tout espace a besoin. Actif dès le premier jour.';
+
+  @override
+  String get featureTierPlatform => 'Plateforme';
+
+  @override
+  String get featureTierPlatformDesc =>
+      'Demandé, jamais supposé. Activez ce que cet espace fait vraiment.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override

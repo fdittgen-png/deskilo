@@ -2900,6 +2900,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Jede Berichtsvorlage lässt sich als eine selbsterklärende Datei ausgeben und wieder einlesen. Die Datei enthält die Vorlage sowie die Bedeutung ihrer Felder, das erlaubte Markup und die vorhandenen Platzhalter — so kann sie außerhalb der App bearbeitet und zurückgegeben werden. Eine Datei für einen anderen Bericht oder aus einer neueren Version wird mit Begründung abgelehnt. Aus: Vorlagen sind nur im Designer änderbar.';
 
   @override
+  String get featureTierCore => 'Kern';
+
+  @override
+  String get featureTierCoreDesc =>
+      'Was jeder Raum braucht. Ab dem ersten Tag an.';
+
+  @override
+  String get featureTierPlatform => 'Plattform';
+
+  @override
+  String get featureTierPlatformDesc =>
+      'Angefragt, nie vorausgesetzt. Schalten Sie ein, was dieser Raum wirklich betreibt.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override

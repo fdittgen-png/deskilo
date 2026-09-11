@@ -2899,6 +2899,20 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cada diseño de informe puede escribirse en un archivo que se explica a sí mismo y volver a leerse. El archivo lleva el diseño y además qué significan sus campos, qué marcado admite y qué variables existen, así una persona o una herramienta puede editarlo fuera de la app y devolverlo. Un archivo de otro informe, o de una versión más nueva, se rechaza con el motivo. Desactivado: los diseños solo se editan en el editor.';
 
   @override
+  String get featureTierCore => 'Esencial';
+
+  @override
+  String get featureTierCoreDesc =>
+      'Lo que todo espacio necesita. Activo desde el primer día.';
+
+  @override
+  String get featureTierPlatform => 'Plataforma';
+
+  @override
+  String get featureTierPlatformDesc =>
+      'Pedido, nunca supuesto. Active lo que este espacio realmente hace.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override

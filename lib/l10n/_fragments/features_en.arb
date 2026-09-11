@@ -370,5 +370,9 @@
   },
   "@featureReportDesignExchangeDesc": {
     "description": "#864 - feature description"
-  }
+  },
+  "featureTierCore": "Core",
+  "featureTierCoreDesc": "What every space needs. On from the first day.",
+  "featureTierPlatform": "Platform",
+  "featureTierPlatformDesc": "Asked for, never assumed. Switch on what this space actually runs."
 }

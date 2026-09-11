@@ -5111,6 +5111,30 @@ abstract class AppLocalizations {
   /// **'Every report design can be written out as one self-describing file and read back in. The file carries the design plus what its fields mean, the markup it accepts and the placeholders that exist, so a person or a tool can edit it outside the app and hand it back. A file for another report, or from a newer version, is refused with the reason. Off: designs are only editable in the designer.'**
   String get featureReportDesignExchangeDesc;
 
+  /// No description provided for @featureTierCore.
+  ///
+  /// In en, this message translates to:
+  /// **'Core'**
+  String get featureTierCore;
+
+  /// No description provided for @featureTierCoreDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'What every space needs. On from the first day.'**
+  String get featureTierCoreDesc;
+
+  /// No description provided for @featureTierPlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform'**
+  String get featureTierPlatform;
+
+  /// No description provided for @featureTierPlatformDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Asked for, never assumed. Switch on what this space actually runs.'**
+  String get featureTierPlatformDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:

@@ -2900,6 +2900,20 @@ class AppLocalizationsIt extends AppLocalizations {
       'Ogni modello di report può essere scritto in un file che si descrive da sé e riletto. Il file porta il modello e inoltre il significato dei campi, il markup ammesso e i segnaposto esistenti, così una persona o uno strumento può modificarlo fuori dall’app e restituirlo. Un file di un altro report, o di una versione più recente, viene rifiutato con la motivazione. Disattivato: i modelli si modificano solo nell’editor.';
 
   @override
+  String get featureTierCore => 'Essenziale';
+
+  @override
+  String get featureTierCoreDesc =>
+      'Ciò di cui ogni spazio ha bisogno. Attivo dal primo giorno.';
+
+  @override
+  String get featureTierPlatform => 'Piattaforma';
+
+  @override
+  String get featureTierPlatformDesc =>
+      'Richiesto, mai presunto. Attivate ciò che questo spazio fa davvero.';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override

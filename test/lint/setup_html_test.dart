@@ -61,14 +61,21 @@ void main() {
     });
 
     test('every default matches featureManifest — the questionnaire must '
-        'not pre-tick a module that ships OFF', () {
+        'not pre-tick a module a new workspace would not get', () {
+      // #1063 — the contract is the TIER-aware default, not `defaultOn`
+      // alone. The questionnaire is the creation path for a self-hoster,
+      // so it has to agree with what `create_workspace` is handed;
+      // otherwise a self-hosted instance starts with the whole surface
+      // while a hosted one starts with Core, and the two answer
+      // differently to the same question.
       final inHtml = parseFeatures(html);
+      final want = defaultFeatureFlagsForNewWorkspace();
       final wrong = <String>[];
       for (final entry in featureManifest.entries) {
         final key = entry.key.name;
-        final want = entry.value.defaultOn;
-        if (inHtml[key] != want) {
-          wrong.add('$key: html=${inHtml[key]} registry=$want');
+        if (inHtml[key] != want[key]) {
+          wrong.add('$key: html=${inHtml[key]} registry=${want[key]} '
+              '(${entry.value.tier.name})');
         }
       }
       expect(wrong, isEmpty,

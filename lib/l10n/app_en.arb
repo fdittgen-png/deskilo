@@ -3249,6 +3249,10 @@
   "@featureReportDesignExchangeDesc": {
     "description": "#864 - feature description"
   },
+  "featureTierCore": "Core",
+  "featureTierCoreDesc": "What every space needs. On from the first day.",
+  "featureTierPlatform": "Platform",
+  "featureTierPlatformDesc": "Asked for, never assumed. Switch on what this space actually runs.",
   "helpTitle": "Help",
   "helpContents": "Contents",
   "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",

@@ -13,6 +13,7 @@ import '../domain/member_badge.dart';
 import '../domain/overage_policy.dart';
 import '../domain/payment_instructions.dart';
 import '../domain/workspace.dart';
+import '../domain/workspace_feature.dart';
 import '../domain/workspace_repository.dart';
 import 'conversation_api.dart';
 import '../domain/workspace_document.dart';
@@ -122,6 +123,11 @@ class SupabaseWorkspaceRepository
       'p_environment': environment.wire,
       // #987 — the dev and the prod, created together.
       'p_with_twin': withTwin,
+      // #1063 — Core on, Platform off, written EXPLICITLY at creation.
+      // The server takes the object rather than knowing the catalogue:
+      // a second copy of it in SQL would disagree with this one within a
+      // release.
+      'p_feature_flags': defaultFeatureFlagsForNewWorkspace(),
     });
     return result as String;
   }

@@ -108,12 +108,17 @@ import 'package:flutter_test/flutter_test.dart';
 //   (founded, invited, delegated), recorded by the path that writes the
 //   row. Default OFF: it is new information about real people, so a
 //   workspace decides to show it rather than finding it already there.
+// #1063 — the pin now covers the TIER SPLIT as well as the count, so a
+//   new flag cannot be added without somebody deciding whether a
+//   fifteen-person community meets it on day one.
 // 99→100 (2026-09-11): #1119 memberEnvironments — the invitation carries
 //   whether the person also reaches the prod twin. Option B of the
 //   issue: dev, or dev+prod, because 0185's invariant is prod ⊆ dev.
 const int _expectedFeatureCount = 100;
 
 void main() {
+  _tierPins();
+
   test('every functionality is registered — the pin', () {
     expect(
       WorkspaceFeature.values.length,
@@ -162,5 +167,79 @@ void main() {
         current = featureManifest[current]?.requires;
       }
     }
+  });
+}
+
+/// #1063 — how many features a NEW workspace starts with.
+///
+/// Pinned beside the total on purpose. The number that matters to the
+/// criticism this project attracts is not "how many flags exist" but
+/// "how many a fifteen-person community meets before it has asked for
+/// anything".
+const int _expectedCoreCount = 36;
+
+void _tierPins() {
+  test('every feature declares a tier, and the split is pinned', () {
+    expect(
+      featureManifest.length,
+      _expectedFeatureCount,
+      reason: 'the manifest and the enum must stay the same size',
+    );
+    final core = featuresOfTier(FeatureTier.core);
+    final platform = featuresOfTier(FeatureTier.platform);
+    expect(
+      core.length + platform.length,
+      _expectedFeatureCount,
+      reason: 'every feature is in exactly one tier',
+    );
+    expect(
+      core.length,
+      _expectedCoreCount,
+      reason: 'a new workspace would now meet ${core.length} features '
+          'before asking for anything; the pin says $_expectedCoreCount. '
+          'If that is the intent, move the pin and say why (#1063).',
+    );
+  });
+
+  test('a child is never in a lower tier than its parent', () {
+    // The Features screen indents a child under its parent, and the two
+    // tiers are separate sections — so a core child of a platform parent
+    // would be rendered away from the thing it depends on, and switching
+    // it on would silently drag a platform capability in with it.
+    final offenders = <String>[];
+    for (final entry in featureManifest.values) {
+      final parent = entry.requires;
+      if (parent == null) continue;
+      final parentEntry = featureManifest[parent]!;
+      if (entry.tier == FeatureTier.core &&
+          parentEntry.tier == FeatureTier.platform) {
+        offenders.add('${entry.feature.name} (core) under '
+            '${parent.name} (platform)');
+      }
+    }
+    expect(offenders, isEmpty, reason: offenders.join('\n'));
+  });
+
+  test('a new workspace starts Core, and nothing else', () {
+    final flags = defaultFeatureFlagsForNewWorkspace();
+    expect(
+      flags.length,
+      _expectedFeatureCount,
+      reason: 'every key is written EXPLICITLY at creation — that is what '
+          'keeps resolution unchanged for workspaces that already exist',
+    );
+    for (final entry in featureManifest.values) {
+      expect(
+        flags[entry.feature.dbKey],
+        entry.tier == FeatureTier.core && entry.defaultOn,
+        reason: entry.feature.name,
+      );
+    }
+    // The platform half is written FALSE, not omitted: "nobody has
+    // chosen yet" and "chosen off" have to stay distinguishable.
+    expect(
+      flags.values.where((on) => on).length,
+      lessThan(_expectedFeatureCount),
+    );
   });
 }
