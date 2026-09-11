@@ -83,5 +83,6 @@
   "spaceManageMyBooking": "Manage my booking",
   "@spaceManageMyBooking": {
     "description": "#670 - whole-space sheet"
-  }
+  },
+  "spaceAlreadyCheckedInHere": "You are already checked in here. Choose Check out to leave the seat."
 }

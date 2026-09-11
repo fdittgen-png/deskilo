@@ -92,6 +92,27 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
       )
       .firstOrNull;
 
+  /// #1135 — MY live check-in on this seat, whatever the window rule
+  /// says about it.
+  ///
+  /// [_myCheckInTarget] cannot answer this: it gates on
+  /// `checkInWindowOpen`, whose FIRST clause is
+  /// `status != ReservationStatus.reserved → false`. A reservation the
+  /// member is already checked into is therefore invisible to it, it
+  /// returns null, and `_confirm` reads that null as "nothing of mine
+  /// here — walk up and create one". The server then refuses, correctly,
+  /// with "you already have a reservation in that period", and the
+  /// member is told nothing they can act on.
+  ///
+  /// That is the whole of the 11:37 sequence in the field trace: five
+  /// identical creates in two and a half seconds, every one of them
+  /// impossible, on a seat the member was already sitting at.
+  Reservation? _myLiveCheckInHere(
+    List<Reservation> reservations,
+    DateTime now,
+    String? myMemberId,
+  ) => _myActiveCheckIn(reservations, now, myMemberId);
+
   /// MY live check-in ON THIS SEAT (#1083). The seat predicate is the
   /// whole point: with `simultaneous_reservations > 1` a member can hold
   /// two seats at once, and scanning one of them must release THAT one.
@@ -178,6 +199,22 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
           });
           if (mine != null) {
             await ref.read(reservationRepositoryProvider).checkIn(mine.id);
+          } else if (_myLiveCheckInHere(reservations, now, me?.id) != null) {
+            // #1135 — the member is already checked in on this seat, so
+            // `_myCheckInTarget` found nothing (it only sees `reserved`).
+            // Falling through to the walk-up create here is what produced
+            // "you already have a reservation in that period" five times
+            // in a row. The sheet normally prevents this; this is the
+            // half that does not depend on the sheet being right.
+            setState(() => _busy = false);
+            AppSnack.info(
+              context,
+              l10n?.spaceAlreadyCheckedInHere ??
+                  'You are already checked in here. Choose Check out to '
+                      'leave the seat.',
+              replace: true,
+            );
+            return;
           } else {
             await ref
                 .read(reservationRepositoryProvider)
@@ -261,7 +298,9 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
     final blocking = _blocking(reservations, choice, me?.id);
     final name = blocking == null ? '' : (names[blocking.memberId] ?? '');
     // #814 — the confirm button obeys the gate the form already shows.
-    final refused = _refusalOf(choice) != null;
+    // #1135 — and the member's own standing, which the gate cannot see.
+    final ownRefusal = _ownStandingRefusal(choice, l10n);
+    final refused = _refusalOf(choice) != null || ownRefusal != null;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -272,6 +311,16 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
             l10n?.spaceYoursNow ?? 'Reserved by you for this slot.',
             key: const ValueKey('space-act-yours'),
             style: theme.textTheme.bodySmall,
+          ),
+        ],
+        if (ownRefusal != null) ...[
+          const SizedBox(height: 8),
+          Text(
+            ownRefusal,
+            key: const ValueKey('space-act-own-standing'),
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.error,
+            ),
           ),
         ],
         if (blocking != null) ...[
@@ -303,6 +352,24 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
     );
   }
 
+  /// #1135 — why THIS member cannot do THIS to THIS seat, before they
+  /// tap. The booking gate answers about the window and the space; this
+  /// answers about the member's own standing, which the gate never sees.
+  ///
+  /// Returning a sentence rather than a bool: "Confirm is greyed out" is
+  /// not an answer, and the sequence this fixes had somebody tapping an
+  /// enabled button five times.
+  String? _ownStandingRefusal(SpaceActChoice choice, AppLocalizations? l10n) {
+    if (choice.action == SpaceAction.checkOut) return null;
+    final now = ref.read(clockProvider).now();
+    final me = ref.read(myMemberProvider).value;
+    final live = _myLiveCheckInHere(_dayReservations(now), now, me?.id);
+    if (live == null) return null;
+    return l10n?.spaceAlreadyCheckedInHere ??
+        'You are already checked in here. Choose Check out to leave the '
+            'seat.';
+  }
+
   /// The gate's answer for [choice] (null while the feature is off).
   BookingRefusal? _refusalOf(SpaceActChoice choice) {
     if (choice.action == SpaceAction.checkOut) return null;
@@ -327,6 +394,18 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
           SpaceActForm(
             granularity: _granularity,
             now: now,
+            // #1135 — already sitting here? Then the move is to leave.
+            // Opening on "Check in" put the member one tap from a
+            // request that could not succeed.
+            initialAction:
+                _myLiveCheckInHere(
+                      _dayReservations(now),
+                      now,
+                      ref.read(myMemberProvider).value?.id,
+                    ) !=
+                    null
+                ? SpaceAction.checkOut
+                : null,
             footer: _footer,
             refusalOf: gate == null ? null : _refusalOf,
             refusalTextOf: gate == null

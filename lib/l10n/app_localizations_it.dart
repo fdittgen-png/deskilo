@@ -8706,6 +8706,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get spaceManageMyBooking => 'Gestisci la mia prenotazione';
 
   @override
+  String get spaceAlreadyCheckedInHere =>
+      'Siete già registrati qui. Scegliete « Registra l\'uscita » per liberare il posto.';
+
+  @override
   String get themeTitle => 'Tema';
 
   @override

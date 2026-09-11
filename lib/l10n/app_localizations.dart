@@ -15227,6 +15227,12 @@ abstract class AppLocalizations {
   /// **'Manage my booking'**
   String get spaceManageMyBooking;
 
+  /// No description provided for @spaceAlreadyCheckedInHere.
+  ///
+  /// In en, this message translates to:
+  /// **'You are already checked in here. Choose Check out to leave the seat.'**
+  String get spaceAlreadyCheckedInHere;
+
   /// Settings entry and dialog title for the in-app theme selection
   ///
   /// In en, this message translates to:

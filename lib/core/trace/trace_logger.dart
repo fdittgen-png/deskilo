@@ -9,6 +9,31 @@ part 'trace_logger.g.dart';
 /// Severity of a [TraceEntry].
 enum TraceLevel { debug, info, warn, error }
 
+/// #1135 — the connection dropped, rather than the app being wrong.
+///
+/// Matched on the message because that is all these carry: `http`'s
+/// `ClientException` and `dart:io`'s `SocketException` both reduce to a
+/// sentence, and the sentence is the platform's. Deliberately narrow —
+/// anything not recognisably a transport failure stays an error, because
+/// a mis-classified real fault is far worse than a noisy list.
+bool isTransientNetworkFailure(Object? error) {
+  if (error == null) return false;
+  final text = error.toString().toLowerCase();
+  const marks = [
+    'clientexception',
+    'socketexception',
+    'connection abort',
+    'connection closed',
+    'connection reset',
+    'connection refused',
+    'failed host lookup',
+    'network is unreachable',
+    'operation timed out',
+    'handshakeexception',
+  ];
+  return marks.any(text.contains);
+}
+
 /// One diagnostic event captured by [TraceLogger] (#144).
 class TraceEntry {
   const TraceEntry({
@@ -102,7 +127,17 @@ class TraceLogger {
   void error(String area, String message,
           {Object? error, StackTrace? stackTrace}) =>
       log(
-        TraceLevel.error,
+        // #1135 — a lost connection is not a defect, and filing it as one
+        // makes the Errors filter useless. In a field trace of 67
+        // errors, 23 were `Software caused connection abort` from a
+        // phone going through a tunnel — a third of the list, hiding the
+        // two real crashes in it.
+        //
+        // Still recorded, in full, one level down: the Developer screen
+        // has a Warnings+ filter and nothing is lost. What changes is
+        // that ERROR comes to mean "the app is wrong" rather than "the
+        // network was".
+        isTransientNetworkFailure(error) ? TraceLevel.warn : TraceLevel.error,
         area,
         message,
         error: error,
