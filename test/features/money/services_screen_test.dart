@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
@@ -26,7 +28,7 @@ Future<FakeMoneyRepository> pumpServices(
   );
   await tester.pumpAndSettle();
   final context = tester.element(find.byType(Scaffold).first);
-  GoRouter.of(context).push('/services');
+  unawaited(GoRouter.of(context).push('/services'));
   await tester.pumpAndSettle();
   return money;
 }

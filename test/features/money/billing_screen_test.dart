@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:async';
+
 import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
@@ -30,7 +32,7 @@ Future<FakeMoneyRepository> pumpBilling(
   );
   await tester.pumpAndSettle();
   final context = tester.element(find.byType(Scaffold).first);
-  GoRouter.of(context).push('/billing');
+  unawaited(GoRouter.of(context).push('/billing'));
   await tester.pumpAndSettle();
   return money;
 }
@@ -242,7 +244,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/billing');
+    unawaited(GoRouter.of(context).push('/billing'));
     await tester.pumpAndSettle();
 
     expect(find.text('Billing'), findsNothing);

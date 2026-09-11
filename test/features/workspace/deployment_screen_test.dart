@@ -4,6 +4,8 @@
 // registry listed, requirements ticked along, the preview before the
 // deploy, the journal with a way back, and the permission that decides
 // the direction.
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/deployment.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +45,7 @@ Future<(FakeWorkspaceRepository, FakeDeploymentRepository)> _pump(
   ));
   await tester.pumpAndSettle();
   final context = tester.element(find.byType(Scaffold).first);
-  GoRouter.of(context).push('/deployment');
+  unawaited(GoRouter.of(context).push('/deployment'));
   await tester.pumpAndSettle();
   return (workspace, deployment);
 }

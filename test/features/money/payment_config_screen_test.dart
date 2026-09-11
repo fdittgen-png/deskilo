@@ -3,6 +3,8 @@
 // Owner online-payments configuration (0047): enter provider credentials
 // from the app; secrets go to the deny-all table via an owner RPC and are
 // never read back.
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/payment_provider.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +37,7 @@ Future<FakeMoneyRepository> pumpConfig(
   );
   await tester.pumpAndSettle();
   final context = tester.element(find.byType(Scaffold).first);
-  GoRouter.of(context).push('/payment-config');
+  unawaited(GoRouter.of(context).push('/payment-config'));
   await tester.pumpAndSettle();
   return money;
 }
@@ -61,7 +63,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/payment-config');
+    unawaited(GoRouter.of(context).push('/payment-config'));
     await tester.pumpAndSettle();
 
     // Bounced away — the config screen never mounts.

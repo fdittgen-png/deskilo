@@ -9,6 +9,8 @@
 // indicator + swiping, a fresh visit opens on the tip after the last
 // shown one (rotating), manual paging updates that memory, and every
 // tip's Learn more lands on its own guide section.
+import 'dart:async';
+
 import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
@@ -154,7 +156,7 @@ void main() {
   testWidgets('the hint renders on the events feed too', (tester) async {
     await _pumpApp(tester);
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/events');
+    unawaited(GoRouter.of(context).push('/events'));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('help-hint-events')), findsOneWidget);
   });
@@ -176,7 +178,7 @@ void main() {
     await _pumpApp(tester, store: store);
     expect(find.byKey(const ValueKey('help-hint-reserve')), findsNothing);
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/events');
+    unawaited(GoRouter.of(context).push('/events'));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('help-hint-events')), findsOneWidget);
   });

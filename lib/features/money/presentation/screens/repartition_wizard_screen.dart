@@ -5,6 +5,8 @@
 // custom method — weighted, then booked through the same
 // distribute_expense as the one-expense sheet (#828), and the adjusted
 // rule remembered so next month proposes it again.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -123,7 +125,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
     if (ok) {
       ref.invalidate(repartitionRuleProvider);
       AppSnack.success(context, l10n?.repartitionBooked ?? 'Repartition booked.');
-      Navigator.of(context).maybePop();
+      unawaited(Navigator.of(context).maybePop());
     }
   }
 

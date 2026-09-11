@@ -4,6 +4,8 @@
 // Profiles switches sides, the twin is created on demand from the
 // environment tile, the onboarding form creates both, and the three
 // deploy permissions sit in the matrix with their implication.
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -24,7 +26,7 @@ Future<FakeWorkspaceRepository> _pump(WidgetTester tester,
   ));
   await tester.pumpAndSettle();
   final context = tester.element(find.byType(Scaffold).first);
-  GoRouter.of(context).push(route);
+  unawaited(GoRouter.of(context).push(route));
   await tester.pumpAndSettle();
   return workspace;
 }

@@ -6,6 +6,8 @@
 // compiled assets stay free of raw wiki HTML. Widget tests inject small
 // markdown through the helpContent seam — decoding the real screenshot
 // assets would leave image timers pending.
+import 'dart:async';
+
 import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
@@ -74,7 +76,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/help');
+    unawaited(GoRouter.of(context).push('/help'));
     await tester.pumpAndSettle();
 
     expect(find.byType(HelpScreen), findsOneWidget);
@@ -101,7 +103,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/help?topic=section 18');
+    unawaited(GoRouter.of(context).push('/help?topic=section 18'));
     await tester.pumpAndSettle();
 
     expect(find.byType(HelpScreen), findsOneWidget);
@@ -128,7 +130,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/help?topic=zzz-no-such-heading');
+    unawaited(GoRouter.of(context).push('/help?topic=zzz-no-such-heading'));
     await tester.pumpAndSettle();
 
     expect(find.byType(HelpScreen), findsOneWidget);

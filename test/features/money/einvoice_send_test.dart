@@ -5,6 +5,8 @@
 // edge function, which holds the credential and logs the attempt. Without
 // one, the button is not offered at all: an affordance that cannot work is
 // worse than none.
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:flutter/material.dart';
@@ -159,8 +161,8 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    GoRouter.of(tester.element(find.byType(Scaffold).first))
-        .push('/einvoice-config');
+    unawaited(GoRouter.of(tester.element(find.byType(Scaffold).first))
+        .push('/einvoice-config'));
     await tester.pumpAndSettle();
 
     await tester.enterText(find.byKey(const ValueKey('einvoice-endpoint')),
@@ -289,7 +291,7 @@ void main() {
     // Deep link straight to the config screen — the settings entry is
     // covered by the feature-gating tests.
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/einvoice-config');
+    unawaited(GoRouter.of(context).push('/einvoice-config'));
     await tester.pumpAndSettle();
 
     await tester.enterText(
@@ -421,7 +423,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/einvoice-config');
+    unawaited(GoRouter.of(context).push('/einvoice-config'));
     await tester.pumpAndSettle();
 
     await tester.enterText(

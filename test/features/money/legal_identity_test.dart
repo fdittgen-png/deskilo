@@ -5,6 +5,8 @@
 // decides which identifier the norm demands: a registration number
 // outside the scope of VAT (BR-O-02 forbids a tax id there), a VAT number
 // when exempt (BR-E-02 requires one).
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +31,7 @@ Future<FakeWorkspaceRepository> pumpIdentity(
   );
   await tester.pumpAndSettle();
   final context = tester.element(find.byType(Scaffold).first);
-  GoRouter.of(context).push('/legal-identity');
+  unawaited(GoRouter.of(context).push('/legal-identity'));
   await tester.pumpAndSettle();
   return workspace;
 }

@@ -3,6 +3,8 @@
 // The VAT rate editor (0072) — owner-only. A rate is a fact about the
 // business, so the screen offers the country's usual ones as a starting
 // point and refuses to save a set the server would reject.
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +32,7 @@ Future<FakeMoneyRepository> pumpVat(
   );
   await tester.pumpAndSettle();
   final context = tester.element(find.byType(Scaffold).first);
-  GoRouter.of(context).push(route);
+  unawaited(GoRouter.of(context).push(route));
   await tester.pumpAndSettle();
   return money;
 }
@@ -279,7 +281,7 @@ void main() {
     // The legal identity screen keeps its identity fields but loses the
     // rates entry — the regime still charges, only the CONFIG is gone.
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/legal-identity');
+    unawaited(GoRouter.of(context).push('/legal-identity'));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('legal-identity-vat-id')),
         findsOneWidget);

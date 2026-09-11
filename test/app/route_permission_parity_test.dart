@@ -9,6 +9,8 @@
 // `operateKiosk`, so OUT OF THE BOX an ordinary admin sees "Services"
 // and "RFID / NFC badges", taps one, and is silently bounced to
 // /messages — with no explanation, because a redirect is not a refusal.
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +46,7 @@ Future<String> locationAfterPush(
   await tester.pumpAndSettle();
   final context = tester.element(find.byType(Scaffold).first);
   final router = GoRouter.of(context);
-  router.push(route);
+  unawaited(router.push(route));
   await tester.pumpAndSettle();
   return router.state.uri.toString();
 }

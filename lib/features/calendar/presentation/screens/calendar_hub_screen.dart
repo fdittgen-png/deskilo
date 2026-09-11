@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../workspace/presentation/widgets/note_record_open.dart';
@@ -172,7 +174,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
   Future<void> _open(CalendarItem item) async {
     switch (item.link) {
       case ReservationLink(:final id):
-        context.push('/res/$id');
+        unawaited(context.push('/res/$id'));
       case ConversationLink(:final id):
         await showConversationThread(context, ref, conversationId: id);
       case EventLink(:final id):

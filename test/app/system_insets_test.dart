@@ -2,6 +2,8 @@
 //
 // #1008 — with a system navigation bar at the bottom, nothing of the app
 // sits under it: not the shell's own bar, not a sheet's buttons.
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +44,7 @@ void main() {
     expect(tester.getRect(bar).bottom, lessThanOrEqualTo(700));
 
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/deployment');
+    unawaited(GoRouter.of(context).push('/deployment'));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('deploy-entity-roles')));
     await tester.pumpAndSettle();
