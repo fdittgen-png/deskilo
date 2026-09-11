@@ -415,3 +415,48 @@ must name the context it was made in.** A cache entry, a queued write, a
 pending-deletion journal — each one is a promise made under one identity
 against one server, and replaying it under another is the defect whether
 or not the server would have refused the request.
+## A grant row never proves access (#1120)
+
+A table whose name ends in `_grants`, `_shares`, `_invitations` or
+`_permissions` hands out access to something else. **It carries a SELECT
+policy and nothing else** — no INSERT, no UPDATE, no DELETE, and no
+policy without a `for` clause, which is `FOR ALL` and is the one that
+gets added by accident. Rows arrive through a `SECURITY DEFINER`
+function whose FIRST statement checks ownership of the **resource**, not
+of the row being written. `test/lint/grant_table_policy_test.dart`
+refuses the rest.
+
+The reason is a real defect in a sibling app, found by an external
+reviewer. Its share table accepted a client INSERT when
+`owner_id = auth.uid()`. That predicate proves who wrote the grant row.
+It proves nothing about the resource the row points at — so anyone
+holding a resource id could write a formally valid grant naming
+themselves as both owner and recipient, and the shared-read policy, which
+matched on resource id and recipient and never compared the resource's
+real owner, then evaluated to true.
+
+Two halves, and both are needed:
+
+1. **Writing.** No client write policy at all. Not a narrow one — none.
+2. **Reading.** Nothing is readable *because a grant row says so*. The
+   read predicate starts from the resource, reads its owner and its
+   visibility, and reaches the grant last. A stale grant on a resource
+   whose owner has withdrawn sharing grants nothing. One predicate, used
+   by the policy AND by every RPC that applies the resource, so the two
+   cannot drift — `workspace_template_readable` is the worked example.
+
+And prove it with three principals — owner, invited, **stranger** —
+against real PostgreSQL, rolled back. An expression model would not have
+caught the composite-key variant, and a "stranger" who turns out to hold
+the right legitimately proves nothing: the first run of this harness
+picked a stranger who was an owner of the workspace's own dev twin, and
+read the row for a perfectly good reason.
+
+Publishing a snapshot of a workspace is a second, separate question.
+`strip_template_plan` removes prices, plan-image storage paths, the
+background path and the site name before the row is written — server
+side, where a client cannot skip it. The images are not cosmetic:
+`merge_floor_plan` rewrites a stored path to the TARGET workspace and
+returns the pair as a copy job, so a template that kept them would have
+the applying workspace ask storage to copy files out of a stranger's
+prefix.
