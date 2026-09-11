@@ -154,11 +154,31 @@ void main() {
     Future<(List<Uri>, List<String>, FakeWorkspaceRepository)> pumpSheet(
       WidgetTester tester, {
       Workspace? workspace,
+      bool environmentChoice = false,
     }) async {
       final launched = <Uri>[];
       final shared = <String>[];
-      final repo = FakeWorkspaceRepository.withWorkspace();
-      if (workspace != null) repo.workspaces[0] = workspace;
+      final repo = FakeWorkspaceRepository.withWorkspace(
+        featureFlags: {
+          if (environmentChoice) ...{
+            'environmentPairs': true,
+            'memberEnvironments': true,
+          },
+        },
+      );
+      // The flags live ON the workspace row, so a replacement row has to
+      // carry them too — otherwise the override silently undoes them.
+      final flags = <String, dynamic>{
+        if (environmentChoice) ...{
+          'environmentPairs': true,
+          'memberEnvironments': true,
+        },
+      };
+      if (workspace != null) {
+        repo.workspaces[0] = workspace.copyWith(
+          featureFlags: {...workspace.featureFlags, ...flags},
+        );
+      }
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
@@ -185,6 +205,49 @@ void main() {
       await tester.pumpAndSettle();
       return (launched, shared, repo);
     }
+
+    // #1119 — the environment choice. Two answers and not three:
+    // 0185's invariant is prod ⊆ dev, so the question is "does this
+    // person touch production", never "which of two parallel worlds".
+    testWidgets('a dev workspace with a twin offers production',
+        (tester) async {
+      final (_, _, repo) = await pumpSheet(
+        tester,
+        workspace: _workspace.copyWith(pairId: 'pair-1'),
+        environmentChoice: true,
+      );
+      final toggle = find.byKey(const ValueKey('invite-also-prod'));
+      expect(toggle, findsOneWidget);
+      expect(tester.widget<SwitchListTile>(toggle).value, isFalse,
+          reason: 'production is opted INTO, never the default');
+
+      await tester.tap(toggle);
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('invite-whatsapp')));
+      await tester.pumpAndSettle();
+      expect(repo.mintedInvitations.single.alsoProd, isTrue);
+    });
+
+    testWidgets('without the choice, an invitation is dev-only',
+        (tester) async {
+      final (_, _, repo) = await pumpSheet(
+        tester,
+        workspace: _workspace.copyWith(pairId: 'pair-1'),
+      );
+      expect(find.byKey(const ValueKey('invite-also-prod')), findsNothing);
+      await tester.tap(find.byKey(const ValueKey('invite-whatsapp')));
+      await tester.pumpAndSettle();
+      expect(repo.mintedInvitations.single.alsoProd, isFalse,
+          reason: 'the seven open invitations that predate #1119 must '
+              'keep redeeming to dev exactly as they do now');
+    });
+
+    testWidgets('a workspace with no twin is not asked', (tester) async {
+      // Asking a question with one possible answer is worse than not
+      // asking it.
+      await pumpSheet(tester, environmentChoice: true);
+      expect(find.byKey(const ValueKey('invite-also-prod')), findsNothing);
+    });
 
     testWidgets('the WORKSPACE language is the preselected message '
         'language (#486)', (tester) async {

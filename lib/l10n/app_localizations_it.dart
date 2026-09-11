@@ -3558,6 +3558,21 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessun ID trovato — incolla l\'invito o digita l\'ID.';
 
   @override
+  String get inviteAlsoProdTitle => 'Dare anche accesso alla produzione';
+
+  @override
+  String get inviteAlsoProdSubtitle =>
+      'La persona entra comunque nello spazio di prova. Il ruolo deve comunque permettere l\'accesso alla produzione.';
+
+  @override
+  String get featureMemberEnvironmentsTitle =>
+      'Scegliere gli ambienti su cui una persona è attivata';
+
+  @override
+  String get featureMemberEnvironmentsDesc =>
+      'Quando invitate qualcuno, scegliete se raggiunge anche lo spazio di produzione. Entra comunque nello spazio di prova, e il ruolo deve comunque permettere l\'accesso alla produzione.';
+
+  @override
   String get invoicePdfDueOn => 'Scadenza';
 
   @override

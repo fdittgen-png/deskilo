@@ -583,6 +583,23 @@ Tocca un membro per aprire la sua **scheda di gestione** — ogni azione per mem
 *Il dialogo dell'abbonamento (la percentuale del membro) e quello del limite di prenotazioni (il tetto alle prenotazioni aperte).*
 
 <!-- anchor: user.members.subscription -->
+#### Quali ambienti dà un invito
+
+Quando il vostro spazio ha un gemello di produzione, il foglio d'invito
+pone una domanda: **Dare anche accesso alla produzione?** (#1119)
+
+La persona entra comunque nello spazio di prova. La produzione si
+aggiunge sopra, mai al posto — il gemello di prova è dove si prova, e chi
+esistesse solo in produzione non potrebbe esservi provato.
+
+Il ruolo decide ancora. Se il ruolo invitato non detiene *Accesso alla
+produzione*, l'invito si rifiuta di essere creato e lo dice, invece di
+fallire più tardi. Un invito non concede mai ciò che la matrice dei ruoli
+nega.
+
+Da attivare in *Impostazioni → Funzionalità → Scegliere gli ambienti su
+cui una persona è attivata*; disattivato all'avvio.
+
 #### Come è iniziata l'adesione
 
 Ogni membro porta una riga discreta che dice come è arrivato (#1110):

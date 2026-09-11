@@ -179,7 +179,13 @@ enum WorkspaceFeature {
   /// the space, joined by invitation, or had the profile created for
   /// them. It is not a status and carries no judgement; it is the fact,
   /// recorded once when the row was written and otherwise lost.
-  memberOrigin;
+  memberOrigin,
+
+  /// #1119 — whoever invites somebody chooses whether that person also
+  /// reaches the production twin. Two answers, not three: 0185's
+  /// invariant is `prod ⊆ dev`, so the question is "does this person
+  /// touch production", never "which of two parallel worlds".
+  memberEnvironments;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -744,6 +750,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.memberOrigin,
     defaultOn: false,
     requires: WorkspaceFeature.membersDirectory,
+  ),
+  // #1119 — the environment choice on an invitation. Under
+  // environmentPairs, because a workspace with no twin has nothing to
+  // choose between, and OFF by default like every other opt-in that
+  // adds a question to a form somebody already knows.
+  WorkspaceFeature.memberEnvironments: FeatureManifestEntry(
+    feature: WorkspaceFeature.memberEnvironments,
+    defaultOn: false,
+    requires: WorkspaceFeature.environmentPairs,
   ),
 };
 

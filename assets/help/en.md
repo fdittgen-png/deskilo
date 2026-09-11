@@ -555,6 +555,24 @@ Tap a member to open their **management sheet** — every per-member action in o
 
 *The subscription dialog (the member's percentage) and the reservation-limit dialog (the cap on open reservations).*
 
+#### Which environments an invitation gives
+
+When your space has a production twin, the invitation sheet asks one
+question: **Also give access to production?** (#1119)
+
+They join the test space either way. Production is added on top, never
+instead — the test twin is where you try things out, and somebody who
+existed only in production could not be rehearsed against.
+
+The role still decides. If the role you are inviting does not hold
+*Access production*, the invitation refuses to be created and says so,
+rather than failing later when the person redeems it. An invitation never
+grants what the role matrix withholds.
+
+Switch it on in *Settings → Features → Choose the environments a person
+is activated on*; it ships off, and invitations made before it redeem to
+the test space exactly as they did.
+
 #### How a membership began
 
 Each member carries one discreet line saying how they got here (#1110):

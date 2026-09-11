@@ -3561,6 +3561,21 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucun identifiant trouvé — collez l\'invitation ou saisissez l\'identifiant.';
 
   @override
+  String get inviteAlsoProdTitle => 'Donner aussi accès à la production';
+
+  @override
+  String get inviteAlsoProdSubtitle =>
+      'La personne rejoint l\'espace de test dans tous les cas. Le rôle doit malgré tout autoriser l\'accès à la production.';
+
+  @override
+  String get featureMemberEnvironmentsTitle =>
+      'Choisir les environnements sur lesquels une personne est activée';
+
+  @override
+  String get featureMemberEnvironmentsDesc =>
+      'Quand vous invitez quelqu\'un, choisissez s\'il atteint aussi l\'espace de production. Il rejoint l\'espace de test dans tous les cas, et le rôle doit malgré tout autoriser l\'accès à la production.';
+
+  @override
   String get invoicePdfDueOn => 'Échéance';
 
   @override

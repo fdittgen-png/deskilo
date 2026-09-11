@@ -13,6 +13,7 @@ import '../../../profile/domain/personal_info.dart';
 import '../../domain/invitation_message.dart';
 import '../../domain/invite_uri.dart';
 import '../../domain/workspace.dart';
+import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
 
 /// The five help/app languages, by endonym — the invitee reads the
@@ -125,6 +126,15 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
   final _lastName = TextEditingController();
   final _phone = TextEditingController();
 
+  /// #1119 — whether this person should also reach production.
+  ///
+  /// The choice is two-way and not three: 0185's invariant is
+  /// `prod ⊆ dev`, because the dev twin is where an admin rehearses and
+  /// somebody who exists only in prod cannot be rehearsed against. The
+  /// real question is "does this person touch production", and that has
+  /// two answers.
+  bool _alsoProd = false;
+
   /// #486 — the WORKSPACE's configured language is the default; the
   /// sender still overrides per send. Null = not yet touched → resolved
   /// at build (workspace language, else the app's).
@@ -178,6 +188,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
               firstName: _firstName.text.trim(),
               lastName: _lastName.text.trim(),
               memberId: widget.memberId,
+              alsoProd: _alsoProd,
             );
       },
     )) {
@@ -256,6 +267,15 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
     final l10n = AppLocalizations.of(context);
     final selected =
         _language ?? _defaultLanguage(context);
+    // Only a DEV workspace that HAS a twin can offer the choice: joining
+    // a prod workspace already reaches production, and the 0185 mirror
+    // adds the dev side by itself. Asking a question with one possible
+    // answer is worse than not asking it.
+    final canChooseEnvironments = ref
+            .watch(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.memberEnvironments) &&
+        widget.workspace.pairId.isNotEmpty &&
+        widget.workspace.environment == 'dev';
     return SheetShell(
       title: l10n?.inviteSectionTitle ?? 'Invite someone',
       children: [
@@ -295,6 +315,23 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
                 'Phone (optional, with country code)',
           ),
         ),
+        if (canChooseEnvironments) ...[
+          const SizedBox(height: AppSpacing.md),
+          SwitchListTile(
+            key: const ValueKey('invite-also-prod'),
+            contentPadding: EdgeInsets.zero,
+            value: _alsoProd,
+            onChanged: (value) => setState(() => _alsoProd = value),
+            title: Text(l10n?.inviteAlsoProdTitle ??
+                'Also give access to production'),
+            subtitle: Text(
+              l10n?.inviteAlsoProdSubtitle ??
+                  'They join the test space either way. The role still '
+                      'has to allow production access.',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ),
+        ],
         const SizedBox(height: AppSpacing.md),
         Text(
           l10n?.inviteLanguageLabel ?? 'Message language',

@@ -3531,6 +3531,21 @@ class AppLocalizationsEn extends AppLocalizations {
       'No workspace ID found — paste the invitation or type the ID.';
 
   @override
+  String get inviteAlsoProdTitle => 'Also give access to production';
+
+  @override
+  String get inviteAlsoProdSubtitle =>
+      'They join the test space either way. The role still has to allow production access.';
+
+  @override
+  String get featureMemberEnvironmentsTitle =>
+      'Choose the environments a person is activated on';
+
+  @override
+  String get featureMemberEnvironmentsDesc =>
+      'When you invite somebody, choose whether they also reach the production space. They join the test space either way, and the role still has to allow production access.';
+
+  @override
   String get invoicePdfDueOn => 'Due on';
 
   @override

@@ -2323,6 +2323,10 @@
   "invitationTemplateHint": "Messaggio d'invito personalizzato con i tag qui sopra…",
   "workspaceInvitePasteHint": "Incolla l'intero messaggio d'invito — l'ID viene trovato automaticamente.",
   "workspaceInviteCodeInvalid": "Nessun ID trovato — incolla l'invito o digita l'ID.",
+  "inviteAlsoProdTitle": "Dare anche accesso alla produzione",
+  "inviteAlsoProdSubtitle": "La persona entra comunque nello spazio di prova. Il ruolo deve comunque permettere l'accesso alla produzione.",
+  "featureMemberEnvironmentsTitle": "Scegliere gli ambienti su cui una persona è attivata",
+  "featureMemberEnvironmentsDesc": "Quando invitate qualcuno, scegliete se raggiunge anche lo spazio di produzione. Entra comunque nello spazio di prova, e il ruolo deve comunque permettere l'accesso alla produzione.",
   "invoicePdfDueOn": "Scadenza",
   "@invoicePdfDueOn": {
     "description": "#910 invoice due date: invoicePdfDueOn"

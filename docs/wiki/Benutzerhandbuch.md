@@ -582,6 +582,24 @@ Ein Mitglied antippen öffnet sein **Verwaltungsblatt** — jede Mitglieds-Aktio
 *Der Abonnement-Dialog (der Prozentsatz des Mitglieds) und der Reservierungslimit-Dialog (die Obergrenze offener Reservierungen).*
 
 <!-- anchor: user.members.subscription -->
+#### Welche Umgebungen eine Einladung gibt
+
+Wenn Ihr Raum einen Produktionszwilling hat, stellt das Einladungsblatt
+eine Frage: **Auch Zugang zur Produktion geben?** (#1119)
+
+Dem Testraum tritt die Person in jedem Fall bei. Die Produktion kommt
+obendrauf, nie stattdessen — der Testzwilling ist der Ort zum
+Ausprobieren, und wer nur in der Produktion existierte, könnte dort nicht
+geprobt werden.
+
+Die Rolle entscheidet weiterhin. Hält die eingeladene Rolle *Zugang zur
+Produktion* nicht, weigert sich die Einladung, angelegt zu werden, statt
+später beim Einlösen zu scheitern. Eine Einladung gewährt nie, was die
+Rollenmatrix verweigert.
+
+Einzuschalten unter *Einstellungen → Funktionen → Die Umgebungen wählen,
+für die eine Person freigeschaltet wird*; standardmäßig aus.
+
 #### Wie die Mitgliedschaft begann
 
 Jedes Mitglied trägt eine dezente Zeile, die sagt, wie es hierherkam

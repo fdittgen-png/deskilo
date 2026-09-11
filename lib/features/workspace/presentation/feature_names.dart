@@ -90,6 +90,9 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureUiAnimationsTitle ?? 'Interface animations',
       WorkspaceFeature.memberOrigin =>
         l10n?.featureMemberOriginTitle ?? 'How each member got here',
+      WorkspaceFeature.memberEnvironments =>
+        l10n?.featureMemberEnvironmentsTitle ??
+            'Choose the environments a person is activated on',
       WorkspaceFeature.kioskMemberPhotos =>
         l10n?.featureKioskMemberPhotosTitle ?? 'Member photos at the kiosk',
       WorkspaceFeature.planMemberPhotos =>

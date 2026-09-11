@@ -181,6 +181,11 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureFormHelpHintsDesc ??
               'Short dismissible how-to hints on forms and screens, '
                   'each linking into the matching guide section.',
+        WorkspaceFeature.memberEnvironments =>
+          l10n?.featureMemberEnvironmentsDesc ??
+              'When you invite somebody, choose whether they also reach '
+                  'the production space. They join the test space either '
+                  'way, and the role still has to allow production access.',
         WorkspaceFeature.memberOrigin =>
           l10n?.featureMemberOriginDesc ??
               'A discreet line on a member saying how their membership '
