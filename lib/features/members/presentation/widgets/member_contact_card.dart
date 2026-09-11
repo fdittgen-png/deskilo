@@ -6,6 +6,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../providers/directory_providers.dart';
 import '../../../workspace/domain/member.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 
@@ -47,6 +48,10 @@ class MemberContactCard extends ConsumerWidget {
     // Admin-only at the source: for anybody else this map is empty.
     final email = ref.watch(memberEmailsProvider).value?[member.id] ?? '';
     final phone = profile?.whatsapp ?? '';
+    final showOrigin = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.memberOrigin);
+    final originLabel = _originLabel(l10n, member.origin);
 
     final rows = <(IconData, String)>[
       if (email.isNotEmpty) (Icons.mail_outline, email),
@@ -62,6 +67,13 @@ class MemberContactCard extends ConsumerWidget {
         ),
       if ((isSelf || isAdmin) && member.status != MemberStatus.active)
         (Icons.pause_circle_outline, _statusLabel(l10n, member.status)),
+      // #1110 — how this membership began. Same audience as the other
+      // membership facts: the member themselves, and whoever administers
+      // members. It is deliberately a plain row among them and not a
+      // coloured badge — it is a fact about how somebody arrived, not a
+      // rank, and a delegated member is not a lesser one.
+      if ((isSelf || isAdmin) && showOrigin && originLabel.isNotEmpty)
+        (_originIcon(member.origin), originLabel),
     ];
     if (rows.isEmpty) return const SizedBox.shrink();
 
@@ -97,6 +109,28 @@ class MemberContactCard extends ConsumerWidget {
       ],
     );
   }
+
+  /// The sentence says what HAPPENED, never what somebody is — "Profile
+  /// created by an admin", not "Delegated". [MemberOrigin.unknown] is a
+  /// row written before 0200, or by a server newer than this build:
+  /// there is no honest sentence for it, so it shows nothing.
+  String _originLabel(AppLocalizations? l10n, MemberOrigin origin) =>
+      switch (origin) {
+        MemberOrigin.founder =>
+          l10n?.memberOriginFounder ?? 'Founded this space',
+        MemberOrigin.invited =>
+          l10n?.memberOriginInvited ?? 'Joined by invitation',
+        MemberOrigin.delegated =>
+          l10n?.memberOriginDelegated ?? 'Profile created by an admin',
+        MemberOrigin.unknown => '',
+      };
+
+  IconData _originIcon(MemberOrigin origin) => switch (origin) {
+        MemberOrigin.founder => Icons.flag_outlined,
+        MemberOrigin.invited => Icons.mail_outline,
+        MemberOrigin.delegated => Icons.badge_outlined,
+        MemberOrigin.unknown => Icons.help_outline,
+      };
 
   String _statusLabel(AppLocalizations? l10n, MemberStatus status) =>
       switch (status) {

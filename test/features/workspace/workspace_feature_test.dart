@@ -36,6 +36,10 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.vatGroups,
   WorkspaceFeature.vatRateHistory,
   WorkspaceFeature.vatCounterparty,
+  // #1110 — how each member got here. New information about real
+  // people, so a workspace decides to show it rather than finding it
+  // already there on the members it already had.
+  WorkspaceFeature.memberOrigin,
 };
 
 /// Every other feature ships ON.
@@ -92,6 +96,7 @@ void main() {
       'vatGroups': true,
       'vatRateHistory': true,
       'vatCounterparty': true,
+      'memberOrigin': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

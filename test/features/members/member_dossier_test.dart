@@ -26,6 +26,7 @@ Member _member({
   String id = 'member-2',
   String userId = 'user-2',
   bool isAdmin = false,
+  MemberOrigin origin = MemberOrigin.unknown,
 }) =>
     Member(
       id: id,
@@ -35,6 +36,7 @@ Member _member({
       isOwner: false,
       status: MemberStatus.active,
       subscriptionPct: 50,
+      origin: origin,
     );
 
 Invoice _invoice({required String id, required String number}) => Invoice(
@@ -59,6 +61,8 @@ Future<void> _pump(
   WidgetTester tester, {
   required bool viewerIsAdmin,
   bool isSelf = false,
+  MemberOrigin origin = MemberOrigin.unknown,
+  bool originFeature = false,
 }) async {
   // Seeded through the fake's OWN stores, so the account is computed
   // the way member_account computes it rather than asserted into
@@ -77,7 +81,14 @@ Future<void> _pump(
         createdAt: DateTime.utc(2026, 7, 20),
       ),
     );
-  final workspace = FakeWorkspaceRepository.withWorkspace()
+  final workspace = FakeWorkspaceRepository.withWorkspace(
+    featureFlags: {
+      if (originFeature) ...{
+        'membersDirectory': true,
+        'memberOrigin': true,
+      },
+    },
+  )
     ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
     ..memberEmails = {'member-2': 'ana@example.com'};
   if (!viewerIsAdmin) {
@@ -91,7 +102,10 @@ Future<void> _pump(
         home: Scaffold(
           body: SingleChildScrollView(
             child: Column(children: [
-              MemberContactCard(member: _member(), isSelf: isSelf),
+              MemberContactCard(
+                member: _member(origin: origin),
+                isSelf: isSelf,
+              ),
               MemberMoneyCard(memberId: 'member-2', isSelf: isSelf),
             ]),
           ),
@@ -103,6 +117,8 @@ Future<void> _pump(
 }
 
 void main() {
+  _originTests();
+
   testWidgets('an admin sees where the member stands, in one place',
       (tester) async {
     await _pump(tester, viewerIsAdmin: true);
@@ -214,5 +230,69 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('member-money-settled')), findsOneWidget);
+  });
+}
+
+// #1110 — how the membership began, on the same card and to the same
+// audience as the other membership facts.
+//
+// The interesting cases are the ones where it must say NOTHING: the
+// feature off, a viewer who administers nothing, and an origin this
+// build does not recognise.
+void _originTests() {
+  testWidgets('an admin sees how the membership began', (tester) async {
+    await _pump(
+      tester,
+      viewerIsAdmin: true,
+      origin: MemberOrigin.delegated,
+      originFeature: true,
+    );
+    expect(find.text('Profile created by an admin'), findsOneWidget);
+  });
+
+  testWidgets('the member sees it on their own profile', (tester) async {
+    await _pump(
+      tester,
+      viewerIsAdmin: false,
+      isSelf: true,
+      origin: MemberOrigin.founder,
+      originFeature: true,
+    );
+    expect(find.text('Founded this space'), findsOneWidget);
+  });
+
+  testWidgets('a colleague who administers nothing does not', (tester) async {
+    await _pump(
+      tester,
+      viewerIsAdmin: false,
+      origin: MemberOrigin.invited,
+      originFeature: true,
+    );
+    expect(find.text('Joined by invitation'), findsNothing);
+  });
+
+  testWidgets('with the feature off, nobody sees it', (tester) async {
+    await _pump(
+      tester,
+      viewerIsAdmin: true,
+      origin: MemberOrigin.founder,
+    );
+    expect(find.text('Founded this space'), findsNothing);
+  });
+
+  testWidgets('an origin this build does not know shows nothing',
+      (tester) async {
+    // The #1088 rule: a value a newer server sends must not put a
+    // question mark on a real person's profile. `fromDb` maps it to
+    // unknown and the row is simply absent.
+    expect(MemberOrigin.fromDb('walked_in'), MemberOrigin.unknown);
+    expect(MemberOrigin.fromDb(null), MemberOrigin.unknown);
+    await _pump(
+      tester,
+      viewerIsAdmin: true,
+      origin: MemberOrigin.unknown,
+      originFeature: true,
+    );
+    expect(find.byIcon(Icons.help_outline), findsNothing);
   });
 }

@@ -10751,6 +10751,42 @@ abstract class AppLocalizations {
   /// **'Nothing to reference yet.'**
   String get noteRefNone;
 
+  /// No description provided for @featureMemberOriginTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How each member got here'**
+  String get featureMemberOriginTitle;
+
+  /// No description provided for @featureMemberOriginDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'A discreet line on a member saying how their membership began: founded the space, joined by invitation, or had the profile created for them. It is not a status.'**
+  String get featureMemberOriginDesc;
+
+  /// No description provided for @memberOriginFounder.
+  ///
+  /// In en, this message translates to:
+  /// **'Founded this space'**
+  String get memberOriginFounder;
+
+  /// No description provided for @memberOriginInvited.
+  ///
+  /// In en, this message translates to:
+  /// **'Joined by invitation'**
+  String get memberOriginInvited;
+
+  /// No description provided for @memberOriginDelegated.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile created by an admin'**
+  String get memberOriginDelegated;
+
+  /// No description provided for @memberOriginHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'How this membership began'**
+  String get memberOriginHeading;
+
   /// Statement line for the plan's monthly fee
   ///
   /// In en, this message translates to:

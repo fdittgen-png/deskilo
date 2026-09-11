@@ -582,6 +582,21 @@ Ein Mitglied antippen öffnet sein **Verwaltungsblatt** — jede Mitglieds-Aktio
 *Der Abonnement-Dialog (der Prozentsatz des Mitglieds) und der Reservierungslimit-Dialog (die Obergrenze offener Reservierungen).*
 
 <!-- anchor: user.members.subscription -->
+#### Wie die Mitgliedschaft begann
+
+Jedes Mitglied trägt eine dezente Zeile, die sagt, wie es hierherkam
+(#1110): **Hat diesen Raum gegründet**, **Per Einladung beigetreten**
+oder **Profil von einer Verwaltung angelegt**.
+
+Das ist eine Tatsache, kein Status, und ändert nichts an dem, was jemand
+darf. Ein Profil, das eine Verwaltung angelegt und übergeben hat, sagt
+das auch nach der Übernahme weiterhin — das Datum der Übernahme ist
+etwas anderes.
+
+Wer es sieht: das Mitglied selbst und wer Mitglieder verwaltet. Sonst
+niemand. Einzuschalten unter *Einstellungen → Funktionen → Wie jedes
+Mitglied hierherkam*; standardmäßig aus.
+
 #### Das Abonnement eines Mitglieds
 
 Der Prozentsatz der Arbeitshalbtage des Monats, auf den das Mitglied

@@ -283,5 +283,11 @@
   "noteRefPickValidation": "¿Qué validación?",
   "noteRefPickInvoice": "¿Qué factura?",
   "noteRefPickPayment": "¿Qué pago?",
-  "noteRefNone": "Nada que referenciar todavía."
+  "noteRefNone": "Nada que referenciar todavía.",
+  "featureMemberOriginTitle": "Cómo llegó cada miembro",
+  "featureMemberOriginDesc": "Una línea discreta en un miembro que indica cómo empezó su afiliación: fundó el espacio, se unió por invitación, o un administrador le creó el perfil. No es un estado.",
+  "memberOriginFounder": "Fundó este espacio",
+  "memberOriginInvited": "Se unió por invitación",
+  "memberOriginDelegated": "Perfil creado por un administrador",
+  "memberOriginHeading": "Cómo empezó esta afiliación"
 }

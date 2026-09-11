@@ -173,7 +173,13 @@ enum WorkspaceFeature {
   demoMode,
 
   /// #977 — the wizard that creates and configures a new instance.
-  instanceWizard;
+  instanceWizard,
+
+  /// #1110 — a discreet line saying how each member got here: founded
+  /// the space, joined by invitation, or had the profile created for
+  /// them. It is not a status and carries no judgement; it is the fact,
+  /// recorded once when the row was written and otherwise lost.
+  memberOrigin;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -730,6 +736,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // motion (the OS accessibility setting) overrides regardless.
   WorkspaceFeature.uiAnimations:
       FeatureManifestEntry(feature: WorkspaceFeature.uiAnimations),
+  // #1110 — how each member got here, on their own profile and on the
+  // member sheet for anyone who manages members. Default OFF: it is new
+  // information about real people, and a workspace should decide to show
+  // it rather than find it already there.
+  WorkspaceFeature.memberOrigin: FeatureManifestEntry(
+    feature: WorkspaceFeature.memberOrigin,
+    defaultOn: false,
+    requires: WorkspaceFeature.membersDirectory,
+  ),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start

@@ -88,6 +88,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureFormHelpHintsTitle ?? 'Help hints',
       WorkspaceFeature.uiAnimations =>
         l10n?.featureUiAnimationsTitle ?? 'Interface animations',
+      WorkspaceFeature.memberOrigin =>
+        l10n?.featureMemberOriginTitle ?? 'How each member got here',
       WorkspaceFeature.kioskMemberPhotos =>
         l10n?.featureKioskMemberPhotosTitle ?? 'Member photos at the kiosk',
       WorkspaceFeature.planMemberPhotos =>

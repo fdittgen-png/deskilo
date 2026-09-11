@@ -584,6 +584,20 @@ Touchez un membre pour sa **feuille de gestion** — chaque action par membre au
 *Le dialogue abonnement (le pourcentage du membre) et le dialogue limite de réservations (le plafond de réservations ouvertes).*
 
 <!-- anchor: user.members.subscription -->
+#### Comment l'adhésion a commencé
+
+Chaque membre porte une ligne discrète indiquant comment il est arrivé
+(#1110) : **A fondé cet espace**, **A rejoint sur invitation**, ou
+**Profil créé par un administrateur**.
+
+C'est un fait, pas un statut, et cela ne change rien à ce qu'une personne
+peut faire. Un profil créé par un administrateur puis remis continue de
+le dire après la reprise — la date de la reprise est autre chose.
+
+Qui le voit : le membre lui-même, et qui gère les membres. Personne
+d'autre. À activer dans *Réglages → Fonctionnalités → Origine de chaque
+membre* ; désactivé par défaut.
+
 #### L'abonnement d'un membre
 
 Le pourcentage des demi-journées ouvrées du mois auquel le membre a

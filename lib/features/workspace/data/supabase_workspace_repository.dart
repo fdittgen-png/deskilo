@@ -1069,6 +1069,7 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         claimedAt: row['claimed_at'] == null
             ? null
             : DateTime.parse(row['claimed_at'] as String),
+        origin: MemberOrigin.fromDb(row['origin'] as String?),
         joinedAt: row['joined_at'] == null
             ? null
             : DateTime.parse(row['joined_at'] as String).toUtc(),

@@ -60,7 +60,11 @@ mixin _$Member {
 /// both. Empty = the rule nobody narrowed (owner and admin).
  Map<String, dynamic> get managedAccess;/// #887 — when the person took the profile over; null while managed
 /// and for members who joined by themselves.
- DateTime? get claimedAt;/// #881 — the member's own payment conditions (keys on top of the
+ DateTime? get claimedAt;/// #1110 — how this membership began. Defaults to [MemberOrigin.unknown]
+/// rather than a guess: a row from a server that predates 0200 has
+/// no answer, and inventing one would put a wrong chip on a real
+/// person's profile.
+ MemberOrigin get origin;/// #881 — the member's own payment conditions (keys on top of the
 /// workspace's); null = inherit everything. Changed only through a
 /// validated payment_terms_change request.
  PaymentTerms? get paymentTerms;/// #992 — the server's stamp on this row.
@@ -75,16 +79,16 @@ $MemberCopyWith<Member> get copyWith => _$MemberCopyWithImpl<Member>(this as Mem
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Member&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin)&&(identical(other.isOwner, isOwner) || other.isOwner == isOwner)&&(identical(other.status, status) || other.status == status)&&(identical(other.subscriptionPct, subscriptionPct) || other.subscriptionPct == subscriptionPct)&&(identical(other.overagePolicy, overagePolicy) || other.overagePolicy == overagePolicy)&&(identical(other.isKiosk, isKiosk) || other.isKiosk == isKiosk)&&(identical(other.maxActiveReservations, maxActiveReservations) || other.maxActiveReservations == maxActiveReservations)&&(identical(other.maxSimultaneousReservations, maxSimultaneousReservations) || other.maxSimultaneousReservations == maxSimultaneousReservations)&&(identical(other.vatTreatment, vatTreatment) || other.vatTreatment == vatTreatment)&&(identical(other.vatExemptionReason, vatExemptionReason) || other.vatExemptionReason == vatExemptionReason)&&(identical(other.canReserveLevel, canReserveLevel) || other.canReserveLevel == canReserveLevel)&&(identical(other.coOwner, coOwner) || other.coOwner == coOwner)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt)&&(identical(other.managedIdentity, managedIdentity) || other.managedIdentity == managedIdentity)&&(identical(other.managedName, managedName) || other.managedName == managedName)&&(identical(other.memberNumber, memberNumber) || other.memberNumber == memberNumber)&&(identical(other.homeSiteId, homeSiteId) || other.homeSiteId == homeSiteId)&&const DeepCollectionEquality().equals(other.managedAccess, managedAccess)&&(identical(other.claimedAt, claimedAt) || other.claimedAt == claimedAt)&&(identical(other.paymentTerms, paymentTerms) || other.paymentTerms == paymentTerms)&&(identical(other.system, system) || other.system == system));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Member&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin)&&(identical(other.isOwner, isOwner) || other.isOwner == isOwner)&&(identical(other.status, status) || other.status == status)&&(identical(other.subscriptionPct, subscriptionPct) || other.subscriptionPct == subscriptionPct)&&(identical(other.overagePolicy, overagePolicy) || other.overagePolicy == overagePolicy)&&(identical(other.isKiosk, isKiosk) || other.isKiosk == isKiosk)&&(identical(other.maxActiveReservations, maxActiveReservations) || other.maxActiveReservations == maxActiveReservations)&&(identical(other.maxSimultaneousReservations, maxSimultaneousReservations) || other.maxSimultaneousReservations == maxSimultaneousReservations)&&(identical(other.vatTreatment, vatTreatment) || other.vatTreatment == vatTreatment)&&(identical(other.vatExemptionReason, vatExemptionReason) || other.vatExemptionReason == vatExemptionReason)&&(identical(other.canReserveLevel, canReserveLevel) || other.canReserveLevel == canReserveLevel)&&(identical(other.coOwner, coOwner) || other.coOwner == coOwner)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt)&&(identical(other.managedIdentity, managedIdentity) || other.managedIdentity == managedIdentity)&&(identical(other.managedName, managedName) || other.managedName == managedName)&&(identical(other.memberNumber, memberNumber) || other.memberNumber == memberNumber)&&(identical(other.homeSiteId, homeSiteId) || other.homeSiteId == homeSiteId)&&const DeepCollectionEquality().equals(other.managedAccess, managedAccess)&&(identical(other.claimedAt, claimedAt) || other.claimedAt == claimedAt)&&(identical(other.origin, origin) || other.origin == origin)&&(identical(other.paymentTerms, paymentTerms) || other.paymentTerms == paymentTerms)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hashAll([runtimeType,id,workspaceId,userId,isAdmin,isOwner,status,subscriptionPct,overagePolicy,isKiosk,maxActiveReservations,maxSimultaneousReservations,vatTreatment,vatExemptionReason,canReserveLevel,coOwner,joinedAt,managedIdentity,managedName,memberNumber,homeSiteId,const DeepCollectionEquality().hash(managedAccess),claimedAt,paymentTerms,system]);
+int get hashCode => Object.hashAll([runtimeType,id,workspaceId,userId,isAdmin,isOwner,status,subscriptionPct,overagePolicy,isKiosk,maxActiveReservations,maxSimultaneousReservations,vatTreatment,vatExemptionReason,canReserveLevel,coOwner,joinedAt,managedIdentity,managedName,memberNumber,homeSiteId,const DeepCollectionEquality().hash(managedAccess),claimedAt,origin,paymentTerms,system]);
 
 @override
 String toString() {
-  return 'Member(id: $id, workspaceId: $workspaceId, userId: $userId, isAdmin: $isAdmin, isOwner: $isOwner, status: $status, subscriptionPct: $subscriptionPct, overagePolicy: $overagePolicy, isKiosk: $isKiosk, maxActiveReservations: $maxActiveReservations, maxSimultaneousReservations: $maxSimultaneousReservations, vatTreatment: $vatTreatment, vatExemptionReason: $vatExemptionReason, canReserveLevel: $canReserveLevel, coOwner: $coOwner, joinedAt: $joinedAt, managedIdentity: $managedIdentity, managedName: $managedName, memberNumber: $memberNumber, homeSiteId: $homeSiteId, managedAccess: $managedAccess, claimedAt: $claimedAt, paymentTerms: $paymentTerms, system: $system)';
+  return 'Member(id: $id, workspaceId: $workspaceId, userId: $userId, isAdmin: $isAdmin, isOwner: $isOwner, status: $status, subscriptionPct: $subscriptionPct, overagePolicy: $overagePolicy, isKiosk: $isKiosk, maxActiveReservations: $maxActiveReservations, maxSimultaneousReservations: $maxSimultaneousReservations, vatTreatment: $vatTreatment, vatExemptionReason: $vatExemptionReason, canReserveLevel: $canReserveLevel, coOwner: $coOwner, joinedAt: $joinedAt, managedIdentity: $managedIdentity, managedName: $managedName, memberNumber: $memberNumber, homeSiteId: $homeSiteId, managedAccess: $managedAccess, claimedAt: $claimedAt, origin: $origin, paymentTerms: $paymentTerms, system: $system)';
 }
 
 
@@ -95,7 +99,7 @@ abstract mixin class $MemberCopyWith<$Res>  {
   factory $MemberCopyWith(Member value, $Res Function(Member) _then) = _$MemberCopyWithImpl;
 @useResult
 $Res call({
- String id, String workspaceId, String userId, bool isAdmin, bool isOwner, MemberStatus status, int subscriptionPct, OveragePolicy overagePolicy, bool isKiosk, int? maxActiveReservations, int? maxSimultaneousReservations, String vatTreatment, String vatExemptionReason, bool canReserveLevel, CoOwnerStatus coOwner, DateTime? joinedAt, PersonalInfo managedIdentity, String managedName, String memberNumber, String? homeSiteId, Map<String, dynamic> managedAccess, DateTime? claimedAt, PaymentTerms? paymentTerms, SystemColumns system
+ String id, String workspaceId, String userId, bool isAdmin, bool isOwner, MemberStatus status, int subscriptionPct, OveragePolicy overagePolicy, bool isKiosk, int? maxActiveReservations, int? maxSimultaneousReservations, String vatTreatment, String vatExemptionReason, bool canReserveLevel, CoOwnerStatus coOwner, DateTime? joinedAt, PersonalInfo managedIdentity, String managedName, String memberNumber, String? homeSiteId, Map<String, dynamic> managedAccess, DateTime? claimedAt, MemberOrigin origin, PaymentTerms? paymentTerms, SystemColumns system
 });
 
 
@@ -112,7 +116,7 @@ class _$MemberCopyWithImpl<$Res>
 
 /// Create a copy of Member
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? userId = null,Object? isAdmin = null,Object? isOwner = null,Object? status = null,Object? subscriptionPct = null,Object? overagePolicy = null,Object? isKiosk = null,Object? maxActiveReservations = freezed,Object? maxSimultaneousReservations = freezed,Object? vatTreatment = null,Object? vatExemptionReason = null,Object? canReserveLevel = null,Object? coOwner = null,Object? joinedAt = freezed,Object? managedIdentity = null,Object? managedName = null,Object? memberNumber = null,Object? homeSiteId = freezed,Object? managedAccess = null,Object? claimedAt = freezed,Object? paymentTerms = freezed,Object? system = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? userId = null,Object? isAdmin = null,Object? isOwner = null,Object? status = null,Object? subscriptionPct = null,Object? overagePolicy = null,Object? isKiosk = null,Object? maxActiveReservations = freezed,Object? maxSimultaneousReservations = freezed,Object? vatTreatment = null,Object? vatExemptionReason = null,Object? canReserveLevel = null,Object? coOwner = null,Object? joinedAt = freezed,Object? managedIdentity = null,Object? managedName = null,Object? memberNumber = null,Object? homeSiteId = freezed,Object? managedAccess = null,Object? claimedAt = freezed,Object? origin = null,Object? paymentTerms = freezed,Object? system = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -136,7 +140,8 @@ as String,memberNumber: null == memberNumber ? _self.memberNumber : memberNumber
 as String,homeSiteId: freezed == homeSiteId ? _self.homeSiteId : homeSiteId // ignore: cast_nullable_to_non_nullable
 as String?,managedAccess: null == managedAccess ? _self.managedAccess : managedAccess // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>,claimedAt: freezed == claimedAt ? _self.claimedAt : claimedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,paymentTerms: freezed == paymentTerms ? _self.paymentTerms : paymentTerms // ignore: cast_nullable_to_non_nullable
+as DateTime?,origin: null == origin ? _self.origin : origin // ignore: cast_nullable_to_non_nullable
+as MemberOrigin,paymentTerms: freezed == paymentTerms ? _self.paymentTerms : paymentTerms // ignore: cast_nullable_to_non_nullable
 as PaymentTerms?,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
 as SystemColumns,
   ));
@@ -220,10 +225,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  int subscriptionPct,  OveragePolicy overagePolicy,  bool isKiosk,  int? maxActiveReservations,  int? maxSimultaneousReservations,  String vatTreatment,  String vatExemptionReason,  bool canReserveLevel,  CoOwnerStatus coOwner,  DateTime? joinedAt,  PersonalInfo managedIdentity,  String managedName,  String memberNumber,  String? homeSiteId,  Map<String, dynamic> managedAccess,  DateTime? claimedAt,  PaymentTerms? paymentTerms,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  int subscriptionPct,  OveragePolicy overagePolicy,  bool isKiosk,  int? maxActiveReservations,  int? maxSimultaneousReservations,  String vatTreatment,  String vatExemptionReason,  bool canReserveLevel,  CoOwnerStatus coOwner,  DateTime? joinedAt,  PersonalInfo managedIdentity,  String managedName,  String memberNumber,  String? homeSiteId,  Map<String, dynamic> managedAccess,  DateTime? claimedAt,  MemberOrigin origin,  PaymentTerms? paymentTerms,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Member() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.subscriptionPct,_that.overagePolicy,_that.isKiosk,_that.maxActiveReservations,_that.maxSimultaneousReservations,_that.vatTreatment,_that.vatExemptionReason,_that.canReserveLevel,_that.coOwner,_that.joinedAt,_that.managedIdentity,_that.managedName,_that.memberNumber,_that.homeSiteId,_that.managedAccess,_that.claimedAt,_that.paymentTerms,_that.system);case _:
+return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.subscriptionPct,_that.overagePolicy,_that.isKiosk,_that.maxActiveReservations,_that.maxSimultaneousReservations,_that.vatTreatment,_that.vatExemptionReason,_that.canReserveLevel,_that.coOwner,_that.joinedAt,_that.managedIdentity,_that.managedName,_that.memberNumber,_that.homeSiteId,_that.managedAccess,_that.claimedAt,_that.origin,_that.paymentTerms,_that.system);case _:
   return orElse();
 
 }
@@ -241,10 +246,10 @@ return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOw
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  int subscriptionPct,  OveragePolicy overagePolicy,  bool isKiosk,  int? maxActiveReservations,  int? maxSimultaneousReservations,  String vatTreatment,  String vatExemptionReason,  bool canReserveLevel,  CoOwnerStatus coOwner,  DateTime? joinedAt,  PersonalInfo managedIdentity,  String managedName,  String memberNumber,  String? homeSiteId,  Map<String, dynamic> managedAccess,  DateTime? claimedAt,  PaymentTerms? paymentTerms,  SystemColumns system)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  int subscriptionPct,  OveragePolicy overagePolicy,  bool isKiosk,  int? maxActiveReservations,  int? maxSimultaneousReservations,  String vatTreatment,  String vatExemptionReason,  bool canReserveLevel,  CoOwnerStatus coOwner,  DateTime? joinedAt,  PersonalInfo managedIdentity,  String managedName,  String memberNumber,  String? homeSiteId,  Map<String, dynamic> managedAccess,  DateTime? claimedAt,  MemberOrigin origin,  PaymentTerms? paymentTerms,  SystemColumns system)  $default,) {final _that = this;
 switch (_that) {
 case _Member():
-return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.subscriptionPct,_that.overagePolicy,_that.isKiosk,_that.maxActiveReservations,_that.maxSimultaneousReservations,_that.vatTreatment,_that.vatExemptionReason,_that.canReserveLevel,_that.coOwner,_that.joinedAt,_that.managedIdentity,_that.managedName,_that.memberNumber,_that.homeSiteId,_that.managedAccess,_that.claimedAt,_that.paymentTerms,_that.system);}
+return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.subscriptionPct,_that.overagePolicy,_that.isKiosk,_that.maxActiveReservations,_that.maxSimultaneousReservations,_that.vatTreatment,_that.vatExemptionReason,_that.canReserveLevel,_that.coOwner,_that.joinedAt,_that.managedIdentity,_that.managedName,_that.memberNumber,_that.homeSiteId,_that.managedAccess,_that.claimedAt,_that.origin,_that.paymentTerms,_that.system);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -258,10 +263,10 @@ return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOw
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  int subscriptionPct,  OveragePolicy overagePolicy,  bool isKiosk,  int? maxActiveReservations,  int? maxSimultaneousReservations,  String vatTreatment,  String vatExemptionReason,  bool canReserveLevel,  CoOwnerStatus coOwner,  DateTime? joinedAt,  PersonalInfo managedIdentity,  String managedName,  String memberNumber,  String? homeSiteId,  Map<String, dynamic> managedAccess,  DateTime? claimedAt,  PaymentTerms? paymentTerms,  SystemColumns system)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  int subscriptionPct,  OveragePolicy overagePolicy,  bool isKiosk,  int? maxActiveReservations,  int? maxSimultaneousReservations,  String vatTreatment,  String vatExemptionReason,  bool canReserveLevel,  CoOwnerStatus coOwner,  DateTime? joinedAt,  PersonalInfo managedIdentity,  String managedName,  String memberNumber,  String? homeSiteId,  Map<String, dynamic> managedAccess,  DateTime? claimedAt,  MemberOrigin origin,  PaymentTerms? paymentTerms,  SystemColumns system)?  $default,) {final _that = this;
 switch (_that) {
 case _Member() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.subscriptionPct,_that.overagePolicy,_that.isKiosk,_that.maxActiveReservations,_that.maxSimultaneousReservations,_that.vatTreatment,_that.vatExemptionReason,_that.canReserveLevel,_that.coOwner,_that.joinedAt,_that.managedIdentity,_that.managedName,_that.memberNumber,_that.homeSiteId,_that.managedAccess,_that.claimedAt,_that.paymentTerms,_that.system);case _:
+return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.subscriptionPct,_that.overagePolicy,_that.isKiosk,_that.maxActiveReservations,_that.maxSimultaneousReservations,_that.vatTreatment,_that.vatExemptionReason,_that.canReserveLevel,_that.coOwner,_that.joinedAt,_that.managedIdentity,_that.managedName,_that.memberNumber,_that.homeSiteId,_that.managedAccess,_that.claimedAt,_that.origin,_that.paymentTerms,_that.system);case _:
   return null;
 
 }
@@ -273,7 +278,7 @@ return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOw
 
 
 class _Member extends Member {
-  const _Member({required this.id, required this.workspaceId, required this.userId, required this.isAdmin, required this.isOwner, required this.status, this.subscriptionPct = 100, this.overagePolicy = OveragePolicy.blocked, this.isKiosk = false, this.maxActiveReservations, this.maxSimultaneousReservations, this.vatTreatment = 'auto', this.vatExemptionReason = '', this.canReserveLevel = false, this.coOwner = CoOwnerStatus.none, this.joinedAt, this.managedIdentity = PersonalInfo.empty, this.managedName = '', this.memberNumber = '', this.homeSiteId, final  Map<String, dynamic> managedAccess = const <String, dynamic>{}, this.claimedAt, this.paymentTerms, this.system = SystemColumns.none}): _managedAccess = managedAccess,super._();
+  const _Member({required this.id, required this.workspaceId, required this.userId, required this.isAdmin, required this.isOwner, required this.status, this.subscriptionPct = 100, this.overagePolicy = OveragePolicy.blocked, this.isKiosk = false, this.maxActiveReservations, this.maxSimultaneousReservations, this.vatTreatment = 'auto', this.vatExemptionReason = '', this.canReserveLevel = false, this.coOwner = CoOwnerStatus.none, this.joinedAt, this.managedIdentity = PersonalInfo.empty, this.managedName = '', this.memberNumber = '', this.homeSiteId, final  Map<String, dynamic> managedAccess = const <String, dynamic>{}, this.claimedAt, this.origin = MemberOrigin.unknown, this.paymentTerms, this.system = SystemColumns.none}): _managedAccess = managedAccess,super._();
   
 
 @override final  String id;
@@ -352,6 +357,11 @@ class _Member extends Member {
 /// #887 — when the person took the profile over; null while managed
 /// and for members who joined by themselves.
 @override final  DateTime? claimedAt;
+/// #1110 — how this membership began. Defaults to [MemberOrigin.unknown]
+/// rather than a guess: a row from a server that predates 0200 has
+/// no answer, and inventing one would put a wrong chip on a real
+/// person's profile.
+@override@JsonKey() final  MemberOrigin origin;
 /// #881 — the member's own payment conditions (keys on top of the
 /// workspace's); null = inherit everything. Changed only through a
 /// validated payment_terms_change request.
@@ -369,16 +379,16 @@ _$MemberCopyWith<_Member> get copyWith => __$MemberCopyWithImpl<_Member>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Member&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin)&&(identical(other.isOwner, isOwner) || other.isOwner == isOwner)&&(identical(other.status, status) || other.status == status)&&(identical(other.subscriptionPct, subscriptionPct) || other.subscriptionPct == subscriptionPct)&&(identical(other.overagePolicy, overagePolicy) || other.overagePolicy == overagePolicy)&&(identical(other.isKiosk, isKiosk) || other.isKiosk == isKiosk)&&(identical(other.maxActiveReservations, maxActiveReservations) || other.maxActiveReservations == maxActiveReservations)&&(identical(other.maxSimultaneousReservations, maxSimultaneousReservations) || other.maxSimultaneousReservations == maxSimultaneousReservations)&&(identical(other.vatTreatment, vatTreatment) || other.vatTreatment == vatTreatment)&&(identical(other.vatExemptionReason, vatExemptionReason) || other.vatExemptionReason == vatExemptionReason)&&(identical(other.canReserveLevel, canReserveLevel) || other.canReserveLevel == canReserveLevel)&&(identical(other.coOwner, coOwner) || other.coOwner == coOwner)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt)&&(identical(other.managedIdentity, managedIdentity) || other.managedIdentity == managedIdentity)&&(identical(other.managedName, managedName) || other.managedName == managedName)&&(identical(other.memberNumber, memberNumber) || other.memberNumber == memberNumber)&&(identical(other.homeSiteId, homeSiteId) || other.homeSiteId == homeSiteId)&&const DeepCollectionEquality().equals(other._managedAccess, _managedAccess)&&(identical(other.claimedAt, claimedAt) || other.claimedAt == claimedAt)&&(identical(other.paymentTerms, paymentTerms) || other.paymentTerms == paymentTerms)&&(identical(other.system, system) || other.system == system));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Member&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin)&&(identical(other.isOwner, isOwner) || other.isOwner == isOwner)&&(identical(other.status, status) || other.status == status)&&(identical(other.subscriptionPct, subscriptionPct) || other.subscriptionPct == subscriptionPct)&&(identical(other.overagePolicy, overagePolicy) || other.overagePolicy == overagePolicy)&&(identical(other.isKiosk, isKiosk) || other.isKiosk == isKiosk)&&(identical(other.maxActiveReservations, maxActiveReservations) || other.maxActiveReservations == maxActiveReservations)&&(identical(other.maxSimultaneousReservations, maxSimultaneousReservations) || other.maxSimultaneousReservations == maxSimultaneousReservations)&&(identical(other.vatTreatment, vatTreatment) || other.vatTreatment == vatTreatment)&&(identical(other.vatExemptionReason, vatExemptionReason) || other.vatExemptionReason == vatExemptionReason)&&(identical(other.canReserveLevel, canReserveLevel) || other.canReserveLevel == canReserveLevel)&&(identical(other.coOwner, coOwner) || other.coOwner == coOwner)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt)&&(identical(other.managedIdentity, managedIdentity) || other.managedIdentity == managedIdentity)&&(identical(other.managedName, managedName) || other.managedName == managedName)&&(identical(other.memberNumber, memberNumber) || other.memberNumber == memberNumber)&&(identical(other.homeSiteId, homeSiteId) || other.homeSiteId == homeSiteId)&&const DeepCollectionEquality().equals(other._managedAccess, _managedAccess)&&(identical(other.claimedAt, claimedAt) || other.claimedAt == claimedAt)&&(identical(other.origin, origin) || other.origin == origin)&&(identical(other.paymentTerms, paymentTerms) || other.paymentTerms == paymentTerms)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hashAll([runtimeType,id,workspaceId,userId,isAdmin,isOwner,status,subscriptionPct,overagePolicy,isKiosk,maxActiveReservations,maxSimultaneousReservations,vatTreatment,vatExemptionReason,canReserveLevel,coOwner,joinedAt,managedIdentity,managedName,memberNumber,homeSiteId,const DeepCollectionEquality().hash(_managedAccess),claimedAt,paymentTerms,system]);
+int get hashCode => Object.hashAll([runtimeType,id,workspaceId,userId,isAdmin,isOwner,status,subscriptionPct,overagePolicy,isKiosk,maxActiveReservations,maxSimultaneousReservations,vatTreatment,vatExemptionReason,canReserveLevel,coOwner,joinedAt,managedIdentity,managedName,memberNumber,homeSiteId,const DeepCollectionEquality().hash(_managedAccess),claimedAt,origin,paymentTerms,system]);
 
 @override
 String toString() {
-  return 'Member(id: $id, workspaceId: $workspaceId, userId: $userId, isAdmin: $isAdmin, isOwner: $isOwner, status: $status, subscriptionPct: $subscriptionPct, overagePolicy: $overagePolicy, isKiosk: $isKiosk, maxActiveReservations: $maxActiveReservations, maxSimultaneousReservations: $maxSimultaneousReservations, vatTreatment: $vatTreatment, vatExemptionReason: $vatExemptionReason, canReserveLevel: $canReserveLevel, coOwner: $coOwner, joinedAt: $joinedAt, managedIdentity: $managedIdentity, managedName: $managedName, memberNumber: $memberNumber, homeSiteId: $homeSiteId, managedAccess: $managedAccess, claimedAt: $claimedAt, paymentTerms: $paymentTerms, system: $system)';
+  return 'Member(id: $id, workspaceId: $workspaceId, userId: $userId, isAdmin: $isAdmin, isOwner: $isOwner, status: $status, subscriptionPct: $subscriptionPct, overagePolicy: $overagePolicy, isKiosk: $isKiosk, maxActiveReservations: $maxActiveReservations, maxSimultaneousReservations: $maxSimultaneousReservations, vatTreatment: $vatTreatment, vatExemptionReason: $vatExemptionReason, canReserveLevel: $canReserveLevel, coOwner: $coOwner, joinedAt: $joinedAt, managedIdentity: $managedIdentity, managedName: $managedName, memberNumber: $memberNumber, homeSiteId: $homeSiteId, managedAccess: $managedAccess, claimedAt: $claimedAt, origin: $origin, paymentTerms: $paymentTerms, system: $system)';
 }
 
 
@@ -389,7 +399,7 @@ abstract mixin class _$MemberCopyWith<$Res> implements $MemberCopyWith<$Res> {
   factory _$MemberCopyWith(_Member value, $Res Function(_Member) _then) = __$MemberCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String workspaceId, String userId, bool isAdmin, bool isOwner, MemberStatus status, int subscriptionPct, OveragePolicy overagePolicy, bool isKiosk, int? maxActiveReservations, int? maxSimultaneousReservations, String vatTreatment, String vatExemptionReason, bool canReserveLevel, CoOwnerStatus coOwner, DateTime? joinedAt, PersonalInfo managedIdentity, String managedName, String memberNumber, String? homeSiteId, Map<String, dynamic> managedAccess, DateTime? claimedAt, PaymentTerms? paymentTerms, SystemColumns system
+ String id, String workspaceId, String userId, bool isAdmin, bool isOwner, MemberStatus status, int subscriptionPct, OveragePolicy overagePolicy, bool isKiosk, int? maxActiveReservations, int? maxSimultaneousReservations, String vatTreatment, String vatExemptionReason, bool canReserveLevel, CoOwnerStatus coOwner, DateTime? joinedAt, PersonalInfo managedIdentity, String managedName, String memberNumber, String? homeSiteId, Map<String, dynamic> managedAccess, DateTime? claimedAt, MemberOrigin origin, PaymentTerms? paymentTerms, SystemColumns system
 });
 
 
@@ -406,7 +416,7 @@ class __$MemberCopyWithImpl<$Res>
 
 /// Create a copy of Member
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? userId = null,Object? isAdmin = null,Object? isOwner = null,Object? status = null,Object? subscriptionPct = null,Object? overagePolicy = null,Object? isKiosk = null,Object? maxActiveReservations = freezed,Object? maxSimultaneousReservations = freezed,Object? vatTreatment = null,Object? vatExemptionReason = null,Object? canReserveLevel = null,Object? coOwner = null,Object? joinedAt = freezed,Object? managedIdentity = null,Object? managedName = null,Object? memberNumber = null,Object? homeSiteId = freezed,Object? managedAccess = null,Object? claimedAt = freezed,Object? paymentTerms = freezed,Object? system = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? userId = null,Object? isAdmin = null,Object? isOwner = null,Object? status = null,Object? subscriptionPct = null,Object? overagePolicy = null,Object? isKiosk = null,Object? maxActiveReservations = freezed,Object? maxSimultaneousReservations = freezed,Object? vatTreatment = null,Object? vatExemptionReason = null,Object? canReserveLevel = null,Object? coOwner = null,Object? joinedAt = freezed,Object? managedIdentity = null,Object? managedName = null,Object? memberNumber = null,Object? homeSiteId = freezed,Object? managedAccess = null,Object? claimedAt = freezed,Object? origin = null,Object? paymentTerms = freezed,Object? system = null,}) {
   return _then(_Member(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -430,7 +440,8 @@ as String,memberNumber: null == memberNumber ? _self.memberNumber : memberNumber
 as String,homeSiteId: freezed == homeSiteId ? _self.homeSiteId : homeSiteId // ignore: cast_nullable_to_non_nullable
 as String?,managedAccess: null == managedAccess ? _self._managedAccess : managedAccess // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>,claimedAt: freezed == claimedAt ? _self.claimedAt : claimedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,paymentTerms: freezed == paymentTerms ? _self.paymentTerms : paymentTerms // ignore: cast_nullable_to_non_nullable
+as DateTime?,origin: null == origin ? _self.origin : origin // ignore: cast_nullable_to_non_nullable
+as MemberOrigin,paymentTerms: freezed == paymentTerms ? _self.paymentTerms : paymentTerms // ignore: cast_nullable_to_non_nullable
 as PaymentTerms?,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
 as SystemColumns,
   ));

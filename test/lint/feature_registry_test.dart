@@ -100,11 +100,15 @@ import 'package:flutter_test/flutter_test.dart';
 // 87→88 (2026-09-06): #945 multiSite.
 // 88→89 (2026-09-06): #946 siteDocuments.
 // 89→90 (2026-09-06): #947 vatGroups.
-const int _expectedFeatureCount = 98;
-// 93→94 (2026-09-06): #977 instanceWizard.
-// 92→93 (2026-09-06): #970 demoMode.
-// 91→92 (2026-09-06): #969 navigationStyle.
 // 90→91 (2026-09-06): #916 configurationTransfer.
+// 91→92 (2026-09-06): #969 navigationStyle.
+// 92→93 (2026-09-06): #970 demoMode.
+// 93→94 (2026-09-06): #977 instanceWizard.
+// 98→99 (2026-09-11): #1110 memberOrigin — how each membership began
+//   (founded, invited, delegated), recorded by the path that writes the
+//   row. Default OFF: it is new information about real people, so a
+//   workspace decides to show it rather than finding it already there.
+const int _expectedFeatureCount = 99;
 
 void main() {
   test('every functionality is registered — the pin', () {

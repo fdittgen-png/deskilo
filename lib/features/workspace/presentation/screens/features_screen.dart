@@ -181,6 +181,11 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureFormHelpHintsDesc ??
               'Short dismissible how-to hints on forms and screens, '
                   'each linking into the matching guide section.',
+        WorkspaceFeature.memberOrigin =>
+          l10n?.featureMemberOriginDesc ??
+              'A discreet line on a member saying how their membership '
+                  'began: founded the space, joined by invitation, or had '
+                  'the profile created for them. It is not a status.',
         WorkspaceFeature.uiAnimations =>
           l10n?.featureUiAnimationsDesc ??
               'Smooth transitions and state animations across the app. '

@@ -35,6 +35,42 @@ enum CoOwnerStatus {
       CoOwnerStatus.values.asNameMap()[raw] ?? CoOwnerStatus.none;
 }
 
+/// #1110 — how a membership began. Written by the path that creates the
+/// row (`members.origin`), never derived afterwards: the fact is known
+/// exactly once, at the moment of writing, and the inference you could
+/// make later is lossy. A founder and an invited admin are identical
+/// once both are `is_admin`.
+///
+/// It is NOT a status and carries no judgement — a delegated member is
+/// not a lesser one. The wording that shows it says what happened
+/// ("Created by an admin"), never what somebody is.
+///
+/// Persisted by name. [unknown] is the #1088 rule applied here: a value
+/// a newer server sends must not crash an older client, so an
+/// unrecognised origin reads as unknown and shows nothing rather than
+/// taking the screen down.
+enum MemberOrigin {
+  /// Created the workspace. `create_workspace` inserts this member
+  /// alongside the space itself — on both twins, because one act makes
+  /// two rows.
+  founder,
+
+  /// Redeemed a code: the workspace's own `invite_code`, or a personal
+  /// invitation.
+  invited,
+
+  /// An admin created the profile before the person had an account
+  /// (#887), and it stays `delegated` after they claim it — `claimedAt`
+  /// says when, this says how.
+  delegated,
+
+  /// Not a value this build knows.
+  unknown;
+
+  static MemberOrigin fromDb(String? raw) =>
+      MemberOrigin.values.asNameMap()[raw] ?? MemberOrigin.unknown;
+}
+
 /// A user's participation in one workspace. Roles are additive flags
 /// (spec §2): every member is a worker; admin/owner add capabilities.
 @freezed
@@ -126,6 +162,12 @@ sealed class Member with _$Member implements SystemStamped {
     /// #887 — when the person took the profile over; null while managed
     /// and for members who joined by themselves.
     DateTime? claimedAt,
+
+    /// #1110 — how this membership began. Defaults to [MemberOrigin.unknown]
+    /// rather than a guess: a row from a server that predates 0200 has
+    /// no answer, and inventing one would put a wrong chip on a real
+    /// person's profile.
+    @Default(MemberOrigin.unknown) MemberOrigin origin,
 
     /// #881 — the member's own payment conditions (keys on top of the
     /// workspace's); null = inherit everything. Changed only through a

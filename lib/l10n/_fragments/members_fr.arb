@@ -283,5 +283,11 @@
   "noteRefPickValidation": "Quelle validation ?",
   "noteRefPickInvoice": "Quelle facture ?",
   "noteRefPickPayment": "Quel paiement ?",
-  "noteRefNone": "Rien à référencer pour le moment."
+  "noteRefNone": "Rien à référencer pour le moment.",
+  "featureMemberOriginTitle": "Comment chaque membre est arrivé",
+  "featureMemberOriginDesc": "Une ligne discrète sur un membre indiquant comment son adhésion a commencé : a fondé l'espace, a rejoint sur invitation, ou a reçu un profil créé par un administrateur. Ce n'est pas un statut.",
+  "memberOriginFounder": "A fondé cet espace",
+  "memberOriginInvited": "A rejoint sur invitation",
+  "memberOriginDelegated": "Profil créé par un administrateur",
+  "memberOriginHeading": "Comment cette adhésion a commencé"
 }

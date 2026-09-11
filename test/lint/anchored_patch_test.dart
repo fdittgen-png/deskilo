@@ -41,6 +41,23 @@ const _reviewed = {
   // 0170's group_key / outside_base / exemption_reason.
   'invoice_lines_for@0182',
   'set_vat_rates@0182',
+  // #1110/0200 adds `origin` to the three paths that create a member.
+  // The bodies were not taken from an earlier migration file — they were
+  // read out of `pg_get_functiondef` on the LIVE project, which is the
+  // post-patch state by definition, and the one line each was added to
+  // them. That is the only way to re-create a patched function without
+  // guessing, and unlike carrying patches forward by hand it cannot
+  // silently miss one.
+  //
+  // Verified afterwards by reading the live definitions back:
+  // create_workspace still carries 0166's `user_has_email` and 0165's
+  // `next_document_number`; join_workspace still carries 0165's numbering,
+  // 0153's managed-identity claim and the member_join event;
+  // create_managed_member still carries 0153's identity row and 0161's
+  // data_access_log write.
+  'create_workspace@0200',
+  'join_workspace@0200',
+  'create_managed_member@0200',
 };
 
 void main() {
