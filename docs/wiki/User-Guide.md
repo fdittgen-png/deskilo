@@ -575,6 +575,28 @@ Tap a member to open their **management sheet** — every per-member action in o
 
 *The subscription dialog (the member's percentage) and the reservation-limit dialog (the cap on open reservations).*
 
+#### Core and Platform
+
+The Features screen has two sections (#1063).
+
+**Core** is what every space needs — the floor plan, bookings, members,
+memberships, the ledger, payments, invoices, basic administration. A new
+space starts with it on.
+
+**Platform** is everything a sophisticated operator needs and nobody else
+does: VAT groups and rate versions, e-invoicing, the report designer and
+positioned layouts, several sites, the dev/prod pair and deployment,
+kiosk and badges, managed profiles, validation quorum. A new space starts
+without it, and you switch on what you actually run.
+
+Nothing is removed and nothing is hidden — every switch is still there,
+in the Platform section, live. The change is only about what a space
+meets before it has asked for anything.
+
+**A space that already exists keeps exactly the features it has.** The
+tiers decide what a *new* workspace is created with; they never reach
+backwards.
+
 #### Which environments an invitation gives
 
 When your space has a production twin, the invitation sheet asks one

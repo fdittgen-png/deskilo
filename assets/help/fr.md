@@ -563,6 +563,29 @@ Touchez un membre pour sa **feuille de gestion** — chaque action par membre au
 
 *Le dialogue abonnement (le pourcentage du membre) et le dialogue limite de réservations (le plafond de réservations ouvertes).*
 
+#### Essentiel et Plateforme
+
+L'écran Fonctionnalités a deux sections (#1063).
+
+**Essentiel** : ce dont tout espace a besoin — le plan, les
+réservations, les membres, les forfaits, le grand livre, les paiements,
+les factures, l'administration de base. Un nouvel espace démarre avec.
+
+**Plateforme** : tout ce dont un exploitant averti a besoin et personne
+d'autre — groupes de TVA et versions de taux, facturation électronique,
+concepteur de documents et gabarits positionnés, multi-sites, la paire
+dev/prod et le déploiement, borne et badges, profils gérés, quorum de
+validation. Un nouvel espace démarre sans, et vous activez ce que vous
+exploitez vraiment.
+
+Rien n'est retiré ni caché : chaque interrupteur reste là, dans la
+section Plateforme, actif. Ce qui change, c'est seulement ce qu'un espace
+rencontre avant d'avoir rien demandé.
+
+**Un espace qui existe déjà garde exactement ses fonctionnalités.** Les
+tiers décident de ce avec quoi un *nouvel* espace est créé ; ils ne
+reviennent jamais en arrière.
+
 #### Les environnements donnés par une invitation
 
 Quand votre espace a un jumeau de production, la feuille d'invitation pose

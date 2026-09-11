@@ -70,6 +70,17 @@ const _reviewed = {
   // post-conditions, precisely so that this function is not re-created
   // twice in two migrations.
   'create_invitation@0201',
+  // #1063/0202 gives create_workspace the feature flags to write at
+  // creation. Body from `pg_get_functiondef` on the live project again,
+  // and verified after applying: it still carries 0166's
+  // `user_has_email`, 0165's numbering and #1110's 'founder'.
+  //
+  // The six-argument signature is dropped in the same migration, for
+  // the reason 0201 discovered: an overload whose extra parameter has a
+  // default is ambiguous against an exact-arity sibling, and the harness
+  // reproduced the refusal ("function ... is not unique") before the
+  // drop was added.
+  'create_workspace@0202',
 };
 
 void main() {

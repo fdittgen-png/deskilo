@@ -191,6 +191,34 @@ enum WorkspaceFeature {
   String get dbKey => name;
 }
 
+/// #1063 — what a workspace meets on its FIRST day, and what it has to
+/// ask for.
+///
+/// The registry has a hundred entries. Every one of them is behind a
+/// flag, which is the right architecture; what was wrong is that the
+/// default was "all of it", so a fifteen-person community met VAT
+/// groups, positioned report layouts, environment pairs and deployment
+/// beside the six things it actually needed.
+///
+/// This is a property, not a mechanism. [core] is what every deployment
+/// needs — the floor plan, reservations, members, memberships, the
+/// ledger, payments, invoices, basic administration. [platform] is what
+/// only a sophisticated operator needs, and a new workspace starts
+/// without it.
+///
+/// It changes NO existing workspace: the tier decides what
+/// [defaultFeatureFlagsForNewWorkspace] writes AT CREATION, and a
+/// workspace that already exists keeps exactly the flags it has.
+/// A migration that silently switched a live workspace's features off
+/// would be a data-loss bug wearing a feature flag.
+enum FeatureTier {
+  /// Day one, every deployment.
+  core,
+
+  /// Asked for, never assumed.
+  platform,
+}
+
 /// Registry entry of one toggleable feature (mirrors tankstellen's
 /// manifest). [requires] expresses the feature HIERARCHY: a feature is
 /// only EFFECTIVE while its whole prerequisite chain is enabled — the
@@ -201,11 +229,17 @@ enum WorkspaceFeature {
 class FeatureManifestEntry {
   const FeatureManifestEntry({
     required this.feature,
+    required this.tier,
     this.defaultOn = true,
     this.requires,
   });
 
   final WorkspaceFeature feature;
+
+  /// #1063 — whether a NEW workspace starts with this. Required, with no
+  /// default, so that a flag cannot be added without somebody deciding
+  /// which tier it belongs to.
+  final FeatureTier tier;
 
   /// Whether the feature is enabled when the workspace row carries no
   /// override for it.
@@ -221,106 +255,157 @@ class FeatureManifestEntry {
 /// online payments, whole-space booking 0050 and its admin delegation).
 const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.calendarTab:
-      FeatureManifestEntry(feature: WorkspaceFeature.calendarTab),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.calendarTab,
+      tier: FeatureTier.core,
+    ),
   WorkspaceFeature.eventsTab:
-      FeatureManifestEntry(feature: WorkspaceFeature.eventsTab),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.eventsTab,
+      tier: FeatureTier.core,
+    ),
   WorkspaceFeature.moneyTab:
-      FeatureManifestEntry(feature: WorkspaceFeature.moneyTab),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.moneyTab,
+      tier: FeatureTier.core,
+    ),
   // Money children: they all land charges on the statement, so without
   // the money module they have no surface to land on.
   WorkspaceFeature.services: FeatureManifestEntry(
     feature: WorkspaceFeature.services,
+    tier: FeatureTier.core,
     requires: WorkspaceFeature.moneyTab,
   ),
   WorkspaceFeature.accessorySupplements: FeatureManifestEntry(
     feature: WorkspaceFeature.accessorySupplements,
+    tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.moneyTab,
   ),
   WorkspaceFeature.onlinePayments: FeatureManifestEntry(
     feature: WorkspaceFeature.onlinePayments,
+    tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.moneyTab,
   ),
   // Invoices (0060): the immutable archive + issuing UI.
   WorkspaceFeature.invoicing: FeatureManifestEntry(
     feature: WorkspaceFeature.invoicing,
+    tier: FeatureTier.core,
     requires: WorkspaceFeature.moneyTab,
   ),
   // Admins issuing invoices is an OWNER delegation (the adminSeatBlocking
   // idiom) — the server re-checks the flag.
   WorkspaceFeature.adminInvoicing: FeatureManifestEntry(
     feature: WorkspaceFeature.adminInvoicing,
+    tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.invoicing,
   ),
   WorkspaceFeature.pdfExport:
-      FeatureManifestEntry(feature: WorkspaceFeature.pdfExport),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.pdfExport,
+      tier: FeatureTier.core,
+    ),
   WorkspaceFeature.seriesBooking:
-      FeatureManifestEntry(feature: WorkspaceFeature.seriesBooking),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.seriesBooking,
+      tier: FeatureTier.core,
+    ),
   WorkspaceFeature.bookForOthers:
-      FeatureManifestEntry(feature: WorkspaceFeature.bookForOthers),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.bookForOthers,
+      tier: FeatureTier.core,
+    ),
   WorkspaceFeature.pushNotifications:
-      FeatureManifestEntry(feature: WorkspaceFeature.pushNotifications),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.pushNotifications,
+      tier: FeatureTier.core,
+    ),
   WorkspaceFeature.adminSeatBlocking: FeatureManifestEntry(
     feature: WorkspaceFeature.adminSeatBlocking,
+    tier: FeatureTier.platform,
     defaultOn: false,
   ),
   WorkspaceFeature.levelBooking: FeatureManifestEntry(
     feature: WorkspaceFeature.levelBooking,
+    tier: FeatureTier.platform,
     defaultOn: false,
   ),
   // Admin level assignment is a DELEGATION of level booking.
   WorkspaceFeature.adminLevelAssign: FeatureManifestEntry(
     feature: WorkspaceFeature.adminLevelAssign,
+    tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.levelBooking,
   ),
   // The wall tablet module (0043): kiosk accounts, badge check-in.
   WorkspaceFeature.kioskMode:
-      FeatureManifestEntry(feature: WorkspaceFeature.kioskMode),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.kioskMode,
+      tier: FeatureTier.platform,
+    ),
   // RFID/NFC badges are kiosk credentials — no kiosk, no tap path.
   WorkspaceFeature.nfcBadges: FeatureManifestEntry(
     feature: WorkspaceFeature.nfcBadges,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.kioskMode,
   ),
   // The community directory tab (#224).
   WorkspaceFeature.membersDirectory:
-      FeatureManifestEntry(feature: WorkspaceFeature.membersDirectory),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.membersDirectory,
+      tier: FeatureTier.core,
+    ),
   // WhatsApp affordances (swipe-to-message, group tile, number
   // editing) ride the directory.
   WorkspaceFeature.whatsappIntegration: FeatureManifestEntry(
     feature: WorkspaceFeature.whatsappIntegration,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.membersDirectory,
   ),
   // Printable per-space QR cards + the scan-to-book flow (#335).
   WorkspaceFeature.spaceQrCodes:
-      FeatureManifestEntry(feature: WorkspaceFeature.spaceQrCodes),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.spaceQrCodes,
+      tier: FeatureTier.core,
+    ),
   // Co-ownership (0058): appoint active/passive co-owners with owner
   // permissions and automatic succession. The SERVER-side succession
   // safety net stays on regardless — this gates the appointment UI.
   WorkspaceFeature.coOwner:
-      FeatureManifestEntry(feature: WorkspaceFeature.coOwner),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.coOwner,
+      tier: FeatureTier.platform,
+    ),
   // End-of-day sweep (#396): reservations never checked in/out complete
   // themselves once their time has passed. Default OFF — it rewrites
   // attendance records, which is an explicit owner decision.
   WorkspaceFeature.autoCheckInOut: FeatureManifestEntry(
     feature: WorkspaceFeature.autoCheckInOut,
+    tier: FeatureTier.platform,
     defaultOn: false,
   ),
   // Owner data export as an Excel workbook (#395). A read-only
   // convenience, so it follows the default-on rule.
   WorkspaceFeature.dataExport:
-      FeatureManifestEntry(feature: WorkspaceFeature.dataExport),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.dataExport,
+      tier: FeatureTier.core,
+    ),
   // Configurable working day + real-hours booking (#446). OFF hides the
   // settings section and the hours granularity option; the 8:00–17:00
   // defaults then apply unchanged.
   WorkspaceFeature.workingHours:
-      FeatureManifestEntry(feature: WorkspaceFeature.workingHours),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.workingHours,
+      tier: FeatureTier.core,
+    ),
   // Owner-written PDF intro/footer template (#454). PDF only — the
   // e-invoice XML never sees it.
   WorkspaceFeature.invoicePdfTemplate: FeatureManifestEntry(
     feature: WorkspaceFeature.invoicePdfTemplate,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.invoicing,
   ),
   // #869 — place the recipient where a window envelope shows it, and
@@ -328,42 +413,58 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // folded and posted without the address moving off the window.
   WorkspaceFeature.invoiceAddressWindow: FeatureManifestEntry(
     feature: WorkspaceFeature.invoiceAddressWindow,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.invoicing,
   ),
   // Member-to-member notes + admin broadcast (#456).
   WorkspaceFeature.memberNotifications:
-      FeatureManifestEntry(feature: WorkspaceFeature.memberNotifications),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.memberNotifications,
+      tier: FeatureTier.core,
+    ),
   // The workspace document library (#500): statutes, guides, financial
   // statements, minutes — federated links to any DMS, role-gated.
   WorkspaceFeature.documents:
-      FeatureManifestEntry(feature: WorkspaceFeature.documents),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.documents,
+      tier: FeatureTier.core,
+    ),
   // Mahnwesen (#472/#502): reminder rules + due suggestions. OFF keeps
   // the manual per-invoice reminder untouched.
   WorkspaceFeature.dunning: FeatureManifestEntry(
     feature: WorkspaceFeature.dunning,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.invoicing,
   ),
   // The member report suite (#494/#502): the financial agreement and
   // the monthly payments report, self-service and admin-sent.
   WorkspaceFeature.memberReports: FeatureManifestEntry(
     feature: WorkspaceFeature.memberReports,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.moneyTab,
   ),
   // Validated deletion requests for past/checked-in bookings
   // (#492/#502). OFF = such bookings simply cannot be deleted.
   WorkspaceFeature.deletionRequests:
-      FeatureManifestEntry(feature: WorkspaceFeature.deletionRequests),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.deletionRequests,
+      tier: FeatureTier.core,
+    ),
   // #513 — the centralized role→permission matrix. OFF hides the
   // Role management screen; the DEFAULT permissions still apply (the
   // matrix is then simply not editable in the app).
   WorkspaceFeature.roleManagement:
-      FeatureManifestEntry(feature: WorkspaceFeature.roleManagement),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.roleManagement,
+      tier: FeatureTier.core,
+    ),
   // VAT management (#544): the rates editor and every per-item/tariff
   // rate picker. OFF hides the CONFIG surfaces only — a vat_registered
   // workspace keeps taxing at its stored/default rates (legal math is
   // never toggleable). Under invoicing, like the /vat screen always was.
   WorkspaceFeature.vatManagement: FeatureManifestEntry(
     feature: WorkspaceFeature.vatManagement,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.invoicing,
   ),
   // Periodic VAT declarations (#534/0107) — a child of VAT management;
@@ -371,6 +472,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // workspace has nothing to declare).
   WorkspaceFeature.vatDeclarations: FeatureManifestEntry(
     feature: WorkspaceFeature.vatDeclarations,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.vatManagement,
   ),
   // Direct delivery to the CUSTOMER's e-invoicing service (#568) — the
@@ -378,39 +480,53 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // ever shows on the send sheet of an issued invoice.
   WorkspaceFeature.einvoiceCustomerDelivery: FeatureManifestEntry(
     feature: WorkspaceFeature.einvoiceCustomerDelivery,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.invoicing,
   ),
   // #587 — owners may delete plan objects that reservations reference;
   // the references survive as an audit substitution text. OFF keeps the
   // historic refusal (the server re-checks the flag in the RPC).
   WorkspaceFeature.planObjectDelete:
-      FeatureManifestEntry(feature: WorkspaceFeature.planObjectDelete),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.planObjectDelete,
+      tier: FeatureTier.core,
+    ),
   // #598 — regroup the notification feed by type, day or member. A
   // child of the events feed: no feed, nothing to group.
   WorkspaceFeature.notificationGrouping: FeatureManifestEntry(
     feature: WorkspaceFeature.notificationGrouping,
+    tier: FeatureTier.core,
     requires: WorkspaceFeature.eventsTab,
   ),
   WorkspaceFeature.bookingPolicies:
-      FeatureManifestEntry(feature: WorkspaceFeature.bookingPolicies),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.bookingPolicies,
+      tier: FeatureTier.core,
+    ),
   // #814 — the client-side mirror of the policies, on every surface.
   WorkspaceFeature.bookingGate: FeatureManifestEntry(
     feature: WorkspaceFeature.bookingGate,
+    tier: FeatureTier.core,
     requires: WorkspaceFeature.bookingPolicies,
   ),
   // #604 — the chair-tag functionality (#585): configuring a tag on a
   // seat and resolving a tapped tag to that seat.
   WorkspaceFeature.nfcSeatTags:
-      FeatureManifestEntry(feature: WorkspaceFeature.nfcSeatTags),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.nfcSeatTags,
+      tier: FeatureTier.platform,
+    ),
   // #604 — barcode/QR badge issuance, beside nfcBadges: both are badge
   // credentials the kiosk accepts, so both sit under kioskMode.
   WorkspaceFeature.qrBadges: FeatureManifestEntry(
     feature: WorkspaceFeature.qrBadges,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.kioskMode,
   ),
   // #616 — the kiosk receipt shows the member's profile photo.
   WorkspaceFeature.kioskMemberPhotos: FeatureManifestEntry(
     feature: WorkspaceFeature.kioskMemberPhotos,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.kioskMode,
   ),
   // #802 — the subscription is billed ahead of its month; what the month
@@ -419,10 +535,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // the extras by hand, or the reverse.
   WorkspaceFeature.subscriptionInvoices: FeatureManifestEntry(
     feature: WorkspaceFeature.subscriptionInvoices,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.invoicing,
   ),
   WorkspaceFeature.usageInvoices: FeatureManifestEntry(
     feature: WorkspaceFeature.usageInvoices,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.invoicing,
   ),
   // #804 — regrouping several open invoices into one demand. Useful with
@@ -430,69 +548,95 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // its invoices can still consolidate a member's arrears.
   WorkspaceFeature.invoiceSettlement: FeatureManifestEntry(
     feature: WorkspaceFeature.invoiceSettlement,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.invoicing,
   ),
   // #812 — the process view: journey bar, next move, stage strip.
   WorkspaceFeature.invoiceJourney: FeatureManifestEntry(
     feature: WorkspaceFeature.invoiceJourney,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.invoicing,
   ),
   // #798 — swipe a message right to quote it, left to take it back
   // while it is still unread.
   WorkspaceFeature.messageGestures:
-      FeatureManifestEntry(feature: WorkspaceFeature.messageGestures),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.messageGestures,
+      tier: FeatureTier.core,
+    ),
   // #793 — monograms that tell members apart wherever an avatar has no
   // photo to show.
   WorkspaceFeature.uniqueMonograms:
-      FeatureManifestEntry(feature: WorkspaceFeature.uniqueMonograms),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.uniqueMonograms,
+      tier: FeatureTier.core,
+    ),
   // #620 — occupant profile photos on the Plan tab and Reserve hub
   // maps, kiosk or not.
   WorkspaceFeature.planMemberPhotos:
-      FeatureManifestEntry(feature: WorkspaceFeature.planMemberPhotos),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.planMemberPhotos,
+      tier: FeatureTier.platform,
+    ),
   // #711 — a member's own numbers, dates, clock and zone. Default ON;
   // OFF makes every member read as the app always did (the UI
   // language's home region, 24-hour clock, workspace zone) and hides
   // the Settings section.
   WorkspaceFeature.regionalFormats:
-      FeatureManifestEntry(feature: WorkspaceFeature.regionalFormats),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.regionalFormats,
+      tier: FeatureTier.core,
+    ),
   // #718 — the calendar as the dated view of everything: one feed of
   // reservations, check-ins, alerts, messages, money and reminders for
   // a day or a range, each row linking to its source. OFF: the calendar
   // shows reservations only, as it did before.
   WorkspaceFeature.calendarHub:
-      FeatureManifestEntry(feature: WorkspaceFeature.calendarHub),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.calendarHub,
+      tier: FeatureTier.core,
+    ),
   // #818 — the views over the hub's feed.
   WorkspaceFeature.calendarViews: FeatureManifestEntry(
     feature: WorkspaceFeature.calendarViews,
+    tier: FeatureTier.core,
     requires: WorkspaceFeature.calendarHub,
   ),
   // #821 — the reworked Messages tab.
   WorkspaceFeature.messagesHub:
-      FeatureManifestEntry(feature: WorkspaceFeature.messagesHub),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.messagesHub,
+      tier: FeatureTier.core,
+    ),
   // #822 — the full-screen report designer over the template editor.
   WorkspaceFeature.reportDesigner: FeatureManifestEntry(
     feature: WorkspaceFeature.reportDesigner,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.invoicePdfTemplate,
   ),
   // #825 — the member page over the directory's profile sheet.
   WorkspaceFeature.memberPage: FeatureManifestEntry(
     feature: WorkspaceFeature.memberPage,
+    tier: FeatureTier.core,
     requires: WorkspaceFeature.membersDirectory,
   ),
   // #827 — the guided month-close process over the invoicing hub.
   WorkspaceFeature.invoicingWizard: FeatureManifestEntry(
     feature: WorkspaceFeature.invoicingWizard,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.invoicing,
   ),
   // #828 — a shared expense split over the members onto their next
   // usage invoice; the reverse as credit notes.
   WorkspaceFeature.expenseRepartition: FeatureManifestEntry(
     feature: WorkspaceFeature.expenseRepartition,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.invoicing,
   ),
   // #831 — the fold of settled sources under their settlement.
   WorkspaceFeature.settlementFold: FeatureManifestEntry(
     feature: WorkspaceFeature.settlementFold,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.invoiceSettlement,
   ),
   // #916 — the exported space IS the space: the file's <configuration>
@@ -500,37 +644,46 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // import. Child of the data export it extends.
   WorkspaceFeature.configurationTransfer: FeatureManifestEntry(
     feature: WorkspaceFeature.configurationTransfer,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.dataExport,
   ),
   // #969 — a per-device preference in Settings; off hides the choice
   // and every device keeps its platform's default.
   WorkspaceFeature.navigationStyle: FeatureManifestEntry(
     feature: WorkspaceFeature.navigationStyle,
+    tier: FeatureTier.core,
   ),
   // #970 — demo mode; off hides the switch and nothing is invented.
   WorkspaceFeature.demoMode: FeatureManifestEntry(
     feature: WorkspaceFeature.demoMode,
+    tier: FeatureTier.platform,
   ),
   // #977 — the instance wizard on the Server screen; off leaves the
   // manual how-to alone.
   WorkspaceFeature.instanceWizard: FeatureManifestEntry(
     feature: WorkspaceFeature.instanceWizard,
+    tier: FeatureTier.platform,
   ),
   // #719 — "who accessed my data": the server-written log of reads of
   // another member's finances, shown to the subject. OFF hides the row;
   // the log is still written, because the record is not optional.
   WorkspaceFeature.dataAccessLog: FeatureManifestEntry(
     feature: WorkspaceFeature.dataAccessLog,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.moneyTab,
   ),
   // #719 — export my data (art. 20) and leave with erasure (art. 17)
   // from Settings → Privacy & data.
   WorkspaceFeature.memberDataExport:
-      FeatureManifestEntry(feature: WorkspaceFeature.memberDataExport),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.memberDataExport,
+      tier: FeatureTier.core,
+    ),
   // #720 — Finances as three faces (Payments · Consumption · Invoices)
   // under one period chooser. OFF keeps the single column.
   WorkspaceFeature.financeFaces: FeatureManifestEntry(
     feature: WorkspaceFeature.financeFaces,
+    tier: FeatureTier.core,
     requires: WorkspaceFeature.moneyTab,
   ),
   // #726 — automatic payment reminders: the dunning levels applied by a
@@ -538,59 +691,76 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // the member's feed and a push. Child of dunning.
   WorkspaceFeature.paymentReminders: FeatureManifestEntry(
     feature: WorkspaceFeature.paymentReminders,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.dunning,
   ),
   // #731 — an expense can be a SUPPLY: validated, it restocks (or
   // creates) a consumable service with a unit price and a stock count.
   WorkspaceFeature.supplyExpenses: FeatureManifestEntry(
     feature: WorkspaceFeature.supplyExpenses,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.services,
   ),
   // #732 — a validation rule names its scope: admins, listed persons of
   // any role, or every member. Off: owner + admins as before.
   WorkspaceFeature.validationScopes:
-      FeatureManifestEntry(feature: WorkspaceFeature.validationScopes),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.validationScopes,
+      tier: FeatureTier.platform,
+    ),
   // #840 — a rule may ask for its validations one after another, and may
   // let the owner (never an admin) sign off on their own act.
   WorkspaceFeature.validationChain:
-      FeatureManifestEntry(feature: WorkspaceFeature.validationChain),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.validationChain,
+      tier: FeatureTier.platform,
+    ),
   // #842 — a message can point at an alert, at the validation behind
   // one, and at the financial documents people argue about.
   WorkspaceFeature.richMessageRefs: FeatureManifestEntry(
     feature: WorkspaceFeature.richMessageRefs,
+    tier: FeatureTier.core,
     requires: WorkspaceFeature.memberNotifications,
   ),
   // #843 — decisions on the timeline, at the moment they were taken.
   WorkspaceFeature.calendarValidations: FeatureManifestEntry(
     feature: WorkspaceFeature.calendarValidations,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.calendarHub,
   ),
   // #833 — every counted booking leaves a record, and an early
   // departure can be corrected through the validation rules.
   WorkspaceFeature.usageRecords: FeatureManifestEntry(
     feature: WorkspaceFeature.usageRecords,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.invoicing,
   ),
   // #864 — a report design leaves as a self-describing file and comes
   // back the same way, so it can be edited outside the app.
   WorkspaceFeature.reportDesignExchange: FeatureManifestEntry(
     feature: WorkspaceFeature.reportDesignExchange,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.reportDesigner,
   ),
   // #875 — positioned layouts: a design states its geometry, the PDF
   // prints it; a document with a layout is drawn by it, the rest unchanged.
   WorkspaceFeature.reportLayouts: FeatureManifestEntry(
     feature: WorkspaceFeature.reportLayouts,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.reportDesigner,
   ),
   // #886 — the person's structured identity (name, postal address,
   // phone, e-mail, ids) on their settings, printed by every document.
   WorkspaceFeature.personalInfo:
-      FeatureManifestEntry(feature: WorkspaceFeature.personalInfo),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.personalInfo,
+      tier: FeatureTier.core,
+    ),
   // #887 — members an admin runs until the person claims them with a
   // bound invitation; they live on the members list.
   WorkspaceFeature.managedProfiles: FeatureManifestEntry(
     feature: WorkspaceFeature.managedProfiles,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.membersDirectory,
   ),
   // #914 — narrowing WHO may administer one managed profile. Off, every
@@ -603,6 +773,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // reason to change is not a control everybody needs to see.
   WorkspaceFeature.numberSequences: FeatureManifestEntry(
     feature: WorkspaceFeature.numberSequences,
+    tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.invoicing,
   ),
@@ -611,6 +782,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // a printable report.
   WorkspaceFeature.workspaceStatus: FeatureManifestEntry(
     feature: WorkspaceFeature.workspaceStatus,
+    tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.invoicing,
   ),
@@ -618,6 +790,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // members by subscription share, adjustable, remembered as the rule.
   WorkspaceFeature.expenseRepartitionWizard: FeatureManifestEntry(
     feature: WorkspaceFeature.expenseRepartitionWizard,
+    tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.expenseRepartition,
   ),
@@ -626,6 +799,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // its one address as before.
   WorkspaceFeature.multiSite: FeatureManifestEntry(
     feature: WorkspaceFeature.multiSite,
+    tier: FeatureTier.platform,
     defaultOn: false,
   ),
   // #946 — documents name the site they concern: the member's home
@@ -633,6 +807,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // sites the month stood at in the details.
   WorkspaceFeature.siteDocuments: FeatureManifestEntry(
     feature: WorkspaceFeature.siteDocuments,
+    tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.multiSite,
   ),
@@ -640,6 +815,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // outside-base rule, the exemption reason. Off: bare percentages.
   WorkspaceFeature.vatGroups: FeatureManifestEntry(
     feature: WorkspaceFeature.vatGroups,
+    tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.vatManagement,
   ),
@@ -647,6 +823,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // new value from a date, never an edit. Off: one value per rate.
   WorkspaceFeature.vatRateHistory: FeatureManifestEntry(
     feature: WorkspaceFeature.vatRateHistory,
+    tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.vatManagement,
   ),
@@ -654,6 +831,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // charge, outside the EU, exempt. Off: the automatic rule only.
   WorkspaceFeature.vatCounterparty: FeatureManifestEntry(
     feature: WorkspaceFeature.vatCounterparty,
+    tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.vatManagement,
   ),
@@ -661,17 +839,20 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // Profiles and the twin action. Off: two unrelated entries.
   WorkspaceFeature.environmentPairs: FeatureManifestEntry(
     feature: WorkspaceFeature.environmentPairs,
+    tier: FeatureTier.platform,
     defaultOn: true,
   ),
   // #988/#990 — entities deployed between the two sides of a pair, with
   // a preview and a journal. Off: the twins stay separate hands.
   WorkspaceFeature.deployments: FeatureManifestEntry(
     feature: WorkspaceFeature.deployments,
+    tier: FeatureTier.platform,
     defaultOn: true,
     requires: WorkspaceFeature.environmentPairs,
   ),
   WorkspaceFeature.managedProfileAccess: FeatureManifestEntry(
     feature: WorkspaceFeature.managedProfileAccess,
+    tier: FeatureTier.platform,
     // OFF by default: the rule nobody narrowed is exactly what #887
     // shipped, so a space that never needs to restrict anything is not
     // shown a control it would have to think about. Turning it on is
@@ -682,43 +863,53 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // #903 — a part-booked seat looks part-booked, and a shared one opens
   // its day: who has it, when, what is still free.
   WorkspaceFeature.seatDayTimeline:
-      FeatureManifestEntry(feature: WorkspaceFeature.seatDayTimeline),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.seatDayTimeline,
+      tier: FeatureTier.core,
+    ),
   // #881 — a member's own payment conditions, changed by validated request.
   WorkspaceFeature.memberPaymentTerms: FeatureManifestEntry(
     feature: WorkspaceFeature.memberPaymentTerms,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.invoicing,
   ),
   // #873 — the month-end consumption report, from the usage records.
   WorkspaceFeature.usageReport: FeatureManifestEntry(
     feature: WorkspaceFeature.usageReport,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.usageRecords,
   ),
   // #880 — the owner's own texts, `{{ text.<key> }}`, per language.
   WorkspaceFeature.reportTexts: FeatureManifestEntry(
     feature: WorkspaceFeature.reportTexts,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.reportDesigner,
   ),
   // #874 — every person-facing document folds into a window envelope:
   // a kind without a design renders its default positioned layout.
   WorkspaceFeature.letterStandard: FeatureManifestEntry(
     feature: WorkspaceFeature.letterStandard,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.reportLayouts,
   ),
   // #878 — the period's VAT positions as a letter and a CSV.
   WorkspaceFeature.vatReport: FeatureManifestEntry(
     feature: WorkspaceFeature.vatReport,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.vatDeclarations,
   ),
   // #739 — the tariff is the default; a member may have their own deal,
   // proposed by finance admins, validated, seen by the member and them.
   WorkspaceFeature.priceNegotiations: FeatureManifestEntry(
     feature: WorkspaceFeature.priceNegotiations,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.moneyTab,
   ),
   // #767 — subscriptions the space pays for keep paying themselves:
   // schedule once, validate once, confirm each occurrence.
   WorkspaceFeature.scheduledExpenses: FeatureManifestEntry(
     feature: WorkspaceFeature.scheduledExpenses,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.moneyTab,
   ),
   // #662 — signing IN by scanning a badge, then a PIN. Under nfcBadges
@@ -728,6 +919,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // in to its shared tablet being a login surface.
   WorkspaceFeature.badgeSignIn: FeatureManifestEntry(
     feature: WorkspaceFeature.badgeSignIn,
+    tier: FeatureTier.platform,
     requires: WorkspaceFeature.nfcBadges,
     defaultOn: false,
   ),
@@ -735,19 +927,26 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // deep-linking into the matching guide section. Default ON: they are
   // exactly for the members who have not found their way around yet.
   WorkspaceFeature.formHelpHints:
-      FeatureManifestEntry(feature: WorkspaceFeature.formHelpHints),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.formHelpHints,
+      tier: FeatureTier.core,
+    ),
   // #611 — the motion pass: purposeful animations (route transitions,
   // view cross-fades, state-colour changes, feedback moments). Default
   // ON; OFF returns the whole app to instant transitions. Reduced
   // motion (the OS accessibility setting) overrides regardless.
   WorkspaceFeature.uiAnimations:
-      FeatureManifestEntry(feature: WorkspaceFeature.uiAnimations),
+      FeatureManifestEntry(
+      feature: WorkspaceFeature.uiAnimations,
+      tier: FeatureTier.core,
+    ),
   // #1110 — how each member got here, on their own profile and on the
   // member sheet for anyone who manages members. Default OFF: it is new
   // information about real people, and a workspace should decide to show
   // it rather than find it already there.
   WorkspaceFeature.memberOrigin: FeatureManifestEntry(
     feature: WorkspaceFeature.memberOrigin,
+    tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.membersDirectory,
   ),
@@ -757,6 +956,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // adds a question to a form somebody already knows.
   WorkspaceFeature.memberEnvironments: FeatureManifestEntry(
     feature: WorkspaceFeature.memberEnvironments,
+    tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.environmentPairs,
   ),
@@ -882,4 +1082,29 @@ List<WorkspaceFeature> alsoEnabledWith({
     [
       for (final required in requirementChain(feature))
         if (!raw.contains(required)) required,
+    ];
+
+/// #1063 — the flags a NEW workspace is created with.
+///
+/// EXPLICIT, every key, rather than an empty object left to resolve
+/// against the registry defaults. That is the whole design: resolution
+/// is unchanged, so a workspace that already exists keeps exactly what
+/// it has, and the tier decides only what gets written the first time.
+/// An implicit rule would have reached backwards into every live
+/// workspace the moment it changed.
+///
+/// A platform feature is written `false` rather than omitted, so that
+/// "nobody has chosen yet" and "chosen off" stay distinguishable, and so
+/// that a later change to a registry default cannot quietly switch
+/// something on in a space that never asked for it.
+Map<String, bool> defaultFeatureFlagsForNewWorkspace() => {
+      for (final entry in featureManifest.values)
+        entry.feature.dbKey: entry.tier == FeatureTier.core && entry.defaultOn,
+    };
+
+/// The features of one tier, in registry order — the Features screen
+/// renders them under their own heading.
+List<WorkspaceFeature> featuresOfTier(FeatureTier tier) => [
+      for (final entry in featureManifest.values)
+        if (entry.tier == tier) entry.feature,
     ];

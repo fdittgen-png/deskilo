@@ -522,38 +522,97 @@ class FeaturesScreen extends ConsumerWidget {
               children: [
                 // #606 — contextual how-to; gated inside the widget.
                 const HelpHint(HelpHintId.features),
-                for (final entry in featureManifest.values)
-                  _FeatureTile(
-                    entry: entry,
-                    name: _name(l10n, entry.feature),
-                    description: _description(l10n, entry.feature),
-                    requiresLabel: entry.requires == null
-                        ? null
-                        : (l10n?.featureRequires(
-                                featureName(l10n, entry.requires!)) ??
-                            'Requires ${featureName(l10n, entry.requires!)}'),
-                    value: raw.contains(entry.feature),
-                    // #800 — every switch is live. A child no longer
-                    // waits for its parent: turning it on brings the
-                    // parent with it, which is what an owner means by
-                    // "switch this on".
-                    inactive: entry.requires != null &&
-                        !effectiveFeatures(raw).contains(entry.requires),
-                    alsoEnables: alsoEnabledWith(
-                      raw: raw,
-                      feature: entry.feature,
-                    ).map((f) => featureName(l10n, f)).toList(),
-                    onChanged: (value) => _toggle(
-                      context,
-                      ref,
-                      workspace,
-                      raw,
-                      entry.feature,
-                      value,
+                // #1063 — two sections, so that reaching for a platform
+                // capability is a deliberate act rather than the state
+                // the workspace woke up in. Registry order is kept
+                // INSIDE each tier: the hierarchy indents children under
+                // their parent, and a parent and its child are always in
+                // the same tier.
+                for (final tier in FeatureTier.values) ...[
+                  _TierHeading(tier: tier),
+                  for (final entry in featureManifest.values)
+                    if (entry.tier == tier)
+                      _FeatureTile(
+                      entry: entry,
+                      name: _name(l10n, entry.feature),
+                      description: _description(l10n, entry.feature),
+                      requiresLabel: entry.requires == null
+                          ? null
+                          : (l10n?.featureRequires(
+                                  featureName(l10n, entry.requires!)) ??
+                              'Requires ${featureName(l10n, entry.requires!)}'),
+                      value: raw.contains(entry.feature),
+                      // #800 — every switch is live. A child no longer
+                      // waits for its parent: turning it on brings the
+                      // parent with it, which is what an owner means by
+                      // "switch this on".
+                      inactive: entry.requires != null &&
+                          !effectiveFeatures(raw).contains(entry.requires),
+                      alsoEnables: alsoEnabledWith(
+                        raw: raw,
+                        feature: entry.feature,
+                      ).map((f) => featureName(l10n, f)).toList(),
+                      onChanged: (value) => _toggle(
+                        context,
+                        ref,
+                        workspace,
+                        raw,
+                        entry.feature,
+                        value,
+                      ),
                     ),
-                  ),
+                ],
               ],
             ),
+    );
+  }
+}
+
+/// #1063 — the heading that separates what every deployment needs from
+/// what only a sophisticated operator does.
+class _TierHeading extends StatelessWidget {
+  const _TierHeading({required this.tier});
+
+  final FeatureTier tier;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final (title, subtitle) = switch (tier) {
+      FeatureTier.core => (
+          l10n?.featureTierCore ?? 'Core',
+          l10n?.featureTierCoreDesc ??
+              'What every space needs. On from the first day.',
+        ),
+      FeatureTier.platform => (
+          l10n?.featureTierPlatform ?? 'Platform',
+          l10n?.featureTierPlatformDesc ??
+              'Asked for, never assumed. Switch on what this space '
+                  'actually runs.',
+        ),
+    };
+    return Padding(
+      key: ValueKey('feature-tier-${tier.name}'),
+      padding: const EdgeInsets.fromLTRB(16, 24, 16, 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title.toUpperCase(),
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: theme.colorScheme.primary,
+              letterSpacing: 1.1,
+            ),
+          ),
+          Text(
+            subtitle,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
