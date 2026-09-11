@@ -17,6 +17,7 @@
 // run — which is exactly the question nobody was asking.
 import 'dart:io';
 
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -39,6 +40,6 @@ void main() {
     // A harness that silently stopped finding the steps would pass while
     // testing nothing.
     expect(out, contains('steps: 12'));
-    expect(out, contains('features: 100'));
+    expect(out, contains('features: ${WorkspaceFeature.values.length}'));
   });
 }

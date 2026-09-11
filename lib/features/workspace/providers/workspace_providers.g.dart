@@ -1447,3 +1447,53 @@ final class SitesOfFamily extends $Family
   @override
   String toString() => r'sitesOfProvider';
 }
+
+/// #1120 — every template the member may read. Invalidated by the
+/// library screen after a save, a share or a delete.
+
+@ProviderFor(workspaceTemplates)
+final workspaceTemplatesProvider = WorkspaceTemplatesProvider._();
+
+/// #1120 — every template the member may read. Invalidated by the
+/// library screen after a save, a share or a delete.
+
+final class WorkspaceTemplatesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<WorkspaceTemplate>>,
+          List<WorkspaceTemplate>,
+          FutureOr<List<WorkspaceTemplate>>
+        >
+    with
+        $FutureModifier<List<WorkspaceTemplate>>,
+        $FutureProvider<List<WorkspaceTemplate>> {
+  /// #1120 — every template the member may read. Invalidated by the
+  /// library screen after a save, a share or a delete.
+  WorkspaceTemplatesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'workspaceTemplatesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceTemplatesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<WorkspaceTemplate>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<WorkspaceTemplate>> create(Ref ref) {
+    return workspaceTemplates(ref);
+  }
+}
+
+String _$workspaceTemplatesHash() =>
+    r'a11de99e16f7949050568c1162d1f463a0e42836';

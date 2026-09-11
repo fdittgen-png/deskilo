@@ -1084,6 +1084,19 @@ class _WorkspaceSettingsScreenState
                         'Payments & billing',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
+                  if (ref
+                      .watch(enabledFeaturesSyncProvider)
+                      .contains(WorkspaceFeature.workspaceLibrary))
+                    ListTile(
+                      key: const Key('workspaceSettingsLibrary'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.grid_view_outlined),
+                      title: Text(l10n?.libraryTitle ?? 'Workspace library'),
+                      subtitle: Text(l10n?.librarySave ??
+                          'Save this space as a template'),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => context.push('/library'),
+                    ),
                   ListTile(
                     key: const Key('workspaceSettingsPaymentMethods'),
                     contentPadding: EdgeInsets.zero,

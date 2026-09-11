@@ -185,7 +185,13 @@ enum WorkspaceFeature {
   /// reaches the production twin. Two answers, not three: 0185's
   /// invariant is `prod ⊆ dev`, so the question is "does this person
   /// touch production", never "which of two parallel worlds".
-  memberEnvironments;
+  memberEnvironments,
+
+  /// #1120 — the workspace library: save this space's floor plan as a
+  /// template, decide who may see it, invite people to it by address, and
+  /// start from what others offer. The builtin template needs no flag —
+  /// a new space starts with a room either way.
+  workspaceLibrary;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -959,6 +965,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.environmentPairs,
+  ),
+  // #1120 — sharing a floor plan is asked for, never assumed.
+  WorkspaceFeature.workspaceLibrary: FeatureManifestEntry(
+    feature: WorkspaceFeature.workspaceLibrary,
+    tier: FeatureTier.platform,
+    defaultOn: false,
   ),
 };
 

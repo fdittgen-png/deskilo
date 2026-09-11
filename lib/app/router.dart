@@ -57,6 +57,7 @@ import '../features/workspace/presentation/screens/onboarding_screen.dart';
 import '../features/workspace/presentation/screens/pending_approval_screen.dart';
 import '../features/workspace/presentation/screens/scan_join_screen.dart';
 import '../features/workspace/presentation/screens/workspace_code_screen.dart';
+import '../features/workspace/presentation/screens/workspace_library_screen.dart';
 import '../features/workspace/presentation/screens/workspace_settings_screen.dart';
 import '../features/workspace/domain/workspace_permission.dart';
 import '../features/workspace/providers/workspace_providers.dart';
@@ -445,6 +446,13 @@ GoRouter router(Ref ref) {
               SpaceKind.seat,
           id: state.pathParameters['id'] ?? '',
         ),
+      ),
+      GoRoute(
+        // #1120 — the workspace library.
+        path: '/library',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.workspaceLibrary) ? null : '/workspace-settings',
+        builder: (context, state) => const WorkspaceLibraryScreen(),
       ),
       GoRoute(
         path: '/workspace-code',

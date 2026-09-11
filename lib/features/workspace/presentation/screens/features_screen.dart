@@ -181,6 +181,11 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureFormHelpHintsDesc ??
               'Short dismissible how-to hints on forms and screens, '
                   'each linking into the matching guide section.',
+        WorkspaceFeature.workspaceLibrary =>
+          l10n?.featureWorkspaceLibraryDesc ??
+              'Save this space\'s floor plan as a template, choose who may '
+                  'see it, invite people by e-mail, and start from what '
+                  'others offer.',
         WorkspaceFeature.memberEnvironments =>
           l10n?.featureMemberEnvironmentsDesc ??
               'When you invite somebody, choose whether they also reach '

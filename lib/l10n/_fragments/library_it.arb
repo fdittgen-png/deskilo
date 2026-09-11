@@ -1,0 +1,68 @@
+{
+  "@@locale": "it",
+  "featureWorkspaceLibraryTitle": "Biblioteca degli spazi",
+  "featureWorkspaceLibraryDesc": "Salvate la pianta di questo spazio come modello, scegliete chi può vederla, invitate persone via e-mail e partite da ciò che altri offrono.",
+  "libraryTitle": "Biblioteca degli spazi",
+  "libraryStartFrom": "Partire dalla biblioteca",
+  "libraryYours": "I vostri modelli",
+  "libraryEmpty": "Ancora niente qui. Salvate questo spazio come modello, o aspettate che qualcuno ne condivida uno con voi.",
+  "libraryCounts": "{levels} livelli · {desks} scrivanie · {seats} posti",
+  "@libraryCounts": {
+    "placeholders": {
+      "levels": {
+        "type": "int"
+      },
+      "desks": {
+        "type": "int"
+      },
+      "seats": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryApply": "Applica a questo spazio",
+  "libraryApplyConfirmTitle": "Applicare « {name} »?",
+  "@libraryApplyConfirmTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryApplyConfirmBody": "Livelli, stanze, scrivanie e posti vengono aggiunti o aggiornati per nome. Nulla di ciò che avete già viene rimosso.",
+  "libraryApplied": "Modello applicato.",
+  "librarySave": "Salva questo spazio come modello",
+  "librarySaveName": "Nome del modello",
+  "librarySaveDescription": "Descrizione (facoltativa)",
+  "librarySaved": "Salvato nei vostri modelli.",
+  "libraryVisibility": "Chi può vederlo",
+  "libraryVisibilityPrivate": "Solo io",
+  "libraryVisibilityShared": "Le persone che invito",
+  "libraryVisibilityPublic": "Tutti (la biblioteca)",
+  "libraryVisibilityBuiltin": "Integrato",
+  "libraryShare": "Condividi…",
+  "libraryShareTitle": "Condividi « {name} »",
+  "@libraryShareTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryShareHint": "Invitate via e-mail. L'invito funziona non appena quell'indirizzo accede — non viene rivelato se esiste già un account.",
+  "libraryShareEmail": "Indirizzo e-mail",
+  "libraryShareAdd": "Invita",
+  "libraryShareNobody": "Nessuno invitato per ora.",
+  "libraryDelete": "Elimina modello",
+  "libraryDeleteConfirm": "Eliminare « {name} »? Le persone con cui lo avete condiviso perdono l'accesso.",
+  "@libraryDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingStartFrom": "Partire da",
+  "onboardingStartEmpty": "Spazio vuoto",
+  "onboardingStartEmptyDesc": "Disegnate la vostra pianta su una tela vuota."
+}

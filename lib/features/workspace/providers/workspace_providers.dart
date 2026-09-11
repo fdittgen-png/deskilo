@@ -22,6 +22,7 @@ import '../domain/workspace_document.dart';
 import '../../profile/domain/personal_info.dart';
 import '../domain/workspace_overview.dart';
 import '../domain/site.dart';
+import '../domain/workspace_template.dart';
 
 part 'workspace_providers.g.dart';
 
@@ -407,3 +408,9 @@ Future<List<Site>> sites(Ref ref) async {
 @riverpod
 Future<List<Site>> sitesOf(Ref ref, String workspaceId) =>
     ref.watch(workspaceRepositoryProvider).fetchSites(workspaceId);
+
+/// #1120 — every template the member may read. Invalidated by the
+/// library screen after a save, a share or a delete.
+@riverpod
+Future<List<WorkspaceTemplate>> workspaceTemplates(Ref ref) =>
+    ref.watch(workspaceRepositoryProvider).fetchWorkspaceTemplates();

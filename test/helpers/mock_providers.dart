@@ -84,6 +84,7 @@ import 'in_memory_default_level_store.dart';
 import 'package:deskilo/features/workspace/domain/workspace_overview.dart';
 import 'package:deskilo/features/workspace/domain/site.dart';
 import 'fake_pref_stores.dart';
+import 'package:deskilo/features/workspace/domain/workspace_template.dart';
 
 /// In-memory [AuthRepository] for widget/unit tests (fakes over mocks).
 class FakeAuthRepository implements AuthRepository {
@@ -1666,6 +1667,90 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     final i = otherMembers.indexWhere((m) => m.id == memberId);
     if (i >= 0) otherMembers[i] = otherMembers[i].copyWith(status: status);
   }
+
+  // ── #1120 — the workspace library, as the fake holds it ─────────
+  final templates = <WorkspaceTemplate>[
+    const WorkspaceTemplate(
+      id: 'tpl-tiny',
+      key: 'tiny',
+      name: 'A tiny space',
+      description: 'Two levels, four desks, eight seats.',
+      visibility: TemplateVisibility.builtin,
+      floorPlan: <Object?>[
+        <String, Object?>{'name': 'Ground', 'offices': <Object?>[<String, Object?>{'name': 'Room 1', 'desks': <Object?>[<String, Object?>{'name': 'Desk 1', 'seats': <Object?>[<String, Object?>{}, <String, Object?>{}]}, <String, Object?>{'name': 'Desk 2', 'seats': <Object?>[<String, Object?>{}, <String, Object?>{}]}]}]},
+        <String, Object?>{'name': 'First', 'offices': <Object?>[<String, Object?>{'name': 'Room 2', 'desks': <Object?>[<String, Object?>{'name': 'Desk 3', 'seats': <Object?>[<String, Object?>{}, <String, Object?>{}]}, <String, Object?>{'name': 'Desk 4', 'seats': <Object?>[<String, Object?>{}, <String, Object?>{}]}]}]},
+      ],
+    ),
+  ];
+  final templateGrants = <String, List<String>>{};
+  final appliedTemplates = <({String workspaceId, String templateId})>[];
+
+  @override
+  Future<List<WorkspaceTemplate>> fetchWorkspaceTemplates() async =>
+      List.of(templates);
+
+  @override
+  Future<void> applyWorkspaceTemplate(String workspaceId, String templateId) async {
+    if (!templates.any((t) => t.id == templateId)) {
+      throw Exception('unknown template');
+    }
+    appliedTemplates.add((workspaceId: workspaceId, templateId: templateId));
+  }
+
+  @override
+  Future<String> saveWorkspaceAsTemplate(
+    String workspaceId, {
+    required String key,
+    required String name,
+    String description = '',
+    TemplateVisibility visibility = TemplateVisibility.private,
+  }) async {
+    if (visibility == TemplateVisibility.builtin) {
+      throw Exception('a workspace cannot publish a builtin template');
+    }
+    templates.removeWhere((t) => t.ownerWorkspaceId == workspaceId && t.key == key);
+    final id = 'tpl-$key';
+    templates.add(WorkspaceTemplate(
+      id: id, key: key, name: name, description: description,
+      visibility: visibility, ownerWorkspaceId: workspaceId,
+      floorPlan: const <Object?>[<String, Object?>{'name': 'Snapshot', 'offices': <Object?>[]}],
+    ));
+    return id;
+  }
+
+  @override
+  Future<void> setWorkspaceTemplateVisibility(
+      String templateId, TemplateVisibility visibility) async {
+    final i = templates.indexWhere((t) => t.id == templateId);
+    if (i < 0) throw Exception('unknown template');
+    final t = templates[i];
+    templates[i] = WorkspaceTemplate(
+      id: t.id, key: t.key, name: t.name, description: t.description,
+      visibility: visibility, ownerWorkspaceId: t.ownerWorkspaceId, floorPlan: t.floorPlan,
+    );
+  }
+
+  @override
+  Future<void> deleteWorkspaceTemplate(String templateId) async {
+    templates.removeWhere((t) => t.id == templateId);
+    templateGrants.remove(templateId);
+  }
+
+  @override
+  Future<void> grantWorkspaceTemplate(String templateId, String email) async {
+    final list = templateGrants.putIfAbsent(templateId, () => []);
+    final e = email.trim().toLowerCase();
+    if (!list.contains(e)) list.add(e);
+  }
+
+  @override
+  Future<void> revokeWorkspaceTemplateGrant(String templateId, String email) async {
+    templateGrants[templateId]?.remove(email.trim().toLowerCase());
+  }
+
+  @override
+  Future<List<String>> workspaceTemplateGrantees(String templateId) async =>
+      List.of(templateGrants[templateId] ?? const []);
 }
 
 /// Baseline overrides for widget tests: a signed-in user who is the owner

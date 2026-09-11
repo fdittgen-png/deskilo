@@ -5782,6 +5782,112 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ya no es miembro de este espacio — pida una invitación a un administrador.';
 
   @override
+  String get featureWorkspaceLibraryTitle => 'Biblioteca de espacios';
+
+  @override
+  String get featureWorkspaceLibraryDesc =>
+      'Guarde el plano de este espacio como plantilla, elija quién puede verla, invite a personas por e-mail y parta de lo que otros ofrecen.';
+
+  @override
+  String get libraryTitle => 'Biblioteca de espacios';
+
+  @override
+  String get libraryStartFrom => 'Partir de la biblioteca';
+
+  @override
+  String get libraryYours => 'Sus plantillas';
+
+  @override
+  String get libraryEmpty =>
+      'Nada aquí todavía. Guarde este espacio como plantilla o espere a que alguien comparta una con usted.';
+
+  @override
+  String libraryCounts(int levels, int desks, int seats) {
+    return '$levels niveles · $desks mesas · $seats plazas';
+  }
+
+  @override
+  String get libraryApply => 'Aplicar a este espacio';
+
+  @override
+  String libraryApplyConfirmTitle(String name) {
+    return '¿Aplicar « $name »?';
+  }
+
+  @override
+  String get libraryApplyConfirmBody =>
+      'Niveles, salas, mesas y plazas se añaden o actualizan por nombre. No se elimina nada de lo que ya tiene.';
+
+  @override
+  String get libraryApplied => 'Plantilla aplicada.';
+
+  @override
+  String get librarySave => 'Guardar este espacio como plantilla';
+
+  @override
+  String get librarySaveName => 'Nombre de la plantilla';
+
+  @override
+  String get librarySaveDescription => 'Descripción (opcional)';
+
+  @override
+  String get librarySaved => 'Guardado en sus plantillas.';
+
+  @override
+  String get libraryVisibility => 'Quién puede verla';
+
+  @override
+  String get libraryVisibilityPrivate => 'Solo yo';
+
+  @override
+  String get libraryVisibilityShared => 'Personas que invito';
+
+  @override
+  String get libraryVisibilityPublic => 'Todos (la biblioteca)';
+
+  @override
+  String get libraryVisibilityBuiltin => 'Integrada';
+
+  @override
+  String get libraryShare => 'Compartir…';
+
+  @override
+  String libraryShareTitle(String name) {
+    return 'Compartir « $name »';
+  }
+
+  @override
+  String get libraryShareHint =>
+      'Invite por e-mail. La invitación funciona en cuanto esa dirección inicia sesión; no se revela si ya tiene cuenta.';
+
+  @override
+  String get libraryShareEmail => 'Dirección de e-mail';
+
+  @override
+  String get libraryShareAdd => 'Invitar';
+
+  @override
+  String get libraryShareNobody => 'Nadie invitado todavía.';
+
+  @override
+  String get libraryDelete => 'Eliminar plantilla';
+
+  @override
+  String libraryDeleteConfirm(String name) {
+    return '¿Eliminar « $name »? Las personas con quienes la compartió pierden el acceso.';
+  }
+
+  @override
+  String get onboardingStartFrom => 'Partir de';
+
+  @override
+  String get onboardingStartEmpty => 'Espacio vacío';
+
+  @override
+  String get onboardingStartEmptyDesc =>
+      'Dibuje su propio plano desde un lienzo en blanco.';
+
+  @override
   String get featureManagedProfileAccess => 'Quién administra un perfil';
 
   @override

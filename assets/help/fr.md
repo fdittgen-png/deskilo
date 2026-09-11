@@ -563,6 +563,29 @@ Touchez un membre pour sa **feuille de gestion** — chaque action par membre au
 
 *Le dialogue abonnement (le pourcentage du membre) et le dialogue limite de réservations (le plafond de réservations ouvertes).*
 
+#### La bibliothèque d'espaces
+
+*Réglages → Bibliothèque d'espaces* (#1120), quand la fonctionnalité est
+activée.
+
+**Partir de la bibliothèque.** Tous les modèles que vous pouvez voir : le
+modèle intégré, les modèles publics, et ceux que quelqu'un a partagés
+avec votre adresse e-mail. *Appliquer à cet espace* ajoute niveaux,
+bureaux, tables et places **par leur nom** ; rien de ce que vous avez
+déjà n'est supprimé, et une confirmation est demandée.
+
+**Vos modèles.** *Enregistrer cet espace comme modèle* prend un instantané
+de votre plan. Les prix, les images du plan et l'adresse de votre site
+sont retirés avant l'enregistrement — un modèle, c'est de la géométrie et
+des noms, rien sur votre argent ni votre rue. Chaque modèle est *Moi
+seulement* tant que vous n'en décidez pas autrement : *Les personnes que
+j'invite* (par e-mail — l'invitation fonctionne dès que cette adresse se
+connecte, sans rien révéler de l'existence d'un compte) ou *Tout le
+monde*, ce qui le place dans la bibliothèque.
+
+Un nouvel espace démarre toujours avec une pièce, quelle que soit cette
+option : l'accueil propose *Partir de* avec le modèle intégré sélectionné.
+
 #### Essentiel et Plateforme
 
 L'écran Fonctionnalités a deux sections (#1063).

@@ -5792,6 +5792,112 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non sei più membro di questo spazio — chiedi un invito a un amministratore.';
 
   @override
+  String get featureWorkspaceLibraryTitle => 'Biblioteca degli spazi';
+
+  @override
+  String get featureWorkspaceLibraryDesc =>
+      'Salvate la pianta di questo spazio come modello, scegliete chi può vederla, invitate persone via e-mail e partite da ciò che altri offrono.';
+
+  @override
+  String get libraryTitle => 'Biblioteca degli spazi';
+
+  @override
+  String get libraryStartFrom => 'Partire dalla biblioteca';
+
+  @override
+  String get libraryYours => 'I vostri modelli';
+
+  @override
+  String get libraryEmpty =>
+      'Ancora niente qui. Salvate questo spazio come modello, o aspettate che qualcuno ne condivida uno con voi.';
+
+  @override
+  String libraryCounts(int levels, int desks, int seats) {
+    return '$levels livelli · $desks scrivanie · $seats posti';
+  }
+
+  @override
+  String get libraryApply => 'Applica a questo spazio';
+
+  @override
+  String libraryApplyConfirmTitle(String name) {
+    return 'Applicare « $name »?';
+  }
+
+  @override
+  String get libraryApplyConfirmBody =>
+      'Livelli, stanze, scrivanie e posti vengono aggiunti o aggiornati per nome. Nulla di ciò che avete già viene rimosso.';
+
+  @override
+  String get libraryApplied => 'Modello applicato.';
+
+  @override
+  String get librarySave => 'Salva questo spazio come modello';
+
+  @override
+  String get librarySaveName => 'Nome del modello';
+
+  @override
+  String get librarySaveDescription => 'Descrizione (facoltativa)';
+
+  @override
+  String get librarySaved => 'Salvato nei vostri modelli.';
+
+  @override
+  String get libraryVisibility => 'Chi può vederlo';
+
+  @override
+  String get libraryVisibilityPrivate => 'Solo io';
+
+  @override
+  String get libraryVisibilityShared => 'Le persone che invito';
+
+  @override
+  String get libraryVisibilityPublic => 'Tutti (la biblioteca)';
+
+  @override
+  String get libraryVisibilityBuiltin => 'Integrato';
+
+  @override
+  String get libraryShare => 'Condividi…';
+
+  @override
+  String libraryShareTitle(String name) {
+    return 'Condividi « $name »';
+  }
+
+  @override
+  String get libraryShareHint =>
+      'Invitate via e-mail. L\'invito funziona non appena quell\'indirizzo accede — non viene rivelato se esiste già un account.';
+
+  @override
+  String get libraryShareEmail => 'Indirizzo e-mail';
+
+  @override
+  String get libraryShareAdd => 'Invita';
+
+  @override
+  String get libraryShareNobody => 'Nessuno invitato per ora.';
+
+  @override
+  String get libraryDelete => 'Elimina modello';
+
+  @override
+  String libraryDeleteConfirm(String name) {
+    return 'Eliminare « $name »? Le persone con cui lo avete condiviso perdono l\'accesso.';
+  }
+
+  @override
+  String get onboardingStartFrom => 'Partire da';
+
+  @override
+  String get onboardingStartEmpty => 'Spazio vuoto';
+
+  @override
+  String get onboardingStartEmptyDesc =>
+      'Disegnate la vostra pianta su una tela vuota.';
+
+  @override
   String get featureManagedProfileAccess => 'Chi amministra un profilo';
 
   @override

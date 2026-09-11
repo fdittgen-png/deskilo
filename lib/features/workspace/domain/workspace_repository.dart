@@ -15,6 +15,7 @@ import '../../profile/domain/personal_info.dart';
 import 'managed_access.dart';
 import 'workspace_overview.dart';
 import 'site.dart';
+import 'workspace_template.dart';
 
 /// Pure-Dart workspace boundary. Supabase impl in data/, fake in tests.
 abstract class WorkspaceRepository {
@@ -581,4 +582,38 @@ abstract class WorkspaceRepository {
   /// configuration and its members. The client gates this behind a typed
   /// confirmation.
   Future<void> resetWorkspace(String workspaceId);
+
+  // ── #1120 — the workspace library ────────────────────────────────
+
+  /// Every template this member may read: builtin, public, the ones
+  /// their workspaces own, and the ones shared with their address. The
+  /// server decides; this is what it returned.
+  Future<List<WorkspaceTemplate>> fetchWorkspaceTemplates();
+
+  /// Merges [templateId]'s floor plan into [workspaceId] — by name, never
+  /// wiping what is there (`merge_floor_plan`). Owner only; refused for a
+  /// template the caller may not read.
+  Future<void> applyWorkspaceTemplate(String workspaceId, String templateId);
+
+  /// Snapshots [workspaceId]'s floor plan as a template the workspace
+  /// owns. Prices, storage paths and the site name are stripped
+  /// server-side. Returns the template id; a second save with the same
+  /// key updates in place.
+  Future<String> saveWorkspaceAsTemplate(
+    String workspaceId, {
+    required String key,
+    required String name,
+    String description = '',
+    TemplateVisibility visibility = TemplateVisibility.private,
+  });
+
+  Future<void> setWorkspaceTemplateVisibility(
+      String templateId, TemplateVisibility visibility);
+  Future<void> deleteWorkspaceTemplate(String templateId);
+
+  /// Invites an address to a template. By address, not by account, so
+  /// the call answers nothing about who has an account (#1120).
+  Future<void> grantWorkspaceTemplate(String templateId, String email);
+  Future<void> revokeWorkspaceTemplateGrant(String templateId, String email);
+  Future<List<String>> workspaceTemplateGrantees(String templateId);
 }

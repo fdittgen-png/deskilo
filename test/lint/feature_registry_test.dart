@@ -114,7 +114,9 @@ import 'package:flutter_test/flutter_test.dart';
 // 99→100 (2026-09-11): #1119 memberEnvironments — the invitation carries
 //   whether the person also reaches the prod twin. Option B of the
 //   issue: dev, or dev+prod, because 0185's invariant is prod ⊆ dev.
-const int _expectedFeatureCount = 100;
+// 100→101 (2026-09-11): #1120 workspaceLibrary — save, share and start
+//   from a floor-plan template. Platform, default OFF.
+const int _expectedFeatureCount = 101;
 
 void main() {
   _tierPins();

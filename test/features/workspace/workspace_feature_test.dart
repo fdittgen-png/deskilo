@@ -44,6 +44,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   // no twin has nothing to choose between, and the sheet is one people
   // already know.
   WorkspaceFeature.memberEnvironments,
+  // #1120 — sharing a floor plan is asked for, never assumed.
+  WorkspaceFeature.workspaceLibrary,
 };
 
 /// Every other feature ships ON.
@@ -104,6 +106,7 @@ void main() {
       'vatCounterparty': true,
       'memberOrigin': true,
       'memberEnvironments': true,
+      'workspaceLibrary': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

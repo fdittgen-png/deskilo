@@ -3718,6 +3718,71 @@
   "bookingSameDayError": "Une réservation se termine le jour où elle commence — réservez le lendemain séparément.",
   "bookingMembershipPaused": "Votre adhésion est suspendue — un administrateur la réactive dans Membres.",
   "bookingNotAMember": "Vous n'êtes plus membre de cet espace — demandez une invitation à un administrateur.",
+  "featureWorkspaceLibraryTitle": "Bibliothèque d'espaces",
+  "featureWorkspaceLibraryDesc": "Enregistrez le plan de cet espace comme modèle, choisissez qui peut le voir, invitez des personnes par e-mail, et partez de ce que d'autres proposent.",
+  "libraryTitle": "Bibliothèque d'espaces",
+  "libraryStartFrom": "Partir de la bibliothèque",
+  "libraryYours": "Vos modèles",
+  "libraryEmpty": "Rien ici pour l'instant. Enregistrez cet espace comme modèle, ou attendez qu'on en partage un avec vous.",
+  "libraryCounts": "{levels} niveaux · {desks} tables · {seats} places",
+  "@libraryCounts": {
+    "placeholders": {
+      "levels": {
+        "type": "int"
+      },
+      "desks": {
+        "type": "int"
+      },
+      "seats": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryApply": "Appliquer à cet espace",
+  "libraryApplyConfirmTitle": "Appliquer « {name} » ?",
+  "@libraryApplyConfirmTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryApplyConfirmBody": "Niveaux, bureaux, tables et places sont ajoutés ou mis à jour par leur nom. Rien de ce que vous avez déjà n'est supprimé.",
+  "libraryApplied": "Modèle appliqué.",
+  "librarySave": "Enregistrer cet espace comme modèle",
+  "librarySaveName": "Nom du modèle",
+  "librarySaveDescription": "Description (facultatif)",
+  "librarySaved": "Enregistré dans vos modèles.",
+  "libraryVisibility": "Qui peut le voir",
+  "libraryVisibilityPrivate": "Moi seulement",
+  "libraryVisibilityShared": "Les personnes que j'invite",
+  "libraryVisibilityPublic": "Tout le monde (la bibliothèque)",
+  "libraryVisibilityBuiltin": "Intégré",
+  "libraryShare": "Partager…",
+  "libraryShareTitle": "Partager « {name} »",
+  "@libraryShareTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryShareHint": "Invitez par e-mail. L'invitation fonctionne dès que cette adresse se connecte — rien n'est révélé sur l'existence d'un compte.",
+  "libraryShareEmail": "Adresse e-mail",
+  "libraryShareAdd": "Inviter",
+  "libraryShareNobody": "Personne n'est invité pour l'instant.",
+  "libraryDelete": "Supprimer le modèle",
+  "libraryDeleteConfirm": "Supprimer « {name} » ? Les personnes avec qui vous l'avez partagé perdent l'accès.",
+  "@libraryDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingStartFrom": "Partir de",
+  "onboardingStartEmpty": "Espace vide",
+  "onboardingStartEmptyDesc": "Dessinez votre propre plan sur une toile vierge.",
   "featureManagedProfileAccess": "Qui administre un profil",
   "@featureManagedProfileAccess": {
     "description": "#914 managed profile access: name"
