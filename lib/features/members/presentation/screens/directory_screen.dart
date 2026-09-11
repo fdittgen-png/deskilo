@@ -151,6 +151,13 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
         ref.watch(memberProfilesProvider).value ?? const {};
     final reservations =
         ref.watch(directoryReservationsProvider).value ?? const <Reservation>[];
+    // #1154 — grouped ONCE per build: both row resolvers filter by member
+    // first, so handing each row its own slice is the same answer without
+    // a members × reservations rescan.
+    final reservationsByMember = <String, List<Reservation>>{};
+    for (final r in reservations) {
+      (reservationsByMember[r.memberId] ??= []).add(r);
+    }
     final targets = ref.watch(targetNamesProvider).value ?? const {};
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     // WhatsApp affordances (swipe, chat buttons, group tile) ride the
@@ -221,12 +228,14 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
                       ),
                       reservationInfo: resolveReservationInfo(
                         memberId: member.id,
-                        reservations: reservations,
+                        reservations: reservationsByMember[member.id] ??
+                            const <Reservation>[],
                         now: now,
                       ),
                       memberReservations: _upcomingFor(
                         member.id,
-                        reservations,
+                        reservationsByMember[member.id] ??
+                            const <Reservation>[],
                         now,
                       ),
                       targetNames: targets,

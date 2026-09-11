@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../workspace/presentation/member_labels.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_spacing.dart';
@@ -132,11 +133,7 @@ class MemberContactCard extends ConsumerWidget {
         MemberOrigin.unknown => Icons.help_outline,
       };
 
+  /// No chip for the ordinary case: only a status worth noticing shows.
   String _statusLabel(AppLocalizations? l10n, MemberStatus status) =>
-      switch (status) {
-        MemberStatus.pending => l10n?.memberStatusPending ?? 'Pending',
-        MemberStatus.paused => l10n?.memberStatusPaused ?? 'Paused',
-        MemberStatus.exited => l10n?.memberStatusExited ?? 'Exited',
-        MemberStatus.active => '',
-      };
+      status == MemberStatus.active ? '' : memberStatusLabel(l10n, status);
 }

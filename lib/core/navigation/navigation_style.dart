@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../storage/prefs_stores.dart';
@@ -47,8 +46,9 @@ NavigationStyleStore navigationStyleStore(Ref ref) =>
 /// The platform the app runs on: the web has the menu and ONLY the
 /// menu — a browser window has the width a phone lacks and none of the
 /// thumb-reach the bar was built for — so the choice never appears
-/// there. A plain provider so tests can run "as the web".
-final platformIsWebProvider = Provider<bool>((_) => kIsWeb);
+/// there. Tests override it to run "as the web".
+@Riverpod(keepAlive: true)
+bool platformIsWeb(Ref ref) => kIsWeb;
 
 /// The user's navigation override; null means "what this platform gets
 /// by default" (the bar on native, the menu on the web). Applied

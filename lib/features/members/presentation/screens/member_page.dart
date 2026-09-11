@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import '../../../../core/vat/vat_treatment.dart';
+import '../../../workspace/presentation/member_labels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -286,7 +287,7 @@ class _MemberPageBody extends ConsumerWidget {
           title: member.status == MemberStatus.paused
               ? (l10n?.memberReactivate ?? 'Reactivate membership')
               : (l10n?.memberPause ?? 'Pause membership'),
-          subtitle: _statusLabel(l10n, member.status),
+          subtitle: memberStatusLabel(l10n, member.status),
           onTap: () => toggleMemberPaused(context, ref, member),
         ),
       if (isOwner && !member.isOwner && !member.isKiosk && active)
@@ -546,13 +547,6 @@ class _MemberPageBody extends ConsumerWidget {
     );
   }
 
-  static String _statusLabel(AppLocalizations? l10n, MemberStatus status) =>
-      switch (status) {
-        MemberStatus.active => l10n?.memberPageStatusActive ?? 'Active',
-        MemberStatus.paused => l10n?.memberStatusPaused ?? 'Paused',
-        MemberStatus.pending => l10n?.memberStatusPending ?? 'Pending',
-        MemberStatus.exited => l10n?.memberStatusExited ?? 'Exited',
-      };
 }
 
 /// Who they are, at a glance: photo with the presence dot, name, role

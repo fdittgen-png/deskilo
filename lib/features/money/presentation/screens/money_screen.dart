@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import '../period_label.dart';
 import '../../domain/invoice_line_text.dart';
+import '../payment_provider_labels.dart';
 import '../report_facts_of.dart';
 import '../report_strings_l10n.dart';
 import 'package:flutter/material.dart';
@@ -685,17 +686,6 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
   /// otherwise tells the member online payments are not set up. Inert until
   /// the server carries the PSP secrets (docs/design/payments-integration.md).
   /// Localized label of an online-payment [provider] button.
-  String _providerLabel(AppLocalizations? l10n, PaymentProvider provider) =>
-      switch (provider) {
-        PaymentProvider.paypal => l10n?.paymentMethodPaypal ?? 'PayPal',
-        PaymentProvider.stripe =>
-          l10n?.paymentProviderStripe ?? 'Credit card (Stripe)',
-        PaymentProvider.mollie =>
-          l10n?.paymentProviderMollie ?? 'Mollie — iDEAL, Bancontact…',
-        PaymentProvider.wero =>
-          l10n?.paymentProviderWero ?? 'Wero (via Mollie)',
-      };
-
   /// Owner/admin diagnostics when online payments cannot run: names the
   /// undeployed function or the exact missing server secrets, so "not set
   /// up" is actionable instead of a mystery. Members get the friendly
@@ -816,7 +806,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
               key: ValueKey('pay-provider-${candidate.wireName}'),
               onPressed: () => Navigator.of(context).pop(candidate),
               icon: const Icon(Icons.account_balance_wallet_outlined),
-              label: Text(_providerLabel(l10n, candidate)),
+              label: Text(paymentProviderLabel(l10n, candidate)),
             ),
             const SizedBox(height: 8),
           ],

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../payment_provider_labels.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_anchors.dart';
@@ -155,16 +156,6 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
         _ => key,
       };
 
-  String _providerLabel(AppLocalizations? l10n) => switch (widget.provider) {
-        PaymentProvider.paypal => l10n?.paymentMethodPaypal ?? 'PayPal',
-        PaymentProvider.stripe =>
-          l10n?.paymentProviderStripe ?? 'Credit card (Stripe)',
-        PaymentProvider.mollie =>
-          l10n?.paymentProviderMollie ?? 'Mollie — iDEAL, Bancontact…',
-        PaymentProvider.wero =>
-          l10n?.paymentProviderWero ?? 'Wero (via Mollie)',
-      };
-
   Future<void> _save() async {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
@@ -232,7 +223,7 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
               children: [
                 Expanded(
                   child: Text(
-                    _providerLabel(l10n),
+                    paymentProviderLabel(l10n, widget.provider),
                     style: theme.textTheme.titleMedium,
                   ),
                 ),

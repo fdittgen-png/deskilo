@@ -57,6 +57,60 @@ final class NavigationStyleStoreProvider
 String _$navigationStyleStoreHash() =>
     r'fe0e87261733c28f7297b580db656d339e165c9e';
 
+/// The platform the app runs on: the web has the menu and ONLY the
+/// menu — a browser window has the width a phone lacks and none of the
+/// thumb-reach the bar was built for — so the choice never appears
+/// there. Tests override it to run "as the web".
+
+@ProviderFor(platformIsWeb)
+final platformIsWebProvider = PlatformIsWebProvider._();
+
+/// The platform the app runs on: the web has the menu and ONLY the
+/// menu — a browser window has the width a phone lacks and none of the
+/// thumb-reach the bar was built for — so the choice never appears
+/// there. Tests override it to run "as the web".
+
+final class PlatformIsWebProvider extends $FunctionalProvider<bool, bool, bool>
+    with $Provider<bool> {
+  /// The platform the app runs on: the web has the menu and ONLY the
+  /// menu — a browser window has the width a phone lacks and none of the
+  /// thumb-reach the bar was built for — so the choice never appears
+  /// there. Tests override it to run "as the web".
+  PlatformIsWebProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'platformIsWebProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$platformIsWebHash();
+
+  @$internal
+  @override
+  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  bool create(Ref ref) {
+    return platformIsWeb(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+}
+
+String _$platformIsWebHash() => r'bf1d5b48bcda84a482d4e54900fa3b94f9a9e377';
+
 /// The user's navigation override; null means "what this platform gets
 /// by default" (the bar on native, the menu on the web). Applied
 /// instantly — the shell watches it.
