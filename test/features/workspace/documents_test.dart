@@ -2,6 +2,8 @@
 //
 // The workspace document library (#500): federated links to any DMS,
 // role-gated visibility, admin/owner curation.
+import 'dart:async';
+
 import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
@@ -36,7 +38,7 @@ Future<(FakeWorkspaceRepository, List<Uri>)> pumpDocuments(
   );
   await tester.pumpAndSettle();
   final context = tester.element(find.byType(Scaffold).first);
-  GoRouter.of(context).push('/documents');
+  unawaited(GoRouter.of(context).push('/documents'));
   await tester.pumpAndSettle();
   return (repo, launched);
 }

@@ -3,6 +3,8 @@
 // #1016 — a help symbol names ONE object. The anchor resolves to that
 // object's heading and the guide opens there; the topic can only find
 // the first heading that happens to contain its words.
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/help/presentation/screens/help_screen.dart';
 import 'package:deskilo/features/help/providers/help_providers.dart';
@@ -49,7 +51,7 @@ Future<double> _openAt(WidgetTester tester, String query,
   ));
   await tester.pumpAndSettle();
   final context = tester.element(find.byType(Scaffold).first);
-  GoRouter.of(context).push('/help?$query');
+  unawaited(GoRouter.of(context).push('/help?$query'));
   await tester.pumpAndSettle();
   expect(find.byType(HelpScreen), findsOneWidget);
   return tester

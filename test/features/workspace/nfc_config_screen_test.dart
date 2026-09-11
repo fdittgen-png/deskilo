@@ -3,6 +3,8 @@
 // Owner RFID/NFC configuration (0046): the workspace toggle + this
 // device's NFC status. Registration itself is per member (see the members
 // screen tests).
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +27,7 @@ Future<FakeWorkspaceRepository> pumpNfcConfig(
   );
   await tester.pumpAndSettle();
   final context = tester.element(find.byType(Scaffold).first);
-  GoRouter.of(context).push('/nfc-config');
+  unawaited(GoRouter.of(context).push('/nfc-config'));
   await tester.pumpAndSettle();
   return workspace;
 }
@@ -82,7 +84,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/nfc-config');
+    unawaited(GoRouter.of(context).push('/nfc-config'));
     await tester.pumpAndSettle();
 
     // Redirected away — the config title never appears in an app bar.

@@ -12,6 +12,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice_ubl.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
+import '../invoice_proforma.dart';
 import '../invoice_status.dart';
 import '../widgets/dunning_rules_dialog.dart';
 import '../widgets/settlement_sheet.dart';

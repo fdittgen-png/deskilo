@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/plan/presentation/screens/accessories_screen.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -47,7 +49,7 @@ Future<FakeAccessoryRepository> pumpAccessories(
   );
   await tester.pumpAndSettle();
   final context = tester.element(find.byType(Scaffold).first);
-  GoRouter.of(context).push('/accessories');
+  unawaited(GoRouter.of(context).push('/accessories'));
   await tester.pumpAndSettle();
   return accessories;
 }

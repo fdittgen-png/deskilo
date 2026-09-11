@@ -4,6 +4,8 @@
 // the money flows keep what the guide promises. The SQL half is pinned
 // on the migration text (the live harness verifies behaviour); the
 // client half asks the fakes.
+import 'dart:async';
+
 import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
@@ -196,7 +198,7 @@ void main() {
       );
       await tester.pumpAndSettle();
       final context = tester.element(find.byType(Scaffold).first);
-      GoRouter.of(context).push('/validation');
+      unawaited(GoRouter.of(context).push('/validation'));
       await tester.pumpAndSettle();
       expect(find.text('Invoice payment'), findsOneWidget);
       expect(find.text('Adjustment'), findsNothing);

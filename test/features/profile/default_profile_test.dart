@@ -3,6 +3,8 @@
 // Default profile (#322): with several profiles the user checks ONE as
 // the start-up default — the app opens on it at every start, while
 // in-session switching still works and lasts until the next start.
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
@@ -54,7 +56,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/profiles');
+    unawaited(GoRouter.of(context).push('/profiles'));
     await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(const ValueKey('profile-default-ws-2')));
@@ -92,7 +94,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/profiles');
+    unawaited(GoRouter.of(context).push('/profiles'));
     await tester.pumpAndSettle();
 
     // The active check sits on the DEFAULT workspace, not the stored
@@ -127,7 +129,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/profiles');
+    unawaited(GoRouter.of(context).push('/profiles'));
     await tester.pumpAndSettle();
 
     final row = find.ancestor(

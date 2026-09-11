@@ -4,6 +4,8 @@
 // territories, the aggregation matches the invoices' own vatSplit, the
 // official-box mapping (CA3/UStVA/generic), the XML export, and the
 // screen's generate → PDF/XML → transmit/mark-filed lifecycle.
+import 'dart:async';
+
 import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
@@ -226,7 +228,7 @@ void main() {
       );
       await tester.pumpAndSettle();
       final context = tester.element(find.byType(Scaffold).first);
-      GoRouter.of(context).push('/vat-declarations');
+      unawaited(GoRouter.of(context).push('/vat-declarations'));
       await tester.pumpAndSettle();
       return money;
     }
@@ -311,7 +313,7 @@ void main() {
       );
       await tester.pumpAndSettle();
       final context = tester.element(find.byType(Scaffold).first);
-      GoRouter.of(context).push('/vat-declarations');
+      unawaited(GoRouter.of(context).push('/vat-declarations'));
       await tester.pumpAndSettle();
 
       await tester.tap(find.byKey(const ValueKey('vat-decl-generate')));

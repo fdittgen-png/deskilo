@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
@@ -29,7 +31,7 @@ Future<FakeWorkspaceRepository> pumpAvailability(
   );
   await tester.pumpAndSettle();
   final context = tester.element(find.byType(Scaffold).first);
-  GoRouter.of(context).push('/availability');
+  unawaited(GoRouter.of(context).push('/availability'));
   await tester.pumpAndSettle();
   return workspace;
 }
@@ -480,7 +482,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/availability');
+    unawaited(GoRouter.of(context).push('/availability'));
     await tester.pumpAndSettle();
 
     final control = find.byKey(const Key('policy-outside-hours'));

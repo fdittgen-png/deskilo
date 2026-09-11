@@ -3,6 +3,8 @@
 // Social sign-in + account linking (0051): four browser-OAuth providers
 // next to e-mail+password — sign-in buttons on the auth screen, and a
 // linked-accounts screen to attach/detach them on an existing account.
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/auth/domain/social_provider.dart';
 import 'package:deskilo/features/auth/presentation/screens/linked_accounts_screen.dart';
@@ -79,7 +81,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/linked-accounts');
+    unawaited(GoRouter.of(context).push('/linked-accounts'));
     await tester.pumpAndSettle();
     return auth;
   }
@@ -117,7 +119,7 @@ void main() {
     await tester.pageBack();
     await tester.pumpAndSettle();
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/linked-accounts');
+    unawaited(GoRouter.of(context).push('/linked-accounts'));
     await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(const ValueKey('unlink-google')));

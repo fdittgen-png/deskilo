@@ -20,3 +20,12 @@ linter:
     - prefer_const_declarations
     - avoid_print
     - require_trailing_commas
+    # #1125 — a `Future` nobody waits for is a write nobody checked.
+    # #1094 was exactly that: `rescheduleCheckInReminders` was called
+    # without `await`, so when it threw, the reminders were silently not
+    # scheduled and the caller had already told the member the booking
+    # was made. The rule makes the two cases different in the SOURCE —
+    # `await` means the outcome matters here, `unawaited(...)` means it
+    # deliberately does not — instead of leaving the reader to guess
+    # from a missing keyword.
+    - unawaited_futures

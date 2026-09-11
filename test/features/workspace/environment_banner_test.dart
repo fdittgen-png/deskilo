@@ -2,6 +2,8 @@
 //
 // #917 — the strip that says a workspace is not real, and the one
 // control that can take it away.
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/theme/status_colors.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +52,7 @@ void main() {
       'a pushed screen cannot escape it', (tester) async {
     await _pump(tester);
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/settings');
+    unawaited(GoRouter.of(context).push('/settings'));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('development-banner')), findsOneWidget);
   });
@@ -59,7 +61,7 @@ void main() {
       'confirmation that says what stops happening', (tester) async {
     final workspace = await _pump(tester);
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/settings');
+    unawaited(GoRouter.of(context).push('/settings'));
     await tester.pumpAndSettle();
 
     await tester.scrollUntilVisible(
@@ -83,7 +85,7 @@ void main() {
       'colour: orange for development, green for real', (tester) async {
     await _pump(tester);
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/profiles');
+    unawaited(GoRouter.of(context).push('/profiles'));
     await tester.pumpAndSettle();
     final avatar = tester.widget<CircleAvatar>(
       find.byKey(const ValueKey('profile-env-ws-1')),
@@ -96,7 +98,7 @@ void main() {
       'take the development mark off the documents', (tester) async {
     await _pump(tester, owner: false);
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).push('/settings');
+    unawaited(GoRouter.of(context).push('/settings'));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('workspace-environment')), findsNothing);
     expect(find.byKey(const ValueKey('development-banner')), findsOneWidget,

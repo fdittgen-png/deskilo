@@ -3,6 +3,8 @@
 // Card counts: default + 17 domains (#828 added shared expenses; #767 added price
 // negotiation and scheduled expense; #833 added the early-departure correction and
 // the usage-record removal).
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/validation_policy.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -50,7 +52,7 @@ Future<FakeEventRepository> pumpValidationSettings(
   );
   await tester.pumpAndSettle();
   final context = tester.element(find.byType(Scaffold).first);
-  GoRouter.of(context).push('/validation');
+  unawaited(GoRouter.of(context).push('/validation'));
   await tester.pumpAndSettle();
   return events;
 }
