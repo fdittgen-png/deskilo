@@ -40,6 +40,23 @@ Map<String, Object?> buildInstanceBundle(String root) {
       .whereType<Directory>()
       .toList()
     ..sort((a, b) => a.path.compareTo(b.path));
+  // #1137 — `_shared/` holds modules the functions import as
+  // `../_shared/x.ts`. The deploy endpoint resolves imports against the
+  // uploaded file paths, so every function carries the shared files
+  // under their own path and its own files under `<slug>/` — the layout
+  // the Supabase CLI uploads to the same endpoint. Before this the
+  // bundle skipped `_shared/` (no index.ts) and a self-hosted deploy
+  // would have failed on the first import.
+  final sharedDir = Directory('$root/supabase/functions/_shared');
+  final shared = [
+    if (sharedDir.existsSync())
+      for (final f in sharedDir.listSync().whereType<File>().toList()
+        ..sort((a, b) => a.path.compareTo(b.path)))
+        {
+          'name': '_shared/${f.uri.pathSegments.last}',
+          'content': f.readAsStringSync(),
+        },
+  ];
   return {
     'schema': [
       for (final file in migrations)
@@ -60,9 +77,11 @@ Map<String, Object?> buildInstanceBundle(String root) {
               for (final f in dir.listSync().whereType<File>().toList()
                 ..sort((a, b) => a.path.compareTo(b.path)))
                 {
-                  'name': f.uri.pathSegments.last,
+                  'name':
+                      '${dir.uri.pathSegments.where((s) => s.isNotEmpty).last}/${f.uri.pathSegments.last}',
                   'content': f.readAsStringSync(),
                 },
+              ...shared,
             ],
           },
     ],

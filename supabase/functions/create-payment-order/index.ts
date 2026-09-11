@@ -11,6 +11,7 @@
 // configured providers and, per provider, the missing config fields.
 
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
+import { toMajor } from "../_shared/money.ts";
 
 type Provider = "paypal" | "stripe" | "mollie" | "wero";
 
@@ -58,12 +59,7 @@ const json = (body: unknown, status = 200) =>
  * and `/ 100` was only ever right for two-decimal currencies — a yen
  * order came out 100× too small, a dinar one 10×. Stripe takes minor
  * units directly and needs no conversion. */
-const ZERO_DECIMAL = new Set(["BIF","CLP","DJF","GNF","ISK","JPY","KMF","KRW","PYG","RWF","UGX","VND","VUV","XAF","XOF","XPF"]);
-const THREE_DECIMAL = new Set(["BHD","IQD","JOD","KWD","LYD","OMR","TND"]);
-const minorDigits = (currency: string) =>
-  ZERO_DECIMAL.has(currency.toUpperCase()) ? 0 : THREE_DECIMAL.has(currency.toUpperCase()) ? 3 : 2;
-const major = (minor: number, currency: string) =>
-  (minor / 10 ** minorDigits(currency)).toFixed(minorDigits(currency));
+const major = toMajor; // #1137 — one rule, shared with the webhooks.
 
 /** The effective config of a provider for a workspace: table row (owner UI)
  * overlaid on env-var fallbacks, per field. */
@@ -264,7 +260,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
   // up exactly like the real one; only the charge is refused.
   const { data: ws } = await admin
     .from("workspaces")
-    .select("environment")
+    .select("environment, currency_code")
     .eq("id", workspaceId)
     .maybeSingle();
   if ((ws?.environment ?? "dev") !== "prod") {
@@ -279,11 +275,19 @@ Deno.serve(async (req: Request): Promise<Response> => {
   const provider = body.provider as Provider;
   const memberId = body.member_id as string;
   const amountCents = body.amount_cents as number;
-  const currency = ((body.currency as string) ?? "EUR").toUpperCase();
   const period = body.period as string;
+  // #1138 — the currency is the WORKSPACE's, never the body's. A client
+  // that names a cheaper currency would be charged in it and credited in
+  // the workspace's; the ledger is currency-blind by design. A body that
+  // disagrees is refused rather than corrected, so the mismatch is seen.
+  const currency = String(ws?.currency_code ?? "EUR").toUpperCase();
+  const bodyCurrency = body.currency == null ? null : String(body.currency).toUpperCase();
+  if (bodyCurrency && bodyCurrency !== currency) {
+    return json({ error: "currency_mismatch", workspace: currency, sent: bodyCurrency }, 400);
+  }
   if (
     !provider || !(provider in REQUIRED) || !memberId ||
-    typeof amountCents !== "number" || amountCents <= 0 || !period
+    !Number.isInteger(amountCents) || amountCents <= 0 || !period
   ) {
     return json({ error: "invalid_request" }, 400);
   }

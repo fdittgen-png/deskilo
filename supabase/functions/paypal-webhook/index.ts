@@ -7,6 +7,7 @@
 // goes through the service-role settle_online_payment RPC (idempotent).
 
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
+import { toMinor } from "../_shared/money.ts";
 
 async function paypalConfig(
   admin: SupabaseClient,
@@ -118,10 +119,9 @@ Deno.serve(async (req: Request): Promise<Response> => {
 
   const type = event.event_type as string;
   if (type === "PAYMENT.CAPTURE.COMPLETED") {
-    const amount = resource.amount as { value?: string } | undefined;
-    const cents = amount?.value
-      ? Math.round(parseFloat(amount.value) * 100)
-      : null;
+    const amount = resource.amount as { value?: string; currency_code?: string } | undefined;
+    // #1137 — see _shared/money.ts: the provider's currency, not `* 100`.
+    const cents = toMinor(amount?.value, amount?.currency_code ?? "EUR");
     const { error } = await admin.rpc("settle_online_payment", {
       p_provider: "paypal",
       p_order_id: orderId,
