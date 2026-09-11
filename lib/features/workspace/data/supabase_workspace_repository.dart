@@ -827,22 +827,12 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   }
 
   @override
-  Future<void> setOpenWeekdays(String workspaceId, List<int> weekdays) async {
-    // booking_rules is one jsonb column; merge client-side so the other
-    // keys (horizon, durations, …) survive the write.
-    final row = await _client
-        .from('workspaces')
-        .select('booking_rules')
-        .eq('id', workspaceId)
-        .single();
-    final rules = <String, dynamic>{
-      ...?row['booking_rules'] as Map<String, dynamic>?,
-      'open_weekdays': weekdays,
-    };
-    await _client
-        .from('workspaces')
-        .update({'booking_rules': rules}).eq('id', workspaceId);
-  }
+  Future<void> setOpenWeekdays(String workspaceId, List<int> weekdays) =>
+      // #1147 — ONE key, merged in the database (0195). The SELECT → Dart
+      // merge → UPDATE this replaced put the whole object back from a
+      // snapshot, so two admins editing different rules from screens
+      // opened at different times undid each other — the #1089 shape.
+      _mergeBookingRule(workspaceId, 'open_weekdays', weekdays);
 
   @override
   Future<BookingGranularity> fetchBookingGranularity(
@@ -863,22 +853,10 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   Future<void> setBookingGranularity(
     String workspaceId,
     BookingGranularity granularity,
-  ) async {
-    // booking_rules is one jsonb column; merge client-side so the other
-    // keys (open_weekdays, horizon, durations, …) survive the write.
-    final row = await _client
-        .from('workspaces')
-        .select('booking_rules')
-        .eq('id', workspaceId)
-        .single();
-    final rules = <String, dynamic>{
-      ...?row['booking_rules'] as Map<String, dynamic>?,
-      BookingRulesKeys.granularity: granularity.wireName,
-    };
-    await _client
-        .from('workspaces')
-        .update({'booking_rules': rules}).eq('id', workspaceId);
-  }
+  ) =>
+      // #1147 — see setOpenWeekdays.
+      _mergeBookingRule(
+          workspaceId, BookingRulesKeys.granularity, granularity.wireName);
 
   @override
   Future<WorkHours> fetchWorkHours(String workspaceId) async {
@@ -950,19 +928,12 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
 
   @override
   Future<void> setWorkHours(String workspaceId, WorkHours hours) async {
-    // Same merge-preserving jsonb write as setBookingGranularity.
-    final row = await _client
-        .from('workspaces')
-        .select('booking_rules')
-        .eq('id', workspaceId)
-        .single();
-    final rules = <String, dynamic>{
-      ...?row['booking_rules'] as Map<String, dynamic>?,
-      ...hours.toRules(),
-    };
-    await _client
-        .from('workspaces')
-        .update({'booking_rules': rules}).eq('id', workspaceId);
+    // #1147 — each key merged where the row is; the working hours are a
+    // handful of keys and a stale snapshot of the others must not ride
+    // along with them.
+    for (final entry in hours.toRules().entries) {
+      await _mergeBookingRule(workspaceId, entry.key, entry.value as Object);
+    }
   }
 
   @override

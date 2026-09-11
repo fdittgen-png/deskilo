@@ -23,7 +23,6 @@ const Map<String, bool> functionVerifyJwt = {
   'paypal-webhook': false,
   'send-e-invoice': true,
   'send-push': true,
-  'send-whatsapp': true,
   'stripe-webhook': false,
 };
 

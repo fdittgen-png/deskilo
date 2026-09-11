@@ -74,4 +74,27 @@ void main() {
     // Downgraded, never discarded.
     expect(dropped.error, contains('connection abort'));
   });
+
+  test('#1153 — the sixth dropped connection in ten minutes is an ERROR', () {
+    // One tunnel is a warning. A backend that keeps being unreachable is
+    // not a tunnel, and hiding it under Warnings+ would leave the Errors
+    // chip green while nothing works.
+    final log = TraceLogger.instance;
+    for (var i = 0; i < 4; i++) {
+      log.error('sync', 'run $i',
+          error: 'ClientException: Software caused connection abort');
+    }
+    TraceEntry by(String m) => log.entries.firstWhere((e) => e.message == m);
+    expect(by('run 3').level, TraceLevel.warn,
+        reason: 'four in a row is still a bad connection');
+    log.error('sync', 'run 5',
+        error: 'ClientException: Software caused connection abort');
+    expect(by('run 5').level, TraceLevel.error,
+        reason: 'the fifth is a pattern, and the pattern is the finding');
+    // A real error in between resets the run: it was answered.
+    log.error('sync', 'refused', error: 'PostgrestException(message: no)');
+    log.error('sync', 'run again',
+        error: 'ClientException: Software caused connection abort');
+    expect(by('run again').level, TraceLevel.warn);
+  });
 }

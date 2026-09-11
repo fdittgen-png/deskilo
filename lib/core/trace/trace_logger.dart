@@ -124,6 +124,27 @@ class TraceLogger {
           {Object? error, StackTrace? stackTrace}) =>
       log(TraceLevel.warn, area, message, error: error, stackTrace: stackTrace);
 
+  /// #1153 — per area, how many transient network failures arrived in a
+  /// row, and when the run began. One dropped connection is a tunnel;
+  /// the sixth in ten minutes is a backend that is unreachable or
+  /// misconfigured, and THAT belongs under Errors.
+  final Map<String, ({int count, DateTime since})> _transientRuns = {};
+  static const int _escalateAfter = 5;
+  static const Duration _escalateWithin = Duration(minutes: 10);
+
+  TraceLevel _levelFor(String area, Object? error) {
+    if (!isTransientNetworkFailure(error)) {
+      _transientRuns.remove(area);
+      return TraceLevel.error;
+    }
+    final now = DateTime.now();
+    final run = _transientRuns[area];
+    final fresh = run == null || now.difference(run.since) > _escalateWithin;
+    final count = fresh ? 1 : run.count + 1;
+    _transientRuns[area] = (count: count, since: fresh ? now : run.since);
+    return count >= _escalateAfter ? TraceLevel.error : TraceLevel.warn;
+  }
+
   void error(String area, String message,
           {Object? error, StackTrace? stackTrace}) =>
       log(
@@ -137,7 +158,7 @@ class TraceLogger {
         // has a Warnings+ filter and nothing is lost. What changes is
         // that ERROR comes to mean "the app is wrong" rather than "the
         // network was".
-        isTransientNetworkFailure(error) ? TraceLevel.warn : TraceLevel.error,
+        _levelFor(area, error),
         area,
         message,
         error: error,

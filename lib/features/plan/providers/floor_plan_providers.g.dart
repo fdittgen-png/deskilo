@@ -184,18 +184,8 @@ final class FloorPlanFamily extends $Family
   String toString() => r'floorPlanProvider';
 }
 
-/// The level's decoded background image (0036), or null when none is set.
-/// Fetched bytes are decoded once and cached; the plan and editor paint
-/// it behind the grid. Failures degrade to null — the schematic still
-/// renders, the photo is just absent.
-
 @ProviderFor(levelBackground)
 final levelBackgroundProvider = LevelBackgroundFamily._();
-
-/// The level's decoded background image (0036), or null when none is set.
-/// Fetched bytes are decoded once and cached; the plan and editor paint
-/// it behind the grid. Failures degrade to null — the schematic still
-/// renders, the photo is just absent.
 
 final class LevelBackgroundProvider
     extends
@@ -205,17 +195,13 @@ final class LevelBackgroundProvider
           FutureOr<ui.Image?>
         >
     with $FutureModifier<ui.Image?>, $FutureProvider<ui.Image?> {
-  /// The level's decoded background image (0036), or null when none is set.
-  /// Fetched bytes are decoded once and cached; the plan and editor paint
-  /// it behind the grid. Failures degrade to null — the schematic still
-  /// renders, the photo is just absent.
   LevelBackgroundProvider._({
     required LevelBackgroundFamily super.from,
     required String super.argument,
   }) : super(
          retry: null,
          name: r'levelBackgroundProvider',
-         isAutoDispose: true,
+         isAutoDispose: false,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -252,12 +238,7 @@ final class LevelBackgroundProvider
   }
 }
 
-String _$levelBackgroundHash() => r'b1a6eb8debeb208e9b18b304f3fb7bc77f7b2422';
-
-/// The level's decoded background image (0036), or null when none is set.
-/// Fetched bytes are decoded once and cached; the plan and editor paint
-/// it behind the grid. Failures degrade to null — the schematic still
-/// renders, the photo is just absent.
+String _$levelBackgroundHash() => r'a0c7c0e404333b453e6071bda8d8ba229191ed5c';
 
 final class LevelBackgroundFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<ui.Image?>, String> {
@@ -267,13 +248,8 @@ final class LevelBackgroundFamily extends $Family
         name: r'levelBackgroundProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: true,
+        isAutoDispose: false,
       );
-
-  /// The level's decoded background image (0036), or null when none is set.
-  /// Fetched bytes are decoded once and cached; the plan and editor paint
-  /// it behind the grid. Failures degrade to null — the schematic still
-  /// renders, the photo is just absent.
 
   LevelBackgroundProvider call(String levelId) =>
       LevelBackgroundProvider._(argument: levelId, from: this);
@@ -304,7 +280,7 @@ final class PlanImageProvider
   }) : super(
          retry: null,
          name: r'planImageProvider',
-         isAutoDispose: true,
+         isAutoDispose: false,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -341,7 +317,7 @@ final class PlanImageProvider
   }
 }
 
-String _$planImageHash() => r'54f4e8a1e4a12a890133e533bed7270008a54287';
+String _$planImageHash() => r'051d84168459c621d1305c36d2f8764176c4ca37';
 
 /// A single plan illustration image decoded (0037), keyed by image id.
 
@@ -353,7 +329,7 @@ final class PlanImageFamily extends $Family
         name: r'planImageProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: true,
+        isAutoDispose: false,
       );
 
   /// A single plan illustration image decoded (0037), keyed by image id.
