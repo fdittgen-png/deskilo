@@ -44,6 +44,10 @@ class ReportStrings {
     this.categoryService = 'Service',
     this.courtesyMr = 'Mr',
     this.courtesyMrs = 'Ms',
+    this.paymentsCredits = 'Payments & credits',
+    this.agreementExtraHalfDay = 'Extra half-day',
+    this.eventTypePayment = 'Payment',
+    this.paymentsPendingTag = 'pending validation',
     this.overage = _overage,
     this.participation = _participation,
     this.subscription = _subscription,
@@ -79,6 +83,10 @@ class ReportStrings {
   final String categoryService;
   final String courtesyMr;
   final String courtesyMrs;
+  final String paymentsCredits;
+  final String agreementExtraHalfDay;
+  final String eventTypePayment;
+  final String paymentsPendingTag;
 
   /// Plural-bearing sentences are FUNCTIONS: the rule belongs to the
   /// language and the ARB already expresses it — carried across, never

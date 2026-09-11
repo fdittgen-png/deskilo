@@ -12,6 +12,8 @@ import '../../../l10n/app_localizations.dart';
 import '../../events/providers/event_providers.dart';
 import '../../members/providers/directory_providers.dart';
 import '../../money/presentation/invoice_actions.dart';
+import '../../money/presentation/report_facts_of.dart';
+import '../../money/presentation/report_strings_l10n.dart';
 import '../../money/presentation/report_layout_actions.dart';
 import '../../money/providers/money_providers.dart';
 import '../domain/member.dart';
@@ -216,11 +218,11 @@ Future<void> sendMemberAgreement(
         return;
       }
       final docL10n = l10nForLanguage(language);
-      final data = agreementReportData(context, ref,
+      final data = agreementReportData(
+          reportStringsFor(context, l10n: docL10n, localeName: language),
+          agreementFactsOf(ref),
           memberName: name,
-          subscriptionPct: member.subscriptionPct,
-          l10nOverride: docL10n,
-          localeName: language);
+          subscriptionPct: member.subscriptionPct);
       final report = renderLetterDoc(context, ref,
           docId: 'agreement', data: data, language: language);
       final pdf = await letterDocPdf(context, ref,

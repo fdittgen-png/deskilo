@@ -36,6 +36,10 @@ void main() {
     expect(d.categoryService, en.categoryService);
     expect(d.courtesyMr, en.courtesyMr);
     expect(d.courtesyMrs, en.courtesyMrs);
+    expect(d.paymentsCredits, en.paymentsCredits);
+    expect(d.agreementExtraHalfDay, en.agreementExtraHalfDay);
+    expect(d.eventTypePayment, en.eventTypePayment);
+    expect(d.paymentsPendingTag, en.paymentsPendingTag);
     expect(d.overage(3), en.overage(3));
     expect(d.participation(50), en.participation(50));
     expect(d.subscription(100), en.subscription(100));
@@ -69,6 +73,9 @@ void main() {
       (fr.categoryOverage, d.categoryOverage),
       // categoryService is 'Service' in both languages — not listed.
       (fr.courtesyMrs, d.courtesyMrs),
+      (fr.paymentsCredits, d.paymentsCredits),
+      (fr.agreementExtraHalfDay, d.agreementExtraHalfDay),
+      (fr.paymentsPendingTag, d.paymentsPendingTag),
       (fr.overage(3), d.overage(3)),
       (fr.participation(50), d.participation(50)),
       (fr.subscription(100), d.subscription(100)),

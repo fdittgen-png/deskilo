@@ -5,6 +5,8 @@
 // their own presets, self-service on the Money tab, sendable per member
 // and exportable from workspace settings.
 import 'package:deskilo/features/money/presentation/invoice_actions.dart';
+import 'package:deskilo/features/money/presentation/report_facts_of.dart';
+import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
@@ -49,11 +51,10 @@ Future<List<Map<String, Object?>>> agreementLines(
               }
             }
             lines = (agreementReportData(
-              context,
-              ref,
+              reportStringsFor(context, localeName: 'en'),
+              agreementFactsOf(ref),
               memberName: 'Flo',
               subscriptionPct: 100,
-              localeName: 'en',
             )['lines'] as List)
                 .cast<Map<String, Object?>>();
             return const SizedBox.shrink();

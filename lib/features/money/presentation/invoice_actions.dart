@@ -53,28 +53,19 @@ import 'widgets/report_preview.dart';
 import 'e_invoice_identity.dart';
 import 'widgets/einvoice_environment_picker.dart';
 import '../domain/invoice_line_text.dart';
+import '../domain/report_facts.dart';
 import '../domain/report_strings.dart';
+import 'report_facts_of.dart';
 import 'report_strings_l10n.dart';
 import 'period_label.dart';
 import 'widgets/e_invoice_sheet.dart';
 import 'widgets/invoice_detail_sheet.dart';
 import 'widgets/invoice_form_sheet.dart';
 import 'widgets/invoicing_dashboard.dart';
-import '../../../core/time/clock.dart';
 import '../../../core/time/workspace_time.dart';
-import '../../../core/time/work_hours.dart';
-import '../../workspace/presentation/feature_names.dart';
 import '../../events/domain/workspace_event.dart';
-import '../../plan/domain/accessory.dart';
 import '../../plan/providers/accessory_providers.dart';
 import '../../plan/providers/floor_plan_providers.dart';
-import '../domain/package.dart';
-import '../domain/service_item.dart';
-import '../domain/fee_band.dart';
-import '../../plan/domain/desk.dart';
-import '../../plan/domain/office.dart';
-import '../../plan/domain/level.dart';
-import '../../plan/domain/floor_plan.dart';
 import '../../workspace/domain/member.dart';
 import '../../../core/locale/report_language.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -406,7 +397,7 @@ Map<String, Object?> invoiceReportData(
 /// packages and credits, with the balance as the total. Zero rows are
 /// skipped so the document reads like the bill.
 Map<String, Object?> statementReportData(
-  BuildContext context, {
+  ReportStrings strings, {
   required Statement statement,
   required String workspaceName,
   required String memberName,
@@ -414,7 +405,6 @@ Map<String, Object?> statementReportData(
   required String currencyCode,
   Workspace? workspace,
 }) {
-  final l10n = AppLocalizations.of(context);
   final currency = moneyFormat(currencyCode);
   String money(int cents) => currency.formatMinor(cents);
   // #870 — the seller kind decides what the recurring position is
@@ -426,7 +416,7 @@ Map<String, Object?> statementReportData(
     if (statement.feeCents > 0)
       {
         'label': subscriptionLabel(
-          reportStringsOf(l10n),
+          strings,
           statement.subscriptionPct,
           association: association,
         ),
@@ -435,39 +425,37 @@ Map<String, Object?> statementReportData(
       },
     if (statement.overageCents > 0)
       {
-        'label':
-            l10n?.billOverage(statement.extraHalfDays) ??
-            '${statement.extraHalfDays} extra half-days',
+        'label': strings.overage(statement.extraHalfDays),
         'amount': money(statement.overageCents),
         'negative': false,
       },
     if (statement.accessorySupplementCents > 0)
       {
-        'label': l10n?.billAccessorySupplements ?? 'Accessory supplements',
+        'label': strings.accessorySupplements,
         'amount': money(statement.accessorySupplementCents),
         'negative': false,
       },
     if (statement.levelSupplementCents > 0)
       {
-        'label': l10n?.levelSupplementLabel ?? 'Level reservations',
+        'label': strings.levelReservations,
         'amount': money(statement.levelSupplementCents),
         'negative': false,
       },
     if (statement.officeSupplementCents > 0)
       {
-        'label': l10n?.officeSupplementLabel ?? 'Office reservations',
+        'label': strings.officeReservations,
         'amount': money(statement.officeSupplementCents),
         'negative': false,
       },
     if (statement.deskSupplementCents > 0)
       {
-        'label': l10n?.deskSupplementLabel ?? 'Desk reservations',
+        'label': strings.deskReservations,
         'amount': money(statement.deskSupplementCents),
         'negative': false,
       },
     if (statement.creditsCents != 0)
       {
-        'label': l10n?.billPaymentsCredits ?? 'Payments & credits',
+        'label': strings.paymentsCredits,
         'amount': money(statement.creditsCents),
         'negative': statement.creditsCents > 0,
       },
@@ -492,7 +480,7 @@ Map<String, Object?> statementReportData(
     'has_vat': false,
     'lines': lines,
     'vat': const <Map<String, Object?>>[],
-    ...legalMentionData(reportStringsOf(l10n), workspace),
+    ...legalMentionData(strings, workspace),
   };
 }
 
@@ -502,86 +490,58 @@ Map<String, Object?> statementReportData(
 /// accessory supplements. The owner/admin SENDS it; the member reads,
 /// shares or downloads it self-service.
 Map<String, Object?> agreementReportData(
-  BuildContext context,
-  WidgetRef ref, {
+  ReportStrings strings,
+  AgreementFacts facts, {
   required String memberName,
   required int subscriptionPct,
-  AppLocalizations? l10nOverride,
-  String? localeName,
 }) {
-  final l10n = l10nOverride ?? AppLocalizations.of(context);
-  final workspace = ref.read(currentWorkspaceProvider).value;
+  final workspace = facts.workspace;
   final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
   String money(int cents) => currency.formatMinor(cents);
-  final bands = ref.read(feeBandsProvider).value ?? const <FeeBand>[];
-  final band = bands
+  final band = facts.bands
       .where((b) => b.fromPct < subscriptionPct && subscriptionPct <= b.toPct)
       .firstOrNull;
-  final services = ref.read(servicesProvider).value ?? const <ServiceItem>[];
-  final packages =
-      ref.read(packagesProvider).value?.where((p) => p.active) ??
-      const <Package>[];
-  final levels = ref.read(levelsProvider).value ?? const <Level>[];
-  final offices = [
-    for (final level in levels)
-      ...(ref.read(floorPlanProvider(level.id)).value?.offices ??
-          const <Office>[]),
-  ];
-  // #638 — DESKS are priced (0059), billed (`desk_supplement_cents`) and
-  // shown on the bill as "Desk reservations": the agreement disclosed
-  // every other scale but this one, so a member could be charged a price
-  // their own agreement never named.
-  final desks = [
-    for (final level in levels)
-      ...(ref.read(floorPlanProvider(level.id)).value?.desks ?? const <Desk>[]),
-  ];
-  final accessories =
-      ref.read(accessoriesProvider()).value ?? const <Accessory>[];
-  final association = ref.read(sellerIsAssociationProvider);
   final lines = <Map<String, Object?>>[
     if (band != null) ...[
       {
         'label': subscriptionLabel(
-          reportStringsOf(l10n),
+          strings,
           subscriptionPct,
-          association: association,
+          association: facts.association,
         ),
         'amount': money(band.feeCents),
       },
       {
-        'label': l10n?.agreementExtraHalfDay ?? 'Extra half-day',
+        'label': strings.agreementExtraHalfDay,
         'amount': money(band.overageFeeCents),
       },
     ],
-    for (final service in services)
+    for (final service in facts.services)
       {'label': service.name, 'amount': money(service.priceCents)},
-    for (final package in packages)
+    for (final package in facts.packages)
       {
         'label': '${package.name} (${package.days}d)',
         'amount': money(package.priceCents),
       },
-    for (final level in levels)
+    for (final level in facts.levels)
       if (level.bookableAsWhole && level.priceCents > 0)
         {
-          'label':
-              '${level.name} — ${l10n?.levelSupplementLabel ?? 'Level reservations'}',
+          'label': '${level.name} — ${strings.levelReservations}',
           'amount': money(level.priceCents),
         },
-    for (final office in offices)
+    for (final office in facts.offices)
       if (office.bookableAsWhole && office.priceCents > 0)
         {
-          'label':
-              '${office.name} — ${l10n?.officeSupplementLabel ?? 'Office reservations'}',
+          'label': '${office.name} — ${strings.officeReservations}',
           'amount': money(office.priceCents),
         },
-    for (final desk in desks)
+    for (final desk in facts.desks)
       if (desk.bookableAsWhole && desk.priceCents > 0)
         {
-          'label':
-              '${desk.name} — ${l10n?.deskSupplementLabel ?? 'Desk reservations'}',
+          'label': '${desk.name} — ${strings.deskReservations}',
           'amount': money(desk.priceCents),
         },
-    for (final accessory in accessories)
+    for (final accessory in facts.accessories)
       if (accessory.supplementCents > 0)
         {'label': accessory.name, 'amount': money(accessory.supplementCents)},
   ];
@@ -592,9 +552,7 @@ Map<String, Object?> agreementReportData(
     'subscription_pct': subscriptionPct,
     'number': '',
     'period': '',
-    'issued': DateFormat.yMMMd(
-      localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
-    ).format(ref.read(clockProvider).now()),
+    'issued': DateFormat.yMMMd(strings.dateLocale).format(facts.now),
     'issued_by': workspace?.name ?? '',
     'replaces': '',
     'total': band == null ? '' : money(band.feeCents),
@@ -608,7 +566,7 @@ Map<String, Object?> agreementReportData(
     'has_vat': false,
     'lines': lines,
     'vat': const <Map<String, Object?>>[],
-    ...legalMentionData(reportStringsOf(l10n), workspace),
+    ...legalMentionData(strings, workspace),
   };
 }
 
@@ -616,27 +574,22 @@ Map<String, Object?> agreementReportData(
 /// declared or had validated in [period] — the little balance sheet a
 /// member can pull self-service.
 Map<String, Object?> paymentsReportData(
-  BuildContext context,
-  WidgetRef ref, {
+  ReportStrings strings,
+  PaymentsFacts facts, {
   required String period,
   required String memberName,
-  AppLocalizations? l10nOverride,
-  String? localeName,
 }) {
-  final l10n = l10nOverride ?? AppLocalizations.of(context);
-  final workspace = ref.read(currentWorkspaceProvider).value;
-  final me = ref.read(myMemberProvider).value;
+  final workspace = facts.workspace;
+  final me = facts.me;
   final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
   String money(int cents) => currency.formatMinor(cents);
-  final dateFormat = DateFormat.yMMMd(
-    localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
-  );
-  final ledger = (ref.read(myLedgerProvider).value ?? const <LedgerEntry>[])
+  final dateFormat = DateFormat.yMMMd(strings.dateLocale);
+  final ledger = facts.ledger
       .where(
         (entry) => entry.period == period && entry.kind == LedgerKind.credit,
       )
       .toList();
-  final pending = (ref.read(eventsProvider).value ?? const [])
+  final pending = facts.events
       .where(
         (event) =>
             event.isPending &&
@@ -655,14 +608,14 @@ Map<String, Object?> paymentsReportData(
     (sum, event) =>
         sum + ((event.payload['amount_cents'] as num?)?.toInt() ?? 0),
   );
-  final statement = ref.read(myStatementProvider(period)).value;
+  final statement = facts.statement;
   return <String, Object?>{
     'workspace': workspace?.name ?? '',
     'workspace_address': workspace?.address ?? '',
     'member': memberName,
     'number': '',
     'period': period,
-    'issued': dateFormat.format(ref.read(clockProvider).now()),
+    'issued': dateFormat.format(facts.now),
     'issued_by': workspace?.name ?? '',
     'replaces': '',
     'total': money(statement?.balanceCents ?? 0),
@@ -687,51 +640,38 @@ Map<String, Object?> paymentsReportData(
       for (final entry in ledger)
         {
           'label':
-              '${dateFormat.format(WorkspaceTime.dateOf(entry.occurredOn ?? entry.createdAt))} · ${entry.description.isEmpty ? (l10n?.billPaymentsCredits ?? 'Payments & credits') : entry.description}',
+              '${dateFormat.format(WorkspaceTime.dateOf(entry.occurredOn ?? entry.createdAt))} · ${entry.description.isEmpty ? strings.paymentsCredits : entry.description}',
           'amount': money(entry.amountCents),
         },
       for (final event in pending)
         {
           'label':
-              '${event.payload['note'] as String? ?? (l10n?.eventTypePayment ?? 'Payment')} — ${l10n?.paymentsPendingTag ?? 'pending validation'}',
+              '${event.payload['note'] as String? ?? strings.eventTypePayment} — ${strings.paymentsPendingTag}',
           'amount': money(
             (event.payload['amount_cents'] as num?)?.toInt() ?? 0,
           ),
         },
     ],
     'vat': const <Map<String, Object?>>[],
-    ...legalMentionData(reportStringsOf(l10n), workspace),
+    ...legalMentionData(strings, workspace),
   };
 }
 
 /// The WORKSPACE REPORT data model (#494): everything about the space —
 /// identity, floor-plan counts, availability, features, prices.
 Map<String, Object?> workspaceReportData(
-  BuildContext context,
-  WidgetRef ref, {
-  AppLocalizations? l10nOverride,
-  String? localeName,
-}) {
-  final l10n = l10nOverride ?? AppLocalizations.of(context);
-  final workspace = ref.read(currentWorkspaceProvider).value;
-  final association = ref.read(sellerIsAssociationProvider);
+  ReportStrings strings,
+  WorkspaceFacts facts,
+) {
+  final workspace = facts.workspace;
   final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
   String money(int cents) => currency.formatMinor(cents);
-  final levels = ref.read(levelsProvider).value ?? const <Level>[];
-  final plans = [
-    for (final level in levels) ref.read(floorPlanProvider(level.id)).value,
-  ].whereType<FloorPlan>().toList();
-  final features = ref.read(enabledFeaturesSyncProvider);
-  final members = ref.read(workspaceMembersProvider).value ?? const [];
-  final bands = ref.read(feeBandsProvider).value ?? const <FeeBand>[];
-  final services = ref.read(servicesProvider).value ?? const <ServiceItem>[];
-  final openDays = ref.read(openWeekdaysProvider).value ?? const <int>[];
-  final hours = WorkHours.current;
+  final levels = facts.levels;
+  final plans = facts.plans;
+  final hours = facts.hours;
   String clock(int minutes) =>
       '${(minutes ~/ 60).toString().padLeft(2, '0')}:${(minutes % 60).toString().padLeft(2, '0')}';
-  final dayNames = DateFormat.E(
-    localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
-  );
+  final dayNames = DateFormat.E(strings.dateLocale);
   final monday = DateTime(2024, 1, 1); // a Monday — weekday names only.
   return <String, Object?>{
     'workspace': workspace?.name ?? '',
@@ -739,9 +679,7 @@ Map<String, Object?> workspaceReportData(
     'member': '',
     'number': '',
     'period': '',
-    'issued': DateFormat.yMMMd(
-      localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
-    ).format(ref.read(clockProvider).now()),
+    'issued': DateFormat.yMMMd(strings.dateLocale).format(facts.now),
     'issued_by': workspace?.name ?? '',
     'replaces': '',
     'total': '',
@@ -756,7 +694,7 @@ Map<String, Object?> workspaceReportData(
     'country': workspace?.countryCode ?? '',
     'currency': workspace?.currencyCode ?? '',
     'timezone': workspace?.timezone ?? '',
-    'members_count': members.length,
+    'members_count': facts.membersCount,
     'levels_count': levels.length,
     'offices_count': plans.fold<int>(
       0,
@@ -764,27 +702,27 @@ Map<String, Object?> workspaceReportData(
     ),
     'desks_count': plans.fold<int>(0, (sum, plan) => sum + plan.desks.length),
     'seats_count': plans.fold<int>(0, (sum, plan) => sum + plan.seats.length),
-    'open_days': openDays
+    'open_days': facts.openDays
         .map((d) => dayNames.format(monday.add(Duration(days: d - 1))))
         .join(', '),
     'work_hours':
         '${clock(hours.startMinutes)}–${clock(hours.halfBoundaryMinutes)}–${clock(hours.endMinutes)}',
     'features': [
-      for (final feature in features) {'label': featureName(l10n, feature)},
+      for (final label in facts.featureLabels) {'label': label},
     ],
     'lines': [
-      for (final band in bands)
+      for (final band in facts.bands)
         {
           'label':
-              '${subscriptionLabel(reportStringsOf(l10n), band.toPct, association: association)}'
+              '${subscriptionLabel(strings, band.toPct, association: facts.association)}'
               ' (${band.fromPct + 1}–${band.toPct}%)',
           'amount': money(band.feeCents),
         },
-      for (final service in services)
+      for (final service in facts.services)
         {'label': service.name, 'amount': money(service.priceCents)},
     ],
     'vat': const <Map<String, Object?>>[],
-    ...legalMentionData(reportStringsOf(l10n), workspace),
+    ...legalMentionData(strings, workspace),
   };
 }
 
@@ -1095,21 +1033,15 @@ Future<({Uint8List bytes, String fileName})> letterDocPdf(
 /// The reminder-letter data model (#472/#474) — the invoice basics plus
 /// the level, the letter date and the days the invoice sits open.
 Map<String, Object?> reminderReportData(
-  BuildContext context,
-  WidgetRef ref,
+  ReportStrings strings,
+  ReminderFacts facts,
   Invoice invoice, {
   required int level,
-  AppLocalizations? l10nOverride,
-  String? localeName,
 }) {
   final currency = moneyFormat(invoice.currency);
-  final dateFormat = DateFormat.yMMMd(
-    localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
-  );
-  final now = ref.read(clockProvider).now();
-  final l10n = l10nOverride ?? AppLocalizations.of(context);
-  final strings = reportStringsOf(l10n);
-  final workspace = ref.read(currentWorkspaceProvider).value;
+  final dateFormat = DateFormat.yMMMd(strings.dateLocale);
+  final now = facts.now;
+  final workspace = facts.workspace;
   return <String, Object?>{
     'workspace': invoice.workspaceName,
     'workspace_address': invoice.workspaceAddress,
@@ -1135,7 +1067,7 @@ Map<String, Object?> reminderReportData(
       clientName: _clientNameOf(invoice),
       reverseCharged: invoice.isReverseCharged,
       counterpartyCategory: invoice.counterpartyCategory,
-      memberTerms: memberTermsFor(ref, invoice.memberId),
+      memberTerms: facts.memberTerms,
     ),
   };
 }
@@ -1744,12 +1676,11 @@ Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
       ? (l10n?.reminderPdfTitleFriendly ?? 'Payment reminder')
       : '${l10n?.reminderPdfTitleFirm ?? 'Reminder'} $level';
   final data = reminderReportData(
-    context,
-    ref,
+    reportStringsFor(context,
+        l10n: l10n, localeName: language.isEmpty ? null : language),
+    reminderFactsOf(ref, invoice),
     invoice,
     level: level,
-    l10nOverride: l10n,
-    localeName: language.isEmpty ? null : language,
   );
   final template = invoicePdfTemplateFor(ref).forLocale(language);
   final bands = draftBands ?? template.reminderBands(level);
