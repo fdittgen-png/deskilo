@@ -40,7 +40,14 @@ Future<FloorPlan> floorPlan(Ref ref, String levelId) {
 /// Fetched bytes are decoded once and cached; the plan and editor paint
 /// it behind the grid. Failures degrade to null — the schematic still
 /// renders, the photo is just absent.
-@riverpod
+// #1149 — kept alive and disposed, decoded once at a bounded width.
+// AutoDispose meant every level-tab switch re-downloaded and re-decoded
+// a full-resolution photo, and the `ui.Image` was never disposed — the
+// plan, the reserve hub and the kiosk all paid it. 2048px is plenty for
+// a plan behind a grid and bounds the decode's memory on a phone.
+const int _maxBackgroundWidth = 2048;
+
+@Riverpod(keepAlive: true)
 Future<ui.Image?> levelBackground(Ref ref, String levelId) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return null;
@@ -48,20 +55,27 @@ Future<ui.Image?> levelBackground(Ref ref, String levelId) async {
       .watch(floorPlanRepositoryProvider)
       .fetchLevelBackground(workspace.id, levelId);
   if (bytes == null || bytes.isEmpty) return null;
-  final codec = await ui.instantiateImageCodec(bytes);
+  final image = await _decodeBounded(bytes);
+  ref.onDispose(image.dispose);
+  return image;
+}
+
+Future<ui.Image> _decodeBounded(Uint8List bytes) async {
+  final codec =
+      await ui.instantiateImageCodec(bytes, targetWidth: _maxBackgroundWidth);
   final frame = await codec.getNextFrame();
   return frame.image;
 }
 
 /// A single plan illustration image decoded (0037), keyed by image id.
-@riverpod
+@Riverpod(keepAlive: true)
 Future<ui.Image?> planImage(Ref ref, String imageId) async {
   final Uint8List? bytes =
       await ref.watch(floorPlanRepositoryProvider).fetchPlanImageBytes(imageId);
   if (bytes == null || bytes.isEmpty) return null;
-  final codec = await ui.instantiateImageCodec(bytes);
-  final frame = await codec.getNextFrame();
-  return frame.image;
+  final image = await _decodeBounded(bytes);
+  ref.onDispose(image.dispose);
+  return image;
 }
 
 /// seat/office id → display name for the active workspace (labels in the
