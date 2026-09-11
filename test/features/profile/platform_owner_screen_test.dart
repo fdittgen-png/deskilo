@@ -3,6 +3,7 @@
 // #937 — the platform owner's overview on the Profiles list: every
 // workspace they are NOT in, greyed out, and its owners on tap.
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/features/profile/presentation/screens/profiles_screen.dart';
 import 'package:deskilo/features/workspace/domain/workspace_overview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,6 +51,8 @@ final _section = find.byKey(const ValueKey('profiles-platform-section'));
 final _foreign = find.byKey(const ValueKey('platform-workspace-ws-9'));
 
 void main() {
+  _pairing();
+
   testWidgets('nothing changes for anyone who is not the platform owner',
       (tester) async {
     await pumpProfiles(tester, platformOwner: false);
@@ -77,5 +80,63 @@ void main() {
     expect(find.text('Mathieu'), findsOneWidget);
     expect(find.text('m@x.fr'), findsOneWidget);
     expect(workspace.ownerReads, ['ws-9']);
+  });
+}
+
+// #987 — a dev and its prod are ONE space with two sides.
+//
+// The list of workspaces you belong to has rendered a pair as a single
+// row with a DEV/PROD toggle since that issue. This list emitted a card
+// per workspace ROW, so the same space appeared twice — once
+// "Development", once "Production" — as though the two were unrelated
+// and belonged to different people. It could not do otherwise:
+// `list_all_workspaces` did not return `pair_id`, so the screen had no
+// way to know.
+void _pairing() {
+  group('a twin pair is one entry (#987)', () {
+    test('the two sides collapse, dev first', () {
+      final groups = groupedOverviews(const [
+        WorkspaceOverview(
+            id: 'p', name: 'zemare', environment: 'prod', pairId: 'pair-1'),
+        WorkspaceOverview(
+            id: 'd', name: 'zemare', environment: 'dev', pairId: 'pair-1'),
+      ]);
+      expect(groups, hasLength(1), reason: 'one space, not two');
+      expect(groups.single.map((w) => w.id), ['d', 'p'],
+          reason: 'the dev side leads — it is the one that always exists');
+    });
+
+    test('a workspace with no twin stands alone', () {
+      final groups = groupedOverviews(const [
+        WorkspaceOverview(id: 'a', name: 'Alone'),
+        WorkspaceOverview(id: 'b', name: 'Also alone'),
+      ]);
+      expect(groups, hasLength(2));
+    });
+
+    test('two different pairs do not merge', () {
+      final groups = groupedOverviews(const [
+        WorkspaceOverview(
+            id: 'a1', name: 'A', environment: 'dev', pairId: 'pair-a'),
+        WorkspaceOverview(
+            id: 'b1', name: 'B', environment: 'dev', pairId: 'pair-b'),
+        WorkspaceOverview(
+            id: 'a2', name: 'A', environment: 'prod', pairId: 'pair-a'),
+      ]);
+      expect(groups, hasLength(2));
+      expect(groups.firstWhere((g) => g.first.pairId == 'pair-a'), hasLength(2));
+    });
+
+    test('a half pair — the twin not returned — still shows once', () {
+      // The prod side can be absent from this list (deleted, or filtered
+      // out as one the caller is a member of). One card, named for the
+      // side that is there.
+      final groups = groupedOverviews(const [
+        WorkspaceOverview(
+            id: 'd', name: 'zemare', environment: 'dev', pairId: 'pair-1'),
+      ]);
+      expect(groups, hasLength(1));
+      expect(groups.single, hasLength(1));
+    });
   });
 }

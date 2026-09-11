@@ -193,22 +193,34 @@ class ProfilesScreen extends ConsumerWidget {
                 style: Theme.of(context).textTheme.titleSmall,
               ),
             ),
-            for (final overview
-                in (ref.watch(allWorkspacesProvider).value ??
-                        const <WorkspaceOverview>[])
-                    .where((w) => !w.isMember))
+            // #987 — a twin pair is ONE space with two sides, and the
+            // list above has rendered it as one row since that issue.
+            // This list used to emit a card per workspace row, so the
+            // same space appeared twice, once "Development" and once
+            // "Production", as though they were unrelated and belonged
+            // to different people.
+            for (final group in groupedOverviews(
+              (ref.watch(allWorkspacesProvider).value ??
+                      const <WorkspaceOverview>[])
+                  .where((w) => !w.isMember)
+                  .toList(),
+            ))
               Opacity(
                 opacity: 0.55,
                 child: Card(
                   child: ListTile(
-                    key: ValueKey('platform-workspace-${overview.id}'),
+                    key: ValueKey('platform-workspace-${group.first.id}'),
                     leading: const Icon(Icons.lock_outline),
-                    title: Text(overview.name),
+                    title: Text(group.first.name),
                     subtitle: Text(
-                      '${overview.isDevelopment ? (l10n?.environmentDev ?? 'Development') : (l10n?.environmentProd ?? 'Production')}'
-                      ' · ${l10n?.profilesNotMember(overview.memberCount) ?? 'Not a member · ${overview.memberCount} members'}',
+                      '${_environmentsLabel(l10n, group)}'
+                      ' · ${l10n?.profilesNotMember(group.first.memberCount) ?? 'Not a member · ${group.first.memberCount} members'}',
                     ),
-                    onTap: () => showWorkspaceOwnersSheet(context, ref, overview),
+                    // The sheet is about who to write to, and a pair has
+                    // one set of owners — the dev side is the one that
+                    // always exists (prod ⊆ dev, 0185).
+                    onTap: () =>
+                        showWorkspaceOwnersSheet(context, ref, group.first),
                   ),
                 ),
               ),
@@ -261,4 +273,50 @@ Workspace? _pairedTwin(List<Workspace> all, Workspace workspace) {
   return all
       .where((w) => w.pairId == workspace.pairId && w.id != workspace.id)
       .firstOrNull;
+}
+
+/// #987 — the twins of one space, side by side, as a single entry.
+///
+/// A pair is keyed by `pairId`; anything without one stands alone. The
+/// server already orders by name then pair then environment, so a group
+/// is a run of adjacent rows and the order inside it is dev first.
+List<List<WorkspaceOverview>> groupedOverviews(List<WorkspaceOverview> all) {
+  final groups = <List<WorkspaceOverview>>[];
+  final byPair = <String, List<WorkspaceOverview>>{};
+  for (final w in all) {
+    if (!w.isPaired) {
+      groups.add([w]);
+      continue;
+    }
+    final existing = byPair[w.pairId];
+    if (existing == null) {
+      final group = [w];
+      byPair[w.pairId] = group;
+      groups.add(group);
+    } else {
+      existing.add(w);
+    }
+  }
+  // Dev first inside a pair, whatever order the rows arrived in: the
+  // dev side is the one that always exists.
+  for (final g in groups) {
+    g.sort((a, b) => a.isDevelopment == b.isDevelopment
+        ? 0
+        : (a.isDevelopment ? -1 : 1));
+  }
+  return groups;
+}
+
+/// "Development" alone, or "Development + Production" for a pair — the
+/// two sides named rather than two cards.
+String _environmentsLabel(
+  AppLocalizations? l10n,
+  List<WorkspaceOverview> group,
+) {
+  final dev = l10n?.environmentDev ?? 'Development';
+  final prod = l10n?.environmentProd ?? 'Production';
+  if (group.length < 2) {
+    return group.first.isDevelopment ? dev : prod;
+  }
+  return '$dev + $prod';
 }

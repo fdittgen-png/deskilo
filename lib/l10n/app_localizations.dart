@@ -12944,7 +12944,7 @@ abstract class AppLocalizations {
   /// #937 platform owner: profilesNotMember
   ///
   /// In en, this message translates to:
-  /// **'Not a member · {count} members'**
+  /// **'Not a member · {count, plural, one{1 member} other{{count} members}}'**
   String profilesNotMember(int count);
 
   /// #937 platform owner: profilesOwnersOf
