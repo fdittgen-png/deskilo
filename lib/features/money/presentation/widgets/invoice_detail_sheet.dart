@@ -14,7 +14,8 @@ import '../../domain/billing_rules.dart';
 import '../../domain/invoice.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_journey.dart';
-import '../invoice_line_text.dart';
+import '../../domain/invoice_line_text.dart';
+import '../report_strings_l10n.dart';
 import '../invoice_status.dart';
 import '../period_label.dart';
 import 'invoice_journey_view.dart';
@@ -254,7 +255,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
                   padding: const EdgeInsets.symmetric(vertical: 2),
                   child: Row(children: [
                     Expanded(
-                        child: Text(invoiceLineText(l10n, position,
+                        child: Text(invoiceLineText(reportStringsOf(l10n), position,
                             association: association,
                             period: invoice.period))),
                     const SizedBox(width: AppSpacing.sm),
@@ -337,7 +338,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
                             child: Row(children: [
                               Expanded(
                                 child: Text(
-                                  invoiceLineText(l10n, position,
+                                  invoiceLineText(reportStringsOf(l10n), position,
                                       association: association,
                                       period: source.period),
                                   style: theme.textTheme.bodySmall

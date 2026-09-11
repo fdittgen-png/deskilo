@@ -2,12 +2,13 @@
 //
 // #936 — the exports carry the purchases side, book credit notes, and
 // mark a development workspace's books.
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
-import 'package:deskilo/features/money/presentation/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _company = InvoiceParty(
@@ -55,7 +56,7 @@ void main() {
       final file = buildFecFile(
         invoices: [_invoice(), _invoice(number: 'CN-2026-0001', total: -25000, replaces: 'INV-2026-0001')],
         matches: const {}, company: _company, accounts: const FecAccounts(),
-        lineText: (line) => invoiceLineText(null, line),
+        lineText: (line) => invoiceLineText(const ReportStrings(), line),
       );
       final cn = _rows(file).where((r) => r['PieceRef'] == 'CN-2026-0001').toList();
       num money(String? s) => num.parse((s ?? '0').replaceAll(',', '.'));
@@ -72,7 +73,7 @@ void main() {
         'expenses against the member\'s customer account', () {
       final file = buildFecFile(
         invoices: [_invoice()], matches: const {}, company: _company,
-        accounts: const FecAccounts(), lineText: (line) => invoiceLineText(null, line),
+        accounts: const FecAccounts(), lineText: (line) => invoiceLineText(const ReportStrings(), line),
         ledger: [_reimbursement], memberNames: const {'member-1': 'Ana Martin'},
       );
       final ha = _rows(file).where((r) => r['JournalCode'] == 'HA').toList();
@@ -86,7 +87,7 @@ void main() {
     test('a shared cost the workspace paid is the expense itself, from the bank', () {
       final file = buildFecFile(
         invoices: [_invoice()], matches: const {}, company: _company,
-        accounts: const FecAccounts(), lineText: (line) => invoiceLineText(null, line),
+        accounts: const FecAccounts(), lineText: (line) => invoiceLineText(const ReportStrings(), line),
         repartitions: [_rent],
       );
       final ha = _rows(file).where((r) => r['JournalCode'] == 'HA').toList();
@@ -98,7 +99,7 @@ void main() {
       final file = buildFecFile(
         invoices: [_invoice(), _invoice(number: 'CN-2026-0001', total: -1000)],
         matches: const {}, company: _company, accounts: const FecAccounts(),
-        lineText: (line) => invoiceLineText(null, line),
+        lineText: (line) => invoiceLineText(const ReportStrings(), line),
       );
       expect(_rows(file).where((r) => r['CompteNum'] == '445710'), isEmpty);
     });

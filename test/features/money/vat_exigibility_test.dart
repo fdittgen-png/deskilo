@@ -9,6 +9,7 @@
 // the same apportionment feeds the accountant's report, so the two can
 // never disagree; and the choice is printed on every invoice, because it
 // is a statutory mention where it is asked for.
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/vat_compliance.dart';
@@ -132,14 +133,14 @@ void main() {
 
     test('a cash-basis seller prints the encaissements mention', () {
       expect(
-        legalMentionData(null, ws('payment'))['vat_exigibility_mention'],
+        legalMentionData(const ReportStrings(), ws('payment'))['vat_exigibility_mention'],
         'TVA acquittée sur les encaissements.',
       );
     });
 
     test('and a seller on the invoice basis prints the other one', () {
       expect(
-        legalMentionData(null, ws('invoice'))['vat_exigibility_mention'],
+        legalMentionData(const ReportStrings(), ws('invoice'))['vat_exigibility_mention'],
         'TVA acquittée sur les débits.',
       );
     });
@@ -147,7 +148,7 @@ void main() {
     test('a workspace outside the scope of VAT prints nothing', () {
       final outside = ws('payment').copyWith(vatRegime: 'not_subject');
       expect(
-        legalMentionData(null, outside)['vat_exigibility_mention'],
+        legalMentionData(const ReportStrings(), outside)['vat_exigibility_mention'],
         '',
       );
     });

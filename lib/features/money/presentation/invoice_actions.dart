@@ -22,7 +22,6 @@ import '../../events/providers/event_providers.dart';
 import '../../members/providers/directory_providers.dart';
 import '../../reservations/providers/reservation_providers.dart';
 import '../../profile/domain/personal_info.dart';
-import '../../profile/presentation/courtesy_words.dart';
 import '../domain/payment_terms.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/domain/workspace_feature.dart';
@@ -53,7 +52,9 @@ import 'report_defaults.dart';
 import 'widgets/report_preview.dart';
 import 'e_invoice_identity.dart';
 import 'widgets/einvoice_environment_picker.dart';
-import 'invoice_line_text.dart';
+import '../domain/invoice_line_text.dart';
+import '../domain/report_strings.dart';
+import 'report_strings_l10n.dart';
 import 'period_label.dart';
 import 'widgets/e_invoice_sheet.dart';
 import 'widgets/invoice_detail_sheet.dart';
@@ -130,7 +131,7 @@ InvoicePdfTemplate invoicePdfTemplateFor(WidgetRef ref) =>
 /// the live [workspace] for the identity numbers — the snapshot is what
 /// the signature covers.
 Map<String, Object?> legalMentionData(
-  AppLocalizations? l10n,
+  ReportStrings strings,
   Workspace? workspace, {
   InvoiceParty? seller,
   InvoiceParty? buyer,
@@ -217,21 +218,19 @@ Map<String, Object?> legalMentionData(
     'payment_terms_source': memberTerms == null ? 'workspace' : 'member',
     'payment_terms': orDefault(
       terms.paymentTerms,
-      l10n?.invoiceLegalPaymentTermsDefault ?? 'Payment on receipt.',
+      strings.paymentTermsDefault,
     ),
     'late_penalty': orB2bDefault(
       terms.latePenalty,
-      l10n?.invoiceLegalLatePenaltyDefault ??
-          'Late-payment penalty: three times the statutory interest rate.',
+      strings.latePenaltyDefault,
     ),
     'recovery_indemnity': orB2bDefault(
       terms.recoveryIndemnity,
-      l10n?.invoiceLegalRecoveryDefault ??
-          'Fixed recovery indemnity for collection costs: €40.',
+      strings.recoveryDefault,
     ),
     'escompte': orB2bDefault(
       terms.escompte,
-      l10n?.invoiceLegalEscompteDefault ?? 'No discount for early payment.',
+      strings.escompteDefault,
     ),
     'insurance': legal.insurance,
     'special_mentions': legal.specialMentions,
@@ -243,7 +242,7 @@ Map<String, Object?> legalMentionData(
 /// (#886) — from the frozen buyer party (0069) or the flat snapshot on
 /// legacy invoices.
 String _clientAddressOf(
-    Invoice invoice, Workspace? workspace, AppLocalizations? l10n) {
+    Invoice invoice, Workspace? workspace, ReportStrings strings) {
   final buyer = invoice.buyerParty;
   if (buyer == null) return invoice.memberAddress;
   final person = buyer.person.trim();
@@ -264,7 +263,7 @@ String _clientAddressOf(
     // twice; when a person is named, the company stays where it belongs.
     nameAbove: _clientNameOf(invoice),
     // #912 — in the reader's language, from the code the party froze.
-    courtesyWord: courtesyWord(l10n, Courtesy.fromWire(buyer.courtesy)),
+    courtesyWord: strings.courtesyWord(Courtesy.fromWire(buyer.courtesy)),
   );
 }
 
@@ -291,7 +290,7 @@ DateTime invoiceDueAt(WidgetRef ref, Invoice invoice) => invoice.issuedAt.add(
 /// null leaves the seller lines empty and the clauses on their
 /// localized statutory defaults.
 Map<String, Object?> invoiceReportData(
-  BuildContext context,
+  ReportStrings strings,
   Invoice invoice, {
   required bool proforma,
   required bool copy,
@@ -304,11 +303,8 @@ Map<String, Object?> invoiceReportData(
   /// the paper. Null leaves the placeholder empty.
   DateTime? dueAt,
 }) {
-  final l10n = AppLocalizations.of(context);
   final currency = moneyFormat(invoice.currency);
-  final dateFormat = DateFormat.yMMMd(
-    Localizations.maybeLocaleOf(context)?.toString(),
-  );
+  final dateFormat = DateFormat.yMMMd(strings.dateLocale);
   String money(int cents) => currency.formatMinor(cents);
   // #870 — an association's positions are participations, not
   // subscriptions; the same word everywhere the document is produced.
@@ -327,10 +323,10 @@ Map<String, Object?> invoiceReportData(
     'usage_sites': usageSitesOf(invoice),
     'member': invoice.clientName,
     'number': invoice.number,
-    'period': invoicePeriodLabel(context, invoice),
+    'period': invoicePeriodLabelOf(strings.dateLocale, invoice),
     // #1002 — the month's name and the year on their own, for a designed
     // label such as « {{ period_month }} 100 % ».
-    'period_month': monthNameOf(l10n?.localeName, invoice.period),
+    'period_month': monthNameOf(strings.localeName, invoice.period),
     'period_year': invoice.period?.split('-').first ?? '',
     'issued': dateFormat.format(invoice.issuedAt),
     // #910 — the settlement date, on the document itself.
@@ -362,13 +358,13 @@ Map<String, Object?> invoiceReportData(
     'lines': [
       for (final line in invoice.lines)
         {
-          'label': invoiceLineText(l10n, line,
+          'label': invoiceLineText(strings, line,
               association: association, period: invoice.period),
           // #1002 — what the line IS, its percentage and its month, so
           // a design composes its own wording for the recurring position.
           'kind': line.kind,
           'pct': line.kind == 'subscription' ? line.label : '',
-          'month': monthNameOf(l10n?.localeName, invoice.period),
+          'month': monthNameOf(strings.localeName, invoice.period),
           'amount': money(line.amountCents),
           'negative': line.amountCents < 0,
           // #480 — quantity, unit price and per-line VAT so a template
@@ -392,11 +388,11 @@ Map<String, Object?> invoiceReportData(
         },
     ],
     ...legalMentionData(
-      l10n,
+      strings,
       workspace,
       seller: invoice.sellerParty,
       buyer: invoice.buyerParty,
-      clientAddress: _clientAddressOf(invoice, workspace, l10n),
+      clientAddress: _clientAddressOf(invoice, workspace, strings),
       clientName: _clientNameOf(invoice),
       reverseCharged: invoice.isReverseCharged,
       counterpartyCategory: invoice.counterpartyCategory,
@@ -430,7 +426,7 @@ Map<String, Object?> statementReportData(
     if (statement.feeCents > 0)
       {
         'label': subscriptionLabel(
-          l10n,
+          reportStringsOf(l10n),
           statement.subscriptionPct,
           association: association,
         ),
@@ -496,7 +492,7 @@ Map<String, Object?> statementReportData(
     'has_vat': false,
     'lines': lines,
     'vat': const <Map<String, Object?>>[],
-    ...legalMentionData(l10n, workspace),
+    ...legalMentionData(reportStringsOf(l10n), workspace),
   };
 }
 
@@ -546,7 +542,7 @@ Map<String, Object?> agreementReportData(
     if (band != null) ...[
       {
         'label': subscriptionLabel(
-          l10n,
+          reportStringsOf(l10n),
           subscriptionPct,
           association: association,
         ),
@@ -612,7 +608,7 @@ Map<String, Object?> agreementReportData(
     'has_vat': false,
     'lines': lines,
     'vat': const <Map<String, Object?>>[],
-    ...legalMentionData(l10n, workspace),
+    ...legalMentionData(reportStringsOf(l10n), workspace),
   };
 }
 
@@ -704,7 +700,7 @@ Map<String, Object?> paymentsReportData(
         },
     ],
     'vat': const <Map<String, Object?>>[],
-    ...legalMentionData(l10n, workspace),
+    ...legalMentionData(reportStringsOf(l10n), workspace),
   };
 }
 
@@ -780,7 +776,7 @@ Map<String, Object?> workspaceReportData(
       for (final band in bands)
         {
           'label':
-              '${subscriptionLabel(l10n, band.toPct, association: association)}'
+              '${subscriptionLabel(reportStringsOf(l10n), band.toPct, association: association)}'
               ' (${band.fromPct + 1}–${band.toPct}%)',
           'amount': money(band.feeCents),
         },
@@ -788,7 +784,7 @@ Map<String, Object?> workspaceReportData(
         {'label': service.name, 'amount': money(service.priceCents)},
     ],
     'vat': const <Map<String, Object?>>[],
-    ...legalMentionData(l10n, workspace),
+    ...legalMentionData(reportStringsOf(l10n), workspace),
   };
 }
 
@@ -1112,6 +1108,7 @@ Map<String, Object?> reminderReportData(
   );
   final now = ref.read(clockProvider).now();
   final l10n = l10nOverride ?? AppLocalizations.of(context);
+  final strings = reportStringsOf(l10n);
   final workspace = ref.read(currentWorkspaceProvider).value;
   return <String, Object?>{
     'workspace': invoice.workspaceName,
@@ -1130,11 +1127,11 @@ Map<String, Object?> reminderReportData(
     'days_open': now.difference(invoice.issuedAt).inDays,
     // #480 — a reminder cites the same statutory payment clauses.
     ...legalMentionData(
-      l10n,
+      strings,
       workspace,
       seller: invoice.sellerParty,
       buyer: invoice.buyerParty,
-      clientAddress: _clientAddressOf(invoice, workspace, l10n),
+      clientAddress: _clientAddressOf(invoice, workspace, strings),
       clientName: _clientNameOf(invoice),
       reverseCharged: invoice.isReverseCharged,
       counterpartyCategory: invoice.counterpartyCategory,
@@ -1197,7 +1194,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   Future<pw.Font> font(String asset) async =>
       pw.Font.ttf(await rootBundle.load(asset));
   final reportData = invoiceReportData(
-    context,
+    reportStringsFor(context),
     invoice,
     memberTerms: memberTerms,
     proforma: proforma,
@@ -1318,13 +1315,14 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   final association = InvoiceLegal.fromJson(
     workspace?.invoiceLegal ?? const {},
   ).isAssociation;
+  final words = reportStringsOf(l10n);
   final bytes = await buildInvoicePdf(
     addressWindow: addressWindow,
     invoice: invoice,
     reportImages: reportImages,
-    lineText: (line) => invoiceLineText(l10n, line,
+    lineText: (line) => invoiceLineText(words, line,
         association: association, period: invoice.period),
-    activityText: (entry) => annexEntryText(l10n, entry),
+    activityText: (entry) => annexEntryText(words, entry),
     strings: strings,
     money: (cents) => currency.formatMinor(cents),
     dateLabel: dateLabel,
@@ -1356,13 +1354,13 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
   required String iban,
 }) async {
   final association = ref.read(sellerIsAssociationProvider);
-  final l10n = AppLocalizations.of(context);
+  final words = reportStringsOf(AppLocalizations.of(context));
   final xml = buildInvoiceCii(
     invoice: invoice,
     seller: seller,
     buyer: buyer,
     iban: iban,
-    lineText: (line) => invoiceLineText(l10n, line,
+    lineText: (line) => invoiceLineText(words, line,
         association: association, period: invoice.period),
     // #941 — the same due date and terms the PDF prints.
     dueDate: invoiceDueAt(ref, invoice),
@@ -1559,7 +1557,7 @@ Future<void> quickViewInvoice(
   final template = invoicePdfTemplateFor(ref);
   final data = withOwnerTexts(
     invoiceReportData(
-      context,
+      reportStringsFor(context),
       invoice,
       memberTerms: memberTermsFor(ref, invoice.memberId),
       proforma: proforma,
@@ -1591,7 +1589,7 @@ Future<void> quickViewInvoice(
       bands: bands,
       data: withOwnerTexts(
         invoiceReportData(
-          context,
+          reportStringsFor(context),
           source,
           memberTerms: memberTermsFor(ref, source.memberId),
           proforma: false,
@@ -1980,6 +1978,7 @@ Future<void> exportEInvoice(
     return;
   }
   final l10n = AppLocalizations.of(context);
+  final words = reportStringsOf(l10n);
   await runGuarded(
     context,
     domain: 'money',
@@ -1993,7 +1992,7 @@ Future<void> exportEInvoice(
         seller: seller,
         buyer: buyer,
         iban: workspaceIban(workspace),
-        lineText: (line) => invoiceLineText(l10n, line,
+        lineText: (line) => invoiceLineText(words, line,
             association: association, period: invoice.period),
       );
       final bytes = Uint8List.fromList(utf8.encode(xml));

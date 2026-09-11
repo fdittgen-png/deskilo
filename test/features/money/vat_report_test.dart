@@ -3,6 +3,7 @@
 // #878 — the VAT review as code: statutory mentions per country, the
 // shape of a European VAT id, the readiness warning, and the VAT
 // report built from frozen breakdowns with its CSV.
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
@@ -70,10 +71,10 @@ void main() {
         id: 'ws-1', name: 'Asso', countryCode: 'FR', currencyCode: 'EUR',
         timezone: 'Europe/Paris', inviteCode: 'CODE', vatRegime: 'exempt',
       );
-      expect(legalMentionData(null, exempt)['exemption_reason'],
+      expect(legalMentionData(const ReportStrings(), exempt)['exemption_reason'],
           contains('293 B'));
       expect(
-        legalMentionData(null,
+        legalMentionData(const ReportStrings(),
             exempt.copyWith(taxExemptionReason: 'Franchise en base'))
             ['exemption_reason'],
         'Franchise en base',
@@ -83,7 +84,7 @@ void main() {
         timezone: 'Europe/Paris', inviteCode: 'CODE',
         vatRegime: 'vat_registered',
       );
-      expect(legalMentionData(null, registered)['exemption_reason'], '');
+      expect(legalMentionData(const ReportStrings(), registered)['exemption_reason'], '');
     });
   });
 

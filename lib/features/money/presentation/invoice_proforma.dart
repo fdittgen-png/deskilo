@@ -24,6 +24,7 @@ import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
 import '../providers/money_providers.dart';
 import 'invoice_actions.dart';
+import 'report_strings_l10n.dart';
 import 'report_actions.dart';
 import 'report_defaults.dart';
 import 'report_layout_actions.dart';
@@ -59,7 +60,7 @@ Future<void> shareProforma(
         bands: bands,
         data: withOwnerTexts(
           invoiceReportData(
-            context,
+            reportStringsFor(context),
             invoice,
             memberTerms: memberTermsFor(ref, invoice.memberId),
         dueAt: invoiceDueAt(ref, invoice),

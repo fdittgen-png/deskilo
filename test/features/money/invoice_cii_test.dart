@@ -4,9 +4,10 @@
 // semantics as the UBL builder, different grammar, and every group is an
 // XSD *sequence*: an element out of order is rejected before a single
 // business rule is read.
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
-import 'package:deskilo/features/money/presentation/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 
@@ -64,7 +65,7 @@ XmlDocument _doc({
       seller: seller,
       buyer: buyer,
       iban: iban,
-      lineText: (line) => invoiceLineText(null, line),
+      lineText: (line) => invoiceLineText(const ReportStrings(), line),
     ));
 
 /// A direct child of `rsm:ExchangedDocument` — the invoice head. Scoped on

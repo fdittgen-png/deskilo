@@ -23,7 +23,8 @@ import '../domain/sage.dart';
 import '../providers/money_providers.dart';
 import 'e_invoice_identity.dart';
 import 'invoice_actions.dart';
-import 'invoice_line_text.dart';
+import '../domain/invoice_line_text.dart';
+import 'report_strings_l10n.dart';
 import 'widgets/accounting_export_sheet.dart';
 import 'widgets/export_accounts_dialogs.dart';
 import '../../reservations/providers/reservation_providers.dart';
@@ -52,6 +53,7 @@ Future<void> exportAccountingFile(
   required String label,
 }) async {
   final l10n = AppLocalizations.of(context);
+  final words = reportStringsOf(l10n);
   final association = ref.read(sellerIsAssociationProvider);
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
@@ -148,7 +150,7 @@ Future<void> exportAccountingFile(
             matches: matches,
             company: company,
             accounts: accounts,
-            lineText: (line) => invoiceLineText(l10n, line,
+            lineText: (line) => invoiceLineText(words, line,
                 association: association),
             customersLabel: l10n?.fecAccountCustomers ?? 'Clients',
             revenueLabel: l10n?.fecAccountRevenue ?? 'Ventes',
@@ -271,7 +273,7 @@ Future<void> exportAccountingFile(
             currency: workspace.currencyCode,
             softwareVersion: safTSoftwareVersion,
             createdAt: now,
-            lineText: (line) => invoiceLineText(l10n, line,
+            lineText: (line) => invoiceLineText(words, line,
                 association: association),
             fallbackDescription: l10n?.invoicesTitle ?? 'Invoice',
             profile:
@@ -344,7 +346,7 @@ Future<void> exportAccountingFile(
             accounts: workspace.vatAccount.isEmpty
                 ? const FecAccounts()
                 : FecAccounts(vat: workspace.vatAccount),
-            lineText: (line) => invoiceLineText(l10n, line, association: association),
+            lineText: (line) => invoiceLineText(words, line, association: association),
             ledger: ledger,
             memberNames: memberNames,
             repartitions: repartitions,

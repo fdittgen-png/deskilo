@@ -7,10 +7,11 @@
 // category: BR-CO-26 (a seller identifier exists at all), BR-O-02/05 (no
 // tax id and no rate outside the scope of VAT), BR-E-02/05/10 (VAT id,
 // zero rate and an exemption reason when exempt).
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
-import 'package:deskilo/features/money/presentation/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 
@@ -71,7 +72,7 @@ String _xml({
       seller: seller,
       buyer: buyer,
       iban: iban,
-      lineText: (line) => invoiceLineText(null, line),
+      lineText: (line) => invoiceLineText(const ReportStrings(), line),
     );
 
 extension on XmlDocument {

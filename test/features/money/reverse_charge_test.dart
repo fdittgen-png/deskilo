@@ -6,6 +6,7 @@
 // names the customer's VAT identifier. Mirrors create_invoice (0157).
 import 'dart:io';
 
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
@@ -123,16 +124,16 @@ void main() {
         timezone: 'Europe/Paris', inviteCode: 'CODE',
         vatRegime: 'vat_registered', taxExemptionReason: 'Ma mention à moi',
       );
-      final data = legalMentionData(null, workspace,
+      final data = legalMentionData(const ReportStrings(), workspace,
           seller: _seller, buyer: const InvoiceParty(country: 'DE'),
           reverseCharged: true);
       expect(data['exemption_reason'], contains('Autoliquidation'));
       // Without the reverse charge a VAT-charging seller states no
       // exemption at all; the workspace's own text is what a document
       // with no frozen seller falls back to.
-      final ordinary = legalMentionData(null, workspace, seller: _seller);
+      final ordinary = legalMentionData(const ReportStrings(), workspace, seller: _seller);
       expect(ordinary['exemption_reason'], '');
-      expect(legalMentionData(null, workspace)['exemption_reason'],
+      expect(legalMentionData(const ReportStrings(), workspace)['exemption_reason'],
           'Ma mention à moi');
     });
 

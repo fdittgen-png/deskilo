@@ -15,7 +15,8 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice.dart';
 import '../../domain/vat_rate.dart';
 import '../../providers/money_providers.dart';
-import '../invoice_line_text.dart';
+import '../../domain/invoice_line_text.dart';
+import '../report_strings_l10n.dart';
 import '../../../../core/time/clock.dart';
 
 /// Issues an invoice — plain, or a REPLACEMENT (0061) prefilled from
@@ -332,7 +333,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
               child: Row(
                 key: ValueKey('invoice-preview-line-$i'),
                 children: [
-                  Expanded(child: Text(invoiceLineText(l10n, line,
+                  Expanded(child: Text(invoiceLineText(reportStringsOf(l10n), line,
                       association: widget.association, period: _period))),
                   Text(widget.currency.formatMinor(line.amountCents)),
                 ],

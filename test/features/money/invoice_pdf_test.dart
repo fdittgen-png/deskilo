@@ -8,12 +8,13 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/address_window.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
-import 'package:deskilo/features/money/presentation/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -111,8 +112,8 @@ void main() {
       invoice: invoice,
       strings: _strings,
       money: (cents) => '${(cents / 100).toStringAsFixed(2)} EUR',
-      lineText: (line) => invoiceLineText(null, line),
-      activityText: (entry) => annexEntryText(null, entry),
+      lineText: (line) => invoiceLineText(const ReportStrings(), line),
+      activityText: (entry) => annexEntryText(const ReportStrings(), entry),
       dateLabel: 'Jul 13, 2026',
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
       boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
@@ -174,8 +175,8 @@ void main() {
       invoice: invoice,
       strings: _strings,
       money: (cents) => '${(cents / 100).toStringAsFixed(2)} EUR',
-      lineText: (line) => invoiceLineText(null, line),
-      activityText: (entry) => annexEntryText(null, entry),
+      lineText: (line) => invoiceLineText(const ReportStrings(), line),
+      activityText: (entry) => annexEntryText(const ReportStrings(), entry),
       dateLabel: 'Jul 31, 2026',
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
       boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
@@ -221,8 +222,8 @@ void main() {
       invoice: invoice,
       strings: _strings,
       money: (cents) => '${(cents / 100).toStringAsFixed(2)} EUR',
-      lineText: (line) => invoiceLineText(null, line),
-      activityText: (entry) => annexEntryText(null, entry),
+      lineText: (line) => invoiceLineText(const ReportStrings(), line),
+      activityText: (entry) => annexEntryText(const ReportStrings(), entry),
       dateLabel: 'Jul 14, 2026',
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
       boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
@@ -271,8 +272,8 @@ void main() {
       invoice: invoice,
       strings: _strings,
       money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
-      lineText: (line) => invoiceLineText(null, line),
-      activityText: (entry) => annexEntryText(null, entry),
+      lineText: (line) => invoiceLineText(const ReportStrings(), line),
+      activityText: (entry) => annexEntryText(const ReportStrings(), entry),
       dateLabel: 'Jul 27, 2026',
       facturXml: xml,
       colorProfile: Uint8List.fromList(
@@ -303,8 +304,8 @@ void main() {
       invoice: invoice,
       strings: _strings,
       money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
-      lineText: (line) => invoiceLineText(null, line),
-      activityText: (entry) => annexEntryText(null, entry),
+      lineText: (line) => invoiceLineText(const ReportStrings(), line),
+      activityText: (entry) => annexEntryText(const ReportStrings(), entry),
       dateLabel: 'Jul 27, 2026',
       facturXml: xml,
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
@@ -363,8 +364,8 @@ void main() {
       invoice: invoice,
       strings: _strings,
       money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
-      lineText: (line) => invoiceLineText(null, line),
-      activityText: (entry) => annexEntryText(null, entry),
+      lineText: (line) => invoiceLineText(const ReportStrings(), line),
+      activityText: (entry) => annexEntryText(const ReportStrings(), entry),
       dateLabel: 'Sep 6, 2026',
       report: report,
       reportImages: {'logo': logo},
@@ -383,8 +384,8 @@ void main() {
       invoice: invoice,
       strings: _strings,
       money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
-      lineText: (line) => invoiceLineText(null, line),
-      activityText: (entry) => annexEntryText(null, entry),
+      lineText: (line) => invoiceLineText(const ReportStrings(), line),
+      activityText: (entry) => annexEntryText(const ReportStrings(), entry),
       dateLabel: 'Sep 6, 2026',
       report: report,
       reportImages: {'logo': logo},
@@ -446,8 +447,8 @@ void main() {
       invoice: invoice,
       strings: _strings,
       money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
-      lineText: (line) => invoiceLineText(null, line),
-      activityText: (entry) => annexEntryText(null, entry),
+      lineText: (line) => invoiceLineText(const ReportStrings(), line),
+      activityText: (entry) => annexEntryText(const ReportStrings(), entry),
       dateLabel: 'Sep 6, 2026',
       report: report,
       reportImages: {'logo': logo},
@@ -466,8 +467,8 @@ void main() {
       invoice: invoice,
       strings: _strings,
       money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
-      lineText: (line) => invoiceLineText(null, line),
-      activityText: (entry) => annexEntryText(null, entry),
+      lineText: (line) => invoiceLineText(const ReportStrings(), line),
+      activityText: (entry) => annexEntryText(const ReportStrings(), entry),
       dateLabel: 'Sep 6, 2026',
       report: report,
       reportImages: {'logo': logo},
@@ -510,8 +511,8 @@ void main() {
                   number: 'INV-2026-0005', signature: 'f' * 64),
           strings: _strings,
           money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
-          lineText: (line) => invoiceLineText(null, line),
-          activityText: (entry) => annexEntryText(null, entry),
+          lineText: (line) => invoiceLineText(const ReportStrings(), line),
+          activityText: (entry) => annexEntryText(const ReportStrings(), entry),
           dateLabel: 'Jul 27, 2026',
           proforma: proforma,
           baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
@@ -578,8 +579,8 @@ void main() {
       invoice: invoice,
       strings: _strings,
       money: (cents) => '${(cents / 100).toStringAsFixed(2)} EUR',
-      lineText: (line) => invoiceLineText(null, line),
-      activityText: (entry) => annexEntryText(null, entry),
+      lineText: (line) => invoiceLineText(const ReportStrings(), line),
+      activityText: (entry) => annexEntryText(const ReportStrings(), entry),
       dateLabel: 'Jul 31, 2026',
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
       boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
