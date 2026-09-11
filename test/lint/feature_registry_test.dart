@@ -108,7 +108,10 @@ import 'package:flutter_test/flutter_test.dart';
 //   (founded, invited, delegated), recorded by the path that writes the
 //   row. Default OFF: it is new information about real people, so a
 //   workspace decides to show it rather than finding it already there.
-const int _expectedFeatureCount = 99;
+// 99→100 (2026-09-11): #1119 memberEnvironments — the invitation carries
+//   whether the person also reaches the prod twin. Option B of the
+//   issue: dev, or dev+prod, because 0185's invariant is prod ⊆ dev.
+const int _expectedFeatureCount = 100;
 
 void main() {
   test('every functionality is registered — the pin', () {

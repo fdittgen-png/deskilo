@@ -85,6 +85,12 @@ abstract class WorkspaceRepository {
     /// #887 — bound to a managed member: whoever redeems the code takes
     /// that profile over instead of joining as a new member.
     String? memberId,
+
+    /// #1119 — whether redeeming this also makes the person a member of
+    /// the PROD twin. The server refuses it when the role being invited
+    /// does not hold `accessProd`: an invitation may not grant what the
+    /// role matrix withholds.
+    bool alsoProd = false,
   });
 
   /// #887 — a member the admin runs until the person claims it (RPC

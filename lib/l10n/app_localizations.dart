@@ -6215,6 +6215,30 @@ abstract class AppLocalizations {
   /// **'No workspace ID found — paste the invitation or type the ID.'**
   String get workspaceInviteCodeInvalid;
 
+  /// No description provided for @inviteAlsoProdTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Also give access to production'**
+  String get inviteAlsoProdTitle;
+
+  /// No description provided for @inviteAlsoProdSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'They join the test space either way. The role still has to allow production access.'**
+  String get inviteAlsoProdSubtitle;
+
+  /// No description provided for @featureMemberEnvironmentsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the environments a person is activated on'**
+  String get featureMemberEnvironmentsTitle;
+
+  /// No description provided for @featureMemberEnvironmentsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'When you invite somebody, choose whether they also reach the production space. They join the test space either way, and the role still has to allow production access.'**
+  String get featureMemberEnvironmentsDesc;
+
   /// #910 invoice due date: invoicePdfDueOn
   ///
   /// In en, this message translates to:

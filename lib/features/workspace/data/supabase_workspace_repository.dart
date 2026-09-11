@@ -159,6 +159,7 @@ class SupabaseWorkspaceRepository
     String firstName = '',
     String lastName = '',
     String? memberId,
+    bool alsoProd = false,
   }) async {
     final result = await _client.rpc<dynamic>('create_invitation', params: {
       'p_workspace_id': workspaceId,
@@ -166,6 +167,7 @@ class SupabaseWorkspaceRepository
       'p_first_name': firstName,
       'p_last_name': lastName,
       'p_member_id': ?memberId,
+      'p_also_prod': alsoProd,
     });
     return result as String;
   }

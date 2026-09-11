@@ -561,6 +561,23 @@ Toca un miembro para abrir su **ficha de gestión** — cada acción por miembro
 
 *El diálogo de suscripción (el porcentaje del miembro) y el diálogo de límite de reservas (el tope de reservas abiertas).*
 
+#### Qué entornos da una invitación
+
+Cuando su espacio tiene un gemelo de producción, la hoja de invitación
+hace una pregunta: **¿Dar también acceso a producción?** (#1119)
+
+La persona se une al espacio de prueba en cualquier caso. Producción se
+añade encima, nunca en su lugar — el gemelo de prueba es donde se ensaya,
+y alguien que existiera solo en producción no podría ensayarse.
+
+El rol sigue decidiendo. Si el rol invitado no tiene *Acceso a
+producción*, la invitación se niega a crearse y lo dice, en lugar de
+fallar más tarde. Una invitación nunca concede lo que la matriz de roles
+retiene.
+
+Se activa en *Ajustes → Funcionalidades → Elegir los entornos en los que
+se activa a una persona*; viene desactivado.
+
 #### Cómo empezó la afiliación
 
 Cada miembro lleva una línea discreta que indica cómo llegó (#1110):
