@@ -4,9 +4,10 @@
 // requires in an audit (art. L47 A-I du LPF, arrêté du 29 juillet 2013).
 // Not XML: a tab-separated flat file of accounting ENTRIES, which is why —
 // unlike SAF-T — it cannot avoid account numbers.
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/presentation/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _company = InvoiceParty(
@@ -64,7 +65,7 @@ List<Map<String, String>> _rows({
     matches: matches,
     company: _company,
     accounts: accounts,
-    lineText: (line) => invoiceLineText(null, line),
+    lineText: (line) => invoiceLineText(const ReportStrings(), line),
   );
   final lines = file.split('\r\n');
   final header = lines.first.split('\t');
@@ -82,7 +83,7 @@ void main() {
       matches: const {},
       company: _company,
       accounts: const FecAccounts(),
-      lineText: (line) => invoiceLineText(null, line),
+      lineText: (line) => invoiceLineText(const ReportStrings(), line),
     );
 
     expect(file.split('\r\n').first.split('\t'), fecColumns);

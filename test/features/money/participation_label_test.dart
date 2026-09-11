@@ -6,18 +6,19 @@
 // association into the VAT-liable trading sector; a non-profit collects
 // a "participation". The owner of the pilot association asked for this
 // in as many words, and the risk is real, so the choice is pinned here.
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
-import 'package:deskilo/features/money/presentation/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/presentation/period_label.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('an association collects a participation, a company a subscription',
       () {
-    expect(subscriptionLabel(null, 100, association: true),
+    expect(subscriptionLabel(const ReportStrings(), 100, association: true),
         'Participation 100%');
-    expect(subscriptionLabel(null, 50, association: false),
+    expect(subscriptionLabel(const ReportStrings(), 50, association: false),
         'Subscription 50%');
   });
 
@@ -25,16 +26,16 @@ void main() {
       'subscription position', () {
     const line = InvoiceLine(
         kind: 'subscription', label: '100', amountCents: 10000);
-    expect(invoiceLineText(null, line, association: true),
+    expect(invoiceLineText(const ReportStrings(), line, association: true),
         'Participation 100%');
-    expect(invoiceLineText(null, line, association: false),
+    expect(invoiceLineText(const ReportStrings(), line, association: false),
         'Subscription 100%');
 
     // A position that is not the recurring one is untouched by the rule.
     const overage = InvoiceLine(
         kind: 'overage', label: '', quantity: 2, amountCents: 500);
-    expect(invoiceLineText(null, overage, association: true),
-        invoiceLineText(null, overage, association: false));
+    expect(invoiceLineText(const ReportStrings(), overage, association: true),
+        invoiceLineText(const ReportStrings(), overage, association: false));
   });
 
   test('the seller kind is what decides it', () {
@@ -52,20 +53,20 @@ void main() {
     // participation: the harm runs one way.
     const line = InvoiceLine(
         kind: 'subscription', label: '100', amountCents: 10000);
-    expect(invoiceLineText(null, line), 'Subscription 100%');
+    expect(invoiceLineText(const ReportStrings(), line), 'Subscription 100%');
   });
 
   test('#1000 — with its month the position names the month it covers, '
       'not the word', () {
-    expect(subscriptionLabel(null, 100, association: true, month: 'Septembre'),
+    expect(subscriptionLabel(const ReportStrings(), 100, association: true, month: 'Septembre'),
         'Septembre 100%');
-    expect(subscriptionLabel(null, 50, association: false, month: 'September'),
+    expect(subscriptionLabel(const ReportStrings(), 50, association: false, month: 'September'),
         'Subscription September 50%');
     const line = InvoiceLine(kind: 'subscription', label: '100', amountCents: 1);
-    expect(invoiceLineText(null, line, association: true, period: '2026-09'),
+    expect(invoiceLineText(const ReportStrings(), line, association: true, period: '2026-09'),
         'September 100%');
     // No period, no month: the wording stays what it was.
-    expect(invoiceLineText(null, line, association: true), 'Participation 100%');
+    expect(invoiceLineText(const ReportStrings(), line, association: true), 'Participation 100%');
     expect(monthNameOf(null, '2026-09'), 'September');
     expect(monthNameOf(null, 'nonsense'), '');
     expect(monthNameOf(null, null), '');

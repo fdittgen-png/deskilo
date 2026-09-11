@@ -20,6 +20,7 @@ import '../domain/vat_regime.dart';
 import '../domain/vat_report.dart';
 import '../providers/money_providers.dart';
 import 'invoice_actions.dart';
+import 'report_strings_l10n.dart';
 import 'report_actions.dart';
 import 'report_layout_actions.dart';
 
@@ -133,7 +134,7 @@ Map<String, Object?> vatReportData(
           'gross': money(t.grossCents),
         },
     ],
-    ...legalMentionData(l10n, workspace),
+    ...legalMentionData(reportStringsOf(l10n), workspace),
   };
 }
 

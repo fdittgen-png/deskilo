@@ -12,6 +12,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/workspace_status.dart';
 import 'invoice_actions.dart';
+import 'report_strings_l10n.dart';
 
 Map<String, Object?> workspaceStatusReportData(
   BuildContext context,
@@ -75,6 +76,6 @@ Map<String, Object?> workspaceStatusReportData(
           'paid': money(m.paidCents),
         },
     ],
-    ...legalMentionData(l10n, workspace),
+    ...legalMentionData(reportStringsOf(l10n), workspace),
   };
 }

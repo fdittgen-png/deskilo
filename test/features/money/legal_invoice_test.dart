@@ -8,6 +8,7 @@
 // modalités de règlement, mentions particulières).
 import 'dart:io';
 
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/presentation/invoice_actions.dart';
@@ -221,7 +222,7 @@ Client SARL
   group('association invoicing (#484)', () {
     test('a company workspace gets the four statutory clause defaults',
         () {
-      final data = legalMentionData(null, _workspace(const {}));
+      final data = legalMentionData(const ReportStrings(), _workspace(const {}));
       expect(data['payment_terms'], 'Payment on receipt.');
       expect(data['late_penalty'], isNot(''));
       expect(data['recovery_indemnity'], isNot(''));
@@ -231,14 +232,14 @@ Client SARL
     test('an association suppresses the B2B-only clause defaults — '
         'payment terms stay, explicit text still prints', () {
       final data = legalMentionData(
-          null, _workspace(const {'seller_kind': 'association'}));
+        const ReportStrings(), _workspace(const {'seller_kind': 'association'}));
       expect(data['payment_terms'], 'Payment on receipt.');
       expect(data['late_penalty'], '');
       expect(data['recovery_indemnity'], '');
       expect(data['escompte'], '');
 
       final explicit = legalMentionData(
-          null,
+        const ReportStrings(),
           _workspace(const {
             'seller_kind': 'association',
             'late_penalty': 'Pénalités selon nos CGV',
@@ -249,7 +250,7 @@ Client SARL
     test('suppressed clauses VANISH from the rendered document — no '
         'empty bullet lines', () {
       final association = legalMentionData(
-          null, _workspace(const {'seller_kind': 'association'}));
+        const ReportStrings(), _workspace(const {'seller_kind': 'association'}));
       final report = renderReportBands(
         bands: defaultBandsForDoc('invoice', null),
         data: {...sampleReportData(null), ...association},

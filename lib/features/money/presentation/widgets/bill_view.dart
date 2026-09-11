@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import '../period_label.dart';
-import '../invoice_line_text.dart';
+import '../../domain/invoice_line_text.dart';
+import '../report_strings_l10n.dart';
 import '../../../../core/i18n/money_format.dart';
 import 'how_to_pay_tiles.dart';
 import 'package:flutter/material.dart';
@@ -500,7 +501,7 @@ class _SubscriptionCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _BillLine(
-              label: subscriptionLabel(l10n, statement.subscriptionPct,
+              label: subscriptionLabel(reportStringsOf(l10n), statement.subscriptionPct,
                   association: association,
                   month: monthNameOf(l10n?.localeName, statement.period)),
               value: '−${money(statement.feeCents)}',

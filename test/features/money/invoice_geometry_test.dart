@@ -16,10 +16,11 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/address_window.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
-import 'package:deskilo/features/money/presentation/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -82,8 +83,8 @@ Future<Uint8List> _pdf({
       strings: _strings,
       addressWindow: window,
       money: (cents) => '${(cents / 100).toStringAsFixed(2)} €',
-      lineText: (line) => invoiceLineText(null, line),
-      activityText: (entry) => annexEntryText(null, entry),
+      lineText: (line) => invoiceLineText(const ReportStrings(), line),
+      activityText: (entry) => annexEntryText(const ReportStrings(), entry),
       dateLabel: '4 sept. 2026',
       periodLabel: 'août 2026',
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),

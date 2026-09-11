@@ -1,41 +1,18 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 
 import '../domain/invoice.dart';
+import '../domain/period_label.dart';
+
+export '../domain/period_label.dart';
 
 /// 'yyyy-MM' → the localized month name ('July 2026', 'juillet 2026').
-/// Was copy-pasted in the archive and the hub; one home now.
-String monthLabel(BuildContext context, String period) {
-  final parts = period.split('-');
-  if (parts.length < 2) return period;
-  final year = int.tryParse(parts[0]);
-  final month = int.tryParse(parts[1]);
-  if (year == null || month == null) return period;
-  return DateFormat.yMMMM(
-    Localizations.maybeLocaleOf(context)?.toString(),
-  ).format(DateTime(year, month));
-}
+/// Was copy-pasted in the archive and the hub; one home now — and since
+/// #1061 the pure half lives in domain/period_label.dart.
+String monthLabel(BuildContext context, String period) =>
+    monthLabelOf(Localizations.maybeLocaleOf(context)?.toString(), period);
 
-/// #1000 — the month's NAME alone ('Septembre', 'September'), for the
-/// recurring position that must say which month it covers. Pure: the
-/// locale comes in, so the PDF, the e-invoice and the exports can call
-/// it without a BuildContext. '' for anything that is not 'yyyy-MM'.
-String monthNameOf(String? locale, String? period) {
-  if (period == null) return '';
-  final parts = period.split('-');
-  if (parts.length < 2) return '';
-  final year = int.tryParse(parts[0]);
-  final month = int.tryParse(parts[1]);
-  if (year == null || month == null) return '';
-  final name = DateFormat.MMMM(locale).format(DateTime(year, month));
-  return name.isEmpty ? '' : name[0].toUpperCase() + name.substring(1);
-}
-
-/// What an invoice COVERS, in words. The server stores the raw period as
-/// the title ('2026-07'), which no user should ever read — so the period
-/// wins and [Invoice.title] only serves legacy free-form invoices (0060).
-String invoicePeriodLabel(BuildContext context, Invoice invoice) {
-  final period = invoice.period;
-  return period == null ? invoice.title : monthLabel(context, period);
-}
+/// What an invoice COVERS, in words — see [invoicePeriodLabelOf].
+String invoicePeriodLabel(BuildContext context, Invoice invoice) =>
+    invoicePeriodLabelOf(
+        Localizations.maybeLocaleOf(context)?.toString(), invoice);

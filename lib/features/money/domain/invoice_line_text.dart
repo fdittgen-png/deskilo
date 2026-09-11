@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: 0BSD
-import '../../../l10n/app_localizations.dart';
 import '../domain/invoice.dart';
+import 'report_strings.dart';
 import 'period_label.dart';
 
 /// Localized wording for one DERIVED invoice position (0062): the kind
@@ -20,24 +20,23 @@ import 'period_label.dart';
 /// #1000 — with [month] the position names the month it covers
 /// ('Septembre 100 %'), so every invoice reads as the month it is for.
 String subscriptionLabel(
-  AppLocalizations? l10n,
+  ReportStrings strings,
   int pct, {
   required bool association,
   String month = '',
 }) {
   if (month.isNotEmpty) {
     return association
-        ? (l10n?.billParticipationMonth(month, pct) ?? '$month $pct%')
-        : (l10n?.billSubscriptionMonth(month, pct) ??
-            'Subscription $month $pct%');
+        ? strings.participationMonth(month, pct)
+        : strings.subscriptionMonth(month, pct);
   }
   return association
-      ? (l10n?.billParticipation(pct) ?? 'Participation $pct%')
-      : (l10n?.billSubscription(pct) ?? 'Subscription $pct%');
+      ? strings.participation(pct)
+      : strings.subscription(pct);
 }
 
 String invoiceLineText(
-  AppLocalizations? l10n,
+  ReportStrings strings,
   InvoiceLine line, {
   bool association = false,
   /// #1000 — the invoice's period, so the recurring line names its month.
@@ -45,42 +44,42 @@ String invoiceLineText(
 }) =>
     switch (line.kind) {
       'subscription' => subscriptionLabel(
-          l10n, int.tryParse(line.label) ?? 0,
+          strings, int.tryParse(line.label) ?? 0,
           association: association,
-          month: monthNameOf(l10n?.localeName, period)),
+          month: monthNameOf(strings.localeName, period)),
       'overage' =>
-        l10n?.billOverage(line.quantity) ?? '${line.quantity} extra half-days',
+        strings.overage(line.quantity),
       'accessories' =>
-        l10n?.billAccessorySupplements ?? 'Accessory supplements',
-      'level' => l10n?.levelSupplementLabel ?? 'Level reservations',
-      'office' => l10n?.officeSupplementLabel ?? 'Office reservations',
-      'desk' => l10n?.deskSupplementLabel ?? 'Desk reservations',
+        strings.accessorySupplements,
+      'level' => strings.levelReservations,
+      'office' => strings.officeReservations,
+      'desk' => strings.deskReservations,
       'adjustment' => line.label.isNotEmpty
           ? line.label
-          : l10n?.invoiceLineAdjustment ?? 'Adjustment',
+          : strings.lineAdjustment,
       // 0063 — credits: payments and expense reimbursements carry
       // their ledger note behind the category label.
       'payment' => line.label.isEmpty
-          ? (l10n?.ledgerCategoryPayment ?? 'Payment')
-          : '${l10n?.ledgerCategoryPayment ?? 'Payment'} · ${line.label}',
+          ? (strings.categoryPayment)
+          : '${strings.categoryPayment} · ${line.label}',
       'expense' => line.label.isEmpty
-          ? (l10n?.ledgerCategoryExpense ?? 'Expense reimbursement')
-          : '${l10n?.ledgerCategoryExpense ?? 'Expense reimbursement'}'
+          ? (strings.categoryExpense)
+          : '${strings.categoryExpense}'
               ' · ${line.label}',
       _ => line.label,
     };
 
 /// Localized wording for one annex activity row (0064): the ledger
 /// category label, with the entry's own note behind it.
-String annexEntryText(AppLocalizations? l10n, InvoiceDetailEntry entry) {
+String annexEntryText(ReportStrings strings, InvoiceDetailEntry entry) {
   final category = switch (entry.category) {
     'subscription' =>
-      l10n?.ledgerCategorySubscription ?? 'Subscription',
-    'overage' => l10n?.ledgerCategoryOverage ?? 'Overage',
-    'expense' => l10n?.ledgerCategoryExpense ?? 'Expense reimbursement',
-    'payment' => l10n?.ledgerCategoryPayment ?? 'Payment',
-    'adjustment' => l10n?.ledgerCategoryAdjustment ?? 'Adjustment',
-    'service' => l10n?.ledgerCategoryService ?? 'Service',
+      strings.categorySubscription,
+    'overage' => strings.categoryOverage,
+    'expense' => strings.categoryExpense,
+    'payment' => strings.categoryPayment,
+    'adjustment' => strings.categoryAdjustment,
+    'service' => strings.categoryService,
     _ => entry.category,
   };
   return entry.label.isEmpty ? category : '$category · ${entry.label}';

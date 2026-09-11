@@ -3,6 +3,7 @@
 // #881 — payment conditions: the workspace's default, a member's own
 // keys on top; printed as the effective ones; changed only by a
 // validated request from an authorised admin, read-only for the member.
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/payment_terms.dart';
 import 'package:deskilo/features/money/presentation/invoice_actions.dart';
@@ -51,10 +52,10 @@ void main() {
       timezone: 'Europe/Paris',
       invoiceLegal: {'payment_terms': 'Payment on receipt.', 'escompte': 'None.'},
     );
-    final inherited = legalMentionData(null, ws);
+    final inherited = legalMentionData(const ReportStrings(), ws);
     expect(inherited['payment_terms'], 'Payment on receipt.');
     expect(inherited['payment_terms_source'], 'workspace');
-    final own = legalMentionData(null, ws,
+    final own = legalMentionData(const ReportStrings(), ws,
         memberTerms: const PaymentTerms(paymentTerms: 'Payment at 45 days.'));
     expect(own['payment_terms'], 'Payment at 45 days.');
     expect(own['escompte'], 'None.', reason: 'untouched keys stay the workspace\'s');

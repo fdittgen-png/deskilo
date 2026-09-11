@@ -33,6 +33,7 @@ import '../report_kind_labels.dart';
 import '../../domain/invoice_report.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
+import '../report_strings_l10n.dart';
 import '../report_defaults.dart';
 import '../report_edit_history.dart';
 import '../screens/report_editor_screen.dart';
@@ -548,11 +549,11 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
     switch (_doc) {
       case 'invoice':
         if (invoices.isEmpty) return null;
-        return invoiceReportData(context, invoices.first,
+        return invoiceReportData(reportStringsFor(context), invoices.first,
             proforma: false, copy: false, workspace: liveWorkspace);
       case 'proforma':
         if (invoices.isEmpty) return null;
-        return invoiceReportData(context, invoices.first,
+        return invoiceReportData(reportStringsFor(context), invoices.first,
             proforma: true, copy: false, workspace: liveWorkspace);
       case 'statement':
         final now = ref.read(clockProvider).now();

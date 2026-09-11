@@ -45,13 +45,32 @@ dart run tool/report.dart render|sample --kind usage|describe|default --kind r1
 `test/tool/report_cli_test.dart` breaks the moment a domain file pulls
 `AppLocalizations`.
 
+## Words reach a builder as DATA — `ReportStrings` (#1061 / #1048 3.1)
+`domain/report_strings.dart` is the twin of `LetterStrings`: a value
+object with the English ARB as defaults. `reportStringsOf(l10n)` in
+`presentation/report_strings_l10n.dart` is the ONE place a document's
+words are read out of the ARB; `reportStringsFor(context)` is the
+widget boundary. `invoiceReportData`, `legalMentionData`,
+`invoiceLineText`, `annexEntryText`, `subscriptionLabel` take
+`ReportStrings`, never a `BuildContext` or an `AppLocalizations`.
+- A new word a document needs: one field on `ReportStrings` (English
+  default = the en ARB, pinned by `report_strings_test`), one line in
+  `reportStringsOf`. Never `l10n?.x ?? '…'` inside a builder again.
+- The goldens under `test/features/money/goldens/` were written by the
+  PRE-seam builders; `report_data_golden_test` asserts every document
+  is byte-identical. Regenerate with `--dart-define=WRITE_GOLDEN=true`
+  ONLY when a document is MEANT to change, and say so in the PR.
+- Not a second localization mechanism: per-language templates and
+  reader-language resolution are untouched; only how the resolved words
+  reach a builder changed.
+
 ## Designer
 Language chips → base + overlays (`forLocale` merges documents, layouts,
 texts); panels mount LAST in the column; anything that adds height
 must be collapsed by default (tests tap the Markup/Visual toggle).
 
 ## Month on the recurring position (#1000/#1002)
-`subscriptionLabel(l10n, pct, association:, month:)` names the month
+`subscriptionLabel(strings, pct, association:, month:)` names the month
 when given one; every surface passes `period:` to `invoiceLineText`
 (PDF, CII/UBL, detail sheet, form preview, bill). Placeholders
 `period_month`, `period_year`; each `lines` row carries `kind`, `pct`,

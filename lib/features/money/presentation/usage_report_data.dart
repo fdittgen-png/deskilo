@@ -18,6 +18,7 @@ import '../domain/usage_record.dart';
 import '../providers/money_providers.dart';
 import '../providers/usage_providers.dart';
 import 'invoice_actions.dart';
+import 'report_strings_l10n.dart';
 
 Map<String, Object?> usageReportData(
   BuildContext context,
@@ -115,6 +116,6 @@ Map<String, Object?> usageReportData(
           'corrected': r.isCorrected,
         },
     ],
-    ...legalMentionData(l10n, workspace),
+    ...legalMentionData(reportStringsOf(l10n), workspace),
   };
 }
