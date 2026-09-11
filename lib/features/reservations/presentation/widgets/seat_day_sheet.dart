@@ -7,14 +7,13 @@
 // you can take. Tapping a free row hands its window back to the caller,
 // which opens the ordinary booking sheet on it.
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-import '../../../../core/time/workspace_time.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/seat.dart';
 import '../../domain/seat_state_logic.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// A free stretch of the day, between (or around) the bookings.
 class SeatDayGap {
@@ -91,8 +90,7 @@ class _SeatDaySheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final locale = Localizations.maybeLocaleOf(context)?.toString();
-    final hm = DateFormat.Hm(locale);
+    final hm = appFormatOf(context); // #1150
     final gaps = seatDayGaps(
       segments: segments,
       dayStart: dayStart,
@@ -109,8 +107,8 @@ class _SeatDaySheet extends StatelessWidget {
     // space's clock unless the member asked for their own. Formatting
     // the instant itself printed UTC — a Paris morning showed 06:00.
     String when(DateTime start, DateTime end) =>
-        '${hm.format(WorkspaceTime.display(start))} – '
-        '${hm.format(WorkspaceTime.display(end))}';
+        '${hm.time(start)} – '
+        '${hm.time(end)}';
     String phaseOf(DateTime start, DateTime end) => end.isBefore(now)
         ? (l10n?.seatDayPast ?? 'Done')
         : start.isAfter(now)

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -11,7 +10,7 @@ import '../../../plan/domain/seat.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
 import '../../domain/seat_state_logic.dart';
-import '../../../../core/time/workspace_time.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// The plan's SEAT LIST (#687), ported out of the deleted Plan tab.
 ///
@@ -55,7 +54,7 @@ class SeatListView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final timeFormat = DateFormat.Hm();
+    final timeFormat = ref.watch(appFormatProvider); // #1150
     final myMemberId = ref.watch(myMemberProvider).value?.id;
 
     if (plan.seats.isEmpty) {
@@ -122,7 +121,7 @@ class SeatListView extends ConsumerWidget {
         final until = covering == null
             ? null
             // #908 — on the space's clock, like the plan beside it.
-            : timeFormat.format(WorkspaceTime.display(covering.endsAt));
+            : timeFormat.time(covering.endsAt);
         final who = covering == null
             ? ''
             : (names[covering.memberId] ?? '');

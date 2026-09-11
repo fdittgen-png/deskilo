@@ -23,6 +23,7 @@ import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../widgets/day_timeline.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// Reservations calendar (spec §6): month grid with markers + day list.
 /// Every member can switch between their own bookings and everyone's: the
@@ -434,11 +435,11 @@ class _ReservationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
-    final timeFormat = DateFormat.Hm();
+    final timeFormat = appFormatOf(context); // #1150
     final badge = _badgeColor;
     final start =
-        timeFormat.format(WorkspaceTime.wall(reservation.startsAt));
-    final end = timeFormat.format(WorkspaceTime.wall(reservation.endsAt));
+        timeFormat.time(reservation.startsAt);
+    final end = timeFormat.time(reservation.endsAt);
     final timeRange = '$start – $end';
     final location =
         occupant.isEmpty ? seatLabel : '$seatLabel · $occupant';

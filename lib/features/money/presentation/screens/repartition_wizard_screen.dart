@@ -23,6 +23,7 @@ import '../../providers/money_providers.dart';
 import '../widgets/wizard_scaffold.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
+import '../../../../core/format/cents.dart';
 
 class RepartitionWizardScreen extends ConsumerStatefulWidget {
   const RepartitionWizardScreen({super.key});
@@ -58,10 +59,9 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
   }
 
   int? get _cents {
-    final v = double.tryParse(_amount.text.trim().replaceAll(',', '.'));
-    if (v == null) return null;
-    final c = (v * 100).round();
-    return c == 0 ? null : c;
+    // #1140 — the currency's own minor digits, never a literal 100.
+    final c = parseCentsInput(_amount.text);
+    return (c == null || c == 0) ? null : c;
   }
 
   RepartitionRule _effectiveRule() =>

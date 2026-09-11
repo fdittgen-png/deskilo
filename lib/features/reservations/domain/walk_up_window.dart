@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import '../../plan/domain/half_day_windows.dart';
 import '../../workspace/domain/booking_granularity.dart';
+import '../../../core/time/workspace_time.dart';
 
 /// The window an on-the-spot action books (kiosk badge flow and the
 /// space-QR scan flow share it): the canonical full working day under
@@ -26,13 +27,19 @@ import '../../workspace/domain/booking_granularity.dart';
     if (dayEnd.isAfter(now)) return (start: now, end: dayEnd);
   }
   var end = now.add(const Duration(hours: 4));
-  final last = DateTime(now.year, now.month, now.day, 23, 45);
+  // #1143 — the day's bounds in the WORKSPACE zone, like the branches
+  // above and like the server's "a booking ends on the day it starts".
+  // A bare DateTime here was the device's day: a Paris space booked from
+  // Los Angeles at 14:00 local is Paris 23:00, and the clamp never fired.
+  final day = WorkspaceTime.dateOf(now);
+  final last = WorkspaceTime.at(day.year, day.month, day.day, 23, 45);
   if (end.isAfter(last)) end = last;
   // #644: a booking ends on the day it starts. Arriving after the last
   // slot, the 15-minute floor would have crossed midnight — clamp it to
   // the day's own end instead, which is where the server draws the line.
   if (!end.isAfter(now)) {
-    final midnight = DateTime(now.year, now.month, now.day + 1);
+    final next = day.add(const Duration(days: 1));
+    final midnight = WorkspaceTime.at(next.year, next.month, next.day);
     final floor = now.add(const Duration(minutes: 15));
     end = floor.isAfter(midnight) ? midnight : floor;
   }

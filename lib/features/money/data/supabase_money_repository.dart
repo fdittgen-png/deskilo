@@ -29,6 +29,7 @@ import '../domain/payment_intent.dart';
 import '../domain/number_sequence.dart';
 import '../domain/workspace_status.dart';
 import '../../../core/data/system_columns.dart';
+import '../../../core/trace/trace_logger.dart';
 
 class SupabaseMoneyRepository implements MoneyRepository {
   @override
@@ -666,15 +667,28 @@ class SupabaseMoneyRepository implements MoneyRepository {
         .select()
         .eq('member_id', memberId)
         .order('created_at', ascending: false);
-    return rows.map(_ledgerFromRow).toList();
+    return rows.map(_ledgerFromRow).whereType<LedgerEntry>().toList();
   }
 
-  LedgerEntry _ledgerFromRow(Map<String, dynamic> row) => LedgerEntry(
+  // #1148 — a ledger row whose kind or category this build does not
+  // know is SKIPPED and traced, never mis-filed: reading a widened
+  // category as "expense" would move money in the statement. Every
+  // other list degrades to a fallback; money degrades to absence.
+  LedgerEntry? _ledgerFromRow(Map<String, dynamic> row) {
+    final kind = LedgerKind.values.asNameMap()[row['kind'] as String?];
+    final category =
+        LedgerCategory.values.asNameMap()[row['category'] as String?];
+    if (kind == null || category == null) {
+      TraceLogger.instance.warn('money',
+          "ledger row ${row['id']} skipped: unknown kind/category ${row['kind']}/${row['category']}");
+      return null;
+    }
+    return LedgerEntry(
         system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         memberId: row['member_id'] as String,
-        kind: LedgerKind.values.byName(row['kind'] as String),
-        category: LedgerCategory.values.byName(row['category'] as String),
+        kind: kind,
+        category: category,
         amountCents: row['amount_cents'] as int,
         description: row['description'] as String,
         period: row['period'] as String,
@@ -683,6 +697,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
             ? null
             : DateTime.parse(row['occurred_on'] as String),
       );
+  }
 
   @override
   Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId) async {
@@ -691,7 +706,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
         .select()
         .eq('workspace_id', workspaceId)
         .order('created_at', ascending: false);
-    return rows.map(_ledgerFromRow).toList();
+    return rows.map(_ledgerFromRow).whereType<LedgerEntry>().toList();
   }
 
   @override

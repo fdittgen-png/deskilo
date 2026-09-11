@@ -98,6 +98,15 @@ class AppFormat {
 
   /// `14:30` under a 24-hour clock, `2:30 PM` under a 12-hour one, and
   /// whatever the format region does under `auto`.
+  /// #1150 — a WALL-CLOCK value that is not an instant: a ruler tick, a
+  /// slot boundary built with `DateTime(y, m, d, 8)`. Applies the clock
+  /// preference and nothing else; [time] would shift it by the zone.
+  String wallTime(DateTime wall) => switch (clock) {
+        ClockPref.h24 => DateFormat.Hm(locale).format(wall),
+        ClockPref.h12 => DateFormat.jm('en_US').format(wall),
+        ClockPref.auto => DateFormat.jm(locale).format(wall),
+      };
+
   String time(DateTime instant) {
     final wall = _wall(instant);
     return switch (clock) {

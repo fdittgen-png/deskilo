@@ -11,6 +11,7 @@ import '../../profile/domain/profile.dart';
 import '../../reservations/domain/reservation.dart';
 import 'member.dart';
 import 'workspace.dart';
+import '../../../core/i18n/currencies.dart';
 
 /// The data export's workbook (#395): one tab per dataset, one row per
 /// record, every stored detail a client may read.
@@ -60,7 +61,9 @@ List<XlsxSheet> buildWorkspaceExcelExport({
     return r.levelId == null ? null : levelName[r.levelId];
   }
 
-  double major(int cents) => cents / 100;
+  // #1140 — the workspace currency's minor digits, never a literal 100.
+  double major(int cents) =>
+      cents / Currencies.minorPerMajor(workspace.currencyCode);
 
   final attended =
       reservations.where((r) => r.checkedInAt != null).toList();

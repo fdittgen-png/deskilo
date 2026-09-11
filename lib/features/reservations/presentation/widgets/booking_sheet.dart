@@ -15,6 +15,7 @@ import '../../domain/booking_gate.dart';
 import '../../domain/picked_time.dart';
 import '../../domain/reservation_repository.dart';
 import 'booking_range_text.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// What the booking sheet returns: the chosen window (start + end), an
 /// optional recurrence and who the booking is for (null/self = caller).
@@ -167,7 +168,7 @@ class _BookingSheetState extends State<BookingSheet> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final timeFormat = DateFormat.Hm();
+    final timeFormat = appFormatOf(context); // #1150
     // Half-day granularity offers the three canonical windows (hours
     // offers them as shortcuts too, #446); full-day is a single locked
     // window; a walk-up keeps its computed end — except under hours,
@@ -232,9 +233,9 @@ class _BookingSheetState extends State<BookingSheet> {
             Text(
               widget.walkUp
                   ? '${l10n?.planStartNow ?? 'Starts now'} · '
-                      '${timeFormat.format(WorkspaceTime.display(widget.start))}'
+                      '${timeFormat.time(widget.start)}'
                   : '${DateFormat.MMMEd().format(WorkspaceTime.display(_start))}'
-                      ' · ${bookingRangeText(l10n, _start, _end)}',
+                      ' · ${bookingRangeText(appFormatOf(context), l10n, _start, _end)}',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
@@ -281,7 +282,7 @@ class _BookingSheetState extends State<BookingSheet> {
               const SizedBox(height: AppSpacing.sm),
               Text(
                 '${l10n?.planDurationLabel ?? 'Duration'} · '
-                '${bookingRangeText(l10n, _start, _end)}',
+                '${bookingRangeText(appFormatOf(context), l10n, _start, _end)}',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color:
                           Theme.of(context).colorScheme.onSurfaceVariant,
@@ -298,7 +299,7 @@ class _BookingSheetState extends State<BookingSheet> {
                 max: maxDuration.toDouble(),
                 divisions:
                     ((maxDuration - gridStep) ~/ gridStep).clamp(1, 288),
-                label: bookingRangeText(l10n, _start, _end),
+                label: bookingRangeText(appFormatOf(context), l10n, _start, _end),
                 onChanged: (v) {
                   final minutes = (v / gridStep).round() * gridStep;
                   setState(() =>
@@ -372,10 +373,10 @@ class _BookingSheetState extends State<BookingSheet> {
             if (widget.capped && widget.cap != null)
               Text(
                 l10n?.planCappedByNext(
-                      timeFormat.format(WorkspaceTime.display(widget.cap!)),
+                      timeFormat.time(widget.cap!),
                     ) ??
                     'The seat is reserved from '
-                        '${timeFormat.format(WorkspaceTime.display(widget.cap!))}.',
+                        '${timeFormat.time(widget.cap!)}.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             if (refusal != null)
@@ -521,12 +522,12 @@ class _BookingSheetState extends State<BookingSheet> {
     required DateTime value,
     required void Function(TimeOfDay) onPicked,
   }) {
-    final timeFormat = DateFormat.Hm();
+    final timeFormat = appFormatOf(context); // #1150
     return ListTile(
       key: key,
       contentPadding: EdgeInsets.zero,
       title: Text(label),
-      trailing: Text(timeFormat.format(WorkspaceTime.display(value))),
+      trailing: Text(timeFormat.time(value)),
       onTap: () async {
         final picked = await showTimePicker(
           context: context,

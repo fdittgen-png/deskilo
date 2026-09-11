@@ -15,6 +15,7 @@ import '../domain/plan_image.dart';
 import '../domain/seat.dart';
 import '../domain/seat_context.dart';
 import '../../../core/data/system_columns.dart';
+import '../../../core/data/enum_wire.dart';
 
 class SupabaseFloorPlanRepository implements FloorPlanRepository {
   SupabaseFloorPlanRepository(this._client, this._cache);
@@ -613,7 +614,10 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         name: row['name'] as String,
         x: row['x'] as int,
         y: row['y'] as int,
-        orientation: SeatOrientation.values.byName(row['orientation'] as String),
+        // #1148 — an unknown orientation draws north rather than emptying
+        // the plan.
+        orientation: enumOr(SeatOrientation.values,
+            row['orientation'] as String?, SeatOrientation.n, area: 'plan'),
         chair: row['chair'] as String,
         amenities: (row['amenities'] as List<dynamic>).cast<String>(),
         blockedFrom: row['blocked_from'] == null

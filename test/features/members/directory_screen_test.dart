@@ -20,6 +20,7 @@ import 'package:deskilo/features/reservations/presentation/widgets/reservation_d
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 
@@ -198,7 +199,7 @@ Future<void> pumpDirectory(
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
-        ...standardTestOverrides(
+        ...standardTestOverrides(timeZoneMode: TimeZoneMode.device, 
           workspace: workspace,
           reservations: reservations,
           floorPlan: floorPlan,

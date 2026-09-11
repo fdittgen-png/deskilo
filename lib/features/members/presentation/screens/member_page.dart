@@ -42,6 +42,8 @@ import '../widgets/member_money_card.dart';
 import '../../../profile/presentation/courtesy_words.dart';
 import '../../../profile/domain/personal_info.dart';
 import '../../../workspace/domain/site.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// #825 — ONE page per person (`/member/:id`): who they are and whether
 /// they are here, what they have booked, how to reach them, their money
@@ -101,11 +103,11 @@ class _MemberPageBody extends ConsumerWidget {
   }
 
   /// "Wed 2 · 08:00 · A1" — the directory's house style for a booking.
-  static String bookingLabel(Reservation reservation, String seatName) {
+  static String bookingLabel(AppFormat format, Reservation reservation, String seatName) {
     final local = reservation.startsAt.toLocal();
     final day =
         '${DateFormat.E().format(local)} ${DateFormat.d().format(local)}';
-    final when = '$day · ${DateFormat.Hm().format(local)}';
+    final when = '$day · ${format.time(reservation.startsAt)}';
     return seatName.isEmpty ? when : '$when · $seatName';
   }
 
@@ -750,23 +752,23 @@ class _NowCard extends StatelessWidget {
           success,
           l10n?.memberPageCheckedIn(
                   reservation.spaceNameFrom(targets),
-                  DateFormat.Hm().format(reservation.startsAt.toLocal())) ??
-              'Checked in · ${reservation.spaceNameFrom(targets)} · since ${DateFormat.Hm().format(reservation.startsAt.toLocal())}',
+                  appFormatOf(context).time(reservation.startsAt)) ??
+              'Checked in · ${reservation.spaceNameFrom(targets)} · since ${appFormatOf(context).time(reservation.startsAt)}',
         ),
       ReservedNow(:final reservation) => (
           Icons.event_seat_outlined,
           theme.colorScheme.primary,
           l10n?.memberPageReservedNow(
                   reservation.spaceNameFrom(targets),
-                  DateFormat.Hm().format(reservation.endsAt.toLocal())) ??
-              'Reserved now · ${reservation.spaceNameFrom(targets)} · until ${DateFormat.Hm().format(reservation.endsAt.toLocal())}',
+                  appFormatOf(context).time(reservation.endsAt)) ??
+              'Reserved now · ${reservation.spaceNameFrom(targets)} · until ${appFormatOf(context).time(reservation.endsAt)}',
         ),
       UpcomingReservation(:final reservation) => (
           Icons.event_outlined,
           theme.colorScheme.onSurfaceVariant,
-          l10n?.memberPageNext(_MemberPageBody.bookingLabel(
+          l10n?.memberPageNext(_MemberPageBody.bookingLabel(appFormatOf(context), 
                   reservation, reservation.spaceNameFrom(targets))) ??
-              'Next: ${_MemberPageBody.bookingLabel(reservation, reservation.spaceNameFrom(targets))}',
+              'Next: ${_MemberPageBody.bookingLabel(appFormatOf(context), reservation, reservation.spaceNameFrom(targets))}',
         ),
       null => (
           Icons.event_busy_outlined,
@@ -818,7 +820,7 @@ class _NowCard extends StatelessWidget {
                     const SizedBox(width: AppSpacing.md),
                     Expanded(
                       child: Text(
-                        _MemberPageBody.bookingLabel(
+                        _MemberPageBody.bookingLabel(appFormatOf(context), 
                             r, r.spaceNameFrom(targets)),
                         style: theme.textTheme.bodyMedium,
                       ),

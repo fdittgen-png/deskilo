@@ -8,6 +8,7 @@ import '../../domain/booking_gate.dart';
 import '../../domain/picked_time.dart';
 import '../../domain/walk_up_window.dart';
 import 'booking_range_text.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// What a space act does — the three operations the kiosk one-sheet
 /// offers (#529) and, since #622, the app's scan flow too.
@@ -343,7 +344,7 @@ class SpaceActFormState extends State<SpaceActForm> {
             ),
           const SizedBox(height: 6),
           Text(
-            bookingRangeText(l10n, _start, _end),
+            bookingRangeText(appFormatOf(context), l10n, _start, _end),
             key: ValueKey('$prefix-period-range'),
             style: theme.textTheme.bodyMedium?.copyWith(
               fontWeight: FontWeight.w600,

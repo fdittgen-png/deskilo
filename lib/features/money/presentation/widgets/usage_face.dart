@@ -26,6 +26,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/usage_record.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/usage_providers.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// One month of usage, newest first.
 class UsageFace extends ConsumerWidget {
@@ -98,8 +99,8 @@ class UsageRecordCard extends ConsumerWidget {
     final theme = Theme.of(context);
     final locale = Localizations.maybeLocaleOf(context)?.toString();
     final day = DateFormat.MMMEd(locale).format(record.reservedFrom);
-    final from = DateFormat.Hm(locale).format(record.reservedFrom);
-    final to = DateFormat.Hm(locale).format(record.reservedTo);
+    final from = appFormatOf(context).time(record.reservedFrom); // #1150
+    final to = appFormatOf(context).time(record.reservedTo); // #1150
 
     return Card(
       key: ValueKey('usage-${record.id}'),

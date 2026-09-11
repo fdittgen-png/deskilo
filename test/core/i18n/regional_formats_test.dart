@@ -23,7 +23,7 @@ Future<({FakeProfileRepository profile, FakeWorkspaceRepository workspace})>
   final profile = FakeProfileRepository();
   final workspace = FakeWorkspaceRepository.withWorkspace(featureFlags: flags);
   await tester.pumpWidget(ProviderScope(
-    overrides: standardTestOverrides(
+    overrides: standardTestOverrides(pinFormats: false, 
       profile: profile,
       workspace: workspace,
       floorPlan: FakeFloorPlanRepository()..seedSmallPlan(),
@@ -93,7 +93,7 @@ void main() {
       workspace.workspaces[0] =
           workspace.workspaces[0].copyWith(countryCode: country);
       return ProviderScope(
-        overrides: standardTestOverrides(workspace: workspace),
+        overrides: standardTestOverrides(pinFormats: false, workspace: workspace),
         child: MaterialApp(
           home: Scaffold(
             body: HowToPayCard(instructions: instructions),

@@ -444,7 +444,7 @@ class ExpenseOccurrenceCard extends ConsumerStatefulWidget {
 
 class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
   late final TextEditingController _amount = TextEditingController(
-      text: (widget.occurrence.amountCents / 100).toStringAsFixed(2));
+      text: centsToMajor(widget.occurrence.amountCents)); // #1140
   final _reason = TextEditingController();
   final _note = TextEditingController();
 

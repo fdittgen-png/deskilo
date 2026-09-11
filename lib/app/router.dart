@@ -371,6 +371,9 @@ GoRouter router(Ref ref) {
       GoRoute(
         // #734 — Region & formats as a screen of its own.
         path: '/formats',
+        // #1151 — gated like every feature-owned route.
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.regionalFormats) ? null : '/settings',
         builder: (context, state) => const RegionalFormatsScreen(),
       ),
       GoRoute(
@@ -411,18 +414,30 @@ GoRouter router(Ref ref) {
       // shell branch's own page key.
       GoRoute(
         path: '/conversation/:conversationId',
+        // #1151 — the deep links ride the memberNotifications gate the
+        // comment above always claimed; now the route does too.
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.memberNotifications) ? null : '/messages',
         builder: (context, state) => ConversationThreadPage(
           conversationId: state.pathParameters['conversationId'] ?? '',
         ),
       ),
       GoRoute(
         path: '/res/:id',
+        // #1151 — the deep links ride the memberNotifications gate the
+        // comment above always claimed; now the route does too.
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.memberNotifications) ? null : '/messages',
         builder: (context, state) => ReferenceLinkScreen.reservation(
           id: state.pathParameters['id'] ?? '',
         ),
       ),
       GoRoute(
         path: '/space/:kind/:id',
+        // #1151 — the deep links ride the memberNotifications gate the
+        // comment above always claimed; now the route does too.
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.memberNotifications) ? null : '/messages',
         builder: (context, state) => ReferenceLinkScreen.space(
           kind:
               SpaceKind.values.asNameMap()[state.pathParameters['kind'] ??

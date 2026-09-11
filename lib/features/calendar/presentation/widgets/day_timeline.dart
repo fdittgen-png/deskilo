@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -19,6 +18,7 @@ import '../../../plan/presentation/widgets/level_chip_row.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// Geometry of the 24h timeline axis (#187). Pinned by test — treat these
 /// as part of the visual contract, not free-floating magic numbers.
@@ -200,7 +200,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     final names = ref.read(memberNamesProvider).value ?? const {};
     final name = names[reservation.memberId] ?? '';
     final until =
-        DateFormat.Hm().format(WorkspaceTime.wall(reservation.endsAt));
+        ref.watch(appFormatProvider).time(reservation.endsAt);
     final message = '${l10n?.planOccupiedBy(name) ?? 'Occupied by $name'} · '
         '${l10n?.planUntil(until) ?? 'until $until'}';
     AppSnack.info(context, message, replace: true);
@@ -512,7 +512,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
   }
 
   Widget _ruler(BuildContext context) {
-    final timeFormat = DateFormat.Hm();
+    final timeFormat = ref.watch(appFormatProvider); // #1150
     final style = Theme.of(context).textTheme.labelSmall;
     return SizedBox(
       height: TimelineAxis.rulerHeight,
@@ -526,7 +526,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
               left: h * TimelineAxis.hourWidth + 3,
               bottom: 2,
               child: Text(
-                timeFormat.format(_dayStart.add(Duration(hours: h))),
+                timeFormat.wallTime(_dayStart.add(Duration(hours: h))),
                 style: style,
               ),
             ),

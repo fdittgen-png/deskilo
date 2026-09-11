@@ -33,6 +33,8 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/directory_status.dart';
 import '../../providers/directory_providers.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 
 /// Member directory (#224, epic #222): every member sees the workspace's
 /// ACTIVE members (alphabetical) with live indicators, and a WhatsApp
@@ -318,11 +320,11 @@ Widget? _presenceChip(
 /// day and start time in the calendar's house style ([DateFormat.E] /
 /// [DateFormat.d] / [DateFormat.Hm]) plus the seat name when the plan
 /// knows one — "Tue 21 · 09:00 · A1".
-String _upcomingLabel(Reservation reservation, String seatName) {
+String _upcomingLabel(AppFormat format, Reservation reservation, String seatName) {
   final local = reservation.startsAt.toLocal();
   final day =
       '${DateFormat.E().format(local)} ${DateFormat.d().format(local)}';
-  final when = '$day · ${DateFormat.Hm().format(local)}';
+  final when = '$day · ${format.time(reservation.startsAt)}';
   return seatName.isEmpty ? when : '$when · $seatName';
 }
 
@@ -366,7 +368,7 @@ Widget? _reservationChip(
     ),
     UpcomingReservation() => _StatusChip(
       chipKey: ValueKey('$keyPrefix-$memberId'),
-      label: _upcomingLabel(reservation, seatName),
+      label: _upcomingLabel(appFormatOf(context), reservation, seatName),
       foreground: theme.colorScheme.onSurfaceVariant,
       outlined: true,
     ),
@@ -901,7 +903,7 @@ class _ReservationTile extends StatelessWidget {
             const SizedBox(width: AppSpacing.md),
             Expanded(
               child: Text(
-                _upcomingLabel(reservation, seatName),
+                _upcomingLabel(appFormatOf(context), reservation, seatName),
                 style: theme.textTheme.bodyMedium,
               ),
             ),

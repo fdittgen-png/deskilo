@@ -21,6 +21,7 @@ import '../domain/managed_access.dart';
 import '../domain/workspace_overview.dart';
 import '../domain/site.dart';
 import '../../../core/data/system_columns.dart';
+import '../../../core/data/enum_wire.dart';
 
 class SupabaseWorkspaceRepository
     with ConversationApi
@@ -1028,7 +1029,10 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         isAdmin: row['is_admin'] as bool,
         isOwner: row['is_owner'] as bool,
         coOwner: CoOwnerStatus.fromWire(row['co_owner'] as String?),
-        status: MemberStatus.values.byName(row['status'] as String),
+        // #1148 — an unknown status reads as PAUSED: visible, never a
+        // grant. A throw here emptied the whole member list.
+        status: enumOr(MemberStatus.values, row['status'] as String?,
+            MemberStatus.paused, area: 'members'),
         subscriptionPct: row['subscription_pct'] as int? ?? 100,
         managedIdentity: PersonalInfo.fromDb(
           (row['managed_identity'] as Map?)?.cast<String, dynamic>() ??

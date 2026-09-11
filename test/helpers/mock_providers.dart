@@ -8,6 +8,9 @@ import 'dart:async';
 import 'package:flutter/foundation.dart' show ValueChanged;
 import 'package:flutter/widgets.dart' show Widget, ColoredBox, Color, Center, Text;
 
+import 'package:deskilo/core/i18n/app_format.dart';
+import 'package:deskilo/core/i18n/format_prefs.dart';
+import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/profile/domain/personal_info.dart';
 import 'package:deskilo/features/auth/domain/badge_sign_in.dart';
@@ -1672,6 +1675,12 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 /// channel. Default OFF, like a fresh install; tests exercising
 
 List<Override> standardTestOverrides({
+  // #1150 — most fixtures were written against workspace wall time (the
+  // app's default); a few against the device's. Each test says which.
+  TimeZoneMode timeZoneMode = TimeZoneMode.workspace,
+  // A test of the format CONTROLLER itself needs the real provider, not
+  // a pinned value.
+  bool pinFormats = true,
   Clock? clock,
   bool devMode = false,
   BackendSettingsStore? backendSettings,
@@ -1703,6 +1712,14 @@ List<Override> standardTestOverrides({
   DeploymentRepository? deployment,
 }) {
   return [
+    // #1150 — a 24-hour clock for every test: `ClockPref.auto` renders
+    // "8:00 AM" under en_US, which is right for that member and wrong for
+    // a fixture that pins "08:00". The app honours the preference; the
+    // tests pin one.
+    if (pinFormats)
+      appFormatProvider.overrideWithValue(
+        AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24, timeZoneMode: timeZoneMode),
+      ),
     // #969/#970 — the per-device preferences, in memory by default.
     demoModeStoreProvider.overrideWithValue(demoMode ?? InMemoryDemoModeStore()),
     navigationStyleStoreProvider.overrideWithValue(

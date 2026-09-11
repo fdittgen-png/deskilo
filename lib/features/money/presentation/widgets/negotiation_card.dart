@@ -15,6 +15,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/package.dart';
 import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
+import '../../../../core/format/cents.dart';
 
 /// #739 — the member's own prices against the workspace tariff, on the
 /// Statement face: what everyone pays, what I pay, since when — and who
@@ -216,11 +217,11 @@ Future<void> showPriceNegotiationSheet(
   final fee = TextEditingController(
       text: current.active?.feeCents == null
           ? ''
-          : (current.active!.feeCents! / 100).toStringAsFixed(2));
+          : centsToMajor(current.active!.feeCents!));
   final overage = TextEditingController(
       text: current.active?.overageFeeCents == null
           ? ''
-          : (current.active!.overageFeeCents! / 100).toStringAsFixed(2));
+          : centsToMajor(current.active!.overageFeeCents!));
   final discount = TextEditingController(
       text: current.active?.discountPercent == null
           ? ''
@@ -238,14 +239,12 @@ Future<void> showPriceNegotiationSheet(
       'services:${s.id}': TextEditingController(
           text: current.active?.itemPrice('services', s.id) == null
               ? ''
-              : (current.active!.itemPrice('services', s.id)! / 100)
-                  .toStringAsFixed(2)),
+              : centsToMajor(current.active!.itemPrice('services', s.id)!)),
     for (final p in packages)
       'packages:${p.id}': TextEditingController(
           text: current.active?.itemPrice('packages', p.id) == null
               ? ''
-              : (current.active!.itemPrice('packages', p.id)! / 100)
-                  .toStringAsFixed(2)),
+              : centsToMajor(current.active!.itemPrice('packages', p.id)!)),
   };
   final ok = await showModalBottomSheet<bool>(
     context: context,
@@ -399,8 +398,8 @@ Future<void> showPriceNegotiationSheet(
   int? cents(String raw) {
     final t = raw.trim().replaceAll(',', '.');
     if (t.isEmpty) return null;
-    final v = double.tryParse(t);
-    return v == null ? null : (v * 100).round();
+    // #1140 — the currency's own minor digits, never a literal 100.
+    return parseCentsInput(t);
   }
   final discountPct = double.tryParse(discount.text.trim().replaceAll(',', '.'));
   final feeCents = cents(fee.text);

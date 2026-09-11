@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:intl/intl.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../features/profile/providers/profile_providers.dart';
@@ -57,4 +59,21 @@ AppFormat appFormat(Ref ref) {
     clock: prefs.clock,
     timeZoneMode: prefs.timeZoneMode,
   );
+}
+
+/// #1150 — the member's formats from a widget that has no `ref`: a
+/// StatelessWidget deep in a sheet still has to honour their clock and
+/// zone. Reads the scope the widget is already inside.
+AppFormat appFormatOf(BuildContext context) {
+  try {
+    return ProviderScope.containerOf(context, listen: false)
+        .read(appFormatProvider);
+  } on StateError {
+    // No scope above this widget — a sheet pumped on its own in a test,
+    // or a surface outside the app root. A preference lookup must never
+    // be the reason a sheet fails to build: a 24-hour clock in the
+    // workspace's zone is what every screen showed before #1150.
+    return const AppFormat(
+        locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24);
+  }
 }
