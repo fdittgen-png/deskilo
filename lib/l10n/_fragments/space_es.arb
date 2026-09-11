@@ -33,5 +33,6 @@
   "spaceManageMyBooking": "Gestionar mi reserva",
   "@spaceManageMyBooking": {
     "description": "#670 - whole-space sheet"
-  }
+  },
+  "spaceAlreadyCheckedInHere": "Ya ha fichado aquí. Elija « Fichar la salida » para dejar la plaza."
 }

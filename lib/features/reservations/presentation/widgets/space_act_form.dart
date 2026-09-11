@@ -42,6 +42,7 @@ class SpaceActForm extends StatefulWidget {
     this.footer,
     this.refusalOf,
     this.refusalTextOf,
+    this.initialAction,
   });
 
   final BookingGranularity granularity;
@@ -59,6 +60,12 @@ class SpaceActForm extends StatefulWidget {
   final BookingRefusal? Function(SpaceActChoice choice)? refusalOf;
   final String Function(BookingRefusal refusal)? refusalTextOf;
 
+  /// #1135 — the action to open on, when the caller knows something the
+  /// form does not: that this member is ALREADY checked in on this seat,
+  /// so the only move left is to leave. Null keeps the walk-up default,
+  /// which is right for every other case.
+  final SpaceAction? initialAction;
+
   @override
   State<SpaceActForm> createState() => SpaceActFormState();
 }
@@ -67,7 +74,7 @@ class SpaceActForm extends StatefulWidget {
 typedef _DayOption = ({String key, String label, DateTime start, DateTime end});
 
 class SpaceActFormState extends State<SpaceActForm> {
-  SpaceAction _action = SpaceAction.checkIn;
+  late SpaceAction _action = widget.initialAction ?? SpaceAction.checkIn;
   late DateTime _start;
   late DateTime _end;
   String? _dayKey;

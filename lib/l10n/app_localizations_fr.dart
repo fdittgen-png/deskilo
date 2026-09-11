@@ -8723,6 +8723,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get spaceManageMyBooking => 'Gérer ma réservation';
 
   @override
+  String get spaceAlreadyCheckedInHere =>
+      'Vous êtes déjà pointé ici. Choisissez « Pointer la sortie » pour libérer la place.';
+
+  @override
   String get themeTitle => 'Thème';
 
   @override

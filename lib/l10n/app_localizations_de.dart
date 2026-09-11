@@ -8708,6 +8708,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get spaceManageMyBooking => 'Meine Buchung verwalten';
 
   @override
+  String get spaceAlreadyCheckedInHere =>
+      'Sie sind hier bereits eingecheckt. Wählen Sie « Auschecken », um den Platz freizugeben.';
+
+  @override
   String get themeTitle => 'Design';
 
   @override

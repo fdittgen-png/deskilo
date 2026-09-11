@@ -321,6 +321,16 @@ class _CanvasControlsState extends State<CanvasControls>
     required double span,
   }) {
     if (span <= 0) return (0, track);
+    // #1135 — `clamp` THROWS when the lower bound exceeds the upper, and
+    // a track shorter than the minimum thumb is exactly that. It happens
+    // on a narrow canvas and on the frame where the track is still being
+    // laid out, and the field trace caught it twice:
+    //
+    //   ERROR flutter: Invalid argument(s): 24.0
+    //     #0 double.clamp  #1 _CanvasControlsState._thumb (:317)
+    //
+    // A track that cannot hold a thumb gets one the length of the track.
+    if (track <= _minThumb) return (0, track);
     final len = (window / span * track).clamp(_minThumb, track);
     final maxStart = track - len;
     final pos =

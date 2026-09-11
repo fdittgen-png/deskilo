@@ -19,6 +19,13 @@ class FakeReservationRepository implements ReservationRepository {
   final String myMemberId;
   final reservations = <Reservation>[];
 
+  /// #1135 — how many times [create] was ENTERED, refused or not.
+  ///
+  /// Counting rows cannot tell "the app never asked" from "the app asked
+  /// and the server said no", and that distinction is the whole point of
+  /// the fix: a request that cannot succeed must not leave the device.
+  int createCalls = 0;
+
   /// The workspace granularity the SERVER would read (#573): the fake
   /// mirrors the canonical walk-up snap-back and the same-day presence
   /// rule only when a test sets a day-based/hours granularity.
@@ -196,6 +203,7 @@ class FakeReservationRepository implements ReservationRepository {
     required DateTime endsAt,
     bool checkIn = false,
   }) async {
+    createCalls++;
     final targets =
         [seatId, deskId, officeId, levelId].whereType<String>().length;
     if (targets != 1) {

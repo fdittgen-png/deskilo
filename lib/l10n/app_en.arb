@@ -9205,6 +9205,7 @@
   "@spaceManageMyBooking": {
     "description": "#670 - whole-space sheet"
   },
+  "spaceAlreadyCheckedInHere": "You are already checked in here. Choose Check out to leave the seat.",
   "themeTitle": "Theme",
   "@themeTitle": {
     "description": "Settings entry and dialog title for the in-app theme selection"

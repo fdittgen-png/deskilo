@@ -5977,6 +5977,7 @@
   "@spaceManageMyBooking": {
     "description": "#670 - whole-space sheet"
   },
+  "spaceAlreadyCheckedInHere": "Sie sind hier bereits eingecheckt. Wählen Sie « Auschecken », um den Platz freizugeben.",
   "themeTitle": "Design",
   "themeSystem": "Systemstandard",
   "themeLight": "Hell",

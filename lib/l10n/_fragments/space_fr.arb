@@ -33,5 +33,6 @@
   "spaceManageMyBooking": "Gérer ma réservation",
   "@spaceManageMyBooking": {
     "description": "#670 - whole-space sheet"
-  }
+  },
+  "spaceAlreadyCheckedInHere": "Vous êtes déjà pointé ici. Choisissez « Pointer la sortie » pour libérer la place."
 }

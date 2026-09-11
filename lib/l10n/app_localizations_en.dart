@@ -8636,6 +8636,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get spaceManageMyBooking => 'Manage my booking';
 
   @override
+  String get spaceAlreadyCheckedInHere =>
+      'You are already checked in here. Choose Check out to leave the seat.';
+
+  @override
   String get themeTitle => 'Theme';
 
   @override

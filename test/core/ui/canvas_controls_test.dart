@@ -34,6 +34,39 @@ Future<TransformationController> _pump(
 }
 
 void main() {
+  // #1135 — the scrollbar thumb has a 24px minimum, and `clamp` THROWS
+  // when its lower bound exceeds its upper. A canvas narrower than that
+  // minimum is exactly that case, and the field trace caught it:
+  //
+  //   ERROR flutter: Invalid argument(s): 24.0
+  //     #0 double.clamp  #1 _CanvasControlsState._thumb
+  //
+  // The widget is on the plan, the editor and the report designer, so
+  // this is a crash on a narrow phone, not a curiosity.
+  testWidgets('a canvas narrower than the minimum thumb does not throw',
+      (tester) async {
+    await _pump(tester, contentSize: const Size(4000, 4000));
+    // A viewport far shorter than the 24px thumb minimum.
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: SizedBox(
+              width: 18,
+              height: 18,
+              child: CanvasControls(
+                controller: TransformationController(),
+                contentSize: const Size(4000, 4000),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('zoom in / out / reset drive the shared transform',
       (tester) async {
     final controller = await _pump(tester);

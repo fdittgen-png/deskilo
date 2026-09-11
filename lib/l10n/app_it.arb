@@ -5977,6 +5977,7 @@
   "@spaceManageMyBooking": {
     "description": "#670 - whole-space sheet"
   },
+  "spaceAlreadyCheckedInHere": "Siete già registrati qui. Scegliete « Registra l'uscita » per liberare il posto.",
   "themeTitle": "Tema",
   "themeSystem": "Predefinito di sistema",
   "themeLight": "Chiaro",

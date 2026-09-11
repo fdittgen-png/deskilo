@@ -5977,6 +5977,7 @@
   "@spaceManageMyBooking": {
     "description": "#670 - whole-space sheet"
   },
+  "spaceAlreadyCheckedInHere": "Vous êtes déjà pointé ici. Choisissez « Pointer la sortie » pour libérer la place.",
   "themeTitle": "Thème",
   "themeSystem": "Par défaut du système",
   "themeLight": "Clair",
