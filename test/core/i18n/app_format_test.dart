@@ -165,7 +165,12 @@ void main() {
     test('the payment-order function knows a yen has no cents', () {
       final ts = File('supabase/functions/create-payment-order/index.ts')
           .readAsStringSync();
-      expect(ts, contains('ZERO_DECIMAL'));
+      // #1137 — the rule moved to _shared/money.ts so the webhooks share
+      // it; the order still converts through it and never by hand.
+      final shared = File('supabase/functions/_shared/money.ts')
+          .readAsStringSync();
+      expect(shared, contains('ZERO_DECIMAL'));
+      expect(ts, contains('from "../_shared/money.ts"'));
       expect(ts, isNot(contains('(cents / 100).toFixed(2)')));
       expect(ts, contains('major(amountCents, currency)'));
     });

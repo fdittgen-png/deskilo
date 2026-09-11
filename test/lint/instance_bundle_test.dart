@@ -31,4 +31,23 @@ void main() {
           reason: 'a new function must say whether it verifies the JWT');
     }
   });
+
+  test('#1137 — every function carries the shared modules, path-named', () {
+    final decoded = jsonDecode(
+        File('assets/instance/bundle.json').readAsStringSync()) as Map;
+    final shared = Directory('supabase/functions/_shared')
+        .listSync()
+        .whereType<File>()
+        .map((f) => '_shared/${f.uri.pathSegments.last}')
+        .toSet();
+    expect(shared, isNotEmpty, reason: 'money.ts lives there');
+    for (final f in decoded['functions'] as List) {
+      final slug = (f as Map)['slug'] as String;
+      final names = (f['files'] as List).map((x) => (x as Map)['name']).toSet();
+      expect(names, contains('$slug/index.ts'),
+          reason: '$slug: the entrypoint is path-named under its slug');
+      expect(names.containsAll(shared), isTrue,
+          reason: '$slug must carry _shared/* or its imports fail on deploy');
+    }
+  });
 }

@@ -26,12 +26,15 @@ async function validSignature(
   header: string,
   secret: string,
 ): Promise<boolean> {
-  const parts = Object.fromEntries(
-    header.split(",").map((p) => p.split("=") as [string, string]),
-  );
-  const timestamp = parts["t"];
-  const signature = parts["v1"];
-  if (!timestamp || !signature) return false;
+  // #1144 — Stripe sends SEVERAL `v1=` pairs while a webhook secret is
+  // being rotated (the old one stays valid up to 24 h), and its reference
+  // verifier accepts if ANY matches. `Object.fromEntries` kept only the
+  // last, so every payment in the rollover window was charged on the card
+  // and never settled.
+  const pairs = header.split(",").map((p) => p.split("=") as [string, string]);
+  const timestamp = pairs.find(([k]) => k === "t")?.[1];
+  const signatures = pairs.filter(([k]) => k === "v1").map(([, v]) => v);
+  if (!timestamp || signatures.length === 0) return false;
   if (Math.abs(Date.now() / 1000 - Number(timestamp)) > 300) return false;
   const key = await crypto.subtle.importKey(
     "raw",
@@ -51,12 +54,18 @@ async function validSignature(
   // Constant-time compare (security audit): `===` short-circuits on the
   // first mismatched byte, leaking a timing side-channel on the one
   // auth-critical comparison in this function.
-  if (expected.length !== signature.length) return false;
-  let diff = 0;
-  for (let i = 0; i < expected.length; i++) {
-    diff |= expected.charCodeAt(i) ^ signature.charCodeAt(i);
+  // Each candidate compared in constant time; the OR over candidates
+  // leaks only how many there were, which the header already says.
+  let any = false;
+  for (const signature of signatures) {
+    if (expected.length !== signature.length) continue;
+    let diff = 0;
+    for (let i = 0; i < expected.length; i++) {
+      diff |= expected.charCodeAt(i) ^ signature.charCodeAt(i);
+    }
+    any = any || diff === 0;
   }
-  return diff === 0;
+  return any;
 }
 
 Deno.serve(async (req: Request): Promise<Response> => {

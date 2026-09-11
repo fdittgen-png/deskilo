@@ -7,6 +7,7 @@
 // first, env fallback). Settlement is idempotent.
 
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
+import { toMinor } from "../_shared/money.ts";
 
 // The key of the provider the intent was created with — Wero is offered
 // through Mollie but stores its own credentials (this is what is deployed
@@ -72,9 +73,9 @@ Deno.serve(async (req: Request): Promise<Response> => {
   const payment = await res.json();
 
   if (payment.status === "paid") {
-    const cents = payment.amount?.value
-      ? Math.round(parseFloat(payment.amount.value) * 100)
-      : null;
+    // #1137 — the provider's own currency decides the minor digits; a
+    // yen has none, and `* 100` credited it a hundred times over.
+    const cents = toMinor(payment.amount?.value, payment.amount?.currency ?? "EUR");
     const { error } = await admin.rpc("settle_online_payment", {
       p_provider: settleProvider,
       p_order_id: paymentId,

@@ -181,7 +181,10 @@ class DioSupabaseManagement implements SupabaseManagement {
             queryParameters: {'slug': slug},
             data: FormData.fromMap({
               'metadata': jsonEncode({
-                'entrypoint_path': 'index.ts',
+                // #1137 — files are path-named (`<slug>/index.ts`,
+                // `_shared/money.ts`) so a shared import resolves; the
+                // entrypoint moves with them.
+                'entrypoint_path': '$slug/index.ts',
                 'name': slug,
                 'verify_jwt': verifyJwt,
               }),
