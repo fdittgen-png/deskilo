@@ -479,6 +479,27 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   }
 
   @override
+  Future<void> setRolePermission(
+    String workspaceId,
+    String role,
+    String permission, {
+    required bool enabled,
+  }) async {
+    // #1089 — the DELTA, never a recomputed list. The server merges it
+    // into the row as it stands, and a held change carries the same
+    // delta so confirming it cannot undo whatever happened while it
+    // waited.
+    final answer =
+        await _client.rpc<dynamic>('request_matrix_permission', params: {
+      'p_workspace_id': workspaceId,
+      'p_role': role,
+      'p_permission': permission,
+      'p_enabled': enabled,
+    });
+    applyOrPending(answer as Map);
+  }
+
+  @override
   Future<void> setRolePermissions(
     String workspaceId,
     String role,
@@ -882,18 +903,16 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
     String key,
     Object value,
   ) async {
-    final row = await _client
-        .from('workspaces')
-        .select('booking_rules')
-        .eq('id', workspaceId)
-        .single();
-    final rules = <String, dynamic>{
-      ...?row['booking_rules'] as Map<String, dynamic>?,
-      key: value,
-    };
-    await _client
-        .from('workspaces')
-        .update({'booking_rules': rules}).eq('id', workspaceId);
+    // #1089 — the merge happens IN the database. This used to SELECT the
+    // jsonb, add one key in Dart and UPDATE the whole object back, so two
+    // admins with the Availability screen open each wrote a copy of the
+    // row as they had found it and the second silently reverted the
+    // first — the shape 0176 removed for feature_flags and left here.
+    await _client.rpc<dynamic>('set_booking_rule', params: {
+      'p_workspace_id': workspaceId,
+      'p_key': key,
+      'p_value': value,
+    });
   }
 
   @override

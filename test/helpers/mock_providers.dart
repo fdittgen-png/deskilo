@@ -1002,6 +1002,37 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     });
   }
 
+  /// #1089 — mirrors `set_role_permission`: ONE permission, merged into
+  /// the list as it stands. A fake that recomputed the whole list would
+  /// pass a test the server would fail, which is how the defect survived.
+  @override
+  Future<void> setRolePermission(
+    String workspaceId,
+    String role,
+    String permission, {
+    required bool enabled,
+  }) async {
+    if (!effectivePermissions(myMember, workspaces.firstOrNull)
+        .contains(WorkspacePermission.manageRoles)) {
+      throw StateError('only role managers may edit permissions');
+    }
+    final i = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (i < 0) return;
+    // rolePermissions is Map<String, dynamic>; strict-casts (#1060)
+    // refuses to spread a dynamic, and the stored value is a JSON list.
+    final stored = workspaces[i].rolePermissions[role] as List<Object?>?;
+    final current = <String>[
+      for (final p in stored ?? const <Object?>[]) '$p',
+    ];
+    current.remove(permission);
+    if (enabled) current.add(permission);
+    current.sort();
+    workspaces[i] = workspaces[i].copyWith(rolePermissions: {
+      ...workspaces[i].rolePermissions,
+      role: current,
+    });
+  }
+
   @override
   Future<void> setInvitationTemplates(
     String workspaceId,
