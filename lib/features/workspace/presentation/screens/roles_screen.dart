@@ -92,9 +92,11 @@ class RolesScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
-    final next = current.contains(permission)
-        ? (current.toSet()..remove(permission))
-        : {...current, permission};
+    // #1089 — what changed, not what the screen remembers. Sending the
+    // recomputed list made every toggle a write of the WHOLE role, so a
+    // permission somebody else granted or an owner removed while this
+    // screen was open came back or vanished with the next tap here.
+    final enabled = !current.contains(permission);
     await runGuarded(
       context,
       domain: 'workspace',
@@ -102,10 +104,11 @@ class RolesScreen extends ConsumerWidget {
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
       action: () async {
-        await ref.read(workspaceRepositoryProvider).setRolePermissions(
+        await ref.read(workspaceRepositoryProvider).setRolePermission(
               workspace.id,
               role.wireName,
-              [for (final p in next) p.wireName],
+              permission.wireName,
+              enabled: enabled,
             );
         // The workspace CHAIN root — currentWorkspaceProvider derives
         // from it and would otherwise recompute from the stale list.
