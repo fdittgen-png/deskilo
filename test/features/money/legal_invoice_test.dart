@@ -11,10 +11,10 @@ import 'dart:io';
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
-import 'package:deskilo/features/money/presentation/invoice_actions.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:deskilo/features/money/domain/report_data.dart';
 
 Workspace _workspace(Map<String, dynamic> invoiceLegal) => Workspace(
       id: 'ws-1',

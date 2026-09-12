@@ -67,6 +67,7 @@ import '../widgets/consumption_sheet.dart';
 import '../../../profile/providers/profile_providers.dart';
 import '../../../../core/locale/report_language.dart';
 import '../../../workspace/domain/workspace.dart';
+import '../../domain/report_data_letters.dart';
 
 /// Money tab (spec §7.3, #132): a structured monthly bill per period —
 /// subscription, consumed services, open positions awaiting validation,

@@ -11,8 +11,8 @@ import '../../../core/time/clock.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/workspace_status.dart';
-import 'invoice_actions.dart';
 import 'report_strings_l10n.dart';
+import '../domain/report_data.dart';
 
 Map<String, Object?> workspaceStatusReportData(
   BuildContext context,

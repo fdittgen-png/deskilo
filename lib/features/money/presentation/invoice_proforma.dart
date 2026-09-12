@@ -28,6 +28,7 @@ import 'report_strings_l10n.dart';
 import 'report_actions.dart';
 import 'report_defaults.dart';
 import 'report_layout_actions.dart';
+import '../domain/report_data.dart';
 
 /// Renders the month as a PROFORMA and hands it to the share sheet — the
 /// quote an issuer sends before invoicing, and the payment request they

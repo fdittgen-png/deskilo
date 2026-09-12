@@ -23,6 +23,7 @@ import 'invoice_actions.dart';
 import 'report_strings_l10n.dart';
 import 'report_actions.dart';
 import 'report_layout_actions.dart';
+import '../domain/report_data.dart';
 
 /// The period's report from the invoices already loaded for the hub.
 Future<VatReport> loadVatReport(

@@ -7,12 +7,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/features/money/domain/statement.dart';
-import 'package:deskilo/features/money/presentation/invoice_actions.dart';
 import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:deskilo/features/money/domain/report_data_letters.dart';
 
 const _write = bool.fromEnvironment('WRITE_GOLDEN');
 

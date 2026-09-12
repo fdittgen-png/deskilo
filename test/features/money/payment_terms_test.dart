@@ -6,7 +6,6 @@
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/payment_terms.dart';
-import 'package:deskilo/features/money/presentation/invoice_actions.dart';
 import 'package:deskilo/features/money/presentation/screens/my_payment_terms_screen.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
@@ -16,6 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/mock_providers.dart';
+import 'package:deskilo/features/money/domain/report_data.dart';
 
 void main() {
   group('the value', () {

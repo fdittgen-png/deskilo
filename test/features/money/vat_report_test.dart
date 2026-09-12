@@ -12,10 +12,10 @@ import 'package:deskilo/features/money/domain/vat_compliance.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
-import 'package:deskilo/features/money/presentation/invoice_actions.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:deskilo/features/money/domain/report_data.dart';
 
 Invoice _invoice(
   String number, {

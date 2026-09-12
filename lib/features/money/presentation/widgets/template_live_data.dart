@@ -7,9 +7,10 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/money_providers.dart';
-import '../invoice_actions.dart';
 import '../report_facts_of.dart';
 import '../report_strings_l10n.dart';
+import '../../domain/report_data.dart';
+import '../../domain/report_data_letters.dart';
 
 /// #1061 — the live data for the designer's SELECTED document, or null
 /// when the app has none yet (→ simulated sample data). Moved out of

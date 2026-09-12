@@ -62,6 +62,7 @@ import '../../../money/presentation/report_strings_l10n.dart';
 import '../../../money/presentation/report_layout_actions.dart';
 import '../../../money/presentation/batch_cover.dart';
 import '../../../../core/locale/report_language.dart';
+import '../../../money/domain/report_data_letters.dart';
 
 /// Owner-only workspace settings: identity (country/currency/time zone,
 /// #153 — a country pick re-defaults both from [CountryCatalog], a

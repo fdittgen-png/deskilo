@@ -21,6 +21,7 @@ import '../domain/site.dart';
 import '../domain/overage_policy.dart';
 import '../providers/workspace_providers.dart';
 import 'widgets/badge_manager_dialog.dart';
+import '../../money/domain/report_data_letters.dart';
 
 /// The admin actions on ONE member (#825) — subscription, overage
 /// policy, limits, roles, co-ownership, kiosk, pause, join decisions,
