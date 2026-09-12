@@ -9,7 +9,6 @@ import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
 
 import '../../../../core/files/file_picker.dart';
-import '../../../../core/format/cents.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -33,6 +32,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../../plan/presentation/widgets/floor_plan_painter.dart';
 import '../../../plan/presentation/widgets/plan_canvas.dart';
 import '../../../../core/time/clock.dart';
+import '../widgets/space_properties_sheet.dart';
 
 enum EditorTool { select, office, desk, seat, image, erase }
 
@@ -729,72 +729,21 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
 
   Future<void> _showOfficeSheet(Office office) async {
     final l10n = AppLocalizations.of(context);
-    var bookable = office.bookableAsWhole;
-    final name = TextEditingController(text: office.name);
-    // Whole-office price per half-day (0057) — the 0050 level shape.
-    final price = TextEditingController(
-      text: office.priceCents == 0 ? '' : centsToMajor(office.priceCents),
+    final props = await showSpacePropertiesSheet(
+      context,
+      title: l10n?.editorOfficeProperties ?? 'Office',
+      nameLabel: l10n?.editorOfficeNameLabel ?? 'Office name',
+      name: office.name,
+      bookable: office.bookableAsWhole,
+      priceCents: office.priceCents,
+      keyPrefix: 'office',
     );
-    final saved = await showModalBottomSheet<bool>(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => Padding(
-        padding: EdgeInsets.only(
-          left: AppSpacing.xl,
-          right: AppSpacing.xl,
-          top: AppSpacing.xl,
-          bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
-        ),
-        child: StatefulBuilder(
-          builder: (context, setSheetState) => Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                l10n?.editorOfficeProperties ?? 'Office',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: name,
-                decoration: InputDecoration(
-                  labelText: l10n?.editorOfficeNameLabel ?? 'Office name',
-                ),
-              ),
-              SwitchListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text(
-                  l10n?.editorBookableAsWhole ?? 'Bookable as a whole',
-                ),
-                value: bookable,
-                onChanged: (v) => setSheetState(() => bookable = v),
-              ),
-              TextField(
-                key: const ValueKey('office-price-field'),
-                controller: price,
-                enabled: bookable,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                decoration: InputDecoration(
-                  labelText: l10n?.levelPriceLabel ?? 'Price per half-day',
-                ),
-              ),
-              const SizedBox(height: 12),
-              FilledButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                child: Text(l10n?.commonSave ?? 'Save'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-    if (saved != true) return;
+    if (props == null) return;
     await ref.read(floorPlanRepositoryProvider).updateOffice(
           office.copyWith(
-            name: name.text.trim().isEmpty ? office.name : name.text.trim(),
-            bookableAsWhole: bookable,
-            priceCents: parseCentsInput(price.text) ?? 0,
+            name: props.name,
+            bookableAsWhole: props.bookable,
+            priceCents: props.priceCents,
           ),
         );
     ref.invalidate(floorPlanProvider(widget.levelId));
@@ -802,73 +751,21 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
 
   Future<void> _showDeskSheet(Desk desk) async {
     final l10n = AppLocalizations.of(context);
-    var bookable = desk.bookableAsWhole;
-    final name = TextEditingController(text: desk.name);
-    // Whole-desk price per half-day (0059) — the office-sheet shape.
-    final price = TextEditingController(
-      text: desk.priceCents == 0 ? '' : centsToMajor(desk.priceCents),
+    final props = await showSpacePropertiesSheet(
+      context,
+      title: l10n?.editorDeskProperties ?? 'Desk',
+      nameLabel: l10n?.editorDeskNameLabel ?? 'Desk name',
+      name: desk.name,
+      bookable: desk.bookableAsWhole,
+      priceCents: desk.priceCents,
+      keyPrefix: 'desk',
     );
-    final saved = await showModalBottomSheet<bool>(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => Padding(
-        padding: EdgeInsets.only(
-          left: AppSpacing.xl,
-          right: AppSpacing.xl,
-          top: AppSpacing.xl,
-          bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
-        ),
-        child: StatefulBuilder(
-          builder: (context, setSheetState) => Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                l10n?.editorDeskProperties ?? 'Desk',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: name,
-                decoration: InputDecoration(
-                  labelText: l10n?.editorDeskNameLabel ?? 'Desk name',
-                ),
-              ),
-              SwitchListTile(
-                key: const ValueKey('desk-bookable-switch'),
-                contentPadding: EdgeInsets.zero,
-                title: Text(
-                  l10n?.editorBookableAsWhole ?? 'Bookable as a whole',
-                ),
-                value: bookable,
-                onChanged: (v) => setSheetState(() => bookable = v),
-              ),
-              TextField(
-                key: const ValueKey('desk-price-field'),
-                controller: price,
-                enabled: bookable,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                decoration: InputDecoration(
-                  labelText: l10n?.levelPriceLabel ?? 'Price per half-day',
-                ),
-              ),
-              const SizedBox(height: 12),
-              FilledButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                child: Text(l10n?.commonSave ?? 'Save'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-    if (saved != true) return;
+    if (props == null) return;
     await ref.read(floorPlanRepositoryProvider).updateDesk(
           desk.copyWith(
-            name: name.text.trim().isEmpty ? desk.name : name.text.trim(),
-            bookableAsWhole: bookable,
-            priceCents: parseCentsInput(price.text) ?? 0,
+            name: props.name,
+            bookableAsWhole: props.bookable,
+            priceCents: props.priceCents,
           ),
         );
     ref.invalidate(floorPlanProvider(widget.levelId));
