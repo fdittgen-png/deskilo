@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../../../../core/ui/app_snack.dart';
 
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
@@ -115,11 +116,11 @@ class _KioskActSheetState extends State<_KioskActSheet> {
     final refusal = _form.currentState?.refusal;
     if (refusal != null) {
       final l10n = AppLocalizations.of(context);
-      ScaffoldMessenger.maybeOf(context)?.showSnackBar(SnackBar(
-        key: const ValueKey('kiosk-gate-snack'),
-        content: Text(widget.refusalTextOf?.call(refusal) ??
-            (l10n?.bookingGateBlocked ?? 'Not bookable as chosen')),
-      ));
+      AppSnack.error(
+        context,
+        widget.refusalTextOf?.call(refusal) ??
+            (l10n?.bookingGateBlocked ?? 'Not bookable as chosen'),
+      );
       return;
     }
     Navigator.of(context).pop((

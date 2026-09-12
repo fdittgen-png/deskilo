@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import '../presentation/screens/help_screen.dart';
 
 part 'help_providers.g.dart';
@@ -28,13 +29,15 @@ Future<Map<String, String>> helpAnchors(Ref ref, String languageCode) async {
     final decoded = jsonDecode(raw) as Map<String, dynamic>;
     return {for (final e in decoded.entries) e.key: '${e.value}'};
   } catch (e, st) {
-    // trace-exempt: a missing anchor map is the documented fallback path,
-    // not a failure — the screen still opens, at the nearest heading.
-    assert(() {
-      // ignore: avoid_print
-      print('help anchors unavailable for $languageCode: $e\n$st');
-      return true;
-    }());
+    // A missing anchor map is the documented fallback path — the screen
+    // still opens, at the nearest heading — so it is a warning in the
+    // trace, not an error, and never a print (#1154).
+    TraceLogger.instance.warn(
+      'help',
+      'anchors unavailable for $languageCode',
+      error: e,
+      stackTrace: st,
+    );
     return const {};
   }
 }

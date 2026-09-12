@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/ui/app_snack.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -217,7 +218,6 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
     required bool monospace,
   }) async {
     final l10n = AppLocalizations.of(context);
-    final messenger = ScaffoldMessenger.of(context);
     final message = await _composeWithFreshCode(monospace: monospace);
     if (message == null || !mounted) return;
     final opened = await ref.read(linkLauncherProvider)(uriOf(message));
@@ -226,11 +226,13 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
       // No handler (e.g. WhatsApp not installed) — the message is not
       // lost: it lands on the clipboard for any app.
       await Clipboard.setData(ClipboardData(text: message));
-      messenger.showSnackBar(SnackBar(
-        content: Text(l10n?.inviteSendFailed ??
+      if (!mounted) return;
+      AppSnack.info(
+        context,
+        l10n?.inviteSendFailed ??
             'Could not open the app for sending. '
-                'The message was copied instead.'),
-      ));
+                'The message was copied instead.',
+      );
     }
     if (mounted) Navigator.of(context).pop();
   }

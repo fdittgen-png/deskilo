@@ -125,3 +125,35 @@ ReservationInfo? resolveReservationInfo({
   if (upcoming != null) return UpcomingReservation(upcoming);
   return null;
 }
+
+/// #1154 — the month's reservations by member, computed ONCE per build:
+/// both row resolvers filter by member first, so handing each row its
+/// own slice is the same answer without a members × reservations rescan.
+Map<String, List<Reservation>> reservationsByMemberOf(
+  List<Reservation> reservations,
+) {
+  final byMember = <String, List<Reservation>>{};
+  for (final r in reservations) {
+    (byMember[r.memberId] ??= []).add(r);
+  }
+  return byMember;
+}
+
+/// This member's still-active bookings from [now] onward, soonest first
+/// — what the detail sheet lists (#237's [directoryReservations] window,
+/// i.e. up to two weeks out). A booking already running (checked in or
+/// covering now) is included; cancelled/past ones are dropped.
+List<Reservation> upcomingReservationsFor(
+  String memberId,
+  List<Reservation> reservations,
+  DateTime now,
+) {
+  final upcoming = reservations
+      .where(
+        (r) =>
+            r.memberId == memberId && r.isActive && r.endsAt.isAfter(now),
+      )
+      .toList()
+    ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
+  return upcoming;
+}

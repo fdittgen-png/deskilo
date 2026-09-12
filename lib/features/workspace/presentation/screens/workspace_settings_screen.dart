@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:file_selector/file_selector.dart';
+import '../member_labels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -301,20 +302,6 @@ class _WorkspaceSettingsScreenState
   }
 
   /// Role label for a member — owner outranks admin outranks member.
-  String _roleLabel(AppLocalizations? l10n, Member member) => member.isOwner
-      ? (l10n?.memberRoleOwner ?? 'Owner')
-      : member.isAdmin
-          ? (l10n?.memberRoleAdmin ?? 'Admin')
-          : (l10n?.memberRoleMember ?? 'Member');
-
-  String _statusLabel(AppLocalizations? l10n, MemberStatus status) =>
-      switch (status) {
-        MemberStatus.active => l10n?.memberStatusActive ?? 'Active',
-        MemberStatus.paused => l10n?.memberStatusPaused ?? 'Paused',
-        MemberStatus.pending => l10n?.memberStatusPending ?? 'Pending',
-        MemberStatus.exited => l10n?.memberStatusExited ?? 'Exited',
-      };
-
   String _granularityLabel(
     AppLocalizations? l10n,
     BookingGranularity granularity,
@@ -468,8 +455,8 @@ class _WorkspaceSettingsScreenState
             for (final member in sortedMembers)
               (
                 name: names[member.id] ?? '',
-                role: _roleLabel(l10n, member),
-                status: _statusLabel(l10n, member.status),
+                role: memberRoleLabel(l10n, member),
+                status: memberStatusLabel(l10n, member.status),
                 details: memberDetails(member),
               ),
           ];

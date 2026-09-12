@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../workspace/presentation/member_labels.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -23,12 +24,6 @@ import '../widgets/workspace_owners_sheet.dart';
 /// whole app; the choice persists across restarts.
 class ProfilesScreen extends ConsumerWidget {
   const ProfilesScreen({super.key});
-
-  String _roleLabel(AppLocalizations? l10n, Member member) {
-    if (member.isOwner) return l10n?.memberRoleOwner ?? 'Owner';
-    if (member.isAdmin) return l10n?.memberRoleAdmin ?? 'Admin';
-    return l10n?.memberRoleMember ?? 'Member';
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -68,7 +63,7 @@ class ProfilesScreen extends ConsumerWidget {
                   roleLabel: memberships
                       .where((m) =>
                           m.workspaceId == (active?.id == twin.id ? twin.id : workspace.id))
-                      .map((m) => _roleLabel(l10n, m))
+                      .map((m) => memberRoleLabel(l10n, m))
                       .firstOrNull,
                   onSelect: (id) => ref
                       .read(activeWorkspaceIdProvider.notifier)
@@ -114,7 +109,7 @@ class ProfilesScreen extends ConsumerWidget {
                       children: [
                         if (member != null)
                           Chip(
-                            label: Text(_roleLabel(l10n, member)),
+                            label: Text(memberRoleLabel(l10n, member)),
                             visualDensity: VisualDensity.compact,
                             materialTapTargetSize:
                                 MaterialTapTargetSize.shrinkWrap,

@@ -151,6 +151,8 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
         ref.watch(memberProfilesProvider).value ?? const {};
     final reservations =
         ref.watch(directoryReservationsProvider).value ?? const <Reservation>[];
+    // #1154 — grouped ONCE per build, not rescanned per row.
+    final reservationsByMember = reservationsByMemberOf(reservations);
     final targets = ref.watch(targetNamesProvider).value ?? const {};
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     // WhatsApp affordances (swipe, chat buttons, group tile) ride the
@@ -221,12 +223,14 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
                       ),
                       reservationInfo: resolveReservationInfo(
                         memberId: member.id,
-                        reservations: reservations,
+                        reservations: reservationsByMember[member.id] ??
+                            const <Reservation>[],
                         now: now,
                       ),
-                      memberReservations: _upcomingFor(
+                      memberReservations: upcomingReservationsFor(
                         member.id,
-                        reservations,
+                        reservationsByMember[member.id] ??
+                            const <Reservation>[],
                         now,
                       ),
                       targetNames: targets,
@@ -263,25 +267,6 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
       _ => const LoadingView(),
     };
   }
-}
-
-/// This member's still-active bookings from [now] onward, soonest first
-/// — what the detail sheet lists (#237's [directoryReservations] window,
-/// i.e. up to two weeks out). A booking already running (checked in or
-/// covering now) is included; cancelled/past ones are dropped.
-List<Reservation> _upcomingFor(
-  String memberId,
-  List<Reservation> reservations,
-  DateTime now,
-) {
-  final upcoming = reservations
-      .where(
-        (r) =>
-            r.memberId == memberId && r.isActive && r.endsAt.isAfter(now),
-      )
-      .toList()
-    ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
-  return upcoming;
 }
 
 /// The presence chip for [presence] — unchanged rendering from #224 —

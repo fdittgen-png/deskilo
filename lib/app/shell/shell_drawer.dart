@@ -8,6 +8,7 @@
 // — one tap away. Native platforms keep the bar untouched.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/navigation/navigation_style.dart';
@@ -17,13 +18,16 @@ import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../router.dart';
 
+part 'shell_drawer.g.dart';
+
 /// Whether the shell navigates through the drawer — the web build
 /// always, native when the user chose the menu (#969), and tests that
 /// ask for it.
-final webShellProvider = Provider<bool>((ref) => shellUsesMenu(
+@Riverpod(keepAlive: true)
+bool webShell(Ref ref) => shellUsesMenu(
       platformIsWeb: ref.watch(platformIsWebProvider),
       override: ref.watch(navigationStyleControllerProvider).value,
-    ));
+    );
 
 /// One destination of the drawer.
 class _Entry {
