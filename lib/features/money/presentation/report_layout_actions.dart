@@ -21,7 +21,7 @@ import '../domain/report_layout/layout_units.dart';
 import '../providers/money_providers.dart';
 import 'report_layout_defaults.dart';
 import '../../../l10n/app_localizations.dart';
-import 'invoice_actions.dart';
+import 'invoice_documents.dart';
 
 /// Renders [layoutXml] against [data] into a PDF, or returns null after
 /// tracing why — the #470 contract that a broken design never blocks a

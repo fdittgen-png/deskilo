@@ -56,7 +56,7 @@ import '../excel_export.dart';
 import '../country_names.dart';
 import '../feature_names.dart';
 import '../../../../core/time/clock.dart';
-import '../../../money/presentation/invoice_actions.dart';
+import '../../../money/presentation/invoice_documents.dart';
 import '../../../money/presentation/report_facts_of.dart';
 import '../../../money/presentation/report_strings_l10n.dart';
 import '../../../money/presentation/report_layout_actions.dart';

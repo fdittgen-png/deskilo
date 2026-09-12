@@ -11,6 +11,7 @@ import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/invoice_report.dart';
 import 'invoice_actions.dart';
+import 'invoice_documents.dart';
 import 'widgets/report_preview.dart';
 
 /// #514 — EVERY report exit offers the same triad: see it on screen

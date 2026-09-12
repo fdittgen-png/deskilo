@@ -23,6 +23,7 @@ import '../domain/sage.dart';
 import '../providers/money_providers.dart';
 import 'e_invoice_identity.dart';
 import 'invoice_actions.dart';
+import 'invoice_documents.dart';
 import '../domain/invoice_line_text.dart';
 import 'report_strings_l10n.dart';
 import 'widgets/accounting_export_sheet.dart';

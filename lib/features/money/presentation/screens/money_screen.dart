@@ -32,7 +32,7 @@ import '../../domain/invoice_pdf_template.dart';
 import '../../domain/bill_pdf.dart';
 import '../../domain/invoice_pdf.dart';
 import '../../domain/invoice_report.dart';
-import '../invoice_actions.dart';
+import '../invoice_documents.dart';
 import '../usage_report_data.dart';
 import '../report_layout_actions.dart';
 import '../report_actions.dart';

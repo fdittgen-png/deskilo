@@ -11,7 +11,7 @@ import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../events/providers/event_providers.dart';
 import '../../members/providers/directory_providers.dart';
-import '../../money/presentation/invoice_actions.dart';
+import '../../money/presentation/invoice_documents.dart';
 import '../../money/presentation/report_facts_of.dart';
 import '../../money/presentation/report_strings_l10n.dart';
 import '../../money/presentation/report_layout_actions.dart';

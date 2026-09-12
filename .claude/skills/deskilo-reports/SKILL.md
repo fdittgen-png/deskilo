@@ -64,6 +64,19 @@ widget boundary. `invoiceReportData`, `legalMentionData`,
   reader-language resolution are untouched; only how the resolved words
   reach a builder changed.
 
+### Where the document code lives after the #1061 split
+| File | Concern |
+|---|---|
+| `domain/report_data.dart` | `legalMentionData`, `invoiceReportData`, `clientAddressOf`, `siteNameOf`… — pure |
+| `domain/report_data_letters.dart` | statement / agreement / payments / workspace / reminder builders — pure, take a `*Facts` |
+| `domain/report_facts.dart` | the facts values; `presentation/report_facts_of.dart` fills them from the ref (the ONLY provider reads) |
+| `presentation/invoice_documents.dart` | document GENERATION: `buildInvoicePdfFile`, `buildFacturXFile`, `buildReminderPdfFile`, `letterDocPdf`, `renderLetterDoc`, `invoicePdfTemplateFor`, `memberTermsFor`, `l10nForLanguage` |
+| `presentation/invoice_actions.dart` | the dialogs and the actions the buttons run — nothing else |
+| `presentation/widgets/template_live_data.dart` | what the designer previews a design against |
+A new builder is a pure function in `domain/`, with its facts gatherer
+in `report_facts_of.dart`; a new render path is `invoice_documents.dart`;
+a new button is `invoice_actions.dart`. The length lint pins each.
+
 ## Designer
 Language chips → base + overlays (`forLocale` merges documents, layouts,
 texts); panels mount LAST in the column; anything that adds height

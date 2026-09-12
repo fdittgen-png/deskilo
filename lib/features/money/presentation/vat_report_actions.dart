@@ -20,6 +20,7 @@ import '../domain/vat_regime.dart';
 import '../domain/vat_report.dart';
 import '../providers/money_providers.dart';
 import 'invoice_actions.dart';
+import 'invoice_documents.dart';
 import 'report_strings_l10n.dart';
 import 'report_actions.dart';
 import 'report_layout_actions.dart';

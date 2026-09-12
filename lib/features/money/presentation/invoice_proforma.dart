@@ -23,7 +23,7 @@ import '../domain/invoice.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
 import '../providers/money_providers.dart';
-import 'invoice_actions.dart';
+import 'invoice_documents.dart';
 import 'report_strings_l10n.dart';
 import 'report_actions.dart';
 import 'report_defaults.dart';
