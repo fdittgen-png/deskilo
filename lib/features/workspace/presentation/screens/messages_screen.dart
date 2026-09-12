@@ -17,6 +17,7 @@ import '../widgets/conversation_row.dart';
 import 'message_search_screen.dart';
 import '../widgets/conversation_thread.dart';
 import '../widgets/new_conversation_sheet.dart';
+import '../../../../core/theme/shell_metrics.dart';
 
 /// #821 — what the chat list shows.
 enum InboxFilter { all, unread, archived }
@@ -125,7 +126,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen> {
       appBar: hub
           ? null
           : AppBar(
-              toolbarHeight: 48,
+              toolbarHeight: kAppToolbarHeight,
               actions: [_searchButton(context, l10n)],
             ),
       // #687 — the way to START one.
