@@ -73,7 +73,7 @@ const Map<String, int> _baseline = {
   // 1040→1140 (2026-08-13): #560 the About section (author, licence,
   // privacy, bug link, support tiles).
   // 1260→1308 (2026-09-06): #945 sites.
-  'lib/features/profile/presentation/screens/settings_screen.dart': 1420, // 2026-09-06 #970 the demo-mode switch and the address-dialog guard // 2026-09-06 #969 the navigation tile and its dialog // 2026-08 #586 default-period tile + dialog // 2026-09-05 #886 the personal-information tile beside the legacy address dialog it replaces // 2026-09-05 #902 the payment-conditions tile // 2026-09-08 #1019 twenty-two help symbols now name the exact setting they document (HelpAnchor), one named argument per symbol
+  'lib/features/profile/presentation/screens/settings_screen.dart': 1316, // 2026-09-11 #1154 1420→1316: the 723-line build() became four section methods; About and the section header moved to widgets/ // 2026-09-06 #970 the demo-mode switch and the address-dialog guard // 2026-09-06 #969 the navigation tile and its dialog // 2026-08 #586 default-period tile + dialog // 2026-09-05 #886 the personal-information tile beside the legacy address dialog it replaces // 2026-09-05 #902 the payment-conditions tile // 2026-09-08 #1019 twenty-two help symbols now name the exact setting they document (HelpAnchor), one named argument per symbol
   // 1020→1040 (2026-08-06): #513 the Role management tile.
   // 980→1030 (2026-08-05): #476 the statement export honors the
   // owner's report template (#478 Invoices button joins the grid).

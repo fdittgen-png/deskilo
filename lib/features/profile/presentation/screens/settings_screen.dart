@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/app_info.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint_providers.dart';
 import '../../../../core/push/push_status_tile.dart';
-import '../../../../core/links/link_launcher.dart';
 import '../../../../core/locale/locale_controller.dart';
 import '../../../../core/scan/front_camera.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -24,7 +22,6 @@ import '../../../../core/country/country_catalog.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/i18n/regional_formats_section.dart';
 import '../../../workspace/presentation/country_names.dart';
-import '../../../auth/providers/sign_out.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../reservations/domain/default_booking_period.dart';
 import '../../../reservations/providers/default_period_controller.dart';
@@ -41,6 +38,8 @@ import '../widgets/backend_settings_tile.dart';
 import '../widgets/member_avatar.dart';
 import '../widgets/whatsapp_dialog.dart';
 import '../../../workspace/presentation/widgets/environment_tile.dart';
+import '../widgets/settings_about_section.dart';
+import '../widgets/settings_section_header.dart';
 
 /// Endonyms are proper nouns, identical in every UI language — deliberately
 /// const strings, not l10n keys (#147). Order matches the issue spec.
@@ -55,20 +54,6 @@ const _endonyms = <String, String>{
 /// Radio sentinel for "follow the system locale" (the override itself is
 /// null, which a radio group cannot use as a selectable value).
 const _systemDefault = 'system';
-
-// About-section facts (#560): proper nouns and URLs, identical in every
-// UI language — consts like the endonyms, not l10n keys.
-const _appName = 'DesKilo';
-const _authorName = 'Florian DITTGEN';
-const _authorEmail = 'fdittgen@gmail.com';
-const _repoUrl = 'https://github.com/fdittgen-png/deskilo';
-const _privacyUrl =
-    'https://github.com/fdittgen-png/deskilo/blob/master/PRIVACY.md';
-const _issuesUrl = 'https://github.com/fdittgen-png/deskilo/issues/new';
-const _paypalName = 'PayPal';
-const _paypalHandle = 'paypal.me/FlorianDITTGEN';
-const _revolutName = 'Revolut';
-const _revolutHandle = 'revolut.me/floriamcep';
 
 /// App settings. Sign-out lives here; more sections arrive with their Epics.
 class SettingsScreen extends ConsumerWidget {
@@ -272,6 +257,29 @@ class SettingsScreen extends ConsumerWidget {
       appBar: AppBar(title: Text(l10n?.settingsTitle ?? 'Settings')),
       body: ListView(
         children: [
+          ..._personalTiles(context, ref, l10n: l10n, myProfile: myProfile, myMember: myMember, canAdminister: canAdminister, perms: perms, features: features, showAdminSection: showAdminSection),
+          ..._preferencesTiles(context, ref, l10n: l10n, localeOverride: localeOverride, themeOverride: themeOverride),
+          ..._advancedTiles(context, ref, l10n: l10n, canAdminister: canAdminister, perms: perms, devMode: devMode),
+          ...aboutSettingsTiles(context, ref, l10n: l10n, colorScheme: colorScheme),
+        ],
+      ),
+    );
+  }
+
+  /// #1154 — the member's own entries, then Administration when they may see it. One of the four slices of a build() that was 723
+  /// lines long; the tiles are unchanged, only the list is cut.
+  List<Widget> _personalTiles(
+    BuildContext context,
+    WidgetRef ref, {
+    required AppLocalizations? l10n,
+    required Profile? myProfile,
+    required Member? myMember,
+    required bool canAdminister,
+    required Set<WorkspacePermission> perms,
+    required Set<WorkspaceFeature> features,
+    required bool showAdminSection,
+  }) =>
+      [
           ListTile(
             leading: const Icon(Icons.switch_account_outlined),
             title: Text(l10n?.profilesTitle ?? 'Profiles'),
@@ -571,7 +579,7 @@ class SettingsScreen extends ConsumerWidget {
             ),
           if (showAdminSection) ...[
             const Divider(),
-            _SectionHeader(
+            SettingsSectionHeader(
               l10n?.settingsSectionAdministration ?? 'Administration',
             ),
           ],
@@ -693,8 +701,21 @@ class SettingsScreen extends ConsumerWidget {
               title: Text(l10n?.workspaceCodeTitle ?? 'Workspace ID & QR'),
               onTap: () => context.push('/workspace-code'),
             ),
+
+      ];
+
+  /// #1154 — the Preferences section — language, theme, formats, scanning. One of the four slices of a build() that was 723
+  /// lines long; the tiles are unchanged, only the list is cut.
+  List<Widget> _preferencesTiles(
+    BuildContext context,
+    WidgetRef ref, {
+    required AppLocalizations? l10n,
+    required Locale? localeOverride,
+    required ThemeMode? themeOverride,
+  }) =>
+      [
           const Divider(),
-          _SectionHeader(l10n?.settingsSectionPreferences ?? 'Preferences'),
+          SettingsSectionHeader(l10n?.settingsSectionPreferences ?? 'Preferences'),
           // In-app language override (#147); null follows the system locale.
           ListTile(
             leading: const Icon(Icons.language),
@@ -800,8 +821,22 @@ class SettingsScreen extends ConsumerWidget {
             onChanged: (v) =>
                 ref.read(frontCameraScanProvider.notifier).setEnabled(v),
           ),
+
+      ];
+
+  /// #1154 — the Advanced section — backend, push, developer, demo mode. One of the four slices of a build() that was 723
+  /// lines long; the tiles are unchanged, only the list is cut.
+  List<Widget> _advancedTiles(
+    BuildContext context,
+    WidgetRef ref, {
+    required AppLocalizations? l10n,
+    required bool canAdminister,
+    required Set<WorkspacePermission> perms,
+    required bool devMode,
+  }) =>
+      [
           const Divider(),
-          _SectionHeader(l10n?.settingsSectionAdvanced ?? 'Advanced'),
+          SettingsSectionHeader(l10n?.settingsSectionAdvanced ?? 'Advanced'),
           // #780 — which Supabase instance this device talks to: the
           // app's own by default, a community's own project if they
           // run one. Device-level, so it sits above the push state.
@@ -865,141 +900,9 @@ class SettingsScreen extends ConsumerWidget {
           // which licence, where to report — and how to support it.
           // Names, links and handles are proper nouns/URLs, identical in
           // every language: consts, not l10n keys (the endonym idiom).
-          const Divider(),
-          _SectionHeader(l10n?.settingsSectionAbout ?? 'About'),
-          ListTile(
-            key: const ValueKey('about-version'),
-            leading: const Icon(Icons.info_outline),
-            title: const Text(_appName),
-            subtitle: switch (ref.watch(appVersionProvider).value) {
-              null || '' => null,
-              final version => Text(
-                l10n?.aboutVersion(version) ?? 'Version $version',
-              ),
-            },
-          ),
-          ListTile(
-            key: const ValueKey('about-author'),
-            leading: const Icon(Icons.person_outline),
-            title: const Text(_authorName),
-            subtitle: const Text(_authorEmail),
-            onTap: () => ref.read(linkLauncherProvider)(
-              Uri(scheme: 'mailto', path: _authorEmail),
-            ),
-          ),
-          ListTile(
-            key: const ValueKey('about-source'),
-            leading: const Icon(Icons.code),
-            title: Text(l10n?.aboutOpenSource ?? 'Open source (0BSD)'),
-            subtitle: Text(
-              l10n?.aboutOpenSourceDesc ?? 'Source code on GitHub',
-            ),
-            onTap: () => ref.read(linkLauncherProvider)(Uri.parse(_repoUrl)),
-          ),
-          ListTile(
-            key: const ValueKey('about-privacy'),
-            leading: const Icon(Icons.shield_outlined),
-            title: Text(l10n?.aboutPrivacy ?? 'Privacy policy'),
-            onTap: () => ref.read(linkLauncherProvider)(Uri.parse(_privacyUrl)),
-          ),
-          ListTile(
-            key: const ValueKey('about-issues'),
-            leading: const Icon(Icons.bug_report_outlined),
-            title: Text(
-              l10n?.aboutReportBug ?? 'Report a bug / suggest a feature',
-            ),
-            onTap: () => ref.read(linkLauncherProvider)(Uri.parse(_issuesUrl)),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.lg,
-              AppSpacing.md,
-              AppSpacing.lg,
-              AppSpacing.xs,
-            ),
-            child: Column(
-              children: [
-                Text(
-                  l10n?.aboutSupportTitle ?? 'Support this project',
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                Text(
-                  l10n?.aboutSupportBody ??
-                      'This app is free, open source and ad-free. If '
-                          'you find it useful, support the developer.',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
-            ),
-          ),
-          ListTile(
-            key: const ValueKey('about-paypal'),
-            leading: const Icon(Icons.payment_outlined),
-            title: const Text(_paypalName),
-            subtitle: const Text(_paypalHandle),
-            onTap: () => ref.read(linkLauncherProvider)(
-              Uri.parse('https://$_paypalHandle'),
-            ),
-          ),
-          ListTile(
-            key: const ValueKey('about-revolut'),
-            leading: const Icon(Icons.account_balance_wallet_outlined),
-            title: const Text(_revolutName),
-            subtitle: const Text(_revolutHandle),
-            onTap: () => ref.read(linkLauncherProvider)(
-              Uri.parse('https://$_revolutHandle'),
-            ),
-          ),
-          // Sign out sits apart from the sections, with the destructive
-          // foreground treatment used elsewhere (colorScheme.error, as in
-          // the billing validation message).
-          const Divider(),
-          ListTile(
-            leading: Icon(Icons.logout, color: colorScheme.error),
-            title: Text(
-              l10n?.authSignOut ?? 'Sign out',
-              style: TextStyle(color: colorScheme.error),
-            ),
-            onTap: () async {
-              await signOutAndForget(ref);
-              // The router's auth redirect takes over from here.
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
 
-/// Material list-subheader for a titled settings section (#188). Matches
-/// the ListTile content inset so headers align with the tiles below them.
-class _SectionHeader extends StatelessWidget {
-  const _SectionHeader(this.label);
+      ];
 
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.lg,
-        AppSpacing.md,
-        AppSpacing.lg,
-        AppSpacing.xs,
-      ),
-      child: Text(
-        label,
-        style: theme.textTheme.titleSmall?.copyWith(
-          color: theme.colorScheme.primary,
-        ),
-      ),
-    );
-  }
 }
 
 /// Radio picker for the app language. Selecting an option applies it
