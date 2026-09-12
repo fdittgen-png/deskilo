@@ -84,6 +84,11 @@ const List<ReportKind> fixedReportKinds = [
   ReportKind(id: 'space_codes', slot: ReportDocSlot('space_codes')),
 ];
 
+/// The most reminder levels any lookup by id needs to consider: the
+/// dunning rules never configure more, so an `rN` beyond it is a typo,
+/// not a level. (#1154 — was the literal 9 in two places.)
+const int kMaxReminderLevels = 9;
+
 /// Every kind, including the reminder levels the dunning rules configure.
 /// [reminderLevels] is 0 when dunning is off, and the reminders simply
 /// do not exist then — not "exist but are hidden".

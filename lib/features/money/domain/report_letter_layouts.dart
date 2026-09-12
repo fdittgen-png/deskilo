@@ -78,7 +78,7 @@ String _esc(String s) => s
 /// The default positioned layout of [kindId] (the reminders share one
 /// body, the level printed from the data).
 String defaultLetterLayoutXml(String kindId, LetterStrings s) {
-  final kind = reportKindById(kindId, reminderLevels: 9);
+  final kind = reportKindById(kindId, reminderLevels: kMaxReminderLevels);
   final level = switch (kind?.slot) {
     ReportReminderSlot(:final level) => level,
     _ => 0,

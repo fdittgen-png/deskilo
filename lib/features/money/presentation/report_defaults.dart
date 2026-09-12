@@ -16,6 +16,7 @@ import '../domain/invoice_pdf_template.dart';
 // in their own file; they are re-exported so every caller keeps
 // resolving document defaults from one import.
 import 'report_defaults_batch.dart';
+import '../domain/report_kind.dart';
 export 'report_defaults_batch.dart';
 // The preview fixture is a different concern from the shipped templates
 // — sample text, never live data — and lives on its own.
@@ -559,47 +560,41 @@ String _presetName(String id, AppLocalizations? l10n) => switch (id) {
 /// Every document offers the same four: Classic · Simple · Verbose ·
 /// Formal.
 List<ReportPreset> presetsForDoc(String docId, AppLocalizations? l10n) {
-  ReportBands bands(String id) {
-    if (docId == 'invoice' || docId == 'proforma') {
-      return _invoicePresetBands(l10n, id);
-    }
-    if (docId == 'statement') return _statementPresetBands(l10n, id);
-    // #494 — the further documents share the letter shape.
-    if (docId == 'agreement') {
-      return _simpleDocPresetBands(
-          l10n, id, l10n?.reportDocAgreement ?? 'Financial agreement',
-          subtitle: '{{ member }}');
-    }
-    if (docId == 'payments') {
-      return _simpleDocPresetBands(
-          l10n, id, l10n?.reportDocPayments ?? 'Payments report',
-          subtitle: '{{ member }} — {{ period }}');
-    }
-    if (docId == 'usage') {
-      return id == 'classic'
-          ? defaultUsageBands(l10n)
-          : _simpleDocPresetBands(
-              l10n, id, l10n?.reportDocUsage ?? 'Consumption report',
-              subtitle: '{{ member }} — {{ period }}');
-    }
-    if (docId == 'coa' || docId == 'badges' || docId == 'space_codes') {
-      // One shipped layout each. These documents are structural — a
-      // chart, a grid of cards — so the presets that make sense for an
-      // invoice (Classic / Formal letter) would only offer ways to
-      // break them.
-      return defaultBandsForDoc(docId, l10n);
-    }
-    if (docId == 'vat') return defaultVatBands(l10n);
-    if (docId == 'workspace') {
-      return id == 'classic'
-          ? defaultWorkspaceBands(l10n)
-          : _simpleDocPresetBands(
-              l10n, id, l10n?.reportDocWorkspace ?? 'Workspace report',
-              subtitle: '{{ workspace_address }}');
-    }
-    final level = int.tryParse(docId.substring(1)) ?? 1;
-    return _reminderPresetBands(level, l10n, id);
-  }
+  // #1154 — the kind registry decides what [docId] is; the old ladder
+  // read anything it did not know as a reminder level (#864's finding,
+  // surviving here). An unknown id now gets EMPTY bands, which the
+  // designer shows as such, instead of silently editing reminder 1.
+  final kind = reportKindById(docId, reminderLevels: kMaxReminderLevels);
+  ReportBands bands(String id) => switch (kind?.slot) {
+        ReportRootSlot() || ReportProformaSlot() =>
+          _invoicePresetBands(l10n, id),
+        ReportStatementSlot() => _statementPresetBands(l10n, id),
+        // #494 — the further documents share the letter shape.
+        ReportDocSlot(key: 'agreement') => _simpleDocPresetBands(
+            l10n, id, l10n?.reportDocAgreement ?? 'Financial agreement',
+            subtitle: '{{ member }}'),
+        ReportDocSlot(key: 'payments') => _simpleDocPresetBands(
+            l10n, id, l10n?.reportDocPayments ?? 'Payments report',
+            subtitle: '{{ member }} — {{ period }}'),
+        ReportDocSlot(key: 'usage') => id == 'classic'
+            ? defaultUsageBands(l10n)
+            : _simpleDocPresetBands(
+                l10n, id, l10n?.reportDocUsage ?? 'Consumption report',
+                subtitle: '{{ member }} — {{ period }}'),
+        ReportDocSlot(key: 'workspace') => id == 'classic'
+            ? defaultWorkspaceBands(l10n)
+            : _simpleDocPresetBands(
+                l10n, id, l10n?.reportDocWorkspace ?? 'Workspace report',
+                subtitle: '{{ workspace_address }}'),
+        // One shipped layout each. These documents are structural — a
+        // chart, a grid of cards, a table — so the presets that make
+        // sense for an invoice (Classic / Formal letter) would only
+        // offer ways to break them.
+        ReportDocSlot() => defaultBandsForDoc(docId, l10n),
+        ReportReminderSlot(:final level) =>
+          _reminderPresetBands(level, l10n, id),
+        null => ReportBands.empty,
+      };
 
   return [
     for (final id in reportPresetIds)
@@ -609,19 +604,25 @@ List<ReportPreset> presetsForDoc(String docId, AppLocalizations? l10n) {
 
 /// The default bands for a STRING document id (#476) — what Reset
 /// inserts and what an uncustomized document renders with.
-ReportBands defaultBandsForDoc(String docId, AppLocalizations? l10n) {
-  if (docId == 'invoice' || docId == 'proforma') {
-    return defaultInvoiceTemplate(l10n).invoiceBands;
-  }
-  if (docId == 'statement') return defaultStatementBands(l10n);
-  if (docId == 'agreement') return defaultAgreementBands(l10n);
-  if (docId == 'payments') return defaultPaymentsBands(l10n);
-  if (docId == 'usage') return defaultUsageBands(l10n);
-  if (docId == 'workspace') return defaultWorkspaceBands(l10n);
-  if (docId == 'status') return defaultStatusBands(l10n);
-  if (docId == 'vat') return defaultVatBands(l10n);
-  if (docId == 'coa') return defaultCoaBands(l10n);
-  if (docId == 'badges') return defaultBadgeSheetBands(l10n);
-  if (docId == 'space_codes') return defaultSpaceCodesBands(l10n);
-  return defaultReminderBands(int.tryParse(docId.substring(1)) ?? 1, l10n);
-}
+ReportBands defaultBandsForDoc(String docId, AppLocalizations? l10n) =>
+    switch (reportKindById(docId, reminderLevels: kMaxReminderLevels)?.slot) {
+      ReportRootSlot() || ReportProformaSlot() =>
+        defaultInvoiceTemplate(l10n).invoiceBands,
+      ReportStatementSlot() => defaultStatementBands(l10n),
+      ReportDocSlot(key: 'agreement') => defaultAgreementBands(l10n),
+      ReportDocSlot(key: 'payments') => defaultPaymentsBands(l10n),
+      ReportDocSlot(key: 'usage') => defaultUsageBands(l10n),
+      ReportDocSlot(key: 'workspace') => defaultWorkspaceBands(l10n),
+      ReportDocSlot(key: 'status') => defaultStatusBands(l10n),
+      ReportDocSlot(key: 'vat') => defaultVatBands(l10n),
+      ReportDocSlot(key: 'coa') => defaultCoaBands(l10n),
+      ReportDocSlot(key: 'badges') => defaultBadgeSheetBands(l10n),
+      ReportDocSlot(key: 'space_codes') => defaultSpaceCodesBands(l10n),
+      // A doc the registry knows but this ladder does not is a bug to
+      // hear about, not a reminder to render.
+      ReportDocSlot(:final key) =>
+        throw StateError('no default bands for report kind $key'),
+      ReportReminderSlot(:final level) => defaultReminderBands(level, l10n),
+      // #1154 — an unknown id used to fall through to reminder level 1.
+      null => ReportBands.empty,
+    };
