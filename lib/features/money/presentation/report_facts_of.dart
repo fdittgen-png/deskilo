@@ -26,7 +26,7 @@ import '../domain/package.dart';
 import '../domain/report_facts.dart';
 import '../domain/service_item.dart';
 import '../providers/money_providers.dart';
-import 'invoice_actions.dart' show memberTermsFor;
+import 'invoice_documents.dart' show memberTermsFor;
 
 AgreementFacts agreementFactsOf(WidgetRef ref) {
   final levels = ref.read(levelsProvider).value ?? const <Level>[];

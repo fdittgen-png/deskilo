@@ -17,8 +17,8 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../domain/usage_record.dart';
 import '../providers/money_providers.dart';
 import '../providers/usage_providers.dart';
-import 'invoice_actions.dart';
 import 'report_strings_l10n.dart';
+import '../domain/report_data.dart';
 
 Map<String, Object?> usageReportData(
   BuildContext context,

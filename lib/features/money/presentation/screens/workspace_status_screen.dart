@@ -15,7 +15,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_status.dart';
 import '../../providers/money_providers.dart';
-import '../invoice_actions.dart';
+import '../invoice_documents.dart';
 import '../report_actions.dart';
 import '../status_report_data.dart';
 import '../report_layout_actions.dart';

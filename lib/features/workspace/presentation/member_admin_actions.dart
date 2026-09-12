@@ -11,7 +11,7 @@ import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../events/providers/event_providers.dart';
 import '../../members/providers/directory_providers.dart';
-import '../../money/presentation/invoice_actions.dart';
+import '../../money/presentation/invoice_documents.dart';
 import '../../money/presentation/report_facts_of.dart';
 import '../../money/presentation/report_strings_l10n.dart';
 import '../../money/presentation/report_layout_actions.dart';
@@ -21,6 +21,7 @@ import '../domain/site.dart';
 import '../domain/overage_policy.dart';
 import '../providers/workspace_providers.dart';
 import 'widgets/badge_manager_dialog.dart';
+import '../../money/domain/report_data_letters.dart';
 
 /// The admin actions on ONE member (#825) — subscription, overage
 /// policy, limits, roles, co-ownership, kiosk, pause, join decisions,

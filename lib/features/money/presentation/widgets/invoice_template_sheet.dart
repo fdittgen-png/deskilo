@@ -32,6 +32,7 @@ import '../report_kind_labels.dart';
 import '../../domain/invoice_report.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
+import '../invoice_documents.dart';
 import '../report_defaults.dart';
 import '../report_edit_history.dart';
 import '../screens/report_editor_screen.dart';

@@ -16,9 +16,9 @@ import 'package:deskilo/features/money/domain/vat_compliance.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
-import 'package:deskilo/features/money/presentation/invoice_actions.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:deskilo/features/money/domain/report_data.dart';
 
 Invoice _invoice(
   String id,

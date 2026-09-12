@@ -127,7 +127,8 @@ const Map<String, int> _baseline = {
   // invoice_proforma.dart. `unawaited_futures` needed one import here
   // and the file was exactly at its cap, which is the house rule's cue
   // to extract rather than raise the number.
-  'lib/features/money/presentation/invoice_actions.dart': 2340,
+  'lib/features/money/presentation/invoice_documents.dart': 616, // 2026-09-11 #1061 born from the invoice_actions split: the PDF/e-invoice builders and the letter pipeline
+  'lib/features/money/presentation/invoice_actions.dart': 1018, // 2026-09-11 #1061 2340→1605→1018: the data builders moved to domain/report_data.dart, then document generation to invoice_documents.dart
   // 2026-09-05 #919 an association is steered off the exempt scheme:
   // the regime that demands a VAT number it cannot have.
   'lib/features/money/presentation/screens/legal_identity_screen.dart': 660, // 2026-09-02 #837 the annex question // 2026-09-04 #871 the bank block: IBAN/BIC/bank name reach a designed report, resolved once in legalMentionData for every document // 2026-09-04 #875 layout-wins hooks + the strings/features hoists they need; the engine itself lives under domain/report_layout // 2026-09-05 #886 the client identity (name, company, contacts, postal block) resolved for every document and frozen on the proforma // 2026-09-05 #881 member payment conditions: effective terms threaded to every document // 2026-09-05 #880 owner texts beside #881 member terms after the rebase // 2026-09-05 #910 the client name falls back to the company and the settlement date reaches the document: invoiceDueAt + the due_date placeholder threaded through every render // 2026-09-05 #917 the development watermark, resolved where the workspace is already at hand, and carried to every report through the shared letter funnel // 2026-09-06 #922 the two Chorus Pro references as placeholders, and the government destination on the pre-flight check // 2026-09-08 #1019 eighteen help symbols now name the exact field they document (HelpAnchor), one named argument per symbol
@@ -159,7 +160,7 @@ const Map<String, int> _baseline = {
   // 900→948 (2026-09-06): #945 sites.
   'lib/features/members/presentation/screens/member_page.dart': 948, // 2026-09-05 #887 the managed-member tiles (edit identity, hand over, revoke) + chip
   // 720→779 (2026-09-06): #945 sites.
-  'lib/features/workspace/presentation/member_admin_actions.dart': 779,
+  'lib/features/workspace/presentation/member_admin_actions.dart': 780, // 2026-09-11 #1061 779→780: one import, the letter builders' new home
   // #828 (2026-09-02): the expense_repartition flag and repository methods.
   // 2026-09-04 #864: one more flag. This file is the feature
   // registry — it grows by ~5 lines per flag by design, and

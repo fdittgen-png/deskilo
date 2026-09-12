@@ -171,10 +171,12 @@ void main() {
       final decl = File('lib/features/money/domain/vat_declaration_pdf.dart')
           .readAsStringSync();
       expect(decl, contains('buildForeground: watermarkForeground(watermark)'));
-      final actions =
-          File('lib/features/money/presentation/invoice_actions.dart')
+      // #1061 — document generation left invoice_actions.dart for
+      // invoice_documents.dart; the mark went with it.
+      final documents =
+          File('lib/features/money/presentation/invoice_documents.dart')
               .readAsStringSync();
-      expect(actions, contains('String developmentMark('),
+      expect(documents, contains('String developmentMark('),
           reason: 'one source for the word, read where the workspace is');
     });
   });
