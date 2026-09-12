@@ -144,7 +144,7 @@ const Map<String, int> _baseline = {
   // right shape for it is one documented constant per object, and it
   // grows with the app rather than being refactored smaller.
   'lib/core/help/help_anchors.dart': 660,
-  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1605, // 2026-09-11 #1120 the library tile (was 1600) // // 2026-09-08 #1012 the export's trace, timeout and Share action // 2026-09-04 #875 the workspace report passes its layout through // 2026-09-08 #1019 seventeen help symbols now name the exact setting or export they document (HelpAnchor), one named argument per symbol
+  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1572, // 2026-09-11 #1154 1605→1572: the 577-line build() became three section methods; the reset dialog moved to widgets/reset_confirm_dialog.dart
   // 600→640 (2026-08-05): #492 the request-deletion dialog + flow.
   // 640→760 (2026-08-22): #574 the running-booking extension flow.
   // 760→880 (2026-08-25): #638 the symmetric END-EARLIER flow — the
