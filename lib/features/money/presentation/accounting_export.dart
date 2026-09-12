@@ -318,11 +318,21 @@ Future<void> exportAccountingFile(
             for (final i in exported)
               if (i.issuedAt.year == year) i,
           ];
-          final integrity = <String, String>{};
+          // #1154 — the signature checks are independent server calls:
+          // all of them in flight at once, not one round-trip per invoice.
+          // The PDFs stay sequential: each needs the context and the
+          // fonts, and a year of them is a memory question, not a
+          // latency one.
+          final verdicts = await Future.wait(
+            yearInvoices.map((i) => repo.verifyInvoiceSignature(i.id)),
+          );
+          if (!context.mounted) return;
+          final integrity = <String, String>{
+            for (var i = 0; i < yearInvoices.length; i++)
+              yearInvoices[i].id: verdicts[i],
+          };
           final files = <String, List<int>>{};
           for (final invoice in yearInvoices) {
-            integrity[invoice.id] = await repo.verifyInvoiceSignature(invoice.id);
-            if (!context.mounted) return;
             final pdf = await buildFacturXFile(
               context,
               ref,
