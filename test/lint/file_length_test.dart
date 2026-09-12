@@ -101,7 +101,7 @@ const Map<String, int> _baseline = {
   // extracting it would drag half the file; 15 feature lines instead.
   // 920→960 (2026-08-04): #456 notify affordance threaded through the
   // row and the sheet.
-  'lib/features/members/presentation/screens/directory_screen.dart': 965, // 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed
+  'lib/features/members/presentation/screens/directory_screen.dart': 951, // 2026-09-11 #1154 965→951: the upcoming-bookings helper and the per-member grouping moved to domain/directory_status.dart // 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed
   // 900→920 (2026-08-01): #393 environment picker threaded through the
   // send flow — feature lines, not accretion; picker itself is its own file.
   // 920→950 (2026-08-04): #454 template lookup + resolution threaded
