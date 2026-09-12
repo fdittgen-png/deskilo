@@ -2,9 +2,9 @@
 import '../../../core/i18n/currencies.dart';
 import 'package:xml/xml.dart';
 
+import 'e_invoice_totals.dart';
 import 'invoice.dart';
 import 'vat_rate.dart';
-import 'vat_compliance.dart';
 import 'vat_regime.dart';
 
 /// EN 16931 as UN/CEFACT **CII** (Cross Industry Invoice, D16B) — the
@@ -43,31 +43,19 @@ String buildInvoiceCii({
       '${date.year}${date.month.toString().padLeft(2, '0')}'
       '${date.day.toString().padLeft(2, '0')}';
 
-  final regime = vatRegimeFromWire(seller.vatRegime);
-  // #895 — a reverse-charged document is category AE whatever the
-  // seller's own regime says: the tax is the customer's.
-  // #985 — or the counterparty's category (G, E) when it decided.
-  final category = invoice.counterpartyCategory.isNotEmpty
-      ? invoice.counterpartyCategory
-      : regime.taxCategoryCode;
-  final exemptionCode =
-      exemptionCodeForCategory(category, seller.country, regime);
-  final exemptionText = exemptionMentionFor(
-    category: category,
-    sellerCountry: seller.country,
-    sellerReason: seller.taxExemptionReason,
-    buyerReason: buyer.taxExemptionReason,
-    regime: regime,
-  );
-  final charges =
-      invoice.lines.where((l) => l.amountCents > 0).toList(growable: false);
-  final chargesCents = charges.fold(0, (sum, l) => sum + l.amountCents);
-  final breakdown = invoice.vatBreakdown(zeroCategory: category);
-  final netCents = breakdown.fold(0, (sum, t) => sum + t.netCents);
-  final taxCents = breakdown.fold(0, (sum, t) => sum + t.vatCents);
-  final prepaidCents = -invoice.lines
-      .where((l) => l.amountCents < 0)
-      .fold(0, (sum, l) => sum + l.amountCents);
+  // #1154 — the totals rule lives once, in e_invoice_totals.dart.
+  final EInvoiceTotals(
+    :regime,
+    :category,
+    :exemptionCode,
+    :exemptionText,
+    :charges,
+    :chargesCents,
+    :breakdown,
+    :netCents,
+    :taxCents,
+    :prepaidCents,
+  ) = eInvoiceTotalsOf(invoice: invoice, seller: seller, buyer: buyer);
   final currency = invoice.currency;
 
   final builder = XmlBuilder();
