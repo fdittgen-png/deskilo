@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../core/theme/contrast.dart';
 
 import '../core/theme/app_radius.dart';
+import '../core/theme/shell_metrics.dart';
 
 /// DesKilo brand palette — muted burnt orange (spec §14, decided 2026-07-07).
 ///
@@ -91,6 +92,8 @@ ThemeData _finish(ThemeData base, {required bool animations}) {
     appBarTheme: base.appBarTheme.copyWith(
       centerTitle: false,
       titleSpacing: 20,
+      // One toolbar height for the whole app (shell_metrics.dart).
+      toolbarHeight: kAppToolbarHeight,
     ),
     chipTheme: base.chipTheme.copyWith(
       side: BorderSide(color: scheme.outlineVariant),
