@@ -17,7 +17,6 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/files/file_names.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/dunning.dart';
@@ -33,11 +32,11 @@ import '../report_kind_labels.dart';
 import '../../domain/invoice_report.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
-import '../report_strings_l10n.dart';
 import '../report_defaults.dart';
 import '../report_edit_history.dart';
 import '../screens/report_editor_screen.dart';
 import 'report_image_picker.dart';
+import 'template_live_data.dart';
 import 'report_history_controls.dart';
 import 'report_markup_guide.dart';
 import 'report_page_designer.dart';
@@ -409,7 +408,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
     await showLayoutQuickPreview(context, ref,
         layoutXml: xml,
         data: withOwnerTexts(
-            _liveData() ?? sampleReportData(AppLocalizations.of(context)),
+            liveReportData(context, ref, _doc) ?? sampleReportData(AppLocalizations.of(context)),
             _currentTexts));
   }
 
@@ -541,73 +540,10 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
   /// INSTANT preview (#474): the report engine's output rendered as
   /// widgets — real newest-invoice data when one exists, simulated
   /// sample data otherwise. No PDF round-trip.
-  /// The live data for the SELECTED document, or null when the app has
-  /// none yet (→ simulated sample data).
-  Map<String, Object?>? _liveData() {
-    final invoices = ref.read(invoicesProvider).value ?? const [];
-    final liveWorkspace = ref.read(currentWorkspaceProvider).value;
-    switch (_doc) {
-      case 'invoice':
-        if (invoices.isEmpty) return null;
-        return invoiceReportData(reportStringsFor(context), invoices.first,
-            proforma: false, copy: false, workspace: liveWorkspace);
-      case 'proforma':
-        if (invoices.isEmpty) return null;
-        return invoiceReportData(reportStringsFor(context), invoices.first,
-            proforma: true, copy: false, workspace: liveWorkspace);
-      case 'statement':
-        final now = ref.read(clockProvider).now();
-        final period =
-            '${now.year}-${now.month.toString().padLeft(2, '0')}';
-        final statement =
-            ref.read(myStatementProvider(period)).value;
-        final workspace = ref.read(currentWorkspaceProvider).value;
-        final me = ref.read(myMemberProvider).value;
-        final names = ref.read(memberNamesProvider).value ?? const {};
-        if (statement == null || workspace == null) return null;
-        return statementReportData(
-          context,
-          statement: statement,
-          workspaceName: workspace.name,
-          memberName: names[me?.id] ?? '',
-          periodLabel: statement.period,
-          currencyCode: workspace.currencyCode,
-          workspace: workspace,
-        );
-      case 'agreement':
-        final me = ref.read(myMemberProvider).value;
-        final names = ref.read(memberNamesProvider).value ?? const {};
-        if (me == null) return null;
-        return agreementReportData(context, ref,
-            memberName: names[me.id] ?? '',
-            subscriptionPct: me.subscriptionPct);
-      case 'payments':
-        final me = ref.read(myMemberProvider).value;
-        final names = ref.read(memberNamesProvider).value ?? const {};
-        final now = ref.read(clockProvider).now();
-        final period =
-            '${now.year}-${now.month.toString().padLeft(2, '0')}';
-        if (me == null) return null;
-        return paymentsReportData(context, ref,
-            period: period, memberName: names[me.id] ?? '');
-      case 'workspace':
-        return workspaceReportData(context, ref);
-      case 'status':
-        return null; // #934 — sample data; the live view prints from its screen.
-      case 'coa':
-      case 'badges':
-      case 'space_codes':
-        return null;
-      default:
-        if (invoices.isEmpty) return null;
-        return reminderReportData(context, ref, invoices.first,
-            level: int.tryParse(_doc.substring(1)) ?? 1);
-    }
-  }
 
   Future<void> _quickPreview() async {
     final l10n = AppLocalizations.of(context);
-    final live = _liveData();
+    final live = liveReportData(context, ref, _doc);
     final simulated = live == null;
     final data = withOwnerTexts(live ?? sampleReportData(l10n), _currentTexts);
     final bands = _currentBands.hasBands
@@ -674,7 +610,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
               is ReportDocSlot) {
         // The letter documents: my own live data, or the sample.
         final data = withOwnerTexts(
-            _liveData() ?? sampleReportData(l10nSync), _currentTexts);
+            liveReportData(context, ref, _doc) ?? sampleReportData(l10nSync), _currentTexts);
         final bands = _currentBands.hasBands
             ? _currentBands
             : defaultBandsForDoc(_doc, l10nSync);
@@ -965,7 +901,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
             'Footer band (payment terms, legal mentions)',
         editorKeyPrefix: 'visual-$_doc-$_visualEpoch',
         previewData: () =>
-            withOwnerTexts(_liveData() ?? sampleReportData(l10n), _currentTexts),
+            withOwnerTexts(liveReportData(context, ref, _doc) ?? sampleReportData(l10n), _currentTexts),
         textKeys: _currentTexts.keys.toList(),
         sideBySide: sideBySide,
       );

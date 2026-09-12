@@ -57,6 +57,8 @@ import '../country_names.dart';
 import '../feature_names.dart';
 import '../../../../core/time/clock.dart';
 import '../../../money/presentation/invoice_actions.dart';
+import '../../../money/presentation/report_facts_of.dart';
+import '../../../money/presentation/report_strings_l10n.dart';
 import '../../../money/presentation/report_layout_actions.dart';
 import '../../../money/presentation/batch_cover.dart';
 import '../../../../core/locale/report_language.dart';
@@ -366,8 +368,9 @@ class _WorkspaceSettingsScreenState
           return;
         }
         final docL10n = l10nForLanguage(language);
-        final data = workspaceReportData(context, ref,
-            l10nOverride: docL10n, localeName: language);
+        final data = workspaceReportData(
+            reportStringsFor(context, l10n: docL10n, localeName: language),
+            workspaceFactsOf(ref, docL10n));
         final report = renderLetterDoc(context, ref,
             docId: 'workspace', data: data, language: language);
         final pdf = await letterDocPdf(context, ref,

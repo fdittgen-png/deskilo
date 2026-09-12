@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import '../period_label.dart';
 import '../../domain/invoice_line_text.dart';
+import '../report_facts_of.dart';
 import '../report_strings_l10n.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/i18n/money_format.dart';
@@ -162,22 +163,22 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       if (!mounted) return;
     }
     final data = switch (docId) {
-      'agreement' => agreementReportData(context, ref,
+      'agreement' => agreementReportData(
+          reportStringsFor(context, l10n: docL10n, localeName: language),
+          agreementFactsOf(ref),
           memberName: names[me.id] ?? '',
-          subscriptionPct: me.subscriptionPct,
-          l10nOverride: docL10n,
-          localeName: language),
+          subscriptionPct: me.subscriptionPct),
       'usage' => usageReportData(context, ref,
           period: _period,
           memberId: me.id,
           memberName: names[me.id] ?? '',
           l10nOverride: docL10n,
           localeName: language),
-      _ => paymentsReportData(context, ref,
+      _ => paymentsReportData(
+          reportStringsFor(context, l10n: docL10n, localeName: language),
+          paymentsFactsOf(ref, _period),
           period: _period,
-          memberName: names[me.id] ?? '',
-          l10nOverride: docL10n,
-          localeName: language),
+          memberName: names[me.id] ?? ''),
     };
     final report = renderLetterDoc(context, ref,
         docId: docId, data: data, language: language);
@@ -261,7 +262,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     // share build the same PDF the save-only path used to.
     InvoiceReport? renderStatement() {
       final data = statementReportData(
-        context,
+        reportStringsFor(context),
         statement: statement,
         workspaceName: workspace.name,
         memberName: memberName,
@@ -316,7 +317,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
         final Uint8List bytes;
         if (statementBands != null && context.mounted) {
           final data = statementReportData(
-            context,
+            reportStringsFor(context),
             statement: statement,
             workspaceName: workspace.name,
             memberName: memberName,

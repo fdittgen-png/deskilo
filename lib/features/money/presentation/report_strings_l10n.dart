@@ -30,6 +30,10 @@ ReportStrings reportStringsOf(AppLocalizations? l10n, {String? dateLocale}) {
     categoryService: l10n.ledgerCategoryService,
     courtesyMr: l10n.courtesyMr,
     courtesyMrs: l10n.courtesyMrs,
+    paymentsCredits: l10n.billPaymentsCredits,
+    agreementExtraHalfDay: l10n.agreementExtraHalfDay,
+    eventTypePayment: l10n.eventTypePayment,
+    paymentsPendingTag: l10n.paymentsPendingTag,
     overage: l10n.billOverage,
     participation: l10n.billParticipation,
     subscription: l10n.billSubscription,
@@ -38,8 +42,16 @@ ReportStrings reportStringsOf(AppLocalizations? l10n, {String? dateLocale}) {
   );
 }
 
-/// The widget boundary: what a screen hands a builder.
-ReportStrings reportStringsFor(BuildContext context) => reportStringsOf(
-      AppLocalizations.of(context),
-      dateLocale: Localizations.maybeLocaleOf(context)?.toString(),
+/// The widget boundary: what a screen hands a builder. A document
+/// rendered in the READER's language (not the viewer's) passes the
+/// resolved bundle and its locale — the `l10nOverride` / `localeName`
+/// pair the builders used to take themselves.
+ReportStrings reportStringsFor(
+  BuildContext context, {
+  AppLocalizations? l10n,
+  String? localeName,
+}) =>
+    reportStringsOf(
+      l10n ?? AppLocalizations.of(context),
+      dateLocale: localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
     );
