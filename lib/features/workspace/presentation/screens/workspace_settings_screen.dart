@@ -64,6 +64,7 @@ import '../../../money/presentation/report_layout_actions.dart';
 import '../../../money/presentation/batch_cover.dart';
 import '../../../../core/locale/report_language.dart';
 import '../../../money/domain/report_data_letters.dart';
+import '../widgets/reset_confirm_dialog.dart';
 
 /// Owner-only workspace settings: identity (country/currency/time zone,
 /// #153 — a country pick re-defaults both from [CountryCatalog], a
@@ -637,7 +638,7 @@ class _WorkspaceSettingsScreenState
     final l10n = AppLocalizations.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (_) => _ResetConfirmDialog(
+      builder: (_) => ResetConfirmDialog(
         phrase: l10n?.workspaceResetConfirmPhrase ?? 'I agree',
       ),
     );
@@ -975,6 +976,24 @@ class _WorkspaceSettingsScreenState
               child: ListView(
                 padding: AppSpacing.gutterAll,
                 children: [
+                  ..._parametersTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic),
+                  ..._toolsTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic),
+                  ..._dangerZoneTiles(context, l10n: l10n, workspace: workspace),
+                ],
+              ),
+            ),
+    );
+  }
+
+  /// #1154 — the workspace's identity and parameters — name, country, currency, zone, hours, policies, invitation. One of the three slices of a build() that was 577
+  /// lines long; the tiles are unchanged, only the list is cut.
+  List<Widget> _parametersTiles(
+    BuildContext context, {
+    required AppLocalizations? l10n,
+    required Workspace workspace,
+    required String helpTopic,
+  }) =>
+      [
                   // #606 — contextual how-to; gated inside the widget.
                   const HelpHint(HelpHintId.workspaceSettings),
                   Text(
@@ -1281,6 +1300,18 @@ class _WorkspaceSettingsScreenState
                     child: Text(l10n?.commonSave ?? 'Save'),
                   ),
                   const SizedBox(height: 24),
+
+      ];
+
+  /// #1154 — the tools — the report editor, exports, imports, the configuration transfer. One of the three slices of a build() that was 577
+  /// lines long; the tiles are unchanged, only the list is cut.
+  List<Widget> _toolsTiles(
+    BuildContext context, {
+    required AppLocalizations? l10n,
+    required Workspace workspace,
+    required String helpTopic,
+  }) =>
+      [
                   const Divider(),
                   // #474 — the banded report editor (invoice + every
                   // reminder level) and the dunning policy live in the
@@ -1478,6 +1509,17 @@ class _WorkspaceSettingsScreenState
                     onTap: () => _importXml(workspace),
                   ),
                   const SizedBox(height: 24),
+
+      ];
+
+  /// #1154 — the danger zone — the irreversible reset, in its own error-tinted section. One of the three slices of a build() that was 577
+  /// lines long; the tiles are unchanged, only the list is cut.
+  List<Widget> _dangerZoneTiles(
+    BuildContext context, {
+    required AppLocalizations? l10n,
+    required Workspace workspace,
+  }) =>
+      [
                   const Divider(),
                   // Irreversible reset (0039). Its own error-tinted section so
                   // it reads as clearly separate from the backup tools above.
@@ -1508,85 +1550,6 @@ class _WorkspaceSettingsScreenState
                     enabled: !_busy,
                     onTap: () => _resetWorkspace(workspace),
                   ),
-                ],
-              ),
-            ),
-    );
-  }
+      ];
 }
 
-/// Destructive reset confirmation (0039): the confirm button unlocks only
-/// once the owner types [phrase] exactly (case-insensitive). Owns its text
-/// controller so it never outlives the dialog's dismissal.
-class _ResetConfirmDialog extends StatefulWidget {
-  const _ResetConfirmDialog({required this.phrase});
-
-  final String phrase;
-
-  @override
-  State<_ResetConfirmDialog> createState() => _ResetConfirmDialogState();
-}
-
-class _ResetConfirmDialogState extends State<_ResetConfirmDialog> {
-  final _controller = TextEditingController();
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
-    final matches = _controller.text.trim().toLowerCase() ==
-        widget.phrase.toLowerCase();
-    return AlertDialog(
-      title:
-          Text(l10n?.workspaceResetDialogTitle ?? 'Reset this workspace?'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            l10n?.workspaceResetWarning ??
-                'This permanently deletes every reservation, all money and '
-                    'ledger entries, the activity feed, and the entire floor '
-                    'plan. Settings and members are kept. This cannot be '
-                    'undone.',
-            style: theme.textTheme.bodyMedium
-                ?.copyWith(color: theme.colorScheme.error),
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          TextField(
-            key: const Key('workspaceResetConfirmField'),
-            controller: _controller,
-            autofocus: true,
-            onChanged: (_) => setState(() {}),
-            decoration: InputDecoration(
-              labelText: l10n?.workspaceResetConfirmLabel(widget.phrase) ??
-                  'Type "${widget.phrase}" to confirm',
-            ),
-          ),
-        ],
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(false),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
-        ),
-        FilledButton(
-          key: const Key('workspaceResetConfirm'),
-          style: FilledButton.styleFrom(
-            backgroundColor: theme.colorScheme.error,
-            foregroundColor: theme.colorScheme.onError,
-          ),
-          onPressed:
-              matches ? () => Navigator.of(context).pop(true) : null,
-          child: Text(l10n?.workspaceResetConfirmButton ?? 'Reset workspace'),
-        ),
-      ],
-    );
-  }
-}
