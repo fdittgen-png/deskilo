@@ -29,9 +29,12 @@ class UsageFilter extends _$UsageFilter {
 /// uncounted bookings appear — there is no cron behind this.
 @riverpod
 Future<List<UsageRecord>> usageRecords(Ref ref, String period) async {
+  // #1218 — every dependency registered BEFORE the first await: a
+  // bare `ref.watch` on the far side of an async gap throws if the
+  // provider was disposed while the future was in flight.
+  final memberId = ref.watch(usageFilterProvider).memberId;
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null || period.isEmpty) return const [];
-  final memberId = ref.watch(usageFilterProvider).memberId;
   return traced(
     'money',
     'usage records',

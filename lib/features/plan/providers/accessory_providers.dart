@@ -21,9 +21,14 @@ Future<List<Accessory>> accessories(
   Ref ref, {
   bool includeInactive = false,
 }) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight, and it is
+  // a dependency registration in any case.
+  final repository = ref.watch(accessoryRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return ref.watch(accessoryRepositoryProvider).fetchAccessories(
+  return repository.fetchAccessories(
         workspace.id,
         includeInactive: includeInactive,
       );

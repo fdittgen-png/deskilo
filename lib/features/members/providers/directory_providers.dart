@@ -48,9 +48,16 @@ Future<List<Reservation>> directoryReservations(Ref ref) async {
   // Set literal: both keys collapse to one when the window stays inside
   // a single month.
   final monthKeys = {monthKeyOf(now), monthKeyOf(horizon)};
-  final windows = await Future.wait(
-    monthKeys.map((key) => ref.watch(reservationsForMonthProvider(key).future)),
-  );
+  // #1218 — the watches are materialised BEFORE the await rather than
+  // handed to `Future.wait` as a lazy map. They were already safe (the
+  // iterable is walked eagerly), but "safe because of when Future.wait
+  // happens to iterate" is not a thing the next reader should have to
+  // know, and it is what a scanner cannot tell from a real gap.
+  final futures = [
+    for (final key in monthKeys)
+      ref.watch(reservationsForMonthProvider(key).future),
+  ];
+  final windows = await Future.wait(futures);
   final seen = <String>{};
   return [
     for (final window in windows)
