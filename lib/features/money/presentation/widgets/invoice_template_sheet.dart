@@ -747,6 +747,8 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
               child: ChoiceChip(
                 key: ValueKey('invoice-template-lang-$lang'),
                 // #822 — a dot says "this language has its own".
+                // #1191 — the chip's own tick would land on this.
+                showCheckmark: false,
                 avatar: _overridden(lang)
                     ? Icon(Icons.circle,
                         key: ValueKey('invoice-template-lang-own-$lang'),

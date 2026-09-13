@@ -50,6 +50,8 @@ class CalendarKindChips extends StatelessWidget {
           const SizedBox(width: AppSpacing.xs),
           FilterChip(
             key: ValueKey('calendar-kind-${kind.wire}'),
+            // #1191 — the chip's own tick would land on this.
+            showCheckmark: false,
             avatar: Icon(calendarKindIcon(kind), size: 18),
             label: Text(calendarKindLabel(l10n, kind)),
             selected: kinds?.contains(kind) ?? false,
