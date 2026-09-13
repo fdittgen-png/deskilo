@@ -109,6 +109,8 @@ class ServicesScreen extends ConsumerWidget {
             child: Text(l10n?.servicesEmpty ?? 'No services yet.'),
           ),
         AsyncData(value: final services) => ListView(
+            // #1181 — the add button overlays this list; it ends above it.
+            padding: const EdgeInsets.only(bottom: kFabSafeBottom),
             children: [
               for (final service in services)
                 ListTile(

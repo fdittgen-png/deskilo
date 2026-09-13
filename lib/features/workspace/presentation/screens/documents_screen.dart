@@ -303,7 +303,10 @@ class DocumentsScreen extends ConsumerWidget {
                         'statements from any drive.',
               )
             : ListView(
-                padding: AppSpacing.gutterAll,
+                // #1181 — the add button overlays this list; it ends
+                // above it.
+                padding: AppSpacing.gutterAll
+                    .add(const EdgeInsets.only(bottom: kFabSafeBottom)),
                 children: [
                   for (final category in WorkspaceDocument.categories)
                     if (documents.any((d) => d.category == category)) ...[

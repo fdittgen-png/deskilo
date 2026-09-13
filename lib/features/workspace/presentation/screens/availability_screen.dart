@@ -333,6 +333,8 @@ class AvailabilityScreen extends ConsumerWidget {
           AsyncData(value: final closures),
         ) =>
           ListView(
+            // #1181 — the add button overlays this list; it ends above it.
+            padding: const EdgeInsets.only(bottom: kFabSafeBottom),
             children: [
               // #606 — contextual how-to; gated inside the widget.
               const HelpHint(HelpHintId.availability),

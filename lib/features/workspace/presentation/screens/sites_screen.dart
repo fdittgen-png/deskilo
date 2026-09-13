@@ -34,7 +34,9 @@ class SitesScreen extends ConsumerWidget {
       ),
       body: switch (sites) {
         AsyncData(value: final rows) => ListView(
-            padding: AppSpacing.lgAll,
+            // #1181 — the add button overlays this list; it ends above it.
+            padding: AppSpacing.lgAll
+                .add(const EdgeInsets.only(bottom: kFabSafeBottom)),
             children: [
               Text(
                 l10n?.sitesIntro ??
