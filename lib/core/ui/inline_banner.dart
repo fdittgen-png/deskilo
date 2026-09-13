@@ -32,7 +32,10 @@ class InlineBanner extends StatelessWidget {
     required this.icon,
     required this.text,
     this.severity = InlineBannerSeverity.error,
-  });
+    this.actionLabel,
+    this.onAction,
+  }) : assert((actionLabel == null) == (onAction == null),
+            'an action needs both a label and a handler');
 
   /// Leading context icon.
   final IconData icon;
@@ -42,6 +45,13 @@ class InlineBanner extends StatelessWidget {
 
   /// Color treatment; defaults to [InlineBannerSeverity.error].
   final InlineBannerSeverity severity;
+
+  /// #1196 — the way forward, when the banner knows one. A banner that
+  /// states a fact and offers nothing leaves the reader to work out the
+  /// next move; the closed-day banner knew the next open day all along
+  /// and made the member find it by hand.
+  final String? actionLabel;
+  final VoidCallback? onAction;
 
   @override
   Widget build(BuildContext context) {
@@ -70,13 +80,34 @@ class InlineBanner extends StatelessWidget {
         color: background,
         borderRadius: AppRadius.mdAll,
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: InlineBannerMetrics.iconSize, color: foreground),
-          const SizedBox(width: AppSpacing.sm),
-          Expanded(
-            child: Text(text, style: TextStyle(color: foreground)),
+          Row(
+            children: [
+              Icon(icon, size: InlineBannerMetrics.iconSize, color: foreground),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Text(text, style: TextStyle(color: foreground)),
+              ),
+            ],
           ),
+          // The action gets its own row, as Material's own `MaterialBanner`
+          // gives its actions one. Beside the text it overflowed the
+          // banner by 72 px on a 360 dp phone — the sentence and a
+          // button naming a date do not share a line on a narrow
+          // screen, in any of the five languages.
+          if (onAction != null)
+            Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: TextButton(
+                key: const ValueKey('inline-banner-action'),
+                onPressed: onAction,
+                style: TextButton.styleFrom(foregroundColor: foreground),
+                child: Text(actionLabel!),
+              ),
+            ),
         ],
       ),
     );

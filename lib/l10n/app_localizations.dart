@@ -13121,6 +13121,12 @@ abstract class AppLocalizations {
   /// **'Closed on this day'**
   String get planClosedDay;
 
+  /// #1196 the closed-day banner's action — jumps to the next day the workspace is open
+  ///
+  /// In en, this message translates to:
+  /// **'Show {day}'**
+  String planClosedDayShowNext(String day);
+
   /// Snackbar when the server rejects a booking or check-in because the workspace is closed on a touched day (#186)
   ///
   /// In en, this message translates to:

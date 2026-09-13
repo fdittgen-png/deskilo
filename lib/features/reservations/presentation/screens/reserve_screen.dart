@@ -53,6 +53,8 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../booking_gate_scope.dart';
 import '../../../../core/time/work_hours.dart';
+import '../../../../core/i18n/format_controller.dart';
+import '../../../workspace/domain/next_open_day.dart';
 
 /// Geometry and ranges of the Reserve hub (#208). Pinned by test — treat
 /// these as part of the visual/behavioural contract, not free-floating
@@ -845,10 +847,33 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
   /// selected day, so nothing below is bookable. Shared [InlineBanner]
   /// since #210.
   Widget _closedDayBanner(AppLocalizations? l10n) {
+    // #1196 — the banner used to state the fact and stop there, so a
+    // member who opened the hub on a Sunday got a blocked plan, inert
+    // chips and no way forward but the date picker, two taps away and
+    // not obviously the answer. The next open day is something this
+    // screen already knows.
+    final next = nextOpenDay(
+      // Tomorrow: today is the day being called closed.
+      _selectedDay.add(const Duration(days: 1)),
+      openWeekdays: ref.watch(openWeekdaysProvider).value ?? const [],
+      closures: ref.watch(closureDaysProvider).value ?? const [],
+    );
+    final label = next == null
+        ? null
+        : appFormatOf(context).shortDate(
+            WorkspaceTime.at(next.year, next.month, next.day, 12),
+          );
     return InlineBanner(
       key: const ValueKey('reserve-closed-banner'),
       icon: Icons.event_busy,
       text: l10n?.planClosedDay ?? 'Closed on this day',
+      // A workspace closed for longer than the horizon, or with no open
+      // weekday at all, has nothing to point at. Then the banner says
+      // only what it always said, which is the honest answer.
+      actionLabel: label == null
+          ? null
+          : (l10n?.planClosedDayShowNext(label) ?? 'Show $label'),
+      onAction: next == null ? null : () => _selectDay(next),
     );
   }
 

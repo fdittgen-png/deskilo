@@ -4987,6 +4987,7 @@
   "planToLabel": "Alle",
   "planEndBeforeStart": "La fine deve essere successiva all'inizio.",
   "planClosedDay": "Chiuso in questo giorno",
+  "planClosedDayShowNext": "Mostra {day}",
   "planClosedDayError": "Lo spazio è chiuso quel giorno.",
   "planMorningChip": "Mattina",
   "planAfternoonChip": "Pomeriggio",

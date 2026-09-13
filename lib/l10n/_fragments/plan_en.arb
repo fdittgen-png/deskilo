@@ -287,6 +287,15 @@
   "@planClosedDay": {
     "description": "Banner under the plan header and seat-tap snackbar when the browsed/live day is a closed day of the workspace (#186)"
   },
+  "planClosedDayShowNext": "Show {day}",
+  "@planClosedDayShowNext": {
+    "description": "#1196 the closed-day banner's action — jumps to the next day the workspace is open",
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
   "planClosedDayError": "The workspace is closed on that day.",
   "@planClosedDayError": {
     "description": "Snackbar when the server rejects a booking or check-in because the workspace is closed on a touched day (#186)"
