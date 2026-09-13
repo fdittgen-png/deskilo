@@ -18,7 +18,9 @@ das er druckt, trägt das **Entwicklungs-Wasserzeichen**, seine
 E-Rechnungen gehen an den Testendpunkt, und nichts, was er erzeugt, kann
 für ein echtes Dokument gehalten werden.
 
-<!-- image: env-pair-profiles -->
+<p><img src="images/env-pair-profiles.jpg" width="240"></p>
+
+*Der Profile-Bildschirm: ein gepaarter Space trägt DEV und PROD in einer Zeile — ein Space, zwei Umgebungen, und das Häkchen zeigt, in welcher du stehst.*
 
 <!-- anchor: env.pair.create -->
 ## Das Paar anlegen
@@ -77,7 +79,9 @@ du stehst**: auf der Produktionsseite heißt der Knopf *Aus DEV ziehen*,
 auf der Entwicklungsseite *Aus PROD ziehen*. Nichts kann versehentlich
 auf die andere Seite geschoben werden.
 
-<!-- image: env-deploy-screen -->
+<p><img src="images/env-deploy-screen.jpg" width="240"></p>
+
+*Der Deployment-Bildschirm von der Entwicklungsseite: der Satz oben nennt die Richtung, und was du ankreuzt, wird vom Produktionszwilling geholt — nach einer Vorschau.*
 
 <!-- anchor: env.deploy.entities -->
 ### Was reist, Entität für Entität

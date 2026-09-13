@@ -573,9 +573,9 @@ Touchez un membre pour sa **feuille de gestion** — chaque action par membre au
 
 *Membres et forfaits : e-mail, pourcentage d'abonnement et puces de rôle par ligne ; mégaphone, ajout et filtres dans la barre.*
 
-<p><img src="images/member-management-sheet.jpg" width="240"></p>
+<p><img src="images/member-management-sheet.jpg" width="240"> <img src="images/member-add-service.jpg" width="240"></p>
 
-*La feuille de gestion d'un membre — chaque action par membre au même endroit.*
+*La feuille de gestion d'un membre — chaque action par membre au même endroit — et, à côté, la boîte Ajouter un service : le service, la quantité et le mois où il atterrit.*
 
 <p><img src="images/member-management-sheet-self.jpg" width="240"></p>
 

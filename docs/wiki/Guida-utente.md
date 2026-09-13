@@ -572,9 +572,9 @@ Tocca un membro per aprire la sua **scheda di gestione** — ogni azione per mem
 
 *Membri e piani: e-mail, quota di piano e chip di ruolo su ogni riga; megafono, aggiunta e filtri nella barra dell'app.*
 
-<p><img src="images/member-management-sheet.jpg" width="240"></p>
+<p><img src="images/member-management-sheet.jpg" width="240"> <img src="images/member-add-service.jpg" width="240"></p>
 
-*La scheda di gestione di un membro — ogni azione per membro in un unico posto.*
+*La scheda di gestione di un membro — ogni azione per membro in un unico posto — e accanto la finestra Aggiungi un servizio: il servizio, la quantità e il mese in cui atterra.*
 
 <p><img src="images/member-management-sheet-self.jpg" width="240"></p>
 

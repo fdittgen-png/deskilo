@@ -16,7 +16,9 @@ it prints carries the **development watermark**, its e-invoices go to
 the test endpoint, and nothing it produces can be mistaken for a real
 document.
 
-<!-- image: env-pair-profiles -->
+<p><img src="images/env-pair-profiles.jpg" width="240"></p>
+
+*The Profiles screen: a paired workspace carries DEV and PROD on one row — one space, two environments, and the tick shows which one you are standing in.*
 
 <!-- anchor: env.pair.create -->
 ## Creating the pair
@@ -69,7 +71,9 @@ the production side the button reads *Pull from DEV*, on the development
 side *Pull from PROD*. Nothing can be pushed onto the other side by
 mistake.
 
-<!-- image: env-deploy-screen -->
+<p><img src="images/env-deploy-screen.jpg" width="240"></p>
+
+*The Deployment screen from the development side: the sentence at the top names the direction, and what you tick is pulled from the production twin — after a preview.*
 
 <!-- anchor: env.deploy.entities -->
 ### What travels, entity by entity

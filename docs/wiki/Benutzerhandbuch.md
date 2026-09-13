@@ -571,9 +571,9 @@ Ein Mitglied antippen öffnet sein **Verwaltungsblatt** — jede Mitglieds-Aktio
 
 *Mitglieder & Tarife: E-Mail, Tarifanteil und Rollen-Chips je Zeile; Megafon, Hinzufügen und Filter in der Leiste.*
 
-<p><img src="images/member-management-sheet.jpg" width="240"></p>
+<p><img src="images/member-management-sheet.jpg" width="240"> <img src="images/member-add-service.jpg" width="240"></p>
 
-*Das Verwaltungsblatt eines Mitglieds — jede Mitglieds-Aktion an einem Ort.*
+*Das Verwaltungsblatt eines Mitglieds — jede Mitglieds-Aktion an einem Ort — und daneben der Dialog Eine Leistung hinzufügen: die Leistung, die Menge und der Monat, in dem sie landet.*
 
 <p><img src="images/member-management-sheet-self.jpg" width="240"></p>
 

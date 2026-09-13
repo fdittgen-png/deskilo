@@ -18,7 +18,9 @@ le **filigrane de développement**, ses factures électroniques partent
 vers le point de test, et rien de ce qu'il produit ne peut être pris
 pour un document réel.
 
-<!-- image: env-pair-profiles -->
+<p><img src="images/env-pair-profiles.jpg" width="240"></p>
+
+*L'écran Profils : un espace apparié porte DEV et PROD sur une seule ligne — un espace, deux environnements, et la coche indique celui où vous vous trouvez.*
 
 <!-- anchor: env.pair.create -->
 ## Créer le couple
@@ -76,7 +78,9 @@ tenez** : du côté production le bouton dit *Tirer depuis la DEV*, du
 côté développement *Tirer depuis la PROD*. Rien ne peut être poussé sur
 l'autre côté par erreur.
 
-<!-- image: env-deploy-screen -->
+<p><img src="images/env-deploy-screen.jpg" width="240"></p>
+
+*L'écran Déploiement vu du côté développement : la phrase en haut nomme le sens, et ce que vous cochez est tiré du jumeau de production — après un aperçu.*
 
 <!-- anchor: env.deploy.entities -->
 ### Ce qui voyage, entité par entité

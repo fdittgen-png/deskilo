@@ -549,7 +549,11 @@ Ein Mitglied antippen öffnet sein **Verwaltungsblatt** — jede Mitglieds-Aktio
 
 ![](assets/help/images/member-management-sheet.jpg)
 
-*Das Verwaltungsblatt eines Mitglieds — jede Mitglieds-Aktion an einem Ort.*
+ 
+
+![](assets/help/images/member-add-service.jpg)
+
+*Das Verwaltungsblatt eines Mitglieds — jede Mitglieds-Aktion an einem Ort — und daneben der Dialog Eine Leistung hinzufügen: die Leistung, die Menge und der Monat, in dem sie landet.*
 
 ![](assets/help/images/member-management-sheet-self.jpg)
 
@@ -1996,7 +2000,9 @@ das er druckt, trägt das **Entwicklungs-Wasserzeichen**, seine
 E-Rechnungen gehen an den Testendpunkt, und nichts, was er erzeugt, kann
 für ein echtes Dokument gehalten werden.
 
-<!-- image: env-pair-profiles -->
+![](assets/help/images/env-pair-profiles.jpg)
+
+*Der Profile-Bildschirm: ein gepaarter Space trägt DEV und PROD in einer Zeile — ein Space, zwei Umgebungen, und das Häkchen zeigt, in welcher du stehst.*
 
 ## Das Paar anlegen
 
@@ -2051,7 +2057,9 @@ du stehst**: auf der Produktionsseite heißt der Knopf *Aus DEV ziehen*,
 auf der Entwicklungsseite *Aus PROD ziehen*. Nichts kann versehentlich
 auf die andere Seite geschoben werden.
 
-<!-- image: env-deploy-screen -->
+![](assets/help/images/env-deploy-screen.jpg)
+
+*Der Deployment-Bildschirm von der Entwicklungsseite: der Satz oben nennt die Richtung, und was du ankreuzt, wird vom Produktionszwilling geholt — nach einer Vorschau.*
 
 ### Was reist, Entität für Entität
 

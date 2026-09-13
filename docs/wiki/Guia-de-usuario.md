@@ -571,9 +571,9 @@ Toca un miembro para abrir su **ficha de gestión** — cada acción por miembro
 
 *Miembros y planes: correo, porcentaje del plan y chips de rol por fila; megáfono, añadir y filtros en la barra.*
 
-<p><img src="images/member-management-sheet.jpg" width="240"></p>
+<p><img src="images/member-management-sheet.jpg" width="240"> <img src="images/member-add-service.jpg" width="240"></p>
 
-*La ficha de gestión de un miembro — cada acción por miembro en un solo lugar.*
+*La ficha de gestión de un miembro — cada acción por miembro en un solo lugar — y a su lado el cuadro Añadir un servicio: el servicio, la cantidad y el mes en que aterriza.*
 
 <p><img src="images/member-management-sheet-self.jpg" width="240"></p>
 

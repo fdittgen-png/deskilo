@@ -550,7 +550,11 @@ Tocca un membro per aprire la sua **scheda di gestione** — ogni azione per mem
 
 ![](assets/help/images/member-management-sheet.jpg)
 
-*La scheda di gestione di un membro — ogni azione per membro in un unico posto.*
+ 
+
+![](assets/help/images/member-add-service.jpg)
+
+*La scheda di gestione di un membro — ogni azione per membro in un unico posto — e accanto la finestra Aggiungi un servizio: il servizio, la quantità e il mese in cui atterra.*
 
 ![](assets/help/images/member-management-sheet-self.jpg)
 
@@ -2011,7 +2015,9 @@ stampa porta la **filigrana di sviluppo**, le sue fatture elettroniche
 vanno all'endpoint di prova, e nulla di ciò che produce può essere
 scambiato per un documento reale.
 
-<!-- image: env-pair-profiles -->
+![](assets/help/images/env-pair-profiles.jpg)
+
+*La schermata Profili: uno spazio accoppiato porta DEV e PROD su una sola riga — uno spazio, due ambienti, e la spunta mostra in quale ti trovi.*
 
 ## Creare la coppia
 
@@ -2063,7 +2069,9 @@ sul lato produzione il pulsante dice *Tira da DEV*, su quello di
 sviluppo *Tira da PROD*. Nulla può essere spinto sull'altro lato per
 errore.
 
-<!-- image: env-deploy-screen -->
+![](assets/help/images/env-deploy-screen.jpg)
+
+*La schermata Distribuzione dal lato sviluppo: la frase in alto nomina la direzione, e ciò che spunti viene tirato dal gemello di produzione — dopo un'anteprima.*
 
 ### Cosa viaggia, entità per entità
 
