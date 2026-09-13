@@ -8,6 +8,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_report.dart';
 import 'report_page_style.dart';
+import '../../../../core/theme/app_radius.dart';
 
 /// The report blocks rendered as Flutter widgets with PRINT FIDELITY
 /// (#474, refit in #548): every style, padding, color and the font
@@ -152,33 +153,22 @@ Future<void> showReportQuickPreview(
                   ),
                 ),
                 Flexible(
-                  child: ColoredBox(
-                    color: ReportPage.backdrop,
-                    child: SingleChildScrollView(
-                      key: const ValueKey('report-quick-preview'),
-                      padding: AppSpacing.mdAll,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            _PreviewSheet(report: report, images: images),
-                            // #837 — each regrouped invoice on its own
-                            // sheet below, never running into the one
-                            // above it, stamped as the PDF stamps it.
-                            for (final annex in annexes) ...[
-                              const SizedBox(height: AppSpacing.lg),
-                              _PreviewSheet(
-                                key: ValueKey('preview-annex-${annex.stamp}'),
-                                report: annex.report,
-                                images: images,
-                                stamp: annex.stamp,
-                              ),
-                            ],
-                          ],
+                  child: _ZoomablePages(
+                    children: [
+                      _PreviewSheet(report: report, images: images),
+                      // #837 — each regrouped invoice on its own sheet
+                      // below, never running into the one above it,
+                      // stamped as the PDF stamps it.
+                      for (final annex in annexes) ...[
+                        const SizedBox(height: AppSpacing.lg),
+                        _PreviewSheet(
+                          key: ValueKey('preview-annex-${annex.stamp}'),
+                          report: annex.report,
+                          images: images,
+                          stamp: annex.stamp,
                         ),
-                      ),
-                    ),
+                      ],
+                    ],
                   ),
                 ),
                 Align(
@@ -199,6 +189,154 @@ Future<void> showReportQuickPreview(
         );
       },
     );
+
+
+/// #1217 — the quick preview, zoomable, and fitted to the width when it
+/// opens.
+///
+/// An A4 sheet is 595 logical pixels wide and a phone dialog is about
+/// 340, so the page used to open at 100 % inside a pair of nested
+/// scrollers: the left margin was off-screen, "Total Hors Taxe" read as
+/// "otal Hors Taxe", and the only way to read a line was to drag the
+/// page sideways and lose your place vertically.
+///
+/// It opens at whatever scale shows the whole width — reading is the
+/// point of a preview — and pinch or the buttons take it from there.
+/// Never above 100 % on a wide screen: a 595 px document blown up to
+/// fill a tablet is not what the paper looks like.
+class _ZoomablePages extends StatefulWidget {
+  const _ZoomablePages({required this.children});
+
+  final List<Widget> children;
+
+  /// What the buttons step by. A little more than a third per tap, so
+  /// three taps roughly double it and nobody has to hold anything down.
+  static const double step = 1.4;
+  static const double minScale = 0.4;
+  static const double maxScale = 5;
+
+  @override
+  State<_ZoomablePages> createState() => _ZoomablePagesState();
+}
+
+class _ZoomablePagesState extends State<_ZoomablePages> {
+  final _transform = TransformationController();
+  double? _fitted;
+
+  @override
+  void dispose() {
+    _transform.dispose();
+    super.dispose();
+  }
+
+  double get _scale => _transform.value.getMaxScaleOnAxis();
+
+  /// Fit the page's WIDTH, never magnifying past 100 %.
+  double _fitFor(double viewport) =>
+      ((viewport - AppSpacing.md * 2) / ReportPage.width).clamp(
+        _ZoomablePages.minScale,
+        1.0,
+      );
+
+  void _apply(double scale) {
+    final clamped =
+        scale.clamp(_ZoomablePages.minScale, _ZoomablePages.maxScale);
+    final current = _transform.value.getMaxScaleOnAxis();
+    if (current == 0) {
+      return;
+    }
+    // Zoom about the CENTRE of what is on screen, so the line you were
+    // reading is still the line you are reading.
+    final factor = clamped / current;
+    _transform.value = _transform.value.clone()
+      ..multiply(Matrix4.diagonal3Values(factor, factor, factor));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return ColoredBox(
+      color: ReportPage.backdrop,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final fit = _fitFor(constraints.maxWidth);
+          // Re-fit when the viewport changes (a rotation), and once on
+          // the first layout — but never while somebody is reading at
+          // their own zoom.
+          if (_fitted != fit) {
+            _fitted = fit;
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (mounted) {
+                // All three axes: `getMaxScaleOnAxis` — which is what
+                // InteractiveViewer reads — returns the LARGEST of
+                // them, so leaving z at 1 reports a zoom of 1 however
+                // small the page is drawn.
+                _transform.value =
+                    Matrix4.diagonal3Values(fit, fit, fit);
+              }
+            });
+          }
+          return Stack(
+            children: [
+              InteractiveViewer(
+                key: const ValueKey('report-quick-preview'),
+                transformationController: _transform,
+                constrained: false,
+                minScale: _ZoomablePages.minScale,
+                maxScale: _ZoomablePages.maxScale,
+                boundaryMargin: const EdgeInsets.all(AppSpacing.lg),
+                child: Padding(
+                  padding: AppSpacing.mdAll,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: widget.children,
+                  ),
+                ),
+              ),
+              Positioned(
+                right: AppSpacing.sm,
+                bottom: AppSpacing.sm,
+                child: Material(
+                  color: Theme.of(context).colorScheme.surface,
+                  elevation: 2,
+                  borderRadius: AppRadius.lgAll,
+                  clipBehavior: Clip.antiAlias,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        key: const ValueKey('preview-zoom-out'),
+                        tooltip: l10n?.reportPreviewZoomOut ?? 'Zoom out',
+                        onPressed: _scale <= _ZoomablePages.minScale + 1e-6
+                            ? null
+                            : () => _apply(_scale / _ZoomablePages.step),
+                        icon: const Icon(Icons.remove),
+                      ),
+                      IconButton(
+                        key: const ValueKey('preview-zoom-fit'),
+                        tooltip: l10n?.reportPreviewFit ?? 'Fit the width',
+                        onPressed: () => _apply(_fitted ?? 1),
+                        icon: const Icon(Icons.fit_screen_outlined),
+                      ),
+                      IconButton(
+                        key: const ValueKey('preview-zoom-in'),
+                        tooltip: l10n?.reportPreviewZoomIn ?? 'Zoom in',
+                        onPressed: _scale >= _ZoomablePages.maxScale - 1e-6
+                            ? null
+                            : () => _apply(_scale * _ZoomablePages.step),
+                        icon: const Icon(Icons.add),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
 
 /// #837 — one sheet of the quick preview: the paper, and behind the
 /// content the same diagonal stamp the PDF prints.

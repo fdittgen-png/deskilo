@@ -80,8 +80,9 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
     required ({int count, DateTime last})? reminder,
     required String replacedByNumber,
   }) async {
-    final action = await showInvoiceDetailSheet(
+    await showInvoiceDetailSheet(
       context,
+      ref: ref,
       invoice: invoice,
       match: match,
       settledByNumber: settledByNumberOf(
@@ -99,14 +100,6 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
         reminder: reminder,
         replacedByNumber: replacedByNumber,
       ),
-    );
-    if (action == null || !mounted) return;
-    await runInvoiceAction(
-      context,
-      ref,
-      action,
-      invoice,
-      countryCode: widget.countryCode,
     );
   }
 

@@ -201,6 +201,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
             ref.read(currentWorkspaceProvider).value?.countryCode ?? '';
         await showInvoiceDetailSheet(
           context,
+          ref: ref,
           invoice: invoice,
           match: matches[invoice.id],
           canIssue: ref

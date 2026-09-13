@@ -29,22 +29,27 @@ EventRepository eventRepository(Ref ref) =>
 /// The active workspace's event feed, newest first (server-scoped by role).
 @riverpod
 Future<List<WorkspaceEvent>> events(Ref ref) async {
+  // #1218 — the repository is watched BEFORE the gap. A `ref.watch` on
+  // the far side of an await throws outright if the provider was
+  // disposed while the future was in flight, and it is a dependency
+  // registration in any case: the right place for it is before there is
+  // anything to be disposed during.
+  final repository = ref.watch(eventRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return ref.watch(eventRepositoryProvider).fetchEvents(workspace.id);
+  return repository.fetchEvents(workspace.id);
 }
 
 /// Per-validator audit trail for the visible feed, keyed by event id
 /// (#130). Derived from [events], so invalidating the feed refreshes it.
 @riverpod
 Future<Map<String, List<EventDecision>>> eventDecisions(Ref ref) async {
+  final repository = ref.watch(eventRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const {};
   final all = await ref.watch(eventsProvider.future);
   if (all.isEmpty) return const {};
-  return ref
-      .watch(eventRepositoryProvider)
-      .fetchDecisions(workspace.id, [for (final e in all) e.id]);
+  return repository.fetchDecisions(workspace.id, [for (final e in all) e.id]);
 }
 
 /// #841 — the ordered decision trail of ONE event, by id, for the
@@ -53,9 +58,14 @@ Future<Map<String, List<EventDecision>>> eventDecisions(Ref ref) async {
 /// the event and its decisions directly instead.
 @riverpod
 Future<EventTrail> eventTrail(Ref ref, String eventId) async {
+  // #1218 — THE one the device reported. A trail is opened from a sheet
+  // and is disposed the moment the sheet closes, so the workspace
+  // future was regularly still in flight when the Ref went away, and
+  // the `ref.watch` that used to sit here threw "Cannot use the Ref of
+  // eventTrailProvider after it has been disposed" instead of loading.
+  final repository = ref.watch(eventRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null || eventId.isEmpty) return const EventTrail();
-  final repository = ref.watch(eventRepositoryProvider);
   final event = await repository.fetchEvent(eventId);
   if (event == null) return const EventTrail();
   final decisions = await repository.fetchDecisions(workspace.id, [eventId]);
@@ -65,11 +75,10 @@ Future<EventTrail> eventTrail(Ref ref, String eventId) async {
 /// The workspace's quorum rules (#130); empty = pre-quorum behavior.
 @riverpod
 Future<List<ValidationPolicy>> validationPolicies(Ref ref) async {
+  final repository = ref.watch(eventRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return ref
-      .watch(eventRepositoryProvider)
-      .fetchValidationPolicies(workspace.id);
+  return repository.fetchValidationPolicies(workspace.id);
 }
 
 /// The pending events awaiting MY decision — the bell badge, the

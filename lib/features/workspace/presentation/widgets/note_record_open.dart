@@ -72,6 +72,7 @@ Future<void> openRecordById(
           ref.read(currentWorkspaceProvider).value?.countryCode ?? '';
       await showInvoiceDetailSheet(
         context,
+        ref: ref,
         invoice: invoice,
         match: matches[invoice.id],
         canIssue: ref

@@ -4409,6 +4409,15 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get reportPreviewZoomIn => 'Agrandir';
+
+  @override
+  String get reportPreviewZoomOut => 'Réduire';
+
+  @override
+  String get reportPreviewFit => 'Ajuster à la largeur';
+
+  @override
   String get reportPreviewTitle =>
       'Aperçu rapide — votre facture la plus récente';
 
