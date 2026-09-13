@@ -9,6 +9,7 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/presentation/widgets/open_conversation.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
+import '../../../workspace/presentation/reference_locale.dart';
 
 /// #622 — "message the reserver": when ANOTHER member's reservation
 /// blocks a check-in or booking (scan sheet, Plan tab), the surface
@@ -48,7 +49,15 @@ Future<void> messageReserver(
   required String name,
   required String spaceName,
 }) {
-  final localeName = Localizations.maybeLocaleOf(context)?.toString();
+  // #1179 — the label is BAKED INTO the message and never re-rendered
+  // (see member_note_refs.dart: that is what lets a since-deleted target
+  // still read as text). So the language it is baked in must not be the
+  // sender's phone: an English reader was shown "31 août" because the
+  // sender happened to have a French device. The WORKSPACE's language is
+  // the one thing every participant shares — the same rule invitations
+  // already follow — and it falls back to the sender's when a space has
+  // not set one.
+  final localeName = referenceLocale(ref, context);
   final token = reservationToken(
     blocking.id,
     _blockingLabel(
