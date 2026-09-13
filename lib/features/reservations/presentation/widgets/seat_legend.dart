@@ -56,14 +56,22 @@ class SeatLegend extends StatelessWidget {
           Icons.event_busy_outlined,
         ),
     ];
-    return SingleChildScrollView(
+    // #1183 — a Wrap, not a horizontal scroller. Sideways, the legend
+    // sits in a 260 dp side panel and the scroller cut it mid-word:
+    // "Free · Reserved · Checked in · M…". Scrolling is the wrong
+    // answer for a legend in any case — nothing in it is tappable, so
+    // an entry you have to find by dragging is an entry you never read.
+    // Wrapped, it takes a second line where it needs one and lays out
+    // on one line wherever it fits.
+    return Padding(
       key: const ValueKey('reserve-legend'),
-      scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.lg,
         vertical: AppSpacing.xs,
       ),
-      child: Row(children: [
+      child: Wrap(
+        runSpacing: AppSpacing.xs,
+        children: [
         for (final (label, color, icon) in entries)
           Padding(
             padding: const EdgeInsets.only(right: AppSpacing.md),
@@ -83,7 +91,8 @@ class SeatLegend extends StatelessWidget {
               Text(label, style: Theme.of(context).textTheme.labelSmall),
             ]),
           ),
-      ]),
+        ],
+      ),
     );
   }
 }

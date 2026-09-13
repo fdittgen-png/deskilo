@@ -828,7 +828,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                       (constraints.maxWidth * 0.3).clamp(260.0, 380.0),
                   child: SingleChildScrollView(child: header()),
                 ),
-                const VerticalDivider(width: 1),
+                const VerticalDivider(key: ValueKey('split-divider'), width: 1),
                 content,
               ],
             );

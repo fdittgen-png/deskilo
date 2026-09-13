@@ -32,6 +32,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/calendar_providers.dart';
 import '../calendar_view.dart';
 import '../widgets/calendar_feed.dart';
+import '../widgets/calendar_view_bar.dart';
 import '../widgets/calendar_kind_chips.dart';
 import '../widgets/calendar_month_grid.dart';
 import '../widgets/calendar_week_strip.dart';
@@ -272,7 +273,13 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     }
 
     final selector = Column(mainAxisSize: MainAxisSize.min, children: [
-      _viewBar(l10n),
+      CalendarViewBar(
+        view: _selection.view,
+        onView: (CalendarView v) =>
+            setState(() => _selection = _selection.withView(v)),
+        onToday: () =>
+            setState(() => _selection = _selection.withAnchor(_today)),
+      ),
       _stepBar(l10n),
       if (_selection.view != CalendarView.agenda) ...[
         _picker(page.value),
@@ -281,8 +288,14 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     ]);
     return Scaffold(
       body: LayoutBuilder(builder: (context, constraints) {
-        final landscape = constraints.maxWidth > constraints.maxHeight &&
-            _selection.view != CalendarView.agenda;
+        // #1183 — the split used to be for the views that carry a
+        // picker. Sideways, the AGENDA needed it most: the view bar,
+        // the step bar and the filter chips are fixed rows, and on a
+        // 360 dp-tall screen they left the feed four pixels less than
+        // it needed — a `RenderFlex overflowed by 4.0 pixels` that
+        // nothing on screen explained. In the side panel those rows
+        // scroll on their own and the feed gets the whole height.
+        final landscape = constraints.maxWidth > constraints.maxHeight;
         if (landscape) {
           return Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             SizedBox(
@@ -295,7 +308,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
                 ]),
               ),
             ),
-            const VerticalDivider(width: 1),
+            const VerticalDivider(key: ValueKey('split-divider'), width: 1),
             Expanded(child: feed),
           ]);
         }
@@ -366,47 +379,6 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
       ]),
     );
   }
-
-  // ── flag ON: the views ─────────────────────────────────────────────
-  Widget _viewBar(AppLocalizations? l10n) => Padding(
-        padding: const EdgeInsets.fromLTRB(
-            AppSpacing.sm, AppSpacing.xs, AppSpacing.sm, 0),
-        child: Row(children: [
-          Expanded(
-            child: SegmentedButton<CalendarView>(
-              key: const ValueKey('calendar-view-switch'),
-              showSelectedIcon: false,
-              segments: [
-                ButtonSegment(
-                  value: CalendarView.agenda,
-                  icon: const Icon(Icons.view_agenda_outlined),
-                  label: Text(l10n?.calendarViewAgenda ?? 'Agenda'),
-                ),
-                ButtonSegment(
-                  value: CalendarView.week,
-                  icon: const Icon(Icons.view_week_outlined),
-                  label: Text(l10n?.calendarViewWeek ?? 'Week'),
-                ),
-                ButtonSegment(
-                  value: CalendarView.month,
-                  icon: const Icon(Icons.calendar_month_outlined),
-                  label: Text(l10n?.calendarViewMonth ?? 'Month'),
-                ),
-              ],
-              selected: {_selection.view},
-              onSelectionChanged: (s) =>
-                  setState(() => _selection = _selection.withView(s.first)),
-            ),
-          ),
-          IconButton(
-            key: const ValueKey('calendar-today'),
-            tooltip: l10n?.calendarToday ?? 'Today',
-            icon: const Icon(Icons.today_outlined),
-            onPressed: () =>
-                setState(() => _selection = _selection.withAnchor(_today)),
-          ),
-        ]),
-      );
 
   /// The arrows and the label of what is on screen: "Next 30 days · from
   /// 2 Sep", "1 – 7 Sep", "September 2026". The label opens a date

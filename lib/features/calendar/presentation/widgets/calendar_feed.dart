@@ -104,7 +104,14 @@ class CalendarFeed extends ConsumerWidget {
                 ),
               ]),
             ),
-          if (page.items.isEmpty && shown.every((d) => !byDay.containsKey(d)))
+          // #1183 — NOT when the days carry their own line. In the
+          // month view on a closed day the feed printed "Nothing on
+          // this day." here, orphaned above the "Today" heading, and
+          // then again under it: the same sentence twice, the first
+          // time attached to nothing.
+          if (!relative &&
+              page.items.isEmpty &&
+              shown.every((d) => !byDay.containsKey(d)))
             Padding(
               padding: AppSpacing.lgAll,
               child: Text(
@@ -120,8 +127,12 @@ class CalendarFeed extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(
                   AppSpacing.lg, AppSpacing.md, AppSpacing.lg, AppSpacing.xs),
+              // #1183 — the badge sits WITH its date, not at the far
+              // right of the panel. Expanded on the date pushed it to
+              // the edge, where sideways it landed half over the
+              // scrollbar and read as belonging to nothing.
               child: Row(children: [
-                Expanded(
+                Flexible(
                   child: Text(
                     _header(l10n, format, day),
                     key: ValueKey('calendar-day-${day.year}-${day.month}-${day.day}'),
@@ -132,7 +143,8 @@ class CalendarFeed extends ConsumerWidget {
                     ),
                   ),
                 ),
-                if (relative && !_open(day))
+                if (relative && !_open(day)) ...[
+                  const SizedBox(width: AppSpacing.sm),
                   Container(
                     key: ValueKey(
                         'calendar-closed-${day.year}-${day.month}-${day.day}'),
@@ -147,6 +159,7 @@ class CalendarFeed extends ConsumerWidget {
                       style: theme.textTheme.labelSmall,
                     ),
                   ),
+                ],
               ]),
             ),
             if (relative && !byDay.containsKey(day))
