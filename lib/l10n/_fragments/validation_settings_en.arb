@@ -1,5 +1,65 @@
 {
   "@@locale": "en",
+  "validationWorkflowBookings": "Bookings",
+  "@validationWorkflowBookings": {
+    "description": "#1221 the validation screen, grouped by the process a rule interrupts"
+  },
+  "validationWorkflowPeople": "People and roles",
+  "@validationWorkflowPeople": {
+    "description": "#1221 the validation screen, grouped by the process a rule interrupts"
+  },
+  "validationWorkflowMoneyStake": "Until it is accepted, the amount does not count on anybody’s statement.",
+  "@validationWorkflowMoneyStake": {
+    "description": "#1221 the validation screen, grouped by the process a rule interrupts"
+  },
+  "validationWorkflowBookingsStake": "Until it is accepted, the seat stays as it was.",
+  "@validationWorkflowBookingsStake": {
+    "description": "#1221 the validation screen, grouped by the process a rule interrupts"
+  },
+  "validationWorkflowPeopleStake": "Until it is accepted, the person keeps the access they have now.",
+  "@validationWorkflowPeopleStake": {
+    "description": "#1221 the validation screen, grouped by the process a rule interrupts"
+  },
+  "validationStepRaised": "Someone asks",
+  "@validationStepRaised": {
+    "description": "#1221 the validation screen, grouped by the process a rule interrupts"
+  },
+  "validationStepOwnerToo": "and the owner, always",
+  "@validationStepOwnerToo": {
+    "description": "#1221 the validation screen, grouped by the process a rule interrupts"
+  },
+  "validationStepApplies": "it takes effect",
+  "@validationStepApplies": {
+    "description": "#1221 the validation screen, grouped by the process a rule interrupts"
+  },
+  "validationThresholdNote": "Smaller amounts apply straight away.",
+  "@validationThresholdNote": {
+    "description": "#1221 the validation screen, grouped by the process a rule interrupts"
+  },
+  "validationStepQuorum": "{who} — any {count}",
+  "@validationStepQuorum": {
+    "description": "#1221 the middle step: who decides and how many are needed",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "validationStepSequential": "{who} — {count} in turn",
+  "@validationStepSequential": {
+    "description": "#1221 the middle step when the accepts are asked one after another",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "who": {
+        "type": "String"
+      }
+    }
+  },
   "validationTitle": "Validation rules",
   "@validationTitle": {
     "description": "App-bar title of the owner validation-policy editor and its settings tile (#131)"

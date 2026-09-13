@@ -2501,6 +2501,58 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featuresNoMatch => 'Aucune fonctionnalité ne correspond.';
 
   @override
+  String get featureSurfaceReports => 'Documents imprimés';
+
+  @override
+  String get featureSurfaceEverywhere => 'Toute l\'application';
+
+  @override
+  String get featureSurfaceReserveHint =>
+      'Réserver une place, le plan, l\'arrivée.';
+
+  @override
+  String get featureSurfaceCalendarHint =>
+      'Ce qui se passe, par jour et par mois.';
+
+  @override
+  String get featureSurfaceMembersHint =>
+      'Qui fréquente l\'espace, leurs profils et leurs rôles.';
+
+  @override
+  String get featureSurfaceMoneyHint =>
+      'Relevés, paiements, factures et leur contenu.';
+
+  @override
+  String get featureSurfaceMessagesHint =>
+      'Conversations, alertes et ce qui arrive sur le téléphone.';
+
+  @override
+  String get featureSurfaceDocumentsHint =>
+      'Les fichiers que l\'espace conserve et partage.';
+
+  @override
+  String get featureSurfaceKioskHint =>
+      'La tablette à la porte, les badges et les scans.';
+
+  @override
+  String get featureSurfaceReportsHint =>
+      'Factures, relevés et courriers, et leur allure sur le papier.';
+
+  @override
+  String get featureSurfaceSettingsHint =>
+      'La configuration de l\'espace lui-même.';
+
+  @override
+  String get featureSurfaceEverywhereHint =>
+      'Change le comportement de l\'application, partout.';
+
+  @override
+  String get featureMore => 'Plus';
+
+  @override
+  String get featureLess => 'Moins';
+
+  @override
   String get featuresTitle => 'Fonctionnalités';
 
   @override
@@ -9089,6 +9141,47 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String eventValidationStage(int stage, int required) {
     return 'Validation $stage sur $required demandée';
+  }
+
+  @override
+  String get validationWorkflowBookings => 'Réservations';
+
+  @override
+  String get validationWorkflowPeople => 'Personnes et rôles';
+
+  @override
+  String get validationWorkflowMoneyStake =>
+      'Tant que ce n\'est pas accepté, le montant ne compte sur aucun relevé.';
+
+  @override
+  String get validationWorkflowBookingsStake =>
+      'Tant que ce n\'est pas accepté, la place reste telle quelle.';
+
+  @override
+  String get validationWorkflowPeopleStake =>
+      'Tant que ce n\'est pas accepté, la personne garde les accès qu\'elle a.';
+
+  @override
+  String get validationStepRaised => 'Quelqu’un demande';
+
+  @override
+  String get validationStepOwnerToo => 'et le propriétaire, toujours';
+
+  @override
+  String get validationStepApplies => 'cela prend effet';
+
+  @override
+  String get validationThresholdNote =>
+      'Les montants plus faibles s\'appliquent aussitôt.';
+
+  @override
+  String validationStepQuorum(int count, String who) {
+    return '$who — $count au choix';
+  }
+
+  @override
+  String validationStepSequential(int count, String who) {
+    return '$who — $count à la suite';
   }
 
   @override

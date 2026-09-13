@@ -75,11 +75,12 @@ void main() {
     // #816 — no Adjustment card: nothing ever emitted that event type.
     expect(find.text('Adjustment'), findsNothing);
 
-    // No stored rows: every card shows the built-in defaults and inherits.
-    expect(
-      find.text("Required validations: 1 · All admins · Never your own"),
-      findsNWidgets(24),
-    );
+    // No stored rows: every card shows the built-in defaults and
+    // inherits. #1221 — the rule reads as the PROCESS now: who asks,
+    // who decides and how many, and what happens then.
+    expect(find.text('Someone asks · Never your own'), findsNWidgets(24));
+    expect(find.text('All admins — any 1'), findsNWidgets(24));
+    expect(find.text('it takes effect'), findsNWidgets(24));
     expect(find.text('Inherits default'), findsNWidgets(24));
     expect(find.text('Customized'), findsNothing);
   });
@@ -250,12 +251,9 @@ void main() {
 
     expect(find.text('Customized'), findsOneWidget);
     expect(find.text('Inherits default'), findsNWidgets(23));
-    expect(
-      find.text(
-        'Required validations: 2 · All admins · Owner must always '
-        "validate · Never your own",
-      ),
-      findsOneWidget,
-    );
+    // #1221 — the customized rule, read as its process: two admins
+    // decide, and the owner is always one of the accepts.
+    expect(find.text('All admins — any 2'), findsOneWidget);
+    expect(find.text('and the owner, always'), findsOneWidget);
   });
 }

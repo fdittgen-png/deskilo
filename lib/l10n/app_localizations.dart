@@ -4427,6 +4427,90 @@ abstract class AppLocalizations {
   /// **'No feature matches that.'**
   String get featuresNoMatch;
 
+  /// #1221 the Features screen, grouped by where a feature shows up
+  ///
+  /// In en, this message translates to:
+  /// **'Documents you print'**
+  String get featureSurfaceReports;
+
+  /// #1221 the Features screen, grouped by where a feature shows up
+  ///
+  /// In en, this message translates to:
+  /// **'The whole app'**
+  String get featureSurfaceEverywhere;
+
+  /// #1221 the Features screen, grouped by where a feature shows up
+  ///
+  /// In en, this message translates to:
+  /// **'Booking a seat, the floor plan, check-in.'**
+  String get featureSurfaceReserveHint;
+
+  /// #1221 the Features screen, grouped by where a feature shows up
+  ///
+  /// In en, this message translates to:
+  /// **'What is happening, by day and by month.'**
+  String get featureSurfaceCalendarHint;
+
+  /// #1221 the Features screen, grouped by where a feature shows up
+  ///
+  /// In en, this message translates to:
+  /// **'Who is in the space, their profiles and their roles.'**
+  String get featureSurfaceMembersHint;
+
+  /// #1221 the Features screen, grouped by where a feature shows up
+  ///
+  /// In en, this message translates to:
+  /// **'Statements, payments, invoices and what they are made of.'**
+  String get featureSurfaceMoneyHint;
+
+  /// #1221 the Features screen, grouped by where a feature shows up
+  ///
+  /// In en, this message translates to:
+  /// **'Conversations, alerts and what reaches a phone.'**
+  String get featureSurfaceMessagesHint;
+
+  /// #1221 the Features screen, grouped by where a feature shows up
+  ///
+  /// In en, this message translates to:
+  /// **'The files the space keeps and shares.'**
+  String get featureSurfaceDocumentsHint;
+
+  /// #1221 the Features screen, grouped by where a feature shows up
+  ///
+  /// In en, this message translates to:
+  /// **'The tablet at the door, badges and scanning.'**
+  String get featureSurfaceKioskHint;
+
+  /// #1221 the Features screen, grouped by where a feature shows up
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices, statements and letters, and how they look on paper.'**
+  String get featureSurfaceReportsHint;
+
+  /// #1221 the Features screen, grouped by where a feature shows up
+  ///
+  /// In en, this message translates to:
+  /// **'How the space itself is set up.'**
+  String get featureSurfaceSettingsHint;
+
+  /// #1221 the Features screen, grouped by where a feature shows up
+  ///
+  /// In en, this message translates to:
+  /// **'Changes how the app behaves, wherever you are in it.'**
+  String get featureSurfaceEverywhereHint;
+
+  /// #1221 reveals the rest of a feature description
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get featureMore;
+
+  /// #1221 folds a feature description back to its lead sentence
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get featureLess;
+
   /// App-bar title of the owner feature-management screen and its settings tile
   ///
   /// In en, this message translates to:
@@ -15838,6 +15922,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Validation {stage} of {required} requested'**
   String eventValidationStage(int stage, int required);
+
+  /// #1221 the validation screen, grouped by the process a rule interrupts
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings'**
+  String get validationWorkflowBookings;
+
+  /// #1221 the validation screen, grouped by the process a rule interrupts
+  ///
+  /// In en, this message translates to:
+  /// **'People and roles'**
+  String get validationWorkflowPeople;
+
+  /// #1221 the validation screen, grouped by the process a rule interrupts
+  ///
+  /// In en, this message translates to:
+  /// **'Until it is accepted, the amount does not count on anybody’s statement.'**
+  String get validationWorkflowMoneyStake;
+
+  /// #1221 the validation screen, grouped by the process a rule interrupts
+  ///
+  /// In en, this message translates to:
+  /// **'Until it is accepted, the seat stays as it was.'**
+  String get validationWorkflowBookingsStake;
+
+  /// #1221 the validation screen, grouped by the process a rule interrupts
+  ///
+  /// In en, this message translates to:
+  /// **'Until it is accepted, the person keeps the access they have now.'**
+  String get validationWorkflowPeopleStake;
+
+  /// #1221 the validation screen, grouped by the process a rule interrupts
+  ///
+  /// In en, this message translates to:
+  /// **'Someone asks'**
+  String get validationStepRaised;
+
+  /// #1221 the validation screen, grouped by the process a rule interrupts
+  ///
+  /// In en, this message translates to:
+  /// **'and the owner, always'**
+  String get validationStepOwnerToo;
+
+  /// #1221 the validation screen, grouped by the process a rule interrupts
+  ///
+  /// In en, this message translates to:
+  /// **'it takes effect'**
+  String get validationStepApplies;
+
+  /// #1221 the validation screen, grouped by the process a rule interrupts
+  ///
+  /// In en, this message translates to:
+  /// **'Smaller amounts apply straight away.'**
+  String get validationThresholdNote;
+
+  /// #1221 the middle step: who decides and how many are needed
+  ///
+  /// In en, this message translates to:
+  /// **'{who} — any {count}'**
+  String validationStepQuorum(int count, String who);
+
+  /// #1221 the middle step when the accepts are asked one after another
+  ///
+  /// In en, this message translates to:
+  /// **'{who} — {count} in turn'**
+  String validationStepSequential(int count, String who);
 
   /// App-bar title of the owner validation-policy editor and its settings tile (#131)
   ///

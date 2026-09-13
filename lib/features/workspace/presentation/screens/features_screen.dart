@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/help/help_anchors.dart';
-import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -13,6 +11,7 @@ import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/feature_tile.dart';
 import '../widgets/features_filter_bar.dart';
 import '../feature_copy.dart';
 import '../feature_names.dart';
@@ -183,15 +182,21 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
                             // tier: the hierarchy indents children under
                             // their parent, and a parent and its child
                             // are always in the same tier.
-                            for (final tier in FeatureTier.values) ...[
+                            // #1221 — grouped by WHERE it shows up. The
+                            // tier answers "should a space like mine
+                            // have this"; the surface answers "where
+                            // would I see it", which is the question an
+                            // owner actually arrives with. The tier
+                            // survives as a chip on the row.
+                            for (final surface in FeatureSurface.values) ...[
                               // A heading over nothing is worse than no
-                              // heading: while filtering, a tier that
+                              // heading: while filtering, a surface that
                               // matched nothing is simply absent.
-                              if (rows.any((e) => e.tier == tier))
-                                _TierHeading(tier: tier),
+                              if (rows.any((e) => e.surface == surface))
+                                FeatureSurfaceHeading(surface: surface),
                               for (final entry in rows)
-                                if (entry.tier == tier)
-                                  _FeatureTile(
+                                if (entry.surface == surface)
+                                  FeatureTile(
                                     entry: entry,
                                     name: _name(l10n, entry.feature),
                                     description: featureDescription(
@@ -232,124 +237,6 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
                 ),
               ],
             ),
-    );
-  }
-}
-
-/// #1063 — the heading that separates what every deployment needs from
-/// what only a sophisticated operator does.
-class _TierHeading extends StatelessWidget {
-  const _TierHeading({required this.tier});
-
-  final FeatureTier tier;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
-    final (title, subtitle) = switch (tier) {
-      FeatureTier.core => (
-          l10n?.featureTierCore ?? 'Core',
-          l10n?.featureTierCoreDesc ??
-              'What every space needs. On from the first day.',
-        ),
-      FeatureTier.platform => (
-          l10n?.featureTierPlatform ?? 'Platform',
-          l10n?.featureTierPlatformDesc ??
-              'Asked for, never assumed. Switch on what this space '
-                  'actually runs.',
-        ),
-    };
-    return Padding(
-      key: ValueKey('feature-tier-${tier.name}'),
-      padding: const EdgeInsets.fromLTRB(16, 24, 16, 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title.toUpperCase(),
-            style: theme.textTheme.labelSmall?.copyWith(
-              color: theme.colorScheme.primary,
-              letterSpacing: 1.1,
-            ),
-          ),
-          Text(
-            subtitle,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// One feature row: children indent under their parent, carry the
-/// "Requires X" note, and grey out while the parent (chain) is off.
-class _FeatureTile extends StatelessWidget {
-  const _FeatureTile({
-    required this.entry,
-    required this.name,
-    required this.description,
-    required this.requiresLabel,
-    required this.value,
-    required this.inactive,
-    required this.alsoEnables,
-    required this.onChanged,
-  });
-
-  final FeatureManifestEntry entry;
-  final String name;
-  final String description;
-  final String? requiresLabel;
-  final bool value;
-
-  /// On, but held back by a parent that is off — the switch still reads
-  /// the owner's choice, and the subtitle says why nothing happens.
-  final bool inactive;
-
-  /// What turning this on would switch on as well, already named.
-  final List<String> alsoEnables;
-  final ValueChanged<bool> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
-    final child = entry.requires != null;
-    final notes = [
-      ?requiresLabel,
-      if (!value && alsoEnables.isNotEmpty)
-        l10n?.featureAlsoEnables(alsoEnables.join(', ')) ??
-            'Switching this on also enables ${alsoEnables.join(', ')}',
-      if (value && inactive)
-        l10n?.featureHeldBack ??
-            'Waiting on the feature above — switch that on and this one '
-                'works again.',
-    ];
-    return Padding(
-      padding: EdgeInsets.only(left: child ? 24 : 0),
-      child: SwitchListTile(
-        key: ValueKey('feature-${entry.feature.name}'),
-        // #1190 — 102 of these at roughly 230 px each was thirteen
-        // screens of scrolling. Compact takes the padding, never the
-        // text: the description is the half that earns its room.
-        visualDensity: VisualDensity.compact,
-        title: HelpDotTitle(
-          name,
-          l10n?.helpHintFeaturesTopic ?? 'Features',
-          anchor: HelpAnchor.featuresSwitch,
-        ),
-        subtitle: Text(
-          [description, ...notes].join('\n'),
-          style: value && inactive
-              ? TextStyle(color: theme.colorScheme.error)
-              : null,
-        ),
-        value: value,
-        onChanged: onChanged,
-      ),
     );
   }
 }
