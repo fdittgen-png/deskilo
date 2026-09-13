@@ -39,7 +39,7 @@ const Map<String, int> _baseline = {
   // new 700 (2026-08-22): #575 day-phase rings + #576 space rings.
 // 700→740 (2026-08-24): #618 the occupant photo marker — clipped
   // photo draw beside the initial disc, one concern, same method.
-    'lib/features/plan/presentation/widgets/floor_plan_painter.dart': 750, // 2026-09-06 #970 the demo blur on painted labels
+    'lib/features/plan/presentation/widgets/floor_plan_painter.dart': 780, // 2026-09-13 #1216 750→780: the dropTargets parameter and the paragraph explaining why an EMPTY set differs from null; the drawing itself went to widgets/drop_target_paint.dart // 2026-09-06 #970 the demo blur on painted labels
   // 1290→1330 (2026-08-02): #395 Excel-export tile — feature lines, the
   // orchestration itself lives in excel_export.dart.
   'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1132, // 2026-09-11 #1154 1250→1132: the office and desk sheets became one space_properties_sheet.dart // 2026-08 #585 seat NFC field

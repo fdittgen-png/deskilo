@@ -58,18 +58,41 @@ Future<SpaceProperties?> showSpacePropertiesSheet(
               title: Text(
                 l10n?.editorBookableAsWhole ?? 'Bookable as a whole',
               ),
+              // #1216 — say what the switch DOES. "Bookable as a whole"
+              // is the app's word for it; whether somebody can take the
+              // room and everything in it is the question being asked.
+              subtitle: Text(
+                l10n?.editorBookableAsWholeHint ??
+                    'Somebody can reserve it entire, with everything '
+                        'inside it.',
+              ),
               value: isBookable,
               onChanged: (v) => setSheetState(() => isBookable = v),
             ),
-            TextField(
-              key: ValueKey('$keyPrefix-price-field'),
-              controller: price,
-              enabled: isBookable,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              decoration: InputDecoration(
-                labelText: l10n?.levelPriceLabel ?? 'Price per half-day',
-              ),
+            // #1216 — the price field used to sit here DISABLED while
+            // the switch was off: visible, greyed and inert, which reads
+            // as broken rather than as inapplicable. A price only means
+            // anything for something that can be booked, so it arrives
+            // with the switch.
+            AnimatedSize(
+              duration: const Duration(milliseconds: 160),
+              curve: Curves.easeOut,
+              alignment: Alignment.topCenter,
+              child: isBookable
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: TextField(
+                        key: ValueKey('$keyPrefix-price-field'),
+                        controller: price,
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                        decoration: InputDecoration(
+                          labelText:
+                              l10n?.levelPriceLabel ?? 'Price per half-day',
+                        ),
+                      ),
+                    )
+                  : const SizedBox(width: double.infinity),
             ),
             const SizedBox(height: 12),
             FilledButton(

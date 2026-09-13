@@ -158,7 +158,7 @@ void main() {
     expect(find.text('Overlaps an existing element.'), findsOneWidget);
   });
 
-  testWidgets('erase tool deletes a desk after confirmation', (tester) async {
+  testWidgets('the selection bar deletes a desk after confirmation', (tester) async {
     final plans = await pumpCanvas(
       tester,
       seed: (plans, levelId) async {
@@ -172,9 +172,10 @@ void main() {
       },
     );
 
-    await tester.tap(find.text('Erase'));
-    await tester.pumpAndSettle();
+    // #1216 — select the desk, then delete it from the bar it raises.
     await tester.tapAt(cellCenter(tester, 5, 5));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('editor-selection-delete')));
     await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
     await tester.pumpAndSettle();
@@ -182,7 +183,7 @@ void main() {
     expect(plans.desks, isEmpty);
   });
 
-  testWidgets('erase tool deletes MANY elements in a row (not just the first)',
+  testWidgets('MANY elements can be deleted in a row (not just the first)',
       (tester) async {
     final plans = await pumpCanvas(
       tester,
@@ -200,12 +201,11 @@ void main() {
       },
     );
 
-    await tester.tap(find.text('Erase'));
-    await tester.pumpAndSettle();
-
-    // Delete all three desks one after another. Each tap → confirm → gone.
+    // Delete all three desks one after another: select, delete, confirm.
     for (var i = 0; i < 3; i++) {
       await tester.tapAt(cellCenter(tester, 4 + i * 8, 5));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('editor-selection-delete')));
       await tester.pumpAndSettle();
       await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
       await tester.pumpAndSettle();
@@ -247,9 +247,9 @@ void main() {
     // The fix passes a State-owned controller (was null → internal before).
     expect(controller, isNotNull);
 
-    await tester.tap(find.text('Erase'));
-    await tester.pumpAndSettle();
     await tester.tapAt(cellCenter(tester, 6, 5));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('editor-selection-delete')));
     await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
     await tester.pumpAndSettle();
@@ -266,6 +266,8 @@ void main() {
 
     // And the second delete still works (it missed before the fix).
     await tester.tapAt(cellCenter(tester, 14, 5));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('editor-selection-delete')));
     await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
     await tester.pumpAndSettle();

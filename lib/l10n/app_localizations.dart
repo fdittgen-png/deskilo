@@ -3600,6 +3600,84 @@ abstract class AppLocalizations {
   /// **'Select'**
   String get editorToolSelect;
 
+  /// #1216 the selection bar action that opens an element’s properties sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Properties'**
+  String get editorProperties;
+
+  /// #1216 the selection bar action that copies a seat onto the next free cell of its desk
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate'**
+  String get editorDuplicate;
+
+  /// #1216 duplicating a seat found no free cell on its desk
+  ///
+  /// In en, this message translates to:
+  /// **'No room left on this desk.'**
+  String get editorDeskFull;
+
+  /// #1216 what the next gesture does while the office tool is armed
+  ///
+  /// In en, this message translates to:
+  /// **'Drag to draw an office'**
+  String get editorHintOffice;
+
+  /// #1216 what the next gesture does while the desk tool is armed
+  ///
+  /// In en, this message translates to:
+  /// **'Drag inside an office to draw a desk'**
+  String get editorHintDesk;
+
+  /// #1216 what the next gesture does while the seat tool is armed
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a desk to add a seat'**
+  String get editorHintSeat;
+
+  /// #1216 what the next gesture does while the image tool is armed
+  ///
+  /// In en, this message translates to:
+  /// **'Tap where the image should go'**
+  String get editorHintImage;
+
+  /// #1216 the card shown on a level nobody has drawn on yet
+  ///
+  /// In en, this message translates to:
+  /// **'This floor is empty'**
+  String get editorEmptyFloorTitle;
+
+  /// #1216 the order the three kinds nest in, said once on an empty floor
+  ///
+  /// In en, this message translates to:
+  /// **'Everything sits inside a room: draw one, put desks in it, then seats on the desks.'**
+  String get editorEmptyFloorBody;
+
+  /// #1216 the empty floor’s button, which arms the office tool
+  ///
+  /// In en, this message translates to:
+  /// **'Draw the first room'**
+  String get editorEmptyFloorAction;
+
+  /// #1216 a link to the accessory catalogue, replacing an instruction to go there
+  ///
+  /// In en, this message translates to:
+  /// **'No accessories yet — set them up'**
+  String get editorNoAccessoriesAction;
+
+  /// #1216 what the four sitting-direction arrows are relative to
+  ///
+  /// In en, this message translates to:
+  /// **'Which way the chair faces on the plan.'**
+  String get editorOrientationHint;
+
+  /// #1216 what the bookable-as-a-whole switch actually does
+  ///
+  /// In en, this message translates to:
+  /// **'Somebody can reserve it entire, with everything inside it.'**
+  String get editorBookableAsWholeHint;
+
   /// Canvas tool: drag to draw an office (room)
   ///
   /// In en, this message translates to:

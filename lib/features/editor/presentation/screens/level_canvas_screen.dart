@@ -1,22 +1,17 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:file_selector/file_selector.dart';
-import '../../../../core/i18n/money_format.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show PostgrestException;
 
 import '../../../../core/files/file_picker.dart';
-import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/canvas_controls.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../plan/domain/accessory.dart';
 import '../../../plan/domain/desk.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/floor_plan_editing.dart';
@@ -25,17 +20,17 @@ import '../../../plan/domain/grid_geometry.dart';
 import '../../../plan/domain/office.dart';
 import '../../../plan/domain/seat.dart';
 import '../delete_confirm_text.dart';
-import '../../../plan/providers/accessory_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
-import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../../plan/presentation/widgets/floor_plan_painter.dart';
 import '../../../plan/presentation/widgets/plan_canvas.dart';
-import '../../../../core/time/clock.dart';
+import '../widgets/editor_selection_bar.dart';
+import '../widgets/editor_tool_hint.dart';
+import '../widgets/editor_toolbar.dart';
+import '../widgets/placement_problem.dart';
+import '../widgets/seat_properties_sheet.dart';
 import '../widgets/space_properties_sheet.dart';
-import '../../../../core/ui/edge_fade_scroll.dart';
-
-enum EditorTool { select, office, desk, seat, image, erase }
+import 'editor_tool.dart';
 
 /// Canvas dimensions in grid cells and the logical cell size at scale 1 —
 /// aliases of the shared [PlanCanvasMetrics] so the editor can never drift
@@ -58,7 +53,11 @@ class LevelCanvasScreen extends ConsumerStatefulWidget {
 }
 
 class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
-  EditorTool _tool = EditorTool.select;
+  /// The armed tool, or null — the resting state, where a tap selects
+  /// and a drag pans (#1216). Select stopped being a tool the day the
+  /// six-segment row no longer fitted and Select was one of the two
+  /// that fell off the end.
+  EditorTool? _tool;
   ({int x, int y})? _dragStart;
   GridRect? _marquee;
   bool _marqueeValid = true;
@@ -193,7 +192,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
         _draft = null;
         _draftValid = true;
       });
-      _showProblem(problem);
+      showPlacementProblem(context, problem);
       return;
     }
     await _persistDiff(plan, draft);
@@ -261,16 +260,6 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     };
   }
 
-  void _showProblem(PlacementProblem problem) {
-    final l10n = AppLocalizations.of(context);
-    final message = switch (problem) {
-      PlacementProblem.overlapsSibling =>
-        l10n?.editorPlacementOverlap ?? 'Overlaps an existing element.',
-      PlacementProblem.outsideParent =>
-        l10n?.editorPlacementOutside ?? 'Must be fully inside an office.',
-    };
-    AppSnack.error(context, message, replace: true);
-  }
 
   Future<void> _commitMarquee(FloorPlan plan, GridRect rect) async {
     final l10n = AppLocalizations.of(context);
@@ -280,7 +269,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
 
     final problem = _validate(plan, rect);
     if (problem != null) {
-      _showProblem(problem);
+      showPlacementProblem(context, problem);
       return;
     }
 
@@ -329,7 +318,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     const orientation = SeatOrientation.n;
     final anchor = clampSeatAnchor(desk, cell.x, cell.y, orientation);
     if (anchor == null) {
-      _showProblem(PlacementProblem.outsideParent);
+      showPlacementProblem(context, PlacementProblem.outsideParent);
       return;
     }
     final candidate = Seat(
@@ -346,7 +335,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     final problem =
         validateSeatPlacement(candidate, desk, plan.seatsOf(desk.id));
     if (problem != null) {
-      _showProblem(problem);
+      showPlacementProblem(context, problem);
       return;
     }
     await ref.read(floorPlanRepositoryProvider).createSeat(
@@ -378,32 +367,11 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     }
 
     final image = plan.imageAtCell(cell.x, cell.y);
-    if (_tool == EditorTool.erase) {
-      if (image != null && seat == null && desk == null && office == null) {
-        await _confirmErase(
-          () => ref.read(floorPlanRepositoryProvider).deletePlanImage(image.id),
-        );
-        return;
-      }
-      if (seat != null) {
-        await _confirmErase(
-          () => ref.read(floorPlanRepositoryProvider).deleteSeat(seat.id),
-        );
-      } else if (desk != null) {
-        await _confirmErase(
-          () => ref.read(floorPlanRepositoryProvider).deleteDesk(desk.id),
-        );
-      } else if (office != null) {
-        await _confirmErase(
-          () => ref.read(floorPlanRepositoryProvider).deleteOffice(office.id),
-        );
-      }
-      return;
-    }
 
-    // Select tool (#101): first tap selects (handles appear, dragging moves
-    // or resizes); tapping the selected element again opens its properties;
-    // tapping empty space deselects.
+    // No tool armed (#1216): a tap selects — handles appear and dragging
+    // moves or resizes (#101) — a second tap on the same element opens
+    // its properties, and a tap on empty space deselects. Everything you
+    // can DO to the selection is on the bar it raises.
     final (ElementKind, String)? hit = seat != null
         ? (ElementKind.seat, seat.id)
         : desk != null
@@ -422,7 +390,8 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     if (kind == _selectedKind && id == _selectedId) {
       switch (kind) {
         case ElementKind.seat:
-          await _showSeatSheet(plan, seat!);
+          await showSeatPropertiesSheet(context, ref,
+              levelId: widget.levelId, plan: plan, seat: seat!);
         case ElementKind.desk:
           await _showDeskSheet(desk!);
         case ElementKind.office:
@@ -440,292 +409,6 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       _draft = null;
       _draftValid = true;
     });
-  }
-
-  /// Chip label: accessory name, plus its per-half-day supplement (in the
-  /// workspace currency) when one is set.
-  String _accessoryLabel(Accessory accessory, MoneyFormat currency) {
-    if (accessory.supplementCents <= 0) return accessory.name;
-    final supplement = currency.formatMinor(accessory.supplementCents);
-    return '${accessory.name} (+$supplement)';
-  }
-
-  Future<void> _showSeatSheet(FloorPlan plan, Seat seat) async {
-    final l10n = AppLocalizations.of(context);
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    // #168: the seat's equipment comes from the workspace accessory
-    // catalog (active entries, catalog order), not a hard-coded list.
-    final catalog = await ref.read(accessoriesProvider().future);
-    final assignments = await ref.read(seatAccessoriesProvider.future);
-    if (!mounted) return;
-    final initialAccessories = assignments[seat.id] ?? const <String>{};
-    final selectedAccessories = {...initialAccessories};
-    final currency =
-        moneyFormat(workspace?.currencyCode);
-
-    final name = TextEditingController(text: seat.name);
-    final chair = TextEditingController(text: seat.chair);
-    // #585 — the chair's NFC/RFID tag. The field takes a typed/pasted
-    // uid on any platform; the Read button fills it from a live tap
-    // where the device can (Android with NFC on).
-    final nfcUid = TextEditingController(text: seat.nfcUid ?? '');
-    final nfcReader = ref.read(nfcUidReaderProvider);
-    // #604: the whole chair-tag block rides the nfcSeatTags flag.
-    final seatTagsOn = ref
-        .read(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.nfcSeatTags);
-    final nfcReady = seatTagsOn && await nfcReader.isAvailable();
-    if (!mounted) return;
-    var orientation = seat.orientation;
-    var blocked = seat.isBlockedAt(ref.read(clockProvider).now());
-
-    final saved = await showModalBottomSheet<bool>(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => Padding(
-        padding: EdgeInsets.only(
-          left: AppSpacing.xl,
-          right: AppSpacing.xl,
-          top: AppSpacing.xl,
-          bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
-        ),
-        child: StatefulBuilder(
-          builder: (context, setSheetState) => SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  l10n?.editorSeatProperties ?? 'Seat',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: name,
-                  decoration: InputDecoration(
-                    labelText: l10n?.editorSeatNameLabel ?? 'Seat name',
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text(l10n?.editorOrientationLabel ?? 'Sitting direction'),
-                const SizedBox(height: 4),
-                SegmentedButton<SeatOrientation>(
-                  segments: const [
-                    ButtonSegment(
-                      value: SeatOrientation.n,
-                      icon: Icon(Icons.arrow_upward),
-                    ),
-                    ButtonSegment(
-                      value: SeatOrientation.e,
-                      icon: Icon(Icons.arrow_forward),
-                    ),
-                    ButtonSegment(
-                      value: SeatOrientation.s,
-                      icon: Icon(Icons.arrow_downward),
-                    ),
-                    ButtonSegment(
-                      value: SeatOrientation.w,
-                      icon: Icon(Icons.arrow_back),
-                    ),
-                  ],
-                  selected: {orientation},
-                  onSelectionChanged: (selection) =>
-                      setSheetState(() => orientation = selection.first),
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: chair,
-                  decoration: InputDecoration(
-                    labelText: l10n?.editorChairLabel ?? 'Chair type',
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text(l10n?.editorAccessoriesLabel ?? 'Accessories'),
-                const SizedBox(height: 4),
-                if (catalog.isEmpty)
-                  Text(
-                    l10n?.editorNoAccessories ??
-                        'No accessories yet — add them in '
-                            'Settings → Accessories.',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  )
-                else
-                  Wrap(
-                    spacing: 8,
-                    children: [
-                      for (final accessory in catalog)
-                        FilterChip(
-                          label: Text(_accessoryLabel(accessory, currency)),
-                          selected:
-                              selectedAccessories.contains(accessory.id),
-                          onSelected: (selected) => setSheetState(() {
-                            selected
-                                ? selectedAccessories.add(accessory.id)
-                                : selectedAccessories.remove(accessory.id);
-                          }),
-                        ),
-                    ],
-                  ),
-                const SizedBox(height: 12),
-                // #585 — a physical tag on the chair resolves to this
-                // seat like its printed QR card (#604: flag-gated).
-                if (seatTagsOn)
-                TextField(
-                  key: const ValueKey('editor-seat-nfc'),
-                  controller: nfcUid,
-                  decoration: InputDecoration(
-                    labelText:
-                        l10n?.editorSeatNfcLabel ?? 'NFC/RFID tag',
-                    helperText: l10n?.editorSeatNfcHelp ??
-                        'Tag uid in hex — leave empty for no tag.',
-                    suffixIcon: nfcReady
-                        ? IconButton(
-                            key: const ValueKey('editor-seat-nfc-read'),
-                            tooltip: l10n?.editorSeatNfcRead ??
-                                'Read a tag now',
-                            icon: const Icon(Icons.nfc),
-                            onPressed: () async {
-                              final ok = await nfcReader.startRead(
-                                onUid: (uid) {
-                                  nfcUid.text = uid;
-                                  nfcReader.stop();
-                                },
-                              );
-                              if (!ok && context.mounted) {
-                                AppSnack.error(
-                                  context,
-                                  l10n?.editorSeatNfcReadFailed ??
-                                      'Could not start the tag reader.',
-                                );
-                              }
-                            },
-                          )
-                        : null,
-                  ),
-                ),
-                SwitchListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(
-                    l10n?.editorBlockedLabel ?? 'Blocked (maintenance)',
-                  ),
-                  value: blocked,
-                  onChanged: (v) => setSheetState(() => blocked = v),
-                ),
-                const SizedBox(height: 12),
-                FilledButton(
-                  onPressed: () => Navigator.of(context).pop(true),
-                  child: Text(l10n?.commonSave ?? 'Save'),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-    if (saved != true) return;
-
-    // #168: `seat.amenities` is intentionally NOT written anymore — the
-    // seat_accessories joins are the write path for seat equipment.
-    // #585 — mirror the server normalization: lowercase hex, no
-    // separators; empty clears the tag.
-    final tag = nfcUid.text.toLowerCase().replaceAll(
-          RegExp('[^0-9a-f]'), '');
-    final updated = seat.copyWith(
-      name: name.text.trim().isEmpty ? seat.name : name.text.trim(),
-      chair: chair.text.trim(),
-      orientation: orientation,
-      blockedFrom: blocked ? (seat.blockedFrom ?? ref.read(clockProvider).now()) : null,
-      blockedTo: blocked ? seat.blockedTo : null,
-      nfcUid: tag.isEmpty ? null : tag,
-    );
-    final problem = validateSeatInPlan(plan, updated);
-    if (problem != null) {
-      _showProblem(problem);
-      return;
-    }
-    try {
-      await ref.read(floorPlanRepositoryProvider).updateSeat(updated);
-    } on PostgrestException catch (e, st) {
-      // The partial unique index (0114): one tag, one chair.
-      if (e.message.contains('seats_nfc_uid_unique')) {
-        TraceLogger.instance.error('editor', 'nfc tag already linked',
-            error: e, stackTrace: st);
-        if (mounted) {
-          AppSnack.error(
-            context,
-            l10n?.editorSeatNfcDuplicate ??
-                'This tag is already linked to another chair.',
-          );
-        }
-        return;
-      }
-      rethrow;
-    }
-    final accessoriesChanged =
-        selectedAccessories.length != initialAccessories.length ||
-            !selectedAccessories.containsAll(initialAccessories);
-    if (accessoriesChanged) {
-      await ref
-          .read(accessoryRepositoryProvider)
-          .setSeatAccessories(seat.id, selectedAccessories);
-      ref.invalidate(seatAccessoriesProvider);
-    }
-    ref.invalidate(floorPlanProvider(widget.levelId));
-  }
-
-  Future<void> _confirmErase(Future<void> Function() action) async {
-    final l10n = AppLocalizations.of(context);
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n?.commonDelete ?? 'Delete'),
-        content: Text(deleteElementConfirmText(ref, l10n)),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n?.commonDelete ?? 'Delete'),
-          ),
-        ],
-      ),
-    );
-    if (confirmed != true) return;
-    await action();
-    ref.invalidate(floorPlanProvider(widget.levelId));
-  }
-
-  Future<String?> _promptText({
-    required String title,
-    required String label,
-    String initial = '',
-  }) {
-    final l10n = AppLocalizations.of(context);
-    final controller = TextEditingController(text: initial);
-    return showDialog<String>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          decoration: InputDecoration(labelText: label),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
-          ),
-          FilledButton(
-            onPressed: () =>
-                Navigator.of(context).pop(controller.text.trim()),
-            child: Text(l10n?.commonSave ?? 'Save'),
-          ),
-        ],
-      ),
-    );
   }
 
   Future<void> _showOfficeSheet(Office office) async {
@@ -816,8 +499,9 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       return;
     }
     ref.invalidate(floorPlanProvider(widget.levelId));
-    // Back to Select so the fresh image can be moved/resized at once.
-    if (context.mounted) setState(() => _tool = EditorTool.select);
+    // Back to the resting state so the fresh image can be moved or
+    // resized at once.
+    if (context.mounted) setState(() => _tool = null);
   }
 
   /// Owner picks a photo/blueprint of the real space as this level's
@@ -903,6 +587,9 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
             ?.name ??
         '';
 
+    final selected =
+        shownPlan == null ? null : _selectedElement(shownPlan);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(levelName),
@@ -950,52 +637,29 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: AppSpacing.smAll,
-          child: EdgeFadeScroll(
-            child: SegmentedButton<EditorTool>(
-            segments: [
-              ButtonSegment(
-                value: EditorTool.select,
-                icon: const Icon(Icons.pan_tool_alt_outlined),
-                label: Text(l10n?.editorToolSelect ?? 'Select'),
-              ),
-              ButtonSegment(
-                value: EditorTool.office,
-                icon: const Icon(Icons.meeting_room_outlined),
-                label: Text(l10n?.editorToolOffice ?? 'Office'),
-              ),
-              ButtonSegment(
-                value: EditorTool.desk,
-                icon: const Icon(Icons.table_restaurant_outlined),
-                label: Text(l10n?.editorToolDesk ?? 'Desk'),
-              ),
-              ButtonSegment(
-                value: EditorTool.seat,
-                icon: const Icon(Icons.chair_outlined),
-                label: Text(l10n?.editorToolSeat ?? 'Seat'),
-              ),
-              ButtonSegment(
-                value: EditorTool.image,
-                icon: const Icon(Icons.add_photo_alternate_outlined),
-                label: Text(l10n?.editorToolImage ?? 'Image'),
-              ),
-              ButtonSegment(
-                value: EditorTool.erase,
-                icon: const Icon(Icons.backspace_outlined),
-                label: Text(l10n?.editorToolErase ?? 'Erase'),
-              ),
-            ],
-            selected: {_tool},
-            onSelectionChanged: (selection) {
-              _clearSelection();
-              setState(() => _tool = selection.first);
-            },
+      // #1216 — the bar answers whichever question the canvas is in the
+      // middle of: what can I add, or what can I do to this thing. Never
+      // both at once, because there is nothing to add TO a selection.
+      bottomNavigationBar: selected != null
+          ? EditorSelectionBar(
+              kind: selected.kind,
+              name: selected.name,
+              onEdit: selected.kind == ElementKind.image
+                  ? null
+                  : () => _editSelection(shownPlan!),
+              onDuplicate: selected.kind == ElementKind.seat
+                  ? () => _duplicateSeat(shownPlan!)
+                  : null,
+              onDelete: () => _deleteSelection(shownPlan!),
+              onDismiss: _clearSelection,
+            )
+          : EditorToolbar(
+              armed: _tool,
+              onArm: (tool) {
+                _clearSelection();
+                setState(() => _tool = tool);
+              },
             ),
-          ),
-        ),
-      ),
       // Keep the canvas mounted whenever we have ANY plan to show — the last
       // fetched one during a reload. Matching only AsyncData here swapped in a
       // spinner and tore down the InteractiveViewer on every delete, resetting
@@ -1015,6 +679,205 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     );
   }
 
+  /// The selected element's kind and its own name, for the bar that
+  /// acts on it (#1216). Null when nothing is selected — which is also
+  /// what says "show the tools instead".
+  ({ElementKind kind, String name})? _selectedElement(FloorPlan plan) {
+    final id = _selectedId;
+    final l10n = AppLocalizations.of(context);
+    return switch (_selectedKind) {
+      ElementKind.office => plan.offices
+          .where((o) => o.id == id)
+          .map((o) => (kind: ElementKind.office, name: o.name))
+          .firstOrNull,
+      ElementKind.desk => plan.desks
+          .where((d) => d.id == id)
+          .map((d) => (kind: ElementKind.desk, name: d.name))
+          .firstOrNull,
+      ElementKind.seat => plan.seats
+          .where((s) => s.id == id)
+          .map((s) => (kind: ElementKind.seat, name: s.name))
+          .firstOrNull,
+      // An image has no name of its own, so the bar says what it is.
+      ElementKind.image => plan.images.any((i) => i.id == id)
+          ? (
+              kind: ElementKind.image,
+              name: l10n?.editorToolImage ?? 'Image',
+            )
+          : null,
+      null => null,
+    };
+  }
+
+  Future<void> _editSelection(FloorPlan plan) async {
+    final id = _selectedId;
+    switch (_selectedKind) {
+      case ElementKind.seat:
+        final seat = plan.seats.where((s) => s.id == id).firstOrNull;
+        if (seat != null) {
+          await showSeatPropertiesSheet(context, ref,
+              levelId: widget.levelId, plan: plan, seat: seat);
+        }
+      case ElementKind.desk:
+        final desk = plan.desks.where((d) => d.id == id).firstOrNull;
+        if (desk != null) await _showDeskSheet(desk);
+      case ElementKind.office:
+        final office = plan.offices.where((o) => o.id == id).firstOrNull;
+        if (office != null) await _showOfficeSheet(office);
+      case ElementKind.image:
+      case null:
+        break;
+    }
+  }
+
+  /// #1216 — the repetitive act this editor exists for. A six-seat table
+  /// is six identical placements, and doing them by hand means six taps
+  /// on a desk plus six trips through the naming default. Duplicating
+  /// puts the copy on the first free cell of the same desk, so the
+  /// second seat costs one tap and the sixth costs one tap.
+  Future<void> _duplicateSeat(FloorPlan plan) async {
+    final l10n = AppLocalizations.of(context);
+    final seat = plan.seats.where((s) => s.id == _selectedId).firstOrNull;
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (seat == null || workspace == null) return;
+    final desk = plan.desks.where((d) => d.id == seat.deskId).firstOrNull;
+    if (desk == null) return;
+
+    final siblings = plan.seatsOf(desk.id);
+    ({int x, int y})? free;
+    for (var y = desk.rect.y; y < desk.rect.y + desk.rect.h && free == null;
+        y++) {
+      for (var x = desk.rect.x; x < desk.rect.x + desk.rect.w; x++) {
+        final anchor = clampSeatAnchor(desk, x, y, seat.orientation);
+        if (anchor == null) continue;
+        final candidate = Seat(
+          id: '',
+          workspaceId: workspace.id,
+          deskId: desk.id,
+          name: '',
+          x: anchor.x,
+          y: anchor.y,
+          orientation: seat.orientation,
+          chair: seat.chair,
+          amenities: const [],
+        );
+        if (validateSeatPlacement(candidate, desk, siblings) == null) {
+          free = anchor;
+          break;
+        }
+      }
+    }
+    if (free == null) {
+      AppSnack.info(
+        context,
+        l10n?.editorDeskFull ?? 'No room left on this desk.',
+        replace: true,
+      );
+      return;
+    }
+    await ref.read(floorPlanRepositoryProvider).createSeat(
+          workspaceId: workspace.id,
+          deskId: desk.id,
+          name: '${l10n?.editorSeatNameDefault ?? 'Seat'} '
+              '${siblings.length + 1}',
+          x: free.x,
+          y: free.y,
+          orientation: seat.orientation,
+        );
+    ref.invalidate(floorPlanProvider(widget.levelId));
+  }
+
+  /// Delete what is selected. The element is outlined on the canvas in
+  /// front of the reader while the dialog asks, which is what the erase
+  /// MODE could never manage: there, the thing you were about to lose
+  /// was whatever your finger happened to land on next.
+  Future<void> _deleteSelection(FloorPlan plan) async {
+    final id = _selectedId;
+    final repo = ref.read(floorPlanRepositoryProvider);
+    final action = switch (_selectedKind) {
+      ElementKind.seat when plan.seats.any((s) => s.id == id) =>
+        () => repo.deleteSeat(id!),
+      ElementKind.desk when plan.desks.any((d) => d.id == id) =>
+        () => repo.deleteDesk(id!),
+      ElementKind.office when plan.offices.any((o) => o.id == id) =>
+        () => repo.deleteOffice(id!),
+      ElementKind.image when plan.images.any((i) => i.id == id) =>
+        () => repo.deletePlanImage(id!),
+      _ => null,
+    };
+    if (action == null) return;
+    await _confirmErase(action);
+    if (mounted) _clearSelection();
+  }
+
+  /// Where the armed tool may legally place its next element (#1216).
+  ///
+  /// The rules already existed and were only ever spoken after a failed
+  /// drag: *"Must be fully inside an office."* Since the editor can
+  /// answer before the gesture, it does — see
+  /// [FloorPlanPainter.dropTargets], where an empty set is a meaningful
+  /// answer and null means no tool is armed.
+  Set<String>? _dropTargets(FloorPlan plan) => switch (_tool) {
+        EditorTool.desk => {for (final o in plan.offices) o.id},
+        EditorTool.seat => {for (final d in plan.desks) d.id},
+        // An office may go anywhere on the floor, and an image too, so
+        // dimming would be a lie about a rule that does not exist.
+        EditorTool.office || EditorTool.image || null => null,
+      };
+
+  /// The first thing to do on a floor nobody has drawn yet.
+  Widget _emptyFloor() {
+    final l10n = AppLocalizations.of(context);
+    return IgnorePointer(
+      ignoring: false,
+      child: Center(
+        child: Padding(
+          padding: AppSpacing.xlAll,
+          child: Card(
+            key: const ValueKey('editor-empty-floor'),
+            child: Padding(
+              padding: AppSpacing.lgAll,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.meeting_room_outlined,
+                    size: 40,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  Text(
+                    l10n?.editorEmptyFloorTitle ?? 'This floor is empty',
+                    style: Theme.of(context).textTheme.titleMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    l10n?.editorEmptyFloorBody ??
+                        'Everything sits inside a room: draw one, put '
+                            'desks in it, then seats on the desks.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  FilledButton.icon(
+                    key: const ValueKey('editor-empty-floor-start'),
+                    onPressed: () =>
+                        setState(() => _tool = EditorTool.office),
+                    icon: const Icon(Icons.add),
+                    label: Text(
+                      l10n?.editorEmptyFloorAction ?? 'Draw the first room',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildCanvas(FloorPlan plan) {
     const size = Size(
       GridCanvas.widthCells * GridCanvas.cellSize,
@@ -1023,7 +886,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     final drawing = _tool == EditorTool.office || _tool == EditorTool.desk;
     // #101: while an element is selected, the drag gesture belongs to
     // move/resize — deselect (tap empty space) to pan the viewport again.
-    final selecting = _tool == EditorTool.select && _selectedId != null;
+    final selecting = _tool == null && _selectedId != null;
     final shownPlan = _draft ?? plan;
 
     return Stack(
@@ -1102,10 +965,29 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
             selection: _selectionRect(shownPlan),
             selectionResizable: _selectedKind != ElementKind.seat,
             selectionValid: _draftValid,
+            dropTargets: _dropTargets(shownPlan),
           ),
         ),
       ),
         ),
+        // #1216 — an empty floor used to be a blank grid under a row of
+        // tools, which says what you CAN do and never what to do first.
+        if (plan.offices.isEmpty && plan.images.isEmpty && _tool == null)
+          Positioned.fill(child: _emptyFloor()),
+        // The armed tool, said out loud, with the way out beside it.
+        if (_tool != null)
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: EditorToolHint(
+                tool: _tool!,
+                onCancel: () => setState(() => _tool = null),
+              ),
+            ),
+          ),
         // Zoom buttons + draggable scrollbars share the viewer's controller,
         // and the plan auto-fits to the screen on open / level switch.
         Positioned.fill(
@@ -1121,6 +1003,61 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  Future<void> _confirmErase(Future<void> Function() action) async {
+    final l10n = AppLocalizations.of(context);
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n?.commonDelete ?? 'Delete'),
+        content: Text(deleteElementConfirmText(ref, l10n)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(l10n?.commonCancel ?? 'Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(l10n?.commonDelete ?? 'Delete'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+    await action();
+    ref.invalidate(floorPlanProvider(widget.levelId));
+  }
+
+  Future<String?> _promptText({
+    required String title,
+    required String label,
+    String initial = '',
+  }) {
+    final l10n = AppLocalizations.of(context);
+    final controller = TextEditingController(text: initial);
+    return showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          decoration: InputDecoration(labelText: label),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(l10n?.commonCancel ?? 'Cancel'),
+          ),
+          FilledButton(
+            onPressed: () =>
+                Navigator.of(context).pop(controller.text.trim()),
+            child: Text(l10n?.commonSave ?? 'Save'),
+          ),
+        ],
+      ),
     );
   }
 }
