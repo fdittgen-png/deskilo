@@ -230,4 +230,86 @@ void main() {
     // And it SAYS so, rather than changing two other settings silently.
     expect(find.textContaining('Also switched on'), findsOneWidget);
   });
+
+  // #1190 — the screen lists 102 switches at roughly 230 px each: about
+  // eight per screen, so thirteen screens of scrolling. An owner
+  // looking for "the VAT one" scrolled and hoped.
+  group('#1190 — finding one switch among a hundred', () {
+    testWidgets('typing a name narrows the list to it', (tester) async {
+      await pumpFeatures(tester);
+      expect(find.byKey(const ValueKey('feature-badgeSignIn')),
+          findsOneWidget);
+
+      await tester.enterText(
+          find.byKey(const ValueKey('features-search')), 'sign in with');
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const ValueKey('feature-badgeSignIn')),
+          findsOneWidget);
+      expect(find.byKey(const ValueKey('feature-calendarTab')), findsNothing,
+          reason: 'everything that does not match is gone, not merely '
+              'scrolled past');
+    });
+
+    testWidgets('and so does typing what a feature DOES, for an owner '
+        'who does not know its name', (tester) async {
+      await pumpFeatures(tester);
+      await tester.enterText(
+          find.byKey(const ValueKey('features-search')), 'closed days');
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const ValueKey('feature-calendarTab')),
+          findsOneWidget,
+          reason: 'the word is in the DESCRIPTION, not the name');
+    });
+
+    testWidgets('a heading over nothing is not shown', (tester) async {
+      await pumpFeatures(tester);
+      await tester.enterText(
+          find.byKey(const ValueKey('features-search')), 'sign in with');
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const ValueKey('feature-tier-core')), findsNothing,
+          reason: 'no core feature matched, so the Core heading has '
+              'nothing under it');
+    });
+
+    testWidgets('nothing matching says so instead of showing an empty '
+        'page', (tester) async {
+      await pumpFeatures(tester);
+      await tester.enterText(
+          find.byKey(const ValueKey('features-search')), 'zzzznope');
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('features-no-match')), findsOneWidget);
+    });
+
+    testWidgets('clearing the field brings the whole list back',
+        (tester) async {
+      await pumpFeatures(tester);
+      await tester.enterText(
+          find.byKey(const ValueKey('features-search')), 'sign in with');
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('features-search-clear')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('feature-calendarTab')),
+          findsOneWidget);
+    });
+
+    testWidgets('"Changed" answers the other question an owner asks: '
+        'what has this space actually moved', (tester) async {
+      // badgeSignIn is off by default; switching it on is the one
+      // deliberate choice in this workspace.
+      await pumpFeatures(tester, featureFlags: const {'badgeSignIn': true});
+
+      await tester.tap(find.byKey(const ValueKey('features-filter-changed')));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const ValueKey('feature-badgeSignIn')),
+          findsOneWidget);
+      expect(find.byKey(const ValueKey('feature-calendarTab')), findsNothing,
+          reason: 'a switch at its default looks exactly like one that '
+              'was deliberately set there, which is why this chip earns '
+              'its place');
+    });
+  });
 }

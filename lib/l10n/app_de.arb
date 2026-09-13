@@ -1760,6 +1760,9 @@
   "@eventTypeUnknown": {
     "description": "#1088 an event type this build does not know: the row still shows"
   },
+  "featuresSearchLabel": "Funktionen durchsuchen",
+  "featuresFilterChanged": "Geändert",
+  "featuresNoMatch": "Keine Funktion passt dazu.",
   "featuresTitle": "Funktionen",
   "featureCalendarTab": "Kalender-Tab",
   "featureCalendarTabDesc": "Monatsübersicht über Buchungen und Schließtage.",

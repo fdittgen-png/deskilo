@@ -1760,6 +1760,9 @@
   "@eventTypeUnknown": {
     "description": "#1088 an event type this build does not know: the row still shows"
   },
+  "featuresSearchLabel": "Cerca funzionalità",
+  "featuresFilterChanged": "Modificate",
+  "featuresNoMatch": "Nessuna funzionalità corrisponde.",
   "featuresTitle": "Funzionalità",
   "featureCalendarTab": "Scheda Calendario",
   "featureCalendarTabDesc": "Panoramica mensile di prenotazioni e giorni di chiusura.",

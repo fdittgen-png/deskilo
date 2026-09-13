@@ -2444,6 +2444,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eventTypeUnknown => 'Activité';
 
   @override
+  String get featuresSearchLabel => 'Rechercher une fonctionnalité';
+
+  @override
+  String get featuresFilterChanged => 'Modifiées';
+
+  @override
+  String get featuresNoMatch => 'Aucune fonctionnalité ne correspond.';
+
+  @override
   String get featuresTitle => 'Fonctionnalités';
 
   @override

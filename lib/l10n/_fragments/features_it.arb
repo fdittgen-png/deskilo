@@ -1,5 +1,8 @@
 {
   "@@locale": "it",
+  "featuresSearchLabel": "Cerca funzionalità",
+  "featuresFilterChanged": "Modificate",
+  "featuresNoMatch": "Nessuna funzionalità corrisponde.",
   "featuresTitle": "Funzionalità",
   "featureCalendarTab": "Scheda Calendario",
   "featureCalendarTabDesc": "Panoramica mensile di prenotazioni e giorni di chiusura.",
