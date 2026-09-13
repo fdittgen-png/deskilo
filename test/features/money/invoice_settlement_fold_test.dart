@@ -176,11 +176,12 @@ void main() {
           workspace: FakeWorkspaceRepository.withWorkspace(), money: s.money),
       child: MaterialApp(
         home: Scaffold(
-          body: Builder(
-            builder: (context) => FilledButton(
+          body: Consumer(
+            builder: (context, ref, _) => FilledButton(
               key: const ValueKey('open'),
               onPressed: () => showInvoiceDetailSheet(
                 context,
+                ref: ref,
                 invoice: source,
                 match: null,
                 canIssue: true,

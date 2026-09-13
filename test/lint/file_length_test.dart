@@ -274,7 +274,7 @@ const Map<String, int> _baseline = {
   // 820→840 (2026-08-05): #482 the side-by-side ReportColumns renderer.
   // 840→860 (2026-08-05): #488 the ReportImage renderer branch.
   'lib/features/money/domain/invoice_pdf.dart': 1085, // 2026-09-02 #837 per-invoice sheets + annexes // 2026-09-02 #831 source groups + watermark helper // 2026-09-04 #869 page-1 window layout: the geometry and both painted blocks live in address_window.dart; what stays here is the flow restructure itself — the letterhead boxed into the band above the field and the field's own height reserved below it // 2026-09-04 #872 the page model: header on page 1, continuation strip on 2+, footer pinned to every page — three callbacks that ARE this file's contract, so splitting them would hide it // 2026-09-04 #873 window-envelope conformance: the identification block moves out of the letterhead to 90 mm when a window is in use
-  'lib/features/money/presentation/widgets/invoice_detail_sheet.dart': 640, // 2026-09-02 #831 folded banner // 2026-09-02 #822 image size/alignment
+  'lib/features/money/presentation/widgets/invoice_detail_sheet.dart': 530, // 2026-09-13 #1217 640→530: the action list became widgets/invoice_sheet_actions.dart — it is the half that grows every time an invoice learns a new verb // 2026-09-02 #831 folded banner // 2026-09-02 #822 image size/alignment
   // 670→680 (2026-08-04): #446 out-of-shell WorkHours install — the
   // kiosk arms the ambient working day itself, like realtime (#430).
   // 680→690: #462 whole-space overlays on the wall display.

@@ -207,6 +207,7 @@ class MyInvoicesList extends ConsumerWidget {
     final reminder = ref.read(invoiceRemindersProvider).value?[invoice.id];
     await showInvoiceDetailSheet(
       context,
+      ref: ref,
       invoice: invoice,
       match: match,
       settledByNumber: settledByNumberOf(

@@ -4400,6 +4400,15 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get reportPreviewZoomIn => 'Acercar';
+
+  @override
+  String get reportPreviewZoomOut => 'Alejar';
+
+  @override
+  String get reportPreviewFit => 'Ajustar al ancho';
+
+  @override
   String get reportPreviewTitle => 'Vista rápida — tu factura más reciente';
 
   @override

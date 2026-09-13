@@ -7661,6 +7661,24 @@ abstract class AppLocalizations {
   /// **'Reminder {level}'**
   String invoiceTemplateDocReminder(int level);
 
+  /// #1217 the quick preview zoom-in button
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom in'**
+  String get reportPreviewZoomIn;
+
+  /// #1217 the quick preview zoom-out button
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom out'**
+  String get reportPreviewZoomOut;
+
+  /// #1217 the quick preview button that returns to the whole-width fit it opened at
+  ///
+  /// In en, this message translates to:
+  /// **'Fit the width'**
+  String get reportPreviewFit;
+
   /// Report UX: presets, quick preview, download (#474)
   ///
   /// In en, this message translates to:

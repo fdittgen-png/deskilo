@@ -14,7 +14,6 @@ import '../../domain/accounting_view.dart';
 import '../../domain/invoice.dart';
 import '../../domain/invoice_ubl.dart';
 import '../../providers/money_providers.dart';
-import '../invoice_actions.dart';
 import '../accounting_export.dart';
 import '../invoice_status.dart';
 import '../period_label.dart';
@@ -340,8 +339,9 @@ class _InvoiceRegisterScreenState
   }) async {
     final countryCode =
         ref.read(currentWorkspaceProvider).value?.countryCode ?? '';
-    final action = await showInvoiceDetailSheet(
+    await showInvoiceDetailSheet(
       context,
+      ref: ref,
       invoice: invoice,
       match: match,
       canIssue: canIssue,
@@ -349,14 +349,6 @@ class _InvoiceRegisterScreenState
       reminder: reminder,
       showMemberName: showMemberName,
       transmission: ref.read(invoiceTransmissionsProvider).value?[invoice.id],
-    );
-    if (action == null || !mounted) return;
-    await runInvoiceAction(
-      context,
-      ref,
-      action,
-      invoice,
-      countryCode: countryCode,
     );
   }
 }

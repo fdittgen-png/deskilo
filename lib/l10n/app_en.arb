@@ -4745,6 +4745,18 @@
       }
     }
   },
+  "reportPreviewZoomIn": "Zoom in",
+  "@reportPreviewZoomIn": {
+    "description": "#1217 the quick preview zoom-in button"
+  },
+  "reportPreviewZoomOut": "Zoom out",
+  "@reportPreviewZoomOut": {
+    "description": "#1217 the quick preview zoom-out button"
+  },
+  "reportPreviewFit": "Fit the width",
+  "@reportPreviewFit": {
+    "description": "#1217 the quick preview button that returns to the whole-width fit it opened at"
+  },
   "reportPreviewTitle": "Quick preview — your newest invoice",
   "@reportPreviewTitle": {
     "description": "Report UX: presets, quick preview, download (#474)"

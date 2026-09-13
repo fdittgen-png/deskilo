@@ -213,4 +213,34 @@ void main() {
     expect(find.text('Record a payment'), findsOneWidget);
     expect(find.text('Add consumption'), findsOneWidget);
   });
+
+  // #1217 — "None of the buttons actually works." The sheet popped an
+  // `InvoiceAction` and left the caller to run it; this surface, the
+  // member's own Invoices face, awaited the future and threw the result
+  // away. Quick view, Download PDF, Share PDF and E-invoice all closed
+  // the sheet and did nothing, and the trace showed no line at all,
+  // because the handler never ran.
+  testWidgets('an invoice row\'s buttons actually DO something here',
+      (tester) async {
+    final money = FakeMoneyRepository();
+    final id = await openInvoice(money, ageDays: 3);
+    await pumpFaces(tester, money: money);
+    await face(tester, MoneyFace.invoices);
+
+    await tester.tap(find.byKey(ValueKey('my-invoice-$id')));
+    await tester.pumpAndSettle();
+
+    final quick = find.byKey(ValueKey('invoice-quick-$id'));
+    await tester.scrollUntilVisible(quick, 150,
+        scrollable: find.byType(Scrollable).last);
+    await tester.tap(quick);
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const ValueKey('report-quick-preview')),
+      findsOneWidget,
+      reason: 'the sheet runs its own action now, so no surface can open '
+          'it and forget to',
+    );
+  });
 }

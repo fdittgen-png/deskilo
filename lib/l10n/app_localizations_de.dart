@@ -4400,6 +4400,15 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get reportPreviewZoomIn => 'Vergrößern';
+
+  @override
+  String get reportPreviewZoomOut => 'Verkleinern';
+
+  @override
+  String get reportPreviewFit => 'An die Breite anpassen';
+
+  @override
   String get reportPreviewTitle => 'Schnellvorschau — deine neueste Rechnung';
 
   @override

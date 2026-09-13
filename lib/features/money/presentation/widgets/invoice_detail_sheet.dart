@@ -19,6 +19,9 @@ import '../report_strings_l10n.dart';
 import '../invoice_status.dart';
 import '../period_label.dart';
 import 'invoice_journey_view.dart';
+import '../invoice_actions.dart';
+import '../../../workspace/providers/workspace_providers.dart';
+import 'invoice_sheet_actions.dart';
 
 /// What the reader asked for after looking at an invoice. The sheet only
 /// DECIDES — the screen runs the action with its own live context, so no
@@ -41,8 +44,21 @@ enum InvoiceAction {
 /// snapshot header, the positions, the balance, where the document stands
 /// in its lifecycle, and every permitted action with a LABEL instead of an
 /// icon crammed into a row.
-Future<InvoiceAction?> showInvoiceDetailSheet(
+/// #1217 — the sheet RUNS what its buttons ask for.
+///
+/// It used to pop an `InvoiceAction` and leave the caller to act on it.
+/// Six surfaces opened it and three of them awaited the future and threw
+/// the result away, so Download PDF, Quick view, Share PDF and
+/// E-invoice were inert on the member's own Invoices tab, on an invoice
+/// opened from the agenda, and on one opened from a message reference —
+/// while the same buttons worked from the three admin lists.
+///
+/// A returned value the compiler lets you discard was the whole bug, so
+/// there is no longer one to discard: the action is dispatched here,
+/// once, where it cannot be forgotten.
+Future<void> showInvoiceDetailSheet(
   BuildContext context, {
+  required WidgetRef ref,
   required Invoice invoice,
   required InvoiceMatch? match,
   required bool canIssue,
@@ -54,8 +70,8 @@ Future<InvoiceAction?> showInvoiceDetailSheet(
   InvoiceJourney? journey,
   // #831 — the settlement a regrouped source went into.
   String settledByNumber = '',
-}) =>
-    showModalBottomSheet<InvoiceAction>(
+}) async {
+  final action = await showModalBottomSheet<InvoiceAction>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
@@ -72,7 +88,19 @@ Future<InvoiceAction?> showInvoiceDetailSheet(
         transmission: transmission,
         journey: journey,
       ),
-    );
+  );
+  if (action == null || !context.mounted) return;
+  // The country comes from the workspace rather than from a parameter,
+  // for the same reason the seller kind does below: six callers, six
+  // chances to pass the wrong one.
+  await runInvoiceAction(
+    context,
+    ref,
+    action,
+    invoice,
+    countryCode: ref.read(currentWorkspaceProvider).value?.countryCode ?? '',
+  );
+}
 
 /// #910 — the seller kind is READ here, not passed in. Every one of the
 /// six callers forgot the flag, so an association's own app called its
@@ -458,10 +486,24 @@ class _InvoiceDetailBody extends ConsumerWidget {
               // journey expects from the issuer comes FIRST and filled;
               // otherwise the PDF keeps its historical place.
               ...[
-                for (final entry in _actions(context, l10n, status, expected))
-                  if (entry.$1 == expected && _allowed(entry.$1)) entry.$2,
-                for (final entry in _actions(context, l10n, status, expected))
-                  if (entry.$1 != expected && _allowed(entry.$1)) entry.$2,
+                ...() {
+                  final actions = InvoiceSheetActions(
+                    invoice: invoice,
+                    canIssue: canIssue,
+                    isEu: isEu,
+                    replacedByNumber: replacedByNumber,
+                    onAction: (InvoiceAction a) =>
+                        Navigator.of(context).pop(a),
+                  );
+                  final all = actions.build(context, l10n, status, expected);
+                  return [
+                    // The expected next move first, the rest after it.
+                    for (final e in all)
+                      if (e.$1 == expected && actions.allowed(e.$1)) e.$2,
+                    for (final e in all)
+                      if (e.$1 != expected && actions.allowed(e.$1)) e.$2,
+                  ];
+                }(),
               ],
             ],
           ),
@@ -470,156 +512,6 @@ class _InvoiceDetailBody extends ConsumerWidget {
     );
   }
 
-  /// #831 — a regrouped source keeps reading and the stamped PDF only.
-  bool _allowed(InvoiceAction action) =>
-      !invoice.isFolded ||
-      action == InvoiceAction.quickView ||
-      action == InvoiceAction.downloadPdf ||
-      action == InvoiceAction.sharePdf;
-
-  /// The permitted actions in their historical order, each tagged so
-  /// the build can pull the expected one to the front.
-  List<(InvoiceAction, Widget)> _actions(
-    BuildContext context,
-    AppLocalizations? l10n,
-    InvoiceLifecycle status,
-    InvoiceAction expected,
-  ) =>
-      [
-        // #514 — see it on screen before any PDF exists.
-        (
-          InvoiceAction.quickView,
-          _action(
-            context,
-            key: 'invoice-quick-${invoice.id}',
-            icon: Icons.bolt_outlined,
-            label: l10n?.reportQuickView ?? 'Quick view',
-            action: InvoiceAction.quickView,
-          ),
-        ),
-        (
-          InvoiceAction.downloadPdf,
-          _action(
-            context,
-            key: 'invoice-download-${invoice.id}',
-            icon: Icons.download_outlined,
-            label: l10n?.invoiceDownload ?? 'Download PDF',
-            action: InvoiceAction.downloadPdf,
-            primary: expected == InvoiceAction.downloadPdf,
-          ),
-        ),
-        (
-          InvoiceAction.sharePdf,
-          _action(
-            context,
-            key: 'invoice-share-${invoice.id}',
-            icon: Icons.share_outlined,
-            label: l10n?.invoiceShare ?? 'Share PDF',
-            action: InvoiceAction.sharePdf,
-          ),
-        ),
-        // 2014/55/EU: the e-invoice affordance is for EU workspaces.
-        if (isEu)
-          (
-            InvoiceAction.eInvoice,
-            _action(
-              context,
-              key: 'invoice-einvoice-action',
-              icon: Icons.code_outlined,
-              label: l10n?.invoiceEInvoiceAction ?? 'E-invoice (XML)',
-              action: InvoiceAction.eInvoice,
-            ),
-          ),
-        if (canIssue && status == InvoiceLifecycle.open) ...[
-          if (invoice.totalCents > 0)
-            (
-              InvoiceAction.remind,
-              _action(
-                context,
-                key: 'invoice-remind-action',
-                icon: Icons.notifications_outlined,
-                label: l10n?.invoiceRemindAction ?? 'Send a reminder',
-                action: InvoiceAction.remind,
-                primary: expected == InvoiceAction.remind,
-              ),
-            ),
-          (
-            InvoiceAction.markPaid,
-            _action(
-              context,
-              key: 'invoice-match-action',
-              icon: Icons.price_check_outlined,
-              label: l10n?.invoiceMatchAction ?? 'Mark as paid',
-              action: InvoiceAction.markPaid,
-              primary: expected == InvoiceAction.markPaid,
-            ),
-          ),
-          (
-            InvoiceAction.markErroneous,
-            _action(
-              context,
-              key: 'invoice-void-action',
-              icon: Icons.block_outlined,
-              label: l10n?.invoiceVoidAction ?? 'Mark erroneous',
-              action: InvoiceAction.markErroneous,
-              danger: true,
-            ),
-          ),
-        ],
-        // A correction chain, never a fork (0061): only an erroneous
-        // invoice that nothing replaces yet can be re-issued.
-        if (canIssue &&
-            status == InvoiceLifecycle.erroneous &&
-            replacedByNumber.isEmpty)
-          (
-            InvoiceAction.replace,
-            _action(
-              context,
-              key: 'invoice-replace-action',
-              icon: Icons.published_with_changes_outlined,
-              label: l10n?.invoiceReplaceAction ?? 'Issue replacement',
-              action: InvoiceAction.replace,
-              primary: expected == InvoiceAction.replace,
-            ),
-          ),
-      ];
-
-  Widget _action(
-    BuildContext context, {
-    required String key,
-    required IconData icon,
-    required String label,
-    required InvoiceAction action,
-    bool primary = false,
-    bool danger = false,
-  }) {
-    final colors = Theme.of(context).colorScheme;
-    final child = Row(children: [
-      Icon(icon, size: 20, color: danger ? colors.error : null),
-      const SizedBox(width: AppSpacing.md),
-      Expanded(
-        child: Text(
-          label,
-          style: danger ? TextStyle(color: colors.error) : null,
-        ),
-      ),
-    ]);
-    void onPressed() => Navigator.of(context).pop(action);
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-      child: primary
-          ? FilledButton(
-              key: ValueKey(key),
-              onPressed: onPressed,
-              child: child,
-            )
-          : OutlinedButton(
-              key: ValueKey(key),
-              onPressed: onPressed,
-              child: child,
-            ),
-    );
-  }
 }
 
 /// '20 %', '5.5 %' — a rate beside its caption.

@@ -168,8 +168,9 @@ class InvoicesScreen extends ConsumerWidget {
     Future<void> openDetail(OpenInvoiceEntry entry) async {
       final reminders =
           ref.read(invoiceRemindersProvider).value ?? const {};
-      final action = await showInvoiceDetailSheet(
+      await showInvoiceDetailSheet(
         context,
+        ref: ref,
         invoice: entry.invoice,
         match: entry.pendingMatch,
         settledByNumber: settledByNumberOf(
@@ -186,14 +187,6 @@ class InvoicesScreen extends ConsumerWidget {
           match: entry.pendingMatch,
           reminder: reminders[entry.invoice.id],
         ),
-      );
-      if (action == null || !context.mounted) return;
-      await runInvoiceAction(
-        context,
-        ref,
-        action,
-        entry.invoice,
-        countryCode: countryCode,
       );
     }
 
