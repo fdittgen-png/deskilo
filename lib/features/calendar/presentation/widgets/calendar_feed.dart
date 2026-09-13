@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/calendar/calendar_item.dart';
 import '../../../../core/i18n/format_controller.dart';
@@ -78,7 +77,6 @@ class CalendarFeed extends ConsumerWidget {
             (l10n?.calendarNothingHere ?? 'Nothing on these dates.'),
       );
     }
-    final weekday = DateFormat.EEEE(format.locale);
     return RefreshIndicator(
       onRefresh: onRefresh,
       child: ListView(
@@ -125,7 +123,7 @@ class CalendarFeed extends ConsumerWidget {
               child: Row(children: [
                 Expanded(
                   child: Text(
-                    _header(l10n, format, weekday, day),
+                    _header(l10n, format, day),
                     key: ValueKey('calendar-day-${day.year}-${day.month}-${day.day}'),
                     style: theme.textTheme.titleSmall?.copyWith(
                       color: relative && _isToday(day)
@@ -202,11 +200,13 @@ class CalendarFeed extends ConsumerWidget {
   String _header(
     AppLocalizations? l10n,
     dynamic format,
-    DateFormat weekday,
     DateTime day,
   ) {
     final noon = WorkspaceTime.at(day.year, day.month, day.day, 12);
-    final date = '${weekday.format(day)} ${format.shortDate(noon)}';
+    // #1175 — ONE formatter. `AppFormat.shortDate` is `DateFormat.MMMEd`,
+    // and the E in MMMEd is already the weekday, so prefixing `EEEE` made
+    // every header read "Sunday Sun 13 Sept" — in all five languages.
+    final date = format.shortDate(noon) as String;
     if (!relative || today == null) return format.shortDate(noon) as String;
     return switch (relativeDayOf(day, today!)) {
       RelativeDay.today => '${l10n?.calendarToday ?? 'Today'} · $date',
