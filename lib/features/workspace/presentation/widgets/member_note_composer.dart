@@ -2,13 +2,9 @@
 import 'package:flutter/material.dart';
 
 import 'ref_picker_sheet.dart';
+import 'note_record_choices.dart';
 import 'note_record_open.dart';
 import '../../domain/workspace_feature.dart';
-import '../../../events/presentation/event_labels.dart';
-import '../../../events/providers/event_providers.dart';
-import '../../../money/domain/ledger_entry.dart';
-import '../../../../core/i18n/money_format.dart';
-import '../../../money/providers/money_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -24,6 +20,7 @@ import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/member_note.dart';
 import '../../domain/member_note_refs.dart';
 import '../../providers/workspace_providers.dart';
+import '../reference_locale.dart';
 
 /// The ONE message composer (#523/refactor): text field, the two
 /// reference chips (any participant's reservation/check-in, any
@@ -198,7 +195,9 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
     if (picked == null || !mounted) return;
     _insert(reservationToken(
         picked.id,
-        _reservationLabel(picked, spaceNames, memberNames, localeName)));
+        // #1179 — baked in the WORKSPACE's language, not this phone's.
+        _reservationLabel(picked, spaceNames, memberNames,
+            referenceLocale(ref, context))));
   }
 
   Future<void> _pickSpace() async {
@@ -274,86 +273,8 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
   /// sheet, because every one of them is long in a real workspace.
   Future<void> _pickRecord(NoteRecordKind kind) async {
     final l10n = AppLocalizations.of(context);
-    final localeName = Localizations.maybeLocaleOf(context)?.toString();
-    final candidates = <RefCandidate>[];
-    final labels = <String, String>{};
-
-    switch (kind) {
-      case NoteRecordKind.alert:
-      case NoteRecordKind.validation:
-        final events = await ref.read(eventsProvider.future);
-        if (!mounted) return;
-        final names = ref.read(memberNamesProvider).value ?? const {};
-        final decisions =
-            ref.read(eventDecisionsProvider).value ?? const {};
-        for (final event in events) {
-          // A validation reference is about a decision: an event nobody
-          // was ever asked about has no trail to point at.
-          if (kind == NoteRecordKind.validation &&
-              !event.isPending &&
-              (decisions[event.id] ?? const []).isEmpty) {
-            continue;
-          }
-          final when = DateFormat.MMMd(localeName)
-              .add_Hm()
-              .format(event.createdAt.toLocal());
-          final who = names[event.subjectMemberId] ?? '';
-          final label = [eventTypeLabel(l10n, event.type), who, when]
-              .where((p) => p.isNotEmpty)
-              .join(' · ');
-          labels[event.id] = label;
-          candidates.add(refCandidate(
-            id: event.id,
-            label: label,
-            icon: noteRecordIcon(kind),
-            extraKeywords: event.status.name,
-          ));
-        }
-      case NoteRecordKind.invoice:
-      case NoteRecordKind.refund:
-        final invoices = await ref.read(invoicesProvider.future);
-        if (!mounted) return;
-        final names = ref.read(memberNamesProvider).value ?? const {};
-        for (final invoice in invoices) {
-          final label = <String>[
-            invoice.number,
-            names[invoice.memberId] ?? invoice.memberName,
-            invoice.period ?? '',
-          ].where((p) => p.isNotEmpty).join(' · ');
-          labels[invoice.id] = label;
-          candidates.add(refCandidate(
-            id: invoice.id,
-            label: label,
-            detail: invoice.title.isEmpty ? null : invoice.title,
-            icon: noteRecordIcon(kind),
-          ));
-        }
-      case NoteRecordKind.payment:
-        final ledger = await ref.read(myLedgerProvider.future);
-        if (!mounted) return;
-        final money = moneyFormat(
-            ref.read(currentWorkspaceProvider).value?.currencyCode ?? 'EUR');
-        final seen = <String>{};
-        for (final entry in ledger) {
-          if (entry.kind != LedgerKind.credit ||
-              entry.category != LedgerCategory.payment) {
-            continue;
-          }
-          // The reference names the MONTH: that is the page a payment
-          // opens on, and two payments in one month share it.
-          if (!seen.add(entry.period)) continue;
-          final label = '${l10n?.noteRefPayment ?? 'Payment'} · '
-              '${entry.period} · ${money.formatMinor(entry.amountCents)}';
-          labels[entry.period] = label;
-          candidates.add(refCandidate(
-            id: entry.period,
-            label: label,
-            detail:
-                entry.description.isEmpty ? null : entry.description,
-            icon: noteRecordIcon(kind),
-          ));
-        }
-    }
+    final (:candidates, :baked) =
+        await noteRecordChoices(ref, context, kind);
 
     if (!mounted) return;
     if (candidates.isEmpty) {
@@ -375,7 +296,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
       candidates: candidates,
     );
     if (picked == null || !mounted) return;
-    _insert(recordToken(kind, picked, labels[picked] ?? picked));
+    _insert(recordToken(kind, picked, baked[picked] ?? picked));
   }
 
   /// #842 — the reference kinds this workspace offers. A refund opens
