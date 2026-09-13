@@ -1,11 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../workspace/providers/workspace_providers.dart';
-import '../../../workspace/domain/workspace_feature.dart';
-import 'package:go_router/go_router.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../../core/backend/backend_settings.dart';
@@ -19,6 +15,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
+import '../widgets/backend_how_to.dart';
 
 /// #780 — Settings → Server: which Supabase instance this device talks
 /// to, configured entirely in the UI.
@@ -101,7 +98,7 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
             ),
           ),
           const SizedBox(height: AppSpacing.sm),
-          _HowTo(topic: topic),
+          BackendHowTo(topic: topic),
           const SizedBox(height: AppSpacing.sm),
           Row(children: [
             Expanded(
@@ -131,8 +128,12 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
             topic: topic,
           ),
           const SizedBox(height: AppSpacing.sm),
+          // #1194 — every other button on this screen runs the full
+          // width; this one sat half-width and left-aligned, so the
+          // column's right edge broke on the one row that matters most.
           Row(children: [
-            OutlinedButton.icon(
+            Expanded(
+              child: OutlinedButton.icon(
               key: const ValueKey('backend-test'),
               onPressed: _testing ? null : _test,
               icon: _testing
@@ -145,6 +146,7 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
               label: Text(_testing
                   ? (l10n?.backendTesting ?? 'Testing…')
                   : (l10n?.backendTest ?? 'Test the connection')),
+              ),
             ),
           ]),
           if (_result != null)
@@ -376,90 +378,4 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
             'Reached it, but the DesKilo tables are missing — run the '
                 'migrations from supabase/migrations on that project first.',
       };
-}
-
-/// The four steps, on the screen rather than in a manual: a coworking
-/// owner setting this up has the Supabase dashboard open in the other
-/// hand.
-class _HowTo extends ConsumerWidget {
-  const _HowTo({required this.topic});
-
-  final String topic;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
-    final featureOn = ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.instanceWizard);
-    final steps = [
-      l10n?.backendStep1 ??
-          'Create a project at supabase.com (the free tier is enough to '
-              'start).',
-      l10n?.backendStep2 ??
-          'Install the app\'s schema: run the SQL files in '
-              'supabase/migrations from the source repository, in order.',
-      l10n?.backendStep3 ??
-          'In the Supabase dashboard, open Project Settings → API keys and '
-              'copy the Project URL and the publishable key.',
-      l10n?.backendStep4 ??
-          'Paste them below, test the connection, and save. Members join '
-              'the same instance by scanning the QR above.',
-    ];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        // #977 — the wizard does the four steps for you.
-        if (featureOn)
-          Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-            child: FilledButton.icon(
-              key: const ValueKey('backend-new-instance'),
-              onPressed: () => context.push('/server/new-instance'),
-              icon: const Icon(Icons.auto_fix_high_outlined),
-              label: Text(l10n?.instanceCreateButton ?? 'Create a new instance'),
-            ),
-          ),
-        Card(
-      child: ExpansionTile(
-        key: const ValueKey('backend-howto'),
-        leading: const Icon(Icons.help_outline),
-        title: Row(children: [
-          Expanded(
-            child: Text(l10n?.backendHowTitle ?? 'Use your own server'),
-          ),
-          HelpDot(topic,
-            anchor: HelpAnchor.backendHow,
-          ),
-        ]),
-        childrenPadding: AppSpacing.mdAll,
-        children: [
-          for (var i = 0; i < steps.length; i++)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    radius: 11,
-                    // The step NUMBER — a numeral, not prose: formatted
-                    // like every other number in the app.
-                    child: Text(
-                      NumberFormat.decimalPattern(
-                        Localizations.localeOf(context).toString(),
-                      ).format(i + 1),
-                      style: Theme.of(context).textTheme.labelSmall,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(child: Text(steps[i])),
-                ],
-              ),
-            ),
-        ],
-      ),
-    ),
-      ],
-    );
-  }
 }

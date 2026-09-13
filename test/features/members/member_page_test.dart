@@ -318,4 +318,33 @@ void main() {
     await tester.pumpAndSettle();
     expect(_subtitle(tester, 'member-page-vat-treatment'), 'Exempt buyer');
   });
+
+  // #1187 — the quick actions were a Wrap of buttons each sized to its
+  // own label: three rows, three widths, a ragged right edge. Two equal
+  // columns read as a group; a lone last button spans both rather than
+  // sitting half-width beside nothing.
+  testWidgets('the quick actions form a grid, not a ragged wrap',
+      (tester) async {
+    await _pumpPage(tester, 'member-3');
+    final grid = find.byKey(const ValueKey('member-page-actions'));
+    await tester.ensureVisible(grid);
+    await tester.pumpAndSettle();
+
+    final cells = find.byWidgetPredicate((w) =>
+        w.key is ValueKey<String> &&
+        (w.key! as ValueKey<String>).value.startsWith('member-page-cell-'));
+    expect(cells, findsWidgets);
+    final widths = <double>{
+      for (final cell in tester.widgetList<SizedBox>(cells))
+        cell.width!.roundToDouble(),
+    };
+    expect(widths.length, lessThanOrEqualTo(2),
+        reason: 'a column width and, for an odd last button, the full '
+            'width — never one width per label');
+
+    final row = tester.getSize(grid).width;
+    expect(widths.every((w) => w > row / 3), isTrue,
+        reason: 'every action fills its column rather than shrinking to '
+            'its own text');
+  });
 }

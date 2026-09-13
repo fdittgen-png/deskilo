@@ -65,8 +65,15 @@ class WorkspacePairCard extends StatelessWidget {
               visualDensity: VisualDensity.compact,
               onSelected: (_) => onSelect(prod.id),
             ),
+            // #1188 — a plain workspace row puts the role in a Chip; a
+            // paired one put the same fact in plain text, so two adjacent
+            // rows styled the same thing two ways.
             if (roleLabel != null)
-              Text(roleLabel!, style: Theme.of(context).textTheme.bodySmall),
+              Chip(
+                label: Text(roleLabel!),
+                visualDensity: VisualDensity.compact,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
           ],
         ),
         trailing: (devActive || prodActive)
