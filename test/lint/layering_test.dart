@@ -27,9 +27,13 @@ import 'lint_sources.dart';
 ///
 /// RATCHET: removing a pair is a normal pull request; adding one means
 /// either using an existing seam instead, or adding the pair HERE with a
-/// one-line justification in the PR description. Counts per pair are
-/// deliberately not tracked — they churn on every refactor and would
-/// turn this file into a conflict magnet.
+/// one-line justification in the PR description.
+///
+/// #1233 — the counts ARE tracked now, in [_pairBudget] below. Tracking
+/// only the pair names was the hole: all 54 were live, and behind them
+/// sat 656 import statements. A pair already on the list could grow
+/// without limit, and `money -> workspace` had reached 111, which is not
+/// a dependency but a merger. The counts may only fall.
 const Set<String> _knownPairs = {
   // #718 — the calendar hub opens invoices and the Money month from a
   // dated row: money's own sheet and its focus controller, not a copy.
@@ -113,7 +117,106 @@ const Set<String> _knownPairs = {
 
 final _importRe = RegExp("import '([^']+)'");
 
+/// The number of imports behind each committed pair — a ceiling, never
+/// a target. It may only go DOWN: a refactor that removes coupling
+/// lowers its line, and a change that adds an import to an existing pair
+/// has to say so here.
+const Map<String, int> _pairBudget = {
+  'calendar -> events': 3,
+  'calendar -> money': 6,
+  'calendar -> plan': 6,
+  'calendar -> reservations': 7,
+  'calendar -> workspace': 15,
+  'editor -> plan': 20,
+  'editor -> workspace': 6,
+  'events -> money': 5,
+  'events -> plan': 1,
+  'events -> reservations': 3,
+  'events -> workspace': 18,
+  'kiosk -> events': 1,
+  'kiosk -> members': 1,
+  'kiosk -> plan': 7,
+  'kiosk -> profile': 2,
+  'kiosk -> reservations': 9,
+  'kiosk -> workspace': 7,
+  'members -> money': 8,
+  'members -> plan': 3,
+  'members -> profile': 9,
+  'members -> reservations': 14,
+  'members -> workspace': 34,
+  'money -> calendar': 1,
+  'money -> events': 30,
+  'money -> members': 2,
+  'money -> plan': 14,
+  'money -> profile': 4,
+  'money -> reservations': 13,
+  'money -> workspace': 112,
+  'plan -> events': 1,
+  'plan -> members': 1,
+  'plan -> money': 4,
+  'plan -> profile': 2,
+  'plan -> reservations': 9,
+  'plan -> workspace': 10,
+  'profile -> auth': 6,
+  'profile -> calendar': 2,
+  'profile -> members': 1,
+  'profile -> reservations': 5,
+  'profile -> workspace': 30,
+  'reservations -> calendar': 1,
+  'reservations -> events': 5,
+  'reservations -> members': 2,
+  'reservations -> money': 1,
+  'reservations -> plan': 62,
+  'reservations -> profile': 1,
+  'reservations -> workspace': 48,
+  'workspace -> auth': 3,
+  'workspace -> events': 11,
+  'workspace -> members': 4,
+  'workspace -> money': 34,
+  'workspace -> plan': 25,
+  'workspace -> profile': 10,
+  'workspace -> reservations': 17,
+};
+
 Iterable<File> _featureFiles() => handWrittenDartFiles('lib/features');
+
+/// #1233 — the layering rules used to scan `lib/features` only, so
+/// `lib/core` and `lib/app` — a fifth of the hand-written source — sat
+/// outside every one of them. A rule that half the tree is exempt from
+/// is a convention wearing a test's clothes.
+Iterable<File> _allSourceFiles() =>
+    handWrittenDartFilesIn(['lib/features', 'lib/core', 'lib/app']);
+
+/// The files that still name a backend type outside `data/`.
+///
+/// RATCHET, and it may only shrink. Each of these needs the server's own
+/// message out of a `PostgrestException` or an `AuthException` in order
+/// to map it to something a person can read — which is an infrastructure
+/// detail with a one-line answer, and the answer now lives in
+/// `lib/core/data/server_error.dart`. Route a file through
+/// `serverErrorMessage` / `isDatabaseError` / `isAuthError` and delete
+/// its line here.
+/// Where the backend legitimately lives: the client itself, the realtime
+/// subscription, the push endpoint registry and the boot sequence that
+/// starts them. Everything else talks to the server through a repository.
+const Set<String> _infrastructureDirs = {
+  'lib/core/backend/',
+  'lib/core/realtime/',
+  'lib/core/push/',
+  'lib/app/app_initializer.dart',
+};
+
+const Set<String> _backendTypeOutsideData = {
+  'lib/core/trace/act_trace.dart',
+  'lib/features/auth/presentation/screens/auth_screen.dart',
+  'lib/features/auth/presentation/screens/linked_accounts_screen.dart',
+  'lib/features/editor/presentation/widgets/seat_properties_sheet.dart',
+  'lib/features/events/presentation/screens/events_screen.dart',
+  'lib/features/kiosk/presentation/screens/kiosk_screen.dart',
+  'lib/features/reservations/domain/booking_error_text.dart',
+  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart',
+  'lib/features/workspace/presentation/widgets/badge_manager_dialog.dart',
+};
 
 /// Resolves [import] against [fromDir] to a repo-relative path, or null
 /// for package/dart imports. Hand-rolled so this test needs no
@@ -190,9 +293,55 @@ void main() {
     );
   });
 
+  // #1233 — `domain/` was checked for Flutter and `dart:ui` and nothing
+  // else, so the backend could sit inside the one directory the rules
+  // call pure Dart and the CLI imports. `presentation/` was not checked
+  // at all, and seven screens named Postgrest and Auth exceptions.
+  test('the backend is named only in data/ — everywhere else goes '
+      'through core/data/server_error.dart (ratchet)', () {
+    final violations = <String>[];
+    for (final file in _allSourceFiles()) {
+      final path = file.path;
+      // `data/` is where a backend type belongs, and the seam itself is
+      // the one file in `core/` whose whole job is to know one.
+      if (path.contains('/data/')) continue;
+      // The infrastructure directories: these ARE the backend adapter,
+      // and each is named rather than pattern-matched so that adding a
+      // fourth is a decision somebody writes down.
+      if (_infrastructureDirs.any(path.startsWith)) continue;
+      // `providers/` is the composition root: it hands the live client
+      // to the repositories, which is wiring rather than a leak. What
+      // it must not do is name an exception type, and that is what the
+      // check below looks for.
+      if (path.contains('/providers/') &&
+          !file.readAsStringSync().contains('Exception')) {
+        continue;
+      }
+      if (!file.readAsStringSync().contains("package:supabase_flutter/")) {
+        continue;
+      }
+      if (_backendTypeOutsideData.contains(path)) continue;
+      violations.add(path);
+    }
+    expect(violations, isEmpty,
+        reason: 'these name a Supabase type outside data/. Use '
+            'serverErrorMessage / isDatabaseError / isAuthError from '
+            'lib/core/data/server_error.dart:\n${violations.join('\n')}');
+
+    final gone = _backendTypeOutsideData
+        .where((p) => !File(p).existsSync() ||
+            !File(p).readAsStringSync().contains('package:supabase_flutter/'))
+        .toList();
+    expect(gone, isEmpty,
+        reason: 'these no longer name a backend type — delete them from '
+            '_backendTypeOutsideData so the ratchet keeps its meaning:\n'
+            '${gone.join('\n')}');
+  });
+
   test('cross-feature import pairs stay inside the committed set (ratchet)',
       () {
     final live = <String>{};
+    final counts = <String, int>{};
     for (final file in _featureFiles()) {
       final src = _featureOf(file.path)!;
       for (final m in _importRe.allMatches(file.readAsStringSync())) {
@@ -205,7 +354,10 @@ void main() {
               file.path.substring(0, file.path.lastIndexOf('/')), imp);
           if (resolved != null) target = _featureOf(resolved);
         }
-        if (target != null && target != src) live.add('$src -> $target');
+        if (target != null && target != src) {
+          live.add('$src -> $target');
+          counts.update('$src -> $target', (n) => n + 1, ifAbsent: () => 1);
+        }
       }
     }
 
@@ -228,5 +380,27 @@ void main() {
           'from _knownPairs (baselines may only shrink, and a stale entry '
           'would let the coupling quietly return): ${gone.join(', ')}',
     );
+
+    // #1233 — and the VOLUME behind each pair, which is the half the
+    // name-only ratchet could never see.
+    final grew = <String>[];
+    final shrank = <String>[];
+    for (final entry in counts.entries) {
+      final budget = _pairBudget[entry.key];
+      if (budget == null) continue; // a new pair; `added` already failed
+      if (entry.value > budget) {
+        grew.add('${entry.key}: ${entry.value} > $budget');
+      } else if (entry.value < budget) {
+        shrank.add('${entry.key}: ${entry.value} (budget $budget)');
+      }
+    }
+    expect(grew, isEmpty,
+        reason: 'coupling GREW behind an already-committed pair. Route it '
+            'through a seam, or raise the line in _pairBudget and say why '
+            'in the PR:\n${grew.join('\n')}');
+    expect(shrank, isEmpty,
+        reason: 'coupling shrank — lower these in _pairBudget in the same '
+            'commit, or the ceiling stops meaning anything:\n'
+            '${shrank.join('\n')}');
   });
 }

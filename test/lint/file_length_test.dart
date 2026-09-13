@@ -39,10 +39,10 @@ const Map<String, int> _baseline = {
   // new 700 (2026-08-22): #575 day-phase rings + #576 space rings.
 // 700→740 (2026-08-24): #618 the occupant photo marker — clipped
   // photo draw beside the initial disc, one concern, same method.
-    'lib/features/plan/presentation/widgets/floor_plan_painter.dart': 780, // 2026-09-13 #1216 750→780: the dropTargets parameter and the paragraph explaining why an EMPTY set differs from null; the drawing itself went to widgets/drop_target_paint.dart // 2026-09-06 #970 the demo blur on painted labels
+    'lib/features/plan/presentation/widgets/floor_plan_painter.dart': 772, // 2026-09-13 #1216 750→780: the dropTargets parameter and the paragraph explaining why an EMPTY set differs from null; the drawing itself went to widgets/drop_target_paint.dart // 2026-09-06 #970 the demo blur on painted labels
   // 1290→1330 (2026-08-02): #395 Excel-export tile — feature lines, the
   // orchestration itself lives in excel_export.dart.
-  'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1132, // 2026-09-11 #1154 1250→1132: the office and desk sheets became one space_properties_sheet.dart // 2026-08 #585 seat NFC field
+  'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1063, // 2026-09-11 #1154 1250→1132: the office and desk sheets became one space_properties_sheet.dart // 2026-08 #585 seat NFC field
   // 1010→1020 (2026-08-04): #462 whole-space overlays on the plan view.
   // 1020→1070: #466 the hub's whole-level reserve button + visibility.
   // 1090→1110 (2026-08-23): #611 fade-through view switch + MotionReveal
@@ -65,7 +65,7 @@ const Map<String, int> _baseline = {
   // 1190→1215 (2026-08-31): #772 windowIsNow — the live-window probe in
   // workspace wall time beside the isLive it refines.
   // 1215→1240 (2026-09-01): #814 closed days into the Day/Week/Month views + the legend.
-  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1300, // 2026-09-05 #903 the seat's day: segments for the plan, the timeline behind a shared seat
+  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1298, // 2026-09-05 #903 the seat's day: segments for the plan, the timeline behind a shared seat
   // 980→990 (2026-08-03): #419 workspace dev-mode switch — admin gate,
   // workspace hint subtitle and the RPC write helper.
   // 990→1000 (2026-08-05): #478 Billing & reports admin entry.
@@ -73,7 +73,7 @@ const Map<String, int> _baseline = {
   // 1040→1140 (2026-08-13): #560 the About section (author, licence,
   // privacy, bug link, support tiles).
   // 1260→1308 (2026-09-06): #945 sites.
-  'lib/features/profile/presentation/screens/settings_screen.dart': 1316, // 2026-09-11 #1154 1420→1316: the 723-line build() became four section methods; About and the section header moved to widgets/ // 2026-09-06 #970 the demo-mode switch and the address-dialog guard // 2026-09-06 #969 the navigation tile and its dialog // 2026-08 #586 default-period tile + dialog // 2026-09-05 #886 the personal-information tile beside the legacy address dialog it replaces // 2026-09-05 #902 the payment-conditions tile // 2026-09-08 #1019 twenty-two help symbols now name the exact setting they document (HelpAnchor), one named argument per symbol
+  'lib/features/profile/presentation/screens/settings_screen.dart': 1311, // 2026-09-11 #1154 1420→1316: the 723-line build() became four section methods; About and the section header moved to widgets/ // 2026-09-06 #970 the demo-mode switch and the address-dialog guard // 2026-09-06 #969 the navigation tile and its dialog // 2026-08 #586 default-period tile + dialog // 2026-09-05 #886 the personal-information tile beside the legacy address dialog it replaces // 2026-09-05 #902 the payment-conditions tile // 2026-09-08 #1019 twenty-two help symbols now name the exact setting they document (HelpAnchor), one named argument per symbol
   // 1020→1040 (2026-08-06): #513 the Role management tile.
   // 980→1030 (2026-08-05): #476 the statement export honors the
   // owner's report template (#478 Invoices button joins the grid).
@@ -84,7 +84,7 @@ const Map<String, int> _baseline = {
   // 1220→1200 (2026-08-31): #767 scheduled expenses — the button, the
   // sweep watch and the occurrence cards join the other money actions.
   // 1253→1316 (2026-09-06): #934 the status report kind and the money-screen tiles.
-  'lib/features/money/presentation/screens/money_screen.dart': 1316, // 2026-09-05 #881 member payment conditions: effective terms threaded to every document // 2026-09-05 #880 reportTexts beside #887 managedProfiles after the rebase // 2026-09-05 #873 the consumption report entry points // 2026-09-05 #881 member payment conditions: effective terms threaded to every document // 2026-09-05 #873 the consumption report entry points
+  'lib/features/money/presentation/screens/money_screen.dart': 1277, // 2026-09-05 #881 member payment conditions: effective terms threaded to every document // 2026-09-05 #880 reportTexts beside #887 managedProfiles after the rebase // 2026-09-05 #873 the consumption report entry points // 2026-09-05 #881 member payment conditions: effective terms threaded to every document // 2026-09-05 #873 the consumption report entry points
   // 1210→1220 (2026-08-06): #512 the account card above the bill.
   // 910→950 (2026-08-04): #456 note tile + admin broadcast button —
   // the dialog itself is its own file.
@@ -95,13 +95,13 @@ const Map<String, int> _baseline = {
   // the 0044 reservation-limit shape next to it, same concern.
   // 1130→1180 (2026-08-31): #763 fifteen help dots — rows, dialogs and
   // the gated negotiation wrap all live beside their existing helpers.
-  'lib/features/workspace/presentation/screens/members_screen.dart': 1180,
+  'lib/features/workspace/presentation/screens/members_screen.dart': 519,
   // 900→920 (2026-08-03): #410 admin-visible email line on the member
   // row — the row shares its chip helpers with the detail sheet, so
   // extracting it would drag half the file; 15 feature lines instead.
   // 920→960 (2026-08-04): #456 notify affordance threaded through the
   // row and the sheet.
-  'lib/features/members/presentation/screens/directory_screen.dart': 951, // 2026-09-11 #1154 965→951: the upcoming-bookings helper and the per-member grouping moved to domain/directory_status.dart // 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed
+  'lib/features/members/presentation/screens/directory_screen.dart': 946, // 2026-09-11 #1154 965→951: the upcoming-bookings helper and the per-member grouping moved to domain/directory_status.dart // 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed
   // 900→920 (2026-08-01): #393 environment picker threaded through the
   // send flow — feature lines, not accretion; picker itself is its own file.
   // 920→950 (2026-08-04): #454 template lookup + resolution threaded
@@ -127,11 +127,11 @@ const Map<String, int> _baseline = {
   // invoice_proforma.dart. `unawaited_futures` needed one import here
   // and the file was exactly at its cap, which is the house rule's cue
   // to extract rather than raise the number.
-  'lib/features/money/presentation/invoice_documents.dart': 616, // 2026-09-11 #1061 born from the invoice_actions split: the PDF/e-invoice builders and the letter pipeline
-  'lib/features/money/presentation/invoice_actions.dart': 1018, // 2026-09-11 #1061 2340→1605→1018: the data builders moved to domain/report_data.dart, then document generation to invoice_documents.dart
+  'lib/features/money/presentation/invoice_documents.dart': 610, // 2026-09-11 #1061 born from the invoice_actions split: the PDF/e-invoice builders and the letter pipeline
+  'lib/features/money/presentation/invoice_actions.dart': 1011, // 2026-09-11 #1061 2340→1605→1018: the data builders moved to domain/report_data.dart, then document generation to invoice_documents.dart
   // 2026-09-05 #919 an association is steered off the exempt scheme:
   // the regime that demands a VAT number it cannot have.
-  'lib/features/money/presentation/screens/legal_identity_screen.dart': 660, // 2026-09-02 #837 the annex question // 2026-09-04 #871 the bank block: IBAN/BIC/bank name reach a designed report, resolved once in legalMentionData for every document // 2026-09-04 #875 layout-wins hooks + the strings/features hoists they need; the engine itself lives under domain/report_layout // 2026-09-05 #886 the client identity (name, company, contacts, postal block) resolved for every document and frozen on the proforma // 2026-09-05 #881 member payment conditions: effective terms threaded to every document // 2026-09-05 #880 owner texts beside #881 member terms after the rebase // 2026-09-05 #910 the client name falls back to the company and the settlement date reaches the document: invoiceDueAt + the due_date placeholder threaded through every render // 2026-09-05 #917 the development watermark, resolved where the workspace is already at hand, and carried to every report through the shared letter funnel // 2026-09-06 #922 the two Chorus Pro references as placeholders, and the government destination on the pre-flight check // 2026-09-08 #1019 eighteen help symbols now name the exact field they document (HelpAnchor), one named argument per symbol
+  'lib/features/money/presentation/screens/legal_identity_screen.dart': 656, // 2026-09-02 #837 the annex question // 2026-09-04 #871 the bank block: IBAN/BIC/bank name reach a designed report, resolved once in legalMentionData for every document // 2026-09-04 #875 layout-wins hooks + the strings/features hoists they need; the engine itself lives under domain/report_layout // 2026-09-05 #886 the client identity (name, company, contacts, postal block) resolved for every document and frozen on the proforma // 2026-09-05 #881 member payment conditions: effective terms threaded to every document // 2026-09-05 #880 owner texts beside #881 member terms after the rebase // 2026-09-05 #910 the client name falls back to the company and the settlement date reaches the document: invoiceDueAt + the due_date placeholder threaded through every render // 2026-09-05 #917 the development watermark, resolved where the workspace is already at hand, and carried to every report through the shared letter funnel // 2026-09-06 #922 the two Chorus Pro references as placeholders, and the government destination on the pre-flight check // 2026-09-08 #1019 eighteen help symbols now name the exact field they document (HelpAnchor), one named argument per symbol
   // 1920→1960 (2026-08-06): #514 quickViewInvoice + the proforma triad.
   // 1910→1920 (2026-08-06): #512 imputation candidates (adjustment
   // credits, baked-credit filter).
@@ -143,8 +143,8 @@ const Map<String, int> _baseline = {
   // the app's 155 help symbols. It is a catalogue, not logic — the
   // right shape for it is one documented constant per object, and it
   // grows with the app rather than being refactored smaller.
-  'lib/core/help/help_anchors.dart': 660,
-  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1572, // 2026-09-11 #1154 1605→1572: the 577-line build() became three section methods; the reset dialog moved to widgets/reset_confirm_dialog.dart
+  'lib/core/help/help_anchors.dart': 606,
+  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1552, // 2026-09-11 #1154 1605→1572: the 577-line build() became three section methods; the reset dialog moved to widgets/reset_confirm_dialog.dart
   // 600→640 (2026-08-05): #492 the request-deletion dialog + flow.
   // 640→760 (2026-08-22): #574 the running-booking extension flow.
   // 760→880 (2026-08-25): #638 the symmetric END-EARLIER flow — the
@@ -158,7 +158,7 @@ const Map<String, int> _baseline = {
   // band rendering, column groups, token palette, in-place editor.
   // #825 (2026-09-02): the member page and the shared admin actions.
   // 900→948 (2026-09-06): #945 sites.
-  'lib/features/members/presentation/screens/member_page.dart': 948, // 2026-09-05 #887 the managed-member tiles (edit identity, hand over, revoke) + chip
+  'lib/features/members/presentation/screens/member_page.dart': 944, // 2026-09-05 #887 the managed-member tiles (edit identity, hand over, revoke) + chip
   // 720→779 (2026-09-06): #945 sites.
   'lib/features/workspace/presentation/member_admin_actions.dart': 780, // 2026-09-11 #1061 779→780: one import, the letter builders' new home
   // #828 (2026-09-02): the expense_repartition flag and repository methods.
@@ -166,23 +166,23 @@ const Map<String, int> _baseline = {
   // registry — it grows by ~5 lines per flag by design, and
   // splitting the registry would defeat its whole purpose.
   // 740→789 (2026-09-06): #934 the status report kind and the money-screen tiles.
-  'lib/features/workspace/domain/workspace_feature.dart': 1260, // 2026-09-13 #1221 1130→1260: every manifest entry gained a required `surface` — one line each, and the registry is one declarative map by design // 2026-09-11 #1120 workspaceLibrary entry (was 1120) // // 2026-09-11 #1063 the Core/Platform tier: one required line on each of the hundred manifest entries, which is the point — a flag cannot be added without deciding which tier it is in // 2026-09-11 #1110 memberOrigin + #1119 memberEnvironments: the registry grows ~10 lines per flag by design (enum doc + manifest entry), which is the one file where a bump is the shape of the work rather than a failure to extract // 2026-09-07 #987/#988 environmentPairs + deployments // 2026-09-06 #985 vatRateHistory + vatCounterparty // 2026-09-06 #916 configurationTransfer // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #873 usageReport beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #878 vatReport beside #881 memberPaymentTerms after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #873 usageReport beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 five flags landed the same day (#880 #887 #881 #873 #878 #874)
-  'lib/features/workspace/presentation/screens/features_screen.dart': 360, // 2026-09-13 #1190 690→360: the 425 lines of switch descriptions became presentation/feature_copy.dart, which left room for the search the screen needed// 2026-09-11 #1063 the two tier headings and the reindented tile loop // 2026-09-11 #1110 + #1119 descriptions // 2026-09-07 #987 environmentPairs description beside #985's two
-  'lib/features/money/presentation/widgets/report_visual_editor.dart': 1000, // 2026-09-02 #822 drag, insert palette, image controls, move-to-band
+  'lib/features/workspace/domain/workspace_feature.dart': 1251, // 2026-09-13 #1221 1130→1260: every manifest entry gained a required `surface` — one line each, and the registry is one declarative map by design // 2026-09-11 #1120 workspaceLibrary entry (was 1120) // // 2026-09-11 #1063 the Core/Platform tier: one required line on each of the hundred manifest entries, which is the point — a flag cannot be added without deciding which tier it is in // 2026-09-11 #1110 memberOrigin + #1119 memberEnvironments: the registry grows ~10 lines per flag by design (enum doc + manifest entry), which is the one file where a bump is the shape of the work rather than a failure to extract // 2026-09-07 #987/#988 environmentPairs + deployments // 2026-09-06 #985 vatRateHistory + vatCounterparty // 2026-09-06 #916 configurationTransfer // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #873 usageReport beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #878 vatReport beside #881 memberPaymentTerms after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #873 usageReport beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 five flags landed the same day (#880 #887 #881 #873 #878 #874)
+  'lib/features/workspace/presentation/screens/features_screen.dart': 242, // 2026-09-13 #1190 690→360: the 425 lines of switch descriptions became presentation/feature_copy.dart, which left room for the search the screen needed// 2026-09-11 #1063 the two tier headings and the reindented tile loop // 2026-09-11 #1110 + #1119 descriptions // 2026-09-07 #987 environmentPairs description beside #985's two
+  'lib/features/money/presentation/widgets/report_visual_editor.dart': 981, // 2026-09-02 #822 drag, insert palette, image controls, move-to-band
   // 660→700 (2026-08-05): #494 the three further document chips + their
   // live data and letter-PDF branches.
   // 700→800 (2026-08-05): #496 the template-language chips + per-language
   // overlay assembly.
   // 800→810 (2026-08-31): #763 the report editor's header help dot.
-  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 1101, // 2026-09-11 #1061 1160→1101: the live-data switch moved to template_live_data.dart // 1180→1160 (2026-09-10): #1056 the app bar's undo/redo pair left for report_history_controls.dart
-  'lib/features/money/presentation/widgets/report_field_picker.dart': 420, // 2026-09-06 #966 meanings + topic groups // 2026-09-02 #822 the page, undo/redo, guards // 2026-09-04 #875 layout drafts per kind, the panel mount and its three handlers — the panel and the actions themselves live in their own files // 2026-09-05 #880 the owner-texts drafts per language, merged into every preview/export, and the Texts panel mount
-  'lib/features/workspace/domain/workspace_xml.dart': 960,
-  'lib/features/profile/presentation/screens/new_instance_screen.dart': 560, // 2026-09-06 #977 six wizard steps
-  'lib/features/profile/presentation/screens/backend_screen.dart': 470, // 2026-09-06 #977 the wizard button // 2026-09-06 #916 schema v3: plan attributes + the configuration section
+  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 1099, // 2026-09-11 #1061 1160→1101: the live-data switch moved to template_live_data.dart // 1180→1160 (2026-09-10): #1056 the app bar's undo/redo pair left for report_history_controls.dart
+  'lib/features/money/presentation/widgets/report_field_picker.dart': 353, // 2026-09-06 #966 meanings + topic groups // 2026-09-02 #822 the page, undo/redo, guards // 2026-09-04 #875 layout drafts per kind, the panel mount and its three handlers — the panel and the actions themselves live in their own files // 2026-09-05 #880 the owner-texts drafts per language, merged into every preview/export, and the Texts panel mount
+  'lib/features/workspace/domain/workspace_xml.dart': 943,
+  'lib/features/profile/presentation/screens/new_instance_screen.dart': 480, // 2026-09-06 #977 six wizard steps
+  'lib/features/profile/presentation/screens/backend_screen.dart': 381, // 2026-09-06 #977 the wizard button // 2026-09-06 #916 schema v3: plan attributes + the configuration section
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.
   // 780→810 (2026-09-01): #814 closed columns.
-  'lib/features/reservations/presentation/widgets/week_grid.dart': 810,
+  'lib/features/reservations/presentation/widgets/week_grid.dart': 803,
   // 750→780 (2026-08-02): #395 adds fetchWorkspaceLedger and
   // fetchPaymentIntents — two new repository surfaces, not accretion.
   // 780→800 (2026-08-04): #454 fetch/setInvoicePdfTemplate.
@@ -196,7 +196,7 @@ const Map<String, int> _baseline = {
   // 980→1020 (2026-08-14): #568 per-destination gateway probe parse.
   // 600→630 (2026-08-22): #585 seatIdForNfcUid + the nfc_uid column in
   // the seat row mapping.
-  'lib/features/plan/data/supabase_floor_plan_repository.dart': 635, // 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed
+  'lib/features/plan/data/supabase_floor_plan_repository.dart': 631, // 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed
   // 1040→1130 (2026-08-31): #767 the six scheduled-expense methods live
   // beside the other money RPC wrappers they mirror.
   // 1130→1150 (2026-09-01): #802 the billing-rules read/write pair and
@@ -209,7 +209,7 @@ const Map<String, int> _baseline = {
   // repository implementation in two places for no gain.
   // 1260→1320 (2026-09-06): #925 three number-sequence methods.
   // 1320→1383 (2026-09-06): #934 two routes / three repository methods.
-  'lib/features/money/data/supabase_money_repository.dart': 1395, // 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed
+  'lib/features/money/data/supabase_money_repository.dart': 1393, // 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed
   // 600→630 (2026-08-11): #537 VAT price transparency — the gross-price
   // hint + per-pack VAT/currency subtitles (labeling, no new concern).
   // 630→660 (2026-08-11): #537 follow-up — live VAT-share helpers under
@@ -218,10 +218,10 @@ const Map<String, int> _baseline = {
   // (picker, resolution with inactive-rate fallback, immediate save).
   // 700→740 (2026-08-31): #763 thirteen help dots across bands, levels
   // and packages — each beside the field it explains.
-  'lib/features/money/presentation/screens/billing_screen.dart': 770, // 2026-09-08 #1019 thirteen help symbols now name the exact field they document (HelpAnchor), one named argument per symbol
+  'lib/features/money/presentation/screens/billing_screen.dart': 763, // 2026-09-08 #1019 thirteen help symbols now name the exact field they document (HelpAnchor), one named argument per symbol
   // 750→880 (2026-08-05): #510 the month-invoice card + settlement-
   // driven balance footer (the invoice decides settled/outstanding).
-  'lib/features/money/presentation/widgets/bill_view.dart': 901, // 2026-09-05 #881 member payment conditions: effective terms threaded to every document
+  'lib/features/money/presentation/widgets/bill_view.dart': 892, // 2026-09-05 #881 member payment conditions: effective terms threaded to every document
   // 600→660 (2026-08-04): #472 the due-reminder flag + emphasized
   // remind action on the open cards.
   // 660→740 (2026-08-05): #504 the partial-open card branch (remaining + write-off).
@@ -230,17 +230,17 @@ const Map<String, int> _baseline = {
   // (remaining value) from to-refund.
   // 820→840 (2026-09-01): #812 the Open tab hands over to the journey
   // list (open_invoice_card.dart) while the flag is on.
-  'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 860,
+  'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 846,
   // 750→770 (2026-08-05): #490 workspace-clock day instants beside the
   // naive axis anchor.
-  'lib/features/calendar/presentation/widgets/day_timeline.dart': 770,
+  'lib/features/calendar/presentation/widgets/day_timeline.dart': 769,
   // 820→830 (2026-08-25): #622 the whole-space conflict now resolves
   // the blocking RESERVATION (message-the-reserver affordance); the
   // seat action dialog moved OUT into the shared space_act_sheet.
   // 830→980 (2026-08-25): #638 the CONVERGED whole-space sheet — the
   // "For the member" selector and the assign write moved in from the
   // deleted _LevelReserveSheet (plan_screen.dart shrank by more).
-  'lib/features/reservations/presentation/widgets/space_scan.dart': 980,
+  'lib/features/reservations/presentation/widgets/space_scan.dart': 880,
   // 600→640 (2026-08-04): #460/#464 Messages inbox rows + mark-seen —
   // the note row widget lives with the feed it sits in. 640→700: #467
   // swipe reply/delete on the rows.
@@ -252,35 +252,35 @@ const Map<String, int> _baseline = {
   // 850→873 (2026-08-31): #769 the deviated-occurrence feed line names
   // 600→615 (2026-08-31): #769 the two missing domain cards (price
   // negotiation, scheduled expense) joined the pinned card list.
-  'lib/features/events/presentation/screens/validation_settings_screen.dart': 615,
+  'lib/features/events/presentation/screens/validation_settings_screen.dart': 437,
   // 600→615 (2026-08-31): #771 the kiosk consent exemption and its
   // rationale live where the gate lives.
   // 700→751 (2026-09-06): #934 two routes / three repository methods.
-  'lib/app/router.dart': 752, // 2026-09-11 #1120 /library on top of the #1148/#1150/#1151 review batch (745→752) // 2026-09-02 #821/#822/#825/#827 the conversation, report-editor, member and wizard routes // 2026-09-05 #902 /settings/payment-terms // 2026-09-10 #1085 751→730: the nine repeated owner-guard closures became one `needs(...)` helper
+  'lib/app/router.dart': 747, // 2026-09-11 #1120 /library on top of the #1148/#1150/#1151 review batch (745→752) // 2026-09-02 #821/#822/#825/#827 the conversation, report-editor, member and wizard routes // 2026-09-05 #902 /settings/payment-terms // 2026-09-10 #1085 751→730: the nine repeated owner-guard closures became one `needs(...)` helper
   // default→660 (2026-09-06): #934 the status report kind / two flags.
-  'lib/features/money/presentation/report_defaults.dart': 660,
+  'lib/features/money/presentation/report_defaults.dart': 628,
   // 600→620 (2026-09-01): #791 the tap dispatcher records the branch it
   // took. The paragraphs explaining WHY each silent branch needs a line
   // were extracted to booking_trace_points.dart; what stayed is eight
   // call sites, on the branches that used to end in nothing at all.
   // 620→680 (2026-09-01): #814 the booking gate before the sheet, the admin check-out.
-  'lib/features/reservations/presentation/reserve_seat_actions.dart': 760, // 2026-09-05 #903 the seat's day: segments for the plan, the timeline behind a shared seat
+  'lib/features/reservations/presentation/reserve_seat_actions.dart': 740, // 2026-09-05 #903 the seat's day: segments for the plan, the timeline behind a shared seat
   // the validated amount and the member's explanation.
-  'lib/features/events/presentation/screens/events_screen.dart': 925, // 2026-09-02 #821 mark seen only when showing // 2026-09-05 #881 member payment conditions: effective terms threaded to every document
+  'lib/features/events/presentation/screens/events_screen.dart': 921, // 2026-09-02 #821 mark seen only when showing // 2026-09-05 #881 member payment conditions: effective terms threaded to every document
   // 680→700 (2026-08-04): #454 owner-template intro/footer blocks.
   // 700→790: #470 the banded report renderer (_reportWidgets) and the
   // header/body/footer band branches.
   // 790→820 (2026-08-04): #472 the banded LETTER builder.
   // 820→840 (2026-08-05): #482 the side-by-side ReportColumns renderer.
   // 840→860 (2026-08-05): #488 the ReportImage renderer branch.
-  'lib/features/money/domain/invoice_pdf.dart': 1085, // 2026-09-02 #837 per-invoice sheets + annexes // 2026-09-02 #831 source groups + watermark helper // 2026-09-04 #869 page-1 window layout: the geometry and both painted blocks live in address_window.dart; what stays here is the flow restructure itself — the letterhead boxed into the band above the field and the field's own height reserved below it // 2026-09-04 #872 the page model: header on page 1, continuation strip on 2+, footer pinned to every page — three callbacks that ARE this file's contract, so splitting them would hide it // 2026-09-04 #873 window-envelope conformance: the identification block moves out of the letterhead to 90 mm when a window is in use
-  'lib/features/money/presentation/widgets/invoice_detail_sheet.dart': 530, // 2026-09-13 #1217 640→530: the action list became widgets/invoice_sheet_actions.dart — it is the half that grows every time an invoice learns a new verb // 2026-09-02 #831 folded banner // 2026-09-02 #822 image size/alignment
+  'lib/features/money/domain/invoice_pdf.dart': 1050, // 2026-09-02 #837 per-invoice sheets + annexes // 2026-09-02 #831 source groups + watermark helper // 2026-09-04 #869 page-1 window layout: the geometry and both painted blocks live in address_window.dart; what stays here is the flow restructure itself — the letterhead boxed into the band above the field and the field's own height reserved below it // 2026-09-04 #872 the page model: header on page 1, continuation strip on 2+, footer pinned to every page — three callbacks that ARE this file's contract, so splitting them would hide it // 2026-09-04 #873 window-envelope conformance: the identification block moves out of the letterhead to 90 mm when a window is in use
+  'lib/features/money/presentation/widgets/invoice_detail_sheet.dart': 519, // 2026-09-13 #1217 640→530: the action list became widgets/invoice_sheet_actions.dart — it is the half that grows every time an invoice learns a new verb // 2026-09-02 #831 folded banner // 2026-09-02 #822 image size/alignment
   // 670→680 (2026-08-04): #446 out-of-shell WorkHours install — the
   // kiosk arms the ambient working day itself, like realtime (#430).
   // 680→690: #462 whole-space overlays on the wall display.
   // 690→720 (2026-08-08): #519 the period step wiring (sheet call,
   // combined reserve+check-in action, warm granularity).
-  'lib/features/kiosk/presentation/screens/kiosk_screen.dart': 720,
+  'lib/features/kiosk/presentation/screens/kiosk_screen.dart': 652,
   // 600→640 (2026-08-04): #446 fetchWorkHours/setWorkHours — two new
   // repository surfaces (merge-preserving booking_rules writes), not
   // accretion. 640→660: #456 sendMemberNote/fetchMyNotes. 660→690:
@@ -300,8 +300,8 @@ const Map<String, int> _baseline = {
   // SAME _mergeBookingRule helper) + setMemberSimultaneousLimit.
   // 970→1020 (2026-09-06): #937 three platform-owner RPC readers.
   // 1020→1062 (2026-09-06): #948 the entity's numbers on the site sheet.
-  'lib/features/workspace/data/supabase_workspace_repository.dart': 1100, // 2026-09-11 #1063 the creation flags + #1119 alsoProd // 2026-09-06 #914/#915 the managed identity moves behind its rule: managedIdentityOf + setManagedAccess // 2026-09-05 #887 managed members: identity parse, names from managed_identity, three handover RPCs // 2026-09-08 #1030 an empty member id is dropped from the profile query, with the paragraph saying why one managed member blanked every name // 2026-09-10 #1089 1070→1090: setRolePermission, the single-permission write. The read-modify-write it replaces got SHORTER; the growth is the new method beside the whole-list one, which stays for the import and the deployment. Extracting part of a data-layer repository inside a security fix would be the larger, riskier diff
-  'lib/features/workspace/domain/workspace_repository.dart': 625, // 2026-09-11 #1120 the library surface of the interface, documented per method (was the 600 default)
+  'lib/features/workspace/data/supabase_workspace_repository.dart': 1074, // 2026-09-11 #1063 the creation flags + #1119 alsoProd // 2026-09-06 #914/#915 the managed identity moves behind its rule: managedIdentityOf + setManagedAccess // 2026-09-05 #887 managed members: identity parse, names from managed_identity, three handover RPCs // 2026-09-08 #1030 an empty member id is dropped from the profile query, with the paragraph saying why one managed member blanked every name // 2026-09-10 #1089 1070→1090: setRolePermission, the single-permission write. The read-modify-write it replaces got SHORTER; the growth is the new method beside the whole-list one, which stays for the import and the deployment. Extracting part of a data-layer repository inside a security fix would be the larger, riskier diff
+  'lib/features/workspace/domain/workspace_repository.dart': 619, // 2026-09-11 #1120 the library surface of the interface, documented per method (was the 600 default)
   // 600→660 (2026-08-23): #600 the Booking policies section — three
   // switches + one write handler on the existing availability screen.
   // 660→730 (2026-08-25): #624 the outside-hours segmented control +
@@ -311,12 +311,12 @@ const Map<String, int> _baseline = {
   // 800→810 (2026-08-25): #634 the outside-hours control becomes FOUR
   // radio rows with per-mode subtitles (a four-way SegmentedButton does
   // not fit 360dp) — net of the deleted grid_within_hours switch.
-  'lib/features/workspace/presentation/screens/availability_screen.dart': 835, // 2026-09-08 #1019 nine help symbols now name the exact rule they document (HelpAnchor), one named argument per symbol
+  'lib/features/workspace/presentation/screens/availability_screen.dart': 829, // 2026-09-08 #1019 nine help symbols now name the exact rule they document (HelpAnchor), one named argument per symbol
   // 770→790 (2026-08-06): #513 setRolePermissions + role_permissions row.
   // 630→640 (2026-08-10): two-dot month markers (mine + others per day)
   // — a dozen lines of dot layout, no new concern worth a split.
   // 640→690 (2026-08-23): #611 directional month-slide switcher.
-  'lib/features/calendar/presentation/screens/calendar_screen.dart': 690,
+  'lib/features/calendar/presentation/screens/calendar_screen.dart': 676,
 };
 
 void main() {
