@@ -383,7 +383,7 @@
   "paymentProviderStripe": "Tarjeta (Stripe)",
   "paymentProviderMollie": "Mollie — iDEAL, Bancontact…",
   "payOnlineDiagTitle": "Pagos en línea — sin configurar",
-  "payOnlineDiagHint": "Al servidor le falta esta configuración (docs/design/payments-integration.md):",
+  "payOnlineDiagHint": "Al servidor le falta esta configuración:",
   "billInvoiceCard": "Factura {number}",
   "@billInvoiceCard": {
     "description": "Bill card title for the invoice covering the browsed month (#510)",
@@ -621,7 +621,7 @@
   "buyPackageDone": "Días añadidos — disfruta del tiempo extra.",
   "payConfigTitle": "Pagos en línea",
   "payConfigOpen": "Configurar",
-  "payConfigIntro": "Introduce cada proveedor de pago que quieras ofrecer. Las claves se guardan de forma segura en el servidor y no se vuelven a mostrar. Consulta docs/design/payments-integration.md.",
+  "payConfigIntro": "Introduce cada proveedor de pago que quieras ofrecer. Las claves se guardan de forma segura en el servidor y no se vuelven a mostrar.",
   "payConfigConfigured": "Configurado",
   "payConfigNotConfigured": "Sin configurar",
   "payConfigSecretSet": "Definido — deja en blanco para conservar",
@@ -1130,6 +1130,7 @@
   "@courtesyMrs": {
     "description": "#912 courtesy title: courtesyMrs"
   },
+  "courtesyHintManaged": "Se imprime delante de su nombre en los documentos. «Ninguno» imprime solo el nombre.",
   "featureDemoMode": "Modo demo",
   "@featureDemoMode": {
     "description": "#970 demo mode: featureDemoMode"
@@ -1409,8 +1410,8 @@
   "directoryOnline": "En línea",
   "directoryReservedToday": "Reservado hoy",
   "directoryLastSeenMinutes": "Visto hace {minutes} min",
-  "directoryLastSeenHours": "Visto hace {hours} h",
-  "directoryLastSeenDays": "Visto hace {days} d",
+  "directoryLastSeenHours": "{hours, plural, =1{Visto hace 1 hora} other{Visto hace {hours} horas}}",
+  "directoryLastSeenDays": "{days, plural, =1{Visto hace 1 día} other{Visto hace {days} días}}",
   "directoryWhatsapp": "Chatear por WhatsApp",
   "directoryOpenGroup": "Abrir el grupo de WhatsApp",
   "directoryClose": "Cerrar",
@@ -1429,7 +1430,7 @@
       }
     }
   },
-  "memberPageLevelTitle": "Reservas de una planta entera",
+  "memberPageLevelTitle": "Reservas de un espacio entero",
   "memberPageGroupMembership": "Membresía",
   "memberPageGroupBooking": "Reglas de reserva",
   "memberPageGroupBilling": "Facturación",
@@ -1809,7 +1810,7 @@
   "featureInvoicePdfTemplateDesc": "Introducción y pie escritos por el propietario en el PDF de la factura. Nunca toca el XML de la factura electrónica.",
   "featureMemberNotifications": "Notificaciones entre miembros",
   "featureMemberNotificationsDesc": "Mensajería entre miembros: conversaciones privadas y de grupo, confirmaciones de lectura, enlaces a una reserva o un espacio; los admins pueden notificar a todos los admins, propietario incluido.",
-  "featureDunning": "Recordatorios de pago (Mahnwesen)",
+  "featureDunning": "Recordatorios de pago",
   "@featureDunning": {
     "description": "Feature-registry completeness (#502)"
   },

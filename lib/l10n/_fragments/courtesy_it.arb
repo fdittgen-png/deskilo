@@ -19,5 +19,6 @@
   "courtesyMrs": "Sig.ra",
   "@courtesyMrs": {
     "description": "#912 courtesy title: courtesyMrs"
-  }
+  },
+  "courtesyHintManaged": "Stampata prima del loro nome sui documenti. «Nessuna» stampa solo il nome."
 }

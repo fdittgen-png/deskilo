@@ -175,7 +175,7 @@
   "featureInvoicePdfTemplateDesc": "Owner-written intro and footer text on the invoice PDF. Never touches the e-invoice XML.",
   "featureMemberNotifications": "Member notifications",
   "featureMemberNotificationsDesc": "Messaging between members: private and group conversations, read receipts, links to a reservation or a space; admins can notify all admins, owner included.",
-  "featureDunning": "Payment reminders (Mahnwesen)",
+  "featureDunning": "Payment reminders",
   "@featureDunning": {
     "description": "Feature-registry completeness (#502)"
   },

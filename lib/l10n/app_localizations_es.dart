@@ -616,8 +616,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get payOnlineDiagTitle => 'Pagos en línea — sin configurar';
 
   @override
-  String get payOnlineDiagHint =>
-      'Al servidor le falta esta configuración (docs/design/payments-integration.md):';
+  String get payOnlineDiagHint => 'Al servidor le falta esta configuración:';
 
   @override
   String billInvoiceCard(String number) {
@@ -907,7 +906,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get payConfigIntro =>
-      'Introduce cada proveedor de pago que quieras ofrecer. Las claves se guardan de forma segura en el servidor y no se vuelven a mostrar. Consulta docs/design/payments-integration.md.';
+      'Introduce cada proveedor de pago que quieras ofrecer. Las claves se guardan de forma segura en el servidor y no se vuelven a mostrar.';
 
   @override
   String get payConfigConfigured => 'Configurado';
@@ -1589,6 +1588,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get courtesyMrs => 'Sra.';
 
   @override
+  String get courtesyHintManaged =>
+      'Se imprime delante de su nombre en los documentos. «Ninguno» imprime solo el nombre.';
+
+  @override
   String get featureDemoMode => 'Modo demo';
 
   @override
@@ -1876,12 +1879,24 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String directoryLastSeenHours(int hours) {
-    return 'Visto hace $hours h';
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: 'Visto hace $hours horas',
+      one: 'Visto hace 1 hora',
+    );
+    return '$_temp0';
   }
 
   @override
   String directoryLastSeenDays(int days) {
-    return 'Visto hace $days d';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Visto hace $days días',
+      one: 'Visto hace 1 día',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -1922,7 +1937,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get memberPageLevelTitle => 'Reservas de una planta entera';
+  String get memberPageLevelTitle => 'Reservas de un espacio entero';
 
   @override
   String get memberPageGroupMembership => 'Membresía';
@@ -2604,7 +2619,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Mensajería entre miembros: conversaciones privadas y de grupo, confirmaciones de lectura, enlaces a una reserva o un espacio; los admins pueden notificar a todos los admins, propietario incluido.';
 
   @override
-  String get featureDunning => 'Recordatorios de pago (Mahnwesen)';
+  String get featureDunning => 'Recordatorios de pago';
 
   @override
   String get featureDunningDesc =>

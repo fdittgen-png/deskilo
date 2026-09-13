@@ -896,11 +896,13 @@ String relativeLastSeen(
     return l10n?.directoryLastSeenMinutes(minutes) ?? 'Seen $minutes min ago';
   }
   if (diff.inHours < 24) {
-    return l10n?.directoryLastSeenHours(diff.inHours) ??
-        'Seen ${diff.inHours} h ago';
+    final hours = diff.inHours;
+    return l10n?.directoryLastSeenHours(hours) ??
+        (hours == 1 ? 'Seen 1 hour ago' : 'Seen $hours hours ago');
   }
-  return l10n?.directoryLastSeenDays(diff.inDays) ??
-      'Seen ${diff.inDays} d ago';
+  final days = diff.inDays;
+  return l10n?.directoryLastSeenDays(days) ??
+      (days == 1 ? 'Seen 1 day ago' : 'Seen $days days ago');
 }
 
 /// #887 — takes an unredeemed handover back; the member stays managed.

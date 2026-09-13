@@ -7,8 +7,8 @@
   "directoryOnline": "En línea",
   "directoryReservedToday": "Reservado hoy",
   "directoryLastSeenMinutes": "Visto hace {minutes} min",
-  "directoryLastSeenHours": "Visto hace {hours} h",
-  "directoryLastSeenDays": "Visto hace {days} d",
+  "directoryLastSeenHours": "{hours, plural, =1{Visto hace 1 hora} other{Visto hace {hours} horas}}",
+  "directoryLastSeenDays": "{days, plural, =1{Visto hace 1 día} other{Visto hace {days} días}}",
   "directoryWhatsapp": "Chatear por WhatsApp",
   "directoryOpenGroup": "Abrir el grupo de WhatsApp",
   "directoryClose": "Cerrar",
@@ -27,7 +27,7 @@
       }
     }
   },
-  "memberPageLevelTitle": "Reservas de una planta entera",
+  "memberPageLevelTitle": "Reservas de un espacio entero",
   "memberPageGroupMembership": "Membresía",
   "memberPageGroupBooking": "Reglas de reserva",
   "memberPageGroupBilling": "Facturación",

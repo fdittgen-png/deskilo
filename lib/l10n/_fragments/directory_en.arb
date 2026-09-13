@@ -38,7 +38,7 @@
       }
     }
   },
-  "directoryLastSeenHours": "Seen {hours} h ago",
+  "directoryLastSeenHours": "{hours, plural, =1{Seen 1 hour ago} other{Seen {hours} hours ago}}",
   "@directoryLastSeenHours": {
     "description": "Directory offline chip: compact relative last-seen, under a day",
     "placeholders": {
@@ -47,7 +47,7 @@
       }
     }
   },
-  "directoryLastSeenDays": "Seen {days} d ago",
+  "directoryLastSeenDays": "{days, plural, =1{Seen 1 day ago} other{Seen {days} days ago}}",
   "@directoryLastSeenDays": {
     "description": "Directory offline chip: compact relative last-seen, a day or more",
     "placeholders": {
@@ -100,7 +100,7 @@
       }
     }
   },
-  "memberPageLevelTitle": "Whole-level bookings",
+  "memberPageLevelTitle": "Whole-space bookings",
   "memberPageGroupMembership": "Membership",
   "memberPageGroupBooking": "Booking rules",
   "memberPageGroupBilling": "Billing",

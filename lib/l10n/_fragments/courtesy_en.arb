@@ -19,5 +19,9 @@
   "courtesyMrs": "Ms",
   "@courtesyMrs": {
     "description": "#912 courtesy title: courtesyMrs"
+  },
+  "courtesyHintManaged": "Printed before their name on documents. \"None\" prints the name alone.",
+  "@courtesyHintManaged": {
+    "description": "Form-of-address hint on a MANAGED profile — the subject is somebody else, so third person (#1177)"
   }
 }

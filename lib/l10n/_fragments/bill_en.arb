@@ -139,7 +139,7 @@
   "@payOnlineDiagTitle": {
     "description": "Title of the admin diagnostics dialog when no provider can charge"
   },
-  "payOnlineDiagHint": "The server is missing this configuration (docs/design/payments-integration.md):",
+  "payOnlineDiagHint": "The server is missing this configuration:",
   "@payOnlineDiagHint": {
     "description": "Hint above the per-provider missing-config lines in the diagnostics dialog"
   },

@@ -157,7 +157,7 @@ void main() {
         tester
             .widget<Text>(find.byKey(const ValueKey('member-page-presence')))
             .data,
-        'Seen 2 h ago');
+        'Seen 2 hours ago');
 
     await _pumpPage(tester, 'member-3');
     expect(
@@ -286,7 +286,7 @@ void main() {
       (tester) async {
     await openDoraFromDirectory(tester, on: true);
     expect(find.byKey(const ValueKey('member-page')), findsOneWidget);
-    expect(find.text('Seen 2 h ago'), findsOneWidget);
+    expect(find.text('Seen 2 hours ago'), findsOneWidget);
   });
 
   testWidgets('with the flag off the row keeps the profile sheet',

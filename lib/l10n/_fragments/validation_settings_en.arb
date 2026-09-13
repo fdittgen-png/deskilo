@@ -68,7 +68,7 @@
   "@validationNoSelfDesc": {
     "description": "#840 - the invariant, stated where the rules are set"
   },
-  "validationNoSelfShort": "Never one's own",
+  "validationNoSelfShort": "Never your own",
   "@validationNoSelfShort": {
     "description": "#840 - summary chip when the owner exception is off"
   },

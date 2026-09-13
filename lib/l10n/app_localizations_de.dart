@@ -617,8 +617,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get payOnlineDiagTitle => 'Online-Zahlungen — nicht konfiguriert';
 
   @override
-  String get payOnlineDiagHint =>
-      'Auf dem Server fehlt diese Konfiguration (docs/design/payments-integration.md):';
+  String get payOnlineDiagHint => 'Auf dem Server fehlt diese Konfiguration:';
 
   @override
   String billInvoiceCard(String number) {
@@ -907,7 +906,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get payConfigIntro =>
-      'Gib jeden Zahlungsanbieter ein, den du anbieten willst. Schlüssel werden sicher auf dem Server gespeichert und nie wieder angezeigt. Siehe docs/design/payments-integration.md.';
+      'Gib jeden Zahlungsanbieter ein, den du anbieten willst. Schlüssel werden sicher auf dem Server gespeichert und nie wieder angezeigt.';
 
   @override
   String get payConfigConfigured => 'Eingerichtet';
@@ -1589,6 +1588,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get courtesyMrs => 'Frau';
 
   @override
+  String get courtesyHintManaged =>
+      'Wird auf Dokumenten vor ihrem Namen gedruckt. „Keine“ druckt nur den Namen.';
+
+  @override
   String get featureDemoMode => 'Demomodus';
 
   @override
@@ -1877,12 +1880,24 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String directoryLastSeenHours(int hours) {
-    return 'Vor $hours Std. gesehen';
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: 'Vor $hours Stunden gesehen',
+      one: 'Vor 1 Stunde gesehen',
+    );
+    return '$_temp0';
   }
 
   @override
   String directoryLastSeenDays(int days) {
-    return 'Vor $days Tagen gesehen';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Vor $days Tagen gesehen',
+      one: 'Vor 1 Tag gesehen',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -1923,7 +1938,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get memberPageLevelTitle => 'Buchungen ganzer Ebenen';
+  String get memberPageLevelTitle => 'Buchungen ganzer Bereiche';
 
   @override
   String get memberPageGroupMembership => 'Mitgliedschaft';

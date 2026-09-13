@@ -25,7 +25,7 @@
   "paymentProviderStripe": "Tarjeta (Stripe)",
   "paymentProviderMollie": "Mollie — iDEAL, Bancontact…",
   "payOnlineDiagTitle": "Pagos en línea — sin configurar",
-  "payOnlineDiagHint": "Al servidor le falta esta configuración (docs/design/payments-integration.md):",
+  "payOnlineDiagHint": "Al servidor le falta esta configuración:",
   "billInvoiceCard": "Factura {number}",
   "@billInvoiceCard": {
     "description": "Bill card title for the invoice covering the browsed month (#510)",

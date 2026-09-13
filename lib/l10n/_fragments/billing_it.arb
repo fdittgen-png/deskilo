@@ -37,7 +37,7 @@
   "buyPackageDone": "Giorni aggiunti — goditi il tempo extra.",
   "payConfigTitle": "Pagamenti online",
   "payConfigOpen": "Configura",
-  "payConfigIntro": "Inserisci ogni fornitore di pagamento da offrire. Le chiavi sono salvate in sicurezza sul server e non vengono più mostrate. Vedi docs/design/payments-integration.md.",
+  "payConfigIntro": "Inserisci ogni fornitore di pagamento da offrire. Le chiavi sono salvate in sicurezza sul server e non vengono più mostrate.",
   "payConfigConfigured": "Configurato",
   "payConfigNotConfigured": "Non configurato",
   "payConfigSecretSet": "Impostato — lascia vuoto per mantenere",
