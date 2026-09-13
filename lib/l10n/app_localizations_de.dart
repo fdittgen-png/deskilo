@@ -2504,6 +2504,58 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featuresNoMatch => 'Keine Funktion passt dazu.';
 
   @override
+  String get featureSurfaceReports => 'Dokumente zum Drucken';
+
+  @override
+  String get featureSurfaceEverywhere => 'Die ganze App';
+
+  @override
+  String get featureSurfaceReserveHint =>
+      'Platz buchen, der Grundriss, das Einchecken.';
+
+  @override
+  String get featureSurfaceCalendarHint =>
+      'Was ansteht, nach Tag und nach Monat.';
+
+  @override
+  String get featureSurfaceMembersHint =>
+      'Wer im Raum ist, ihre Profile und ihre Rollen.';
+
+  @override
+  String get featureSurfaceMoneyHint =>
+      'Abrechnungen, Zahlungen, Rechnungen und woraus sie bestehen.';
+
+  @override
+  String get featureSurfaceMessagesHint =>
+      'Gespräche, Hinweise und was auf dem Telefon ankommt.';
+
+  @override
+  String get featureSurfaceDocumentsHint =>
+      'Die Dateien, die der Raum aufbewahrt und teilt.';
+
+  @override
+  String get featureSurfaceKioskHint =>
+      'Das Tablet an der Tür, Ausweise und Scans.';
+
+  @override
+  String get featureSurfaceReportsHint =>
+      'Rechnungen, Abrechnungen und Briefe — und wie sie auf Papier aussehen.';
+
+  @override
+  String get featureSurfaceSettingsHint =>
+      'Wie der Raum selbst eingerichtet ist.';
+
+  @override
+  String get featureSurfaceEverywhereHint =>
+      'Ändert das Verhalten der App, überall.';
+
+  @override
+  String get featureMore => 'Mehr';
+
+  @override
+  String get featureLess => 'Weniger';
+
+  @override
   String get featuresTitle => 'Funktionen';
 
   @override
@@ -9072,6 +9124,46 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String eventValidationStage(int stage, int required) {
     return 'Freigabe $stage von $required angefragt';
+  }
+
+  @override
+  String get validationWorkflowBookings => 'Buchungen';
+
+  @override
+  String get validationWorkflowPeople => 'Personen und Rollen';
+
+  @override
+  String get validationWorkflowMoneyStake =>
+      'Bis es angenommen ist, zählt der Betrag auf keiner Abrechnung.';
+
+  @override
+  String get validationWorkflowBookingsStake =>
+      'Bis es angenommen ist, bleibt der Platz, wie er war.';
+
+  @override
+  String get validationWorkflowPeopleStake =>
+      'Bis es angenommen ist, behält die Person ihre jetzigen Zugriffe.';
+
+  @override
+  String get validationStepRaised => 'Jemand fragt';
+
+  @override
+  String get validationStepOwnerToo => 'und die Inhaberin, immer';
+
+  @override
+  String get validationStepApplies => 'es wird wirksam';
+
+  @override
+  String get validationThresholdNote => 'Kleinere Beträge gelten sofort.';
+
+  @override
+  String validationStepQuorum(int count, String who) {
+    return '$who — beliebige $count';
+  }
+
+  @override
+  String validationStepSequential(int count, String who) {
+    return '$who — $count nacheinander';
   }
 
   @override

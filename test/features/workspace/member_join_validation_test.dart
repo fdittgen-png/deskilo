@@ -131,6 +131,14 @@ void main() {
     await tester.tap(find.text('Validation rules'));
     await tester.pumpAndSettle();
 
+    // #1221 — the rules are grouped by the process they interrupt, so
+    // "New member" sits under People and Money comes first. Scroll to
+    // it rather than assume a position.
+    await tester.scrollUntilVisible(
+      find.text('New member'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(find.text('New member'), findsOneWidget);
   });
 }

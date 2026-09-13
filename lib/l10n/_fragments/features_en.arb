@@ -12,6 +12,62 @@
   "@featuresNoMatch": {
     "description": "#1190 empty state when the search or the Changed filter matches nothing"
   },
+  "featureSurfaceReports": "Documents you print",
+  "@featureSurfaceReports": {
+    "description": "#1221 the Features screen, grouped by where a feature shows up"
+  },
+  "featureSurfaceEverywhere": "The whole app",
+  "@featureSurfaceEverywhere": {
+    "description": "#1221 the Features screen, grouped by where a feature shows up"
+  },
+  "featureSurfaceReserveHint": "Booking a seat, the floor plan, check-in.",
+  "@featureSurfaceReserveHint": {
+    "description": "#1221 the Features screen, grouped by where a feature shows up"
+  },
+  "featureSurfaceCalendarHint": "What is happening, by day and by month.",
+  "@featureSurfaceCalendarHint": {
+    "description": "#1221 the Features screen, grouped by where a feature shows up"
+  },
+  "featureSurfaceMembersHint": "Who is in the space, their profiles and their roles.",
+  "@featureSurfaceMembersHint": {
+    "description": "#1221 the Features screen, grouped by where a feature shows up"
+  },
+  "featureSurfaceMoneyHint": "Statements, payments, invoices and what they are made of.",
+  "@featureSurfaceMoneyHint": {
+    "description": "#1221 the Features screen, grouped by where a feature shows up"
+  },
+  "featureSurfaceMessagesHint": "Conversations, alerts and what reaches a phone.",
+  "@featureSurfaceMessagesHint": {
+    "description": "#1221 the Features screen, grouped by where a feature shows up"
+  },
+  "featureSurfaceDocumentsHint": "The files the space keeps and shares.",
+  "@featureSurfaceDocumentsHint": {
+    "description": "#1221 the Features screen, grouped by where a feature shows up"
+  },
+  "featureSurfaceKioskHint": "The tablet at the door, badges and scanning.",
+  "@featureSurfaceKioskHint": {
+    "description": "#1221 the Features screen, grouped by where a feature shows up"
+  },
+  "featureSurfaceReportsHint": "Invoices, statements and letters, and how they look on paper.",
+  "@featureSurfaceReportsHint": {
+    "description": "#1221 the Features screen, grouped by where a feature shows up"
+  },
+  "featureSurfaceSettingsHint": "How the space itself is set up.",
+  "@featureSurfaceSettingsHint": {
+    "description": "#1221 the Features screen, grouped by where a feature shows up"
+  },
+  "featureSurfaceEverywhereHint": "Changes how the app behaves, wherever you are in it.",
+  "@featureSurfaceEverywhereHint": {
+    "description": "#1221 the Features screen, grouped by where a feature shows up"
+  },
+  "featureMore": "More",
+  "@featureMore": {
+    "description": "#1221 reveals the rest of a feature description"
+  },
+  "featureLess": "Less",
+  "@featureLess": {
+    "description": "#1221 folds a feature description back to its lead sentence"
+  },
   "featuresTitle": "Features",
   "@featuresTitle": {
     "description": "App-bar title of the owner feature-management screen and its settings tile"

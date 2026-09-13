@@ -2502,6 +2502,58 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featuresNoMatch => 'Nessuna funzionalità corrisponde.';
 
   @override
+  String get featureSurfaceReports => 'Documenti da stampare';
+
+  @override
+  String get featureSurfaceEverywhere => 'Tutta l\'app';
+
+  @override
+  String get featureSurfaceReserveHint =>
+      'Prenotare un posto, la pianta, l\'arrivo.';
+
+  @override
+  String get featureSurfaceCalendarHint =>
+      'Che cosa succede, per giorno e per mese.';
+
+  @override
+  String get featureSurfaceMembersHint =>
+      'Chi c\'è nello spazio, i loro profili e i loro ruoli.';
+
+  @override
+  String get featureSurfaceMoneyHint =>
+      'Estratti conto, pagamenti, fatture e di che cosa sono fatti.';
+
+  @override
+  String get featureSurfaceMessagesHint =>
+      'Conversazioni, avvisi e ciò che arriva sul telefono.';
+
+  @override
+  String get featureSurfaceDocumentsHint =>
+      'I file che lo spazio conserva e condivide.';
+
+  @override
+  String get featureSurfaceKioskHint =>
+      'Il tablet all\'ingresso, i badge e le scansioni.';
+
+  @override
+  String get featureSurfaceReportsHint =>
+      'Fatture, estratti conto e lettere, e come appaiono su carta.';
+
+  @override
+  String get featureSurfaceSettingsHint =>
+      'Come è configurato lo spazio stesso.';
+
+  @override
+  String get featureSurfaceEverywhereHint =>
+      'Cambia il comportamento dell\'app, ovunque tu sia.';
+
+  @override
+  String get featureMore => 'Altro';
+
+  @override
+  String get featureLess => 'Meno';
+
+  @override
   String get featuresTitle => 'Funzionalità';
 
   @override
@@ -9076,6 +9128,47 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String eventValidationStage(int stage, int required) {
     return 'Convalida $stage su $required richiesta';
+  }
+
+  @override
+  String get validationWorkflowBookings => 'Prenotazioni';
+
+  @override
+  String get validationWorkflowPeople => 'Persone e ruoli';
+
+  @override
+  String get validationWorkflowMoneyStake =>
+      'Finché non è accettato, l\'importo non conta su nessun estratto conto.';
+
+  @override
+  String get validationWorkflowBookingsStake =>
+      'Finché non è accettato, il posto resta com’era.';
+
+  @override
+  String get validationWorkflowPeopleStake =>
+      'Finché non è accettato, la persona mantiene gli accessi che ha.';
+
+  @override
+  String get validationStepRaised => 'Qualcuno chiede';
+
+  @override
+  String get validationStepOwnerToo => 'e la proprietaria, sempre';
+
+  @override
+  String get validationStepApplies => 'diventa effettivo';
+
+  @override
+  String get validationThresholdNote =>
+      'Gli importi minori si applicano subito.';
+
+  @override
+  String validationStepQuorum(int count, String who) {
+    return '$who — $count qualsiasi';
+  }
+
+  @override
+  String validationStepSequential(int count, String who) {
+    return '$who — $count in sequenza';
   }
 
   @override

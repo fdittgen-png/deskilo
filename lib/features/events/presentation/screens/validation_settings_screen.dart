@@ -6,8 +6,10 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../event_labels.dart';
+import '../validation_workflow.dart';
 import '../widgets/policy_editor_sheet.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -70,36 +72,6 @@ class ValidationSettingsScreen extends ConsumerWidget {
   const ValidationSettingsScreen({super.key});
 
 
-  /// "2 required · All admins · Owner must always validate" — the
-  /// effective rule at a glance.
-  String _summary(AppLocalizations? l10n, ValidationPolicy policy) {
-    // #840 — the scope decides who, and the summary used to ignore it:
-    // a 'members' rule read as "All admins", which was simply untrue.
-    final who = switch (policy.validatorScope) {
-      'members' => l10n?.validationScopeMembers ?? 'Every member',
-      'listed' => '${l10n?.validationSpecificAdmins ?? 'Specific admins'} '
-          '(${policy.eligibleAdminIds.length})',
-      _ => !policy.adminsMayValidate
-          ? (l10n?.validationOwnerOnly ?? 'Owner only')
-          : policy.eligibleAdminIds.isEmpty
-              ? (l10n?.validationAllAdmins ?? 'All admins')
-              : '${l10n?.validationSpecificAdmins ?? 'Specific admins'} '
-                  '(${policy.eligibleAdminIds.length})',
-    };
-    return [
-      '${l10n?.validationRequiredCount ?? 'Required validations'}: '
-          '${policy.requiredCount}',
-      who,
-      if (policy.ownerRequired)
-        l10n?.validationOwnerRequired ?? 'Owner must always validate',
-      if (policy.sequential)
-        l10n?.validationSequential ?? 'One after another',
-      // The rule that never changes comes last, and it is always there.
-      policy.ownerMaySelfValidate
-          ? (l10n?.validationOwnerSelfShort ?? 'Owner may validate their own')
-          : (l10n?.validationNoSelfShort ?? 'Never one\'s own'),
-    ].join(' · ');
-  }
 
   Future<void> _edit(
     BuildContext context,
@@ -232,7 +204,6 @@ class ValidationSettingsScreen extends ConsumerWidget {
                         .firstOrNull ??
                     ValidationPolicy.defaults(workspaceId, null),
                 customized: policies.any((p) => p.eventType == null),
-                summary: _summary,
                 onEdit: () => _edit(
                   context,
                   ref,
@@ -240,22 +211,30 @@ class ValidationSettingsScreen extends ConsumerWidget {
                   label: l10n?.validationDefaultPolicy ?? 'Default policy',
                 ),
               ),
-              for (final type in _cardTypes)
-                _PolicyCard(
-                  label: eventTypeLabel(l10n, type),
-                  effective: policies.isEmpty
-                      ? ValidationPolicy.defaults(workspaceId, type.dbName)
-                      : policyFor(type.dbName, policies),
-                  customized:
-                      policies.any((p) => p.eventType == type.dbName),
-                  summary: _summary,
-                  onEdit: () => _edit(
-                    context,
-                    ref,
-                    eventType: type.dbName,
-                    label: eventTypeLabel(l10n, type),
-                  ),
-                ),
+              // #1221 — grouped by the PROCESS a rule interrupts. The
+              // screen used to be twenty-four cards in one hand-ordered
+              // column, so finding the rule that was slowing something
+              // down meant already knowing which event type that thing
+              // emitted.
+              for (final workflow in ValidationWorkflow.values) ...[
+                _WorkflowHeading(workflow: workflow),
+                for (final type in _cardTypes)
+                  if (workflowOf(type) == workflow)
+                    _PolicyCard(
+                      label: eventTypeLabel(l10n, type),
+                      effective: policies.isEmpty
+                          ? ValidationPolicy.defaults(workspaceId, type.dbName)
+                          : policyFor(type.dbName, policies),
+                      customized:
+                          policies.any((p) => p.eventType == type.dbName),
+                      onEdit: () => _edit(
+                        context,
+                        ref,
+                        eventType: type.dbName,
+                        label: eventTypeLabel(l10n, type),
+                      ),
+                    ),
+              ],
             ],
           ),
         AsyncError() => Center(
@@ -275,50 +254,182 @@ class _PolicyCard extends StatelessWidget {
     required this.label,
     required this.effective,
     required this.customized,
-    required this.summary,
     required this.onEdit,
   });
 
   final String label;
   final ValidationPolicy effective;
   final bool customized;
-  final String Function(AppLocalizations?, ValidationPolicy) summary;
   final VoidCallback onEdit;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    final steps = validationSteps(l10n, effective);
     return Card(
       margin: const EdgeInsets.symmetric(
         horizontal: AppSpacing.md,
         vertical: AppSpacing.xs,
       ),
-      child: ListTile(
-        title: HelpDotTitle(
-          label,
-          l10n?.helpHintValidationTopic ?? 'confirmations',
-          anchor: HelpAnchor.validationOverview,
+      child: InkWell(
+        borderRadius: AppRadius.mdAll,
+        onTap: onEdit,
+        child: Padding(
+          padding: AppSpacing.mdAll,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: HelpDotTitle(
+                      label,
+                      l10n?.helpHintValidationTopic ?? 'confirmations',
+                      anchor: HelpAnchor.validationOverview,
+                    ),
+                  ),
+                  // Whether this rule is its own or the default's is
+                  // the difference between "I set that" and "that is
+                  // just what happens", so both states are named.
+                  Padding(
+                    padding: const EdgeInsets.only(right: AppSpacing.xs),
+                    child: Text(
+                      customized
+                          ? (l10n?.validationCustomized ?? 'Customized')
+                          : (l10n?.validationInherited ?? 'Inherits default'),
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: customized
+                            ? theme.colorScheme.primary
+                            : theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ),
+                  const Icon(Icons.edit_outlined, size: 18),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              // #1221 — the rule AS THE PROCESS. It used to read
+              // "2 required · All admins · Owner must always validate":
+              // three true facts in a row, none of which says what
+              // happens, in what order, or what is waiting meanwhile.
+              _ProcessStrip(steps: steps),
+              if (effective.minAmountCents > 0) ...[
+                const SizedBox(height: AppSpacing.xs),
+                Text(
+                  l10n?.validationThresholdNote ??
+                      'Smaller amounts apply straight away.',
+                  style: theme.textTheme.labelSmall
+                      ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                ),
+              ],
+            ],
+          ),
         ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(summary(l10n, effective)),
-            const SizedBox(height: 2),
-            Text(
-              customized
-                  ? (l10n?.validationCustomized ?? 'Customized')
-                  : (l10n?.validationInherited ?? 'Inherits default'),
-              style: theme.textTheme.labelSmall?.copyWith(
-                color: customized
+      ),
+    );
+  }
+}
+
+/// Who asks → who decides → what then, drawn as the three steps they
+/// are (#1221).
+class _ProcessStrip extends StatelessWidget {
+  const _ProcessStrip({required this.steps});
+
+  final ValidationSteps steps;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    Widget step(IconData icon, String text, {bool strong = false}) => Expanded(
+          child: Column(
+            children: [
+              Icon(
+                icon,
+                size: 18,
+                color: strong
                     ? theme.colorScheme.primary
                     : theme.colorScheme.onSurfaceVariant,
               ),
+              const SizedBox(height: 2),
+              Text(
+                text,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: strong
+                      ? theme.colorScheme.onSurface
+                      : theme.colorScheme.onSurfaceVariant,
+                  fontWeight: strong ? FontWeight.w600 : null,
+                ),
+              ),
+            ],
+          ),
+        );
+    Widget arrow() => Padding(
+          padding: const EdgeInsets.only(top: 2),
+          child: Icon(
+            Icons.chevron_right,
+            size: 16,
+            color: theme.colorScheme.outlineVariant,
+          ),
+        );
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        step(Icons.edit_note_outlined, steps.asked),
+        arrow(),
+        // The middle step is the one the owner edits, so it is the one
+        // drawn in full weight.
+        step(Icons.how_to_reg_outlined, steps.decide, strong: true),
+        arrow(),
+        step(Icons.check_circle_outline, steps.then),
+      ],
+    );
+  }
+}
+
+/// #1221 — the heading of one workflow, with what is at stake while a
+/// rule in it is waiting.
+class _WorkflowHeading extends StatelessWidget {
+  const _WorkflowHeading({required this.workflow});
+
+  final ValidationWorkflow workflow;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    return Padding(
+      key: ValueKey('validation-workflow-${workflow.name}'),
+      padding: const EdgeInsets.fromLTRB(
+          AppSpacing.md, AppSpacing.lg, AppSpacing.md, AppSpacing.xs),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(workflowIcon(workflow),
+              size: 20, color: theme.colorScheme.primary),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  workflowName(l10n, workflow).toUpperCase(),
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: theme.colorScheme.primary,
+                    letterSpacing: 1.1,
+                  ),
+                ),
+                Text(
+                  workflowStake(l10n, workflow),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-        trailing: const Icon(Icons.edit_outlined),
-        onTap: onEdit,
+          ),
+        ],
       ),
     );
   }
