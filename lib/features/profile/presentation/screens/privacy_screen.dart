@@ -88,20 +88,16 @@ class PrivacyScreen extends ConsumerWidget {
             key: const ValueKey('privacy-erase'),
             leading: Icon(Icons.person_remove_outlined,
                 color: theme.colorScheme.error),
-            // The destructive row keeps its error-colored Text, so the
-            // dot rides in a plain Row instead of HelpDotTitle.
-            title: Row(children: [
-              Flexible(
-                child: Text(
-                  l10n?.privacyErase ??
-                      'Leave this workspace and erase my data',
-                  style: TextStyle(color: theme.colorScheme.error),
-                ),
-              ),
-              HelpDot(l10n?.helpHintPrivacyTopic ?? 'Privacy',
-                anchor: HelpAnchor.privacyErase,
-              ),
-            ]),
+            // #1185 — the destructive row keeps its error colour AND the
+            // shared title widget: HelpDotTitle takes a style, so the
+            // hand-rolled Row that drifted the dot to the far right when
+            // the title wrapped is not needed.
+            title: HelpDotTitle(
+              l10n?.privacyErase ?? 'Leave this workspace and erase my data',
+              l10n?.helpHintPrivacyTopic ?? 'Privacy',
+              anchor: HelpAnchor.privacyErase,
+              style: TextStyle(color: theme.colorScheme.error),
+            ),
             subtitle: Text(isOwner
                 ? (l10n?.privacyEraseOwner ??
                     'An owner hands the workspace over first (Members & plans → Co-ownership).')

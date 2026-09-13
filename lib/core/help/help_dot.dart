@@ -82,6 +82,15 @@ class HelpDotTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(
+        // #1185 — the symbol sits at the END of the title area, which on
+        // a title that wraps means the far right of the row. Putting it
+        // inline with the last word needs `Text.rich`, and that takes the
+        // title out of reach of `find.text`, which two dozen tests (and
+        // every `scrollUntilVisible`) use to locate a row. The cosmetic
+        // gain is not worth making every titled row untestable; what is
+        // fixed here is the ALIGNMENT — top, with the first line, rather
+        // than centred against two.
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Flexible(child: Text(text, style: style)),
           HelpDot(topic, anchor: anchor),
