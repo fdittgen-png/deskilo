@@ -767,6 +767,12 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                           const SizedBox(width: 8),
                           FilterChip(
                             key: ValueKey('notif-group-${axis.name}'),
+                            // #1191 — a selected chip draws its OWN
+                            // tick, and it lands on the avatar: the
+                            // group-by glyph under a checkmark reads
+                            // as a dark smudge. The avatar IS the
+                            // state here.
+                            showCheckmark: false,
                             avatar: Icon(_groupingIcon(axis), size: 18),
                             label: Text(_groupingLabel(l10n, axis)),
                             selected: filter.grouping == axis,

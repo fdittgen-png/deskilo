@@ -92,6 +92,8 @@ class _TemplateCard extends StatelessWidget {
     return ChoiceChip(
       selected: selected,
       onSelected: (_) => onTap(),
+      // #1191 — the chip's own tick would land on this.
+      showCheckmark: false,
       avatar: Icon(selected ? Icons.check : Icons.grid_view_outlined,
           size: 18),
       label: Column(

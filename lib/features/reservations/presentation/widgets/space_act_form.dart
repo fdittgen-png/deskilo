@@ -258,6 +258,8 @@ class SpaceActFormState extends State<SpaceActForm> {
           children: [
             ChoiceChip(
               key: ValueKey('$prefix-check-in'),
+              // #1191 — the chip's own tick would land on this.
+              showCheckmark: false,
               avatar: const Icon(Icons.login_outlined, size: 18),
               label: Text(l10n?.kioskCheckIn ?? 'Check in'),
               selected: _action == SpaceAction.checkIn,
@@ -268,6 +270,8 @@ class SpaceActFormState extends State<SpaceActForm> {
             ),
             ChoiceChip(
               key: ValueKey('$prefix-reserve'),
+              // #1191 — the chip's own tick would land on this.
+              showCheckmark: false,
               avatar: const Icon(Icons.event_available_outlined, size: 18),
               label: Text(l10n?.kioskReserve ?? 'Reserve'),
               selected: _action == SpaceAction.reserve,
@@ -278,6 +282,8 @@ class SpaceActFormState extends State<SpaceActForm> {
             ),
             ChoiceChip(
               key: ValueKey('$prefix-check-out'),
+              // #1191 — the chip's own tick would land on this.
+              showCheckmark: false,
               avatar: const Icon(Icons.logout_outlined, size: 18),
               label: Text(l10n?.kioskCheckOut ?? 'Check out'),
               selected: _action == SpaceAction.checkOut,

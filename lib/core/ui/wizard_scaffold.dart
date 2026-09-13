@@ -74,6 +74,12 @@ class WizardScaffold extends StatelessWidget {
                     padding: const EdgeInsets.only(right: AppSpacing.xs),
                     child: ChoiceChip(
                       key: ValueKey('wizard-step-${step.name}'),
+                      // #1191/#1192 — a selected Chip draws its OWN
+                      // checkmark, and it lands ON the avatar: the
+                      // step number under a tick, the group-by icon
+                      // under one too — a dark smudge where a glyph
+                      // should be. The avatar IS the state here.
+                      showCheckmark: false,
                       avatar: i < index
                           ? const Icon(Icons.check, size: 16)
                           : CircleAvatar(
@@ -122,6 +128,9 @@ class WizardScaffold extends StatelessWidget {
                 if (!last)
                   FilledButton.icon(
                     key: const ValueKey('wizard-next'),
+                    // #1192 — the arrow points the way it goes, AFTER the
+                    // word. `Back ‹` already reads correctly.
+                    iconAlignment: IconAlignment.end,
                     icon: const Icon(Icons.chevron_right),
                     label: Text(l10n?.wizardNext ?? 'Next'),
                     onPressed: nextEnabled ? onNext : null,
