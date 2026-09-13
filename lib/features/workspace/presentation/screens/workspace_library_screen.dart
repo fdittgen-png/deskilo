@@ -48,7 +48,9 @@ class WorkspaceLibraryScreen extends ConsumerWidget {
             )
           : null,
       body: ListView(
-        padding: const EdgeInsets.all(AppSpacing.md),
+        // #1181 — the publish button overlays this list; it ends above it.
+        padding: const EdgeInsets.all(AppSpacing.md)
+            .add(const EdgeInsets.only(bottom: kFabSafeBottom)),
         children: [
           Text(l10n?.libraryStartFrom ?? 'Start from the library',
               style: theme.textTheme.titleMedium),

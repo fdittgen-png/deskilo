@@ -116,6 +116,8 @@ class _LevelList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     return ReorderableListView.builder(
+      // #1181 — the add button overlays this list; it ends above it.
+      padding: const EdgeInsets.only(bottom: kFabSafeBottom),
       itemCount: levels.length,
       buildDefaultDragHandles: false,
       // #667 — onReorder was deprecated after Flutter 3.41. onReorderItem

@@ -1053,16 +1053,17 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Row(children: [
-            Flexible(
-              child: Text(l10n?.reportEditorTitle ?? 'Report editor',
-                  overflow: TextOverflow.ellipsis),
-            ),
+          // #1180 — the screen's own name was cut to "Report e…". The
+          // help symbol sat INSIDE the title, taking 48 dp of it plus the
+          // title's leading spacing, while every other screen puts its
+          // help dot in the actions. Moved there, the title has room and
+          // the app is one shape less inconsistent.
+          title: Text(l10n?.reportEditorTitle ?? 'Report editor',
+              overflow: TextOverflow.ellipsis),
+          actions: [
             HelpDot(l10n?.helpTopicReportEditor ?? 'report editor',
               anchor: HelpAnchor.reportsEditor,
             ),
-          ]),
-          actions: [
             ReportHistoryControls(
               canUndo: _history.canUndo && !_busy,
               canRedo: _history.canRedo && !_busy,

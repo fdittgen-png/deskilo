@@ -132,6 +132,8 @@ class AccessoriesScreen extends ConsumerWidget {
             title: l10n?.accessoriesEmpty ?? 'No accessories yet.',
           ),
         AsyncData(value: final accessories) => ListView(
+            // #1181 — the add button overlays this list; it ends above it.
+            padding: const EdgeInsets.only(bottom: kFabSafeBottom),
             children: [
               for (final accessory in accessories)
                 ListTile(

@@ -71,6 +71,9 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen> {
             },
             child: ListView.separated(
               key: const ValueKey('conversation-list'),
+              // #1181 — the compose button floats over this list and was
+              // covering the last row's date. The list ends above it.
+              padding: const EdgeInsets.only(bottom: kFabSafeBottom),
               itemCount: shown.length,
               separatorBuilder: (_, _) => const Divider(height: 1),
               itemBuilder: (context, index) {

@@ -49,7 +49,11 @@ class ProfilesScreen extends ConsumerWidget {
         label: Text(l10n?.profilesAdd ?? 'Add a profile'),
       ),
       body: ListView(
-        padding: AppSpacing.mdAll,
+        // #1181 — "Add a profile" floats over the list; the last row has
+        // to be reachable clear of it.
+        padding: AppSpacing.mdAll.add(
+          const EdgeInsets.only(bottom: kFabSafeBottom),
+        ),
         children: [
           // #987 — a paired workspace renders once, as the couple, at
           // the dev's place; the prod row steps aside.

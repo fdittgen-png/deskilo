@@ -43,3 +43,11 @@ abstract final class AppSpacing {
   static const EdgeInsets lgH = EdgeInsets.symmetric(horizontal: lg);
   static const EdgeInsets xlH = EdgeInsets.symmetric(horizontal: xl);
 }
+
+/// #1181 — the room a list leaves at its bottom so a floating action
+/// button cannot cover its last row.
+///
+/// A `FloatingActionButton` is 56 dp and sits 16 dp from the edge; an
+/// extended one is the same height. 88 clears both with a breath left
+/// over, on every screen that floats a button over a scrolling list.
+const double kFabSafeBottom = 88;
