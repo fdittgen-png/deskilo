@@ -50,7 +50,7 @@
   "featureInvoicePdfTemplateDesc": "Introduction et pied de page rédigés par le propriétaire sur le PDF de facture. Ne touche jamais au XML de facture électronique.",
   "featureMemberNotifications": "Notifications entre membres",
   "featureMemberNotificationsDesc": "Messagerie entre membres : conversations privées et de groupe, accusés de lecture, liens vers une réservation ou un espace ; les admins peuvent notifier tous les admins, propriétaire inclus.",
-  "featureDunning": "Relances de paiement (Mahnwesen)",
+  "featureDunning": "Relances de paiement",
   "@featureDunning": {
     "description": "Feature-registry completeness (#502)"
   },

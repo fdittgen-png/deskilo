@@ -7,8 +7,8 @@
   "directoryOnline": "Online",
   "directoryReservedToday": "Heute reserviert",
   "directoryLastSeenMinutes": "Vor {minutes} Min. gesehen",
-  "directoryLastSeenHours": "Vor {hours} Std. gesehen",
-  "directoryLastSeenDays": "Vor {days} Tagen gesehen",
+  "directoryLastSeenHours": "{hours, plural, =1{Vor 1 Stunde gesehen} other{Vor {hours} Stunden gesehen}}",
+  "directoryLastSeenDays": "{days, plural, =1{Vor 1 Tag gesehen} other{Vor {days} Tagen gesehen}}",
   "directoryWhatsapp": "Auf WhatsApp schreiben",
   "directoryOpenGroup": "WhatsApp-Gruppe öffnen",
   "directoryClose": "Schließen",
@@ -27,7 +27,7 @@
       }
     }
   },
-  "memberPageLevelTitle": "Buchungen ganzer Ebenen",
+  "memberPageLevelTitle": "Buchungen ganzer Bereiche",
   "memberPageGroupMembership": "Mitgliedschaft",
   "memberPageGroupBooking": "Buchungsregeln",
   "memberPageGroupBilling": "Abrechnung",

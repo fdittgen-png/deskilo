@@ -25,6 +25,7 @@ class PersonalInfoForm extends StatefulWidget {
     this.workspaceCountry = '',
     this.saving = false,
     this.intro,
+    this.managed = false,
   });
 
   final PersonalInfo initial;
@@ -38,6 +39,12 @@ class PersonalInfoForm extends StatefulWidget {
   /// Replaces the "printed on YOUR documents" line — an admin editing a
   /// managed member (#887) is told whose data this is instead.
   final String? intro;
+
+  /// #1177 — the form is editing SOMEBODY ELSE. The subject decides the
+  /// person the hints are written in: "your name" is right on your own
+  /// profile and wrong on a managed one, where an admin fills a form
+  /// about a member who has no account yet.
+  final bool managed;
 
   @override
   State<PersonalInfoForm> createState() => _PersonalInfoFormState();
@@ -179,9 +186,13 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             decoration: InputDecoration(
               labelText: l10n?.courtesyLabel ?? 'Form of address',
               helperMaxLines: 3,
-              helperText: l10n?.courtesyHint ??
-                  'Printed before your name on documents. "None" prints '
-                      'the name alone.',
+              helperText: widget.managed
+                  ? (l10n?.courtesyHintManaged ??
+                      'Printed before their name on documents. "None" '
+                          'prints the name alone.')
+                  : (l10n?.courtesyHint ??
+                      'Printed before your name on documents. "None" '
+                          'prints the name alone.'),
               border: const OutlineInputBorder(),
             ),
             items: [

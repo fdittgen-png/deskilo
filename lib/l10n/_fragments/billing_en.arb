@@ -176,7 +176,7 @@
   "@payConfigOpen": {
     "description": "Diagnostics dialog action opening the online-payments config screen"
   },
-  "payConfigIntro": "Enter each payment provider you want to offer. Keys are stored securely on the server and never shown again. See docs/design/payments-integration.md.",
+  "payConfigIntro": "Enter each payment provider you want to offer. Keys are stored securely on the server and never shown again.",
   "@payConfigIntro": {
     "description": "Intro on the online-payments config screen"
   },

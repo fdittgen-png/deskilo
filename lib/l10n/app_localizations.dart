@@ -1145,7 +1145,7 @@ abstract class AppLocalizations {
   /// Hint above the per-provider missing-config lines in the diagnostics dialog
   ///
   /// In en, this message translates to:
-  /// **'The server is missing this configuration (docs/design/payments-integration.md):'**
+  /// **'The server is missing this configuration:'**
   String get payOnlineDiagHint;
 
   /// Bill card title for the invoice covering the browsed month (#510)
@@ -1655,7 +1655,7 @@ abstract class AppLocalizations {
   /// Intro on the online-payments config screen
   ///
   /// In en, this message translates to:
-  /// **'Enter each payment provider you want to offer. Keys are stored securely on the server and never shown again. See docs/design/payments-integration.md.'**
+  /// **'Enter each payment provider you want to offer. Keys are stored securely on the server and never shown again.'**
   String get payConfigIntro;
 
   /// Chip: provider is configured
@@ -2826,6 +2826,12 @@ abstract class AppLocalizations {
   /// **'Ms'**
   String get courtesyMrs;
 
+  /// Form-of-address hint on a MANAGED profile — the subject is somebody else, so third person (#1177)
+  ///
+  /// In en, this message translates to:
+  /// **'Printed before their name on documents. \"None\" prints the name alone.'**
+  String get courtesyHintManaged;
+
   /// #970 demo mode: featureDemoMode
   ///
   /// In en, this message translates to:
@@ -3351,13 +3357,13 @@ abstract class AppLocalizations {
   /// Directory offline chip: compact relative last-seen, under a day
   ///
   /// In en, this message translates to:
-  /// **'Seen {hours} h ago'**
+  /// **'{hours, plural, =1{Seen 1 hour ago} other{Seen {hours} hours ago}}'**
   String directoryLastSeenHours(int hours);
 
   /// Directory offline chip: compact relative last-seen, a day or more
   ///
   /// In en, this message translates to:
-  /// **'Seen {days} d ago'**
+  /// **'{days, plural, =1{Seen 1 day ago} other{Seen {days} days ago}}'**
   String directoryLastSeenDays(int days);
 
   /// Tooltip of the wa.me contact button on a directory row (#223 opt-in); also the swipe-right background label and the contact button in the member detail sheet (#232)
@@ -3429,7 +3435,7 @@ abstract class AppLocalizations {
   /// No description provided for @memberPageLevelTitle.
   ///
   /// In en, this message translates to:
-  /// **'Whole-level bookings'**
+  /// **'Whole-space bookings'**
   String get memberPageLevelTitle;
 
   /// No description provided for @memberPageGroupMembership.
@@ -4622,7 +4628,7 @@ abstract class AppLocalizations {
   /// Feature-registry completeness (#502)
   ///
   /// In en, this message translates to:
-  /// **'Payment reminders (Mahnwesen)'**
+  /// **'Payment reminders'**
   String get featureDunning;
 
   /// Feature-registry completeness (#502)
@@ -15812,7 +15818,7 @@ abstract class AppLocalizations {
   /// #840 - summary chip when the owner exception is off
   ///
   /// In en, this message translates to:
-  /// **'Never one\'s own'**
+  /// **'Never your own'**
   String get validationNoSelfShort;
 
   /// #840 - switch: the owner may validate their own event

@@ -37,7 +37,7 @@
   "buyPackageDone": "Días añadidos — disfruta del tiempo extra.",
   "payConfigTitle": "Pagos en línea",
   "payConfigOpen": "Configurar",
-  "payConfigIntro": "Introduce cada proveedor de pago que quieras ofrecer. Las claves se guardan de forma segura en el servidor y no se vuelven a mostrar. Consulta docs/design/payments-integration.md.",
+  "payConfigIntro": "Introduce cada proveedor de pago que quieras ofrecer. Las claves se guardan de forma segura en el servidor y no se vuelven a mostrar.",
   "payConfigConfigured": "Configurado",
   "payConfigNotConfigured": "Sin configurar",
   "payConfigSecretSet": "Definido — deja en blanco para conservar",

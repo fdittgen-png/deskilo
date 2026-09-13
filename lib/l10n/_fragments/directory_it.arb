@@ -7,8 +7,8 @@
   "directoryOnline": "Online",
   "directoryReservedToday": "Prenotato oggi",
   "directoryLastSeenMinutes": "Visto {minutes} min fa",
-  "directoryLastSeenHours": "Visto {hours} h fa",
-  "directoryLastSeenDays": "Visto {days} g fa",
+  "directoryLastSeenHours": "{hours, plural, =1{Visto 1 ora fa} other{Visto {hours} ore fa}}",
+  "directoryLastSeenDays": "{days, plural, =1{Visto 1 giorno fa} other{Visto {days} giorni fa}}",
   "directoryWhatsapp": "Chatta su WhatsApp",
   "directoryOpenGroup": "Apri il gruppo WhatsApp",
   "directoryClose": "Chiudi",
@@ -27,7 +27,7 @@
       }
     }
   },
-  "memberPageLevelTitle": "Prenotazioni di un piano intero",
+  "memberPageLevelTitle": "Prenotazioni di uno spazio intero",
   "memberPageGroupMembership": "Iscrizione",
   "memberPageGroupBooking": "Regole di prenotazione",
   "memberPageGroupBilling": "Fatturazione",

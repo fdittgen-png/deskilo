@@ -50,7 +50,7 @@
   "featureInvoicePdfTemplateDesc": "Introducción y pie escritos por el propietario en el PDF de la factura. Nunca toca el XML de la factura electrónica.",
   "featureMemberNotifications": "Notificaciones entre miembros",
   "featureMemberNotificationsDesc": "Mensajería entre miembros: conversaciones privadas y de grupo, confirmaciones de lectura, enlaces a una reserva o un espacio; los admins pueden notificar a todos los admins, propietario incluido.",
-  "featureDunning": "Recordatorios de pago (Mahnwesen)",
+  "featureDunning": "Recordatorios de pago",
   "@featureDunning": {
     "description": "Feature-registry completeness (#502)"
   },

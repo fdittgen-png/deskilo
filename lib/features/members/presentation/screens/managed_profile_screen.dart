@@ -95,6 +95,7 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 PersonalInfoForm(
+                  managed: true,
               // Rebuilt when the member arrives so the fields prefill.
               key: ValueKey('managed-form-${existing?.id}'),
               // #915 — the identity comes from behind the access rule;

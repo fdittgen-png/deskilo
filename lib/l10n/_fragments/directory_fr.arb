@@ -7,8 +7,8 @@
   "directoryOnline": "En ligne",
   "directoryReservedToday": "Réservé aujourd'hui",
   "directoryLastSeenMinutes": "Vu il y a {minutes} min",
-  "directoryLastSeenHours": "Vu il y a {hours} h",
-  "directoryLastSeenDays": "Vu il y a {days} j",
+  "directoryLastSeenHours": "{hours, plural, =1{Vu il y a 1 heure} other{Vu il y a {hours} heures}}",
+  "directoryLastSeenDays": "{days, plural, =1{Vu il y a 1 jour} other{Vu il y a {days} jours}}",
   "directoryWhatsapp": "Discuter sur WhatsApp",
   "directoryOpenGroup": "Ouvrir le groupe WhatsApp",
   "directoryClose": "Fermer",
@@ -27,7 +27,7 @@
       }
     }
   },
-  "memberPageLevelTitle": "Réservations d'un étage entier",
+  "memberPageLevelTitle": "Réservations d'un espace entier",
   "memberPageGroupMembership": "Adhésion",
   "memberPageGroupBooking": "Règles de réservation",
   "memberPageGroupBilling": "Facturation",

@@ -276,7 +276,7 @@ void main() {
       '${DateFormat.E().format(start)} ${DateFormat.d().format(start)}'
       ' · ${DateFormat.Hm().format(start)} · A1',
     );
-    expect(_chipText(tester, 'member-5'), 'Seen 2 h ago');
+    expect(_chipText(tester, 'member-5'), 'Seen 2 hours ago');
 
     // Eve: never seen and her only booking starts 15 days out — outside
     // the 14-day window, no chip of either kind.

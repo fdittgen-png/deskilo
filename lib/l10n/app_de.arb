@@ -383,7 +383,7 @@
   "paymentProviderStripe": "Kreditkarte (Stripe)",
   "paymentProviderMollie": "Mollie — iDEAL, Bancontact…",
   "payOnlineDiagTitle": "Online-Zahlungen — nicht konfiguriert",
-  "payOnlineDiagHint": "Auf dem Server fehlt diese Konfiguration (docs/design/payments-integration.md):",
+  "payOnlineDiagHint": "Auf dem Server fehlt diese Konfiguration:",
   "billInvoiceCard": "Rechnung {number}",
   "@billInvoiceCard": {
     "description": "Bill card title for the invoice covering the browsed month (#510)",
@@ -621,7 +621,7 @@
   "buyPackageDone": "Tage hinzugefügt — viel Spaß.",
   "payConfigTitle": "Online-Zahlungen",
   "payConfigOpen": "Einrichten",
-  "payConfigIntro": "Gib jeden Zahlungsanbieter ein, den du anbieten willst. Schlüssel werden sicher auf dem Server gespeichert und nie wieder angezeigt. Siehe docs/design/payments-integration.md.",
+  "payConfigIntro": "Gib jeden Zahlungsanbieter ein, den du anbieten willst. Schlüssel werden sicher auf dem Server gespeichert und nie wieder angezeigt.",
   "payConfigConfigured": "Eingerichtet",
   "payConfigNotConfigured": "Nicht eingerichtet",
   "payConfigSecretSet": "Gesetzt — leer lassen zum Behalten",
@@ -1130,6 +1130,7 @@
   "@courtesyMrs": {
     "description": "#912 courtesy title: courtesyMrs"
   },
+  "courtesyHintManaged": "Wird auf Dokumenten vor ihrem Namen gedruckt. „Keine“ druckt nur den Namen.",
   "featureDemoMode": "Demomodus",
   "@featureDemoMode": {
     "description": "#970 demo mode: featureDemoMode"
@@ -1409,8 +1410,8 @@
   "directoryOnline": "Online",
   "directoryReservedToday": "Heute reserviert",
   "directoryLastSeenMinutes": "Vor {minutes} Min. gesehen",
-  "directoryLastSeenHours": "Vor {hours} Std. gesehen",
-  "directoryLastSeenDays": "Vor {days} Tagen gesehen",
+  "directoryLastSeenHours": "{hours, plural, =1{Vor 1 Stunde gesehen} other{Vor {hours} Stunden gesehen}}",
+  "directoryLastSeenDays": "{days, plural, =1{Vor 1 Tag gesehen} other{Vor {days} Tagen gesehen}}",
   "directoryWhatsapp": "Auf WhatsApp schreiben",
   "directoryOpenGroup": "WhatsApp-Gruppe öffnen",
   "directoryClose": "Schließen",
@@ -1429,7 +1430,7 @@
       }
     }
   },
-  "memberPageLevelTitle": "Buchungen ganzer Ebenen",
+  "memberPageLevelTitle": "Buchungen ganzer Bereiche",
   "memberPageGroupMembership": "Mitgliedschaft",
   "memberPageGroupBooking": "Buchungsregeln",
   "memberPageGroupBilling": "Abrechnung",

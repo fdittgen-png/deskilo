@@ -37,7 +37,7 @@
   "buyPackageDone": "Tage hinzugefügt — viel Spaß.",
   "payConfigTitle": "Online-Zahlungen",
   "payConfigOpen": "Einrichten",
-  "payConfigIntro": "Gib jeden Zahlungsanbieter ein, den du anbieten willst. Schlüssel werden sicher auf dem Server gespeichert und nie wieder angezeigt. Siehe docs/design/payments-integration.md.",
+  "payConfigIntro": "Gib jeden Zahlungsanbieter ein, den du anbieten willst. Schlüssel werden sicher auf dem Server gespeichert und nie wieder angezeigt.",
   "payConfigConfigured": "Eingerichtet",
   "payConfigNotConfigured": "Nicht eingerichtet",
   "payConfigSecretSet": "Gesetzt — leer lassen zum Behalten",

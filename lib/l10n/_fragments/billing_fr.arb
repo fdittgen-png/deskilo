@@ -37,7 +37,7 @@
   "buyPackageDone": "Jours ajoutés — profitez-en.",
   "payConfigTitle": "Paiements en ligne",
   "payConfigOpen": "Configurer",
-  "payConfigIntro": "Saisissez chaque prestataire de paiement à proposer. Les clés sont stockées en sécurité sur le serveur et ne sont plus affichées. Voir docs/design/payments-integration.md.",
+  "payConfigIntro": "Saisissez chaque prestataire de paiement à proposer. Les clés sont stockées en sécurité sur le serveur et ne sont plus affichées.",
   "payConfigConfigured": "Configuré",
   "payConfigNotConfigured": "Non configuré",
   "payConfigSecretSet": "Défini — laisser vide pour conserver",

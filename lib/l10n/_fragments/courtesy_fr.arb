@@ -19,5 +19,6 @@
   "courtesyMrs": "Madame",
   "@courtesyMrs": {
     "description": "#912 courtesy title: courtesyMrs"
-  }
+  },
+  "courtesyHintManaged": "Imprimée devant leur nom sur les documents. « Aucune » n'imprime que le nom."
 }

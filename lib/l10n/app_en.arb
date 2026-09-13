@@ -707,7 +707,7 @@
   "@payOnlineDiagTitle": {
     "description": "Title of the admin diagnostics dialog when no provider can charge"
   },
-  "payOnlineDiagHint": "The server is missing this configuration (docs/design/payments-integration.md):",
+  "payOnlineDiagHint": "The server is missing this configuration:",
   "@payOnlineDiagHint": {
     "description": "Hint above the per-provider missing-config lines in the diagnostics dialog"
   },
@@ -1093,7 +1093,7 @@
   "@payConfigOpen": {
     "description": "Diagnostics dialog action opening the online-payments config screen"
   },
-  "payConfigIntro": "Enter each payment provider you want to offer. Keys are stored securely on the server and never shown again. See docs/design/payments-integration.md.",
+  "payConfigIntro": "Enter each payment provider you want to offer. Keys are stored securely on the server and never shown again.",
   "@payConfigIntro": {
     "description": "Intro on the online-payments config screen"
   },
@@ -1874,6 +1874,10 @@
   "@courtesyMrs": {
     "description": "#912 courtesy title: courtesyMrs"
   },
+  "courtesyHintManaged": "Printed before their name on documents. \"None\" prints the name alone.",
+  "@courtesyHintManaged": {
+    "description": "Form-of-address hint on a MANAGED profile — the subject is somebody else, so third person (#1177)"
+  },
   "featureDemoMode": "Demo mode",
   "@featureDemoMode": {
     "description": "#970 demo mode: featureDemoMode"
@@ -2232,7 +2236,7 @@
       }
     }
   },
-  "directoryLastSeenHours": "Seen {hours} h ago",
+  "directoryLastSeenHours": "{hours, plural, =1{Seen 1 hour ago} other{Seen {hours} hours ago}}",
   "@directoryLastSeenHours": {
     "description": "Directory offline chip: compact relative last-seen, under a day",
     "placeholders": {
@@ -2241,7 +2245,7 @@
       }
     }
   },
-  "directoryLastSeenDays": "Seen {days} d ago",
+  "directoryLastSeenDays": "{days, plural, =1{Seen 1 day ago} other{Seen {days} days ago}}",
   "@directoryLastSeenDays": {
     "description": "Directory offline chip: compact relative last-seen, a day or more",
     "placeholders": {
@@ -2294,7 +2298,7 @@
       }
     }
   },
-  "memberPageLevelTitle": "Whole-level bookings",
+  "memberPageLevelTitle": "Whole-space bookings",
   "memberPageGroupMembership": "Membership",
   "memberPageGroupBooking": "Booking rules",
   "memberPageGroupBilling": "Billing",
@@ -3073,7 +3077,7 @@
   "featureInvoicePdfTemplateDesc": "Owner-written intro and footer text on the invoice PDF. Never touches the e-invoice XML.",
   "featureMemberNotifications": "Member notifications",
   "featureMemberNotificationsDesc": "Messaging between members: private and group conversations, read receipts, links to a reservation or a space; admins can notify all admins, owner included.",
-  "featureDunning": "Payment reminders (Mahnwesen)",
+  "featureDunning": "Payment reminders",
   "@featureDunning": {
     "description": "Feature-registry completeness (#502)"
   },
@@ -9589,7 +9593,7 @@
   "@validationNoSelfDesc": {
     "description": "#840 - the invariant, stated where the rules are set"
   },
-  "validationNoSelfShort": "Never one's own",
+  "validationNoSelfShort": "Never your own",
   "@validationNoSelfShort": {
     "description": "#840 - summary chip when the owner exception is off"
   },

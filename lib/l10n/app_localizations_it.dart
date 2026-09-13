@@ -617,8 +617,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get payOnlineDiagTitle => 'Pagamenti online — non configurati';
 
   @override
-  String get payOnlineDiagHint =>
-      'Sul server manca questa configurazione (docs/design/payments-integration.md):';
+  String get payOnlineDiagHint => 'Sul server manca questa configurazione:';
 
   @override
   String billInvoiceCard(String number) {
@@ -909,7 +908,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get payConfigIntro =>
-      'Inserisci ogni fornitore di pagamento da offrire. Le chiavi sono salvate in sicurezza sul server e non vengono più mostrate. Vedi docs/design/payments-integration.md.';
+      'Inserisci ogni fornitore di pagamento da offrire. Le chiavi sono salvate in sicurezza sul server e non vengono più mostrate.';
 
   @override
   String get payConfigConfigured => 'Configurato';
@@ -1591,6 +1590,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get courtesyMrs => 'Sig.ra';
 
   @override
+  String get courtesyHintManaged =>
+      'Stampata prima del loro nome sui documenti. «Nessuna» stampa solo il nome.';
+
+  @override
   String get featureDemoMode => 'Modalità demo';
 
   @override
@@ -1877,12 +1880,24 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String directoryLastSeenHours(int hours) {
-    return 'Visto $hours h fa';
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: 'Visto $hours ore fa',
+      one: 'Visto 1 ora fa',
+    );
+    return '$_temp0';
   }
 
   @override
   String directoryLastSeenDays(int days) {
-    return 'Visto $days g fa';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Visto $days giorni fa',
+      one: 'Visto 1 giorno fa',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -1923,7 +1938,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get memberPageLevelTitle => 'Prenotazioni di un piano intero';
+  String get memberPageLevelTitle => 'Prenotazioni di uno spazio intero';
 
   @override
   String get memberPageGroupMembership => 'Iscrizione';
@@ -2604,7 +2619,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Messaggistica tra membri: conversazioni private e di gruppo, conferme di lettura, link a una prenotazione o a uno spazio; gli admin possono notificare tutti gli admin, proprietario incluso.';
 
   @override
-  String get featureDunning => 'Solleciti di pagamento (Mahnwesen)';
+  String get featureDunning => 'Solleciti di pagamento';
 
   @override
   String get featureDunningDesc =>

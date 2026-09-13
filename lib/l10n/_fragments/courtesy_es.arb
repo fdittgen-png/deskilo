@@ -19,5 +19,6 @@
   "courtesyMrs": "Sra.",
   "@courtesyMrs": {
     "description": "#912 courtesy title: courtesyMrs"
-  }
+  },
+  "courtesyHintManaged": "Se imprime delante de su nombre en los documentos. «Ninguno» imprime solo el nombre."
 }
