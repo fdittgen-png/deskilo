@@ -1479,6 +1479,23 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa app è gratuita, open source e senza pubblicità. Se la trovi utile, sostieni lo sviluppatore.';
 
   @override
+  String get shellSwipeCoachMark =>
+      'Scorri la barra verso il basso per la vista a schermo intero. Scorri verso l’alto, o tieni premuto il pulsante Prenota, per riportarla.';
+
+  @override
+  String get shellBarHideHint => 'Tieni premuto per la vista a schermo intero';
+
+  @override
+  String get shellBarShowHint =>
+      'Tieni premuto per mostrare la barra di navigazione';
+
+  @override
+  String get shellBarHiddenAnnounce => 'Barra di navigazione nascosta';
+
+  @override
+  String get shellBarShownAnnounce => 'Barra di navigazione visibile';
+
+  @override
   String get commonShare => 'Condividi';
 
   @override

@@ -1478,6 +1478,23 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese App ist kostenlos, Open Source und werbefrei. Wenn sie dir nützt, unterstütze den Entwickler.';
 
   @override
+  String get shellSwipeCoachMark =>
+      'Wischen Sie die Leiste nach unten für die Vollbildansicht. Nach oben wischen oder die Reservieren-Taste lange drücken, um sie zurückzuholen.';
+
+  @override
+  String get shellBarHideHint => 'Lange drücken für die Vollbildansicht';
+
+  @override
+  String get shellBarShowHint =>
+      'Lange drücken, um die Navigationsleiste einzublenden';
+
+  @override
+  String get shellBarHiddenAnnounce => 'Navigationsleiste ausgeblendet';
+
+  @override
+  String get shellBarShownAnnounce => 'Navigationsleiste eingeblendet';
+
+  @override
   String get commonShare => 'Teilen';
 
   @override

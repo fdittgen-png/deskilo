@@ -63,6 +63,8 @@ Die App hat bis zu fünf Ziele am unteren Rand: **Nachrichten** (§16), **Kalend
 
 **Im Web: der Menü-Knopf.** Im Browser entfallen die untere Leiste und ihr runder Reservieren-Knopf — das Fenster hat die Breite, die dem Telefon fehlt, und nichts von dessen Daumenreichweite. Das **☰-Menü** oben links öffnet eine Schublade mit jedem Ziel einen Tipp entfernt: Reservieren, die Tabs, Ereignisse, dann die Verwaltungsseiten (Space, Mitglieder & Pläne, Verfügbarkeit, Rollen, Abrechnung & Berichte, Zahlungsangaben, Online-Zahlungen, Badges, Services, Zubehör, Abrechnung, Funktionen, Space bearbeiten) und zuletzt Dokumente, Datenschutz, Einstellungen. Die ganze Höhe bleibt dem Inhalt. Telefone und Desktop-Apps behalten die Leiste.
 
+**Mehr Platz: die Leiste wegwischen (#1173).** Wischen Sie die untere Leiste **nach unten** — oder tippen Sie doppelt darauf — und die Tabs gleiten weg; der runde **Reservieren**-Knopf bleibt, wo er ist. Der Inhalt bekommt den ganzen Streifen zurück, was im Raumplan der Unterschied zwischen vier und fünf Sitzreihen ist. Drei Wege holen die Leiste zurück: **nach oben** wischen im selben Streifen, den Reservieren-Knopf **lange drücken**, oder dessen Aktion *Navigation einblenden* mit einem Screenreader. Die Wahl merkt sich dieses Gerät, und der Hinweis erscheint genau einmal.
+
 ## 2. Rollen & Einladungen
 
 DesKilo hat drei additive Rollen und darüber die Co-Inhaberschaft als Aufsatz, plus ein Gerätekonto:

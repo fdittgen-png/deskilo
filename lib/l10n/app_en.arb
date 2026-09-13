@@ -1723,6 +1723,26 @@
   "@aboutSupportBody": {
     "description": "Support block body (#560)"
   },
+  "shellSwipeCoachMark": "Swipe the bar down for a full-screen view. Swipe up, or long-press the Reserve button, to bring it back.",
+  "@shellSwipeCoachMark": {
+    "description": "One-time hint teaching the swipe-away full-screen view (#1173)"
+  },
+  "shellBarHideHint": "Long-press for a full-screen view",
+  "@shellBarHideHint": {
+    "description": "Semantics hint on the Reserve button while the bar shows (#1173)"
+  },
+  "shellBarShowHint": "Long-press to show the navigation bar",
+  "@shellBarShowHint": {
+    "description": "Semantics hint on the Reserve button while the bar is hidden (#1173)"
+  },
+  "shellBarHiddenAnnounce": "Navigation bar hidden",
+  "@shellBarHiddenAnnounce": {
+    "description": "Screen-reader announcement when the bar is swiped away (#1173)"
+  },
+  "shellBarShownAnnounce": "Navigation bar shown",
+  "@shellBarShownAnnounce": {
+    "description": "Screen-reader announcement when the bar comes back (#1173)"
+  },
   "commonShare": "Share",
   "@commonShare": {
     "description": "#1012 the share action on a saved export"

@@ -1058,6 +1058,11 @@
   "@aboutSupportBody": {
     "description": "Support block body (#560)"
   },
+  "shellSwipeCoachMark": "Desliza la barra hacia abajo para la vista de pantalla completa. Desliza hacia arriba, o mantén pulsado el botón Reservar, para recuperarla.",
+  "shellBarHideHint": "Mantén pulsado para la vista de pantalla completa",
+  "shellBarShowHint": "Mantén pulsado para mostrar la barra de navegación",
+  "shellBarHiddenAnnounce": "Barra de navegación oculta",
+  "shellBarShownAnnounce": "Barra de navegación visible",
   "commonShare": "Compartir",
   "@commonShare": {
     "description": "#1012 the share action on a saved export"

@@ -1,7 +1,15 @@
 // SPDX-License-Identifier: 0BSD
-import 'package:flutter/material.dart';
+import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../core/motion/motion.dart';
 import 'notched_bar_border.dart';
+import 'shell_bar_double_tap.dart';
+import 'shell_bar_visibility.dart';
+import 'shell_center_button.dart';
+import 'shell_swipe_coach_mark.dart';
 
 /// Fixed geometry of the notched bottom bar (#207).
 ///
@@ -37,6 +45,15 @@ abstract final class ShellBarMetrics {
 
   /// Width of the surface-coloured seat ring around the centre button.
   static const double buttonRingWidth = 2.5;
+
+  /// Height the widget keeps for itself in the full-screen view (#1173):
+  /// the Reserve button alone, which stays put as the way back. The
+  /// shell sets `extendBody` while hidden, so the body runs behind even
+  /// this strip and the button floats over the content.
+  static const double hiddenHeight = buttonDiameter;
+
+  /// Height the widget occupies with the bar showing.
+  static const double shownHeight = barHeight + rise;
 }
 
 /// One flat tab of the [ShellBottomBar] — icon, label, selected state.
@@ -57,13 +74,18 @@ class ShellDestination {
   });
 }
 
-/// Sparkilo-style notched bottom navigation bar (#207).
+/// Sparkilo-style notched bottom navigation bar (#207), with its
+/// swipe-away full-screen view (#1173).
 ///
 /// The app's core action — Reserve — is a raised, primary-tinted circular
 /// button docked into a concave notch carved into the bar's top edge; the
 /// branch destinations are flat tabs flanking it, split around the centre
 /// gap by index halving (4 tabs -> 2+2, 3 -> 2+1, 2 -> 1+1).
-class ShellBottomBar extends StatelessWidget {
+///
+/// A downward swipe (or a double-tap) slides the tab surface out and
+/// leaves the Reserve button behind, giving the whole strip back to the
+/// content. See [ShellBarHidden] for the three ways back.
+class ShellBottomBar extends ConsumerStatefulWidget {
   final List<ShellDestination> destinations;
 
   /// Selected destination, or `-1` while no visible tab matches the
@@ -93,12 +115,45 @@ class ShellBottomBar extends StatelessWidget {
   });
 
   @override
+  ConsumerState<ShellBottomBar> createState() => _ShellBottomBarState();
+}
+
+class _ShellBottomBarState extends ConsumerState<ShellBottomBar> {
+  /// Whether the stored preference has ever resolved.
+  ///
+  /// It is read asynchronously, so the first frame of a launch always
+  /// says "shown". For somebody who chose the full-screen view that
+  /// would play the hide animation on every single launch — the bar
+  /// sliding away unasked, every morning. The first transition is
+  /// therefore instant and only later ones animate.
+  bool _settled = false;
+
+  Future<void> _setHidden(bool hidden) async {
+    await ref.read(shellBarHiddenProvider.notifier).set(hidden);
+    // Performing the gesture is the best possible proof it was learned.
+    await ref.read(shellSwipeCoachSeenProvider.notifier).markSeen();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final hiddenAsync = ref.watch(shellBarHiddenProvider);
+    final hidden = hiddenAsync.value ?? false;
+    final settled = _settled;
+    if (!settled && hiddenAsync.hasValue) {
+      // Rebuilt anyway by the watch above; flip the flag for next time
+      // without asking for another frame.
+      _settled = true;
+    }
+    // A hint can only appear once the flag it is gated on has resolved,
+    // and never while the bar is already hidden: the gesture has plainly
+    // been found.
+    final coachSeen = ref.watch(shellSwipeCoachSeenProvider).value ?? true;
+    final showCoach = !hidden && !coachSeen;
 
     // Tabs left of the centre gap: ceil-half of the destinations, so an
     // odd count keeps the heavier side leading (3 -> 2+1).
-    final leftCount = (destinations.length + 1) ~/ 2;
+    final leftCount = (widget.destinations.length + 1) ~/ 2;
 
     // Material both CLIPS the notch and casts a shadow that follows the
     // notched silhouette automatically (it derives its elevation shadow
@@ -129,7 +184,7 @@ class ShellBottomBar extends StatelessWidget {
             Expanded(
               child: Row(
                 children: [
-                  for (var i = leftCount; i < destinations.length; i++)
+                  for (var i = leftCount; i < widget.destinations.length; i++)
                     Expanded(child: _tab(i)),
                 ],
               ),
@@ -139,39 +194,131 @@ class ShellBottomBar extends StatelessWidget {
       ),
     );
 
+    final motion = settled
+        ? motionDuration(context, kShellBarHideDuration)
+        : Duration.zero;
+
+    final stack = Stack(
+      children: [
+        // The tab surface: slid fully below the fold when hidden and made
+        // inert, so no tab can be tapped or read through it.
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: _maybeSlide(
+            hidden: hidden,
+            motion: motion,
+            child: IgnorePointer(
+              key: const ValueKey('shell-bar-surface'),
+              ignoring: hidden,
+              child: ExcludeSemantics(
+                key: const ValueKey('shell-bar-surface-semantics'),
+                excluding: hidden,
+                // A double-tap on the bar toggles it away. Scoped to the
+                // tab surface on purpose: the Reserve button is NOT a
+                // descendant, so the primary action keeps its zero-delay
+                // tap (see [ShellBarDoubleTap] for the 300 ms arena hold
+                // this avoids).
+                child: ShellBarDoubleTap(
+                  onDoubleTap: () => unawaited(_setHidden(!hidden)),
+                  child: bar,
+                ),
+              ),
+            ),
+          ),
+        ),
+        // Introduce the gesture once, over the bar it acts on.
+        if (showCoach)
+          ShellSwipeCoachMark(
+            barHeight: ShellBarMetrics.barHeight,
+            onDismiss: () => unawaited(
+              ref.read(shellSwipeCoachSeenProvider.notifier).markSeen(),
+            ),
+          ),
+        // Raised Reserve action. It stays put when the bar leaves — the
+        // one piece of chrome still on screen, and the way back.
+        Align(
+          alignment: hidden ? Alignment.bottomCenter : Alignment.topCenter,
+          child: ShellCenterButton(
+            label: widget.reserveLabel,
+            selected: widget.reserveSelected,
+            onPressed: widget.onReservePressed,
+          ),
+        ),
+      ],
+    );
+
     // Clamp text scaling so labels grow with the OS setting but never
     // past what the fixed-height bar can show.
     return MediaQuery.withClampedTextScaling(
       maxScaleFactor: 1.3,
       child: SafeArea(
         top: false,
-        child: SizedBox(
-          height: ShellBarMetrics.barHeight + ShellBarMetrics.rise,
-          child: Stack(
-            children: [
-              // Coloured bar pinned to the bottom. The top `rise` strip is
-              // where the docked centre button protrudes above the notch.
-              Positioned(left: 0, right: 0, bottom: 0, child: bar),
-              // Raised Reserve action, horizontally centred over the notch.
-              Align(
-                alignment: Alignment.topCenter,
-                child: _ReserveButton(
-                  label: reserveLabel,
-                  selected: reserveSelected,
-                  onPressed: onReservePressed,
-                ),
-              ),
-            ],
+        child: GestureDetector(
+          // A DRAG toggles; tap keeps its current meaning, so nothing
+          // anybody does today changes. Down hides, up shows, and the
+          // target is the bar's full width, not a 56 dp circle.
+          //
+          // A drag recognizer competes for the pointer but never HOLDS
+          // the arena, so a plain tap on a tab or on the Reserve button
+          // still resolves the instant the finger leaves. The double-tap
+          // deliberately does not live here — see [ShellBarDoubleTap].
+          onVerticalDragEnd: (details) {
+            final v = details.primaryVelocity ?? 0;
+            if (v.abs() < kShellBarSwipeVelocity) return;
+            unawaited(_setHidden(v > 0));
+          },
+          child: _maybeResize(
+            motion: motion,
+            child: SizedBox(
+              height: hidden
+                  ? ShellBarMetrics.hiddenHeight
+                  : ShellBarMetrics.shownHeight,
+              child: stack,
+            ),
           ),
         ),
       ),
     );
   }
 
+  /// [AnimatedSize] asserts on a zero duration, so the wrapper is
+  /// skipped outright when motion is off or the preference has not
+  /// settled yet.
+  Widget _maybeResize({required Duration motion, required Widget child}) =>
+      motion == Duration.zero
+          ? child
+          : AnimatedSize(
+              duration: motion,
+              curve: MotionTokens.ease,
+              alignment: Alignment.bottomCenter,
+              child: child,
+            );
+
+  Widget _maybeSlide({
+    required bool hidden,
+    required Duration motion,
+    required Widget child,
+  }) {
+    final offset = Offset(0, hidden ? 1 : 0);
+    return motion == Duration.zero
+        ? Transform.translate(
+            offset: Offset(0, hidden ? ShellBarMetrics.barHeight : 0),
+            child: child,
+          )
+        : AnimatedSlide(
+            offset: offset,
+            duration: motion,
+            curve: MotionTokens.ease,
+            child: child,
+          );
+  }
+
   Widget _tab(int index) => ShellBarTab(
-        destination: destinations[index],
-        selected: index == selectedIndex,
-        onTap: () => onDestinationSelected(index),
+        destination: widget.destinations[index],
+        selected: index == widget.selectedIndex,
+        onTap: () => widget.onDestinationSelected(index),
       );
 }
 
@@ -231,99 +378,6 @@ class ShellBarTab extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-/// The raised, primary-tinted circular Reserve button.
-///
-/// Docks into the concave notch painted by the bar's [NotchedBarBorder]
-/// shape — the notch IS the seat. Three layers of depth, all derived from
-/// the theme (Sparkilo pattern):
-///   * a hairline surface-coloured ring in the CircleBorder side — a crisp
-///     seat separating the button from whatever scrolls beneath the notch;
-///   * a top-light vertical gradient over the primary fill (painted by an
-///     Ink so the ripple stays above it) — the dome that makes the disc
-///     read as raised;
-///   * a soft primary-tinted glow under the Material's own key shadow.
-class _ReserveButton extends StatelessWidget {
-  final String label;
-  final VoidCallback onPressed;
-
-  /// The hub is the loaded form: filled seat icon + selected semantics —
-  /// the centre button doubles as the bar's selection indicator.
-  final bool selected;
-
-  const _ReserveButton({
-    required this.label,
-    required this.onPressed,
-    required this.selected,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final buttonColor = theme.colorScheme.primary;
-    final gradient = LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [
-        Color.lerp(buttonColor, Colors.white, 0.22)!,
-        buttonColor,
-        Color.lerp(buttonColor, Colors.black, 0.14)!,
-      ],
-      stops: const [0.0, 0.55, 1.0],
-    );
-
-    final button = DecoratedBox(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: theme.colorScheme.primary.withValues(alpha: 0.30),
-            blurRadius: 14,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Material(
-        color: buttonColor,
-        shape: CircleBorder(
-          side: BorderSide(
-            color: theme.colorScheme.surface,
-            width: ShellBarMetrics.buttonRingWidth,
-          ),
-        ),
-        elevation: 4,
-        shadowColor: Colors.black.withValues(alpha: 0.4),
-        clipBehavior: Clip.antiAlias,
-        child: Ink(
-          decoration: BoxDecoration(shape: BoxShape.circle, gradient: gradient),
-          child: InkWell(
-            customBorder: const CircleBorder(),
-            onTap: onPressed,
-            child: SizedBox(
-              width: ShellBarMetrics.buttonDiameter,
-              height: ShellBarMetrics.buttonDiameter,
-              child: Center(
-                child: Icon(
-                  selected ? Icons.event_seat : Icons.event_seat_outlined,
-                  size: ShellBarMetrics.buttonIconSize,
-                  color: theme.colorScheme.onPrimary,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    return Semantics(
-      label: label,
-      button: true,
-      selected: selected,
-      excludeSemantics: true,
-      child: Tooltip(message: label, child: button),
     );
   }
 }

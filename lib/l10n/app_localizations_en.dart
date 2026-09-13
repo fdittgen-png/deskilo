@@ -1471,6 +1471,22 @@ class AppLocalizationsEn extends AppLocalizations {
       'This app is free, open source and ad-free. If you find it useful, support the developer.';
 
   @override
+  String get shellSwipeCoachMark =>
+      'Swipe the bar down for a full-screen view. Swipe up, or long-press the Reserve button, to bring it back.';
+
+  @override
+  String get shellBarHideHint => 'Long-press for a full-screen view';
+
+  @override
+  String get shellBarShowHint => 'Long-press to show the navigation bar';
+
+  @override
+  String get shellBarHiddenAnnounce => 'Navigation bar hidden';
+
+  @override
+  String get shellBarShownAnnounce => 'Navigation bar shown';
+
+  @override
   String get commonShare => 'Share';
 
   @override

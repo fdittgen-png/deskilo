@@ -2636,6 +2636,36 @@ abstract class AppLocalizations {
   /// **'This app is free, open source and ad-free. If you find it useful, support the developer.'**
   String get aboutSupportBody;
 
+  /// One-time hint teaching the swipe-away full-screen view (#1173)
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe the bar down for a full-screen view. Swipe up, or long-press the Reserve button, to bring it back.'**
+  String get shellSwipeCoachMark;
+
+  /// Semantics hint on the Reserve button while the bar shows (#1173)
+  ///
+  /// In en, this message translates to:
+  /// **'Long-press for a full-screen view'**
+  String get shellBarHideHint;
+
+  /// Semantics hint on the Reserve button while the bar is hidden (#1173)
+  ///
+  /// In en, this message translates to:
+  /// **'Long-press to show the navigation bar'**
+  String get shellBarShowHint;
+
+  /// Screen-reader announcement when the bar is swiped away (#1173)
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation bar hidden'**
+  String get shellBarHiddenAnnounce;
+
+  /// Screen-reader announcement when the bar comes back (#1173)
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation bar shown'**
+  String get shellBarShownAnnounce;
+
   /// #1012 the share action on a saved export
   ///
   /// In en, this message translates to:

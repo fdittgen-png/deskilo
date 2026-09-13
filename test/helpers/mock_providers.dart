@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'package:deskilo/app/shell/shell_bar_visibility.dart';
 import 'package:deskilo/features/workspace/domain/deployment.dart';
 import 'package:deskilo/features/workspace/providers/deployment_providers.dart';
 import 'fake_deployment_repository.dart';
@@ -1792,6 +1793,8 @@ List<Override> standardTestOverrides({
   NoteSeenStore? noteSeen,
   NotificationFilterStore? notificationFilters,
   HelpHintStore? helpHints,
+  ShellFlagStore? shellBarHidden,
+  ShellFlagStore? shellSwipeCoach,
   DemoModeStore? demoMode,
   NavigationStyleStore? navigationStyle,
   DeploymentRepository? deployment,
@@ -1864,6 +1867,14 @@ List<Override> standardTestOverrides({
     // #606: dismissed help hints persist on-device — in-memory for tests.
     helpHintStoreProvider
         .overrideWithValue(helpHints ?? InMemoryHelpHintStore()),
+    // #1173: the swipe-away shell flags persist on-device. The coach
+    // mark defaults to SEEN so its pill never floats over a test that
+    // is about something else — the tests that are about it pass their
+    // own store.
+    shellBarHiddenStoreProvider
+        .overrideWithValue(shellBarHidden ?? InMemoryShellFlagStore()),
+    shellSwipeCoachStoreProvider
+        .overrideWithValue(shellSwipeCoach ?? InMemoryShellFlagStore(true)),
     profileRepositoryProvider
         .overrideWithValue(profile ?? FakeProfileRepository()),
     nfcUidReaderProvider.overrideWithValue(nfc ?? FakeNfcUidReader()),

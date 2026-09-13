@@ -34,6 +34,7 @@ import '../router.dart';
 import 'shell_bottom_bar.dart';
 import 'shell_drawer.dart';
 import '../../core/time/clock.dart';
+import 'shell_bar_visibility.dart';
 
 /// #821 — the conversations I muted; empty when the list cannot be
 /// read, so a failing fetch silences nothing by accident.
@@ -318,6 +319,7 @@ class ShellScreen extends ConsumerWidget {
     // The web navigates through a drawer (every destination one tap
     // away, the full height for content); native keeps the bar.
     final webShell = ref.watch(webShellProvider);
+    final barHidden = ref.watch(shellBarHiddenProvider).value ?? false;
     return Scaffold(
       drawer: webShell
           ? ShellDrawer(
@@ -418,6 +420,12 @@ class ShellScreen extends ConsumerWidget {
       //
       // The bar lays a single tab out on the leading side and leaves the
       // other blank, which looks sparse and works.
+      // #1173 — the full-screen view. Only while the bar is swiped away
+      // does the body run behind the bottom strip: the Reserve button
+      // floats over the content and the whole bar's height is given
+      // back. With the bar showing this is false, so every tab lays out
+      // exactly as it always did.
+      extendBody: barHidden,
       bottomNavigationBar: webShell || visibleBranches.isEmpty
           ? null
           : ShellBottomBar(
