@@ -2449,6 +2449,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get eventTypeUnknown => 'Actividad';
 
   @override
+  String get featuresSearchLabel => 'Buscar funciones';
+
+  @override
+  String get featuresFilterChanged => 'Modificadas';
+
+  @override
+  String get featuresNoMatch => 'Ninguna función coincide.';
+
+  @override
   String get featuresTitle => 'Funciones';
 
   @override

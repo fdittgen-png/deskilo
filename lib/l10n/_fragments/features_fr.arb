@@ -1,5 +1,8 @@
 {
   "@@locale": "fr",
+  "featuresSearchLabel": "Rechercher une fonctionnalité",
+  "featuresFilterChanged": "Modifiées",
+  "featuresNoMatch": "Aucune fonctionnalité ne correspond.",
   "featuresTitle": "Fonctionnalités",
   "featureCalendarTab": "Onglet Calendrier",
   "featureCalendarTabDesc": "Vue mensuelle des réservations et jours de fermeture.",

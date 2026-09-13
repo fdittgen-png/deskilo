@@ -4331,6 +4331,24 @@ abstract class AppLocalizations {
   /// **'Activity'**
   String get eventTypeUnknown;
 
+  /// #1190 the Features screen search field — 102 switches were unsearchable
+  ///
+  /// In en, this message translates to:
+  /// **'Search features'**
+  String get featuresSearchLabel;
+
+  /// #1190 filter chip: only the features this workspace moved off their default
+  ///
+  /// In en, this message translates to:
+  /// **'Changed'**
+  String get featuresFilterChanged;
+
+  /// #1190 empty state when the search or the Changed filter matches nothing
+  ///
+  /// In en, this message translates to:
+  /// **'No feature matches that.'**
+  String get featuresNoMatch;
+
   /// App-bar title of the owner feature-management screen and its settings tile
   ///
   /// In en, this message translates to:

@@ -1,5 +1,17 @@
 {
   "@@locale": "en",
+  "featuresSearchLabel": "Search features",
+  "@featuresSearchLabel": {
+    "description": "#1190 the Features screen search field — 102 switches were unsearchable"
+  },
+  "featuresFilterChanged": "Changed",
+  "@featuresFilterChanged": {
+    "description": "#1190 filter chip: only the features this workspace moved off their default"
+  },
+  "featuresNoMatch": "No feature matches that.",
+  "@featuresNoMatch": {
+    "description": "#1190 empty state when the search or the Changed filter matches nothing"
+  },
   "featuresTitle": "Features",
   "@featuresTitle": {
     "description": "App-bar title of the owner feature-management screen and its settings tile"

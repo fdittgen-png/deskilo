@@ -1,5 +1,8 @@
 {
   "@@locale": "de",
+  "featuresSearchLabel": "Funktionen durchsuchen",
+  "featuresFilterChanged": "Geändert",
+  "featuresNoMatch": "Keine Funktion passt dazu.",
   "featuresTitle": "Funktionen",
   "featureCalendarTab": "Kalender-Tab",
   "featureCalendarTabDesc": "Monatsübersicht über Buchungen und Schließtage.",

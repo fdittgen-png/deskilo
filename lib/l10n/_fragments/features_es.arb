@@ -1,5 +1,8 @@
 {
   "@@locale": "es",
+  "featuresSearchLabel": "Buscar funciones",
+  "featuresFilterChanged": "Modificadas",
+  "featuresNoMatch": "Ninguna función coincide.",
   "featuresTitle": "Funciones",
   "featureCalendarTab": "Pestaña Calendario",
   "featureCalendarTabDesc": "Vista mensual de reservas y días de cierre.",
