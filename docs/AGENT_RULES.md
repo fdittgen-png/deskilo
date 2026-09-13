@@ -235,6 +235,27 @@ plus feature gate in `web/setup.html`, and the guides' card count/list
 ×5. The events feed line must give validators what they DECIDE on (a
 deviated amount shows the validated amount and the member's reason).
 
+## The trailing chevron means one thing (#1182)
+
+A `ListTile`'s trailing `Icons.chevron_right` says **"tapping this opens
+something you can read or change"** — another screen, a sheet, a dialog.
+It says nothing else, and it is the only thing that says it:
+
+| the row | trailing |
+|---|---|
+| pushes a route, opens a sheet or a dialog | `Icons.chevron_right` |
+| leaves the app | `Icons.open_in_new` |
+| acts immediately — writes a file, fires a request | nothing; the subtitle says what happens |
+| is a switch | the switch |
+| is a destructive confirmation | nothing — it is not somewhere you go |
+
+The screenshot review of 2026-09-13 found the app almost right and wrong
+in two places, in opposite directions: *Workspace report* carried one
+while producing a PDF like the five file rows around it, and *Price
+negotiation* lacked one while opening a sheet like the two `_ManageTile`
+rows either side of it. A chevron that sometimes means nothing teaches
+the reader to stop looking at it.
+
 ## Printed reports: the window-envelope contract (#873/#874) — no exceptions
 
 Every document the app posts is folded into a DL window envelope. These

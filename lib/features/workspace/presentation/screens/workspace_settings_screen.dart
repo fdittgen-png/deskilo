@@ -1374,8 +1374,6 @@ class _WorkspaceSettingsScreenState
                       subtitle: Text(
                         l10n?.billingRulesSubtitle ??
                             'When subscription and end-of-month invoices go out',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                       ),
                       onTap: () => showBillingRulesDialog(context, ref),
                     ),
@@ -1432,7 +1430,6 @@ class _WorkspaceSettingsScreenState
                     subtitle: Text(l10n?.reportDocWorkspaceSubtitle ??
                         'Everything about the space — through the '
                             'report editor\'s workspace template'),
-                    trailing: const Icon(Icons.chevron_right),
                     onTap: _exportWorkspaceReport,
                   ),
                   // Space QR codes (field request): one printable card

@@ -482,6 +482,9 @@ class MemberNegotiationTile extends ConsumerWidget {
       subtitle: canManage
           ? null
           : Text(l10n?.negotiationReadOnly ?? 'Read only'),
+      // #1182 — its two siblings in the Billing card are `_ManageTile`s,
+      // which carry one. Three rows that open a sheet, one affordance.
+      trailing: const Icon(Icons.chevron_right),
       onTap: () => showPriceNegotiationSheet(
         context,
         ref,
