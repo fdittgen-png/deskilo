@@ -22,10 +22,20 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
-/// The recipe as submitted at v1.0.1 — the revision whose reproducible
-/// build verified against our published APK.
-const _frozenBytes = 5376;
-const _frozenHash = '0x62164774d625a865';
+/// The recipe as submitted at v1.0.2.
+///
+/// PIN MOVED 2026-09-13, on the owner's instruction to update the
+/// F-Droid dossier with the changes of that day — the same authority
+/// that froze it on 2026-09-04, which is the only kind that lifts it.
+/// The freeze otherwise stands: nothing here changes for tidiness.
+///
+/// What changed: three build entries for 1.0.2 (codes 31/32/33) beside
+/// the 1.0.1 ones, and CurrentVersion/CurrentVersionCode to match —
+/// `fdroid lint` refuses a CurrentVersionCode below the oldest build
+/// entry, and `checkupdates` computes both from pubspec, so the three
+/// move together or two jobs go red.
+const _frozenBytes = 9974;
+const _frozenHash = '0x4bd65d72e139bffa';
 
 /// FNV-1a, 64-bit. Hand-rolled because `crypto` is not a direct
 /// dependency of this package and adding one to detect an edited YAML
