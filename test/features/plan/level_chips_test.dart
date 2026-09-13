@@ -110,7 +110,9 @@ void main() {
 
     // Split engaged: a vertical divider separates controls from the level,
     // and the plan canvas still renders (and its controls are reachable).
-    expect(find.byType(VerticalDivider), findsOneWidget);
+    // #1183 — by key: the zoom cluster lies down on a short canvas
+    // and brings VerticalDividers of its own.
+    expect(find.byKey(const ValueKey('split-divider')), findsOneWidget);
     expect(find.byKey(const ValueKey('reserve-plan-canvas')), findsOneWidget);
     // The floor switcher rides the canvas, not the side panel.
     expect(find.byKey(const ValueKey('reserve-level-level-1')), findsOneWidget);
@@ -124,7 +126,7 @@ void main() {
 
     await pumpTwoLevelPlan(tester);
 
-    expect(find.byType(VerticalDivider), findsNothing);
+    expect(find.byKey(const ValueKey('split-divider')), findsNothing);
     expect(find.byKey(const ValueKey('reserve-plan-canvas')), findsOneWidget);
   });
 }

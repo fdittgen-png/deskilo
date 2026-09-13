@@ -36,6 +36,10 @@ Future<({FakeCalendarRepository calendar, FakeWorkspaceRepository workspace})>
   WidgetTester tester, {
   bool admin = true,
   Map<String, dynamic> flags = const {},
+  // #1183 — a test that is ABOUT the sideways layout has to start
+  // there: turning the phone after the fact leaves one transient frame
+  // whose overflow belongs to a widget already gone.
+  Size size = const Size(1080, 2400),
 }) async {
   final today = kTestNow;
   final calendar = FakeCalendarRepository()
@@ -67,7 +71,7 @@ Future<({FakeCalendarRepository calendar, FakeWorkspaceRepository workspace})>
   }
   // A phone-sized viewport: the filter row scrolls horizontally and the
   // feed vertically, and taps must land on what is on screen.
-  tester.view.physicalSize = const Size(1080, 2400);
+  tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 3;
   addTearDown(tester.view.reset);
   await tester.pumpWidget(ProviderScope(

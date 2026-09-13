@@ -24,6 +24,11 @@ Rect? fitRectFromCells(
 /// same box. [contentSize] is the child's unscaled size and [boundaryMargin]
 /// mirrors the viewer's, so the scrollbars span exactly the pannable extent.
 ///
+/// #1183 — below this canvas height, the zoom cluster lies down. Three
+/// 40 dp buttons plus two dividers are 122 dp tall; a canvas under
+/// roughly three times that has no room to spend on a column of them.
+const double _shortCanvas = 380;
+
 /// The viewer keeps its native pinch-zoom / drag-pan; this adds the discrete
 /// controls desktop users expect and a visible sense of position.
 class CanvasControls extends StatefulWidget {
@@ -298,6 +303,14 @@ class _CanvasControlsState extends State<CanvasControls>
                   right: _thickness + 8,
                   bottom: _thickness + 8,
                   child: _ZoomCluster(
+                    // #1183 — sideways the canvas is about 280 dp tall,
+                    // and a 122 dp stack of buttons anchored to the
+                    // bottom ran off the top of it: the + and − were
+                    // clipped away and only the recentre button
+                    // survived, which reads as "this canvas cannot
+                    // zoom". Laid out along the long axis instead, all
+                    // three fit.
+                    horizontal: viewport.height < _shortCanvas,
                     onIn: () => _zoomAround(widget.zoomStep, center, viewport),
                     onOut: () =>
                         _zoomAround(1 / widget.zoomStep, center, viewport),
@@ -392,6 +405,7 @@ class _ZoomCluster extends StatelessWidget {
     required this.onReset,
     required this.atMax,
     required this.atMin,
+    this.horizontal = false,
   });
 
   final VoidCallback onIn;
@@ -399,6 +413,9 @@ class _ZoomCluster extends StatelessWidget {
   final VoidCallback onReset;
   final bool atMax;
   final bool atMin;
+
+  /// Lay the three buttons along the canvas's long axis (#1183).
+  final bool horizontal;
 
   @override
   Widget build(BuildContext context) {
@@ -433,14 +450,20 @@ class _ZoomCluster extends StatelessWidget {
         ],
       ),
       clipBehavior: Clip.antiAlias,
-      child: Column(
+      child: Flex(
+        direction: horizontal ? Axis.horizontal : Axis.vertical,
         mainAxisSize: MainAxisSize.min,
         children: [
           button(Icons.add, atMax ? null : onIn, 'canvas-zoom-in'),
-          Divider(height: 1, color: scheme.outlineVariant),
+          horizontal
+              ? VerticalDivider(width: 1, color: scheme.outlineVariant)
+              : Divider(height: 1, color: scheme.outlineVariant),
           button(Icons.remove, atMin ? null : onOut, 'canvas-zoom-out'),
-          Divider(height: 1, color: scheme.outlineVariant),
-          button(Icons.center_focus_strong_outlined, onReset, 'canvas-zoom-reset'),
+          horizontal
+              ? VerticalDivider(width: 1, color: scheme.outlineVariant)
+              : Divider(height: 1, color: scheme.outlineVariant),
+          button(
+              Icons.center_focus_strong_outlined, onReset, 'canvas-zoom-reset'),
         ],
       ),
     );

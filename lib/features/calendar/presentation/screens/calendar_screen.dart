@@ -375,7 +375,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                 width: (constraints.maxWidth * 0.42).clamp(300.0, 520.0),
                 child: SingleChildScrollView(child: header),
               ),
-              const VerticalDivider(width: 1),
+              const VerticalDivider(key: ValueKey('split-divider'), width: 1),
               content,
             ],
           );

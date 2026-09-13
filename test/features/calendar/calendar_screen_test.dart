@@ -77,7 +77,9 @@ void main() {
 
     await pumpCalendar(tester, seed: [todayReservation()]);
 
-    expect(find.byType(VerticalDivider), findsOneWidget);
+    // #1183 — by key: the zoom cluster lies down on a short
+    // canvas and brings VerticalDividers of its own.
+    expect(find.byKey(const ValueKey('split-divider')), findsOneWidget);
     // The month grid and the day's reservation both render.
     expect(find.text('May 2026'), findsOneWidget);
     expect(find.textContaining('A1'), findsOneWidget);

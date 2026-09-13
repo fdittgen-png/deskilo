@@ -54,6 +54,28 @@ abstract final class ShellBarMetrics {
 
   /// Height the widget occupies with the bar showing.
   static const double shownHeight = barHeight + rise;
+
+  /// #1183 — the same bar on a phone held sideways.
+  ///
+  /// A 1080 px-tall landscape screen gave 88 of its 1080 to a bar sized
+  /// for a 2316 px portrait one — eight per cent of the screen, on the
+  /// axis that has none to spare. Sparkilo drops its bar for exactly
+  /// this reason, and the tabs lose nothing by it: an `IconButton` is
+  /// 48 dp, so the touch target is untouched and only the padding goes.
+  static const double barHeightShort = 48;
+
+  /// The bar is measured against HEIGHT, not orientation: a tablet in
+  /// landscape has plenty of room and keeps the portrait bar, while a
+  /// phone in portrait with the keyboard up does not need this.
+  static const double shortScreenHeight = 500;
+
+  static double barHeightOf(BuildContext context) =>
+      MediaQuery.sizeOf(context).height < shortScreenHeight
+          ? barHeightShort
+          : barHeight;
+
+  static double shownHeightOf(BuildContext context) =>
+      barHeightOf(context) + rise;
 }
 
 /// One flat tab of the [ShellBottomBar] — icon, label, selected state.
@@ -168,7 +190,7 @@ class _ShellBottomBarState extends ConsumerState<ShellBottomBar> {
       shape: const NotchedBarBorder(notchRadius: ShellBarMetrics.notchRadius),
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
-        height: ShellBarMetrics.barHeight,
+        height: ShellBarMetrics.barHeightOf(context),
         child: Row(
           children: [
             Expanded(
@@ -231,7 +253,7 @@ class _ShellBottomBarState extends ConsumerState<ShellBottomBar> {
         // Introduce the gesture once, over the bar it acts on.
         if (showCoach)
           ShellSwipeCoachMark(
-            barHeight: ShellBarMetrics.barHeight,
+            barHeight: ShellBarMetrics.barHeightOf(context),
             onDismiss: () => unawaited(
               ref.read(shellSwipeCoachSeenProvider.notifier).markSeen(),
             ),
@@ -274,7 +296,7 @@ class _ShellBottomBarState extends ConsumerState<ShellBottomBar> {
             child: SizedBox(
               height: hidden
                   ? ShellBarMetrics.hiddenHeight
-                  : ShellBarMetrics.shownHeight,
+                  : ShellBarMetrics.shownHeightOf(context),
               child: stack,
             ),
           ),
@@ -304,7 +326,8 @@ class _ShellBottomBarState extends ConsumerState<ShellBottomBar> {
     final offset = Offset(0, hidden ? 1 : 0);
     return motion == Duration.zero
         ? Transform.translate(
-            offset: Offset(0, hidden ? ShellBarMetrics.barHeight : 0),
+            offset:
+                Offset(0, hidden ? ShellBarMetrics.barHeightOf(context) : 0),
             child: child,
           )
         : AnimatedSlide(

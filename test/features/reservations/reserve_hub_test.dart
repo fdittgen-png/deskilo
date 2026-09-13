@@ -54,12 +54,15 @@ Future<FakeReservationRepository> pumpHub(
   bool twoLevels = false,
   FakeReservationRepository? repo,
   Clock? clock,
+  // #1183 — a test that is ABOUT the sideways layout starts there.
+  Size size = const Size(800, 1400),
+  double pixelRatio = 1.0,
 }) async {
   // Portrait viewport: these tests exercise the hub's feature behaviour,
   // not the landscape split (which is covered separately). The 800×600
   // default is landscape and would engage the side-panel layout.
-  tester.view.physicalSize = const Size(800, 1400);
-  tester.view.devicePixelRatio = 1.0;
+  tester.view.physicalSize = size;
+  tester.view.devicePixelRatio = pixelRatio;
   addTearDown(tester.view.reset);
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
   if (twoLevels) addSecondLevel(plans);
@@ -214,7 +217,9 @@ void main() {
     tester.view.physicalSize = const Size(760, 360);
     await tester.pumpAndSettle();
 
-    expect(find.byType(VerticalDivider), findsOneWidget);
+    // #1183 — by key: the zoom cluster lies down on a short
+    // canvas and brings VerticalDividers of its own.
+    expect(find.byKey(const ValueKey('split-divider')), findsOneWidget);
     expect(find.byKey(const ValueKey('reserve-view-switch')), findsOneWidget);
     expect(find.byKey(_canvasKey), findsOneWidget);
   });
