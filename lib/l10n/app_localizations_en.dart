@@ -523,6 +523,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not reach the server. Your PIN was not changed — try again.';
 
   @override
+  String badgeIssuedOn(String date) {
+    return 'Issued $date';
+  }
+
+  @override
   String billSubscription(int pct) {
     return 'Subscription $pct%';
   }

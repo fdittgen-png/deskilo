@@ -992,6 +992,12 @@ abstract class AppLocalizations {
   /// **'Could not reach the server. Your PIN was not changed — try again.'**
   String get badgePinSaveFailed;
 
+  /// Badge row subtitle — the day it was issued, so two unnamed badges are told apart before one is revoked (#1178)
+  ///
+  /// In en, this message translates to:
+  /// **'Issued {date}'**
+  String badgeIssuedOn(String date);
+
   /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount
   ///
   /// In en, this message translates to:
