@@ -63,6 +63,8 @@ L'app a jusqu'à cinq destinations en bas : **Messages** (§16), **Calendrier** 
 
 **Sur le web : le bouton menu.** Dans un navigateur, la barre du bas et son bouton rond Réserver disparaissent — la fenêtre a la largeur qui manque au téléphone et pas sa portée du pouce. Le **menu ☰** en haut à gauche ouvre un tiroir avec chaque destination à un geste : Réserver, les onglets, Événements, puis les écrans d'administration (Espace, Membres et abonnements, Disponibilités, Rôles, Facturation et rapports, Coordonnées de paiement, Paiements en ligne, Badges, Services, Accessoires, Facturation, Fonctionnalités, Modifier l'espace) et, en dernier, Documents, Confidentialité et données, Réglages. Toute la hauteur reste au contenu. Téléphones et applications de bureau gardent la barre.
 
+**Plus de place : balayez la barre (#1173).** Balayez la barre du bas **vers le bas** — ou touchez-la deux fois — et les onglets s'effacent, laissant le bouton rond **Réserver** à sa place. Le contenu récupère toute la bande, ce qui sur le plan fait la différence entre quatre rangées de places et cinq. Trois gestes la font revenir : balayer **vers le haut** dans la même bande, un **appui long** sur le bouton Réserver, ou l'action *Afficher la navigation* de ce bouton avec un lecteur d'écran. Le choix est retenu sur cet appareil, et l'application affiche l'astuce une seule fois, la première.
+
 ## 2. Rôles et invitations
 
 DesKilo a trois rôles additifs, une déclinaison de copropriété par-dessus, plus un compte d'appareil :

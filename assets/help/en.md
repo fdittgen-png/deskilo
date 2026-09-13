@@ -63,6 +63,8 @@ The app has up to five destinations along the bottom: **Messages** (§16), **Cal
 
 **On the web: the menu button.** In a browser the bottom bar and its round Reserve button are gone — the window has the width a phone lacks and none of its thumb reach. The **☰ menu** at the top left opens a drawer with every destination one tap away: Reserve, the tabs, Events, then the administration screens (Workspace, Members & plans, Availability, Roles, Billing & reports, Payment instructions, Online payments, Badges, Services, Accessories, Billing, Features, Edit workspace) and, last, Documents, Privacy & data and Settings. The whole height stays for content. Phones and desktop apps keep the bar.
 
+**More room: swipe the bar away (#1173).** Swipe the bottom bar **down** — or double-tap it — and the tabs slide out of the way, leaving the round **Reserve** button where it is. The content takes the whole strip back, which on the floor plan is the difference between four rows of seats and five. Three ways bring the bar back: swipe **up** in the same strip, **long-press** the Reserve button, or use that button's *Show navigation* action with a screen reader. The choice is remembered on this device, and the app shows the hint once, the first time.
+
 ## 2. Roles & invitations
 
 DesKilo has three additive roles and a co-ownership flavour on top of them, plus a device account:

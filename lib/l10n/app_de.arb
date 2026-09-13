@@ -1058,6 +1058,11 @@
   "@aboutSupportBody": {
     "description": "Support block body (#560)"
   },
+  "shellSwipeCoachMark": "Wischen Sie die Leiste nach unten für die Vollbildansicht. Nach oben wischen oder die Reservieren-Taste lange drücken, um sie zurückzuholen.",
+  "shellBarHideHint": "Lange drücken für die Vollbildansicht",
+  "shellBarShowHint": "Lange drücken, um die Navigationsleiste einzublenden",
+  "shellBarHiddenAnnounce": "Navigationsleiste ausgeblendet",
+  "shellBarShownAnnounce": "Navigationsleiste eingeblendet",
   "commonShare": "Teilen",
   "@commonShare": {
     "description": "#1012 the share action on a saved export"

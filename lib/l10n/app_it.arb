@@ -1058,6 +1058,11 @@
   "@aboutSupportBody": {
     "description": "Support block body (#560)"
   },
+  "shellSwipeCoachMark": "Scorri la barra verso il basso per la vista a schermo intero. Scorri verso l’alto, o tieni premuto il pulsante Prenota, per riportarla.",
+  "shellBarHideHint": "Tieni premuto per la vista a schermo intero",
+  "shellBarShowHint": "Tieni premuto per mostrare la barra di navigazione",
+  "shellBarHiddenAnnounce": "Barra di navigazione nascosta",
+  "shellBarShownAnnounce": "Barra di navigazione visibile",
   "commonShare": "Condividi",
   "@commonShare": {
     "description": "#1012 the share action on a saved export"

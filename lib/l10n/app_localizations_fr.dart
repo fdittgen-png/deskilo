@@ -1478,6 +1478,23 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette application est gratuite, open source et sans publicité. Si vous la trouvez utile, soutenez le développeur.';
 
   @override
+  String get shellSwipeCoachMark =>
+      'Balayez la barre vers le bas pour l\'affichage plein écran. Balayez vers le haut, ou appuyez longuement sur le bouton Réserver, pour la faire revenir.';
+
+  @override
+  String get shellBarHideHint => 'Appui long pour l’affichage plein écran';
+
+  @override
+  String get shellBarShowHint =>
+      'Appui long pour afficher la barre de navigation';
+
+  @override
+  String get shellBarHiddenAnnounce => 'Barre de navigation masquée';
+
+  @override
+  String get shellBarShownAnnounce => 'Barre de navigation affichée';
+
+  @override
   String get commonShare => 'Partager';
 
   @override

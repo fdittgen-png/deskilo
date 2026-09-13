@@ -50,5 +50,10 @@
   "aboutSupportBody": "Esta aplicación es gratuita, de código abierto y sin publicidad. Si te resulta útil, apoya al desarrollador.",
   "@aboutSupportBody": {
     "description": "Support block body (#560)"
-  }
+  },
+  "shellSwipeCoachMark": "Desliza la barra hacia abajo para la vista de pantalla completa. Desliza hacia arriba, o mantén pulsado el botón Reservar, para recuperarla.",
+  "shellBarHideHint": "Mantén pulsado para la vista de pantalla completa",
+  "shellBarShowHint": "Mantén pulsado para mostrar la barra de navegación",
+  "shellBarHiddenAnnounce": "Barra de navegación oculta",
+  "shellBarShownAnnounce": "Barra de navegación visible"
 }

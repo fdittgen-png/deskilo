@@ -173,7 +173,7 @@ final class HelpAnchorsProvider
   }
 }
 
-String _$helpAnchorsHash() => r'0ba8dcd35dd383bb1f78af535a6e20a6928e89a7';
+String _$helpAnchorsHash() => r'2e1d2d8bf663d9dbd3d15f9a6ad16081f9a47567';
 
 /// #1016 — anchor -> heading text for [languageCode], compiled from the
 /// guide's `<!-- anchor: … -->` comments.

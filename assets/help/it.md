@@ -63,6 +63,8 @@ L'app ha fino a cinque destinazioni lungo il bordo inferiore: **Messaggi** (§16
 
 **Sul web: il pulsante menu.** In un browser spariscono la barra in basso e il suo pulsante rotondo Prenota — la finestra ha la larghezza che manca al telefono e nulla della sua portata del pollice. Il **menu ☰** in alto a sinistra apre un cassetto con ogni destinazione a un tocco: Prenota, le schede, Eventi, poi le schermate di amministrazione (Spazio, Membri e piani, Disponibilità, Ruoli, Fatturazione e report, Coordinate di pagamento, Pagamenti online, Badge, Servizi, Accessori, Fatturazione, Funzionalità, Modifica spazio) e, per ultimi, Documenti, Privacy e dati, Impostazioni. Tutta l'altezza resta al contenuto. Telefoni e app desktop mantengono la barra.
 
+**Più spazio: scorri via la barra (#1173).** Scorri la barra in basso **verso il basso** — o toccala due volte — e le schede si spostano, lasciando il pulsante rotondo **Prenota** dov'è. Il contenuto riprende tutta la fascia, che sulla piantina è la differenza fra quattro file di posti e cinque. Tre modi la riportano: scorrere **verso l'alto** nella stessa fascia, **tenere premuto** il pulsante Prenota, o usare la sua azione *Mostra navigazione* con uno screen reader. La scelta è ricordata su questo dispositivo, e il suggerimento compare una volta sola.
+
 ## 2. Ruoli e inviti
 
 DesKilo ha tre ruoli cumulativi e, sopra di essi, una variante di comproprietà, più un account dispositivo:

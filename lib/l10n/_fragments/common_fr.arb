@@ -50,5 +50,10 @@
   "aboutSupportBody": "Cette application est gratuite, open source et sans publicité. Si vous la trouvez utile, soutenez le développeur.",
   "@aboutSupportBody": {
     "description": "Support block body (#560)"
-  }
+  },
+  "shellSwipeCoachMark": "Balayez la barre vers le bas pour l'affichage plein écran. Balayez vers le haut, ou appuyez longuement sur le bouton Réserver, pour la faire revenir.",
+  "shellBarHideHint": "Appui long pour l’affichage plein écran",
+  "shellBarShowHint": "Appui long pour afficher la barre de navigation",
+  "shellBarHiddenAnnounce": "Barre de navigation masquée",
+  "shellBarShownAnnounce": "Barre de navigation affichée"
 }
