@@ -10,6 +10,7 @@ import '../../../../core/calendar/calendar_item.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'calendar_item_row.dart';
+import '../../../../core/ui/edge_fade_scroll.dart';
 
 /// The horizontal filter row above the feed.
 class CalendarKindChips extends StatelessWidget {
@@ -36,8 +37,7 @@ class CalendarKindChips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
+    return EdgeFadeScroll(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
       child: Row(children: [
         FilterChip(

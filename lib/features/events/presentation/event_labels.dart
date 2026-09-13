@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import '../../../l10n/app_localizations.dart';
+import '../domain/notification_feed.dart';
 import '../domain/workspace_event.dart';
 
 /// The human name of an event type — the feed's, the calendar's, the
@@ -49,5 +50,27 @@ String eventTypeLabel(AppLocalizations? l10n, EventType type) {
       l10n?.eventTypeExpenseSchedule ?? 'Scheduled expense',
     EventType.expenseRepartition =>
       l10n?.eventTypeExpenseRepartition ?? 'Shared expense',
+  };
+}
+
+/// The name of one notification category (#581/#598).
+///
+/// The filter chips and the grouped feed's headers say the same
+/// words, so they read it from one place. Moved out of the Alerts
+/// screen (#1184) — it is a label, and this is where labels live.
+String notificationCategoryLabel(
+  AppLocalizations? l10n,
+  NotificationCategory category,
+) {
+  return switch (category) {
+    NotificationCategory.messages =>
+      l10n?.eventsMessagesHeader ?? 'Messages',
+    NotificationCategory.reservations =>
+      l10n?.eventTypeReservation ?? 'Reservation',
+    NotificationCategory.checkIns =>
+      l10n?.notifCategoryCheckIns ?? 'Check-ins',
+    NotificationCategory.money => l10n?.notifCategoryMoney ?? 'Money',
+    NotificationCategory.members =>
+      l10n?.notifCategoryMembers ?? 'Members',
   };
 }

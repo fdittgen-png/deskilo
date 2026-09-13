@@ -42,6 +42,7 @@ import 'report_history_controls.dart';
 import 'report_markup_guide.dart';
 import 'report_page_designer.dart';
 import 'report_preview.dart';
+import '../../../../core/ui/edge_fade_scroll.dart';
 
 /// The invoice REPORT editor (#454, rebuilt as a banded reporting tool
 /// in #470): three Liquid bands — header, body with the lines, footer —
@@ -728,8 +729,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
           (kind.id, reportKindLabel(l10n, kind)),
       ];
 
-  Widget _langChips(AppLocalizations? l10n) => SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
+  Widget _langChips(AppLocalizations? l10n) => EdgeFadeScroll(
         child: Row(children: [
           Padding(
             padding: const EdgeInsets.only(right: 6),
@@ -775,9 +775,8 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
         ]),
       );
 
-  Widget _docChips(AppLocalizations? l10n) => SingleChildScrollView(
+  Widget _docChips(AppLocalizations? l10n) => EdgeFadeScroll(
         key: const ValueKey('invoice-template-docs'),
-        scrollDirection: Axis.horizontal,
         child: Row(children: [
           for (final (doc, label) in _docs(l10n))
             Padding(

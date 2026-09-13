@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../domain/level.dart';
+import '../../../../core/ui/edge_fade_scroll.dart';
 
 /// The one horizontal level-chip selector (#187/#221 idiom), formerly
 /// copy-pasted across the day timeline, the week grid and the Reserve hub's
@@ -40,7 +41,9 @@ class LevelChipRow extends StatelessWidget {
     if (levels.length < 2) return const SizedBox.shrink();
     return SizedBox(
       height: kMinInteractiveDimension,
-      child: ListView(
+      child: EdgeFadeScroll.around(
+        builder: (context, controller) => ListView(
+        controller: controller,
         scrollDirection: Axis.horizontal,
         padding: AppSpacing.mdH,
         children: [
@@ -66,6 +69,7 @@ class LevelChipRow extends StatelessWidget {
               ),
             ),
         ],
+        ),
       ),
     );
   }
