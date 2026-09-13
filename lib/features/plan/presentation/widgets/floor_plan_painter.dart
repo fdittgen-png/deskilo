@@ -14,6 +14,7 @@ import '../../../reservations/domain/seat_state_logic.dart';
 import '../../domain/floor_plan.dart';
 import '../../domain/grid_geometry.dart';
 import '../../domain/seat.dart';
+import 'drop_target_paint.dart';
 
 /// Paints a level's grid, offices, desks and seats. Shared by the editor
 /// canvas (#34/#35) and the live floor plan (Epic #4): passing [seatStates]
@@ -52,6 +53,7 @@ class FloorPlanPainter extends CustomPainter {
     this.selection,
     this.selectionResizable = false,
     this.selectionValid = true,
+    this.dropTargets,
   });
 
   final FloorPlan plan;
@@ -143,6 +145,21 @@ class FloorPlanPainter extends CustomPainter {
 
   /// In-progress drag rectangle (grid cells) while drawing a new element.
   final GridRect? marquee;
+
+  /// #1216 — where the armed editor tool may legally place its next
+  /// element: the offices a desk can go in, the desks a seat can go on.
+  ///
+  /// The rules were enforced all along and shown only after a failed
+  /// drag, as "Must be fully inside an office." in a snackbar. The
+  /// editor knows the answer before the gesture, so it says it before
+  /// the gesture: the listed rectangles keep their colour and get an
+  /// accent ring, and everything else is washed out.
+  ///
+  /// Null = no tool armed, nothing dimmed. EMPTY is meaningful and not
+  /// the same thing: a tool is armed and there is nowhere legal to put
+  /// it, so the whole floor dims and the answer is visible rather than
+  /// waiting behind a drag.
+  final Set<String>? dropTargets;
   final bool marqueeValid;
 
   /// Editor selection (#101): highlighted rect, resize handles when the
@@ -512,6 +529,17 @@ class FloorPlanPainter extends CustomPainter {
       }
     }
 
+    // #1216 — the editor's only mark on this canvas: where the armed
+    // tool may legally place its next element.
+    paintDropTargets(
+      canvas: canvas,
+      size: size,
+      plan: plan,
+      targets: dropTargets,
+      cellSize: cellSize,
+      colorScheme: colorScheme,
+    );
+
     final m = marquee;
     if (m != null) {
       final rect = _toPx(m);
@@ -683,6 +711,7 @@ class FloorPlanPainter extends CustomPainter {
       !mapEquals(oldDelegate.images, images) ||
       !mapEquals(oldDelegate.seatPhotos, seatPhotos) ||
       oldDelegate.marquee != marquee ||
+      !setEquals(oldDelegate.dropTargets, dropTargets) ||
       oldDelegate.marqueeValid != marqueeValid ||
       oldDelegate.selection != selection ||
       oldDelegate.selectionResizable != selectionResizable ||

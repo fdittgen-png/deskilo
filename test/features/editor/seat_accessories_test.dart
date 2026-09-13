@@ -110,16 +110,23 @@ void main() {
       expect(accessories.seatAccessories[seatId], {monitor.id});
     });
 
-    testWidgets('empty catalog shows a hint instead of chips',
+    // #1216 — a LINK, not an instruction. Naming the screen and making
+    // the reader walk there themselves costs two taps and a memory of
+    // the sentence; this costs one, and the sheet closes behind it.
+    testWidgets('empty catalog offers the way to set them up',
         (tester) async {
       await pumpCanvas(tester, seed: seedSeat);
 
       await openSeatSheet(tester);
 
       expect(find.byType(FilterChip), findsNothing);
+      final link = find.byKey(const ValueKey('seat-add-accessories'));
+      expect(link, findsOneWidget);
       expect(
-        find.text('No accessories yet — add them in Settings → Accessories.'),
-        findsOneWidget,
+        tester.widget<TextButton>(link).onPressed,
+        isNotNull,
+        reason: 'an instruction you cannot follow from here is where '
+            'this started',
       );
     });
   });

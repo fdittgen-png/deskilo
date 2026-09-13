@@ -2024,6 +2024,47 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editorToolSelect => 'Select';
 
   @override
+  String get editorProperties => 'Properties';
+
+  @override
+  String get editorDuplicate => 'Duplicate';
+
+  @override
+  String get editorDeskFull => 'No room left on this desk.';
+
+  @override
+  String get editorHintOffice => 'Drag to draw an office';
+
+  @override
+  String get editorHintDesk => 'Drag inside an office to draw a desk';
+
+  @override
+  String get editorHintSeat => 'Tap a desk to add a seat';
+
+  @override
+  String get editorHintImage => 'Tap where the image should go';
+
+  @override
+  String get editorEmptyFloorTitle => 'This floor is empty';
+
+  @override
+  String get editorEmptyFloorBody =>
+      'Everything sits inside a room: draw one, put desks in it, then seats on the desks.';
+
+  @override
+  String get editorEmptyFloorAction => 'Draw the first room';
+
+  @override
+  String get editorNoAccessoriesAction => 'No accessories yet — set them up';
+
+  @override
+  String get editorOrientationHint => 'Which way the chair faces on the plan.';
+
+  @override
+  String get editorBookableAsWholeHint =>
+      'Somebody can reserve it entire, with everything inside it.';
+
+  @override
   String get editorToolOffice => 'Office';
 
   @override

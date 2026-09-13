@@ -2036,6 +2036,49 @@ class AppLocalizationsFr extends AppLocalizations {
   String get editorToolSelect => 'Sélection';
 
   @override
+  String get editorProperties => 'Propriétés';
+
+  @override
+  String get editorDuplicate => 'Dupliquer';
+
+  @override
+  String get editorDeskFull => 'Plus de place sur cette table.';
+
+  @override
+  String get editorHintOffice => 'Faites glisser pour dessiner un bureau';
+
+  @override
+  String get editorHintDesk =>
+      'Faites glisser dans un bureau pour dessiner une table';
+
+  @override
+  String get editorHintSeat => 'Touchez une table pour ajouter une place';
+
+  @override
+  String get editorHintImage => 'Touchez l\'endroit où placer l\'image';
+
+  @override
+  String get editorEmptyFloorTitle => 'Cet étage est vide';
+
+  @override
+  String get editorEmptyFloorBody =>
+      'Tout se trouve dans une pièce : dessinez-en une, placez-y des tables, puis des places sur les tables.';
+
+  @override
+  String get editorEmptyFloorAction => 'Dessiner la première pièce';
+
+  @override
+  String get editorNoAccessoriesAction => 'Aucun équipement — les configurer';
+
+  @override
+  String get editorOrientationHint =>
+      'Le sens dans lequel la chaise est tournée sur le plan.';
+
+  @override
+  String get editorBookableAsWholeHint =>
+      'Quelqu\'un peut la réserver en entier, avec tout ce qu\'elle contient.';
+
+  @override
   String get editorToolOffice => 'Bureau';
 
   @override

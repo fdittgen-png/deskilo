@@ -52,6 +52,58 @@
   "@editorToolSelect": {
     "description": "Canvas tool: select/inspect elements, pan and zoom"
   },
+  "editorProperties": "Properties",
+  "@editorProperties": {
+    "description": "#1216 the selection bar action that opens an element’s properties sheet"
+  },
+  "editorDuplicate": "Duplicate",
+  "@editorDuplicate": {
+    "description": "#1216 the selection bar action that copies a seat onto the next free cell of its desk"
+  },
+  "editorDeskFull": "No room left on this desk.",
+  "@editorDeskFull": {
+    "description": "#1216 duplicating a seat found no free cell on its desk"
+  },
+  "editorHintOffice": "Drag to draw an office",
+  "@editorHintOffice": {
+    "description": "#1216 what the next gesture does while the office tool is armed"
+  },
+  "editorHintDesk": "Drag inside an office to draw a desk",
+  "@editorHintDesk": {
+    "description": "#1216 what the next gesture does while the desk tool is armed"
+  },
+  "editorHintSeat": "Tap a desk to add a seat",
+  "@editorHintSeat": {
+    "description": "#1216 what the next gesture does while the seat tool is armed"
+  },
+  "editorHintImage": "Tap where the image should go",
+  "@editorHintImage": {
+    "description": "#1216 what the next gesture does while the image tool is armed"
+  },
+  "editorEmptyFloorTitle": "This floor is empty",
+  "@editorEmptyFloorTitle": {
+    "description": "#1216 the card shown on a level nobody has drawn on yet"
+  },
+  "editorEmptyFloorBody": "Everything sits inside a room: draw one, put desks in it, then seats on the desks.",
+  "@editorEmptyFloorBody": {
+    "description": "#1216 the order the three kinds nest in, said once on an empty floor"
+  },
+  "editorEmptyFloorAction": "Draw the first room",
+  "@editorEmptyFloorAction": {
+    "description": "#1216 the empty floor’s button, which arms the office tool"
+  },
+  "editorNoAccessoriesAction": "No accessories yet — set them up",
+  "@editorNoAccessoriesAction": {
+    "description": "#1216 a link to the accessory catalogue, replacing an instruction to go there"
+  },
+  "editorOrientationHint": "Which way the chair faces on the plan.",
+  "@editorOrientationHint": {
+    "description": "#1216 what the four sitting-direction arrows are relative to"
+  },
+  "editorBookableAsWholeHint": "Somebody can reserve it entire, with everything inside it.",
+  "@editorBookableAsWholeHint": {
+    "description": "#1216 what the bookable-as-a-whole switch actually does"
+  },
   "editorToolOffice": "Office",
   "@editorToolOffice": {
     "description": "Canvas tool: drag to draw an office (room)"
