@@ -7461,6 +7461,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get planClosedDay => 'Closed on this day';
 
   @override
+  String planClosedDayShowNext(String day) {
+    return 'Show $day';
+  }
+
+  @override
   String get planClosedDayError => 'The workspace is closed on that day.';
 
   @override

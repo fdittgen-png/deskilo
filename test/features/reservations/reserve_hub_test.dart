@@ -1078,4 +1078,53 @@ void main() {
     expect(
         find.byKey(const ValueKey('booking-check-in-now')), findsNothing);
   });
+
+  // #1196 — the hub used to open on a closed day, paint every seat
+  // blocked, inert the day-part chips, and say "Closed on this day"
+  // with no way forward. The next open day is something the screen
+  // already knew; it just made the member find it by hand.
+  testWidgets('the closed-day banner offers the next open day, and '
+      'tapping it goes there', (tester) async {
+    await pumpHub(tester, openWeekdays: const [1, 2, 3, 4, 5]);
+
+    var saturday = _today;
+    while (saturday.weekday != DateTime.saturday) {
+      saturday = DateTime(saturday.year, saturday.month, saturday.day + 1);
+    }
+    await pickHubDate(tester, saturday);
+
+    final action = find.descendant(
+      of: find.byKey(const ValueKey('reserve-closed-banner')),
+      matching: find.byKey(const ValueKey('inline-banner-action')),
+    );
+    expect(action, findsOneWidget,
+        reason: 'a banner that states a fact and offers nothing leaves '
+            'the member to work the next move out themselves');
+
+    await tester.tap(action);
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('reserve-closed-banner')), findsNothing,
+        reason: 'the tap landed on the Monday after, which is open');
+    await tester.tap(find.byTooltip('Day'));
+    await tester.pumpAndSettle();
+    final timeline = tester.widget<DayTimeline>(find.byType(DayTimeline));
+    expect(timeline.day.weekday, DateTime.monday);
+  });
+
+  testWidgets('a workspace that is never open has nothing to point at, '
+      'and says so by offering nothing', (tester) async {
+    await pumpHub(tester, openWeekdays: const []);
+
+    expect(find.byKey(const ValueKey('reserve-closed-banner')),
+        findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('reserve-closed-banner')),
+        matching: find.byKey(const ValueKey('inline-banner-action')),
+      ),
+      findsNothing,
+      reason: 'an action that cannot lead anywhere is worse than none',
+    );
+  });
 }
