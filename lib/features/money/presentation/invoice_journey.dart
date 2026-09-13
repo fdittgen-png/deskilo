@@ -3,6 +3,7 @@ import '../../events/domain/workspace_event.dart';
 import '../domain/dunning.dart';
 import '../domain/invoice.dart';
 import 'invoice_status.dart';
+import '../../../core/time/calendar_days.dart';
 
 /// #812 — the four steps every invoice walks through, in order. The same
 /// four on every surface, so an issuer's hub and a member's face tell one
@@ -292,9 +293,13 @@ class InvoiceJourney {
       move: move,
       settled: settled,
       remainingCents: settled ? 0 : remaining,
-      dueOn: invoice.issuedAt.add(Duration(days: rules.firstAfterDays)),
-      daysToTerm:
-          rules.firstAfterDays - now.difference(invoice.issuedAt).inDays,
+      // #1231 — the payment term is a CALENDAR promise: thirty days
+      // from this moment, at this moment. A Duration loses or gains an
+      // hour across a clock change, and this date is printed on the
+      // document and starts the dunning clock.
+      dueOn: addCalendarDays(invoice.issuedAt, rules.firstAfterDays),
+      daysToTerm: rules.firstAfterDays -
+          calendarDaysBetween(invoice.issuedAt, now),
       reminderDue: remaining > 0 &&
               !settled &&
               (lifecycle == InvoiceLifecycle.open ||
