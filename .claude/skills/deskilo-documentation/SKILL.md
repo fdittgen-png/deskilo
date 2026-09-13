@@ -88,6 +88,28 @@ The pipeline works, but four things sink a batch silently:
   Stage the originals under zero-padded names in scroll order anyway; it
   costs nothing and the order is then visible in the directory.
 
+## The screenshots are shot in ENGLISH (#1198)
+
+One image set serves all five guides, so no language is *right*: four
+readers in five always see a foreign screenshot. What the set can be is
+**consistent**, and until 2026-09-13 it was not — 82 images in French,
+three new ones in English.
+
+English, because it is the widest reach and because the guides' own
+anchors and ids are English already. The alternative, per-language sets
+resolved by the guide's language, is correct and costs five times the
+shooting and the storage; it is not worth that for a screenshot whose
+job is to say *this is the screen you are on*.
+
+The 82 French ones are a **backlog, not a batch**. Each is replaced for
+free the next time that screen is photographed: `media ingest --screen
+<id>` overwrites the same `docs/wiki/images/<id>.jpg` and every link in
+every language keeps working. Nobody re-shoots eighty screens in an
+afternoon; everybody shoots the screen they are already documenting.
+
+So: **set the device to English before a batch**, next to setting Demo
+mode on.
+
 ## Screenshots carry personal data, and `docs/media/source/` is in git
 
 Demo mode exists for exactly this — *"Names, e-mails, phones and
