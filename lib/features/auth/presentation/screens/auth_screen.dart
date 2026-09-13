@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
 import '../../../../core/nfc/nfc_uid_reader.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -286,11 +287,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    l10n?.appTitle ?? 'DesKilo',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                    textAlign: TextAlign.center,
-                  ),
+                  const _Wordmark(),
                   const SizedBox(height: 8),
                   Text(
                     _isSignUp
@@ -385,12 +382,21 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                   // on the server) surface as a snack.
                   Row(children: [
                     const Expanded(child: Divider()),
-                    Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 8),
-                      child: Text(
-                        l10n?.authContinueWith ?? 'or continue with',
-                        style: Theme.of(context).textTheme.bodySmall,
+                    // #1205 — Flexible, not a bare Padding: at a large
+                    // text scale "or continue with" is wider than the
+                    // rules leave it, and a fixed child in a Row answers
+                    // that by overflowing off the right of a phone.
+                    // Flexible lets the sentence wrap to two lines
+                    // instead, which is what the rest of this form does.
+                    Flexible(
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(
+                          l10n?.authContinueWith ?? 'or continue with',
+                          style: Theme.of(context).textTheme.bodySmall,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                     const Expanded(child: Divider()),
@@ -465,6 +471,61 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// #1205 — the logo and the name, as one lockup.
+///
+/// The boot splash shows the app's face for a second and used to hand
+/// over to a sign-in screen that dropped it, so the brand vanished at
+/// exactly the moment a new member is deciding whether they opened the
+/// right app. Same artwork as the launcher icon, now beside the name
+/// rather than instead of it.
+class _Wordmark extends StatelessWidget {
+  const _Wordmark();
+
+  /// Tied to the title's own size rather than fixed, so the mark grows
+  /// with the text scale instead of shrinking beside it.
+  static const double _size = 40;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final scaled = MediaQuery.textScalerOf(context).scale(_size);
+    return Row(
+      // A lockup, not a banner: the pair stays together in the middle
+      // of the column however wide the screen is.
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ClipRRect(
+          borderRadius: AppRadius.mdAll,
+          child: Image.asset(
+            'assets/icon/icon_full.png',
+            key: const ValueKey('signin-logo'),
+            width: scaled,
+            height: scaled,
+            // The word beside it is the accessible name; announcing the
+            // mark as well would say "DesKilo" twice.
+            excludeFromSemantics: true,
+            // The asset ships with the app; if it ever goes missing,
+            // signing in must not fail over a logo.
+            errorBuilder: (_, _, _) => SizedBox.square(
+              dimension: scaled,
+              child: const Icon(Icons.event_seat_outlined),
+            ),
+          ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Flexible(
+          child: Text(
+            l10n?.appTitle ?? 'DesKilo',
+            style: Theme.of(context).textTheme.headlineMedium,
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
     );
   }
 }
