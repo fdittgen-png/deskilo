@@ -501,11 +501,32 @@ class _MemberPageBody extends ConsumerWidget {
           ),
           if (quickActions.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.md),
-            Wrap(
+            // #1187 — the actions were a Wrap of buttons each sized to
+            // its own label: three rows, three widths, ragged right. Two
+            // equal columns instead, and a lone last button spans them,
+            // so the group reads as a group.
+            LayoutBuilder(
               key: const ValueKey('member-page-actions'),
-              spacing: AppSpacing.sm,
-              runSpacing: AppSpacing.sm,
-              children: quickActions,
+              builder: (context, constraints) {
+                const gap = AppSpacing.sm;
+                final cell = (constraints.maxWidth - gap) / 2;
+                return Wrap(
+                  spacing: gap,
+                  runSpacing: gap,
+                  children: [
+                    for (final (i, action) in quickActions.indexed)
+                      SizedBox(
+                        key: ValueKey('member-page-cell-$i'),
+                        // A lone last button spans both columns rather
+                        // than sitting half-width beside nothing.
+                        width: i == quickActions.length - 1 && i.isEven
+                            ? constraints.maxWidth
+                            : cell,
+                        child: action,
+                      ),
+                  ],
+                );
+              },
             ),
           ],
           // Role-gated INSIDE each card, as on the old sheet.
