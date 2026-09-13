@@ -358,6 +358,7 @@
   "@badgePinSaveFailed": {
     "description": "#1086 the PIN save or clear could not reach the server"
   },
+  "badgeIssuedOn": "Emesso il {date}",
   "billSubscription": "Abbonamento {pct} %",
   "billEntitlement": "{used} mezze giornate fatturate su {included} ({openDays} giorni di apertura)",
   "billOverage": "{extra} mezze giornate extra",

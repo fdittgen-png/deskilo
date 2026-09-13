@@ -568,6 +568,15 @@
   "@badgePinSaveFailed": {
     "description": "#1086 the PIN save or clear could not reach the server"
   },
+  "badgeIssuedOn": "Issued {date}",
+  "@badgeIssuedOn": {
+    "description": "Badge row subtitle — the day it was issued, so two unnamed badges are told apart before one is revoked (#1178)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "billSubscription": "Subscription {pct}%",
   "@billSubscription": {
     "description": "Bill section header (#132): the member's percentage; the band fee renders as the trailing amount",

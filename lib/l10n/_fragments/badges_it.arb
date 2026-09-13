@@ -125,5 +125,6 @@
   "badgePinSaveFailed": "Server irraggiungibile. Il tuo PIN non è stato modificato — riprova.",
   "@badgePinSaveFailed": {
     "description": "#1086 the PIN save or clear could not reach the server"
-  }
+  },
+  "badgeIssuedOn": "Emesso il {date}"
 }

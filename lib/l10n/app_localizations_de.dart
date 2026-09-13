@@ -527,6 +527,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Server nicht erreichbar. Ihre PIN wurde nicht geändert — bitte erneut versuchen.';
 
   @override
+  String badgeIssuedOn(String date) {
+    return 'Ausgestellt am $date';
+  }
+
+  @override
   String billSubscription(int pct) {
     return 'Abo $pct %';
   }

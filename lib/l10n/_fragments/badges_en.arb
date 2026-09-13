@@ -125,5 +125,14 @@
   "badgePinSaveFailed": "Could not reach the server. Your PIN was not changed — try again.",
   "@badgePinSaveFailed": {
     "description": "#1086 the PIN save or clear could not reach the server"
+  },
+  "badgeIssuedOn": "Issued {date}",
+  "@badgeIssuedOn": {
+    "description": "Badge row subtitle — the day it was issued, so two unnamed badges are told apart before one is revoked (#1178)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   }
 }

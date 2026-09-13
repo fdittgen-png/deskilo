@@ -528,6 +528,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Serveur injoignable. Votre code n\'a pas été modifié — réessayez.';
 
   @override
+  String badgeIssuedOn(String date) {
+    return 'Émis le $date';
+  }
+
+  @override
   String billSubscription(int pct) {
     return 'Abonnement $pct %';
   }

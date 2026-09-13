@@ -24,6 +24,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/badge_pdf.dart';
 import '../../domain/member_badge.dart';
 import '../../domain/workspace_feature.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../providers/workspace_providers.dart';
 
 /// One member's badge manager (0043/0046, extracted for the 0053
@@ -359,9 +360,15 @@ class _BadgeManagerDialogState
             ? (l10n?.badgeDefaultLabel ?? 'Badge')
             : badge.label,
       ),
-      subtitle: badge.isActive
-          ? null
-          : Text(l10n?.badgeRevoked ?? 'Revoked'),
+      // #1178 — every unnamed badge read "Badge", so `Revoke` sat
+      // beside four identical rows. The icon already says QR or card;
+      // the issue date says WHICH one.
+      subtitle: Text(
+        badge.isActive
+            ? (l10n?.badgeIssuedOn(_day(context, badge.createdAt)) ??
+                'Issued ${_day(context, badge.createdAt)}')
+            : (l10n?.badgeRevoked ?? 'Revoked'),
+      ),
       trailing: badge.isActive
           ? TextButton(
               onPressed: () => _revoke(badge),
@@ -379,12 +386,6 @@ class _BadgeManagerDialogState
           contentPadding: EdgeInsets.zero,
           value: badge.authEnabled,
           title: Text(l10n?.badgeAuthEnabledLabel ?? 'Signs me in'),
-          subtitle: Text(
-            l10n?.badgeAuthEnabledHint ??
-                'Off by default: a badge that checks you in does not log '
-                    'you in until you say so.',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
           onChanged: _busy ? null : (value) => _setAuth(badge, value, arm),
         ),
       ]);
@@ -412,6 +413,10 @@ class _BadgeManagerDialogState
       child: row,
     );
   }
+
+  /// The badge's issue day, in the reader's own date format.
+  String _day(BuildContext context, DateTime at) =>
+      appFormatOf(context).shortDate(at);
 
   /// The dialog body below the workspace line: the one-time QR, the
   /// loading spinner, or the badge list.
@@ -462,6 +467,22 @@ class _BadgeManagerDialogState
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ),
+                      // #1178 — said ONCE, above the badges, instead of
+                      // three lines repeated under every switch: with
+                      // four badges the dialog was two-thirds the same
+                      // sentence.
+                      if (badges.any((b) => b.isActive) &&
+                          widget.setAuthEnabled != null)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4),
+                          child: Text(
+                            l10n?.badgeAuthEnabledHint ??
+                                'Off by default: a badge that checks you '
+                                    'in does not log you in until you say '
+                                    'so.',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ),
                       for (final badge in badges)
                         _badgeRow(context, badge),
                     ],
@@ -477,9 +498,20 @@ class _BadgeManagerDialogState
       title: Text(
         l10n?.memberBadgesTitle(widget.name) ?? 'Badges — ${widget.name}',
       ),
+      // #1178 — an unbounded Column of badge rows overflowed the dialog
+      // and painted itself OVER the actions: "Close" landed on a switch
+      // and "New badge" on a Revoke. The content gets its own viewport,
+      // so the buttons stay below it however many badges there are.
+      //
+      // A SingleChildScrollView, NOT `AlertDialog(scrollable: true)`:
+      // that flag makes the dialog measure its child's intrinsic height,
+      // and the content holds a LayoutBuilder (the help hint), which
+      // cannot answer an intrinsic query — "LayoutBuilder does not
+      // support returning intrinsic dimensions".
       content: SizedBox(
         width: 320,
-        child: Column(
+        child: SingleChildScrollView(
+          child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -499,6 +531,7 @@ class _BadgeManagerDialogState
             const SizedBox(height: 8),
             _content(context, issued, badges),
           ],
+          ),
         ),
       ),
       actions: [
