@@ -543,7 +543,11 @@ Tap a member to open their **management sheet** — every per-member action in o
 
 ![](assets/help/images/member-management-sheet.jpg)
 
-*A member's management sheet — every per-member action in one place.*
+ 
+
+![](assets/help/images/member-add-service.jpg)
+
+*A member's management sheet — every per-member action in one place — and the Add-a-service dialog beside it, naming the service, the quantity and the month it lands in.*
 
 ![](assets/help/images/member-management-sheet-self.jpg)
 
@@ -2304,7 +2308,9 @@ engine. A **report kind** names the document; a **design** says how it
 looks; the **data** the app hands it is a fixed vocabulary of
 placeholders.
 
-<!-- image: admin-reports-editor -->
+![](assets/help/images/admin-reports-editor.jpg)
+
+*The report editor: the language and document pickers on top, the Markup / Visual and Design / Preview switches under them, and the invoice's bands — header, body, footer — below.*
 
 ### The kinds, and the four presets
 
@@ -2636,7 +2642,9 @@ it prints carries the **development watermark**, its e-invoices go to
 the test endpoint, and nothing it produces can be mistaken for a real
 document.
 
-<!-- image: env-pair-profiles -->
+![](assets/help/images/env-pair-profiles.jpg)
+
+*The Profiles screen: a paired workspace carries DEV and PROD on one row — one space, two environments, and the tick shows which one you are standing in.*
 
 ## Creating the pair
 
@@ -2685,7 +2693,9 @@ the production side the button reads *Pull from DEV*, on the development
 side *Pull from PROD*. Nothing can be pushed onto the other side by
 mistake.
 
-<!-- image: env-deploy-screen -->
+![](assets/help/images/env-deploy-screen.jpg)
+
+*The Deployment screen from the development side: the sentence at the top names the direction, and what you tick is pulled from the production twin — after a preview.*
 
 ### What travels, entity by entity
 

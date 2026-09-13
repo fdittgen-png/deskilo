@@ -549,7 +549,11 @@ Toca un miembro para abrir su **ficha de gestión** — cada acción por miembro
 
 ![](assets/help/images/member-management-sheet.jpg)
 
-*La ficha de gestión de un miembro — cada acción por miembro en un solo lugar.*
+ 
+
+![](assets/help/images/member-add-service.jpg)
+
+*La ficha de gestión de un miembro — cada acción por miembro en un solo lugar — y a su lado el cuadro Añadir un servicio: el servicio, la cantidad y el mes en que aterriza.*
 
 ![](assets/help/images/member-management-sheet-self.jpg)
 
@@ -2003,7 +2007,9 @@ eso. Cada documento que imprime lleva la **marca de agua de
 desarrollo**, sus facturas electrónicas van al punto de prueba, y nada
 de lo que produce puede confundirse con un documento real.
 
-<!-- image: env-pair-profiles -->
+![](assets/help/images/env-pair-profiles.jpg)
+
+*La pantalla Perfiles: un espacio emparejado lleva DEV y PROD en una sola fila — un espacio, dos entornos, y la marca indica en cuál estás.*
 
 ## Crear la pareja
 
@@ -2055,7 +2061,9 @@ electrónica se niega a alcanzar una plataforma gubernamental.
 lado de producción el botón dice *Traer de DEV*, en el de desarrollo
 *Traer de PROD*. Nada puede empujarse al otro lado por error.
 
-<!-- image: env-deploy-screen -->
+![](assets/help/images/env-deploy-screen.jpg)
+
+*La pantalla Despliegue desde el lado de desarrollo: la frase de arriba nombra el sentido, y lo que marcas se trae del gemelo de producción — tras una vista previa.*
 
 ### Lo que viaja, entidad por entidad
 

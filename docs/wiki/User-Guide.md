@@ -565,9 +565,9 @@ Tap a member to open their **management sheet** — every per-member action in o
 
 *Members & plans: e-mail, plan share and role chips per row; megaphone, add and filters in the app bar.*
 
-<p><img src="images/member-management-sheet.jpg" width="240"></p>
+<p><img src="images/member-management-sheet.jpg" width="240"> <img src="images/member-add-service.jpg" width="240"></p>
 
-*A member's management sheet — every per-member action in one place.*
+*A member's management sheet — every per-member action in one place — and the Add-a-service dialog beside it, naming the service, the quantity and the month it lands in.*
 
 <p><img src="images/member-management-sheet-self.jpg" width="240"></p>
 

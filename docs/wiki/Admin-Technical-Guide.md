@@ -18,7 +18,9 @@ engine. A **report kind** names the document; a **design** says how it
 looks; the **data** the app hands it is a fixed vocabulary of
 placeholders.
 
-<!-- image: admin-reports-editor -->
+<p><img src="images/admin-reports-editor.jpg" width="240"></p>
+
+*The report editor: the language and document pickers on top, the Markup / Visual and Design / Preview switches under them, and the invoice's bands — header, body, footer — below.*
 
 <!-- anchor: admin.reports.kinds -->
 ### The kinds, and the four presets

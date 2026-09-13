@@ -17,7 +17,9 @@ stampa porta la **filigrana di sviluppo**, le sue fatture elettroniche
 vanno all'endpoint di prova, e nulla di ciò che produce può essere
 scambiato per un documento reale.
 
-<!-- image: env-pair-profiles -->
+<p><img src="images/env-pair-profiles.jpg" width="240"></p>
+
+*La schermata Profili: uno spazio accoppiato porta DEV e PROD su una sola riga — uno spazio, due ambienti, e la spunta mostra in quale ti trovi.*
 
 <!-- anchor: env.pair.create -->
 ## Creare la coppia
@@ -73,7 +75,9 @@ sul lato produzione il pulsante dice *Tira da DEV*, su quello di
 sviluppo *Tira da PROD*. Nulla può essere spinto sull'altro lato per
 errore.
 
-<!-- image: env-deploy-screen -->
+<p><img src="images/env-deploy-screen.jpg" width="240"></p>
+
+*La schermata Distribuzione dal lato sviluppo: la frase in alto nomina la direzione, e ciò che spunti viene tirato dal gemello di produzione — dopo un'anteprima.*
 
 <!-- anchor: env.deploy.entities -->
 ### Cosa viaggia, entità per entità
