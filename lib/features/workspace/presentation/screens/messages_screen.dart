@@ -18,6 +18,7 @@ import 'message_search_screen.dart';
 import '../widgets/conversation_thread.dart';
 import '../widgets/new_conversation_sheet.dart';
 import '../../../../core/theme/shell_metrics.dart';
+import '../../../../core/ui/edge_fade_scroll.dart';
 
 /// #821 — what the chat list shows.
 enum InboxFilter { all, unread, archived }
@@ -168,8 +169,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen> {
           AppSpacing.md, AppSpacing.xs, AppSpacing.xs, 0),
       child: Row(children: [
         Expanded(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
+          child: EdgeFadeScroll(
             child: Row(children: [
               for (final f in InboxFilter.values) ...[
                 FilterChip(

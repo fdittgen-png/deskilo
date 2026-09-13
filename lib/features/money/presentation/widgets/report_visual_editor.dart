@@ -8,6 +8,7 @@ import '../../domain/invoice_report.dart';
 import '../../providers/money_providers.dart';
 import 'report_field_picker.dart';
 import 'report_page_style.dart';
+import '../../../../core/ui/edge_fade_scroll.dart';
 
 /// The kinds a visual line can be (#488) — one per markup prefix. The
 /// visual editor is WYSIWYG over the SAME markup the text mode edits:
@@ -858,8 +859,10 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
             _lines[_editing!].kind != ReportLineKind.image)
           SizedBox(
             height: 34,
-            child: ListView(
+            child: EdgeFadeScroll.around(
+              builder: (context, controller) => ListView(
               key: ValueKey('${widget.bandKey}-palette'),
+              controller: controller,
               scrollDirection: Axis.horizontal,
               children: [
                 for (final field in InvoicePdfTemplate.placeholders)
@@ -875,6 +878,7 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
                     ),
                   ),
               ],
+            ),
             ),
           ),
         if (_lines.isEmpty)

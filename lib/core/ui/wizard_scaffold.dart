@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_spacing.dart';
 import '../../l10n/app_localizations.dart';
+import 'edge_fade_scroll.dart';
 
 /// One step: a stable [name] (keys `wizard-step-<name>`) and its label.
 typedef WizardStepSpec = ({String name, String label});
@@ -64,8 +65,7 @@ class WizardScaffold extends StatelessWidget {
         children: [
           SizedBox(
             height: 56,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
+            child: EdgeFadeScroll(
               padding: const EdgeInsets.symmetric(
                   horizontal: AppSpacing.md, vertical: AppSpacing.sm),
               child: Row(children: [

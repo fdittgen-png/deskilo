@@ -33,6 +33,7 @@ import '../../../plan/presentation/widgets/floor_plan_painter.dart';
 import '../../../plan/presentation/widgets/plan_canvas.dart';
 import '../../../../core/time/clock.dart';
 import '../widgets/space_properties_sheet.dart';
+import '../../../../core/ui/edge_fade_scroll.dart';
 
 enum EditorTool { select, office, desk, seat, image, erase }
 
@@ -952,8 +953,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: AppSpacing.smAll,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
+          child: EdgeFadeScroll(
             child: SegmentedButton<EditorTool>(
             segments: [
               ButtonSegment(

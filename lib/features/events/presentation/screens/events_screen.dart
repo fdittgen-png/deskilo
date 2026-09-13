@@ -33,6 +33,7 @@ import '../../../money/domain/usage_record.dart';
 import '../widgets/validation_trail.dart';
 import '../widgets/note_row.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/ui/edge_fade_scroll.dart';
 
 /// The Events space (spec §8.1): pending confirmations pinned on top,
 /// ONE mixed date-sorted feed below (#581) — messages and workspace
@@ -83,22 +84,6 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     ref.read(eventsSeenCutoffProvider.notifier).markOpened();
   }
 
-  String _categoryLabel(
-    AppLocalizations? l10n,
-    NotificationCategory category,
-  ) {
-    return switch (category) {
-      NotificationCategory.messages =>
-        l10n?.eventsMessagesHeader ?? 'Messages',
-      NotificationCategory.reservations =>
-        l10n?.eventTypeReservation ?? 'Reservation',
-      NotificationCategory.checkIns =>
-        l10n?.notifCategoryCheckIns ?? 'Check-ins',
-      NotificationCategory.money => l10n?.notifCategoryMoney ?? 'Money',
-      NotificationCategory.members =>
-        l10n?.notifCategoryMembers ?? 'Members',
-    };
-  }
 
   String _line(
     AppLocalizations? l10n,
@@ -290,7 +275,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
   ) {
     return switch (grouping) {
       FeedGrouping.type =>
-        _categoryLabel(l10n, group.key as NotificationCategory),
+        notificationCategoryLabel(l10n, group.key as NotificationCategory),
       FeedGrouping.date =>
         DateFormat.yMMMEd().format(group.key as DateTime),
       FeedGrouping.user => names[group.key] ?? '',
@@ -661,8 +646,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 ],
                 // #581 — ONE filter line: categories × read state, all
                 // persisted. Empty category selection = everything.
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
+                EdgeFadeScroll(
                   padding: AppSpacing.mdH,
                   child: Row(
                     children: [
@@ -679,7 +663,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                         const SizedBox(width: 8),
                         FilterChip(
                           key: ValueKey('notif-cat-${category.wire}'),
-                          label: Text(_categoryLabel(l10n, category)),
+                          label: Text(notificationCategoryLabel(l10n, category)),
                           selected:
                               filter.categories.contains(category),
                           visualDensity: VisualDensity.compact,
@@ -698,6 +682,17 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                   padding: AppSpacing.mdH,
                   child: Row(
                     children: [
+                      // #1184 — the same overflow strategy as the
+                      // category line above: the chips scroll and say
+                      // so, while the sort button keeps its place at
+                      // the end. As a plain Row this line ran off the
+                      // right of a narrow phone at a large text scale,
+                      // and a four-digit unread count did it at any
+                      // scale.
+                      Expanded(
+                        child: EdgeFadeScroll(
+                          child: Row(
+                            children: [
                       FilterChip(
                         key: const ValueKey('notes-filter-unread'),
                         label: Text(
@@ -725,7 +720,10 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                               value ? ReadFilter.read : ReadFilter.all,
                             ),
                       ),
-                      const Spacer(),
+                            ],
+                          ),
+                        ),
+                      ),
                       // #581 — flip the date sort; the choice persists
                       // like the rest of the filter. It sat in an app
                       // bar this screen no longer has (#702), and it
@@ -750,8 +748,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 // day or member. Tapping the selected chip — or the
                 // symbol on any group header — returns to flat.
                 if (groupingOn)
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
+                  EdgeFadeScroll(
                     padding: AppSpacing.mdH,
                     child: Row(
                       children: [
