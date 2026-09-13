@@ -27,12 +27,17 @@ void main() {
 
   test('the recipe builds where the publishing job builds — Dart AOT '
       'embeds its own path, so the two must agree exactly', () {
-    // Once per build entry in prebuild AND in build: three entries, so
-    // six relocations and six moves back.
-    expect('export repo=$_runnerPath'.allMatches(recipe).length, 6,
+    // Once per build entry in prebuild AND in build. Derived from the
+    // entry count rather than hard-coded: a release adds three entries
+    // at a stroke, and a number in this test would then be the thing
+    // that failed instead of the thing it guards.
+    final entries =
+        RegExp(r'^  - versionName: ', multiLine: true).allMatches(recipe).length;
+    expect(entries, greaterThanOrEqualTo(3));
+    expect('export repo=$_runnerPath'.allMatches(recipe).length, entries * 2,
         reason: 'every prebuild and build must relocate to $_runnerPath');
-    expect('mv de.deskilo.app \$repo'.allMatches(recipe).length, 6);
-    expect('mv \$repo de.deskilo.app'.allMatches(recipe).length, 6);
+    expect('mv de.deskilo.app \$repo'.allMatches(recipe).length, entries * 2);
+    expect('mv \$repo de.deskilo.app'.allMatches(recipe).length, entries * 2);
 
     // The job must NOT move anything: its default checkout already is
     // that path. A `cd` into a temporary directory would silently
