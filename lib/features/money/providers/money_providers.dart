@@ -43,17 +43,27 @@ MoneyRepository moneyRepository(Ref ref) =>
 /// The signed-in member's statement for a period ('yyyy-MM').
 @riverpod
 Future<Statement?> myStatement(Ref ref, String period) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight, and it is
+  // a dependency registration in any case.
+  final repository = ref.watch(moneyRepositoryProvider);
   final member = await ref.watch(myMemberProvider.future);
   if (member == null) return null;
-  return ref.watch(moneyRepositoryProvider).fetchStatement(member.id, period);
+  return repository.fetchStatement(member.id, period);
 }
 
 /// The signed-in member's full ledger, newest first.
 @riverpod
 Future<List<LedgerEntry>> myLedger(Ref ref) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight, and it is
+  // a dependency registration in any case.
+  final repository = ref.watch(moneyRepositoryProvider);
   final member = await ref.watch(myMemberProvider.future);
   if (member == null) return const [];
-  return ref.watch(moneyRepositoryProvider).fetchLedger(member.id);
+  return repository.fetchLedger(member.id);
 }
 
 /// ONE MEMBER's money, for the dossier on their profile (#704).
@@ -109,9 +119,14 @@ Future<List<Invoice>> memberInvoices(Ref ref, String memberId) async {
 /// Fee bands of the current workspace, ordered by from_pct (#128).
 @Riverpod(keepAlive: true)
 Future<List<FeeBand>> feeBands(Ref ref) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight, and it is
+  // a dependency registration in any case.
+  final repository = ref.watch(moneyRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return ref.watch(moneyRepositoryProvider).fetchFeeBands(workspace.id);
+  return repository.fetchFeeBands(workspace.id);
 }
 
 /// Offered subscription levels of the current workspace (#128).
@@ -129,9 +144,14 @@ Future<SubscriptionLevels> subscriptionLevels(Ref ref) async {
 /// Active consumable services of the current workspace (#123).
 @Riverpod(keepAlive: true)
 Future<List<ServiceItem>> services(Ref ref) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight, and it is
+  // a dependency registration in any case.
+  final repository = ref.watch(moneyRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return ref.watch(moneyRepositoryProvider).fetchServices(workspace.id);
+  return repository.fetchServices(workspace.id);
 }
 
 /// Every service incl. deactivated ones — the owner's catalog editor (#123).
@@ -148,9 +168,14 @@ Future<List<ServiceItem>> allServices(Ref ref) async {
 /// (migration 0042).
 @riverpod
 Future<List<Package>> packages(Ref ref) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight, and it is
+  // a dependency registration in any case.
+  final repository = ref.watch(moneyRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return ref.watch(moneyRepositoryProvider).fetchPackages(workspace.id);
+  return repository.fetchPackages(workspace.id);
 }
 
 /// Every package incl. deactivated ones — the owner's package editor.
@@ -170,9 +195,14 @@ Future<List<Package>> allPackages(Ref ref) async {
 /// regime says it is, and nothing about the bill changes.
 @Riverpod(keepAlive: true)
 Future<List<VatRate>> vatRates(Ref ref) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight, and it is
+  // a dependency registration in any case.
+  final repository = ref.watch(moneyRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return ref.watch(moneyRepositoryProvider).fetchVatRates(workspace.id);
+  return repository.fetchVatRates(workspace.id);
 }
 
 /// The percentage an item with no rate of its own is taxed at — the mirror
@@ -248,9 +278,14 @@ Future<DunningRules> dunningRules(Ref ref) async {
 /// nothing is stored, which is what every workspace starts with.
 @Riverpod(keepAlive: true)
 Future<BillingRules> billingRules(Ref ref) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight, and it is
+  // a dependency registration in any case.
+  final repository = ref.watch(moneyRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return BillingRules.defaults;
-  return ref.watch(moneyRepositoryProvider).fetchBillingRules(workspace.id);
+  return repository.fetchBillingRules(workspace.id);
 }
 
 /// The member's REAL cross-month position (#512): credit on account,

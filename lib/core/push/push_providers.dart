@@ -34,6 +34,12 @@ PushEndpointRepository pushEndpointRepository(Ref ref) =>
 /// the shell; a missing distributor or platform just means local-only.
 @Riverpod(keepAlive: true)
 Future<PushService?> pushBootstrap(Ref ref) async {
+  // #1218 — every dependency registered BEFORE the first await: a
+  // bare `ref.watch` on the far side of an async gap throws if the
+  // provider was disposed while the future was in flight.
+  final connector = ref.watch(pushConnectorProvider);
+  final endpoints = ref.watch(pushEndpointRepositoryProvider);
+  final notifications = ref.watch(notificationServiceProvider);
   // Per-workspace feature gate (#146). selectAsync keeps the run-once
   // semantics: the provider only re-executes when the flag itself flips
   // (applying it on the next connect), not on every workspace refetch.
@@ -55,9 +61,9 @@ Future<PushService?> pushBootstrap(Ref ref) async {
         error: e, stackTrace: st);
   }
   final service = PushService(
-    connector: ref.watch(pushConnectorProvider),
-    repository: ref.watch(pushEndpointRepositoryProvider),
-    notifications: ref.watch(notificationServiceProvider),
+    connector: connector,
+    repository: endpoints,
+    notifications: notifications,
     myMemberIds: () async {
       final memberships = await ref.read(myMembershipsProvider.future);
       return [for (final m in memberships) m.id];

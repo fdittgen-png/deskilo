@@ -131,9 +131,14 @@ Future<Workspace?> currentWorkspace(Ref ref) async {
 /// decider computation, #107).
 @riverpod
 Future<List<Member>> workspaceMembers(Ref ref) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight, and it is
+  // a dependency registration in any case.
+  final repository = ref.watch(workspaceRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return ref.watch(workspaceRepositoryProvider).fetchMembers(workspace.id);
+  return repository.fetchMembers(workspace.id);
 }
 
 /// All my membership rows across workspaces — one per profile (#89).
@@ -188,18 +193,28 @@ Future<BookingPolicies> bookingPolicies(Ref ref) async {
 /// while no workspace is selected or the keys are absent.
 @riverpod
 Future<WorkHours> workHours(Ref ref) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight, and it is
+  // a dependency registration in any case.
+  final repository = ref.watch(workspaceRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return WorkHours.defaults;
-  return ref.watch(workspaceRepositoryProvider).fetchWorkHours(workspace.id);
+  return repository.fetchWorkHours(workspace.id);
 }
 
 /// Notes visible to me in the active workspace (#456), newest first —
 /// the shell listens and surfaces arrivals as local notifications.
 @Riverpod(keepAlive: true)
 Future<List<MemberNote>> myNotes(Ref ref) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight, and it is
+  // a dependency registration in any case.
+  final repository = ref.watch(workspaceRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return ref.watch(workspaceRepositoryProvider).fetchMyNotes(workspace.id);
+  return repository.fetchMyNotes(workspace.id);
 }
 
 /// The ids of my UNREAD received notes (#539): a direct note is unread
@@ -344,9 +359,14 @@ Future<Map<String, String>> memberEmails(Ref ref) async {
 /// The signed-in user's membership (roles!) in the active workspace.
 @Riverpod(keepAlive: true)
 Future<Member?> myMember(Ref ref) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight, and it is
+  // a dependency registration in any case.
+  final repository = ref.watch(workspaceRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return null;
-  return ref.watch(workspaceRepositoryProvider).fetchMyMember(workspace.id);
+  return repository.fetchMyMember(workspace.id);
 }
 
 /// #915 — one managed profile's identity, from behind the access rule.
@@ -391,16 +411,26 @@ Future<bool> isPlatformOwner(Ref ref) async {
 /// the platform owner (the RPC would refuse, so it is not even asked).
 @riverpod
 Future<List<WorkspaceOverview>> allWorkspaces(Ref ref) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight, and it is
+  // a dependency registration in any case.
+  final repository = ref.watch(workspaceRepositoryProvider);
   if (!(await ref.watch(isPlatformOwnerProvider.future))) return const [];
-  return ref.watch(workspaceRepositoryProvider).fetchAllWorkspaces();
+  return repository.fetchAllWorkspaces();
 }
 
 /// #945 — the workspace's sites, default first.
 @riverpod
 Future<List<Site>> sites(Ref ref) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight, and it is
+  // a dependency registration in any case.
+  final repository = ref.watch(workspaceRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return ref.watch(workspaceRepositoryProvider).fetchSites(workspace.id);
+  return repository.fetchSites(workspace.id);
 }
 
 /// #974 — the sites of one workspace the person belongs to, for the

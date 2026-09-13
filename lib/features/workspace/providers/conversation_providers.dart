@@ -16,12 +16,16 @@ part 'conversation_providers.g.dart';
 /// provider, so switching profiles recomputes it with no extra plumbing.
 @riverpod
 Future<List<Conversation>> conversations(Ref ref) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight.
+  final repository = ref.watch(workspaceRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   return traced(
     'messaging',
     'conversations',
-    () => ref.watch(workspaceRepositoryProvider).fetchConversations(
+    () => repository.fetchConversations(
           workspace.id,
         ),
   );
@@ -108,12 +112,16 @@ Future<List<ConversationParticipant>> conversationParticipants(
 /// empty thread with no id and cannot send anything from it.
 @riverpod
 Future<String?> directConversationId(Ref ref, String memberId) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight.
+  final repository = ref.watch(workspaceRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return null;
   return traced(
     'messaging',
     'direct conversation',
-    () => ref.watch(workspaceRepositoryProvider).openDirectConversation(
+    () => repository.openDirectConversation(
           workspace.id,
           otherMemberId: memberId,
         ),
@@ -126,12 +134,16 @@ Future<String?> directConversationId(Ref ref, String memberId) async {
 /// backwards re-uses what was already fetched.
 @riverpod
 Future<List<MemberNote>> messageSearch(Ref ref, String query) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight.
+  final repository = ref.watch(workspaceRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   return traced(
     'messaging',
     'message search',
-    () => ref.watch(workspaceRepositoryProvider).searchMessages(
+    () => repository.searchMessages(
           workspace.id,
           query,
         ),

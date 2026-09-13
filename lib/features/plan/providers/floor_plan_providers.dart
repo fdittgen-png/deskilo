@@ -25,9 +25,14 @@ FloorPlanRepository floorPlanRepository(Ref ref) =>
 /// Levels of the active workspace, sorted by sort_order.
 @Riverpod(keepAlive: true)
 Future<List<Level>> levels(Ref ref) async {
+  // #1218 — the repository is watched BEFORE the gap: a bare
+  // `ref.watch` on the far side of an await throws outright if the
+  // provider was disposed while the future was in flight, and it is
+  // a dependency registration in any case.
+  final repository = ref.watch(floorPlanRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return ref.watch(floorPlanRepositoryProvider).fetchLevels(workspace.id);
+  return repository.fetchLevels(workspace.id);
 }
 
 /// Everything drawn on one level. Family-keyed by level id.
