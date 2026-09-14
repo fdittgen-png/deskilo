@@ -905,6 +905,11 @@ Die Sprache, die der Raum standardmäßig spricht. Einladungen werden darin
 geschrieben, und ein Dokument fällt darauf zurück, wenn die lesende
 Person keine eigene Sprache hat.
 
+Das ist **nicht deine eigene App-Sprache**. Die stellst du unter
+*Einstellungen → Sprache* ein, sie ändert, was **du** siehst, und betrifft
+sonst niemanden. Diese hier gehört dem Raum und ändert, was der Raum
+**anderen schreibt**.
+
 <!-- anchor: user.workspace.settings.address -->
 #### Briefkopfanschrift
 
@@ -926,6 +931,10 @@ App.
 Der Text, den eine Einladung trägt, je Sprache. Einmal geschrieben nutzt
 ihn jede Einladung in dieser Sprache; Code und Link fügt die App hinzu —
 füge also nie selbst einen in den Text ein.
+
+**Sprache der Nachricht** über dem Feld sagt, welcher der fünf Entwürfe
+zu sehen ist. Es ist keine Einstellung: davon wird nichts gespeichert,
+und es öffnet jedes Mal mit der Sprache des Raums.
 
 <!-- anchor: user.workspace.settings.desk-transparency -->
 #### Transparenz der Tische

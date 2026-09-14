@@ -55,6 +55,7 @@ import '../booking_gate_scope.dart';
 import '../../../../core/time/work_hours.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../workspace/domain/next_open_day.dart';
+import '../../providers/browsed_level.dart';
 
 /// Geometry and ranges of the Reserve hub (#208). Pinned by test — treat
 /// these as part of the visual/behavioural contract, not free-floating
@@ -154,9 +155,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
 
   _ReserveView _view = _ReserveView.plan;
 
-  /// Level chip choice of the Plan view — local browsing state, never the
-  /// plan tab's persisted default (DayTimeline pattern, #187).
-  String? _levelId;
+  // #1269 — the browsed level lives in [BrowsedLevel] now, shared with
+  // the day and week views. It used to be a `State` field here and one
+  // in each of those, so switching the view built a fresh widget whose
+  // field was null and the hub snapped back to the first floor.
 
   /// The seat LIST and the MAP are the same view with two
   /// presentations, so both render the plan surface below.
@@ -446,9 +448,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
   /// has always taken the highlight parameters; the hub simply never
   /// passed them, because the Plan tab owned the jump.
   void _applyFocus(PlanFocus focus) {
+    // A "show on plan" jump names a floor, and the other views should
+    // follow it: the member asked to be taken somewhere.
+    ref.read(browsedLevelProvider.notifier).select(focus.levelId);
     setState(() {
       _view = _ReserveView.plan;
-      _levelId = focus.levelId;
       _focusSeatId = focus.seatId;
       _focusDeskId = focus.deskId;
       _focusOfficeId = focus.officeId;
@@ -894,18 +898,23 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
         title: l10n?.planNoLevels ?? 'The workspace has no floor plan yet.',
       );
     }
-    final level =
-        // #687 — the hub is the only map surface, so the floor it shows
-        // is the member's PERSISTED default (#159), not just this
-        // session's browsing state. `_levelId` still wins while set, so
-        // a "show on plan" jump (#182) stays transient and never
-        // overwrites a floor someone chose deliberately.
-        levels
-                .where((l) =>
-                    l.id ==
-                    (_levelId ?? ref.watch(selectedLevelIdProvider).value))
-                .firstOrNull ??
-            levels.first;
+    // #687 — the hub is the only map surface, so the floor it shows is
+    // the member's PERSISTED default (#159) when nothing has been
+    // browsed. The browsed choice still wins while set.
+    //
+    // #1269 — and when that choice is "All levels", this view RESOLVES
+    // it without WRITING over it. The plan cannot show two floors at
+    // once, so it falls back to the default and draws one — but the
+    // value stays what the member set, and the day view finds its chip
+    // exactly as it was left. A view that cannot honour a shared value
+    // must never destroy it.
+    final browsed = ref.watch(browsedLevelProvider);
+    final wanted = browsed == BrowsedLevel.allLevels ? null : browsed;
+    final level = levels
+            .where((l) =>
+                l.id == (wanted ?? ref.watch(selectedLevelIdProvider).value))
+            .firstOrNull ??
+        levels.first;
     final planAsync = ref.watch(floorPlanProvider(level.id));
     // The window may straddle TWO device-day keys (a workspace-clock full day
     // starts before the device midnight west of the workspace); reading only
@@ -1123,7 +1132,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 // Changing floor answers the question the highlight was
                 // asking, so the ring goes with it.
                 _clearFocus();
-                setState(() => _levelId = id);
+                ref.read(browsedLevelProvider.notifier).select(id);
                 // #687/#159 — and it STICKS. Choosing a floor used to be
                 // browsing-only here because the Plan tab owned the
                 // stored default; with that tab gone, a member who works

@@ -2366,6 +2366,7 @@
   "invitationDefaultTemplate": "Bonjour{firstName} ! Vous êtes invité·e à rejoindre notre espace de coworking « {workspaceName} » sur DesKilo.\n\n1. Téléchargez l'application :\n{downloadUrl}\n\n2. Ouvrez-la, créez votre compte (e-mail + mot de passe) et connectez-vous.\n\n3. Choisissez « Rejoindre un espace » et saisissez votre code d'invitation personnel :\n{workspaceId}\n(lien d'invitation : {inviteLink})\n\nAstuce : copiez simplement ce message entier et collez-le dans l'application — le code est détecté automatiquement. Votre code est personnel, à usage unique et valable 14 jours.\n\nÀ bientôt chez {workspaceName} !",
   "invitationTemplateTitle": "Message d'invitation",
   "invitationTemplateHelp": "Envoyé quand vous invitez quelqu'un par WhatsApp, SMS ou partage. Laissez vide pour utiliser le message intégré dans la langue choisie. Balises disponibles :",
+  "invitationTemplateLanguage": "Langue du message",
   "invitationTemplateHint": "Message d'invitation personnalisé utilisant les balises ci-dessus…",
   "workspaceInvitePasteHint": "Collez le message d'invitation entier — l'identifiant est trouvé automatiquement.",
   "workspaceInviteCodeInvalid": "Aucun identifiant trouvé — collez l'invitation ou saisissez l'identifiant.",
@@ -6575,7 +6576,7 @@
   "@workspaceLanguageLabel": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
-  "workspaceLanguageHelper": "Les invitations sont rédigées par défaut dans cette langue.",
+  "workspaceLanguageHelper": "Les invitations sont rédigées par défaut dans cette langue. La langue de votre application se règle dans Réglages.",
   "@workspaceLanguageHelper": {
     "description": "Finance/settings UX + workspace language (#486)"
   },

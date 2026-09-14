@@ -116,6 +116,27 @@ void main() {
   });
 
   testWidgets(
+      'the two language controls say which is which (#1269)',
+      (tester) async {
+    await pumpWorkspaceSettings(tester);
+    // The report: "Selecting the language (from English to French) and
+    // save did not change the language. Closing the form and reopening
+    // did display again English." What was selected was the chip row —
+    // English / Français / Deutsch / Español / Italiano, unlabelled,
+    // in a settings form. It picks which invitation DRAFT is on screen,
+    // it is re-derived from the workspace language on every open, and
+    // nothing about it is saved. It now says so.
+    await tester.ensureVisible(
+        find.byKey(const ValueKey('workspace-invitation-lang-fr')));
+    expect(find.text('Message language'), findsOneWidget);
+
+    // And the workspace language names the thing it is NOT, because
+    // that is the setting the reader was actually looking for.
+    expect(find.textContaining('Your own app language is in Settings'),
+        findsOneWidget);
+  });
+
+  testWidgets(
       'the workspace language dropdown saves default_locale (#486)',
       (tester) async {
     final workspace = await pumpWorkspaceSettings(tester);

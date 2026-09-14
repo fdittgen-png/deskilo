@@ -65,7 +65,7 @@ const Map<String, int> _baseline = {
   // 1190→1215 (2026-08-31): #772 windowIsNow — the live-window probe in
   // workspace wall time beside the isLive it refines.
   // 1215→1240 (2026-09-01): #814 closed days into the Day/Week/Month views + the legend.
-  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1298, // 2026-09-05 #903 the seat's day: segments for the plan, the timeline behind a shared seat
+  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1307, // 2026-09-14 #1269 1298→1307: the browsed level left the screen for a provider, and the paragraph saying why three views may not each keep their own copy is longer than the field it replaced // 2026-09-05 #903 the seat's day: segments for the plan, the timeline behind a shared seat
   // 980→990 (2026-08-03): #419 workspace dev-mode switch — admin gate,
   // workspace hint subtitle and the RPC write helper.
   // 990→1000 (2026-08-05): #478 Billing & reports admin entry.
@@ -144,7 +144,7 @@ const Map<String, int> _baseline = {
   // right shape for it is one documented constant per object, and it
   // grows with the app rather than being refactored smaller.
   'lib/core/help/help_anchors.dart': 606,
-  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1552, // 2026-09-11 #1154 1605→1572: the 577-line build() became three section methods; the reset dialog moved to widgets/reset_confirm_dialog.dart
+  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1564, // 2026-09-14 #1269 1552→1564: the invitation-language chips carry a label now, plus the paragraph on why an unlabelled row of language chips reads as THE language setting // 2026-09-11 #1154 1605→1572: the 577-line build() became three section methods; the reset dialog moved to widgets/reset_confirm_dialog.dart
   // 600→640 (2026-08-05): #492 the request-deletion dialog + flow.
   // 640→760 (2026-08-22): #574 the running-booking extension flow.
   // 760→880 (2026-08-25): #638 the symmetric END-EARLIER flow — the
@@ -233,7 +233,7 @@ const Map<String, int> _baseline = {
   'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 846,
   // 750→770 (2026-08-05): #490 workspace-clock day instants beside the
   // naive axis anchor.
-  'lib/features/calendar/presentation/widgets/day_timeline.dart': 769,
+  'lib/features/calendar/presentation/widgets/day_timeline.dart': 772, // 2026-09-14 #1269 769→772: reading the browsed level from the shared provider instead of its own State field
   // 820→830 (2026-08-25): #622 the whole-space conflict now resolves
   // the blocking RESERVATION (message-the-reserver affordance); the
   // seat action dialog moved OUT into the shared space_act_sheet.
@@ -300,7 +300,7 @@ const Map<String, int> _baseline = {
   // SAME _mergeBookingRule helper) + setMemberSimultaneousLimit.
   // 970→1020 (2026-09-06): #937 three platform-owner RPC readers.
   // 1020→1062 (2026-09-06): #948 the entity's numbers on the site sheet.
-  'lib/features/workspace/data/supabase_workspace_repository.dart': 1074, // 2026-09-11 #1063 the creation flags + #1119 alsoProd // 2026-09-06 #914/#915 the managed identity moves behind its rule: managedIdentityOf + setManagedAccess // 2026-09-05 #887 managed members: identity parse, names from managed_identity, three handover RPCs // 2026-09-08 #1030 an empty member id is dropped from the profile query, with the paragraph saying why one managed member blanked every name // 2026-09-10 #1089 1070→1090: setRolePermission, the single-permission write. The read-modify-write it replaces got SHORTER; the growth is the new method beside the whole-list one, which stays for the import and the deployment. Extracting part of a data-layer repository inside a security fix would be the larger, riskier diff
+  'lib/features/workspace/data/supabase_workspace_repository.dart': 1089, // 2026-09-14 #1269 1074→1089: _updateWorkspaceRow, the one place that reads the row back so an RLS refusal stops looking like a save. Every workspaces-row write is shorter for it; the growth is the helper and the paragraph explaining the 204-with-no-body // 2026-09-11 #1063 the creation flags + #1119 alsoProd // 2026-09-06 #914/#915 the managed identity moves behind its rule: managedIdentityOf + setManagedAccess // 2026-09-05 #887 managed members: identity parse, names from managed_identity, three handover RPCs // 2026-09-08 #1030 an empty member id is dropped from the profile query, with the paragraph saying why one managed member blanked every name // 2026-09-10 #1089 1070→1090: setRolePermission, the single-permission write. The read-modify-write it replaces got SHORTER; the growth is the new method beside the whole-list one, which stays for the import and the deployment. Extracting part of a data-layer repository inside a security fix would be the larger, riskier diff
   'lib/features/workspace/domain/workspace_repository.dart': 619, // 2026-09-11 #1120 the library surface of the interface, documented per method (was the 600 default)
   // 600→660 (2026-08-23): #600 the Booking policies section — three
   // switches + one write handler on the existing availability screen.

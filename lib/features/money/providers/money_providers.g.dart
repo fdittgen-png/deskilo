@@ -110,7 +110,7 @@ final class MyStatementProvider
   }
 }
 
-String _$myStatementHash() => r'db155a00e5d29e799a74d9bfe1b9f544ea603523';
+String _$myStatementHash() => r'987ba26ea591e7d142bdfb733b7db94b95fc0364';
 
 /// The signed-in member's statement for a period ('yyyy-MM').
 
@@ -178,7 +178,7 @@ final class MyLedgerProvider
   }
 }
 
-String _$myLedgerHash() => r'5d8925eeb1aa748d7505849799c742c10e7e11d8';
+String _$myLedgerHash() => r'39aa8825fdc47bb8a04eda359f85c57a5f15bcc0';
 
 /// ONE MEMBER's money, for the dossier on their profile (#704).
 ///
@@ -614,7 +614,7 @@ final class FeeBandsProvider
   }
 }
 
-String _$feeBandsHash() => r'890f538fdbc1ecdb8a3ed467f858c6ca6ec07705';
+String _$feeBandsHash() => r'7abdf46bced372da44127bc9300d54a0b4fe117e';
 
 /// Offered subscription levels of the current workspace (#128).
 
@@ -710,7 +710,7 @@ final class ServicesProvider
   }
 }
 
-String _$servicesHash() => r'35f3295248b134e975fa8fd5ea2d56f83c713b54';
+String _$servicesHash() => r'8b346c6d37a1e82f5213803792d8bf24c60c09e7';
 
 /// Every service incl. deactivated ones — the owner's catalog editor (#123).
 
@@ -803,7 +803,7 @@ final class PackagesProvider
   }
 }
 
-String _$packagesHash() => r'c963187492353e53cdaed749c53e4c7e9b53e89e';
+String _$packagesHash() => r'ff2732ea6c6ed7900e33d05b02013cb763a93b1a';
 
 /// Every package incl. deactivated ones — the owner's package editor.
 
@@ -903,7 +903,7 @@ final class VatRatesProvider
   }
 }
 
-String _$vatRatesHash() => r'df4434126bc231e40ce949776c6a544c3dcd55cc';
+String _$vatRatesHash() => r'93e83a384d2a000a9e21cfcdff18b285ebe61fbf';
 
 /// The percentage an item with no rate of its own is taxed at — the mirror
 /// of `workspace_default_vat_percent`, for previews only. The server is
@@ -1271,7 +1271,7 @@ final class BillingRulesProvider
   }
 }
 
-String _$billingRulesHash() => r'9ca81887417ec8153dae0f42d4e2f134766210bc';
+String _$billingRulesHash() => r'9fe2e40d2d3932e4f71cf1e16fa011bdc2e28aad';
 
 /// The member's REAL cross-month position (#512): credit on account,
 /// open remainders from any month, refunds due, net. Watches the

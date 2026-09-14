@@ -3713,6 +3713,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Se envía al invitar a alguien por WhatsApp, SMS o compartir. Déjalo vacío para usar el mensaje integrado en el idioma elegido. Etiquetas disponibles:';
 
   @override
+  String get invitationTemplateLanguage => 'Idioma del mensaje';
+
+  @override
   String get invitationTemplateHint =>
       'Mensaje de invitación personalizado usando las etiquetas de arriba…';
 
@@ -9831,7 +9834,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get workspaceLanguageHelper =>
-      'Las invitaciones se redactan por defecto en este idioma.';
+      'Las invitaciones se redactan por defecto en este idioma. El idioma de tu app se cambia en Ajustes.';
 
   @override
   String get workspaceLanguageUnset => 'Idioma de la app del remitente';

@@ -10,6 +10,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/theme/seat_state_colors.dart';
 import 'package:deskilo/features/plan/domain/half_day_windows.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/reservations/presentation/widgets/booking_controls.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -99,7 +100,20 @@ void main() {
     expect(find.byKey(const ValueKey('reserve-am-chip')), findsOneWidget);
     expect(find.byKey(const ValueKey('reserve-pm-chip')), findsOneWidget);
     expect(find.byKey(const ValueKey('reserve-day-chip')), findsOneWidget);
-    expect(find.byTooltip('Morning'), findsOneWidget);
+    // #1269 — the tooltip carries the HOURS as well as the name. The
+    // default working day is 8:00–12:00–17:00 (WorkHours.defaults), and
+    // the exact rendering follows the reader's clock preference, so the
+    // pin is the shape: "<name> · <start>–<end>".
+    expect(find.byTooltip(RegExp(r'^Morning · .+–.+$')), findsOneWidget);
+    expect(find.byTooltip(RegExp(r'^Afternoon · .+–.+$')), findsOneWidget);
+    // …and the glyph is the week grid's day cell, not a weather icon:
+    // morning fills the left half only, full day fills both.
+    final morningGlyph = tester.widget<DayHalvesGlyph>(find.descendant(
+      of: find.byKey(_amChip), matching: find.byType(DayHalvesGlyph)));
+    expect((morningGlyph.am, morningGlyph.pm), (true, false));
+    final dayGlyph = tester.widget<DayHalvesGlyph>(find.descendant(
+      of: find.byKey(_dayChip), matching: find.byType(DayHalvesGlyph)));
+    expect((dayGlyph.am, dayGlyph.pm), (true, true));
     expect(find.byKey(_fromChip), findsNothing);
     expect(find.byKey(_toChip), findsNothing);
     // #687 — the hub PRESELLS the member's default period (#586), which

@@ -869,6 +869,11 @@ La lingua che lo spazio parla per impostazione predefinita. Gli inviti
 sono scritti in essa, e un documento vi ricade quando chi legge non ha
 una lingua propria.
 
+**Non è la lingua della tua applicazione.** Quella si imposta in
+*Impostazioni → Lingua*, cambia ciò che **tu** vedi e non riguarda nessun
+altro. Questa appartiene allo spazio e cambia ciò che lo spazio **scrive
+agli altri**.
+
 #### Indirizzo della carta intestata
 
 L'indirizzo in testo libero che stampa un documento cartaceo. È distinto
@@ -886,6 +891,10 @@ altri effetti: senza di esso un messaggio resta nella posta dell'app.
 Il testo che un invito porta, per lingua. Scrivilo una volta e ogni
 invito in quella lingua lo usa; il codice e il link li aggiunge l'app,
 quindi non incollarne mai uno nel testo.
+
+**Lingua del messaggio**, sopra il campo, dice quale dei cinque
+brogliacci è a schermo. Non è un'impostazione: nulla di esso viene
+salvato, e si apre ogni volta sulla lingua dello spazio.
 
 #### Trasparenza dei tavoli
 

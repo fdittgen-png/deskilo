@@ -900,6 +900,10 @@ El idioma que habla el espacio por defecto. Las invitaciones se escriben
 en él, y un documento vuelve a él cuando quien lo lee no tiene idioma
 propio.
 
+**No es el idioma de tu aplicación.** Ese se cambia en *Ajustes →
+Idioma*, cambia lo que **tú** ves y no afecta a nadie más. Este pertenece
+al espacio y cambia lo que el espacio **escribe a los demás**.
+
 <!-- anchor: user.workspace.settings.address -->
 #### Dirección del membrete
 
@@ -920,6 +924,10 @@ demás: sin él, un mensaje se queda en la bandeja de la app.
 El texto que lleva una invitación, por idioma. Escríbalo una vez y todas
 las invitaciones en ese idioma lo usan; el código y el enlace los añade
 la app, así que nunca pegue uno en el texto.
+
+**Idioma del mensaje**, encima del campo, indica cuál de los cinco
+borradores está en pantalla. No es un ajuste: no se guarda nada de él, y
+se abre cada vez con el idioma del espacio.
 
 <!-- anchor: user.workspace.settings.desk-transparency -->
 #### Transparencia de las mesas

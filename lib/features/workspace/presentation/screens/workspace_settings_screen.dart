@@ -1198,6 +1198,18 @@ class _WorkspaceSettingsScreenState
                   const SizedBox(height: 8),
                   // #486 — one template per language: the chips page
                   // through the drafts, empty = built-in message.
+                  //
+                  // #1269 — the row carried no label, so a row of
+                  // English / Français / Deutsch chips at the top of a
+                  // settings form read as "the language". It is not:
+                  // it says which draft you are editing, it is re-derived
+                  // from the workspace language on every open, and
+                  // nothing about it is saved. Say so.
+                  Text(
+                    l10n?.invitationTemplateLanguage ?? 'Message language',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                  const SizedBox(height: 4),
                   Wrap(
                     spacing: 6,
                     children: [

@@ -933,6 +933,11 @@ La langue que parle l'espace par défaut. Les invitations sont écrites
 dedans, et un document y revient quand le lecteur n'a pas de langue à
 lui.
 
+Ce n'est **pas la langue de votre application**. Celle-là se règle dans
+*Réglages → Langue*, elle change ce que **vous** voyez et n'affecte
+personne d'autre. Celle-ci appartient à l'espace et change ce que
+l'espace **écrit aux autres**.
+
 <!-- anchor: user.workspace.settings.address -->
 #### Adresse d'en-tête
 
@@ -954,6 +959,10 @@ reste : sans lui, un message reste dans la boîte de l'application.
 Le texte que porte une invitation, par langue. Écrivez-le une fois et
 toutes les invitations dans cette langue l'utilisent ; le code et le lien
 sont ajoutés par l'application, n'en collez donc jamais un dans le texte.
+
+**Langue du message**, au-dessus du champ, indique lequel des cinq
+brouillons est affiché. Ce n'est pas un réglage : rien n'en est
+enregistré, et il s'ouvre chaque fois sur la langue de l'espace.
 
 <!-- anchor: user.workspace.settings.desk-transparency -->
 #### Transparence des tables

@@ -3715,6 +3715,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wird gesendet, wenn du jemanden per WhatsApp, SMS oder Teilen einlädst. Leer lassen für die eingebaute Nachricht in der gewählten Sprache. Verfügbare Tags:';
 
   @override
+  String get invitationTemplateLanguage => 'Sprache der Nachricht';
+
+  @override
   String get invitationTemplateHint =>
       'Eigene Einladungsnachricht mit den Tags oben…';
 
@@ -9842,7 +9845,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get workspaceLanguageHelper =>
-      'Einladungen werden standardmäßig in dieser Sprache verfasst.';
+      'Einladungen werden standardmäßig in dieser Sprache verfasst. Deine eigene App-Sprache stellst du in den Einstellungen ein.';
 
   @override
   String get workspaceLanguageUnset => 'App-Sprache des Absenders';

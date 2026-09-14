@@ -19,6 +19,7 @@ import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../reservations/providers/browsed_level.dart';
 
 /// Geometry of the 24h timeline axis (#187). Pinned by test — treat these
 /// as part of the visual contract, not free-floating magic numbers.
@@ -133,19 +134,19 @@ class DayTimeline extends ConsumerStatefulWidget {
 }
 
 class _DayTimelineState extends ConsumerState<DayTimeline> {
-  /// Sentinel value of [_levelId] for the "All levels" chip (#221) — never
-  /// a real level id (real ids are UUIDs / seeded `level-N` ids).
-  static const String _allLevelsId = '__all-levels__';
-
   final ScrollController _axisController = ScrollController();
 
-  /// Level chip choice — local, never the plan's persisted default.
-  /// [_allLevelsId] stacks every level on one shared axis.
-  String? _levelId;
-
+  /// #1269 — the level choice used to be a `State` field here, and one
+  /// each in `WeekGrid` and `ReserveScreen`. Switching the view built a
+  /// fresh widget whose field was null, so the hub snapped back to the
+  /// first floor every time. It is [BrowsedLevel] now: one value above
+  /// all four views, still browsing state and still never the plan's
+  /// persisted default.
+  ///
   /// Level ids collapsed in all-levels mode (#221 follow-up): tapping a
-  /// level header hides its rows so a busy multi-floor day stays scannable.
-  /// Session-only browsing state, like [_levelId].
+  /// level header hides its rows so a busy multi-floor day stays
+  /// scannable. Session-only, and local because it means nothing to the
+  /// other views.
   final Set<String> _collapsedLevels = {};
 
   /// Day the axis was last auto-scrolled for.
@@ -242,11 +243,12 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     if (levels.isEmpty) {
       return _emptyHint(l10n, allLevels: false);
     }
-    // Default stays the FIRST real level; "All levels" is opt-in per view.
-    final allSelected = levels.length > 1 && _levelId == _allLevelsId;
+    // Default stays the FIRST real level; "All levels" is opt-in.
+    final browsed = ref.watch(browsedLevelProvider);
+    final allSelected = levels.length > 1 && browsed == BrowsedLevel.allLevels;
     final level = allSelected
         ? null
-        : levels.where((l) => l.id == _levelId).firstOrNull ?? levels.first;
+        : levels.where((l) => l.id == browsed).firstOrNull ?? levels.first;
     final names = ref.watch(memberNamesProvider).value ?? const {};
 
     return Column(
@@ -258,12 +260,13 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
         LevelChipRow(
           levels: levels,
           selectedLevelId: level?.id,
-          onSelected: (id) => setState(() => _levelId = id),
+          onSelected: (id) =>
+              ref.read(browsedLevelProvider.notifier).select(id),
           // Sentinel chip FIRST: stack every level on one axis (#221).
           allLevelsLabel: l10n?.calendarAllLevels ?? 'All levels',
           allLevelsSelected: allSelected,
           onAllLevelsSelected: () =>
-              setState(() => _levelId = _allLevelsId),
+              ref.read(browsedLevelProvider.notifier).selectAll(),
         ),
         Expanded(
           child: allSelected

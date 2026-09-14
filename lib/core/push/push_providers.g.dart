@@ -143,4 +143,4 @@ final class PushBootstrapProvider
   }
 }
 
-String _$pushBootstrapHash() => r'a680a255773b2067e10fe965b3687b597a488246';
+String _$pushBootstrapHash() => r'b562e0e074705cf443a8a22c00dc12c8ac7adbc7';
