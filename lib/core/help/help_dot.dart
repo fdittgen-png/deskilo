@@ -15,9 +15,15 @@ import '../../l10n/app_localizations.dart';
 /// (docs/AGENT_RULES.md).
 ///
 /// Rides [WorkspaceFeature.formHelpHints] like the hint cards: gating
-/// lives HERE, so every form just drops the widget in. Visually 20 px,
-/// but the tap target keeps the 48 dp floor via the IconButton's
-/// default constraints being restored on tap area (splash radius).
+/// lives HERE, so every form just drops the widget in.
+///
+/// Visually 17 px and 48 dp to the finger. #1235 — the comment here used
+/// to claim the 48 dp floor was kept "via the IconButton's default
+/// constraints", and `visualDensity: VisualDensity.compact` had taken
+/// it to 40 × 40. Flutter's own `androidTapTargetGuideline` found it on
+/// three screens at once. An explicit constraint says the size rather
+/// than inheriting it, so the next density tweak cannot quietly undo
+/// it.
 class HelpDot extends ConsumerWidget {
   const HelpDot(this.topic, {this.anchor, super.key});
 
@@ -43,7 +49,9 @@ class HelpDot extends ConsumerWidget {
     return IconButton(
       key: ValueKey('help-dot-$topic'),
       tooltip: l10n?.helpDotTooltip ?? 'Open the guide',
-      visualDensity: VisualDensity.compact,
+      // The FINGER gets 48; the ink and the glyph stay small.
+      constraints: const BoxConstraints.tightFor(width: 48, height: 48),
+      padding: EdgeInsets.zero,
       iconSize: 17,
       color: scheme.primary.withValues(alpha: .75),
       icon: const Icon(Icons.help_outline),
@@ -92,7 +100,15 @@ class HelpDotTitle extends StatelessWidget {
         // than centred against two.
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Flexible(child: Text(text, style: style)),
+          // #1235 — `Expanded`, not `Flexible`. Loose, the title kept
+          // its intrinsic width and the symbol sat immediately after
+          // the last word: on a row 768 wide with a title of 313, that
+          // put a 48 dp target across the row's own centre, and a tap
+          // aimed at the row opened the guide instead. Four tests
+          // caught it by tapping a tile's middle, which is exactly what
+          // a finger does. The symbol belongs at the far right of the
+          // title area — which is what #1185 said it was doing.
+          Expanded(child: Text(text, style: style)),
           HelpDot(topic, anchor: anchor),
         ],
       );

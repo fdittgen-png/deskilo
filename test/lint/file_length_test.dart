@@ -42,7 +42,7 @@ const Map<String, int> _baseline = {
     'lib/features/plan/presentation/widgets/floor_plan_painter.dart': 772, // 2026-09-13 #1216 750→780: the dropTargets parameter and the paragraph explaining why an EMPTY set differs from null; the drawing itself went to widgets/drop_target_paint.dart // 2026-09-06 #970 the demo blur on painted labels
   // 1290→1330 (2026-08-02): #395 Excel-export tile — feature lines, the
   // orchestration itself lives in excel_export.dart.
-  'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1063, // 2026-09-11 #1154 1250→1132: the office and desk sheets became one space_properties_sheet.dart // 2026-08 #585 seat NFC field
+  'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1044, // 2026-09-13 #1235 1063→1044: the name-this-room dialog moved to text_prompt_dialog.dart, paying for the canvas's screen-reader name // 2026-09-11 #1154 1250→1132: the office and desk sheets became one space_properties_sheet.dart // 2026-08 #585 seat NFC field
   // 1010→1020 (2026-08-04): #462 whole-space overlays on the plan view.
   // 1020→1070: #466 the hub's whole-level reserve button + visibility.
   // 1090→1110 (2026-08-23): #611 fade-through view switch + MotionReveal

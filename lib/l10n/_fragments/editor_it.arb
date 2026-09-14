@@ -72,5 +72,6 @@
   "editorDeleteLevelConfirmAudit": "Eliminare questo piano? Tutti gli uffici, i tavoli e i posti su di esso vengono rimossi. Le prenotazioni che vi fanno riferimento conservano un'istantanea di testo per gli audit; le prenotazioni aperte vengono annullate.",
   "@editorDeleteLevelConfirmAudit": {
     "description": "#587 delete despite reservations — audit substitution warning"
-  }
+  },
+  "editorCanvasSemantics": "Area di disegno della pianta"
 }

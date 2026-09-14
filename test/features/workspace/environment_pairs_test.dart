@@ -88,12 +88,17 @@ void main() {
       (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace();
     await _pump(tester, workspace: workspace, route: '/settings');
-    await tester.scrollUntilVisible(
-      find.byKey(const ValueKey('workspace-create-twin')),
-      300,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await tester.tap(find.byKey(const ValueKey('workspace-create-twin')));
+    final twin = find.byKey(const ValueKey('workspace-create-twin'));
+    await tester.scrollUntilVisible(twin, 300,
+        scrollable: find.byType(Scrollable).first);
+    // #1235 — `scrollUntilVisible` stops the moment the row is BUILT,
+    // which on a list this long leaves it straddling the bottom edge;
+    // the tap then lands outside the viewport and does nothing. Eight
+    // more device pixels of help symbol above it were enough to expose
+    // that. `ensureVisible` puts the row where a finger could reach it.
+    await tester.ensureVisible(twin);
+    await tester.pumpAndSettle();
+    await tester.tap(twin);
     await tester.pumpAndSettle();
     expect(workspace.twinsCreated, hasLength(1));
     expect(workspace.workspaces.where((w) => w.pairId == 'pair-1'),

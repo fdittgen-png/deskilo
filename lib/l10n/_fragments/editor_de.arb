@@ -72,5 +72,6 @@
   "editorDeleteLevelConfirmAudit": "Diese Ebene löschen? Alle Büros, Tische und Sitzplätze darauf werden entfernt. Buchungen, die darauf verweisen, behalten einen Text-Schnappschuss für Audits; offene Buchungen werden storniert.",
   "@editorDeleteLevelConfirmAudit": {
     "description": "#587 delete despite reservations — audit substitution warning"
-  }
+  },
+  "editorCanvasSemantics": "Zeichenfläche des Grundrisses"
 }

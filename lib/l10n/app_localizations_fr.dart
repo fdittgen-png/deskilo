@@ -27,6 +27,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get a11yFinishEditing => 'Terminer la modification';
 
   @override
+  String get a11yZoomIn => 'Zoom avant';
+
+  @override
+  String get a11yZoomOut => 'Zoom arrière';
+
+  @override
+  String get a11yRecentre => 'Ajuster le plan à l\'écran';
+
+  @override
   String accessRuleManagedProfile(String people) {
     return 'Tant que ce profil était géré pour vous : $people. Chaque consultation ou modification par l\'un d\'eux figure ci-dessous.';
   }
@@ -2213,6 +2222,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get editorDeleteLevelConfirmAudit =>
       'Supprimer ce niveau ? Tous les bureaux, tables et places qui s\'y trouvent sont retirés. Les réservations qui y font référence gardent un instantané texte pour les audits ; les réservations ouvertes sont annulées.';
+
+  @override
+  String get editorCanvasSemantics => 'Zone de dessin du plan';
 
   @override
   String get eInvoiceGapMissingBuyerLegalId =>

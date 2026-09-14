@@ -206,6 +206,12 @@ class _PlanCanvasState extends State<PlanCanvas>
           // oriented; the viewer must never fight the fit.
           boundaryMargin: const EdgeInsets.all(double.infinity),
           child: GestureDetector(
+            // #1235 — the recognizer's own semantics node covered the
+            // whole plan with a tap action and no name: a screen reader
+            // announced an anonymous button the size of the office. The
+            // painter below emits ONE named node per seat, with its own
+            // tap, which is the thing a reader should land on.
+            excludeFromSemantics: true,
             onTapUp: (details) {
               const cell = PlanCanvasMetrics.cellSize;
               final x = (details.localPosition.dx / cell).floor();

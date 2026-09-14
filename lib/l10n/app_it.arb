@@ -6,6 +6,9 @@
   "a11yMoveUp": "Sposta su",
   "a11yMoveDown": "Sposta giù",
   "a11yFinishEditing": "Termina la modifica",
+  "a11yZoomIn": "Ingrandisci",
+  "a11yZoomOut": "Riduci",
+  "a11yRecentre": "Adatta la pianta allo schermo",
   "accessRuleManagedProfile": "Finché questo profilo è stato gestito per voi: {people}. Ogni consultazione o modifica da parte loro è registrata sotto.",
   "@accessRuleManagedProfile": {
     "description": "#914 access rule: profile",
@@ -1560,6 +1563,7 @@
   "@editorDeleteLevelConfirmAudit": {
     "description": "#587 delete despite reservations — audit substitution warning"
   },
+  "editorCanvasSemantics": "Area di disegno della pianta",
   "eInvoiceGapMissingBuyerLegalId": "L'acquirente è un'impresa francese senza SIREN — inserisci il suo identificativo legale nel profilo del socio.",
   "@eInvoiceGapMissingBuyerLegalId": {
     "description": "#941 e-invoice audit: eInvoiceGapMissingBuyerLegalId"

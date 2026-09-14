@@ -24,6 +24,18 @@
   "@a11yFinishEditing": {
     "description": "Tooltip on the tick that closes the inline editor for a report line."
   },
+  "a11yZoomIn": "Zoom in",
+  "@a11yZoomIn": {
+    "description": "Tooltip on the plan canvas's zoom-in button (#1235)."
+  },
+  "a11yZoomOut": "Zoom out",
+  "@a11yZoomOut": {
+    "description": "Tooltip on the plan canvas's zoom-out button (#1235)."
+  },
+  "a11yRecentre": "Fit the plan to the screen",
+  "@a11yRecentre": {
+    "description": "Tooltip on the plan canvas's recentre button, which sizes the whole level to the viewport (#1235)."
+  },
   "accessRuleManagedProfile": "While this profile was managed for you: {people}. Every time one of them opened or changed it is on the record below.",
   "@accessRuleManagedProfile": {
     "description": "#914 access rule: profile",
@@ -2618,6 +2630,10 @@
   "editorDeleteLevelConfirmAudit": "Delete this level? All offices, desks and seats on it are removed. Bookings that reference them keep a text snapshot for audits; open bookings are cancelled.",
   "@editorDeleteLevelConfirmAudit": {
     "description": "#587 delete despite reservations — audit substitution warning"
+  },
+  "editorCanvasSemantics": "Floor plan drawing area",
+  "@editorCanvasSemantics": {
+    "description": "Screen-reader name for the level editor's canvas: it says what the surface is, since the objects on it are reached through the objects panel (#1235)."
   },
   "eInvoiceGapMissingBuyerLegalId": "The buyer is a French business without a SIREN — fill in its legal id on the member's profile.",
   "@eInvoiceGapMissingBuyerLegalId": {

@@ -36,7 +36,10 @@ Future<FakeEventRepository> pumpValidationSettings(
   final events = FakeEventRepository()..policies.addAll(policies);
   // Policy cards (0097 added Booking deletion) outgrow the default
   // 600px fold; a taller surface keeps every card built and hit-testable.
-  tester.view.physicalSize = const Size(1200, 3100);
+  // 3100 → 3400 (#1235): each card's title carries a help symbol, and
+  // the symbol went from 40 dp to the 48 dp floor, so the stack of 24
+  // grew past the old surface and the last card stopped being built.
+  tester.view.physicalSize = const Size(1200, 3400);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
   final workspace = FakeWorkspaceRepository.withWorkspace(

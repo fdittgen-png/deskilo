@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../motion/motion.dart';
 import '../theme/app_radius.dart';
 
@@ -420,20 +421,35 @@ class _ZoomCluster extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    Widget button(IconData icon, VoidCallback? onTap, String key) => Material(
+    final l10n = AppLocalizations.of(context);
+    // #1235 — three icon-only squares that a screen reader read out as
+    // "button", "button", "button". The name is what makes them usable.
+    Widget button(
+      IconData icon,
+      VoidCallback? onTap,
+      String key,
+      String label,
+    ) =>
+        Material(
           color: scheme.surfaceContainerHighest,
           child: InkWell(
             key: ValueKey(key),
             onTap: onTap,
-            child: SizedBox(
-              width: 40,
-              height: 40,
-              child: Icon(
-                icon,
-                size: 22,
-                color: onTap == null
-                    ? scheme.onSurfaceVariant.withValues(alpha: 0.4)
-                    : scheme.onSurface,
+            child: Tooltip(
+              message: label,
+              child: SizedBox(
+              // #1235 — 48, the Android floor. These were 40, and a
+              // zoom control is exactly the kind of small square target
+              // somebody with an unsteady hand misses.
+                width: 48,
+                height: 48,
+                child: Icon(
+                  icon,
+                  size: 22,
+                  color: onTap == null
+                      ? scheme.onSurfaceVariant.withValues(alpha: 0.4)
+                      : scheme.onSurface,
+                ),
               ),
             ),
           ),
@@ -454,16 +470,19 @@ class _ZoomCluster extends StatelessWidget {
         direction: horizontal ? Axis.horizontal : Axis.vertical,
         mainAxisSize: MainAxisSize.min,
         children: [
-          button(Icons.add, atMax ? null : onIn, 'canvas-zoom-in'),
+          button(Icons.add, atMax ? null : onIn, 'canvas-zoom-in',
+              l10n?.a11yZoomIn ?? 'Zoom in'),
           horizontal
               ? VerticalDivider(width: 1, color: scheme.outlineVariant)
               : Divider(height: 1, color: scheme.outlineVariant),
-          button(Icons.remove, atMin ? null : onOut, 'canvas-zoom-out'),
+          button(Icons.remove, atMin ? null : onOut, 'canvas-zoom-out',
+              l10n?.a11yZoomOut ?? 'Zoom out'),
           horizontal
               ? VerticalDivider(width: 1, color: scheme.outlineVariant)
               : Divider(height: 1, color: scheme.outlineVariant),
-          button(
-              Icons.center_focus_strong_outlined, onReset, 'canvas-zoom-reset'),
+          button(Icons.center_focus_strong_outlined, onReset,
+              'canvas-zoom-reset',
+              l10n?.a11yRecentre ?? 'Fit the plan to the screen'),
         ],
       ),
     );

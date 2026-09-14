@@ -6,6 +6,9 @@
   "a11yMoveUp": "Monter",
   "a11yMoveDown": "Descendre",
   "a11yFinishEditing": "Terminer la modification",
+  "a11yZoomIn": "Zoom avant",
+  "a11yZoomOut": "Zoom arrière",
+  "a11yRecentre": "Ajuster le plan à l'écran",
   "accessRuleManagedProfile": "Tant que ce profil était géré pour vous : {people}. Chaque consultation ou modification par l'un d'eux figure ci-dessous.",
   "@accessRuleManagedProfile": {
     "description": "#914 access rule: profile",
@@ -1560,6 +1563,7 @@
   "@editorDeleteLevelConfirmAudit": {
     "description": "#587 delete despite reservations — audit substitution warning"
   },
+  "editorCanvasSemantics": "Zone de dessin du plan",
   "eInvoiceGapMissingBuyerLegalId": "L'acheteur est une entreprise française sans SIREN — renseignez son identifiant légal sur le profil de l'adhérent.",
   "@eInvoiceGapMissingBuyerLegalId": {
     "description": "#941 e-invoice audit: eInvoiceGapMissingBuyerLegalId"

@@ -6,6 +6,9 @@
   "a11yMoveUp": "Nach oben",
   "a11yMoveDown": "Nach unten",
   "a11yFinishEditing": "Bearbeitung beenden",
+  "a11yZoomIn": "Vergrößern",
+  "a11yZoomOut": "Verkleinern",
+  "a11yRecentre": "Plan an den Bildschirm anpassen",
   "accessRuleManagedProfile": "Solange dieses Profil für Sie verwaltet wurde: {people}. Jede Einsicht und jede Änderung durch eine dieser Personen steht unten.",
   "@accessRuleManagedProfile": {
     "description": "#914 access rule: profile",
@@ -1560,6 +1563,7 @@
   "@editorDeleteLevelConfirmAudit": {
     "description": "#587 delete despite reservations — audit substitution warning"
   },
+  "editorCanvasSemantics": "Zeichenfläche des Grundrisses",
   "eInvoiceGapMissingBuyerLegalId": "Der Käufer ist ein französisches Unternehmen ohne SIREN — tragen Sie die Registernummer im Profil des Mitglieds ein.",
   "@eInvoiceGapMissingBuyerLegalId": {
     "description": "#941 e-invoice audit: eInvoiceGapMissingBuyerLegalId"

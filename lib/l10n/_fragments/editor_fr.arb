@@ -72,5 +72,6 @@
   "editorDeleteLevelConfirmAudit": "Supprimer ce niveau ? Tous les bureaux, tables et places qui s'y trouvent sont retirés. Les réservations qui y font référence gardent un instantané texte pour les audits ; les réservations ouvertes sont annulées.",
   "@editorDeleteLevelConfirmAudit": {
     "description": "#587 delete despite reservations — audit substitution warning"
-  }
+  },
+  "editorCanvasSemantics": "Zone de dessin du plan"
 }

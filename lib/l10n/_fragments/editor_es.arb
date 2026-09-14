@@ -72,5 +72,6 @@
   "editorDeleteLevelConfirmAudit": "¿Eliminar esta planta? Se eliminan todas las oficinas, mesas y asientos que contiene. Las reservas que hacen referencia a ellos conservan una instantánea de texto para auditorías; las reservas abiertas se cancelan.",
   "@editorDeleteLevelConfirmAudit": {
     "description": "#587 delete despite reservations — audit substitution warning"
-  }
+  },
+  "editorCanvasSemantics": "Área de dibujo del plano"
 }
