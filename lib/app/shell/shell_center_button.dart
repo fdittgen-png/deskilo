@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'dart:async';
+import 'dart:ui' show lerpDouble;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
@@ -30,6 +31,7 @@ class ShellCenterButton extends ConsumerWidget {
     required this.label,
     required this.onPressed,
     required this.selected,
+    this.collapseProgress = 0,
   });
 
   /// Localized tooltip / semantic label.
@@ -41,11 +43,26 @@ class ShellCenterButton extends ConsumerWidget {
   /// the centre button doubles as the bar's selection indicator.
   final bool selected;
 
+  /// How far the bar around this button has collapsed — 0 docked in the
+  /// notch, 1 floating alone over the content.
+  ///
+  /// Only the DEPTH reads this. The button's size does not change: it is
+  /// 56 dp, Material's standard FAB, and the primary action of the whole
+  /// app — there is nowhere for it to shrink to that would not cost it
+  /// prominence. What changes is what it is sitting on. Docked, it has a
+  /// bar surface beneath it and a tight shadow is right; alone over a
+  /// floor plan, a softer and wider one is what says "I am floating here
+  /// now".
+  final double collapseProgress;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
     final hidden = ref.watch(shellBarHiddenProvider).value ?? false;
+    // Clamped because the collapse is driven straight off a finger, and
+    // a drag that overshoots must not produce a negative blur.
+    final t = collapseProgress.clamp(0.0, 1.0);
     final buttonColor = theme.colorScheme.primary;
     final gradient = LinearGradient(
       begin: Alignment.topCenter,
@@ -83,9 +100,10 @@ class ShellCenterButton extends ConsumerWidget {
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: theme.colorScheme.primary.withValues(alpha: 0.30),
-            blurRadius: 14,
-            offset: const Offset(0, 4),
+            color: theme.colorScheme.primary
+                .withValues(alpha: lerpDouble(0.30, 0.20, t)!),
+            blurRadius: lerpDouble(14, 22, t)!,
+            offset: Offset(0, lerpDouble(4, 7, t)!),
           ),
         ],
       ),
@@ -97,8 +115,9 @@ class ShellCenterButton extends ConsumerWidget {
             width: ShellBarMetrics.buttonRingWidth,
           ),
         ),
-        elevation: 4,
-        shadowColor: Colors.black.withValues(alpha: 0.4),
+        elevation: lerpDouble(4, 7, t)!,
+        shadowColor:
+            Colors.black.withValues(alpha: lerpDouble(0.4, 0.28, t)!),
         clipBehavior: Clip.antiAlias,
         child: Ink(
           decoration: BoxDecoration(shape: BoxShape.circle, gradient: gradient),
