@@ -488,9 +488,36 @@ String buildFecFile({
       letter: '', validDate: on,
     );
   }
+  // Chronological, then by journal and entry number.
+  //
+  // The rows are BUILT document by document — an invoice's sale, then
+  // the cash that settled it — so a July payment for a June invoice was
+  // written before the July invoices that follow it. Every entry was
+  // correct and the file read as though the books had been kept out of
+  // order, which is the first thing an auditor notices and the last
+  // thing you want them asking about.
+  //
+  // A STABLE sort on the date alone, and the tiebreak matters. Ordering
+  // by journal code within a day puts BQ before VE — the bank entry
+  // ahead of the sale that created it, which is backwards in the one
+  // direction an accountant reads. Insertion order is document by
+  // document, so within a day it is already causal: the invoice, then
+  // the cash that settled it. `List.sort` is not stable, hence the
+  // index.
+  //
+  // `EcritureDate` is column index 3. Sorting cannot change what #927
+  // fixed: an entry's number comes from the document it books, never
+  // from its position in the file.
+  final indexed = [
+    for (var i = 0; i < rows.length; i++) (row: rows[i], at: i),
+  ]..sort((a, b) {
+      final byDate = a.row[3].compareTo(b.row[3]);
+      return byDate != 0 ? byDate : a.at.compareTo(b.at);
+    });
+  final sorted = [for (final e in indexed) e.row];
   return [
     fecColumns.join('\t'),
-    for (final row in rows) row.join('\t'),
+    for (final row in sorted) row.join('\t'),
   ].join('\r\n');
 }
 

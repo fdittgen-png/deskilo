@@ -28,6 +28,15 @@ import 'ledger_entry.dart';
 ///  3. `Festschreibung` = 1 marks the batch as final. We write **0**:
 ///     locking someone else's books is the accountant's decision, not an
 ///     exporting app's.
+///  4. The file is read as **Windows-1252 unless it carries a UTF-8 BOM**.
+///     This is the one that corrupts silently and in the accountant's
+///     books rather than ours: without the three-byte mark, "Bürogemein-
+///     schaft München" imports as "BÃ¼rogemeinschaft MÃ¼nchen" in every
+///     Buchungstext and every customer name, and nothing anywhere
+///     errors. [datevBom] is prepended for that reason — and UTF-8 with
+///     the mark rather than transcoding to Windows-1252, because a
+///     coworking in Munich bills members called Kowalczyk and Škoda, and
+///     Windows-1252 cannot spell either.
 ///
 /// WHY THERE IS NO GENERALLEDGER-COMPLETE SAF-T HERE. Portugal's
 /// accounting SAF-T, Romania's D406 and Poland's JPK_KR all mandate
@@ -71,6 +80,13 @@ class DatevAccounts {
   /// betriebliche Aufwendungen" in SKR03.
   final String expenses;
 }
+
+/// The UTF-8 byte-order mark, as the character that encodes to it.
+///
+/// DATEV's importer treats an unmarked file as Windows-1252. Declaring
+/// format version 700 in the header — as this exporter does — is what
+/// makes the marked UTF-8 form recognised, so the two belong together.
+const String datevBom = '\u{FEFF}';
 
 /// DATEV expects `EXTF_<something>.csv`; the name is free-form after the
 /// prefix, and DATEV keys on the header, not the filename.
@@ -188,22 +204,50 @@ String buildDatevFile({
       );
       continue;
     }
-    // Receivable against revenue, at the GROSS amount — DATEV derives
-    // the tax split from the BU-Schlüssel/Steuersatz on the revenue
-    // account, which is the accountant's configuration, not ours.
+    // Receivable against revenue, at what the invoice CHARGES — DATEV
+    // derives the tax split from the BU-Schlüssel/Steuersatz on the
+    // revenue account, which is the accountant's configuration, not
+    // ours.
+    //
+    // `chargesCents`, not `totalCents`, and the difference is money. An
+    // invoice may NET payments the member already made during the month
+    // (0070): 300 charged, 120 already paid, 180 left. `totalCents` is
+    // the 180. Booking that as revenue understated the year by every
+    // euro anybody paid mid-month, and the 120 that actually arrived was
+    // booked nowhere at all — so the bank was short too, and the VAT
+    // base under it. The FEC has always split these; this did not.
+    final charges = invoice.chargesCents;
+    if (charges == 0) continue;
     book(
-      cents: invoice.totalCents,
+      cents: charges,
       debit: accounts.customers,
       credit: accounts.revenue,
       date: invoice.issuedAt,
       documentRef: invoice.number,
       text: 'Rechnung ${invoice.number}',
     );
+    // The credits the document itself carries: money in, receivable
+    // cleared, on the invoice's own date. The FEC's BQ journal books
+    // exactly these.
+    for (final line in invoice.lines) {
+      if (line.amountCents >= 0) continue;
+      book(
+        cents: -line.amountCents,
+        debit: accounts.bank,
+        credit: accounts.customers,
+        date: invoice.issuedAt,
+        documentRef: invoice.number,
+        text: 'Zahlung ${invoice.number}',
+      );
+    }
     final match = matches[invoice.id];
     // A PENDING match is a settlement still awaiting validation (0067) —
     // booking it would put money in the ledger that the workspace has
     // not agreed it received. The FEC makes the same exclusion.
-    if (match != null && !match.pending) {
+    // Skipped when the document already settled itself: that money is
+    // the credit lines above, and booking it twice inflates the bank.
+    // The FEC makes the same exclusion.
+    if (match != null && !match.pending && invoice.totalCents != 0) {
       // The settlement: money in, receivable cleared. Booked on the day
       // the money moved (0070), not the day it was recorded.
       book(
@@ -247,5 +291,5 @@ String buildDatevFile({
       text: r.title,
     );
   }
-  return '$header\r\n$columns\r\n${rows.join('\r\n')}\r\n';
+  return '$datevBom$header\r\n$columns\r\n${rows.join('\r\n')}\r\n';
 }
