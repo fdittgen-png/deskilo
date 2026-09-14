@@ -54,11 +54,41 @@ processes that payment under its own privacy policy.
 
 - You can leave a workspace at any time; the owner can pause or remove
   members.
-- On account deletion, personal profile data (name, e-mail, photo,
-  phone) is removed; **financial ledger history is anonymized, not
-  deleted**, to preserve the community's bookkeeping integrity.
+- **Leaving one workspace.** Your bookings there are cancelled, the
+  messages you sent are deleted, and your membership is marked exited —
+  it keeps no personal data of its own. Your ledger rows and invoices
+  stay, because they are the workspace's accounting records and the law
+  requires the community to keep them.
+- **Leaving your last workspace.** Your profile is cleared as well —
+  name, WhatsApp number, status, address, VAT id and photo.
+- So a member of two spaces who leaves one keeps their profile, because
+  the other space still needs it. Their ledger rows in the space they
+  left remain readable to that space's owner, under the same accounting
+  retention as everyone else's.
 - Badges can be revoked at any time; revoked hashes stop working
   immediately.
+
+### What is kept, and for how long
+
+| Data | Why it exists | Kept | When you erase |
+|---|---|---|---|
+| Profile — name, photo, WhatsApp, status, address, VAT id | to be a member of a space | while you are a member of any space | cleared when you leave your last one |
+| Membership row | your role and standing in one space | for the life of the space | marked exited; keeps no personal data |
+| Bookings | running the space | the workspace's configured booking-history limit | open ones cancelled; past ones kept as the space's occupancy record |
+| Messages you sent | conversation | until you erase | deleted |
+| Ledger entries | the space's accounts | the statutory accounting period of the workspace's country | kept |
+| Invoices and credit notes | legal documents | the statutory accounting period of the workspace's country | kept, and immutable |
+| Audit and decision trail | proving who approved what | the statutory period | kept |
+| Badge hashes | opening the door | until revoked | revoked immediately |
+| Diagnostic trace | fixing a fault you report | on your device only, 512 KiB, oldest discarded | delete the app, or clear it in Settings |
+
+The statutory period is set by the country of the workspace, not of the
+member — it is the community's bookkeeping obligation, not yours. In
+France and Germany that is ten years for accounting records; the app
+knows the workspace's country because it needs it for VAT.
+
+Nothing in this table leaves the workspace's own database, and none of
+it goes to an analytics service. There is no analytics service.
 
 ## Your rights (GDPR)
 
