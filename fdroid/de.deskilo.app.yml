@@ -156,7 +156,7 @@ Builds:
 
   - versionName: 1.0.2
     versionCode: 31
-    commit: d0b4d4e167e261644b289d8bc5948f1a3b253e9e
+    commit: 1247360719f0ca23741a9adf24c60ab958a77d86
     sudo:
       - apt-get update
       - apt-get install -y --no-install-recommends cmake ninja-build
@@ -202,7 +202,7 @@ Builds:
 
   - versionName: 1.0.2
     versionCode: 32
-    commit: d0b4d4e167e261644b289d8bc5948f1a3b253e9e
+    commit: 1247360719f0ca23741a9adf24c60ab958a77d86
     sudo:
       - apt-get update
       - apt-get install -y --no-install-recommends cmake ninja-build
@@ -248,7 +248,7 @@ Builds:
 
   - versionName: 1.0.2
     versionCode: 33
-    commit: d0b4d4e167e261644b289d8bc5948f1a3b253e9e
+    commit: 1247360719f0ca23741a9adf24c60ab958a77d86
     sudo:
       - apt-get update
       - apt-get install -y --no-install-recommends cmake ninja-build
