@@ -30,6 +30,7 @@ import '../widgets/editor_toolbar.dart';
 import '../widgets/placement_problem.dart';
 import '../widgets/seat_properties_sheet.dart';
 import '../widgets/space_properties_sheet.dart';
+import '../widgets/text_prompt_dialog.dart';
 import 'editor_tool.dart';
 
 /// Canvas dimensions in grid cells and the logical cell size at scale 1 —
@@ -274,7 +275,8 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     }
 
     if (_tool == EditorTool.office) {
-      final name = await _promptText(
+      final name = await showTextPrompt(
+        context,
         title: l10n?.editorNewOffice ?? 'New office',
         label: l10n?.editorOfficeNameLabel ?? 'Office name',
         initial: '${l10n?.editorOfficeNameDefault ?? 'Office'} '
@@ -879,6 +881,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
   }
 
   Widget _buildCanvas(FloorPlan plan) {
+    final l10n = AppLocalizations.of(context);
     const size = Size(
       GridCanvas.widthCells * GridCanvas.cellSize,
       GridCanvas.heightCells * GridCanvas.cellSize,
@@ -901,7 +904,15 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       // UNBOUNDED pan — the same fit-vs-clamp fight as the live plan
       // (see plan_canvas.dart): a centred small level must stay legal.
       boundaryMargin: const EdgeInsets.all(double.infinity),
-      child: GestureDetector(
+      child: Semantics(
+        // #1235 — the drawing surface used to reach a screen reader as
+        // an anonymous button the size of the floor: a tap action with
+        // no name, and a coordinate nobody navigating by voice can aim
+        // at. It is a canvas, so it says so, and the objects on it are
+        // reached through the objects panel instead.
+        label: l10n?.editorCanvasSemantics ?? 'Floor plan drawing area',
+        child: GestureDetector(
+        excludeFromSemantics: true,
         // `down` so onPanStart reports the touch-down cell, not the position
         // where the drag cleared the touch slop.
         dragStartBehavior: DragStartBehavior.down,
@@ -969,6 +980,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
           ),
         ),
       ),
+      ),
         ),
         // #1216 — an empty floor used to be a blank grid under a row of
         // tools, which says what you CAN do and never what to do first.
@@ -1028,36 +1040,5 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     if (confirmed != true) return;
     await action();
     ref.invalidate(floorPlanProvider(widget.levelId));
-  }
-
-  Future<String?> _promptText({
-    required String title,
-    required String label,
-    String initial = '',
-  }) {
-    final l10n = AppLocalizations.of(context);
-    final controller = TextEditingController(text: initial);
-    return showDialog<String>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          decoration: InputDecoration(labelText: label),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
-          ),
-          FilledButton(
-            onPressed: () =>
-                Navigator.of(context).pop(controller.text.trim()),
-            child: Text(l10n?.commonSave ?? 'Save'),
-          ),
-        ],
-      ),
-    );
   }
 }

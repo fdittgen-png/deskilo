@@ -140,6 +140,24 @@ abstract class AppLocalizations {
   /// **'Finish editing'**
   String get a11yFinishEditing;
 
+  /// Tooltip on the plan canvas's zoom-in button (#1235).
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom in'**
+  String get a11yZoomIn;
+
+  /// Tooltip on the plan canvas's zoom-out button (#1235).
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom out'**
+  String get a11yZoomOut;
+
+  /// Tooltip on the plan canvas's recentre button, which sizes the whole level to the viewport (#1235).
+  ///
+  /// In en, this message translates to:
+  /// **'Fit the plan to the screen'**
+  String get a11yRecentre;
+
   /// #914 access rule: profile
   ///
   /// In en, this message translates to:
@@ -3923,6 +3941,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete this level? All offices, desks and seats on it are removed. Bookings that reference them keep a text snapshot for audits; open bookings are cancelled.'**
   String get editorDeleteLevelConfirmAudit;
+
+  /// Screen-reader name for the level editor's canvas: it says what the surface is, since the objects on it are reached through the objects panel (#1235).
+  ///
+  /// In en, this message translates to:
+  /// **'Floor plan drawing area'**
+  String get editorCanvasSemantics;
 
   /// #941 e-invoice audit: eInvoiceGapMissingBuyerLegalId
   ///

@@ -27,6 +27,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get a11yFinishEditing => 'Bearbeitung beenden';
 
   @override
+  String get a11yZoomIn => 'Vergrößern';
+
+  @override
+  String get a11yZoomOut => 'Verkleinern';
+
+  @override
+  String get a11yRecentre => 'Plan an den Bildschirm anpassen';
+
+  @override
   String accessRuleManagedProfile(String people) {
     return 'Solange dieses Profil für Sie verwaltet wurde: $people. Jede Einsicht und jede Änderung durch eine dieser Personen steht unten.';
   }
@@ -2210,6 +2219,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get editorDeleteLevelConfirmAudit =>
       'Diese Ebene löschen? Alle Büros, Tische und Sitzplätze darauf werden entfernt. Buchungen, die darauf verweisen, behalten einen Text-Schnappschuss für Audits; offene Buchungen werden storniert.';
+
+  @override
+  String get editorCanvasSemantics => 'Zeichenfläche des Grundrisses';
 
   @override
   String get eInvoiceGapMissingBuyerLegalId =>

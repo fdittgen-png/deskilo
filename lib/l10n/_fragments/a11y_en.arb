@@ -22,5 +22,17 @@
   "a11yFinishEditing": "Finish editing",
   "@a11yFinishEditing": {
     "description": "Tooltip on the tick that closes the inline editor for a report line."
+  },
+  "a11yZoomIn": "Zoom in",
+  "@a11yZoomIn": {
+    "description": "Tooltip on the plan canvas's zoom-in button (#1235)."
+  },
+  "a11yZoomOut": "Zoom out",
+  "@a11yZoomOut": {
+    "description": "Tooltip on the plan canvas's zoom-out button (#1235)."
+  },
+  "a11yRecentre": "Fit the plan to the screen",
+  "@a11yRecentre": {
+    "description": "Tooltip on the plan canvas's recentre button, which sizes the whole level to the viewport (#1235)."
   }
 }

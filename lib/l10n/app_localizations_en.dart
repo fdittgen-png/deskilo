@@ -27,6 +27,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get a11yFinishEditing => 'Finish editing';
 
   @override
+  String get a11yZoomIn => 'Zoom in';
+
+  @override
+  String get a11yZoomOut => 'Zoom out';
+
+  @override
+  String get a11yRecentre => 'Fit the plan to the screen';
+
+  @override
   String accessRuleManagedProfile(String people) {
     return 'While this profile was managed for you: $people. Every time one of them opened or changed it is on the record below.';
   }
@@ -2191,6 +2200,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get editorDeleteLevelConfirmAudit =>
       'Delete this level? All offices, desks and seats on it are removed. Bookings that reference them keep a text snapshot for audits; open bookings are cancelled.';
+
+  @override
+  String get editorCanvasSemantics => 'Floor plan drawing area';
 
   @override
   String get eInvoiceGapMissingBuyerLegalId =>

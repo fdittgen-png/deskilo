@@ -27,6 +27,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get a11yFinishEditing => 'Terminar la edición';
 
   @override
+  String get a11yZoomIn => 'Acercar';
+
+  @override
+  String get a11yZoomOut => 'Alejar';
+
+  @override
+  String get a11yRecentre => 'Ajustar el plano a la pantalla';
+
+  @override
   String accessRuleManagedProfile(String people) {
     return 'Mientras este perfil se gestionó para usted: $people. Cada consulta o cambio por alguno de ellos consta abajo.';
   }
@@ -2209,6 +2218,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get editorDeleteLevelConfirmAudit =>
       '¿Eliminar esta planta? Se eliminan todas las oficinas, mesas y asientos que contiene. Las reservas que hacen referencia a ellos conservan una instantánea de texto para auditorías; las reservas abiertas se cancelan.';
+
+  @override
+  String get editorCanvasSemantics => 'Área de dibujo del plano';
 
   @override
   String get eInvoiceGapMissingBuyerLegalId =>

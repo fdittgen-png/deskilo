@@ -4,5 +4,8 @@
   "a11yClearDate": "Borrar la fecha",
   "a11yMoveUp": "Subir",
   "a11yMoveDown": "Bajar",
-  "a11yFinishEditing": "Terminar la edición"
+  "a11yFinishEditing": "Terminar la edición",
+  "a11yZoomIn": "Acercar",
+  "a11yZoomOut": "Alejar",
+  "a11yRecentre": "Ajustar el plano a la pantalla"
 }
