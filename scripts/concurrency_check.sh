@@ -32,6 +32,12 @@ set -uo pipefail
 DB_URL=${1:?usage: concurrency_check.sh <db url>}
 WS=00000000-0000-4000-8000-00000000c001
 MEMBER=00000000-0000-4000-8000-00000000c002
+# The rival is a DIFFERENT member, and that is the whole point. With one
+# member both attempts are refused by `enforce_one_place` — "at most 1 at
+# a time" — which is a real guard and is not this one. Two members put
+# the exclusion constraint on the seat in the way, which is the invariant
+# under test.
+RIVAL=00000000-0000-4000-8000-00000000c008
 SEAT=00000000-0000-4000-8000-00000000c003
 
 say() { printf '  %s\n' "$*"; }
@@ -56,8 +62,14 @@ insert into public.workspaces (id, name, country_code, currency_code, timezone,
                                created_by)
 values ('$WS', 'Race', 'FR', 'EUR', 'Europe/Paris',
         '00000000-0000-4000-8000-00000000c004');
+insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
+                        email_confirmed_at, created_at, updated_at)
+values ('00000000-0000-4000-8000-00000000c009',
+        '00000000-0000-0000-0000-000000000000', 'authenticated',
+        'authenticated', 'rival@deskilo.test', '', now(), now(), now());
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin)
-values ('$MEMBER', '$WS', '00000000-0000-4000-8000-00000000c004', true, true);
+values ('$MEMBER', '$WS', '00000000-0000-4000-8000-00000000c004', true, true),
+       ('$RIVAL', '$WS', '00000000-0000-4000-8000-00000000c009', false, false);
 insert into public.levels (id, workspace_id, name)
 values ('00000000-0000-4000-8000-00000000c005', '$WS', 'Ground');
 insert into public.offices (id, workspace_id, level_id, name, x, y, w, h)
@@ -71,21 +83,26 @@ values ('$SEAT', '$WS', '00000000-0000-4000-8000-00000000c007', 1, 1);
 SQL
 ) || fail "the fixture would not build. psql said: $fixture"
 
-BOOKING="insert into public.reservations
-  (workspace_id, member_id, seat_id, starts_at, ends_at)
- values ('$WS', '$MEMBER', '$SEAT',
-         date_trunc('day', now()) + interval '1 day 9 hours',
-         date_trunc('day', now()) + interval '1 day 13 hours')"
+booking_for() {
+  printf "insert into public.reservations
+    (workspace_id, member_id, seat_id, starts_at, ends_at)
+   values ('%s', '%s', '%s',
+           date_trunc('day', now()) + interval '1 day 9 hours',
+           date_trunc('day', now()) + interval '1 day 13 hours')" \
+    "$WS" "$1" "$SEAT"
+}
+MINE=$(booking_for "$MEMBER")
+THEIRS=$(booking_for "$RIVAL")
 
 # A takes the seat and holds it for three seconds.
 psql "$DB_URL" -qX -v ON_ERROR_STOP=1 \
-  -c "begin; $BOOKING; select pg_sleep(3); commit;" >/dev/null 2>&1 &
+  -c "begin; $MINE; select pg_sleep(3); commit;" >/dev/null 2>&1 &
 holder=$!
 sleep 1
 
 # B, while A is undecided. `-q` keeps stdout clean; the SQLSTATE comes
 # back on stderr, which is what we read.
-blocked=$(psql "$DB_URL" -qX -c "set lock_timeout = '800ms'; $BOOKING" 2>&1 || true)
+blocked=$(psql "$DB_URL" -qX -c "set lock_timeout = '800ms'; $THEIRS" 2>&1 || true)
 case "$blocked" in
   *"canceling statement due to lock timeout"*|*55P03*)
     say "while the first booking is uncommitted the rival BLOCKS and times out" ;;
@@ -99,7 +116,7 @@ esac
 
 wait "$holder" || fail "the holding session did not commit"
 
-after=$(psql "$DB_URL" -qX -c "$BOOKING" 2>&1 || true)
+after=$(psql "$DB_URL" -qX -c "$THEIRS" 2>&1 || true)
 case "$after" in
   *"conflicting key value violates exclusion constraint"*|*23P01*)
     say "and once the first is committed the rival is refused outright" ;;
@@ -113,7 +130,8 @@ esac
 # would make a second run of this script on the same database fail on
 # the primary key rather than on the property.
 psql_q "delete from public.workspaces where id = '$WS'" >/dev/null
-psql_q "delete from auth.users where id = '00000000-0000-4000-8000-00000000c004'" \
-  >/dev/null
+psql_q "delete from auth.users where id in
+    ('00000000-0000-4000-8000-00000000c004',
+     '00000000-0000-4000-8000-00000000c009')" >/dev/null
 
 echo "two sessions, one seat: exactly one winner"
