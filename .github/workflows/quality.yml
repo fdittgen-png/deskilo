@@ -47,6 +47,26 @@ jobs:
           cache: true
       - run: flutter pub get
 
+      # The gates that are not a discipline row: they are preconditions,
+      # and a red one makes every row below it meaningless rather than
+      # merely worse. They fail the job immediately, as they always did.
+      - name: l10n gate — the ARB pipeline is clean and committed
+        run: |
+          dart run tool/build_arb.dart
+          flutter gen-l10n
+          git diff --exit-code -- lib/l10n \
+            || { echo "::error::lib/l10n drift — run 'dart run tool/build_arb.dart && flutter gen-l10n' and commit (HARD RULE #4)"; exit 1; }
+
+      - name: Analyze (lib + test)
+        run: flutter analyze
+
+      # ONE run of the suite, with coverage, for the whole report. The
+      # discipline steps below re-run small subsets of it — seconds each —
+      # because a table that cannot say WHICH discipline regressed is the
+      # thing this workflow exists to replace.
+      - name: Tests with coverage
+        run: flutter test --coverage
+
       # Every discipline runs even when an earlier one failed: a report
       # that stops at the first red row tells you less than no report.
       - name: Architecture
@@ -94,6 +114,16 @@ jobs:
         id: coverage
         continue-on-error: true
         run: bash scripts/coverage_gate.sh
+
+      # ADVISORY, deliberately non-blocking: this repository has no branch
+      # protection at all, so a hard failure here would redden every pull
+      # request without any of them being at fault. It reports the drift
+      # so the gap stays visible instead of living only in a document.
+      - name: Branch protection drift (advisory)
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/branch_protection.sh verify
 
       - name: Rows
         if: always()

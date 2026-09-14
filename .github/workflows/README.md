@@ -36,10 +36,9 @@ Supabase platform image changes.
 
 | Name | File | What it is for |
 | --- | --- | --- |
-| CI · Analyze, test & coverage | `ci.yml` | the gate every PR waits on |
+| CI · Quality report | `quality.yml` | **the gate every PR waits on**: l10n, analyze, the suite with coverage, then nine disciplines as one table in the run summary — including the migration replay and the pgTAP suite |
 | CI · Android boot check | `android-boot.yml` | installs the shrunk release APK on an emulator and proves it stays alive |
 | CI · F-Droid no-GMS audit | `fdroid-foss.yml` | proves the libre flavour carries no Google dependency |
-| CI · Quality report | `quality.yml` | nine disciplines, one table in the run summary — including the migration replay and the pgTAP suite |
 | Release · Train (all platforms) | `release-train.yml` | one dispatch, every store, one commit |
 | Release · Play track upload | `play-internal.yml` | builds the signed AAB and uploads it to the chosen Play track |
 | Release · iOS TestFlight build | `ios-testflight.yml` | builds, uploads, and optionally distributes to the external group |

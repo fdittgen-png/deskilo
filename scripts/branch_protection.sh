@@ -37,7 +37,11 @@ API="repos/${REPO}/branches/${BRANCH}/protection"
 # name before adding it here.
 # ---------------------------------------------------------------------
 TARGET_CHECKS=(
-  "analyze · l10n gate · test · coverage"
+  # #1244 — the one workflow that runs the suite. Three jobs, because
+  # a PR should not be mergeable when the database half is red either.
+  "quality · code"
+  "quality · database"
+  "quality · report"
 )
 
 # Deliberately NOT required, with reasons — an advisory workflow that
