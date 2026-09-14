@@ -325,7 +325,7 @@ final class WorkspaceMembersProvider
   }
 }
 
-String _$workspaceMembersHash() => r'22591de7638efc1d8b8ae3991143235e160da403';
+String _$workspaceMembersHash() => r'd66338ceb70fdb41535c2213db6ea163f943ce98';
 
 /// All my membership rows across workspaces — one per profile (#89).
 
@@ -600,7 +600,7 @@ final class WorkHoursProvider
   }
 }
 
-String _$workHoursHash() => r'0089026f25376d6ab096cad781591258c48d9c86';
+String _$workHoursHash() => r'3633e9e8c3605565e56f1c45673591d292c221de';
 
 /// Notes visible to me in the active workspace (#456), newest first —
 /// the shell listens and surfaces arrivals as local notifications.
@@ -647,7 +647,7 @@ final class MyNotesProvider
   }
 }
 
-String _$myNotesHash() => r'd6e2756b52ed2e4dd8aaf427eb15c34a4162d278';
+String _$myNotesHash() => r'8ca767ec88da938ddc1c772f4a76256eb64c3ccd';
 
 /// The ids of my UNREAD received notes (#539): a direct note is unread
 /// until its read receipt lands (0105 — stamped when its CONVERSATION
@@ -1114,7 +1114,7 @@ final class MyMemberProvider
   }
 }
 
-String _$myMemberHash() => r'4490381a6cf73ba9a3eb496d8d705538aaddcc41';
+String _$myMemberHash() => r'894055bd99d73ca6c7d30a82ed343f8f484fb725';
 
 /// #915 — one managed profile's identity, from behind the access rule.
 ///
@@ -1315,7 +1315,7 @@ final class AllWorkspacesProvider
   }
 }
 
-String _$allWorkspacesHash() => r'1464cdc4bc158fc330ce9e7d0988e9087dd49f9e';
+String _$allWorkspacesHash() => r'6bdb2278e547e87792ad963c71990a99b6e83a1b';
 
 /// #945 — the workspace's sites, default first.
 
@@ -1358,7 +1358,7 @@ final class SitesProvider
   }
 }
 
-String _$sitesHash() => r'7d7f89dd27e5500c73fa2c91ad2af2769b569dff';
+String _$sitesHash() => r'9ec2f563e2d13a4c811088f8286ba63cb41148a5';
 
 /// #974 — the sites of one workspace the person belongs to, for the
 /// profiles list (which spans every workspace, not only the active one).

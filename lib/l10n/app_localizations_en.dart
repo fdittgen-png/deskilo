@@ -3686,6 +3686,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Sent when you invite someone via WhatsApp, SMS, or share. Leave empty to use the built-in message in the chosen language. Available tags:';
 
   @override
+  String get invitationTemplateLanguage => 'Message language';
+
+  @override
   String get invitationTemplateHint =>
       'Custom invitation message using the tags above…';
 
@@ -9758,7 +9761,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get workspaceLanguageHelper =>
-      'Invitations are written in this language by default.';
+      'Invitations are written in this language by default. Your own app language is in Settings.';
 
   @override
   String get workspaceLanguageUnset => 'Sender\'s app language';

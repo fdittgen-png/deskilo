@@ -57,21 +57,43 @@ class WindowControls extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    // Icons, not words (UX pass): sunrise = morning, sunset =
-    // afternoon, calendar-day = full day; the localized name lives in
-    // the tooltip (and the semantics label for assistive tech).
+    final timeFormat = appFormatOf(context); // #1150
+    // Icons, not words (UX pass): the localized name lives in the
+    // tooltip (and the semantics label for assistive tech).
+    //
+    // #1269 — "the morning and afternoon selection could be more
+    // meaningful". It was a sunrise, a sunset and a calendar page: three
+    // unrelated glyphs at 18dp, none of which said WHICH hours it books
+    // or that the three are one family. Two changes, both free in
+    // width — and width is why these are icons at all (#699):
+    //
+    //   * the glyph is now the week grid's own day cell, two half-slots
+    //     side by side with the booked half filled. A member who has
+    //     seen the week view has already learnt to read it, and the
+    //     three chips finally look like three parts of one choice.
+    //   * the tooltip and the semantics label carry the real hours —
+    //     "Morning · 08:00–13:00" — off the workspace's configured
+    //     working day, so "morning" stops being a guess. Hours in the
+    //     chip itself would cost ~62dp and take the hub's header to a
+    //     third row at 360dp, which is the trade #699 already refused.
     Widget chip(
       String keySuffix,
-      IconData icon,
+      ({bool am, bool pm}) halves,
       String name,
       HalfDayWindow Function(DateTime day) windowOf,
     ) {
       final window = windowOf(day);
+      final label = '$name · ${timeFormat.time(window.start)}'
+          '–${timeFormat.time(window.end)}';
       return Tooltip(
-        message: name,
+        message: label,
         child: ChoiceChip(
           key: ValueKey('$keyPrefix-$keySuffix'),
-          label: Icon(icon, size: 18, semanticLabel: name),
+          label: DayHalvesGlyph(
+            am: halves.am,
+            pm: halves.pm,
+            semanticLabel: label,
+          ),
           selected: isSelected(window),
           materialTapTargetSize: MaterialTapTargetSize.padded,
           // #699 — SQUARE, 48dp, not the default chip's ~58dp text box.
@@ -92,7 +114,6 @@ class WindowControls extends StatelessWidget {
       );
     }
 
-    final timeFormat = appFormatOf(context); // #1150
     final style = muted
         ? TextButton.styleFrom(
             foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -116,20 +137,20 @@ class WindowControls extends StatelessWidget {
           if (granularity != BookingGranularity.fullDay) ...[
             chip(
               'am-chip',
-              Icons.wb_sunny_outlined,
+              (am: true, pm: false),
               l10n?.planMorningChip ?? 'Morning',
               HalfDayWindows.morning,
             ),
             chip(
               'pm-chip',
-              Icons.wb_twilight,
+              (am: false, pm: true),
               l10n?.planAfternoonChip ?? 'Afternoon',
               HalfDayWindows.afternoon,
             ),
           ],
           chip(
             'day-chip',
-            Icons.today_outlined,
+            (am: true, pm: true),
             l10n?.reserveFullDayChip ?? 'Full day',
             HalfDayWindows.fullDay,
           ),
@@ -309,6 +330,62 @@ class LevelSelector extends StatelessWidget {
             ],
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// #1269 — the week grid's day cell, at chip size: two half-slots side
+/// by side, the booked half filled and the other left as an outline.
+///
+/// The same shape the week view paints (`WeekGridMetrics.halfSlotGap`),
+/// so morning / afternoon / full day are read the way the grid already
+/// taught them, rather than as a sunrise and a sunset that happen to sit
+/// next to each other. It takes the chip's own foreground colour, so a
+/// selected chip's glyph follows it without being told.
+class DayHalvesGlyph extends StatelessWidget {
+  const DayHalvesGlyph({
+    super.key,
+    required this.am,
+    required this.pm,
+    this.semanticLabel,
+  });
+
+  /// Whether the morning half is filled.
+  final bool am;
+
+  /// Whether the afternoon half is filled.
+  final bool pm;
+
+  final String? semanticLabel;
+
+  /// Total width, matching the 18dp icon these chips used to carry.
+  static const double _width = 18;
+  static const double _height = 14;
+  static const double _gap = 2;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = IconTheme.of(context).color ??
+        Theme.of(context).colorScheme.onSurfaceVariant;
+    Widget half(bool filled) => Container(
+          width: (_width - _gap) / 2,
+          height: _height,
+          decoration: BoxDecoration(
+            color: filled ? color : Colors.transparent,
+            border: filled ? null : Border.all(color: color, width: 1.2),
+            borderRadius: AppRadius.smAll,
+          ),
+        );
+    return Semantics(
+      label: semanticLabel,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          half(am),
+          const SizedBox(width: _gap),
+          half(pm),
+        ],
       ),
     );
   }

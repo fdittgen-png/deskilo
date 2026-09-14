@@ -8,9 +8,9 @@ import '../../../../l10n/app_localizations.dart';
 
 /// #814 — the seat states, named. The plan, the day, the week and the
 /// month views paint five states plus "closed day"; until now the only
-/// place that said which colour meant what was the guide. One compact,
-/// horizontally scrolling row of swatches with their words, so a
-/// member reads the plan without learning it first.
+/// place that said which colour meant what was the guide. One compact
+/// row of swatches with their words, so a member reads the plan
+/// without learning it first.
 class SeatLegend extends StatelessWidget {
   const SeatLegend({super.key, this.showClosed = true});
 
@@ -61,38 +61,78 @@ class SeatLegend extends StatelessWidget {
     // "Free · Reserved · Checked in · M…". Scrolling is the wrong
     // answer for a legend in any case — nothing in it is tappable, so
     // an entry you have to find by dragging is an entry you never read.
-    // Wrapped, it takes a second line where it needs one and lays out
-    // on one line wherever it fits.
+    //
+    // #1269 — but a legend that wraps is a legend that lies about
+    // itself: "Blocked" alone on a second line reads as a heading for
+    // what is under it, not as the fifth of five equals. On a 360 dp
+    // phone the five plan states needed 361 dp of the 328 available,
+    // so it spilled by one entry every time. Two changes: the chrome
+    // per entry went 30 dp → 23 (a 12 dp swatch, a 3 dp gap, an 8 dp
+    // separator, none after the last), which alone brings the five to
+    // 318; and whatever still does not fit — six entries, a German
+    // "Geschlossener Tag", a 320 dp screen — is scaled down to the one
+    // row rather than folded onto a second.
+    //
+    // The scale-down is skipped when the reader has asked for larger
+    // text: shrinking it back would hand them exactly the size they
+    // said was too small. They get the honest two lines instead.
+    final row = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (final (index, (label, color, icon)) in entries.indexed)
+          Padding(
+            padding: EdgeInsets.only(
+                right: index == entries.length - 1 ? 0 : AppSpacing.sm),
+            child: _entry(context, label, color, icon),
+          ),
+      ],
+    );
+    final enlarged = MediaQuery.textScalerOf(context).scale(100) > 115;
     return Padding(
       key: const ValueKey('reserve-legend'),
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.lg,
         vertical: AppSpacing.xs,
       ),
-      child: Wrap(
-        runSpacing: AppSpacing.xs,
-        children: [
-        for (final (label, color, icon) in entries)
-          Padding(
-            padding: const EdgeInsets.only(right: AppSpacing.md),
-            child: Row(mainAxisSize: MainAxisSize.min, children: [
-              Container(
-                width: 14,
-                height: 14,
-                decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: AppRadius.smAll,
-                ),
-                child: icon == null
-                    ? null
-                    : Icon(icon, size: 10, color: Colors.white),
+      child: enlarged
+          ? Wrap(
+              spacing: AppSpacing.sm,
+              runSpacing: AppSpacing.xs,
+              children: [
+                for (final (label, color, icon) in entries)
+                  _entry(context, label, color, icon),
+              ],
+            )
+          : SizedBox(
+              width: double.infinity,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: row,
               ),
-              const SizedBox(width: AppSpacing.xs),
-              Text(label, style: Theme.of(context).textTheme.labelSmall),
-            ]),
-          ),
-        ],
-      ),
+            ),
     );
   }
+
+  Widget _entry(
+    BuildContext context,
+    String label,
+    Color color,
+    IconData? icon,
+  ) =>
+      Row(mainAxisSize: MainAxisSize.min, children: [
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: AppRadius.smAll,
+          ),
+          child: icon == null
+              ? null
+              : Icon(icon, size: 9, color: Colors.white),
+        ),
+        const SizedBox(width: 3),
+        Text(label, style: Theme.of(context).textTheme.labelSmall),
+      ]);
 }

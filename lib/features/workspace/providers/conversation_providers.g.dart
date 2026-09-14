@@ -64,7 +64,7 @@ final class ConversationsProvider
   }
 }
 
-String _$conversationsHash() => r'4f5affdd222338a94218d44caadc5a104dbf398b';
+String _$conversationsHash() => r'a3c53e6d340c2840c6b517d6f68f4508f2c3557f';
 
 /// #821 — the archived threads, on demand (the Archived filter).
 
@@ -489,7 +489,7 @@ final class DirectConversationIdProvider
 }
 
 String _$directConversationIdHash() =>
-    r'832725b05b28aca0d4daaf360c5dd3dd471dfd68';
+    r'15f8c9e21e69106a89b9ee24d44d9752583ba67f';
 
 /// The direct conversation with one member, resolved by the server
 /// (#702) — `direct_conversation` returns the existing thread or opens
@@ -596,7 +596,7 @@ final class MessageSearchProvider
   }
 }
 
-String _$messageSearchHash() => r'af34178ba7aee43a3318b66bf0423d2d9bd6c8ad';
+String _$messageSearchHash() => r'c61c237f4cb51b8b493c1af8f8c1842a39bcfcad';
 
 /// Full-text search over messages I can see (#687).
 ///

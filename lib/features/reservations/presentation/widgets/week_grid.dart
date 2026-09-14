@@ -20,6 +20,7 @@ import 'booking_range_text.dart';
 import '../../providers/reservation_providers.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../providers/browsed_level.dart';
 
 /// Geometry of the Reserve hub's Week grid (#236). Pinned by test — treat
 /// these as part of the visual contract, not free-floating magic numbers.
@@ -160,13 +161,10 @@ class WeekGrid extends ConsumerStatefulWidget {
 }
 
 class _WeekGridState extends ConsumerState<WeekGrid> {
-  /// Sentinel value of [_levelId] for the "All levels" chip — never a real
-  /// level id. The row itself is the shared [LevelChipRow] (#221).
-  static const String _allLevelsId = '__all-levels__';
-
-  /// Level chip choice — local browsing state, never the plan tab's
-  /// persisted default (DayTimeline pattern, #187).
-  String? _levelId;
+  /// #1269 — the level choice lives in [BrowsedLevel] now, one value
+  /// above every view of the hub. It used to be a `State` field here and
+  /// one in each of the other two views, so switching the view snapped
+  /// the hub back to the first floor.
 
   /// The seven local days of [WeekGrid.selectedDay]'s ISO week.
   List<DateTime> get _days {
@@ -200,10 +198,11 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
       return _emptyHint(l10n);
     }
     // Default stays the FIRST real level; "All levels" is opt-in per view.
-    final allSelected = levels.length > 1 && _levelId == _allLevelsId;
+    final browsed = ref.watch(browsedLevelProvider);
+    final allSelected = levels.length > 1 && browsed == BrowsedLevel.allLevels;
     final level = allSelected
         ? null
-        : levels.where((l) => l.id == _levelId).firstOrNull ?? levels.first;
+        : levels.where((l) => l.id == browsed).firstOrNull ?? levels.first;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -213,12 +212,13 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
         LevelChipRow(
           levels: levels,
           selectedLevelId: level?.id,
-          onSelected: (id) => setState(() => _levelId = id),
+          onSelected: (id) =>
+              ref.read(browsedLevelProvider.notifier).select(id),
           // Sentinel chip FIRST: stack every level in one grid.
           allLevelsLabel: l10n?.calendarAllLevels ?? 'All levels',
           allLevelsSelected: allSelected,
           onAllLevelsSelected: () =>
-              setState(() => _levelId = _allLevelsId),
+              ref.read(browsedLevelProvider.notifier).selectAll(),
         ),
         Expanded(
           child: allSelected

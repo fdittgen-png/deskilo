@@ -123,7 +123,7 @@ final class AccessoriesProvider
   }
 }
 
-String _$accessoriesHash() => r'eeed0a54dbc8ee68a5033b4ae1de779f68867ba2';
+String _$accessoriesHash() => r'fc2eeea1f8229dbde38d6180c6ac465e28129cb8';
 
 /// Accessory catalog of the active workspace, ordered by sort_order then
 /// name. The catalog editor (#167) passes [includeInactive]; booking

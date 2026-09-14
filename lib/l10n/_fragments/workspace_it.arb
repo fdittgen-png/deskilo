@@ -99,7 +99,7 @@
   "@workspaceLanguageLabel": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
-  "workspaceLanguageHelper": "Gli inviti sono scritti per impostazione predefinita in questa lingua.",
+  "workspaceLanguageHelper": "Gli inviti sono scritti per impostazione predefinita in questa lingua. La lingua della tua app si imposta nelle Impostazioni.",
   "@workspaceLanguageHelper": {
     "description": "Finance/settings UX + workspace language (#486)"
   },

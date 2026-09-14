@@ -241,11 +241,11 @@ class SupabaseWorkspaceRepository
   }) async {
     // Direct row update — workspaces_update RLS restricts it to owners,
     // and the 0001 column checks re-validate the ISO shapes (#153).
-    await _client.from('workspaces').update({
+    await _updateWorkspaceRow(workspaceId, {
       'country_code': countryCode.toUpperCase(),
       'currency_code': currencyCode.toUpperCase(),
       'timezone': timezone,
-    }).eq('id', workspaceId);
+    });
   }
 
   @override
@@ -255,8 +255,8 @@ class SupabaseWorkspaceRepository
   ) async {
     // Wholesale jsonb replace, like feature_flags (#155): the settings
     // form always writes the full three-field blob.
-    await _client.from('workspaces').update(
-        {'payment_instructions': instructions.toDb()}).eq('id', workspaceId);
+    await _updateWorkspaceRow(
+        workspaceId, {'payment_instructions': instructions.toDb()});
   }
 
   @override
@@ -274,7 +274,7 @@ class SupabaseWorkspaceRepository
     // Owner-only via workspaces_update RLS; the 0069 column checks cap
     // every field. Written as one row update so an identity can never be
     // half-declared.
-    await _client.from('workspaces').update({
+    await _updateWorkspaceRow(workspaceId, {
       'vat_regime': vatRegime,
       'vat_id': vatId.trim(),
       'legal_id': legalId.trim(),
@@ -283,7 +283,7 @@ class SupabaseWorkspaceRepository
       'city': city.trim(),
       'postal_code': postalCode.trim(),
       'vat_account': vatAccount.trim(),
-    }).eq('id', workspaceId);
+    });
   }
 
   @override
@@ -292,9 +292,9 @@ class SupabaseWorkspaceRepository
     String vatRateId,
   ) async {
     // Owner-only via workspaces_update RLS, like the legal identity.
-    await _client.from('workspaces').update({
+    await _updateWorkspaceRow(workspaceId, {
       'subscription_vat_rate_id': vatRateId.isEmpty ? null : vatRateId,
-    }).eq('id', workspaceId);
+    });
   }
 
   @override
@@ -337,9 +337,7 @@ class SupabaseWorkspaceRepository
     String locale,
   ) async {
     // Owner-only via workspaces_update RLS; 0096 caps at 5 chars.
-    await _client
-        .from('workspaces')
-        .update({'default_locale': locale.trim()}).eq('id', workspaceId);
+    await _updateWorkspaceRow(workspaceId, {'default_locale': locale.trim()});
   }
 
   @override
@@ -349,13 +347,13 @@ class SupabaseWorkspaceRepository
   ) async {
     // Owner-only via workspaces_update RLS; empty entries are dropped so
     // the jsonb only carries real overrides (0096).
-    await _client.from('workspaces').update({
+    await _updateWorkspaceRow(workspaceId, {
       'invitation_templates': {
         for (final entry in templates.entries)
           if (entry.value.trim().isNotEmpty)
             entry.key: entry.value.trim(),
       },
-    }).eq('id', workspaceId);
+    });
   }
 
   @override
@@ -365,17 +363,13 @@ class SupabaseWorkspaceRepository
   ) async {
     // Owner-only via workspaces_update RLS; the whole jsonb is replaced
     // (0094) — the mentions are one coherent statement, not a delta.
-    await _client
-        .from('workspaces')
-        .update({'invoice_legal': legal}).eq('id', workspaceId);
+    await _updateWorkspaceRow(workspaceId, {'invoice_legal': legal});
   }
 
   @override
   Future<void> setWorkspaceAddress(String workspaceId, String address) async {
     // Owner-only via workspaces_update RLS; 0060 caps at 400 chars.
-    await _client
-        .from('workspaces')
-        .update({'address': address.trim()}).eq('id', workspaceId);
+    await _updateWorkspaceRow(workspaceId, {'address': address.trim()});
   }
 
   @override
@@ -384,17 +378,15 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
     // Direct row update like setPaymentInstructions — workspaces_update
     // RLS restricts it to owners, and the 0029 column check re-validates
     // the chat.whatsapp.com prefix.
-    await _client
-        .from('workspaces')
-        .update({'whatsapp_group': link.trim()}).eq('id', workspaceId);
+    await _updateWorkspaceRow(
+        workspaceId, {'whatsapp_group': link.trim()});
   }
 
   @override
   Future<void> setInvitationTemplate(String workspaceId, String template) async {
     // Same shape as setWhatsappGroup — owner-only RLS, 0049 length check.
-    await _client
-        .from('workspaces')
-        .update({'invitation_template': template.trim()}).eq('id', workspaceId);
+    await _updateWorkspaceRow(
+        workspaceId, {'invitation_template': template.trim()});
   }
 
   @override
@@ -525,6 +517,31 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
       'p_permissions': permissions,
     });
     applyOrPending(answer as Map);
+  }
+
+  /// Every write to a `workspaces` row goes through here (#1269).
+  ///
+  /// `workspaces_update` is owner-only, and an UPDATE that RLS refuses
+  /// does not raise — it matches no rows, silently. The settings form
+  /// then said "Workspace saved." over a row that had not moved, and
+  /// reopening it showed the old value. Reading the id back is what
+  /// turns a refusal into an error the caller can show.
+  Future<void> _updateWorkspaceRow(
+    String workspaceId,
+    Map<String, Object?> values,
+  ) async {
+    final rows = await _client
+        .from('workspaces')
+        .update(values)
+        .eq('id', workspaceId)
+        .select('id');
+    if (rows.isEmpty) {
+      throw StateError(
+        'workspace $workspaceId not updated: the row is invisible, or '
+        'workspaces_update refused the write (owners and active '
+        'co-owners only)',
+      );
+    }
   }
 
   Workspace _workspaceFromRow(Map<String, dynamic> row) => Workspace(
@@ -997,9 +1014,7 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
 
   @override
   Future<void> setDeskOpacity(String workspaceId, int opacity) async {
-    await _client
-        .from('workspaces')
-        .update({'desk_opacity': opacity}).eq('id', workspaceId);
+    await _updateWorkspaceRow(workspaceId, {'desk_opacity': opacity});
   }
 
   @override

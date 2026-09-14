@@ -158,7 +158,12 @@ const Map<String, int> _pairBudget = {
   'calendar -> events': 3,
   'calendar -> money': 6,
   'calendar -> plan': 6,
-  'calendar -> reservations': 7,
+  // 2026-09-14 #1269 7→8: the day view reads `browsedLevelProvider`.
+  // The browsed level is ONE value the plan, the day and the week
+  // share — three private copies is what made it snap back to the
+  // first floor on every view switch — and it belongs to the feature
+  // that owns booking, not to the calendar.
+  'calendar -> reservations': 8,
   'calendar -> workspace': 15,
   'editor -> plan': 20,
   'editor -> workspace': 6,

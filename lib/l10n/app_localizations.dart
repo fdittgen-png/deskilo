@@ -6473,6 +6473,12 @@ abstract class AppLocalizations {
   /// **'Sent when you invite someone via WhatsApp, SMS, or share. Leave empty to use the built-in message in the chosen language. Available tags:'**
   String get invitationTemplateHelp;
 
+  /// Label above the chips that pick WHICH language's invitation draft is being edited (#1269) — not the app language
+  ///
+  /// In en, this message translates to:
+  /// **'Message language'**
+  String get invitationTemplateLanguage;
+
   /// Hint in the template editor
   ///
   /// In en, this message translates to:
@@ -17228,7 +17234,7 @@ abstract class AppLocalizations {
   /// Finance/settings UX + workspace language (#486)
   ///
   /// In en, this message translates to:
-  /// **'Invitations are written in this language by default.'**
+  /// **'Invitations are written in this language by default. Your own app language is in Settings.'**
   String get workspaceLanguageHelper;
 
   /// Finance/settings UX + workspace language (#486)

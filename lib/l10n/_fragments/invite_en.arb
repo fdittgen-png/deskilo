@@ -35,6 +35,10 @@
   "@invitationTemplateHelp": {
     "description": "Help above the tag list"
   },
+  "invitationTemplateLanguage": "Message language",
+  "@invitationTemplateLanguage": {
+    "description": "Label above the chips that pick WHICH language's invitation draft is being edited (#1269) — not the app language"
+  },
   "invitationTemplateHint": "Custom invitation message using the tags above…",
   "@invitationTemplateHint": {
     "description": "Hint in the template editor"

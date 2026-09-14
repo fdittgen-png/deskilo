@@ -330,7 +330,7 @@
   "@workspaceLanguageLabel": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
-  "workspaceLanguageHelper": "Invitations are written in this language by default.",
+  "workspaceLanguageHelper": "Invitations are written in this language by default. Your own app language is in Settings.",
   "@workspaceLanguageHelper": {
     "description": "Finance/settings UX + workspace language (#486)"
   },

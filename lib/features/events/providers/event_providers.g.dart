@@ -95,7 +95,7 @@ final class EventsProvider
   }
 }
 
-String _$eventsHash() => r'94a3ee3da1a3fa5f32571529fc99ab264b9075af';
+String _$eventsHash() => r'c078e3942f8ad90add4eb474ef2af3b56f7c4531';
 
 /// Per-validator audit trail for the visible feed, keyed by event id
 /// (#130). Derived from [events], so invalidating the feed refreshes it.
@@ -144,7 +144,7 @@ final class EventDecisionsProvider
   }
 }
 
-String _$eventDecisionsHash() => r'34eef19c105c108c78b08f21fd487d0f3464fb9a';
+String _$eventDecisionsHash() => r'256d25ff3f4674ba3b9aa42802778c2c539bb453';
 
 /// #841 — the ordered decision trail of ONE event, by id, for the
 /// document that raised it. The feed only carries the newest hundred
@@ -214,7 +214,7 @@ final class EventTrailProvider
   }
 }
 
-String _$eventTrailHash() => r'5bfa869022139f200dfa2222048fb0f87c2a8199';
+String _$eventTrailHash() => r'aeb6055c2bf8341d85ed0c8952ea185939a42661';
 
 /// #841 — the ordered decision trail of ONE event, by id, for the
 /// document that raised it. The feed only carries the newest hundred
@@ -289,7 +289,7 @@ final class ValidationPoliciesProvider
 }
 
 String _$validationPoliciesHash() =>
-    r'c290f85f2167ee8a475373032cf63b16296be022';
+    r'395039d560265a29db87bae9c56a16b3924f41c8';
 
 /// The pending events awaiting MY decision — the bell badge, the
 /// app-icon badge and the notification mirror (#432) all derive from

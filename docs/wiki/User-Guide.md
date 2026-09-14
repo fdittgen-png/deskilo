@@ -913,6 +913,11 @@ The language the space speaks by default. Invitations are written in it,
 and a document falls back to it when the reader has no language of their
 own.
 
+It is **not your own app language**. That one lives in *Settings →
+Language*, it changes what **you** see, and nobody else is affected by
+it. This one belongs to the space and changes what the space **writes to
+other people**.
+
 <!-- anchor: user.workspace.settings.address -->
 #### Letterhead address
 
@@ -933,6 +938,10 @@ else: without it a message stays in the app's own inbox.
 The text an invitation carries, per language. Write it once and every
 invitation in that language uses it; the code and the link are added by
 the app, so never paste one into the text.
+
+**Message language** above the box says which of the five drafts is on
+screen. It is not a setting: nothing about it is saved, and it opens on
+the workspace language every time.
 
 <!-- anchor: user.workspace.settings.desk-transparency -->
 #### Desk transparency

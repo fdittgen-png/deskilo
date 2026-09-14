@@ -99,7 +99,7 @@
   "@workspaceLanguageLabel": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
-  "workspaceLanguageHelper": "Les invitations sont rédigées par défaut dans cette langue.",
+  "workspaceLanguageHelper": "Les invitations sont rédigées par défaut dans cette langue. La langue de votre application se règle dans Réglages.",
   "@workspaceLanguageHelper": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
