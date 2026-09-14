@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/time/calendar_days.dart';
 
 /// What an invoice CHARGES FOR (#802, migration 0142).
 ///
@@ -130,6 +131,11 @@ class BillingRules {
 /// many days earlier, which for a lead longer than the previous month is
 /// simply that month's first day.
 DateTime subscriptionIssueDay(DateTime period, BillingRules rules) {
-  final firstOfMonth = DateTime(period.year, period.month);
-  return firstOfMonth.subtract(Duration(days: rules.subscriptionAdvanceDays));
+  // #1231 — calendar arithmetic, not a Duration. Subtracting 168 hours
+  // from 1 November lands at 23:00 on 24 October in a zone that fell
+  // back in the week, and the members would see the invoice a day early.
+  return addCalendarDays(
+    DateTime(period.year, period.month),
+    -rules.subscriptionAdvanceDays,
+  );
 }
