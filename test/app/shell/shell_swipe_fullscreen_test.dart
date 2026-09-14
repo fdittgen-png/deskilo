@@ -78,9 +78,18 @@ void main() {
     expect(isHidden(tester), isFalse);
   });
 
-  testWidgets('a slow drag is a rest, not a swipe', (tester) async {
+  testWidgets('a short drag is a rest, not a swipe', (tester) async {
     await pumpApp(tester);
-    // Below kShellBarSwipeVelocity: a finger that moved but never threw.
+    // #1265 — this used to read "a SLOW drag", and under the velocity
+    // gate that was the whole rule: below kShellBarSwipeVelocity,
+    // nothing happened however far the finger went. The bar is dragged
+    // directly now, so travel decides when a throw does not, and a slow
+    // pull past the threshold DOES collapse it (asserted in
+    // shell_bar_drag_test).
+    //
+    // What still holds, and what this is now about: 40 px of which the
+    // recognizer swallows 18 as touch slop leaves ~0.34 of a 64 dp
+    // extent — under the 0.45 settle threshold, so it springs back.
     await tester.timedDrag(
       _bar,
       const Offset(0, 40),
