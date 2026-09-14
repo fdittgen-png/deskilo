@@ -176,14 +176,27 @@ $$;
 revoke execute on function public.release_invoice_payment(uuid) from public, anon;
 
 -- respond_to_event: the reject branch delegates to the helper (in place —
--- 0135 patched this body last; the block below is the 0101 text AS THE
--- HOSTED PROJECT HOLDS IT: without the two #506 comment lines the file
--- carries — pg_get_functiondef returned the body comment-free there, and
--- the live harness caught the mismatch on the first run).
+-- 0135 patched this body last).
+--
+-- TWO anchors, and the reason is the whole story of anchored patches.
+-- The hosted project holds the 0101 text WITHOUT the two #506 comment
+-- lines that `0101_partial_rematch.sql` carries: the function there was
+-- created from a source that had already dropped them, so
+-- pg_get_functiondef returns it comment-free and the live harness caught
+-- the mismatch on the first run. A database built by replaying the FILES
+-- has the comments. Both are legitimate histories of the same function,
+-- so the patch recognises both and says so out loud (#1226).
 do $patch$
 declare
   v_def text;
-  v_old text := $o$    if v_event.type = 'invoice_payment' then
+  v_old text;
+  v_new text := $n$    if v_event.type = 'invoice_payment' then
+      -- #816 — ONE release, shared with the expiry sweep.
+      perform public.release_invoice_payment(v_event.id);
+    end if;$n$;
+  v_candidates text[] := array[
+    -- as the hosted projects hold it
+    $a$    if v_event.type = 'invoice_payment' then
       delete from public.ledger_entries
         where id = (select credit_ledger_id from public.invoice_matches
                      where event_id = v_event.id);
@@ -195,11 +208,24 @@ declare
                         and credit_ledger_id is not null);
       delete from public.invoice_match_payments
         where event_id = v_event.id;
-    end if;$o$;
-  v_new text := $n$    if v_event.type = 'invoice_payment' then
-      -- #816 — ONE release, shared with the expiry sweep.
-      perform public.release_invoice_payment(v_event.id);
-    end if;$n$;
+    end if;$a$,
+    -- as 0101_partial_rematch.sql writes it, comments and all
+    $b$    if v_event.type = 'invoice_payment' then
+      delete from public.ledger_entries
+        where id = (select credit_ledger_id from public.invoice_matches
+                     where event_id = v_event.id);
+      delete from public.invoice_matches where event_id = v_event.id;
+      -- #506 — an ADDITIONAL payment leaves no match row; its credit
+      -- note and its payment reservation are released here.
+      delete from public.ledger_entries
+        where id in (select credit_ledger_id
+                       from public.invoice_match_payments
+                      where event_id = v_event.id
+                        and credit_ledger_id is not null);
+      delete from public.invoice_match_payments
+        where event_id = v_event.id;
+    end if;$b$
+  ];
 begin
   select pg_get_functiondef(p.oid) into v_def
     from pg_proc p join pg_namespace n on n.oid = p.pronamespace
@@ -209,10 +235,13 @@ begin
     raise notice 'respond_to_event already releases through the helper';
     return;
   end if;
-  if position(v_old in v_def) = 0 then
-    raise exception '0144: respond_to_event reject block not found — body drifted';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  foreach v_old in array v_candidates loop
+    if position(v_old in v_def) > 0 then
+      execute replace(v_def, v_old, v_new);
+      return;
+    end if;
+  end loop;
+  raise exception '0144: respond_to_event reject block not found — body drifted';
 end $patch$;
 
 -- sweep_pending_events v2: the money events it expires are released

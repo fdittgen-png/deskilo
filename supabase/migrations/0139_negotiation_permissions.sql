@@ -83,13 +83,27 @@ create policy price_negotiations_select on public.price_negotiations
 do $$
 declare
   v_def text;
-  v_old text := $o$  if not public.may_view_member_finances(p_member_id) then raise exception 'not allowed to see this member''s deal'; end if;$o$;
-  v_new text := $n$  if not public.may_view_member_negotiations(p_member_id) then raise exception 'not allowed to see this member''s deal'; end if;$n$;
+  -- #1226 — the anchor is the CALL, not the statement around it.
+  --
+  -- This block used to anchor on a one-line `if … then raise … end if;`,
+  -- which is how the hosted projects hold the guard. The file that
+  -- writes it — 0137_price_negotiations.sql — spreads it over three
+  -- lines, so a database built by replaying the FILES holds the same
+  -- guard in a shape the anchor could not see, and the replay stopped
+  -- here. `may_view_member_finances(p_member_id)` appears exactly once
+  -- in this body and carries all the meaning; the whitespace around it
+  -- carries none.
+  v_old text := $o$public.may_view_member_finances(p_member_id)$o$;
+  v_new text := $n$public.may_view_member_negotiations(p_member_id)$n$;
 begin
   select pg_get_functiondef(p.oid) into v_def
     from pg_proc p join pg_namespace n on n.oid = p.pronamespace
    where n.nspname = 'public' and p.proname = 'member_price_negotiation';
   if v_def is null then raise exception 'member_price_negotiation missing'; end if;
+  if position('may_view_member_negotiations' in v_def) > 0 then
+    raise notice 'member_price_negotiation already reads the negotiation permission';
+    return;
+  end if;
   if position(v_old in v_def) = 0 then raise exception 'read guard anchor not found'; end if;
   execute replace(v_def, v_old, v_new);
 end $$;
@@ -98,15 +112,26 @@ end $$;
 do $$
 declare
   v_def text;
-  v_old text := $o$  if not (v_actor.is_owner or public.has_permission(v_member.workspace_id, 'viewFinances')) then raise exception 'only the owner or a finance admin may propose a deal'; end if;$o$;
-  v_new text := $n$  if not (v_actor.is_owner or public.has_permission(v_member.workspace_id, 'manageNegotiations')) then raise exception 'only the owner or a member with the manageNegotiations permission may propose a deal'; end if;$n$;
+  -- #1226 — same shape as the read guard above: 0138 writes this
+  -- condition over three lines and the hosted projects hold it on one,
+  -- so the anchor is the two pieces that carry the meaning rather than
+  -- the statement they happen to sit in.
+  v_old text := $o$public.has_permission(v_member.workspace_id, 'viewFinances')$o$;
+  v_new text := $n$public.has_permission(v_member.workspace_id, 'manageNegotiations')$n$;
+  v_old_msg text := $om$'only the owner or a finance admin may propose a deal'$om$;
+  v_new_msg text := $nm$'only the owner or a member with the manageNegotiations permission may propose a deal'$nm$;
 begin
   select pg_get_functiondef(p.oid) into v_def
     from pg_proc p join pg_namespace n on n.oid = p.pronamespace
    where n.nspname = 'public' and p.proname = 'propose_price_negotiation';
   if v_def is null then raise exception 'propose_price_negotiation missing'; end if;
+  if position('manageNegotiations' in v_def) > 0 then
+    raise notice 'propose_price_negotiation already asks for manageNegotiations';
+    return;
+  end if;
   if position(v_old in v_def) = 0 then raise exception 'propose guard anchor not found'; end if;
-  execute replace(v_def, v_old, v_new);
+  if position(v_old_msg in v_def) = 0 then raise exception 'propose message anchor not found'; end if;
+  execute replace(replace(v_def, v_old, v_new), v_old_msg, v_new_msg);
 end $$;
 
 -- who_can_access_me: the negotiations list names who actually holds the
