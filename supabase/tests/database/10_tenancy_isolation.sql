@@ -49,8 +49,8 @@ begin
   -- mode that makes a tenancy test worthless.
   insert into public.ledger_entries (workspace_id, member_id, kind, category,
                                      amount_cents, description, period)
-  values (ws_a, m_a, 'debit', 'subscription', 10000, 'A subscription', '2026-09'),
-         (ws_b, m_b, 'debit', 'subscription', 20000, 'B subscription', '2026-09');
+  values (ws_a, m_a, 'charge', 'subscription', 10000, 'A subscription', '2026-09'),
+         (ws_b, m_b, 'charge', 'subscription', 20000, 'B subscription', '2026-09');
 
   insert into public.invoices (workspace_id, member_id, issuer_member_id, number,
                                title, lines, total_cents, currency, member_name,
@@ -131,7 +131,7 @@ select throws_ok(
   format($$ insert into public.ledger_entries
               (workspace_id, member_id, kind, category, amount_cents,
                description, period)
-            values (%L, %L, 'credit', 'adjustment', -99999, 'gift', '2026-09') $$,
+            values (%L, %L, 'credit', 'adjustment', 99999, 'gift', '2026-09') $$,
          current_setting('deskilo.test.ws_b'),
          current_setting('deskilo.test.m_b')),
   '42501',
