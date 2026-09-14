@@ -5,6 +5,7 @@
   "tabCalendar": "Calendario",
   "tabEvents": "Eventos",
   "tabMoney": "Finanzas",
+  "errorOffline": "Sin conexión: no se ha enviado nada. Inténtalo de nuevo cuando vuelvas a estar en línea.",
   "settingsTitle": "Ajustes",
   "settingsSectionAdministration": "Administración",
   "settingsSectionPreferences": "Preferencias",

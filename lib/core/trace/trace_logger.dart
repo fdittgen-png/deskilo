@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'redaction.dart';
 
 part 'trace_logger.g.dart';
 
@@ -180,7 +181,10 @@ class TraceLogger {
       ..write(e.message.replaceAll('\n', r'\n'));
     if (e.error != null) b.write(' | ${e.error!.replaceAll('\n', r'\n')}');
     if (e.stack != null) b.write(' | ${e.stack!.replaceAll('\n', r'\n')}');
-    return b.toString();
+    // #1240 — masked HERE, at the single point every entry passes
+    // through on its way to the file and to the export. Redacting at
+    // the call sites would mean trusting several hundred of them.
+    return redactTraceLine(b.toString());
   }
 
   /// Full log content for export: the persisted file when present,

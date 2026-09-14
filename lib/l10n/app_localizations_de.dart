@@ -1426,6 +1426,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tabMoney => 'Finanzen';
 
   @override
+  String get errorOffline =>
+      'Keine Verbindung — es wurde nichts gesendet. Versuchen Sie es erneut, sobald Sie wieder online sind.';
+
+  @override
   String get settingsTitle => 'Einstellungen';
 
   @override

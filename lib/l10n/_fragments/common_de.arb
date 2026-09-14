@@ -5,6 +5,7 @@
   "tabCalendar": "Kalender",
   "tabEvents": "Ereignisse",
   "tabMoney": "Finanzen",
+  "errorOffline": "Keine Verbindung — es wurde nichts gesendet. Versuchen Sie es erneut, sobald Sie wieder online sind.",
   "settingsTitle": "Einstellungen",
   "settingsSectionAdministration": "Verwaltung",
   "settingsSectionPreferences": "Präferenzen",

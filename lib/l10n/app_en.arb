@@ -1654,6 +1654,10 @@
   "@tabMoney": {
     "description": "Bottom-navigation label for the ledger/statements tab"
   },
+  "errorOffline": "No connection — nothing was sent. Try again when you are back online.",
+  "@errorOffline": {
+    "description": "#1241 a request that never reached the server — the attempt was not made, which is a different thing from a failure"
+  },
   "settingsTitle": "Settings",
   "@settingsTitle": {
     "description": "Title of the settings screen and tooltip of the app-bar settings action"

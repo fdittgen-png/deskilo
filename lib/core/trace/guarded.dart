@@ -55,7 +55,24 @@ Future<bool> runGuarded(
     debugPrint('$message: $e\n$st');
     TraceLogger.instance.error(domain, message, error: e, stackTrace: st);
     if (errorText != null && context.mounted) {
-      AppSnack.error(context, errorText);
+      // #1241 — "Something went wrong. Please try again." is the wrong
+      // sentence for a dropped connection. It reads as a fault in the
+      // app, it does not say the attempt never reached the server, and
+      // it does not tell the reader the one thing they can act on:
+      // there is no network, and nothing was sent.
+      //
+      // This is the single point every guarded action passes through,
+      // so one check covers the whole app. There is no write queue yet
+      // (#1241 step 3, which needs the idempotency work first) — saying
+      // so plainly is step one, and it ships today.
+      AppSnack.error(
+        context,
+        isTransientNetworkFailure(e)
+            ? (AppLocalizations.of(context)?.errorOffline ??
+                'No connection — nothing was sent. Try again when you '
+                    'are back online.')
+            : errorText,
+      );
     }
     return false;
   }

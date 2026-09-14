@@ -2540,6 +2540,12 @@ abstract class AppLocalizations {
   /// **'Money'**
   String get tabMoney;
 
+  /// #1241 a request that never reached the server — the attempt was not made, which is a different thing from a failure
+  ///
+  /// In en, this message translates to:
+  /// **'No connection — nothing was sent. Try again when you are back online.'**
+  String get errorOffline;
+
   /// Title of the settings screen and tooltip of the app-bar settings action
   ///
   /// In en, this message translates to:

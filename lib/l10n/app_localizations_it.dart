@@ -1427,6 +1427,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tabMoney => 'Finanze';
 
   @override
+  String get errorOffline =>
+      'Nessuna connessione: non è stato inviato nulla. Riprova quando sei di nuovo online.';
+
+  @override
   String get settingsTitle => 'Impostazioni';
 
   @override

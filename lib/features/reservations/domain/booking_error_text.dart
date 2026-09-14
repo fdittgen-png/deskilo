@@ -9,6 +9,7 @@ import '../../workspace/domain/workspace_availability.dart';
 import '../../workspace/domain/booking_granularity.dart';
 import '../../workspace/domain/booking_policies.dart';
 import 'booking_gate.dart';
+import '../../../core/trace/trace_logger.dart';
 
 /// THE booking-failure → user-message mapper (maintainability audit:
 /// this switch was pasted, and drifting, across four screens). Maps the
@@ -23,6 +24,13 @@ String bookingErrorText(
   String fallback, {
   int? stepMinutes,
 }) {
+  // #1241 — a dropped connection is not "something went wrong": the
+  // request never reached the server, and the booking was not made.
+  if (isTransientNetworkFailure(error)) {
+    return l10n?.errorOffline ??
+        'No connection — nothing was sent. Try again when you are back '
+            'online.';
+  }
   if (error is! PostgrestException) return fallback;
   final message = error.message;
   if (message.contains(WorkspaceClosedError.serverSubstring)) {
