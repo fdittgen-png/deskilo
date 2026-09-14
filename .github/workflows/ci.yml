@@ -46,31 +46,17 @@ jobs:
       - name: Tests with coverage
         run: flutter test --coverage
 
-      # RATCHET — this number may only ever go UP.
+      # #1244 — the gate moved into `scripts/coverage_gate.sh`, so this
+      # workflow and `CI · Quality report` measure it exactly the same
+      # way, and the reasoning lives beside the numbers instead of in a
+      # YAML comment nobody greps.
       #
-      # It sat at 45% while the suite covered 68%: a gate 23 points below
-      # the floor has never failed a build and therefore never influenced
-      # a single decision. That is not a control, it is a decoration.
-      #
-      # 65% leaves ~3 points of headroom — a normal PR will not trip it, a
-      # large feature landing without tests will. Raise it when the margin
-      # grows; never lower it to make a branch green.
-      - name: Coverage gate (>= 65%)
-        run: |
-          # Integer tenths, not floats: printf "%.1f" emits a COMMA decimal
-          # separator under a non-English locale, and the comparison then
-          # silently truncates. Runners are C-locale today; this does not
-          # depend on that staying true.
-          read -r hit found <<< "$(awk '
-            /^LF:/ { found += substr($0, 4) }
-            /^LH:/ { hit   += substr($0, 4) }
-            END    { print hit, found }' coverage/lcov.info)"
-          tenths=$(( hit * 1000 / found ))
-          echo "line coverage: $(( tenths / 10 )).$(( tenths % 10 ))% ($hit/$found lines)"
-          if [ "$tenths" -lt 650 ]; then
-            echo "::error::coverage $(( tenths / 10 )).$(( tenths % 10 ))% is below the 65% gate"
-            exit 1
-          fi
+      # It keeps the repository-wide 65% and adds a floor per LAYER,
+      # which is the thing the old number could not say: `domain/` is at
+      # 88.9%, and a percentage averaging it with 20 000 lines of
+      # GENERATED localisation cannot tell you that.
+      - name: Coverage gate
+        run: bash scripts/coverage_gate.sh
 
       # ADVISORY, deliberately non-blocking: this repository has no branch
       # protection at all, so a hard failure here would redden every pull

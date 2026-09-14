@@ -1,0 +1,196 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: 0BSD
+
+name: CI · Quality report
+
+# #1244 — a failure says WHICH DISCIPLINE regressed.
+#
+# The old gate was good and it was the whole gate: l10n, analyze, tests,
+# 65% coverage. The accessibility and contrast tests ran, but only inside
+# the general suite, so a regression read as "a test failed" — which is
+# exactly the sentence that gets skimmed. Nine disciplines, nine named
+# steps, one table in the run summary.
+#
+# This workflow replaces `db.yml` (#1226). Its database work is unchanged
+# and lives in the `quality: database` job below; folding it in is what
+# lets one report cover both halves instead of two workflows each knowing
+# half the answer.
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  schedule:
+    # The schema can break from underneath us when a Supabase platform
+    # image changes; a nightly run says so before a branch does.
+    - cron: '30 4 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  FLUTTER_VERSION: "3.44.9"
+
+jobs:
+  code:
+    name: quality · code
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - run: flutter pub get
+
+      # Every discipline runs even when an earlier one failed: a report
+      # that stops at the first red row tells you less than no report.
+      - name: Architecture
+        id: architecture
+        continue-on-error: true
+        run: |
+          flutter test test/lint/layering_test.dart \
+            test/lint/file_length_test.dart \
+            test/lint/route_registry_test.dart \
+            test/lint/feature_registry_test.dart
+
+      - name: Security
+        id: security
+        continue-on-error: true
+        run: |
+          flutter test test/lint/migration_grants_test.dart \
+            test/lint/grant_table_policy_test.dart \
+            test/lint/edge_function_auth_test.dart \
+            test/lint/anchored_patch_test.dart
+
+      - name: Accessibility
+        id: accessibility
+        continue-on-error: true
+        run: |
+          flutter test test/a11y \
+            test/core/ui/touch_target_guard_test.dart \
+            test/lint/contrast_test.dart
+
+      - name: Localization
+        id: localization
+        continue-on-error: true
+        run: |
+          flutter test test/i18n \
+            test/lint/l10n_completeness_test.dart \
+            test/lint/legal_terms_test.dart
+
+      - name: Privacy
+        id: privacy
+        continue-on-error: true
+        run: |
+          flutter test test/lint/privacy_claims_test.dart \
+            test/lint/privacy_policy_version_test.dart
+
+      - name: Coverage
+        id: coverage
+        continue-on-error: true
+        run: bash scripts/coverage_gate.sh
+
+      - name: Rows
+        if: always()
+        run: |
+          mkdir -p report
+          {
+            printf 'Architecture|%s|layering, coupling volume, route and feature registries\n' "${{ steps.architecture.outcome }}"
+            printf 'Security|%s|definer grants, grant-vs-policy, edge auth, anchored patches\n' "${{ steps.security.outcome }}"
+            printf 'Accessibility|%s|8 screens x 4 guidelines, 48dp targets, WCAG AA contrast\n' "${{ steps.accessibility.outcome }}"
+            printf 'Localization|%s|5 locales, screen overflow, pinned legal terms\n' "${{ steps.localization.outcome }}"
+            printf 'Privacy|%s|no claim the code does not keep, retention matrix, erasure\n' "${{ steps.privacy.outcome }}"
+            printf 'Coverage|%s|%s\n' "${{ steps.coverage.outcome }}" "$(cat report/coverage-line.txt 2>/dev/null || echo 'not measured')"
+          } > report/code.psv
+          cat report/code.psv
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quality-code
+          path: report/
+
+  database:
+    name: quality · database
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      # The assertion nobody had ever made before #1226: that every
+      # migration replays onto an EMPTY database, in order, without the
+      # dev project's accumulated state underneath. A migration history
+      # that only works against a database that already exists cannot
+      # rebuild production, and we would find that out on the day we
+      # needed to.
+      - name: Migration safety
+        id: migrations
+        continue-on-error: true
+        run: supabase start
+
+      - name: Database disciplines
+        id: pgtap
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        run: |
+          psql "$(supabase status -o env | sed -n 's/^DB_URL="\(.*\)"$/\1/p')" \
+            -v ON_ERROR_STOP=1 \
+            -c 'create extension if not exists pgtap with schema extensions;'
+          supabase test db 2>&1 | tee report-pgtap.log
+
+      - name: Rows
+        if: always()
+        run: |
+          mkdir -p report
+          count=$(ls supabase/tests/database/*.sql | wc -l | tr -d ' ')
+          migrations=$(ls supabase/migrations/*.sql | wc -l | tr -d ' ')
+          tenancy=$(sed -n 's/.*tenancy matrix: \([0-9]*\) tables covered.*/\1/p' report-pgtap.log 2>/dev/null | head -1)
+          {
+            printf 'Migration safety|%s|%s migrations replayed from empty\n' \
+              "${{ steps.migrations.outcome }}" "$migrations"
+            printf 'Tenant isolation|%s|%s workspace-scoped tables swept, both roles, both directions\n' \
+              "${{ steps.pgtap.outcome }}" "${tenancy:-0}"
+            printf 'Financial invariants|%s|append-only ledger, reconciliation, webhook idempotency\n' \
+              "${{ steps.pgtap.outcome }}"
+          } > report/database.psv
+          cat report/database.psv
+
+      - name: What the database looked like when it failed
+        if: failure() || steps.migrations.outcome == 'failure' || steps.pgtap.outcome == 'failure'
+        run: supabase logs db || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quality-database
+          path: report/
+
+  report:
+    name: quality · report
+    runs-on: ubuntu-latest
+    needs: [code, database]
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: quality-*
+          merge-multiple: true
+          path: report
+
+      - name: DESKILO QUALITY REPORT
+        run: bash scripts/quality_report.sh report
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quality-report
+          path: report/quality-report.md
