@@ -151,7 +151,14 @@ const sageFormat = AccountingFormat(
 );
 
 /// A plain, self-describing CSV for every accountant with no national
-/// mandate behind them — ten of the fourteen supported countries.
+/// mandate behind them — most of the 32 supported countries.
+///
+/// The count used to read "ten of the fourteen". The catalogue grew to
+/// 32 with #534 and this sentence did not, which in a file whose whole
+/// purpose is not overclaiming is the wrong sentence to leave stale.
+/// `docs/domain/ACCOUNTING_EXPORTS.md` carries the country-by-country
+/// map, including what each one mandates that this app does not
+/// produce.
 ///
 /// Offered EVERYWHERE rather than only where nothing is mandated: an
 /// accountant in France may still prefer a readable file to an FEC, and
