@@ -1013,6 +1013,7 @@
   "tabCalendar": "Calendario",
   "tabEvents": "Eventi",
   "tabMoney": "Finanze",
+  "errorOffline": "Nessuna connessione: non è stato inviato nulla. Riprova quando sei di nuovo online.",
   "settingsTitle": "Impostazioni",
   "settingsSectionAdministration": "Amministrazione",
   "settingsSectionPreferences": "Preferenze",
