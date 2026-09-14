@@ -66,11 +66,18 @@ begin
          'seat ' || i
     from generate_series(1, 5000) i;
 
+  -- Twelve rows is not a scale. The planner seq scans a one-page table
+  -- and is RIGHT to — this file says so three paragraphs up, and then
+  -- the first version of it asserted an index scan over twelve rows and
+  -- was correctly refused. A real workspace's ledger is every member's
+  -- charges, credits and payments for years: 5 000 rows across five
+  -- years of periods is the shape, and it is the volume at which
+  -- `ledger_member_period_idx` earns its keep.
   insert into public.ledger_entries (workspace_id, member_id, kind, category,
                                      amount_cents, description, period)
-  select ws, m, 'charge', 'subscription', 10000, 'month',
-         to_char(now() - (i || ' months')::interval, 'YYYY-MM')
-    from generate_series(0, 11) i;
+  select ws, m, 'charge', 'subscription', 10000 + i, 'month',
+         to_char(now() - ((i % 60) || ' months')::interval, 'YYYY-MM')
+    from generate_series(1, 5000) i;
 
   -- Without this the planner is working from an empty table's statistics
   -- and every plan below is a guess about a table it thinks has one row.
@@ -119,13 +126,14 @@ select ok(
     current_setting('deskilo.scale.ws'))) not like '%Seq Scan on reservations%',
   'and reads none of the rows outside the window');
 
-select matches(
+select ok(
   pg_temp.plan_for(format(
     $$ select * from public.ledger_entries
-        where member_id = %L::uuid and period = '2026-09' $$,
-    current_setting('deskilo.scale.member'))),
-  'Index Scan using ledger_member_period_idx',
-  'a member''s month of ledger comes from its index');
+        where member_id = %L::uuid and period = %L $$,
+    current_setting('deskilo.scale.member'),
+    to_char(now(), 'YYYY-MM'))) not like '%Seq Scan on ledger_entries%',
+  'a member''s month of ledger is found by an index, not by reading five '
+  'years of it');
 
 -- ------------------------------------------------------ the one ceiling
 do $time$

@@ -37,24 +37,29 @@ select plan(4);
 
 -- One connection for the writer, one for the rival.
 --
--- `dblink_connect_u` and not `dblink_connect`: the plain one refuses a
--- password-less connection ("password or GSSAPI delegated credentials
--- required") however local it is, because it is available to
--- non-superusers and that rule is what keeps it safe for them. The `_u`
--- form is superuser-only and lifts exactly that restriction, which is
--- the right trade in a throwaway test database that CI builds from
--- empty for every run.
+-- The connection string carries the local stack's credentials, and that
+-- is not a secret being committed: `supabase start` publishes
+-- postgres/postgres on 127.0.0.1 by design, `supabase status` prints it,
+-- and CI throws the database away after every run. It is written here
+-- rather than read from an environment variable because pgTAP files run
+-- under psql with no shell around them.
+--
+-- `dblink_connect`, not `dblink_connect_u`: the `_u` form is
+-- superuser-only and the role `supabase test db` runs as is not one —
+-- the first attempt got "permission denied for function
+-- dblink_connect_u". The plain form needs a password, so it gets one.
 create or replace function pg_temp.conninfo() returns text language sql
 stable as $$
-  select format('dbname=%s port=%s host=/var/run/postgresql',
-                current_database(), inet_server_port());
+  select format('host=127.0.0.1 port=%s dbname=%s user=postgres '
+                'password=postgres',
+                inet_server_port(), current_database());
 $$;
 
 select ok(
-  extensions.dblink_connect_u('booker', pg_temp.conninfo()) = 'OK',
+  extensions.dblink_connect('booker', pg_temp.conninfo()) = 'OK',
   'a second session can be opened');
 select ok(
-  extensions.dblink_connect_u('rival', pg_temp.conninfo()) = 'OK',
+  extensions.dblink_connect('rival', pg_temp.conninfo()) = 'OK',
   'and a third, so the two can race');
 
 -- ------------------------------------------------------------ fixture
