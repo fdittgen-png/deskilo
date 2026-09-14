@@ -41,7 +41,8 @@ Future<FakeWorkspaceRepository> pumpFeatures(
   addTearDown(tester.view.reset);
   final workspace =
       await pumpSettings(tester, featureFlags: featureFlags);
-  await tester.tap(find.text('Features'));
+  // #1246 — by icon, not by the English label.
+  await tester.tap(find.byIcon(Icons.toggle_on_outlined));
   await tester.pumpAndSettle();
   return workspace;
 }

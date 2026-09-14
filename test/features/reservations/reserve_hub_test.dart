@@ -31,6 +31,7 @@ import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/app/shell/shell_center_button.dart';
 import '../../helpers/mock_providers.dart';
 import '../calendar/day_timeline_test.dart' show addSecondLevel;
 import '../plan/time_scroller_test.dart' show pickChipTime;
@@ -86,7 +87,9 @@ Future<FakeReservationRepository> pumpHub(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.byTooltip('Reserve'));
+  // #1246 — by TYPE, not by the English tooltip: this helper is
+  // reused by the locale sweep, where 'Reserve' is 'Reservieren'.
+  await tester.tap(find.byType(ShellCenterButton));
   await tester.pumpAndSettle();
   return reservations;
 }

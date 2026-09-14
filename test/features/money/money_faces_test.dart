@@ -18,6 +18,7 @@ import 'package:intl/intl.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 Future<FakeMoneyRepository> pumpFaces(
   WidgetTester tester, {
@@ -41,7 +42,8 @@ Future<FakeMoneyRepository> pumpFaces(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Money'));
+  // #1246 — by icon, not by the English label (see navigation.dart).
+  await tapNavIcon(tester, Icons.account_balance_wallet_outlined);
   await tester.pumpAndSettle();
   return money;
 }
