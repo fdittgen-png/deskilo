@@ -34,6 +34,39 @@ import 'lint_sources.dart';
 /// sat 656 import statements. A pair already on the list could grow
 /// without limit, and `money -> workspace` had reached 111, which is not
 /// a dependency but a merger. The counts may only fall.
+/// A widget reaching a repository: `ref.read(xRepositoryProvider)` or
+/// `ref.watch(...)`, which is the exact shape #1234 counted 125 of.
+final RegExp _repositoryUse =
+    RegExp(r'ref\.(read|watch)\(\s*[a-zA-Z]+RepositoryProvider');
+
+/// How many widget FILES in each feature still reach a repository
+/// directly (#1234). 66 of them, and this is the ratchet that empties
+/// them.
+///
+/// A count and not a list of names, for the same reason `_pairBudget`
+/// counts imports rather than listing pairs: presence tells you nothing
+/// about progress. `reservations` went 5 → 4 when
+/// `application/book_seat.dart` took the booking decision out of a
+/// 740-line widget method, and that is exactly the kind of step this has
+/// to be able to see.
+///
+/// Every number may only go DOWN. A feature that reaches zero is deleted
+/// from the map, after which any widget in it touching a repository
+/// fails.
+const Map<String, int> _repositoryInWidgets = {
+  'money': 25,
+  'workspace': 20,
+  'auth': 4,
+  'reservations': 4,
+  'editor': 3,
+  'profile': 3,
+  'members': 2,
+  'plan': 2,
+  'calendar': 1,
+  'events': 1,
+  'kiosk': 1,
+};
+
 const Set<String> _knownPairs = {
   // #718 — the calendar hub opens invoices and the Money month from a
   // dated row: money's own sheet and its focus controller, not a copy.
@@ -236,6 +269,20 @@ String? _resolveRelative(String fromDir, String import) {
 }
 
 /// The feature a repo-relative path belongs to, or null.
+/// Source with `//` comments removed.
+///
+/// A lint that scans raw text reports the comment EXPLAINING the rule as
+/// a violation of it — which this repository has learned twice now. The
+/// paragraph above this test contains `ref.read(xRepositoryProvider)`
+/// and must not count.
+String _withoutComments(String source) => source
+    .split('\n')
+    .map((line) {
+      final at = line.indexOf('//');
+      return at < 0 ? line : line.substring(0, at);
+    })
+    .join('\n');
+
 String? _featureOf(String path) {
   final parts = path.split('/');
   if (parts.length > 2 && parts[0] == 'lib' && parts[1] == 'features') {
@@ -268,6 +315,65 @@ void main() {
       isEmpty,
       reason: 'presentation/ imports data/ — go through providers/:\n'
           '${violations.join('\n')}',
+    );
+  });
+
+  // #1234 — the application layer, one context at a time.
+  //
+  // `presentation/` says what the member ASKED for, `application/`
+  // decides which write that is, `data/` performs it. 125 widgets reach
+  // a repository directly today, and moving them all in one branch is
+  // how a refactor this size goes wrong — so this is a SHRINKING
+  // allow-list, feature by feature, the same shape as
+  // `_backendTypeOutsideData`.
+  //
+  // A feature NOT on the list may not touch a repository from
+  // presentation at all. `reservations` is the first one off it: ADR
+  // 0024 and `application/book_seat.dart` are the proof of shape, and
+  // the remaining entries below are what is left to move there.
+  test('presentation/ reaches repositories only where the application '
+      'layer has not arrived yet (#1234)', () {
+    final offenders = <String, List<String>>{};
+    for (final file in _featureFiles()) {
+      if (!file.path.contains('/presentation/')) continue;
+      final feature = _featureOf(file.path);
+      if (feature == null) continue;
+      final text = _withoutComments(file.readAsStringSync());
+      if (!_repositoryUse.hasMatch(text)) continue;
+      (offenders[feature] ??= []).add(file.path);
+    }
+
+    final grew = <String>[];
+    final shrank = <String>[];
+    for (final entry in offenders.entries) {
+      final budget = _repositoryInWidgets[entry.key];
+      if (budget == null) {
+        grew.add('${entry.key}: ${entry.value.length} files, and this '
+            'feature is supposed to be finished:\n    '
+            '${entry.value.join('\n    ')}');
+      } else if (entry.value.length > budget) {
+        grew.add('${entry.key}: ${entry.value.length} > $budget');
+      } else if (entry.value.length < budget) {
+        shrank.add('${entry.key}: ${entry.value.length} (budget $budget)');
+      }
+    }
+
+    expect(
+      grew,
+      isEmpty,
+      reason: 'a widget started calling a repository directly:\n'
+          '${grew.join('\n')}\n\n'
+          'Put the DECISION in lib/features/<feature>/application/ and '
+          'let the widget say what the member asked for. ADR 0024, and '
+          'lib/features/reservations/application/book_seat.dart is the '
+          'worked example.',
+    );
+    expect(
+      shrank,
+      isEmpty,
+      reason: 'good — lower these in _repositoryInWidgets in the same '
+          'commit, so the next person inherits the ground you took:\n'
+          '${shrank.join('\n')}',
     );
   });
 
