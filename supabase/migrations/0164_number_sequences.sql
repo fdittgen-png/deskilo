@@ -177,9 +177,22 @@ begin
   execute replace(v_def, v_old, E'  v_number := public.next_document_number(p_workspace_id, ''invoice'');\n');
   select pg_get_functiondef(p.oid) into v_def from pg_proc p join pg_namespace n on n.oid=p.pronamespace
    where n.nspname='public' and p.proname='settle_invoices';
+  -- #1226 — two shapes of the same five lines. The hosted projects hold
+  -- the `where` and the `v_number :=` each on ONE line; 0148_settlement_fold
+  -- wraps both, so a database built by replaying the FILES has the wrapped
+  -- form and the one-line anchor could not see it. The block above, for
+  -- create_invoice, already anchors on the wrapped form — which is how we
+  -- know the difference is history, not intent.
   v_old := E'  select count(*) into v_count from public.invoices\n'
         || E'    where workspace_id = p_workspace_id and date_part(''year'', issued_at) = date_part(''year'', now());\n'
         || E'  v_number := ''INV-'' || date_part(''year'', now())::int || ''-'' || lpad((v_count + 1)::text, 4, ''0'');\n';
+  if position(v_old in v_def) = 0 then
+    v_old := E'  select count(*) into v_count from public.invoices\n'
+          || E'    where workspace_id = p_workspace_id\n'
+          || E'      and date_part(''year'', issued_at) = date_part(''year'', now());\n'
+          || E'  v_number := ''INV-'' || date_part(''year'', now())::int || ''-''\n'
+          || E'      || lpad((v_count + 1)::text, 4, ''0'');\n';
+  end if;
   if position(v_old in v_def) = 0 then raise exception '0164: settle_invoices numbering anchor missing'; end if;
   execute replace(v_def, v_old, E'  v_number := public.next_document_number(p_workspace_id, ''invoice'');\n');
 end

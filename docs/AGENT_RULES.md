@@ -38,6 +38,20 @@ These rules are version-controlled so a fresh clone sees them. They mirror the s
 - If a fix adds an affordance (button, banner), a test must tap it.
 - Structural widget tests only — no platform-baselined golden PNGs.
 - Fakes over mocks for the service layer; `mocktail` only for widget-level callbacks.
+- **A claim about the DATABASE is proved in the database (#1226).** RLS,
+  a definer function's guard, a trigger, an idempotency check: none of
+  them can be tested by a Dart fake, and a lint that greps the migration
+  text proves the words were typed, not that they hold. Add a pgTAP file
+  under `supabase/tests/database/`; `CI · Database` replays every
+  migration onto an empty Postgres and runs them.
+  - **`set local role authenticated` or the test proves nothing.** As
+    `postgres`, every policy is bypassed. Setting `request.jwt.claims`
+    alone makes `auth.uid()` answer while RLS stays off, so the
+    assertions pass on a database with no policies at all.
+  - **Assert the positive case beside the negative one.** "A sees none of
+    B's invoices" is also true when the seed inserted no invoices.
+  - **An UPDATE refused by RLS does not raise** — it matches no rows. Read
+    the row back with `reset role` and assert it is unchanged.
 
 ## Git rules
 

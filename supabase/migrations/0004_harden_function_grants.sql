@@ -6,7 +6,32 @@
 -- RPCs are callable by authenticated only (they are the intended API surface);
 -- nothing SECURITY DEFINER is callable by anon.
 
-alter extension btree_gist set schema extensions;
+-- #1226 — `create` before `alter`.
+--
+-- This line only ever MOVED an extension somebody had switched on from
+-- the dashboard. On an empty database there was nothing to move, so the
+-- whole migration history stopped here — which is how we learned, on the
+-- day CI first replayed it, that these 210 files could not rebuild the
+-- schema they describe.
+--
+-- btree_gist is not decoration: 0005's `exclude using gist (seat_id with
+-- =, tstzrange(...) with &&)` is the constraint that stops two members
+-- booking one seat, and gist cannot compare a uuid with `=` without it.
+-- The app's most important invariant rested on a checkbox in a web
+-- console. It rests on this line now.
+--
+-- Both halves are conditional so the file behaves the same on an empty
+-- database and on the two projects where it has already run.
+create extension if not exists btree_gist with schema extensions;
+do $btree$
+begin
+  if (select n.nspname
+        from pg_extension e join pg_namespace n on n.oid = e.extnamespace
+       where e.extname = 'btree_gist') <> 'extensions' then
+    execute 'alter extension btree_gist set schema extensions';
+  end if;
+end
+$btree$;
 
 -- trigger-only functions: no direct execution by any API role
 revoke execute on function public.handle_new_user() from public, anon, authenticated;
