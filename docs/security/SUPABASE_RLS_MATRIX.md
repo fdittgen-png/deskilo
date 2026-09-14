@@ -1,7 +1,30 @@
 # Supabase RLS permission matrix
 
-Modeled on Sparkilo's `SUPABASE_RLS_MATRIX`. Audited with the Supabase security
-advisors (clean, 2026-07-07). Default-deny: any operation not listed is blocked.
+Modeled on Sparkilo's `SUPABASE_RLS_MATRIX`. Default-deny: any operation not
+listed is blocked.
+
+## How this table is evidenced (#1226)
+
+It used to say "Audited with the Supabase security advisors (clean,
+2026-07-07)". An advisor reports that a policy **exists**. It does not
+evaluate one, and it was a point in time two months before this line was
+last read.
+
+Since 2026-09-13 the claims here are executed. `.github/workflows/db.yml`
+raises a real Postgres with the Supabase platform schemas, replays every
+migration onto it from empty, and runs `supabase/tests/database/`:
+
+| file | what it evaluates |
+|---|---|
+| `00_schema_guarantees.sql` | RLS on every table; a policy-less table grants nothing; no definer function is executable by `anon`; every definer function pins its `search_path`; the six system columns |
+| `10_tenancy_isolation.sql` | two workspaces, impersonated through `request.jwt.claims` **and** `set role authenticated`, each blind to the other's workspaces, members, ledger and invoices — reads *and* writes, in both directions |
+| `20_money_invariants.sql` | an issued invoice cannot be edited or deleted but can be voided; a retried payment webhook credits the ledger exactly once |
+
+The impersonation detail matters more than it looks: as `postgres` every
+policy is bypassed, so a test that forgets `set role authenticated`
+passes while proving nothing. That is the trap a first RLS test falls
+into, and it is why each file asserts the *positive* case too — "A sees
+their own row" — beside every "A sees nothing of B".
 
 Roles are per workspace (spec §2): **anon** (not signed in), **user** (signed
 in, not a member of the row's workspace), **worker** (active member),

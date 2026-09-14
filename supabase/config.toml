@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: 0BSD
+#
+# The LOCAL stack, and nothing else.
+#
+# This file exists so `supabase start` can raise a database in CI with
+# the platform schemas the migrations actually use — `auth.uid()`,
+# `auth.users`, `storage.objects`, the `anon` / `authenticated` /
+# `service_role` roles, and the `extensions` schema that `digest`,
+# `crypt` and `gen_salt` live in. A bare Postgres container has none of
+# them, and stubbing them would mean testing the stub.
+#
+# It configures nothing about the hosted projects. The dev and prod
+# projects are managed through the dashboard and `supabase/migrations/`;
+# nothing here is ever pushed to either.
+project_id = "deskilo"
+
+[db]
+port = 54322
+shadow_port = 54320
+# Matches the hosted projects — checked with `select version()` on the
+# dev project, 2026-09-13: PostgreSQL 17.6.
+major_version = 17
+
+[db.migrations]
+enabled = true
+
+[auth]
+enabled = true
+# A local stack only ever sees the harness users the tests insert.
+site_url = "http://127.0.0.1:3000"
+enable_signup = true
+
+[storage]
+enabled = true
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+
+[studio]
+enabled = false
+
+[inbucket]
+enabled = false
+
+[analytics]
+enabled = false
+
+[realtime]
+enabled = false
+
+[edge_runtime]
+enabled = false

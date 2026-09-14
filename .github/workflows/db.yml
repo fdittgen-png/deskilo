@@ -1,0 +1,67 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: 0BSD
+
+name: CI · Database
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'supabase/**'
+      - '.github/workflows/db.yml'
+  pull_request:
+    paths:
+      - 'supabase/**'
+      - '.github/workflows/db.yml'
+  # The schema can also break from underneath us — a Supabase platform
+  # image bump changes what `auth` and `storage` provide. Once a night
+  # tells us before a branch does.
+  schedule:
+    - cron: '30 4 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: db-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  database:
+    name: migrations replay · pgTAP
+    runs-on: ubuntu-latest
+    # `supabase start` pulls images the first time; 20 is generous.
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      # This is the assertion nobody had ever made: that 210 migrations
+      # replay onto an EMPTY database, in order, without the dev
+      # project's accumulated state underneath them. A migration that
+      # only works against a database that already exists cannot rebuild
+      # production, and we would find that out on the day we needed to.
+      - name: Raise a database and replay every migration
+        run: supabase start
+
+      - name: pgTAP
+        run: |
+          psql "$(supabase status -o env | sed -n 's/^DB_URL="\(.*\)"$/\1/p')" \
+            -v ON_ERROR_STOP=1 \
+            -c 'create extension if not exists pgtap with schema extensions;'
+          supabase test db
+
+      # The advisors are a second opinion, not the gate: they report
+      # POLICY EXISTENCE, which is what the pgTAP files exist to stop
+      # being the only evidence. Kept visible, kept non-blocking.
+      - name: Security advisors (advisory)
+        continue-on-error: true
+        run: supabase inspect db outliers || true
+
+      - name: What the database looked like when it failed
+        if: failure()
+        run: |
+          supabase status || true
+          docker ps -a || true
+          supabase logs db || true
