@@ -35,7 +35,14 @@ env:
 
 jobs:
   code:
-    name: quality · code
+    # The name is the REQUIRED STATUS CHECK on master, and this job is
+    # what now does that work — the l10n gate, analyze, the suite with
+    # coverage — plus the disciplines. Renaming it would silently make
+    # every pull request unmergeable, because branch protection waits
+    # for a context that would never report again. (It waited for
+    # exactly that for one push; ci.yml's own comment said the
+    # repository had no protection, and it was out of date.)
+    name: analyze · l10n gate · test · coverage
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -115,10 +122,11 @@ jobs:
         continue-on-error: true
         run: bash scripts/coverage_gate.sh
 
-      # ADVISORY, deliberately non-blocking: this repository has no branch
-      # protection at all, so a hard failure here would redden every pull
-      # request without any of them being at fault. It reports the drift
-      # so the gap stays visible instead of living only in a document.
+      # ADVISORY, deliberately non-blocking. Master DOES have protection
+      # — one required context, this job's name — and `branch_protection.sh`
+      # names the two the database half should add. Applying that is a
+      # repository-settings change and belongs to whoever owns the
+      # repository, so this reports the drift rather than failing over it.
       - name: Branch protection drift (advisory)
         continue-on-error: true
         env:

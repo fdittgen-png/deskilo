@@ -36,7 +36,7 @@ Supabase platform image changes.
 
 | Name | File | What it is for |
 | --- | --- | --- |
-| CI · Quality report | `quality.yml` | **the gate every PR waits on**: l10n, analyze, the suite with coverage, then nine disciplines as one table in the run summary — including the migration replay and the pgTAP suite |
+| CI · Quality report | `quality.yml` | **the gate every PR waits on**: l10n, analyze, the suite with coverage, then nine disciplines as one table in the run summary — including the migration replay and the pgTAP suite. Its first job keeps the name `analyze · l10n gate · test · coverage`, because that name is master's required status check |
 | CI · Android boot check | `android-boot.yml` | installs the shrunk release APK on an emulator and proves it stays alive |
 | CI · F-Droid no-GMS audit | `fdroid-foss.yml` | proves the libre flavour carries no Google dependency |
 | Release · Train (all platforms) | `release-train.yml` | one dispatch, every store, one commit |
