@@ -58,6 +58,11 @@ const Map<String, String> _notExported = {
       'a workspace cost, which names a member only as whoever entered it',
   'expense_occurrences':
       'as above — an instance of a workspace cost, not personal data',
+  'reservation_requests':
+      '#1241 — the dedup key an offline replay is matched on. It holds a '
+          'member id, a client-generated uuid and a pointer to the '
+          'reservation, and the RESERVATION is exported; the row itself '
+          'says only that the app asked twice',
 };
 
 

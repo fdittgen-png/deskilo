@@ -10,6 +10,7 @@ visible rather than implicit.
 |---|---|---|
 | a seat cannot hold two overlapping reservations | `exclude using gist` on `reservations` (0005) | `23_domain_invariants.sql` |
 | a check-in is your own booking, inside its window | `check_in_reservation` | `23_domain_invariants.sql` |
+| a booking replayed with the same client request id books once | `create_reservation_once` (0214) | `24_booking_idempotency.sql` |
 | an issued invoice cannot be edited or deleted | trigger `invoices_no_mutation` (0060, revised 0061) | `20_money_invariants.sql` |
 | a payment webhook delivered twice creates money once | `settle_online_payment`, `for update` + status guard (0205) | `20_money_invariants.sql`, `22_reconciliation.sql` |
 | a webhook whose amount disagrees with the intent is refused | `settle_online_payment` (0205, #1138) | `22_reconciliation.sql` |
