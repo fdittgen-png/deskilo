@@ -24,6 +24,7 @@ import '../../../core/time/work_hours.dart';
 import 'booking_gate_scope.dart';
 import '../../plan/domain/half_day_windows.dart';
 import '../domain/default_booking_period.dart';
+import '../application/book_seat.dart';
 import '../domain/reservation.dart';
 import '../domain/seat_state_logic.dart';
 import '../domain/walk_up_window.dart';
@@ -592,67 +593,61 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     }
 
     try {
-      // #687 — booking FOR someone else (#106). The hub showed no picker
-      // and, once it did, still ignored `forMemberId` — which would have
-      // booked the seat for ME while naming someone else on the sheet.
-      // A confirmation request, never a check-in: the subject has not
-      // agreed to anything yet.
-      if (choice.forMemberId != null && choice.forMemberId != myMemberId) {
-        await ref.read(reservationRepositoryProvider).createFor(
-              workspaceId: workspace.id,
-              subjectMemberId: choice.forMemberId!,
-              seatId: seat.id,
-              startsAt: choice.start,
-              endsAt: choice.end,
-            );
-        final who =
-            (ref.read(memberNamesProvider).value ?? const {})[
-                    choice.forMemberId] ??
-                '';
-        if (!mounted) return;
-        AppSnack.success(
-          context,
-          l10n?.planBookedForPending(who) ?? 'Sent to $who for confirmation.',
-          replace: true,
-        );
-      } else if (choice.pattern == null) {
-        if (!walkUp && !choice.checkInNow && liveWindow) {
-          traceReserveWithoutCheckIn(
-              seat: seat, start: choice.start, end: choice.end);
-        }
-        await ref.read(reservationRepositoryProvider).create(
-              workspaceId: workspace.id,
-              seatId: seat.id,
-              startsAt: choice.start,
-              endsAt: choice.end,
-              // #687 — a LIVE free-seat tap is a walk-up: "I am sitting
-              // here", so it checks in atomically. Booking without the
-              // check-in left someone at a desk the plan showed as
-              // merely reserved.
-              checkIn: walkUp || choice.checkInNow,
-            );
-        // #663: the Reserve hub reported every refusal and no success at
-        // all — a booking simply happened, or appeared to. Say which.
-        if (!mounted) return;
-        announceBooking(context, l10n,
-            // #687 — a LIVE tap is a walk-up: it checks in. Reporting
-            // `false` here while the server checked them in is the
-            // confirmation lying about what just happened.
-            checkedIn: walkUp || choice.checkInNow,
-            start: choice.start,
-            end: choice.end,
-            spaceName: seat.name);
-      } else {
-        final result =
-            await ref.read(reservationRepositoryProvider).createSeries(
-                  workspaceId: workspace.id,
-                  seatId: seat.id,
-                  firstStart: choice.start,
-                  firstEnd: choice.end,
-                  pattern: choice.pattern!,
-                  until: choice.until!,
-                );
-        if (mounted) await showSeriesResultDialog(context, result);
+      // #1234 — the decision of WHICH write a booking is now lives in
+      // `application/book_seat.dart`, where a test can reach it without
+      // pumping a screen. This method's job is what the member asked
+      // for, and what to say once it happened.
+      if (choice.pattern == null &&
+          (choice.forMemberId == null || choice.forMemberId == myMemberId) &&
+          !walkUp &&
+          !choice.checkInNow &&
+          liveWindow) {
+        traceReserveWithoutCheckIn(
+            seat: seat, start: choice.start, end: choice.end);
+      }
+
+      final outcome = await bookSeat(
+        ref.read(reservationRepositoryProvider),
+        (
+          workspaceId: workspace.id,
+          seatId: seat.id,
+          start: choice.start,
+          end: choice.end,
+          // #687 — a LIVE free-seat tap is a walk-up: "I am sitting
+          // here", so it checks in atomically. Booking without the
+          // check-in left someone at a desk the plan showed as merely
+          // reserved.
+          checkIn: walkUp || choice.checkInNow,
+          forMemberId: choice.forMemberId,
+          pattern: choice.pattern,
+          until: choice.until,
+        ),
+        myMemberId: myMemberId,
+      );
+      if (!mounted) return;
+
+      switch (outcome) {
+        case SentForConfirmation(:final subjectMemberId):
+          final who = (ref.read(memberNamesProvider).value ??
+                  const <String, String>{})[subjectMemberId] ??
+              '';
+          AppSnack.success(
+            context,
+            l10n?.planBookedForPending(who) ?? 'Sent to $who for confirmation.',
+            replace: true,
+          );
+        case Booked(:final checkedIn, :final start, :final end):
+          // #663: the Reserve hub reported every refusal and no success
+          // at all — a booking simply happened, or appeared to. Say
+          // which, and say it about what the SERVER did: reporting
+          // `false` while it checked them in is the confirmation lying.
+          announceBooking(context, l10n,
+              checkedIn: checkedIn,
+              start: start,
+              end: end,
+              spaceName: seat.name);
+        case SeriesBooked(:final result):
+          await showSeriesResultDialog(context, result);
       }
     } catch (e, st) {
       debugPrint('reserve hub booking failed: $e\n$st');
