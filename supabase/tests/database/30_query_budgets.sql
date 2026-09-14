@@ -107,14 +107,16 @@ select matches(
   'Index Scan using reservations_workspace_time_idx',
   'the hub''s week window uses its index at 5 000 rows, not a seq scan');
 
-select unlike(
+-- `ok(... not like ...)` rather than pgTAP's `unlike`: that function
+-- takes its pattern as `text` and a bare literal arrives as `unknown`,
+-- so the overload does not resolve. The assertion is the same one.
+select ok(
   pg_temp.plan_for(format(
     $$ select * from public.reservations
         where workspace_id = %L::uuid
           and starts_at >= now() - interval '7 days'
           and starts_at < now() $$,
-    current_setting('deskilo.scale.ws'))),
-  '%Seq Scan on reservations%',
+    current_setting('deskilo.scale.ws'))) not like '%Seq Scan on reservations%',
   'and reads none of the rows outside the window');
 
 select matches(

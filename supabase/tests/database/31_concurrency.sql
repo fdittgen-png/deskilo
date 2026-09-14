@@ -36,11 +36,25 @@ create extension if not exists dblink with schema extensions;
 select plan(4);
 
 -- One connection for the writer, one for the rival.
+--
+-- `dblink_connect_u` and not `dblink_connect`: the plain one refuses a
+-- password-less connection ("password or GSSAPI delegated credentials
+-- required") however local it is, because it is available to
+-- non-superusers and that rule is what keeps it safe for them. The `_u`
+-- form is superuser-only and lifts exactly that restriction, which is
+-- the right trade in a throwaway test database that CI builds from
+-- empty for every run.
+create or replace function pg_temp.conninfo() returns text language sql
+stable as $$
+  select format('dbname=%s port=%s host=/var/run/postgresql',
+                current_database(), inet_server_port());
+$$;
+
 select ok(
-  extensions.dblink_connect('booker', 'dbname=postgres') = 'OK',
+  extensions.dblink_connect_u('booker', pg_temp.conninfo()) = 'OK',
   'a second session can be opened');
 select ok(
-  extensions.dblink_connect('rival', 'dbname=postgres') = 'OK',
+  extensions.dblink_connect_u('rival', pg_temp.conninfo()) = 'OK',
   'and a third, so the two can race');
 
 -- ------------------------------------------------------------ fixture
