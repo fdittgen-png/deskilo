@@ -36,6 +36,7 @@ DoctorFinding named(List<DoctorFinding> all, String fragment) =>
     all.firstWhere((f) => f.title.contains(fragment));
 
 void main() {
+  _installChecks();
   group('auth configuration', () {
     test('the wizard-configured project is clean', () {
       final findings = InstanceDoctor.checkAuthConfig(healthyConfig());
@@ -177,6 +178,101 @@ void main() {
       expect(report, contains('localhost:3000'));
       expect(report, contains('3 signed up, 0 confirmed'));
       expect(report, contains('need a human'));
+    });
+  });
+}
+
+// ---------------------------------------------------------------------
+// #1245 — the install, not just the sign-in.
+//
+// Every check below is one the repository already makes on a database CI
+// builds (#1226). An operator running DesKilo on their own Supabase has
+// neither the lints nor the pgTAP suite, so the doctor asks the same
+// questions of the live project.
+void _installChecks() {
+  Map<String, Object?> row({
+    int migrations = 214,
+    int tables = 55,
+    String noRls = '',
+    String openPolicyless = '',
+    String anonDefiners = '',
+    String buckets = 'avatars, floor-plans',
+  }) =>
+      {
+        'migrations_applied': migrations,
+        'tables': tables,
+        'tables_without_rls': noRls,
+        'open_policyless': openPolicyless,
+        'anon_definers': anonDefiners,
+        'buckets': buckets,
+      };
+
+  List<DoctorFinding> examine(Map<String, Object?> r) =>
+      InstanceDoctor.checkInstall([r]);
+
+  DoctorFinding named(List<DoctorFinding> fs, String needle) =>
+      fs.firstWhere((f) => f.title.contains(needle));
+
+  group('the install doctor', () {
+    test('a healthy install reports no problem at all', () {
+      final findings = examine(row());
+      expect(findings.where((f) => f.isProblem), isEmpty,
+          reason: findings.join('\n'));
+    });
+
+    test('an empty project is an ALARM and says which command fixes it', () {
+      final f = named(examine(row(migrations: 0, tables: 0)), 'Schema');
+      expect(f.level, DoctorLevel.alarm);
+      expect(f.detail, contains('instance.dart install'));
+    });
+
+    test('a half-installed schema is an alarm — it fails at the first '
+        'feature whose table is missing and says nothing until then', () {
+      final f = named(examine(row(migrations: 40, tables: 12)), 'Schema');
+      expect(f.level, DoctorLevel.alarm);
+      expect(f.detail, contains('40 migrations'));
+    });
+
+    test('MORE migrations than the floor is fine — a project may carry a '
+        'hand-applied fix, and refusing to start over that would be the '
+        'doctor causing the outage', () {
+      expect(examine(row(migrations: 9001)).where((f) => f.isProblem), isEmpty);
+    });
+
+    test('a table without RLS is an alarm, named', () {
+      final f = named(examine(row(noRls: 'invoices, ledger_entries')), 'Row-level');
+      expect(f.level, DoctorLevel.alarm);
+      expect(f.detail, contains('ledger_entries'));
+    });
+
+    test('a policy-less table that still grants to anon is a warning — '
+        'nothing leaks today, and one create policy would', () {
+      final f = named(
+          examine(row(openPolicyless: 'payment_credentials')), 'no policy');
+      expect(f.level, DoctorLevel.warn);
+      expect(f.detail, contains('payment_credentials'));
+    });
+
+    test('a definer function callable by anon is an alarm — the EXECUTE '
+        'grant is the only thing between anon and the whole database', () {
+      final f = named(examine(row(anonDefiners: 'export_my_data')), 'DEFINER');
+      expect(f.level, DoctorLevel.alarm);
+      expect(f.detail, contains('export_my_data'));
+    });
+
+    test('a missing storage bucket is an alarm, and names the one', () {
+      final f = named(examine(row(buckets: 'avatars')), 'bucket');
+      expect(f.level, DoctorLevel.alarm);
+      expect(f.detail, contains('floor-plans'));
+      expect(f.detail, isNot(contains('avatars')),
+          reason: 'only the MISSING one is named');
+    });
+
+    test('no rows at all is an alarm, because that is a project nobody '
+        'can reach rather than a healthy one', () {
+      final findings = InstanceDoctor.checkInstall(const []);
+      expect(findings.single.level, DoctorLevel.alarm);
+      expect(findings.single.detail, contains('no migration has ever run'));
     });
   });
 }
