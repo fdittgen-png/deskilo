@@ -30,9 +30,9 @@
 set -uo pipefail
 
 DB_URL=${1:?usage: concurrency_check.sh <db url>}
-WS=00000000-0000-4000-8000-0000000000w1
-MEMBER=00000000-0000-4000-8000-0000000000m1
-SEAT=00000000-0000-4000-8000-0000000000s1
+WS=00000000-0000-4000-8000-00000000c001
+MEMBER=00000000-0000-4000-8000-00000000c002
+SEAT=00000000-0000-4000-8000-00000000c003
 
 say() { printf '  %s\n' "$*"; }
 fail() { echo "::error::$*"; exit 1; }
@@ -41,29 +41,35 @@ psql_q() { psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -c "$1"; }
 
 echo "two sessions, one seat"
 
-psql "$DB_URL" -qX -v ON_ERROR_STOP=1 <<SQL || fail "the fixture would not build"
+# `w`, `r`, `l`, `o` and `s` are not hex digits, and a uuid literal that
+# contains one is refused at parse time — which is how the first run of
+# this script spent a CI cycle. The ids below are valid hex and still
+# readable: c001 is the workspace, c002 the member, c003 the seat.
+fixture=$(psql "$DB_URL" -qX -v ON_ERROR_STOP=1 2>&1 <<SQL
+
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
                         email_confirmed_at, created_at, updated_at)
-values ('00000000-0000-4000-8000-0000000000r1',
+values ('00000000-0000-4000-8000-00000000c004',
         '00000000-0000-0000-0000-000000000000', 'authenticated',
         'authenticated', 'race@deskilo.test', '', now(), now(), now());
 insert into public.workspaces (id, name, country_code, currency_code, timezone,
                                created_by)
 values ('$WS', 'Race', 'FR', 'EUR', 'Europe/Paris',
-        '00000000-0000-4000-8000-0000000000r1');
+        '00000000-0000-4000-8000-00000000c004');
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin)
-values ('$MEMBER', '$WS', '00000000-0000-4000-8000-0000000000r1', true, true);
+values ('$MEMBER', '$WS', '00000000-0000-4000-8000-00000000c004', true, true);
 insert into public.levels (id, workspace_id, name)
-values ('00000000-0000-4000-8000-0000000000l1', '$WS', 'Ground');
+values ('00000000-0000-4000-8000-00000000c005', '$WS', 'Ground');
 insert into public.offices (id, workspace_id, level_id, name, x, y, w, h)
-values ('00000000-0000-4000-8000-0000000000o1', '$WS',
-        '00000000-0000-4000-8000-0000000000l1', 'Room', 0, 0, 10, 10);
+values ('00000000-0000-4000-8000-00000000c006', '$WS',
+        '00000000-0000-4000-8000-00000000c005', 'Room', 0, 0, 10, 10);
 insert into public.desks (id, workspace_id, office_id, x, y, w, h)
-values ('00000000-0000-4000-8000-0000000000d1', '$WS',
-        '00000000-0000-4000-8000-0000000000o1', 1, 1, 4, 2);
+values ('00000000-0000-4000-8000-00000000c007', '$WS',
+        '00000000-0000-4000-8000-00000000c006', 1, 1, 4, 2);
 insert into public.seats (id, workspace_id, desk_id, x, y)
-values ('$SEAT', '$WS', '00000000-0000-4000-8000-0000000000d1', 1, 1);
+values ('$SEAT', '$WS', '00000000-0000-4000-8000-00000000c007', 1, 1);
 SQL
+) || fail "the fixture would not build. psql said: $fixture"
 
 BOOKING="insert into public.reservations
   (workspace_id, member_id, seat_id, starts_at, ends_at)
@@ -107,7 +113,7 @@ esac
 # would make a second run of this script on the same database fail on
 # the primary key rather than on the property.
 psql_q "delete from public.workspaces where id = '$WS'" >/dev/null
-psql_q "delete from auth.users where id = '00000000-0000-4000-8000-0000000000r1'" \
+psql_q "delete from auth.users where id = '00000000-0000-4000-8000-00000000c004'" \
   >/dev/null
 
 echo "two sessions, one seat: exactly one winner"
