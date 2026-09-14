@@ -27,7 +27,7 @@ sidebar:
 
 DesKilo has no `Nightly` workflow yet. The group stays in the list because
 the two projects share one convention, and the first scheduled health check
-should not have to invent a name. `CI · Database` also runs on a nightly
+should not have to invent a name. `CI · Quality report` also runs on a nightly
 cron, but it is a `CI` workflow: it gates a pull request, and the schedule
 is only there because the schema can break from underneath us when a
 Supabase platform image changes.
@@ -36,10 +36,9 @@ Supabase platform image changes.
 
 | Name | File | What it is for |
 | --- | --- | --- |
-| CI · Analyze, test & coverage | `ci.yml` | the gate every PR waits on |
+| CI · Quality report | `quality.yml` | **the gate every PR waits on**: l10n, analyze, the suite with coverage, then nine disciplines as one table in the run summary — including the migration replay and the pgTAP suite. Its first job keeps the name `analyze · l10n gate · test · coverage`, because that name is master's required status check |
 | CI · Android boot check | `android-boot.yml` | installs the shrunk release APK on an emulator and proves it stays alive |
 | CI · F-Droid no-GMS audit | `fdroid-foss.yml` | proves the libre flavour carries no Google dependency |
-| CI · Database | `db.yml` | replays every migration onto an empty database and runs the pgTAP suite |
 | Release · Train (all platforms) | `release-train.yml` | one dispatch, every store, one commit |
 | Release · Play track upload | `play-internal.yml` | builds the signed AAB and uploads it to the chosen Play track |
 | Release · iOS TestFlight build | `ios-testflight.yml` | builds, uploads, and optionally distributes to the external group |

@@ -37,7 +37,18 @@ API="repos/${REPO}/branches/${BRANCH}/protection"
 # name before adding it here.
 # ---------------------------------------------------------------------
 TARGET_CHECKS=(
+  # #1244 — the job that runs the l10n gate, analyze and the suite. It
+  # kept this name when ci.yml folded into `CI · Quality report`,
+  # because the name IS the required context and a rename makes every
+  # pull request unmergeable until protection is updated in lockstep.
   "analyze · l10n gate · test · coverage"
+  # The database half of the same workflow. NOT required on master yet:
+  # adding a context is a settings change, and `apply` is the command
+  # that makes it. Until somebody runs it, a red pgTAP run is visible
+  # and does not block — which is worth fixing and is not this script's
+  # decision to make.
+  "quality · database"
+  "quality · report"
 )
 
 # Deliberately NOT required, with reasons — an advisory workflow that

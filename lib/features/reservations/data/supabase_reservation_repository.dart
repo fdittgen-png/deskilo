@@ -8,6 +8,7 @@ import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
 import '../../../core/trace/act_trace.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/data/retry.dart';
 import '../../../core/data/system_columns.dart';
 
 class SupabaseReservationRepository implements ReservationRepository {
@@ -23,6 +24,7 @@ class SupabaseReservationRepository implements ReservationRepository {
   /// Every mutation drops the cached windows: an offline fallback must
   /// never resurrect a pre-mutation view.
   Future<void> _bust() => _cache.invalidatePrefix('resv:');
+
 
   /// #791 — every booking mutation leaves three possible lines in the
   /// trace: requested, accepted, or failed with its exception.
@@ -117,6 +119,7 @@ class SupabaseReservationRepository implements ReservationRepository {
     // `checkIn` is the field that answers "they booked but were never
     // checked in" (#772) without guessing: it says whether the walk-up
     // was atomic or whether the app only reserved.
+    final requestId = newRequestId();
     final result = await _traced(
       'reserve',
       {
@@ -128,16 +131,28 @@ class SupabaseReservationRepository implements ReservationRepository {
         'to': endsAt.toUtc(),
         'checkIn': checkIn,
       },
-      () => _client.rpc<dynamic>('create_reservation', params: {
-        'p_workspace_id': workspaceId,
-        'p_seat_id': seatId,
-        'p_desk_id': deskId,
-        'p_office_id': officeId,
-        'p_level_id': levelId,
-        'p_starts_at': startsAt.toUtc().toIso8601String(),
-        'p_ends_at': endsAt.toUtc().toIso8601String(),
-        'p_check_in': checkIn,
-      }),
+      // #1241 — the REPLAYABLE path. The request id is generated here,
+      // once, and the server claims it before it books (0214), so a
+      // retry after a dropped connection returns the booking the first
+      // attempt made instead of making a second one. That is what makes
+      // retrying a WRITE safe at all; every other mutation below stays
+      // unretried on purpose.
+      () => retryTransient(
+        'create_reservation',
+        () => _client.rpc<dynamic>('create_reservation_once', params: {
+          // OUTSIDE the retried closure on purpose: every attempt at
+          // this booking carries the SAME id, which is the whole point.
+          'p_client_request_id': requestId,
+          'p_workspace_id': workspaceId,
+          'p_seat_id': seatId,
+          'p_desk_id': deskId,
+          'p_office_id': officeId,
+          'p_level_id': levelId,
+          'p_starts_at': startsAt.toUtc().toIso8601String(),
+          'p_ends_at': endsAt.toUtc().toIso8601String(),
+          'p_check_in': checkIn,
+        }),
+      ),
     );
     await _bust();
     return result as String;
