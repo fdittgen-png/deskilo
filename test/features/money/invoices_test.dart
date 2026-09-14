@@ -21,6 +21,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 /// A fake archive seeded with one derived invoice for the current month
 /// (the default fake statement: 150.00 subscription + 16.00 overage).
@@ -78,7 +79,8 @@ Future<FakeMoneyRepository> pumpInvoices(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Money'));
+  // #1246 — by icon, not by the English label (see navigation.dart).
+  await tapNavIcon(tester, Icons.account_balance_wallet_outlined);
   await tester.pumpAndSettle();
   // #720 — the register lives on the Invoices face.
   await tester.tap(find.byKey(const ValueKey('money-face-invoices')));
