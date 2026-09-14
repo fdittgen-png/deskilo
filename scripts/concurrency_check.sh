@@ -41,7 +41,7 @@ RIVAL=00000000-0000-4000-8000-00000000c008
 SEAT=00000000-0000-4000-8000-00000000c003
 
 say() { printf '  %s\n' "$*"; }
-fail() { echo "::error::$*"; exit 1; }
+fail() { cleanup 2>/dev/null || true; echo "::error::$*"; exit 1; }
 
 psql_q() { psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -c "$1"; }
 
@@ -126,12 +126,30 @@ case "$after" in
        This is the app's central invariant: one seat, one booking." ;;
 esac
 
-# The workspace is thrown away with the database, but leaving it behind
-# would make a second run of this script on the same database fail on
-# the primary key rather than on the property.
-psql_q "delete from public.workspaces where id = '$WS'" >/dev/null
-psql_q "delete from auth.users where id in
-    ('00000000-0000-4000-8000-00000000c004',
-     '00000000-0000-4000-8000-00000000c009')" >/dev/null
+# Tidy up, so a second run on the same database fails on the property
+# rather than on a primary key.
+#
+# In dependency order and quietly. `protect_last_owner` refuses to let a
+# workspace lose its last owner, and `workspaces_created_by_fkey` holds
+# the user the workspace was created by — so deleting the workspace
+# before its reservations, or the user before the workspace, prints an
+# alarming wall of red on a run that passed. Both of those triggers are
+# doing their job; the cleanup simply has to go in the right order and
+# say nothing when it does.
+cleanup() {
+  psql "$DB_URL" -qtAX >/dev/null 2>&1 <<SQL
+delete from public.reservations where workspace_id = '$WS';
+delete from public.seats where workspace_id = '$WS';
+delete from public.desks where workspace_id = '$WS';
+delete from public.offices where workspace_id = '$WS';
+delete from public.levels where workspace_id = '$WS';
+delete from public.events where workspace_id = '$WS';
+delete from public.workspaces where id = '$WS';
+delete from auth.users where id in
+  ('00000000-0000-4000-8000-00000000c004',
+   '00000000-0000-4000-8000-00000000c009');
+SQL
+}
+cleanup
 
 echo "two sessions, one seat: exactly one winner"
