@@ -20,20 +20,84 @@ import 'package:flutter_test/flutter_test.dart';
 /// The migration that owns export and erasure.
 const _erasure = 'supabase/migrations/0133_calendar_hub.sql';
 
+/// Every document that could repeat the claim, in every language it is
+/// written in.
+///
+/// The first cut of this test named two files and one English phrase,
+/// and the claim was alive in SEVEN other places when it passed: five
+/// user guides — which ship inside the app as `assets/help/` and are
+/// therefore the copy a member actually reads — plus ADR 0006. A lint
+/// that only knows the file it was written against proves nothing.
+final List<String> _documents = [
+  'PRIVACY.md',
+  'docs/SPECIFICATION.md',
+  'docs/decisions/0006-quota-overage-billing.md',
+  for (final guide in [
+    'User-Guide',
+    'Guide-utilisateur',
+    'Benutzerhandbuch',
+    'Guia-de-usuario',
+    'Guida-utente',
+  ])
+    'docs/wiki/$guide.md',
+  for (final locale in ['en', 'fr', 'de', 'es', 'it'])
+    'assets/help/$locale.md',
+];
+
+/// A negation, within this many characters before the verb, turns the
+/// claim into its correction — `docs/SPECIFICATION.md` legitimately says
+/// "retained, **not** anonymized", and a lint that banned the word
+/// outright would forbid saying the true thing.
+const _negationWindow = 32;
+
+/// How each language says no, near enough to the verb to be about it.
+/// Whole words only: Spanish says "**no** se anonimizan" and Italian
+/// "**non** vengono anonimizzate", and a plain substring test for "no"
+/// would find it inside "nombre" and "número" and wave any claim
+/// through.
+final RegExp _negation = RegExp(
+  r'(?<![a-zà-ÿ])(not|never|pas|jamais|non|nicht|nie|keine|no|nunca|mai)'
+  r'(?![a-zà-ÿ])',
+);
+
+/// The verb, in the five languages the guides are written in. Matching
+/// the verb alone is deliberately broad: any sentence in any of these
+/// documents that says a financial record is anonymised is wrong,
+/// whatever shape it is phrased in.
+const _anonymise = [
+  'anonymized',
+  'anonymised',
+  'anonymisé', // fr
+  'anonymisiert', // de
+  'anonimiza', // es
+  'anonimizzat', // it
+];
+
 void main() {
-  test('the policy does not promise anonymisation the code does not do',
-      () {
-    for (final path in ['PRIVACY.md', 'docs/SPECIFICATION.md']) {
-      final text = File(path).readAsStringSync().toLowerCase();
-      expect(
-        text.contains('ledger history is anonymized') ||
-            text.contains('ledger history is anonymised'),
-        isFalse,
-        reason: '$path promises the ledger is anonymised on erasure. '
-            '`erase_my_membership` does not touch ledger_entries — see '
-            '#1237. Either change the function, or keep the document '
-            'describing what it does.',
-      );
+  test('no document promises anonymisation the code does not do', () {
+    for (final path in _documents) {
+      final file = File(path);
+      if (!file.existsSync()) continue; // assets/help is generated
+      final text = file.readAsStringSync().toLowerCase();
+      for (final word in _anonymise) {
+        for (var at = text.indexOf(word); at >= 0;
+            at = text.indexOf(word, at + 1)) {
+          final before =
+              text.substring((at - _negationWindow).clamp(0, at), at);
+          expect(
+            _negation.hasMatch(before),
+            isTrue,
+            reason: '$path claims something is "$word", around:\n'
+                '  …${text.substring((at - 90).clamp(0, at), at + 60)}…\n'
+                '`erase_my_membership` does not touch ledger_entries, and '
+                'invoices are immutable — a ledger row keeps the name it '
+                'was written with, for the statutory period (#1237). '
+                'Either change the function, or keep the document '
+                'describing what it does. The retention matrix in '
+                'PRIVACY.md is the wording to follow.',
+          );
+        }
+      }
     }
   });
 

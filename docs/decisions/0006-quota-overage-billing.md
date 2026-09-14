@@ -15,4 +15,4 @@ The brief describes tiers "100%, 50%, sometimes, or 50% and if more, paying more
 
 ## Consequences
 
-Billing is auditable and dispute-resistant (prorated lines labelled, no-show policy explicit, exit keeps the ledger open until settled; financial history is anonymized, never deleted). Payment-provider integration is deferred to v2 as an optional non-F-Droid feature.
+Billing is auditable and dispute-resistant (prorated lines labelled, no-show policy explicit, exit keeps the ledger open until settled; financial history is retained as issued, never anonymized and never deleted — see the retention matrix in PRIVACY.md). Payment-provider integration is deferred to v2 as an optional non-F-Droid feature.
