@@ -3336,6 +3336,12 @@ abstract class AppLocalizations {
   /// **'Every booking and check-in — past, present and future, every state — as CSV, for analysis and debugging.'**
   String get developerExportReservationsHint;
 
+  /// #1310 - the developer reservation export without the exportData permission
+  ///
+  /// In en, this message translates to:
+  /// **'Your own bookings and check-ins, every state, as CSV — exporting the whole workspace needs the data-export permission.'**
+  String get developerExportReservationsOwnHint;
+
   /// #716 - F-Droid build without a push transport
   ///
   /// In en, this message translates to:

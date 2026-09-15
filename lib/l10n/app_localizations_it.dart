@@ -1876,6 +1876,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Tutte le prenotazioni e i check-in — passati, presenti e futuri, in ogni stato — in CSV, per analisi e debug.';
 
   @override
+  String get developerExportReservationsOwnHint =>
+      'Le tue prenotazioni e i tuoi check-in, in ogni stato, in CSV — esportare tutto lo spazio richiede il permesso di esportazione dati.';
+
+  @override
   String get pushStatusNoTransport => 'Questa versione non ha notifiche push';
 
   @override

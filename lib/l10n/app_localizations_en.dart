@@ -1864,6 +1864,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Every booking and check-in — past, present and future, every state — as CSV, for analysis and debugging.';
 
   @override
+  String get developerExportReservationsOwnHint =>
+      'Your own bookings and check-ins, every state, as CSV — exporting the whole workspace needs the data-export permission.';
+
+  @override
   String get pushStatusNoTransport => 'This build has no push notifications';
 
   @override

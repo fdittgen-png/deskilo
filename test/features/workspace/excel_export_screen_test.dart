@@ -10,6 +10,7 @@ import 'dart:typed_data';
 import 'package:archive/archive.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,9 +18,29 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
 
+/// #1310 S0 — an ADMIN whose role row does not carry exportData. An owner
+/// holds every permission by construction, so the permission can only be
+/// narrowed on somebody who is not one.
+FakeWorkspaceRepository _adminWithout(String permission) {
+  final workspace = FakeWorkspaceRepository.withWorkspace();
+  workspace.myMember = workspace.myMember.copyWith(isOwner: false);
+  workspace.workspaces[0] = workspace.workspaces[0].copyWith(rolePermissions: {
+    'admin': [
+      for (final p in defaultPermissionsFor(PermissionRole.admin))
+        if (p.wireName != permission) p.wireName,
+      // Reaching Workspace settings at all: the admin default row does
+      // not carry it, and this test is about exportData, not about who
+      // may open the screen.
+      WorkspacePermission.workspaceSettings.wireName,
+    ],
+  });
+  return workspace;
+}
+
 Future<List<({String name, Uint8List bytes})>> _pump(
   WidgetTester tester, {
   Map<String, dynamic> featureFlags = const {},
+  FakeWorkspaceRepository? workspace,
 }) async {
   tester.view.physicalSize = const Size(800, 4600);
   tester.view.devicePixelRatio = 1.0;
@@ -29,7 +50,7 @@ Future<List<({String name, Uint8List bytes})>> _pump(
     ProviderScope(
       overrides: [
         ...standardTestOverrides(
-          workspace:
+          workspace: workspace ??
               FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags),
           floorPlan: FakeFloorPlanRepository()..seedSmallPlan(),
         ),
@@ -80,5 +101,21 @@ void main() {
           reason: 'sheet$i missing — a dataset dropped out of the export');
     }
     expect(find.textContaining('/local/deskilo-export'), findsOneWidget);
+  });
+
+  testWidgets('#1310 S0 — without the data-export permission the tile is '
+      'gone: exportData is what governs BULK export', (tester) async {
+    await _pump(tester, workspace: _adminWithout('exportData'));
+    expect(find.byKey(const Key('workspaceSettingsExportExcel')), findsNothing);
+  });
+
+  testWidgets('#1310 S0 — an admin who keeps the permission still has it',
+      (tester) async {
+    await _pump(tester, workspace: _adminWithout('manageIntegrations'));
+    expect(
+      find.byKey(const Key('workspaceSettingsExportExcel')),
+      findsOneWidget,
+      reason: 'narrowing another permission must not take the export away',
+    );
   });
 }

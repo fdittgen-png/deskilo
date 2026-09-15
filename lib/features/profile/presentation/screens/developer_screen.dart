@@ -14,6 +14,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../../core/time/clock.dart';
 import '../../../reservations/domain/reservation_export.dart';
 import '../../../reservations/providers/reservation_providers.dart';
+import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 
 /// Which trace levels the list shows.
@@ -103,10 +104,24 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
     if (workspace == null) return;
     setState(() => _exporting = true);
     try {
+      // #1310 S0 — /developer is reachable by every member by design
+      // (#144), and this writes one file of everybody's presence history.
+      // It crosses no RLS boundary (reservations_select is is_member_of),
+      // but a bulk export is exactly what exportData governs: without it
+      // the file carries only the exporter's own bookings, so the
+      // bug-report use case (#677) survives without the bulk channel.
+      final mine = !ref
+          .read(myPermissionsProvider)
+          .contains(WorkspacePermission.exportData);
+      final myMemberId = ref.read(myMemberProvider).value?.id;
+      final all = await ref
+          .read(reservationRepositoryProvider)
+          .fetchAllForExport(workspace.id);
       final content = buildReservationExportCsv(
-        reservations: await ref
-            .read(reservationRepositoryProvider)
-            .fetchAllForExport(workspace.id),
+        reservations: [
+          for (final r in all)
+            if (!mine || r.memberId == myMemberId) r,
+        ],
         generatedAt: ref.read(clockProvider).now(),
         workspaceId: workspace.id,
       );
@@ -175,9 +190,17 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
               l10n?.developerExportReservations ?? 'Export reservations',
             ),
             subtitle: Text(
-              l10n?.developerExportReservationsHint ??
-                  'Every booking and check-in — past, present and future, '
-                      'every state — as CSV, for analysis and debugging.',
+              ref
+                      .watch(myPermissionsProvider)
+                      .contains(WorkspacePermission.exportData)
+                  ? (l10n?.developerExportReservationsHint ??
+                      'Every booking and check-in — past, present and '
+                          'future, every state — as CSV, for analysis and '
+                          'debugging.')
+                  : (l10n?.developerExportReservationsOwnHint ??
+                      'Your own bookings and check-ins, every state, as '
+                          'CSV — exporting the whole workspace needs the '
+                          'data-export permission.'),
             ),
             onTap: _exporting ? null : _exportReservations,
           ),

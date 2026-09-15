@@ -19,8 +19,12 @@
     "description": "#677 - developer reservation export"
   },
   "developerExportReservationsHint": "Todas las reservas y entradas — pasadas, presentes y futuras, en cualquier estado — en CSV, para análisis y depuración.",
+  "developerExportReservationsOwnHint": "Tus propias reservas y entradas, en cualquier estado, como CSV: exportar todo el espacio requiere el permiso de exportación de datos.",
   "@developerExportReservationsHint": {
     "description": "#677 - developer reservation export"
+  },
+  "@developerExportReservationsOwnHint": {
+    "description": "#1310 - the developer reservation export without the exportData permission"
   },
   "pushStatusNoTransport": "Esta versión no tiene notificaciones push",
   "@pushStatusNoTransport": {
