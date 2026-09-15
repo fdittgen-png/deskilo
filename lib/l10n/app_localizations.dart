@@ -2672,6 +2672,12 @@ abstract class AppLocalizations {
   /// **'Swipe the bar down for a full-screen view. Swipe up, or long-press the Reserve button, to bring it back.'**
   String get shellSwipeCoachMark;
 
+  /// Read after the Reserve button's label while the bars are swiped away and decisions are pending (#1322)
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 decision awaits you} other{{count} decisions await you}}'**
+  String shellPendingDecisions(int count);
+
   /// Semantics hint on the Reserve button while the bar shows (#1173)
   ///
   /// In en, this message translates to:

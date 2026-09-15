@@ -1064,6 +1064,7 @@
     "description": "Support block body (#560)"
   },
   "shellSwipeCoachMark": "Desliza la barra hacia abajo para la vista de pantalla completa. Desliza hacia arriba, o mantén pulsado el botón Reservar, para recuperarla.",
+  "shellPendingDecisions": "{count, plural, =1{1 decisión te espera} other{{count} decisiones te esperan}}",
   "shellBarHideHint": "Mantén pulsado para la vista de pantalla completa",
   "shellBarShowHint": "Mantén pulsado para mostrar la barra de navegación",
   "shellBarHiddenAnnounce": "Barra de navegación oculta",

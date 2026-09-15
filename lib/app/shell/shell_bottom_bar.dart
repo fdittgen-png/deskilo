@@ -276,7 +276,7 @@ class ShellBottomBar extends ConsumerWidget {
     final surfaceFactor = (1 - t).clamp(0.0, 1.0);
     // Labels go before the bar does, so it never reaches its last few
     // pixels still carrying legible text.
-    final contentOpacity = (1 - t / 0.7).clamp(0.0, 1.0);
+    final contentOpacity = shellBarContentOpacity(t);
 
     return SizedBox(
       height: boxHeight,

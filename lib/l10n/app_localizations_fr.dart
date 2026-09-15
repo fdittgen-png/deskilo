@@ -1500,6 +1500,17 @@ class AppLocalizationsFr extends AppLocalizations {
       'Balayez la barre vers le bas pour l\'affichage plein écran. Balayez vers le haut, ou appuyez longuement sur le bouton Réserver, pour la faire revenir.';
 
   @override
+  String shellPendingDecisions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count décisions vous attendent',
+      one: '1 décision vous attend',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get shellBarHideHint => 'Appui long pour l’affichage plein écran';
 
   @override

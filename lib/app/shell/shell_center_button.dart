@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../features/events/providers/event_providers.dart';
+import '../../features/workspace/domain/workspace_feature.dart';
+import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import 'shell_bar_visibility.dart';
 import 'shell_bottom_bar.dart' show ShellBarMetrics;
@@ -60,6 +63,15 @@ class ShellCenterButton extends ConsumerWidget {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
     final hidden = ref.watch(shellBarHiddenProvider).value ?? false;
+    // #1322 — full screen takes the bell away with the title bar, so the
+    // one piece of chrome left on screen carries its count: choosing more
+    // room must never hide a decision somebody is waiting for. No count,
+    // NO BADGE WIDGET — the #687 rule of the Messages destination.
+    final eventsOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.eventsTab);
+    final pendingCount = ref.watch(myPendingEventCountProvider).value ?? 0;
+    final pending = hidden && eventsOn ? pendingCount : 0;
     // Clamped because the collapse is driven straight off a finger, and
     // a drag that overshoots must not produce a negative blur.
     final t = collapseProgress.clamp(0.0, 1.0);
@@ -149,7 +161,9 @@ class ShellCenterButton extends ConsumerWidget {
     );
 
     return Semantics(
-      label: label,
+      label: pending == 0
+          ? label
+          : '$label, ${l10n?.shellPendingDecisions(pending) ?? '$pending awaiting your decision'}',
       button: true,
       selected: selected,
       // Exposed to TalkBack and switch access as an ACTION, so somebody
@@ -159,7 +173,16 @@ class ShellCenterButton extends ConsumerWidget {
           : (l10n?.shellBarHideHint ?? 'Long-press for a full-screen view'),
       onLongPress: () => unawaited(toggleBar()),
       excludeSemantics: true,
-      child: Tooltip(message: label, child: button),
+      child: Tooltip(
+        message: label,
+        child: pending == 0
+            ? button
+            : Badge.count(
+                key: const ValueKey('shell-center-pending'),
+                count: pending,
+                child: button,
+              ),
+      ),
     );
   }
 }
