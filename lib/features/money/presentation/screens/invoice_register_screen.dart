@@ -9,6 +9,7 @@ import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/accounting_view.dart';
 import '../../domain/invoice.dart';
@@ -65,6 +66,7 @@ class _InvoiceRegisterScreenState
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final me = ref.watch(myMemberProvider).value;
     final features = ref.watch(enabledFeaturesSyncProvider);
+    final permissions = ref.watch(myPermissionsProvider);
     final canIssue = me != null &&
         (me.actsAsOwner ||
             (me.canAdminister &&
@@ -79,7 +81,10 @@ class _InvoiceRegisterScreenState
       appBar: AppBar(
         title: Text(l10n?.invoiceRegisterTitle ?? 'Invoice register'),
         actions: [
-          if (canIssue)
+          // #1310 S0 — an accounting export (and the archive bundle
+          // behind it) is a bulk export: exportData governs it, beside
+          // the issuing right that decides whose invoices are visible.
+          if (canIssue && permissions.contains(WorkspacePermission.exportData))
             IconButton(
               key: const ValueKey('invoice-accounting-export'),
               // Named for the ACTION, not for one of the seven formats

@@ -144,7 +144,7 @@ const Map<String, int> _baseline = {
   // right shape for it is one documented constant per object, and it
   // grows with the app rather than being refactored smaller.
   'lib/core/help/help_anchors.dart': 606,
-  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1564, // 2026-09-14 #1269 1552→1564: the invitation-language chips carry a label now, plus the paragraph on why an unlabelled row of language chips reads as THE language setting // 2026-09-11 #1154 1605→1572: the 577-line build() became three section methods; the reset dialog moved to widgets/reset_confirm_dialog.dart
+  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1570, // 2026-09-15 #1310 S0 1564→1570: every bulk export asks for the exportData permission // // 2026-09-14 #1269 1552→1564: the invitation-language chips carry a label now, plus the paragraph on why an unlabelled row of language chips reads as THE language setting // 2026-09-11 #1154 1605→1572: the 577-line build() became three section methods; the reset dialog moved to widgets/reset_confirm_dialog.dart
   // 600→640 (2026-08-05): #492 the request-deletion dialog + flow.
   // 640→760 (2026-08-22): #574 the running-booking extension flow.
   // 760→880 (2026-08-25): #638 the symmetric END-EARLIER flow — the

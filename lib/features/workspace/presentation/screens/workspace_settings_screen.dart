@@ -44,6 +44,7 @@ import '../../domain/space_codes_pdf.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_config_pdf.dart';
 import '../../domain/workspace_feature.dart';
+import '../../domain/workspace_permission.dart';
 import '../../domain/workspace_import.dart';
 import '../../domain/workspace_xml_configuration.dart';
 import '../../domain/workspace_xml.dart';
@@ -1472,9 +1473,14 @@ class _WorkspaceSettingsScreenState
                   // surface, so the flag gate lives here (no route to
                   // guard); headers inside the file are stable English
                   // like the XML schema, the UI around it is localized.
+                  // #1310 S0 — and the permission the roles screen
+                  // promises: exportData is what governs BULK export.
                   if (ref
-                      .watch(enabledFeaturesSyncProvider)
-                      .contains(WorkspaceFeature.dataExport))
+                          .watch(enabledFeaturesSyncProvider)
+                          .contains(WorkspaceFeature.dataExport) &&
+                      ref
+                          .watch(myPermissionsProvider)
+                          .contains(WorkspacePermission.exportData))
                   ListTile(
                     key: const Key('workspaceSettingsExportExcel'),
                     contentPadding: EdgeInsets.zero,

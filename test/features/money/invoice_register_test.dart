@@ -8,6 +8,7 @@ import 'dart:convert';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -290,5 +291,26 @@ void main() {
     expect(find.byKey(ValueKey('invoice-register-$wrong')), findsNothing,
         reason: 'a cancelled invoice owes the member nothing');
     expect(find.text('Partially paid'), findsOneWidget);
+  });
+
+  testWidgets('#1310 S0 — the accounting export needs the data-export '
+      'permission, not only the right to issue', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.myMember = workspace.myMember.copyWith(isOwner: false);
+    workspace.workspaces[0] = workspace.workspaces[0].copyWith(
+      rolePermissions: {
+        'admin': [
+          for (final p in defaultPermissionsFor(PermissionRole.admin))
+            if (p != WorkspacePermission.exportData) p.wireName,
+          // Issuing stays: what disappears is the BULK export, not the
+          // invoices themselves.
+          WorkspacePermission.issueInvoices.wireName,
+        ],
+      },
+    );
+    await _pumpRegister(tester, workspace: workspace);
+
+    expect(find.byKey(const ValueKey('invoice-accounting-export')),
+        findsNothing);
   });
 }

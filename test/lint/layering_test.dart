@@ -188,7 +188,9 @@ const Map<String, int> _pairBudget = {
   'money -> plan': 14,
   'money -> profile': 4,
   'money -> reservations': 13,
-  'money -> workspace': 112,
+  // 2026-09-15 #1310 S0 112→113: the invoice register asks for the
+  // exportData permission before offering the accounting export.
+  'money -> workspace': 113,
   'plan -> events': 1,
   'plan -> members': 1,
   'plan -> money': 4,
@@ -199,7 +201,9 @@ const Map<String, int> _pairBudget = {
   'profile -> calendar': 2,
   'profile -> members': 1,
   'profile -> reservations': 5,
-  'profile -> workspace': 30,
+  // 2026-09-15 #1310 S0 30→31: the developer reservation dump asks for
+  // the exportData permission before exporting anyone but the exporter.
+  'profile -> workspace': 31,
   'reservations -> calendar': 1,
   'reservations -> events': 5,
   'reservations -> members': 2,

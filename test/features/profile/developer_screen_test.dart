@@ -10,6 +10,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:typed_data';
 
+import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
+
+import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
 
 TraceLogger seededLogger() {
@@ -34,11 +38,17 @@ Future<void> pumpSettings(
   required TraceLogger logger,
   bool devMode = false,
   FileSaver? saver,
+  FakeWorkspaceRepository? workspace,
+  FakeReservationRepository? reservations,
 }) async {
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
-        ...standardTestOverrides(devMode: devMode),
+        ...standardTestOverrides(
+          devMode: devMode,
+          workspace: workspace,
+          reservations: reservations,
+        ),
         traceLoggerProvider.overrideWithValue(logger),
         fileSaverProvider.overrideWithValue(
             saver ?? ({required bytes, required fileName}) async => '/local/f'),
@@ -62,12 +72,16 @@ Future<void> pumpDeveloper(
   WidgetTester tester, {
   required TraceLogger logger,
   FileSaver? saver,
+  FakeWorkspaceRepository? workspace,
+  FakeReservationRepository? reservations,
 }) async {
   await pumpSettings(
     tester,
     logger: logger,
     devMode: true,
     saver: saver,
+    workspace: workspace,
+    reservations: reservations,
   );
   // The Developer tile sits below the dev-mode switch, which may rest at
   // the bottom edge after the scroll above — reveal it before tapping.
@@ -172,5 +186,82 @@ void main() {
     expect(logger.entries, isEmpty);
     expect(find.text('No trace entries yet.'), findsOneWidget);
     expect(find.text('newest error entry'), findsNothing);
+  });
+
+  group('#1310 S0 — the reservation dump honours exportData', () {
+    /// Two members' bookings in the workspace; 'member-1' is the viewer.
+    FakeReservationRepository seededReservations() {
+      final reservations = FakeReservationRepository();
+      for (final (id, memberId) in [
+        ('res-mine', 'member-1'),
+        ('res-theirs', 'member-2'),
+      ]) {
+        reservations.reservations.add(Reservation(
+          id: id,
+          workspaceId: 'ws-1',
+          seatId: 'seat-4',
+          memberId: memberId,
+          startsAt: kTestNow,
+          endsAt: kTestNow.add(const Duration(hours: 2)),
+          status: ReservationStatus.reserved,
+        ));
+      }
+      return reservations;
+    }
+
+    /// An ADMIN whose role row does or does not carry exportData. Owners
+    /// hold every permission by construction, and developer mode is an
+    /// admin affordance (#419), so the admin row is where this rule can
+    /// be seen at all — and an admin is who reaches for a bulk export.
+    FakeWorkspaceRepository adminWith(bool exportData) {
+      final workspace = FakeWorkspaceRepository.withWorkspace();
+      workspace.myMember = workspace.myMember.copyWith(isOwner: false);
+      workspace.workspaces[0] = workspace.workspaces[0].copyWith(
+        rolePermissions: {
+          'admin': [
+            for (final p in defaultPermissionsFor(PermissionRole.admin))
+              if (p != WorkspacePermission.exportData) p.wireName,
+            if (exportData) WorkspacePermission.exportData.wireName,
+          ],
+        },
+      );
+      return workspace;
+    }
+
+    Future<String> exportedCsv(
+      WidgetTester tester, {
+      required bool exportData,
+    }) async {
+      String saved = '';
+      await pumpDeveloper(
+        tester,
+        logger: TraceLogger(),
+        workspace: adminWith(exportData),
+        reservations: seededReservations(),
+        saver: ({required bytes, required fileName}) async {
+          if (fileName.contains('reservations')) {
+            saved = String.fromCharCodes(bytes);
+          }
+          return '/local/$fileName';
+        },
+      );
+      await tester.tap(
+          find.byKey(const ValueKey('developer-export-reservations')));
+      await tester.pumpAndSettle();
+      return saved;
+    }
+
+    testWidgets('without it, the file carries only my own bookings — the '
+        'bug report survives, the bulk channel does not', (tester) async {
+      final csv = await exportedCsv(tester, exportData: false);
+      expect(csv, contains('res-mine'));
+      expect(csv, isNot(contains('res-theirs')));
+    });
+
+    testWidgets('with it, the file carries the workspace', (tester) async {
+      final csv = await exportedCsv(tester, exportData: true);
+      expect(csv, contains('res-mine'));
+      expect(csv, contains('res-theirs'));
+    });
   });
 }

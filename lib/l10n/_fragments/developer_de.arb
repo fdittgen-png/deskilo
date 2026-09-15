@@ -19,8 +19,12 @@
     "description": "#677 - developer reservation export"
   },
   "developerExportReservationsHint": "Alle Buchungen und Check-ins — vergangene, laufende und künftige, in jedem Zustand — als CSV, für Analyse und Fehlersuche.",
+  "developerExportReservationsOwnHint": "Ihre eigenen Buchungen und Check-ins, jeder Zustand, als CSV — der Export des ganzen Bereichs braucht die Datenexport-Berechtigung.",
   "@developerExportReservationsHint": {
     "description": "#677 - developer reservation export"
+  },
+  "@developerExportReservationsOwnHint": {
+    "description": "#1310 - the developer reservation export without the exportData permission"
   },
   "pushStatusNoTransport": "Diese Version hat keine Push-Benachrichtigungen",
   "@pushStatusNoTransport": {
