@@ -16,6 +16,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/real_async.dart';
 
 /// A workspace with a complete legal identity — otherwise the export
 /// refuses before any of this matters (0069).
@@ -117,7 +118,8 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('invoice-einvoice-send')));
       await tester.pump();
       // Building the PDF loads real font assets.
-      await Future<void>.delayed(const Duration(milliseconds: 300));
+      await untilReal(() => money.sentEInvoices.isNotEmpty,
+          what: 'the e-invoice send');
     });
     await tester.pumpAndSettle();
 
@@ -140,7 +142,8 @@ void main() {
     await tester.runAsync(() async {
       await tester.tap(find.byKey(const ValueKey('invoice-einvoice-send')));
       await tester.pump();
-      await Future<void>.delayed(const Duration(milliseconds: 300));
+      await untilReal(() => money.sentEInvoices.isNotEmpty,
+          what: 'the e-invoice send');
     });
     await tester.pumpAndSettle();
 
@@ -218,7 +221,8 @@ void main() {
     await tester.runAsync(() async {
       await tester.tap(find.byKey(const ValueKey('einvoice-env-uat')));
       await tester.pump();
-      await Future<void>.delayed(const Duration(milliseconds: 300));
+      await untilReal(() => money.sentEInvoices.isNotEmpty,
+          what: 'the e-invoice send');
     });
     await tester.pumpAndSettle();
 
@@ -238,7 +242,8 @@ void main() {
     await tester.runAsync(() async {
       await tester.tap(find.byKey(const ValueKey('invoice-einvoice-send')));
       await tester.pump();
-      await Future<void>.delayed(const Duration(milliseconds: 300));
+      await untilReal(() => money.sentEInvoices.isNotEmpty,
+          what: 'the e-invoice send');
     });
     await tester.pumpAndSettle();
 
@@ -264,7 +269,8 @@ void main() {
     await tester.runAsync(() async {
       await tester.tap(find.byKey(const ValueKey('invoice-einvoice-send')));
       await tester.pump();
-      await Future<void>.delayed(const Duration(milliseconds: 300));
+      await untilReal(() => money.sentEInvoices.isNotEmpty,
+          what: 'the e-invoice send');
     });
     await tester.pumpAndSettle();
 
@@ -344,7 +350,8 @@ void main() {
       await tester
           .tap(find.byKey(const ValueKey('invoice-einvoice-send-customer')));
       await tester.pump();
-      await Future<void>.delayed(const Duration(milliseconds: 300));
+      await untilReal(() => money.sentEInvoices.isNotEmpty,
+          what: 'the e-invoice send');
     });
     await tester.pumpAndSettle();
 
@@ -366,7 +373,8 @@ void main() {
     await tester.runAsync(() async {
       await tester.tap(find.byKey(const ValueKey('invoice-einvoice-send')));
       await tester.pump();
-      await Future<void>.delayed(const Duration(milliseconds: 300));
+      await untilReal(() => money.sentEInvoices.isNotEmpty,
+          what: 'the e-invoice send');
     });
     await tester.pumpAndSettle();
 

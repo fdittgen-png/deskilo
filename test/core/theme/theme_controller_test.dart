@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The theme override: empty or unknown follows the system, a stored mode
+// applies and persists, system normalizes to no override.
 import 'package:deskilo/core/theme/theme_controller.dart';
 import 'package:flutter/material.dart' show ThemeMode;
 import 'package:flutter_riverpod/flutter_riverpod.dart';

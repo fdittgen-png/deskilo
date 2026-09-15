@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+//
+// buildQrPng returns a decodable PNG of the requested size.
 import 'dart:ui' as ui;
 
 import 'package:deskilo/features/workspace/presentation/qr_png.dart';

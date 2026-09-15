@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The level picker switches and persists the level, falls back from a
+// stale one, and adapts to landscape.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:deskilo/features/plan/presentation/widgets/floor_plan_painter.dart';

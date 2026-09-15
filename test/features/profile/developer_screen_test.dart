@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Developer mode: the trace list newest first, level filters, export to a
+// .log file, and clear.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/trace/trace_logger.dart';

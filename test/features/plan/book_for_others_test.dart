@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// #106 — owners book a seat for another member; booking for yourself stays
+// a walk-up; workers get no picker.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';

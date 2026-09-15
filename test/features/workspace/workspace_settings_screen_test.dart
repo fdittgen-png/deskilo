@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Workspace settings seed from the workspace and save identity, languages,
+// invitation templates and currency (#486, #711).
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Owners, and only owners, add, rename, reorder, delete and price levels
+// in the editor.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';

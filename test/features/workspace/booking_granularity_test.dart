@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// #200 — booking granularity wire values are append-only, and each mode's
+// step and day-window behaviour is pinned (#446).
 import 'dart:io';
 
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';

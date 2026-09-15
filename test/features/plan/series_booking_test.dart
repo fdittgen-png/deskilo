@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// A weekly series books every instance in its window and reports
+// conflicting ones as skipped.
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

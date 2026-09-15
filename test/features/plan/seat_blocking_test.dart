@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// #161 — blocking and unblocking seats from the booking sheet, with the
+// affordance only for those allowed.
 import 'package:deskilo/app/app.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

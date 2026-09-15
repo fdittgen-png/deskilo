@@ -207,6 +207,9 @@ Reservation reservationOn(
   );
 }
 
+// test-inventory: structure is the invariant — the hub and week-grid metrics
+// (#208, #236), chip selection and the painter's inputs are what this file
+// pins; reading them through the widgets is the point.
 void main() {
   // Half-slot classification anchors to the WORKSPACE clock (the fake
   // workspace is Europe/Berlin); reset between tests.

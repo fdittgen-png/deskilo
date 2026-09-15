@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Invite URLs carry role and code, and decoding accepts both URLs and
+// legacy raw codes.
 import 'package:deskilo/features/workspace/domain/invite_uri.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// An expense submission captures amount, category and description, and the
+// feed narrates it.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:flutter/material.dart';

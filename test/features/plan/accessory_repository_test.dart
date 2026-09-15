@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// #166 — the accessory catalogue and seat assignment contracts: order,
+// workspace scope, soft deactivation, unique names.
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_accessory_repository.dart';

@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// A seat's state at an instant: reservations, check-in, whole-office
+// bookings and blocks; start inclusive, end exclusive.
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';

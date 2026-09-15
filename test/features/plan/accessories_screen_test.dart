@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The accessory catalogue: listed with supplements, created, edited,
+// deactivated but never deleted; plain members get no entry.
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';

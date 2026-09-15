@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The events feed narrates activity and offers a pending decision only to
+// someone allowed to take it (#107, #434).
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/theme/status_colors.dart';
 import 'package:deskilo/core/theme/theme_controller.dart';

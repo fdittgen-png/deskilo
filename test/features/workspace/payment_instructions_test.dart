@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// #192 — the payment instructions jsonb shape is a contract: pinned keys,
+// a round trip, tolerant of older blobs.
 import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
 import 'package:flutter_test/flutter_test.dart';
 

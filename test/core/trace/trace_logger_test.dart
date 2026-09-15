@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The trace log: a 500-entry newest-first buffer, one line per entry, a
+// rotating file, and an export that prefers the file.
 import 'dart:io';
 
 import 'package:deskilo/core/trace/trace_logger.dart';

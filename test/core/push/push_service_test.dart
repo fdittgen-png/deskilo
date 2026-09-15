@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Push registration follows the transport's availability, and each message
+// kind raises its own localized notification.
 import 'dart:convert';
 import 'dart:typed_data';
 

@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The workspace configuration PDF renders, grows with its members and
+// survives empty sections.
 import 'dart:io';
 import 'dart:typed_data';
 

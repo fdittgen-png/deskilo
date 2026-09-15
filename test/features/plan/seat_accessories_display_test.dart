@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The booking sheet lists a seat's active accessories with their
+// supplements, and nothing when there are none.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/plan/presentation/widgets/seat_accessory_row.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';

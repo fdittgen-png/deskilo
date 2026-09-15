@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Grid geometry: the seat footprint, overlap, containment and orientation
+// rules the plan builds on.
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:flutter_test/flutter_test.dart';

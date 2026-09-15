@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Drag geometry for plan editing: moves clamp at the origin, resizes keep
+// at least one cell and validate containment.
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/floor_plan_editing.dart';

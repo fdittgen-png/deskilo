@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Who decides a pending event: never its submitter, never a worker, and no
+// solo escape hatch (#107, #434).
 import 'package:deskilo/features/events/domain/validation_policy.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';

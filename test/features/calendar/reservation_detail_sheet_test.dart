@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The reservation detail sheet names the booked space, jumps to it on the
+// plan, and survives a deleted plan object (#587).
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/plan/domain/level.dart';

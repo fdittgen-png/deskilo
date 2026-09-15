@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Onboarding: create or join leads into the shell, an invalid code stays
+// put, a member with a workspace never sees it.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:flutter/material.dart';

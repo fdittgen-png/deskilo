@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The bill PDF renders every section, grows with its content, and covers €
+// and − in all five locales.
 import 'dart:io';
 import 'dart:typed_data';
 

@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Statement.fromRpc reads every payload generation, defaulting the fields
+// older servers never sent (#170, 0041).
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:flutter_test/flutter_test.dart';

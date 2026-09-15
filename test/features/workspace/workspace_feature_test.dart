@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Feature resolution: registry defaults, boolean overrides only, and the
+// requires hierarchy (effectiveFeatures).
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -25,6 +25,7 @@ import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/fake_realtime_sync.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/real_async.dart';
 
 const _canvasKey = ValueKey('kiosk-plan-canvas');
 
@@ -858,8 +859,13 @@ void main() {
         reason: 'occupant → user id resolution (flag ON, avatar set)');
     // The image codec is REAL async — let it finish outside the fake
     // zone, then settle the resulting setState frame.
-    await tester.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 100)));
+    await tester.runAsync(() => untilReal(() async {
+          await tester.pump();
+          return tester
+              .widget<PlanCanvas>(find.byType(PlanCanvas))
+              .seatPhotos
+              .containsKey('seat-4');
+        }, what: 'the occupant photo decode'));
     await tester.pumpAndSettle();
     final canvas = tester.widget<PlanCanvas>(find.byType(PlanCanvas));
     expect(canvas.seatPhotos.keys, contains('seat-4'),

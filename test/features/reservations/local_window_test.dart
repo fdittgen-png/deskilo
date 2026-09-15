@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Month and day windows come from local date components, not UTC,
+// including across local midnight.
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';

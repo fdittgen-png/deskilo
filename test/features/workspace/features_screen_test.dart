@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The Features screen: a switch per manifest feature; a toggle writes only
+// its key and, switching on, its parent chain (#963).
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter/material.dart';

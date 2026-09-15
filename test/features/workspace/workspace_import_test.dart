@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// #180 — the XML import maps plans and catalogues to the RPC jsonb shapes,
+// pinned to their migrations.
 import 'dart:io';
 
 import 'package:deskilo/features/plan/domain/accessory.dart';
