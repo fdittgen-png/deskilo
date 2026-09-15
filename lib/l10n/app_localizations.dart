@@ -13361,6 +13361,12 @@ abstract class AppLocalizations {
   /// **'Closed on this day'**
   String get planClosedDay;
 
+  /// Seat-tap snackbar while the opening days and closures have not loaded: the day is neither open nor closed yet (#1301)
+  ///
+  /// In en, this message translates to:
+  /// **'Checking the opening days…'**
+  String get planAvailabilityLoading;
+
   /// #1196 the closed-day banner's action — jumps to the next day the workspace is open
   ///
   /// In en, this message translates to:

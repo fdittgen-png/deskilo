@@ -7667,6 +7667,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get planClosedDay => 'An diesem Tag geschlossen';
 
   @override
+  String get planAvailabilityLoading => 'Öffnungstage werden geprüft…';
+
+  @override
   String planClosedDayShowNext(String day) {
     return '$day anzeigen';
   }

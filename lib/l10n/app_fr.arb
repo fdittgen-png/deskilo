@@ -5027,6 +5027,7 @@
   "planToLabel": "À",
   "planEndBeforeStart": "La fin doit être après le début.",
   "planClosedDay": "Fermé ce jour-là",
+  "planAvailabilityLoading": "Vérification des jours d’ouverture…",
   "planClosedDayShowNext": "Afficher {day}",
   "planClosedDayError": "L'espace est fermé ce jour-là.",
   "planMorningChip": "Matin",

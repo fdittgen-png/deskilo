@@ -131,6 +131,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
   bool isWorkspaceOpenAt(DateTime at) => _isWorkspaceOpenAt(at);
 
   @override
+  bool get availabilityKnown =>
+      ref.read(openWeekdaysProvider).hasValue &&
+      ref.read(closureDaysProvider).hasValue;
+
+  @override
   DateTime defaultEndFor(DateTime from) => _defaultEndFor(from);
 
   @override
@@ -547,7 +552,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
   bool _isWorkspaceOpenAt(DateTime at) {
     final openWeekdays = ref.read(openWeekdaysProvider).value;
     final closures = ref.read(closureDaysProvider).value;
-    if (openWeekdays == null || closures == null) return true;
+    if (openWeekdays == null || closures == null) return false;
     return isWorkspaceOpenOn(WorkspaceTime.dateOf(at), openWeekdays, closures);
   }
 
@@ -581,11 +586,12 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
 
     // Closed day (#186): banner + gated booking. Watched (not the
     // read-based [_isWorkspaceOpenAt]) so the hub reacts to availability
-    // edits; unknown while loading counts as open.
+    // edits. #1301 S4 — unknown while loading is neither open nor closed.
     final openWeekdays = ref.watch(openWeekdaysProvider).value;
     final closures = ref.watch(closureDaysProvider).value;
-    final dayOpen = openWeekdays == null ||
-        closures == null ||
+    final dayKnown = openWeekdays != null && closures != null;
+    final dayOpen = openWeekdays != null &&
+        closures != null &&
         isWorkspaceOpenOn(_selectedDay, openWeekdays, closures);
     // #814 — the legend under the controls, and closed days drawn as
     // closed in every view (not only the plan).
@@ -762,7 +768,12 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
             child: dayOpen
                 ? const SizedBox.shrink(
                     key: ValueKey('reserve-open-day'))
-                : _closedDayBanner(l10n),
+                : dayKnown
+                    ? _closedDayBanner(l10n)
+                    // #1301 S4 — loading reads as loading, not as closed.
+                    : const LinearProgressIndicator(
+                        key: ValueKey('reserve-availability-loading'),
+                        minHeight: 2),
           ),
           // Two rows, and the split means something — HeaderControlRow
           // carries the why and the metrics (#699).
@@ -1229,7 +1240,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     }
     final openWeekdays = ref.watch(openWeekdaysProvider).value;
     final closures = ref.watch(closureDaysProvider).value;
-    if (openWeekdays == null || closures == null) return null;
+    // #1301 S4 — not loaded yet: no day reads as bookable.
+    if (openWeekdays == null || closures == null) return (_) => false;
     return (day) => isWorkspaceOpenOn(day, openWeekdays, closures);
   }
 

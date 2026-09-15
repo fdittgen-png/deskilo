@@ -64,6 +64,7 @@
   "planToLabel": "Bis",
   "planEndBeforeStart": "Das Ende muss nach dem Beginn liegen.",
   "planClosedDay": "An diesem Tag geschlossen",
+  "planAvailabilityLoading": "Öffnungstage werden geprüft…",
   "planClosedDayShowNext": "{day} anzeigen",
   "planClosedDayError": "Der Workspace ist an diesem Tag geschlossen.",
   "planMorningChip": "Vormittag",
