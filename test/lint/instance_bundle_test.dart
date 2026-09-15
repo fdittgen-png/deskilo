@@ -50,4 +50,38 @@ void main() {
           reason: '$slug must carry _shared/* or its imports fail on deploy');
     }
   });
+
+  test('#1314 — every migration can run inside the one request that records '
+      'it', () {
+    final offenders = <String>[];
+    for (final file in Directory('supabase/migrations')
+        .listSync()
+        .whereType<File>()
+        .where((f) => f.path.endsWith('.sql'))) {
+      final name = file.uri.pathSegments.last;
+      // A comment may name what it forbids.
+      final sql = file.readAsStringSync().split('\n').map((line) {
+        final comment = line.indexOf('--');
+        return comment < 0 ? line : line.substring(0, comment);
+      }).join('\n');
+      if (RegExp(r'^\s*(begin|commit|rollback)\s*;',
+              multiLine: true, caseSensitive: false)
+          .hasMatch(sql)) {
+        offenders.add('$name: explicit transaction control');
+      }
+      if (RegExp(r'\bconcurrently\b', caseSensitive: false).hasMatch(sql)) {
+        offenders.add('$name: CONCURRENTLY');
+      }
+      if (RegExp(r'alter\s+type\s+\S+\s+add\s+value', caseSensitive: false)
+          .hasMatch(sql)) {
+        offenders.add('$name: ALTER TYPE … ADD VALUE');
+      }
+    }
+    expect(offenders, isEmpty,
+        reason: 'the installer sends each migration together with its record '
+            'in ONE request, which runs as one transaction '
+            '(InstanceBuilder.recordedMigrationSql). A statement that cannot '
+            'run inside a transaction needs its own request, recorded in a '
+            'second one.');
+  });
 }

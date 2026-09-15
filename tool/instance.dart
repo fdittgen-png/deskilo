@@ -6,6 +6,7 @@
 //   dart run tool/instance.dart orgs     --token <personal access token>
 //   dart run tool/instance.dart create   --token … --org <organisation id> --name <project name> [--region eu-west-3]
 //   dart run tool/instance.dart install  --token … --ref <project ref> [--skip N]
+//   dart run tool/instance.dart record   --token … --ref <project ref> --through NNNN
 //   dart run tool/instance.dart auth     --token … --ref <project ref>
 //   dart run tool/instance.dart doctor   --token … --ref <project ref>
 //
@@ -39,7 +40,7 @@ Future<int> main(List<String> argv) async {
   final args = _Args(argv);
   final token = args.option('token') ?? Platform.environment['SUPABASE_ACCESS_TOKEN'];
   if (args.command.isEmpty || token == null || token.isEmpty) {
-    stderr.writeln('usage: dart run tool/instance.dart orgs|create|install|auth|doctor --token … [--org … --name … --region … --ref … --skip N]');
+    stderr.writeln('usage: dart run tool/instance.dart orgs|create|install|record|auth|doctor --token … [--org … --name … --region … --ref … --skip N --through NNNN]');
     return 2;
   }
   final api = DioSupabaseManagement(token);
@@ -78,7 +79,23 @@ Future<int> main(List<String> argv) async {
           return 2;
         }
         await builder.waitUntilReady(ref, onStatus: (s) => stdout.writeln('project: $s'));
-        return _install(builder, ref, int.tryParse(args.option('skip') ?? '0') ?? 0);
+        // #1314 — without --skip the install resumes from what the
+        // project recorded.
+        final skip = args.option('skip');
+        return _install(builder, ref, skip == null ? null : int.tryParse(skip) ?? 0);
+      case 'record':
+        final ref = args.option('ref');
+        final through = args.option('through');
+        if (ref == null || through == null || !RegExp(r'^\d{4}$').hasMatch(through)) {
+          stderr.writeln('record needs --ref and --through NNNN: the last '
+              'migration the project already has');
+          return 2;
+        }
+        final bundle = parseInstanceBundle(encodeInstanceBundle(buildInstanceBundle('.')));
+        final count = await builder.recordApplied(ref, bundle, through);
+        stdout.writeln('recorded $count migrations through $through as applied '
+            'on $ref — nothing was run');
+        return 0;
       case 'auth':
         final ref = args.option('ref');
         if (ref == null) {
@@ -113,9 +130,10 @@ Future<int> main(List<String> argv) async {
   }
 }
 
-Future<int> _install(InstanceBuilder builder, String ref, int skip) async {
+Future<int> _install(InstanceBuilder builder, String ref, int? skip) async {
   final bundle = parseInstanceBundle(encodeInstanceBundle(buildInstanceBundle('.')));
-  stdout.writeln('schema: ${bundle.schema.length} migrations (skipping $skip)');
+  stdout.writeln('schema: ${bundle.schema.length} migrations '
+      '(${skip == null ? 'resuming from what the project recorded' : 'skipping $skip'})');
   await builder.installSchema(ref, bundle, skip: skip, onProgress: (p) {
     if (p.current.isNotEmpty) stdout.writeln('  ${p.done + 1}/${p.total} ${p.current}');
   });

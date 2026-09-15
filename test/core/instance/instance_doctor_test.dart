@@ -8,7 +8,10 @@
 // the 10th.
 import 'package:deskilo/core/instance/instance_builder.dart';
 import 'package:deskilo/core/instance/instance_doctor.dart';
+import 'package:deskilo/core/instance/management_api.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../helpers/fake_supabase_management.dart';
 
 /// The project as the wizard leaves it.
 Map<String, Object?> healthyConfig() => {
@@ -37,6 +40,7 @@ DoctorFinding named(List<DoctorFinding> all, String fragment) =>
 
 void main() {
   _installChecks();
+  _probeIsolation();
   group('auth configuration', () {
     test('the wizard-configured project is clean', () {
       final findings = InstanceDoctor.checkAuthConfig(healthyConfig());
@@ -268,11 +272,79 @@ void _installChecks() {
           reason: 'only the MISSING one is named');
     });
 
-    test('no rows at all is an alarm, because that is a project nobody '
-        'can reach rather than a healthy one', () {
-      final findings = InstanceDoctor.checkInstall(const []);
-      expect(findings.single.level, DoctorLevel.alarm);
-      expect(findings.single.detail, contains('no migration has ever run'));
+    test('no rows is an alarm on each half, because that is a project that '
+        'did not answer rather than a healthy one', () {
+      expect(InstanceDoctor.checkSchema(const []).single.level, DoctorLevel.alarm);
+      final security = InstanceDoctor.checkSecurity(const []).single;
+      expect(security.level, DoctorLevel.alarm);
+      expect(security.detail, contains('nothing about RLS'));
+    });
+
+    test('#1314 — tables without recorded migrations are named, with the '
+        'remedy, instead of "no migration has ever run"', () {
+      final f = named(examine(row(migrations: -1, tables: 55)), 'not recorded');
+      expect(f.level, DoctorLevel.warn);
+      expect(f.detail, contains('55 tables'));
+      expect(f.detail, contains('instance.dart record --ref'));
+    });
+
+    test('#1314 — no migrations table and no tables is still the empty '
+        'project', () {
+      final f = named(examine(row(migrations: -1, tables: 0)), 'Schema');
+      expect(f.level, DoctorLevel.alarm);
+      expect(f.detail, contains('instance.dart install'));
+    });
+  });
+}
+
+// ---------------------------------------------------------------------
+// #1314 — one question failing never silences the others.
+//
+// The install used to be asked in the same statement as the security
+// checks, and that statement read `supabase_migrations`. On a project
+// without it the query raised, `examine` returned nothing at all, and a
+// real RLS problem sat behind a bookkeeping error.
+void _probeIsolation() {
+  group('the doctor asks each question on its own', () {
+    test('a failing schema query leaves auth, sign-ups and security '
+        'standing', () async {
+      final api = FakeSupabaseManagement()
+        ..authConfigValue = healthyConfig()
+        ..failQueryContaining = 'supabase_migrations'
+        ..failMessage =
+            'relation "supabase_migrations.schema_migrations" does not exist';
+      api.onQuery = (ref, sql) => sql == InstanceDoctor.securityHealthSql
+          ? [
+              {
+                'tables_without_rls': 'invoices',
+                'open_policyless': '',
+                'anon_definers': '',
+                'buckets': 'avatars, floor-plans',
+              },
+            ]
+          : counts(created7d: 1, confirmed7d: 1);
+
+      final findings = await InstanceDoctor(api).examine('ref-1');
+
+      final failed = named(findings, 'Schema query failed');
+      expect(failed.level, DoctorLevel.alarm);
+      expect(failed.detail, contains('does not exist'));
+      expect(named(findings, 'Row-level').level, DoctorLevel.alarm,
+          reason: 'the real problem is still reported');
+      expect(named(findings, 'Site URL').level, DoctorLevel.ok);
+      expect(named(findings, 'Sign-ups').level, DoctorLevel.ok);
+    });
+
+    test('a token that cannot read the project stops the doctor once, as '
+        'the CLI reports it', () async {
+      final api = FakeSupabaseManagement()
+        ..authConfigValue = healthyConfig()
+        ..unauthorized = true;
+      await expectLater(
+        InstanceDoctor(api).examine('ref-1'),
+        throwsA(isA<ManagementApiException>()
+            .having((e) => e.unauthorized, 'unauthorized', isTrue)),
+      );
     });
   });
 }

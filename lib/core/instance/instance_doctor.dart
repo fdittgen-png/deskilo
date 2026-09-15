@@ -57,15 +57,51 @@ class InstanceDoctor {
   /// is told nothing useful (0036, 0043).
   static const Set<String> expectedBuckets = {'avatars', 'floor-plans'};
 
-  Future<List<DoctorFinding>> examine(String ref) async {
-    final config = await api.authConfig(ref);
-    final rows = await api.query(ref, signupHealthSql);
-    final install = await api.query(ref, installHealthSql);
-    return [
-      ...checkAuthConfig(config),
-      ...checkSignups(rows),
-      ...checkInstall(install),
-    ];
+  /// Every question on its own, so one that fails never silences the
+  /// others (#1314).
+  ///
+  /// The install used to be asked in ONE statement with the security
+  /// checks, and that statement read `supabase_migrations` — which a
+  /// wizard-built instance did not have. The query raised, `examine`
+  /// returned nothing, and a real RLS or definer problem on that instance
+  /// sat behind a bookkeeping error.
+  Future<List<DoctorFinding>> examine(
+    String ref, {
+    int minimumMigrations = 200,
+  }) async =>
+      [
+        ...await _probe('Auth configuration',
+            () async => checkAuthConfig(await api.authConfig(ref))),
+        ...await _probe('Sign-ups',
+            () async => checkSignups(await api.query(ref, signupHealthSql))),
+        ...await _probe(
+            'Schema',
+            () async => checkSchema(await api.query(ref, schemaHealthSql),
+                minimumMigrations: minimumMigrations)),
+        ...await _probe('Security',
+            () async => checkSecurity(await api.query(ref, securityHealthSql))),
+      ];
+
+  Future<List<DoctorFinding>> _probe(
+    String what,
+    Future<List<DoctorFinding>> Function() ask,
+  ) async {
+    try {
+      return await ask();
+    } on ManagementApiException catch (e, st) {
+      // A token that cannot read the project fails every probe the same
+      // way: say that once, as the CLI does, not four times.
+      // trace-exempt: an unauthorized answer is rethrown with its stack; any other becomes a finding the report prints.
+      if (e.unauthorized) Error.throwWithStackTrace(e, st);
+      return [
+        DoctorFinding(
+          DoctorLevel.alarm,
+          '$what query failed',
+          'Supabase answered ${e.status}: ${e.message}\n'
+              '        The other checks ran without it.',
+        ),
+      ];
+    }
   }
 
   /// One round trip for the whole picture: how many accounts exist, how
@@ -92,15 +128,29 @@ select
 from auth.users;
 ''';
 
-  /// #1245 — one round trip for the INSTALL, the way [signupHealthSql]
-  /// is one round trip for sign-in.
+  /// #1245 — how much schema is installed. #1314 split it from the
+  /// security questions and made it safe to ask of any project:
+  /// `supabase_migrations` is only read once `to_regclass` has found it,
+  /// and `-1` says it does not exist.
+  static const String schemaHealthSql = r'''
+select
+  case when to_regclass('supabase_migrations.schema_migrations') is null then -1
+    else (xpath('/row/c/text()', query_to_xml(
+      'select count(*) as c from supabase_migrations.schema_migrations',
+      false, true, '')))[1]::text::int
+  end as migrations_applied,
+  (select count(*)::int from pg_class c
+     join pg_namespace n on n.oid = c.relnamespace
+    where n.nspname = 'public' and c.relkind = 'r') as tables;
+''';
+
+  /// #1245 — the install's security, asked on its own (#1314).
   ///
   /// Every one of these is something the repository's own lints or the
   /// pgTAP suite check on a database CI built (#1226). An operator
   /// running DesKilo on their own Supabase has neither, so the same
   /// questions are asked of the live project instead:
   ///
-  ///   * did the schema install at all, and how much of it;
   ///   * is row-level security on everywhere;
   ///   * is any table without a policy still handing `anon` a grant —
   ///     the finding that made 0211 necessary, and the one that would
@@ -109,13 +159,8 @@ from auth.users;
   ///   * is any `SECURITY DEFINER` function callable by `anon` — the
   ///     hole 0191 swept, which existed for months;
   ///   * do the storage buckets the policies are written against exist.
-  static const String installHealthSql = '''
+  static const String securityHealthSql = '''
 select
-  (select count(*)::int from supabase_migrations.schema_migrations)
-    as migrations_applied,
-  (select count(*)::int from pg_class c
-     join pg_namespace n on n.oid = c.relnamespace
-    where n.nspname = 'public' and c.relkind = 'r') as tables,
   (select coalesce(string_agg(c.relname, ', ' order by c.relname), '')
      from pg_class c join pg_namespace n on n.oid = c.relnamespace
     where n.nspname = 'public' and c.relkind = 'r'
@@ -236,52 +281,94 @@ select
     return findings;
   }
 
-  /// #1245 — is the install itself sound?
+  /// #1245 — is the install itself sound? Both halves, from one row that
+  /// carries every key — what the two queries return, side by side.
+  static List<DoctorFinding> checkInstall(
+    List<Map<String, Object?>> rows, {
+    int minimumMigrations = 200,
+  }) =>
+      [
+        ...checkSchema(rows, minimumMigrations: minimumMigrations),
+        ...checkSecurity(rows),
+      ];
+
+  /// How much schema is installed.
   ///
   /// [minimumMigrations] is how much schema a working instance has.
   /// It is a floor rather than an equality on purpose: a project may
   /// legitimately carry more (a hand-applied fix, a newer bundle than
   /// the binary running this), and refusing to start over a number
   /// being larger would be the doctor causing the outage.
-  static List<DoctorFinding> checkInstall(
+  static List<DoctorFinding> checkSchema(
     List<Map<String, Object?>> rows, {
     int minimumMigrations = 200,
   }) {
     if (rows.isEmpty) {
       return const [
         DoctorFinding(DoctorLevel.alarm, 'Schema',
-            'the install query returned nothing — the project is not '
-                'reachable, or `supabase_migrations` does not exist, which '
-                'means no migration has ever run here'),
+            'the schema query returned no row — the project did not answer it'),
+      ];
+    }
+    final row = rows.first;
+    int number(String key) => int.tryParse('${row[key] ?? ''}') ?? 0;
+    final applied = number('migrations_applied');
+    final tables = number('tables');
+
+    if (applied <= 0 && tables == 0) {
+      return const [
+        DoctorFinding(DoctorLevel.alarm, 'Schema',
+            'no migration has been applied. Nothing works yet.\n'
+                '        Fix: dart run tool/instance.dart install --ref <ref>'),
+      ];
+    }
+    if (applied <= 0) {
+      // #1314 — the tables are there and the bookkeeping is not: what an
+      // instance installed before installs recorded their migrations looks
+      // like. Not unreachable, and not necessarily incomplete.
+      return [
+        DoctorFinding(
+          DoctorLevel.warn,
+          'Migrations are not recorded',
+          '$tables tables exist, but no migration is recorded. An instance '
+              'installed before #1314 looks like this; its schema may be '
+              'complete, and nothing here can tell how much of it is.\n'
+              '        Fix, once you know the last migration it has: '
+              'dart run tool/instance.dart record --ref <ref> --through <NNNN>',
+        ),
+      ];
+    }
+    if (applied < minimumMigrations) {
+      return [
+        DoctorFinding(
+          DoctorLevel.alarm,
+          'Schema is behind',
+          '$applied migrations applied, $tables tables. A working instance '
+              'has at least $minimumMigrations.\n'
+              '        A half-installed schema fails at the first feature '
+              'whose table is missing, and says nothing until then.\n'
+              '        Fix: dart run tool/instance.dart install --ref <ref>',
+        ),
+      ];
+    }
+    return [
+      DoctorFinding(DoctorLevel.ok, 'Schema',
+          '$applied migrations applied, $tables tables'),
+    ];
+  }
+
+  /// Is the installed schema closed to the people it must be closed to?
+  static List<DoctorFinding> checkSecurity(List<Map<String, Object?>> rows) {
+    if (rows.isEmpty) {
+      return const [
+        DoctorFinding(DoctorLevel.alarm, 'Security',
+            'the security query returned no row — nothing about RLS, grants '
+                'or definer functions is known'),
       ];
     }
     final row = rows.first;
     String text(String key) => '${row[key] ?? ''}';
-    int number(String key) => int.tryParse(text(key)) ?? 0;
 
     final findings = <DoctorFinding>[];
-    final applied = number('migrations_applied');
-    final tables = number('tables');
-
-    if (applied == 0) {
-      findings.add(const DoctorFinding(DoctorLevel.alarm, 'Schema',
-          'no migration has been applied. Nothing works yet.\n'
-              '        Fix: dart run tool/instance.dart install --ref <ref>'));
-    } else if (applied < minimumMigrations) {
-      findings.add(DoctorFinding(
-        DoctorLevel.alarm,
-        'Schema is behind',
-        '$applied migrations applied, $tables tables. A working instance '
-            'has at least $minimumMigrations.\n'
-            '        A half-installed schema fails at the first feature '
-            'whose table is missing, and says nothing until then.\n'
-            '        Fix: dart run tool/instance.dart install --ref <ref>',
-      ));
-    } else {
-      findings.add(DoctorFinding(DoctorLevel.ok, 'Schema',
-          '$applied migrations applied, $tables tables'));
-    }
-
     final noRls = text('tables_without_rls');
     findings.add(noRls.isEmpty
         ? const DoctorFinding(

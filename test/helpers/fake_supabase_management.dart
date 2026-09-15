@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'package:deskilo/core/instance/instance_builder.dart';
 import 'package:deskilo/core/instance/management_api.dart';
 
 /// An in-memory Management API (#977): records every call, brings a
@@ -15,6 +16,15 @@ class FakeSupabaseManagement implements SupabaseManagement {
   String? failSqlContaining;
   String failMessage = 'syntax error';
   bool unauthorized = false;
+
+  /// #1314 — the versions each project recorded, read out of the recording
+  /// insert the installer sends with every migration.
+  final recorded = <String, List<String>>{};
+
+  /// Rows recorded by OTHER tooling (timestamp versions), per project.
+  int foreignRecorded = 0;
+  String? failQueryContaining;
+  List<Map<String, Object?>> Function(String ref, String sql)? onQuery;
 
   void _auth() {
     if (unauthorized) throw const ManagementApiException(401, 'Unauthorized');
@@ -75,6 +85,13 @@ class FakeSupabaseManagement implements SupabaseManagement {
       throw ManagementApiException(400, failMessage);
     }
     (this.sql[ref] ??= []).add(sql);
+    if (sql.contains('insert into supabase_migrations.schema_migrations')) {
+      for (final m in RegExp(r"\('(\d{4})', '").allMatches(sql)) {
+        final version = m.group(1)!;
+        final list = recorded[ref] ??= [];
+        if (!list.contains(version)) list.add(version);
+      }
+    }
   }
 
   @override
@@ -97,8 +114,23 @@ class FakeSupabaseManagement implements SupabaseManagement {
 
   @override
   Future<List<Map<String, Object?>>> query(String ref, String sql) async {
+    _auth();
     queriedSql.add(sql);
-    return queryRows;
+    final needle = failQueryContaining;
+    if (needle != null && sql.contains(needle)) {
+      throw ManagementApiException(400, failMessage);
+    }
+    if (sql == InstanceBuilder.recordedVersionsSql) {
+      final versions = recorded[ref] ?? const <String>[];
+      return [
+        {
+          'present': versions.isNotEmpty || foreignRecorded > 0,
+          'recorded': versions.length + foreignRecorded,
+          'versions': versions.isEmpty ? null : versions.join(','),
+        },
+      ];
+    }
+    return onQuery?.call(ref, sql) ?? queryRows;
   }
 
   @override
