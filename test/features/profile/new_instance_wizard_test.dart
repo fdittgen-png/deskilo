@@ -77,7 +77,8 @@ void main() {
     await _tap(tester, 'wizard-next');
 
     await _tap(tester, 'instance-install-schema');
-    expect(api.sql['ref1'], ['create table a();', 'create table b();']);
+    expect(api.recorded['ref1'], ['0001', '0002'],
+        reason: '#1314 — each migration is recorded as it installs');
     await _tap(tester, 'wizard-next');
 
     await _tap(tester, 'instance-deploy-functions');
@@ -116,7 +117,8 @@ void main() {
       ..failMessage = 'permission denied';
     await _tap(tester, 'instance-install-schema');
     expect(find.textContaining('Stopped at 0002_b.sql: permission denied'), findsOneWidget);
-    expect(api.sql['ref1'], ['create table a();']);
+    expect(api.sql['ref1'], hasLength(1));
+    expect(api.recorded['ref1'], ['0001']);
 
     api.failSqlContaining = null;
     await _tap(tester, 'instance-install-schema');

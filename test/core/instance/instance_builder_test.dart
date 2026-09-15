@@ -6,6 +6,7 @@
 // endpoint is the project's URL and publishable key.
 import 'package:deskilo/core/instance/instance_builder.dart';
 import 'package:deskilo/core/instance/instance_bundle.dart';
+import 'package:deskilo/core/instance/instance_doctor.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_supabase_management.dart';
@@ -45,7 +46,15 @@ void main() {
     final bundle = parseInstanceBundle(_bundleJson);
     final progress = <InstanceProgress>[];
     await builder.installSchema(project.ref, bundle, onProgress: progress.add);
-    expect(api.sql[project.ref], ['create table a();', 'create table b();', 'create table c();']);
+    expect(
+      [
+        for (final sql in api.sql[project.ref]!)
+          RegExp(r'create table (\w)\(\)').firstMatch(sql)!.group(1),
+      ],
+      ['a', 'b', 'c'],
+    );
+    expect(api.recorded[project.ref], ['0001', '0002', '0003'],
+        reason: '#1314 — every migration is recorded as it applies');
     expect(progress.last, (done: 3, total: 3, current: ''));
 
     await builder.deployFunctions(project.ref, bundle);
@@ -73,7 +82,9 @@ void main() {
           .having((e) => e.item, 'item', '0002_b.sql')
           .having((e) => e.message, 'message', contains('already exists'))),
     );
-    expect(api.sql['ref-1'], ['create table a();']);
+    expect(api.sql['ref-1'], hasLength(1));
+    expect(api.recorded['ref-1'], ['0001'],
+        reason: 'the failed migration left no record behind');
     api.failSqlContaining = null;
     await builder.installSchema('ref-1', bundle, skip: 1);
     expect(api.sql['ref-1'], hasLength(3));
@@ -95,5 +106,116 @@ void main() {
     final pw = generateDatabasePassword();
     expect(pw, hasLength(24));
     expect(pw, matches(RegExp(r'^[A-Za-z0-9]+$')));
+  });
+
+  group('#1314 — an install records, resumes, and never runs a migration '
+      'twice', () {
+    test('one request carries the migration and its record, in that order',
+        () {
+      final sql = InstanceBuilder.recordedMigrationSql(
+          (name: '0214_booking_idempotency.sql', sql: 'create table x();'));
+      final migration = sql.indexOf('create table x();');
+      final record = sql.indexOf(
+          "values ('0214', '0214_booking_idempotency')");
+      expect(migration, greaterThanOrEqualTo(0));
+      expect(record, greaterThan(migration),
+          reason: 'the record follows the migration inside the same '
+              'transaction, so it exists exactly when the migration applied');
+      expect(sql, contains('on conflict (version) do nothing'));
+      expect(sql, contains('create table if not exists '
+          'supabase_migrations.schema_migrations'));
+    });
+
+    test('an interrupted install resumes from what the project recorded',
+        () async {
+      final api = FakeSupabaseManagement()..failSqlContaining = 'table c';
+      final builder = InstanceBuilder(api);
+      final bundle = parseInstanceBundle(_bundleJson);
+      await expectLater(builder.installSchema('ref-1', bundle),
+          throwsA(isA<InstanceStepFailure>()));
+      expect(api.recorded['ref-1'], ['0001', '0002']);
+      expect(await builder.resumePoint('ref-1', bundle), 2);
+
+      api.failSqlContaining = null;
+      // No --skip: the project says where it stopped.
+      await builder.installSchema('ref-1', bundle);
+      for (final table in ['a', 'b', 'c']) {
+        expect(
+          api.sql['ref-1']!.where((s) => s.contains('create table $table();')),
+          hasLength(1),
+          reason: 'migration $table ran exactly once',
+        );
+      }
+      expect(await builder.resumePoint('ref-1', bundle), 3);
+    });
+
+    test('a project migrated by other tooling is not resumed by guesswork',
+        () async {
+      final api = FakeSupabaseManagement()..foreignRecorded = 230;
+      final builder = InstanceBuilder(api);
+      final bundle = parseInstanceBundle(_bundleJson);
+      expect(await builder.resumePoint('ref-1', bundle), isNull);
+      await expectLater(
+        builder.installSchema('ref-1', bundle),
+        throwsA(isA<InstanceStepFailure>()
+            .having((e) => e.message, 'message', contains('--skip'))),
+      );
+      expect(api.sql['ref-1'], isNull,
+          reason: 're-running migrations on a working schema breaks it');
+    });
+
+    test('record marks the migrations a project already has, running none',
+        () async {
+      final api = FakeSupabaseManagement();
+      final builder = InstanceBuilder(api);
+      final bundle = parseInstanceBundle(_bundleJson);
+      expect(await builder.recordApplied('ref-1', bundle, '0002'), 2);
+      expect(api.recorded['ref-1'], ['0001', '0002']);
+      expect(api.sql['ref-1']!.single, isNot(contains('create table a')),
+          reason: 'only the bookkeeping is written; no migration body runs');
+      expect(await builder.resumePoint('ref-1', bundle), 2);
+    });
+
+    test('installed, then examined: the doctor calls the schema sound',
+        () async {
+      // Red before #1314: the install recorded nothing, so the doctor read
+      // zero migrations and raised an alarm on every instance it built.
+      final api = FakeSupabaseManagement()
+        ..authConfigValue = {
+          'site_url': InstanceAuthConfig.siteUrl,
+          'uri_allow_list': InstanceAuthConfig.redirectAllowList,
+          'mailer_autoconfirm': false,
+        };
+      api.onQuery = (ref, sql) {
+        if (sql == InstanceDoctor.schemaHealthSql) {
+          return [
+            {'migrations_applied': (api.recorded[ref] ?? const []).length, 'tables': 3},
+          ];
+        }
+        if (sql == InstanceDoctor.securityHealthSql) {
+          return [
+            {
+              'tables_without_rls': '',
+              'open_policyless': '',
+              'anon_definers': '',
+              'buckets': 'avatars, floor-plans',
+            },
+          ];
+        }
+        return [
+          {'created_7d': 0, 'confirmed_7d': 0, 'stuck': 0, 'oldest_stuck_hours': 0},
+        ];
+      };
+      final builder = InstanceBuilder(api);
+      final bundle = parseInstanceBundle(_bundleJson);
+      await builder.installSchema('ref-1', bundle);
+
+      final findings = await InstanceDoctor(api)
+          .examine('ref-1', minimumMigrations: bundle.schema.length);
+      expect(findings.where((f) => f.isProblem), isEmpty,
+          reason: findings.join('\n'));
+      expect(findings.firstWhere((f) => f.title == 'Schema').detail,
+          contains('3 migrations applied'));
+    });
   });
 }

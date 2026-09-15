@@ -158,7 +158,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
     if (ref == null) return;
     await _run('install schema', () async {
       _bundle ??= await this.ref.read(instanceBundleLoaderProvider)();
-      await _builder.installSchema(ref, _bundle!, skip: _schemaDone,
+      await _builder.installSchema(ref, _bundle!, skip: _schemaDone == 0 ? null : _schemaDone,
           onProgress: (p) {
         if (mounted) {
           setState(() {
