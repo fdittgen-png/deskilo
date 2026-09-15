@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Placement rules: offices never overlap, desks stay inside their office,
+// seats fit on their desk.
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/floor_plan_rules.dart';

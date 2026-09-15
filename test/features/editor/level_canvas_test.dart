@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Drawing on the level canvas creates offices and desks only where the
+// placement rules allow, and deleting keeps the view.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/editor/presentation/screens/level_canvas_screen.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';

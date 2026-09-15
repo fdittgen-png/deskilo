@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Fee bands edit as one ordered, gap-free set: boundaries stay increasing,
+// adding splits a band, removing merges it (#194).
 import 'dart:async';
 
 import 'dart:io';

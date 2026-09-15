@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// #146 — disabled features drop their bottom-bar destinations, and the
+// inbox with its pending badge always survives.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';

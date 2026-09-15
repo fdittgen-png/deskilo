@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Profiles: each membership with its role; switching persists across
+// restarts; adding one leads to create or join.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';

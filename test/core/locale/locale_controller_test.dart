@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The language override: an empty store follows the system, a stored code
+// applies and persists, null clears it.
 import 'dart:ui';
 
 import 'package:deskilo/core/locale/locale_controller.dart';

@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// #916 — importing a workspace XML previews first, applies configuration
+// before the plan, and maps each refusal to its own message.
 import 'dart:convert';
 
 import 'package:deskilo/app/app.dart';

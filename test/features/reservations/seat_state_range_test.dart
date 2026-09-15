@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// A seat's state over a window: overlap is start-inclusive and end-
+// exclusive, and inactive reservations never block.
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';

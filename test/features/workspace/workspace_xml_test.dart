@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// #164 — the workspace XML codec round-trips without ids or invite codes,
+// and rejects what it cannot read (#180).
 import 'package:deskilo/features/plan/domain/accessory.dart';
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';

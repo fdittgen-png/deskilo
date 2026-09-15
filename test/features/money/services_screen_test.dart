@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// #123 — the service catalogue: listed with prices and VAT, created,
+// edited, deactivated but never deleted.
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';

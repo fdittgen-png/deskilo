@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The design tokens and themes: radii, the spec §14 values, Material 3
+// builds, the brand ramp, dense fields and seat-state colours.
 import 'package:deskilo/app/theme.dart';
 import 'package:deskilo/core/theme/app_radius.dart';
 import 'package:deskilo/core/theme/seat_state_colors.dart';

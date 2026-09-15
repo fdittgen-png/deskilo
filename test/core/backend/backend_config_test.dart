@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The reference deployment's backend defaults are pinned.
 import 'package:deskilo/core/backend/backend_config.dart';
 import 'package:flutter_test/flutter_test.dart';
 

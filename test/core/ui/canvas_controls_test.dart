@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Canvas zoom controls drive one shared transform: fit on load, clamp at
+// max scale, centre small content, glide when animated.
 import 'package:deskilo/core/ui/canvas_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

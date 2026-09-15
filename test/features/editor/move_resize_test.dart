@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Moving and resizing plan elements carries their contents and reverts
+// anything that would break containment.
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:flutter_test/flutter_test.dart';

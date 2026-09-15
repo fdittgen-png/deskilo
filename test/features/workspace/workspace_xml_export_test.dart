@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// #1012 — exporting the workspace XML saves a file, leaves a trace, offers
+// Share, and reports a failed save.
 import 'dart:convert';
 import 'dart:typed_data';
 

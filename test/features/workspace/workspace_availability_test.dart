@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Whether the workspace is open on a day: open weekdays minus closure
+// days, pinned to the server's refusal message.
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
 import 'package:deskilo/features/workspace/domain/workspace_availability.dart';
 import 'package:flutter_test/flutter_test.dart';

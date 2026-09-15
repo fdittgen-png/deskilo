@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Exporting the visible bill saves a PDF, and a failed save says so.
 import 'dart:typed_data';
 
 import 'package:deskilo/app/app.dart';

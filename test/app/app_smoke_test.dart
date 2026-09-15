@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The app boots: a signed-in user lands in the shell on Messages, a
+// signed-out one on the auth screen.
 import 'package:deskilo/app/app.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

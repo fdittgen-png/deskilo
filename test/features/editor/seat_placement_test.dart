@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Seats are stamped onto desks clamped to fit — never overlapping, never
+// outside a desk.
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan_rules.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';

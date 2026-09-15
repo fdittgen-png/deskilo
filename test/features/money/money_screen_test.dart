@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The member's bill: month, subscription, entitlement, packages and online
+// payment, each shown only when it applies (0041, 0042).
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';

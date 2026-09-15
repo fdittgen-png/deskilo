@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// #166 — the amenity-key to accessory-name mapping is pinned, and
+// migration 0022 seeds with the same one.
 import 'dart:io';
 
 import 'package:deskilo/features/plan/domain/accessory_seed.dart';

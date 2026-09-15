@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// #187 — the day timeline: pinned axis metrics, blocks placed by hour,
+// level chips and the collapsible All-levels view.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/calendar/presentation/widgets/day_timeline.dart';

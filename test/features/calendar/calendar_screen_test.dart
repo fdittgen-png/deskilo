@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The month calendar: today preselected, mine and others' markers, the
+// Everyone view, series cancellation and pull-to-refresh.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';

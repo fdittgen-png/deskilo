@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The default level per workspace: the stored one while it still exists,
+// otherwise the first by sort order.
 import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:deskilo/features/plan/providers/default_level_controller.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';

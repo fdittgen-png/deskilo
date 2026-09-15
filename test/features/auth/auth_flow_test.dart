@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Sign-in, sign-up and sign-out move between the auth screen and the
+// shell; a failure stays put with an error.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:flutter/material.dart';

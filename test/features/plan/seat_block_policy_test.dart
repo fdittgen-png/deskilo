@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// #161 — who may block seats: the owner always, an admin only with the
+// feature, a worker or inactive member never.
 import 'package:deskilo/features/plan/domain/seat_block_policy.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';

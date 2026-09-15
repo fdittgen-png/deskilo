@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// #104 — the time scroller: a future window books a reservation, Now
+// returns to live, invalid ranges are rejected.
 import 'package:deskilo/core/theme/seat_state_colors.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/plan/presentation/widgets/floor_plan_painter.dart';

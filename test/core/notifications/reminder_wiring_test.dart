@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Booting with an upcoming reservation schedules its check-in reminder.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

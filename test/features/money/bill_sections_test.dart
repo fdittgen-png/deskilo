@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// A bill's sections: the period's charges, open positions and credits,
+// each in the period it belongs to.
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/bill_sections.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';

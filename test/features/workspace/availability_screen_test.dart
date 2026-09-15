@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The availability screen persists open weekdays (never none), the booking
+// granularity and working hours (0032).
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
@@ -36,6 +39,9 @@ Future<FakeWorkspaceRepository> pumpAvailability(
   return workspace;
 }
 
+// test-inventory: structure is the invariant — the reads are each control's
+// selected value (the granularity and outside-hours radio groups, the policy
+// switches) and the seven weekday chips: what the screen shows and saves.
 void main() {
   testWidgets('renders seven weekday chips reflecting the open weekdays',
       (tester) async {

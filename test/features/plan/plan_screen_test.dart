@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Tapping a seat: walk-up check-in capped by the next booking, check-out,
+// and an explanation for a taken or blocked seat.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';

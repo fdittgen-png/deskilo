@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Choosing a language in Settings switches the app immediately and
+// persists; System default clears it.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/locale/locale_controller.dart';
 import 'package:flutter/material.dart';

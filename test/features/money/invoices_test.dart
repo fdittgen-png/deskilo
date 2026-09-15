@@ -22,6 +22,7 @@ import '../../helpers/fake_event_repository.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
+import '../../helpers/real_async.dart';
 
 /// A fake archive seeded with one derived invoice for the current month
 /// (the default fake statement: 150.00 subscription + 16.00 overage).
@@ -861,7 +862,7 @@ void main() {
       await tester.pump();
       // The chain reads providers BEFORE it renders: give the whole of it
       // real time, or the font load lands back on the fake clock.
-      await Future<void>.delayed(const Duration(milliseconds: 200));
+      await untilReal(() => shared.isNotEmpty, what: 'the PDF share');
     });
     await tester.pumpAndSettle();
 
@@ -908,7 +909,7 @@ void main() {
     await tester.runAsync(() async {
       await tester.tap(find.byKey(const ValueKey('proforma-share')));
       await tester.pump();
-      await Future<void>.delayed(const Duration(milliseconds: 200));
+      await untilReal(() => shared.isNotEmpty, what: 'the PDF share');
     });
     await tester.pumpAndSettle();
 
@@ -1210,7 +1211,7 @@ void main() {
     await tester.runAsync(() async {
       await tester.tap(find.byKey(ValueKey('invoice-share-$partial')));
       await tester.pump();
-      await Future<void>.delayed(const Duration(milliseconds: 200));
+      await untilReal(() => shared.isNotEmpty, what: 'the PDF share');
     });
     await tester.pumpAndSettle();
 

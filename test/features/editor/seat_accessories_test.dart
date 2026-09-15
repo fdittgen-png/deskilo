@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// #168 — the seat sheet assigns catalogue accessories and keeps the
+// assignment unless it is changed.
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:flutter/material.dart';

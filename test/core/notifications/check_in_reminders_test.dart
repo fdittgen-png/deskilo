@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// Check-in reminders fire 15 minutes before my own upcoming reserved
+// bookings only, sorted by time.
 import 'package:deskilo/features/reservations/domain/check_in_reminders.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:flutter_test/flutter_test.dart';

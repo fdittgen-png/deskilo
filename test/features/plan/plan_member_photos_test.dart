@@ -19,6 +19,7 @@ import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
+import '../../helpers/real_async.dart';
 
 Future<Uint8List> _realPng(WidgetTester tester) async {
   final png = await tester.runAsync(() async {
@@ -87,8 +88,13 @@ void main() {
     await _pump(tester, profile: _photoProfile(png));
     await switchToPlanTab(tester);
     await tester.pumpAndSettle();
-    await tester.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 100)));
+    await tester.runAsync(() => untilReal(() async {
+          await tester.pump();
+          return tester
+              .widget<PlanCanvas>(find.byType(PlanCanvas))
+              .seatPhotos
+              .containsKey('seat-4');
+        }, what: 'the occupant photo decode'));
     await tester.pumpAndSettle();
 
     final canvas = tester.widget<PlanCanvas>(find.byType(PlanCanvas));
@@ -100,8 +106,13 @@ void main() {
     final png = await _realPng(tester);
     await _pump(tester, profile: _photoProfile(png));
     // The app boots on the Reserve hub — its canvas is the first map.
-    await tester.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 100)));
+    await tester.runAsync(() => untilReal(() async {
+          await tester.pump();
+          return tester
+              .widget<PlanCanvas>(find.byType(PlanCanvas))
+              .seatPhotos
+              .containsKey('seat-4');
+        }, what: 'the occupant photo decode'));
     await tester.pumpAndSettle();
     final canvas = tester.widget<PlanCanvas>(find.byType(PlanCanvas));
     expect(canvas.seatPhotos.keys, contains('seat-4'));

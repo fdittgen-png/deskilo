@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+//
+// The shell's destinations: localized labels, branch switching with the
+// app-bar title, the settings action and tap targets.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:flutter/material.dart';

@@ -52,6 +52,13 @@ These rules are version-controlled so a fresh clone sees them. They mirror the s
     B's invoices" is also true when the seed inserted no invoices.
   - **An UPDATE refused by RLS does not raise** — it matches no rows. Read
     the row back with `reset role` and assert it is unchanged.
+- **Every test file is classified (#1334).** Adding, moving or deleting a
+  test file means `dart run tool/test_inventory.dart` and committing
+  `docs/testing/TEST_INVENTORY.md`; `test_inventory_test` fails otherwise.
+  State the file's invariant in its header paragraph. Wait for real I/O
+  with `untilReal` (`test/helpers/real_async.dart`), never a fixed delay.
+  A file whose widget structure IS the contract says so with a
+  `// test-inventory: structure is the invariant — <reason>` comment.
 
 ## Git rules
 
