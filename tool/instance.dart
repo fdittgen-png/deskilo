@@ -7,6 +7,7 @@
 //   dart run tool/instance.dart create   --token … --org <organisation id> --name <project name> [--region eu-west-3]
 //   dart run tool/instance.dart install  --token … --ref <project ref> [--skip N]
 //   dart run tool/instance.dart record   --token … --ref <project ref> --through NNNN
+//   dart run tool/instance.dart doctor   --token … --ref <project ref> [--public]
 //   dart run tool/instance.dart auth     --token … --ref <project ref>
 //   dart run tool/instance.dart doctor   --token … --ref <project ref>
 //
@@ -32,6 +33,7 @@ import 'dart:io';
 import 'package:deskilo/core/instance/instance_builder.dart';
 import 'package:deskilo/core/instance/instance_bundle.dart';
 import 'package:deskilo/core/instance/instance_doctor.dart';
+import 'package:deskilo/core/instance/instance_policies.dart';
 import 'package:deskilo/core/instance/management_api.dart';
 
 import 'build_instance.dart';
@@ -113,8 +115,18 @@ Future<int> main(List<String> argv) async {
           stderr.writeln('doctor needs --ref');
           return 2;
         }
-        final findings = await InstanceDoctor(api).examine(ref);
-        stdout.write(doctorReport(ref, findings));
+        // #1313 — the expected policies come from the file CI's replay
+        // writes; without it drift simply is not judged.
+        final policiesFile = File(instancePoliciesAssetPath);
+        final findings = await InstanceDoctor(api).examine(
+          ref,
+          expectedPolicies: policiesFile.existsSync()
+              ? parseInstancePolicies(policiesFile.readAsStringSync())
+              : const {},
+        );
+        // A run whose log is public publishes counts, never names.
+        stdout.write(doctorReport(ref, findings,
+            redacted: args.option('public') != null));
         // Exit 1 on a finding so a schedule can act without parsing text.
         return hasProblem(findings) ? 1 : 0;
       default:
