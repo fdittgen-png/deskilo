@@ -49,7 +49,7 @@ cannot write the ledger, the invoices or the reservations directly.
 
 | # | Threat | Mitigation | Proof today |
 |---|---|---|---|
-| T1 | A member reads another workspace's data | RLS on all 56 tables | **none — no test executes a policy** (#1226, #1227) |
+| T1 | A member reads another workspace's data — rows **and storage objects** | RLS on every table; storage policies scoped to the workspace folder | `10_tenancy_isolation.sql`, `11_tenancy_matrix.sql` (#1226, #1227); `12_storage_tenancy.sql` for storage, added with 0215 after a hand-made broad read was found live on `floor-plans` |
 | T2 | A member reads another member's invoice | `invoices_select` scoped to the member or an issuer permission | none (#1227) |
 | T3 | Privilege escalation to admin | `has_permission`, role matrix, last-owner protection | Dart tests against fakes only |
 | T4 | A `SECURITY DEFINER` function answers for any workspace | 54 of 57 client-reachable functions check the caller | **3 do not** (#1228) |
