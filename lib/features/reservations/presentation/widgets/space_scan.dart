@@ -560,7 +560,16 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
 
     final title = switch (widget.kind) {
       SpaceKind.level => level?.name ?? '',
-      SpaceKind.office => office?.name ?? '',
+      // #1273 — a level's only room is named by the level.
+      // A double tap may open this sheet without the plan or the level:
+      // both are found from the office's own level.
+      SpaceKind.office => office == null
+          ? ''
+          : (plan ?? ref.read(floorPlanProvider(office.levelId)).value)
+                  ?.officeContextName(office,
+                      levelName: level?.name ?? levelNameOf(ref, office.levelId),
+                      byLevel: namesSingleRoomsByLevel(ref)) ??
+              office.name,
       SpaceKind.desk => desk?.name ?? '',
       // The workstation card names seat AND desk — several tables can
       // share seat letters.

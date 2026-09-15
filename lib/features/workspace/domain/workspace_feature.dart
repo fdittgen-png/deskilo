@@ -191,7 +191,12 @@ enum WorkspaceFeature {
   /// template, decide who may see it, invite people to it by address, and
   /// start from what others offer. The builtin template needs no flag —
   /// a new space starts with a room either way.
-  workspaceLibrary;
+  workspaceLibrary,
+
+  /// #1273 — a level holding exactly one room is named by the level on the
+  /// member surfaces: "2e étage · Table 3", not "Bureau 1 · Table 3". A
+  /// second room brings both names back; the editor always shows rooms.
+  singleRoomLevelNames;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1100,6 +1105,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     surface: FeatureSurface.documents,
     tier: FeatureTier.platform,
     defaultOn: false,
+  ),
+  // #1273 — a label rule, not a new surface: every workspace started from
+  // `tiny` has single-room levels, so it is Core and on.
+  WorkspaceFeature.singleRoomLevelNames: FeatureManifestEntry(
+    feature: WorkspaceFeature.singleRoomLevelNames,
+    surface: FeatureSurface.reserve,
+    tier: FeatureTier.core,
+    defaultOn: true,
   ),
 };
 

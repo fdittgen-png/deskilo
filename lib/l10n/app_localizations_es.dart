@@ -8815,6 +8815,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get servicesActive => 'Activo';
 
   @override
+  String get featureSingleRoomLevelNamesTitle =>
+      'Nombrar por la planta una planta de una sola sala';
+
+  @override
+  String get featureSingleRoomLevelNamesDesc =>
+      'Cuando una planta tiene una sola sala, las vistas de reserva nombran la planta en lugar de la sala: «2.ª planta · Mesa 3», no «Despacho 1 · Mesa 3». Una segunda sala recupera ambos nombres; el editor del plano muestra siempre las salas.';
+
+  @override
   String get featureSiteDocuments => 'Sedes en los documentos';
 
   @override

@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**466 files, 3061 tests.**
+**467 files, 3076 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -12,16 +12,16 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | database | 13 | 118 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
-| lint | 59 | 154 |
+| lint | 59 | 155 |
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
-| unit | 163 | 1277 |
-| widget | 222 | 1478 |
+| unit | 164 | 1290 |
+| widget | 222 | 1479 |
 
 | action | files |
 |---|---:|
-| KEEP | 466 |
+| KEEP | 467 |
 
 ## Rules
 
@@ -100,8 +100,8 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/core/i18n/app_format_test.dart` | unit | #711 — globalization. The workspace owns the money and the clock; the member owns how they read them. These pin the formatting seam, the currency table and the… | 16 | yes | repository sources | a domain rule — #711, #1137 | no | KEEP |  |
 | `test/core/i18n/locale_names_test.dart` | unit | #713 — the format picker speaks the reader's language, not BCP-47. | 2 | yes | none | a domain rule — #713 | no | KEEP |  |
 | `test/core/i18n/regional_formats_test.dart` | widget | #711 — the surfaces of globalization: the member's Region & formats section, the owner's currency and time-zone pickers, and the bank details a non-IBAN… | 5 | yes | fakes | user-visible behaviour — #711, #734 | no | KEEP |  |
-| `test/core/instance/instance_builder_test.dart` | unit | #977 — the instance builder over a fake Management API: the project comes up after a few polls, the schema runs in order and names the migration that fails,… | 5 | yes | fakes | a domain rule — #977 | no | KEEP |  |
-| `test/core/instance/instance_doctor_test.dart` | unit | #1075 — the doctor, driven by the shapes it exists to catch. | 23 | yes | none | a domain rule — #1075, #1245, #1226 | no | KEEP |  |
+| `test/core/instance/instance_builder_test.dart` | unit | #977 — the instance builder over a fake Management API: the project comes up after a few polls, the schema runs in order and names the migration that fails,… | 10 | yes | fakes | a domain rule — #977, #1314 | no | KEEP |  |
+| `test/core/instance/instance_doctor_test.dart` | unit | #1075 — the doctor, driven by the shapes it exists to catch. | 27 | yes | fakes | a domain rule — #1075, #1245, #1226 | no | KEEP |  |
 | `test/core/locale/locale_controller_test.dart` | unit | The language override: an empty store follows the system, a stored code applies and persists, null clears it. | 4 | yes | none | a domain rule | shares a test name with test/core/theme/theme_controller_test.dart | KEEP |  |
 | `test/core/motion/motion_core_test.dart` | widget | Motion core (#611): ONE seam decides whether anything animates — the uiAnimations feature flag (installed by the app shell as MotionSettings) AND the… | 8 | yes | none | user-visible behaviour — #611 | no | KEEP |  |
 | `test/core/navigation/navigation_style_test.dart` | unit | #969 — the navigation preference: persisted per device, applied to the shell instantly, and never a choice on the web. | 2 | yes | fakes | a domain rule — #969 | no | KEEP |  |
@@ -319,7 +319,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/plan/level_reservation_test.dart` | widget | Whole-level reservations (0050): the plan's reserve-level affordance is triple-gated (feature + level bookable + personal grant or assignment right); booking… | 8 | yes | fakes | user-visible behaviour — #638, #466 | no | KEEP |  |
 | `test/features/plan/message_reserver_plan_test.dart` | widget | #622 — message the reserver from the Plan tab: tapping a seat held by ANOTHER member offers opening the conversation with them, the composer seeded with the… | 3 | yes | none | user-visible behaviour — #622 | no | KEEP |  |
 | `test/features/plan/overrule_test.dart` | widget | Admin overrule (#412, cancel_reservation v2): "no multiple reservations — the owner and admin only can overrule an existing reservation; the other is removed… | 3 | yes | fakes | user-visible behaviour — #412, #490 | no | KEEP |  |
-| `test/features/plan/plan_closed_day_test.dart` | widget | #186: on days the workspace is closed (weekday not open / closure day) the plan must say so — banner, muted seats, gated taps — and booking refusals from… | 7 | yes | fakes | user-visible behaviour — #186 | shares a test name with test/features/workspace/workspace_availability_test.dart | KEEP |  |
+| `test/features/plan/plan_closed_day_test.dart` | widget | #186: on days the workspace is closed (weekday not open / closure day) the plan must say so — banner, muted seats, gated taps — and booking refusals from… | 8 | yes | fakes | user-visible behaviour — #186, #1301 | shares a test name with test/features/workspace/workspace_availability_test.dart | KEEP |  |
 | `test/features/plan/plan_member_photos_test.dart` | widget | #620 — occupant profile photos on the member-facing maps: the Plan tab and the Reserve hub draw the occupant's photo in the seat marker (the #618 kiosk… | 3 | yes | fakes, real async I/O | user-visible behaviour — #620, #618 | no | KEEP |  |
 | `test/features/plan/plan_screen_test.dart` | widget | Tapping a seat: walk-up check-in capped by the next booking, check-out, and an explanation for a taken or blocked seat. | 7 | yes | fakes | user-visible behaviour — #622, #186, #278 | no | KEEP |  |
 | `test/features/plan/plan_semantics_test.dart` | widget | Floor-plan semantics (#402, wiki 26): without a semanticsBuilder the app's core surface is one unlabeled picture to TalkBack/VoiceOver. Every seat must… | 2 | yes | fakes | user-visible behaviour — #402, #186 | no | KEEP |  |
@@ -333,6 +333,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/plan/seat_day_timeline_test.dart` | widget | #903 — a seat booked for PART of the day must look part-booked, and a seat several people share must say who has it and when. One derivation (seatDaySegments)… | 11 | yes | none | user-visible behaviour — #903, #908 | no | KEEP |  |
 | `test/features/plan/seat_state_motion_test.dart` | widget | #611 — seat fill colours ANIMATE on a state change: the canvas host detects the diff, runs one finite lerp and passes it to the (pure) painter. The final… | 4 | yes | none | user-visible behaviour — #611 | no | KEEP |  |
 | `test/features/plan/series_booking_test.dart` | widget | A weekly series books every instance in its window and reports conflicting ones as skipped. | 2 | yes | none | user-visible behaviour — #184 | no | KEEP |  |
+| `test/features/plan/single_room_level_names_test.dart` | unit | #1273 — a level whose only room is the office is named by the level on member surfaces, and a second room brings both names back. | 4 | yes | none | a domain rule — #1273 | no | KEEP |  |
 | `test/features/plan/space_overlays_test.dart` | unit | #462: whole-space reservations must mark the ROOM/TABLE itself, with the occupant's name, for every user — not only the seats. | 5 | yes | none | a domain rule — #462 | no | KEEP |  |
 | `test/features/plan/time_scroller_test.dart` | widget | #104 — the time scroller: a future window books a reservation, Now returns to live, invalid ranges are rejected. | 8 | yes | none | user-visible behaviour — #104, #490, #814 | no | KEEP |  |
 | `test/features/profile/about_section_test.dart` | widget | The About section (#560, the Sparkilo idiom): who builds the app, under which licence, where to report — and how to support the project. Every tile opens its… | 1 | yes | fakes | user-visible behaviour — #560, #719 | no | KEEP |  |
@@ -346,7 +347,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/profile/language_selection_test.dart` | widget | Choosing a language in Settings switches the app immediately and persists; System default clears it. | 4 | yes | fakes | user-visible behaviour | no | KEEP |  |
 | `test/features/profile/member_monogram_test.dart` | unit | #793 — the Membres list drew three identical `M` circles: Mathieu, mathieu.bouchard and marion.blein.gauthier all rendered as one letter, so the glyph shown… | 14 | yes | none | a domain rule — #793 | no | KEEP |  |
 | `test/features/profile/navigation_selection_test.dart` | widget | #969 — the Navigation tile beside the theme: choosing the menu swaps the bottom bar for the drawer at once; the web never sees the tile. | 2 | yes | fakes | user-visible behaviour — #969 | no | KEEP |  |
-| `test/features/profile/new_instance_wizard_test.dart` | widget | #977 — the instance wizard over a fake Management API: token → the organisation, the project comes up, the schema and the functions run with progress, the… | 2 | yes | fakes | user-visible behaviour — #977 | no | KEEP |  |
+| `test/features/profile/new_instance_wizard_test.dart` | widget | #977 — the instance wizard over a fake Management API: token → the organisation, the project comes up, the schema and the functions run with progress, the… | 2 | yes | fakes | user-visible behaviour — #977, #1314 | no | KEEP |  |
 | `test/features/profile/personal_info_subject_test.dart` | widget | #1177 — the form's hints are written in the person of their SUBJECT. The same widget serves my own profile and a managed member's, and "printed before your… | 2 | yes | none | user-visible behaviour — #1177 | no | KEEP |  |
 | `test/features/profile/personal_info_test.dart` | unit | #886 — the two renderings every document prints, pinned equal to their SQL twins. | 16 | yes | none | a domain rule — #886, #910, #912 | no | KEEP |  |
 | `test/features/profile/platform_owner_screen_test.dart` | widget | #937 — the platform owner's overview on the Profiles list: every workspace they are NOT in, greyed out, and its owners on tap. | 7 | yes | fakes | user-visible behaviour — #937, #987 | no | KEEP |  |
@@ -379,7 +380,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/reservations/membership_refusal_text_test.dart` | unit | #1030 — a pilot tapped a free seat and read "Réservation impossible — la place vient peut-être d'être prise." The seat was free. The server had answered `not… | 8 | yes | none | a domain rule — #1030 | no | KEEP |  |
 | `test/features/reservations/one_place_test.dart` | unit | One place at a time (#412, migration 0079): a member cannot hold two ACTIVE reservations overlapping in time — the field bug was a walk-up check-in on a second… | 9 | yes | fakes | a domain rule — #412 | no | KEEP |  |
 | `test/features/reservations/picked_time_zone_test.dart` | unit | #1082 — a picked time is a WORKSPACE wall-clock time. | 2 | yes | none | a domain rule — #1082 | no | KEEP |  |
-| `test/features/reservations/plan_double_tap_test.dart` | widget | Double tap on the plan = whole-space intent (field request: "when double tapping on table or room, it must trigger the reservation or check in"). A desk cell… | 8 | yes | fakes | user-visible behaviour — #278 | no | KEEP |  |
+| `test/features/reservations/plan_double_tap_test.dart` | widget | Double tap on the plan = whole-space intent (field request: "when double tapping on table or room, it must trigger the reservation or check in"). A desk cell… | 8 | yes | fakes | user-visible behaviour — #278, #1273 | no | KEEP |  |
 | `test/features/reservations/reservation_delete_request_test.dart` | widget | Deleting a PAST or CHECKED-IN reservation is a REQUEST (#492): the member never deletes directly — the button says so, the dialog says who decides (and what… | 7 | yes | fakes, repository sources | user-visible behaviour — #492, #562 | no | KEEP |  |
 | `test/features/reservations/reservation_edges_test.dart` | unit | #600 (migration 0116) — the reservation/check-in edges a live-RPC test matrix surfaced. A check-out BEFORE the reserved slot's start (possible since 0113's… | 10 | yes | fakes | a domain rule — #600, #636 | no | KEEP |  |
 | `test/features/reservations/reservation_edit_test.dart` | widget | Edit & cancel own reservations from the shared detail sheet (0033): the sheet serves the hub's plan, Day, Week and the calendar timeline, so one surface change… | 5 | yes | none | user-visible behaviour | no | KEEP |  |
@@ -481,7 +482,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/lint/help_anchor_test.dart` | lint | #1016/#1018 — the anchor is one identity for the help symbol, the guide heading and the screenshot. This is what keeps the three in step, and what stops a… | 8 | yes | repository sources | an architecture, security or process rule — #1016, #1018, #1019 | no | KEEP |  |
 | `test/lint/help_coverage_test.dart` | lint | #1016/#1019 — the migration from coarse topics to exact anchors, made measurable, and now finished. 152 help symbols shared 14 topics between them; screen by… | 1 | yes | none | an architecture, security or process rule — #1016, #1019 | no | KEEP |  |
 | `test/lint/icon_button_labels_test.dart` | lint | #1055 — an icon button says what it does. | 3 | yes | none | an architecture, security or process rule — #1055 | no | KEEP |  |
-| `test/lint/instance_bundle_test.dart` | lint | #977 — the instance bundle the wizard installs must never lag the migrations or the functions: a new migration without a rebuilt bundle would leave a freshly… | 2 | yes | repository sources | an architecture, security or process rule — #977, #1137 | no | KEEP |  |
+| `test/lint/instance_bundle_test.dart` | lint | #977 — the instance bundle the wizard installs must never lag the migrations or the functions: a new migration without a rebuilt bundle would leave a freshly… | 3 | yes | repository sources | an architecture, security or process rule — #977, #1137, #1314 | no | KEEP |  |
 | `test/lint/l10n_completeness_test.dart` | lint | Every label exists in every language (#412 follow-up, owner rule): the aggregated ARBs must carry IDENTICAL key sets across all five locales. build_arb.dart… | 1 | yes | repository sources | an architecture, security or process rule — #412 | no | KEEP |  |
 | `test/lint/layering_test.dart` | lint | Architecture lint: the feature-first layering rules, machine-enforced. | 5 | yes | none | an architecture, security or process rule — #1233, #1234, #718 | no | KEEP |  |
 | `test/lint/legal_terms_test.dart` | lint | #1246 — the words a tax authority reads are pinned, per language. | 1 | yes | repository sources | an architecture, security or process rule — #1246 | no | KEEP |  |

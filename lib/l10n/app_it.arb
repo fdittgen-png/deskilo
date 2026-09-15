@@ -5956,6 +5956,14 @@
   "servicesPrice": "Prezzo",
   "servicesInactive": "Inattivo",
   "servicesActive": "Attivo",
+  "featureSingleRoomLevelNamesTitle": "Chiamare con il piano un piano a stanza unica",
+  "@featureSingleRoomLevelNamesTitle": {
+    "description": "#1273 single-room level names: the feature switch title"
+  },
+  "featureSingleRoomLevelNamesDesc": "Quando un piano ha una sola stanza, le viste di prenotazione indicano il piano invece della stanza — «2° piano · Tavolo 3», non «Ufficio 1 · Tavolo 3». Una seconda stanza riporta entrambi i nomi; l’editor della planimetria mostra sempre le stanze.",
+  "@featureSingleRoomLevelNamesDesc": {
+    "description": "#1273 single-room level names: the feature switch description"
+  },
   "featureSiteDocuments": "Sedi sui documenti",
   "@featureSiteDocuments": {
     "description": "#946 site documents: featureSiteDocuments"

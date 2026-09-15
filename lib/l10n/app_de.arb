@@ -5956,6 +5956,14 @@
   "servicesPrice": "Preis",
   "servicesInactive": "Inaktiv",
   "servicesActive": "Aktiv",
+  "featureSingleRoomLevelNamesTitle": "Einraum-Etagen nach der Etage benennen",
+  "@featureSingleRoomLevelNamesTitle": {
+    "description": "#1273 single-room level names: the feature switch title"
+  },
+  "featureSingleRoomLevelNamesDesc": "Hat eine Etage nur einen Raum, nennen die Buchungsansichten die Etage statt des Raums — „2. Etage · Tisch 3“ statt „Büro 1 · Tisch 3“. Ein zweiter Raum bringt beide Namen zurück; der Planeditor zeigt immer die Räume.",
+  "@featureSingleRoomLevelNamesDesc": {
+    "description": "#1273 single-room level names: the feature switch description"
+  },
   "featureSiteDocuments": "Standorte auf Belegen",
   "@featureSiteDocuments": {
     "description": "#946 site documents: featureSiteDocuments"

@@ -4,9 +4,11 @@ import 'dart:typed_data';
 import '../../../core/cache/cache_store.dart';
 import 'dart:ui' as ui;
 
+import 'package:flutter_riverpod/flutter_riverpod.dart' show WidgetRef;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_floor_plan_repository.dart';
 import '../domain/floor_plan.dart';
@@ -93,3 +95,19 @@ Future<Map<String, String>> targetNames(Ref ref) async {
       .watch(floorPlanRepositoryProvider)
       .fetchTargetNames(workspace.id);
 }
+
+/// #1273 — whether member surfaces name a level's only room by the level.
+/// One read shared by the list, the day, the week, the scan sheet and the
+/// canvas, so no two of them can disagree. A read, not a watch: callers
+/// rebuild with the screen that watches the features.
+bool namesSingleRoomsByLevel(WidgetRef ref) => ref
+    .read(enabledFeaturesSyncProvider)
+    .contains(WorkspaceFeature.singleRoomLevelNames);
+
+/// The name of [levelId], or null before the levels have loaded.
+String? levelNameOf(WidgetRef ref, String levelId) => ref
+    .read(levelsProvider)
+    .value
+    ?.where((l) => l.id == levelId)
+    .firstOrNull
+    ?.name;

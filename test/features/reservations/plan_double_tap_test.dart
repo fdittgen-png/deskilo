@@ -135,6 +135,9 @@ void main() {
     // Inside office (0,0,20,20) but outside the desk (2,2,12,4).
     await doubleTapCell(tester, 17.5, 15.5);
 
+    // #1273 — this level holds TWO rooms (Main room, Back room), so the
+    // sheet keeps the room's own name: the single-room rule never hides a
+    // name that tells two rooms apart.
     expect(find.text('Main room'), findsWidgets);
     await tester.tap(find.byKey(const ValueKey('space-checkin')));
     await tester.pumpAndSettle();

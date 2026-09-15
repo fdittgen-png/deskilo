@@ -8830,6 +8830,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get servicesActive => 'Attivo';
 
   @override
+  String get featureSingleRoomLevelNamesTitle =>
+      'Chiamare con il piano un piano a stanza unica';
+
+  @override
+  String get featureSingleRoomLevelNamesDesc =>
+      'Quando un piano ha una sola stanza, le viste di prenotazione indicano il piano invece della stanza — «2° piano · Tavolo 3», non «Ufficio 1 · Tavolo 3». Una seconda stanza riporta entrambi i nomi; l’editor della planimetria mostra sempre le stanze.';
+
+  @override
   String get featureSiteDocuments => 'Sedi sui documenti';
 
   @override

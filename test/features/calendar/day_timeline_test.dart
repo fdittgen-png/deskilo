@@ -154,7 +154,8 @@ void main() {
     await pumpTimeline(tester, seed: [todayReservation()]);
 
     expect(find.byType(DayTimeline), findsOneWidget);
-    expect(find.text('Main room · Window desk'), findsOneWidget);
+    // #1273 — the seeded level holds one room, so the header names the level.
+    expect(find.text('Ground floor · Window desk'), findsOneWidget);
     expect(find.text('A1'), findsOneWidget);
     expect(find.byKey(DayTimeline.trackKey('seat-4')), findsOneWidget);
     // Hour ruler labels every 2h.
@@ -208,7 +209,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(DayTimeline.trackKey('seat-9')), findsOneWidget);
-    expect(find.text('Quiet room · Corner desk'), findsOneWidget);
+    // #1273 — First floor's only room is named by the level.
+    expect(find.text('First floor · Corner desk'), findsOneWidget);
     expect(find.text('B1'), findsOneWidget);
     expect(find.byKey(DayTimeline.trackKey('seat-4')), findsNothing);
   });
@@ -261,8 +263,9 @@ void main() {
     );
 
     // Both levels' group headers and seat rows are on one axis.
-    expect(find.text('Main room · Window desk'), findsOneWidget);
-    expect(find.text('Quiet room · Corner desk'), findsOneWidget);
+    // #1273 — each level holds one room, so each header names its level.
+    expect(find.text('Ground floor · Window desk'), findsOneWidget);
+    expect(find.text('First floor · Corner desk'), findsOneWidget);
     expect(find.byKey(DayTimeline.trackKey('seat-4')), findsOneWidget);
     expect(find.byKey(DayTimeline.trackKey('seat-9')), findsOneWidget);
 

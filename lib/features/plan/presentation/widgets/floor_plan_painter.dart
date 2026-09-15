@@ -54,7 +54,15 @@ class FloorPlanPainter extends CustomPainter {
     this.selectionResizable = false,
     this.selectionValid = true,
     this.dropTargets,
+    this.singleRoomByLevel = false,
   });
+
+  /// #1273 — a level's only room carries no name on the canvas (the
+  /// singleRoomLevelNames feature). False in the editor, where the owner
+  /// manipulates the real rooms and must see them.
+  final bool singleRoomByLevel;
+
+  bool get _labelsOffices => plan.labelsOffices(byLevel: singleRoomByLevel);
 
   final FloorPlan plan;
   final double cellSize;
@@ -244,19 +252,21 @@ class FloorPlanPainter extends CustomPainter {
             ..strokeWidth = 2.5
             ..color = accent.withValues(alpha: 0.9),
         );
-        drawLabel(
-          canvas,
-          overlay.label.isEmpty
-              ? office.name
-              : '${office.name} · ${overlay.label}',
-          rect,
-          colorScheme.onSurface,
-        );
+        final officeLabel = !_labelsOffices
+            ? overlay.label
+            : overlay.label.isEmpty
+                ? office.name
+                : '${office.name} · ${overlay.label}';
+        if (officeLabel.isNotEmpty) {
+          drawLabel(canvas, officeLabel, rect, colorScheme.onSurface);
+        }
         drawReservedChip(canvas, rect, overlay.label, accent, blur: blurLabels,
             checkedIn: overlay.state == SeatState.occupied);
       } else {
         canvas.drawRect(rect, officeBorder);
-        drawLabel(canvas, office.name, rect, colorScheme.onSurface);
+        if (_labelsOffices) {
+          drawLabel(canvas, office.name, rect, colorScheme.onSurface);
+        }
       }
     }
 
@@ -703,6 +713,7 @@ class FloorPlanPainter extends CustomPainter {
   @override
   bool shouldRepaint(FloorPlanPainter oldDelegate) =>
       oldDelegate.plan != plan ||
+      oldDelegate.singleRoomByLevel != singleRoomByLevel ||
       oldDelegate.background != background ||
       // Deep compares on the maps (perf audit): callers rebuild these
       // maps every frame/minute-tick, so identity `!=` was ALWAYS true

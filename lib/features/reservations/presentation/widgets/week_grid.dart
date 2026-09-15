@@ -327,6 +327,9 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
               height: WeekGridMetrics.levelHeaderRowHeight,
             ));
           }
+          // #1273 — a level's only room is named by the level.
+          final byLevel = namesSingleRoomsByLevel(ref);
+          final levelName = level?.name ?? levelNameOf(ref, plan.levelId);
           for (final office in plan.offices) {
             final officeReservations = widget.reservations
                 .where((r) => r.officeId == office.id)
@@ -340,7 +343,10 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
                   .where((r) => r.deskId == desk.id)
                   .toList();
               leadingCells.add(
-                _groupHeaderCell(context, '${office.name} · ${desk.name}'),
+                _groupHeaderCell(
+                  context,
+                  '${plan.officeContextName(office, levelName: levelName, byLevel: byLevel)} · ${desk.name}',
+                ),
               );
               gridRows.add(const SizedBox(
                 height: WeekGridMetrics.groupHeaderRowHeight,

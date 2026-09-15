@@ -194,7 +194,9 @@ const Map<String, int> _pairBudget = {
   'plan -> money': 4,
   'plan -> profile': 2,
   'plan -> reservations': 9,
-  'plan -> workspace': 10,
+  // 2026-09-15 #1273 10→11: floor_plan_providers reads the
+  // singleRoomLevelNames flag once for every map surface.
+  'plan -> workspace': 11,
   'profile -> auth': 6,
   'profile -> calendar': 2,
   'profile -> members': 1,
@@ -204,7 +206,9 @@ const Map<String, int> _pairBudget = {
   'reservations -> events': 5,
   'reservations -> members': 2,
   'reservations -> money': 1,
-  'reservations -> plan': 62,
+  // 2026-09-15 #1273 62→63: the seat list names a level's only room by
+  // the level through floor_plan_providers, like the day and week views.
+  'reservations -> plan': 63,
   'reservations -> profile': 1,
   'reservations -> workspace': 48,
   'workspace -> auth': 3,

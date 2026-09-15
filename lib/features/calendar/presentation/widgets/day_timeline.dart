@@ -404,6 +404,9 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
       final wholeLevelReservations = levelReservations
           .where((r) => r.levelId == plan.levelId)
           .toList();
+      // #1273 — a level's only room is named by the level.
+      final byLevel = namesSingleRoomsByLevel(ref);
+      final levelName = level?.name ?? levelNameOf(ref, plan.levelId);
       for (final office in plan.offices) {
         final officeReservations = levelReservations
             .where((r) => r.officeId == office.id)
@@ -411,7 +414,8 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
         for (final desk in plan.desksOf(office.id)) {
           final seats = plan.seatsOf(desk.id);
           if (seats.isEmpty) continue;
-          final header = '${office.name} · ${desk.name}';
+          final header =
+              '${plan.officeContextName(office, levelName: levelName, byLevel: byLevel)} · ${desk.name}';
           leadingCells.add(_headerCell(context, header));
           tracks.add(const SizedBox(
             height: TimelineAxis.headerRowHeight,

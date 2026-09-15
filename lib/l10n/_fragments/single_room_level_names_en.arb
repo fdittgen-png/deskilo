@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "featureSingleRoomLevelNamesTitle": "Name a single-room level by the level",
+  "@featureSingleRoomLevelNamesTitle": {
+    "description": "#1273 single-room level names: the feature switch title"
+  },
+  "featureSingleRoomLevelNamesDesc": "When a level holds only one room, the booking views name the level instead of the room — “2nd floor · Table 3”, not “Room 1 · Table 3”. Adding a second room brings both names back; the plan editor always shows the rooms.",
+  "@featureSingleRoomLevelNamesDesc": {
+    "description": "#1273 single-room level names: the feature switch description"
+  }
+}

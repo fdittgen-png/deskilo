@@ -21,6 +21,29 @@ sealed class FloorPlan with _$FloorPlan {
     @Default(<PlanImage>[]) List<PlanImage> images,
   }) = _FloorPlan;
 
+  /// #1273 — how a member surface names [office] as CONTEXT ("… · Table 3").
+  ///
+  /// A level whose only room is [office] learns nothing from the room's
+  /// name — the association's two floors each held one room called
+  /// "Bureau 1". With [byLevel] (the singleRoomLevelNames feature) such a
+  /// room is named by [levelName]; a second room brings both names back
+  /// with no configuration change. Presentation only: the office id stays
+  /// the identity everywhere below.
+  String officeContextName(
+    Office office, {
+    String? levelName,
+    required bool byLevel,
+  }) =>
+      byLevel && offices.length == 1 && (levelName?.isNotEmpty ?? false)
+          ? levelName!
+          : office.name;
+
+  /// Whether a canvas paints its rooms' names: not a level's only room
+  /// while [byLevel] — the level picker already said which floor this is,
+  /// and painting the level's name inside the room would be a room called
+  /// a floor.
+  bool labelsOffices({required bool byLevel}) => !byLevel || offices.length != 1;
+
   List<Desk> desksOf(String officeId) =>
       desks.where((d) => d.officeId == officeId).toList();
 
