@@ -1497,6 +1497,17 @@ class AppLocalizationsEs extends AppLocalizations {
       'Desliza la barra hacia abajo para la vista de pantalla completa. Desliza hacia arriba, o mantén pulsado el botón Reservar, para recuperarla.';
 
   @override
+  String shellPendingDecisions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count decisiones te esperan',
+      one: '1 decisión te espera',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get shellBarHideHint =>
       'Mantén pulsado para la vista de pantalla completa';
 

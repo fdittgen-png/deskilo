@@ -53,6 +53,7 @@
     "description": "Support block body (#560)"
   },
   "shellSwipeCoachMark": "Wischen Sie die Leiste nach unten für die Vollbildansicht. Nach oben wischen oder die Reservieren-Taste lange drücken, um sie zurückzuholen.",
+  "shellPendingDecisions": "{count, plural, =1{1 Entscheidung wartet auf Sie} other{{count} Entscheidungen warten auf Sie}}",
   "shellBarHideHint": "Lange drücken für die Vollbildansicht",
   "shellBarShowHint": "Lange drücken, um die Navigationsleiste einzublenden",
   "shellBarHiddenAnnounce": "Navigationsleiste ausgeblendet",

@@ -1499,6 +1499,17 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wischen Sie die Leiste nach unten für die Vollbildansicht. Nach oben wischen oder die Reservieren-Taste lange drücken, um sie zurückzuholen.';
 
   @override
+  String shellPendingDecisions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Entscheidungen warten auf Sie',
+      one: '1 Entscheidung wartet auf Sie',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get shellBarHideHint => 'Lange drücken für die Vollbildansicht';
 
   @override

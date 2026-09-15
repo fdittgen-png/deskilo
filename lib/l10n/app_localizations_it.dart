@@ -1500,6 +1500,17 @@ class AppLocalizationsIt extends AppLocalizations {
       'Scorri la barra verso il basso per la vista a schermo intero. Scorri verso l’alto, o tieni premuto il pulsante Prenota, per riportarla.';
 
   @override
+  String shellPendingDecisions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count decisioni ti aspettano',
+      one: '1 decisione ti aspetta',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get shellBarHideHint => 'Tieni premuto per la vista a schermo intero';
 
   @override

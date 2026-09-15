@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -125,3 +126,18 @@ const Duration kShellBarHideDuration = Duration(milliseconds: 220);
 /// Minimum fling speed that counts as a swipe, in logical pixels per
 /// second. Below it the finger was resting, not throwing.
 const double kShellBarSwipeVelocity = 200;
+
+/// The live collapse progress `t` ∈ [0, 1] — 0 shown, 1 hidden — for
+/// chrome that lives outside [ShellBarCollapse]: the title bar (#1322).
+///
+/// Published by the ONE controller that owns the gesture, never driven by
+/// a second: two controllers with the same duration and curve still part
+/// company the moment a finger is on the bar, because only one of them
+/// follows it. Transient like that controller; the settled, persisted
+/// choice stays [ShellBarHidden].
+@Riverpod(keepAlive: true)
+ValueNotifier<double> shellBarProgress(Ref ref) {
+  final progress = ValueNotifier<double>(0);
+  ref.onDispose(progress.dispose);
+  return progress;
+}

@@ -35,6 +35,7 @@ import 'shell_bottom_bar.dart';
 import 'shell_drawer.dart';
 import '../../core/time/clock.dart';
 import 'shell_bar_visibility.dart';
+import 'shell_title_bar.dart';
 
 /// #821 — the conversations I muted; empty when the list cannot be
 /// read, so a failing fetch silences nothing by accident.
@@ -333,7 +334,12 @@ class ShellScreen extends ConsumerWidget {
               ),
             )
           : null,
-      appBar: AppBar(
+      // #1322 — the title bar leaves with the bottom bar: one gesture,
+      // one progress, a real full-screen view. The web shell has no bar
+      // to follow, and neither does a shell without one.
+      appBar: ShellTitleBar(
+        collapsible: !webShell && visibleBranches.isNotEmpty,
+        appBar: AppBar(
         title: Text(tabTitles[navigationShell.currentIndex]),
         actions: [
           // The editor sits on BOTH map surfaces (field request). Plan
@@ -399,6 +405,7 @@ class ShellScreen extends ConsumerWidget {
             onPressed: () => context.push('/settings'),
           ),
         ],
+        ),
       ),
       // #611 — the tab switch fades the incoming branch in. The
       // FadeIndexedStack pattern: the shell's IndexedStack (and with it

@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/motion/motion.dart';
@@ -36,6 +37,11 @@ double shellBarSettleTarget({
   if (velocity.abs() >= kShellBarSwipeVelocity) return velocity > 0 ? 1 : 0;
   return progress >= kShellBarSettleThreshold ? 1 : 0;
 }
+
+/// How legible the chrome still is at progress [t]: labels and titles go
+/// before their surface does, so neither bar reaches its last few pixels
+/// still carrying text. One curve for both bars (#1322).
+double shellBarContentOpacity(double t) => (1 - t / 0.7).clamp(0.0, 1.0);
 
 /// Owns the bar's collapse progress and the gesture that drives it.
 ///
@@ -104,7 +110,34 @@ class _ShellBarCollapseState extends ConsumerState<ShellBarCollapse>
   bool _resolved = false;
 
   @override
+  void initState() {
+    super.initState();
+    _controller.addListener(_publish);
+  }
+
+  /// Hands every frame of the collapse to [shellBarProgressProvider], so
+  /// the title bar moves with this one (#1322).
+  ///
+  /// Straight through — except inside a build. The instant settle in
+  /// [build] runs there, and rebuilding a widget that is not below this
+  /// one mid-build is exactly what Flutter forbids. That path is the
+  /// launch and the reduced-motion jump: no journey to keep in step, only
+  /// an end state, one frame later.
+  void _publish() {
+    final progress = ref.read(shellBarProgressProvider);
+    if (SchedulerBinding.instance.schedulerPhase !=
+        SchedulerPhase.persistentCallbacks) {
+      progress.value = _controller.value;
+      return;
+    }
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (mounted) progress.value = _controller.value;
+    });
+  }
+
+  @override
   void dispose() {
+    _controller.removeListener(_publish);
     _controller.dispose();
     super.dispose();
   }

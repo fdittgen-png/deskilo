@@ -1492,6 +1492,17 @@ class AppLocalizationsEn extends AppLocalizations {
       'Swipe the bar down for a full-screen view. Swipe up, or long-press the Reserve button, to bring it back.';
 
   @override
+  String shellPendingDecisions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count decisions await you',
+      one: '1 decision awaits you',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get shellBarHideHint => 'Long-press for a full-screen view';
 
   @override
