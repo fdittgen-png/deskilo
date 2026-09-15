@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**465 files, 3057 tests.**
+**466 files, 3061 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -12,7 +12,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | database | 13 | 118 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
-| lint | 58 | 150 |
+| lint | 59 | 154 |
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
@@ -21,7 +21,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 
 | action | files |
 |---|---:|
-| KEEP | 465 |
+| KEEP | 466 |
 
 ## Rules
 
@@ -471,6 +471,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/lint/fab_safe_list_test.dart` | lint | #1181 — a list with a floating action button over it must end above the button. | 1 | yes | none | an architecture, security or process rule — #1181 | no | KEEP |  |
 | `test/lint/fdroid_frozen_test.dart` | lint | THE F-DROID SUBMISSION IS FROZEN. | 1 | yes | none | an architecture, security or process rule | no | KEEP |  |
 | `test/lint/fdroid_reproducible_test.dart` | lint | #835 — F-Droid ships OUR signed binary only while its rebuild of the pinned commit matches it byte for byte. Two invariants carry that, and both are split… | 5 | yes | repository sources | an architecture, security or process rule — #835 | no | KEEP |  |
+| `test/lint/feature_flag_writers_test.dart` | lint | #1336 — every feature-flag writer goes through the canonical change-set, or is a named exception with its reason. | 4 | yes | none | an architecture, security or process rule — #1336, #800, #963 | no | KEEP |  |
 | `test/lint/feature_registry_test.dart` | lint | Feature-management completeness (#502) — the LIFETIME rule of this project: every user-facing functionality ships behind a [WorkspaceFeature] flag, wired end… | 7 | yes | none | an architecture, security or process rule — #502, #500, #513 | no | KEEP |  |
 | `test/lint/file_length_test.dart` | lint | File-length budget with a ratcheting allow-list. | 1 | yes | none | an architecture, security or process rule — #408, #490, #575 | no | KEEP |  |
 | `test/lint/flutter_pin_test.dart` | lint | #809 — one pinned Flutter version, and everything reads it. | 2 | yes | repository sources | an architecture, security or process rule — #809 | no | KEEP |  |
