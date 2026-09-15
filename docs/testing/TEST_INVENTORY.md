@@ -4,24 +4,24 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**464 files, 3033 tests.**
+**465 files, 3057 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
 | a11y | 1 | 1 |
-| database | 12 | 100 |
+| database | 13 | 118 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
 | lint | 58 | 150 |
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
-| unit | 163 | 1273 |
-| widget | 222 | 1476 |
+| unit | 163 | 1277 |
+| widget | 222 | 1478 |
 
 | action | files |
 |---|---:|
-| KEEP | 464 |
+| KEEP | 465 |
 
 ## Rules
 
@@ -59,6 +59,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `supabase/tests/database/12_storage_tenancy.sql` | database | 0215 — #1316: two workspaces, and neither can read the other's files. | 9 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1316, #1313 | no | KEEP |  |
 | `supabase/tests/database/13_matrix_policies.sql` | database | 0216 — #1321: a narrowed admin row narrows the rows. | 15 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1321 | no | KEEP |  |
 | `supabase/tests/database/14_feature_gates.sql` | database | #1335 — a feature the client treats as OFF must be off on the server. | 8 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1335, #800, #1332 | no | KEEP |  |
+| `supabase/tests/database/15_number_series.sql` | database | 0217 — #1320: a number series never issues the same number twice. | 18 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1320 | no | KEEP |  |
 | `supabase/tests/database/20_money_invariants.sql` | database | #1226/#1229/#1231 — the two money guards nothing had ever executed. | 7 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1226, #1229, #1231 | no | KEEP |  |
 | `supabase/tests/database/21_ledger_append_only.sql` | database | #1229 — the ledger is append-only, and the one exception is narrow. | 6 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1229 | no | KEEP |  |
 | `supabase/tests/database/22_reconciliation.sql` | database | #1230 — the reconciliation, proved to be clean AND proved to bite. | 8 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1230, #1231, #1138 | no | KEEP |  |
@@ -250,8 +251,8 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/money/money_validation_parity_test.dart` | widget | #816 (migration 0144) — the validation framework and the role gates on the money flows keep what the guide promises. The SQL half is pinned on the migration… | 12 | yes | fakes, repository sources | user-visible behaviour — #816, #881, #982 | no | KEEP |  |
 | `test/features/money/month_placeholders_test.dart` | unit | #1002 — a design references the period's month and composes the recurring position's wording itself: « Septembre 100 % ». | 3 | yes | none | a domain rule — #1002 | no | KEEP |  |
 | `test/features/money/number_sequence_adopters_test.dart` | unit | #928 — three documents that carried no number take one from the framework: member numbers, VAT declaration numbers, payment references. The Dart side reads… | 10 | yes | repository sources | a domain rule — #928 | no | KEEP |  |
-| `test/features/money/number_sequences_screen_test.dart` | widget | #925 — the one screen for every number series: reached from Settings by the owner, live preview while typing, save through the repository. | 3 | yes | fakes | user-visible behaviour — #925 | no | KEEP |  |
-| `test/features/money/number_sequences_test.dart` | unit | #925 — one number-sequence framework, per workspace, generated in the database. The Dart side is the owner's view of a series; the numbers are drawn by… | 9 | yes | repository sources | a domain rule — #925 | no | KEEP |  |
+| `test/features/money/number_sequences_screen_test.dart` | widget | #925 — the one screen for every number series: reached from Settings by the owner, live preview while typing, save through the repository. | 5 | yes | fakes | user-visible behaviour — #925, #1320 | no | KEEP |  |
+| `test/features/money/number_sequences_test.dart` | unit | #925 — one number-sequence framework, per workspace, generated in the database. The Dart side is the owner's view of a series; the numbers are drawn by… | 13 | yes | repository sources | a domain rule — #925, #1320 | no | KEEP |  |
 | `test/features/money/page_furniture_test.dart` | unit | #872 — the header and footer are FIXED page furniture, the body is the only thing that flows. A reader holding page 3 of an invoice must still see which… | 6 | yes | none | a domain rule — #872 | no | KEEP |  |
 | `test/features/money/partial_rematch_test.dart` | unit | Additional payments onto a PARTIALLY PAID invoice (#506): matched against the REMAINING amount — maybe until fully paid, maybe the rest is written off (#504). | 5 | yes | repository sources | a domain rule — #506, #504 | no | KEEP |  |
 | `test/features/money/participation_label_test.dart` | unit | #870 — what the recurring position is CALLED is a tax question, not a wording preference. On a French association's invoice "abonnement" reads as a commercial… | 5 | yes | none | a domain rule — #870, #1000 | no | KEEP |  |
@@ -455,7 +456,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/i18n/screen_locales_test.dart` | i18n | #1246 — every screen we can pump, in every language, narrowed to a phone. | 1 | yes | none | a localisation contract — #1246 | no | KEEP |  |
 | `test/i18n/text_expansion_test.dart` | i18n | Text-expansion survival: the main surfaces render in every launch locale at phone width without a RenderFlex overflow. | 2 | yes | fakes | a localisation contract — #402, #707 | no | KEEP |  |
 | `test/lint/adr_format_test.dart` | lint | Docs-parity lint: decision records keep the shape that makes them citable. | 2 | yes | repository sources | an architecture, security or process rule | no | KEEP |  |
-| `test/lint/anchored_patch_test.dart` | lint | #1092 — a migration that re-creates a function FROM SCRATCH silently discards every anchored patch applied to it since. | 2 | yes | repository sources | an architecture, security or process rule — #1092, #960, #985 | no | KEEP |  |
+| `test/lint/anchored_patch_test.dart` | lint | #1092 — a migration that re-creates a function FROM SCRATCH silently discards every anchored patch applied to it since. | 2 | yes | repository sources | an architecture, security or process rule — #1092, #960, #1320 | no | KEEP |  |
 | `test/lint/android_manifest_test.dart` | lint | Manifest pins (#436): POST_NOTIFICATIONS was silently missing and Android 13+ suppressed every notification the app ever posted — no reminder, no badge mirror,… | 2 | yes | repository sources | an architecture, security or process rule — #436, #442 | no | KEEP |  |
 | `test/lint/android_reach_test.dart` | lint | Play turns a PERMISSION into a hardware REQUIREMENT unless the manifest says otherwise, and a required feature is not an error anywhere — it is a silent… | 3 | yes | repository sources | an architecture, security or process rule | no | KEEP |  |
 | `test/lint/booking_rules_single_key_test.dart` | lint | #1147 / #1089 — booking_rules is one jsonb column and it is written ONE key at a time, merged in the database (set_booking_rule, 0195). A client that SELECTs… | 1 | yes | none | an architecture, security or process rule — #1147, #1089 | no | KEEP |  |

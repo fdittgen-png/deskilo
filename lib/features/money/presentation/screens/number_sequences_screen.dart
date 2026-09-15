@@ -60,7 +60,14 @@ class _SequenceCard extends ConsumerStatefulWidget {
 }
 
 class _SequenceCardState extends ConsumerState<_SequenceCard> {
-  late NumberSequence _draft = widget.sequence;
+  // #1320 — a stored pair that restarts more often than it prints its date
+  // opens as the finest restart the date can carry; Save repairs it.
+  late NumberSequence _draft = widget.sequence.copyWith(
+    reset: NumberSequence.effectiveReset(
+      widget.sequence.datePart,
+      widget.sequence.reset,
+    ),
+  );
   late final _prefix = TextEditingController(text: widget.sequence.prefix);
   late final _suffix = TextEditingController(text: widget.sequence.suffix);
   bool _saving = false;
@@ -109,6 +116,11 @@ class _SequenceCardState extends ConsumerState<_SequenceCard> {
     final preview = _draft
         .copyWith(prefix: _prefix.text, suffix: _suffix.text)
         .format(widget.sequence.nextValue, ref.watch(clockProvider).now());
+    // #1320 — the two refusals of set_number_sequence, shown before Save.
+    final removalBlocked = _draft
+        .copyWith(prefix: _prefix.text.trim(), suffix: _suffix.text.trim())
+        .removesDateFrom(widget.sequence);
+    final repairedPair = !widget.sequence.isValidPair;
     final journalLabel = switch (_draft.journal) {
       'invoice' => l10n?.numberSequenceJournalInvoice ?? 'Invoices',
       'credit_note' => l10n?.numberSequenceJournalCreditNote ?? 'Credit notes',
@@ -186,6 +198,13 @@ class _SequenceCardState extends ConsumerState<_SequenceCard> {
                     isExpanded: true,
                     decoration: InputDecoration(
                       labelText: l10n?.numberSequenceDatePart ?? 'Date',
+                      errorText: removalBlocked
+                          ? l10n?.numberSequenceDateRemovalBlocked ??
+                              'Numbers were already issued with the date. '
+                                  'Removing it could repeat one — change the '
+                                  'prefix or suffix too.'
+                          : null,
+                      errorMaxLines: 4,
                     ),
                     items: [
                       DropdownMenuItem(
@@ -206,7 +225,17 @@ class _SequenceCardState extends ConsumerState<_SequenceCard> {
                     onChanged: _saving
                         ? null
                         : (v) => setState(
-                            () => _draft = _draft.copyWith(datePart: v),
+                            () => _draft = v == null
+                                ? _draft
+                                : _draft.copyWith(
+                                    datePart: v,
+                                    // #1320 — a restart the new date cannot
+                                    // carry becomes the finest one it can.
+                                    reset: NumberSequence.effectiveReset(
+                                      v,
+                                      _draft.reset,
+                                    ),
+                                  ),
                           ),
                   ),
                 ),
@@ -233,27 +262,43 @@ class _SequenceCardState extends ConsumerState<_SequenceCard> {
             ),
             const SizedBox(height: AppSpacing.md),
             DropdownButtonFormField<NumberReset>(
-              key: ValueKey('number-sequence-reset-${_draft.journal}'),
+              // Keyed by the date part: the restarts on offer change with
+              // it, and a form field keeps its initial value otherwise.
+              key: ValueKey(
+                'number-sequence-reset-${_draft.journal}-${_draft.datePart.name}',
+              ),
               initialValue: _draft.reset,
               isExpanded: true,
               decoration: InputDecoration(
                 labelText: l10n?.numberSequenceReset ?? 'Restart',
+                helperText: _draft.datePart == NumberDatePart.yearMonth
+                    ? null
+                    : l10n?.numberSequenceResetLimited ??
+                        'A number restarts at most as often as it shows its '
+                            'date — otherwise it would print an earlier '
+                            'number again.',
+                helperMaxLines: 4,
+                errorText: repairedPair
+                    ? l10n?.numberSequenceResetWasInvalid ??
+                        'This series restarted more often than it shows its '
+                            'date. Save to keep a restart that cannot repeat '
+                            'a number.'
+                    : null,
+                errorMaxLines: 4,
               ),
               items: [
-                DropdownMenuItem(
-                  value: NumberReset.never,
-                  child: Text(l10n?.numberSequenceResetNever ?? 'Never'),
-                ),
-                DropdownMenuItem(
-                  value: NumberReset.yearly,
-                  child: Text(l10n?.numberSequenceResetYearly ?? 'Every year'),
-                ),
-                DropdownMenuItem(
-                  value: NumberReset.monthly,
-                  child: Text(
-                    l10n?.numberSequenceResetMonthly ?? 'Every month',
+                for (final reset in NumberSequence.resetsFor(_draft.datePart))
+                  DropdownMenuItem(
+                    value: reset,
+                    child: Text(switch (reset) {
+                      NumberReset.never =>
+                        l10n?.numberSequenceResetNever ?? 'Never',
+                      NumberReset.yearly =>
+                        l10n?.numberSequenceResetYearly ?? 'Every year',
+                      NumberReset.monthly =>
+                        l10n?.numberSequenceResetMonthly ?? 'Every month',
+                    }),
                   ),
-                ),
               ],
               onChanged: _saving
                   ? null
@@ -262,7 +307,7 @@ class _SequenceCardState extends ConsumerState<_SequenceCard> {
             const SizedBox(height: AppSpacing.md),
             FilledButton(
               key: ValueKey('number-sequence-save-${_draft.journal}'),
-              onPressed: _saving ? null : _save,
+              onPressed: _saving || removalBlocked ? null : _save,
               child: Text(l10n?.commonSave ?? 'Save'),
             ),
           ],

@@ -266,6 +266,11 @@ const VATPERIOD=[['month','Mensuelle'],['quarter','Trimestrielle']];
 const ENVIRONMENTS=[['dev',"Développement — pour essayer : l'app l'annonce partout et filigrane chaque document"],['prod','Production — les factures qui en sortent sont réellement dues']];
 const NUMDATE=[['none','Aucune'],['year','Année (INV-2026-0001)'],['year_month','Année-mois (INV-2026-09-0001)']];
 const NUMRESET=[['never','Jamais'],['yearly','Chaque année'],['monthly','Chaque mois']];
+// #1320 — un numéro ne recommence pas plus souvent qu'il n'imprime sa date,
+// sinon il réimprime un numéro déjà attribué (le serveur refuse ces paires).
+const RESETS_FOR={none:['never'],year:['never','yearly'],year_month:['never','yearly','monthly']};
+function numResets(){const ok=RESETS_FOR[S.numbering.datePart]||['never'];if(!ok.includes(S.numbering.reset)){S.numbering.reset=ok[ok.length-1];save()}return NUMRESET.filter(([v])=>ok.includes(v))}
+function numResetHint(){return S.numbering.datePart==='year_month'?'':"La remise à zéro ne peut pas être plus fréquente que la date imprimée — sinon un numéro déjà attribué reviendrait."}
 const VATEXIGIBILITY=[['invoice','Sur les débits — la TVA est due à la facture'],['payment','Sur les encaissements — la TVA est due au paiement']];
 const OUTSIDE=[['charged','Facturé (défaut) — compté comme un usage ordinaire'],['free','Gratuit — autorisé, jamais compté ni facturé'],['walkup_only','Spontané seulement — arrivée impromptue oui, réservation à l\'avance non'],['off','Interdit — rien en dehors des heures, débordement compris']];
 const GRAN=[['half_day','Demi-journées (matin / après-midi)'],['full_day','Journées entières uniquement'],['hours','Heures réelles (de–à exact, demi/journées en raccourcis)'],['minutes_60',"Créneaux d'une heure"],['minutes_30','Créneaux de 30 minutes'],['minutes_15','Créneaux de 15 minutes'],['minutes_5','Créneaux de 5 minutes'],['flexible','Plage horaire libre']];
@@ -592,7 +597,7 @@ const STEPS=[
    else k.push(needs('vatManagement'),h('p',{class:'hint'},'Assujetti sans « Gestion de la TVA » : les factures partiront sans taux. Activez la fonctionnalité pour saisir vos taux.'));
    k.push(selectEl('Exigibilité de la TVA','vatExigibility',VATEXIGIBILITY,"Quand la taxe devient due : à la facture, ou au paiement du client. En France les prestations de services sont sur les encaissements sauf option pour les débits. Ce choix décide de ce qu'une période déclare, et il est imprimé sur chaque facture.",null,'vat'));
    k.push(lbl('Numérotation des factures','legal'),h('p',{class:'hint'},"Une série sans trou par journal : le numéro est pris dans la base à l'émission. Le format vaut pour la suite ; un document émis ne change jamais."),
-    h('div',{class:'row'},input('Préfixe','numbering.prefix','','text','INV-'),selectEl('Date','numbering.datePart',NUMDATE,'',null,'legal'),input('Chiffres','numbering.digits','','number','4'),selectEl('Remise à zéro','numbering.reset',NUMRESET,'',null,'legal')));
+    h('div',{class:'row'},input('Préfixe','numbering.prefix','','text','INV-'),selectEl('Date','numbering.datePart',NUMDATE,'',null,'legal'),input('Chiffres','numbering.digits','','number','4'),selectEl('Remise à zéro','numbering.reset',numResets(),numResetHint(),null,'legal')));
    k.push(lbl('Numérotation des adhérents','legal'),h('p',{class:'hint'},"Le numéro d'adhérent est attribué à l'arrivée et ne change jamais ; il figure sur la facture sous « N° Adhérent »."),
     h('div',{class:'row'},input('Préfixe','memberNumbering.prefix','','text','M-'),input('Chiffres','memberNumbering.digits','','number','4')));
    if(on('vatDeclarations'))k.push(selectEl('Période de déclaration de TVA','vatPeriod',VATPERIOD,"La périodicité que votre régime impose. La déclaration agrège ce que la période porte selon l'exigibilité choisie — les factures émises (débits) ou les paiements reçus (encaissements) — par taux (CA3, UStVA…), et se transmet ou s'exporte en PDF/XML.",null,'vat'));else k.push(needs('vatDeclarations'))}

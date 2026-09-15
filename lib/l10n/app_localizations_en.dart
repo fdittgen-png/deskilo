@@ -7229,6 +7229,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get memberNumberLabel => 'Member no.';
 
   @override
+  String get numberSequenceResetLimited =>
+      'A number restarts at most as often as it shows its date — otherwise it would print an earlier number again.';
+
+  @override
+  String get numberSequenceResetWasInvalid =>
+      'This series restarted more often than it shows its date. Save to keep a restart that cannot repeat a number.';
+
+  @override
+  String get numberSequenceDateRemovalBlocked =>
+      'Numbers were already issued with the date. Removing it could repeat one — change the prefix or suffix too.';
+
+  @override
   String billParticipation(int pct) {
     return 'Participation $pct%';
   }

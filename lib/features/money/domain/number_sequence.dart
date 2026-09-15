@@ -50,6 +50,37 @@ class NumberSequence {
     'payment',
   ];
 
+  /// #1320 — the restarts a date part can carry. A number restarts at most
+  /// as often as it prints its date, or it prints an earlier number again.
+  /// Mirrors `number_sequence_pair_valid` (0217).
+  static List<NumberReset> resetsFor(NumberDatePart datePart) =>
+      switch (datePart) {
+        NumberDatePart.none => const [NumberReset.never],
+        NumberDatePart.year => const [NumberReset.never, NumberReset.yearly],
+        NumberDatePart.yearMonth => NumberReset.values,
+      };
+
+  /// The restart a series is drawn with: [reset] when [datePart] can carry
+  /// it, otherwise the finest one it can. Mirrors
+  /// `number_sequence_effective_reset` (0217).
+  static NumberReset effectiveReset(NumberDatePart datePart, NumberReset reset) {
+    final allowed = resetsFor(datePart);
+    return allowed.contains(reset) ? reset : allowed.last;
+  }
+
+  /// Whether this series restarts no more often than it prints its date.
+  bool get isValidPair => resetsFor(datePart).contains(reset);
+
+  /// Whether saving this draft over [saved] prints less of the date on a
+  /// series that already issued numbers, under the same prefix and suffix
+  /// — 2026-0005 and 2027-0005 would both read INV-0005. The refusal of
+  /// `set_number_sequence` (0217), shown before Save.
+  bool removesDateFrom(NumberSequence saved) =>
+      datePart.index < saved.datePart.index &&
+      saved.nextValue > 1 &&
+      prefix == saved.prefix &&
+      suffix == saved.suffix;
+
   /// #928 — what an untouched series looks like, journal by journal;
   /// mirrors `number_sequence_defaults` (0165) and is pinned equal to it
   /// by test. A member number never resets and carries no year.

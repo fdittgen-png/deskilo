@@ -7274,6 +7274,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get memberNumberLabel => 'N.º de socio';
 
   @override
+  String get numberSequenceResetLimited =>
+      'Un número se reinicia como mucho tan a menudo como muestra su fecha; si no, volvería a emitir un número anterior.';
+
+  @override
+  String get numberSequenceResetWasInvalid =>
+      'Esta serie se reiniciaba más a menudo de lo que muestra su fecha. Guarda para mantener un reinicio que no repita ningún número.';
+
+  @override
+  String get numberSequenceDateRemovalBlocked =>
+      'Ya se emitieron números con la fecha. Quitarla podría repetir uno: cambia también el prefijo o el sufijo.';
+
+  @override
   String billParticipation(int pct) {
     return 'Participación $pct %';
   }

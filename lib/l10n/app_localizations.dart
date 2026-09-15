@@ -12707,6 +12707,24 @@ abstract class AppLocalizations {
   /// **'Member no.'**
   String get memberNumberLabel;
 
+  /// Helper under the restart picker when the date offers fewer restarts (#1320)
+  ///
+  /// In en, this message translates to:
+  /// **'A number restarts at most as often as it shows its date — otherwise it would print an earlier number again.'**
+  String get numberSequenceResetLimited;
+
+  /// Error under the restart picker when the stored series restarted more often than it printed its date (#1320)
+  ///
+  /// In en, this message translates to:
+  /// **'This series restarted more often than it shows its date. Save to keep a restart that cannot repeat a number.'**
+  String get numberSequenceResetWasInvalid;
+
+  /// Error under the date picker when removing the date could repeat an issued number (#1320)
+  ///
+  /// In en, this message translates to:
+  /// **'Numbers were already issued with the date. Removing it could repeat one — change the prefix or suffix too.'**
+  String get numberSequenceDateRemovalBlocked;
+
   /// The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.
   ///
   /// In en, this message translates to:

@@ -99,5 +99,17 @@
   "memberNumberLabel": "Member no.",
   "@memberNumberLabel": {
     "description": "#928 number-sequence adopters: memberNumberLabel"
+  },
+  "numberSequenceResetLimited": "A number restarts at most as often as it shows its date — otherwise it would print an earlier number again.",
+  "@numberSequenceResetLimited": {
+    "description": "Helper under the restart picker when the date offers fewer restarts (#1320)"
+  },
+  "numberSequenceResetWasInvalid": "This series restarted more often than it shows its date. Save to keep a restart that cannot repeat a number.",
+  "@numberSequenceResetWasInvalid": {
+    "description": "Error under the restart picker when the stored series restarted more often than it printed its date (#1320)"
+  },
+  "numberSequenceDateRemovalBlocked": "Numbers were already issued with the date. Removing it could repeat one — change the prefix or suffix too.",
+  "@numberSequenceDateRemovalBlocked": {
+    "description": "Error under the date picker when removing the date could repeat an issued number (#1320)"
   }
 }
