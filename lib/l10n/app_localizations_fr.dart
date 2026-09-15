@@ -7298,6 +7298,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get memberNumberLabel => 'N° adhérent';
 
   @override
+  String get numberSequenceResetLimited =>
+      'Un numéro ne recommence pas plus souvent qu’il n’affiche sa date — sinon il réimprimerait un numéro déjà attribué.';
+
+  @override
+  String get numberSequenceResetWasInvalid =>
+      'Cette série recommençait plus souvent qu’elle n’affiche sa date. Enregistrez pour garder une remise à zéro qui ne répète aucun numéro.';
+
+  @override
+  String get numberSequenceDateRemovalBlocked =>
+      'Des numéros ont déjà été attribués avec la date. La retirer pourrait en répéter un — changez aussi le préfixe ou le suffixe.';
+
+  @override
   String billParticipation(int pct) {
     return 'Participation $pct %';
   }

@@ -7290,6 +7290,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get memberNumberLabel => 'N. socio';
 
   @override
+  String get numberSequenceResetLimited =>
+      'Un numero ricomincia al massimo tanto spesso quanto mostra la sua data, altrimenti ristamperebbe un numero già emesso.';
+
+  @override
+  String get numberSequenceResetWasInvalid =>
+      'Questa serie ricominciava più spesso di quanto mostri la data. Salva per mantenere un azzeramento che non ripete alcun numero.';
+
+  @override
+  String get numberSequenceDateRemovalBlocked =>
+      'Sono già stati emessi numeri con la data. Toglierla potrebbe ripeterne uno: cambia anche il prefisso o il suffisso.';
+
+  @override
   String billParticipation(int pct) {
     return 'Partecipazione $pct %';
   }

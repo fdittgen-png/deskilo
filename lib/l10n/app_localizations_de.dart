@@ -7289,6 +7289,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get memberNumberLabel => 'Mitgliedsnummer';
 
   @override
+  String get numberSequenceResetLimited =>
+      'Eine Nummer beginnt höchstens so oft neu, wie sie ihr Datum zeigt – sonst würde sie eine frühere Nummer erneut vergeben.';
+
+  @override
+  String get numberSequenceResetWasInvalid =>
+      'Diese Serie begann öfter neu, als sie ihr Datum zeigt. Speichern Sie, um einen Neustart zu behalten, der keine Nummer wiederholt.';
+
+  @override
+  String get numberSequenceDateRemovalBlocked =>
+      'Mit dem Datum wurden bereits Nummern vergeben. Es zu entfernen könnte eine wiederholen – ändern Sie auch Präfix oder Suffix.';
+
+  @override
   String billParticipation(int pct) {
     return 'Beitrag $pct %';
   }

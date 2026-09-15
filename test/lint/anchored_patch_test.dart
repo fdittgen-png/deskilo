@@ -29,6 +29,12 @@ import 'package:flutter_test/flutter_test.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
+  // #1320/0217 restates next_document_number from pg_get_functiondef on
+  // the LIVE project (post-patch by definition): the defaults upsert, the
+  // gapless row lock and number_sequence_format are carried unchanged;
+  // only the restart decision and the re-key were changed, and a
+  // rolled-back pgTAP run drew every scenario of 15_number_series.sql.
+  'next_document_number@0217',
   // 0185 lost BOTH patches. Restored by 0192, with a live harness.
   'create_workspace@0185',
   // 0180/0185 kept the 0139/0154 permission additions — verified in

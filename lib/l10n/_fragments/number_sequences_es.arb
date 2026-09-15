@@ -99,5 +99,8 @@
   "memberNumberLabel": "N.º de socio",
   "@memberNumberLabel": {
     "description": "#928 number-sequence adopters: memberNumberLabel"
-  }
+  },
+  "numberSequenceResetLimited": "Un número se reinicia como mucho tan a menudo como muestra su fecha; si no, volvería a emitir un número anterior.",
+  "numberSequenceResetWasInvalid": "Esta serie se reiniciaba más a menudo de lo que muestra su fecha. Guarda para mantener un reinicio que no repita ningún número.",
+  "numberSequenceDateRemovalBlocked": "Ya se emitieron números con la fecha. Quitarla podría repetir uno: cambia también el prefijo o el sufijo."
 }

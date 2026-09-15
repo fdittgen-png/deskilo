@@ -179,4 +179,62 @@ void main() {
       },
     );
   });
+
+  group('#1320 — a series never prints a number twice', () {
+    test('the restarts each date part can carry', () {
+      expect(NumberSequence.resetsFor(NumberDatePart.none), [NumberReset.never]);
+      expect(NumberSequence.resetsFor(NumberDatePart.year),
+          [NumberReset.never, NumberReset.yearly]);
+      expect(NumberSequence.resetsFor(NumberDatePart.yearMonth),
+          NumberReset.values);
+    });
+
+    test('an invalid pair is drawn as the finest restart its date can carry',
+        () {
+      expect(NumberSequence.effectiveReset(NumberDatePart.none, NumberReset.yearly),
+          NumberReset.never);
+      expect(NumberSequence.effectiveReset(NumberDatePart.none, NumberReset.monthly),
+          NumberReset.never);
+      expect(NumberSequence.effectiveReset(NumberDatePart.year, NumberReset.monthly),
+          NumberReset.yearly);
+      expect(
+          NumberSequence.effectiveReset(
+              NumberDatePart.yearMonth, NumberReset.monthly),
+          NumberReset.monthly);
+    });
+
+    test('removing the date after numbers were issued needs a new prefix or '
+        'suffix', () {
+      const saved =
+          NumberSequence(journal: 'invoice', prefix: 'INV-', nextValue: 57);
+      final noDate = saved.copyWith(
+          datePart: NumberDatePart.none, reset: NumberReset.never);
+      expect(noDate.removesDateFrom(saved), isTrue);
+      expect(noDate.copyWith(prefix: 'F-').removesDateFrom(saved), isFalse);
+      expect(noDate.copyWith(suffix: '/B').removesDateFrom(saved), isFalse);
+      expect(
+          saved
+              .copyWith(datePart: NumberDatePart.yearMonth)
+              .removesDateFrom(saved),
+          isFalse,
+          reason: 'printing more of the date is always safe');
+      const fresh = NumberSequence(journal: 'invoice', prefix: 'INV-');
+      expect(
+          fresh
+              .copyWith(datePart: NumberDatePart.none, reset: NumberReset.never)
+              .removesDateFrom(fresh),
+          isFalse,
+          reason: 'nothing issued, nothing to repeat');
+    });
+
+    test('the pair rules mirror migration 0217', () {
+      final sql =
+          File('supabase/migrations/0217_number_series_never_repeat.sql')
+              .readAsStringSync();
+      expect(sql, contains("when 'none' then p_reset = 'never'"));
+      expect(sql, contains("when 'year' then p_reset in ('never', 'yearly')"));
+      expect(sql,
+          contains("when 'year_month' then p_reset in ('never', 'yearly', 'monthly')"));
+    });
+  });
 }

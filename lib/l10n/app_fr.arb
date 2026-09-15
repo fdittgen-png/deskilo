@@ -4743,6 +4743,9 @@
   "@memberNumberLabel": {
     "description": "#928 number-sequence adopters: memberNumberLabel"
   },
+  "numberSequenceResetLimited": "Un numéro ne recommence pas plus souvent qu’il n’affiche sa date — sinon il réimprimerait un numéro déjà attribué.",
+  "numberSequenceResetWasInvalid": "Cette série recommençait plus souvent qu’elle n’affiche sa date. Enregistrez pour garder une remise à zéro qui ne répète aucun numéro.",
+  "numberSequenceDateRemovalBlocked": "Des numéros ont déjà été attribués avec la date. La retirer pourrait en répéter un — changez aussi le préfixe ou le suffixe.",
   "billParticipation": "Participation {pct} %",
   "@billParticipation": {
     "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.",
