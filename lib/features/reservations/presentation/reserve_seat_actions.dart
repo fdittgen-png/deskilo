@@ -73,6 +73,11 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
   /// server-side, so the tap must not open a sheet at all.
   bool isWorkspaceOpenAt(DateTime at);
 
+  /// #1301 S4 — whether the opening days and closures have loaded. Until
+  /// they have, a day is neither open nor closed: the tap says so and
+  /// opens nothing.
+  bool get availabilityKnown;
+
   /// Default end for a start, clamped to the day's last slot.
   DateTime defaultEndFor(DateTime from);
 
@@ -131,6 +136,17 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     HalfDayWindow window,
   ) async {
     final l10n = AppLocalizations.of(context);
+    // #1301 S4 — before the opening days load, a closed day would take the
+    // tap and only the server's refusal would say otherwise, and "Closed"
+    // would be just as untrue. Say what is happening and open nothing.
+    if (!availabilityKnown) {
+      AppSnack.info(
+        context,
+        l10n?.planAvailabilityLoading ?? 'Checking the opening days…',
+        replace: true,
+      );
+      return;
+    }
     // Closed day (#186): no sheet at all — the server would reject any
     // booking touching it (`assert_workspace_open`, migration 0013).
     if (!isWorkspaceOpenAt(window.start)) {

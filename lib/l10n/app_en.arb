@@ -8002,6 +8002,10 @@
   "@planClosedDay": {
     "description": "Banner under the plan header and seat-tap snackbar when the browsed/live day is a closed day of the workspace (#186)"
   },
+  "planAvailabilityLoading": "Checking the opening days…",
+  "@planAvailabilityLoading": {
+    "description": "Seat-tap snackbar while the opening days and closures have not loaded: the day is neither open nor closed yet (#1301)"
+  },
   "planClosedDayShowNext": "Show {day}",
   "@planClosedDayShowNext": {
     "description": "#1196 the closed-day banner's action — jumps to the next day the workspace is open",

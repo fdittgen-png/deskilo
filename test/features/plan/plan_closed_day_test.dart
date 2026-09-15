@@ -4,11 +4,14 @@
 // the plan must say so — banner, muted seats, gated taps — and booking
 // refusals from `assert_workspace_open` must map to a clear message
 // instead of "the seat may have just been taken".
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/theme/seat_state_colors.dart';
 import 'package:deskilo/features/plan/presentation/widgets/floor_plan_painter.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -267,5 +270,53 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text(_closedDayErrorText), findsOneWidget);
+  });
+
+  testWidgets(
+      '#1301 S4 — while the opening days load, no seat reads as free, no '
+      'closed day is claimed, and a tap opens nothing', (tester) async {
+    final plans = FakeFloorPlanRepository()..seedSmallPlan();
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          ...standardTestOverrides(floorPlan: plans),
+          // Never resolves: the state a slow network leaves the hub in.
+          openWeekdaysProvider
+              .overrideWith((ref) => Completer<List<int>>().future),
+        ],
+        child: const DeskiloApp(),
+      ),
+    );
+    // A progress bar runs while loading, so this settles by frames.
+    Future<void> frames() async {
+      for (var i = 0; i < 10; i++) {
+        await tester.pump(const Duration(milliseconds: 100));
+      }
+    }
+
+    await frames();
+
+    expect(find.byKey(const ValueKey('reserve-availability-loading')),
+        findsOneWidget);
+    expect(find.byKey(_bannerKey), findsNothing,
+        reason: 'not knowing yet is not the same as closed');
+    final states = planPainter(tester).seatStates!;
+    expect(states, isNotEmpty);
+    expect(states.values, everyElement(SeatState.blocked),
+        reason: 'before #1301 every seat rendered free until the server '
+            'refused the booking');
+
+    await tester.tapAt(seatCenter(tester));
+    await frames();
+
+    expect(find.textContaining('Starts now'), findsNothing,
+        reason: 'no booking sheet opens on an unknown day');
+    expect(
+      find.descendant(
+        of: find.byType(SnackBar),
+        matching: find.text('Checking the opening days…'),
+      ),
+      findsOneWidget,
+    );
   });
 }
