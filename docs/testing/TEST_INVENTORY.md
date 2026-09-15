@@ -4,24 +4,24 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**460 files, 2998 tests.**
+**464 files, 3033 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
 | a11y | 1 | 1 |
-| database | 10 | 75 |
+| database | 12 | 100 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
-| lint | 57 | 148 |
+| lint | 58 | 150 |
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
 | unit | 163 | 1273 |
-| widget | 221 | 1468 |
+| widget | 222 | 1476 |
 
 | action | files |
 |---|---:|
-| KEEP | 460 |
+| KEEP | 464 |
 
 ## Rules
 
@@ -55,8 +55,10 @@ Every test file, classified for reliability and regression value (#1334). The cl
 |---|---|---|---:|---|---|---|---|---|---|
 | `supabase/tests/database/00_schema_guarantees.sql` | database | #1226 — the first test that has ever executed this database. | 6 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1226, #992 | no | KEEP |  |
 | `supabase/tests/database/10_tenancy_isolation.sql` | database | #1226/#1227 — two workspaces, and neither can see the other. | 12 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1226, #1227 | no | KEEP |  |
-| `supabase/tests/database/11_tenancy_matrix.sql` | database | #1227 — the matrix, generated from the table list. | 5 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1227 | no | KEEP |  |
+| `supabase/tests/database/11_tenancy_matrix.sql` | database | #1227 — the matrix, generated from the table list. | 7 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1227, #1335 | no | KEEP |  |
 | `supabase/tests/database/12_storage_tenancy.sql` | database | 0215 — #1316: two workspaces, and neither can read the other's files. | 9 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1316, #1313 | no | KEEP |  |
+| `supabase/tests/database/13_matrix_policies.sql` | database | 0216 — #1321: a narrowed admin row narrows the rows. | 15 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1321 | no | KEEP |  |
+| `supabase/tests/database/14_feature_gates.sql` | database | #1335 — a feature the client treats as OFF must be off on the server. | 8 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1335, #800, #1332 | no | KEEP |  |
 | `supabase/tests/database/20_money_invariants.sql` | database | #1226/#1229/#1231 — the two money guards nothing had ever executed. | 7 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1226, #1229, #1231 | no | KEEP |  |
 | `supabase/tests/database/21_ledger_append_only.sql` | database | #1229 — the ledger is append-only, and the one exception is narrow. | 6 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1229 | no | KEEP |  |
 | `supabase/tests/database/22_reconciliation.sql` | database | #1230 — the reconciliation, proved to be clean AND proved to bite. | 8 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1230, #1231, #1138 | no | KEEP |  |
@@ -77,6 +79,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/app/shell/shell_feature_gating_test.dart` | widget | #146 — disabled features drop their bottom-bar destinations, and the inbox with its pending badge always survives. | 5 | yes | fakes | user-visible behaviour — #146, #702, #707 | no | KEEP |  |
 | `test/app/shell/shell_screen_test.dart` | widget | The shell's destinations: localized labels, branch switching with the app-bar title, the settings action and tap targets. | 5 | yes | fakes | user-visible behaviour — #707, #402 | no | KEEP |  |
 | `test/app/shell/shell_swipe_fullscreen_test.dart` | widget | #1173 — the swipe-away full-screen view, ported from the Sparkilo shell. A downward swipe slides the tab surface out and leaves the Reserve button behind;… | 11 | yes | fakes | user-visible behaviour — #1173, #4103, #1265 | no | KEEP |  |
+| `test/app/shell/shell_title_bar_test.dart` | widget | #1322 — swiping the bar away takes the title bar with it. | 8 | yes | fakes | user-visible behaviour — #1322 | no | KEEP |  |
 | `test/app/system_insets_test.dart` | widget | #1008 — with a system navigation bar at the bottom, nothing of the app sits under it: not the shell's own bar, not a sheet's buttons. | 1 | yes | fakes | user-visible behaviour — #1008 | no | KEEP |  |
 | `test/app/toolbar_height_test.dart` | widget | The compact toolbar: 48 dp on every AppBar through the theme (the Sparkilo shell idiom — its #4082). Material's 56 spent eight dp on every screen for nothing;… | 2 | yes | none | user-visible behaviour — #4082 | no | KEEP |  |
 | `test/core/backend/backend_config_test.dart` | unit | The reference deployment's backend defaults are pinned. | 1 | yes | none | a domain rule | no | KEEP |  |
@@ -497,6 +500,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/lint/privacy_policy_version_test.dart` | lint | #751 — a change of the consent TEXT must ask every account again: the text of record (the English fallback in privacy_policy.dart) is pinned by a content hash… | 2 | yes | none | an architecture, security or process rule — #751 | no | KEEP |  |
 | `test/lint/provider_watch_before_await_test.dart` | lint | #1218 — a provider registers its dependencies BEFORE its first await. | 1 | yes | none | an architecture, security or process rule — #1218 | no | KEEP |  |
 | `test/lint/report_kind_registry_test.dart` | lint | #864 — a report kind added later must gain export, import, a label and defaults, or fail here. | 7 | yes | repository sources | an architecture, security or process rule — #864 | no | KEEP |  |
+| `test/lint/rls_matrix_gate_test.dart` | lint | #1321 — a row policy asks the role matrix, never "admin or owner". | 2 | yes | repository sources | an architecture, security or process rule — #1321, #513, #982 | no | KEEP |  |
 | `test/lint/route_registry_test.dart` | lint | Route-registry lint: a new route cannot be added silently. | 1 | yes | repository sources | an architecture, security or process rule — #486, #500, #513 | no | KEEP |  |
 | `test/lint/setup_html_test.dart` | lint | The setup questionnaire NEVER lags the app (#653). `web/setup.html` is what a new owner answers BEFORE opening DesKilo, and it is published at the URL all five… | 6 | yes | repository sources | an architecture, security or process rule — #653, #634, #1063 | no | KEEP |  |
 | `test/lint/setup_runs_test.dart` | lint | `web/setup.html` is ~900 lines of dense JavaScript with no build step, and nothing in CI ever executed it. So a plain `ReferenceError` in one step shipped to… | 1 | yes | none | an architecture, security or process rule | no | KEEP |  |
