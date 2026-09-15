@@ -51,7 +51,7 @@ cannot write the ledger, the invoices or the reservations directly.
 |---|---|---|---|
 | T1 | A member reads another workspace's data — rows **and storage objects** | RLS on every table; storage policies scoped to the workspace folder | `10_tenancy_isolation.sql`, `11_tenancy_matrix.sql` (#1226, #1227); `12_storage_tenancy.sql` for storage, added with 0215 after a hand-made broad read was found live on `floor-plans` |
 | T2 | A member reads another member's invoice | `invoices_select` scoped to the member or an issuer permission | none (#1227) |
-| T3 | Privilege escalation to admin | `has_permission`, role matrix, last-owner protection | Dart tests against fakes only |
+| T3 | Privilege escalation to admin | `has_permission`, role matrix, last-owner protection; row policies read the matrix, never `is_admin_of` (0216, #1321) | `supabase/tests/database/13_matrix_policies.sql` (a narrowed admin row loses the rows), `test/lint/rls_matrix_gate_test.dart` |
 | T4 | A `SECURITY DEFINER` function answers for any workspace | 54 of 57 client-reachable functions check the caller | **3 do not** (#1228) |
 | T5 | Anonymous execution of a definer function | `revoke … from anon`, swept by `0191` | `migration_grants_test` — source text, forward-looking only |
 | T6 | Invitation abuse: a code redeemed by the wrong person, or replayed | single-use personal codes, workspace-scoped | Dart tests |
