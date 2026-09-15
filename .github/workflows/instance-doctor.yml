@@ -19,10 +19,16 @@ name: Status · Instance doctor
 #
 # Every signal was already in the project. Nothing was reading it.
 #
-# The doctor writes nothing — it reads the auth config and counts rows in
-# auth.users. It exits 1 when a finding needs a human, and this workflow
-# turns that into an issue, because an owner reads issues and does not
-# read a workflow that quietly passed.
+# The doctor writes nothing — it reads the auth config, counts rows in
+# auth.users, and (#1313) compares the project's policies with the set the
+# migrations build. It exits 1 when a finding needs a human, and this
+# workflow turns that into an issue, because an owner reads issues and does
+# not read a workflow that quietly passed.
+#
+# This repository is PUBLIC, and so are this job's log and summary, so the
+# scheduled run uses `--public`: levels, titles and counts, never the name
+# of a table, a policy or a function. The names are for an operator running
+# `dart run tool/instance.dart doctor` themselves.
 
 on:
   schedule:
@@ -92,7 +98,9 @@ jobs:
           REF: ${{ inputs.ref != '' && inputs.ref || secrets.SUPABASE_PROJECT_REF }}
         run: |
           set +e
-          dart run tool/instance.dart doctor --ref "$REF" > doctor.txt 2>&1
+          # #1313 — this log and this summary are PUBLIC: --public prints
+          # each finding's level, title and count, never an object name.
+          dart run tool/instance.dart doctor --ref "$REF" --public > doctor.txt 2>&1
           echo "code=$?" >> "$GITHUB_OUTPUT"
           {
             echo "## Instance doctor"

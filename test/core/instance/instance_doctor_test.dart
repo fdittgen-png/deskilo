@@ -8,6 +8,7 @@
 // the 10th.
 import 'package:deskilo/core/instance/instance_builder.dart';
 import 'package:deskilo/core/instance/instance_doctor.dart';
+import 'package:deskilo/core/instance/instance_security_checks.dart';
 import 'package:deskilo/core/instance/management_api.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -41,6 +42,7 @@ DoctorFinding named(List<DoctorFinding> all, String fragment) =>
 void main() {
   _installChecks();
   _probeIsolation();
+  _securityChecks();
   group('auth configuration', () {
     test('the wizard-configured project is clean', () {
       final findings = InstanceDoctor.checkAuthConfig(healthyConfig());
@@ -345,6 +347,134 @@ void _probeIsolation() {
         throwsA(isA<ManagementApiException>()
             .having((e) => e.unauthorized, 'unauthorized', isTrue)),
       );
+    });
+  });
+}
+
+// ---------------------------------------------------------------------
+// #1313 — the structural checks: a live project must carry exactly the
+// policies the migrations build, storage reads must name the folder that
+// owns the file, and four hardening properties that are clean today must
+// stay clean. The scheduled run publishes none of those names.
+void _securityChecks() {
+  const expected = {
+    'public.invoices.invoices_select',
+    'public.members.members_select',
+    'storage.objects.floor_plans_select',
+  };
+  List<Map<String, Object?>> live(Iterable<String> names) => [
+        {'policies': names.join(',')},
+      ];
+
+  group('policy drift', () {
+    test('the replay set and the project agree', () {
+      final findings = checkPolicyDrift(live(expected), expected);
+      expect(findings.single.level, DoctorLevel.ok);
+      expect(findings.single.count, 3);
+    });
+
+    test('a policy no migration created is an alarm — the hand-made one of '
+        '#1316 could not be seen any other way', () {
+      final findings = checkPolicyDrift(
+        live({...expected, 'storage.objects.floor_plans_read'}),
+        expected,
+      );
+      final drift = findings.firstWhere((f) => f.title.contains('no migration'));
+      expect(drift.level, DoctorLevel.alarm);
+      expect(drift.detail, contains('floor_plans_read'));
+      expect(drift.count, 1);
+    });
+
+    test('a policy the migrations create but the project lacks is an alarm',
+        () {
+      final findings = checkPolicyDrift(
+        live(expected.where((p) => !p.contains('invoices'))),
+        expected,
+      );
+      final drift = findings.firstWhere((f) => f.title.contains('missing'));
+      expect(drift.level, DoctorLevel.alarm);
+      expect(drift.detail, contains('invoices_select'));
+    });
+
+    test('no expected list means drift is not judged, and says so', () {
+      final findings = checkPolicyDrift(live(expected), const {});
+      expect(findings.single.level, DoctorLevel.warn);
+      expect(findings.single.detail, contains('policies.txt'));
+    });
+  });
+
+  group('storage scoping', () {
+    List<Map<String, Object?>> reads(String value) => [
+          {'read_policies': value},
+        ];
+
+    test('the shipped read policies name the folder that owns the file', () {
+      final findings = checkStorageScoping(reads(
+          "floor_plans_select :: ((bucket_id = 'floor-plans') AND "
+          'is_member_of(((storage.foldername(name))[1])::uuid))'));
+      expect(findings.single.level, DoctorLevel.ok);
+    });
+
+    test('a read granted by role alone is an alarm', () {
+      final findings = checkStorageScoping(reads(
+          "floor_plans_read :: (bucket_id = 'floor-plans'::text)"));
+      expect(findings.single.level, DoctorLevel.alarm);
+      expect(findings.single.detail, contains('floor_plans_read'));
+      expect(findings.single.count, 1);
+    });
+  });
+
+  group('the hardening guards', () {
+    Map<String, Object?> row({
+      String realtime = '',
+      String definers = '',
+      String views = '',
+      String grants = '',
+      String buckets = '',
+    }) =>
+        {
+          'realtime_unprotected': realtime,
+          'definers_unpinned': definers,
+          'anon_views': views,
+          'secret_grants': grants,
+          'public_buckets': buckets,
+        };
+
+    test('the project as the migrations build it trips none of them', () {
+      expect(checkGuards([row()]).where((f) => f.isProblem),
+          isEmpty);
+    });
+
+    test('each guard names what it found', () {
+      final cases = {
+        'realtime': ('realtime_unprotected', 'ledger_entries'),
+        'definer': ('definers_unpinned', 'export_my_data'),
+        'view': ('anon_views', 'member_totals'),
+        'secret': ('secret_grants', 'payment_credentials to anon'),
+        'bucket': ('public_buckets', 'avatars'),
+      };
+      for (final MapEntry(value: (key, found)) in cases.entries) {
+        final findings = checkGuards([row()..[key] = found]);
+        final alarm = findings.firstWhere((DoctorFinding f) => f.isProblem);
+        expect(alarm.level, DoctorLevel.alarm, reason: key);
+        expect(alarm.detail, contains(found.split(' ').first), reason: key);
+      }
+    });
+  });
+
+  group('the public report', () {
+    test('a scheduled run publishes levels, titles and counts — never a '
+        'policy, a table or a function', () {
+      final findings = checkPolicyDrift(
+        live({...expected, 'storage.objects.floor_plans_read'}),
+        expected,
+      );
+      final report = doctorReport('abc', findings, redacted: true);
+      expect(report, contains('A policy no migration created (1)'));
+      expect(report, isNot(contains('floor_plans_read')));
+      expect(report, isNot(contains('invoices_select')));
+      expect(doctorReport('abc', findings), contains('floor_plans_read'),
+          reason: 'an operator running it locally still gets the names');
     });
   });
 }
