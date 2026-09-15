@@ -7,6 +7,7 @@
 import 'package:deskilo/core/instance/instance_builder.dart';
 import 'package:deskilo/core/instance/instance_bundle.dart';
 import 'package:deskilo/core/instance/instance_doctor.dart';
+import 'package:deskilo/core/instance/instance_security_checks.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_supabase_management.dart';
@@ -202,6 +203,31 @@ void main() {
             },
           ];
         }
+        // #1313 — the structural checks run in the same examine.
+        if (sql == policyDriftSql) {
+          return [
+            {'policies': 'public.invoices.invoices_select'},
+          ];
+        }
+        if (sql == storageReadPolicySql) {
+          return [
+            {
+              'read_policies': 'floor_plans_select :: '
+                  'is_member_of(((storage.foldername(name))[1])::uuid)',
+            },
+          ];
+        }
+        if (sql == guardHealthSql) {
+          return [
+            {
+              'realtime_unprotected': '',
+              'definers_unpinned': '',
+              'anon_views': '',
+              'secret_grants': '',
+              'public_buckets': '',
+            },
+          ];
+        }
         return [
           {'created_7d': 0, 'confirmed_7d': 0, 'stuck': 0, 'oldest_stuck_hours': 0},
         ];
@@ -210,8 +236,11 @@ void main() {
       final bundle = parseInstanceBundle(_bundleJson);
       await builder.installSchema('ref-1', bundle);
 
-      final findings = await InstanceDoctor(api)
-          .examine('ref-1', minimumMigrations: bundle.schema.length);
+      final findings = await InstanceDoctor(api).examine(
+        'ref-1',
+        minimumMigrations: bundle.schema.length,
+        expectedPolicies: const {'public.invoices.invoices_select'},
+      );
       expect(findings.where((f) => f.isProblem), isEmpty,
           reason: findings.join('\n'));
       expect(findings.firstWhere((f) => f.title == 'Schema').detail,

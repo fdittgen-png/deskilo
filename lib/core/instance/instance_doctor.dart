@@ -18,6 +18,7 @@
 // four rows of `auth.users`. This is the thing that reads them.
 
 import 'instance_builder.dart';
+import 'instance_security_checks.dart';
 import 'management_api.dart';
 
 /// How serious a finding is. [alarm] means people are affected right now.
@@ -25,10 +26,15 @@ enum DoctorLevel { ok, warn, alarm }
 
 /// One thing the doctor looked at.
 class DoctorFinding {
-  const DoctorFinding(this.level, this.title, this.detail);
+  const DoctorFinding(this.level, this.title, this.detail, {this.count});
 
   final DoctorLevel level;
   final String title;
+
+  /// #1313 — how many objects the finding is about, when it is about a
+  /// list of them. The scheduled run publishes this number and not the
+  /// names: its log is public.
+  final int? count;
 
   /// What was found and, when something is wrong, what to do about it.
   final String detail;
@@ -68,6 +74,7 @@ class InstanceDoctor {
   Future<List<DoctorFinding>> examine(
     String ref, {
     int minimumMigrations = 200,
+    Set<String> expectedPolicies = const {},
   }) async =>
       [
         ...await _probe('Auth configuration',
@@ -80,6 +87,18 @@ class InstanceDoctor {
                 minimumMigrations: minimumMigrations)),
         ...await _probe('Security',
             () async => checkSecurity(await api.query(ref, securityHealthSql))),
+        // #1313 — structural, read-only, and the only check that can see a
+        // policy no migration created: a replay cannot contain one.
+        ...await _probe(
+            'Policies',
+            () async => checkPolicyDrift(
+                await api.query(ref, policyDriftSql), expectedPolicies)),
+        ...await _probe(
+            'Storage scoping',
+            () async =>
+                checkStorageScoping(await api.query(ref, storageReadPolicySql))),
+        ...await _probe('Hardening',
+            () async => checkGuards(await api.query(ref, guardHealthSql))),
       ];
 
   Future<List<DoctorFinding>> _probe(
@@ -436,10 +455,26 @@ bool hasProblem(List<DoctorFinding> findings) =>
     findings.any((f) => f.isProblem);
 
 /// The findings as a report — the same text on a terminal and in an issue.
-String doctorReport(String ref, List<DoctorFinding> findings) {
+///
+/// #1313 — [redacted] is for a run whose log is PUBLIC: the scheduled
+/// workflow lives in a public repository, so it publishes each finding's
+/// level, title and count, never an object name, a policy definition or a
+/// row. The names are for `tool/instance.dart doctor` run by an operator.
+String doctorReport(
+  String ref,
+  List<DoctorFinding> findings, {
+  bool redacted = false,
+}) {
   final buffer = StringBuffer('instance doctor — $ref\n\n');
   for (final finding in findings) {
-    buffer.writeln(finding);
+    buffer.writeln(redacted
+        ? '${switch (finding.level) {
+            DoctorLevel.ok => 'ok   ',
+            DoctorLevel.warn => 'warn ',
+            DoctorLevel.alarm => 'ALARM',
+          }}  ${finding.title}'
+            '${finding.count == null ? '' : ' (${finding.count})'}'
+        : '$finding');
   }
   final problems = findings.where((f) => f.isProblem).length;
   buffer.writeln();

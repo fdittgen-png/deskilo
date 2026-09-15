@@ -187,6 +187,29 @@ jobs:
             -c 'create extension if not exists pgtap with schema extensions;'
           supabase test db 2>&1 | tee report-pgtap.log
 
+      # #1313 — the policies the migrations actually build, read from the
+      # replay and never parsed out of the SQL: 0030 creates a policy 0051
+      # drops with its table, and a text parser still expects it. The
+      # doctor compares a live project against this file, which is the
+      # only check that can see a policy no migration created.
+      - name: Policies equal the migrations
+        id: policies
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          psql "$(supabase status -o env | sed -n 's/^DB_URL="\(.*\)"$/\1/p')" \
+            -v ON_ERROR_STOP=1 -At \
+            -c "select schemaname || '.' || tablename || '.' || policyname
+                  from pg_policies where schemaname in ('public', 'storage')
+                 order by 1" > replay-policies.txt
+          grep -vE '^[[:space:]]*(#|$)' assets/instance/policies.txt > committed-policies.txt
+          if ! diff -u committed-policies.txt replay-policies.txt; then
+            echo "::error::assets/instance/policies.txt is not what the migrations build — copy the + side into the file (keep its header)"
+            exit 1
+          fi
+          echo "policies: $(wc -l < replay-policies.txt | tr -d ' ') match"
+
       # #1232 — the one property no pgTAP file can make, because every
       # one of them runs in a single transaction and a race needs two
       # connections. Two real psql processes, one seat.
@@ -216,6 +239,8 @@ jobs:
               "${{ steps.race.outcome }}"
             printf 'Query budgets|%s|indexes exist, the planner uses them at 5 000 rows\n' \
               "${{ steps.pgtap.outcome }}"
+            printf 'Policy drift|%s|live policies equal the set the migrations build\n' \
+              "${{ steps.policies.outcome }}"
           } > report/database.psv
           cat report/database.psv
 
@@ -239,6 +264,7 @@ jobs:
           status=0
           for step in "Migration safety=${{ steps.migrations.outcome }}" \
                       "Database disciplines=${{ steps.pgtap.outcome }}" \
+                      "Policies equal the migrations=${{ steps.policies.outcome }}" \
                       "Two sessions, one seat=${{ steps.race.outcome }}"; do
             echo "$step"
             case "$step" in *=failure) status=1 ;; esac
