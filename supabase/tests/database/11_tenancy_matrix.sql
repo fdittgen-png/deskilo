@@ -23,7 +23,7 @@
 -- go down, and the list of the ones still missed is printed by the
 -- diagnostic at the end so the next person knows what to hand-seed.
 begin;
-select plan(5);
+select plan(7);
 
 create or replace function pg_temp.fill(p_ws uuid, p_member uuid)
 returns text[] language plpgsql as $fill$
@@ -211,6 +211,55 @@ select is(
   pg_temp.leaks('anon', json_build_object('role', 'anon')::text),
   '{}'::text[],
   'and an anonymous caller sees none of them either');
+
+-- #1335 — reading was never the whole of isolation. A member of A must
+-- not change or remove a row of B either. Each probe runs in its own
+-- subtransaction that is always rolled back, so a probe that DID write
+-- cannot disturb the next one; the count it saw is what is judged. A
+-- refusal at the grant layer, or by a trigger or constraint, is a pass.
+create or replace function pg_temp.write_leaks(p_role text, p_claims text)
+returns text[] language plpgsql as $writes$
+declare v text; verb text; n int; out text[] := '{}';
+begin
+  perform set_config('request.jwt.claims', p_claims, true);
+  execute format('set local role %I', p_role);
+  foreach v in array pg_temp.covered() loop
+    foreach verb in array array['update', 'delete'] loop
+      n := 0;
+      begin
+        if verb = 'update' then
+          execute format('with w as (update public.%I set workspace_id = workspace_id '
+                         'where workspace_id = %L returning 1) select count(*) from w',
+                         v, current_setting('deskilo.matrix.ws_b')) into n;
+        else
+          execute format('with w as (delete from public.%I where workspace_id = %L '
+                         'returning 1) select count(*) from w',
+                         v, current_setting('deskilo.matrix.ws_b')) into n;
+        end if;
+        raise exception using errcode = 'P0B35', message = 'undo the probe';
+      exception
+        when sqlstate 'P0B35' then null;
+        when others then null;
+      end;
+      if n > 0 then out := out || (verb || ' ' || v); end if;
+    end loop;
+  end loop;
+  reset role;
+  return out;
+end;
+$writes$;
+
+select is(
+  pg_temp.write_leaks('authenticated',
+    json_build_object('sub', current_setting('deskilo.matrix.u_a'),
+                      'role', 'authenticated')::text),
+  '{}'::text[],
+  'no table with a workspace_id lets a member of A update or delete a row of workspace B');
+
+select is(
+  pg_temp.write_leaks('anon', json_build_object('role', 'anon')::text),
+  '{}'::text[],
+  'and an anonymous caller can change none of them either');
 
 -- The floor. It may rise; it may not fall. When it does fall, the
 -- diagnostic below names the table that stopped being coverable.

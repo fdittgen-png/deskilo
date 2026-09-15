@@ -179,6 +179,9 @@ jobs:
         if: steps.migrations.outcome == 'success'
         continue-on-error: true
         run: |
+          # #1335 — without pipefail this step reported `tee`'s exit code,
+          # so a failing pgTAP run could never turn it red.
+          set -o pipefail
           psql "$(supabase status -o env | sed -n 's/^DB_URL="\(.*\)"$/\1/p')" \
             -v ON_ERROR_STOP=1 \
             -c 'create extension if not exists pgtap with schema extensions;'
@@ -205,7 +208,7 @@ jobs:
           {
             printf 'Migration safety|%s|%s migrations replayed from empty\n' \
               "${{ steps.migrations.outcome }}" "$migrations"
-            printf 'Tenant isolation|%s|%s workspace-scoped tables swept, both roles, both directions\n' \
+            printf 'Tenant isolation|%s|%s workspace-scoped tables swept for read, update and delete, both roles\n' \
               "${{ steps.pgtap.outcome }}" "${tenancy:-0}"
             printf 'Financial invariants|%s|append-only ledger, reconciliation, webhook idempotency\n' \
               "${{ steps.pgtap.outcome }}"
@@ -225,6 +228,22 @@ jobs:
         with:
           name: quality-database
           path: report/
+
+      # #1335 — the steps above run continue-on-error so the report is
+      # always complete. This is what makes it a gate: the job fails when
+      # any of them did, and a database regression is reported apart from
+      # the Flutter job.
+      - name: Gate
+        if: always()
+        run: |
+          status=0
+          for step in "Migration safety=${{ steps.migrations.outcome }}" \
+                      "Database disciplines=${{ steps.pgtap.outcome }}" \
+                      "Two sessions, one seat=${{ steps.race.outcome }}"; do
+            echo "$step"
+            case "$step" in *=failure) status=1 ;; esac
+          done
+          exit $status
 
   report:
     name: quality · report
