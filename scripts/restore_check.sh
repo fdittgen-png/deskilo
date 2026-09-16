@@ -90,13 +90,24 @@ src -q -c "drop database if exists $COPY_DB" -c "create database $COPY_DB" \
 
 # Whatever the source has installed, and where — asked rather than
 # guessed, so a new extension never silently breaks the drill.
-src -At -c "select distinct 'create schema if not exists ' || quote_ident(n.nspname) || ';'
-              from pg_extension e join pg_namespace n on n.oid = e.extnamespace
-             where e.extname <> 'plpgsql'" | copy -q >/dev/null 2>&1
-src -At -c "select 'create extension if not exists ' || quote_ident(e.extname)
-                || ' with schema ' || quote_ident(n.nspname) || ';'
-              from pg_extension e join pg_namespace n on n.oid = e.extnamespace
-             where e.extname <> 'plpgsql'" | copy -q >/dev/null 2>&1
+#
+# The output is READ. It used to go to /dev/null as a best-effort step,
+# and when one of these failed the only symptom was a pgTAP function
+# that would not resolve, four steps later, with the cause nowhere in
+# the log. A step that cannot report its own failure is the defect this
+# whole drill exists to rule out.
+replicate() {
+  local out
+  out="$(src -At -c "$1" | copy -At -v ON_ERROR_STOP=1 2>&1)" \
+    || fail "$2 failed on the copy: $out"
+}
+replicate "select distinct 'create schema if not exists ' || quote_ident(n.nspname) || ';'
+             from pg_extension e join pg_namespace n on n.oid = e.extnamespace
+            where e.extname <> 'plpgsql'" "creating the extension schemas"
+replicate "select 'create extension if not exists ' || quote_ident(e.extname)
+               || ' with schema ' || quote_ident(n.nspname) || ';'
+             from pg_extension e join pg_namespace n on n.oid = e.extnamespace
+            where e.extname <> 'plpgsql'" "installing the extensions"
 
 # A brand-new database already has a `public` schema, and pg_dump emits
 # `CREATE SCHEMA public;` for it — which stops the restore on its very
@@ -140,12 +151,20 @@ CROSSED="$(copy -At -c "
 # called unqualified, which is why search_path is set first — outside
 # the transaction each file opens.
 echo "--- the suites still hold on the copy"
+# pgTAP has to be in the copy for any of this to mean anything, and a
+# missing extension should say so in one line rather than surface as an
+# unresolvable `is()` several files later.
+HAS_PGTAP="$(copy -At -c \
+  "select count(*) from pg_extension where extname = 'pgtap'" 2>&1)"
+[ "$HAS_PGTAP" = "1" ] \
+  || fail "pgtap is not installed in the copy (got '$HAS_PGTAP'), so the suites cannot run there"
+
 for f in 10_tenancy_isolation 11_tenancy_matrix 20_money_invariants \
          21_ledger_append_only 23_domain_invariants; do
-  out="$( { echo 'set search_path to public, extensions;'; \
+  out="$( { echo 'set search_path to public, extensions, pg_catalog;'; \
             cat "supabase/tests/database/$f.sql"; } \
           | copy -At -v ON_ERROR_STOP=1 2>&1 )" \
-    || fail "$f could not run on the copy: $(echo "$out" | tail -3)"
+    || fail "$f could not run on the copy: $(echo "$out" | grep -E '^(ERROR|psql)' | head -3)"
   if echo "$out" | grep -qE '^not ok'; then
     echo "$out" | grep -E '^not ok' | head -5
     fail "$f failed on the restored copy"
