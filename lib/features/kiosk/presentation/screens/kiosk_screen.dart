@@ -44,6 +44,7 @@ import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../../core/time/work_hours.dart';
+import '../../../../core/l10n/lexicon.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../widgets/kiosk_act_sheet.dart';
 import '../../device_pin.dart';
@@ -290,7 +291,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
         hasAvatar: identity.hasAvatar,
         targetName: title,
         rangeText: booksWindow
-            ? bookingRangeText(appFormatOf(context), l10n, request.start, request.end)
+            ? bookingRangeText(context, appFormatOf(context), l10n, request.start, request.end)
             : null,
       ),
     ));
@@ -329,6 +330,9 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     // #446: same out-of-shell rule for the ambient working day — the
     // walk-up windows this screen books derive from it.
     WorkHours.install(ref.watch(workHoursProvider).value);
+    // #1277 — same out-of-shell rule for the workspace's own words: a
+    // kiosk that calls a seat «une place» must say so on its own route.
+    Lexicon.install(ref.watch(lexiconProvider).value);
     // #814 — the gate reads the policies synchronously at badge time.
     ref.watch(bookingPoliciesProvider);
     // #519 — keep the granularity warm: the period step reads it

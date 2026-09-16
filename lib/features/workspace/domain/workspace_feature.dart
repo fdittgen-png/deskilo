@@ -197,7 +197,8 @@ enum WorkspaceFeature {
   /// member surfaces: "2e étage · Table 3", not "Bureau 1 · Table 3". A
   /// second room brings both names back; the editor always shows rooms.
   singleRoomLevelNames,
-  publicHolidays;
+  publicHolidays,
+  workspaceVocabulary;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1120,6 +1121,16 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.publicHolidays: FeatureManifestEntry(
     feature: WorkspaceFeature.publicHolidays,
     surface: FeatureSurface.settings,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+  ),
+  // #1277 — the words themselves, so `everywhere`: the legend, the shell
+  // destinations and the booking sheet all read them. Off by default —
+  // a space that never renames anything is not shown the control, and
+  // with no overrides every screen renders exactly as before.
+  WorkspaceFeature.workspaceVocabulary: FeatureManifestEntry(
+    feature: WorkspaceFeature.workspaceVocabulary,
+    surface: FeatureSurface.everywhere,
     tier: FeatureTier.platform,
     defaultOn: false,
   ),

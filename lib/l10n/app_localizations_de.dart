@@ -10305,6 +10305,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get permManageNegotiations => 'Geschäftsvereinbarungen verwalten';
 
   @override
+  String get featureWorkspaceVocabularyTitle => 'Wortwahl des Arbeitsbereichs';
+
+  @override
+  String get featureWorkspaceVocabularyDesc =>
+      'Der Arbeitsbereich darf je Sprache eine kleine, freigegebene Auswahl an Produktbegriffen umbenennen — einen Platz, die Beschriftungen der Legende, die Tabs. Alles Übrige behält die Formulierung des Produkts, und ein Arbeitsbereich, der nichts umbenennt, sieht genau so aus wie zuvor.';
+
+  @override
   String get featureWorkspaceStatus => 'Lage des Arbeitsbereichs';
 
   @override

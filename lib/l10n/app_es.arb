@@ -7144,6 +7144,14 @@
   },
   "permViewNegotiations": "Consultar los acuerdos comerciales",
   "permManageNegotiations": "Gestionar los acuerdos comerciales",
+  "featureWorkspaceVocabularyTitle": "Vocabulario del espacio",
+  "@featureWorkspaceVocabularyTitle": {
+    "description": "#1277 workspace vocabulary: the feature switch title"
+  },
+  "featureWorkspaceVocabularyDesc": "El espacio puede renombrar, por idioma, un conjunto reducido y aprobado de palabras del producto: una plaza, las etiquetas de la leyenda, las pestañas. Todo lo demás conserva la redacción del producto, y un espacio que no renombra nada se ve exactamente igual que antes.",
+  "@featureWorkspaceVocabularyDesc": {
+    "description": "#1277 workspace vocabulary: the feature switch description"
+  },
   "featureWorkspaceStatus": "Situación del espacio",
   "@featureWorkspaceStatus": {
     "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"

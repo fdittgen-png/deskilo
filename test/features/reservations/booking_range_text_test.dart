@@ -25,7 +25,7 @@ void main() {
     test('a full-day window reads Full day — never 00:00 – 00:00', () {
       WorkspaceTime.install('Europe/Paris');
       final w = HalfDayWindows.fullDay(day);
-      expect(bookingRangeText(const AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24), null, w.start, w.end), 'Full day');
+      expect(bookingRangeText(null, const AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24), null, w.start, w.end), 'Full day');
     });
 
     test('the halves carry their names and the configured working hours '
@@ -33,9 +33,9 @@ void main() {
       WorkspaceTime.install('Europe/Paris');
       final am = HalfDayWindows.morning(day);
       final pm = HalfDayWindows.afternoon(day);
-      expect(bookingRangeText(const AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24), null, am.start, am.end),
+      expect(bookingRangeText(null, const AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24), null, am.start, am.end),
           'Morning · 08:00 – 12:00');
-      expect(bookingRangeText(const AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24), null, pm.start, pm.end),
+      expect(bookingRangeText(null, const AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24), null, pm.start, pm.end),
           'Afternoon · 12:00 – 17:00');
     });
 
@@ -43,9 +43,9 @@ void main() {
         '24:00', () {
       final nine = DateTime(2026, 7, 21, 9);
       final eleven = DateTime(2026, 7, 21, 11);
-      expect(bookingRangeText(const AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24), null, nine, eleven), '09:00 – 11:00');
+      expect(bookingRangeText(null, const AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24), null, nine, eleven), '09:00 – 11:00');
       expect(
-        bookingRangeText(const AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24), null, nine, DateTime(2026, 7, 22)),
+        bookingRangeText(null, const AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24), null, nine, DateTime(2026, 7, 22)),
         '09:00 – 24:00',
       );
     });

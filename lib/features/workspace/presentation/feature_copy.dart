@@ -446,4 +446,11 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'year adds nothing, and a month that already carries an '
                   'invoice is skipped and named — generating holidays '
                   'never changes a bill that was already issued.',
+        WorkspaceFeature.workspaceVocabulary =>
+          l10n?.featureWorkspaceVocabularyDesc ??
+              'The workspace may rename a small, approved set of product '
+                  'words — a seat, the legend labels, the tabs — per '
+                  'language. Everything else keeps the product\'s own '
+                  'wording, and a workspace that renames nothing looks '
+                  'exactly as it did before.',
       };

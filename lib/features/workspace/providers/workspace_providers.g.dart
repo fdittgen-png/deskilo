@@ -608,6 +608,73 @@ final class NewMemberDefaultsProvider
 
 String _$newMemberDefaultsHash() => r'ca69daf6ac603005a39a35abc07cee26d32c0f91';
 
+/// #1277 — the active workspace's own words for allow-listed product
+/// terms, `{locale: {key: text}}`.
+///
+/// Empty in three cases, all of which render the product's own wording:
+/// the feature is off, no workspace is selected, or the space renamed
+/// nothing. The FLAG is checked here rather than at the 33 call sites —
+/// a gate threaded through every legend label and tab title would be a
+/// gate nobody could see.
+
+@ProviderFor(lexicon)
+final lexiconProvider = LexiconProvider._();
+
+/// #1277 — the active workspace's own words for allow-listed product
+/// terms, `{locale: {key: text}}`.
+///
+/// Empty in three cases, all of which render the product's own wording:
+/// the feature is off, no workspace is selected, or the space renamed
+/// nothing. The FLAG is checked here rather than at the 33 call sites —
+/// a gate threaded through every legend label and tab title would be a
+/// gate nobody could see.
+
+final class LexiconProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, dynamic>>,
+          Map<String, dynamic>,
+          FutureOr<Map<String, dynamic>>
+        >
+    with
+        $FutureModifier<Map<String, dynamic>>,
+        $FutureProvider<Map<String, dynamic>> {
+  /// #1277 — the active workspace's own words for allow-listed product
+  /// terms, `{locale: {key: text}}`.
+  ///
+  /// Empty in three cases, all of which render the product's own wording:
+  /// the feature is off, no workspace is selected, or the space renamed
+  /// nothing. The FLAG is checked here rather than at the 33 call sites —
+  /// a gate threaded through every legend label and tab title would be a
+  /// gate nobody could see.
+  LexiconProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'lexiconProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$lexiconHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, dynamic>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, dynamic>> create(Ref ref) {
+    return lexicon(ref);
+  }
+}
+
+String _$lexiconHash() => r'5974dd4ea3c1d3d39e53969807af999a7ebe5fc3';
+
 /// Working day of the active workspace (#446); [WorkHours.defaults]
 /// while no workspace is selected or the keys are absent.
 

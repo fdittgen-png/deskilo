@@ -947,6 +947,33 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
     });
   }
 
+  @override
+  Future<Map<String, dynamic>> fetchLexicon(String workspaceId) async {
+    final row = await _client
+        .from('workspaces')
+        .select('lexicon')
+        .eq('id', workspaceId)
+        .single();
+    return row['lexicon'] as Map<String, dynamic>? ?? const {};
+  }
+
+  @override
+  Future<void> setLexiconTerm(
+    String workspaceId,
+    String locale,
+    String key,
+    String? text,
+  ) async {
+    // Keyed, so the merge happens in the database: a second editor
+    // cannot revert the first, and the other locales survive (#1089).
+    await _client.rpc<dynamic>('set_workspace_lexicon_term', params: {
+      'p_workspace_id': workspaceId,
+      'p_locale': locale,
+      'p_key': key,
+      'p_text': text,
+    });
+  }
+
   /// THE merge-preserving policy write (#600/#624): one booking_rules
   /// key changes, every other key survives — the same jsonb merge as
   /// setBookingGranularity.

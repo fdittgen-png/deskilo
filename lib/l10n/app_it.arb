@@ -7144,6 +7144,14 @@
   },
   "permViewNegotiations": "Consultare gli accordi commerciali",
   "permManageNegotiations": "Gestire gli accordi commerciali",
+  "featureWorkspaceVocabularyTitle": "Lessico dello spazio",
+  "@featureWorkspaceVocabularyTitle": {
+    "description": "#1277 workspace vocabulary: the feature switch title"
+  },
+  "featureWorkspaceVocabularyDesc": "Lo spazio può rinominare, per lingua, un piccolo insieme approvato di parole del prodotto: un posto, le etichette della legenda, le schede. Tutto il resto mantiene la formulazione del prodotto, e uno spazio che non rinomina nulla appare esattamente come prima.",
+  "@featureWorkspaceVocabularyDesc": {
+    "description": "#1277 workspace vocabulary: the feature switch description"
+  },
   "featureWorkspaceStatus": "Situazione dello spazio",
   "@featureWorkspaceStatus": {
     "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"

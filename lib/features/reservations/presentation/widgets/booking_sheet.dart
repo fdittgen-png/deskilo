@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/l10n/lexicon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -214,7 +215,7 @@ class _BookingSheetState extends State<BookingSheet> {
               Expanded(
                 child: Text(
                   widget.seatName.isEmpty
-                      ? (l10n?.planCheckInTitle ?? 'Check in')
+                      ? (lexiconText(context, key: 'planCheckInTitle', fallback: l10n?.planCheckInTitle ?? 'Check in'))
                       : widget.seatName,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -235,7 +236,7 @@ class _BookingSheetState extends State<BookingSheet> {
                   ? '${l10n?.planStartNow ?? 'Starts now'} · '
                       '${timeFormat.time(widget.start)}'
                   : '${DateFormat.MMMEd().format(WorkspaceTime.display(_start))}'
-                      ' · ${bookingRangeText(appFormatOf(context), l10n, _start, _end)}',
+                      ' · ${bookingRangeText(context, appFormatOf(context), l10n, _start, _end)}',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
@@ -251,7 +252,7 @@ class _BookingSheetState extends State<BookingSheet> {
             if (showTimePickers) ...[
               _timeTile(
                 key: const ValueKey('booking-from-tile'),
-                label: l10n?.planFromLabel ?? 'From',
+                label: lexiconText(context, key: 'planFromLabel', fallback: l10n?.planFromLabel ?? 'From'),
                 value: _start,
                 onPicked: (t) {
                   var start = _snap(pickedInstantAt(_day, t.hour, t.minute));
@@ -281,8 +282,8 @@ class _BookingSheetState extends State<BookingSheet> {
             if (showDurationSlider) ...[
               const SizedBox(height: AppSpacing.sm),
               Text(
-                '${l10n?.planDurationLabel ?? 'Duration'} · '
-                '${bookingRangeText(appFormatOf(context), l10n, _start, _end)}',
+                '${lexiconText(context, key: 'planDurationLabel', fallback: l10n?.planDurationLabel ?? 'Duration')} · '
+                '${bookingRangeText(context, appFormatOf(context), l10n, _start, _end)}',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color:
                           Theme.of(context).colorScheme.onSurfaceVariant,
@@ -299,7 +300,7 @@ class _BookingSheetState extends State<BookingSheet> {
                 max: maxDuration.toDouble(),
                 divisions:
                     ((maxDuration - gridStep) ~/ gridStep).clamp(1, 288),
-                label: bookingRangeText(appFormatOf(context), l10n, _start, _end),
+                label: bookingRangeText(context, appFormatOf(context), l10n, _start, _end),
                 onChanged: (v) {
                   final minutes = (v / gridStep).round() * gridStep;
                   setState(() =>
@@ -336,7 +337,7 @@ class _BookingSheetState extends State<BookingSheet> {
                 key: const ValueKey('booking-for-member'),
                 initialValue: _forMemberId,
                 decoration: InputDecoration(
-                  labelText: l10n?.planBookForLabel ?? 'Book for',
+                  labelText: lexiconText(context, key: 'planBookForLabel', fallback: l10n?.planBookForLabel ?? 'Book for'),
                 ),
                 items: [
                   for (final m in widget.members)
@@ -422,8 +423,8 @@ class _BookingSheetState extends State<BookingSheet> {
                     ? (l10n?.planSendForConfirmation ??
                         'Send for confirmation')
                     : widget.walkUp
-                        ? (l10n?.planCheckInButton ?? 'Check in')
-                        : (l10n?.planReserveButton ?? 'Reserve'),
+                        ? (lexiconText(context, key: 'planCheckInButton', fallback: l10n?.planCheckInButton ?? 'Check in'))
+                        : (lexiconText(context, key: 'planReserveButton', fallback: l10n?.planReserveButton ?? 'Reserve')),
               ),
             ),
             if (widget.liveWindow && !widget.walkUp)
@@ -506,11 +507,11 @@ class _BookingSheetState extends State<BookingSheet> {
     return Wrap(
       spacing: AppSpacing.xs,
       children: [
-        chip('booking-am', l10n?.planMorningChip ?? 'Morning',
+        chip('booking-am', lexiconText(context, key: 'planMorningChip', fallback: l10n?.planMorningChip ?? 'Morning'),
             HalfDayWindows.morning(_day)),
-        chip('booking-pm', l10n?.planAfternoonChip ?? 'Afternoon',
+        chip('booking-pm', lexiconText(context, key: 'planAfternoonChip', fallback: l10n?.planAfternoonChip ?? 'Afternoon'),
             HalfDayWindows.afternoon(_day)),
-        chip('booking-day', l10n?.reserveFullDayChip ?? 'Full day',
+        chip('booking-day', lexiconText(context, key: 'reserveFullDayChip', fallback: l10n?.reserveFullDayChip ?? 'Full day'),
             HalfDayWindows.fullDay(_day)),
       ],
     );

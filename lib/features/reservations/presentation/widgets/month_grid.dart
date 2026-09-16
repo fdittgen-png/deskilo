@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/l10n/lexicon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -169,7 +170,7 @@ class MonthGrid extends ConsumerWidget {
                 totalSeats: totalSeats,
                 closed: !open,
                 label: !open
-                    ? (l10n?.reserveClosedShort ?? 'Closed')
+                    ? (lexiconText(context, key: 'reserveClosedShort', fallback: l10n?.reserveClosedShort ?? 'Closed'))
                     : free == null
                         ? ''
                         : (l10n?.monthFreeCount(free, totalSeats) ??

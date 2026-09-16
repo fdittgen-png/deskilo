@@ -202,6 +202,27 @@ Future<NewMemberDefaults> newMemberDefaults(Ref ref) async {
       .fetchNewMemberDefaults(workspace.id);
 }
 
+/// #1277 — the active workspace's own words for allow-listed product
+/// terms, `{locale: {key: text}}`.
+///
+/// Empty in three cases, all of which render the product's own wording:
+/// the feature is off, no workspace is selected, or the space renamed
+/// nothing. The FLAG is checked here rather than at the 33 call sites —
+/// a gate threaded through every legend label and tab title would be a
+/// gate nobody could see.
+@riverpod
+Future<Map<String, dynamic>> lexicon(Ref ref) async {
+  // #1218 — the repository is watched BEFORE the gap.
+  final repository = ref.watch(workspaceRepositoryProvider);
+  final features = await ref.watch(enabledFeaturesProvider.future);
+  if (!features.contains(WorkspaceFeature.workspaceVocabulary)) {
+    return const {};
+  }
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const {};
+  return repository.fetchLexicon(workspace.id);
+}
+
 /// Working day of the active workspace (#446); [WorkHours.defaults]
 /// while no workspace is selected or the keys are absent.
 @riverpod

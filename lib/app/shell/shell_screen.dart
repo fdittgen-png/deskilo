@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'dart:async';
+import '../../core/l10n/lexicon.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -196,6 +197,11 @@ class ShellScreen extends ConsumerWidget {
     // clock: the HalfDayWindows builders travel as function references.
     WorkHours.install(ref.watch(workHoursProvider).value);
 
+    // #1277 — and the workspace's own words, ambient for the same
+    // reason: the legend, the shell destinations and the booking sheet
+    // all render deep inside widgets that were never handed a `ref`.
+    Lexicon.install(ref.watch(lexiconProvider).value);
+
     // #1077 — and the currency's GRAIN, for the same reason again: the
     // major-unit editor helpers are called from three dozen forms, and a
     // yen has no minor unit at all.
@@ -250,13 +256,13 @@ class ShellScreen extends ConsumerWidget {
     final tabTitles = [
       // #687 — the first destination is Messages now; the plan lives on
       // Réserver, which draws the same canvas.
-      l10n?.messagesTitle ?? 'Messages',
-      l10n?.tabCalendar ?? 'Calendar',
-      l10n?.directoryTitle ?? 'Members',
-      l10n?.tabMoney ?? 'Money',
+      lexiconText(context, key: 'messagesTitle', fallback: l10n?.messagesTitle ?? 'Messages'),
+      lexiconText(context, key: 'tabCalendar', fallback: l10n?.tabCalendar ?? 'Calendar'),
+      lexiconText(context, key: 'directoryTitle', fallback: l10n?.directoryTitle ?? 'Members'),
+      lexiconText(context, key: 'tabMoney', fallback: l10n?.tabMoney ?? 'Money'),
       // The centre button's branch (#reserve-as-branch): not a bar
       // destination, but it owns the app-bar title while active.
-      l10n?.shellReserveButton ?? 'Reserve',
+      lexiconText(context, key: 'shellReserveButton', fallback: l10n?.shellReserveButton ?? 'Reserve'),
     ];
 
     // Per-workspace feature gating (#146): the router branches stay fixed,
@@ -395,7 +401,7 @@ class ShellScreen extends ConsumerWidget {
                       count: pendingEvents,
                       child: const Icon(Icons.notifications_outlined),
                     ),
-              tooltip: l10n?.tabEvents ?? 'Events',
+              tooltip: lexiconText(context, key: 'tabEvents', fallback: l10n?.tabEvents ?? 'Events'),
               // The /events path already lands on the alerts face.
               onPressed: () => context.go('/events'),
             ),
@@ -452,7 +458,7 @@ class ShellScreen extends ConsumerWidget {
               destinations: [
                 for (final branch in visibleBranches) destinationFor(branch),
               ],
-              reserveLabel: l10n?.shellReserveButton ?? 'Reserve',
+              reserveLabel: lexiconText(context, key: 'shellReserveButton', fallback: l10n?.shellReserveButton ?? 'Reserve'),
               // A branch switch, not a push — the bar (and this button)
               // stay visible and functional on the hub.
               onReservePressed: () => navigationShell.goBranch(

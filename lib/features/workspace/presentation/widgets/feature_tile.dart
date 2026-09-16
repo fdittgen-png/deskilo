@@ -41,7 +41,7 @@ class FeatureSurfaceHeading extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  featureSurfaceName(l10n, surface).toUpperCase(),
+                  featureSurfaceName(context, l10n, surface).toUpperCase(),
                   style: theme.textTheme.labelSmall?.copyWith(
                     color: theme.colorScheme.primary,
                     letterSpacing: 1.1,

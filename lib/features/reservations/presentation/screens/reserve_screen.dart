@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import '../../../../core/demo/demo_mode.dart';
+import '../../../../core/l10n/lexicon.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -629,22 +630,22 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                   // real ambiguity a user would meet, not just a finder
                   // the tests tripped over.
                   icon: Icons.grid_view_outlined,
-                  tooltip: l10n?.tabPlan ?? 'Plan',
+                  tooltip: lexiconText(context, key: 'tabPlan', fallback: l10n?.tabPlan ?? 'Plan'),
                 ),
                 ViewToggleOption(
                   value: _ReserveView.day,
                   icon: Icons.view_timeline_outlined,
-                  tooltip: l10n?.reserveDayView ?? 'Day',
+                  tooltip: lexiconText(context, key: 'reserveDayView', fallback: l10n?.reserveDayView ?? 'Day'),
                 ),
                 ViewToggleOption(
                   value: _ReserveView.week,
                   icon: Icons.view_week_outlined,
-                  tooltip: l10n?.reserveWeekView ?? 'Week',
+                  tooltip: lexiconText(context, key: 'reserveWeekView', fallback: l10n?.reserveWeekView ?? 'Week'),
                 ),
                 ViewToggleOption(
                   value: _ReserveView.month,
                   icon: Icons.calendar_month_outlined,
-                  tooltip: l10n?.reserveMonthView ?? 'Month',
+                  tooltip: lexiconText(context, key: 'reserveMonthView', fallback: l10n?.reserveMonthView ?? 'Month'),
                 ),
               ],
               selected: _view,
@@ -1159,9 +1160,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
               trailing: _levelReserveVisible(level)
                   ? IconButton(
                       key: const ValueKey('reserve-reserve-level'),
-                      tooltip: AppLocalizations.of(context)
-                              ?.levelReserveButton ??
-                          'Reserve level',
+                      tooltip: lexiconText(context,
+                          key: 'levelReserveButton',
+                          fallback: AppLocalizations.of(context)
+                                  ?.levelReserveButton ??
+                              'Reserve level'),
                       icon: const Icon(Icons.layers_outlined),
                       onPressed: () {
                         final plan =

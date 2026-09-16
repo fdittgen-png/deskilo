@@ -459,6 +459,23 @@ abstract class WorkspaceRepository {
     NewMemberDefaults defaults,
   );
 
+  /// #1277 — the workspace's own words for allow-listed product terms
+  /// (`workspaces.lexicon`), shaped `{locale: {key: text}}`. Empty for a
+  /// workspace that has renamed nothing, which is almost all of them.
+  Future<Map<String, dynamic>> fetchLexicon(String workspaceId);
+
+  /// Writes ONE term, preserving every other word and every other
+  /// locale. `text` null removes the override rather than storing the
+  /// product default — storing it would freeze that word against every
+  /// future rewording. The server refuses a key outside
+  /// `lexicon_allowed_keys()` (0223).
+  Future<void> setLexiconTerm(
+    String workspaceId,
+    String locale,
+    String key,
+    String? text,
+  );
+
   /// #1294 — the workspace's fallback default booking period
   /// (`booking_rules.default_period`), used only when the device holds
   /// no choice of its own. Null when unset or blank.

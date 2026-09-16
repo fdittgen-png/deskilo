@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/l10n/lexicon.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/space_codes_pdf.dart';
@@ -46,10 +47,10 @@ class _SpaceCodesOptionsDialogState extends State<SpaceCodesOptionsDialog> {
   String _infoLabel(AppLocalizations? l10n, SpaceCardInfo info) =>
       switch (info) {
         SpaceCardInfo.workspace => l10n?.spaceCardInfoWorkspace ?? 'Workspace',
-        SpaceCardInfo.level => l10n?.spaceKindLevel ?? 'Level',
-        SpaceCardInfo.room => l10n?.spaceKindOffice ?? 'Office',
-        SpaceCardInfo.table => l10n?.spaceKindDesk ?? 'Desk',
-        SpaceCardInfo.chair => l10n?.spaceKindSeat ?? 'Seat',
+        SpaceCardInfo.level => lexiconText(context, key: 'spaceKindLevel', fallback: l10n?.spaceKindLevel ?? 'Level'),
+        SpaceCardInfo.room => lexiconText(context, key: 'spaceKindOffice', fallback: l10n?.spaceKindOffice ?? 'Office'),
+        SpaceCardInfo.table => lexiconText(context, key: 'spaceKindDesk', fallback: l10n?.spaceKindDesk ?? 'Desk'),
+        SpaceCardInfo.chair => lexiconText(context, key: 'spaceKindSeat', fallback: l10n?.spaceKindSeat ?? 'Seat'),
       };
 
   @override

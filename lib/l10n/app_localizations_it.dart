@@ -10308,6 +10308,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get permManageNegotiations => 'Gestire gli accordi commerciali';
 
   @override
+  String get featureWorkspaceVocabularyTitle => 'Lessico dello spazio';
+
+  @override
+  String get featureWorkspaceVocabularyDesc =>
+      'Lo spazio può rinominare, per lingua, un piccolo insieme approvato di parole del prodotto: un posto, le etichette della legenda, le schede. Tutto il resto mantiene la formulazione del prodotto, e uno spazio che non rinomina nulla appare esattamente come prima.';
+
+  @override
   String get featureWorkspaceStatus => 'Situazione dello spazio';
 
   @override

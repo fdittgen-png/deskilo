@@ -105,7 +105,7 @@ void main() {
     // #985 — vatRateHistory and vatCounterparty are opt-in too.
     // #1274 — publicHolidays is the twenty-first: generating a year of
     // closure days changes what a subscription includes.
-    expect(onCount, featureManifest.length - 21);
+    expect(onCount, featureManifest.length - 22);
   });
 
   testWidgets(

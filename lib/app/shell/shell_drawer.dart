@@ -7,6 +7,7 @@
 // — the tabs, the Reserve hub, the administration screens, the account
 // — one tap away. Native platforms keep the bar untouched.
 import 'package:flutter/material.dart';
+import '../../core/l10n/lexicon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:go_router/go_router.dart';
@@ -85,7 +86,7 @@ class ShellDrawer extends ConsumerWidget {
 
     final navigation = <_Entry>[
       _Entry('drawer-reserve', _branchIcon(ShellBranch.reserve),
-          l10n?.shellReserveButton ?? 'Reserve', () {
+          lexiconText(context, key: 'shellReserveButton', fallback: l10n?.shellReserveButton ?? 'Reserve'), () {
         Navigator.of(context).pop();
         onBranch(ShellBranch.reserve);
       }, selected: currentIndex == ShellBranch.reserve),
@@ -96,7 +97,7 @@ class ShellDrawer extends ConsumerWidget {
         }, selected: currentIndex == branch),
       if (features.contains(WorkspaceFeature.eventsTab))
         _Entry('drawer-events', Icons.notifications_outlined,
-            l10n?.tabEvents ?? 'Events', () => go('/events', push: false)),
+            lexiconText(context, key: 'tabEvents', fallback: l10n?.tabEvents ?? 'Events'), () => go('/events', push: false)),
     ];
     final administration = <_Entry>[
       if (isOwner)

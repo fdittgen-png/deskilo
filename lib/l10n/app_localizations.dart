@@ -18077,6 +18077,18 @@ abstract class AppLocalizations {
   /// **'Manage commercial agreements'**
   String get permManageNegotiations;
 
+  /// #1277 workspace vocabulary: the feature switch title
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace vocabulary'**
+  String get featureWorkspaceVocabularyTitle;
+
+  /// #1277 workspace vocabulary: the feature switch description
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace may rename a small, approved set of product words — a seat, the legend labels, the tabs — per language. Everything else keeps the product\'s own wording, and a workspace that renames nothing looks exactly as it did before.'**
+  String get featureWorkspaceVocabularyDesc;
+
   /// #934 workspace status / repartition wizard: featureWorkspaceStatus
   ///
   /// In en, this message translates to:

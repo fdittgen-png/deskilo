@@ -1,0 +1,10 @@
+{
+  "featureWorkspaceVocabularyTitle": "Vocabulaire de l’espace",
+  "@featureWorkspaceVocabularyTitle": {
+    "description": "#1277 workspace vocabulary: the feature switch title"
+  },
+  "featureWorkspaceVocabularyDesc": "L’espace peut renommer, par langue, un petit ensemble approuvé de mots du produit — une place, les libellés de la légende, les onglets. Tout le reste conserve les mots du produit, et un espace qui ne renomme rien s’affiche exactement comme avant.",
+  "@featureWorkspaceVocabularyDesc": {
+    "description": "#1277 workspace vocabulary: the feature switch description"
+  }
+}

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../core/l10n/lexicon.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../domain/workspace_feature.dart';
@@ -11,13 +12,17 @@ import '../domain/workspace_feature.dart';
 /// owner arrives with. They arrive having seen something on a screen,
 /// or wanting something to appear on one. So the grouping is the place,
 /// and the tier survives as a chip on the row.
-String featureSurfaceName(AppLocalizations? l10n, FeatureSurface surface) =>
+String featureSurfaceName(
+  BuildContext context,
+  AppLocalizations? l10n,
+  FeatureSurface surface,
+) =>
     switch (surface) {
-      FeatureSurface.reserve => l10n?.shellReserveButton ?? 'Reserve',
-      FeatureSurface.calendar => l10n?.tabCalendar ?? 'Calendar',
+      FeatureSurface.reserve => lexiconText(context, key: 'shellReserveButton', fallback: l10n?.shellReserveButton ?? 'Reserve'),
+      FeatureSurface.calendar => lexiconText(context, key: 'tabCalendar', fallback: l10n?.tabCalendar ?? 'Calendar'),
       FeatureSurface.members => l10n?.membersTitle ?? 'Members',
-      FeatureSurface.money => l10n?.tabMoney ?? 'Money',
-      FeatureSurface.messages => l10n?.messagesTitle ?? 'Messages',
+      FeatureSurface.money => lexiconText(context, key: 'tabMoney', fallback: l10n?.tabMoney ?? 'Money'),
+      FeatureSurface.messages => lexiconText(context, key: 'messagesTitle', fallback: l10n?.messagesTitle ?? 'Messages'),
       FeatureSurface.documents => l10n?.documentsTitle ?? 'Documents',
       FeatureSurface.kiosk => l10n?.kioskRevertTitle ?? 'Kiosk device',
       FeatureSurface.reports => l10n?.featureSurfaceReports ?? 'Documents you print',

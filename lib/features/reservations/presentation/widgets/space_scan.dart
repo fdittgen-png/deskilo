@@ -702,7 +702,7 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
       children: [
         const SizedBox(height: 4),
         Text(
-          bookingRangeText(appFormatOf(context), l10n, window.start, window.end),
+          bookingRangeText(context, appFormatOf(context), l10n, window.start, window.end),
           style: Theme.of(context).textTheme.bodySmall,
         ),
         if (priceLine != null) ...[

@@ -10221,6 +10221,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permManageNegotiations => 'Manage commercial agreements';
 
   @override
+  String get featureWorkspaceVocabularyTitle => 'Workspace vocabulary';
+
+  @override
+  String get featureWorkspaceVocabularyDesc =>
+      'The workspace may rename a small, approved set of product words — a seat, the legend labels, the tabs — per language. Everything else keeps the product\'s own wording, and a workspace that renames nothing looks exactly as it did before.';
+
+  @override
   String get featureWorkspaceStatus => 'Workspace status';
 
   @override

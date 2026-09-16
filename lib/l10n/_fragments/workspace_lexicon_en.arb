@@ -1,0 +1,10 @@
+{
+  "featureWorkspaceVocabularyTitle": "Workspace vocabulary",
+  "@featureWorkspaceVocabularyTitle": {
+    "description": "#1277 workspace vocabulary: the feature switch title"
+  },
+  "featureWorkspaceVocabularyDesc": "The workspace may rename a small, approved set of product words — a seat, the legend labels, the tabs — per language. Everything else keeps the product's own wording, and a workspace that renames nothing looks exactly as it did before.",
+  "@featureWorkspaceVocabularyDesc": {
+    "description": "#1277 workspace vocabulary: the feature switch description"
+  }
+}
