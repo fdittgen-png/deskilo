@@ -19,6 +19,7 @@
 import 'dart:io';
 
 import 'package:deskilo/core/l10n/lexicon.dart';
+import 'package:deskilo/core/l10n/lexicon_defaults.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// The keys `lexicon_allowed_keys()` returns, from the LATEST migration
@@ -105,6 +106,22 @@ void main() {
         reason: 'these allow-listed terms are read by nothing in lib/, so '
             'renaming one would change nothing a member can see:\n  '
             '${unrendered.join('\n  ')}');
+  });
+
+  test('every allow-listed key has a product default the editor can show', () {
+    // #1277 S3 — the editor shows the product's own word beside the
+    // override, so an owner sees what they are replacing. `lexiconDefault`
+    // falls back to returning the KEY when it has no arm, which would put
+    // `legendFree` on screen where "Free" belongs. Nothing else would
+    // catch that: it renders, it just renders nonsense.
+    final unresolved = lexiconAllowList.keys
+        .where((k) => lexiconDefault(null, k) == k)
+        .toList()
+      ..sort();
+    expect(unresolved, isEmpty,
+        reason: 'these allow-listed terms have no arm in lexiconDefault, so '
+            'the wording editor would show the key instead of the word:\n  '
+            '${unresolved.join('\n  ')}');
   });
 
   test('a term declaring placeholders names them exactly', () {

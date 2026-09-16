@@ -50,6 +50,7 @@
   "user.workspace.settings.address": "Briefkopfanschrift",
   "user.workspace.settings.whatsapp-group": "WhatsApp-Gruppe",
   "user.workspace.settings.invitation-message": "Einladungstext",
+  "user.workspace.settings.wording": "Wortwahl",
   "user.workspace.settings.desk-transparency": "Transparenz der Tische",
   "user.workspace.export.space-xml": "Raum exportieren (XML)",
   "user.workspace.export.space-import": "Raum importieren (XML)",

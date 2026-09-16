@@ -6662,6 +6662,70 @@
   "@repartitionStepExpense": {
     "description": "#872 one wizard idiom: repartitionStepExpense"
   },
+  "wordingTitle": "Vocabulario",
+  "@wordingTitle": {
+    "description": "#1277 the wording editor: screen title"
+  },
+  "wordingRow": "Vocabulario",
+  "@wordingRow": {
+    "description": "#1277 the wording editor: the settings row"
+  },
+  "wordingRowHint": "Las palabras que este espacio usa para una plaza, la leyenda y las pestañas.",
+  "@wordingRowHint": {
+    "description": "#1277 the wording editor: the settings row subtitle"
+  },
+  "wordingIntro": "Renombre un conjunto reducido y aprobado de palabras del producto. Todo lo demás conserva la redacción del producto, y un término que no haya renombrado se muestra exactamente igual que antes.",
+  "@wordingIntro": {
+    "description": "#1277 the wording editor: what it does"
+  },
+  "wordingSearch": "Buscar una palabra",
+  "@wordingSearch": {
+    "description": "#1277 the wording editor: search field"
+  },
+  "wordingChangedOnly": "Solo modificados",
+  "@wordingChangedOnly": {
+    "description": "#1277 the wording editor: show only renamed terms"
+  },
+  "wordingReset": "Restablecer",
+  "@wordingReset": {
+    "description": "#1277 the wording editor: reset one term"
+  },
+  "wordingResetHint": "Restablecer elimina su palabra y recupera la del producto.",
+  "@wordingResetHint": {
+    "description": "#1277 the wording editor: what reset does"
+  },
+  "wordingDefaultLabel": "Palabra del producto",
+  "@wordingDefaultLabel": {
+    "description": "#1277 the wording editor: the product's own word"
+  },
+  "wordingNone": "Ningún término coincide.",
+  "@wordingNone": {
+    "description": "#1277 the wording editor: nothing matches the search"
+  },
+  "wordingSavedOne": "Guardado",
+  "@wordingSavedOne": {
+    "description": "#1277 the wording editor: a term was saved"
+  },
+  "wordingLocale": "Idioma",
+  "@wordingLocale": {
+    "description": "#1277 the wording editor: which language is being edited"
+  },
+  "wordingSurfaceLegend": "Leyenda",
+  "@wordingSurfaceLegend": {
+    "description": "#1277 the wording editor: surface name, the plan legend"
+  },
+  "wordingSurfacePlan": "El espacio",
+  "@wordingSurfacePlan": {
+    "description": "#1277 the wording editor: surface name, what a space is made of"
+  },
+  "wordingSurfaceNavigation": "Navegación",
+  "@wordingSurfaceNavigation": {
+    "description": "#1277 the wording editor: surface name, the shell destinations"
+  },
+  "wordingSurfaceBooking": "Reserva",
+  "@wordingSurfaceBooking": {
+    "description": "#1277 the wording editor: surface name, booking"
+  },
   "onboardingTitle": "Bienvenido a DesKilo",
   "onboardingCreateTab": "Crear un espacio",
   "onboardingJoinTab": "Unirse a un espacio",

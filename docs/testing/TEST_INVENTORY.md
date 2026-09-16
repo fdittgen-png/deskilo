@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**480 files, 3197 tests.**
+**481 files, 3202 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -12,16 +12,16 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | database | 19 | 192 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
-| lint | 62 | 166 |
+| lint | 62 | 167 |
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
 | unit | 166 | 1311 |
-| widget | 223 | 1489 |
+| widget | 224 | 1493 |
 
 | action | files |
 |---|---:|
-| KEEP | 480 |
+| KEEP | 481 |
 
 ## Rules
 
@@ -450,6 +450,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/workspace/space_codes_pdf_test.dart` | unit | The space QR sheet: badge-grid A4 pages, one card per desk, office and level — chunked at ten cards per page. | 4 | yes | none | a domain rule — #584, #596 | no | KEEP |  |
 | `test/features/workspace/status_whatsapp_group_migration_test.dart` | unit | Content pins for migration 0029 (#231): the status_text column with the SAME 40-char cap the client enforces (StatusTextRules cross-pin), the whatsapp_group… | 3 | yes | repository sources | a domain rule — #231 | no | KEEP |  |
 | `test/features/workspace/whatsapp_group_test.dart` | unit | The workspace side of #231: the whatsappGroup field and its #232 contract (whatsappGroupUri null when no group is configured), the prefix rule mirroring the… | 7 | yes | fakes | a domain rule — #231, #232 | no | KEEP |  |
+| `test/features/workspace/wording_screen_test.dart` | widget | #1277 S3 — the owner's wording editor. | 4 | yes | fakes | user-visible behaviour — #1277 | no | KEEP |  |
 | `test/features/workspace/workspace_availability_test.dart` | unit | Whether the workspace is open on a day: open weekdays minus closure days, pinned to the server's refusal message. | 6 | yes | none | a domain rule — #186 | shares a test name with test/features/plan/plan_closed_day_test.dart | KEEP |  |
 | `test/features/workspace/workspace_code_test.dart` | widget | The workspace code screen: member and single-use admin invites, and a validated new workspace ID. | 9 | yes | fakes | user-visible behaviour — #188, #319, #0030 | no | KEEP |  |
 | `test/features/workspace/workspace_config_pdf_test.dart` | unit | The workspace configuration PDF renders, grows with its members and survives empty sections. | 3 | yes | none | a domain rule | no | KEEP |  |
@@ -499,7 +500,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/lint/l10n_completeness_test.dart` | lint | Every label exists in every language (#412 follow-up, owner rule): the aggregated ARBs must carry IDENTICAL key sets across all five locales. build_arb.dart… | 1 | yes | repository sources | an architecture, security or process rule — #412 | no | KEEP |  |
 | `test/lint/layering_test.dart` | lint | Architecture lint: the feature-first layering rules, machine-enforced. | 5 | yes | none | an architecture, security or process rule — #1233, #1234, #718 | no | KEEP |  |
 | `test/lint/legal_terms_test.dart` | lint | #1246 — the words a tax authority reads are pinned, per language. | 1 | yes | repository sources | an architecture, security or process rule — #1246 | no | KEEP |  |
-| `test/lint/lexicon_allow_list_test.dart` | lint | #1277 — the app and the server agree on which words a workspace may rename, or the feature is a trap. | 4 | yes | repository sources | an architecture, security or process rule — #1277 | no | KEEP |  |
+| `test/lint/lexicon_allow_list_test.dart` | lint | #1277 — the app and the server agree on which words a workspace may rename, or the feature is a trap. | 5 | yes | repository sources | an architecture, security or process rule — #1277 | no | KEEP |  |
 | `test/lint/manifest_permissions_test.dart` | lint | Pinning test for #99: Flutter injects INTERNET only into the debug/profile manifest overlays — a release build without it in the MAIN manifest cannot open any… | 1 | yes | repository sources | an architecture, security or process rule | no | KEEP |  |
 | `test/lint/migration_grants_test.dart` | lint | #1054 — a migration that creates a function revokes anon in the same file. | 5 | yes | repository sources | an architecture, security or process rule — #1054, #1047 | no | KEEP |  |
 | `test/lint/no_day_duration_test.dart` | lint | #1231 — a date that is printed, invoiced or chased is never computed with `Duration(days: n)`. | 1 | yes | none | an architecture, security or process rule — #1231 | no | KEEP |  |

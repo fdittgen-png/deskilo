@@ -1,0 +1,66 @@
+{
+  "wordingTitle": "Wortwahl",
+  "@wordingTitle": {
+    "description": "#1277 the wording editor: screen title"
+  },
+  "wordingRow": "Wortwahl",
+  "@wordingRow": {
+    "description": "#1277 the wording editor: the settings row"
+  },
+  "wordingRowHint": "Die Wörter, die dieser Bereich für einen Platz, die Legende und die Tabs verwendet.",
+  "@wordingRowHint": {
+    "description": "#1277 the wording editor: the settings row subtitle"
+  },
+  "wordingIntro": "Benennen Sie eine kleine, freigegebene Auswahl an Produktbegriffen um. Alles Übrige behält die Formulierung des Produkts, und ein nicht umbenannter Begriff erscheint genau wie zuvor.",
+  "@wordingIntro": {
+    "description": "#1277 the wording editor: what it does"
+  },
+  "wordingSearch": "Wort suchen",
+  "@wordingSearch": {
+    "description": "#1277 the wording editor: search field"
+  },
+  "wordingChangedOnly": "Nur geänderte",
+  "@wordingChangedOnly": {
+    "description": "#1277 the wording editor: show only renamed terms"
+  },
+  "wordingReset": "Zurücksetzen",
+  "@wordingReset": {
+    "description": "#1277 the wording editor: reset one term"
+  },
+  "wordingResetHint": "Zurücksetzen entfernt Ihr Wort und stellt das des Produkts wieder her.",
+  "@wordingResetHint": {
+    "description": "#1277 the wording editor: what reset does"
+  },
+  "wordingDefaultLabel": "Produktbegriff",
+  "@wordingDefaultLabel": {
+    "description": "#1277 the wording editor: the product's own word"
+  },
+  "wordingNone": "Kein Begriff passt.",
+  "@wordingNone": {
+    "description": "#1277 the wording editor: nothing matches the search"
+  },
+  "wordingSavedOne": "Gespeichert",
+  "@wordingSavedOne": {
+    "description": "#1277 the wording editor: a term was saved"
+  },
+  "wordingLocale": "Sprache",
+  "@wordingLocale": {
+    "description": "#1277 the wording editor: which language is being edited"
+  },
+  "wordingSurfaceLegend": "Legende",
+  "@wordingSurfaceLegend": {
+    "description": "#1277 the wording editor: surface name, the plan legend"
+  },
+  "wordingSurfacePlan": "Der Bereich",
+  "@wordingSurfacePlan": {
+    "description": "#1277 the wording editor: surface name, what a space is made of"
+  },
+  "wordingSurfaceNavigation": "Navigation",
+  "@wordingSurfaceNavigation": {
+    "description": "#1277 the wording editor: surface name, the shell destinations"
+  },
+  "wordingSurfaceBooking": "Buchung",
+  "@wordingSurfaceBooking": {
+    "description": "#1277 the wording editor: surface name, booking"
+  }
+}

@@ -9621,6 +9621,57 @@ class AppLocalizationsEn extends AppLocalizations {
   String get repartitionStepExpense => 'The expense';
 
   @override
+  String get wordingTitle => 'Wording';
+
+  @override
+  String get wordingRow => 'Wording';
+
+  @override
+  String get wordingRowHint =>
+      'The words this space uses for a seat, the legend and the tabs.';
+
+  @override
+  String get wordingIntro =>
+      'Rename a small, approved set of product words. Everything else keeps the product\'s own wording, and a term you have not renamed shows exactly as before.';
+
+  @override
+  String get wordingSearch => 'Search a word';
+
+  @override
+  String get wordingChangedOnly => 'Changed only';
+
+  @override
+  String get wordingReset => 'Reset';
+
+  @override
+  String get wordingResetHint =>
+      'Reset removes your word and brings the product\'s back.';
+
+  @override
+  String get wordingDefaultLabel => 'Product default';
+
+  @override
+  String get wordingNone => 'No term matches.';
+
+  @override
+  String get wordingSavedOne => 'Saved';
+
+  @override
+  String get wordingLocale => 'Language';
+
+  @override
+  String get wordingSurfaceLegend => 'Legend';
+
+  @override
+  String get wordingSurfacePlan => 'The space';
+
+  @override
+  String get wordingSurfaceNavigation => 'Navigation';
+
+  @override
+  String get wordingSurfaceBooking => 'Booking';
+
+  @override
   String get onboardingTitle => 'Welcome to DesKilo';
 
   @override

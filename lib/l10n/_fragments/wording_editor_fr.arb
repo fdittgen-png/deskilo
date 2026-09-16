@@ -1,0 +1,66 @@
+{
+  "wordingTitle": "Vocabulaire",
+  "@wordingTitle": {
+    "description": "#1277 the wording editor: screen title"
+  },
+  "wordingRow": "Vocabulaire",
+  "@wordingRow": {
+    "description": "#1277 the wording editor: the settings row"
+  },
+  "wordingRowHint": "Les mots que cet espace emploie pour une place, la légende et les onglets.",
+  "@wordingRowHint": {
+    "description": "#1277 the wording editor: the settings row subtitle"
+  },
+  "wordingIntro": "Renommez un petit ensemble approuvé de mots du produit. Tout le reste conserve les mots du produit, et un terme que vous n'avez pas renommé s'affiche exactement comme avant.",
+  "@wordingIntro": {
+    "description": "#1277 the wording editor: what it does"
+  },
+  "wordingSearch": "Rechercher un mot",
+  "@wordingSearch": {
+    "description": "#1277 the wording editor: search field"
+  },
+  "wordingChangedOnly": "Modifiés seulement",
+  "@wordingChangedOnly": {
+    "description": "#1277 the wording editor: show only renamed terms"
+  },
+  "wordingReset": "Réinitialiser",
+  "@wordingReset": {
+    "description": "#1277 the wording editor: reset one term"
+  },
+  "wordingResetHint": "Réinitialiser supprime votre mot et rétablit celui du produit.",
+  "@wordingResetHint": {
+    "description": "#1277 the wording editor: what reset does"
+  },
+  "wordingDefaultLabel": "Mot du produit",
+  "@wordingDefaultLabel": {
+    "description": "#1277 the wording editor: the product's own word"
+  },
+  "wordingNone": "Aucun terme ne correspond.",
+  "@wordingNone": {
+    "description": "#1277 the wording editor: nothing matches the search"
+  },
+  "wordingSavedOne": "Enregistré",
+  "@wordingSavedOne": {
+    "description": "#1277 the wording editor: a term was saved"
+  },
+  "wordingLocale": "Langue",
+  "@wordingLocale": {
+    "description": "#1277 the wording editor: which language is being edited"
+  },
+  "wordingSurfaceLegend": "Légende",
+  "@wordingSurfaceLegend": {
+    "description": "#1277 the wording editor: surface name, the plan legend"
+  },
+  "wordingSurfacePlan": "L'espace",
+  "@wordingSurfacePlan": {
+    "description": "#1277 the wording editor: surface name, what a space is made of"
+  },
+  "wordingSurfaceNavigation": "Navigation",
+  "@wordingSurfaceNavigation": {
+    "description": "#1277 the wording editor: surface name, the shell destinations"
+  },
+  "wordingSurfaceBooking": "Réservation",
+  "@wordingSurfaceBooking": {
+    "description": "#1277 the wording editor: surface name, booking"
+  }
+}

@@ -50,6 +50,7 @@
   "user.workspace.settings.address": "Indirizzo della carta intestata",
   "user.workspace.settings.whatsapp-group": "Gruppo WhatsApp",
   "user.workspace.settings.invitation-message": "Messaggio di invito",
+  "user.workspace.settings.wording": "Lessico",
   "user.workspace.settings.desk-transparency": "Trasparenza dei tavoli",
   "user.workspace.export.space-xml": "Esportare lo spazio (XML)",
   "user.workspace.export.space-import": "Importare lo spazio (XML)",

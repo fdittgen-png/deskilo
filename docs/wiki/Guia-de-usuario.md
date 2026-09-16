@@ -929,6 +929,23 @@ la app, así que nunca pegue uno en el texto.
 borradores está en pantalla. No es un ajuste: no se guarda nada de él, y
 se abre cada vez con el idioma del espacio.
 
+<!-- anchor: user.workspace.settings.wording -->
+#### Vocabulario
+
+Las palabras que este espacio usa en lugar de las del producto.
+Renombre una plaza, las etiquetas de la leyenda, las pestañas o las
+palabras de la reserva — por idioma — y todo lo demás conserva la
+redacción del producto.
+
+La palabra del producto siempre aparece bajo la suya, para que vea qué
+está reemplazando. **Restablecer** elimina su palabra en vez de guardar
+la del producto en su lugar: un término restablecido sigue al producto
+cuando su redacción cambia más adelante.
+
+Los términos se agrupan por dónde aparecen, no se listan por nombre —
+dos de ellos se leen *Reserve* en inglés, y el grupo es lo que los
+distingue.
+
 <!-- anchor: user.workspace.settings.desk-transparency -->
 #### Transparencia de las mesas
 

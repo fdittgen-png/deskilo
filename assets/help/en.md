@@ -902,6 +902,20 @@ the app, so never paste one into the text.
 screen. It is not a setting: nothing about it is saved, and it opens on
 the workspace language every time.
 
+#### Wording
+
+The words this space uses for the product's own terms. Rename a seat,
+the legend labels, the tabs or the booking words — per language — and
+everything else keeps the product's own wording.
+
+The product's word is always shown beneath your own, so you can see
+what you are replacing. **Reset** removes your word rather than saving
+the product's in its place: a term you have reset follows the product
+when its wording later changes.
+
+Terms are grouped by where they appear, not listed by name — two of
+them read *Reserve* in English and the group is what tells them apart.
+
 #### Desk transparency
 
 How much of the background image shows through a desk on the plan. Turn

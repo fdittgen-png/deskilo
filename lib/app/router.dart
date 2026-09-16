@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import '../features/workspace/presentation/screens/deployment_screen.dart';
+import '../features/workspace/presentation/screens/wording_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -587,6 +588,15 @@ GoRouter router(Ref ref) {
                 ? null
                 : '/money',
         builder: (context, state) => const RepartitionWizardScreen(),
+      ),
+      // #1277 — the words this space uses instead of the product's.
+      GoRoute(
+        path: '/settings/wording',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.workspaceVocabulary)
+                ? null
+                : '/settings',
+        builder: (context, state) => const WordingScreen(),
       ),
       // #925 — how every journal numbers its documents, one screen.
       GoRoute(
