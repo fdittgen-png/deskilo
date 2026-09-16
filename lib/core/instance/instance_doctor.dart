@@ -18,6 +18,7 @@
 // four rows of `auth.users`. This is the thing that reads them.
 
 import 'instance_builder.dart';
+import 'schema_compatibility.dart';
 import 'instance_security_checks.dart';
 import 'management_api.dart';
 
@@ -73,7 +74,8 @@ class InstanceDoctor {
   /// sat behind a bookkeeping error.
   Future<List<DoctorFinding>> examine(
     String ref, {
-    int minimumMigrations = 200,
+    List<String> bundleMigrations = const [],
+    int required = requiredSchemaVersion,
     Set<String> expectedPolicies = const {},
   }) async =>
       [
@@ -84,7 +86,7 @@ class InstanceDoctor {
         ...await _probe(
             'Schema',
             () async => checkSchema(await api.query(ref, schemaHealthSql),
-                minimumMigrations: minimumMigrations)),
+                required: required, bundleMigrations: bundleMigrations)),
         ...await _probe('Security',
             () async => checkSecurity(await api.query(ref, securityHealthSql))),
         // #1313 — structural, read-only, and the only check that can see a
@@ -150,9 +152,11 @@ from auth.users;
   /// #1245 — how much schema is installed. #1314 split it from the
   /// security questions and made it safe to ask of any project:
   /// `supabase_migrations` is only read once `to_regclass` has found it,
-  /// and `-1` says it does not exist.
-  static const String schemaHealthSql = r'''
-select
+  /// and `-1` says it does not exist. #1312 — `marker` is the schema's own
+  /// version, null before 0226.
+  static const String schemaHealthSql = 'select\n  '
+      '${InstanceBuilder.markerColumnSql} as marker,' r'''
+
   case when to_regclass('supabase_migrations.schema_migrations') is null then -1
     else (xpath('/row/c/text()', query_to_xml(
       'select count(*) as c from supabase_migrations.schema_migrations',
@@ -304,23 +308,27 @@ select
   /// carries every key — what the two queries return, side by side.
   static List<DoctorFinding> checkInstall(
     List<Map<String, Object?>> rows, {
-    int minimumMigrations = 200,
+    int required = requiredSchemaVersion,
+    List<String> bundleMigrations = const [],
   }) =>
       [
-        ...checkSchema(rows, minimumMigrations: minimumMigrations),
+        ...checkSchema(rows,
+            required: required, bundleMigrations: bundleMigrations),
         ...checkSecurity(rows),
       ];
 
-  /// How much schema is installed.
+  /// #1312 — which version of the schema is installed, in migration
+  /// numbers: the marker every migration from 0226 writes, compared with
+  /// [required] — the last migration of the bundle this tool carries.
   ///
-  /// [minimumMigrations] is how much schema a working instance has.
-  /// It is a floor rather than an equality on purpose: a project may
-  /// legitimately carry more (a hand-applied fix, a newer bundle than
-  /// the binary running this), and refusing to start over a number
-  /// being larger would be the doctor causing the outage.
+  /// Row counts in `supabase_migrations` decide nothing any more: a hosted
+  /// project records timestamps and names there that map to no file, and
+  /// an older installer recorded nothing at all. [bundleMigrations] (file
+  /// names) only lets a "behind" finding name what is missing.
   static List<DoctorFinding> checkSchema(
     List<Map<String, Object?>> rows, {
-    int minimumMigrations = 200,
+    int required = requiredSchemaVersion,
+    List<String> bundleMigrations = const [],
   }) {
     if (rows.isEmpty) {
       return const [
@@ -330,48 +338,57 @@ select
     }
     final row = rows.first;
     int number(String key) => int.tryParse('${row[key] ?? ''}') ?? 0;
-    final applied = number('migrations_applied');
+    final marker = int.tryParse('${row['marker'] ?? ''}');
     final tables = number('tables');
+    const install = '        Fix: dart run tool/instance.dart install --ref <ref>';
 
-    if (applied <= 0 && tables == 0) {
+    if (marker == null && tables == 0) {
       return const [
         DoctorFinding(DoctorLevel.alarm, 'Schema',
-            'no migration has been applied. Nothing works yet.\n'
-                '        Fix: dart run tool/instance.dart install --ref <ref>'),
+            'no migration has been applied. Nothing works yet.\n$install'),
       ];
     }
-    if (applied <= 0) {
-      // #1314 — the tables are there and the bookkeeping is not: what an
-      // instance installed before installs recorded their migrations looks
-      // like. Not unreachable, and not necessarily incomplete.
+    if (marker == null) {
       return [
         DoctorFinding(
-          DoctorLevel.warn,
-          'Migrations are not recorded',
-          '$tables tables exist, but no migration is recorded. An instance '
-              'installed before #1314 looks like this; its schema may be '
-              'complete, and nothing here can tell how much of it is.\n'
-              '        Fix, once you know the last migration it has: '
+          DoctorLevel.alarm,
+          'Schema has no version',
+          '$tables tables exist, but no schema version: this instance '
+              'predates migration 0226, so it is behind an app that needs '
+              '$required. The install upgrades it from what it recorded.\n'
+              '$install\n'
+              '        If it cannot tell where to resume, first: '
               'dart run tool/instance.dart record --ref <ref> --through <NNNN>',
         ),
       ];
     }
-    if (applied < minimumMigrations) {
+    if (marker < required) {
+      final missing = [
+        for (final name in bundleMigrations)
+          if ((int.tryParse(name.split('_').first) ?? 0) > marker) name,
+      ];
+      final behindBy = missing.isEmpty ? required - marker : missing.length;
       return [
         DoctorFinding(
           DoctorLevel.alarm,
           'Schema is behind',
-          '$applied migrations applied, $tables tables. A working instance '
-              'has at least $minimumMigrations.\n'
-              '        A half-installed schema fails at the first feature '
-              'whose table is missing, and says nothing until then.\n'
-              '        Fix: dart run tool/instance.dart install --ref <ref>',
+          'version $marker, and this app needs $required — behind by '
+              '$behindBy${missing.isEmpty ? '' : ': ${missing.join(', ')}'}.\n'
+              '        A newer app on an older schema stops at "This server '
+              'needs an update".\n$install',
+          count: behindBy,
         ),
       ];
     }
     return [
-      DoctorFinding(DoctorLevel.ok, 'Schema',
-          '$applied migrations applied, $tables tables'),
+      DoctorFinding(
+        DoctorLevel.ok,
+        'Schema',
+        marker == required
+            ? 'version $marker, current — $tables tables'
+            : 'version $marker, ahead of this tool ($required) — supported; '
+                'update the tooling before installing from it',
+      ),
     ];
   }
 

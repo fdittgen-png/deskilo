@@ -158,6 +158,16 @@ values (${_quote(_versionOf(migration))}, ${_quote(_nameOf(migration))})
 on conflict (version) do nothing;
 ''';
 
+  /// #1312 — the schema's own version, as one select-list expression:
+  /// null where the marker function does not exist (a schema before 0226),
+  /// never an error.
+  static const String markerColumnSql = r'''
+case when to_regprocedure('public.deskilo_schema_version()') is not null
+    then (xpath('/row/v/text()', query_to_xml(
+      'select public.deskilo_schema_version() as v',
+      false, true, '')))[1]::text::int
+  end''';
+
   /// What this tooling recorded on a project. Never raises where
   /// `supabase_migrations` does not exist: the table is only read through
   /// `query_to_xml` once `to_regclass` has found it.
@@ -176,11 +186,12 @@ select
         where version ~ ''^[0-9]{4}$''
       ',
       false, true, '')))[1]::text
-  end as versions;
-''';
+  end as versions,
+''' '  $markerColumnSql as marker;\n';
 
-  /// #1314 — where an install resumes: the first bundle migration this
-  /// tooling has not recorded on [ref].
+  /// #1314/#1312 — where an install resumes: the first bundle migration
+  /// after the schema's version marker, or — on a schema that predates the
+  /// marker — the first one this tooling has not recorded on [ref].
   ///
   /// `null` when the project's migrations were recorded by OTHER tooling
   /// (Supabase's CLI writes timestamp versions): nothing there says how
@@ -189,6 +200,17 @@ select
   Future<int?> resumePoint(String ref, InstanceBundle bundle) async {
     final rows = await api.query(ref, recordedVersionsSql);
     final row = rows.isEmpty ? const <String, Object?>{} : rows.first;
+    // #1312 — the marker is the schema's own word, whoever applied it:
+    // resume after the last migration it names, and nothing else counts.
+    final marker = int.tryParse('${row['marker'] ?? ''}');
+    if (marker != null) {
+      var after = 0;
+      while (after < bundle.schema.length &&
+          (int.tryParse(_versionOf(bundle.schema[after])) ?? 0) <= marker) {
+        after++;
+      }
+      return after;
+    }
     final recorded = int.tryParse('${row['recorded'] ?? 0}') ?? 0;
     final versions = '${row['versions'] ?? ''}'
         .split(',')
