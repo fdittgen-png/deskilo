@@ -31,6 +31,9 @@ Edit ALL of these in the same commit:
    redirect + `test/lint/route_registry_test.dart` pin.
 8. `workspace_process.dart` — primary subprocess or explicit internal reason;
    regenerate with `dart run tool/build_process_catalogue.dart`.
+9. **A migration** with `dart run tool/build_feature_registry_sql.dart`'s
+   output — the server's copy of the manifest (#1333). A server gate calls
+   `public.feature_effective(ws, 'key')`, never reads the flag by hand.
 Validation domains grow in FOUR places (AGENT_RULES #767/#769); the
 placeholders registry has its own pin (`deskilo-reports`).
 

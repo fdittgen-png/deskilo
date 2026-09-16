@@ -30,6 +30,15 @@ These rules are version-controlled so a fresh clone sees them. They mirror the s
 - Default ON unless the feature is risky or needs owner setup; dependent features declare `requires` so the Features screen explains the chain.
 - OFF must degrade honestly: the entry points disappear (and their routes redirect); already-stored data stays untouched.
 
+- **The server reads the same registry (#1333).** A gate in SQL asks
+  `public.feature_effective(workspace, 'key')` — stored JSON boolean over
+  the default, AND every parent — never `feature_flags ->> 'key'` by hand.
+  `public.feature_registry()` is generated from `featureManifest`: adding,
+  removing or re-parenting a feature, or changing its default or tier,
+  means a migration carrying the output of
+  `dart run tool/build_feature_registry_sql.dart`;
+  `test/lint/feature_registry_sql_test.dart` names the feature until it does.
+
 Every `WorkspaceFeature` also belongs to exactly one primary subprocess in
 `workspace_process.dart`, or has an explicit internal classification reason.
 Regenerate `docs/design/process-catalogue.md` with
