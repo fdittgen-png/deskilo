@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../core/l10n/lexicon.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../domain/validation_policy.dart';
@@ -37,9 +38,13 @@ ValidationWorkflow workflowOf(EventType type) => switch (type) {
       _ => ValidationWorkflow.people,
     };
 
-String workflowName(AppLocalizations? l10n, ValidationWorkflow w) =>
+String workflowName(
+  BuildContext context,
+  AppLocalizations? l10n,
+  ValidationWorkflow w,
+) =>
     switch (w) {
-      ValidationWorkflow.money => l10n?.tabMoney ?? 'Money',
+      ValidationWorkflow.money => lexiconText(context, key: 'tabMoney', fallback: l10n?.tabMoney ?? 'Money'),
       ValidationWorkflow.bookings =>
         l10n?.validationWorkflowBookings ?? 'Bookings',
       ValidationWorkflow.people =>

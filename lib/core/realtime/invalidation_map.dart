@@ -102,6 +102,9 @@ TableInvalidation invalidationFor(String table) => switch (table) {
           openWeekdaysProvider,
           bookingGranularityProvider,
           workHoursProvider,
+          // #1277 — a renamed word is a workspaces-row change like any
+          // other; without this it reaches only the device that wrote it.
+          lexiconProvider,
           invoicePdfTemplateProvider,
           dunningRulesProvider,
         ]),

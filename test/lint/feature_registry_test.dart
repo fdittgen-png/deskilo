@@ -121,7 +121,12 @@ import 'package:flutter_test/flutter_test.dart';
 // 102→103 (2026-09-16): #1274 publicHolidays — an owner generates the
 //   year's public holidays as closure days, with a preview. Platform,
 //   default OFF.
-const int _expectedFeatureCount = 103;
+// 103→104 (2026-09-16): #1277 workspaceVocabulary — a workspace renames
+//   an allow-listed set of product words per locale. Surface
+//   `everywhere`, because the legend, the shell destinations and the
+//   booking sheet all read them. Platform, default OFF: a space that
+//   keeps the product's vocabulary is not shown a control for it.
+const int _expectedFeatureCount = 104;
 
 void main() {
   _tierPins();

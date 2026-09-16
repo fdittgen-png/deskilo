@@ -275,7 +275,7 @@ class _WorkflowHeading extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  workflowName(l10n, workflow).toUpperCase(),
+                  workflowName(context, l10n, workflow).toUpperCase(),
                   style: theme.textTheme.labelSmall?.copyWith(
                     color: theme.colorScheme.primary,
                     letterSpacing: 1.1,

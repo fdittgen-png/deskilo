@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -127,7 +128,7 @@ class MemberMoneyCard extends ConsumerWidget {
       key: const ValueKey('member-money'),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        label(l10n?.tabMoney ?? 'Money'),
+        label(lexiconText(context, key: 'tabMoney', fallback: l10n?.tabMoney ?? 'Money')),
         // The one number the question is really about. The shared card,
         // not a second rendering of the same arithmetic — a profile that
         // computed the position itself is a profile that can disagree

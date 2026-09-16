@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**479 files, 3193 tests.**
+**480 files, 3197 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -12,7 +12,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | database | 19 | 192 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
-| lint | 61 | 162 |
+| lint | 62 | 166 |
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
@@ -21,7 +21,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 
 | action | files |
 |---|---:|
-| KEEP | 479 |
+| KEEP | 480 |
 
 ## Rules
 
@@ -499,6 +499,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/lint/l10n_completeness_test.dart` | lint | Every label exists in every language (#412 follow-up, owner rule): the aggregated ARBs must carry IDENTICAL key sets across all five locales. build_arb.dart… | 1 | yes | repository sources | an architecture, security or process rule — #412 | no | KEEP |  |
 | `test/lint/layering_test.dart` | lint | Architecture lint: the feature-first layering rules, machine-enforced. | 5 | yes | none | an architecture, security or process rule — #1233, #1234, #718 | no | KEEP |  |
 | `test/lint/legal_terms_test.dart` | lint | #1246 — the words a tax authority reads are pinned, per language. | 1 | yes | repository sources | an architecture, security or process rule — #1246 | no | KEEP |  |
+| `test/lint/lexicon_allow_list_test.dart` | lint | #1277 — the app and the server agree on which words a workspace may rename, or the feature is a trap. | 4 | yes | repository sources | an architecture, security or process rule — #1277 | no | KEEP |  |
 | `test/lint/manifest_permissions_test.dart` | lint | Pinning test for #99: Flutter injects INTERNET only into the debug/profile manifest overlays — a release build without it in the MAIN manifest cannot open any… | 1 | yes | repository sources | an architecture, security or process rule | no | KEEP |  |
 | `test/lint/migration_grants_test.dart` | lint | #1054 — a migration that creates a function revokes anon in the same file. | 5 | yes | repository sources | an architecture, security or process rule — #1054, #1047 | no | KEEP |  |
 | `test/lint/no_day_duration_test.dart` | lint | #1231 — a date that is printed, invoiced or chased is never computed with `Duration(days: n)`. | 1 | yes | none | an architecture, security or process rule — #1231 | no | KEEP |  |

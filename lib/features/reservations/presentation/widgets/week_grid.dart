@@ -801,7 +801,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     Map<String, String> names,
     AppLocalizations? l10n,
   ) {
-    final range = bookingRangeText(appFormatOf(context), l10n, r.startsAt, r.endsAt);
+    final range = bookingRangeText(context, appFormatOf(context), l10n, r.startsAt, r.endsAt);
     if (!widget.everyone) return range;
     final name = names[r.memberId] ?? '';
     return name.isEmpty ? range : '$range · $name';

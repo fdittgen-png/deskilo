@@ -16,6 +16,10 @@ import 'package:flutter_test/flutter_test.dart';
 /// a login surface. Shipping any of those ON would make the choice for
 /// them silently.
 const Set<WorkspaceFeature> defaultOffFeatures = {
+  // #1277 — renaming the product's words is asked for, never assumed:
+  // a space that keeps the product's vocabulary is not shown a control
+  // for changing it.
+  WorkspaceFeature.workspaceVocabulary,
   // #1274 — generating a year of closure days changes what a
   // subscription includes, so it is asked for and never assumed.
   WorkspaceFeature.publicHolidays,
@@ -114,6 +118,7 @@ void main() {
       'memberEnvironments': true,
       'workspaceLibrary': true,
       'publicHolidays': true,
+      'workspaceVocabulary': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

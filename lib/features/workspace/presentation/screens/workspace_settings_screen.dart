@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'dart:convert';
+import '../../../../core/l10n/lexicon.dart';
 
 import 'package:file_selector/file_selector.dart';
 import '../member_labels.dart';
@@ -591,6 +592,18 @@ class _WorkspaceSettingsScreenState
           'workspace': workspace.name,
           'issued': DateFormat.yMMMMd().format(ref.read(clockProvider).now()),
         });
+        // #1277 — the space nouns resolve HERE, above the gap, for the
+        // same reason `batchCover` does: everything below this line is
+        // async and a BuildContext must not cross it.
+        final kindLevel = lexiconText(context,
+            key: 'spaceKindLevel', fallback: l10n?.spaceKindLevel ?? 'Level');
+        final kindOffice = lexiconText(context,
+            key: 'spaceKindOffice',
+            fallback: l10n?.spaceKindOffice ?? 'Office');
+        final kindDesk = lexiconText(context,
+            key: 'spaceKindDesk', fallback: l10n?.spaceKindDesk ?? 'Desk');
+        final kindSeat = lexiconText(context,
+            key: 'spaceKindSeat', fallback: l10n?.spaceKindSeat ?? 'Seat');
         final levels = await ref.read(levelsProvider.future);
         final entries = buildSpaceCodeEntries(
           workspaceId: workspace.id,
@@ -601,10 +614,10 @@ class _WorkspaceSettingsScreenState
           ],
           info: options.info,
           kindLabels: (
-            level: l10n?.spaceKindLevel ?? 'Level',
-            office: l10n?.spaceKindOffice ?? 'Office',
-            desk: l10n?.spaceKindDesk ?? 'Desk',
-            seat: l10n?.spaceKindSeat ?? 'Seat',
+            level: kindLevel,
+            office: kindOffice,
+            desk: kindDesk,
+            seat: kindSeat,
           ),
         );
         if (entries.isEmpty) {

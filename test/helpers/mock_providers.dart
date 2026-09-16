@@ -1206,6 +1206,29 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     newMemberDefaults[workspaceId] = defaults;
   }
 
+  /// #1277 — workspaceId -> locale -> key -> the workspace's word.
+  final Map<String, Map<String, Map<String, String>>> lexicons = {};
+
+  @override
+  Future<Map<String, dynamic>> fetchLexicon(String workspaceId) async =>
+      {for (final e in (lexicons[workspaceId] ?? {}).entries) e.key: e.value};
+
+  @override
+  Future<void> setLexiconTerm(
+    String workspaceId,
+    String locale,
+    String key,
+    String? text,
+  ) async {
+    final byLocale = lexicons.putIfAbsent(workspaceId, () => {});
+    final terms = byLocale.putIfAbsent(locale, () => {});
+    if (text == null) {
+      terms.remove(key);
+    } else {
+      terms[key] = text;
+    }
+  }
+
   @override
   Future<BookingPolicies> fetchBookingPolicies(String workspaceId) async =>
       bookingPolicies[workspaceId] ?? const BookingPolicies();

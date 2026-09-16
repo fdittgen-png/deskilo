@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/l10n/lexicon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -144,7 +145,7 @@ class _InboxScreenState extends ConsumerState<InboxScreen>
                           InboxTab.alerts => features
                                   .contains(WorkspaceFeature.messagesHub)
                               ? (l10n?.inboxAlertsTab ?? 'Alerts')
-                              : (l10n?.tabEvents ?? 'Events'),
+                              : (lexiconText(context, key: 'tabEvents', fallback: l10n?.tabEvents ?? 'Events')),
                         },
                         // The count each face is responsible for, on the
                         // face itself: an inbox that only badges its

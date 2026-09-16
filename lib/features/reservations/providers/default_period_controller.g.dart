@@ -94,7 +94,7 @@ final class DefaultPeriodProvider
   DefaultPeriod create() => DefaultPeriod();
 }
 
-String _$defaultPeriodHash() => r'88544dde4a53ebb9b69d6406270eda269bb8d1df';
+String _$defaultPeriodHash() => r'8804e738fdf707b2787dfe4cd954fdec541419b7';
 
 /// The active workspace's stored default period, validated against what
 /// the CURRENT booking configuration still offers — a preference saved

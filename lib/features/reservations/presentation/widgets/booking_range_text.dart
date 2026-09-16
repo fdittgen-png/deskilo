@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: 0BSD
 
 import '../../../../core/time/workspace_time.dart';
+import 'package:flutter/widgets.dart';
+import '../../../../core/l10n/lexicon.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/booking_window_label.dart';
 import '../../../../core/i18n/app_format.dart';
@@ -11,6 +13,10 @@ import '../../../../core/i18n/app_format.dart';
 /// and free ranges read from–to on the window's own wall clock, with a
 /// next-midnight end written 24:00, never 00:00.
 String bookingRangeText(
+  // #1277 — nullable so this stays a PURE function: its unit test builds
+  // an AppFormat and never pumps a widget. Null means the product's own
+  // words, which is what a workspace that renamed nothing renders.
+  BuildContext? context,
   AppFormat format,
   AppLocalizations? l10n,
   DateTime start,
@@ -27,11 +33,11 @@ String bookingRangeText(
   }
 
   return switch (bookingWindowKindOf(start, end)) {
-    BookingWindowKind.fullDay => l10n?.reserveFullDayChip ?? 'Full day',
+    BookingWindowKind.fullDay => lexiconText(context, key: 'reserveFullDayChip', fallback: l10n?.reserveFullDayChip ?? 'Full day'),
     BookingWindowKind.morning =>
-      '${l10n?.planMorningChip ?? 'Morning'} · ${fmt(start)} – ${fmtEnd()}',
+      '${lexiconText(context, key: 'planMorningChip', fallback: l10n?.planMorningChip ?? 'Morning')} · ${fmt(start)} – ${fmtEnd()}',
     BookingWindowKind.afternoon =>
-      '${l10n?.planAfternoonChip ?? 'Afternoon'} · '
+      '${lexiconText(context, key: 'planAfternoonChip', fallback: l10n?.planAfternoonChip ?? 'Afternoon')} · '
           '${fmt(start)} – ${fmtEnd()}',
     BookingWindowKind.times => '${fmt(start)} – ${fmtEnd()}',
   };

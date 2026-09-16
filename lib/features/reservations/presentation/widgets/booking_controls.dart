@@ -5,6 +5,7 @@
 // but grew separate layouts. One implementation each, composed inline
 // into a single compact header row by both screens.
 import 'package:flutter/material.dart';
+import '../../../../core/l10n/lexicon.dart';
 
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -138,26 +139,26 @@ class WindowControls extends StatelessWidget {
             chip(
               'am-chip',
               (am: true, pm: false),
-              l10n?.planMorningChip ?? 'Morning',
+              lexiconText(context, key: 'planMorningChip', fallback: l10n?.planMorningChip ?? 'Morning'),
               HalfDayWindows.morning,
             ),
             chip(
               'pm-chip',
               (am: false, pm: true),
-              l10n?.planAfternoonChip ?? 'Afternoon',
+              lexiconText(context, key: 'planAfternoonChip', fallback: l10n?.planAfternoonChip ?? 'Afternoon'),
               HalfDayWindows.afternoon,
             ),
           ],
           chip(
             'day-chip',
             (am: true, pm: true),
-            l10n?.reserveFullDayChip ?? 'Full day',
+            lexiconText(context, key: 'reserveFullDayChip', fallback: l10n?.reserveFullDayChip ?? 'Full day'),
             HalfDayWindows.fullDay,
           ),
         ],
         if (!granularity.isDayBased) ...[
           Tooltip(
-            message: l10n?.planFromLabel ?? 'From',
+            message: lexiconText(context, key: 'planFromLabel', fallback: l10n?.planFromLabel ?? 'From'),
             child: TextButton(
               key: ValueKey('$keyPrefix-from-chip'),
               style: style,

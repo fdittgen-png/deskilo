@@ -10324,6 +10324,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get permManageNegotiations => 'Gérer les accords commerciaux';
 
   @override
+  String get featureWorkspaceVocabularyTitle => 'Vocabulaire de l’espace';
+
+  @override
+  String get featureWorkspaceVocabularyDesc =>
+      'L’espace peut renommer, par langue, un petit ensemble approuvé de mots du produit — une place, les libellés de la légende, les onglets. Tout le reste conserve les mots du produit, et un espace qui ne renomme rien s’affiche exactement comme avant.';
+
+  @override
   String get featureWorkspaceStatus => 'Situation de l\'espace';
 
   @override

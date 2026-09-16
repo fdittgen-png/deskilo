@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/l10n/lexicon.dart';
 
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -25,33 +26,33 @@ class SeatLegend extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final entries = <(String, Color, IconData?)>[
       (
-        l10n?.legendFree ?? 'Free',
+        lexiconText(context, key: 'legendFree', fallback: l10n?.legendFree ?? 'Free'),
         SeatStateColors.of(SeatState.free, brightness: brightness),
         null,
       ),
       (
-        l10n?.legendReserved ?? 'Reserved',
+        lexiconText(context, key: 'legendReserved', fallback: l10n?.legendReserved ?? 'Reserved'),
         SeatStateColors.of(SeatState.reserved, brightness: brightness),
         null,
       ),
       (
-        l10n?.legendOccupied ?? 'Checked in',
+        lexiconText(context, key: 'legendOccupied', fallback: l10n?.legendOccupied ?? 'Checked in'),
         SeatStateColors.of(SeatState.occupied, brightness: brightness),
         Icons.check,
       ),
       (
-        l10n?.legendMine ?? 'Mine',
+        lexiconText(context, key: 'legendMine', fallback: l10n?.legendMine ?? 'Mine'),
         SeatStateColors.of(SeatState.mine, brightness: brightness),
         Icons.person,
       ),
       (
-        l10n?.legendBlocked ?? 'Blocked',
+        lexiconText(context, key: 'legendBlocked', fallback: l10n?.legendBlocked ?? 'Blocked'),
         SeatStateColors.of(SeatState.blocked, brightness: brightness),
         Icons.block,
       ),
       if (showClosed)
         (
-          l10n?.legendClosed ?? 'Closed day',
+          lexiconText(context, key: 'legendClosed', fallback: l10n?.legendClosed ?? 'Closed day'),
           scheme.surfaceContainerHighest,
           Icons.event_busy_outlined,
         ),

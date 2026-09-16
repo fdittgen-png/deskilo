@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/l10n/lexicon.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
@@ -131,6 +132,11 @@ class SpaceActFormState extends State<SpaceActForm> {
   /// Today's bookable day parts, already clamped to now. Passing [l10n]
   /// labels them; initState passes null (keys only).
   List<_DayOption> _dayOptions(AppLocalizations? l10n) {
+    // #1277 — initState calls this with a null l10n for the KEYS ONLY,
+    // before dependencies are available, and reading `Localizations`
+    // there is illegal (it asserts in the app, not only in tests). The
+    // context is meaningful exactly when l10n is, so it travels with it.
+    final ctx = l10n == null ? null : context;
     final now = widget.now;
     final morning = HalfDayWindows.morning(now);
     final afternoon = HalfDayWindows.afternoon(now);
@@ -141,7 +147,7 @@ class SpaceActFormState extends State<SpaceActForm> {
           morning.end.isAfter(now))
         (
           key: 'morning',
-          label: l10n?.planMorningChip ?? 'Morning',
+          label: lexiconText(ctx, key: 'planMorningChip', fallback: l10n?.planMorningChip ?? 'Morning'),
           start: clamp(morning.start),
           end: morning.end,
         ),
@@ -149,7 +155,7 @@ class SpaceActFormState extends State<SpaceActForm> {
           afternoon.end.isAfter(now))
         (
           key: 'afternoon',
-          label: l10n?.planAfternoonChip ?? 'Afternoon',
+          label: lexiconText(ctx, key: 'planAfternoonChip', fallback: l10n?.planAfternoonChip ?? 'Afternoon'),
           start: clamp(afternoon.start),
           end: afternoon.end,
         ),
@@ -329,7 +335,7 @@ class SpaceActFormState extends State<SpaceActForm> {
                         ? null
                         : () => _pickTime(isStart: true),
                     label: Text(
-                      '${l10n?.planFromLabel ?? 'From'} '
+                      '${lexiconText(context, key: 'planFromLabel', fallback: l10n?.planFromLabel ?? 'From')} '
                       '${timeLabel.formatTimeOfDay(TimeOfDay.fromDateTime(_start))}',
                     ),
                   ),
@@ -350,7 +356,7 @@ class SpaceActFormState extends State<SpaceActForm> {
             ),
           const SizedBox(height: 6),
           Text(
-            bookingRangeText(appFormatOf(context), l10n, _start, _end),
+            bookingRangeText(context, appFormatOf(context), l10n, _start, _end),
             key: ValueKey('$prefix-period-range'),
             style: theme.textTheme.bodyMedium?.copyWith(
               fontWeight: FontWeight.w600,

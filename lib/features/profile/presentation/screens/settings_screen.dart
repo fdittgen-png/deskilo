@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:file_selector/file_selector.dart';
+import '../../../../core/l10n/lexicon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -312,7 +313,7 @@ class SettingsScreen extends ConsumerWidget {
           if (features.contains(WorkspaceFeature.membersDirectory))
             ListTile(
               leading: const Icon(Icons.people_outline),
-              title: Text(l10n?.directoryTitle ?? 'Members'),
+              title: Text(lexiconText(context, key: 'directoryTitle', fallback: l10n?.directoryTitle ?? 'Members')),
               onTap: () => context.go('/directory'),
             ),
           // #711 — Region & formats: numbers, dates, clock, zone. Gated by
@@ -377,11 +378,11 @@ class SettingsScreen extends ConsumerWidget {
               ),
               subtitle: Text(switch (ref.watch(defaultPeriodProvider).value) {
                 DefaultBookingPeriod.morning =>
-                  l10n?.planMorningChip ?? 'Morning',
+                  lexiconText(context, key: 'planMorningChip', fallback: l10n?.planMorningChip ?? 'Morning'),
                 DefaultBookingPeriod.afternoon =>
-                  l10n?.planAfternoonChip ?? 'Afternoon',
+                  lexiconText(context, key: 'planAfternoonChip', fallback: l10n?.planAfternoonChip ?? 'Afternoon'),
                 DefaultBookingPeriod.fullDay =>
-                  l10n?.reserveFullDayChip ?? 'Full day',
+                  lexiconText(context, key: 'reserveFullDayChip', fallback: l10n?.reserveFullDayChip ?? 'Full day'),
                 null => l10n?.defaultPeriodNone ?? 'No preference (full day)',
               }),
               onTap: () => showDialog<void>(
@@ -400,15 +401,15 @@ class SettingsScreen extends ConsumerWidget {
                       ),
                       (
                         DefaultBookingPeriod.morning,
-                        l10n?.planMorningChip ?? 'Morning',
+                        lexiconText(context, key: 'planMorningChip', fallback: l10n?.planMorningChip ?? 'Morning'),
                       ),
                       (
                         DefaultBookingPeriod.afternoon,
-                        l10n?.planAfternoonChip ?? 'Afternoon',
+                        lexiconText(context, key: 'planAfternoonChip', fallback: l10n?.planAfternoonChip ?? 'Afternoon'),
                       ),
                       (
                         DefaultBookingPeriod.fullDay,
-                        l10n?.reserveFullDayChip ?? 'Full day',
+                        lexiconText(context, key: 'reserveFullDayChip', fallback: l10n?.reserveFullDayChip ?? 'Full day'),
                       ),
                     ])
                       SimpleDialogOption(

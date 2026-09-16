@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/l10n/lexicon.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -125,7 +126,7 @@ class ReservationDetailSheet extends ConsumerWidget {
               // 'Full day', never '00:00 – 00:00' (field report).
               title: Text(
                 '${DateFormat.MMMEd().format(WorkspaceTime.display(r.startsAt))}'
-                ' · ${bookingRangeText(appFormatOf(context), l10n, r.startsAt, r.endsAt)}',
+                ' · ${bookingRangeText(context, appFormatOf(context), l10n, r.startsAt, r.endsAt)}',
               ),
               subtitle: target == null &&
                       r.seriesId == null &&
@@ -157,7 +158,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                                   .watch(targetNamesProvider)
                                   .value?[r.deskId];
                               return Text(
-                                '${l10n?.deskDetail ?? 'Whole desk'}'
+                                '${lexiconText(context, key: 'deskDetail', fallback: l10n?.deskDetail ?? 'Whole desk')}'
                                 '${name == null ? '' : ' — $name'}',
                                 key: const ValueKey('reservation-desk'),
                               );
@@ -174,7 +175,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                                   .firstOrNull
                                   ?.name;
                               return Text(
-                                '${l10n?.levelDetail ?? 'Whole level'}'
+                                '${lexiconText(context, key: 'levelDetail', fallback: l10n?.levelDetail ?? 'Whole level')}'
                                 '${name == null ? '' : ' — $name'}',
                                 key: const ValueKey('reservation-level'),
                               );
@@ -776,21 +777,21 @@ class ReservationDetailSheet extends ConsumerWidget {
             ListTile(
               key: const ValueKey('edit-window-am'),
               leading: const Icon(Icons.wb_twilight_outlined),
-              title: Text(l10n?.planMorningChip ?? 'Morning'),
+              title: Text(lexiconText(context, key: 'planMorningChip', fallback: l10n?.planMorningChip ?? 'Morning')),
               onTap: () => Navigator.of(sheetContext)
                   .pop(HalfDayWindows.morning(day)),
             ),
             ListTile(
               key: const ValueKey('edit-window-pm'),
               leading: const Icon(Icons.wb_sunny_outlined),
-              title: Text(l10n?.planAfternoonChip ?? 'Afternoon'),
+              title: Text(lexiconText(context, key: 'planAfternoonChip', fallback: l10n?.planAfternoonChip ?? 'Afternoon')),
               onTap: () => Navigator.of(sheetContext)
                   .pop(HalfDayWindows.afternoon(day)),
             ),
             ListTile(
               key: const ValueKey('edit-window-day'),
               leading: const Icon(Icons.today_outlined),
-              title: Text(l10n?.reserveFullDayChip ?? 'Full day'),
+              title: Text(lexiconText(context, key: 'reserveFullDayChip', fallback: l10n?.reserveFullDayChip ?? 'Full day')),
               onTap: () => Navigator.of(sheetContext)
                   .pop(HalfDayWindows.fullDay(day)),
             ),
@@ -815,7 +816,7 @@ class ReservationDetailSheet extends ConsumerWidget {
     final from = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.fromDateTime(local),
-      helpText: l10n?.planFromLabel ?? 'From',
+      helpText: lexiconText(context, key: 'planFromLabel', fallback: l10n?.planFromLabel ?? 'From'),
     );
     if (from == null || !context.mounted) return null;
     final to = await showTimePicker(

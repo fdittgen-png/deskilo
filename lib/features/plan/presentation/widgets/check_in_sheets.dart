@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/l10n/lexicon.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../l10n/app_localizations.dart';
@@ -68,7 +69,7 @@ Future<String?> showMySeatSheet(
           else if (mine.checkInWindowOpen(now, granularity: granularity))
             ListTile(
               leading: const Icon(Icons.login),
-              title: Text(l10n?.planCheckInButton ?? 'Check in'),
+              title: Text(lexiconText(context, key: 'planCheckInButton', fallback: l10n?.planCheckInButton ?? 'Check in')),
               onTap: () => Navigator.of(context).pop('checkin'),
             )
           else
@@ -77,7 +78,7 @@ Future<String?> showMySeatSheet(
             ListTile(
               enabled: false,
               leading: const Icon(Icons.login),
-              title: Text(l10n?.planCheckInButton ?? 'Check in'),
+              title: Text(lexiconText(context, key: 'planCheckInButton', fallback: l10n?.planCheckInButton ?? 'Check in')),
               subtitle: Text(
                 now.isBefore(mine.startsAt)
                     ? (opensOnAnotherDay
