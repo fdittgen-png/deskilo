@@ -12,7 +12,7 @@
 -- only in the insert; if they were named in the update too, coming back
 -- would silently rewrite the subscription that member already had.
 begin;
-select plan(11);
+select plan(12);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -111,6 +111,25 @@ select public.set_billing_rules(current_setting('deskilo.def.ws')::uuid,
     jsonb_build_object('subscription_pct', 25, 'overage_policy', 'blocked')));
 select is(pg_temp.member('ws', 'joiner'), '80/blocked',
   'changing what NEW members get rewrites nobody who is already here');
+
+-- That call also just demonstrated the hazard #1089 named: it replaced
+-- `billing_rules` WHOLESALE, so the unrelated rule seeded above is gone.
+-- This is not a defect being tolerated — it is the entire reason the
+-- keyed writer below exists, so it is asserted rather than described.
+-- (This assertion is what the first version of this file got wrong: it
+-- seeded the sibling, replaced the blob, and then expected the sibling
+-- to have survived. The product was right and the test was not.)
+select is(
+  (select billing_rules->>'something_else' from public.workspaces
+    where id = current_setting('deskilo.def.ws')::uuid),
+  null::text,
+  'the blob writer replaces every billing rule, including ones it was '
+  'never told about — which is why writing one key needs its own writer');
+
+-- Put it back through the keyed writer, so the next assertion measures
+-- preservation rather than the leftovers of the seed.
+select public.set_billing_rule(current_setting('deskilo.def.ws')::uuid,
+  'something_else', '"kept"'::jsonb);
 
 -- -------------------------------------------------------- the refusals
 select throws_matching(
