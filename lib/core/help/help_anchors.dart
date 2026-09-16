@@ -461,6 +461,28 @@ abstract final class HelpAnchor {
   /// What never travels: members, money, credentials, counters.
   static const envDeployNever = 'env.deploy.never';
 
+  // ── the technical guide · what the app explains nowhere ────────────
+  //
+  // #1393 — possible only since #1259 translated Admin-Technical-Guide
+  // into all five languages: `help_anchor_test` refuses a symbol whose
+  // guide a language is missing. These four name objects the app itself
+  // documents nowhere.
+  /// The XML layout: the root, its zones, the elements, frame
+  /// attributes and units.
+  static const adminReportLayouts = 'admin.reports.layouts';
+
+  /// The window-envelope geometry, and the check that measures the
+  /// rendered PDF rather than trusting the eye.
+  static const adminReportWindow = 'admin.reports.window';
+
+  /// The trace: a ring buffer per device, its three shapes, and what an
+  /// export does and does not carry.
+  static const adminTrace = 'admin.trace.overview';
+
+  /// An instance is a whole DesKilo on its own database; the bundle is
+  /// its build material.
+  static const adminInstances = 'admin.instances.overview';
+
   /// Every anchor the app points at — the lint's left-hand side.
   static const all = <String>{
     moneyVatRates,
@@ -490,6 +512,10 @@ abstract final class HelpAnchor {
     envDeployPreview,
     envDeployJournal,
     envDeployNever,
+    adminReportLayouts,
+    adminReportWindow,
+    adminTrace,
+    adminInstances,
     billingFeeBands,
     billingBandTo,
     billingBandFee,

@@ -388,6 +388,11 @@ void main() {
         // HelpDot call sites.
         'helpTopicDeployment': l10n.helpTopicDeployment,
         'helpTopicEnvironments': l10n.helpTopicEnvironments,
+        // #1393 — the four the technical guide made possible.
+        'helpTopicReportLayout': l10n.helpTopicReportLayout,
+        'helpTopicWindowEnvelope': l10n.helpTopicWindowEnvelope,
+        'helpTopicTrace': l10n.helpTopicTrace,
+        'helpTopicInstances': l10n.helpTopicInstances,
       };
       // The map above is written by hand, so it can fall behind the ARB
       // exactly as the old `dotTopics` array did — 16 keys shipped and

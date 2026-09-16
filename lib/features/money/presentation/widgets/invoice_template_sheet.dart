@@ -1004,6 +1004,20 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
             .watch(enabledFeaturesSyncProvider)
             .contains(WorkspaceFeature.reportLayouts)) ...[
           const SizedBox(height: AppSpacing.sm),
+          // #1393 — the XML grammar and the envelope geometry live in the
+          // technical guide and nowhere in the app. The symbols sit HERE
+          // rather than inside ReportLayoutPanel: that panel is a plain
+          // StatelessWidget its own test pumps without a ProviderScope,
+          // and HelpDot is a ConsumerWidget — putting them inside would
+          // make every future host supply a scope.
+          Row(children: [
+            HelpDot(l10n?.helpTopicReportLayout ?? 'Positioned layouts',
+                anchor: HelpAnchor.adminReportLayouts),
+            HelpDot(
+                l10n?.helpTopicWindowEnvelope ??
+                    'The window-envelope contract',
+                anchor: HelpAnchor.adminReportWindow),
+          ]),
           ReportLayoutPanel(
             hasLayout: _layoutOfDoc != null,
             busy: _busy,

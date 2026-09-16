@@ -149,7 +149,11 @@ const Map<String, int> _baseline = {
   // 606→610 (2026-09-16): #1277 S3 — the wording editor's anchor: one constant, its doc
   // and its line in `all`. The registry grows by an anchor per
   // documented object, which is what keeps symbol and guide in step.
-  'lib/core/help/help_anchors.dart': 610,
+  // 610→640 (2026-09-16): #1393 — four admin.* anchors, possible only
+  // since #1259 translated the technical guide into all five
+  // languages. This file grows by an anchor per documented object,
+  // which is the point: the comment above says so.
+  'lib/core/help/help_anchors.dart': 640,
   // 1570→1600 (2026-09-16): #1294 — the new-member defaults ride this
   // screen's one Save. The tiles themselves are their own file
   // (new_member_defaults_tiles.dart); what is left here is the
@@ -194,10 +198,10 @@ const Map<String, int> _baseline = {
   // 700→800 (2026-08-05): #496 the template-language chips + per-language
   // overlay assembly.
   // 800→810 (2026-08-31): #763 the report editor's header help dot.
-  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 1099, // 2026-09-11 #1061 1160→1101: the live-data switch moved to template_live_data.dart // 1180→1160 (2026-09-10): #1056 the app bar's undo/redo pair left for report_history_controls.dart
+  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 1115, // 2026-09-11 #1061 1160→1101: the live-data switch moved to template_live_data.dart // 1180→1160 (2026-09-10): #1056 the app bar's undo/redo pair left for report_history_controls.dart
   'lib/features/money/presentation/widgets/report_field_picker.dart': 353, // 2026-09-06 #966 meanings + topic groups // 2026-09-02 #822 the page, undo/redo, guards // 2026-09-04 #875 layout drafts per kind, the panel mount and its three handlers — the panel and the actions themselves live in their own files // 2026-09-05 #880 the owner-texts drafts per language, merged into every preview/export, and the Texts panel mount
   'lib/features/workspace/domain/workspace_xml.dart': 943,
-  'lib/features/profile/presentation/screens/new_instance_screen.dart': 480, // 2026-09-06 #977 six wizard steps
+  'lib/features/profile/presentation/screens/new_instance_screen.dart': 495, // 2026-09-06 #977 six wizard steps // 2026-09-16 #1393 480→495: the wizard's help symbol — an instance and its bundle are explained in the guide, not on screen
   'lib/features/profile/presentation/screens/backend_screen.dart': 381, // 2026-09-06 #977 the wizard button // 2026-09-06 #916 schema v3: plan attributes + the configuration section
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.

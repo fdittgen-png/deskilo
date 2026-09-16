@@ -6197,6 +6197,30 @@ abstract class AppLocalizations {
   /// **'your own server'**
   String get helpTopicServer;
 
+  /// No description provided for @helpTopicReportLayout.
+  ///
+  /// In en, this message translates to:
+  /// **'Positioned layouts'**
+  String get helpTopicReportLayout;
+
+  /// No description provided for @helpTopicWindowEnvelope.
+  ///
+  /// In en, this message translates to:
+  /// **'The window-envelope contract'**
+  String get helpTopicWindowEnvelope;
+
+  /// No description provided for @helpTopicTrace.
+  ///
+  /// In en, this message translates to:
+  /// **'The trace'**
+  String get helpTopicTrace;
+
+  /// No description provided for @helpTopicInstances.
+  ///
+  /// In en, this message translates to:
+  /// **'Instances'**
+  String get helpTopicInstances;
+
   /// #977 instance wizard: featureInstanceWizard
   ///
   /// In en, this message translates to:

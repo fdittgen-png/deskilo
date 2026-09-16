@@ -3531,6 +3531,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpTopicServer => 'your own server';
 
   @override
+  String get helpTopicReportLayout => 'Positioned layouts';
+
+  @override
+  String get helpTopicWindowEnvelope => 'The window-envelope contract';
+
+  @override
+  String get helpTopicTrace => 'The trace';
+
+  @override
+  String get helpTopicInstances => 'Instances';
+
+  @override
   String get featureInstanceWizard => 'Instance wizard';
 
   @override
