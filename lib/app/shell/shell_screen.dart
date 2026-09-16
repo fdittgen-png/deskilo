@@ -31,8 +31,8 @@ import '../../features/workspace/domain/member_note_refs.dart';
 import '../../features/workspace/providers/conversation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
-import '../router.dart';
 import 'shell_bottom_bar.dart';
+import 'shell_destinations.dart';
 import 'shell_drawer.dart';
 import '../../core/time/clock.dart';
 import 'shell_bar_visibility.dart';
@@ -278,35 +278,25 @@ class ShellScreen extends ConsumerWidget {
     // different kinds of "something needs you" told nobody which.
     final unreadMessages = ref.watch(unreadMessagesProvider);
     final pendingEvents = ref.watch(myPendingEventCountProvider).value ?? 0;
-    final visibleBranches = [
-      ShellBranch.plan,
-      if (features.contains(WorkspaceFeature.calendarTab))
-        ShellBranch.calendar,
-      // #707 — Members is a bottom-bar destination again, left of
-      // Finances (owner's call, on seeing it as an inbox face). The
-      // directory is a roster you consult, not a thing that arrives —
-      // an inbox tab put it behind the wrong door.
-      if (features.contains(WorkspaceFeature.membersDirectory))
-        ShellBranch.directory,
-      if (features.contains(WorkspaceFeature.moneyTab)) ShellBranch.money,
-    ];
+    // #1306 — the one destination list the drawer renders too.
+    final visibleBranches = visibleShellBranches(features);
     final selectedPosition =
         visibleBranches.indexOf(navigationShell.currentIndex);
 
     ShellDestination destinationFor(int branch) => switch (branch) {
           ShellBranch.calendar => ShellDestination(
-              icon: const Icon(Icons.calendar_month_outlined),
-              selectedIcon: const Icon(Icons.calendar_month),
+              icon: Icon(shellBranchIcon(branch)),
+              selectedIcon: Icon(shellBranchIcon(branch, selected: true)),
               label: tabTitles[ShellBranch.calendar],
             ),
           ShellBranch.directory => ShellDestination(
-              icon: const Icon(Icons.people_outline),
-              selectedIcon: const Icon(Icons.people),
+              icon: Icon(shellBranchIcon(branch)),
+              selectedIcon: Icon(shellBranchIcon(branch, selected: true)),
               label: tabTitles[ShellBranch.directory],
             ),
           ShellBranch.money => ShellDestination(
-              icon: const Icon(Icons.account_balance_wallet_outlined),
-              selectedIcon: const Icon(Icons.account_balance_wallet),
+              icon: Icon(shellBranchIcon(branch)),
+              selectedIcon: Icon(shellBranchIcon(branch, selected: true)),
               label: tabTitles[ShellBranch.money],
             ),
           // #687 — the messaging centre, carrying its own unread count.
@@ -317,9 +307,10 @@ class ShellScreen extends ConsumerWidget {
           // nothing and still answers find.byType(Badge), which is a
           // widget in the tree lying about an empty inbox.
           _ => ShellDestination(
-              icon: _messagesIcon(Icons.forum_outlined, unreadMessages),
-              selectedIcon: _messagesIcon(Icons.forum, unreadMessages),
-              label: tabTitles[ShellBranch.plan],
+              icon: _messagesIcon(shellBranchIcon(branch), unreadMessages),
+              selectedIcon: _messagesIcon(
+                  shellBranchIcon(branch, selected: true), unreadMessages),
+              label: tabTitles[ShellBranch.messages],
             ),
         };
 
