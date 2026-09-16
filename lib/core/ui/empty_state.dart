@@ -44,27 +44,37 @@ class EmptyState extends StatelessWidget {
     final theme = Theme.of(context);
     final muted = theme.colorScheme.onSurfaceVariant;
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(EmptyStateMetrics.padding),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, size: EmptyStateMetrics.iconSize, color: muted),
-            const SizedBox(height: EmptyStateMetrics.iconGap),
-            Text(
-              title,
-              style: theme.textTheme.titleMedium,
-              textAlign: TextAlign.center,
-            ),
-            if (subtitle != null) ...[
-              const SizedBox(height: EmptyStateMetrics.subtitleGap),
+      // #1339 — at twice the text size this block outgrew a short
+      // viewport and the Column overflowed by 224 px. It sits on 19
+      // screens, so the overflow appeared wherever a list was empty and
+      // the reader had large text switched on.
+      //
+      // Under Center's loose constraints the scroll view sizes to its
+      // child, so when the content fits this renders exactly as before
+      // and scrolls only when it would otherwise be clipped.
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(EmptyStateMetrics.padding),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, size: EmptyStateMetrics.iconSize, color: muted),
+              const SizedBox(height: EmptyStateMetrics.iconGap),
               Text(
-                subtitle!,
-                style: theme.textTheme.bodySmall?.copyWith(color: muted),
+                title,
+                style: theme.textTheme.titleMedium,
                 textAlign: TextAlign.center,
               ),
+              if (subtitle != null) ...[
+                const SizedBox(height: EmptyStateMetrics.subtitleGap),
+                Text(
+                  subtitle!,
+                  style: theme.textTheme.bodySmall?.copyWith(color: muted),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );

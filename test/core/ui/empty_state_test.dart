@@ -63,6 +63,28 @@ void main() {
     );
   });
 
+  // #1339 — the block is on 19 screens, so when it overflowed at twice
+  // the text size, it overflowed wherever a list happened to be empty
+  // and the reader had large text switched on. The responsive matrix
+  // caught it on three unrelated screens reporting the identical 224 px,
+  // which is what gave the single shared widget away.
+  testWidgets('it does not overflow at twice the text size', (tester) async {
+    tester.view.physicalSize = const Size(360, 400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    tester.platformDispatcher.textScaleFactorTestValue = 2.0;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+
+    await pumpEmptyState(
+      tester,
+      subtitle: 'a subtitle long enough to wrap onto several lines once '
+          'the reader has doubled the text size',
+    );
+
+    expect(tester.takeException(), isNull,
+        reason: 'the empty state overflowed its viewport at 2x text');
+  });
+
   testWidgets('subtitle renders muted in bodySmall', (tester) async {
     await pumpEmptyState(tester, subtitle: 'try again later');
     final context = tester.element(find.byType(EmptyState));

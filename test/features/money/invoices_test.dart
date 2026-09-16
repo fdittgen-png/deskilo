@@ -59,8 +59,12 @@ Future<FakeMoneyRepository> pumpInvoices(
   FileSaver? saver,
   FileSharer? sharer,
   FilePicker? picker,
+  // #1339 — the responsive matrix asks for a narrow surface. Every
+  // other caller keeps the tall one this file has always used, so
+  // nothing existing changes.
+  Size size = const Size(800, 1400),
 }) async {
-  tester.view.physicalSize = const Size(800, 1400);
+  tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
   money ??= FakeMoneyRepository();

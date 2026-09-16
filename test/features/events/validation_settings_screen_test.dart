@@ -32,6 +32,10 @@ Future<FakeEventRepository> pumpValidationSettings(
   List<ValidationPolicy> policies = const [],
   List<Member>? otherMembers,
   Map<String, dynamic> featureFlags = const {},
+  // #1339 — the responsive matrix asks for a narrow surface. Every
+  // other caller keeps the tall one this file has always used, so
+  // nothing existing changes.
+  Size size = const Size(1200, 3400),
 }) async {
   final events = FakeEventRepository()..policies.addAll(policies);
   // Policy cards (0097 added Booking deletion) outgrow the default
@@ -39,7 +43,7 @@ Future<FakeEventRepository> pumpValidationSettings(
   // 3100 → 3400 (#1235): each card's title carries a help symbol, and
   // the symbol went from 40 dp to the 48 dp floor, so the stack of 24
   // grew past the old surface and the last card stopped being built.
-  tester.view.physicalSize = const Size(1200, 3400);
+  tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
   final workspace = FakeWorkspaceRepository.withWorkspace(

@@ -33,6 +33,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../features/editor/level_canvas_test.dart' show pumpCanvas;
 import '../features/events/events_screen_test.dart' show pumpEvents;
+import '../features/events/validation_settings_screen_test.dart'
+    show pumpValidationSettings;
+import '../features/money/money_faces_test.dart' show pumpFaces;
+import '../features/plan/accessories_screen_test.dart' show pumpAccessories;
 import '../features/reservations/reserve_hub_test.dart' show pumpHub;
 
 /// A phone most members actually hold, and a wide surface.
@@ -56,7 +60,27 @@ final Map<String, ScreenPump> _screens = {
     addTearDown(t.view.reset);
     await pumpCanvas(t);
   },
+  'Money faces': (t, size) => pumpFaces(t, size: size),
+  'Validation rules': (t, size) => pumpValidationSettings(t, size: size),
+  'Accessories': (t, size) => pumpAccessories(t, size: size),
 };
+
+// Invoices and Features are NOT in the table, and the reason is worth
+// writing down because it is not "they fail".
+//
+// Those two helpers do not merely size the view: they NAVIGATE. Features
+// opens Settings and then taps `Icons.toggle_on_outlined`; Invoices taps
+// through the money faces and `ensureVisible`s a button. Both depend on
+// a viewport tall enough to have mounted what they are about to tap, so
+// at 360 dp they fail inside the helper — "Found 0 widgets", "Bad state:
+// No element" — before the screen under test is ever reached. Features
+// fails the same way at 1200x900, which is what proves it is the
+// navigation and not the width.
+//
+// A row that fails before reaching its screen measures the helper, not
+// the screen. Giving those two a reachable entry point at phone size is
+// the follow-up; asserting against them today would only pin the
+// harness.
 
 void main() {
   for (final entry in _screens.entries) {
