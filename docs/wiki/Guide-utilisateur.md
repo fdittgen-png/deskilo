@@ -964,6 +964,23 @@ sont ajoutés par l'application, n'en collez donc jamais un dans le texte.
 brouillons est affiché. Ce n'est pas un réglage : rien n'en est
 enregistré, et il s'ouvre chaque fois sur la langue de l'espace.
 
+<!-- anchor: user.workspace.settings.wording -->
+#### Vocabulaire
+
+Les mots que cet espace emploie à la place de ceux du produit.
+Renommez une place, les libellés de la légende, les onglets ou les mots
+de la réservation — par langue — et tout le reste conserve les mots du
+produit.
+
+Le mot du produit reste affiché sous le vôtre, pour que vous voyiez ce
+que vous remplacez. **Réinitialiser** supprime votre mot au lieu
+d'enregistrer celui du produit à sa place : un terme réinitialisé suit
+le produit lorsque sa formulation change.
+
+Les termes sont regroupés par endroit d'apparition, et non listés par
+nom — deux d'entre eux se lisent *Reserve* en anglais, et c'est le
+groupe qui les distingue.
+
 <!-- anchor: user.workspace.settings.desk-transparency -->
 #### Transparence des tables
 

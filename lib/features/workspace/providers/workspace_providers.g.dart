@@ -608,6 +608,70 @@ final class NewMemberDefaultsProvider
 
 String _$newMemberDefaultsHash() => r'ca69daf6ac603005a39a35abc07cee26d32c0f91';
 
+/// #1277 S3 — renaming a word, as a decision rather than a repository
+/// call (ADR 0024).
+///
+/// The wording editor is a ROUTE, so nothing can hand it a command the
+/// way `availability_screen` hands one to the holidays sheet. This is
+/// the seam instead: the provider owns the wiring, the widget says what
+/// the owner asked for, and `WordingTerms` decides which write that is.
+
+@ProviderFor(wordingTerms)
+final wordingTermsProvider = WordingTermsProvider._();
+
+/// #1277 S3 — renaming a word, as a decision rather than a repository
+/// call (ADR 0024).
+///
+/// The wording editor is a ROUTE, so nothing can hand it a command the
+/// way `availability_screen` hands one to the holidays sheet. This is
+/// the seam instead: the provider owns the wiring, the widget says what
+/// the owner asked for, and `WordingTerms` decides which write that is.
+
+final class WordingTermsProvider
+    extends $FunctionalProvider<WordingTerms, WordingTerms, WordingTerms>
+    with $Provider<WordingTerms> {
+  /// #1277 S3 — renaming a word, as a decision rather than a repository
+  /// call (ADR 0024).
+  ///
+  /// The wording editor is a ROUTE, so nothing can hand it a command the
+  /// way `availability_screen` hands one to the holidays sheet. This is
+  /// the seam instead: the provider owns the wiring, the widget says what
+  /// the owner asked for, and `WordingTerms` decides which write that is.
+  WordingTermsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'wordingTermsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$wordingTermsHash();
+
+  @$internal
+  @override
+  $ProviderElement<WordingTerms> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  WordingTerms create(Ref ref) {
+    return wordingTerms(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(WordingTerms value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<WordingTerms>(value),
+    );
+  }
+}
+
+String _$wordingTermsHash() => r'0679271af9729a2b06ad2b402ec8316756281bfd';
+
 /// #1277 — the active workspace's own words for allow-listed product
 /// terms, `{locale: {key: text}}`.
 ///

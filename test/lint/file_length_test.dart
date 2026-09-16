@@ -146,14 +146,20 @@ const Map<String, int> _baseline = {
   // the app's 155 help symbols. It is a catalogue, not logic — the
   // right shape for it is one documented constant per object, and it
   // grows with the app rather than being refactored smaller.
-  'lib/core/help/help_anchors.dart': 606,
+  // 606→610 (2026-09-16): #1277 S3 — the wording editor's anchor: one constant, its doc
+  // and its line in `all`. The registry grows by an anchor per
+  // documented object, which is what keeps symbol and guide in step.
+  'lib/core/help/help_anchors.dart': 610,
   // 1570→1600 (2026-09-16): #1294 — the new-member defaults ride this
   // screen's one Save. The tiles themselves are their own file
   // (new_member_defaults_tiles.dart); what is left here is the
   // seeding, the setter in _save and the render block.
   // 1600→1613 (2026-09-16): #1277 S2 — the four space nouns resolve through the lexicon
   // ABOVE the async gap, where the context is still safe to use.
-  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1613, // 2026-09-15 #1310 S0 1564→1570: every bulk export asks for the exportData permission // // 2026-09-14 #1269 1552→1564: the invitation-language chips carry a label now, plus the paragraph on why an unlabelled row of language chips reads as THE language setting // 2026-09-11 #1154 1605→1572: the 577-line build() became three section methods; the reset dialog moved to widgets/reset_confirm_dialog.dart
+  // 1613→1637 (2026-09-16): #1277 S3 — the Wording row: a ListTile opening the editor, with
+  // its help anchor. The editor itself is its own screen precisely
+  // so this file did not absorb it.
+  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1637, // 2026-09-15 #1310 S0 1564→1570: every bulk export asks for the exportData permission // // 2026-09-14 #1269 1552→1564: the invitation-language chips carry a label now, plus the paragraph on why an unlabelled row of language chips reads as THE language setting // 2026-09-11 #1154 1605→1572: the 577-line build() became three section methods; the reset dialog moved to widgets/reset_confirm_dialog.dart
   // 600→640 (2026-08-05): #492 the request-deletion dialog + flow.
   // 640→760 (2026-08-22): #574 the running-booking extension flow.
   // 760→880 (2026-08-25): #638 the symmetric END-EARLIER flow — the
@@ -273,7 +279,9 @@ const Map<String, int> _baseline = {
   // 600→615 (2026-08-31): #771 the kiosk consent exemption and its
   // rationale live where the gate lives.
   // 700→751 (2026-09-06): #934 two routes / three repository methods.
-  'lib/app/router.dart': 747, // 2026-09-11 #1120 /library on top of the #1148/#1150/#1151 review batch (745→752) // 2026-09-02 #821/#822/#825/#827 the conversation, report-editor, member and wizard routes // 2026-09-05 #902 /settings/payment-terms // 2026-09-10 #1085 751→730: the nine repeated owner-guard closures became one `needs(...)` helper
+  // 747→757 (2026-09-16): #1277 S3 — /settings/wording: the import and one GoRoute with its
+  // feature redirect. The router grows by a route per destination.
+  'lib/app/router.dart': 757, // 2026-09-11 #1120 /library on top of the #1148/#1150/#1151 review batch (745→752) // 2026-09-02 #821/#822/#825/#827 the conversation, report-editor, member and wizard routes // 2026-09-05 #902 /settings/payment-terms // 2026-09-10 #1085 751→730: the nine repeated owner-guard closures became one `needs(...)` helper
   // default→660 (2026-09-06): #934 the status report kind / two flags.
   'lib/features/money/presentation/report_defaults.dart': 628,
   // 600→620 (2026-09-01): #791 the tap dispatcher records the branch it

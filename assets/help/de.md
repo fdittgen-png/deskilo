@@ -895,6 +895,22 @@ füge also nie selbst einen in den Text ein.
 zu sehen ist. Es ist keine Einstellung: davon wird nichts gespeichert,
 und es öffnet jedes Mal mit der Sprache des Raums.
 
+#### Wortwahl
+
+Die Wörter, die dieser Bereich anstelle der Produktbegriffe verwendet.
+Benennen Sie einen Platz, die Beschriftungen der Legende, die Tabs oder
+die Buchungsbegriffe um — je Sprache — und alles Übrige behält die
+Formulierung des Produkts.
+
+Der Produktbegriff steht immer unter Ihrem eigenen, damit Sie sehen,
+was Sie ersetzen. **Zurücksetzen** entfernt Ihr Wort, statt das des
+Produkts an seiner Stelle zu speichern: Ein zurückgesetzter Begriff
+folgt dem Produkt, wenn sich dessen Formulierung später ändert.
+
+Die Begriffe sind nach ihrem Ort gruppiert und nicht nach Namen
+aufgelistet — zwei davon lauten auf Englisch *Reserve*, und die Gruppe
+unterscheidet sie.
+
 #### Transparenz der Tische
 
 Wie viel des Hintergrundbildes unter einem Tisch im Plan durchscheint.

@@ -313,6 +313,9 @@ abstract final class HelpAnchor {
   static const workspaceInvitationMessage =
       'user.workspace.settings.invitation-message';
 
+  /// The words this space uses for the product's own terms.
+  static const workspaceWording = 'user.workspace.settings.wording';
+
   /// How much background shows through a desk on the plan.
   static const workspaceDeskTransparency =
       'user.workspace.settings.desk-transparency';
@@ -533,6 +536,7 @@ abstract final class HelpAnchor {
     workspaceAddress,
     workspaceWhatsappGroup,
     workspaceInvitationMessage,
+    workspaceWording,
     workspaceDeskTransparency,
     exportSpaceXml,
     exportSpaceImport,

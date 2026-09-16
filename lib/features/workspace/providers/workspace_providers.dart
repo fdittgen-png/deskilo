@@ -18,6 +18,7 @@ import '../domain/workspace.dart';
 import '../domain/workspace_feature.dart';
 import '../domain/workspace_permission.dart';
 import '../domain/workspace_repository.dart';
+import '../application/set_wording_term.dart';
 import '../domain/new_member_defaults.dart';
 import '../domain/workspace_document.dart';
 import '../../profile/domain/personal_info.dart';
@@ -201,6 +202,17 @@ Future<NewMemberDefaults> newMemberDefaults(Ref ref) async {
       .watch(workspaceRepositoryProvider)
       .fetchNewMemberDefaults(workspace.id);
 }
+
+/// #1277 S3 — renaming a word, as a decision rather than a repository
+/// call (ADR 0024).
+///
+/// The wording editor is a ROUTE, so nothing can hand it a command the
+/// way `availability_screen` hands one to the holidays sheet. This is
+/// the seam instead: the provider owns the wiring, the widget says what
+/// the owner asked for, and `WordingTerms` decides which write that is.
+@riverpod
+WordingTerms wordingTerms(Ref ref) =>
+    WordingTerms(ref.watch(workspaceRepositoryProvider));
 
 /// #1277 — the active workspace's own words for allow-listed product
 /// terms, `{locale: {key: text}}`.

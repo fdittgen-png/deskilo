@@ -937,6 +937,23 @@ quindi non incollarne mai uno nel testo.
 brogliacci è a schermo. Non è un'impostazione: nulla di esso viene
 salvato, e si apre ogni volta sulla lingua dello spazio.
 
+<!-- anchor: user.workspace.settings.wording -->
+#### Lessico
+
+Le parole che questo spazio usa al posto di quelle del prodotto.
+Rinomina un posto, le etichette della legenda, le schede o le parole
+della prenotazione — per lingua — e tutto il resto mantiene la
+formulazione del prodotto.
+
+La parola del prodotto resta visibile sotto la tua, così vedi che cosa
+stai sostituendo. **Reimposta** rimuove la tua parola invece di salvare
+quella del prodotto al suo posto: un termine reimpostato segue il
+prodotto quando la sua formulazione cambia in seguito.
+
+I termini sono raggruppati per punto di comparsa, non elencati per
+nome — due di essi si leggono *Reserve* in inglese, ed è il gruppo a
+distinguerli.
+
 <!-- anchor: user.workspace.settings.desk-transparency -->
 #### Trasparenza dei tavoli
 

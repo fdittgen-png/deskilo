@@ -1,0 +1,66 @@
+{
+  "wordingTitle": "Lessico",
+  "@wordingTitle": {
+    "description": "#1277 the wording editor: screen title"
+  },
+  "wordingRow": "Lessico",
+  "@wordingRow": {
+    "description": "#1277 the wording editor: the settings row"
+  },
+  "wordingRowHint": "Le parole che questo spazio usa per un posto, la legenda e le schede.",
+  "@wordingRowHint": {
+    "description": "#1277 the wording editor: the settings row subtitle"
+  },
+  "wordingIntro": "Rinomina un piccolo insieme approvato di parole del prodotto. Tutto il resto mantiene la formulazione del prodotto, e un termine non rinominato appare esattamente come prima.",
+  "@wordingIntro": {
+    "description": "#1277 the wording editor: what it does"
+  },
+  "wordingSearch": "Cerca una parola",
+  "@wordingSearch": {
+    "description": "#1277 the wording editor: search field"
+  },
+  "wordingChangedOnly": "Solo modificati",
+  "@wordingChangedOnly": {
+    "description": "#1277 the wording editor: show only renamed terms"
+  },
+  "wordingReset": "Reimposta",
+  "@wordingReset": {
+    "description": "#1277 the wording editor: reset one term"
+  },
+  "wordingResetHint": "Reimposta rimuove la tua parola e ripristina quella del prodotto.",
+  "@wordingResetHint": {
+    "description": "#1277 the wording editor: what reset does"
+  },
+  "wordingDefaultLabel": "Parola del prodotto",
+  "@wordingDefaultLabel": {
+    "description": "#1277 the wording editor: the product's own word"
+  },
+  "wordingNone": "Nessun termine corrisponde.",
+  "@wordingNone": {
+    "description": "#1277 the wording editor: nothing matches the search"
+  },
+  "wordingSavedOne": "Salvato",
+  "@wordingSavedOne": {
+    "description": "#1277 the wording editor: a term was saved"
+  },
+  "wordingLocale": "Lingua",
+  "@wordingLocale": {
+    "description": "#1277 the wording editor: which language is being edited"
+  },
+  "wordingSurfaceLegend": "Legenda",
+  "@wordingSurfaceLegend": {
+    "description": "#1277 the wording editor: surface name, the plan legend"
+  },
+  "wordingSurfacePlan": "Lo spazio",
+  "@wordingSurfacePlan": {
+    "description": "#1277 the wording editor: surface name, what a space is made of"
+  },
+  "wordingSurfaceNavigation": "Navigazione",
+  "@wordingSurfaceNavigation": {
+    "description": "#1277 the wording editor: surface name, the shell destinations"
+  },
+  "wordingSurfaceBooking": "Prenotazione",
+  "@wordingSurfaceBooking": {
+    "description": "#1277 the wording editor: surface name, booking"
+  }
+}

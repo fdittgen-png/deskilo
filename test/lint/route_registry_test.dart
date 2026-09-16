@@ -48,7 +48,9 @@ import 'package:flutter_test/flutter_test.dart';
 // 53→54 (2026-09-06): #925 /settings/number-sequences.
 // 54→56 (2026-09-06): #934 /money/status, /money/repartition-wizard.
 // 56→57 (2026-09-06): #945 /settings/sites.
-const int _expectedRouteCount = 60; // 2026-09-11 #1120 /library
+// 60→61 (2026-09-16): #1277 /settings/wording — the owner renames the
+//   product's words, per locale, behind workspaceVocabulary.
+const int _expectedRouteCount = 61; // 2026-09-16 #1277 /settings/wording
 // 57→58 (2026-09-06): #977 /server/new-instance.
 
 void main() {

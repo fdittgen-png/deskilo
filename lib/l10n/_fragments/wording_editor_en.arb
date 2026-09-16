@@ -1,0 +1,66 @@
+{
+  "wordingTitle": "Wording",
+  "@wordingTitle": {
+    "description": "#1277 the wording editor: screen title"
+  },
+  "wordingRow": "Wording",
+  "@wordingRow": {
+    "description": "#1277 the wording editor: the settings row"
+  },
+  "wordingRowHint": "The words this space uses for a seat, the legend and the tabs.",
+  "@wordingRowHint": {
+    "description": "#1277 the wording editor: the settings row subtitle"
+  },
+  "wordingIntro": "Rename a small, approved set of product words. Everything else keeps the product's own wording, and a term you have not renamed shows exactly as before.",
+  "@wordingIntro": {
+    "description": "#1277 the wording editor: what it does"
+  },
+  "wordingSearch": "Search a word",
+  "@wordingSearch": {
+    "description": "#1277 the wording editor: search field"
+  },
+  "wordingChangedOnly": "Changed only",
+  "@wordingChangedOnly": {
+    "description": "#1277 the wording editor: show only renamed terms"
+  },
+  "wordingReset": "Reset",
+  "@wordingReset": {
+    "description": "#1277 the wording editor: reset one term"
+  },
+  "wordingResetHint": "Reset removes your word and brings the product's back.",
+  "@wordingResetHint": {
+    "description": "#1277 the wording editor: what reset does"
+  },
+  "wordingDefaultLabel": "Product default",
+  "@wordingDefaultLabel": {
+    "description": "#1277 the wording editor: the product's own word"
+  },
+  "wordingNone": "No term matches.",
+  "@wordingNone": {
+    "description": "#1277 the wording editor: nothing matches the search"
+  },
+  "wordingSavedOne": "Saved",
+  "@wordingSavedOne": {
+    "description": "#1277 the wording editor: a term was saved"
+  },
+  "wordingLocale": "Language",
+  "@wordingLocale": {
+    "description": "#1277 the wording editor: which language is being edited"
+  },
+  "wordingSurfaceLegend": "Legend",
+  "@wordingSurfaceLegend": {
+    "description": "#1277 the wording editor: surface name, the plan legend"
+  },
+  "wordingSurfacePlan": "The space",
+  "@wordingSurfacePlan": {
+    "description": "#1277 the wording editor: surface name, what a space is made of"
+  },
+  "wordingSurfaceNavigation": "Navigation",
+  "@wordingSurfaceNavigation": {
+    "description": "#1277 the wording editor: surface name, the shell destinations"
+  },
+  "wordingSurfaceBooking": "Booking",
+  "@wordingSurfaceBooking": {
+    "description": "#1277 the wording editor: surface name, booking"
+  }
+}

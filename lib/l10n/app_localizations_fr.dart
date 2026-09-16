@@ -9720,6 +9720,57 @@ class AppLocalizationsFr extends AppLocalizations {
   String get repartitionStepExpense => 'La dépense';
 
   @override
+  String get wordingTitle => 'Vocabulaire';
+
+  @override
+  String get wordingRow => 'Vocabulaire';
+
+  @override
+  String get wordingRowHint =>
+      'Les mots que cet espace emploie pour une place, la légende et les onglets.';
+
+  @override
+  String get wordingIntro =>
+      'Renommez un petit ensemble approuvé de mots du produit. Tout le reste conserve les mots du produit, et un terme que vous n\'avez pas renommé s\'affiche exactement comme avant.';
+
+  @override
+  String get wordingSearch => 'Rechercher un mot';
+
+  @override
+  String get wordingChangedOnly => 'Modifiés seulement';
+
+  @override
+  String get wordingReset => 'Réinitialiser';
+
+  @override
+  String get wordingResetHint =>
+      'Réinitialiser supprime votre mot et rétablit celui du produit.';
+
+  @override
+  String get wordingDefaultLabel => 'Mot du produit';
+
+  @override
+  String get wordingNone => 'Aucun terme ne correspond.';
+
+  @override
+  String get wordingSavedOne => 'Enregistré';
+
+  @override
+  String get wordingLocale => 'Langue';
+
+  @override
+  String get wordingSurfaceLegend => 'Légende';
+
+  @override
+  String get wordingSurfacePlan => 'L\'espace';
+
+  @override
+  String get wordingSurfaceNavigation => 'Navigation';
+
+  @override
+  String get wordingSurfaceBooking => 'Réservation';
+
+  @override
   String get onboardingTitle => 'Bienvenue sur DesKilo';
 
   @override

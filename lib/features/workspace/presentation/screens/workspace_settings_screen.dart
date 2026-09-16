@@ -1303,6 +1303,30 @@ class _WorkspaceSettingsScreenState
                     ),
                   ),
                   const SizedBox(height: 24),
+                  // #1277 — the words this space uses. Its own screen: it
+                  // browses 33 terms across four surfaces, per locale, and
+                  // saves each one on its own through the keyed writer —
+                  // nothing here rides the Save button below.
+                  ListTile(
+                    key: const Key('workspaceSettingsWording'),
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.translate_outlined),
+                    title: HelpDotTitle(
+                      l10n?.wordingRow ?? 'Wording',
+                      helpTopic,
+                      anchor: HelpAnchor.workspaceWording,
+                    ),
+                    subtitle: Text(
+                      l10n?.wordingRowHint ??
+                          'The words this space uses for a seat, the legend '
+                              'and the tabs.',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => context.push('/settings/wording'),
+                  ),
+                  const SizedBox(height: 24),
                   // 0040 — desk transparency. Rides the same Save button.
                   Row(children: [
                     Text(

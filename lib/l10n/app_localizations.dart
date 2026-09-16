@@ -16943,6 +16943,102 @@ abstract class AppLocalizations {
   /// **'The expense'**
   String get repartitionStepExpense;
 
+  /// #1277 the wording editor: screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Wording'**
+  String get wordingTitle;
+
+  /// #1277 the wording editor: the settings row
+  ///
+  /// In en, this message translates to:
+  /// **'Wording'**
+  String get wordingRow;
+
+  /// #1277 the wording editor: the settings row subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'The words this space uses for a seat, the legend and the tabs.'**
+  String get wordingRowHint;
+
+  /// #1277 the wording editor: what it does
+  ///
+  /// In en, this message translates to:
+  /// **'Rename a small, approved set of product words. Everything else keeps the product\'s own wording, and a term you have not renamed shows exactly as before.'**
+  String get wordingIntro;
+
+  /// #1277 the wording editor: search field
+  ///
+  /// In en, this message translates to:
+  /// **'Search a word'**
+  String get wordingSearch;
+
+  /// #1277 the wording editor: show only renamed terms
+  ///
+  /// In en, this message translates to:
+  /// **'Changed only'**
+  String get wordingChangedOnly;
+
+  /// #1277 the wording editor: reset one term
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get wordingReset;
+
+  /// #1277 the wording editor: what reset does
+  ///
+  /// In en, this message translates to:
+  /// **'Reset removes your word and brings the product\'s back.'**
+  String get wordingResetHint;
+
+  /// #1277 the wording editor: the product's own word
+  ///
+  /// In en, this message translates to:
+  /// **'Product default'**
+  String get wordingDefaultLabel;
+
+  /// #1277 the wording editor: nothing matches the search
+  ///
+  /// In en, this message translates to:
+  /// **'No term matches.'**
+  String get wordingNone;
+
+  /// #1277 the wording editor: a term was saved
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get wordingSavedOne;
+
+  /// #1277 the wording editor: which language is being edited
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get wordingLocale;
+
+  /// #1277 the wording editor: surface name, the plan legend
+  ///
+  /// In en, this message translates to:
+  /// **'Legend'**
+  String get wordingSurfaceLegend;
+
+  /// #1277 the wording editor: surface name, what a space is made of
+  ///
+  /// In en, this message translates to:
+  /// **'The space'**
+  String get wordingSurfacePlan;
+
+  /// #1277 the wording editor: surface name, the shell destinations
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation'**
+  String get wordingSurfaceNavigation;
+
+  /// #1277 the wording editor: surface name, booking
+  ///
+  /// In en, this message translates to:
+  /// **'Booking'**
+  String get wordingSurfaceBooking;
+
   /// App-bar title of the first-run onboarding screen
   ///
   /// In en, this message translates to:
