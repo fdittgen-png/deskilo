@@ -230,7 +230,10 @@ const Map<String, int> _baseline = {
   // (remaining value) from to-refund.
   // 820→840 (2026-09-01): #812 the Open tab hands over to the journey
   // list (open_invoice_card.dart) while the flag is on.
-  'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 846,
+  // 846→850 (2026-09-16): #1339 — the issue-all button wraps in a
+  // Flexible so the header Row stops overflowing at twice the text
+  // size. One line of code, one of comment, one of indentation.
+  'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 850,
   // 750→770 (2026-08-05): #490 workspace-clock day instants beside the
   // naive axis anchor.
   'lib/features/calendar/presentation/widgets/day_timeline.dart': 776, // 2026-09-15 #1273 772→776: singleRoomLevelNames — the label rule and its flag // // 2026-09-14 #1269 769→772: reading the browsed level from the shared provider instead of its own State field

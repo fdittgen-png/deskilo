@@ -49,6 +49,13 @@ Future<FakeWorkspaceRepository> pumpFeatures(
   final workspace =
       await pumpSettings(tester, featureFlags: featureFlags);
   // #1246 — by icon, not by the English label.
+  // #1339 — and bring it on stage first. The tile is far down a lazy
+  // list, so on a short viewport it is simply not built and the tap
+  // finds nothing. Tall viewports hid that for as long as this helper
+  // has existed.
+  await tester.scrollUntilVisible(find.byIcon(Icons.toggle_on_outlined), 200);
+  await tester.ensureVisible(find.byIcon(Icons.toggle_on_outlined));
+  await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.toggle_on_outlined));
   await tester.pumpAndSettle();
   return workspace;

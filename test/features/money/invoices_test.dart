@@ -90,6 +90,17 @@ Future<FakeMoneyRepository> pumpInvoices(
   // #720 — the register lives on the Invoices face.
   await tester.tap(find.byKey(const ValueKey('money-face-invoices')));
   await tester.pumpAndSettle();
+  // #1339 — on a short viewport the button is below the fold and not
+  // built, so `ensureVisible` alone threw "Bad state: No element".
+  //
+  // The scrollable is named explicitly. Left to its default finder,
+  // `scrollUntilVisible` takes THE Scrollable and throws "Bad state: Too
+  // many elements" as soon as the screen holds a second one — which it
+  // does whenever an empty state is on it, since that block scrolls too
+  // rather than overflow at large text.
+  await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('invoices-button')), 200,
+      scrollable: find.byType(Scrollable).first);
   await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
   await tester.tap(find.byKey(const ValueKey('invoices-button')));
   await tester.pumpAndSettle();

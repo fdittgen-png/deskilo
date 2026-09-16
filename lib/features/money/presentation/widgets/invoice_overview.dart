@@ -165,7 +165,12 @@ class InvoiceSummaryCard extends ConsumerWidget {
                   child: Text(l10n?.moneyNothingOpen ??
                       'Nothing open — you are up to date.'),
                 ),
-                ?howItWorks,
+                // #1339 — the Expanded flexes; this button did not, and
+                // at twice the text size its own icon and label pushed
+                // the Row 87 px past the card. Flexible is a no-op at
+                // normal scale — a loose fit takes the child's natural
+                // width — and lets the label wrap instead of overflowing.
+                if (howItWorks != null) Flexible(child: howItWorks),
               ])
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
