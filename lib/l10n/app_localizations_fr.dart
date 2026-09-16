@@ -7224,6 +7224,40 @@ class AppLocalizationsFr extends AppLocalizations {
   String get navigationMenu => 'Menu : le hamburger, comme sur le web';
 
   @override
+  String get newMemberDefaultsTitle => 'Nouveaux membres';
+
+  @override
+  String get newMemberDefaultsConfigured =>
+      'Ce avec quoi commence une personne qui rejoint l\'espace.';
+
+  @override
+  String get newMemberDefaultsUnset =>
+      'Rien de choisi — les nouveaux membres commencent à 100 % et les réservations sont bloquées une fois le forfait épuisé.';
+
+  @override
+  String get newMemberSubscription => 'Abonnement';
+
+  @override
+  String newMemberSubscriptionValue(int percent) {
+    return '$percent %';
+  }
+
+  @override
+  String get newMemberSubscriptionLess => 'Abonnement plus petit';
+
+  @override
+  String get newMemberSubscriptionMore => 'Abonnement plus grand';
+
+  @override
+  String get newMemberOverageBlocked => 'Bloqué une fois épuisé';
+
+  @override
+  String get newMemberOveragePayg => 'Paiement à l\'usage';
+
+  @override
+  String get newMemberOveragePackage => 'Doit acheter un forfait';
+
+  @override
   String get featureNumberSequences => 'Séquences de numérotation';
 
   @override

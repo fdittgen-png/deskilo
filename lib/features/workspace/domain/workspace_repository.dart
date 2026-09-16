@@ -2,6 +2,7 @@
 import '../../../core/time/work_hours.dart';
 import 'booking_granularity.dart';
 import 'booking_policies.dart';
+import 'new_member_defaults.dart';
 import 'closure_day.dart';
 import 'public_holidays.dart';
 import 'member.dart';
@@ -442,6 +443,29 @@ abstract class WorkspaceRepository {
   /// `min_duration_minutes`, `max_duration_minutes`. Same
   /// merge-preserving booking_rules write as the other policies.
   Future<void> setBookingLimit(String workspaceId, String key, int value);
+
+  /// #1294 — how a newly joining member starts
+  /// (`billing_rules.new_member_defaults`). Read by the settings screen;
+  /// applied by the server in `join_workspace` and
+  /// `create_managed_member`, on insert only.
+  Future<NewMemberDefaults> fetchNewMemberDefaults(String workspaceId);
+
+  /// Writes that key, preserving every other billing rule. The merge
+  /// happens in the database (#1089): reading the blob, changing a key
+  /// and writing it back is how two admins with the screen open each
+  /// revert the other.
+  Future<void> setNewMemberDefaults(
+    String workspaceId,
+    NewMemberDefaults defaults,
+  );
+
+  /// #1294 — the workspace's fallback default booking period
+  /// (`booking_rules.default_period`), used only when the device holds
+  /// no choice of its own. Null when unset or blank.
+  Future<String?> fetchDefaultPeriod(String workspaceId);
+
+  /// Writes it, preserving every other booking rule. '' clears it.
+  Future<void> setDefaultPeriod(String workspaceId, String? wire);
 
   /// Sends a member note (#456, RPC `send_member_note`): to one member,
   /// or — [toMemberId] null — to all admins incl. the owner (the server

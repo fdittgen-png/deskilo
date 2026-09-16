@@ -7155,6 +7155,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navigationMenu => 'Menu: the hamburger, like the web';
 
   @override
+  String get newMemberDefaultsTitle => 'New members';
+
+  @override
+  String get newMemberDefaultsConfigured =>
+      'What somebody starts with when they join.';
+
+  @override
+  String get newMemberDefaultsUnset =>
+      'Nothing chosen — new members start at 100% with bookings blocked once the entitlement is used.';
+
+  @override
+  String get newMemberSubscription => 'Subscription';
+
+  @override
+  String newMemberSubscriptionValue(int percent) {
+    return '$percent%';
+  }
+
+  @override
+  String get newMemberSubscriptionLess => 'A smaller subscription';
+
+  @override
+  String get newMemberSubscriptionMore => 'A larger subscription';
+
+  @override
+  String get newMemberOverageBlocked => 'Blocked once used up';
+
+  @override
+  String get newMemberOveragePayg => 'Pay as you go';
+
+  @override
+  String get newMemberOveragePackage => 'Must buy a package';
+
+  @override
   String get featureNumberSequences => 'Number sequences';
 
   @override

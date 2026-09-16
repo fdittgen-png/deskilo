@@ -4647,6 +4647,51 @@
   "@navigationMenu": {
     "description": "#969 navigation style: navigationMenu"
   },
+  "newMemberDefaultsTitle": "Nouveaux membres",
+  "@newMemberDefaultsTitle": {
+    "description": "#1294 the new-member defaults section title"
+  },
+  "newMemberDefaultsConfigured": "Ce avec quoi commence une personne qui rejoint l'espace.",
+  "@newMemberDefaultsConfigured": {
+    "description": "#1294 shown when the workspace has configured its new-member defaults"
+  },
+  "newMemberDefaultsUnset": "Rien de choisi — les nouveaux membres commencent à 100 % et les réservations sont bloquées une fois le forfait épuisé.",
+  "@newMemberDefaultsUnset": {
+    "description": "#1294 shown when nothing is configured, naming the product defaults"
+  },
+  "newMemberSubscription": "Abonnement",
+  "@newMemberSubscription": {
+    "description": "#1294 the subscription percentage label"
+  },
+  "newMemberSubscriptionValue": "{percent} %",
+  "@newMemberSubscriptionValue": {
+    "description": "#1294 a subscription percentage",
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "newMemberSubscriptionLess": "Abonnement plus petit",
+  "@newMemberSubscriptionLess": {
+    "description": "#1294 tooltip: decrease the default subscription"
+  },
+  "newMemberSubscriptionMore": "Abonnement plus grand",
+  "@newMemberSubscriptionMore": {
+    "description": "#1294 tooltip: increase the default subscription"
+  },
+  "newMemberOverageBlocked": "Bloqué une fois épuisé",
+  "@newMemberOverageBlocked": {
+    "description": "#1294 overage policy: blocked once the entitlement is used"
+  },
+  "newMemberOveragePayg": "Paiement à l'usage",
+  "@newMemberOveragePayg": {
+    "description": "#1294 overage policy: pay as you go"
+  },
+  "newMemberOveragePackage": "Doit acheter un forfait",
+  "@newMemberOveragePackage": {
+    "description": "#1294 overage policy: must buy a package"
+  },
   "featureNumberSequences": "Séquences de numérotation",
   "@featureNumberSequences": {
     "description": "#925 number sequences: featureNumberSequences"

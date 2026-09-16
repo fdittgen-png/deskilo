@@ -7402,6 +7402,51 @@
   "@navigationMenu": {
     "description": "#969 navigation style: navigationMenu"
   },
+  "newMemberDefaultsTitle": "New members",
+  "@newMemberDefaultsTitle": {
+    "description": "#1294 the new-member defaults section title"
+  },
+  "newMemberDefaultsConfigured": "What somebody starts with when they join.",
+  "@newMemberDefaultsConfigured": {
+    "description": "#1294 shown when the workspace has configured its new-member defaults"
+  },
+  "newMemberDefaultsUnset": "Nothing chosen — new members start at 100% with bookings blocked once the entitlement is used.",
+  "@newMemberDefaultsUnset": {
+    "description": "#1294 shown when nothing is configured, naming the product defaults"
+  },
+  "newMemberSubscription": "Subscription",
+  "@newMemberSubscription": {
+    "description": "#1294 the subscription percentage label"
+  },
+  "newMemberSubscriptionValue": "{percent}%",
+  "@newMemberSubscriptionValue": {
+    "description": "#1294 a subscription percentage",
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "newMemberSubscriptionLess": "A smaller subscription",
+  "@newMemberSubscriptionLess": {
+    "description": "#1294 tooltip: decrease the default subscription"
+  },
+  "newMemberSubscriptionMore": "A larger subscription",
+  "@newMemberSubscriptionMore": {
+    "description": "#1294 tooltip: increase the default subscription"
+  },
+  "newMemberOverageBlocked": "Blocked once used up",
+  "@newMemberOverageBlocked": {
+    "description": "#1294 overage policy: blocked once the entitlement is used"
+  },
+  "newMemberOveragePayg": "Pay as you go",
+  "@newMemberOveragePayg": {
+    "description": "#1294 overage policy: pay as you go"
+  },
+  "newMemberOveragePackage": "Must buy a package",
+  "@newMemberOveragePackage": {
+    "description": "#1294 overage policy: must buy a package"
+  },
   "featureNumberSequences": "Number sequences",
   "@featureNumberSequences": {
     "description": "#925 number sequences: featureNumberSequences"

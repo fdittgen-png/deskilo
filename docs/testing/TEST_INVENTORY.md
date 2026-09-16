@@ -4,24 +4,24 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**475 files, 3157 tests.**
+**477 files, 3176 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
 | a11y | 2 | 6 |
-| database | 17 | 166 |
+| database | 18 | 178 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
 | lint | 60 | 159 |
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
-| unit | 165 | 1304 |
+| unit | 166 | 1311 |
 | widget | 223 | 1489 |
 
 | action | files |
 |---|---:|
-| KEEP | 475 |
+| KEEP | 477 |
 
 ## Rules
 
@@ -63,13 +63,14 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `supabase/tests/database/15_number_series.sql` | database | 0217 — #1320: a number series never issues the same number twice. | 18 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1320 | no | KEEP |  |
 | `supabase/tests/database/16_public_holidays.sql` | database | #1274 — the holidays a year actually has, and the months it may not touch. | 13 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1274 | no | KEEP |  |
 | `supabase/tests/database/17_entitlement_specification.sql` | database | #1274 — the field report, executed. | 16 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1274 | no | KEEP |  |
-| `supabase/tests/database/18_configuration_merge.sql` | database | #1276 S1 — the configuration import has a mode, and the default is the old behaviour. | 10 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1276 | no | KEEP |  |
+| `supabase/tests/database/18_configuration_merge.sql` | database | #1276 S1 — the configuration import has a mode, and the default is the old behaviour. | 10 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1276, #1295 | no | KEEP |  |
 | `supabase/tests/database/19_number_sequences_travel.sql` | database | #1295 — a template may carry the invoice series, never the counter. | 9 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1295, #1320 | no | KEEP |  |
 | `supabase/tests/database/20_money_invariants.sql` | database | #1226/#1229/#1231 — the two money guards nothing had ever executed. | 7 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1226, #1229, #1231 | no | KEEP |  |
 | `supabase/tests/database/21_ledger_append_only.sql` | database | #1229 — the ledger is append-only, and the one exception is narrow. | 6 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1229 | no | KEEP |  |
 | `supabase/tests/database/22_reconciliation.sql` | database | #1230 — the reconciliation, proved to be clean AND proved to bite. | 8 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1230, #1231, #1138 | no | KEEP |  |
 | `supabase/tests/database/23_domain_invariants.sql` | database | #1248 — the business invariants, executed. | 7 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1248, #1226 | no | KEEP |  |
 | `supabase/tests/database/24_booking_idempotency.sql` | database | #1241 — a booking can be replayed, and replaying it books once. | 6 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1241, #1240, #1248 | no | KEEP |  |
+| `supabase/tests/database/25_new_member_defaults.sql` | database | #1294 — how a new member starts, and who is NOT a new member. | 12 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1294, #1089, #1279 | no | KEEP |  |
 | `supabase/tests/database/30_query_budgets.sql` | database | #1236 — the database half of the performance budgets. | 9 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1236, #1225 | no | KEEP |  |
 | `test/a11y/responsive_matrix_test.dart` | a11y | #1339 — the screens hold at a narrow phone, at twice the text size, and with animation switched off. | 5 | yes | none | an accessibility contract — #1339 | no | KEEP |  |
 | `test/a11y/screen_guidelines_test.dart` | a11y | #1235 — WCAG 2.2 AA as a build result, on every screen we can reach. | 1 | yes | none | an accessibility contract — #1235 | no | KEEP |  |
@@ -430,6 +431,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/workspace/messages_hub_test.dart` | widget | #821 — the Messages tab reworked: filter chips over the list, a long-press menu (pin, mute, mark unread, archive) that writes a preference and reorders the… | 7 | yes | fakes, repository sources | user-visible behaviour — #821 | no | KEEP |  |
 | `test/features/workspace/messages_screen_test.dart` | widget | #687 stage 2 — the messaging centre as a screen. | 7 | yes | fakes, repository sources | user-visible behaviour — #687, #696, #973 | no | KEEP |  |
 | `test/features/workspace/my_badge_test.dart` | widget | Self-service badges (0053): a member mints their OWN printable QR badge and registers their OWN RFID/NFC card from Settings → My badge — the same… | 6 | yes | fakes | user-visible behaviour — #523 | no | KEEP |  |
+| `test/features/workspace/new_member_defaults_test.dart` | unit | #1294 — reading what a workspace says a new member starts with. | 7 | yes | none | a domain rule — #1294 | no | KEEP |  |
 | `test/features/workspace/next_open_day_test.dart` | unit | #1196 — the closed-day banner has to have somewhere to point. | 7 | yes | none | a domain rule — #1196 | no | KEEP |  |
 | `test/features/workspace/nfc_config_screen_test.dart` | widget | Owner RFID/NFC configuration (0046): the workspace toggle + this device's NFC status. Registration itself is per member (see the members screen tests). | 4 | yes | fakes | user-visible behaviour | no | KEEP |  |
 | `test/features/workspace/onboarding_flow_test.dart` | widget | Onboarding: create or join leads into the shell, an invalid code stays put, a member with a workspace never sees it. | 8 | yes | fakes | user-visible behaviour — #987, #572 | no | KEEP |  |

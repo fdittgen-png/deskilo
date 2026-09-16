@@ -12563,6 +12563,66 @@ abstract class AppLocalizations {
   /// **'Menu: the hamburger, like the web'**
   String get navigationMenu;
 
+  /// #1294 the new-member defaults section title
+  ///
+  /// In en, this message translates to:
+  /// **'New members'**
+  String get newMemberDefaultsTitle;
+
+  /// #1294 shown when the workspace has configured its new-member defaults
+  ///
+  /// In en, this message translates to:
+  /// **'What somebody starts with when they join.'**
+  String get newMemberDefaultsConfigured;
+
+  /// #1294 shown when nothing is configured, naming the product defaults
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing chosen — new members start at 100% with bookings blocked once the entitlement is used.'**
+  String get newMemberDefaultsUnset;
+
+  /// #1294 the subscription percentage label
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription'**
+  String get newMemberSubscription;
+
+  /// #1294 a subscription percentage
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}%'**
+  String newMemberSubscriptionValue(int percent);
+
+  /// #1294 tooltip: decrease the default subscription
+  ///
+  /// In en, this message translates to:
+  /// **'A smaller subscription'**
+  String get newMemberSubscriptionLess;
+
+  /// #1294 tooltip: increase the default subscription
+  ///
+  /// In en, this message translates to:
+  /// **'A larger subscription'**
+  String get newMemberSubscriptionMore;
+
+  /// #1294 overage policy: blocked once the entitlement is used
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked once used up'**
+  String get newMemberOverageBlocked;
+
+  /// #1294 overage policy: pay as you go
+  ///
+  /// In en, this message translates to:
+  /// **'Pay as you go'**
+  String get newMemberOveragePayg;
+
+  /// #1294 overage policy: must buy a package
+  ///
+  /// In en, this message translates to:
+  /// **'Must buy a package'**
+  String get newMemberOveragePackage;
+
   /// #925 number sequences: featureNumberSequences
   ///
   /// In en, this message translates to:

@@ -69,9 +69,21 @@ class DefaultPeriod extends _$DefaultPeriod {
     if (workspace == null) return null;
     final granularity =
         await ref.watch(bookingGranularityProvider.future);
+    // #1294 — the device's own choice wins. The workspace's
+    // `booking_rules.default_period` is a FALLBACK: it answers "what
+    // should somebody who has never chosen see?", and stops answering
+    // the moment they choose for themselves.
+    final onDevice = await ref.watch(defaultPeriodStoreProvider).read(
+          workspace.id,
+        );
     final stored = DefaultBookingPeriod.fromWire(
-      await ref.watch(defaultPeriodStoreProvider).read(workspace.id),
+      onDevice ??
+          await ref
+              .watch(workspaceRepositoryProvider)
+              .fetchDefaultPeriod(workspace.id),
     );
+    // An unusable value — unset, or one this granularity no longer
+    // offers — reads as no preference either way.
     if (stored == null) return null;
     return defaultPeriodChoicesFor(granularity).contains(stored)
         ? stored

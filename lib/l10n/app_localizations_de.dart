@@ -7215,6 +7215,40 @@ class AppLocalizationsDe extends AppLocalizations {
   String get navigationMenu => 'Menü: das Hamburger-Menü wie im Web';
 
   @override
+  String get newMemberDefaultsTitle => 'Neue Mitglieder';
+
+  @override
+  String get newMemberDefaultsConfigured =>
+      'Womit jemand startet, der beitritt.';
+
+  @override
+  String get newMemberDefaultsUnset =>
+      'Nichts gewählt — neue Mitglieder starten mit 100 %, Buchungen werden gesperrt, sobald das Kontingent aufgebraucht ist.';
+
+  @override
+  String get newMemberSubscription => 'Abonnement';
+
+  @override
+  String newMemberSubscriptionValue(int percent) {
+    return '$percent %';
+  }
+
+  @override
+  String get newMemberSubscriptionLess => 'Kleineres Abonnement';
+
+  @override
+  String get newMemberSubscriptionMore => 'Größeres Abonnement';
+
+  @override
+  String get newMemberOverageBlocked => 'Gesperrt, sobald aufgebraucht';
+
+  @override
+  String get newMemberOveragePayg => 'Nutzungsabhängig zahlen';
+
+  @override
+  String get newMemberOveragePackage => 'Muss ein Paket kaufen';
+
+  @override
   String get featureNumberSequences => 'Nummernkreise';
 
   @override

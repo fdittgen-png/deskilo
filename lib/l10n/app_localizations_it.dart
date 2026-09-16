@@ -7216,6 +7216,39 @@ class AppLocalizationsIt extends AppLocalizations {
   String get navigationMenu => 'Menu: l\'hamburger, come sul web';
 
   @override
+  String get newMemberDefaultsTitle => 'Nuovi membri';
+
+  @override
+  String get newMemberDefaultsConfigured => 'Con cosa inizia chi si unisce.';
+
+  @override
+  String get newMemberDefaultsUnset =>
+      'Niente scelto: i nuovi membri iniziano al 100 % e le prenotazioni si bloccano una volta esaurito il monte ore.';
+
+  @override
+  String get newMemberSubscription => 'Abbonamento';
+
+  @override
+  String newMemberSubscriptionValue(int percent) {
+    return '$percent %';
+  }
+
+  @override
+  String get newMemberSubscriptionLess => 'Abbonamento più piccolo';
+
+  @override
+  String get newMemberSubscriptionMore => 'Abbonamento più grande';
+
+  @override
+  String get newMemberOverageBlocked => 'Bloccato una volta esaurito';
+
+  @override
+  String get newMemberOveragePayg => 'Paga a consumo';
+
+  @override
+  String get newMemberOveragePackage => 'Deve acquistare un pacchetto';
+
+  @override
   String get featureNumberSequences => 'Serie di numerazione';
 
   @override

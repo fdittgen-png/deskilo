@@ -144,7 +144,11 @@ const Map<String, int> _baseline = {
   // right shape for it is one documented constant per object, and it
   // grows with the app rather than being refactored smaller.
   'lib/core/help/help_anchors.dart': 606,
-  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1570, // 2026-09-15 #1310 S0 1564→1570: every bulk export asks for the exportData permission // // 2026-09-14 #1269 1552→1564: the invitation-language chips carry a label now, plus the paragraph on why an unlabelled row of language chips reads as THE language setting // 2026-09-11 #1154 1605→1572: the 577-line build() became three section methods; the reset dialog moved to widgets/reset_confirm_dialog.dart
+  // 1570→1600 (2026-09-16): #1294 — the new-member defaults ride this
+  // screen's one Save. The tiles themselves are their own file
+  // (new_member_defaults_tiles.dart); what is left here is the
+  // seeding, the setter in _save and the render block.
+  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1600, // 2026-09-15 #1310 S0 1564→1570: every bulk export asks for the exportData permission // // 2026-09-14 #1269 1552→1564: the invitation-language chips carry a label now, plus the paragraph on why an unlabelled row of language chips reads as THE language setting // 2026-09-11 #1154 1605→1572: the 577-line build() became three section methods; the reset dialog moved to widgets/reset_confirm_dialog.dart
   // 600→640 (2026-08-05): #492 the request-deletion dialog + flow.
   // 640→760 (2026-08-22): #574 the running-booking extension flow.
   // 760→880 (2026-08-25): #638 the symmetric END-EARLIER flow — the
@@ -307,9 +311,15 @@ const Map<String, int> _baseline = {
   // 1020→1062 (2026-09-06): #948 the entity's numbers on the site sheet.
   // 1089→1109 (2026-09-16): #1274 — generateClosureDays, the definer RPC
   // that carries the owner gate and the invoiced-month rule.
-  'lib/features/workspace/data/supabase_workspace_repository.dart': 1109, // 2026-09-14 #1269 1074→1089: _updateWorkspaceRow, the one place that reads the row back so an RLS refusal stops looking like a save. Every workspaces-row write is shorter for it; the growth is the helper and the paragraph explaining the 204-with-no-body // 2026-09-11 #1063 the creation flags + #1119 alsoProd // 2026-09-06 #914/#915 the managed identity moves behind its rule: managedIdentityOf + setManagedAccess // 2026-09-05 #887 managed members: identity parse, names from managed_identity, three handover RPCs // 2026-09-08 #1030 an empty member id is dropped from the profile query, with the paragraph saying why one managed member blanked every name // 2026-09-10 #1089 1070→1090: setRolePermission, the single-permission write. The read-modify-write it replaces got SHORTER; the growth is the new method beside the whole-list one, which stays for the import and the deployment. Extracting part of a data-layer repository inside a security fix would be the larger, riskier diff
+  // 1109→1152 (2026-09-16): #1294 — the new-member defaults and the
+  // workspace default period: two readers and two writers, each going
+  // through a keyed RPC so the merge stays in the database.
+  'lib/features/workspace/data/supabase_workspace_repository.dart': 1152, // 2026-09-14 #1269 1074→1089: _updateWorkspaceRow, the one place that reads the row back so an RLS refusal stops looking like a save. Every workspaces-row write is shorter for it; the growth is the helper and the paragraph explaining the 204-with-no-body // 2026-09-11 #1063 the creation flags + #1119 alsoProd // 2026-09-06 #914/#915 the managed identity moves behind its rule: managedIdentityOf + setManagedAccess // 2026-09-05 #887 managed members: identity parse, names from managed_identity, three handover RPCs // 2026-09-08 #1030 an empty member id is dropped from the profile query, with the paragraph saying why one managed member blanked every name // 2026-09-10 #1089 1070→1090: setRolePermission, the single-permission write. The read-modify-write it replaces got SHORTER; the growth is the new method beside the whole-list one, which stays for the import and the deployment. Extracting part of a data-layer repository inside a security fix would be the larger, riskier diff
   // 619→630 (2026-09-16): #1274 — the generateClosureDays contract.
-  'lib/features/workspace/domain/workspace_repository.dart': 630, // 2026-09-11 #1120 the library surface of the interface, documented per method (was the 600 default)
+  // 630→654 (2026-09-16): #1294 — four contracts: new-member defaults and
+  // the workspace default period, each read and written. An interface
+  // grows by a method per capability; there is nothing here to extract.
+  'lib/features/workspace/domain/workspace_repository.dart': 654, // 2026-09-11 #1120 the library surface of the interface, documented per method (was the 600 default)
   // 600→660 (2026-08-23): #600 the Booking policies section — three
   // switches + one write handler on the existing availability screen.
   // 660→730 (2026-08-25): #624 the outside-hours segmented control +

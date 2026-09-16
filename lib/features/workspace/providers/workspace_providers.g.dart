@@ -556,6 +556,58 @@ final class BookingPoliciesProvider
 
 String _$bookingPoliciesHash() => r'fbcb72f764ca9790de2ffcdc3be5e3ef1499084f';
 
+/// #1294 — how a newly joining member starts, as the active workspace
+/// says. The product defaults (100 %, blocked) while nothing is
+/// configured, which is what the server applies too.
+
+@ProviderFor(newMemberDefaults)
+final newMemberDefaultsProvider = NewMemberDefaultsProvider._();
+
+/// #1294 — how a newly joining member starts, as the active workspace
+/// says. The product defaults (100 %, blocked) while nothing is
+/// configured, which is what the server applies too.
+
+final class NewMemberDefaultsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<NewMemberDefaults>,
+          NewMemberDefaults,
+          FutureOr<NewMemberDefaults>
+        >
+    with
+        $FutureModifier<NewMemberDefaults>,
+        $FutureProvider<NewMemberDefaults> {
+  /// #1294 — how a newly joining member starts, as the active workspace
+  /// says. The product defaults (100 %, blocked) while nothing is
+  /// configured, which is what the server applies too.
+  NewMemberDefaultsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'newMemberDefaultsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$newMemberDefaultsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<NewMemberDefaults> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<NewMemberDefaults> create(Ref ref) {
+    return newMemberDefaults(ref);
+  }
+}
+
+String _$newMemberDefaultsHash() => r'ca69daf6ac603005a39a35abc07cee26d32c0f91';
+
 /// Working day of the active workspace (#446); [WorkHours.defaults]
 /// while no workspace is selected or the keys are absent.
 

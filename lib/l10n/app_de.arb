@@ -4647,6 +4647,51 @@
   "@navigationMenu": {
     "description": "#969 navigation style: navigationMenu"
   },
+  "newMemberDefaultsTitle": "Neue Mitglieder",
+  "@newMemberDefaultsTitle": {
+    "description": "#1294 the new-member defaults section title"
+  },
+  "newMemberDefaultsConfigured": "Womit jemand startet, der beitritt.",
+  "@newMemberDefaultsConfigured": {
+    "description": "#1294 shown when the workspace has configured its new-member defaults"
+  },
+  "newMemberDefaultsUnset": "Nichts gewählt — neue Mitglieder starten mit 100 %, Buchungen werden gesperrt, sobald das Kontingent aufgebraucht ist.",
+  "@newMemberDefaultsUnset": {
+    "description": "#1294 shown when nothing is configured, naming the product defaults"
+  },
+  "newMemberSubscription": "Abonnement",
+  "@newMemberSubscription": {
+    "description": "#1294 the subscription percentage label"
+  },
+  "newMemberSubscriptionValue": "{percent} %",
+  "@newMemberSubscriptionValue": {
+    "description": "#1294 a subscription percentage",
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "newMemberSubscriptionLess": "Kleineres Abonnement",
+  "@newMemberSubscriptionLess": {
+    "description": "#1294 tooltip: decrease the default subscription"
+  },
+  "newMemberSubscriptionMore": "Größeres Abonnement",
+  "@newMemberSubscriptionMore": {
+    "description": "#1294 tooltip: increase the default subscription"
+  },
+  "newMemberOverageBlocked": "Gesperrt, sobald aufgebraucht",
+  "@newMemberOverageBlocked": {
+    "description": "#1294 overage policy: blocked once the entitlement is used"
+  },
+  "newMemberOveragePayg": "Nutzungsabhängig zahlen",
+  "@newMemberOveragePayg": {
+    "description": "#1294 overage policy: pay as you go"
+  },
+  "newMemberOveragePackage": "Muss ein Paket kaufen",
+  "@newMemberOveragePackage": {
+    "description": "#1294 overage policy: must buy a package"
+  },
   "featureNumberSequences": "Nummernkreise",
   "@featureNumberSequences": {
     "description": "#925 number sequences: featureNumberSequences"
