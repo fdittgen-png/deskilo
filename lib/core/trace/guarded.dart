@@ -4,6 +4,7 @@ import '../validation/pending_validation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../ui/app_snack.dart';
+import 'refusal_text.dart';
 import 'trace_logger.dart';
 
 /// Runs a mutating [action] with THE error boilerplate every call site
@@ -65,13 +66,18 @@ Future<bool> runGuarded(
       // so one check covers the whole app. There is no write queue yet
       // (#1241 step 3, which needs the idempotency work first) — saying
       // so plainly is step one, and it ships today.
+      //
+      // #1305 — and a refusal is not a fault either: "you may not", "your
+      // session ended", "someone already decided" each say what to do,
+      // where the caller's generic text would only say "try again".
+      final l10n = AppLocalizations.of(context);
       AppSnack.error(
         context,
         isTransientNetworkFailure(e)
-            ? (AppLocalizations.of(context)?.errorOffline ??
+            ? (l10n?.errorOffline ??
                 'No connection — nothing was sent. Try again when you '
                     'are back online.')
-            : errorText,
+            : knownRefusalText(l10n, e) ?? errorText,
       );
     }
     return false;

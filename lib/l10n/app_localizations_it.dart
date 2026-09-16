@@ -8579,6 +8579,22 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get refusalPermission =>
+      'Non hai il permesso per farlo. Un proprietario dello spazio può concederlo in Gestione dei ruoli.';
+
+  @override
+  String get refusalSession =>
+      'La tua sessione è scaduta. Accedi di nuovo, poi riprova.';
+
+  @override
+  String get refusalAlreadyDecided =>
+      'Qualcuno ha già deciso. L\'elenco mostra l\'esito.';
+
+  @override
+  String get refusalChangedMeanwhile =>
+      'Nel frattempo è cambiato. Riaprilo per vedere a che punto è.';
+
+  @override
   String get reportGuideTitle => 'Campi e marcatura';
 
   @override

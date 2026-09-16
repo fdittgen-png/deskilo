@@ -1,0 +1,7 @@
+{
+  "@@locale": "fr",
+  "refusalPermission": "Vous n'avez pas l'autorisation pour cela. Un propriétaire de l'espace peut l'accorder dans Gestion des rôles.",
+  "refusalSession": "Votre session a expiré. Reconnectez-vous, puis réessayez.",
+  "refusalAlreadyDecided": "Quelqu'un a déjà décidé. La liste affiche le résultat.",
+  "refusalChangedMeanwhile": "Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est."
+}

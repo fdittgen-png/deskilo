@@ -8791,6 +8791,22 @@
       }
     }
   },
+  "refusalPermission": "You do not have the permission for this. An owner of the space can grant it in Role management.",
+  "@refusalPermission": {
+    "description": "#1305 Shown when the server refuses an action for lack of a permission"
+  },
+  "refusalSession": "Your session has ended. Sign in again, then retry.",
+  "@refusalSession": {
+    "description": "#1305 Shown when the session expired during an action"
+  },
+  "refusalAlreadyDecided": "Someone has already decided this. The list shows the outcome.",
+  "@refusalAlreadyDecided": {
+    "description": "#1305 Shown when a validation was already decided by someone else"
+  },
+  "refusalChangedMeanwhile": "This changed in the meantime. Reopen it to see where it stands.",
+  "@refusalChangedMeanwhile": {
+    "description": "#1305 Shown when an invoice changed state before the action reached the server"
+  },
   "reportGuideTitle": "Placeholders and markup",
   "@reportGuideTitle": {
     "description": "#966 report guide: reportGuideTitle"

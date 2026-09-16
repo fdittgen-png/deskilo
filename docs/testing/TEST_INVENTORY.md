@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**493 files, 3275 tests.**
+**495 files, 3283 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -12,16 +12,16 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | database | 20 | 201 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
-| lint | 67 | 184 |
+| lint | 68 | 185 |
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
 | unit | 171 | 1353 |
-| widget | 225 | 1498 |
+| widget | 226 | 1505 |
 
 | action | files |
 |---|---:|
-| KEEP | 493 |
+| KEEP | 495 |
 
 ## Rules
 
@@ -141,6 +141,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/core/trace/network_noise_test.dart` | unit | #1135 — the Errors filter on the Developer screen was a third noise. | 5 | yes | none | a domain rule — #1135, #1153 | no | KEEP |  |
 | `test/core/trace/offline_message_test.dart` | widget | #1241 — a dropped connection says so. | 4 | yes | none | user-visible behaviour — #1241 | no | KEEP |  |
 | `test/core/trace/redaction_test.dart` | unit | #1240 — the diagnostic log carries nothing personal. | 11 | yes | none | a domain rule — #1240 | no | KEEP |  |
+| `test/core/trace/refusal_text_test.dart` | widget | #1305 S2 — a refusal is not a fault, and every guarded action says which refusal it met. | 7 | yes | repository sources | user-visible behaviour — #1305 | no | KEEP |  |
 | `test/core/trace/trace_logger_test.dart` | unit | The trace log: a 500-entry newest-first buffer, one line per entry, a rotating file, and an export that prefers the file. | 10 | yes | temp filesystem | a domain rule | no | KEEP |  |
 | `test/core/trace/trace_provider_observer_test.dart` | unit | #742 — a provider that fails leaves a line in the trace, whichever provider it is; and the app's root scope carries the observer. | 2 | yes | repository sources | a domain rule — #742 | no | KEEP |  |
 | `test/core/ui/app_snack_test.dart` | widget | #209: semantic snackbars. The three variants must float and carry their severity color (error = colorScheme.error, success = the #196 status token, info =… | 5 | yes | none | user-visible behaviour — #209, #196 | no | KEEP |  |
@@ -498,6 +499,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/lint/flutter_pin_test.dart` | lint | #809 — one pinned Flutter version, and everything reads it. | 2 | yes | repository sources | an architecture, security or process rule — #809 | no | KEEP |  |
 | `test/lint/foss_flavour_test.dart` | lint | #716 — the F-Droid flavour stays buildable and Google-free, and the store flavour stays exactly what it was. | 4 | yes | repository sources | an architecture, security or process rule — #716, #809 | no | KEEP |  |
 | `test/lint/gdpr_export_coverage_test.dart` | lint | #1238 — every table that holds a member's data is either exported or exempt on the record. | 3 | yes | repository sources | an architecture, security or process rule — #1238, #1241 | no | KEEP |  |
+| `test/lint/generic_error_test.dart` | lint | #1305 S2 — "Something went wrong. Please try again." may only become rarer. | 1 | yes | none | an architecture, security or process rule — #1305, #1241 | no | KEEP |  |
 | `test/lint/grant_table_policy_test.dart` | lint | #1120 — a grant row may never be the thing that proves access. | 3 | yes | repository sources | an architecture, security or process rule — #1120 | no | KEEP |  |
 | `test/lint/help_anchor_test.dart` | lint | #1016/#1018 — the anchor is one identity for the help symbol, the guide heading and the screenshot. This is what keeps the three in step, and what stops a… | 8 | yes | repository sources | an architecture, security or process rule — #1016, #1018, #1019 | no | KEEP |  |
 | `test/lint/help_coverage_test.dart` | lint | #1016/#1019 — the migration from coarse topics to exact anchors, made measurable, and now finished. 152 help symbols shared 14 topics between them; screen by… | 1 | yes | none | an architecture, security or process rule — #1016, #1019 | no | KEEP |  |
