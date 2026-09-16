@@ -4,12 +4,12 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**472 files, 3134 tests.**
+**473 files, 3144 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
 | a11y | 2 | 6 |
-| database | 15 | 147 |
+| database | 16 | 157 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
 | lint | 59 | 155 |
@@ -21,7 +21,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 
 | action | files |
 |---|---:|
-| KEEP | 472 |
+| KEEP | 473 |
 
 ## Rules
 
@@ -63,6 +63,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `supabase/tests/database/15_number_series.sql` | database | 0217 — #1320: a number series never issues the same number twice. | 18 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1320 | no | KEEP |  |
 | `supabase/tests/database/16_public_holidays.sql` | database | #1274 — the holidays a year actually has, and the months it may not touch. | 13 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1274 | no | KEEP |  |
 | `supabase/tests/database/17_entitlement_specification.sql` | database | #1274 — the field report, executed. | 16 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1274 | no | KEEP |  |
+| `supabase/tests/database/18_configuration_merge.sql` | database | #1276 S1 — the configuration import has a mode, and the default is the old behaviour. | 10 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1276 | no | KEEP |  |
 | `supabase/tests/database/20_money_invariants.sql` | database | #1226/#1229/#1231 — the two money guards nothing had ever executed. | 7 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1226, #1229, #1231 | no | KEEP |  |
 | `supabase/tests/database/21_ledger_append_only.sql` | database | #1229 — the ledger is append-only, and the one exception is narrow. | 6 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1229 | no | KEEP |  |
 | `supabase/tests/database/22_reconciliation.sql` | database | #1230 — the reconciliation, proved to be clean AND proved to bite. | 8 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1230, #1231, #1138 | no | KEEP |  |
@@ -414,7 +415,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/workspace/environment_pairs_test.dart` | widget | #987/#989 — a workspace and its twin as one couple: the pair card in Profiles switches sides, the twin is created on demand from the environment tile, the… | 4 | yes | fakes | user-visible behaviour — #987, #989, #996 | no | KEEP |  |
 | `test/features/workspace/excel_export_screen_test.dart` | widget | The Excel export surface (#395): the tile exists only while the dataExport feature is on (its ONLY surface, so the flag gate is the tile), and tapping it hands… | 4 | yes | fakes | user-visible behaviour — #395, #1310 | no | KEEP |  |
 | `test/features/workspace/feature_structure_test.dart` | widget | #1221 — the Features screen, organised by WHERE a feature shows up. | 8 | yes | none | user-visible behaviour — #1221 | no | KEEP |  |
-| `test/features/workspace/features_screen_test.dart` | widget | The Features screen: a switch per manifest feature; a toggle writes only its key and, switching on, its parent chain (#963). | 15 | yes | fakes | user-visible behaviour — #963, #1339, #759 | no | KEEP |  |
+| `test/features/workspace/features_screen_test.dart` | widget | The Features screen: a switch per manifest feature; a toggle writes only its key and, switching on, its parent chain (#963). | 15 | yes | fakes | user-visible behaviour — #963, #1339, #1274 | no | KEEP |  |
 | `test/features/workspace/inbox_test.dart` | widget | THE INBOX (#702): conversations and alerts — two faces of one destination, where they used to be a tab and an app-bar bell. (Members was a third face for one… | 8 | yes | fakes, repository sources | user-visible behaviour — #702, #707, #687 | no | KEEP |  |
 | `test/features/workspace/invitation_test.dart` | widget | Personal invitations (0049): a ready-made download → account → join message sent over WhatsApp, SMS, or the share sheet, in the invitee's language; the owner… | 19 | yes | fakes, repository sources | user-visible behaviour — #318, #486, #1119 | no | KEEP |  |
 | `test/features/workspace/invite_uri_test.dart` | unit | Invite URLs carry role and code, and decoding accepts both URLs and legacy raw codes. | 11 | yes | none | a domain rule — #318 | no | KEEP |  |
@@ -463,7 +464,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/i18n/screen_locales_test.dart` | i18n | #1246 — every screen we can pump, in every language, narrowed to a phone. | 1 | yes | none | a localisation contract — #1246 | no | KEEP |  |
 | `test/i18n/text_expansion_test.dart` | i18n | Text-expansion survival: the main surfaces render in every launch locale at phone width without a RenderFlex overflow. | 2 | yes | fakes | a localisation contract — #402, #707 | no | KEEP |  |
 | `test/lint/adr_format_test.dart` | lint | Docs-parity lint: decision records keep the shape that makes them citable. | 2 | yes | repository sources | an architecture, security or process rule | no | KEEP |  |
-| `test/lint/anchored_patch_test.dart` | lint | #1092 — a migration that re-creates a function FROM SCRATCH silently discards every anchored patch applied to it since. | 2 | yes | repository sources | an architecture, security or process rule — #1092, #960, #1320 | no | KEEP |  |
+| `test/lint/anchored_patch_test.dart` | lint | #1092 — a migration that re-creates a function FROM SCRATCH silently discards every anchored patch applied to it since. | 2 | yes | repository sources | an architecture, security or process rule — #1092, #960, #1276 | no | KEEP |  |
 | `test/lint/android_manifest_test.dart` | lint | Manifest pins (#436): POST_NOTIFICATIONS was silently missing and Android 13+ suppressed every notification the app ever posted — no reminder, no badge mirror,… | 2 | yes | repository sources | an architecture, security or process rule — #436, #442 | no | KEEP |  |
 | `test/lint/android_reach_test.dart` | lint | Play turns a PERMISSION into a hardware REQUIREMENT unless the manifest says otherwise, and a required feature is not an error anywhere — it is a silent… | 3 | yes | repository sources | an architecture, security or process rule | no | KEEP |  |
 | `test/lint/booking_rules_single_key_test.dart` | lint | #1147 / #1089 — booking_rules is one jsonb column and it is written ONE key at a time, merged in the database (set_booking_rule, 0195). A client that SELECTs… | 1 | yes | none | an architecture, security or process rule — #1147, #1089 | no | KEEP |  |

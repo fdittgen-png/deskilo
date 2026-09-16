@@ -46,6 +46,11 @@ class SupabaseWorkspaceImportRepository implements WorkspaceImportRepository {
     await _client.rpc<dynamic>('import_workspace_configuration', params: {
       'p_workspace_id': workspaceId,
       'p_configuration': configuration,
+      // #1276 — the mode is named rather than inherited. This path is the
+      // owner restoring a configuration file over their own workspace,
+      // which is a mirror: what the file does not contain is meant to go.
+      // Template application is merge, and it goes through its own RPC.
+      'p_mode': 'mirror',
     });
   }
 }

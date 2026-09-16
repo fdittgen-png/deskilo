@@ -29,6 +29,14 @@ import 'package:flutter_test/flutter_test.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
+  // #1276 S1/0219 restates deployable_entities to add `merge_policy` and
+  // `group` to each of the eighteen entities. The new body was built FROM
+  // `pg_get_functiondef` on the live project — the post-patch state by
+  // definition — and a rolled-back harness asserted that all five
+  // pre-existing keys (key, kind, requires, workspace_keys, tables)
+  // survive on all eighteen, so nothing an earlier migration established
+  // was dropped. The function is pure data with no logic to lose.
+  'deployable_entities@0219',
   // #1320/0217 restates next_document_number from pg_get_functiondef on
   // the LIVE project (post-patch by definition): the defaults upsert, the
   // gapless row lock and number_sequence_format are carried unchanged;
