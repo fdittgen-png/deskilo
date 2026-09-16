@@ -221,6 +221,20 @@ jobs:
           bash scripts/concurrency_check.sh \
             "$(supabase status -o env | sed -n 's/^DB_URL="\(.*\)"$/\1/p')"
 
+      # #1310 — OPERATIONS.md has documented the dump and the restore
+      # since the day it was written, and nothing had ever executed it.
+      # A backup procedure that has never been restored is a hope, not a
+      # recovery plan. Every pgTAP file rolls back, so this is the one
+      # fixture that persists: it is seeded, dumped, restored into a
+      # fresh database, and the copy is made to prove itself — equal row
+      # counts, a clean reconciliation per workspace, tenants intact.
+      # It runs last because its seed is the only data left on disk.
+      - name: Restore drill
+        id: restore
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        run: bash scripts/restore_check.sh
+
       - name: Rows
         if: always()
         run: |
@@ -241,6 +255,8 @@ jobs:
               "${{ steps.pgtap.outcome }}"
             printf 'Policy drift|%s|live policies equal the set the migrations build\n' \
               "${{ steps.policies.outcome }}"
+            printf 'Restore drill|%s|seeded, dumped, restored into a fresh database, counts equal and reconciled\n' \
+              "${{ steps.restore.outcome }}"
           } > report/database.psv
           cat report/database.psv
 
@@ -265,7 +281,8 @@ jobs:
           for step in "Migration safety=${{ steps.migrations.outcome }}" \
                       "Database disciplines=${{ steps.pgtap.outcome }}" \
                       "Policies equal the migrations=${{ steps.policies.outcome }}" \
-                      "Two sessions, one seat=${{ steps.race.outcome }}"; do
+                      "Two sessions, one seat=${{ steps.race.outcome }}" \
+                      "Restore drill=${{ steps.restore.outcome }}"; do
             echo "$step"
             case "$step" in *=failure) status=1 ;; esac
           done

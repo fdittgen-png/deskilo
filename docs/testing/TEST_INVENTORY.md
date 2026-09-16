@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**467 files, 3076 tests.**
+**467 files, 3090 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -16,8 +16,8 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
-| unit | 164 | 1290 |
-| widget | 222 | 1479 |
+| unit | 164 | 1299 |
+| widget | 222 | 1484 |
 
 | action | files |
 |---|---:|
@@ -44,7 +44,8 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | Process registry, resolver, preview == apply | #1336 | blocked on #1325, #1326, #1329 |
 | Template merge, idempotency, allow-list, provenance | #1338 | blocked on #1276 |
 | Number sequences: invalid pairs, no reuse | #1338 / #1320 | lands with the #1320 fix |
-| Export completeness and restore drill | #1338 / #1310 | lands with #1310 |
+| Restore drill: dump, restore into a fresh database, reconcile | #1338 / #1310 | the `Restore drill` step in quality · database (#1310 S1) |
+| Export completeness: paging, manifest, ZIP | #1338 / #1310 | #1310 S2, blocked on #1312 for schema_version |
 | Instance install, resume, doctor isolation | #1337 / #1314 | lands with #1314; schema marker with #1312 |
 | Journeys: decision without the bell, onboarding retry | #1339 | with #1306 and #1303 |
 | State model: stale, offline, empty, error | #1339 / #1305 | with #1305 |
@@ -100,8 +101,8 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/core/i18n/app_format_test.dart` | unit | #711 — globalization. The workspace owns the money and the clock; the member owns how they read them. These pin the formatting seam, the currency table and the… | 16 | yes | repository sources | a domain rule — #711, #1137 | no | KEEP |  |
 | `test/core/i18n/locale_names_test.dart` | unit | #713 — the format picker speaks the reader's language, not BCP-47. | 2 | yes | none | a domain rule — #713 | no | KEEP |  |
 | `test/core/i18n/regional_formats_test.dart` | widget | #711 — the surfaces of globalization: the member's Region & formats section, the owner's currency and time-zone pickers, and the bank details a non-IBAN… | 5 | yes | fakes | user-visible behaviour — #711, #734 | no | KEEP |  |
-| `test/core/instance/instance_builder_test.dart` | unit | #977 — the instance builder over a fake Management API: the project comes up after a few polls, the schema runs in order and names the migration that fails,… | 10 | yes | fakes | a domain rule — #977, #1314 | no | KEEP |  |
-| `test/core/instance/instance_doctor_test.dart` | unit | #1075 — the doctor, driven by the shapes it exists to catch. | 27 | yes | fakes | a domain rule — #1075, #1245, #1226 | no | KEEP |  |
+| `test/core/instance/instance_builder_test.dart` | unit | #977 — the instance builder over a fake Management API: the project comes up after a few polls, the schema runs in order and names the migration that fails,… | 10 | yes | fakes | a domain rule — #977, #1314, #1313 | no | KEEP |  |
+| `test/core/instance/instance_doctor_test.dart` | unit | #1075 — the doctor, driven by the shapes it exists to catch. | 36 | yes | fakes | a domain rule — #1075, #1245, #1226 | no | KEEP |  |
 | `test/core/locale/locale_controller_test.dart` | unit | The language override: an empty store follows the system, a stored code applies and persists, null clears it. | 4 | yes | none | a domain rule | shares a test name with test/core/theme/theme_controller_test.dart | KEEP |  |
 | `test/core/motion/motion_core_test.dart` | widget | Motion core (#611): ONE seam decides whether anything animates — the uiAnimations feature flag (installed by the app shell as MotionSettings) AND the… | 8 | yes | none | user-visible behaviour — #611 | no | KEEP |  |
 | `test/core/navigation/navigation_style_test.dart` | unit | #969 — the navigation preference: persisted per device, applied to the shell instantly, and never a choice on the web. | 2 | yes | fakes | a domain rule — #969 | no | KEEP |  |
@@ -228,7 +229,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/money/invoice_geometry_test.dart` | unit | #873 — the invoice must conform to the French window-envelope spec, measured on the GENERATED PDF rather than asserted about the code that generates it. | 6 | yes | none | a domain rule — #873 | no | KEEP |  |
 | `test/features/money/invoice_journey_test.dart` | widget | #812 — the journey of an invoice: Issued → Payment → Confirmation → Closed, ONE derivation behind the issuers' hub, the member's Invoices face and the detail… | 27 | yes | fakes, real async I/O | user-visible behaviour — #812, #804 | shares a test name with test/features/money/report_language_test.dart | KEEP |  |
 | `test/features/money/invoice_pdf_test.dart` | widget | The invoice PDF (0060): one A4 page carrying only SNAPSHOT fields — both addresses, issuer, date, lines, total and the SHA-256 digital signature. Nothing live… | 8 | yes | repository sources, real async I/O | user-visible behaviour — #923, #965 | no | KEEP |  |
-| `test/features/money/invoice_register_test.dart` | widget | The invoice REGISTER (0072): one line per invoice — date, name, amount, status — sorted by date in either direction, with the sum at the foot. The name column… | 6 | yes | fakes | user-visible behaviour — #720, #669, #512 | no | KEEP |  |
+| `test/features/money/invoice_register_test.dart` | widget | The invoice REGISTER (0072): one line per invoice — date, name, amount, status — sorted by date in either direction, with the sum at the foot. The name column… | 7 | yes | fakes | user-visible behaviour — #720, #669, #512 | no | KEEP |  |
 | `test/features/money/invoice_settlement_fold_test.dart` | widget | #831 — settled sources fold under their settlement: the settlement carries the sources' lines tagged with their number; the sources leave the open list, the… | 8 | yes | fakes, repository sources | user-visible behaviour — #831 | no | KEEP |  |
 | `test/features/money/invoice_settlement_test.dart` | unit | #804 — several open invoices regrouped into ONE the member pays. | 6 | yes | fakes | a domain rule — #804 | no | KEEP |  |
 | `test/features/money/invoice_template_test.dart` | widget | #454/#470: the banded invoice reporting tool — Liquid bands (header / body with the lines / footer), the line markup, the fallback contract (a broken template… | 15 | yes | fakes, repository sources, real async I/O | user-visible behaviour — #454, #470, #480 | no | KEEP |  |
@@ -342,7 +343,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/profile/consent_test.dart` | widget | #751 — the GDPR consent gate: an account that has not accepted the current policy version sees the consent screen and nothing else; ticking and accepting… | 6 | yes | fakes | user-visible behaviour — #751, #771 | no | KEEP |  |
 | `test/features/profile/default_profile_test.dart` | widget | Default profile (#322): with several profiles the user checks ONE as the start-up default — the app opens on it at every start, while in-session switching… | 3 | yes | fakes | user-visible behaviour — #322, #458 | no | KEEP |  |
 | `test/features/profile/demo_mode_screen_test.dart` | widget | #970 — with demo mode on, the directory still prints the real names and the blur covers them; the switch persists; the personal-information form stays editable. | 3 | yes | fakes | user-visible behaviour — #970 | no | KEEP |  |
-| `test/features/profile/developer_screen_test.dart` | widget | Developer mode: the trace list newest first, level filters, export to a .log file, and clear. | 5 | yes | fakes | user-visible behaviour — #147, #188, #419 | no | KEEP |  |
+| `test/features/profile/developer_screen_test.dart` | widget | Developer mode: the trace list newest first, level filters, export to a .log file, and clear. | 7 | yes | fakes | user-visible behaviour — #147, #188, #419 | no | KEEP |  |
 | `test/features/profile/front_camera_setting_test.dart` | widget | The front-camera switch in Settings → Preferences: on by default, toggling writes the device-local preference the badge scanner reads. | 1 | yes | fakes | user-visible behaviour | no | KEEP |  |
 | `test/features/profile/language_selection_test.dart` | widget | Choosing a language in Settings switches the app immediately and persists; System default clears it. | 4 | yes | fakes | user-visible behaviour | no | KEEP |  |
 | `test/features/profile/member_monogram_test.dart` | unit | #793 — the Membres list drew three identical `M` circles: Mathieu, mathieu.bouchard and marion.blein.gauthier all rendered as one letter, so the glyph shown… | 14 | yes | none | a domain rule — #793 | no | KEEP |  |
@@ -408,7 +409,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/workspace/documents_test.dart` | widget | The workspace document library (#500): federated links to any DMS, role-gated visibility, admin/owner curation. | 4 | yes | fakes, repository sources | user-visible behaviour — #500 | no | KEEP |  |
 | `test/features/workspace/environment_banner_test.dart` | widget | #917 — the strip that says a workspace is not real, and the one control that can take it away. | 6 | yes | fakes | user-visible behaviour — #917 | no | KEEP |  |
 | `test/features/workspace/environment_pairs_test.dart` | widget | #987/#989 — a workspace and its twin as one couple: the pair card in Profiles switches sides, the twin is created on demand from the environment tile, the… | 4 | yes | fakes | user-visible behaviour — #987, #989, #996 | no | KEEP |  |
-| `test/features/workspace/excel_export_screen_test.dart` | widget | The Excel export surface (#395): the tile exists only while the dataExport feature is on (its ONLY surface, so the flag gate is the tile), and tapping it hands… | 2 | yes | fakes | user-visible behaviour — #395 | no | KEEP |  |
+| `test/features/workspace/excel_export_screen_test.dart` | widget | The Excel export surface (#395): the tile exists only while the dataExport feature is on (its ONLY surface, so the flag gate is the tile), and tapping it hands… | 4 | yes | fakes | user-visible behaviour — #395, #1310 | no | KEEP |  |
 | `test/features/workspace/feature_structure_test.dart` | widget | #1221 — the Features screen, organised by WHERE a feature shows up. | 8 | yes | none | user-visible behaviour — #1221 | no | KEEP |  |
 | `test/features/workspace/features_screen_test.dart` | widget | The Features screen: a switch per manifest feature; a toggle writes only its key and, switching on, its parent chain (#963). | 15 | yes | fakes | user-visible behaviour — #963, #759, #800 | no | KEEP |  |
 | `test/features/workspace/inbox_test.dart` | widget | THE INBOX (#702): conversations and alerts — two faces of one destination, where they used to be a tab and an app-bar bell. (Members was a third face for one… | 8 | yes | fakes, repository sources | user-visible behaviour — #702, #707, #687 | no | KEEP |  |

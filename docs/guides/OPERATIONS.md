@@ -94,6 +94,22 @@ sign-up before #1075 built the doctor that catches it.
 Then point the app at the new project and check somebody can sign in
 before you tell anybody it is fixed.
 
+**This procedure is executed on every pull request.** It used to be a
+procedure nobody had ever run — written down, plausible, and unproven,
+which is the state every backup is in until the first restore. The
+`quality · database` job now runs `scripts/restore_check.sh`: it seeds
+`supabase/restore/seed.sql` — two workspaces, a floor plan in each,
+bookings across two months, and an invoice with the ledger row and the
+match that settle it — dumps the database, restores it into a fresh one,
+and then makes the copy prove itself: equal row counts per table,
+`reconcile_workspace()` clean for both workspaces, and no member holding
+another tenant's booking. Then it damages the copy on purpose — deletes a
+row, breaks a match — and requires both to be caught, because a drill
+that has only ever passed cannot be told apart from one that does not
+look. What CI cannot rehearse is the part above that
+touches a real project — storage and the `auth` step — so read those
+twice on the day (#1310).
+
 ## Rollback
 
 **The schema does not roll back, and that is deliberate.** There are no
