@@ -238,7 +238,14 @@ const Map<String, int> _baseline = {
   // repository implementation in two places for no gain.
   // 1260→1320 (2026-09-06): #925 three number-sequence methods.
   // 1320→1383 (2026-09-06): #934 two routes / three repository methods.
-  'lib/features/money/data/supabase_money_repository.dart': 1393, // 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed
+  // 1393→1420 (2026-09-16): #1310 S2 — four export reads page instead of
+  // returning whatever the server's max_rows happened to allow. The cost
+  // is structural, not padding: a paged read needs its select inside a
+  // `build:` closure, because a PostgREST builder is single-use and the
+  // second page would fail on a reused one. Extracting four closures
+  // into helpers would move the lines, not remove them, and would put
+  // each query a call away from the method that owns it.
+  'lib/features/money/data/supabase_money_repository.dart': 1420, // 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed
   // 600→630 (2026-08-11): #537 VAT price transparency — the gross-price
   // hint + per-pack VAT/currency subtitles (labeling, no new concern).
   // 630→660 (2026-08-11): #537 follow-up — live VAT-share helpers under

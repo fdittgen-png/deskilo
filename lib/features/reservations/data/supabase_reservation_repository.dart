@@ -8,6 +8,7 @@ import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
 import '../../../core/trace/act_trace.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/retry.dart';
 import '../../../core/data/system_columns.dart';
 
@@ -95,11 +96,16 @@ class SupabaseReservationRepository implements ReservationRepository {
 
   @override
   Future<List<Reservation>> fetchAllForExport(String workspaceId) async {
-    final rows = await _client
-        .from('reservations')
-        .select()
-        .eq('workspace_id', workspaceId)
-        .order('starts_at', ascending: true);
+    // #1310 S2 — paged: an unranged select returns at most the
+    // project's max_rows and says nothing about the rest.
+    final rows = await fetchAllPages(
+      table: 'reservations',
+      build: () => _client
+          .from('reservations')
+          .select()
+          .eq('workspace_id', workspaceId)
+          .order('starts_at', ascending: true),
+    );
     return [
       for (final row in rows) _fromRow(Map<String, dynamic>.from(row)),
     ];

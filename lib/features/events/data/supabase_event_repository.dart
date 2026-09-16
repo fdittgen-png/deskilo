@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
+
 import '../../money/domain/payment_terms.dart';
 import '../domain/event_decision.dart';
 import '../domain/event_repository.dart';
@@ -22,6 +24,23 @@ class SupabaseEventRepository implements EventRepository {
     await _client.rpc<dynamic>('sweep_pending_events', params: {
       'p_workspace_id': workspaceId,
     });
+    // #1310 S2 — a limit of 0 means "everything", for the export.
+    //
+    // The feed asks for a page and gets one; the workspace export asks
+    // for the whole history and used to pass limit: 10000, which is a
+    // silent truncation dressed up as a big number. Paging is the only
+    // form that cannot stop short.
+    if (limit <= 0) {
+      final rows = await fetchAllPages(
+        table: 'events',
+        build: () => _client
+            .from('events')
+            .select()
+            .eq('workspace_id', workspaceId)
+            .order('created_at', ascending: false),
+      );
+      return rows.map(_fromRow).toList();
+    }
     final rows = await _client
         .from('events')
         .select()

@@ -18,6 +18,7 @@ import '../domain/expense_schedule.dart';
 import '../domain/fee_band.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/money_repository.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../domain/package.dart';
 import '../domain/payment_method.dart';
 import '../domain/payment_provider.dart';
@@ -34,11 +35,16 @@ import '../../../core/trace/trace_logger.dart';
 class SupabaseMoneyRepository implements MoneyRepository {
   @override
   Future<List<Invoice>> fetchInvoices(String workspaceId) async {
-    final rows = await _client
-        .from('invoices')
-        .select()
-        .eq('workspace_id', workspaceId)
-        .order('issued_at', ascending: false);
+    // #1310 S2 — paged: the register and the export both read all of
+    // them, and a workspace outlives 1000 invoices.
+    final rows = await fetchAllPages(
+      table: 'invoices',
+      build: () => _client
+          .from('invoices')
+          .select()
+          .eq('workspace_id', workspaceId)
+          .order('issued_at', ascending: false),
+    );
     return rows.map(Invoice.fromRow).toList();
   }
 
@@ -701,21 +707,29 @@ class SupabaseMoneyRepository implements MoneyRepository {
 
   @override
   Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId) async {
-    final rows = await _client
-        .from('ledger_entries')
-        .select()
-        .eq('workspace_id', workspaceId)
-        .order('created_at', ascending: false);
+    // #1310 S2 — paged; the whole ledger is an export read.
+    final rows = await fetchAllPages(
+      table: 'ledger_entries',
+      build: () => _client
+          .from('ledger_entries')
+          .select()
+          .eq('workspace_id', workspaceId)
+          .order('created_at', ascending: false),
+    );
     return rows.map(_ledgerFromRow).whereType<LedgerEntry>().toList();
   }
 
   @override
   Future<List<PaymentIntent>> fetchPaymentIntents(String workspaceId) async {
-    final rows = await _client
-        .from('payment_intents')
-        .select()
-        .eq('workspace_id', workspaceId)
-        .order('created_at', ascending: false);
+    // #1310 S2 — paged.
+    final rows = await fetchAllPages(
+      table: 'payment_intents',
+      build: () => _client
+          .from('payment_intents')
+          .select()
+          .eq('workspace_id', workspaceId)
+          .order('created_at', ascending: false),
+    );
     return rows
         .map((row) => PaymentIntent.fromRow(Map<String, dynamic>.from(row)))
         .toList();
@@ -966,10 +980,17 @@ class SupabaseMoneyRepository implements MoneyRepository {
     String workspaceId, {
     bool includeInactive = false,
   }) async {
-    var query =
-        _client.from('services').select().eq('workspace_id', workspaceId);
-    if (!includeInactive) query = query.eq('active', true);
-    final rows = await query.order('name', ascending: true);
+    // #1310 S2 — paged: the export asks for the catalogue including
+    // retired entries, which is the longest form of this list.
+    final rows = await fetchAllPages(
+      table: 'services',
+      build: () {
+        var query =
+            _client.from('services').select().eq('workspace_id', workspaceId);
+        if (!includeInactive) query = query.eq('active', true);
+        return query.order('name', ascending: true);
+      },
+    );
     return rows.map(_serviceFromRow).toList();
   }
 
@@ -1226,11 +1247,17 @@ class SupabaseMoneyRepository implements MoneyRepository {
   Future<Map<String, InvoiceTransmission>> fetchInvoiceTransmissions(
     String workspaceId,
   ) async {
-    final rows = await _client
-        .from('invoice_transmissions')
-        .select()
-        .eq('workspace_id', workspaceId)
-        .order('sent_at', ascending: false);
+    // #1310 S2 — paged. The fold below keeps only the newest row per
+    // invoice, so a truncated read would silently drop whole invoices'
+    // transmission state rather than merely shortening a list.
+    final rows = await fetchAllPages(
+      table: 'invoice_transmissions',
+      build: () => _client
+          .from('invoice_transmissions')
+          .select()
+          .eq('workspace_id', workspaceId)
+          .order('sent_at', ascending: false),
+    );
     final latest = <String, InvoiceTransmission>{};
     for (final row in rows) {
       // Ordered newest first: the first row per invoice is the current one.
