@@ -62,6 +62,16 @@ abstract class WorkspaceRepository {
 
     /// #987 — create the other side of the pair at the same time.
     bool withTwin = true,
+
+    /// #1303 — the id this creation is known by. Given, the server makes
+    /// ONE workspace however often the same id is sent: a retry after a
+    /// lost response returns the workspace the first attempt made. The
+    /// caller generates it once per onboarding session.
+    String? requestId,
+
+    /// #1303 — the template the new space starts from, applied in the
+    /// same transaction as the creation: both happen, or neither.
+    String? templateId,
   });
 
   /// #987 (RPC `create_workspace_twin`, migration 0185): the missing side

@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+
+import '../../../../core/ids/request_id.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -40,6 +42,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   /// arrives.
   String? _templateId;
   bool _templateResolved = false;
+
+  /// #1303 — the id this creation is known by, generated ONCE for the
+  /// session: a retry after a failure or a lost response sends the same id,
+  /// so the server returns the workspace it already made instead of
+  /// making a second one (and a second dev/prod pair).
+  final String _requestId = newRequestId();
   final _inviteCode = TextEditingController();
   String _countryCode = 'DE';
   bool _joinMode = false;
@@ -81,19 +89,19 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     if (!(_createFormKey.currentState?.validate() ?? false)) return;
     await _run(() async {
       final repo = ref.read(workspaceRepositoryProvider);
-      final id = await repo.createWorkspace(
+      await repo.createWorkspace(
         name: _name.text.trim(),
         countryCode: _countryCode,
         currencyCode: _currency.text.trim().toUpperCase(),
         timezone: _timezone.text.trim(),
         environment: _environment,
         withTwin: _withTwin,
+        requestId: _requestId,
+        // #1120 — a new space starts with a room. #1303 — applied in the
+        // same transaction as the creation; the twin receives it through
+        // the deployment refresh, like every other piece of configuration.
+        templateId: _templateId,
       );
-      // #1120 — a new space starts with a room. Applied to the space just
-      // made; the twin receives it through the deployment refresh, which
-      // is the path every other piece of configuration takes.
-      final template = _templateId;
-      if (template != null) await repo.applyWorkspaceTemplate(id, template);
     });
   }
 
