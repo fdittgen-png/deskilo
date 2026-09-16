@@ -62,6 +62,7 @@ configuration.
 | address, street, city, postal_code | `workspaces.*` | A | no — identity | replace | — | — |
 | default_locale | `workspaces.default_locale` | B | yes | replace | — | `workspace_language_test` |
 | invitation_template, invitation_templates | `workspaces.*` | B | yes | replace | — | — |
+| lexicon | `workspaces.lexicon` jsonb | B | yes | **merge** — keyed on (locale, key) (0223) | #1277 | `26_workspace_lexicon` |
 | whatsapp_group | `workspaces.whatsapp_group` | A | no — identity (with a space's own twins) | replace | #1360 | `18_configuration_merge` |
 | role_permissions | `workspaces.role_permissions` jsonb | B | yes | replace | #1287 | `roles_screen_test` |
 | subscription_vat_rate_id | `workspaces.subscription_vat_rate_id` | B | yes — by natural key | replace | — | — |
@@ -73,7 +74,7 @@ configuration.
 
 ## Deployable entities
 
-The 18 keys `deployable_entities()` returns, which is what a deployment
+The keys `deployable_entities()` returns, which is what a deployment
 actually moves.
 
 | key | kind | tables / workspace keys | class | note |
@@ -96,6 +97,7 @@ actually moves.
 | **closure_days** | configuration | closure_days | B | **a mirror import replaces them**, so generated public holidays (#1274) can be removed by a deployment — ADR 0025 |
 | invitations | configuration | invitation_template, invitation_templates | B | wording only. `whatsapp_group` was here until #1360, and a template that carried the wording carried the group link with it |
 | number_sequences | configuration | number_sequences | B | **format only** — `prefix`, `suffix`, `date_part`, `digits`, `reset`, `gapless`. `period_key` and `next_value` are class E and never exported (#1295) |
+| lexicon | configuration | lexicon | B | allow-listed product terminology only, per locale. `keyed_update`, so a template supplying French words cannot delete the German ones a space already wrote |
 | features | configuration | feature_flags | B | merge, not replace (0176) |
 
 ## Personal preferences — class D, never carried
