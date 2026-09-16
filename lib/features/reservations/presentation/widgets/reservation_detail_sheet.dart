@@ -16,6 +16,7 @@ import '../../../events/presentation/widgets/event_validation_trail.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/domain/half_day_windows.dart';
+import '../../application/change_reservation.dart';
 import '../../domain/booking_error_text.dart';
 import '../../../plan/domain/seat_context.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
@@ -360,7 +361,7 @@ class ReservationDetailSheet extends ConsumerWidget {
   Future<void> _cancel(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context);
     final r = reservation;
-    final choice = await showModalBottomSheet<String>(
+    final choice = await showModalBottomSheet<CancelScope>(
       context: context,
       builder: (sheetContext) => SafeArea(
         child: Column(
@@ -375,7 +376,8 @@ class ReservationDetailSheet extends ConsumerWidget {
                     : (l10n?.calendarCancelOccurrence ??
                         'Cancel this occurrence'),
               ),
-              onTap: () => Navigator.of(sheetContext).pop('single'),
+              onTap: () =>
+                  Navigator.of(sheetContext).pop(CancelScope.thisOne),
             ),
             if (r.seriesId != null)
               ListTile(
@@ -384,7 +386,8 @@ class ReservationDetailSheet extends ConsumerWidget {
                   l10n?.calendarCancelFollowing ??
                       'Cancel this and following',
                 ),
-                onTap: () => Navigator.of(sheetContext).pop('following'),
+                onTap: () => Navigator.of(sheetContext)
+                    .pop(CancelScope.thisAndFollowing),
               ),
             const SizedBox(height: 8),
           ],
@@ -393,13 +396,13 @@ class ReservationDetailSheet extends ConsumerWidget {
     );
     if (choice == null || !context.mounted) return;
     try {
-      if (choice == 'single') {
-        await ref.read(reservationRepositoryProvider).cancel(r.id);
-      } else {
-        await ref
-            .read(reservationRepositoryProvider)
-            .cancelSeries(r.seriesId!, from: r.startsAt);
-      }
+      // #1234 — which occurrences a cancellation touches is a decision,
+      // and it lives in application/ where a test can reach it.
+      await cancelReservation(
+        ref.read(reservationRepositoryProvider),
+        r,
+        scope: choice,
+      );
     } catch (e, st) {
       debugPrint('cancel failed: $e\n$st');
       TraceLogger.instance.error(
@@ -460,17 +463,27 @@ class ReservationDetailSheet extends ConsumerWidget {
       if (!context.mounted) return;
     }
 
-    if (pattern != null) {
-      await _convertToSeries(context, ref, window, pattern);
-      return;
-    }
-
+    final RescheduleOutcome outcome;
     try {
-      await ref.read(reservationRepositoryProvider).updateTimes(
-            r.id,
-            startsAt: window.start,
-            endsAt: window.end,
-          );
+      // #1394 — with a pattern this is `convert_to_series` (0224): ONE
+      // transaction that refuses rather than leaving the member with the
+      // original cancelled and nothing in its place. It used to be a
+      // client-side `cancel` followed by `createSeries`, and when no date
+      // could be booked the second returned NORMALLY with an empty
+      // `booked`, so nothing here ever caught it.
+      outcome = await rescheduleReservation(
+        ref.read(reservationRepositoryProvider),
+        r,
+        start: window.start,
+        end: window.end,
+        pattern: pattern,
+        // The horizon the booking sheet starts from. The member cannot
+        // change it HERE yet — the detail sheet has no repeat-end
+        // affordance, and adding one is its own slice (#1394).
+        until: pattern == null
+            ? null
+            : window.start.add(const Duration(days: 28)),
+      );
     } catch (e, st) {
       debugPrint('reservation edit failed: $e\n$st');
       TraceLogger.instance.error(
@@ -495,10 +508,18 @@ class ReservationDetailSheet extends ConsumerWidget {
     invalidateBookingData(ref);
     if (!context.mounted) return;
     Navigator.of(context).pop();
-    AppSnack.success(
-      context,
-      l10n?.reservationUpdatedSnack ?? 'Reservation updated.',
-    );
+    // A repeat may book some dates and skip others, and the skips are
+    // what the member needs to see — a generic "updated" would hide
+    // them. The plain move has nothing to report beyond success.
+    switch (outcome) {
+      case BecameSeries(:final result):
+        await showSeriesResultDialog(context, result);
+      case Moved():
+        AppSnack.success(
+          context,
+          l10n?.reservationUpdatedSnack ?? 'Reservation updated.',
+        );
+    }
   }
 
   /// The next canonical LATER end for a running booking (#574), or null
@@ -652,11 +673,14 @@ class ReservationDetailSheet extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final r = reservation;
     try {
-      await ref.read(reservationRepositoryProvider).updateTimes(
-            r.id,
-            startsAt: r.startsAt,
-            endsAt: newEnd,
-          );
+      // #1234 — "I am leaving at a different time", never "I arrived at
+      // a different time": the command keeps the start out of the
+      // caller's hands, which is the rule update_reservation enforces.
+      await changeReservationEnd(
+        ref.read(reservationRepositoryProvider),
+        r,
+        end: newEnd,
+      );
     } catch (e, st) {
       TraceLogger.instance.error(
           'reservations',
@@ -718,51 +742,6 @@ class ReservationDetailSheet extends ConsumerWidget {
       ),
     );
   }
-
-  /// Turns this single booking into a series from [window]: cancel the
-  /// one, then book the recurrence on the same seat (28-day horizon, the
-  /// booking-sheet default). Cancel-first so the first instance does not
-  /// collide with the reservation being replaced.
-  Future<void> _convertToSeries(
-    BuildContext context,
-    WidgetRef ref,
-    HalfDayWindow window,
-    SeriesPattern pattern,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    final r = reservation;
-    final repo = ref.read(reservationRepositoryProvider);
-    final seatId = r.seatId;
-    if (seatId == null) return; // whole-office series unsupported (spec)
-    try {
-      await repo.cancel(r.id);
-      final result = await repo.createSeries(
-        workspaceId: r.workspaceId,
-        seatId: seatId,
-        firstStart: window.start,
-        firstEnd: window.end,
-        pattern: pattern,
-        until: window.start.add(const Duration(days: 28)),
-      );
-      invalidateBookingData(ref);
-      if (!context.mounted) return;
-      Navigator.of(context).pop();
-      await showSeriesResultDialog(context, result);
-    } catch (e, st) {
-      debugPrint('convert to series failed: $e\n$st');
-      TraceLogger.instance.error(
-          'reservations',
-          'convert to series failed server=${ActTrace.serverAnswer(e)}',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.reserveBookingFailed ??
-            'Could not reserve — the seat may have just been taken.',
-      );
-    }
-  }
-
   Future<HalfDayWindow?> _pickHalfDayWindow(
     BuildContext context,
     AppLocalizations? l10n,

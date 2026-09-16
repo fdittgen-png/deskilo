@@ -4,24 +4,24 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**485 files, 3224 tests.**
+**487 files, 3244 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
 | a11y | 2 | 6 |
-| database | 19 | 192 |
+| database | 20 | 201 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
 | lint | 64 | 176 |
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
-| unit | 168 | 1323 |
+| unit | 169 | 1334 |
 | widget | 224 | 1494 |
 
 | action | files |
 |---|---:|
-| KEEP | 485 |
+| KEEP | 487 |
 
 ## Rules
 
@@ -72,6 +72,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `supabase/tests/database/24_booking_idempotency.sql` | database | #1241 — a booking can be replayed, and replaying it books once. | 6 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1241, #1240, #1248 | no | KEEP |  |
 | `supabase/tests/database/25_new_member_defaults.sql` | database | #1294 — how a new member starts, and who is NOT a new member. | 12 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1294, #1089, #1279 | no | KEEP |  |
 | `supabase/tests/database/26_workspace_lexicon.sql` | database | #1277 S1 — a workspace may say its own words, and only the words it is allowed to say. | 12 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1277 | no | KEEP |  |
+| `supabase/tests/database/27_convert_to_series.sql` | database | #1394 — converting a booking to a repeat must never leave the member with less than they started with. | 9 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1394 | no | KEEP |  |
 | `supabase/tests/database/30_query_budgets.sql` | database | #1236 — the database half of the performance budgets. | 9 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1236, #1225 | no | KEEP |  |
 | `test/a11y/responsive_matrix_test.dart` | a11y | #1339 — the screens hold at a narrow phone, at twice the text size, and with animation switched off. | 5 | yes | none | an accessibility contract — #1339 | no | KEEP |  |
 | `test/a11y/screen_guidelines_test.dart` | a11y | #1235 — WCAG 2.2 AA as a build result, on every screen we can reach. | 1 | yes | none | an accessibility contract — #1235 | no | KEEP |  |
@@ -375,6 +376,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/reservations/already_checked_in_test.dart` | widget | #1135 — a member already sitting at a seat, who opens that seat's sheet, was one tap from a request that could not succeed. | 5 | yes | fakes | user-visible behaviour — #1135, #184 | no | KEEP |  |
 | `test/features/reservations/application/act_on_space_test.dart` | unit | #1234 — the same decisions as `already_checked_in_test.dart`, without the application. | 10 | yes | fakes | a domain rule — #1234, #1135, #687 | no | KEEP |  |
 | `test/features/reservations/application/book_seat_test.dart` | unit | #1234 — the point of the application layer, demonstrated. | 7 | yes | fakes | a domain rule — #1234, #687, #106 | no | KEEP |  |
+| `test/features/reservations/application/change_reservation_test.dart` | unit | #1234 — cancel and reschedule, as decisions rather than as a bottom sheet. | 11 | yes | fakes | a domain rule — #1234, #1394 | no | KEEP |  |
 | `test/features/reservations/auto_check_in_out_test.dart` | unit | Auto check-in/out (#396, migration 0075): with the workspace's autoCheckInOut flag on, a reservation nobody touched completes itself once its time has passed —… | 5 | yes | fakes | a domain rule — #396 | no | KEEP |  |
 | `test/features/reservations/booking_always_answers_test.dart` | unit | #663 — a booking attempt must END IN AN ANSWER: the reservation or check-in the member asked for, named and dated, or the reason it was refused. Never silence. | 8 | yes | none | a domain rule — #663, #644, #687 | no | KEEP |  |
 | `test/features/reservations/booking_gate_test.dart` | widget | #814 — ONE booking gate on the client: the availability parameters asked BEFORE a window is offered, on every surface — the plan tap, the Day and Week… | 20 | yes | fakes, repository sources | user-visible behaviour — #814, #649, #644 | no | KEEP |  |

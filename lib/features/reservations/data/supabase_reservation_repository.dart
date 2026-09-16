@@ -321,6 +321,36 @@ class SupabaseReservationRepository implements ReservationRepository {
   }
 
   @override
+  Future<SeriesResult> convertToSeries(
+    String reservationId, {
+    required SeriesPattern pattern,
+    required DateTime until,
+  }) async {
+    final result = await _traced(
+      'convert-to-series',
+      {
+        'reservation': reservationId,
+        'pattern': pattern.name,
+        'until': until.toUtc(),
+      },
+      () => _client.rpc<dynamic>('convert_to_series', params: {
+        'p_reservation_id': reservationId,
+        'p_pattern': pattern.name,
+        'p_until': until.toUtc().toIso8601String(),
+      }),
+    ) as Map<String, dynamic>;
+    List<DateTime> dates(String key) => (result[key] as List<dynamic>)
+        .map((v) => DateTime.parse(v as String))
+        .toList();
+    await _bust();
+    return SeriesResult(
+      seriesId: result['series_id'] as String,
+      booked: dates('booked'),
+      skipped: dates('skipped'),
+    );
+  }
+
+  @override
   Future<int> cancelSeries(String seriesId, {DateTime? from}) async {
     final result = await _traced(
       'cancel-series',
