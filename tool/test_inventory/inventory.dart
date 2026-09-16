@@ -274,6 +274,26 @@ const missingCoverage = <(String, String, String)>[
 
 String _cell(String s) => s.replaceAll('|', r'\|').replaceAll('\n', ' ');
 
+/// The totals the tool prints: files and tests, by layer and by action.
+String summary(List<TestFileEntry> entries) {
+  final b = StringBuffer()
+    ..writeln('${entries.length} files, '
+        '${entries.fold<int>(0, (n, e) => n + e.tests)} tests');
+  final layers = <String, (int, int)>{};
+  for (final e in entries) {
+    final (f, t) = layers[e.layer] ?? (0, 0);
+    layers[e.layer] = (f + 1, t + e.tests);
+  }
+  for (final l in (layers.keys.toList()..sort())) {
+    b.writeln('  $l: ${layers[l]!.$1} files, ${layers[l]!.$2} tests');
+  }
+  for (final a in actions) {
+    final n = entries.where((e) => e.action == a).length;
+    if (n > 0) b.writeln('  $a: $n');
+  }
+  return b.toString();
+}
+
 /// The inventory as markdown.
 String render(List<TestFileEntry> entries) {
   final b = StringBuffer()
@@ -286,29 +306,12 @@ String render(List<TestFileEntry> entries) {
         'what it reads — so the rules below are the review surface, not the rows.')
     ..writeln();
 
-  final files = entries.length;
-  final tests = entries.fold<int>(0, (n, e) => n + e.tests);
-  b
-    ..writeln('**$files files, $tests tests.**')
-    ..writeln()
-    ..writeln('| layer | files | tests |')
-    ..writeln('|---|---:|---:|');
-  final layers = <String, (int, int)>{};
-  for (final e in entries) {
-    final (f, t) = layers[e.layer] ?? (0, 0);
-    layers[e.layer] = (f + 1, t + e.tests);
-  }
-  for (final l in (layers.keys.toList()..sort())) {
-    b.writeln('| $l | ${layers[l]!.$1} | ${layers[l]!.$2} |');
-  }
-  b
-    ..writeln()
-    ..writeln('| action | files |')
-    ..writeln('|---|---:|');
-  for (final a in actions) {
-    final n = entries.where((e) => e.action == a).length;
-    if (n > 0) b.writeln('| $a | $n |');
-  }
+  // Totals are printed by the tool, never committed: a count here changed
+  // in every pull request that added a test, so any two such pull requests
+  // conflicted on this one line and each merge forced a rebase of the rest.
+  b.writeln('Totals by layer and by action: run the tool — they are printed, '
+      'not committed, so two pull requests that each add a test do not '
+      'conflict here.');
 
   b
     ..writeln()

@@ -15,6 +15,8 @@ void main() {
   final file = File(inventoryPath)..parent.createSync(recursive: true);
   file.writeAsStringSync(render(entries));
   final flagged = entries.where((e) => e.action != 'KEEP').length;
-  stdout.writeln(
-      'wrote $inventoryPath: ${entries.length} files, $flagged flagged for refactor');
+  stdout
+    ..writeln(
+        'wrote $inventoryPath: ${entries.length} files, $flagged flagged for refactor')
+    ..write(summary(entries));
 }

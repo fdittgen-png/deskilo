@@ -4,24 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**499 files, 3318 tests.**
-
-| layer | files | tests |
-|---|---:|---:|
-| a11y | 2 | 6 |
-| database | 21 | 208 |
-| i18n | 3 | 5 |
-| journey | 1 | 3 |
-| lint | 69 | 196 |
-| perf | 1 | 4 |
-| property | 1 | 10 |
-| tool | 2 | 11 |
-| unit | 172 | 1360 |
-| widget | 227 | 1515 |
-
-| action | files |
-|---|---:|
-| KEEP | 499 |
+Totals by layer and by action: run the tool — they are printed, not committed, so two pull requests that each add a test do not conflict here.
 
 ## Rules
 
