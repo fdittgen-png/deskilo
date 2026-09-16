@@ -37,3 +37,9 @@ bool isDatabaseError(Object error) => error is PostgrestException;
 /// True for an authentication failure: wrong credentials, an expired
 /// session, a provider that declined.
 bool isAuthError(Object error) => error is AuthException;
+
+/// #1305 — the database's own error code (`42501` insufficient privilege,
+/// `23505` unique violation…), or null when the failure did not come from
+/// the database.
+String? serverErrorCode(Object error) =>
+    error is PostgrestException ? error.code : null;

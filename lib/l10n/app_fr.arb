@@ -5514,6 +5514,10 @@
   "memberSimultaneousLimitExplainer": "Combien de réservations ce membre peut détenir sur une même période. Non défini : le réglage de l'espace s'applique.",
   "memberSimultaneousLimitDefault": "Réglage de l'espace",
   "memberSimultaneousLimitChip": "{n} à la fois",
+  "refusalPermission": "Vous n'avez pas l'autorisation pour cela. Un propriétaire de l'espace peut l'accorder dans Gestion des rôles.",
+  "refusalSession": "Votre session a expiré. Reconnectez-vous, puis réessayez.",
+  "refusalAlreadyDecided": "Quelqu'un a déjà décidé. La liste affiche le résultat.",
+  "refusalChangedMeanwhile": "Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.",
   "reportGuideTitle": "Champs et balisage",
   "@reportGuideTitle": {
     "description": "#966 report guide: reportGuideTitle"

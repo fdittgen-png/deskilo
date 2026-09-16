@@ -1,0 +1,7 @@
+{
+  "@@locale": "it",
+  "refusalPermission": "Non hai il permesso per farlo. Un proprietario dello spazio può concederlo in Gestione dei ruoli.",
+  "refusalSession": "La tua sessione è scaduta. Accedi di nuovo, poi riprova.",
+  "refusalAlreadyDecided": "Qualcuno ha già deciso. L'elenco mostra l'esito.",
+  "refusalChangedMeanwhile": "Nel frattempo è cambiato. Riaprilo per vedere a che punto è."
+}

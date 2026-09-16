@@ -14939,6 +14939,30 @@ abstract class AppLocalizations {
   /// **'{n} at once'**
   String memberSimultaneousLimitChip(int n);
 
+  /// #1305 Shown when the server refuses an action for lack of a permission
+  ///
+  /// In en, this message translates to:
+  /// **'You do not have the permission for this. An owner of the space can grant it in Role management.'**
+  String get refusalPermission;
+
+  /// #1305 Shown when the session expired during an action
+  ///
+  /// In en, this message translates to:
+  /// **'Your session has ended. Sign in again, then retry.'**
+  String get refusalSession;
+
+  /// #1305 Shown when a validation was already decided by someone else
+  ///
+  /// In en, this message translates to:
+  /// **'Someone has already decided this. The list shows the outcome.'**
+  String get refusalAlreadyDecided;
+
+  /// #1305 Shown when an invoice changed state before the action reached the server
+  ///
+  /// In en, this message translates to:
+  /// **'This changed in the meantime. Reopen it to see where it stands.'**
+  String get refusalChangedMeanwhile;
+
   /// #966 report guide: reportGuideTitle
   ///
   /// In en, this message translates to:

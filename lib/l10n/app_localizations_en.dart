@@ -8510,6 +8510,22 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get refusalPermission =>
+      'You do not have the permission for this. An owner of the space can grant it in Role management.';
+
+  @override
+  String get refusalSession =>
+      'Your session has ended. Sign in again, then retry.';
+
+  @override
+  String get refusalAlreadyDecided =>
+      'Someone has already decided this. The list shows the outcome.';
+
+  @override
+  String get refusalChangedMeanwhile =>
+      'This changed in the meantime. Reopen it to see where it stands.';
+
+  @override
   String get reportGuideTitle => 'Placeholders and markup';
 
   @override

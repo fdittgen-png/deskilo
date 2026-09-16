@@ -5514,6 +5514,10 @@
   "memberSimultaneousLimitExplainer": "Quante prenotazioni questo membro può avere nello stesso periodo. Non impostato: vale il valore predefinito dello spazio.",
   "memberSimultaneousLimitDefault": "Valore dello spazio",
   "memberSimultaneousLimitChip": "{n} alla volta",
+  "refusalPermission": "Non hai il permesso per farlo. Un proprietario dello spazio può concederlo in Gestione dei ruoli.",
+  "refusalSession": "La tua sessione è scaduta. Accedi di nuovo, poi riprova.",
+  "refusalAlreadyDecided": "Qualcuno ha già deciso. L'elenco mostra l'esito.",
+  "refusalChangedMeanwhile": "Nel frattempo è cambiato. Riaprilo per vedere a che punto è.",
   "reportGuideTitle": "Campi e marcatura",
   "@reportGuideTitle": {
     "description": "#966 report guide: reportGuideTitle"

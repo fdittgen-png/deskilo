@@ -5514,6 +5514,10 @@
   "memberSimultaneousLimitExplainer": "Wie viele Buchungen dieses Mitglied im selben Zeitraum halten darf. Ohne Angabe gilt die Vorgabe des Arbeitsraums.",
   "memberSimultaneousLimitDefault": "Vorgabe des Arbeitsraums",
   "memberSimultaneousLimitChip": "{n} gleichzeitig",
+  "refusalPermission": "Dafür haben Sie keine Berechtigung. Eine Inhaberin oder ein Inhaber des Space kann sie in der Rollenverwaltung erteilen.",
+  "refusalSession": "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an und versuchen Sie es dann noch einmal.",
+  "refusalAlreadyDecided": "Jemand hat bereits darüber entschieden. Die Liste zeigt das Ergebnis.",
+  "refusalChangedMeanwhile": "Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.",
   "reportGuideTitle": "Platzhalter und Markup",
   "@reportGuideTitle": {
     "description": "#966 report guide: reportGuideTitle"

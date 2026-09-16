@@ -8590,6 +8590,22 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get refusalPermission =>
+      'Vous n\'avez pas l\'autorisation pour cela. Un propriétaire de l\'espace peut l\'accorder dans Gestion des rôles.';
+
+  @override
+  String get refusalSession =>
+      'Votre session a expiré. Reconnectez-vous, puis réessayez.';
+
+  @override
+  String get refusalAlreadyDecided =>
+      'Quelqu\'un a déjà décidé. La liste affiche le résultat.';
+
+  @override
+  String get refusalChangedMeanwhile =>
+      'Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.';
+
+  @override
   String get reportGuideTitle => 'Champs et balisage';
 
   @override

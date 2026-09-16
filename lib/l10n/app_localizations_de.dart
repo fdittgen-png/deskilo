@@ -8579,6 +8579,22 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get refusalPermission =>
+      'Dafür haben Sie keine Berechtigung. Eine Inhaberin oder ein Inhaber des Space kann sie in der Rollenverwaltung erteilen.';
+
+  @override
+  String get refusalSession =>
+      'Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an und versuchen Sie es dann noch einmal.';
+
+  @override
+  String get refusalAlreadyDecided =>
+      'Jemand hat bereits darüber entschieden. Die Liste zeigt das Ergebnis.';
+
+  @override
+  String get refusalChangedMeanwhile =>
+      'Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.';
+
+  @override
   String get reportGuideTitle => 'Platzhalter und Markup';
 
   @override
