@@ -122,6 +122,27 @@ abstract class ReservationRepository {
     required DateTime until,
   });
 
+  /// Turns MY single booking into a repeat, in ONE transaction
+  /// (`convert_to_series`, 0224 — #1394).
+  ///
+  /// The client used to do this as `cancel` then `createSeries`. Each is
+  /// transactional alone; the composition was not. And the failure is
+  /// the ordinary path rather than a race: `create_series` reports a
+  /// date it cannot book as SKIPPED rather than raising, so when no date
+  /// is available it returns normally with an empty `booked` — leaving
+  /// the member with the original already cancelled and nothing in its
+  /// place, and no error to show them.
+  ///
+  /// So this throws when the repeat books nothing, and the cancel rolls
+  /// back with it. A partial result still comes back whole: skipping
+  /// some dates is a real outcome the caller reports, losing the
+  /// original is not.
+  Future<SeriesResult> convertToSeries(
+    String reservationId, {
+    required SeriesPattern pattern,
+    required DateTime until,
+  });
+
   /// Cancels a whole series, or only instances starting at/after [from].
   Future<int> cancelSeries(String seriesId, {DateTime? from});
 }

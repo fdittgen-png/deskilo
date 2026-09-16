@@ -614,6 +614,49 @@ class FakeReservationRepository implements ReservationRepository {
   }
 
   @override
+  Future<SeriesResult> convertToSeries(
+    String reservationId, {
+    required SeriesPattern pattern,
+    required DateTime until,
+  }) async {
+    // Mirrors convert_to_series (0224): one transaction, and a
+    // conversion that books nothing is not a conversion.
+    final i = reservations.indexWhere((r) => r.id == reservationId);
+    if (i < 0) throw StateError('not your reservation');
+    final original = reservations[i];
+    if (original.status != ReservationStatus.reserved) {
+      throw StateError('only an upcoming reservation can become a repeat');
+    }
+    if (original.seatId == null) {
+      throw StateError('only a seat booking can become a repeat');
+    }
+    if (original.seriesId != null) {
+      throw StateError('this booking is already part of a repeat');
+    }
+
+    // The cancel happens first here too, so the series sees the seat and
+    // the member as free — exactly as the server's transaction does.
+    reservations[i] = original.copyWith(status: ReservationStatus.cancelled);
+    final result = await createSeries(
+      workspaceId: original.workspaceId,
+      seatId: original.seatId,
+      firstStart: original.startsAt,
+      firstEnd: original.endsAt,
+      pattern: pattern,
+      until: until,
+    );
+    if (result.booked.isEmpty) {
+      // The whole point: roll the cancel back with the refusal, so the
+      // member keeps what they had.
+      reservations.removeWhere((r) => r.seriesId == result.seriesId);
+      reservations[i] = original;
+      throw StateError(
+          'the repeat could not book any date — your booking is unchanged');
+    }
+    return result;
+  }
+
+  @override
   Future<int> cancelSeries(String seriesId, {DateTime? from}) async {
     var count = 0;
     for (var i = 0; i < reservations.length; i++) {
