@@ -54,6 +54,8 @@ import '../../../money/presentation/widgets/billing_rules_dialog.dart';
 import '../../../money/presentation/widgets/dunning_rules_dialog.dart';
 import '../../../money/presentation/widgets/invoice_template_sheet.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/new_member_defaults_tiles.dart';
+import '../../domain/new_member_defaults.dart';
 import '../excel_export.dart';
 import '../country_names.dart';
 import '../feature_names.dart';
@@ -92,6 +94,8 @@ class _WorkspaceSettingsScreenState
   final _invitationTemplate = TextEditingController();
   // 0040 — desk fill opacity percentage (20..100); rides the Save button.
   int _deskOpacity = 100;
+  // #1294 — what a newly joining member starts with; rides the Save too.
+  NewMemberDefaults _newMemberDefaults = const NewMemberDefaults();
   String? _countryCode;
   // #486 — the workspace's own language ('' = sender's app language)
   // and the per-language invitation drafts the chips page through.
@@ -121,6 +125,7 @@ class _WorkspaceSettingsScreenState
   /// Seed the form ONCE from the loaded workspace; later rebuilds must
   /// not clobber the owner's in-progress edits.
   bool _seeded = false;
+  bool _seededDefaults = false;
 
   @override
   void dispose() {
@@ -192,6 +197,13 @@ class _WorkspaceSettingsScreenState
           );
           // 0040 — desk transparency rides the same Save.
           await repository.setDeskOpacity(workspaceId, _deskOpacity);
+          // #1294 — how a new member starts. Keyed, so every other
+          // billing rule survives (#1089).
+          await repository.setNewMemberDefaults(
+            workspaceId,
+            _newMemberDefaults,
+          );
+          ref.invalidate(newMemberDefaultsProvider);
           // Every money surface watches the workspace chain — invalidating it
           // re-renders all amounts in the new currency immediately.
           ref.invalidate(myWorkspacesProvider);
@@ -966,6 +978,13 @@ class _WorkspaceSettingsScreenState
       _invitationTemplate.text = _templateDrafts[_templateLang] ?? '';
       _deskOpacity = workspace.deskOpacity;
     }
+    // #1294 — read separately: it lives in billing_rules, not on the
+    // workspace row the screen already holds. Seeded once, like the rest.
+    final loadedDefaults = ref.watch(newMemberDefaultsProvider).value;
+    if (loadedDefaults != null && !_seededDefaults) {
+      _seededDefaults = true;
+      _newMemberDefaults = loadedDefaults;
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n?.workspaceSettingsTitle ?? 'Workspace'),
@@ -1305,6 +1324,17 @@ class _WorkspaceSettingsScreenState
                     l10n?.workspaceDeskOpacityValue(_deskOpacity) ??
                         'Opacity: $_deskOpacity%',
                     style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 24),
+                  NewMemberDefaultsTiles(
+                    defaults: _newMemberDefaults,
+                    enabled: !_busy,
+                    onSubscriptionChanged: (pct) => setState(() =>
+                        _newMemberDefaults = _newMemberDefaults
+                            .copyWith(subscriptionPct: pct)),
+                    onOveragePolicyChanged: (policy) => setState(() =>
+                        _newMemberDefaults = _newMemberDefaults
+                            .copyWith(overagePolicy: policy)),
                   ),
                   const SizedBox(height: 24),
                   FilledButton(

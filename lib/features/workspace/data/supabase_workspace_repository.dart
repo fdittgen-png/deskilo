@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/time/work_hours.dart';
 import '../domain/booking_granularity.dart';
 import '../domain/booking_policies.dart';
+import '../domain/new_member_defaults.dart';
 import '../domain/closure_day.dart';
 import '../domain/public_holidays.dart';
 import '../../money/domain/payment_terms.dart';
@@ -858,6 +859,23 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
       _mergeBookingRule(workspaceId, 'open_weekdays', weekdays);
 
   @override
+  Future<String?> fetchDefaultPeriod(String workspaceId) async {
+    final row = await _client
+        .from('workspaces')
+        .select('booking_rules')
+        .eq('id', workspaceId)
+        .single();
+    final rules = row['booking_rules'] as Map<String, dynamic>? ?? const {};
+    final wire = rules['default_period'];
+    return wire is String && wire.isNotEmpty ? wire : null;
+  }
+
+  @override
+  Future<void> setDefaultPeriod(String workspaceId, String? wire) =>
+      // Merge-preserving, like every other booking rule (#1089).
+      _mergeBookingRule(workspaceId, 'default_period', wire ?? '');
+
+  @override
   Future<BookingGranularity> fetchBookingGranularity(
     String workspaceId,
   ) async {
@@ -902,6 +920,31 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         .single();
     return BookingPolicies.fromRules(
         row['booking_rules'] as Map<String, dynamic>?);
+  }
+
+  @override
+  Future<NewMemberDefaults> fetchNewMemberDefaults(String workspaceId) async {
+    final row = await _client
+        .from('workspaces')
+        .select('billing_rules')
+        .eq('id', workspaceId)
+        .single();
+    return NewMemberDefaults.fromRules(
+        row['billing_rules'] as Map<String, dynamic>?);
+  }
+
+  @override
+  Future<void> setNewMemberDefaults(
+    String workspaceId,
+    NewMemberDefaults defaults,
+  ) async {
+    // Keyed, so the merge happens in the database and a sibling billing
+    // rule survives (#1089, and 0221's `set_billing_rule`).
+    await _client.rpc<dynamic>('set_billing_rule', params: {
+      'p_workspace_id': workspaceId,
+      'p_key': newMemberDefaultsKey,
+      'p_value': defaults.toValue(),
+    });
   }
 
   /// THE merge-preserving policy write (#600/#624): one booking_rules

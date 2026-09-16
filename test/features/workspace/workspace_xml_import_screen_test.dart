@@ -197,7 +197,11 @@ Future<void> pumpWorkspaceSettings(
 }) async {
   // The settings form outgrew the 800×600 test viewport long ago (#155);
   // the import tile sits below the export tile, keep the form built.
-  tester.view.physicalSize = const Size(800, 2600);
+  // 2600→3200 (2026-09-16): #1294 put the new-member defaults above the
+  // import tile, and this list builds lazily — a tile outside the build
+  // range is not "invisible", it does not exist, and the finder matches
+  // nothing at all.
+  tester.view.physicalSize = const Size(800, 3200);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);

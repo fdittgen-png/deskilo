@@ -4647,6 +4647,51 @@
   "@navigationMenu": {
     "description": "#969 navigation style: navigationMenu"
   },
+  "newMemberDefaultsTitle": "Nuovi membri",
+  "@newMemberDefaultsTitle": {
+    "description": "#1294 the new-member defaults section title"
+  },
+  "newMemberDefaultsConfigured": "Con cosa inizia chi si unisce.",
+  "@newMemberDefaultsConfigured": {
+    "description": "#1294 shown when the workspace has configured its new-member defaults"
+  },
+  "newMemberDefaultsUnset": "Niente scelto: i nuovi membri iniziano al 100 % e le prenotazioni si bloccano una volta esaurito il monte ore.",
+  "@newMemberDefaultsUnset": {
+    "description": "#1294 shown when nothing is configured, naming the product defaults"
+  },
+  "newMemberSubscription": "Abbonamento",
+  "@newMemberSubscription": {
+    "description": "#1294 the subscription percentage label"
+  },
+  "newMemberSubscriptionValue": "{percent} %",
+  "@newMemberSubscriptionValue": {
+    "description": "#1294 a subscription percentage",
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "newMemberSubscriptionLess": "Abbonamento più piccolo",
+  "@newMemberSubscriptionLess": {
+    "description": "#1294 tooltip: decrease the default subscription"
+  },
+  "newMemberSubscriptionMore": "Abbonamento più grande",
+  "@newMemberSubscriptionMore": {
+    "description": "#1294 tooltip: increase the default subscription"
+  },
+  "newMemberOverageBlocked": "Bloccato una volta esaurito",
+  "@newMemberOverageBlocked": {
+    "description": "#1294 overage policy: blocked once the entitlement is used"
+  },
+  "newMemberOveragePayg": "Paga a consumo",
+  "@newMemberOveragePayg": {
+    "description": "#1294 overage policy: pay as you go"
+  },
+  "newMemberOveragePackage": "Deve acquistare un pacchetto",
+  "@newMemberOveragePackage": {
+    "description": "#1294 overage policy: must buy a package"
+  },
   "featureNumberSequences": "Serie di numerazione",
   "@featureNumberSequences": {
     "description": "#925 number sequences: featureNumberSequences"

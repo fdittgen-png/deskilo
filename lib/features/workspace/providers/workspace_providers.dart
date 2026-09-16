@@ -18,6 +18,7 @@ import '../domain/workspace.dart';
 import '../domain/workspace_feature.dart';
 import '../domain/workspace_permission.dart';
 import '../domain/workspace_repository.dart';
+import '../domain/new_member_defaults.dart';
 import '../domain/workspace_document.dart';
 import '../../profile/domain/personal_info.dart';
 import '../domain/workspace_overview.dart';
@@ -187,6 +188,18 @@ Future<BookingPolicies> bookingPolicies(Ref ref) async {
   return ref
       .watch(workspaceRepositoryProvider)
       .fetchBookingPolicies(workspace.id);
+}
+
+/// #1294 — how a newly joining member starts, as the active workspace
+/// says. The product defaults (100 %, blocked) while nothing is
+/// configured, which is what the server applies too.
+@riverpod
+Future<NewMemberDefaults> newMemberDefaults(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const NewMemberDefaults();
+  return ref
+      .watch(workspaceRepositoryProvider)
+      .fetchNewMemberDefaults(workspace.id);
 }
 
 /// Working day of the active workspace (#446); [WorkHours.defaults]

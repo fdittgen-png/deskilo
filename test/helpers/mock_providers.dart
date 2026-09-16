@@ -23,6 +23,7 @@ import 'package:deskilo/features/workspace/domain/conversation.dart';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
+import 'package:deskilo/features/workspace/domain/new_member_defaults.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
 import 'package:deskilo/features/workspace/domain/public_holidays.dart';
 import 'package:deskilo/core/badge/app_badge.dart';
@@ -1177,6 +1178,33 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   /// The #600 policy switches per workspace; all OFF when unseeded.
   final Map<String, BookingPolicies> bookingPolicies = {};
+
+  /// #1294 — what each workspace says a new member starts with.
+  final Map<String, NewMemberDefaults> newMemberDefaults = {};
+
+  /// #1294 — the workspace's fallback default period, by workspace.
+  final Map<String, String?> workspaceDefaultPeriods = {};
+
+  @override
+  Future<String?> fetchDefaultPeriod(String workspaceId) async =>
+      workspaceDefaultPeriods[workspaceId];
+
+  @override
+  Future<void> setDefaultPeriod(String workspaceId, String? wire) async {
+    workspaceDefaultPeriods[workspaceId] = (wire ?? '').isEmpty ? null : wire;
+  }
+
+  @override
+  Future<NewMemberDefaults> fetchNewMemberDefaults(String workspaceId) async =>
+      newMemberDefaults[workspaceId] ?? const NewMemberDefaults();
+
+  @override
+  Future<void> setNewMemberDefaults(
+    String workspaceId,
+    NewMemberDefaults defaults,
+  ) async {
+    newMemberDefaults[workspaceId] = defaults;
+  }
 
   @override
   Future<BookingPolicies> fetchBookingPolicies(String workspaceId) async =>
