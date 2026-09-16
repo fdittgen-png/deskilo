@@ -13,9 +13,11 @@ import '../../../plan/domain/seat.dart';
 import '../../../plan/presentation/seat_occupancy.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/act_on_space.dart';
 import '../../domain/booking_error_text.dart';
 import '../../domain/booking_gate.dart';
 import '../../domain/reservation.dart';
+import '../../domain/space_act.dart';
 import '../booking_gate_scope.dart';
 import '../../providers/reservation_providers.dart';
 import 'message_reserver.dart';
@@ -76,70 +78,6 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
   List<Reservation> _dayReservations(DateTime now) =>
       ref.watch(reservationsForDayProvider(dayKeyOf(now))).value ?? const [];
 
-  /// MY reservation of this seat the check-in rules accept (same-day
-  /// rule, `checkInWindowOpen` with granularity — #600).
-  Reservation? _myCheckInTarget(
-    List<Reservation> reservations,
-    DateTime now,
-    String? myMemberId,
-  ) => reservations
-      .where(
-        (r) =>
-            r.memberId == myMemberId &&
-            r.seatId == widget.seat.id &&
-            r.checkInWindowOpen(now, granularity: _granularity),
-      )
-      .firstOrNull;
-
-  /// #1135 — MY live check-in on this seat, whatever the window rule
-  /// says about it.
-  ///
-  /// [_myCheckInTarget] cannot answer this: it gates on
-  /// `checkInWindowOpen`, whose FIRST clause is
-  /// `status != ReservationStatus.reserved → false`. A reservation the
-  /// member is already checked into is therefore invisible to it, it
-  /// returns null, and `_confirm` reads that null as "nothing of mine
-  /// here — walk up and create one". The server then refuses, correctly,
-  /// with "you already have a reservation in that period", and the
-  /// member is told nothing they can act on.
-  ///
-  /// That is the whole of the 11:37 sequence in the field trace: five
-  /// identical creates in two and a half seconds, every one of them
-  /// impossible, on a seat the member was already sitting at.
-  Reservation? _myLiveCheckInHere(
-    List<Reservation> reservations,
-    DateTime now,
-    String? myMemberId,
-  ) => _myActiveCheckIn(reservations, now, myMemberId);
-
-  /// MY live check-in ON THIS SEAT (#1083). The seat predicate is the
-  /// whole point: with `simultaneous_reservations > 1` a member can hold
-  /// two seats at once, and scanning one of them must release THAT one.
-  /// Without it the branch took `firstOrNull` of an unordered list and
-  /// checked the member out of whichever seat came first.
-  ///
-  /// Ordered by check-in time so that even a seat holding two live rows
-  /// — which the server should never allow — resolves the same way twice
-  /// rather than by list order.
-  Reservation? _myActiveCheckIn(
-    List<Reservation> reservations,
-    DateTime now,
-    String? myMemberId,
-  ) {
-    final mine = reservations
-        .where(
-          (r) =>
-              r.memberId == myMemberId &&
-              r.seatId == widget.seat.id &&
-              r.status == ReservationStatus.checkedIn &&
-              r.endsAt.isAfter(now),
-        )
-        .toList()
-      ..sort((a, b) => (a.checkedInAt ?? a.startsAt)
-          .compareTo(b.checkedInAt ?? b.startsAt));
-    return mine.isEmpty ? null : mine.last;
-  }
-
   /// ANOTHER member's reservation holding this seat over the chosen
   /// window — the seat's own booking or a whole desk/office/level one
   /// covering it (space overlays' semantics via [occupantOnSeat]).
@@ -177,81 +115,46 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
     final now = ref.read(clockProvider).now();
     final reservations = _dayReservations(now);
     setState(() => _busy = true);
+    // #791 — the scan path resolves its target on the DEVICE too, from
+    // the same day slice and the same window rule as the map. Recording
+    // which branch it took is what makes "the QR worked and the map did
+    // not" a comparison instead of a mystery.
+    //
+    // It is traced HERE, before the command, because the trace belongs to
+    // this surface: the same decision reached from the kiosk is a
+    // different act with different fields. `application/` decides which
+    // write it is; the sheet says who asked and how.
+    if (choice.action == SpaceAction.checkIn) {
+      final target = myCheckInTarget(
+        reservations,
+        now,
+        me?.id,
+        seatId: widget.seat.id,
+        granularity: _granularity,
+      );
+      ActTrace.booking.step('scan-check-in', {
+        'seat': widget.seat.id,
+        'target': target?.id,
+        'route': target != null ? 'existing-reservation' : 'walk-up',
+        'member': me?.id,
+        'dayReservations': reservations.length,
+        'granularity': _granularity.name,
+      });
+    }
+    final SpaceActOutcome outcome;
     try {
-      switch (choice.action) {
-        case SpaceAction.checkIn:
-          // Own reservation the rules accept → continue into THAT
-          // (check_in_reservation); free → the walk-up create books
-          // implicitly (#573 snap + walk-up-today rule server-side).
-          final mine = _myCheckInTarget(reservations, now, me?.id);
-          // #791 — the scan path resolves its target on the DEVICE too,
-          // from the same day slice and the same window rule as the map.
-          // Recording which branch it took is what makes "the QR worked
-          // and the map did not" a comparison instead of a mystery.
-          ActTrace.booking.step('scan-check-in', {
-            'seat': widget.seat.id,
-            'target': mine?.id,
-            'route': mine != null ? 'existing-reservation' : 'walk-up',
-            'member': me?.id,
-            'dayReservations': reservations.length,
-            'granularity': _granularity.name,
-          });
-          if (mine != null) {
-            await ref.read(reservationRepositoryProvider).checkIn(mine.id);
-          } else if (_myLiveCheckInHere(reservations, now, me?.id)
-                  ?.coversRange(choice.start, choice.end) ??
-              false) {
-            // #1135 — the member is already checked in on this seat, so
-            // `_myCheckInTarget` found nothing (it only sees `reserved`).
-            // Falling through to the walk-up create here is what produced
-            // "you already have a reservation in that period" five times
-            // in a row. The sheet normally prevents this; this is the
-            // half that does not depend on the sheet being right.
-            setState(() => _busy = false);
-            AppSnack.info(
-              context,
-              l10n?.spaceAlreadyCheckedInHere ??
-                  'You are already checked in here. Choose Check out to '
-                      'leave the seat.',
-              replace: true,
-            );
-            return;
-          } else {
-            await ref
-                .read(reservationRepositoryProvider)
-                .create(
-                  workspaceId: workspace.id,
-                  seatId: widget.seat.id,
-                  startsAt: choice.start,
-                  endsAt: choice.end,
-                  checkIn: true,
-                );
-          }
-        case SpaceAction.reserve:
-          await ref
-              .read(reservationRepositoryProvider)
-              .create(
-                workspaceId: workspace.id,
-                seatId: widget.seat.id,
-                startsAt: choice.start,
-                endsAt: choice.end,
-                checkIn: choice.checkInNow,
-              );
-        case SpaceAction.checkOut:
-          final active = _myActiveCheckIn(reservations, now, me?.id);
-          if (active == null) {
-            setState(() => _busy = false);
-            AppSnack.error(
-              context,
-              l10n?.kioskNotCheckedIn ??
-                  'No active check-in found — the plan may have just '
-                      'updated.',
-              replace: true,
-            );
-            return;
-          }
-          await ref.read(reservationRepositoryProvider).checkOut(active.id);
-      }
+      outcome = await actOnSpace(
+        ref.read(reservationRepositoryProvider),
+        (
+          workspaceId: workspace.id,
+          seatId: widget.seat.id,
+          choice: choice,
+          dayReservations: reservations,
+          myMemberId: me?.id,
+          now: now,
+          granularity: _granularity,
+        ),
+      );
     } catch (e, st) {
       TraceLogger.instance.error(
         'reservations',
@@ -277,6 +180,39 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
       return;
     }
     if (!mounted) return;
+    // The two refusals are OUTCOMES, not exceptions: nothing went wrong,
+    // the member asked for something they already have or no longer
+    // have. They keep the sheet open, because the move left is on it.
+    switch (outcome) {
+      case AlreadyCheckedInHere():
+        // #1135 — the sheet normally prevents this by opening on Check
+        // out; this is the half that does not depend on the sheet being
+        // right. The request never reached the server.
+        setState(() => _busy = false);
+        AppSnack.info(
+          context,
+          l10n?.spaceAlreadyCheckedInHere ??
+              'You are already checked in here. Choose Check out to '
+                  'leave the seat.',
+          replace: true,
+        );
+        return;
+      case NoActiveCheckIn():
+        setState(() => _busy = false);
+        AppSnack.error(
+          context,
+          l10n?.kioskNotCheckedIn ??
+              'No active check-in found — the plan may have just '
+                  'updated.',
+          replace: true,
+        );
+        return;
+      case CheckedIntoExisting():
+      case WalkedUp():
+      case Reserved():
+      case CheckedOut():
+        break;
+    }
     Navigator.of(context).pop();
     AppSnack.success(
       context,
@@ -294,7 +230,8 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
     final reservations = _dayReservations(now);
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final mine = choice.action == SpaceAction.checkIn
-        ? _myCheckInTarget(reservations, now, me?.id)
+        ? myCheckInTarget(reservations, now, me?.id,
+            seatId: widget.seat.id, granularity: _granularity)
         : null;
     final blocking = _blocking(reservations, choice, me?.id);
     final name = blocking == null ? '' : (names[blocking.memberId] ?? '');
@@ -364,7 +301,8 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
     if (choice.action == SpaceAction.checkOut) return null;
     final now = ref.read(clockProvider).now();
     final me = ref.read(myMemberProvider).value;
-    final live = _myLiveCheckInHere(_dayReservations(now), now, me?.id);
+    final live = myActiveCheckIn(_dayReservations(now), now, me?.id,
+        seatId: widget.seat.id);
     // Only a choice that OVERLAPS the live check-in is impossible. A
     // member sitting here this morning may reserve this seat for the
     // afternoon; enforce_one_place counts overlaps and nothing else, and
@@ -405,10 +343,11 @@ class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
             // Opening on "Check in" put the member one tap from a
             // request that could not succeed.
             initialAction:
-                _myLiveCheckInHere(
+                myActiveCheckIn(
                       _dayReservations(now),
                       now,
                       ref.read(myMemberProvider).value?.id,
+                      seatId: widget.seat.id,
                     ) !=
                     null
                 ? SpaceAction.checkOut

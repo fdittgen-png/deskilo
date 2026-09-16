@@ -14,7 +14,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../reservations/domain/booking_error_text.dart';
 import '../../../reservations/presentation/booking_gate_scope.dart';
-import '../../../reservations/presentation/widgets/space_act_form.dart';
+import '../../../reservations/domain/space_act.dart';
 import '../../../workspace/domain/workspace_availability.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';

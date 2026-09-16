@@ -11,6 +11,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/domain/booking_gate.dart';
+import '../../../reservations/domain/space_act.dart';
 import '../../../reservations/presentation/widgets/space_act_form.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../screens/kiosk_screen.dart' show KioskAction;
