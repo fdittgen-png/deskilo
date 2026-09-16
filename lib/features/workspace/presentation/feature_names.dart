@@ -211,4 +211,7 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureMemberDataExportTitle ?? 'Export & erasure',
       WorkspaceFeature.badgeSignIn =>
         l10n?.featureBadgeSignInTitle ?? 'Sign in with a badge',
+      WorkspaceFeature.singleRoomLevelNames =>
+        l10n?.featureSingleRoomLevelNamesTitle ??
+            'Name a single-room level by the level',
     };

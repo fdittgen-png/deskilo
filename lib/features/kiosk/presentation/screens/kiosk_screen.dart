@@ -484,6 +484,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                   builder: (context, seatPhotos) => PlanCanvas(
               blurLabels: ref.watch(demoModeControllerProvider).value ?? false,
                     seatPhotos: seatPhotos,
+                    singleRoomByLevel: namesSingleRoomsByLevel(ref),
                     paintKey: const ValueKey('kiosk-plan-canvas'),
                     plan: plan,
                     // Live "now" occupancy — a wall display's one job.

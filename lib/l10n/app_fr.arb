@@ -5960,6 +5960,14 @@
   "servicesPrice": "Prix",
   "servicesInactive": "Inactif",
   "servicesActive": "Actif",
+  "featureSingleRoomLevelNamesTitle": "Nommer par l’étage un étage à une seule salle",
+  "@featureSingleRoomLevelNamesTitle": {
+    "description": "#1273 single-room level names: the feature switch title"
+  },
+  "featureSingleRoomLevelNamesDesc": "Quand un étage ne contient qu’une salle, les vues de réservation nomment l’étage plutôt que la salle — « 2e étage · Table 3 » au lieu de « Bureau 1 · Table 3 ». Une deuxième salle fait revenir les deux noms ; l’éditeur du plan montre toujours les salles.",
+  "@featureSingleRoomLevelNamesDesc": {
+    "description": "#1273 single-room level names: the feature switch description"
+  },
   "featureSiteDocuments": "Sites sur les documents",
   "@featureSiteDocuments": {
     "description": "#946 site documents: featureSiteDocuments"

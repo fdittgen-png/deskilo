@@ -39,7 +39,7 @@ const Map<String, int> _baseline = {
   // new 700 (2026-08-22): #575 day-phase rings + #576 space rings.
 // 700→740 (2026-08-24): #618 the occupant photo marker — clipped
   // photo draw beside the initial disc, one concern, same method.
-    'lib/features/plan/presentation/widgets/floor_plan_painter.dart': 772, // 2026-09-13 #1216 750→780: the dropTargets parameter and the paragraph explaining why an EMPTY set differs from null; the drawing itself went to widgets/drop_target_paint.dart // 2026-09-06 #970 the demo blur on painted labels
+    'lib/features/plan/presentation/widgets/floor_plan_painter.dart': 783, // 2026-09-15 #1273 772→783: singleRoomLevelNames — the label rule and its flag // // 2026-09-13 #1216 750→780: the dropTargets parameter and the paragraph explaining why an EMPTY set differs from null; the drawing itself went to widgets/drop_target_paint.dart // 2026-09-06 #970 the demo blur on painted labels
   // 1290→1330 (2026-08-02): #395 Excel-export tile — feature lines, the
   // orchestration itself lives in excel_export.dart.
   'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1044, // 2026-09-13 #1235 1063→1044: the name-this-room dialog moved to text_prompt_dialog.dart, paying for the canvas's screen-reader name // 2026-09-11 #1154 1250→1132: the office and desk sheets became one space_properties_sheet.dart // 2026-08 #585 seat NFC field
@@ -65,7 +65,7 @@ const Map<String, int> _baseline = {
   // 1190→1215 (2026-08-31): #772 windowIsNow — the live-window probe in
   // workspace wall time beside the isLive it refines.
   // 1215→1240 (2026-09-01): #814 closed days into the Day/Week/Month views + the legend.
-  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1319, // 2026-09-15 #1301 S4 1307→1319: unresolved availability renders as loading — the getter the seat tap reads and the loading bar beside the closed-day banner // 2026-09-14 #1269 1298→1307: the browsed level left the screen for a provider, and the paragraph saying why three views may not each keep their own copy is longer than the field it replaced // 2026-09-05 #903 the seat's day: segments for the plan, the timeline behind a shared seat
+  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1320, // 2026-09-15 #1273 +1: the hub tells the canvas whether a level's only room is named by the level // 2026-09-15 #1273 1307→1308: singleRoomLevelNames — the label rule and its flag // // 2026-09-14 #1269 1298→1307: the browsed level left the screen for a provider, and the paragraph saying why three views may not each keep their own copy is longer than the field it replaced // 2026-09-05 #903 the seat's day: segments for the plan, the timeline behind a shared seat
   // 980→990 (2026-08-03): #419 workspace dev-mode switch — admin gate,
   // workspace hint subtitle and the RPC write helper.
   // 990→1000 (2026-08-05): #478 Billing & reports admin entry.
@@ -166,7 +166,7 @@ const Map<String, int> _baseline = {
   // registry — it grows by ~5 lines per flag by design, and
   // splitting the registry would defeat its whole purpose.
   // 740→789 (2026-09-06): #934 the status report kind and the money-screen tiles.
-  'lib/features/workspace/domain/workspace_feature.dart': 1251, // 2026-09-13 #1221 1130→1260: every manifest entry gained a required `surface` — one line each, and the registry is one declarative map by design // 2026-09-11 #1120 workspaceLibrary entry (was 1120) // // 2026-09-11 #1063 the Core/Platform tier: one required line on each of the hundred manifest entries, which is the point — a flag cannot be added without deciding which tier it is in // 2026-09-11 #1110 memberOrigin + #1119 memberEnvironments: the registry grows ~10 lines per flag by design (enum doc + manifest entry), which is the one file where a bump is the shape of the work rather than a failure to extract // 2026-09-07 #987/#988 environmentPairs + deployments // 2026-09-06 #985 vatRateHistory + vatCounterparty // 2026-09-06 #916 configurationTransfer // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #873 usageReport beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #878 vatReport beside #881 memberPaymentTerms after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #873 usageReport beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 five flags landed the same day (#880 #887 #881 #873 #878 #874)
+  'lib/features/workspace/domain/workspace_feature.dart': 1264, // 2026-09-15 #1273 1251→1264: singleRoomLevelNames — the label rule and its flag // // 2026-09-13 #1221 1130→1260: every manifest entry gained a required `surface` — one line each, and the registry is one declarative map by design // 2026-09-11 #1120 workspaceLibrary entry (was 1120) // // 2026-09-11 #1063 the Core/Platform tier: one required line on each of the hundred manifest entries, which is the point — a flag cannot be added without deciding which tier it is in // 2026-09-11 #1110 memberOrigin + #1119 memberEnvironments: the registry grows ~10 lines per flag by design (enum doc + manifest entry), which is the one file where a bump is the shape of the work rather than a failure to extract // 2026-09-07 #987/#988 environmentPairs + deployments // 2026-09-06 #985 vatRateHistory + vatCounterparty // 2026-09-06 #916 configurationTransfer // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #873 usageReport beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #878 vatReport beside #881 memberPaymentTerms after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #873 usageReport beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #880 reportTexts beside #881 after the rebase // 2026-09-05 #886/#887 personalInfo + managedProfiles manifest entries // 2026-09-05 #874 letterStandard manifest entry // 2026-09-05 five flags landed the same day (#880 #887 #881 #873 #878 #874)
   'lib/features/workspace/presentation/screens/features_screen.dart': 242, // 2026-09-13 #1190 690→360: the 425 lines of switch descriptions became presentation/feature_copy.dart, which left room for the search the screen needed// 2026-09-11 #1063 the two tier headings and the reindented tile loop // 2026-09-11 #1110 + #1119 descriptions // 2026-09-07 #987 environmentPairs description beside #985's two
   'lib/features/money/presentation/widgets/report_visual_editor.dart': 981, // 2026-09-02 #822 drag, insert palette, image controls, move-to-band
   // 660→700 (2026-08-05): #494 the three further document chips + their
@@ -182,7 +182,7 @@ const Map<String, int> _baseline = {
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.
   // 780→810 (2026-09-01): #814 closed columns.
-  'lib/features/reservations/presentation/widgets/week_grid.dart': 803,
+  'lib/features/reservations/presentation/widgets/week_grid.dart': 809, // 2026-09-15 #1273 803→809: singleRoomLevelNames — the label rule and its flag //
   // 750→780 (2026-08-02): #395 adds fetchWorkspaceLedger and
   // fetchPaymentIntents — two new repository surfaces, not accretion.
   // 780→800 (2026-08-04): #454 fetch/setInvoicePdfTemplate.
@@ -233,14 +233,14 @@ const Map<String, int> _baseline = {
   'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 846,
   // 750→770 (2026-08-05): #490 workspace-clock day instants beside the
   // naive axis anchor.
-  'lib/features/calendar/presentation/widgets/day_timeline.dart': 772, // 2026-09-14 #1269 769→772: reading the browsed level from the shared provider instead of its own State field
+  'lib/features/calendar/presentation/widgets/day_timeline.dart': 776, // 2026-09-15 #1273 772→776: singleRoomLevelNames — the label rule and its flag // // 2026-09-14 #1269 769→772: reading the browsed level from the shared provider instead of its own State field
   // 820→830 (2026-08-25): #622 the whole-space conflict now resolves
   // the blocking RESERVATION (message-the-reserver affordance); the
   // seat action dialog moved OUT into the shared space_act_sheet.
   // 830→980 (2026-08-25): #638 the CONVERGED whole-space sheet — the
   // "For the member" selector and the assign write moved in from the
   // deleted _LevelReserveSheet (plan_screen.dart shrank by more).
-  'lib/features/reservations/presentation/widgets/space_scan.dart': 880,
+  'lib/features/reservations/presentation/widgets/space_scan.dart': 889, // 2026-09-15 #1273 880→886: singleRoomLevelNames — the label rule and its flag //
   // 600→640 (2026-08-04): #460/#464 Messages inbox rows + mark-seen —
   // the note row widget lives with the feed it sits in. 640→700: #467
   // swipe reply/delete on the rows.
@@ -280,7 +280,7 @@ const Map<String, int> _baseline = {
   // 680→690: #462 whole-space overlays on the wall display.
   // 690→720 (2026-08-08): #519 the period step wiring (sheet call,
   // combined reserve+check-in action, warm granularity).
-  'lib/features/kiosk/presentation/screens/kiosk_screen.dart': 652,
+  'lib/features/kiosk/presentation/screens/kiosk_screen.dart': 653, // 2026-09-15 #1273 652→653: singleRoomLevelNames — the label rule and its flag //
   // 600→640 (2026-08-04): #446 fetchWorkHours/setWorkHours — two new
   // repository surfaces (merge-preserving booking_rules writes), not
   // accretion. 640→660: #456 sendMemberNote/fetchMyNotes. 660→690:

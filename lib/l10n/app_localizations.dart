@@ -15389,6 +15389,18 @@ abstract class AppLocalizations {
   /// **'Active'**
   String get servicesActive;
 
+  /// #1273 single-room level names: the feature switch title
+  ///
+  /// In en, this message translates to:
+  /// **'Name a single-room level by the level'**
+  String get featureSingleRoomLevelNamesTitle;
+
+  /// #1273 single-room level names: the feature switch description
+  ///
+  /// In en, this message translates to:
+  /// **'When a level holds only one room, the booking views name the level instead of the room — “2nd floor · Table 3”, not “Room 1 · Table 3”. Adding a second room brings both names back; the plan editor always shows the rooms.'**
+  String get featureSingleRoomLevelNamesDesc;
+
   /// #946 site documents: featureSiteDocuments
   ///
   /// In en, this message translates to:

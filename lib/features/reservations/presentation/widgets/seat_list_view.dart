@@ -7,6 +7,7 @@ import '../../../../core/ui/empty_state.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/seat.dart';
+import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
 import '../../domain/seat_state_logic.dart';
@@ -64,13 +65,20 @@ class SeatListView extends ConsumerWidget {
       );
     }
 
+    // #1273 — a level's only room is named by the level.
+    final byLevel = namesSingleRoomsByLevel(ref);
+    final levelName = levelNameOf(ref, plan.levelId);
     String contextOf(Seat seat) {
       final desk =
           plan.desks.where((d) => d.id == seat.deskId).firstOrNull;
       final office = desk == null
           ? null
           : plan.offices.where((o) => o.id == desk.officeId).firstOrNull;
-      return [office?.name, desk?.name]
+      return [
+        if (office != null)
+          plan.officeContextName(office, levelName: levelName, byLevel: byLevel),
+        desk?.name,
+      ]
           .whereType<String>()
           .where((n) => n.isNotEmpty)
           .join(' · ');

@@ -60,7 +60,11 @@ class PlanCanvas extends StatefulWidget {
     this.background,
     this.images = const {},
     this.seatPhotos = const {},
+    this.singleRoomByLevel = false,
   });
+
+  /// #1273 — see [FloorPlanPainter.singleRoomByLevel].
+  final bool singleRoomByLevel;
 
   /// Key of the [CustomPaint] — the tests' canvas handle
   /// (`reserve-plan-canvas` on the hub, `kiosk-plan-canvas` at the kiosk).
@@ -242,6 +246,7 @@ class _PlanCanvasState extends State<PlanCanvas>
               size: PlanCanvasMetrics.size,
               painter: FloorPlanPainter(
                 plan: widget.plan,
+                singleRoomByLevel: widget.singleRoomByLevel,
                 blurLabels: widget.blurLabels,
                 cellSize: PlanCanvasMetrics.cellSize,
                 colorScheme: Theme.of(context).colorScheme,

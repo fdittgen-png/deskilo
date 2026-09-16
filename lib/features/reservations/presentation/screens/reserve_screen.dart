@@ -1005,6 +1005,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 builder: (context, seatPhotos) => PlanCanvas(
               blurLabels: ref.watch(demoModeControllerProvider).value ?? false,
                 seatPhotos: seatPhotos,
+                singleRoomByLevel: namesSingleRoomsByLevel(ref),
                 paintKey: const ValueKey('reserve-plan-canvas'),
                 plan: plan,
                 highlightedSeatId: _focusSeatId,

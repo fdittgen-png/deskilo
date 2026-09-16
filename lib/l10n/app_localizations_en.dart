@@ -8754,6 +8754,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get servicesActive => 'Active';
 
   @override
+  String get featureSingleRoomLevelNamesTitle =>
+      'Name a single-room level by the level';
+
+  @override
+  String get featureSingleRoomLevelNamesDesc =>
+      'When a level holds only one room, the booking views name the level instead of the room — “2nd floor · Table 3”, not “Room 1 · Table 3”. Adding a second room brings both names back; the plan editor always shows the rooms.';
+
+  @override
   String get featureSiteDocuments => 'Sites on documents';
 
   @override

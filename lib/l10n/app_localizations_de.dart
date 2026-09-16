@@ -8831,6 +8831,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get servicesActive => 'Aktiv';
 
   @override
+  String get featureSingleRoomLevelNamesTitle =>
+      'Einraum-Etagen nach der Etage benennen';
+
+  @override
+  String get featureSingleRoomLevelNamesDesc =>
+      'Hat eine Etage nur einen Raum, nennen die Buchungsansichten die Etage statt des Raums — „2. Etage · Tisch 3“ statt „Büro 1 · Tisch 3“. Ein zweiter Raum bringt beide Namen zurück; der Planeditor zeigt immer die Räume.';
+
+  @override
   String get featureSiteDocuments => 'Standorte auf Belegen';
 
   @override

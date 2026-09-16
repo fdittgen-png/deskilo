@@ -434,4 +434,9 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'their PIN, instead of typing an e-mail on a shared '
                   'tablet. Each member sets their own PIN and arms their '
                   'own badge.',
+        WorkspaceFeature.singleRoomLevelNames =>
+          l10n?.featureSingleRoomLevelNamesDesc ??
+              'When a level holds only one room, the booking views name the '
+                  'level instead of the room. Adding a second room brings '
+                  'both names back; the plan editor always shows the rooms.',
       };

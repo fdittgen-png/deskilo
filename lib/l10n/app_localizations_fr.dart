@@ -8845,6 +8845,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get servicesActive => 'Actif';
 
   @override
+  String get featureSingleRoomLevelNamesTitle =>
+      'Nommer par l’étage un étage à une seule salle';
+
+  @override
+  String get featureSingleRoomLevelNamesDesc =>
+      'Quand un étage ne contient qu’une salle, les vues de réservation nomment l’étage plutôt que la salle — « 2e étage · Table 3 » au lieu de « Bureau 1 · Table 3 ». Une deuxième salle fait revenir les deux noms ; l’éditeur du plan montre toujours les salles.';
+
+  @override
   String get featureSiteDocuments => 'Sites sur les documents';
 
   @override

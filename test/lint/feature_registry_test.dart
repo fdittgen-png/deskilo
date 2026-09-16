@@ -116,7 +116,9 @@ import 'package:flutter_test/flutter_test.dart';
 //   issue: dev, or dev+prod, because 0185's invariant is prod ⊆ dev.
 // 100→101 (2026-09-11): #1120 workspaceLibrary — save, share and start
 //   from a floor-plan template. Platform, default OFF.
-const int _expectedFeatureCount = 101;
+// 101→102 (2026-09-15): #1273 singleRoomLevelNames — a level's only room
+//   is named by the level on member surfaces. Core, default ON.
+const int _expectedFeatureCount = 102;
 
 void main() {
   _tierPins();
@@ -178,7 +180,9 @@ void main() {
 /// criticism this project attracts is not "how many flags exist" but
 /// "how many a fifteen-person community meets before it has asked for
 /// anything".
-const int _expectedCoreCount = 36;
+// 36→37 (2026-09-15): #1273 singleRoomLevelNames — a label rule every
+// workspace started from `tiny` meets on day one.
+const int _expectedCoreCount = 37;
 
 void _tierPins() {
   test('every feature declares a tier, and the split is pinned', () {
