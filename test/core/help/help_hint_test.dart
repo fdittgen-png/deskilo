@@ -10,6 +10,7 @@
 // shown one (rotating), manual paging updates that memory, and every
 // tip's Learn more lands on its own guide section.
 import 'dart:async';
+import 'dart:convert';
 
 import 'dart:io';
 
@@ -303,16 +304,64 @@ void main() {
     }
   });
 
-  test('every HelpDot topic getter matches a heading of its language\'s '
-      'guide (#763)', () async {
-    const dotTopics = [
-      'helpTopicLegalIdentity', 'helpTopicEinvoice', 'helpTopicVat',
-      'helpTopicReportEditor', 'helpTopicDocumentLibrary',
-      'helpTopicWorkspaceId', 'helpTopicSettings', 'helpTopicKiosk',
-      'helpTopicBilling', 'helpTopicWorkingHours', 'helpTopicBookingPolicies',
-      'helpTopicBookingLimits', 'helpTopicScheduledExpenses',
-      'helpTopicServer',
-    ];
+  // #1393 — DERIVED from the ARB, not restated.
+  //
+  // This list used to be a `const dotTopics` array beside a hand-built
+  // map, and the only check between them was `containsAll`. Neither was
+  // compared with what actually exists: 16 `helpTopic*` keys shipped and
+  // 14 were listed, so `helpTopicDeployment` (three live HelpDot call
+  // sites) and `helpTopicEnvironments` were pinned by nothing at all.
+  //
+  // Both land in all five languages — nothing was broken behind the
+  // hole — but a gate that only sees what somebody remembered to type
+  // twice is not a gate. Reading the aggregate ARB is the idiom
+  // `l10n_completeness_test`, `legal_terms_test` and
+  // `lexicon_allow_list_test` already use.
+  test('every helpTopic in the ARB matches a heading of its language\'s '
+      'guide (#763, #1393)', () {
+    Map<String, String> topicsOf(String locale) {
+      final map = json.decode(
+          File('lib/l10n/app_$locale.arb').readAsStringSync())
+          as Map<String, dynamic>;
+      return {
+        for (final e in map.entries)
+          if (e.key.startsWith('helpTopic')) e.key: e.value as String,
+      };
+    }
+
+    final en = topicsOf('en');
+    expect(en, isNotEmpty,
+        reason: 'no helpTopic* key was found in lib/l10n/app_en.arb — the '
+            'derivation is reading the wrong file and this test now '
+            'asserts nothing');
+
+    for (final locale in ['en', 'fr', 'de', 'es', 'it']) {
+      final topics = topicsOf(locale);
+      expect(topics.keys, unorderedEquals(en.keys),
+          reason: '$locale carries a different set of helpTopic keys than '
+              'en — l10n_completeness_test should have caught this first');
+
+      final headings = File('assets/help/$locale.md')
+          .readAsLinesSync()
+          .where((l) => l.startsWith('#'))
+          .toList();
+      topics.forEach((key, topic) {
+        expect(
+          headings.any((h) => h.toLowerCase().contains(topic.toLowerCase())),
+          isTrue,
+          reason: '$key "$topic" ($locale) matches no guide heading — the '
+              '/help jump would land at the top of the guide instead of '
+              'the paragraph',
+        );
+      });
+    }
+  });
+
+  // And the getters still agree with the ARB the derivation reads. The
+  // test above catches an omission; this one catches a divergence
+  // between the generated getter and the file it was generated from.
+  test('every HelpDot topic getter returns what the ARB says (#763)',
+      () async {
     for (final locale in AppLocalizations.supportedLocales) {
       final l10n = await AppLocalizations.delegate.load(locale);
       final headings = File('assets/help/${locale.languageCode}.md')
@@ -334,8 +383,26 @@ void main() {
         'helpTopicBookingLimits': l10n.helpTopicBookingLimits,
         'helpTopicScheduledExpenses': l10n.helpTopicScheduledExpenses,
         'helpTopicServer': l10n.helpTopicServer,
+        // #1393 — the two the old hand-list never named, and so
+        // nothing checked: helpTopicDeployment has three live
+        // HelpDot call sites.
+        'helpTopicDeployment': l10n.helpTopicDeployment,
+        'helpTopicEnvironments': l10n.helpTopicEnvironments,
       };
-      expect(topics.keys, containsAll(dotTopics));
+      // The map above is written by hand, so it can fall behind the ARB
+      // exactly as the old `dotTopics` array did — 16 keys shipped and
+      // 14 were listed. Comparing it with the ARB makes the omission
+      // fail instead of passing silently.
+      final declared = (json.decode(
+              File('lib/l10n/app_${locale.languageCode}.arb')
+                  .readAsStringSync()) as Map<String, dynamic>)
+          .keys
+          .where((k) => k.startsWith('helpTopic'))
+          .toSet();
+      expect(topics.keys.toSet(), declared,
+          reason: 'this map and lib/l10n/app_${locale.languageCode}.arb '
+              'disagree about which helpTopic keys exist — add the new '
+              'getter here, or remove the retired one');
       topics.forEach((key, topic) {
         expect(
           headings.any(
