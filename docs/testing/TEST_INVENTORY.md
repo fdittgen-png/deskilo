@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**481 files, 3202 tests.**
+**481 files, 3203 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -17,7 +17,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | property | 1 | 10 |
 | tool | 2 | 11 |
 | unit | 166 | 1311 |
-| widget | 224 | 1493 |
+| widget | 224 | 1494 |
 
 | action | files |
 |---|---:|
@@ -450,7 +450,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/workspace/space_codes_pdf_test.dart` | unit | The space QR sheet: badge-grid A4 pages, one card per desk, office and level — chunked at ten cards per page. | 4 | yes | none | a domain rule — #584, #596 | no | KEEP |  |
 | `test/features/workspace/status_whatsapp_group_migration_test.dart` | unit | Content pins for migration 0029 (#231): the status_text column with the SAME 40-char cap the client enforces (StatusTextRules cross-pin), the whatsapp_group… | 3 | yes | repository sources | a domain rule — #231 | no | KEEP |  |
 | `test/features/workspace/whatsapp_group_test.dart` | unit | The workspace side of #231: the whatsappGroup field and its #232 contract (whatsappGroupUri null when no group is configured), the prefix rule mirroring the… | 7 | yes | fakes | a domain rule — #231, #232 | no | KEEP |  |
-| `test/features/workspace/wording_screen_test.dart` | widget | #1277 S3 — the owner's wording editor. | 4 | yes | fakes | user-visible behaviour — #1277 | no | KEEP |  |
+| `test/features/workspace/wording_screen_test.dart` | widget | #1277 S3 — the owner's wording editor. | 5 | yes | fakes | user-visible behaviour — #1277 | no | KEEP |  |
 | `test/features/workspace/workspace_availability_test.dart` | unit | Whether the workspace is open on a day: open weekdays minus closure days, pinned to the server's refusal message. | 6 | yes | none | a domain rule — #186 | shares a test name with test/features/plan/plan_closed_day_test.dart | KEEP |  |
 | `test/features/workspace/workspace_code_test.dart` | widget | The workspace code screen: member and single-use admin invites, and a validated new workspace ID. | 9 | yes | fakes | user-visible behaviour — #188, #319, #0030 | no | KEEP |  |
 | `test/features/workspace/workspace_config_pdf_test.dart` | unit | The workspace configuration PDF renders, grows with its members and survives empty sections. | 3 | yes | none | a domain rule | no | KEEP |  |

@@ -7,6 +7,7 @@
 
 *Administrators*
 - [Configuring the space](Admin-Configuration-Guide)
+- [Configurer l'espace](Admin-Configuration-Guide.fr) 🇫🇷
 - [The technical side](Admin-Technical-Guide)
 - [Environments: dev and prod](Environments-Guide)
 
