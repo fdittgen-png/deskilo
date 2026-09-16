@@ -17,6 +17,7 @@ Every feature serves at least one of three goals (the *feature filter*):
 | [Configuring the space](Admin-Configuration-Guide) | Owners | Every parameter the questionnaire asks, the master data, the floor plan — including how to turn photographs of the room into a plan image with an AI |
 | [Configurer l'espace](Admin-Configuration-Guide.fr) | Propriétaires | Le guide de configuration en français : chaque paramètre du questionnaire, les données de référence, le plan des locaux |
 | [Den Bereich einrichten](Admin-Configuration-Guide.de) | Inhaberinnen | Der Konfigurationsleitfaden auf Deutsch: jeder Parameter des Fragebogens, die Stammdaten, der Raumplan |
+| [Configurar el espacio](Admin-Configuration-Guide.es) | Propietarios | La guía de configuración en español: cada parámetro del cuestionario, los datos maestros, el plano |
 | [The technical side](Admin-Technical-Guide) | Administrators | Documents and the report designer, e-invoicing, accounting exports, integrations, instances, the trace |
 | [Environments: dev and prod](Environments-Guide) | Owners | Why a pair, creating it, who may deploy, what travels and what never does |
 | [Implementation](Implementation) | Developers / contributors | Repo layout, conventions, codegen, migrations, testing, CI, feature-gating checklist, how to build and run on every platform |

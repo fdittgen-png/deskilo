@@ -2054,7 +2054,7 @@ Hilfesymbol daneben öffnet genau seinen Absatz.
 eigene Einheit und wandern deshalb für sich allein zwischen einem
 Entwicklungs- und einem Produktivbereich.
 
-## Umsatzsteuer
+## MwSt.
 
 Welchen Satz eine Leistung trägt, entscheiden drei Dinge, nie eines
 allein: was sie ist (**die Gruppe**), wer sie kauft (**die Behandlung**)
@@ -2085,7 +2085,7 @@ E-Rechnungsprüfung verweigert den Versand eines Dokuments mit
 Steuerschuldnerschaft des Empfängers, solange diese Umsatzsteuer-ID
 fehlt — sie ist der Nachweis, dass die Steuer die ihre ist.
 
-**Wann die Umsatzsteuer fällig wird**, ist eine Einstellung des Bereichs:
+**Wann die MwSt. fällig wird**, ist eine Einstellung des Bereichs:
 *nach vereinbarten Entgelten* (fällig bei Ausstellung) oder *nach
 vereinnahmten Entgelten* (fällig an dem Tag, an dem die Kundin zahlt).
 Deutschland nennt Letzteres *Ist-Versteuerung*, Frankreich stellt
