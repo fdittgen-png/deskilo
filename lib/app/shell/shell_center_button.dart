@@ -12,6 +12,7 @@ import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import 'shell_bar_visibility.dart';
 import 'shell_bottom_bar.dart' show ShellBarMetrics;
+import 'shell_destinations.dart';
 
 /// The raised, primary-tinted circular Reserve button.
 ///
@@ -67,11 +68,14 @@ class ShellCenterButton extends ConsumerWidget {
     // one piece of chrome left on screen carries its count: choosing more
     // room must never hide a decision somebody is waiting for. No count,
     // NO BADGE WIDGET — the #687 rule of the Messages destination.
-    final eventsOn = ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.eventsTab);
+    // #1306 S3 — and when the bell is off and the Calendar carries the
+    // decisions instead, full screen hides THAT badge too: the button
+    // carries the count in both cases, or a decision goes unseen.
+    final features = ref.watch(enabledFeaturesSyncProvider);
+    final signalled = features.contains(WorkspaceFeature.eventsTab) ||
+        decisionSignalOnCalendar(features);
     final pendingCount = ref.watch(myPendingEventCountProvider).value ?? 0;
-    final pending = hidden && eventsOn ? pendingCount : 0;
+    final pending = hidden && signalled ? pendingCount : 0;
     // Clamped because the collapse is driven straight off a finger, and
     // a drag that overshoots must not produce a negative blur.
     final t = collapseProgress.clamp(0.0, 1.0);
