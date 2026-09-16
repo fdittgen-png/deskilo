@@ -21,8 +21,8 @@ import '../../helpers/mock_providers.dart';
 
 /// Widget tests default to 800x600 with lazy lists — use a taller
 /// viewport so every list item is on-stage when tapped.
-void useTallViewport(WidgetTester tester) {
-  tester.view.physicalSize = const Size(800, 1600);
+void useTallViewport(WidgetTester tester, {Size size = const Size(800, 1600)}) {
+  tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
 }
@@ -32,8 +32,12 @@ Future<FakeAccessoryRepository> pumpAccessories(
   FakeAccessoryRepository? accessories,
   FakeWorkspaceRepository? workspace,
   FakeMoneyRepository? money,
+  // #1339 — the responsive matrix asks for a narrow surface. Every
+  // other caller keeps the tall one this file has always used, so
+  // nothing existing changes.
+  Size size = const Size(800, 1600),
 }) async {
-  useTallViewport(tester);
+  useTallViewport(tester, size: size);
   accessories ??= FakeAccessoryRepository()..seedSmallCatalog();
   await tester.pumpWidget(
     ProviderScope(
