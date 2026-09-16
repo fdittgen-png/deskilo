@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/ids/request_id.dart';
+import '../../../../core/locale/device_locale.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -29,8 +30,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _createFormKey = GlobalKey<FormState>();
   final _joinFormKey = GlobalKey<FormState>();
   final _name = TextEditingController();
-  final _currency = TextEditingController(text: 'EUR');
-  final _timezone = TextEditingController(text: 'Europe/Berlin');
+  // #1303 S1 — seeded from the device's country in initState; never a
+  // hardcoded Germany.
+  final _currency = TextEditingController();
+  final _timezone = TextEditingController();
   // #917 — a new space is for trying things out until its owner
   // says otherwise. The safe answer to "is this real?" is no.
   WorkspaceEnvironment _environment = WorkspaceEnvironment.development;
@@ -49,9 +52,18 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   /// making a second one (and a second dev/prod pair).
   final String _requestId = newRequestId();
   final _inviteCode = TextEditingController();
-  String _countryCode = 'DE';
+  late String _countryCode;
   bool _joinMode = false;
   bool _busy = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final country = initialCountryFor(ref.read(deviceLocaleProvider));
+    _countryCode = country.code;
+    _currency.text = country.currencyCode;
+    _timezone.text = country.defaultTimezone;
+  }
 
   @override
   void dispose() {
