@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**482 files, 3210 tests.**
+**483 files, 3212 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -12,7 +12,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | database | 19 | 192 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
-| lint | 63 | 174 |
+| lint | 64 | 176 |
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
@@ -21,7 +21,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 
 | action | files |
 |---|---:|
-| KEEP | 482 |
+| KEEP | 483 |
 
 ## Rules
 
@@ -494,6 +494,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/lint/grant_table_policy_test.dart` | lint | #1120 — a grant row may never be the thing that proves access. | 3 | yes | repository sources | an architecture, security or process rule — #1120 | no | KEEP |  |
 | `test/lint/help_anchor_test.dart` | lint | #1016/#1018 — the anchor is one identity for the help symbol, the guide heading and the screenshot. This is what keeps the three in step, and what stops a… | 8 | yes | repository sources | an architecture, security or process rule — #1016, #1018, #1019 | no | KEEP |  |
 | `test/lint/help_coverage_test.dart` | lint | #1016/#1019 — the migration from coarse topics to exact anchors, made measurable, and now finished. 152 help symbols shared 14 topics between them; screen by… | 1 | yes | none | an architecture, security or process rule — #1016, #1019 | no | KEEP |  |
+| `test/lint/help_generated_test.dart` | lint | #1386 — `assets/help/` is generated from `docs/wiki/` and committed, and until this test nothing compared the two. | 2 | yes | none | an architecture, security or process rule — #1386 | no | KEEP |  |
 | `test/lint/help_guide_parity_test.dart` | lint | #1259 — the in-app help must not lose a guide in silence. | 3 | yes | repository sources | an architecture, security or process rule — #1259 | no | KEEP |  |
 | `test/lint/icon_button_labels_test.dart` | lint | #1055 — an icon button says what it does. | 3 | yes | none | an architecture, security or process rule — #1055 | no | KEEP |  |
 | `test/lint/instance_bundle_test.dart` | lint | #977 — the instance bundle the wizard installs must never lag the migrations or the functions: a new migration without a rebuilt bundle would leave a freshly… | 3 | yes | repository sources | an architecture, security or process rule — #977, #1137, #1314 | no | KEEP |  |

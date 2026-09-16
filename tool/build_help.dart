@@ -133,13 +133,43 @@ String compile(String source) {
   return '${text.trim()}\n';
 }
 
+/// What `build_help` writes for one locale, composed from the listed
+/// sources that exist.
+///
+/// #1386 — this was inline in [main]. Nothing could assert that the
+/// committed `assets/help/` equalled a fresh build, so a guide edited
+/// without a regeneration shipped in-app help contradicting its own
+/// source: `Admin-Configuration-Guide.de.md` said `## MwSt.` while the
+/// generated `de.md` still said `## Umsatzsteuer`, and the help symbol
+/// `config.vat.overview` resolved to the stale wording. Three lines, and
+/// nothing to catch them — `lib/l10n` has had exactly this gate since
+/// HARD RULE #4, and the other generated tree had none.
+///
+/// Pure, so `help_generated_test` can compare it against what is on disk.
+typedef RenderedGuide = ({String markdown, String anchorsJson, List<String> present, List<String> absent});
+
+RenderedGuide renderLocale(String locale) {
+  final listed = guides[locale]!.map((name) => File('$wikiDir/$name')).toList();
+  final sources = listed.where((f) => f.existsSync()).toList();
+  final raw = sources.map((f) => f.readAsStringSync()).join('\n\n');
+  return (
+    markdown: compile(raw),
+    anchorsJson:
+        '${const JsonEncoder.withIndent('  ').convert(anchorsOf(raw))}\n',
+    present: sources.map((f) => f.uri.pathSegments.last).toList(),
+    absent: listed
+        .where((f) => !f.existsSync())
+        .map((f) => f.uri.pathSegments.last)
+        .toList(),
+  );
+}
+
 void main() {
   final images = Directory('$wikiDir/images');
   final outImages = Directory('$outDir/images')..createSync(recursive: true);
 
-  for (final entry in guides.entries) {
-    final listed = entry.value.map((name) => File('$wikiDir/$name')).toList();
-    final sources = listed.where((f) => f.existsSync()).toList();
+  for (final locale in guides.keys) {
+    final rendered = renderLocale(locale);
     // #1259 — a guide this tool LISTS but cannot find used to disappear
     // without a word: `where(existsSync)` dropped it and the run still
     // reported success. Eight translated admin guides were absent that
@@ -150,24 +180,18 @@ void main() {
     // tool that refuses to run until they do would block the very work
     // that produces them. The ratchet in help_guide_parity_test is what
     // stops the gap growing.
-    final absent =
-        listed.where((f) => !f.existsSync()).map((f) => f.uri.pathSegments.last);
-    if (absent.isNotEmpty) {
-      stderr.writeln('${entry.key}: listed but absent — ${absent.join(', ')}');
+    if (rendered.absent.isNotEmpty) {
+      stderr.writeln('$locale: listed but absent — ${rendered.absent.join(', ')}');
     }
-    if (sources.isEmpty) {
-      stderr.writeln('No guide for ${entry.key} in $wikiDir');
+    if (rendered.present.isEmpty) {
+      stderr.writeln('No guide for $locale in $wikiDir');
       exitCode = 1;
       return;
     }
-    final raw = sources.map((f) => f.readAsStringSync()).join('\n\n');
-    final out = File('$outDir/${entry.key}.md')
-      ..writeAsStringSync(compile(raw));
-    final anchors = anchorsOf(raw);
-    File('$outDir/${entry.key}.anchors.json').writeAsStringSync(
-        '${const JsonEncoder.withIndent('  ').convert(anchors)}\n');
-    stdout.writeln('wrote ${out.path} — ${sources.length} guide(s), '
-        '${anchors.length} anchors');
+    File('$outDir/$locale.md').writeAsStringSync(rendered.markdown);
+    File('$outDir/$locale.anchors.json').writeAsStringSync(rendered.anchorsJson);
+    stdout.writeln('wrote $outDir/$locale.md — ${rendered.present.length} '
+        'guide(s), ${(jsonDecode(rendered.anchorsJson) as Map).length} anchors');
   }
 
   var copied = 0;
