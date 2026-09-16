@@ -95,6 +95,7 @@ actually moves.
 | document_links | configuration | workspace_documents | B | |
 | **closure_days** | configuration | closure_days | B | **a mirror import replaces them**, so generated public holidays (#1274) can be removed by a deployment — ADR 0025 |
 | invitations | configuration | invitation_template, invitation_templates, whatsapp_group | B | whatsapp_group is A and should not travel — **F**, #1360 |
+| number_sequences | configuration | number_sequences | B | **format only** — `prefix`, `suffix`, `date_part`, `digits`, `reset`, `gapless`. `period_key` and `next_value` are class E and never exported (#1295) |
 | features | configuration | feature_flags | B | merge, not replace (0176) |
 
 ## Personal preferences — class D, never carried
@@ -124,7 +125,7 @@ not: they are per person, server-side, and cross-workspace.
 | working-hours fallback | `lib/core/time/work_hours.dart` — `WorkHours.defaults` | **C, legitimate** — a fallback for "unset"; the configuration is `booking_rules` | — |
 | every member has a subscription | `members.subscription_pct` default 100, `coalesce(…, 100)` in SQL | F | #1294, #1279 |
 | new-member overage policy | `members.overage_policy` default `'blocked'`; no workspace default | F | #1294 |
-| number sequences do not travel | not in `deployable_entities()` | F | #1295 |
+| ~~number sequences do not travel~~ | fixed: entity `number_sequences`, `keyed_update` on `journal`, format columns only | — | #1295, 0220 |
 | a template is a floor plan | `WorkspaceTemplate.counts`, `libraryCounts` | F | #1276 |
 
 ## Gaps this sweep found
