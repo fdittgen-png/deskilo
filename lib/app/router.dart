@@ -77,22 +77,11 @@ import '../features/money/presentation/screens/workspace_status_screen.dart';
 import '../features/money/presentation/screens/repartition_wizard_screen.dart';
 import '../features/workspace/presentation/screens/sites_screen.dart';
 
+export 'shell/shell_destinations.dart' show ShellBranch;
+
 part 'router.g.dart';
 
-/// Branch indices of the stateful shell (order = bottom-bar order).
-/// #230 swapped the third slot: the member directory took the bottom-bar
-/// place of the events feed, which moved to the app-bar bell.
-abstract final class ShellBranch {
-  static const int plan = 0;
-  static const int calendar = 1;
-  static const int directory = 2;
-  static const int money = 3;
-
-  /// The raised centre button's branch — not a bar destination, but a
-  /// branch so the bar stays visible and functional on the hub. Core
-  /// like Plan: never feature-gated, active by default.
-  static const int reserve = 4;
-}
+// #1306 — ShellBranch lives beside the one destination list that uses it.
 
 @Riverpod(keepAlive: true)
 GoRouter router(Ref ref) {

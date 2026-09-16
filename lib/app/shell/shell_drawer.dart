@@ -17,7 +17,7 @@ import '../../core/theme/app_spacing.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
-import '../router.dart';
+import 'shell_destinations.dart';
 
 part 'shell_drawer.g.dart';
 
@@ -56,13 +56,8 @@ class ShellDrawer extends ConsumerWidget {
   final ValueChanged<int> onBranch;
   final int pendingEvents;
 
-  static IconData _branchIcon(int branch) => switch (branch) {
-        ShellBranch.calendar => Icons.calendar_month_outlined,
-        ShellBranch.directory => Icons.people_outline,
-        ShellBranch.money => Icons.account_balance_wallet_outlined,
-        ShellBranch.reserve => Icons.event_seat_outlined,
-        _ => Icons.forum_outlined,
-      };
+  // #1306 — the bar's own icon table; one list, one set of icons.
+  static IconData _branchIcon(int branch) => shellBranchIcon(branch);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
