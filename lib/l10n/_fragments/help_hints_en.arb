@@ -153,5 +153,9 @@
   "helpTopicBookingPolicies": "Booking policies",
   "helpTopicBookingLimits": "Booking limits",
   "helpTopicScheduledExpenses": "Scheduled expenses",
-  "helpTopicServer": "your own server"
+  "helpTopicServer": "your own server",
+  "helpTopicReportLayout": "Positioned layouts",
+  "helpTopicWindowEnvelope": "The window-envelope contract",
+  "helpTopicTrace": "The trace",
+  "helpTopicInstances": "Instances"
 }

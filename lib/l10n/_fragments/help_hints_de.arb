@@ -153,5 +153,9 @@
   "helpTopicBookingPolicies": "Buchungsregeln",
   "helpTopicBookingLimits": "Buchungsgrenzen",
   "helpTopicScheduledExpenses": "Geplante Ausgaben",
-  "helpTopicServer": "dein eigener Server"
+  "helpTopicServer": "dein eigener Server",
+  "helpTopicReportLayout": "Positionierte Layouts",
+  "helpTopicWindowEnvelope": "Der Vertrag des Fensterkuverts",
+  "helpTopicTrace": "Das Protokoll",
+  "helpTopicInstances": "Instanzen"
 }

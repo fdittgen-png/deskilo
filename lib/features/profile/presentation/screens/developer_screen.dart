@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/app_info.dart';
 import '../../../../core/files/file_saver.dart';
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -171,6 +173,12 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
             icon: const Icon(Icons.delete_outline),
             tooltip: l10n?.developerClear ?? 'Clear trace',
             onPressed: () => ref.read(traceLoggerProvider).clear(),
+          ),
+          // #1393 — what the three shapes mean, why a trace is per
+          // device, and what an export deliberately does not carry.
+          HelpDot(
+            l10n?.helpTopicTrace ?? 'The trace',
+            anchor: HelpAnchor.adminTrace,
           ),
         ],
       ),

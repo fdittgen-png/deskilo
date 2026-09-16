@@ -3560,6 +3560,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpTopicServer => 'dein eigener Server';
 
   @override
+  String get helpTopicReportLayout => 'Positionierte Layouts';
+
+  @override
+  String get helpTopicWindowEnvelope => 'Der Vertrag des Fensterkuverts';
+
+  @override
+  String get helpTopicTrace => 'Das Protokoll';
+
+  @override
+  String get helpTopicInstances => 'Instanzen';
+
+  @override
   String get featureInstanceWizard => 'Instanz-Assistent';
 
   @override

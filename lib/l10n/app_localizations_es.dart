@@ -3558,6 +3558,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpTopicServer => 'tu propio servidor';
 
   @override
+  String get helpTopicReportLayout => 'Los diseños posicionados';
+
+  @override
+  String get helpTopicWindowEnvelope => 'El contrato del sobre con ventana';
+
+  @override
+  String get helpTopicTrace => 'El registro';
+
+  @override
+  String get helpTopicInstances => 'Instancias';
+
+  @override
   String get featureInstanceWizard => 'Asistente de instancia';
 
   @override

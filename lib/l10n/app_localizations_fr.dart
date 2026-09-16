@@ -3566,6 +3566,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get helpTopicServer => 'votre propre serveur';
 
   @override
+  String get helpTopicReportLayout => 'Les mises en page positionnées';
+
+  @override
+  String get helpTopicWindowEnvelope => 'Le contrat de l\'enveloppe à fenêtre';
+
+  @override
+  String get helpTopicTrace => 'Le journal';
+
+  @override
+  String get helpTopicInstances => 'Instances';
+
+  @override
   String get featureInstanceWizard => 'Assistant d\'instance';
 
   @override

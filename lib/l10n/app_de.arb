@@ -2183,6 +2183,10 @@
   "helpTopicBookingLimits": "Buchungsgrenzen",
   "helpTopicScheduledExpenses": "Geplante Ausgaben",
   "helpTopicServer": "dein eigener Server",
+  "helpTopicReportLayout": "Positionierte Layouts",
+  "helpTopicWindowEnvelope": "Der Vertrag des Fensterkuverts",
+  "helpTopicTrace": "Das Protokoll",
+  "helpTopicInstances": "Instanzen",
   "featureInstanceWizard": "Instanz-Assistent",
   "@featureInstanceWizard": {
     "description": "#977 instance wizard: featureInstanceWizard"

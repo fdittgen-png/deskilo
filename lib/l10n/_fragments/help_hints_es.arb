@@ -153,5 +153,9 @@
   "helpTopicBookingPolicies": "Políticas de reserva",
   "helpTopicBookingLimits": "Límites de reserva",
   "helpTopicScheduledExpenses": "Gastos programados",
-  "helpTopicServer": "tu propio servidor"
+  "helpTopicServer": "tu propio servidor",
+  "helpTopicReportLayout": "Los diseños posicionados",
+  "helpTopicWindowEnvelope": "El contrato del sobre con ventana",
+  "helpTopicTrace": "El registro",
+  "helpTopicInstances": "Instancias"
 }

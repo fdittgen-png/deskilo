@@ -8,6 +8,8 @@ import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/instance/instance_builder.dart';
 import '../../../../core/instance/instance_bundle.dart';
 import '../../../../core/instance/instance_bundle_asset.dart';
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/instance/management_api.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -237,6 +239,15 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
     ];
     return WizardScaffold(
       title: l10n?.instanceWizardTitle ?? 'Create a new instance',
+      // #1393 — an instance is a whole DesKilo on its own database, and
+      // the bundle is what builds it. The wizard performs that; the
+      // guide is where it is explained.
+      actions: [
+        HelpDot(
+          l10n?.helpTopicInstances ?? 'Instances',
+          anchor: HelpAnchor.adminInstances,
+        ),
+      ],
       steps: steps,
       index: _step.index,
       nextEnabled: _nextEnabled,

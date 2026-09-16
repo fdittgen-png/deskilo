@@ -3620,6 +3620,10 @@
   "helpTopicBookingLimits": "Booking limits",
   "helpTopicScheduledExpenses": "Scheduled expenses",
   "helpTopicServer": "your own server",
+  "helpTopicReportLayout": "Positioned layouts",
+  "helpTopicWindowEnvelope": "The window-envelope contract",
+  "helpTopicTrace": "The trace",
+  "helpTopicInstances": "Instances",
   "featureInstanceWizard": "Instance wizard",
   "@featureInstanceWizard": {
     "description": "#977 instance wizard: featureInstanceWizard"

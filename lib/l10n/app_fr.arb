@@ -2183,6 +2183,10 @@
   "helpTopicBookingLimits": "Limites de réservation",
   "helpTopicScheduledExpenses": "Dépenses programmées",
   "helpTopicServer": "votre propre serveur",
+  "helpTopicReportLayout": "Les mises en page positionnées",
+  "helpTopicWindowEnvelope": "Le contrat de l'enveloppe à fenêtre",
+  "helpTopicTrace": "Le journal",
+  "helpTopicInstances": "Instances",
   "featureInstanceWizard": "Assistant d'instance",
   "@featureInstanceWizard": {
     "description": "#977 instance wizard: featureInstanceWizard"

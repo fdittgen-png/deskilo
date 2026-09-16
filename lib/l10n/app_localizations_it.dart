@@ -3562,6 +3562,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpTopicServer => 'il tuo server';
 
   @override
+  String get helpTopicReportLayout => 'I layout posizionati';
+
+  @override
+  String get helpTopicWindowEnvelope => 'Il contratto della busta a finestra';
+
+  @override
+  String get helpTopicTrace => 'Il registro';
+
+  @override
+  String get helpTopicInstances => 'Istanze';
+
+  @override
   String get featureInstanceWizard => 'Assistente istanza';
 
   @override
