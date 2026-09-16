@@ -16,7 +16,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
-| unit | 166 | 1311 |
+| unit | 167 | 1313 |
 | widget | 224 | 1494 |
 
 | action | files |
@@ -439,6 +439,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/workspace/outside_hours_policy_test.dart` | unit | #624 (migration 0118) + #634 (migration 0120) — THE outside-opening- hours policy: one booking_rules string key, outside_hours_mode, with FOUR mutually… | 28 | yes | fakes, repository sources | a domain rule — #624, #634, #600 | no | KEEP |  |
 | `test/features/workspace/payment_instructions_test.dart` | unit | #192 — the payment instructions jsonb shape is a contract: pinned keys, a round trip, tolerant of older blobs. | 4 | yes | none | a domain rule — #192, #155, #711 | no | KEEP |  |
 | `test/features/workspace/permission_catalog_test.dart` | unit | #982 — the nine permissions: in the catalog, with defaults that keep what admins could always do and withhold what only owners could. | 2 | yes | none | a domain rule — #982, #989 | no | KEEP |  |
+| `test/features/workspace/process_names_test.dart` | unit | Every process and subprocess has localized, business-readable copy. | 2 | yes | repository sources | a domain rule | no | KEEP |  |
 | `test/features/workspace/public_holidays_flow_test.dart` | widget | #1274 — an owner previews a year's public holidays, then confirms. | 4 | yes | fakes | user-visible behaviour — #1274 | no | KEEP |  |
 | `test/features/workspace/public_holidays_test.dart` | unit | #1274 — the client reads the server's answer and never recomputes it. | 5 | yes | none | a domain rule — #1274 | no | KEEP |  |
 | `test/features/workspace/qr_png_test.dart` | widget | buildQrPng returns a decodable PNG of the requested size. | 1 | yes | real async I/O | user-visible behaviour | no | KEEP |  |
