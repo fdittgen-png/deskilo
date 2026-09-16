@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**489 files, 3260 tests.**
+**490 files, 3267 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -16,12 +16,12 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
-| unit | 170 | 1346 |
+| unit | 171 | 1353 |
 | widget | 225 | 1498 |
 
 | action | files |
 |---|---:|
-| KEEP | 489 |
+| KEEP | 490 |
 
 ## Rules
 
@@ -408,6 +408,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/reservations/space_scan_test.dart` | widget | Space QR codes (field request): every desk, office and level carries a printable QR; scanning it (camera or typed) opens the space sheet with exactly the… | 18 | yes | fakes | user-visible behaviour — #584, #622, #1087 | no | KEEP |  |
 | `test/features/reservations/whole_space_identity_test.dart` | unit | #670 — two field reports about whole-space bookings, one visual and one a dead end. | 11 | yes | repository sources | a domain rule — #670, #622 | no | KEEP |  |
 | `test/features/reservations/workspace_timezone_open_day_test.dart` | unit | The field bug (#417): with a real workspace timezone INSTALLED, the full-day window's start is a TZDateTime (workspace midnight) — and `TZDateTime.toLocal()`… | 4 | yes | none | a domain rule — #417, #446 | no | KEEP |  |
+| `test/features/workspace/application/process_resolver_contract_test.dart` | unit | #1336 — the contract between the process resolver (#1326) and the manual switch semantics that shipped years before it. | 7 | yes | none | a domain rule — #1336, #1326, #800 | no | KEEP |  |
 | `test/features/workspace/application/resolve_processes_test.dart` | unit | #1326 — the eight cases the issue asks for, red-first, against the real registry rather than a fixture of my own invention. | 12 | yes | none | a domain rule — #1326, #1325 | no | KEEP |  |
 | `test/features/workspace/availability_screen_test.dart` | widget | The availability screen persists open weekdays (never none), the booking granularity and working hours (0032). | 18 | yes | fakes | user-visible behaviour — #624, #446, #600 | no | KEEP |  |
 | `test/features/workspace/badge_dialog_layout_test.dart` | widget | #1178 — the badge manager with more than a badge or two in it. | 3 | yes | fakes | user-visible behaviour — #1178 | no | KEEP |  |
