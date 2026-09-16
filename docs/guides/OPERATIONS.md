@@ -103,7 +103,11 @@ bookings across two months, and an invoice with the ledger row and the
 match that settle it — dumps the database, restores it into a fresh one,
 and then makes the copy prove itself: equal row counts per table,
 `reconcile_workspace()` clean for both workspaces, and no member holding
-another tenant's booking. Then it damages the copy on purpose — deletes a
+another tenant's booking. It then re-runs the tenancy and money suites
+**against the copy**, because equal counts say the rows arrived and say
+nothing about whether the restored database still enforces what the
+original enforced — a restore that lost its policies would pass every
+count and hand you a database where one workspace can read another. Then it damages the copy on purpose — deletes a
 row, breaks a match — and requires both to be caught, because a drill
 that has only ever passed cannot be told apart from one that does not
 look. What CI cannot rehearse is the part above that
