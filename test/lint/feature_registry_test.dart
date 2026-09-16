@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+// 2026-09-16: #1325 process_registry_test also requires every flag to have
+// one business home or an explicit internal reason; enum count unchanged.
 //
 // Feature-management completeness (#502) — the LIFETIME rule of this
 // project: every user-facing functionality ships behind a

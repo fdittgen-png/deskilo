@@ -29,6 +29,8 @@ Edit ALL of these in the same commit:
    comment; `workspace_feature.dart` grows ~10 lines per flag.
 7. Routes: `lib/app/router.dart` GoRoute with `featureEnabled(...)`
    redirect + `test/lint/route_registry_test.dart` pin.
+8. `workspace_process.dart` — primary subprocess or explicit internal reason;
+   regenerate with `dart run tool/build_process_catalogue.dart`.
 Validation domains grow in FOUR places (AGENT_RULES #767/#769); the
 placeholders registry has its own pin (`deskilo-reports`).
 

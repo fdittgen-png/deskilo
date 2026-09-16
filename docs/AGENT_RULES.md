@@ -30,6 +30,11 @@ These rules are version-controlled so a fresh clone sees them. They mirror the s
 - Default ON unless the feature is risky or needs owner setup; dependent features declare `requires` so the Features screen explains the chain.
 - OFF must degrade honestly: the entry points disappear (and their routes redirect); already-stored data stays untouched.
 
+Every `WorkspaceFeature` also belongs to exactly one primary subprocess in
+`workspace_process.dart`, or has an explicit internal classification reason.
+Regenerate `docs/design/process-catalogue.md` with
+`dart run tool/build_process_catalogue.dart` after changing either registry.
+
 ## Testing rules
 
 - TDD pyramid 70/20/10. Bug fixes: write the failing test FIRST, calling the exact method the failing UI calls.
