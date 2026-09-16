@@ -6,24 +6,11 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/booking_gate.dart';
+import '../../domain/space_act.dart';
 import '../../domain/picked_time.dart';
 import '../../domain/walk_up_window.dart';
 import 'booking_range_text.dart';
 import '../../../../core/i18n/format_controller.dart';
-
-/// What a space act does — the three operations the kiosk one-sheet
-/// offers (#529) and, since #622, the app's scan flow too.
-enum SpaceAction { checkIn, reserve, checkOut }
-
-/// The state of the act form at completion time: the action, the window
-/// it books (ignored for check-out) and whether a begun reservation
-/// starts checked in.
-typedef SpaceActChoice = ({
-  SpaceAction action,
-  DateTime start,
-  DateTime end,
-  bool checkInNow,
-});
 
 /// THE action + derived-period core of the kiosk one-sheet (#529),
 /// extracted for #622 so the app's scan flow offers the SAME options

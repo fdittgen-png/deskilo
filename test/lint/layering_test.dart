@@ -57,6 +57,11 @@ const Map<String, int> _repositoryInWidgets = {
   'money': 25,
   'workspace': 20,
   'auth': 4,
+  // Still 4 after #1234: `space_act_sheet.dart` moved its DECISION to
+  // `application/act_on_space.dart` but still resolves the repository
+  // from a provider to hand it over — exactly as
+  // `reserve_seat_actions.dart` does for `bookSeat`. This ratchet
+  // counts provider reads, and a command's caller still makes one.
   'reservations': 4,
   'editor': 3,
   'profile': 3,
@@ -175,7 +180,14 @@ const Map<String, int> _pairBudget = {
   'kiosk -> members': 1,
   'kiosk -> plan': 7,
   'kiosk -> profile': 2,
-  'kiosk -> reservations': 9,
+  // 9→10 (2026-09-16): #1234 — `SpaceAction`/`SpaceActChoice` moved
+  // from `presentation/widgets/space_act_form.dart` to
+  // `domain/space_act.dart` so the application layer could name them
+  // without importing a widget file. kiosk_act_sheet needs both (it
+  // renders the form AND names the choice); kiosk_screen needed only
+  // the types, and its now-dead form import was removed — so this is
+  // +1, not +2.
+  'kiosk -> reservations': 10,
   'kiosk -> workspace': 7,
   'members -> money': 8,
   'members -> plan': 3,
@@ -214,7 +226,11 @@ const Map<String, int> _pairBudget = {
   // the level through floor_plan_providers, like the day and week views.
   'reservations -> plan': 63,
   'reservations -> profile': 1,
-  'reservations -> workspace': 48,
+  // 48→50 (2026-09-16): #1234 — `application/act_on_space.dart` and
+  // `domain/space_act.dart` both need `BookingGranularity`: the
+  // check-in window rule widens with the grid step, so the decision
+  // cannot be made without it. Two imports, both load-bearing.
+  'reservations -> workspace': 50,
   'workspace -> auth': 3,
   'workspace -> events': 11,
   'workspace -> members': 4,
@@ -390,10 +406,25 @@ void main() {
     );
   });
 
-  test('domain/ is pure Dart — no Flutter, no dart:ui', () {
+  // #1234 — `application/` is covered here too, and was not.
+  //
+  // The rule ADR 0024 states is that `application/` decides WHICH WRITE a
+  // request is and nothing else: no BuildContext, no rendering. Three
+  // commands honoured that, and nothing enforced it — this test filtered
+  // on `/domain/` alone. Writing `act_on_space.dart` found the hole the
+  // obvious way: the choice types it needed were declared at the top of
+  // `space_act_form.dart`, a widget file importing material.dart, so the
+  // command would have pulled Material into the application layer and the
+  // suite would have stayed green. The types moved to
+  // `domain/space_act.dart`; this stops the next one.
+  test('domain/ and application/ are pure Dart — no Flutter, no dart:ui',
+      () {
     final violations = <String>[];
     for (final file in _featureFiles()) {
-      if (!file.path.contains('/domain/')) continue;
+      if (!file.path.contains('/domain/') &&
+          !file.path.contains('/application/')) {
+        continue;
+      }
       final lines = file.readAsLinesSync();
       for (var i = 0; i < lines.length; i++) {
         final line = lines[i];
@@ -406,9 +437,10 @@ void main() {
     expect(
       violations,
       isEmpty,
-      reason: 'domain/ must stay pure Dart (AGENT_RULES) — anything that '
-          'paints, renders or touches a BuildContext belongs in '
-          'presentation/:\n${violations.join('\n')}',
+      reason: 'domain/ and application/ must stay pure Dart (AGENT_RULES, '
+          'ADR 0024) — anything that paints, renders or touches a '
+          'BuildContext belongs in presentation/:\n'
+          '${violations.join('\n')}',
     );
   });
 

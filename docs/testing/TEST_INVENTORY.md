@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**483 files, 3212 tests.**
+**485 files, 3224 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -16,12 +16,12 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
-| unit | 167 | 1313 |
+| unit | 168 | 1323 |
 | widget | 224 | 1494 |
 
 | action | files |
 |---|---:|
-| KEEP | 483 |
+| KEEP | 485 |
 
 ## Rules
 
@@ -373,6 +373,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/profile/workspace_dev_mode_test.dart` | widget | Workspace-wide developer mode (#419, migration 0081): set by owner/admins, applies to EVERY member. The switch is an admin affordance; plain members inherit… | 3 | yes | fakes | user-visible behaviour — #419 | no | KEEP |  |
 | `test/features/reservations/act_trace_test.dart` | widget | #791 — two field reports arrived with an EMPTY developer trace: a map check-in that "failed" while the seat QR worked, and an invite QR the scanner "could not… | 9 | yes | fakes | user-visible behaviour — #791 | no | KEEP |  |
 | `test/features/reservations/already_checked_in_test.dart` | widget | #1135 — a member already sitting at a seat, who opens that seat's sheet, was one tap from a request that could not succeed. | 5 | yes | fakes | user-visible behaviour — #1135, #184 | no | KEEP |  |
+| `test/features/reservations/application/act_on_space_test.dart` | unit | #1234 — the same decisions as `already_checked_in_test.dart`, without the application. | 10 | yes | fakes | a domain rule — #1234, #1135, #687 | no | KEEP |  |
 | `test/features/reservations/application/book_seat_test.dart` | unit | #1234 — the point of the application layer, demonstrated. | 7 | yes | fakes | a domain rule — #1234, #687, #106 | no | KEEP |  |
 | `test/features/reservations/auto_check_in_out_test.dart` | unit | Auto check-in/out (#396, migration 0075): with the workspace's autoCheckInOut flag on, a reservation nobody touched completes itself once its time has passed —… | 5 | yes | fakes | a domain rule — #396 | no | KEEP |  |
 | `test/features/reservations/booking_always_answers_test.dart` | unit | #663 — a booking attempt must END IN AN ANSWER: the reservation or check-in the member asked for, named and dated, or the reason it was refused. Never silence. | 8 | yes | none | a domain rule — #663, #644, #687 | no | KEEP |  |
