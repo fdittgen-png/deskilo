@@ -50,7 +50,7 @@ Future<void> exportWorkspaceExcel(
       final money = ref.read(moneyRepositoryProvider);
       final events = await ref
           .read(eventRepositoryProvider)
-          .fetchEvents(workspace.id, limit: 10000);
+          .fetchEvents(workspace.id, limit: 0);
       final features = await ref.read(enabledFeaturesProvider.future);
       final transmissions =
           await money.fetchInvoiceTransmissions(workspace.id);
