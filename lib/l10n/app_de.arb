@@ -2187,6 +2187,8 @@
   "helpTopicWindowEnvelope": "Der Vertrag des Fensterkuverts",
   "helpTopicTrace": "Das Protokoll",
   "helpTopicInstances": "Instanzen",
+  "helpTopicAccounting": "Buchhaltungsexporte",
+  "helpTopicReadiness": "Bereitschaftsprüfung",
   "featureInstanceWizard": "Instanz-Assistent",
   "@featureInstanceWizard": {
     "description": "#977 instance wizard: featureInstanceWizard"

@@ -157,5 +157,7 @@
   "helpTopicReportLayout": "Les mises en page positionnées",
   "helpTopicWindowEnvelope": "Le contrat de l'enveloppe à fenêtre",
   "helpTopicTrace": "Le journal",
-  "helpTopicInstances": "Instances"
+  "helpTopicInstances": "Instances",
+  "helpTopicAccounting": "Exports comptables",
+  "helpTopicReadiness": "recevabilité"
 }

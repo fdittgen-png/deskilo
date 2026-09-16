@@ -157,5 +157,7 @@
   "helpTopicReportLayout": "I layout posizionati",
   "helpTopicWindowEnvelope": "Il contratto della busta a finestra",
   "helpTopicTrace": "Il registro",
-  "helpTopicInstances": "Istanze"
+  "helpTopicInstances": "Istanze",
+  "helpTopicAccounting": "Esportazioni contabili",
+  "helpTopicReadiness": "ammissibilità"
 }

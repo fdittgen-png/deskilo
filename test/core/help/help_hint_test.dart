@@ -393,6 +393,11 @@ void main() {
         'helpTopicWindowEnvelope': l10n.helpTopicWindowEnvelope,
         'helpTopicTrace': l10n.helpTopicTrace,
         'helpTopicInstances': l10n.helpTopicInstances,
+        // #1393 — the export sheet and the readiness gate, the two
+        // surfaces of the sixteen that explain a refusal the app states
+        // without justifying.
+        'helpTopicAccounting': l10n.helpTopicAccounting,
+        'helpTopicReadiness': l10n.helpTopicReadiness,
       };
       // The map above is written by hand, so it can fall behind the ARB
       // exactly as the old `dotTopics` array did — 16 keys shipped and

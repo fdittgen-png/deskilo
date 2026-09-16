@@ -3543,6 +3543,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpTopicInstances => 'Instances';
 
   @override
+  String get helpTopicAccounting => 'Accounting exports';
+
+  @override
+  String get helpTopicReadiness => 'readiness gate';
+
+  @override
   String get featureInstanceWizard => 'Instance wizard';
 
   @override

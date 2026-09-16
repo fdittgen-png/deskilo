@@ -6221,6 +6221,18 @@ abstract class AppLocalizations {
   /// **'Instances'**
   String get helpTopicInstances;
 
+  /// No description provided for @helpTopicAccounting.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting exports'**
+  String get helpTopicAccounting;
+
+  /// No description provided for @helpTopicReadiness.
+  ///
+  /// In en, this message translates to:
+  /// **'readiness gate'**
+  String get helpTopicReadiness;
+
   /// #977 instance wizard: featureInstanceWizard
   ///
   /// In en, this message translates to:

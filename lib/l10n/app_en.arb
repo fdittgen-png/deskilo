@@ -3624,6 +3624,8 @@
   "helpTopicWindowEnvelope": "The window-envelope contract",
   "helpTopicTrace": "The trace",
   "helpTopicInstances": "Instances",
+  "helpTopicAccounting": "Accounting exports",
+  "helpTopicReadiness": "readiness gate",
   "featureInstanceWizard": "Instance wizard",
   "@featureInstanceWizard": {
     "description": "#977 instance wizard: featureInstanceWizard"

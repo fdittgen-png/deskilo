@@ -2161,6 +2161,8 @@
   "helpTopicWindowEnvelope": "Il contratto della busta a finestra",
   "helpTopicTrace": "Il registro",
   "helpTopicInstances": "Istanze",
+  "helpTopicAccounting": "Esportazioni contabili",
+  "helpTopicReadiness": "ammissibilità",
   "helpTitle": "Aiuto",
   "helpContents": "Indice",
   "helpHintMessages": "Tutte le conversazioni in un elenco, la più recente in alto. Tocca la matita per scrivere a qualcuno o creare un gruppo.",
