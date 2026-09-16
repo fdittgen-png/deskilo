@@ -239,13 +239,17 @@ const Map<String, int> _pairBudget = {
   'reservations -> money': 1,
   // 2026-09-15 #1273 62→63: the seat list names a level's only room by
   // the level through floor_plan_providers, like the day and week views.
-  'reservations -> plan': 63,
+  // 2026-09-16 #1301 S1 — +5 plan, +3 workspace: reserve_canvas.dart left
+  // the at-cap reserve_screen.dart and imports the plan and workspace types
+  // the screen still needs for its list view and controls — one file split
+  // in two, no new dependency.
+  'reservations -> plan': 68,
   'reservations -> profile': 1,
   // 48→50 (2026-09-16): #1234 — `application/act_on_space.dart` and
   // `domain/space_act.dart` both need `BookingGranularity`: the
   // check-in window rule widens with the grid step, so the decision
   // cannot be made without it. Two imports, both load-bearing.
-  'reservations -> workspace': 50,
+  'reservations -> workspace': 53,
   'workspace -> auth': 3,
   'workspace -> events': 11,
   'workspace -> members': 4,
