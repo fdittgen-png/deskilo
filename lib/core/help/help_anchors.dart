@@ -483,6 +483,15 @@ abstract final class HelpAnchor {
   /// its build material.
   static const adminInstances = 'admin.instances.overview';
 
+  /// What each accounting format may CLAIM — a regulatory export, an
+  /// exchange format, or a subset — so nobody hands their accountant a
+  /// file that says less than they think.
+  static const adminExportsAccounting = 'admin.exports.accounting';
+
+  /// The readiness gate: what EN 16931 refuses, and which missing item
+  /// is refusing this invoice right now.
+  static const adminEinvoiceReadiness = 'admin.einvoice.readiness';
+
   /// Every anchor the app points at — the lint's left-hand side.
   static const all = <String>{
     moneyVatRates,
@@ -516,6 +525,8 @@ abstract final class HelpAnchor {
     adminReportWindow,
     adminTrace,
     adminInstances,
+    adminExportsAccounting,
+    adminEinvoiceReadiness,
     billingFeeBands,
     billingBandTo,
     billingBandFee,

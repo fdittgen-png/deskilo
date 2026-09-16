@@ -2187,6 +2187,8 @@
   "helpTopicWindowEnvelope": "El contrato del sobre con ventana",
   "helpTopicTrace": "El registro",
   "helpTopicInstances": "Instancias",
+  "helpTopicAccounting": "Exportaciones contables",
+  "helpTopicReadiness": "admisibilidad",
   "featureInstanceWizard": "Asistente de instancia",
   "@featureInstanceWizard": {
     "description": "#977 instance wizard: featureInstanceWizard"

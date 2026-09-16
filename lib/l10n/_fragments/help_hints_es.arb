@@ -157,5 +157,7 @@
   "helpTopicReportLayout": "Los diseños posicionados",
   "helpTopicWindowEnvelope": "El contrato del sobre con ventana",
   "helpTopicTrace": "El registro",
-  "helpTopicInstances": "Instancias"
+  "helpTopicInstances": "Instancias",
+  "helpTopicAccounting": "Exportaciones contables",
+  "helpTopicReadiness": "admisibilidad"
 }

@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/accounting_format.dart';
 
@@ -40,10 +42,21 @@ Future<AccountingFormat?> showAccountingExportSheet(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                l10n?.invoiceExportChoose ?? 'Export for accounting',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
+              Row(children: [
+                Expanded(
+                  child: Text(
+                    l10n?.invoiceExportChoose ?? 'Export for accounting',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                // #1393 — what each format may CLAIM is the whole
+                // question here, and the sheet lists eight of them
+                // without room to say it.
+                HelpDot(
+                  l10n?.helpTopicAccounting ?? 'Accounting exports',
+                  anchor: HelpAnchor.adminExportsAccounting,
+                ),
+              ]),
               const SizedBox(height: AppSpacing.lg),
               for (final format in formats)
                 _FormatTile(format: format, l10n: l10n),

@@ -3574,6 +3574,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpTopicInstances => 'Istanze';
 
   @override
+  String get helpTopicAccounting => 'Esportazioni contabili';
+
+  @override
+  String get helpTopicReadiness => 'ammissibilità';
+
+  @override
   String get featureInstanceWizard => 'Assistente istanza';
 
   @override

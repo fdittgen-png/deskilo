@@ -157,5 +157,7 @@
   "helpTopicReportLayout": "Positioned layouts",
   "helpTopicWindowEnvelope": "The window-envelope contract",
   "helpTopicTrace": "The trace",
-  "helpTopicInstances": "Instances"
+  "helpTopicInstances": "Instances",
+  "helpTopicAccounting": "Accounting exports",
+  "helpTopicReadiness": "readiness gate"
 }

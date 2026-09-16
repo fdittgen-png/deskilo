@@ -3570,6 +3570,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpTopicInstances => 'Instancias';
 
   @override
+  String get helpTopicAccounting => 'Exportaciones contables';
+
+  @override
+  String get helpTopicReadiness => 'admisibilidad';
+
+  @override
   String get featureInstanceWizard => 'Asistente de instancia';
 
   @override

@@ -2187,6 +2187,8 @@
   "helpTopicWindowEnvelope": "Le contrat de l'enveloppe à fenêtre",
   "helpTopicTrace": "Le journal",
   "helpTopicInstances": "Instances",
+  "helpTopicAccounting": "Exports comptables",
+  "helpTopicReadiness": "recevabilité",
   "featureInstanceWizard": "Assistant d'instance",
   "@featureInstanceWizard": {
     "description": "#977 instance wizard: featureInstanceWizard"

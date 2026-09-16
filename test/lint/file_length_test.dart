@@ -153,7 +153,12 @@ const Map<String, int> _baseline = {
   // since #1259 translated the technical guide into all five
   // languages. This file grows by an anchor per documented object,
   // which is the point: the comment above says so.
-  'lib/core/help/help_anchors.dart': 640,
+  // 640→650 (2026-09-16): #1393 — admin.exports.accounting and
+  // admin.einvoice.readiness, each with the paragraph saying what it
+  // documents. A flat registry of constants is the one shape where
+  // extraction is the wrong answer: splitting it would put one identity
+  // in two files and the lint's left-hand side in neither.
+  'lib/core/help/help_anchors.dart': 650,
   // 1570→1600 (2026-09-16): #1294 — the new-member defaults ride this
   // screen's one Save. The tiles themselves are their own file
   // (new_member_defaults_tiles.dart); what is left here is the

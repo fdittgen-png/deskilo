@@ -3578,6 +3578,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get helpTopicInstances => 'Instances';
 
   @override
+  String get helpTopicAccounting => 'Exports comptables';
+
+  @override
+  String get helpTopicReadiness => 'recevabilité';
+
+  @override
   String get featureInstanceWizard => 'Assistant d\'instance';
 
   @override

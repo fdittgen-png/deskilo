@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -184,10 +186,21 @@ class _EInvoiceBody extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                l10n?.invoiceEInvoiceAction ?? 'E-invoice (XML)',
-                style: theme.textTheme.titleMedium,
-              ),
+              Row(children: [
+                Expanded(
+                  child: Text(
+                    l10n?.invoiceEInvoiceAction ?? 'E-invoice (XML)',
+                    style: theme.textTheme.titleMedium,
+                  ),
+                ),
+                // #1393 — the gate refuses with a named missing item,
+                // and that is exactly the moment somebody wants the
+                // chapter explaining what EN 16931 requires.
+                HelpDot(
+                  l10n?.helpTopicReadiness ?? 'readiness gate',
+                  anchor: HelpAnchor.adminEinvoiceReadiness,
+                ),
+              ]),
               const SizedBox(height: AppSpacing.sm),
               Text(
                 l10n?.invoiceEInvoiceExplain ??

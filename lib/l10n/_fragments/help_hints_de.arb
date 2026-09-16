@@ -157,5 +157,7 @@
   "helpTopicReportLayout": "Positionierte Layouts",
   "helpTopicWindowEnvelope": "Der Vertrag des Fensterkuverts",
   "helpTopicTrace": "Das Protokoll",
-  "helpTopicInstances": "Instanzen"
+  "helpTopicInstances": "Instanzen",
+  "helpTopicAccounting": "Buchhaltungsexporte",
+  "helpTopicReadiness": "Bereitschaftsprüfung"
 }
