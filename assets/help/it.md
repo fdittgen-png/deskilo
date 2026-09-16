@@ -959,6 +959,15 @@ I dati operativi — membri, prenotazioni, consumo, fatture, pagamenti —
 come foglio di calcolo, per l'analisi che l'app non fa. È
 un'esportazione, non un trasferimento: nulla la rilegge.
 
+Arriva come **un unico ZIP** (#1310): `workspace.xlsx`, un `manifest.json`
+che indica quante righe contiene ogni scheda, da quale versione dello
+schema provengono i dati e uno SHA-256 per file, e `files/` con i file
+salvati dello spazio — sfondi e immagini della piantina, immagini dei
+report. Ogni tabella viene letta fino alla fine; un'esportazione che non
+può essere completa fallisce con un messaggio invece di salvare meno. Gli
+account non viaggiano: le persone si riuniscono e rivendicano il proprio
+profilo su un altro server.
+
 ### Codici QR degli spazi e prenotazioni di spazi interi
 
 Quattro passi trasformano «scansiona il codice sul tavolo» nel flusso di prenotazione quotidiano (§4a):

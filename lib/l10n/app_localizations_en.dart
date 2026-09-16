@@ -10259,7 +10259,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get workspaceExcelExportSubtitle =>
-      'Every dataset in one workbook: bookings, payments, invoices, members and the floor plan — a tab each.';
+      'One ZIP: every dataset in a workbook (bookings, payments, invoices, members, the floor plan — a tab each), a manifest counting its rows, and the space\'s stored files.';
 
   @override
   String get workspaceLanguageLabel => 'Workspace language';

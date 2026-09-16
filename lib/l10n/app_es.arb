@@ -6901,7 +6901,7 @@
   "workspaceDeskTransparencyHelper": "Reduce la opacidad de las mesas para que se vea la foto de fondo de la planta.",
   "workspaceDeskOpacityValue": "Opacidad: {percent} %",
   "workspaceExcelExport": "Exportar datos (Excel)",
-  "workspaceExcelExportSubtitle": "Todos los datos en un libro: reservas, pagos, facturas, miembros y plano — una pestaña cada uno.",
+  "workspaceExcelExportSubtitle": "Un ZIP: todos los datos en un libro (reservas, pagos, facturas, miembros, plano — una pestaña cada uno), un manifiesto que cuenta sus filas y los archivos guardados del espacio.",
   "workspaceLanguageLabel": "Idioma del espacio",
   "@workspaceLanguageLabel": {
     "description": "Finance/settings UX + workspace language (#486)"

@@ -950,6 +950,15 @@ Los datos de explotación — miembros, reservas, consumo, facturas, pagos —
 como hoja de cálculo, para el análisis que la app no hace. Es una
 exportación, no una transferencia: nada la vuelve a leer.
 
+Llega como **un único ZIP** (#1310): `workspace.xlsx`, un `manifest.json`
+que indica cuántas filas tiene cada pestaña, de qué versión del esquema
+vienen los datos y un SHA-256 por archivo, y `files/` con los archivos
+guardados del espacio — fondos e imágenes del plano, imágenes de los
+informes. Cada tabla se lee hasta el final; una exportación que no puede
+ser completa falla con un mensaje en lugar de guardar menos. Las cuentas no
+viajan: las personas vuelven a unirse y reclaman su perfil en otro
+servidor.
+
 ### Códigos QR de espacios y reservas de espacios enteros
 
 Cuatro pasos convierten «escanear el código de la mesa» en el flujo de reserva diario (§4a):

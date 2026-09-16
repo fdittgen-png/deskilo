@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:typed_data' show Uint8List;
+import 'package:deskilo/features/workspace/domain/workspace_export_bundle.dart';
+import 'package:deskilo/features/workspace/providers/workspace_files_providers.dart';
 import 'package:deskilo/core/backend/schema_version.dart';
 import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:deskilo/app/shell/shell_bar_visibility.dart';
@@ -1894,6 +1897,7 @@ List<Override> standardTestOverrides({
   NavigationStyleStore? navigationStyle,
   DeploymentRepository? deployment,
   SchemaVersionSource? schemaVersion,
+  WorkspaceFilesRepository? workspaceFiles,
 }) {
   return [
     // #1150 — a 24-hour clock for every test: `ClockPref.auto` renders
@@ -1904,6 +1908,9 @@ List<Override> standardTestOverrides({
       appFormatProvider.overrideWithValue(
         AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24, timeZoneMode: timeZoneMode),
       ),
+    // #1310 — the workspace's stored files, in memory.
+    workspaceFilesRepositoryProvider
+        .overrideWithValue(workspaceFiles ?? FakeWorkspaceFiles()),
     // #1312 — the server answers with exactly this app's schema, so no
     // test is sent to the update screen unless it says otherwise.
     schemaVersionSourceProvider.overrideWithValue(
@@ -2150,4 +2157,16 @@ class FixedSchemaVersionSource implements SchemaVersionSource {
     }
     return version;
   }
+}
+
+/// #1310 — a workspace's stored files, keyed by path under its prefix.
+class FakeWorkspaceFiles implements WorkspaceFilesRepository {
+  FakeWorkspaceFiles([Map<String, List<int>>? files]) : files = files ?? {};
+  final Map<String, List<int>> files;
+  @override
+  Future<List<String>> listFiles(String workspaceId) async =>
+      files.keys.toList()..sort();
+  @override
+  Future<Uint8List> download(String workspaceId, String path) async =>
+      Uint8List.fromList(files[path]!);
 }

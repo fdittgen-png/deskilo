@@ -53,6 +53,9 @@ Future<List<({String name, Uint8List bytes})>> _pump(
           workspace: workspace ??
               FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags),
           floorPlan: FakeFloorPlanRepository()..seedSmallPlan(),
+          workspaceFiles: FakeWorkspaceFiles({
+            'level-1/background.png': [0x89, 0x50, 0x4E, 0x47],
+          }),
         ),
         fileSaverProvider.overrideWithValue(
           ({required bytes, required fileName}) async {
@@ -82,8 +85,9 @@ void main() {
     );
   });
 
-  testWidgets('the tile saves a real workbook: eleven tabs, named with '
-      'the workspace code and the pinned date', (tester) async {
+  testWidgets('the tile saves the export ZIP: a real eleven-tab workbook, '
+      'the manifest and the stored files, named with the workspace code and '
+      'the pinned date', (tester) async {
     final saved = await _pump(tester);
 
     final tile = find.byKey(const Key('workspaceSettingsExportExcel'));
@@ -92,10 +96,17 @@ void main() {
     await tester.pumpAndSettle();
 
     final file = saved.single;
-    expect(file.name, 'deskilo-export-GOODCODE22-2026-05-13.xlsx');
-    // PK magic + all eleven worksheets present in the archive.
-    expect(file.bytes.sublist(0, 2), [0x50, 0x4B]);
-    final archive = ZipDecoder().decodeBytes(file.bytes);
+    expect(file.name, 'deskilo-export-GOODCODE22-2026-05-13.zip');
+    // #1310 — the workbook travels inside the export ZIP, beside the
+    // manifest and the space's stored files.
+    final bundle = ZipDecoder().decodeBytes(file.bytes);
+    expect(bundle.findFile('manifest.json'), isNotNull);
+    expect(bundle.findFile('files/level-1/background.png'), isNotNull,
+        reason: 'a stored file of the space is missing from the export');
+    final workbook = bundle.findFile('workspace.xlsx')!.content as List<int>;
+    // PK magic + all eleven worksheets present in the workbook.
+    expect(workbook.sublist(0, 2), [0x50, 0x4B]);
+    final archive = ZipDecoder().decodeBytes(workbook);
     for (var i = 1; i <= 11; i++) {
       expect(archive.findFile('xl/worksheets/sheet$i.xml'), isNotNull,
           reason: 'sheet$i missing — a dataset dropped out of the export');
