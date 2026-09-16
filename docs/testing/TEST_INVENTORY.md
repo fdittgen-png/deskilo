@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**473 files, 3144 tests.**
+**474 files, 3148 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -12,7 +12,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | database | 16 | 157 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
-| lint | 59 | 155 |
+| lint | 60 | 159 |
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
@@ -21,7 +21,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 
 | action | files |
 |---|---:|
-| KEEP | 473 |
+| KEEP | 474 |
 
 ## Rules
 
@@ -472,6 +472,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/lint/chip_checkmark_test.dart` | lint | #1191/#1192 — a Chip that carries an `avatar:` must not ALSO draw the selected checkmark. Material paints both, one on top of the other: the wizard's step… | 1 | yes | repository sources | an architecture, security or process rule — #1191, #1192 | no | KEEP |  |
 | `test/lint/chip_row_affordance_test.dart` | lint | #1184 — a horizontal row of chips must say that it scrolls. | 1 | yes | none | an architecture, security or process rule — #1184 | no | KEEP |  |
 | `test/lint/config_reachable_test.dart` | lint | #807 — every parameter an owner can set must be reachable in the UI. | 2 | yes | repository sources | an architecture, security or process rule — #807, #925, #945 | no | KEEP |  |
+| `test/lint/configuration_classification_test.dart` | lint | #1290 S2 — nothing configurable stays unclassified. | 4 | yes | repository sources | an architecture, security or process rule — #1290, #992 | no | KEEP |  |
 | `test/lint/contrast_test.dart` | lint | #721 — every text-on-surface pair the app relies on reaches WCAG 2.1 AA (4.5:1) in the light, dark and warm schemes, and every decorative pair (outlines, icons… | 2 | yes | none | an architecture, security or process rule — #721 | no | KEEP |  |
 | `test/lint/definer_caller_guard_test.dart` | lint | #1228 — a SECURITY DEFINER function a client can call checks who is calling. | 1 | yes | repository sources | an architecture, security or process rule — #1228, #1226 | no | KEEP |  |
 | `test/lint/distinct_tile_labels_test.dart` | lint | #1057 — two rows of one list must not carry the same label. | 2 | yes | repository sources | an architecture, security or process rule — #1057, #1058 | no | KEEP |  |

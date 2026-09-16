@@ -135,10 +135,28 @@ not: they are per person, server-side, and cross-workspace.
 - Everything else already has one: #1287, #1288, #1289, #1294, #1295,
   #1276.
 
-## What is not here yet
+## The lint
 
-**The lint** (`test/lint/configuration_classification_test.dart`, S2)
-fails when any `deployable_entities()` key or any `workspaces` column has
-no row above. It waits on #1276 S1, which defines the `merge_policy` and
-`group` keys the rows must carry. Until it exists, this document is
-maintained by hand and the sweep recipes above are how to check it.
+`test/lint/configuration_classification_test.dart` (S2) fails when any
+`workspaces` column or any `deployable_entities()` key has no row above.
+It reads both from the migrations rather than from a live database — the
+way `privacy_claims_test` reads its SQL — because a lint that needs a
+connection is a lint that gets skipped.
+
+Three shapes it has to know about, each of which would otherwise let a
+setting through unclassified:
+
+- many `alter table public.workspaces` statements put the table on one
+  line and the column on the next, so the parser reads whole statements;
+  a single-line pattern finds five of the twenty-eight;
+- the six system columns (#992) are never named in a `workspaces`
+  statement at all — `ensure_system_columns()` adds them to every table;
+- `deployable_entities()` is defined twice (0186, then 0219), and only
+  the later definition is the one in force.
+
+It is proven red: a throwaway migration adding an unclassified column and
+a nineteenth entity key makes it name both and fail.
+
+The sweep recipes above remain how to rebuild this document by hand when
+the classification itself — as opposed to its completeness — needs
+revisiting.
