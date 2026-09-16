@@ -101,13 +101,27 @@ replicate() {
   out="$(src -At -c "$1" | copy -At -v ON_ERROR_STOP=1 2>&1)" \
     || fail "$2 failed on the copy: $out"
 }
+# The two queries filter differently, and the difference matters.
+#
+# A schema is only created when it is one this database does not already
+# have: `pg_catalog` and friends are refused outright ("the prefix pg_ is
+# reserved for system schemas") and `public` and `information_schema`
+# already exist. An EXTENSION in `public`, on the other hand, still has
+# to be created there — so that query only skips the system schemas it
+# could not target anyway. `left(nspname, 3)` rather than a LIKE, so no
+# escaped underscore has to survive both bash and SQL quoting.
 replicate "select distinct 'create schema if not exists ' || quote_ident(n.nspname) || ';'
              from pg_extension e join pg_namespace n on n.oid = e.extnamespace
-            where e.extname <> 'plpgsql'" "creating the extension schemas"
+            where e.extname <> 'plpgsql'
+              and left(n.nspname, 3) <> 'pg_'
+              and n.nspname not in ('public', 'information_schema')" \
+  "creating the extension schemas"
 replicate "select 'create extension if not exists ' || quote_ident(e.extname)
                || ' with schema ' || quote_ident(n.nspname) || ';'
              from pg_extension e join pg_namespace n on n.oid = e.extnamespace
-            where e.extname <> 'plpgsql'" "installing the extensions"
+            where e.extname <> 'plpgsql'
+              and left(n.nspname, 3) <> 'pg_'" \
+  "installing the extensions"
 
 # A brand-new database already has a `public` schema, and pg_dump emits
 # `CREATE SCHEMA public;` for it — which stops the restore on its very
