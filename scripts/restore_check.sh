@@ -124,6 +124,35 @@ CROSSED="$(copy -At -c "
    where m.workspace_id <> r.workspace_id")"
 [ "$CROSSED" = "0" ] || fail "$CROSSED reservations belong to another tenant's member"
 
+# ------------------------------------------------------------ #1310 S1
+# The suites, re-executed against the COPY.
+#
+# Equal counts and a clean reconciliation say the rows arrived. They say
+# nothing about whether the restored database still ENFORCES what the
+# original enforced — a restore that lost the policies would pass every
+# check above and hand an operator a database where one workspace can
+# read another. So the tenancy and money suites run again, here, against
+# the copy. They roll back, so they leave it as they found it, and they
+# run before the damage below.
+#
+# pgTAP reports a failure as `not ok` in its output, not as a non-zero
+# exit status, so the output is what gets read. `plan()` and friends are
+# called unqualified, which is why search_path is set first — outside
+# the transaction each file opens.
+echo "--- the suites still hold on the copy"
+for f in 10_tenancy_isolation 11_tenancy_matrix 20_money_invariants \
+         21_ledger_append_only 23_domain_invariants; do
+  out="$( { echo 'set search_path to public, extensions;'; \
+            cat "supabase/tests/database/$f.sql"; } \
+          | copy -At -v ON_ERROR_STOP=1 2>&1 )" \
+    || fail "$f could not run on the copy: $(echo "$out" | tail -3)"
+  if echo "$out" | grep -qE '^not ok'; then
+    echo "$out" | grep -E '^not ok' | head -5
+    fail "$f failed on the restored copy"
+  fi
+  echo "  $f: $(echo "$out" | grep -cE '^ok') assertions hold on the copy"
+done
+
 # ---------------------------------------------------------------- #1338
 # The drill made to fail, on the copy that is about to be dropped.
 echo "--- and the drill detects damage"
@@ -145,4 +174,4 @@ echo "broken match detected: reconciliation refused it"
 
 src -q -c "drop database if exists $COPY_DB" >/dev/null 2>&1
 rm -f "$DUMP" "$DUMP.load"
-echo "restore drill:$AFTER, reconciled clean, tenants intact, damage detected"
+echo "restore drill:$AFTER, reconciled clean, suites hold, tenants intact, damage detected"
