@@ -4,11 +4,11 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**467 files, 3090 tests.**
+**468 files, 3095 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
-| a11y | 1 | 1 |
+| a11y | 2 | 6 |
 | database | 13 | 118 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
@@ -21,7 +21,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 
 | action | files |
 |---|---:|
-| KEEP | 467 |
+| KEEP | 468 |
 
 ## Rules
 
@@ -67,6 +67,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `supabase/tests/database/23_domain_invariants.sql` | database | #1248 — the business invariants, executed. | 7 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1248, #1226 | no | KEEP |  |
 | `supabase/tests/database/24_booking_idempotency.sql` | database | #1241 — a booking can be replayed, and replaying it books once. | 6 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1241, #1240, #1248 | no | KEEP |  |
 | `supabase/tests/database/30_query_budgets.sql` | database | #1236 — the database half of the performance budgets. | 9 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1236, #1225 | no | KEEP |  |
+| `test/a11y/responsive_matrix_test.dart` | a11y | #1339 — the screens hold at a narrow phone, at twice the text size, and with animation switched off. | 5 | yes | none | an accessibility contract — #1339 | no | KEEP |  |
 | `test/a11y/screen_guidelines_test.dart` | a11y | #1235 — WCAG 2.2 AA as a build result, on every screen we can reach. | 1 | yes | none | an accessibility contract — #1235 | no | KEEP |  |
 | `test/app/app_smoke_test.dart` | widget | The app boots: a signed-in user lands in the shell on Messages, a signed-out one on the auth screen. | 2 | yes | fakes | user-visible behaviour — #687 | no | KEEP |  |
 | `test/app/boot_roles_test.dart` | widget | App-start validation per role (#87): the app must reach the shell for every role defined on the workspace membership (owner / admin / worker), showing exactly… | 3 | yes | fakes | user-visible behaviour — #718 | no | KEEP |  |
