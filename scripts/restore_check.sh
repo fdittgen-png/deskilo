@@ -178,7 +178,23 @@ for f in 10_tenancy_isolation 11_tenancy_matrix 20_money_invariants \
   out="$( { echo 'set search_path to public, extensions, pg_catalog;'; \
             cat "supabase/tests/database/$f.sql"; } \
           | copy -At -v ON_ERROR_STOP=1 2>&1 )" \
-    || fail "$f could not run on the copy: $(echo "$out" | grep -E '^(ERROR|psql)' | head -3)"
+    || {
+         # Four rounds in, each failure has named a different cause, so
+         # the step says what the copy actually has rather than leaving
+         # the next guess to a rerun.
+         echo "--- what the copy actually has ---"
+         copy -At -c "select 'pgtap ' || e.extversion || ' in ' || n.nspname
+                        from pg_extension e
+                        join pg_namespace n on n.oid = e.extnamespace
+                       where e.extname = 'pgtap'" 2>&1 || true
+         copy -At -c "select n.nspname || '.is(' ||
+                             pg_get_function_identity_arguments(p.oid) || ')'
+                        from pg_proc p
+                        join pg_namespace n on n.oid = p.pronamespace
+                       where p.proname = 'is' limit 8" 2>&1 || true
+         copy -At -c "show search_path" 2>&1 || true
+         fail "$f could not run on the copy: $(echo "$out" | grep -E '^(ERROR|psql)' | head -3)"
+       }
   if echo "$out" | grep -qE '^not ok'; then
     echo "$out" | grep -E '^not ok' | head -5
     fail "$f failed on the restored copy"
