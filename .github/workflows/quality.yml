@@ -255,7 +255,7 @@ jobs:
               "${{ steps.pgtap.outcome }}"
             printf 'Policy drift|%s|live policies equal the set the migrations build\n' \
               "${{ steps.policies.outcome }}"
-            printf 'Restore drill|%s|seeded, dumped, restored into a fresh database; counts equal, reconciled, tenancy and money suites re-run on the copy\n' \
+            printf 'Restore drill|%s|seeded, dumped, restored into a fresh database, counts equal and reconciled\n' \
               "${{ steps.restore.outcome }}"
           } > report/database.psv
           cat report/database.psv
