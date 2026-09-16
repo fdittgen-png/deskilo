@@ -18,7 +18,7 @@
 -- carrying rows dev deleted. `mirror` stays the default, and a
 -- two-argument call still means mirror.
 begin;
-select plan(10);
+select plan(12);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -140,6 +140,41 @@ select is(
   'fee bands PARTITION 0-100, so tariffs travel whole or not at all — '
   'merging them by from_pct leaves overlapping ranges and member_statement '
   'then picks a band arbitrarily');
+
+-- --------------------------------------------- #1360: one space's group
+-- Why here and not in `configuration_classification_test`: that lint
+-- reads the registry from the latest migration that DEFINES
+-- deployable_entities(). 0222 is an anchored patch, not a definition, so
+-- the lint still reads 0219 and would see the pre-fix placement. This
+-- file runs against the replayed database, where every migration has
+-- been applied in order — the only place the real registry can be read.
+select is(
+  (select string_agg(e->>'key', ',' order by e->>'key')
+     from jsonb_array_elements(public.deployable_entities()) e
+    where e->'workspace_keys' @> '["whatsapp_group"]'::jsonb),
+  'identity',
+  'whatsapp_group belongs to identity and to nothing else: it is a link '
+  'to ONE space''s group chat, so it travels with a space''s own '
+  'particulars between its twins — never with the wording a template '
+  'carries, which is how a second space got pointed at the first one''s '
+  'WhatsApp group (#1360)');
+
+-- The rule rather than the instance, so the NEXT class-A key cannot
+-- repeat it. `default_locale` is deliberately absent: it sits in
+-- identity but is class B — a language a template may legitimately
+-- carry. These eleven are the keys that name one particular space.
+select is(
+  (select coalesce(string_agg(e->>'key', ',' order by e->>'key'), '')
+     from jsonb_array_elements(public.deployable_entities()) e
+    where e->>'key' <> 'identity'
+      and e->'workspace_keys' ?| array['address','street','postal_code','city',
+            'vat_regime','vat_id','legal_id','tax_exemption_reason',
+            'vat_account','invoice_legal','whatsapp_group']),
+  '',
+  'no entity but identity carries a key that identifies ONE space. '
+  'Those keys travel between a space''s own twins because identity is '
+  'ticked deliberately; an entity a template carries must never smuggle '
+  'them into a different space');
 
 select * from finish();
 rollback;
