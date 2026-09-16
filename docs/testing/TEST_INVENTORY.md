@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**492 files, 3272 tests.**
+**493 files, 3275 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -12,7 +12,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | database | 20 | 201 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
-| lint | 66 | 181 |
+| lint | 67 | 184 |
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
@@ -21,7 +21,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 
 | action | files |
 |---|---:|
-| KEEP | 492 |
+| KEEP | 493 |
 
 ## Rules
 
@@ -537,6 +537,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/lint/state_primitives_test.dart` | lint | #1305 S1 — an empty list must never look like a failed one. | 2 | yes | none | an architecture, security or process rule — #1305 | no | KEEP |  |
 | `test/lint/system_columns_test.dart` | lint | #992 — six system columns on every table: created_datetime, modified_datetime, company_id, site_id, created_by_user, modified_by_user. Migration 0183 added… | 4 | yes | repository sources | an architecture, security or process rule — #992 | no | KEEP |  |
 | `test/lint/test_inventory_test.dart` | lint | #1334 — the test inventory lists exactly the tests that exist. | 3 | yes | none | an architecture, security or process rule — #1334 | no | KEEP |  |
+| `test/lint/visual_tokens_test.dart` | lint | #1304 S1 — a screen does not choose its own font size or its own colour. | 3 | yes | none | an architecture, security or process rule — #1304 | no | KEEP |  |
 | `test/lint/wire_enum_test.dart` | lint | #1148 — `Enum.values.byName` throws on a value it does not know, and a throw inside a row mapper empties the whole list on an older client. Data layers read… | 1 | yes | none | an architecture, security or process rule — #1148 | no | KEEP |  |
 | `test/lint/workflow_naming_test.dart` | lint | #1033 — the Actions sidebar is sorted alphabetically by workflow name, so the name has to carry the grouping or fourteen workflows read as fourteen unrelated… | 4 | yes | repository sources | an architecture, security or process rule — #1033 | no | KEEP |  |
 | `test/lint/workflow_pins_test.dart` | lint | #706 — every workflow that builds the app builds it with the SAME Flutter, and says so in one place. | 1 | yes | repository sources | an architecture, security or process rule — #706, #809 | no | KEEP |  |
