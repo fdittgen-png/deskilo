@@ -1007,6 +1007,15 @@ Die Betriebsdaten — Mitglieder, Reservierungen, Nutzung, Rechnungen,
 Zahlungen — als Tabelle, für die Auswertung, die die App nicht macht. Es
 ist ein Export, keine Übertragung: nichts liest ihn zurück.
 
+Er kommt als **ein ZIP** (#1310): `workspace.xlsx`, eine `manifest.json`,
+die angibt, wie viele Zeilen jeder Tab enthält, aus welcher Schemaversion
+die Daten stammen und einen SHA-256 je Datei, sowie `files/` mit den
+gespeicherten Dateien des Space — Planhintergründe und -bilder,
+Berichtsbilder. Jede Tabelle wird bis zum Ende gelesen; ein Export, der
+nicht vollständig sein kann, scheitert mit einer Meldung, statt weniger zu
+speichern. Konten reisen nicht mit: Personen treten erneut bei und
+übernehmen ihr Profil auf einem anderen Server.
+
 ### Raum-QR-Codes & Ganzraum-Reservierungen
 
 Vier Schritte machen „scann die Karte am Tisch" zum Alltag (§4a):

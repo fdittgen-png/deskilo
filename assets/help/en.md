@@ -961,6 +961,14 @@ The operational data — members, reservations, usage, invoices, payments —
 as a spreadsheet, for the analysis the app does not do. It is an export,
 not a transfer: nothing reads it back.
 
+It arrives as **one ZIP** (#1310): `workspace.xlsx`, a `manifest.json`
+that states how many rows each tab holds, which schema version the data
+came from and a SHA-256 for every file, and `files/` with the space's own
+stored files — plan backgrounds and images, the report images. Every table
+is read to its end; an export that cannot be complete fails with a message
+instead of saving less. Accounts do not travel: people re-join and claim
+their profile on another server.
+
 ### Space QR codes & whole-space reservations
 
 Four steps turn "scan the code on the desk" into the daily booking flow (§4a):

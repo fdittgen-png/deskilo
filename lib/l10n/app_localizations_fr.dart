@@ -10361,7 +10361,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get workspaceExcelExportSubtitle =>
-      'Toutes les données dans un classeur : réservations, paiements, factures, membres et plan — un onglet chacun.';
+      'Un ZIP : toutes les données dans un classeur (réservations, paiements, factures, membres, plan — un onglet chacun), un manifeste qui en compte les lignes, et les fichiers de l\'espace.';
 
   @override
   String get workspaceLanguageLabel => 'Langue de l\'espace';

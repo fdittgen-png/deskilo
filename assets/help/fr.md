@@ -984,6 +984,15 @@ Les données d'exploitation — membres, réservations, consommation,
 factures, paiements — en tableur, pour l'analyse que l'application ne
 fait pas. C'est un export, pas un transfert : rien ne le relit.
 
+Il arrive en **un seul ZIP** (#1310) : `workspace.xlsx`, un `manifest.json`
+qui indique le nombre de lignes de chaque onglet, la version du schéma
+d'où viennent les données et un SHA-256 par fichier, et `files/` avec les
+fichiers de l'espace — fonds et images du plan, images des rapports.
+Chaque table est lue jusqu'au bout ; un export qui ne peut pas être complet
+échoue avec un message au lieu d'enregistrer moins. Les comptes ne
+voyagent pas : les personnes rejoignent et réclament leur profil sur un
+autre serveur.
+
 ### Codes QR des espaces et réservations d'espaces entiers
 
 Quatre étapes font de « scanner le code sur la table » le flux quotidien (§4a) :

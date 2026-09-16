@@ -72,6 +72,9 @@ dependencies:
   # zip. Pure Dart, MIT, already in the tree transitively — the workbook
   # itself is written by lib/core/files/xlsx.dart, no spreadsheet package.
   archive: ^4.0.9
+  # #1310 — SHA-256 of every stored file in the workspace export manifest.
+  # BSD-3, Dart team, already in the tree transitively; now named directly.
+  crypto: ^3.0.7
 
   # XML import file picking (#165) — Flutter-official, BSD-3; the Android
   # implementation rides the Storage Access Framework, no GMS.

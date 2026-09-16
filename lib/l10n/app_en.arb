@@ -10919,7 +10919,7 @@
   "@workspaceExcelExport": {
     "description": "Settings tile (#395): download the whole workspace as an Excel workbook."
   },
-  "workspaceExcelExportSubtitle": "Every dataset in one workbook: bookings, payments, invoices, members and the floor plan — a tab each.",
+  "workspaceExcelExportSubtitle": "One ZIP: every dataset in a workbook (bookings, payments, invoices, members, the floor plan — a tab each), a manifest counting its rows, and the space's stored files.",
   "@workspaceExcelExportSubtitle": {
     "description": "Subtitle under the Excel export tile (#395)."
   },

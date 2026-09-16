@@ -10343,7 +10343,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get workspaceExcelExportSubtitle =>
-      'Alle Daten in einer Arbeitsmappe: Buchungen, Zahlungen, Rechnungen, Mitglieder und Plan — je ein Tab.';
+      'Ein ZIP: alle Daten in einer Arbeitsmappe (Buchungen, Zahlungen, Rechnungen, Mitglieder, Plan — je ein Tab), ein Manifest, das ihre Zeilen zählt, und die gespeicherten Dateien des Space.';
 
   @override
   String get workspaceLanguageLabel => 'Sprache des Arbeitsbereichs';

@@ -10332,7 +10332,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get workspaceExcelExportSubtitle =>
-      'Todos los datos en un libro: reservas, pagos, facturas, miembros y plano — una pestaña cada uno.';
+      'Un ZIP: todos los datos en un libro (reservas, pagos, facturas, miembros, plano — una pestaña cada uno), un manifiesto que cuenta sus filas y los archivos guardados del espacio.';
 
   @override
   String get workspaceLanguageLabel => 'Idioma del espacio';

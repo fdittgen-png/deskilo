@@ -6901,7 +6901,7 @@
   "workspaceDeskTransparencyHelper": "Riduci l'opacità dei tavoli per far trasparire la foto di sfondo del piano.",
   "workspaceDeskOpacityValue": "Opacità: {percent}%",
   "workspaceExcelExport": "Esporta i dati (Excel)",
-  "workspaceExcelExportSubtitle": "Tutti i dati in una cartella: prenotazioni, pagamenti, fatture, membri e piantina — una scheda ciascuno.",
+  "workspaceExcelExportSubtitle": "Uno ZIP: tutti i dati in una cartella (prenotazioni, pagamenti, fatture, membri, piantina — una scheda ciascuno), un manifesto che ne conta le righe e i file salvati dello spazio.",
   "workspaceLanguageLabel": "Lingua dello spazio",
   "@workspaceLanguageLabel": {
     "description": "Finance/settings UX + workspace language (#486)"

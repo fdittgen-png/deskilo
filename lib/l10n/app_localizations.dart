@@ -18092,7 +18092,7 @@ abstract class AppLocalizations {
   /// Subtitle under the Excel export tile (#395).
   ///
   /// In en, this message translates to:
-  /// **'Every dataset in one workbook: bookings, payments, invoices, members and the floor plan — a tab each.'**
+  /// **'One ZIP: every dataset in a workbook (bookings, payments, invoices, members, the floor plan — a tab each), a manifest counting its rows, and the space\'s stored files.'**
   String get workspaceExcelExportSubtitle;
 
   /// Finance/settings UX + workspace language (#486)

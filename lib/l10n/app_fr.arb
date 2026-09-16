@@ -6901,7 +6901,7 @@
   "workspaceDeskTransparencyHelper": "Réduisez l'opacité des tables pour laisser transparaître la photo de fond de l'étage.",
   "workspaceDeskOpacityValue": "Opacité : {percent} %",
   "workspaceExcelExport": "Exporter les données (Excel)",
-  "workspaceExcelExportSubtitle": "Toutes les données dans un classeur : réservations, paiements, factures, membres et plan — un onglet chacun.",
+  "workspaceExcelExportSubtitle": "Un ZIP : toutes les données dans un classeur (réservations, paiements, factures, membres, plan — un onglet chacun), un manifeste qui en compte les lignes, et les fichiers de l'espace.",
   "workspaceLanguageLabel": "Langue de l'espace",
   "@workspaceLanguageLabel": {
     "description": "Finance/settings UX + workspace language (#486)"
