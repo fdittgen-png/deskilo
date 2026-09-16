@@ -48,6 +48,16 @@ Set<String> _anchors(String locale) {
 /// budget below STAYS 35: it is per locale, and Italian still misses both
 /// admin guides, so the worst case has not moved.
 ///
+/// 35→16 (2026-09-16): #1259 S2 — the Italian configuration guide,
+/// the last of four. THIS is the slice that moves the worst case: the
+/// budget is checked per locale and takes the widest gap, so it could
+/// not fall while any locale still missed the guide. fr, de, es and it
+/// now all sit at 16 — the `admin.*` anchors of the technical guide,
+/// which no locale has yet. Leaving it at 35 would admit a regression
+/// of nineteen topics without a word.
+///
+/// 5→4 (2026-09-16): one fewer listed-but-absent guide.
+///
 /// 7→6 (2026-09-16): #1259 S2 — the German configuration guide. The GAP
 /// budget below STAYS 35: it is checked per locale, and es/it are still
 /// missing both admin guides, so the worst case has not moved.
@@ -61,7 +71,7 @@ Set<String> _anchors(String locale) {
 /// it as translations land — a slice that translates the configuration
 /// guide takes it to 16, and the technical guide takes it to 0, at which
 /// point this becomes an equality and the ratchet is retired.
-const _missingBudget = 35;
+const _missingBudget = 16;
 
 void main() {
   test('no locale carries a topic English does not', () {
@@ -114,9 +124,9 @@ void main() {
         .where((name) => !File('docs/wiki/$name').existsSync())
         .toList()
       ..sort();
-    expect(absent.length, lessThanOrEqualTo(5),
+    expect(absent.length, lessThanOrEqualTo(4),
         reason: 'tool/build_help.dart lists ${absent.length} guides that do '
-            'not exist in docs/wiki, and 5 are known (#1259, the admin '
+            'not exist in docs/wiki, and 4 are known (#1259, the admin '
             'guides in fr/de/es/it):\n  ${absent.join('\n  ')}');
     expect(absent.every((name) => name.startsWith('Admin-')), isTrue,
         reason: 'the known-absent guides are the admin translations; '
