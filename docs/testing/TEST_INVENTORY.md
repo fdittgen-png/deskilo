@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**468 files, 3095 tests.**
+**468 files, 3096 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -17,7 +17,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | property | 1 | 10 |
 | tool | 2 | 11 |
 | unit | 164 | 1299 |
-| widget | 222 | 1484 |
+| widget | 222 | 1485 |
 
 | action | files |
 |---|---:|
@@ -139,7 +139,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/core/ui/canvas_controls_test.dart` | widget | Canvas zoom controls drive one shared transform: fit on load, clamp at max scale, centre small content, glide when animated. | 8 | yes | none | user-visible behaviour — #1135, #611 | no | KEEP |  |
 | `test/core/ui/canvas_motion_leak_test.dart` | widget | #1090 — a CurvedAnimation registers a status listener on its parent in its constructor and removes it only in dispose(). One built per frame (the glide… | 2 | yes | none | user-visible behaviour — #1090 | no | KEEP |  |
 | `test/core/ui/edge_fade_scroll_test.dart` | widget | #1184 — a chip row that scrolls has to say so. | 4 | yes | none | user-visible behaviour — #1184 | no | KEEP |  |
-| `test/core/ui/empty_state_test.dart` | widget | #209: shared empty-state block — muted icon over a titleMedium title and an optional bodySmall subtitle, centered with the pinned metrics. | 4 | yes | none | user-visible behaviour — #209 | no | KEEP |  |
+| `test/core/ui/empty_state_test.dart` | widget | #209: shared empty-state block — muted icon over a titleMedium title and an optional bodySmall subtitle, centered with the pinned metrics. | 5 | yes | none | user-visible behaviour — #209, #1339 | no | KEEP |  |
 | `test/core/ui/inline_banner_test.dart` | widget | #210: shared inline banner — the #186 closed-day banner generalized. Structure: full width, AppRadius.mdAll container, severity-driven container/on-container… | 3 | yes | none | user-visible behaviour — #210, #186 | no | KEEP |  |
 | `test/core/ui/loading_view_test.dart` | widget | #209: LoadingView masks quick loads — the spinner renders at opacity 0 on the first frame and fades in over AppMotion.loadingFadeIn, so a load that resolves… | 2 | yes | none | user-visible behaviour — #209 | no | KEEP |  |
 | `test/core/ui/motion_test.dart` | widget | Reduce motion (#402, wiki 26): when the platform asks for reduced motion, every animation collapses to zero — decided once in the token class, not re-decided… | 2 | yes | none | user-visible behaviour — #402 | no | KEEP |  |
@@ -237,7 +237,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/money/invoice_ubl_test.dart` | unit | EN 16931 e-invoice (0066/0069): the UBL 2.1 document maps the app's SOLDE model onto the norm — charges are InvoiceLines, confirmed payments are PrepaidAmount… | 15 | yes | none | a domain rule | no | KEEP |  |
 | `test/features/money/invoice_writeoff_test.dart` | widget | Partially paid is NOT closed (#504): the invoice stays on the Open tab — the remainder is owed — until the outstanding amount is cancelled through the… | 4 | yes | repository sources | user-visible behaviour — #504, #506 | no | KEEP |  |
 | `test/features/money/invoices_manage_access_test.dart` | widget | #871 — Finances → Invoices hands off to invoice MANAGEMENT the way every other tab does: a management row (icon, verb, chevron), not a button repeating the… | 1 | yes | fakes | user-visible behaviour — #871 | no | KEEP |  |
-| `test/features/money/invoices_test.dart` | widget | Invoices (0060/0061/0062): an IMMUTABLE archive whose positions are DERIVED — the issue form is member + month + a read-only preview of what that month already… | 33 | yes | fakes, real async I/O | user-visible behaviour — #1246, #720, #452 | no | KEEP |  |
+| `test/features/money/invoices_test.dart` | widget | Invoices (0060/0061/0062): an IMMUTABLE archive whose positions are DERIVED — the issue form is member + month + a read-only preview of what that month already… | 33 | yes | fakes, real async I/O | user-visible behaviour — #1339, #1246, #720 | no | KEEP |  |
 | `test/features/money/invoicing_wizard_test.dart` | widget | #827 — the invoicing wizard: the run the date calls for, the period and kind of a run, the plans derived from what the workspace holds, and the guided screen —… | 17 | yes | fakes | user-visible behaviour — #827, #902 | no | KEEP |  |
 | `test/features/money/layout_logo_test.dart` | widget | #920 — the letter's logo. | 6 | yes | none | user-visible behaviour — #920 | no | KEEP |  |
 | `test/features/money/layout_page_view_test.dart` | widget | #875 — the page-true mirror places things where the PDF places them. | 5 | yes | none | user-visible behaviour — #875 | shares a test name with test/features/money/layout_render_test.dart | KEEP |  |
@@ -248,7 +248,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/money/legal_invoice_test.dart` | unit | Legal-valid invoices (#480): the InvoiceLegal mentions, the statutory defaults, the new report variables (seller identity, client address, line qty/unit… | 17 | yes | repository sources | a domain rule — #480, #886, #482 | no | KEEP |  |
 | `test/features/money/letter_standard_test.dart` | unit | #874 — every document sent to a person conforms to the letter standard when it has no design of its own: proven on the PDF the default positioned layouts… | 3 | yes | none | a domain rule — #874, #902 | no | KEEP |  |
 | `test/features/money/money_face_labels_test.dart` | widget | #902 — a Finances tab label NEVER wraps: "Documents" was breaking into "Document" + "s". It shrinks to the width its tab is given and, at the very worst, ends… | 1 | yes | none | user-visible behaviour — #902 | no | KEEP |  |
-| `test/features/money/money_faces_test.dart` | widget | #720 — the Finances tab as four faces: Statement, Payments, Invoices, Documents. Each face shows ITS cards and ITS actions and nothing of the others; the… | 13 | yes | fakes | user-visible behaviour — #720, #726, #1246 | no | KEEP |  |
+| `test/features/money/money_faces_test.dart` | widget | #720 — the Finances tab as four faces: Statement, Payments, Invoices, Documents. Each face shows ITS cards and ITS actions and nothing of the others; the… | 13 | yes | fakes | user-visible behaviour — #720, #726, #1339 | no | KEEP |  |
 | `test/features/money/money_screen_test.dart` | widget | The member's bill: month, subscription, entitlement, packages and online payment, each shown only when it applies (0041, 0042). | 30 | yes | fakes, platform channel (mocked) | user-visible behaviour — #284, #720, #155 | no | KEEP |  |
 | `test/features/money/money_validation_parity_test.dart` | widget | #816 (migration 0144) — the validation framework and the role gates on the money flows keep what the guide promises. The SQL half is pinned on the migration… | 12 | yes | fakes, repository sources | user-visible behaviour — #816, #881, #982 | no | KEEP |  |
 | `test/features/money/month_placeholders_test.dart` | unit | #1002 — a design references the period's month and composes the recurring position's wording itself: « Septembre 100 % ». | 3 | yes | none | a domain rule — #1002 | no | KEEP |  |
@@ -305,7 +305,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/money/wizard_scaffold_test.dart` | widget | #872 — the one wizard chrome every guided invoicing flow runs in: numbered steps, Back disabled on the first, Next until the last, then Finish (or nothing,… | 2 | yes | none | user-visible behaviour — #872 | no | KEEP |  |
 | `test/features/money/workspace_status_screen_test.dart` | widget | #934 — the treasurer's view reads the database's status and prints it. | 1 | yes | fakes | user-visible behaviour — #934 | no | KEEP |  |
 | `test/features/money/workspace_status_test.dart` | unit | #934 — the workspace status as the database returns it, the net the screen and the report agree on, and the repartition rule's round trip. | 5 | yes | repository sources | a domain rule — #934 | no | KEEP |  |
-| `test/features/plan/accessories_screen_test.dart` | widget | The accessory catalogue: listed with supplements, created, edited, deactivated but never deleted; plain members get no entry. | 9 | yes | fakes | user-visible behaviour — #170, #167, #542 | shares a test name with test/features/money/services_screen_test.dart | KEEP |  |
+| `test/features/plan/accessories_screen_test.dart` | widget | The accessory catalogue: listed with supplements, created, edited, deactivated but never deleted; plain members get no entry. | 9 | yes | fakes | user-visible behaviour — #1339, #170, #167 | shares a test name with test/features/money/services_screen_test.dart | KEEP |  |
 | `test/features/plan/accessory_repository_test.dart` | unit | #166 — the accessory catalogue and seat assignment contracts: order, workspace scope, soft deactivation, unique names. | 9 | yes | fakes | a domain rule — #166 | no | KEEP |  |
 | `test/features/plan/accessory_seed_test.dart` | unit | #166 — the amenity-key to accessory-name mapping is pinned, and migration 0022 seeds with the same one. | 3 | yes | repository sources | a domain rule — #166 | no | KEEP |  |
 | `test/features/plan/book_for_others_test.dart` | widget | #106 — owners book a seat for another member; booking for yourself stays a walk-up; workers get no picker. | 3 | yes | fakes | user-visible behaviour — #106, #186 | no | KEEP |  |
@@ -412,7 +412,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/workspace/environment_pairs_test.dart` | widget | #987/#989 — a workspace and its twin as one couple: the pair card in Profiles switches sides, the twin is created on demand from the environment tile, the… | 4 | yes | fakes | user-visible behaviour — #987, #989, #996 | no | KEEP |  |
 | `test/features/workspace/excel_export_screen_test.dart` | widget | The Excel export surface (#395): the tile exists only while the dataExport feature is on (its ONLY surface, so the flag gate is the tile), and tapping it hands… | 4 | yes | fakes | user-visible behaviour — #395, #1310 | no | KEEP |  |
 | `test/features/workspace/feature_structure_test.dart` | widget | #1221 — the Features screen, organised by WHERE a feature shows up. | 8 | yes | none | user-visible behaviour — #1221 | no | KEEP |  |
-| `test/features/workspace/features_screen_test.dart` | widget | The Features screen: a switch per manifest feature; a toggle writes only its key and, switching on, its parent chain (#963). | 15 | yes | fakes | user-visible behaviour — #963, #759, #800 | no | KEEP |  |
+| `test/features/workspace/features_screen_test.dart` | widget | The Features screen: a switch per manifest feature; a toggle writes only its key and, switching on, its parent chain (#963). | 15 | yes | fakes | user-visible behaviour — #963, #1339, #759 | no | KEEP |  |
 | `test/features/workspace/inbox_test.dart` | widget | THE INBOX (#702): conversations and alerts — two faces of one destination, where they used to be a tab and an app-bar bell. (Members was a third face for one… | 8 | yes | fakes, repository sources | user-visible behaviour — #702, #707, #687 | no | KEEP |  |
 | `test/features/workspace/invitation_test.dart` | widget | Personal invitations (0049): a ready-made download → account → join message sent over WhatsApp, SMS, or the share sheet, in the invitee's language; the owner… | 19 | yes | fakes, repository sources | user-visible behaviour — #318, #486, #1119 | no | KEEP |  |
 | `test/features/workspace/invite_uri_test.dart` | unit | Invite URLs carry role and code, and decoding accepts both URLs and legacy raw codes. | 11 | yes | none | a domain rule — #318 | no | KEEP |  |

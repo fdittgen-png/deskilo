@@ -31,6 +31,10 @@ Future<FakeWorkspaceRepository> pumpSettings(
 Future<FakeWorkspaceRepository> pumpFeatures(
   WidgetTester tester, {
   Map<String, dynamic> featureFlags = const {},
+  // #1339 — the responsive matrix asks for a narrow surface. Every
+  // other caller keeps the tall one this file has always used, so
+  // nothing existing changes.
+  Size size = const Size(800, 17000),
 }) async {
   // Ten manifest features no longer fit the default 800×600 surface and
   // the lazy list drops off-screen tiles; keep every switch mounted.
@@ -39,7 +43,7 @@ Future<FakeWorkspaceRepository> pumpFeatures(
   // features — 7200 px stopped fitting the last two switches. #821–#831
   // added five more with long descriptions; 9600 px dropped the last.
   // 2026-09-05 — 82 manifest features (#874) outgrow 12000 px.
-  tester.view.physicalSize = const Size(800, 17000);
+  tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final workspace =
