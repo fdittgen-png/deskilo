@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**488 files, 3247 tests.**
+**489 files, 3260 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -16,12 +16,12 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
-| unit | 169 | 1334 |
-| widget | 225 | 1497 |
+| unit | 170 | 1346 |
+| widget | 225 | 1498 |
 
 | action | files |
 |---|---:|
-| KEEP | 488 |
+| KEEP | 489 |
 
 ## Rules
 
@@ -105,7 +105,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/core/files/xlsx_test.dart` | unit | The XLSX writer (#395) is proven by UNZIPPING its own output — the same bar a spreadsheet reader applies — not by trusting the strings it was built from. | 4 | yes | none | a domain rule — #395 | no | KEEP |  |
 | `test/core/format/cents_currency_test.dart` | unit | #1077 — `Currencies.selectable` offers JPY, KRW and ISK, which have NO minor unit: 1 yen is 1 yen, not 100 of anything. `parseCentsInput` and `centsToMajor`… | 6 | yes | none | a domain rule — #1077 | no | KEEP |  |
 | `test/core/help/help_hint_store_test.dart` | unit | #606 — the help-hint dismissal store and its provider: dismiss hides (and persists eagerly), restore brings everything back, and unknown ids in the stored set… | 9 | yes | none | a domain rule — #606, #610 | no | KEEP |  |
-| `test/core/help/help_hint_test.dart` | widget | #606 — contextual help hints: the dismissible card renders at the top of its surface, the X persists the dismissal across rebuilds, "Learn more" deep-links… | 14 | yes | fakes, repository sources | user-visible behaviour — #606, #610, #763 | no | KEEP |  |
+| `test/core/help/help_hint_test.dart` | widget | #606 — contextual help hints: the dismissible card renders at the top of its surface, the X persists the dismissal across rebuilds, "Learn more" deep-links… | 15 | yes | fakes, repository sources | user-visible behaviour — #606, #610, #1393 | no | KEEP |  |
 | `test/core/i18n/app_format_test.dart` | unit | #711 — globalization. The workspace owns the money and the clock; the member owns how they read them. These pin the formatting seam, the currency table and the… | 16 | yes | repository sources | a domain rule — #711, #1137 | no | KEEP |  |
 | `test/core/i18n/locale_names_test.dart` | unit | #713 — the format picker speaks the reader's language, not BCP-47. | 2 | yes | none | a domain rule — #713 | no | KEEP |  |
 | `test/core/i18n/regional_formats_test.dart` | widget | #711 — the surfaces of globalization: the member's Region & formats section, the owner's currency and time-zone pickers, and the bank details a non-IBAN… | 5 | yes | fakes | user-visible behaviour — #711, #734 | no | KEEP |  |
@@ -408,6 +408,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/reservations/space_scan_test.dart` | widget | Space QR codes (field request): every desk, office and level carries a printable QR; scanning it (camera or typed) opens the space sheet with exactly the… | 18 | yes | fakes | user-visible behaviour — #584, #622, #1087 | no | KEEP |  |
 | `test/features/reservations/whole_space_identity_test.dart` | unit | #670 — two field reports about whole-space bookings, one visual and one a dead end. | 11 | yes | repository sources | a domain rule — #670, #622 | no | KEEP |  |
 | `test/features/reservations/workspace_timezone_open_day_test.dart` | unit | The field bug (#417): with a real workspace timezone INSTALLED, the full-day window's start is a TZDateTime (workspace midnight) — and `TZDateTime.toLocal()`… | 4 | yes | none | a domain rule — #417, #446 | no | KEEP |  |
+| `test/features/workspace/application/resolve_processes_test.dart` | unit | #1326 — the eight cases the issue asks for, red-first, against the real registry rather than a fixture of my own invention. | 12 | yes | none | a domain rule — #1326, #1325 | no | KEEP |  |
 | `test/features/workspace/availability_screen_test.dart` | widget | The availability screen persists open weekdays (never none), the booking granularity and working hours (0032). | 18 | yes | fakes | user-visible behaviour — #624, #446, #600 | no | KEEP |  |
 | `test/features/workspace/badge_dialog_layout_test.dart` | widget | #1178 — the badge manager with more than a badge or two in it. | 3 | yes | fakes | user-visible behaviour — #1178 | no | KEEP |  |
 | `test/features/workspace/badge_pdf_test.dart` | unit | Badge sheet (A4 revision): the one-time badge QR repeated at credit-card size, 2×5 per A4 page — print once, cut, keep spares. | 2 | yes | none | a domain rule | no | KEEP |  |
