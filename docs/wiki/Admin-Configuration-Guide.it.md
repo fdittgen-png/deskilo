@@ -3,7 +3,7 @@
 Per chi mette in piedi lo spazio: che cosa decide ogni parametro,
 nell'ordine in cui il questionario li chiede, poi i dati anagrafici, poi
 la piantina e le sue immagini. La parte tecnica sta nella
-[guida tecnica](Admin-Technical-Guide) (in inglese); spostare una
+[guida tecnica](Admin-Technical-Guide.it); spostare una
 configurazione da uno spazio di sviluppo a uno di produzione sta nella
 [guida degli ambienti](Environments-Guide.it).
 
@@ -349,7 +349,7 @@ visibilità per ruolo invece di più cartelle.
 
 I *layout* dei documenti — l'impaginazione di una fattura o di una
 lettera — sono un'altra cosa, e stanno nella
-[guida tecnica](Admin-Technical-Guide) (in inglese).
+[guida tecnica](Admin-Technical-Guide.it).
 
 <!-- anchor: config.roles -->
 ## Ruoli e permessi

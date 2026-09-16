@@ -3,7 +3,7 @@
 Für die Person, die den Bereich aufsetzt: was jeder Parameter
 entscheidet, in der Reihenfolge, in der der Fragebogen ihn abfragt, dann
 die Stammdaten, dann der Raumplan und seine Bilder. Die technische Seite
-steht im [technischen Handbuch](Admin-Technical-Guide) (auf Englisch);
+steht im [technischen Handbuch](Admin-Technical-Guide.de);
 wie eine Konfiguration von einem Entwicklungs- in einen Produktivbereich
 wandert, steht im [Umgebungshandbuch](Environments-Guide.de).
 
@@ -352,7 +352,7 @@ Rolle statt mehrerer Ordner.
 
 Dokument*layouts* — die Gestaltung einer Rechnung oder eines Briefs —
 sind etwas anderes und stehen im
-[technischen Handbuch](Admin-Technical-Guide) (auf Englisch).
+[technischen Handbuch](Admin-Technical-Guide.de).
 
 <!-- anchor: config.roles -->
 ## Rollen und Berechtigungen

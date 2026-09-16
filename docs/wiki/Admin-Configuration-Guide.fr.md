@@ -3,7 +3,7 @@
 Pour la personne qui installe l'espace : ce que décide chaque paramètre,
 dans l'ordre où le questionnaire les demande, puis les données de
 référence, puis le plan des locaux et ses images. Le côté technique est
-dans le [guide technique](Admin-Technical-Guide) (en anglais) ; déplacer
+dans le [guide technique](Admin-Technical-Guide.fr) ; déplacer
 une configuration d'un espace de développement vers un espace de
 production est dans le [guide des environnements](Environments-Guide.fr).
 
@@ -351,7 +351,7 @@ visibilité par rôle, plutôt que plusieurs dossiers.
 
 Les *mises en page* de documents — la composition d'une facture ou d'une
 lettre — sont autre chose, et vivent dans le
-[guide technique](Admin-Technical-Guide) (en anglais).
+[guide technique](Admin-Technical-Guide.fr).
 
 <!-- anchor: config.roles -->
 ## Rôles et permissions

@@ -42,36 +42,21 @@ Set<String> _anchors(String locale) {
       .toSet();
 }
 
-/// How many topics English has that [locale] does not.
+/// #1259 is finished, so this file no longer budgets anything.
 ///
-/// 6→5 (2026-09-16): #1259 S2 — the Spanish configuration guide. The GAP
-/// budget below STAYS 35: it is per locale, and Italian still misses both
-/// admin guides, so the worst case has not moved.
+/// It began as a ratchet because the translations did not exist: en had
+/// 176 anchors and fr/de/es/it had 141 each, the 35 missing being
+/// exactly the two English admin guides. A test demanding parity then
+/// could not have been merged, so the gap was pinned and walked down —
+/// 35 (both admin guides absent) -> 16 (the configuration guide landed
+/// in all four) -> 0 (the technical guide landed in all four).
 ///
-/// 35→16 (2026-09-16): #1259 S2 — the Italian configuration guide,
-/// the last of four. THIS is the slice that moves the worst case: the
-/// budget is checked per locale and takes the widest gap, so it could
-/// not fall while any locale still missed the guide. fr, de, es and it
-/// now all sit at 16 — the `admin.*` anchors of the technical guide,
-/// which no locale has yet. Leaving it at 35 would admit a regression
-/// of nineteen topics without a word.
-///
-/// 5→4 (2026-09-16): one fewer listed-but-absent guide.
-///
-/// 7→6 (2026-09-16): #1259 S2 — the German configuration guide. The GAP
-/// budget below STAYS 35: it is checked per locale, and es/it are still
-/// missing both admin guides, so the worst case has not moved.
-///
-/// 8→7 (2026-09-16): #1259 S2 translated Admin-Configuration-Guide into
-/// French, so one of the eight listed-but-absent guides now exists. The
-/// GAP budget below stays 35: it is checked per locale and de/es/it are
-/// untouched, so the worst case has not moved.
-///
-/// 35 on 2026-09-16 (#1259): the two admin guides, untranslated. Lower
-/// it as translations land — a slice that translates the configuration
-/// guide takes it to 16, and the technical guide takes it to 0, at which
-/// point this becomes an equality and the ratchet is retired.
-const _missingBudget = 16;
+/// At zero it becomes an EQUALITY, which is what the ratchet was for.
+/// A budget of 0 and an equality are not the same thing to read: one
+/// says "we are still working on it", the other says "a locale missing
+/// a topic is a defect". All five now compile 4 guides and 177
+/// anchors, so the second is the true statement.
+
 
 void main() {
   test('no locale carries a topic English does not', () {
@@ -91,25 +76,30 @@ void main() {
             '${offenders.join('\n  ')}');
   });
 
-  test('the gap between English and each translation only shrinks', () {
+  test('every translation carries every topic English does', () {
     final en = _anchors('en');
+    final offenders = <String>[];
     for (final locale in _locales) {
-      final missing = en.difference(_anchors(locale)).length;
-      expect(missing, lessThanOrEqualTo(_missingBudget),
-          reason: 'assets/help/$locale.md is missing $missing of English\'s '
-              '${en.length} topics, and the budget is $_missingBudget.\n'
-              'A guide listed in tool/build_help.dart went missing, or a '
-              'new English chapter was written without its translations. '
-              'Run `dart run tool/build_help.dart` and read what it says '
-              'is "listed but absent".');
+      for (final anchor in (en.difference(_anchors(locale)).toList()..sort())) {
+        offenders.add('$locale: $anchor');
+      }
     }
+    expect(offenders, isEmpty,
+        reason: 'These topics exist in English and in no translation, so a '
+            'help symbol naming one would open the top of the guide '
+            'instead of the paragraph (help_anchor_test asserts a symbol '
+            'may only point into a guide all five languages have):\n  '
+            '${offenders.join('\n  ')}\n\n'
+            'A guide listed in tool/build_help.dart went missing, or a new '
+            'English chapter was written without its translations. Run '
+            '`dart run tool/build_help.dart` and read what it says is '
+            '"listed but absent".');
   });
 
-  test('every guide build_help lists is actually there, or is budgeted', () {
-    // The tool names what it cannot find on stderr; this pins the count
-    // so that a NEW absence fails even though the eight known ones do
-    // not. Without it, adding a fifth guide per locale and forgetting
-    // four of them would look exactly like today.
+  test('every guide build_help lists is actually there', () {
+    // The tool names what it cannot find on stderr and exits 0 anyway.
+    // Adding a fifth guide per locale and forgetting four of them would
+    // otherwise look exactly like success.
     final source = File('tool/build_help.dart').readAsStringSync();
     final listed = RegExp(r"'([A-Za-z0-9._-]+\.md)'")
         .allMatches(source)
@@ -124,12 +114,14 @@ void main() {
         .where((name) => !File('docs/wiki/$name').existsSync())
         .toList()
       ..sort();
-    expect(absent.length, lessThanOrEqualTo(4),
-        reason: 'tool/build_help.dart lists ${absent.length} guides that do '
-            'not exist in docs/wiki, and 4 are known (#1259, the admin '
-            'guides in fr/de/es/it):\n  ${absent.join('\n  ')}');
-    expect(absent.every((name) => name.startsWith('Admin-')), isTrue,
-        reason: 'the known-absent guides are the admin translations; '
-            'something else is missing now:\n  ${absent.join('\n  ')}');
+    // #1259 closed the last of them, so this is an equality now: every
+    // guide the tool lists exists. `build_help` drops a listed-but-absent
+    // file with only a line on stderr and still exits 0, which is how
+    // eight of them stayed missing without anyone noticing.
+    expect(absent, isEmpty,
+        reason: 'tool/build_help.dart lists ${absent.length} guide(s) that '
+            'do not exist in docs/wiki. The tool drops them with a line on '
+            'stderr and exits 0, so nothing else will tell you:\n  '
+            '${absent.join('\n  ')}');
   });
 }
