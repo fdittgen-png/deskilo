@@ -215,11 +215,15 @@ class ToInvoiceTab extends ConsumerWidget {
               ],
             ),
           ),
-          FilledButton.tonalIcon(
-            key: const ValueKey('invoice-issue-all'),
-            onPressed: () => onIssueAll(overview.toInvoice, overview.period),
-            icon: const Icon(Icons.playlist_add_check_outlined),
-            label: Text(l10n?.invoiceIssueAll ?? 'Invoice all'),
+          // #1339 — the Column flexes and this did not, so at 2x text
+          // the Row ran 15 px over. A no-op at normal scale.
+          Flexible(
+            child: FilledButton.tonalIcon(
+              key: const ValueKey('invoice-issue-all'),
+              onPressed: () => onIssueAll(overview.toInvoice, overview.period),
+              icon: const Icon(Icons.playlist_add_check_outlined),
+              label: Text(l10n?.invoiceIssueAll ?? 'Invoice all'),
+            ),
           ),
         ]),
         const SizedBox(height: 4),

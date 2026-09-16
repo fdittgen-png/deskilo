@@ -35,9 +35,11 @@ import '../features/editor/level_canvas_test.dart' show pumpCanvas;
 import '../features/events/events_screen_test.dart' show pumpEvents;
 import '../features/events/validation_settings_screen_test.dart'
     show pumpValidationSettings;
+import '../features/money/invoices_test.dart' show pumpInvoices;
 import '../features/money/money_faces_test.dart' show pumpFaces;
 import '../features/plan/accessories_screen_test.dart' show pumpAccessories;
 import '../features/reservations/reserve_hub_test.dart' show pumpHub;
+import '../features/workspace/features_screen_test.dart' show pumpFeatures;
 
 /// A phone most members actually hold, and a wide surface.
 const _phone = Size(360, 800);
@@ -61,26 +63,25 @@ final Map<String, ScreenPump> _screens = {
     await pumpCanvas(t);
   },
   'Money faces': (t, size) => pumpFaces(t, size: size),
+  'Invoices': (t, size) => pumpInvoices(t, size: size),
   'Validation rules': (t, size) => pumpValidationSettings(t, size: size),
+  'Features': (t, size) => pumpFeatures(t, size: size),
   'Accessories': (t, size) => pumpAccessories(t, size: size),
 };
 
-// Invoices and Features are NOT in the table, and the reason is worth
-// writing down because it is not "they fail".
+// Invoices and Features were out of this table when it was written,
+// because their helpers failed INSIDE themselves at 360 dp — "Found 0
+// widgets", "Bad state: No element" — before the screen under test was
+// reached, and a row that fails before reaching its screen measures the
+// helper rather than the screen.
 //
-// Those two helpers do not merely size the view: they NAVIGATE. Features
-// opens Settings and then taps `Icons.toggle_on_outlined`; Invoices taps
-// through the money faces and `ensureVisible`s a button. Both depend on
-// a viewport tall enough to have mounted what they are about to tap, so
-// at 360 dp they fail inside the helper — "Found 0 widgets", "Bad state:
-// No element" — before the screen under test is ever reached. Features
-// fails the same way at 1200x900, which is what proves it is the
-// navigation and not the width.
-//
-// A row that fails before reaching its screen measures the helper, not
-// the screen. Giving those two a reachable entry point at phone size is
-// the follow-up; asserting against them today would only pin the
-// harness.
+// The cause turned out to be smaller than it looked. Neither helper
+// needed a different route: the shell's bottom bar is there at every
+// width (only the web shell swaps it for a drawer). They tapped widgets
+// that exist but are not BUILT — far down a lazy list on a short
+// viewport — so they now scroll to what they are about to tap, which is
+// what every other helper in this suite already does. Tall viewports had
+// hidden that for as long as those helpers existed.
 
 void main() {
   for (final entry in _screens.entries) {
