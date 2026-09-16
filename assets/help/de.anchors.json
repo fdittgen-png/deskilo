@@ -132,7 +132,7 @@
   "user.money.vat.groups": "USt-Gruppen (#947)",
   "config.setup.questionnaire": "Der Einrichtungsfragebogen",
   "config.identity.legal": "Identität und Pflichtangaben",
-  "config.vat.overview": "Umsatzsteuer",
+  "config.vat.overview": "MwSt.",
   "config.tariffs.overview": "Tarife und Abrechnungsregeln",
   "config.services": "Dienstleistungen",
   "config.packages": "Tagespakete",
