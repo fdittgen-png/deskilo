@@ -9131,6 +9131,36 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die USt-IdNr. des Kunden fehlt — eine Reverse-Charge-Rechnung muss sie nennen.';
 
   @override
+  String get schemaUpdateTitle => 'Dieser Server muss aktualisiert werden';
+
+  @override
+  String schemaUpdateBody(int version) {
+    return 'Diese App benötigt Version $version des DesKilo-Schemas, und der Server, mit dem sie sich verbindet, hat eine ältere. Bis der Server aktualisiert ist, würde die App auf eine Weise scheitern, die sie nicht erklären könnte – deshalb hält sie hier an.';
+  }
+
+  @override
+  String get schemaUpdateOperator =>
+      'Wenn Sie diesen Server betreiben: Spielen Sie die fehlenden Migrationen mit `dart run tool/instance.dart install --ref <projekt>` ein. Es läuft nur, was fehlt.';
+
+  @override
+  String get schemaUpdateMember =>
+      'Andernfalls: Sagen Sie der Person Bescheid, die Ihren Space betreibt. Nichts von dem, was Sie eingegeben haben, geht verloren.';
+
+  @override
+  String get schemaUpdateRetry => 'Erneut prüfen';
+
+  @override
+  String get schemaUpdateServer => 'Server-Einstellungen';
+
+  @override
+  String get backendTestBehind =>
+      'Erreicht, aber sein DesKilo-Schema ist älter, als diese App benötigt. Aktualisieren Sie den Server, bevor Sie ihn verwenden.';
+
+  @override
+  String get backendTestAhead =>
+      'Erreicht. Sein Schema ist neuer als diese App – es funktioniert, und eine neuere App ist verfügbar.';
+
+  @override
   String seatDayTitle(String seat) {
     return 'Platz $seat heute';
   }

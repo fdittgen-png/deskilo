@@ -9054,6 +9054,36 @@ class AppLocalizationsEn extends AppLocalizations {
       'The customer\'s VAT number is missing — a reverse-charged invoice must name it.';
 
   @override
+  String get schemaUpdateTitle => 'This server needs an update';
+
+  @override
+  String schemaUpdateBody(int version) {
+    return 'This app needs version $version of the DesKilo schema, and the server it connects to runs an older one. Until the server is updated, the app would fail in ways it could not explain, so it stops here.';
+  }
+
+  @override
+  String get schemaUpdateOperator =>
+      'If you run this server: apply the missing migrations with `dart run tool/instance.dart install --ref <project>`. Only what is missing runs.';
+
+  @override
+  String get schemaUpdateMember =>
+      'Otherwise: tell the person who runs your space. Nothing you entered is lost.';
+
+  @override
+  String get schemaUpdateRetry => 'Check again';
+
+  @override
+  String get schemaUpdateServer => 'Server settings';
+
+  @override
+  String get backendTestBehind =>
+      'Reached it, but its DesKilo schema is older than this app needs. Update the server before using it.';
+
+  @override
+  String get backendTestAhead =>
+      'Reached it. Its schema is newer than this app — it works, and a newer app is available.';
+
+  @override
   String seatDayTitle(String seat) {
     return 'Seat $seat today';
   }

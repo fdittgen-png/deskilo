@@ -24,6 +24,7 @@
 //     they are about to run; `destructive` names the backup to take first.
 import 'dart:io';
 
+import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// The migration that introduced the marker. Files before it predate the
@@ -98,6 +99,16 @@ void main() {
     expect(sql, contains('create table if not exists public.deskilo_schema_version'));
     expect(sql, contains('security invoker'));
     expect(markerProblem(intro.$1, sql), isNull);
+  });
+
+  test('the app requires exactly the last migration it ships', () {
+    // A migration merged without raising `requiredSchemaVersion` would
+    // let this build run on a server missing it — the failure the gate
+    // exists to prevent, one file late.
+    final last = _migrationsFrom(markerIntroducedAt).last.$1;
+    expect(requiredSchemaVersion, last,
+        reason: 'supabase/migrations ends at $last; set requiredSchemaVersion '
+            'in lib/core/instance/schema_compatibility.dart to $last');
   });
 
   test('every migration from the marker on ends with its own version', () {

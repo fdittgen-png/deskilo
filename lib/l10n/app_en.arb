@@ -9461,6 +9461,43 @@
   "@invoiceGapMissingBuyerVatId": {
     "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
   },
+  "schemaUpdateTitle": "This server needs an update",
+  "@schemaUpdateTitle": {
+    "description": "#1312 Title of the screen shown when the server's schema is older than the app needs"
+  },
+  "schemaUpdateBody": "This app needs version {version} of the DesKilo schema, and the server it connects to runs an older one. Until the server is updated, the app would fail in ways it could not explain, so it stops here.",
+  "@schemaUpdateBody": {
+    "description": "#1312 Explanation on the schema-update screen",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "schemaUpdateOperator": "If you run this server: apply the missing migrations with `dart run tool/instance.dart install --ref <project>`. Only what is missing runs.",
+  "@schemaUpdateOperator": {
+    "description": "#1312 What the person running the server should do; the command stays untranslated"
+  },
+  "schemaUpdateMember": "Otherwise: tell the person who runs your space. Nothing you entered is lost.",
+  "@schemaUpdateMember": {
+    "description": "#1312 What a member who does not run the server should do"
+  },
+  "schemaUpdateRetry": "Check again",
+  "@schemaUpdateRetry": {
+    "description": "#1312 Button that asks the server its version again"
+  },
+  "schemaUpdateServer": "Server settings",
+  "@schemaUpdateServer": {
+    "description": "#1312 Button opening Settings → Server"
+  },
+  "backendTestBehind": "Reached it, but its DesKilo schema is older than this app needs. Update the server before using it.",
+  "@backendTestBehind": {
+    "description": "#1312 Connection test result: schema older than the app"
+  },
+  "backendTestAhead": "Reached it. Its schema is newer than this app — it works, and a newer app is available.",
+  "@backendTestAhead": {
+    "description": "#1312 Connection test result: schema newer than the app"
+  },
   "seatDayTitle": "Seat {seat} today",
   "@seatDayTitle": {
     "description": "#903 seat day timeline: seatDayTitle",

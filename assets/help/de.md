@@ -2698,6 +2698,17 @@ Datenbank an und stempeln, bei welcher Migration sie steht. Eine spätere
 Migration erreicht eine bestehende Instanz auf demselben Weg — der Reihe
 nach ab dem Stempel angewandt, nie erneut ausgeführt.
 
+Die Version ist eine Zahl, die das Schema selbst trägt:
+`select public.deskilo_schema_version();` liefert die zuletzt
+angewandte Migration, und jede Migration schreibt sie in ihrer eigenen
+Transaktion (#1312). Eine App, die älter ist als ihr Server, funktioniert
+weiter. Eine App, die **neuer** ist als ihr Server, hält bei *Dieser
+Server muss aktualisiert werden* an — wer den Server betreibt, spielt die
+fehlenden Migrationen ein; alle anderen können von dort aus den
+Server-Bildschirm öffnen und das Gerät auf einen anderen Server richten.
+Ohne Netzwerk findet die Prüfung einfach nicht statt, und nichts wird
+blockiert.
+
 Konfiguration und Stammdaten reisen zwischen Instanzen über die
 **Bereichsdatei**, denn ein Deployment braucht eine Datenbank, und eine
 Instanz ist genau der Punkt, an dem es zwei gibt.

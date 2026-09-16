@@ -412,6 +412,14 @@ the app's startup check, the wizard's upgrade — because it is the one
 signal written by the SQL itself, whichever way the SQL arrived. Never
 compute a version from `supabase_migrations` row counts or names.
 
+**The gate this feeds has no feature flag.** A server older than the app
+sends every route to `/server-update` (`lib/app/schema_gate.dart`); the
+flags live on that server, so a flag could not be read to switch the gate
+off, and the one workspace that most needed the gate would be the one
+whose stale schema answered wrongly. It is infrastructure, like the Server
+screen and the development mark. Only `behind` blocks; `unknown` (offline)
+never does.
+
 ## One feature branch at a time — the registries are append-at-one-spot
 
 Every functionality adds itself to the SAME lines: the `WorkspaceFeature`

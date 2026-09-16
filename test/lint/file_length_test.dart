@@ -302,7 +302,7 @@ const Map<String, int> _baseline = {
   // 700→751 (2026-09-06): #934 two routes / three repository methods.
   // 747→757 (2026-09-16): #1277 S3 — /settings/wording: the import and one GoRoute with its
   // feature redirect. The router grows by a route per destination.
-  'lib/app/router.dart': 757, // 2026-09-11 #1120 /library on top of the #1148/#1150/#1151 review batch (745→752) // 2026-09-02 #821/#822/#825/#827 the conversation, report-editor, member and wizard routes // 2026-09-05 #902 /settings/payment-terms // 2026-09-10 #1085 751→730: the nine repeated owner-guard closures became one `needs(...)` helper
+  'lib/app/router.dart': 773, // 2026-09-16 #1312 757→773: the schema gate listens, redirects first and owns /server-update — its rule lives in schema_gate.dart // 2026-09-11 #1120 /library on top of the #1148/#1150/#1151 review batch (745→752) // 2026-09-02 #821/#822/#825/#827 the conversation, report-editor, member and wizard routes // 2026-09-05 #902 /settings/payment-terms // 2026-09-10 #1085 751→730: the nine repeated owner-guard closures became one `needs(...)` helper
   // default→660 (2026-09-06): #934 the status report kind / two flags.
   'lib/features/money/presentation/report_defaults.dart': 628,
   // 600→620 (2026-09-01): #791 the tap dispatcher records the branch it

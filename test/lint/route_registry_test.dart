@@ -50,7 +50,10 @@ import 'package:flutter_test/flutter_test.dart';
 // 56→57 (2026-09-06): #945 /settings/sites.
 // 60→61 (2026-09-16): #1277 /settings/wording — the owner renames the
 //   product's words, per locale, behind workspaceVocabulary.
-const int _expectedRouteCount = 61; // 2026-09-16 #1277 /settings/wording
+// 61→62 (2026-09-16): #1312 /server-update — where a server whose schema
+//   is older than the app sends every route. No flag: the flags live on
+//   that server.
+const int _expectedRouteCount = 62; // 2026-09-16 #1312 /server-update
 // 57→58 (2026-09-06): #977 /server/new-instance.
 
 void main() {

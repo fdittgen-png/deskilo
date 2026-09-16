@@ -4,8 +4,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../l10n/app_localizations.dart';
+import '../instance/schema_compatibility.dart';
 import '../trace/trace_logger.dart';
 import 'backend_config.dart';
+import 'schema_version.dart';
 
 part 'backend_settings.g.dart';
 
@@ -146,6 +148,13 @@ enum BackendProbeResult {
   unreachable,
   badKey,
   schemaMissing,
+
+  /// #1312 — the schema is there, older than this app needs.
+  behind,
+
+  /// #1312 — the schema is newer than this app. Works; an update of the
+  /// app is available.
+  ahead,
 }
 
 /// Tries the candidate endpoint BEFORE it is saved, on a throwaway
@@ -163,7 +172,22 @@ Future<BackendProbeResult> probeBackend(BackendEndpoint endpoint) async {
         .select('id')
         .limit(1)
         .timeout(const Duration(seconds: 12));
-    return BackendProbeResult.ok;
+    // #1312 — reachable and carrying tables is not yet "usable": the
+    // version decides. A marker that cannot be read after the table read
+    // succeeded says nothing new, so it stays `ok`.
+    try {
+      return switch (compareSchema(await readSchemaVersion(probe))) {
+        SchemaCompatibility.behind => BackendProbeResult.behind,
+        SchemaCompatibility.ahead => BackendProbeResult.ahead,
+        SchemaCompatibility.current ||
+        SchemaCompatibility.unknown =>
+          BackendProbeResult.ok,
+      };
+    } on SchemaVersionUnavailable catch (e, st) {
+      TraceLogger.instance.warn('backend', 'probe could not read the schema version',
+          error: e, stackTrace: st);
+      return BackendProbeResult.ok;
+    }
   } on PostgrestException catch (e, st) {
     TraceLogger.instance.warn(
       'backend',
@@ -196,6 +220,27 @@ Future<BackendProbeResult> probeBackend(BackendEndpoint endpoint) async {
     await probe?.dispose();
   }
 }
+
+/// What a connection test found, as the one sentence the Server screen shows.
+String backendProbeText(AppLocalizations? l10n, BackendProbeResult result) =>
+    switch (result) {
+      BackendProbeResult.ok =>
+        l10n?.backendTestOk ?? 'Reached it — the app\'s schema is there.',
+      BackendProbeResult.unreachable => l10n?.backendTestUnreachable ??
+          'Could not reach that address. Check the URL and your network.',
+      BackendProbeResult.badKey => l10n?.backendTestBadKey ??
+          'Reached it, but the key was refused. Copy the publishable key '
+              'again from Project Settings → API keys.',
+      BackendProbeResult.schemaMissing => l10n?.backendTestSchemaMissing ??
+          'Reached it, but the DesKilo tables are missing — run the '
+              'migrations from supabase/migrations on that project first.',
+      BackendProbeResult.behind => l10n?.backendTestBehind ??
+          'Reached it, but its DesKilo schema is older than this app needs. '
+              'Update the server before using it.',
+      BackendProbeResult.ahead => l10n?.backendTestAhead ??
+          'Reached it. Its schema is newer than this app — it works, and a '
+              'newer app is available.',
+    };
 
 /// One sentence per refusal — the UI never says "invalid input".
 String backendErrorText(AppLocalizations? l10n, BackendEndpointError error) =>

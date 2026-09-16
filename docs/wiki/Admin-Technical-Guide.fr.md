@@ -325,6 +325,16 @@ vide et estampillent la migration à laquelle elle se tient. Une migration
 ultérieure atteint une instance existante de la même façon — appliquée
 dans l'ordre à partir de l'estampille, jamais rejouée.
 
+La version est un nombre que le schéma porte lui-même :
+`select public.deskilo_schema_version();` renvoie la dernière migration
+appliquée, et chaque migration l'écrit dans sa propre transaction (#1312).
+Une application plus ancienne que son serveur continue de fonctionner.
+Une application **plus récente** que son serveur s'arrête sur *Ce serveur
+doit être mis à jour* — la personne qui gère le serveur applique les
+migrations manquantes ; les autres peuvent encore ouvrir l'écran Serveur
+depuis là et pointer l'appareil ailleurs. Sans réseau, la vérification
+n'a simplement pas lieu, et rien n'est bloqué.
+
 La configuration et les données de référence voyagent entre instances par
 le **fichier d'espace**, puisqu'un déploiement a besoin d'une seule base
 et qu'une instance est précisément le moment où il y en a deux.
