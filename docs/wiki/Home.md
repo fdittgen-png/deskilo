@@ -20,7 +20,15 @@ Every feature serves at least one of three goals (the *feature filter*):
 | [Configurar el espacio](Admin-Configuration-Guide.es) | Propietarios | La guía de configuración en español: cada parámetro del cuestionario, los datos maestros, el plano |
 | [Configurare lo spazio](Admin-Configuration-Guide.it) | Proprietari | La guida di configurazione in italiano: ogni parametro del questionario, i dati di base, la piantina |
 | [The technical side](Admin-Technical-Guide) | Administrators | Documents and the report designer, e-invoicing, accounting exports, integrations, instances, the trace |
+| [Le côté technique](Admin-Technical-Guide.fr) | Administrateurs | Les documents et le concepteur de rapports, la facturation électronique, les exports comptables, les intégrations, les instances, le journal |
+| [Die technische Seite](Admin-Technical-Guide.de) | Administratoren | Die Dokumente und der Berichts-Entwerfer, die E-Rechnung, die Buchhaltungsexporte, die Integrationen, die Instanzen, das Protokoll |
+| [La parte técnica](Admin-Technical-Guide.es) | Administradores | Los documentos y el diseñador de informes, la facturación electrónica, las exportaciones contables, las integraciones, las instancias, el registro |
+| [La parte tecnica](Admin-Technical-Guide.it) | Amministratori | I documenti e il progettista dei report, la fatturazione elettronica, le esportazioni contabili, le integrazioni, le istanze, il registro |
 | [Environments: dev and prod](Environments-Guide) | Owners | Why a pair, creating it, who may deploy, what travels and what never does |
+| [Environnements : dev et prod](Environments-Guide.fr) | Propriétaires | Pourquoi une paire, comment la créer, qui peut déployer, ce qui voyage et ce qui ne voyage jamais |
+| [Umgebungen: Dev und Prod](Environments-Guide.de) | Inhaberinnen | Warum ein Paar, wie man es anlegt, wer deployen darf, was reist und was nie |
+| [Entornos: dev y prod](Environments-Guide.es) | Propietarios | Por qué una pareja, cómo crearla, quién puede desplegar, qué viaja y qué nunca |
+| [Ambienti: dev e prod](Environments-Guide.it) | Proprietari | Perché una coppia, come crearla, chi può distribuire, che cosa viaggia e che cosa mai |
 | [Implementation](Implementation) | Developers / contributors | Repo layout, conventions, codegen, migrations, testing, CI, feature-gating checklist, how to build and run on every platform |
 | [User Guide](User-Guide) | Members, admins, owners | Complete illustrated walkthrough in English: onboarding, booking, roles & invites, money, online payments & NFC configuration, space QR codes, kiosk mode, settings |
 | [Guide utilisateur](Guide-utilisateur) | Membres, admins, propriétaires | Le guide complet en français |

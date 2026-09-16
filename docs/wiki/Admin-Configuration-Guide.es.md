@@ -3,7 +3,7 @@
 Para quien pone el espacio en marcha: qué decide cada parámetro, en el
 orden en que el cuestionario los pregunta, después los datos maestros y
 después el plano y sus imágenes. La parte técnica está en la
-[guía técnica](Admin-Technical-Guide) (en inglés); mover una
+[guía técnica](Admin-Technical-Guide.es); mover una
 configuración de un espacio de desarrollo a uno de producción está en la
 [guía de entornos](Environments-Guide.es).
 
@@ -337,7 +337,7 @@ visibilidad por rol en lugar de varias carpetas.
 
 Los *diseños* de documento — la maquetación de una factura o de una
 carta — son otra cosa, y están en la
-[guía técnica](Admin-Technical-Guide) (en inglés).
+[guía técnica](Admin-Technical-Guide.es).
 
 <!-- anchor: config.roles -->
 ## Roles y permisos
