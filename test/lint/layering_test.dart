@@ -160,7 +160,9 @@ final _importRe = RegExp("import '([^']+)'");
 /// lowers its line, and a change that adds an import to an existing pair
 /// has to say so here.
 const Map<String, int> _pairBudget = {
-  'calendar -> events': 3,
+  // 2026-09-16 #1306 S2 — the calendar carries the pending decisions when
+  // the events bell is off: one import of the events feature's widget.
+  'calendar -> events': 4,
   'calendar -> money': 6,
   'calendar -> plan': 6,
   // 2026-09-14 #1269 7→8: the day view reads `browsedLevelProvider`.
@@ -173,9 +175,13 @@ const Map<String, int> _pairBudget = {
   'editor -> plan': 20,
   'editor -> workspace': 6,
   'events -> money': 5,
-  'events -> plan': 1,
-  'events -> reservations': 3,
-  'events -> workspace': 18,
+  // 2026-09-16 #1306 — +1 each on plan, reservations and workspace: the
+  // pending-decisions section left events_screen.dart so the calendar can
+  // carry it when the bell is off, and names, targets and the currency
+  // are read in both files now.
+  'events -> plan': 2,
+  'events -> reservations': 4,
+  'events -> workspace': 20, // #1306 S2 — CalendarDecisions reads the effective features
   'kiosk -> events': 1,
   'kiosk -> members': 1,
   'kiosk -> plan': 7,
@@ -288,7 +294,6 @@ const Set<String> _backendTypeOutsideData = {
   'lib/features/auth/presentation/screens/auth_screen.dart',
   'lib/features/auth/presentation/screens/linked_accounts_screen.dart',
   'lib/features/editor/presentation/widgets/seat_properties_sheet.dart',
-  'lib/features/events/presentation/screens/events_screen.dart',
   'lib/features/kiosk/presentation/screens/kiosk_screen.dart',
   'lib/features/reservations/domain/booking_error_text.dart',
   'lib/features/workspace/presentation/screens/workspace_settings_screen.dart',

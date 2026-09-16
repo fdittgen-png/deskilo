@@ -60,8 +60,8 @@ final Set<String> _sessionNotifiedNoteIds = <String>{};
 /// Plan · Calendar · Members · Money (spec §13, members since #230).
 /// Settings is not a tab — it is the top-right app-bar action, as in
 /// Sparkilo; the events feed sits behind the app-bar bell beside it.
-/// The Messages destination icon, badged only when there is something to
-/// badge (#687). The count comes from the SAME query the list renders,
+/// A destination icon — Messages (#687), and Calendar when it carries the
+/// decisions (#1306) — badged only when there is something to badge. The count comes from the SAME query the list renders,
 /// so the badge cannot disagree with the screen it points at.
 Widget _messagesIcon(IconData icon, int unread) => unread > 0
     ? Badge.count(count: unread, child: Icon(icon))
@@ -278,15 +278,20 @@ class ShellScreen extends ConsumerWidget {
     // different kinds of "something needs you" told nobody which.
     final unreadMessages = ref.watch(unreadMessagesProvider);
     final pendingEvents = ref.watch(myPendingEventCountProvider).value ?? 0;
+    final calendarBadge =
+        decisionSignalOnCalendar(features) ? pendingEvents : 0;
     // #1306 — the one destination list the drawer renders too.
     final visibleBranches = visibleShellBranches(features);
     final selectedPosition =
         visibleBranches.indexOf(navigationShell.currentIndex);
 
     ShellDestination destinationFor(int branch) => switch (branch) {
+          // #1306 S2 — with the bell off, the pending decisions badge the
+          // Calendar, which opens on them.
           ShellBranch.calendar => ShellDestination(
-              icon: Icon(shellBranchIcon(branch)),
-              selectedIcon: Icon(shellBranchIcon(branch, selected: true)),
+              icon: _messagesIcon(shellBranchIcon(branch), calendarBadge),
+              selectedIcon: _messagesIcon(
+                  shellBranchIcon(branch, selected: true), calendarBadge),
               label: tabTitles[ShellBranch.calendar],
             ),
           ShellBranch.directory => ShellDestination(

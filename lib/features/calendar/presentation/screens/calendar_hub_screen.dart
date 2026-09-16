@@ -30,6 +30,7 @@ import '../../../workspace/presentation/widgets/conversation_avatar.dart';
 import '../../../workspace/presentation/widgets/conversation_thread.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/calendar_providers.dart';
+import '../../../events/presentation/widgets/calendar_decisions.dart';
 import '../calendar_view.dart';
 import '../widgets/calendar_feed.dart';
 import '../widgets/calendar_view_bar.dart';
@@ -266,6 +267,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
       return Scaffold(
         body: Column(children: [
           const HelpHint(HelpHintId.calendar),
+          const CalendarDecisions(), // #1306 — when the bell is off
           _plainSelector(l10n),
           chips,
           Expanded(child: feed),
@@ -304,6 +306,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
               child: SingleChildScrollView(
                 child: Column(children: [
                   const HelpHint(HelpHintId.calendar),
+          const CalendarDecisions(), // #1306 — when the bell is off
                   selector,
                   chips,
                 ]),
@@ -315,6 +318,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         }
         return Column(children: [
           const HelpHint(HelpHintId.calendar),
+          const CalendarDecisions(), // #1306 — when the bell is off
           selector,
           chips,
           Expanded(child: feed),

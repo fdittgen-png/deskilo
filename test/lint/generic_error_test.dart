@@ -26,7 +26,9 @@ const Map<String, int> _baseline = {
   'lib/features/calendar/presentation/widgets/access_sheet.dart': 2,
   'lib/features/editor/presentation/screens/editor_screen.dart': 2,
   'lib/features/editor/presentation/screens/level_canvas_screen.dart': 4,
-  'lib/features/events/presentation/screens/events_screen.dart': 2,
+  'lib/features/events/presentation/screens/events_screen.dart': 1,
+  // #1306 — moved with the pending decisions out of events_screen.dart.
+  'lib/features/events/presentation/widgets/pending_decisions_section.dart': 1,
   'lib/features/events/presentation/screens/validation_settings_screen.dart': 2,
   'lib/features/kiosk/presentation/screens/kiosk_screen.dart': 2,
   'lib/features/members/presentation/member_profile_link.dart': 1,
