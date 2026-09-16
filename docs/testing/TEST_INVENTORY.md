@@ -4,15 +4,15 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**495 files, 3283 tests.**
+**497 files, 3300 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
 | a11y | 2 | 6 |
-| database | 20 | 201 |
+| database | 21 | 208 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
-| lint | 68 | 185 |
+| lint | 69 | 195 |
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
@@ -21,7 +21,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 
 | action | files |
 |---|---:|
-| KEEP | 495 |
+| KEEP | 497 |
 
 ## Rules
 
@@ -73,6 +73,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `supabase/tests/database/25_new_member_defaults.sql` | database | #1294 — how a new member starts, and who is NOT a new member. | 12 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1294, #1089, #1279 | no | KEEP |  |
 | `supabase/tests/database/26_workspace_lexicon.sql` | database | #1277 S1 — a workspace may say its own words, and only the words it is allowed to say. | 12 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1277 | no | KEEP |  |
 | `supabase/tests/database/27_convert_to_series.sql` | database | #1394 — converting a booking to a repeat must never leave the member with less than they started with. | 9 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1394 | no | KEEP |  |
+| `supabase/tests/database/28_schema_version.sql` | database | #1312 — the schema version is written by the migrations and readable before anybody signs in. | 7 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1312 | no | KEEP |  |
 | `supabase/tests/database/30_query_budgets.sql` | database | #1236 — the database half of the performance budgets. | 9 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1236, #1225 | no | KEEP |  |
 | `test/a11y/responsive_matrix_test.dart` | a11y | #1339 — the screens hold at a narrow phone, at twice the text size, and with animation switched off. | 5 | yes | none | an accessibility contract — #1339 | no | KEEP |  |
 | `test/a11y/screen_guidelines_test.dart` | a11y | #1235 — WCAG 2.2 AA as a build result, on every screen we can reach. | 1 | yes | none | an accessibility contract — #1235 | no | KEEP |  |
@@ -513,6 +514,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/lint/lexicon_allow_list_test.dart` | lint | #1277 — the app and the server agree on which words a workspace may rename, or the feature is a trap. | 5 | yes | repository sources | an architecture, security or process rule — #1277 | no | KEEP |  |
 | `test/lint/manifest_permissions_test.dart` | lint | Pinning test for #99: Flutter injects INTERNET only into the debug/profile manifest overlays — a release build without it in the MAIN manifest cannot open any… | 1 | yes | repository sources | an architecture, security or process rule | no | KEEP |  |
 | `test/lint/migration_grants_test.dart` | lint | #1054 — a migration that creates a function revokes anon in the same file. | 5 | yes | repository sources | an architecture, security or process rule — #1054, #1047 | no | KEEP |  |
+| `test/lint/migration_version_marker_test.dart` | lint | #1312 — every migration after the marker's introduction says which version it makes the schema, and what kind of change it is. | 10 | yes | repository sources | an architecture, security or process rule — #1312, #1314 | no | KEEP |  |
 | `test/lint/no_day_duration_test.dart` | lint | #1231 — a date that is printed, invoiced or chased is never computed with `Duration(days: n)`. | 1 | yes | none | an architecture, security or process rule — #1231 | no | KEEP |  |
 | `test/lint/no_hand_rolled_cents_test.dart` | lint | #1140 — after #1077 every amount an editor reads or shows goes through `parseCentsInput` / `centsToMajor`, which know the currency's minor digits. A… | 1 | yes | none | an architecture, security or process rule — #1140, #1077 | no | KEEP |  |
 | `test/lint/no_hardcoded_strings_test.dart` | lint | HARD RULE #1: no hard-coded user-facing strings. Every Text() must go through AppLocalizations; a string literal is allowed only as the defensive English… | 1 | yes | none | an architecture, security or process rule | no | KEEP |  |

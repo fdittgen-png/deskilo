@@ -18,6 +18,7 @@ public.conversation_participants.conversation_participants_select
 public.conversations.conversations_select
 public.data_access_log.data_access_log_select
 public.deployments.deployments_select
+public.deskilo_schema_version.deskilo_schema_version_read
 public.desks.desks_select
 public.desks.desks_write
 public.event_decisions.event_decisions_select
