@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**487 files, 3244 tests.**
+**488 files, 3247 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -17,11 +17,11 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | property | 1 | 10 |
 | tool | 2 | 11 |
 | unit | 169 | 1334 |
-| widget | 224 | 1494 |
+| widget | 225 | 1497 |
 
 | action | files |
 |---|---:|
-| KEEP | 487 |
+| KEEP | 488 |
 
 ## Rules
 
@@ -109,6 +109,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/core/i18n/app_format_test.dart` | unit | #711 — globalization. The workspace owns the money and the clock; the member owns how they read them. These pin the formatting seam, the currency table and the… | 16 | yes | repository sources | a domain rule — #711, #1137 | no | KEEP |  |
 | `test/core/i18n/locale_names_test.dart` | unit | #713 — the format picker speaks the reader's language, not BCP-47. | 2 | yes | none | a domain rule — #713 | no | KEEP |  |
 | `test/core/i18n/regional_formats_test.dart` | widget | #711 — the surfaces of globalization: the member's Region & formats section, the owner's currency and time-zone pickers, and the bank details a non-IBAN… | 5 | yes | fakes | user-visible behaviour — #711, #734 | no | KEEP |  |
+| `test/core/i18n/time_zone_picker_test.dart` | widget | #1390 — the time-zone search field's hint was the literal `'Europe/Paris'`, while the label directly above it resolved through `AppLocalizations`. Every… | 3 | yes | none | user-visible behaviour — #1390, #711 | no | KEEP |  |
 | `test/core/instance/instance_builder_test.dart` | unit | #977 — the instance builder over a fake Management API: the project comes up after a few polls, the schema runs in order and names the migration that fails,… | 10 | yes | fakes | a domain rule — #977, #1314, #1313 | no | KEEP |  |
 | `test/core/instance/instance_doctor_test.dart` | unit | #1075 — the doctor, driven by the shapes it exists to catch. | 36 | yes | fakes | a domain rule — #1075, #1245, #1226 | no | KEEP |  |
 | `test/core/locale/locale_controller_test.dart` | unit | The language override: an empty store follows the system, a stored code applies and persists, null clears it. | 4 | yes | none | a domain rule | shares a test name with test/core/theme/theme_controller_test.dart | KEEP |  |

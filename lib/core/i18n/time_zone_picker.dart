@@ -59,7 +59,7 @@ class _TimeZoneSheetState extends State<_TimeZoneSheet> {
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
                 labelText: l10n?.workspaceTimezoneLabel ?? 'Time zone',
-                hintText: 'Europe/Paris',
+                hintText: l10n?.workspaceTimezoneHint ?? 'Europe/London',
               ),
               onChanged: (q) => setState(() => _query = q),
             ),

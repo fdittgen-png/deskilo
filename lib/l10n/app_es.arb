@@ -6794,6 +6794,7 @@
   "workspaceNameLabel": "Nombre del espacio",
   "workspaceCountryLabel": "País",
   "workspaceCurrencyLabel": "Moneda",
+  "workspaceTimezoneHint": "Europe/Madrid",
   "workspaceTimezoneLabel": "Zona horaria",
   "onboardingCreateButton": "Crear espacio",
   "workspaceInviteCodeLabel": "Código de invitación",

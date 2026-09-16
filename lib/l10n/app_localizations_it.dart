@@ -9993,6 +9993,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get workspaceCurrencyLabel => 'Valuta';
 
   @override
+  String get workspaceTimezoneHint => 'Europe/Rome';
+
+  @override
   String get workspaceTimezoneLabel => 'Fuso orario';
 
   @override

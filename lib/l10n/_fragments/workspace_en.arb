@@ -24,6 +24,10 @@
   "@workspaceCurrencyLabel": {
     "description": "Label of the ISO-4217 currency input"
   },
+  "workspaceTimezoneHint": "Europe/London",
+  "@workspaceTimezoneHint": {
+    "description": "Example IANA zone shown in the time-zone search field. The identifiers are not translated; the EXAMPLE is localized, so a reader is shown a city they recognise."
+  },
   "workspaceTimezoneLabel": "Time zone",
   "@workspaceTimezoneLabel": {
     "description": "Label of the IANA time-zone input"

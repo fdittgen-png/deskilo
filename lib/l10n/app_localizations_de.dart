@@ -9988,6 +9988,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get workspaceCurrencyLabel => 'Währung';
 
   @override
+  String get workspaceTimezoneHint => 'Europe/Berlin';
+
+  @override
   String get workspaceTimezoneLabel => 'Zeitzone';
 
   @override
