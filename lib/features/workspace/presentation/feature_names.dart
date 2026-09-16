@@ -214,4 +214,6 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.singleRoomLevelNames =>
         l10n?.featureSingleRoomLevelNamesTitle ??
             'Name a single-room level by the level',
+      WorkspaceFeature.publicHolidays =>
+        l10n?.featurePublicHolidaysTitle ?? 'Public holidays',
     };

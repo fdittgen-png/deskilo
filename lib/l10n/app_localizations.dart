@@ -14075,6 +14075,168 @@ abstract class AppLocalizations {
   /// **'Change your site'**
   String get profilesSitePick;
 
+  /// #1274 public holidays: the feature switch title
+  ///
+  /// In en, this message translates to:
+  /// **'Public holidays'**
+  String get featurePublicHolidaysTitle;
+
+  /// #1274 public holidays: the feature switch description
+  ///
+  /// In en, this message translates to:
+  /// **'An owner picks a year and sees the public holidays that would become closure days, then confirms. Re-running a year adds nothing, and a month that already carries an invoice is skipped and named — generating holidays never changes a bill that was already issued.'**
+  String get featurePublicHolidaysDesc;
+
+  /// #1274 public holiday name, keyed by what public_holidays() returns
+  ///
+  /// In en, this message translates to:
+  /// **'New Year\'s Day'**
+  String get holidayNewYear;
+
+  /// #1274 public holiday name, keyed by what public_holidays() returns
+  ///
+  /// In en, this message translates to:
+  /// **'Easter Monday'**
+  String get holidayEasterMonday;
+
+  /// #1274 public holiday name, keyed by what public_holidays() returns
+  ///
+  /// In en, this message translates to:
+  /// **'Labour Day'**
+  String get holidayLabourDay;
+
+  /// #1274 public holiday name, keyed by what public_holidays() returns
+  ///
+  /// In en, this message translates to:
+  /// **'Victory 1945'**
+  String get holidayVictory1945;
+
+  /// #1274 public holiday name, keyed by what public_holidays() returns
+  ///
+  /// In en, this message translates to:
+  /// **'Ascension'**
+  String get holidayAscension;
+
+  /// #1274 public holiday name, keyed by what public_holidays() returns
+  ///
+  /// In en, this message translates to:
+  /// **'Whit Monday'**
+  String get holidayWhitMonday;
+
+  /// #1274 public holiday name, keyed by what public_holidays() returns
+  ///
+  /// In en, this message translates to:
+  /// **'Bastille Day'**
+  String get holidayNationalDay;
+
+  /// #1274 public holiday name, keyed by what public_holidays() returns
+  ///
+  /// In en, this message translates to:
+  /// **'Assumption'**
+  String get holidayAssumption;
+
+  /// #1274 public holiday name, keyed by what public_holidays() returns
+  ///
+  /// In en, this message translates to:
+  /// **'All Saints\' Day'**
+  String get holidayAllSaints;
+
+  /// #1274 public holiday name, keyed by what public_holidays() returns
+  ///
+  /// In en, this message translates to:
+  /// **'Armistice 1918'**
+  String get holidayArmistice;
+
+  /// #1274 public holiday name, keyed by what public_holidays() returns
+  ///
+  /// In en, this message translates to:
+  /// **'Christmas Day'**
+  String get holidayChristmas;
+
+  /// #1274 public holiday name, keyed by what public_holidays() returns
+  ///
+  /// In en, this message translates to:
+  /// **'Good Friday'**
+  String get holidayGoodFriday;
+
+  /// #1274 public holiday name, keyed by what public_holidays() returns
+  ///
+  /// In en, this message translates to:
+  /// **'German Unity Day'**
+  String get holidayGermanUnity;
+
+  /// #1274 public holiday name, keyed by what public_holidays() returns
+  ///
+  /// In en, this message translates to:
+  /// **'Boxing Day'**
+  String get holidayBoxingDay;
+
+  /// #1274 the action that opens the holiday preview
+  ///
+  /// In en, this message translates to:
+  /// **'Add public holidays'**
+  String get publicHolidaysAction;
+
+  /// #1274 the preview sheet's title
+  ///
+  /// In en, this message translates to:
+  /// **'Public holidays'**
+  String get publicHolidaysSheetTitle;
+
+  /// #1274 the year field label
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get publicHolidaysYear;
+
+  /// #1274 the country field label
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get publicHolidaysCountry;
+
+  /// #1274 the preview came back empty
+  ///
+  /// In en, this message translates to:
+  /// **'No public holidays for this year.'**
+  String get publicHolidaysPreviewNone;
+
+  /// #1274 this date is already a closure day
+  ///
+  /// In en, this message translates to:
+  /// **'Already a closure day'**
+  String get publicHolidaysPresent;
+
+  /// #1274 this date's month already carries an invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Invoiced month — not created'**
+  String get publicHolidaysLocked;
+
+  /// #1274 the months skipped because they are invoiced
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped, already invoiced: {months}'**
+  String publicHolidaysLockedMonths(String months);
+
+  /// #1274 confirm creating the previewed days
+  ///
+  /// In en, this message translates to:
+  /// **'Create {count} closure days'**
+  String publicHolidaysConfirm(int count);
+
+  /// #1274 nothing left to create
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to create — every day is already there.'**
+  String get publicHolidaysNothingToCreate;
+
+  /// #1274 how many closure days were written
+  ///
+  /// In en, this message translates to:
+  /// **'{count} closure days created'**
+  String publicHolidaysCreated(int count);
+
   /// Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card
   ///
   /// In en, this message translates to:

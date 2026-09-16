@@ -8091,6 +8091,95 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profilesSitePick => 'Changer de site';
 
   @override
+  String get featurePublicHolidaysTitle => 'Jours fériés';
+
+  @override
+  String get featurePublicHolidaysDesc =>
+      'Le propriétaire choisit une année, voit les jours fériés qui deviendraient des jours de fermeture, puis confirme. Relancer une année n\'ajoute rien, et un mois déjà facturé est ignoré et nommé — générer des jours fériés ne modifie jamais une facture déjà émise.';
+
+  @override
+  String get holidayNewYear => 'Jour de l\'An';
+
+  @override
+  String get holidayEasterMonday => 'Lundi de Pâques';
+
+  @override
+  String get holidayLabourDay => 'Fête du Travail';
+
+  @override
+  String get holidayVictory1945 => 'Victoire 1945';
+
+  @override
+  String get holidayAscension => 'Ascension';
+
+  @override
+  String get holidayWhitMonday => 'Lundi de Pentecôte';
+
+  @override
+  String get holidayNationalDay => 'Fête nationale';
+
+  @override
+  String get holidayAssumption => 'Assomption';
+
+  @override
+  String get holidayAllSaints => 'Toussaint';
+
+  @override
+  String get holidayArmistice => 'Armistice 1918';
+
+  @override
+  String get holidayChristmas => 'Noël';
+
+  @override
+  String get holidayGoodFriday => 'Vendredi saint';
+
+  @override
+  String get holidayGermanUnity => 'Jour de l\'Unité allemande';
+
+  @override
+  String get holidayBoxingDay => 'Deuxième jour de Noël';
+
+  @override
+  String get publicHolidaysAction => 'Ajouter les jours fériés';
+
+  @override
+  String get publicHolidaysSheetTitle => 'Jours fériés';
+
+  @override
+  String get publicHolidaysYear => 'Année';
+
+  @override
+  String get publicHolidaysCountry => 'Pays';
+
+  @override
+  String get publicHolidaysPreviewNone => 'Aucun jour férié pour cette année.';
+
+  @override
+  String get publicHolidaysPresent => 'Déjà un jour de fermeture';
+
+  @override
+  String get publicHolidaysLocked => 'Mois facturé — non créé';
+
+  @override
+  String publicHolidaysLockedMonths(String months) {
+    return 'Ignorés, déjà facturés : $months';
+  }
+
+  @override
+  String publicHolidaysConfirm(int count) {
+    return 'Créer $count jours de fermeture';
+  }
+
+  @override
+  String get publicHolidaysNothingToCreate =>
+      'Rien à créer — tous les jours sont déjà là.';
+
+  @override
+  String publicHolidaysCreated(int count) {
+    return '$count jours de fermeture créés';
+  }
+
+  @override
   String get eventTypeRoleChange => 'Changement de rôle';
 
   @override

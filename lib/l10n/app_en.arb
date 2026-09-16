@@ -8348,6 +8348,129 @@
   "@profilesSitePick": {
     "description": "#974 profiles site: profilesSitePick"
   },
+  "featurePublicHolidaysTitle": "Public holidays",
+  "@featurePublicHolidaysTitle": {
+    "description": "#1274 public holidays: the feature switch title"
+  },
+  "featurePublicHolidaysDesc": "An owner picks a year and sees the public holidays that would become closure days, then confirms. Re-running a year adds nothing, and a month that already carries an invoice is skipped and named — generating holidays never changes a bill that was already issued.",
+  "@featurePublicHolidaysDesc": {
+    "description": "#1274 public holidays: the feature switch description"
+  },
+  "holidayNewYear": "New Year's Day",
+  "@holidayNewYear": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayEasterMonday": "Easter Monday",
+  "@holidayEasterMonday": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayLabourDay": "Labour Day",
+  "@holidayLabourDay": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayVictory1945": "Victory 1945",
+  "@holidayVictory1945": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayAscension": "Ascension",
+  "@holidayAscension": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayWhitMonday": "Whit Monday",
+  "@holidayWhitMonday": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayNationalDay": "Bastille Day",
+  "@holidayNationalDay": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayAssumption": "Assumption",
+  "@holidayAssumption": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayAllSaints": "All Saints' Day",
+  "@holidayAllSaints": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayArmistice": "Armistice 1918",
+  "@holidayArmistice": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayChristmas": "Christmas Day",
+  "@holidayChristmas": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayGoodFriday": "Good Friday",
+  "@holidayGoodFriday": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayGermanUnity": "German Unity Day",
+  "@holidayGermanUnity": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayBoxingDay": "Boxing Day",
+  "@holidayBoxingDay": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "publicHolidaysAction": "Add public holidays",
+  "@publicHolidaysAction": {
+    "description": "#1274 the action that opens the holiday preview"
+  },
+  "publicHolidaysSheetTitle": "Public holidays",
+  "@publicHolidaysSheetTitle": {
+    "description": "#1274 the preview sheet's title"
+  },
+  "publicHolidaysYear": "Year",
+  "@publicHolidaysYear": {
+    "description": "#1274 the year field label"
+  },
+  "publicHolidaysCountry": "Country",
+  "@publicHolidaysCountry": {
+    "description": "#1274 the country field label"
+  },
+  "publicHolidaysPreviewNone": "No public holidays for this year.",
+  "@publicHolidaysPreviewNone": {
+    "description": "#1274 the preview came back empty"
+  },
+  "publicHolidaysPresent": "Already a closure day",
+  "@publicHolidaysPresent": {
+    "description": "#1274 this date is already a closure day"
+  },
+  "publicHolidaysLocked": "Invoiced month — not created",
+  "@publicHolidaysLocked": {
+    "description": "#1274 this date's month already carries an invoice"
+  },
+  "publicHolidaysLockedMonths": "Skipped, already invoiced: {months}",
+  "@publicHolidaysLockedMonths": {
+    "description": "#1274 the months skipped because they are invoiced",
+    "placeholders": {
+      "months": {
+        "type": "String"
+      }
+    }
+  },
+  "publicHolidaysConfirm": "Create {count} closure days",
+  "@publicHolidaysConfirm": {
+    "description": "#1274 confirm creating the previewed days",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "publicHolidaysNothingToCreate": "Nothing to create — every day is already there.",
+  "@publicHolidaysNothingToCreate": {
+    "description": "#1274 nothing left to create"
+  },
+  "publicHolidaysCreated": "{count} closure days created",
+  "@publicHolidaysCreated": {
+    "description": "#1274 how many closure days were written",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "eventTypeRoleChange": "Role change",
   "@eventTypeRoleChange": {
     "description": "Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card"

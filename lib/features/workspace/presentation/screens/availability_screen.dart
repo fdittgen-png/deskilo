@@ -18,6 +18,8 @@ import '../../domain/closure_day.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/availability_tiles.dart';
+import '../../application/generate_public_holidays.dart';
+import '../widgets/public_holidays_sheet.dart';
 import '../../../../core/time/clock.dart';
 
 /// Owner-only availability editor (#127): which ISO weekdays (1=Mon..7=Sun,
@@ -310,6 +312,10 @@ class AvailabilityScreen extends ConsumerWidget {
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.workingHours);
     final workHours = ref.watch(workHoursProvider).value ?? WorkHours.defaults;
+    // #1274: generating a year's holidays is asked for, never assumed.
+    final holidaysOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.publicHolidays);
     // #600: the owner-configurable booking-behavior matrix.
     final policiesOn = ref
         .watch(enabledFeaturesSyncProvider)
@@ -745,6 +751,23 @@ class AvailabilityScreen extends ConsumerWidget {
                   anchor: HelpAnchor.availabilityClosureDays,
                 ),
               ]),
+              if (holidaysOn)
+                ListTile(
+                  key: const ValueKey('availability-public-holidays'),
+                  leading: const Icon(Icons.flag_outlined),
+                  title: Text(
+                    l10n?.publicHolidaysAction ?? 'Add public holidays',
+                  ),
+                  trailing: const Icon(Icons.chevron_right),
+                  // The screen already holds the repository for its own
+                  // closure-day writes; the sheet is handed the decision
+                  // rather than reaching for one itself (ADR 0024).
+                  onTap: () => showPublicHolidaysSheet(
+                    context,
+                    PublicHolidayGeneration(
+                        ref.read(workspaceRepositoryProvider)),
+                  ),
+                ),
               if (closures.isEmpty)
                 Padding(
                   padding: AppSpacing.lgH,

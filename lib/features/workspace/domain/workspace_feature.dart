@@ -196,7 +196,8 @@ enum WorkspaceFeature {
   /// #1273 — a level holding exactly one room is named by the level on the
   /// member surfaces: "2e étage · Table 3", not "Bureau 1 · Table 3". A
   /// second room brings both names back; the editor always shows rooms.
-  singleRoomLevelNames;
+  singleRoomLevelNames,
+  publicHolidays;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1113,6 +1114,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     surface: FeatureSurface.reserve,
     tier: FeatureTier.core,
     defaultOn: true,
+  ),
+  // #1274 — generating closure days changes what a subscription
+  // includes, so it is asked for rather than assumed: Platform, off.
+  WorkspaceFeature.publicHolidays: FeatureManifestEntry(
+    feature: WorkspaceFeature.publicHolidays,
+    surface: FeatureSurface.settings,
+    tier: FeatureTier.platform,
+    defaultOn: false,
   ),
 };
 

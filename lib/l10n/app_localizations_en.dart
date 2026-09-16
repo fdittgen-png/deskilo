@@ -8013,6 +8013,95 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profilesSitePick => 'Change your site';
 
   @override
+  String get featurePublicHolidaysTitle => 'Public holidays';
+
+  @override
+  String get featurePublicHolidaysDesc =>
+      'An owner picks a year and sees the public holidays that would become closure days, then confirms. Re-running a year adds nothing, and a month that already carries an invoice is skipped and named — generating holidays never changes a bill that was already issued.';
+
+  @override
+  String get holidayNewYear => 'New Year\'s Day';
+
+  @override
+  String get holidayEasterMonday => 'Easter Monday';
+
+  @override
+  String get holidayLabourDay => 'Labour Day';
+
+  @override
+  String get holidayVictory1945 => 'Victory 1945';
+
+  @override
+  String get holidayAscension => 'Ascension';
+
+  @override
+  String get holidayWhitMonday => 'Whit Monday';
+
+  @override
+  String get holidayNationalDay => 'Bastille Day';
+
+  @override
+  String get holidayAssumption => 'Assumption';
+
+  @override
+  String get holidayAllSaints => 'All Saints\' Day';
+
+  @override
+  String get holidayArmistice => 'Armistice 1918';
+
+  @override
+  String get holidayChristmas => 'Christmas Day';
+
+  @override
+  String get holidayGoodFriday => 'Good Friday';
+
+  @override
+  String get holidayGermanUnity => 'German Unity Day';
+
+  @override
+  String get holidayBoxingDay => 'Boxing Day';
+
+  @override
+  String get publicHolidaysAction => 'Add public holidays';
+
+  @override
+  String get publicHolidaysSheetTitle => 'Public holidays';
+
+  @override
+  String get publicHolidaysYear => 'Year';
+
+  @override
+  String get publicHolidaysCountry => 'Country';
+
+  @override
+  String get publicHolidaysPreviewNone => 'No public holidays for this year.';
+
+  @override
+  String get publicHolidaysPresent => 'Already a closure day';
+
+  @override
+  String get publicHolidaysLocked => 'Invoiced month — not created';
+
+  @override
+  String publicHolidaysLockedMonths(String months) {
+    return 'Skipped, already invoiced: $months';
+  }
+
+  @override
+  String publicHolidaysConfirm(int count) {
+    return 'Create $count closure days';
+  }
+
+  @override
+  String get publicHolidaysNothingToCreate =>
+      'Nothing to create — every day is already there.';
+
+  @override
+  String publicHolidaysCreated(int count) {
+    return '$count closure days created';
+  }
+
+  @override
   String get eventTypeRoleChange => 'Role change';
 
   @override

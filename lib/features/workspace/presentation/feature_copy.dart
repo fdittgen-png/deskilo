@@ -439,4 +439,11 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
               'When a level holds only one room, the booking views name the '
                   'level instead of the room. Adding a second room brings '
                   'both names back; the plan editor always shows the rooms.',
+        WorkspaceFeature.publicHolidays =>
+          l10n?.featurePublicHolidaysDesc ??
+              'An owner picks a year and sees the public holidays that '
+                  'would become closure days, then confirms. Re-running a '
+                  'year adds nothing, and a month that already carries an '
+                  'invoice is skipped and named — generating holidays '
+                  'never changes a bill that was already issued.',
       };

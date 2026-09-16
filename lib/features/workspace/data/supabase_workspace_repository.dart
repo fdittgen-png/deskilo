@@ -6,6 +6,7 @@ import '../../../core/time/work_hours.dart';
 import '../domain/booking_granularity.dart';
 import '../domain/booking_policies.dart';
 import '../domain/closure_day.dart';
+import '../domain/public_holidays.dart';
 import '../../money/domain/payment_terms.dart';
 import '../../profile/domain/personal_info.dart';
 import '../domain/member.dart';
@@ -987,6 +988,25 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         .eq('workspace_id', workspaceId)
         .order('day', ascending: true);
     return rows.map(_closureDayFromRow).toList();
+  }
+
+  @override
+  Future<HolidayGeneration> generateClosureDays(
+    String workspaceId, {
+    required String country,
+    required int year,
+    bool apply = false,
+  }) async {
+    // Definer RPC: the owner gate and the invoiced-month rule are the
+    // server's, not this client's (ADR 0020).
+    final row = await _client.rpc<dynamic>('generate_closure_days', params: {
+      'p_workspace_id': workspaceId,
+      'p_country': country,
+      'p_year': year,
+      'p_apply': apply,
+    });
+    return holidayGenerationFromJson(
+        Map<String, dynamic>.from(row as Map));
   }
 
   @override

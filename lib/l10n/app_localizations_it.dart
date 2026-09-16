@@ -8080,6 +8080,96 @@ class AppLocalizationsIt extends AppLocalizations {
   String get profilesSitePick => 'Cambia sede';
 
   @override
+  String get featurePublicHolidaysTitle => 'Giorni festivi';
+
+  @override
+  String get featurePublicHolidaysDesc =>
+      'Il proprietario sceglie un anno, vede i giorni festivi che diventerebbero giorni di chiusura e conferma. Rilanciare un anno non aggiunge nulla, e un mese già fatturato viene saltato e nominato: generare i festivi non cambia mai una fattura già emessa.';
+
+  @override
+  String get holidayNewYear => 'Capodanno';
+
+  @override
+  String get holidayEasterMonday => 'Lunedì dell\'Angelo';
+
+  @override
+  String get holidayLabourDay => 'Festa del Lavoro';
+
+  @override
+  String get holidayVictory1945 => 'Vittoria 1945';
+
+  @override
+  String get holidayAscension => 'Ascensione';
+
+  @override
+  String get holidayWhitMonday => 'Lunedì di Pentecoste';
+
+  @override
+  String get holidayNationalDay => 'Festa nazionale francese';
+
+  @override
+  String get holidayAssumption => 'Assunzione';
+
+  @override
+  String get holidayAllSaints => 'Ognissanti';
+
+  @override
+  String get holidayArmistice => 'Armistizio 1918';
+
+  @override
+  String get holidayChristmas => 'Natale';
+
+  @override
+  String get holidayGoodFriday => 'Venerdì Santo';
+
+  @override
+  String get holidayGermanUnity => 'Giorno dell\'Unità tedesca';
+
+  @override
+  String get holidayBoxingDay => 'Santo Stefano';
+
+  @override
+  String get publicHolidaysAction => 'Aggiungi i giorni festivi';
+
+  @override
+  String get publicHolidaysSheetTitle => 'Giorni festivi';
+
+  @override
+  String get publicHolidaysYear => 'Anno';
+
+  @override
+  String get publicHolidaysCountry => 'Paese';
+
+  @override
+  String get publicHolidaysPreviewNone =>
+      'Nessun giorno festivo per quest\'anno.';
+
+  @override
+  String get publicHolidaysPresent => 'Già un giorno di chiusura';
+
+  @override
+  String get publicHolidaysLocked => 'Mese fatturato — non creato';
+
+  @override
+  String publicHolidaysLockedMonths(String months) {
+    return 'Saltati, già fatturati: $months';
+  }
+
+  @override
+  String publicHolidaysConfirm(int count) {
+    return 'Crea $count giorni di chiusura';
+  }
+
+  @override
+  String get publicHolidaysNothingToCreate =>
+      'Niente da creare: tutti i giorni ci sono già.';
+
+  @override
+  String publicHolidaysCreated(int count) {
+    return '$count giorni di chiusura creati';
+  }
+
+  @override
   String get eventTypeRoleChange => 'Cambio di ruolo';
 
   @override
