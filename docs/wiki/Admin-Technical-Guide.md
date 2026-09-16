@@ -313,6 +313,15 @@ database and stamp which migration it stands at. A later migration
 reaches an existing instance the same way — applied in order from the
 stamp forward, never re-run.
 
+The version is a number the schema carries itself:
+`select public.deskilo_schema_version();` answers the last migration
+applied, and every migration writes it in its own transaction (#1312).
+An app older than its server keeps working. An app **newer** than its
+server stops on *This server needs an update* — whoever runs the server
+applies the missing migrations; everyone else can still open the Server
+screen from there and point the device elsewhere. Without a network the
+check simply does not happen, and nothing is blocked.
+
 Configuration and master data travel between instances through the
 **space file**, since a deployment needs one database and an instance is
 the point at which there are two.

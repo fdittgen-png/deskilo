@@ -1,0 +1,11 @@
+{
+  "@@locale": "fr",
+  "schemaUpdateTitle": "Ce serveur doit être mis à jour",
+  "schemaUpdateBody": "Cette application a besoin de la version {version} du schéma DesKilo, et le serveur auquel elle se connecte en exécute une plus ancienne. Tant que le serveur n'est pas mis à jour, l'application échouerait sans pouvoir expliquer pourquoi : elle s'arrête donc ici.",
+  "schemaUpdateOperator": "Si vous gérez ce serveur : appliquez les migrations manquantes avec `dart run tool/instance.dart install --ref <projet>`. Seul ce qui manque est exécuté.",
+  "schemaUpdateMember": "Sinon : prévenez la personne qui gère votre espace. Rien de ce que vous avez saisi n'est perdu.",
+  "schemaUpdateRetry": "Vérifier à nouveau",
+  "schemaUpdateServer": "Réglages du serveur",
+  "backendTestBehind": "Contacté, mais son schéma DesKilo est plus ancien que ce dont l'application a besoin. Mettez le serveur à jour avant de l'utiliser.",
+  "backendTestAhead": "Contacté. Son schéma est plus récent que l'application — cela fonctionne, et une version plus récente de l'application est disponible."
+}

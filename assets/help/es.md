@@ -2681,6 +2681,16 @@ y sellan en qué migración está. Una migración posterior llega a una
 instancia existente por el mismo camino — aplicada en orden desde el
 sello hacia adelante, nunca reejecutada.
 
+La versión es un número que lleva el propio esquema:
+`select public.deskilo_schema_version();` devuelve la última migración
+aplicada, y cada migración lo escribe en su propia transacción (#1312).
+Una aplicación más antigua que su servidor sigue funcionando. Una
+aplicación **más reciente** que su servidor se detiene en *Este servidor
+necesita una actualización*: quien gestiona el servidor aplica las
+migraciones que faltan; los demás pueden abrir desde ahí la pantalla
+Servidor y apuntar el dispositivo a otro. Sin red, la comprobación
+simplemente no se hace y no se bloquea nada.
+
 La configuración y los datos maestros viajan entre instancias a través
 del **archivo de espacio**, ya que un despliegue necesita una sola base y
 una instancia es justamente el punto en el que hay dos.

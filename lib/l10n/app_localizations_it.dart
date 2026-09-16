@@ -9150,6 +9150,36 @@ class AppLocalizationsIt extends AppLocalizations {
       'Manca la partita IVA del cliente — una fattura in inversione contabile deve indicarla.';
 
   @override
+  String get schemaUpdateTitle => 'Questo server deve essere aggiornato';
+
+  @override
+  String schemaUpdateBody(int version) {
+    return 'Questa app richiede la versione $version dello schema DesKilo, e il server a cui si collega ne esegue una più vecchia. Finché il server non viene aggiornato, l\'app fallirebbe in modi che non saprebbe spiegare, quindi si ferma qui.';
+  }
+
+  @override
+  String get schemaUpdateOperator =>
+      'Se gestisci questo server: applica le migrazioni mancanti con `dart run tool/instance.dart install --ref <progetto>`. Viene eseguito solo ciò che manca.';
+
+  @override
+  String get schemaUpdateMember =>
+      'Altrimenti: avvisa la persona che gestisce il tuo spazio. Nulla di ciò che hai inserito va perso.';
+
+  @override
+  String get schemaUpdateRetry => 'Controlla di nuovo';
+
+  @override
+  String get schemaUpdateServer => 'Impostazioni del server';
+
+  @override
+  String get backendTestBehind =>
+      'Raggiunto, ma il suo schema DesKilo è più vecchio di quanto richiede questa app. Aggiorna il server prima di usarlo.';
+
+  @override
+  String get backendTestAhead =>
+      'Raggiunto. Il suo schema è più recente di questa app: funziona, ed è disponibile un\'app più recente.';
+
+  @override
   String seatDayTitle(String seat) {
     return 'Postazione $seat oggi';
   }

@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**497 files, 3300 tests.**
+**499 files, 3315 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -12,16 +12,16 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | database | 21 | 208 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
-| lint | 69 | 195 |
+| lint | 69 | 196 |
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
-| unit | 171 | 1353 |
-| widget | 226 | 1505 |
+| unit | 172 | 1358 |
+| widget | 227 | 1514 |
 
 | action | files |
 |---|---:|
-| KEEP | 497 |
+| KEEP | 499 |
 
 ## Rules
 
@@ -82,6 +82,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/app/boot_splash_test.dart` | widget | Boot splash (field request): from the very first frame the user sees the brand splash, the data warm-up runs behind it, and the finished screen fades in —… | 1 | yes | fakes | user-visible behaviour | no | KEEP |  |
 | `test/app/page_transitions_test.dart` | widget | Route transitions of the motion pass (#611): the theme carries fade-forwards transitions for Android/desktop and keeps iOS's native Cupertino back-swipe;… | 4 | yes | fakes | user-visible behaviour — #611 | no | KEEP |  |
 | `test/app/route_permission_parity_test.dart` | widget | #1085 — `myPermissions` documents the rule: "The one client-side gate: screens ask for a permission, never for a role flag." The Settings tiles were migrated… | 1 | yes | fakes | user-visible behaviour — #1085 | no | KEEP |  |
+| `test/app/schema_gate_test.dart` | widget | #1312 — the app refuses a server whose schema is older than it needs, and ONLY that: a current or newer server boots as before, and a check that could not be… | 9 | yes | fakes | user-visible behaviour — #1312 | no | KEEP |  |
 | `test/app/shell/events_badge_test.dart` | widget | Where the pending-confirmation count lives (#230, moved again by #702). The feed left the bottom bar for an app-bar bell, and left the bell for the inbox's… | 4 | yes | fakes | user-visible behaviour — #230, #702, #707 | no | KEEP |  |
 | `test/app/shell/shell_bar_continuity_test.dart` | widget | The Reserve button is the anchor the eye follows. | 7 | yes | fakes | user-visible behaviour — #1173, #1183, #611 | no | KEEP |  |
 | `test/app/shell/shell_bar_drag_test.dart` | widget | The bar moves with the finger, and the finger decides. | 12 | yes | fakes | user-visible behaviour — #1173 | no | KEEP |  |
@@ -113,6 +114,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/core/i18n/time_zone_picker_test.dart` | widget | #1390 — the time-zone search field's hint was the literal `'Europe/Paris'`, while the label directly above it resolved through `AppLocalizations`. Every… | 3 | yes | none | user-visible behaviour — #1390, #711 | no | KEEP |  |
 | `test/core/instance/instance_builder_test.dart` | unit | #977 — the instance builder over a fake Management API: the project comes up after a few polls, the schema runs in order and names the migration that fails,… | 10 | yes | fakes | a domain rule — #977, #1314, #1313 | no | KEEP |  |
 | `test/core/instance/instance_doctor_test.dart` | unit | #1075 — the doctor, driven by the shapes it exists to catch. | 36 | yes | fakes | a domain rule — #1075, #1245, #1226 | no | KEEP |  |
+| `test/core/instance/schema_compatibility_test.dart` | unit | #1312 — a server's schema marker against what this build needs: lower or absent blocks, equal and higher do not. A server predating the marker is `behind`,… | 5 | yes | none | a domain rule — #1312 | no | KEEP |  |
 | `test/core/locale/locale_controller_test.dart` | unit | The language override: an empty store follows the system, a stored code applies and persists, null clears it. | 4 | yes | none | a domain rule | shares a test name with test/core/theme/theme_controller_test.dart | KEEP |  |
 | `test/core/motion/motion_core_test.dart` | widget | Motion core (#611): ONE seam decides whether anything animates — the uiAnimations feature flag (installed by the app shell as MotionSettings) AND the… | 8 | yes | none | user-visible behaviour — #611 | no | KEEP |  |
 | `test/core/navigation/navigation_style_test.dart` | unit | #969 — the navigation preference: persisted per device, applied to the shell instantly, and never a choice on the web. | 2 | yes | fakes | a domain rule — #969 | no | KEEP |  |
@@ -514,7 +516,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/lint/lexicon_allow_list_test.dart` | lint | #1277 — the app and the server agree on which words a workspace may rename, or the feature is a trap. | 5 | yes | repository sources | an architecture, security or process rule — #1277 | no | KEEP |  |
 | `test/lint/manifest_permissions_test.dart` | lint | Pinning test for #99: Flutter injects INTERNET only into the debug/profile manifest overlays — a release build without it in the MAIN manifest cannot open any… | 1 | yes | repository sources | an architecture, security or process rule | no | KEEP |  |
 | `test/lint/migration_grants_test.dart` | lint | #1054 — a migration that creates a function revokes anon in the same file. | 5 | yes | repository sources | an architecture, security or process rule — #1054, #1047 | no | KEEP |  |
-| `test/lint/migration_version_marker_test.dart` | lint | #1312 — every migration after the marker's introduction says which version it makes the schema, and what kind of change it is. | 10 | yes | repository sources | an architecture, security or process rule — #1312, #1314 | no | KEEP |  |
+| `test/lint/migration_version_marker_test.dart` | lint | #1312 — every migration after the marker's introduction says which version it makes the schema, and what kind of change it is. | 11 | yes | repository sources | an architecture, security or process rule — #1312, #1314 | no | KEEP |  |
 | `test/lint/no_day_duration_test.dart` | lint | #1231 — a date that is printed, invoiced or chased is never computed with `Duration(days: n)`. | 1 | yes | none | an architecture, security or process rule — #1231 | no | KEEP |  |
 | `test/lint/no_hand_rolled_cents_test.dart` | lint | #1140 — after #1077 every amount an editor reads or shows goes through `parseCentsInput` / `centsToMajor`, which know the currency's minor digits. A… | 1 | yes | none | an architecture, security or process rule — #1140, #1077 | no | KEEP |  |
 | `test/lint/no_hardcoded_strings_test.dart` | lint | HARD RULE #1: no hard-coded user-facing strings. Every Text() must go through AppLocalizations; a string literal is allowed only as the defensive English… | 1 | yes | none | an architecture, security or process rule | no | KEEP |  |

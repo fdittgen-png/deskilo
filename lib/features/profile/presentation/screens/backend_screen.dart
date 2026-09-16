@@ -154,7 +154,7 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
               padding: const EdgeInsets.only(top: AppSpacing.sm),
               child: Text(
                 key: const ValueKey('backend-test-result'),
-                _resultText(l10n, _result!),
+                backendProbeText(l10n, _result!),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: _result == BackendProbeResult.ok
                           ? scheme.primary
@@ -364,18 +364,4 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
           'Saved. Close and reopen the app to use the new server.',
     );
   }
-
-  String _resultText(AppLocalizations? l10n, BackendProbeResult result) =>
-      switch (result) {
-        BackendProbeResult.ok =>
-          l10n?.backendTestOk ?? 'Reached it — the app\'s schema is there.',
-        BackendProbeResult.unreachable => l10n?.backendTestUnreachable ??
-            'Could not reach that address. Check the URL and your network.',
-        BackendProbeResult.badKey => l10n?.backendTestBadKey ??
-            'Reached it, but the key was refused. Copy the publishable key '
-                'again from Project Settings → API keys.',
-        BackendProbeResult.schemaMissing => l10n?.backendTestSchemaMissing ??
-            'Reached it, but the DesKilo tables are missing — run the '
-                'migrations from supabase/migrations on that project first.',
-      };
 }

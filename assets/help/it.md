@@ -2707,6 +2707,16 @@ vuota e timbrano a quale migrazione si trova. Una migrazione successiva
 raggiunge un'istanza esistente per la stessa via — applicata in ordine dal
 timbro in avanti, mai rieseguita.
 
+La versione è un numero che lo schema porta con sé:
+`select public.deskilo_schema_version();` restituisce l'ultima migrazione
+applicata, e ogni migrazione lo scrive nella propria transazione (#1312).
+Un'app più vecchia del suo server continua a funzionare. Un'app **più
+recente** del suo server si ferma su *Questo server deve essere
+aggiornato*: chi gestisce il server applica le migrazioni mancanti; gli
+altri possono aprire da lì la schermata Server e puntare il dispositivo
+altrove. Senza rete il controllo semplicemente non avviene, e nulla viene
+bloccato.
+
 Configurazione e dati anagrafici viaggiano fra istanze attraverso il
 **file di spazio**, dato che un deployment ha bisogno di una sola base
 dati e un'istanza è esattamente il punto in cui ce ne sono due.

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+import 'package:deskilo/core/backend/schema_version.dart';
+import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:deskilo/app/shell/shell_bar_visibility.dart';
 import 'package:deskilo/features/workspace/domain/deployment.dart';
 import 'package:deskilo/features/workspace/providers/deployment_providers.dart';
@@ -1891,6 +1893,7 @@ List<Override> standardTestOverrides({
   DemoModeStore? demoMode,
   NavigationStyleStore? navigationStyle,
   DeploymentRepository? deployment,
+  SchemaVersionSource? schemaVersion,
 }) {
   return [
     // #1150 — a 24-hour clock for every test: `ClockPref.auto` renders
@@ -1901,6 +1904,10 @@ List<Override> standardTestOverrides({
       appFormatProvider.overrideWithValue(
         AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24, timeZoneMode: timeZoneMode),
       ),
+    // #1312 — the server answers with exactly this app's schema, so no
+    // test is sent to the update screen unless it says otherwise.
+    schemaVersionSourceProvider.overrideWithValue(
+        schemaVersion ?? const FixedSchemaVersionSource(requiredSchemaVersion)),
     // #969/#970 — the per-device preferences, in memory by default.
     demoModeStoreProvider.overrideWithValue(demoMode ?? InMemoryDemoModeStore()),
     navigationStyleStoreProvider.overrideWithValue(
@@ -2128,4 +2135,19 @@ class FakeAppBadge implements AppBadge {
 
   @override
   Future<void> update(int count) async => counts.add(count);
+}
+
+/// #1312 — a server whose `deskilo_schema_version()` answers [version];
+/// null is a server that predates the marker.
+class FixedSchemaVersionSource implements SchemaVersionSource {
+  const FixedSchemaVersionSource(this.version, {this.unavailable = false});
+  final int? version;
+  final bool unavailable;
+  @override
+  Future<int?> read() async {
+    if (unavailable) {
+      throw const SchemaVersionUnavailable('offline in the test');
+    }
+    return version;
+  }
 }
