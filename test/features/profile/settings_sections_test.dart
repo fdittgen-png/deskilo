@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: 0BSD
 //
-// Structural test for the sectioned settings list (#188): Profiles on top,
-// then the Administration / Preferences / Advanced sections in that order,
-// with Sign out set apart at the bottom. A plain member must not see the
-// Administration header (nor any of its entries) at all.
+// Structural test for the sectioned settings list (#188, regrouped by
+// ownership in #1307): Profiles on top, then My account, My membership,
+// This workspace, Administration, Governance, Advanced and Help & about,
+// with Sign out closing the list. A plain member meets none of the three
+// workspace sections — and always keeps the four essentials: Sign out,
+// Language, the privacy policy and Help.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +28,9 @@ Future<void> pumpSettingsAs(
   // 1900→2000 (#552): the owner WhatsApp-channel tile added one.
   // 2000→2700 (#560): the About section (7 tiles + support block).
   // #711 added the Region & formats tile; 2700 no longer reached Sign out.
-  tester.view.physicalSize = const Size(800, 3300);
+  // 3300→3600 (#1307): section headers for My account, My membership,
+  // This workspace and Governance.
+  tester.view.physicalSize = const Size(800, 3600);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final workspace = FakeWorkspaceRepository.withWorkspace(
@@ -57,39 +61,50 @@ double dy(WidgetTester tester, String text) =>
 
 void main() {
   testWidgets(
-      'owner sees Profiles first, then the Administration, Preferences and '
-      'Advanced sections in order, with Sign out at the bottom',
-      (tester) async {
+      'owner sees Profiles first, then every section in order, with Sign out '
+      'at the bottom', (tester) async {
     await pumpSettingsAs(tester, isAdmin: true, isOwner: true);
 
-    for (final header in ['Administration', 'Preferences', 'Advanced']) {
+    const order = [
+      'Profiles',
+      'My account',
+      'My membership',
+      'This workspace',
+      'Administration',
+      'Governance',
+      'Advanced',
+      'Help & about',
+      'Sign out',
+    ];
+    for (final header in order) {
       expect(find.text(header), findsOneWidget, reason: 'missing "$header"');
     }
-
-    // Profiles is the ungrouped top entry.
-    expect(dy(tester, 'Profiles'), lessThan(dy(tester, 'Administration')));
-    // Administration wraps the admin entries (Workspace … Workspace ID & QR).
-    expect(dy(tester, 'Administration'), lessThan(dy(tester, 'Workspace')));
-    expect(
-      dy(tester, 'Workspace ID & QR'),
-      lessThan(dy(tester, 'Preferences')),
-    );
-    // Preferences wraps Language and Theme.
-    expect(dy(tester, 'Preferences'), lessThan(dy(tester, 'Language')));
-    expect(dy(tester, 'Theme'), lessThan(dy(tester, 'Advanced')));
-    // Advanced wraps the developer entries; Sign out closes the list.
+    for (var i = 1; i < order.length; i++) {
+      expect(dy(tester, order[i - 1]), lessThan(dy(tester, order[i])),
+          reason: '"${order[i - 1]}" must come before "${order[i]}"');
+    }
+    // Each section wraps what it is about.
+    expect(dy(tester, 'My account'), lessThan(dy(tester, 'Language')));
+    expect(dy(tester, 'Language'), lessThan(dy(tester, 'My membership')));
+    expect(dy(tester, 'My membership'), lessThan(dy(tester, 'Status')));
+    expect(dy(tester, 'This workspace'), lessThan(dy(tester, 'Workspace')));
+    expect(dy(tester, 'Features'), lessThan(dy(tester, 'Administration')));
+    expect(dy(tester, 'Administration'), lessThan(dy(tester, 'Members & plans')));
+    expect(dy(tester, 'Governance'), lessThan(dy(tester, 'Role management')));
     expect(dy(tester, 'Advanced'), lessThan(dy(tester, 'Developer mode')));
-    expect(dy(tester, 'Developer mode'), lessThan(dy(tester, 'Sign out')));
+    expect(dy(tester, 'Help & about'), lessThan(dy(tester, 'Help')));
     // Sections are visually separated.
     expect(find.byType(Divider), findsWidgets);
   });
 
   testWidgets(
-      'a plain member sees no Administration header and none of its entries',
-      (tester) async {
+      'a plain member sees none of the workspace sections, and keeps the '
+      'four essentials', (tester) async {
     await pumpSettingsAs(tester, isAdmin: false, isOwner: false);
 
-    expect(find.text('Administration'), findsNothing);
+    for (final header in ['This workspace', 'Administration', 'Governance']) {
+      expect(find.text(header), findsNothing, reason: '"$header" leaked');
+    }
     for (final entry in [
       'Workspace',
       'Members & plans',
@@ -100,14 +115,60 @@ void main() {
       'Features',
       'Validation rules',
       'Workspace ID & QR',
+      'Role management',
     ]) {
       expect(find.text(entry), findsNothing, reason: '"$entry" leaked');
     }
-    // The personal sections stay.
-    expect(find.text('Profiles'), findsOneWidget);
-    expect(find.text('Preferences'), findsOneWidget);
-    expect(find.text('Advanced'), findsOneWidget);
+    // #1306/#1307 — Members is a bottom-bar destination; Settings is not a
+    // second door to it.
+    expect(find.text('Members'), findsNothing);
+    // The member's own sections stay.
+    for (final header in ['Profiles', 'My account', 'My membership', 'Help & about']) {
+      expect(find.text(header), findsOneWidget, reason: 'missing "$header"');
+    }
+    // The four essentials, pinned by what they are.
     expect(find.text('Sign out'), findsOneWidget);
+    expect(find.text('Language'), findsOneWidget);
+    expect(find.byKey(const ValueKey('about-privacy')), findsOneWidget);
+    expect(find.byKey(const ValueKey('settings-help')), findsOneWidget);
+  });
+
+  testWidgets(
+      '#1307 — a delegate holding one permission finds its entry and the '
+      'role matrix, and nothing else of the workspace', (tester) async {
+    tester.view.physicalSize = const Size(800, 3600);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.myMember = const Member(
+      id: 'member-1',
+      workspaceId: 'ws-1',
+      userId: 'user-1',
+      isAdmin: false,
+      isOwner: false,
+      status: MemberStatus.active,
+    );
+    workspace.workspaces[0] = workspace.workspaces[0].copyWith(
+      rolePermissions: {
+        'member': ['manageBilling'],
+      },
+    );
+    await tester.pumpWidget(ProviderScope(
+      overrides: standardTestOverrides(workspace: workspace),
+      child: const DeskiloApp(),
+    ));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await tester.pumpAndSettle();
+
+    expect(find.text('This workspace'), findsOneWidget);
+    expect(find.text('Billing'), findsOneWidget);
+    expect(find.text('Role management'), findsOneWidget,
+        reason: 'whoever holds a permission may read the matrix that grants it');
+    for (final entry in ['Workspace', 'Availability', 'Features', 'Members & plans']) {
+      expect(find.text(entry), findsNothing, reason: '"$entry" leaked');
+    }
+    expect(find.text('Administration'), findsNothing);
   });
 
   // Feature-gating of the admin entries (#146 rule): a feature's config entry

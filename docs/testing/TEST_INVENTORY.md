@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**499 files, 3317 tests.**
+**499 files, 3318 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -17,7 +17,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | property | 1 | 10 |
 | tool | 2 | 11 |
 | unit | 172 | 1360 |
-| widget | 227 | 1514 |
+| widget | 227 | 1515 |
 
 | action | files |
 |---|---:|
@@ -196,7 +196,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/events/validation_structure_test.dart` | widget | #1221 — the validation rules, read as the process they interrupt. | 4 | yes | none | user-visible behaviour — #1221 | no | KEEP |  |
 | `test/features/events/validation_trail_test.dart` | widget | #841 — the trail says who decided, in what order, and when. It is the same widget on an alert and on the document that raised it, so the two can never drift… | 7 | yes | none | user-visible behaviour — #841 | no | KEEP |  |
 | `test/features/help/help_anchor_jump_test.dart` | widget | #1016 — a help symbol names ONE object. The anchor resolves to that object's heading and the guide opens there; the topic can only find the first heading that… | 4 | yes | fakes | user-visible behaviour — #1016 | no | KEEP |  |
-| `test/features/help/help_screen_test.dart` | widget | In-app help: the wiki user guide compiled into offline assets by tool/build_help.dart and rendered natively. The screen is reachable from Settings for every… | 6 | yes | fakes, repository sources | user-visible behaviour — #606 | no | KEEP |  |
+| `test/features/help/help_screen_test.dart` | widget | In-app help: the wiki user guide compiled into offline assets by tool/build_help.dart and rendered natively. The screen is reachable from Settings for every… | 6 | yes | fakes, repository sources | user-visible behaviour — #1307, #606 | no | KEEP |  |
 | `test/features/kiosk/kiosk_presence_test.dart` | widget | The kiosk under the presence/one-place rules (#430): the kiosk route lives OUTSIDE the shell, so it must arm the realtime invalidator itself — and its error… | 2 | yes | fakes | user-visible behaviour — #430 | no | KEEP |  |
 | `test/features/kiosk/kiosk_screen_test.dart` | widget | Kiosk mode (0043, K2): the router locks a kiosk account to the kiosk plan view; seat taps offer check-in / reserve / check-out, each completed by a badge code… | 30 | yes | fakes, real async I/O | user-visible behaviour — #490, #519, #616 | no | KEEP |  |
 | `test/features/members/directory_feature_test.dart` | widget | Hierarchy pass: the member directory is feature-gated (default ON) — off removes the tab; whatsappIntegration strips every WhatsApp affordance while the… | 2 | yes | fakes | user-visible behaviour | no | KEEP |  |
@@ -204,10 +204,10 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/members/directory_screen_test.dart` | widget | The member directory (#224, epic #222): every member reaches it from settings; each ACTIVE member renders up to TWO chips side by side (#237) — the reservation… | 12 | yes | fakes | user-visible behaviour — #224, #222, #237 | no | KEEP |  |
 | `test/features/members/directory_status_test.dart` | unit | Pure resolver rules of the member directory's two indicators (#237): the presence resolver (online > relative last-seen, #223/#224) and the reservation… | 10 | yes | none | a domain rule — #237, #223, #224 | no | KEEP |  |
 | `test/features/members/managed_access_test.dart` | unit | #914/#915 — who may administer a managed profile, and what the person sees when they take it over. | 11 | yes | repository sources | a domain rule — #914, #915, #887 | no | KEEP |  |
-| `test/features/members/managed_profile_test.dart` | widget | #887 — a managed profile from the admin's side: created with THE identity form, shown as managed on its page, handed over through a bound invitation (the sheet… | 2 | yes | fakes | user-visible behaviour — #887, #912 | no | KEEP |  |
+| `test/features/members/managed_profile_test.dart` | widget | #887 — a managed profile from the admin's side: created with THE identity form, shown as managed on its page, handed over through a bound invitation (the sheet… | 2 | yes | fakes | user-visible behaviour — #887, #1307, #912 | no | KEEP |  |
 | `test/features/members/member_dossier_test.dart` | widget | THE MEMBER DOSSIER (#704): a profile that answers the questions asked about a person where the person is — including the money ones, which used to live a hub… | 14 | yes | fakes, repository sources | user-visible behaviour — #704, #709, #1110 | no | KEEP |  |
 | `test/features/members/member_emails_test.dart` | widget | Member emails in the members lists (#410, migration 0078): an ADMIN surface. Admin/owner viewers see each member's email under the name in Members & plans and… | 4 | yes | fakes | user-visible behaviour — #410 | no | KEEP |  |
-| `test/features/members/member_page_test.dart` | widget | #825 — one page per member: identity and presence spelled out, the "right now" sentence and the upcoming list, quick actions by right, the admin controls… | 8 | yes | fakes | user-visible behaviour — #825, #985, #1187 | no | KEEP |  |
+| `test/features/members/member_page_test.dart` | widget | #825 — one page per member: identity and presence spelled out, the "right now" sentence and the upcoming list, quick actions by right, the admin controls… | 8 | yes | fakes | user-visible behaviour — #825, #1307, #985 | no | KEEP |  |
 | `test/features/members/members_screen_test.dart` | widget | Members & plans. Since the UX pass, every per-member action lives in the row's MANAGEMENT SHEET (tap the row → labeled tiles) instead of a pile of icon buttons… | 25 | yes | fakes | user-visible behaviour — #825, #982, #128 | no | KEEP |  |
 | `test/features/money/accounting_formats_test.dart` | unit | #669 — the accounting and Steuerberater exports. | 35 | yes | repository sources | a domain rule — #669, #673 | no | KEEP |  |
 | `test/features/money/accounting_journals_test.dart` | unit | #936 — the exports carry the purchases side, book credit notes, and mark a development workspace's books. | 8 | yes | none | a domain rule — #936 | no | KEEP |  |
@@ -371,8 +371,8 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/profile/profiles_screen_test.dart` | widget | Profiles: each membership with its role; switching persists across restarts; adding one leads to create or join. | 4 | yes | fakes | user-visible behaviour | no | KEEP |  |
 | `test/features/profile/profiles_site_test.dart` | widget | #974 — the profiles list names the home site on a multi-site workspace and lets the person switch it; a single site is no line. | 2 | yes | fakes | user-visible behaviour — #974 | no | KEEP |  |
 | `test/features/profile/screen_polish_test.dart` | widget | The three screen-polish findings of the 2026-09-13 screenshot review. Each one is the same kind of defect: the screen said a true thing in a form that… | 3 | yes | fakes | user-visible behaviour — #1194, #1188 | no | KEEP |  |
-| `test/features/profile/settings_sections_test.dart` | widget | Structural test for the sectioned settings list (#188): Profiles on top, then the Administration / Preferences / Advanced sections in that order, with Sign out… | 4 | yes | fakes | user-visible behaviour — #188, #478, #486 | no | KEEP |  |
-| `test/features/profile/status_text_edit_test.dart` | widget | The status editor on the settings surface (#231): saving pins the trim + hard-cap normalization on the exact repository call the UI makes; input past the… | 4 | yes | fakes | user-visible behaviour — #231 | shares a test name with test/features/profile/whatsapp_edit_test.dart | KEEP |  |
+| `test/features/profile/settings_sections_test.dart` | widget | Structural test for the sectioned settings list (#188, regrouped by ownership in #1307): Profiles on top, then My account, My membership, This workspace,… | 5 | yes | fakes | user-visible behaviour — #188, #1307, #478 | no | KEEP |  |
+| `test/features/profile/status_text_edit_test.dart` | widget | The status editor on the settings surface (#231): saving pins the trim + hard-cap normalization on the exact repository call the UI makes; input past the… | 4 | yes | fakes | user-visible behaviour — #231, #1307 | shares a test name with test/features/profile/whatsapp_edit_test.dart | KEEP |  |
 | `test/features/profile/theme_selection_test.dart` | widget | Choosing a theme in Settings switches the app immediately and persists; System default clears it. | 4 | yes | fakes | user-visible behaviour — #188 | no | KEEP |  |
 | `test/features/profile/whatsapp_edit_test.dart` | widget | The WhatsApp editor on the settings surface (#223): entering a number pins the normalization rule (+ + digits) on the exact repository call the UI makes;… | 3 | yes | fakes | user-visible behaviour — #223 | shares a test name with test/features/profile/status_text_edit_test.dart | KEEP |  |
 | `test/features/profile/whatsapp_presence_migration_test.dart` | unit | Content pins for migration 0028 (#223): the two profile columns, the wire-shape check the client normalization targets, and the self-scoped SECURITY DEFINER… | 5 | yes | repository sources | a domain rule — #223 | no | KEEP |  |
@@ -424,7 +424,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/workspace/conversations_test.dart` | unit | #687 — the conversation model and write path (migrations 0125/0126). | 38 | yes | fakes, repository sources | a domain rule — #687, #821, #695 | no | KEEP |  |
 | `test/features/workspace/deployment_screen_test.dart` | widget | #988/#990 — the deployment between the two sides of a pair: the registry listed, requirements ticked along, the preview before the deploy, the journal with a… | 7 | yes | fakes | user-visible behaviour — #988, #990, #1004 | no | KEEP |  |
 | `test/features/workspace/documents_test.dart` | widget | The workspace document library (#500): federated links to any DMS, role-gated visibility, admin/owner curation. | 4 | yes | fakes, repository sources | user-visible behaviour — #500 | no | KEEP |  |
-| `test/features/workspace/environment_banner_test.dart` | widget | #917 — the strip that says a workspace is not real, and the one control that can take it away. | 6 | yes | fakes | user-visible behaviour — #917 | no | KEEP |  |
+| `test/features/workspace/environment_banner_test.dart` | widget | #917 — the strip that says a workspace is not real, and the one control that can take it away. | 6 | yes | fakes | user-visible behaviour — #917, #1307 | no | KEEP |  |
 | `test/features/workspace/environment_pairs_test.dart` | widget | #987/#989 — a workspace and its twin as one couple: the pair card in Profiles switches sides, the twin is created on demand from the environment tile, the… | 4 | yes | fakes | user-visible behaviour — #987, #989, #996 | no | KEEP |  |
 | `test/features/workspace/excel_export_screen_test.dart` | widget | The Excel export surface (#395): the tile exists only while the dataExport feature is on (its ONLY surface, so the flag gate is the tile), and tapping it hands… | 4 | yes | fakes | user-visible behaviour — #395, #1310 | no | KEEP |  |
 | `test/features/workspace/feature_structure_test.dart` | widget | #1221 — the Features screen, organised by WHERE a feature shows up. | 8 | yes | none | user-visible behaviour — #1221 | no | KEEP |  |

@@ -69,6 +69,11 @@ void main() {
       120,
       scrollable: find.byType(Scrollable).first,
     );
+    // #1307 — the tile now closes the Governance section; make the switch
+    // itself fully visible before tapping it.
+    await tester.ensureVisible(
+        find.byKey(const ValueKey('workspace-environment-switch')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('workspace-environment-switch')));
     await tester.pumpAndSettle();
 

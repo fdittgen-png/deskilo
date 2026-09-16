@@ -72,7 +72,7 @@ gouvernementale.
 <!-- anchor: env.deploy.screen -->
 ## Déployer
 
-*Réglages → Administration → Déploiement*, du côté que vous voulez
+*Réglages → Gouvernance → Déploiement*, du côté que vous voulez
 **écrire**. Un déploiement va toujours **dans le côté où vous vous
 tenez** : du côté production le bouton dit *Tirer depuis la DEV*, du
 côté développement *Tirer depuis la PROD*. Rien ne peut être poussé sur

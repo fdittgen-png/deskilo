@@ -2576,12 +2576,6 @@ abstract class AppLocalizations {
   /// **'Administration'**
   String get settingsSectionAdministration;
 
-  /// Settings section header grouping the personal preference entries (language, theme)
-  ///
-  /// In en, this message translates to:
-  /// **'Preferences'**
-  String get settingsSectionPreferences;
-
   /// Settings section header grouping the developer/diagnostics entries
   ///
   /// In en, this message translates to:
@@ -2617,12 +2611,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try again'**
   String get commonRetry;
-
-  /// Settings section header: About (#560)
-  ///
-  /// In en, this message translates to:
-  /// **'About'**
-  String get settingsSectionAbout;
 
   /// Version line under the app name (#560)
   ///
@@ -16090,6 +16078,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Active'**
   String get servicesActive;
+
+  /// #1307 Settings section: who I am and how the app looks, on every workspace
+  ///
+  /// In en, this message translates to:
+  /// **'My account'**
+  String get settingsSectionAccount;
+
+  /// #1307 Settings section: my standing in this workspace
+  ///
+  /// In en, this message translates to:
+  /// **'My membership'**
+  String get settingsSectionMembership;
+
+  /// #1307 Settings section: how this workspace works
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace'**
+  String get settingsSectionWorkspace;
+
+  /// #1307 Settings section: roles, deployment, environment
+  ///
+  /// In en, this message translates to:
+  /// **'Governance'**
+  String get settingsSectionGovernance;
+
+  /// #1307 Settings section: help, the app, privacy, sign out
+  ///
+  /// In en, this message translates to:
+  /// **'Help & about'**
+  String get settingsSectionHelpAbout;
 
   /// #1273 single-room level names: the feature switch title
   ///

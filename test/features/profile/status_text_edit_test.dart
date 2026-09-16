@@ -17,6 +17,11 @@ Future<void> pumpSettings(
   WidgetTester tester,
   FakeProfileRepository profile,
 ) async {
+  // #1307 — Status now sits in My membership, below My account; a taller
+  // view keeps it built in the lazy list.
+  tester.view.physicalSize = const Size(800, 3300);
+  tester.view.devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
   await tester.pumpWidget(
     ProviderScope(
       overrides: [

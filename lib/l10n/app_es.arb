@@ -1019,17 +1019,12 @@
   "errorOffline": "Sin conexión: no se ha enviado nada. Inténtalo de nuevo cuando vuelvas a estar en línea.",
   "settingsTitle": "Ajustes",
   "settingsSectionAdministration": "Administración",
-  "settingsSectionPreferences": "Preferencias",
   "settingsSectionAdvanced": "Avanzado",
   "comingSoon": "Próximamente",
   "shellReserveButton": "Reservar",
   "commonSavedTo": "Guardado en {path}",
   "commonSaveFailed": "No se pudo guardar el archivo.",
   "commonRetry": "Reintentar",
-  "settingsSectionAbout": "Acerca de",
-  "@settingsSectionAbout": {
-    "description": "Settings section header: About (#560)"
-  },
   "aboutVersion": "Versión {version}",
   "@aboutVersion": {
     "description": "Version line under the app name (#560)",
@@ -6208,6 +6203,11 @@
   "servicesPrice": "Precio",
   "servicesInactive": "Inactivo",
   "servicesActive": "Activo",
+  "settingsSectionAccount": "Mi cuenta",
+  "settingsSectionMembership": "Mi membresía",
+  "settingsSectionWorkspace": "Este espacio",
+  "settingsSectionGovernance": "Gobernanza",
+  "settingsSectionHelpAbout": "Ayuda y acerca de",
   "featureSingleRoomLevelNamesTitle": "Nombrar por la planta una planta de una sola sala",
   "@featureSingleRoomLevelNamesTitle": {
     "description": "#1273 single-room level names: the feature switch title"

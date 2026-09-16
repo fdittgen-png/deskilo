@@ -8,17 +8,12 @@
   "errorOffline": "Keine Verbindung — es wurde nichts gesendet. Versuchen Sie es erneut, sobald Sie wieder online sind.",
   "settingsTitle": "Einstellungen",
   "settingsSectionAdministration": "Verwaltung",
-  "settingsSectionPreferences": "Präferenzen",
   "settingsSectionAdvanced": "Erweitert",
   "comingSoon": "Demnächst verfügbar",
   "shellReserveButton": "Reservieren",
   "commonSavedTo": "Gespeichert unter {path}",
   "commonSaveFailed": "Datei konnte nicht gespeichert werden.",
   "commonRetry": "Erneut versuchen",
-  "settingsSectionAbout": "Über",
-  "@settingsSectionAbout": {
-    "description": "Settings section header: About (#560)"
-  },
   "aboutVersion": "Version {version}",
   "@aboutVersion": {
     "description": "Version line under the app name (#560)",

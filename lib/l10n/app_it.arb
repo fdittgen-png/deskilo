@@ -1019,17 +1019,12 @@
   "errorOffline": "Nessuna connessione: non è stato inviato nulla. Riprova quando sei di nuovo online.",
   "settingsTitle": "Impostazioni",
   "settingsSectionAdministration": "Amministrazione",
-  "settingsSectionPreferences": "Preferenze",
   "settingsSectionAdvanced": "Avanzate",
   "comingSoon": "Prossimamente",
   "shellReserveButton": "Prenota",
   "commonSavedTo": "Salvato in {path}",
   "commonSaveFailed": "Impossibile salvare il file.",
   "commonRetry": "Riprova",
-  "settingsSectionAbout": "Informazioni",
-  "@settingsSectionAbout": {
-    "description": "Settings section header: About (#560)"
-  },
   "aboutVersion": "Versione {version}",
   "@aboutVersion": {
     "description": "Version line under the app name (#560)",
@@ -6208,6 +6203,11 @@
   "servicesPrice": "Prezzo",
   "servicesInactive": "Inattivo",
   "servicesActive": "Attivo",
+  "settingsSectionAccount": "Il mio account",
+  "settingsSectionMembership": "La mia iscrizione",
+  "settingsSectionWorkspace": "Questo spazio",
+  "settingsSectionGovernance": "Governance",
+  "settingsSectionHelpAbout": "Aiuto e informazioni",
   "featureSingleRoomLevelNamesTitle": "Chiamare con il piano un piano a stanza unica",
   "@featureSingleRoomLevelNamesTitle": {
     "description": "#1273 single-room level names: the feature switch title"

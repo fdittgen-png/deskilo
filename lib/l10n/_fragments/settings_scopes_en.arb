@@ -1,0 +1,23 @@
+{
+  "@@locale": "en",
+  "settingsSectionAccount": "My account",
+  "@settingsSectionAccount": {
+    "description": "#1307 Settings section: who I am and how the app looks, on every workspace"
+  },
+  "settingsSectionMembership": "My membership",
+  "@settingsSectionMembership": {
+    "description": "#1307 Settings section: my standing in this workspace"
+  },
+  "settingsSectionWorkspace": "This workspace",
+  "@settingsSectionWorkspace": {
+    "description": "#1307 Settings section: how this workspace works"
+  },
+  "settingsSectionGovernance": "Governance",
+  "@settingsSectionGovernance": {
+    "description": "#1307 Settings section: roles, deployment, environment"
+  },
+  "settingsSectionHelpAbout": "Help & about",
+  "@settingsSectionHelpAbout": {
+    "description": "#1307 Settings section: help, the app, privacy, sign out"
+  }
+}

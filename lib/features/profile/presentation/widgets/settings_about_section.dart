@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/app_info.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -32,7 +33,15 @@ List<Widget> aboutSettingsTiles(
   }) =>
       [
           const Divider(),
-          SettingsSectionHeader(l10n?.settingsSectionAbout ?? 'About'),
+          SettingsSectionHeader(l10n?.settingsSectionHelpAbout ?? 'Help & about'),
+          // In-app help: the wiki user guide bundled as an offline asset,
+          // in the app's language. Available to every member.
+          ListTile(
+            key: const ValueKey('settings-help'),
+            leading: const Icon(Icons.help_outline),
+            title: Text(l10n?.helpTitle ?? 'Help'),
+            onTap: () => context.push('/help'),
+          ),
           ListTile(
             key: const ValueKey('about-version'),
             leading: const Icon(Icons.info_outline),
