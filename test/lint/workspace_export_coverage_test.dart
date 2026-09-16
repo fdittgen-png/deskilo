@@ -152,6 +152,10 @@ const Map<String, String> _notExported = {
   'invoice_reminders': 'dunning state, regenerated from the invoices',
   'price_negotiations': 'a per-member agreed price; part of membership',
   'quota_extensions': 'a granted exception, part of membership',
+  'workspace_creation_requests':
+      '#1303 — the claim a creation request made, keyed by the creator; it '
+          'belongs to the act of creating, and the workspace it made is the '
+          'export itself',
   'reservation_requests':
       'a request that became a reservation or was refused — the '
           'reservations themselves are exported',

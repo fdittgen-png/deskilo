@@ -121,8 +121,17 @@ class SupabaseWorkspaceRepository
     required String timezone,
     WorkspaceEnvironment environment = WorkspaceEnvironment.development,
     bool withTwin = true,
+    String? requestId,
+    String? templateId,
   }) async {
-    final result = await _client.rpc<dynamic>('create_workspace', params: {
+    // #1303 — with a request id, creation and the first template are one
+    // replayable act (0228).
+    final once = requestId != null;
+    final result = await _client.rpc<dynamic>(
+        once ? 'create_workspace_once' : 'create_workspace',
+        params: {
+      if (once) 'p_client_request_id': requestId,
+      if (once) 'p_template_id': templateId,
       'p_name': name,
       'p_country_code': countryCode,
       'p_currency_code': currencyCode,

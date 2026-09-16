@@ -448,7 +448,18 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     required String timezone,
     WorkspaceEnvironment environment = WorkspaceEnvironment.development,
     bool withTwin = true,
+    String? requestId,
+    String? templateId,
   }) async {
+    // #1303 — the server's replay rule: one workspace per request id.
+    final replayed = requestId == null ? null : createdByRequest[requestId];
+    if (replayed != null) return replayed;
+    createRequests.add((requestId: requestId, templateId: templateId));
+    final failure = createFailure;
+    if (failure != null) {
+      createFailure = null;
+      throw failure;
+    }
     final workspace = Workspace(
       id: 'ws-created-${_nextId++}',
       name: name,
@@ -460,8 +471,16 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       environment: environment.wire,
     );
     workspaces.add(workspace);
+    if (requestId != null) createdByRequest[requestId] = workspace.id;
     return workspace.id;
   }
+
+  /// #1303 — every creation asked for, and the request ids it answered.
+  final createRequests = <({String? requestId, String? templateId})>[];
+  final createdByRequest = <String, String>{};
+
+  /// #1303 — the next creation throws this once (a lost response, say).
+  Object? createFailure;
 
   /// #917 — the last environment written, for assertions.
   String? lastEnvironment;

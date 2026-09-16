@@ -52,6 +52,47 @@ void main() {
     expect(find.byType(ShellBottomBar), findsOneWidget);
   });
 
+  testWidgets('#1303 — a retry after a failed creation sends the SAME '
+      'request id, so the server can answer with one workspace', (tester) async {
+    final repo = await pumpWithoutWorkspace(tester)
+      ..createFailure = StateError('the response was lost');
+
+    await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
+    await tester.ensureVisible(find.text('Create workspace'));
+    await tester.tap(find.text('Create workspace'));
+    await tester.pumpAndSettle();
+    expect(repo.workspaces, isEmpty, reason: 'the first attempt failed');
+    // The error snack sits over the button; let it leave.
+    ScaffoldMessenger.of(tester.element(find.text('Create workspace')))
+        .hideCurrentSnackBar();
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Create workspace'));
+    await tester.tap(find.text('Create workspace'));
+    await tester.pumpAndSettle();
+
+    expect(repo.createRequests, hasLength(2));
+    final ids = {for (final r in repo.createRequests) r.requestId};
+    expect(ids, hasLength(1), reason: 'one creation, one id, however often asked');
+    expect(ids.single, matches(RegExp(r'^[0-9a-f-]{36}$')));
+    expect(repo.workspaces, hasLength(1));
+  });
+
+  testWidgets('#1303 — the template travels WITH the creation request, not '
+      'as a second call that can fail on its own', (tester) async {
+    final repo = await pumpWithoutWorkspace(tester);
+    await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
+    await tester.ensureVisible(find.text('Create workspace'));
+    await tester.tap(find.text('Create workspace'));
+    await tester.pumpAndSettle();
+
+    expect(repo.createRequests.single.requestId, isNotNull);
+    expect(repo.createRequests.single.templateId, 'tpl-tiny',
+        reason: 'the builtin the form preselects rides the creation');
+    expect(repo.appliedTemplates, isEmpty,
+        reason: 'no separate apply call after the workspace exists');
+  });
+
   testWidgets('joining with a valid invite code leads into the shell',
       (tester) async {
     await pumpWithoutWorkspace(tester);
