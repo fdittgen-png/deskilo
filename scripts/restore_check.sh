@@ -123,6 +123,27 @@ replicate "select 'create extension if not exists ' || quote_ident(e.extname)
               and left(n.nspname, 3) <> 'pg_'" \
   "installing the extensions"
 
+# And the roles have to be able to SEE them.
+#
+# The suites impersonate `authenticated` — that is the whole point of
+# them; as `postgres` every policy is bypassed and they would prove
+# nothing. A role without USAGE on a schema cannot see the functions in
+# it, and Postgres says they do not exist rather than that they are
+# forbidden. That is what
+#
+#   ERROR: function is(integer, integer, unknown) does not exist
+#
+# meant, while `extensions.is(anyelement, anyelement, text)` sat right
+# there and `extensions` was on the search_path: visible to postgres,
+# invisible to authenticated. The dump carries public and auth, not the
+# grants on a schema this script created itself.
+replicate "select 'grant usage on schema ' || quote_ident(n.nspname) || ' to public;'
+             from pg_extension e join pg_namespace n on n.oid = e.extnamespace
+            where e.extname <> 'plpgsql'
+              and left(n.nspname, 3) <> 'pg_'
+              and n.nspname not in ('public', 'information_schema')" \
+  "granting usage on the extension schemas"
+
 # A brand-new database already has a `public` schema, and pg_dump emits
 # `CREATE SCHEMA public;` for it — which stops the restore on its very
 # first statement under ON_ERROR_STOP. Dropping `public` in the copy
