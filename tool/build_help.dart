@@ -138,10 +138,23 @@ void main() {
   final outImages = Directory('$outDir/images')..createSync(recursive: true);
 
   for (final entry in guides.entries) {
-    final sources = entry.value
-        .map((name) => File('$wikiDir/$name'))
-        .where((f) => f.existsSync())
-        .toList();
+    final listed = entry.value.map((name) => File('$wikiDir/$name')).toList();
+    final sources = listed.where((f) => f.existsSync()).toList();
+    // #1259 — a guide this tool LISTS but cannot find used to disappear
+    // without a word: `where(existsSync)` dropped it and the run still
+    // reported success. Eight translated admin guides were absent that
+    // way, so fr/de/es/it shipped in-app help carrying no operator
+    // content at all while every build said it had worked.
+    //
+    // Named, not fatal: the four translations do not exist yet, and a
+    // tool that refuses to run until they do would block the very work
+    // that produces them. The ratchet in help_guide_parity_test is what
+    // stops the gap growing.
+    final absent =
+        listed.where((f) => !f.existsSync()).map((f) => f.uri.pathSegments.last);
+    if (absent.isNotEmpty) {
+      stderr.writeln('${entry.key}: listed but absent — ${absent.join(', ')}');
+    }
     if (sources.isEmpty) {
       stderr.writeln('No guide for ${entry.key} in $wikiDir');
       exitCode = 1;
