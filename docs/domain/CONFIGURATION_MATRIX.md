@@ -62,7 +62,7 @@ configuration.
 | address, street, city, postal_code | `workspaces.*` | A | no — identity | replace | — | — |
 | default_locale | `workspaces.default_locale` | B | yes | replace | — | `workspace_language_test` |
 | invitation_template, invitation_templates | `workspaces.*` | B | yes | replace | — | — |
-| whatsapp_group | `workspaces.whatsapp_group` | A | **no** — a link to one space's group | replace | — | — |
+| whatsapp_group | `workspaces.whatsapp_group` | A | no — identity (with a space's own twins) | replace | #1360 | `18_configuration_merge` |
 | role_permissions | `workspaces.role_permissions` jsonb | B | yes | replace | #1287 | `roles_screen_test` |
 | subscription_vat_rate_id | `workspaces.subscription_vat_rate_id` | B | yes — by natural key | replace | — | — |
 | accessory_supplements_since | `workspaces.accessory_supplements_since` | A | no — a date in this space's history | replace | — | — |
@@ -78,7 +78,7 @@ actually moves.
 
 | key | kind | tables / workspace keys | class | note |
 |---|---|---|---|---|
-| identity | configuration | address, street, postal_code, city, default_locale, vat_regime, vat_id, legal_id, tax_exemption_reason, vat_account, invoice_legal | A | legal identity travels between a space's OWN twins, not between spaces |
+| identity | configuration | address, street, postal_code, city, default_locale, vat_regime, vat_id, legal_id, tax_exemption_reason, vat_account, invoice_legal, whatsapp_group | A | legal identity travels between a space's OWN twins, not between spaces. `whatsapp_group` joined it in #1360 — it names one space the same way an address does |
 | vat | master_data | vat_rates, subscription_vat_rate | B | |
 | tariffs | master_data | fee_bands, plans, subscription_levels, billing_rules | B | |
 | services | master_data | services | B | |
@@ -94,7 +94,7 @@ actually moves.
 | document_design | reports | invoice_pdf_template | B | |
 | document_links | configuration | workspace_documents | B | |
 | **closure_days** | configuration | closure_days | B | **a mirror import replaces them**, so generated public holidays (#1274) can be removed by a deployment — ADR 0025 |
-| invitations | configuration | invitation_template, invitation_templates, whatsapp_group | B | whatsapp_group is A and should not travel — **F**, #1360 |
+| invitations | configuration | invitation_template, invitation_templates | B | wording only. `whatsapp_group` was here until #1360, and a template that carried the wording carried the group link with it |
 | number_sequences | configuration | number_sequences | B | **format only** — `prefix`, `suffix`, `date_part`, `digits`, `reset`, `gapless`. `period_key` and `next_value` are class E and never exported (#1295) |
 | features | configuration | feature_flags | B | merge, not replace (0176) |
 
@@ -130,9 +130,13 @@ not: they are per person, server-side, and cross-workspace.
 
 ## Gaps this sweep found
 
-- **`whatsapp_group` travels with `invitations`.** It is one space's group
-  link (class A), and a mirror import would point a second space at the
-  first one's WhatsApp group — #1360.
+- ~~**`whatsapp_group` travels with `invitations`.**~~ Closed by #1360:
+  moved to `identity`, which is where the class-A keys live and which
+  only travels between a space's own twins. Dropping it outright would
+  have made it the one class-A key that could not follow a space to its
+  own production twin. `18_configuration_merge.sql` now asserts both the
+  instance and the rule — no entity but `identity` may carry a key that
+  names one particular space.
 - Everything else already has one: #1287, #1288, #1289, #1294, #1295,
   #1276.
 
