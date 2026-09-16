@@ -273,9 +273,8 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    // The directory, the way its own tests reach it.
-    await tester.tap(find.byIcon(Icons.settings_outlined));
-    await tester.pumpAndSettle();
+    // The directory, the way its own tests reach it: the Members
+    // destination of the bottom bar (#1307).
     await tester.tap(find.text('Members'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Dora'));

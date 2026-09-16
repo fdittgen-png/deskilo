@@ -212,14 +212,8 @@ Future<void> pumpDirectory(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.byIcon(Icons.settings_outlined));
-  await tester.pumpAndSettle();
-
-  // The entry is in the personal section and needs no role: the plain
-  // member sees it while the owner-only management entry is absent.
-  expect(find.text('Members'), findsOneWidget);
-  expect(find.text('Members & plans'), findsNothing);
-
+  // #1307 — the directory is the Members destination of the bottom bar;
+  // Settings is no longer a second door to it.
   await tester.tap(find.text('Members'));
   await tester.pumpAndSettle();
 }
