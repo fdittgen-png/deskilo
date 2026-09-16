@@ -4,12 +4,12 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**474 files, 3148 tests.**
+**475 files, 3157 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
 | a11y | 2 | 6 |
-| database | 16 | 157 |
+| database | 17 | 166 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
 | lint | 60 | 159 |
@@ -21,7 +21,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 
 | action | files |
 |---|---:|
-| KEEP | 474 |
+| KEEP | 475 |
 
 ## Rules
 
@@ -64,6 +64,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `supabase/tests/database/16_public_holidays.sql` | database | #1274 — the holidays a year actually has, and the months it may not touch. | 13 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1274 | no | KEEP |  |
 | `supabase/tests/database/17_entitlement_specification.sql` | database | #1274 — the field report, executed. | 16 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1274 | no | KEEP |  |
 | `supabase/tests/database/18_configuration_merge.sql` | database | #1276 S1 — the configuration import has a mode, and the default is the old behaviour. | 10 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1276 | no | KEEP |  |
+| `supabase/tests/database/19_number_sequences_travel.sql` | database | #1295 — a template may carry the invoice series, never the counter. | 9 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1295, #1320 | no | KEEP |  |
 | `supabase/tests/database/20_money_invariants.sql` | database | #1226/#1229/#1231 — the two money guards nothing had ever executed. | 7 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1226, #1229, #1231 | no | KEEP |  |
 | `supabase/tests/database/21_ledger_append_only.sql` | database | #1229 — the ledger is append-only, and the one exception is narrow. | 6 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1229 | no | KEEP |  |
 | `supabase/tests/database/22_reconciliation.sql` | database | #1230 — the reconciliation, proved to be clean AND proved to bite. | 8 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1230, #1231, #1138 | no | KEEP |  |
