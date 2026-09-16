@@ -1446,9 +1446,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get settingsSectionAdministration => 'Amministrazione';
 
   @override
-  String get settingsSectionPreferences => 'Preferenze';
-
-  @override
   String get settingsSectionAdvanced => 'Avanzate';
 
   @override
@@ -1467,9 +1464,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get commonRetry => 'Riprova';
-
-  @override
-  String get settingsSectionAbout => 'Informazioni';
 
   @override
   String aboutVersion(String version) {
@@ -9236,6 +9230,21 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get servicesActive => 'Attivo';
+
+  @override
+  String get settingsSectionAccount => 'Il mio account';
+
+  @override
+  String get settingsSectionMembership => 'La mia iscrizione';
+
+  @override
+  String get settingsSectionWorkspace => 'Questo spazio';
+
+  @override
+  String get settingsSectionGovernance => 'Governance';
+
+  @override
+  String get settingsSectionHelpAbout => 'Aiuto e informazioni';
 
   @override
   String get featureSingleRoomLevelNamesTitle =>

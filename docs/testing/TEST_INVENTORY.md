@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**499 files, 3317 tests.**
+**499 files, 3318 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -17,7 +17,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | property | 1 | 10 |
 | tool | 2 | 11 |
 | unit | 172 | 1360 |
-| widget | 227 | 1514 |
+| widget | 227 | 1515 |
 
 | action | files |
 |---|---:|
@@ -371,8 +371,8 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/profile/profiles_screen_test.dart` | widget | Profiles: each membership with its role; switching persists across restarts; adding one leads to create or join. | 4 | yes | fakes | user-visible behaviour | no | KEEP |  |
 | `test/features/profile/profiles_site_test.dart` | widget | #974 — the profiles list names the home site on a multi-site workspace and lets the person switch it; a single site is no line. | 2 | yes | fakes | user-visible behaviour — #974 | no | KEEP |  |
 | `test/features/profile/screen_polish_test.dart` | widget | The three screen-polish findings of the 2026-09-13 screenshot review. Each one is the same kind of defect: the screen said a true thing in a form that… | 3 | yes | fakes | user-visible behaviour — #1194, #1188 | no | KEEP |  |
-| `test/features/profile/settings_sections_test.dart` | widget | Structural test for the sectioned settings list (#188): Profiles on top, then the Administration / Preferences / Advanced sections in that order, with Sign out… | 4 | yes | fakes | user-visible behaviour — #188, #478, #486 | no | KEEP |  |
-| `test/features/profile/status_text_edit_test.dart` | widget | The status editor on the settings surface (#231): saving pins the trim + hard-cap normalization on the exact repository call the UI makes; input past the… | 4 | yes | fakes | user-visible behaviour — #231 | shares a test name with test/features/profile/whatsapp_edit_test.dart | KEEP |  |
+| `test/features/profile/settings_sections_test.dart` | widget | Structural test for the sectioned settings list (#188, regrouped by ownership in #1307): Profiles on top, then My account, My membership, This workspace,… | 5 | yes | fakes | user-visible behaviour — #188, #1307, #478 | no | KEEP |  |
+| `test/features/profile/status_text_edit_test.dart` | widget | The status editor on the settings surface (#231): saving pins the trim + hard-cap normalization on the exact repository call the UI makes; input past the… | 4 | yes | fakes | user-visible behaviour — #231, #1307 | shares a test name with test/features/profile/whatsapp_edit_test.dart | KEEP |  |
 | `test/features/profile/theme_selection_test.dart` | widget | Choosing a theme in Settings switches the app immediately and persists; System default clears it. | 4 | yes | fakes | user-visible behaviour — #188 | no | KEEP |  |
 | `test/features/profile/whatsapp_edit_test.dart` | widget | The WhatsApp editor on the settings surface (#223): entering a number pins the normalization rule (+ + digits) on the exact repository call the UI makes;… | 3 | yes | fakes | user-visible behaviour — #223 | shares a test name with test/features/profile/status_text_edit_test.dart | KEEP |  |
 | `test/features/profile/whatsapp_presence_migration_test.dart` | unit | Content pins for migration 0028 (#223): the two profile columns, the wire-shape check the client normalization targets, and the self-scoped SECURITY DEFINER… | 5 | yes | repository sources | a domain rule — #223 | no | KEEP |  |

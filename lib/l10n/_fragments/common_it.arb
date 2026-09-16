@@ -8,17 +8,12 @@
   "errorOffline": "Nessuna connessione: non è stato inviato nulla. Riprova quando sei di nuovo online.",
   "settingsTitle": "Impostazioni",
   "settingsSectionAdministration": "Amministrazione",
-  "settingsSectionPreferences": "Preferenze",
   "settingsSectionAdvanced": "Avanzate",
   "comingSoon": "Prossimamente",
   "shellReserveButton": "Prenota",
   "commonSavedTo": "Salvato in {path}",
   "commonSaveFailed": "Impossibile salvare il file.",
   "commonRetry": "Riprova",
-  "settingsSectionAbout": "Informazioni",
-  "@settingsSectionAbout": {
-    "description": "Settings section header: About (#560)"
-  },
   "aboutVersion": "Versione {version}",
   "@aboutVersion": {
     "description": "Version line under the app name (#560)",

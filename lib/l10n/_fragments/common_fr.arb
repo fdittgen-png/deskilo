@@ -8,17 +8,12 @@
   "errorOffline": "Pas de connexion — rien n'a été envoyé. Réessayez une fois reconnecté.",
   "settingsTitle": "Réglages",
   "settingsSectionAdministration": "Administration",
-  "settingsSectionPreferences": "Préférences",
   "settingsSectionAdvanced": "Avancé",
   "comingSoon": "Bientôt disponible",
   "shellReserveButton": "Réserver",
   "commonSavedTo": "Enregistré dans {path}",
   "commonSaveFailed": "Impossible d'enregistrer le fichier.",
   "commonRetry": "Réessayer",
-  "settingsSectionAbout": "À propos",
-  "@settingsSectionAbout": {
-    "description": "Settings section header: About (#560)"
-  },
   "aboutVersion": "Version {version}",
   "@aboutVersion": {
     "description": "Version line under the app name (#560)",

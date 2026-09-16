@@ -73,7 +73,7 @@ erreichen.
 <!-- anchor: env.deploy.screen -->
 ## Deployen
 
-*Einstellungen → Administration → Deployment*, auf der Seite, die du
+*Einstellungen → Governance → Deployment*, auf der Seite, die du
 **schreiben** willst. Ein Deployment geht immer **in die Seite, auf der
 du stehst**: auf der Produktionsseite heißt der Knopf *Aus DEV ziehen*,
 auf der Entwicklungsseite *Aus PROD ziehen*. Nichts kann versehentlich

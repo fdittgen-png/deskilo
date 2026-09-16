@@ -69,7 +69,7 @@ electrónica se niega a alcanzar una plataforma gubernamental.
 <!-- anchor: env.deploy.screen -->
 ## Desplegar
 
-*Ajustes → Administración → Despliegue*, en el lado que quiere
+*Ajustes → Gobernanza → Despliegue*, en el lado que quiere
 **escribir**. Un despliegue va siempre **al lado en el que está**: en el
 lado de producción el botón dice *Traer de DEV*, en el de desarrollo
 *Traer de PROD*. Nada puede empujarse al otro lado por error.

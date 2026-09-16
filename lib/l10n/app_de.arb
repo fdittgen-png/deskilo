@@ -1019,17 +1019,12 @@
   "errorOffline": "Keine Verbindung — es wurde nichts gesendet. Versuchen Sie es erneut, sobald Sie wieder online sind.",
   "settingsTitle": "Einstellungen",
   "settingsSectionAdministration": "Verwaltung",
-  "settingsSectionPreferences": "Präferenzen",
   "settingsSectionAdvanced": "Erweitert",
   "comingSoon": "Demnächst verfügbar",
   "shellReserveButton": "Reservieren",
   "commonSavedTo": "Gespeichert unter {path}",
   "commonSaveFailed": "Datei konnte nicht gespeichert werden.",
   "commonRetry": "Erneut versuchen",
-  "settingsSectionAbout": "Über",
-  "@settingsSectionAbout": {
-    "description": "Settings section header: About (#560)"
-  },
   "aboutVersion": "Version {version}",
   "@aboutVersion": {
     "description": "Version line under the app name (#560)",
@@ -6208,6 +6203,11 @@
   "servicesPrice": "Preis",
   "servicesInactive": "Inaktiv",
   "servicesActive": "Aktiv",
+  "settingsSectionAccount": "Mein Konto",
+  "settingsSectionMembership": "Meine Mitgliedschaft",
+  "settingsSectionWorkspace": "Dieser Space",
+  "settingsSectionGovernance": "Governance",
+  "settingsSectionHelpAbout": "Hilfe & Info",
   "featureSingleRoomLevelNamesTitle": "Einraum-Etagen nach der Etage benennen",
   "@featureSingleRoomLevelNamesTitle": {
     "description": "#1273 single-room level names: the feature switch title"

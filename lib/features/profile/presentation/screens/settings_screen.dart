@@ -10,9 +10,7 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint_providers.dart';
 import '../../../../core/locale/locale_controller.dart';
-import '../../../../core/scan/front_camera.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/demo/demo_mode.dart';
 import '../../../../core/navigation/navigation_style.dart';
 import '../../../../core/theme/theme_controller.dart';
 import '../../../../core/trace/guarded.dart';
@@ -27,7 +25,6 @@ import '../../../reservations/domain/default_booking_period.dart';
 import '../../../reservations/providers/default_period_controller.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
-import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../auth/presentation/widgets/badge_pin_tile.dart';
 import '../../../workspace/presentation/widgets/my_badge_tile.dart';
@@ -38,6 +35,7 @@ import '../widgets/member_avatar.dart';
 import '../widgets/whatsapp_dialog.dart';
 import '../widgets/settings_advanced_section.dart';
 import '../widgets/settings_about_section.dart';
+import '../widgets/settings_workspace_sections.dart';
 import '../widgets/settings_section_header.dart';
 
 /// Endonyms are proper nouns, identical in every UI language — deliberately
@@ -238,45 +236,42 @@ class SettingsScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final myProfile = ref.watch(myProfileProvider).value;
     final myMember = ref.watch(myMemberProvider).value;
-    final isOwner = myMember?.actsAsOwner ?? false;
     final canAdminister =
         ref.watch(myMemberProvider).value?.canAdminister ?? false;
-    // #982 — the matrix decides what an owner used to decide alone.
+    // #982/#1307 — the matrix decides what the sections show, never
+    // `isOwner || canAdminister`.
     final perms = ref.watch(myPermissionsProvider);
     final devMode = ref.watch(devModeProvider).value ?? false;
     final localeOverride = ref.watch(localeControllerProvider).value;
     final themeOverride = ref.watch(themeControllerProvider).value;
     final features = ref.watch(enabledFeaturesSyncProvider);
-    // The administration section header is hidden when the member would see
-    // none of its entries (#188). All entries are owner-only except
-    // Accessories, which is canAdminister (#167).
-    final showAdminSection = isOwner || canAdminister;
     final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(title: Text(l10n?.settingsTitle ?? 'Settings')),
       body: ListView(
         children: [
-          ..._personalTiles(context, ref, l10n: l10n, myProfile: myProfile, myMember: myMember, canAdminister: canAdminister, perms: perms, features: features, showAdminSection: showAdminSection),
-          ..._preferencesTiles(context, ref, l10n: l10n, localeOverride: localeOverride, themeOverride: themeOverride),
-          ...advancedSettingsTiles(context, ref, l10n: l10n, canAdminister: canAdminister, perms: perms, devMode: devMode),
+          ..._accountTiles(context, ref, l10n: l10n, myProfile: myProfile, features: features, localeOverride: localeOverride, themeOverride: themeOverride),
+          ..._membershipTiles(context, ref, l10n: l10n, myProfile: myProfile, myMember: myMember, features: features),
+          ...workspaceSettingsTiles(context, ref, l10n: l10n, canAdminister: canAdminister, perms: perms, features: features,
+              isOwner: myMember?.isOwner ?? false,
+              hasTwin: ref.watch(currentWorkspaceProvider).value?.pairId.isNotEmpty ?? false),
+          ...advancedSettingsTiles(context, ref, l10n: l10n, devMode: devMode),
           ...aboutSettingsTiles(context, ref, l10n: l10n, colorScheme: colorScheme),
         ],
       ),
     );
   }
 
-  /// #1154 — the member's own entries, then Administration when they may see it. One of the four slices of a build() that was 723
-  /// lines long; the tiles are unchanged, only the list is cut.
-  List<Widget> _personalTiles(
+  /// #1307 — Profiles, then My account: who I am and how the app looks and
+  /// speaks to me, on every workspace. Never carried by a template.
+  List<Widget> _accountTiles(
     BuildContext context,
     WidgetRef ref, {
     required AppLocalizations? l10n,
     required Profile? myProfile,
-    required Member? myMember,
-    required bool canAdminister,
-    required Set<WorkspacePermission> perms,
     required Set<WorkspaceFeature> features,
-    required bool showAdminSection,
+    required Locale? localeOverride,
+    required ThemeMode? themeOverride,
   }) =>
       [
           ListTile(
@@ -284,6 +279,8 @@ class SettingsScreen extends ConsumerWidget {
             title: Text(l10n?.profilesTitle ?? 'Profiles'),
             onTap: () => context.push('/profiles'),
           ),
+          const Divider(),
+          SettingsSectionHeader(l10n?.settingsSectionAccount ?? 'My account'),
           // Profile photo (0038): shown on my directory row and detail
           // sheet. Tapping opens a chooser to set or remove it.
           if (myProfile != null)
@@ -303,22 +300,47 @@ class SettingsScreen extends ConsumerWidget {
               ),
               onTap: () => _photoSheet(context, ref, myProfile),
             ),
-          // Member directory (#224): visible to EVERY member — it lives in
-          // the ungrouped personal section, not under Administration. Kept
-          // for discovery even though the directory is a bottom tab since
-          // #230: go() switches to the Members branch (closing settings)
-          // instead of pushing a second copy. Gated with the tab.
-          if (features.contains(WorkspaceFeature.membersDirectory))
+          // #886 — the structured identity: name, postal block, contacts.
+          // The legacy free-text address dialog stays while the flag is off.
+          if (features.contains(WorkspaceFeature.personalInfo))
             ListTile(
-              leading: const Icon(Icons.people_outline),
-              title: Text(lexiconText(context, key: 'directoryTitle', fallback: l10n?.directoryTitle ?? 'Members')),
-              onTap: () => context.go('/directory'),
+              key: const ValueKey('settings-personal-info'),
+              leading: const Icon(Icons.contact_mail_outlined),
+              title: HelpDotTitle(
+                l10n?.personalInfoTitle ?? 'Personal information',
+                l10n?.helpTopicSettings ?? 'Settings & profile',
+                anchor: HelpAnchor.profilePersonalInfo,
+              ),
+              subtitle: Text(
+                _identitySummary(myProfile) ??
+                    (l10n?.personalInfoNone ?? 'Not filled in yet'),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              onTap: () => context.push('/settings/personal-info'),
+            )
+          else
+            // Postal address (0060): printed on the member's invoices.
+            ListTile(
+              key: const ValueKey('settings-address'),
+              leading: const Icon(Icons.home_outlined),
+              title: HelpDotTitle(
+                l10n?.addressTitle ?? 'Address',
+                l10n?.helpTopicSettings ?? 'Settings & profile',
+                anchor: HelpAnchor.profileAddress,
+              ),
+              subtitle: Text(
+                (myProfile?.address.isNotEmpty ?? false)
+                    ? myProfile!.address
+                    : (l10n?.addressNone ?? 'No address'),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              onTap: () => showDialog<void>(
+                context: context,
+                builder: (_) => const _AddressDialog(),
+              ),
             ),
-          // #711 — Region & formats: numbers, dates, clock, zone. Gated by
-          // the regionalFormats feature like every member preference the
-          // owner may switch off.
-          if (features.contains(WorkspaceFeature.regionalFormats))
-            const RegionalFormatsSection(),
           // Opt-in WhatsApp number on my profile (#223): shared with
           // members of my workspaces, consumed by the directory (#224).
           // Rides the whatsappIntegration feature (hierarchy pass).
@@ -340,6 +362,147 @@ class SettingsScreen extends ConsumerWidget {
                 builder: (_) => const WhatsappDialog(),
               ),
             ),
+          // #711 — Region & formats: numbers, dates, clock, zone. Gated by
+          // the regionalFormats feature like every member preference the
+          // owner may switch off.
+          if (features.contains(WorkspaceFeature.regionalFormats))
+            const RegionalFormatsSection(),
+          // Linked accounts (0051): attach Google/Microsoft/Apple/
+          // Facebook to this account for password-less sign-in.
+          ListTile(
+            key: const ValueKey('settings-linked-accounts'),
+            leading: const Icon(Icons.link),
+            title: Text(l10n?.linkedAccountsTitle ?? 'Linked accounts'),
+            onTap: () => context.push('/linked-accounts'),
+          ),
+          // #662 — the member's own half of badge sign-in. Beside My
+          // badge, because the card and the PIN are two halves of one
+          // credential and a member who has one and not the other
+          // cannot sign in. #763 — both tiles live in their own files;
+          // the help dot rides beside them under the tiles' own
+          // visibility rule so it never floats alone.
+          if (ref.watch(myMemberProvider).value case final me?
+              when me.status == MemberStatus.active && !me.isKiosk) ...[
+            Row(
+              children: [
+                const Expanded(child: MyBadgeTile()),
+                HelpDot(l10n?.helpHintBadgesTopic ?? 'NFC badges',
+                  anchor: HelpAnchor.profileBadge,
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                const Expanded(child: BadgePinTile()),
+                HelpDot(l10n?.helpHintBadgesTopic ?? 'NFC badges',
+                  anchor: HelpAnchor.profileBadgePin,
+                ),
+              ],
+            ),
+          ],
+          // In-app language override (#147); null follows the system locale.
+          ListTile(
+            leading: const Icon(Icons.language),
+            title: HelpDotTitle(
+              l10n?.languageTitle ?? 'Language',
+              l10n?.helpTopicSettings ?? 'Settings & profile',
+              anchor: HelpAnchor.profileLanguage,
+            ),
+            subtitle: Text(
+              localeOverride == null
+                  ? (l10n?.languageSystemDefault ?? 'System default')
+                  : _endonyms[localeOverride.languageCode] ??
+                        localeOverride.languageCode,
+            ),
+            onTap: () => showDialog<void>(
+              context: context,
+              builder: (_) => const _LanguageDialog(),
+            ),
+          ),
+          // In-app theme override (#160); null follows the system.
+          ListTile(
+            leading: const Icon(Icons.brightness_6_outlined),
+            title: HelpDotTitle(
+              l10n?.themeTitle ?? 'Theme',
+              l10n?.helpTopicSettings ?? 'Settings & profile',
+              anchor: HelpAnchor.profileTheme,
+            ),
+            subtitle: Text(switch (themeOverride) {
+              ThemeMode.light => l10n?.themeLight ?? 'Light',
+              ThemeMode.dark => l10n?.themeDark ?? 'Dark',
+              _ => l10n?.themeSystem ?? 'System default',
+            }),
+            onTap: () => showDialog<void>(
+              context: context,
+              builder: (_) => const _ThemeDialog(),
+            ),
+          ),
+          // #969 — how the app navigates: the classic bar or the menu.
+          // Never on the web, which has the menu and only the menu.
+          if (!ref.watch(platformIsWebProvider) &&
+              ref
+                  .watch(enabledFeaturesSyncProvider)
+                  .contains(WorkspaceFeature.navigationStyle))
+            ListTile(
+              key: const ValueKey('settings-navigation'),
+              leading: const Icon(Icons.menu_open_outlined),
+              title: HelpDotTitle(
+                l10n?.navigationTitle ?? 'Navigation',
+                l10n?.helpTopicSettings ?? 'Settings & profile',
+                anchor: HelpAnchor.profileNavigation,
+              ),
+              subtitle: Text(switch (
+                  ref.watch(navigationStyleControllerProvider).value) {
+                NavigationStyle.classic =>
+                  l10n?.navigationClassic ??
+                      'Classic: the bottom bar and the round button',
+                NavigationStyle.menu =>
+                  l10n?.navigationMenu ?? 'Menu: the hamburger, like the web',
+                _ => l10n?.navigationDefault ?? 'Default for this device',
+              }),
+              onTap: () => showDialog<void>(
+                context: context,
+                builder: (_) => const _NavigationDialog(),
+              ),
+            ),
+          // #606 — bring every dismissed contextual hint back. Rides
+          // the same flag as the hints themselves: no hints, no row.
+          if (ref
+              .watch(enabledFeaturesSyncProvider)
+              .contains(WorkspaceFeature.formHelpHints))
+            ListTile(
+              key: const ValueKey('settings-restore-hints'),
+              leading: const Icon(Icons.lightbulb_outline),
+              title: HelpDotTitle(
+                l10n?.helpHintRestoreTitle ?? 'Show help hints again',
+                l10n?.helpTopicSettings ?? 'Settings & profile',
+                anchor: HelpAnchor.profileRestoreHints,
+              ),
+              onTap: () async {
+                await ref
+                    .read(dismissedHelpHintsProvider.notifier)
+                    .restoreAll();
+                if (!context.mounted) return;
+                AppSnack.success(
+                  context,
+                  l10n?.helpHintRestored ?? 'Help hints will be shown again.',
+                );
+              },
+            ),
+      ];
+
+  /// #1307 — My membership: my standing in THIS workspace.
+  List<Widget> _membershipTiles(
+    BuildContext context,
+    WidgetRef ref, {
+    required AppLocalizations? l10n,
+    required Profile? myProfile,
+    required Member? myMember,
+    required Set<WorkspaceFeature> features,
+  }) =>
+      [
+          const Divider(),
+          SettingsSectionHeader(l10n?.settingsSectionMembership ?? 'My membership'),
           // Self-set status line on my profile (#231): shown next to me
           // in the member directory (#232). Sits with WhatsApp in the
           // ungrouped personal area on top.
@@ -426,47 +589,6 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ),
             ),
-          // #886 — the structured identity: name, postal block, contacts.
-          // The legacy free-text address dialog stays while the flag is off.
-          if (features.contains(WorkspaceFeature.personalInfo))
-            ListTile(
-              key: const ValueKey('settings-personal-info'),
-              leading: const Icon(Icons.contact_mail_outlined),
-              title: HelpDotTitle(
-                l10n?.personalInfoTitle ?? 'Personal information',
-                l10n?.helpTopicSettings ?? 'Settings & profile',
-                anchor: HelpAnchor.profilePersonalInfo,
-              ),
-              subtitle: Text(
-                _identitySummary(myProfile) ??
-                    (l10n?.personalInfoNone ?? 'Not filled in yet'),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              onTap: () => context.push('/settings/personal-info'),
-            )
-          else
-            // Postal address (0060): printed on the member's invoices.
-            ListTile(
-              key: const ValueKey('settings-address'),
-              leading: const Icon(Icons.home_outlined),
-              title: HelpDotTitle(
-                l10n?.addressTitle ?? 'Address',
-                l10n?.helpTopicSettings ?? 'Settings & profile',
-                anchor: HelpAnchor.profileAddress,
-              ),
-              subtitle: Text(
-                (myProfile?.address.isNotEmpty ?? false)
-                    ? myProfile!.address
-                    : (l10n?.addressNone ?? 'No address'),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              onTap: () => showDialog<void>(
-                context: context,
-                builder: (_) => const _AddressDialog(),
-              ),
-            ),
           // #881/#902 — the conditions this member's documents print.
           // The workspace sets the default (Workspace → Legal identity);
           // an authorised admin changes a member's own through
@@ -486,37 +608,14 @@ class SettingsScreen extends ConsumerWidget {
                   : (l10n?.paymentTermsOverridden ?? "Member's own")),
               onTap: () => context.push('/settings/payment-terms'),
             ),
-          // In-app help: the wiki user guide bundled as an offline asset,
-          // in the app's language. Available to every member.
-          ListTile(
-            key: const ValueKey('settings-help'),
-            leading: const Icon(Icons.help_outline),
-            title: Text(l10n?.helpTitle ?? 'Help'),
-            onTap: () => context.push('/help'),
-          ),
-          // #606 — bring every dismissed contextual hint back. Rides
-          // the same flag as the hints themselves: no hints, no row.
-          if (ref
-              .watch(enabledFeaturesSyncProvider)
-              .contains(WorkspaceFeature.formHelpHints))
+          // #500 — the document library: everyone sees it (their role
+          // filters the content server-side).
+          if (features.contains(WorkspaceFeature.documents))
             ListTile(
-              key: const ValueKey('settings-restore-hints'),
-              leading: const Icon(Icons.lightbulb_outline),
-              title: HelpDotTitle(
-                l10n?.helpHintRestoreTitle ?? 'Show help hints again',
-                l10n?.helpTopicSettings ?? 'Settings & profile',
-                anchor: HelpAnchor.profileRestoreHints,
-              ),
-              onTap: () async {
-                await ref
-                    .read(dismissedHelpHintsProvider.notifier)
-                    .restoreAll();
-                if (!context.mounted) return;
-                AppSnack.success(
-                  context,
-                  l10n?.helpHintRestored ?? 'Help hints will be shown again.',
-                );
-              },
+              key: const ValueKey('settings-documents'),
+              leading: const Icon(Icons.folder_open_outlined),
+              title: Text(l10n?.documentsTitle ?? 'Documents'),
+              onTap: () => context.push('/documents'),
             ),
           // Kiosk escape hatch (0056, field report: "cannot be undone"):
           // a profile flagged as kiosk reverts ITSELF to a regular
@@ -534,293 +633,6 @@ class SettingsScreen extends ConsumerWidget {
               ),
               onTap: () => _revertKiosk(context, ref, me.workspaceId),
             ),
-          // #662 — the member's own half of badge sign-in. Beside My
-          // badge, because the card and the PIN are two halves of one
-          // credential and a member who has one and not the other
-          // cannot sign in. #763 — both tiles live in their own files;
-          // the help dot rides beside them under the tiles' own
-          // visibility rule so it never floats alone.
-          if (ref.watch(myMemberProvider).value case final me?
-              when me.status == MemberStatus.active && !me.isKiosk) ...[
-            Row(
-              children: [
-                const Expanded(child: MyBadgeTile()),
-                HelpDot(l10n?.helpHintBadgesTopic ?? 'NFC badges',
-                  anchor: HelpAnchor.profileBadge,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                const Expanded(child: BadgePinTile()),
-                HelpDot(l10n?.helpHintBadgesTopic ?? 'NFC badges',
-                  anchor: HelpAnchor.profileBadgePin,
-                ),
-              ],
-            ),
-          ],
-          // Linked accounts (0051): attach Google/Microsoft/Apple/
-          // Facebook to this account for password-less sign-in.
-          ListTile(
-            key: const ValueKey('settings-linked-accounts'),
-            leading: const Icon(Icons.link),
-            title: Text(l10n?.linkedAccountsTitle ?? 'Linked accounts'),
-            onTap: () => context.push('/linked-accounts'),
-          ),
-          // #500 — the document library: everyone sees it (their role
-          // filters the content server-side).
-          if (features.contains(WorkspaceFeature.documents))
-            ListTile(
-              key: const ValueKey('settings-documents'),
-              leading: const Icon(Icons.folder_open_outlined),
-              title: Text(l10n?.documentsTitle ?? 'Documents'),
-              onTap: () => context.push('/documents'),
-            ),
-          if (showAdminSection) ...[
-            const Divider(),
-            SettingsSectionHeader(
-              l10n?.settingsSectionAdministration ?? 'Administration',
-            ),
-          ],
-          if (perms.contains(WorkspacePermission.workspaceSettings))
-            ListTile(
-              leading: const Icon(Icons.business_outlined),
-              title: Text(l10n?.workspaceSettingsTitle ?? 'Workspace'),
-              onTap: () => context.push('/workspace-settings'),
-            ),
-          if (showAdminSection)
-            ListTile(
-              leading: const Icon(Icons.group_outlined),
-              title: Text(l10n?.membersTitle ?? 'Members & plans'),
-              onTap: () => context.push('/members'),
-            ),
-          if (perms.contains(WorkspacePermission.workspaceSettings))
-            ListTile(
-              leading: const Icon(Icons.event_busy_outlined),
-              title: Text(l10n?.availabilityTitle ?? 'Availability'),
-              onTap: () => context.push('/availability'),
-            ),
-          // Feature-gated admin surfaces (#146 rule): the config screen for a
-          // feature appears only while that feature is on — enable it in
-          // Features to reveal its settings, disable it and the entry (and its
-          // route) go with it. The master Features toggle below is always
-          // reachable so a disabled feature can be switched back on.
-          // #478: billing & reports as ONE admin entry — invoicing hub
-          // with the report editor and the reminder rules in its header.
-          // #513 — the role→permission matrix: whoever holds any
-          // permission may READ it; manageRoles edits it.
-          if (showAdminSection &&
-              features.contains(WorkspaceFeature.roleManagement))
-            ListTile(
-              key: const ValueKey('settings-roles'),
-              leading: const Icon(Icons.admin_panel_settings_outlined),
-              title: Text(l10n?.rolesTitle ?? 'Role management'),
-              onTap: () => context.push('/roles'),
-            ),
-          // #990 — deploying between the two sides of the pair.
-          if (showAdminSection &&
-              features.contains(WorkspaceFeature.deployments) &&
-              perms.contains(WorkspacePermission.deployToDev) &&
-              (ref.watch(currentWorkspaceProvider).value?.pairId.isNotEmpty ??
-                  false))
-            ListTile(
-              key: const ValueKey('settings-deployment'),
-              leading: const Icon(Icons.rocket_launch_outlined),
-              title: Text(l10n?.deploymentTitle ?? 'Deployment'),
-              onTap: () => context.push('/deployment'),
-            ),
-          if (showAdminSection && features.contains(WorkspaceFeature.invoicing))
-            ListTile(
-              key: const ValueKey('settings-billing-reports'),
-              leading: const Icon(Icons.receipt_long_outlined),
-              title: Text(l10n?.settingsBillingReports ?? 'Billing & reports'),
-              onTap: () => context.push('/invoices'),
-            ),
-          // #486 — the manual payment methods members see on an unpaid
-          // statement, beside the online-payment providers.
-          if (perms.contains(WorkspacePermission.manageIntegrations))
-            ListTile(
-              key: const ValueKey('settings-payment-methods'),
-              leading: const Icon(Icons.account_balance_wallet_outlined),
-              title: Text(
-                l10n?.paymentInstructionsTitle ?? 'Payment instructions',
-              ),
-              onTap: () => context.push('/payment-methods'),
-            ),
-          if (perms.contains(WorkspacePermission.manageIntegrations) && features.contains(WorkspaceFeature.onlinePayments))
-            ListTile(
-              leading: const Icon(Icons.credit_card_outlined),
-              title: Text(l10n?.payConfigTitle ?? 'Online payments'),
-              onTap: () => context.push('/payment-config'),
-            ),
-          if (perms.contains(WorkspacePermission.operateKiosk) && features.contains(WorkspaceFeature.nfcBadges))
-            ListTile(
-              leading: const Icon(Icons.contactless_outlined),
-              title: Text(l10n?.nfcConfigTitle ?? 'RFID / NFC badges'),
-              onTap: () => context.push('/nfc-config'),
-            ),
-          if (perms.contains(WorkspacePermission.manageServices) && features.contains(WorkspaceFeature.services))
-            ListTile(
-              leading: const Icon(Icons.local_cafe_outlined),
-              title: Text(l10n?.servicesTitle ?? 'Services'),
-              onTap: () => context.push('/services'),
-            ),
-          // Accessory catalog (#167): owner AND admins, per the epic #163
-          // decision — deliberately canAdminister, not owner-only. Gated on the
-          // accessorySupplements feature (#170): the catalog only bites when
-          // supplements bill, so no feature → no catalog surface.
-          if (canAdminister &&
-              features.contains(WorkspaceFeature.accessorySupplements))
-            ListTile(
-              leading: const Icon(Icons.devices_other_outlined),
-              title: Text(l10n?.accessoriesTitle ?? 'Accessories'),
-              onTap: () => context.push('/accessories'),
-            ),
-          if (perms.contains(WorkspacePermission.manageBilling))
-            ListTile(
-              leading: const Icon(Icons.payments_outlined),
-              title: Text(l10n?.billingTitle ?? 'Billing'),
-              onTap: () => context.push('/billing'),
-            ),
-          if (perms.contains(WorkspacePermission.manageConfiguration))
-            ListTile(
-              leading: const Icon(Icons.toggle_on_outlined),
-              title: Text(l10n?.featuresTitle ?? 'Features'),
-              onTap: () => context.push('/features'),
-            ),
-          if (perms.contains(WorkspacePermission.manageValidation))
-            ListTile(
-              leading: const Icon(Icons.fact_check_outlined),
-              title: Text(l10n?.validationTitle ?? 'Validation rules'),
-              onTap: () => context.push('/validation'),
-            ),
-          if (perms.contains(WorkspacePermission.manageConfiguration))
-            ListTile(
-              leading: const Icon(Icons.qr_code_2),
-              title: Text(l10n?.workspaceCodeTitle ?? 'Workspace ID & QR'),
-              onTap: () => context.push('/workspace-code'),
-            ),
-
-      ];
-
-  /// #1154 — the Preferences section — language, theme, formats, scanning. One of the four slices of a build() that was 723
-  /// lines long; the tiles are unchanged, only the list is cut.
-  List<Widget> _preferencesTiles(
-    BuildContext context,
-    WidgetRef ref, {
-    required AppLocalizations? l10n,
-    required Locale? localeOverride,
-    required ThemeMode? themeOverride,
-  }) =>
-      [
-          const Divider(),
-          SettingsSectionHeader(l10n?.settingsSectionPreferences ?? 'Preferences'),
-          // In-app language override (#147); null follows the system locale.
-          ListTile(
-            leading: const Icon(Icons.language),
-            title: HelpDotTitle(
-              l10n?.languageTitle ?? 'Language',
-              l10n?.helpTopicSettings ?? 'Settings & profile',
-              anchor: HelpAnchor.profileLanguage,
-            ),
-            subtitle: Text(
-              localeOverride == null
-                  ? (l10n?.languageSystemDefault ?? 'System default')
-                  : _endonyms[localeOverride.languageCode] ??
-                        localeOverride.languageCode,
-            ),
-            onTap: () => showDialog<void>(
-              context: context,
-              builder: (_) => const _LanguageDialog(),
-            ),
-          ),
-          // In-app theme override (#160); null follows the system.
-          ListTile(
-            leading: const Icon(Icons.brightness_6_outlined),
-            title: HelpDotTitle(
-              l10n?.themeTitle ?? 'Theme',
-              l10n?.helpTopicSettings ?? 'Settings & profile',
-              anchor: HelpAnchor.profileTheme,
-            ),
-            subtitle: Text(switch (themeOverride) {
-              ThemeMode.light => l10n?.themeLight ?? 'Light',
-              ThemeMode.dark => l10n?.themeDark ?? 'Dark',
-              _ => l10n?.themeSystem ?? 'System default',
-            }),
-            onTap: () => showDialog<void>(
-              context: context,
-              builder: (_) => const _ThemeDialog(),
-            ),
-          ),
-          // #969 — how the app navigates: the classic bar or the menu.
-          // Never on the web, which has the menu and only the menu.
-          if (!ref.watch(platformIsWebProvider) &&
-              ref
-                  .watch(enabledFeaturesSyncProvider)
-                  .contains(WorkspaceFeature.navigationStyle))
-            ListTile(
-              key: const ValueKey('settings-navigation'),
-              leading: const Icon(Icons.menu_open_outlined),
-              title: HelpDotTitle(
-                l10n?.navigationTitle ?? 'Navigation',
-                l10n?.helpTopicSettings ?? 'Settings & profile',
-                anchor: HelpAnchor.profileNavigation,
-              ),
-              subtitle: Text(switch (
-                  ref.watch(navigationStyleControllerProvider).value) {
-                NavigationStyle.classic =>
-                  l10n?.navigationClassic ??
-                      'Classic: the bottom bar and the round button',
-                NavigationStyle.menu =>
-                  l10n?.navigationMenu ?? 'Menu: the hamburger, like the web',
-                _ => l10n?.navigationDefault ?? 'Default for this device',
-              }),
-              onTap: () => showDialog<void>(
-                context: context,
-                builder: (_) => const _NavigationDialog(),
-              ),
-            ),
-          // #970 — demo mode: invented names, e-mails and addresses on
-          // this device, for screenshots and recordings.
-          if (ref
-              .watch(enabledFeaturesSyncProvider)
-              .contains(WorkspaceFeature.demoMode))
-            SwitchListTile(
-              key: const ValueKey('settings-demo-mode'),
-              secondary: const Icon(Icons.visibility_off_outlined),
-              title: HelpDotTitle(
-                l10n?.demoModeTitle ?? 'Demo mode',
-                l10n?.helpTopicSettings ?? 'Settings & profile',
-                anchor: HelpAnchor.profileDemoMode,
-              ),
-              subtitle: Text(l10n?.demoModeSubtitle ??
-                  'Names, e-mails, phones and addresses are blurred on '
-                      'this device\'s screen — for screenshots and videos.'),
-              value: ref.watch(demoModeControllerProvider).value ?? false,
-              onChanged: (on) =>
-                  ref.read(demoModeControllerProvider.notifier).set(on),
-            ),
-          // Which camera reads badge QR codes: front by default (a
-          // wall-mounted kiosk's back lens faces the wall). Device-local
-          // preference, like language and theme.
-          SwitchListTile(
-            key: const ValueKey('settings-front-camera'),
-            secondary: const Icon(Icons.camera_front_outlined),
-            title: HelpDotTitle(
-              l10n?.settingsFrontCamera ?? 'Scan with the front camera',
-              l10n?.helpTopicSettings ?? 'Settings & profile',
-              anchor: HelpAnchor.profileFrontCamera,
-            ),
-            subtitle: Text(
-              l10n?.settingsFrontCameraDesc ??
-                  'Badges are read with the screen-side camera — turn '
-                      'off to use the back camera.',
-            ),
-            value: ref.watch(frontCameraScanProvider).value ?? true,
-            onChanged: (v) =>
-                ref.read(frontCameraScanProvider.notifier).setEnabled(v),
-          ),
-
       ];
 
   /// #1154 — the Advanced section — backend, push, developer, demo mode. One of the four slices of a build() that was 723

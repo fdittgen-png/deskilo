@@ -65,7 +65,7 @@ platform.
 <!-- anchor: env.deploy.screen -->
 ## Deploying
 
-*Settings → Administration → Deployment*, on the side you want to
+*Settings → Governance → Deployment*, on the side you want to
 **write**. A deployment always goes **into the side you stand on**: on
 the production side the button reads *Pull from DEV*, on the development
 side *Pull from PROD*. Nothing can be pushed onto the other side by

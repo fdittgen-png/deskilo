@@ -69,7 +69,7 @@ elettronica rifiuta di raggiungere una piattaforma governativa.
 <!-- anchor: env.deploy.screen -->
 ## Distribuire
 
-*Impostazioni → Amministrazione → Distribuzione*, sul lato che vuoi
+*Impostazioni → Governance → Distribuzione*, sul lato che vuoi
 **scrivere**. Una distribuzione va sempre **nel lato in cui ti trovi**:
 sul lato produzione il pulsante dice *Tira da DEV*, su quello di
 sviluppo *Tira da PROD*. Nulla può essere spinto sull'altro lato per

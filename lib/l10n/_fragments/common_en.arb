@@ -32,10 +32,6 @@
   "@settingsSectionAdministration": {
     "description": "Settings section header grouping the owner/admin workspace-management entries (workspace, members, billing, …)"
   },
-  "settingsSectionPreferences": "Preferences",
-  "@settingsSectionPreferences": {
-    "description": "Settings section header grouping the personal preference entries (language, theme)"
-  },
   "settingsSectionAdvanced": "Advanced",
   "@settingsSectionAdvanced": {
     "description": "Settings section header grouping the developer/diagnostics entries"
@@ -64,10 +60,6 @@
   "commonRetry": "Try again",
   "@commonRetry": {
     "description": "Generic retry button"
-  },
-  "settingsSectionAbout": "About",
-  "@settingsSectionAbout": {
-    "description": "Settings section header: About (#560)"
   },
   "aboutVersion": "Version {version}",
   "@aboutVersion": {
