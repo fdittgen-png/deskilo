@@ -22,7 +22,12 @@ import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:deskilo/app/app.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../features/events/events_screen_test.dart' show pumpEvents, event;
+import '../helpers/fake_event_repository.dart';
+import '../helpers/mock_providers.dart';
 import '../features/reservations/reserve_hub_test.dart'
     show pumpHub, seatCenter;
 import 'package:deskilo/features/events/domain/workspace_event.dart';
@@ -121,6 +126,56 @@ void main() {
           '(#1247): what an administrator has to do to clear the thing '
           'that was waiting on them.',
     );
+  });
+
+  testWidgets('#1306 — the association case: the events bell is OFF, and a '
+      'pending decision is still reachable and decided in the budget',
+      (tester) async {
+    // Red before #1306 S2: with eventsTab off there was no path to a
+    // decision at all — the bell was gone and /events redirected away.
+    final events = FakeEventRepository()
+      ..events.add(event(
+        actor: 'member-2',
+        subject: 'member-1',
+        status: EventStatus.pending,
+      ));
+    await tester.pumpWidget(ProviderScope(
+      overrides: standardTestOverrides(
+        events: events,
+        workspace: FakeWorkspaceRepository.withWorkspace(featureFlags: const {
+          'eventsTab': false,
+          'calendarTab': true,
+          'calendarHub': true,
+          'calendarValidations': true,
+        }),
+      ),
+      child: const DeskiloApp(),
+    ));
+    await tester.pumpAndSettle();
+    const bothDecisionBudget = 2;
+    final taps = Taps();
+
+    expect(find.byKey(const ValueKey('shell-events-bell')), findsNothing,
+        reason: 'the bell really is off');
+    // The Calendar destination carries the count it opens on.
+    expect(
+      find.descendant(
+          of: find.byType(Badge), matching: find.byIcon(Icons.calendar_month_outlined)),
+      findsOneWidget,
+      reason: 'the pending decision badges the Calendar destination',
+    );
+
+    await taps.on(tester, find.text('Calendar'));
+    expect(find.byKey(const ValueKey('pending-decisions')), findsOneWidget,
+        reason: 'the badge opens the content it counts');
+
+    await taps.on(tester, find.text('Accept'));
+    expect(events.events.single.status, EventStatus.confirmed,
+        reason: 'the decision actually took effect');
+    expect(taps.count, lessThanOrEqualTo(bothDecisionBudget),
+        reason: 'with the bell off, deciding took ${taps.count} taps from '
+            'launch, budget $bothDecisionBudget (#1306): one to reach the '
+            'Calendar, one to decide.');
   });
 
   testWidgets('and the budgets are not vacuous — a path that completes in '

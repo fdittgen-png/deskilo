@@ -53,3 +53,19 @@ IconData shellBranchIcon(int branch, {bool selected = false}) =>
         selected ? Icons.event_seat : Icons.event_seat_outlined,
       _ => selected ? Icons.forum : Icons.forum_outlined,
     };
+
+/// #1306 S2 — where a pending decision is signalled.
+///
+/// The events bell carries it while `eventsTab` is on. A workspace that
+/// switches the bell off — the association's profile does, to calm the
+/// menu — would otherwise have NO path to a decision at all. When the
+/// Calendar destination shows decisions on its timeline
+/// (`calendarValidations`, which needs the calendar hub), the pending count
+/// moves there instead: the Calendar badge counts them and the calendar
+/// opens on them. One home, never also a banner. [effective] is the
+/// workspace's effective feature set, so a stored child under a switched-
+/// off parent does not claim the signal.
+bool decisionSignalOnCalendar(Set<WorkspaceFeature> effective) =>
+    !effective.contains(WorkspaceFeature.eventsTab) &&
+    effective.contains(WorkspaceFeature.calendarTab) &&
+    effective.contains(WorkspaceFeature.calendarValidations);
