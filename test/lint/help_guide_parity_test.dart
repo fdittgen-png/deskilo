@@ -44,6 +44,10 @@ Set<String> _anchors(String locale) {
 
 /// How many topics English has that [locale] does not.
 ///
+/// 7→6 (2026-09-16): #1259 S2 — the German configuration guide. The GAP
+/// budget below STAYS 35: it is checked per locale, and es/it are still
+/// missing both admin guides, so the worst case has not moved.
+///
 /// 8→7 (2026-09-16): #1259 S2 translated Admin-Configuration-Guide into
 /// French, so one of the eight listed-but-absent guides now exists. The
 /// GAP budget below stays 35: it is checked per locale and de/es/it are
@@ -106,9 +110,9 @@ void main() {
         .where((name) => !File('docs/wiki/$name').existsSync())
         .toList()
       ..sort();
-    expect(absent.length, lessThanOrEqualTo(7),
+    expect(absent.length, lessThanOrEqualTo(6),
         reason: 'tool/build_help.dart lists ${absent.length} guides that do '
-            'not exist in docs/wiki, and 7 are known (#1259, the admin '
+            'not exist in docs/wiki, and 6 are known (#1259, the admin '
             'guides in fr/de/es/it):\n  ${absent.join('\n  ')}');
     expect(absent.every((name) => name.startsWith('Admin-')), isTrue,
         reason: 'the known-absent guides are the admin translations; '

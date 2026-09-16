@@ -8,6 +8,7 @@
 *Administrators*
 - [Configuring the space](Admin-Configuration-Guide)
 - [Configurer l'espace](Admin-Configuration-Guide.fr) 🇫🇷
+- [Den Bereich einrichten](Admin-Configuration-Guide.de) 🇩🇪
 - [The technical side](Admin-Technical-Guide)
 - [Environments: dev and prod](Environments-Guide)
 
