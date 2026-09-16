@@ -79,8 +79,22 @@ BEFORE="$(counts src)" || fail "could not count the source"
 echo "source:$BEFORE"
 
 echo "--- dump"
+# --no-owner, but NOT --no-privileges.
+#
+# Dropping the privileges made the copy unfaithful to the thing this
+# drill exists to prove. The migrations grant table access to
+# `authenticated`; a dump without those grants restores tables that no
+# application role may read, and the suites — which impersonate
+# `authenticated`, because as `postgres` every policy is bypassed — were
+# refused with `permission denied for table members` before RLS was ever
+# consulted.
+#
+# A restore that silently loses its grants IS a broken restore, and the
+# command OPERATIONS.md documents does not drop them. Ownership is a
+# different matter: the copy is restored as `postgres`, so --no-owner
+# stays.
 docker exec "$C" pg_dump -U postgres -d postgres \
-  --schema public --schema auth --no-owner --no-privileges > "$DUMP" \
+  --schema public --schema auth --no-owner > "$DUMP" \
   || fail "the dump failed"
 [ -s "$DUMP" ] || fail "the dump is empty"
 
