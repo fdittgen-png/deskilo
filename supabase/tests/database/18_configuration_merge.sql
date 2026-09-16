@@ -123,10 +123,14 @@ select throws_matching(
   'merge is no wider than mirror: a member without manageConfiguration is refused');
 
 -- --------------------------------------------------- the entity keys
+-- Counted against the registry, not pinned to a number. The first
+-- version said 18, and #1295's nineteenth entity broke it the moment a
+-- new entity was legitimate — which is the opposite of what this
+-- assertion means. The invariant is EVERY, whatever the total.
 select is(
   (select count(*)::int from jsonb_array_elements(public.deployable_entities()) e
     where e ? 'merge_policy' and e ? 'group'),
-  18,
+  (select count(*)::int from jsonb_array_elements(public.deployable_entities()) e),
   'every entity declares how it merges and which group it belongs to');
 
 select is(
