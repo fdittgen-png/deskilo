@@ -118,7 +118,10 @@ import 'package:flutter_test/flutter_test.dart';
 //   from a floor-plan template. Platform, default OFF.
 // 101→102 (2026-09-15): #1273 singleRoomLevelNames — a level's only room
 //   is named by the level on member surfaces. Core, default ON.
-const int _expectedFeatureCount = 102;
+// 102→103 (2026-09-16): #1274 publicHolidays — an owner generates the
+//   year's public holidays as closure days, with a preview. Platform,
+//   default OFF.
+const int _expectedFeatureCount = 103;
 
 void main() {
   _tierPins();

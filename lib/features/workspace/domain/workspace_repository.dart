@@ -3,6 +3,7 @@ import '../../../core/time/work_hours.dart';
 import 'booking_granularity.dart';
 import 'booking_policies.dart';
 import 'closure_day.dart';
+import 'public_holidays.dart';
 import 'member.dart';
 import 'member_badge.dart';
 import 'conversation.dart';
@@ -571,6 +572,16 @@ abstract class WorkspaceRepository {
 
   /// Owner-only: remove a closure day.
   Future<void> removeClosureDay(String closureDayId);
+
+  /// #1274 — the public holidays of [year] in [country], previewed when
+  /// [apply] is false and written when it is true. One server call for
+  /// both, so the list an owner confirms is the list that gets written.
+  Future<HolidayGeneration> generateClosureDays(
+    String workspaceId, {
+    required String country,
+    required int year,
+    bool apply = false,
+  });
 
   /// Owner-only: set the desk fill opacity percentage (0040), clamped
   /// 20..100 server-side. Lower = more translucent desks.

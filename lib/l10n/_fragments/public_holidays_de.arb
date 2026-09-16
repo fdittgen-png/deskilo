@@ -1,0 +1,125 @@
+{
+  "featurePublicHolidaysTitle": "Feiertage",
+  "@featurePublicHolidaysTitle": {
+    "description": "#1274 public holidays: the feature switch title"
+  },
+  "featurePublicHolidaysDesc": "Die Inhaberin wählt ein Jahr, sieht die Feiertage, die zu Schließtagen würden, und bestätigt. Ein erneuter Lauf fügt nichts hinzu, und ein Monat mit bereits erstellter Rechnung wird übersprungen und benannt — erzeugte Feiertage ändern nie eine bereits gestellte Rechnung.",
+  "@featurePublicHolidaysDesc": {
+    "description": "#1274 public holidays: the feature switch description"
+  },
+  "holidayNewYear": "Neujahr",
+  "@holidayNewYear": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayEasterMonday": "Ostermontag",
+  "@holidayEasterMonday": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayLabourDay": "Tag der Arbeit",
+  "@holidayLabourDay": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayVictory1945": "Tag des Sieges 1945",
+  "@holidayVictory1945": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayAscension": "Christi Himmelfahrt",
+  "@holidayAscension": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayWhitMonday": "Pfingstmontag",
+  "@holidayWhitMonday": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayNationalDay": "Französischer Nationalfeiertag",
+  "@holidayNationalDay": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayAssumption": "Mariä Himmelfahrt",
+  "@holidayAssumption": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayAllSaints": "Allerheiligen",
+  "@holidayAllSaints": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayArmistice": "Waffenstillstand 1918",
+  "@holidayArmistice": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayChristmas": "Weihnachten",
+  "@holidayChristmas": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayGoodFriday": "Karfreitag",
+  "@holidayGoodFriday": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayGermanUnity": "Tag der Deutschen Einheit",
+  "@holidayGermanUnity": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayBoxingDay": "Zweiter Weihnachtsfeiertag",
+  "@holidayBoxingDay": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "publicHolidaysAction": "Feiertage hinzufügen",
+  "@publicHolidaysAction": {
+    "description": "#1274 the action that opens the holiday preview"
+  },
+  "publicHolidaysSheetTitle": "Feiertage",
+  "@publicHolidaysSheetTitle": {
+    "description": "#1274 the preview sheet's title"
+  },
+  "publicHolidaysYear": "Jahr",
+  "@publicHolidaysYear": {
+    "description": "#1274 the year field label"
+  },
+  "publicHolidaysCountry": "Land",
+  "@publicHolidaysCountry": {
+    "description": "#1274 the country field label"
+  },
+  "publicHolidaysPreviewNone": "Keine Feiertage für dieses Jahr.",
+  "@publicHolidaysPreviewNone": {
+    "description": "#1274 the preview came back empty"
+  },
+  "publicHolidaysPresent": "Bereits ein Schließtag",
+  "@publicHolidaysPresent": {
+    "description": "#1274 this date is already a closure day"
+  },
+  "publicHolidaysLocked": "Abgerechneter Monat — nicht erstellt",
+  "@publicHolidaysLocked": {
+    "description": "#1274 this date's month already carries an invoice"
+  },
+  "publicHolidaysLockedMonths": "Übersprungen, bereits abgerechnet: {months}",
+  "@publicHolidaysLockedMonths": {
+    "description": "#1274 the months skipped because they are invoiced",
+    "placeholders": {
+      "months": {
+        "type": "String"
+      }
+    }
+  },
+  "publicHolidaysConfirm": "{count} Schließtage erstellen",
+  "@publicHolidaysConfirm": {
+    "description": "#1274 confirm creating the previewed days",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "publicHolidaysNothingToCreate": "Nichts zu erstellen — alle Tage sind bereits vorhanden.",
+  "@publicHolidaysNothingToCreate": {
+    "description": "#1274 nothing left to create"
+  },
+  "publicHolidaysCreated": "{count} Schließtage erstellt",
+  "@publicHolidaysCreated": {
+    "description": "#1274 how many closure days were written",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}

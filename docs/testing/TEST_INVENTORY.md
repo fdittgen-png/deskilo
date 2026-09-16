@@ -4,24 +4,24 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**468 files, 3096 tests.**
+**472 files, 3134 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
 | a11y | 2 | 6 |
-| database | 13 | 118 |
+| database | 15 | 147 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
 | lint | 59 | 155 |
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
-| unit | 164 | 1299 |
-| widget | 222 | 1485 |
+| unit | 165 | 1304 |
+| widget | 223 | 1489 |
 
 | action | files |
 |---|---:|
-| KEEP | 468 |
+| KEEP | 472 |
 
 ## Rules
 
@@ -61,6 +61,8 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `supabase/tests/database/13_matrix_policies.sql` | database | 0216 — #1321: a narrowed admin row narrows the rows. | 15 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1321 | no | KEEP |  |
 | `supabase/tests/database/14_feature_gates.sql` | database | #1335 — a feature the client treats as OFF must be off on the server. | 8 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1335, #800, #1332 | no | KEEP |  |
 | `supabase/tests/database/15_number_series.sql` | database | 0217 — #1320: a number series never issues the same number twice. | 18 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1320 | no | KEEP |  |
+| `supabase/tests/database/16_public_holidays.sql` | database | #1274 — the holidays a year actually has, and the months it may not touch. | 13 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1274 | no | KEEP |  |
+| `supabase/tests/database/17_entitlement_specification.sql` | database | #1274 — the field report, executed. | 16 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1274 | no | KEEP |  |
 | `supabase/tests/database/20_money_invariants.sql` | database | #1226/#1229/#1231 — the two money guards nothing had ever executed. | 7 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1226, #1229, #1231 | no | KEEP |  |
 | `supabase/tests/database/21_ledger_append_only.sql` | database | #1229 — the ledger is append-only, and the one exception is narrow. | 6 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1229 | no | KEEP |  |
 | `supabase/tests/database/22_reconciliation.sql` | database | #1230 — the reconciliation, proved to be clean AND proved to bite. | 8 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1230, #1231, #1138 | no | KEEP |  |
@@ -432,6 +434,8 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/features/workspace/outside_hours_policy_test.dart` | unit | #624 (migration 0118) + #634 (migration 0120) — THE outside-opening- hours policy: one booking_rules string key, outside_hours_mode, with FOUR mutually… | 28 | yes | fakes, repository sources | a domain rule — #624, #634, #600 | no | KEEP |  |
 | `test/features/workspace/payment_instructions_test.dart` | unit | #192 — the payment instructions jsonb shape is a contract: pinned keys, a round trip, tolerant of older blobs. | 4 | yes | none | a domain rule — #192, #155, #711 | no | KEEP |  |
 | `test/features/workspace/permission_catalog_test.dart` | unit | #982 — the nine permissions: in the catalog, with defaults that keep what admins could always do and withhold what only owners could. | 2 | yes | none | a domain rule — #982, #989 | no | KEEP |  |
+| `test/features/workspace/public_holidays_flow_test.dart` | widget | #1274 — an owner previews a year's public holidays, then confirms. | 4 | yes | fakes | user-visible behaviour — #1274 | no | KEEP |  |
+| `test/features/workspace/public_holidays_test.dart` | unit | #1274 — the client reads the server's answer and never recomputes it. | 5 | yes | none | a domain rule — #1274 | no | KEEP |  |
 | `test/features/workspace/qr_png_test.dart` | widget | buildQrPng returns a decodable PNG of the requested size. | 1 | yes | real async I/O | user-visible behaviour | no | KEEP |  |
 | `test/features/workspace/reference_locale_test.dart` | widget | #1179 — a message reference is written ONCE, in the workspace's language. | 4 | yes | fakes | user-visible behaviour — #1179 | no | KEEP |  |
 | `test/features/workspace/role_permission_delta_test.dart` | unit | #1089 — the role matrix is written one permission at a time. | 2 | yes | fakes | a domain rule — #1089 | no | KEEP |  |

@@ -24,6 +24,7 @@ import 'package:deskilo/features/workspace/domain/member_note.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
+import 'package:deskilo/features/workspace/domain/public_holidays.dart';
 import 'package:deskilo/core/badge/app_badge.dart';
 import 'package:deskilo/core/realtime/realtime_providers.dart';
 import 'package:deskilo/core/realtime/realtime_sync.dart';
@@ -1616,6 +1617,47 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   Future<List<ClosureDay>> fetchClosureDays(String workspaceId) async =>
       closureDays.where((c) => c.workspaceId == workspaceId).toList()
         ..sort((a, b) => a.day.compareTo(b.day));
+
+  /// #1274 — what `generate_closure_days` hands back. Tests seed this;
+  /// the fake never recomputes the calendar.
+  HolidayGeneration holidayGeneration = HolidayGeneration.empty;
+
+  /// Every generate call, in order, so a test can prove a preview did
+  /// not write and an apply did.
+  final holidayCalls =
+      <({String country, int year, bool apply})>[];
+
+  @override
+  Future<HolidayGeneration> generateClosureDays(
+    String workspaceId, {
+    required String country,
+    required int year,
+    bool apply = false,
+  }) async {
+    holidayCalls.add((country: country, year: year, apply: apply));
+    if (!apply) {
+      return HolidayGeneration(
+        days: holidayGeneration.days,
+        lockedMonths: holidayGeneration.lockedMonths,
+        created: 0,
+      );
+    }
+    var created = 0;
+    for (final d in holidayGeneration.creatable) {
+      closureDays.add(ClosureDay(
+        id: 'closure-${_nextId++}',
+        workspaceId: workspaceId,
+        day: d.day,
+        reason: d.key,
+      ));
+      created++;
+    }
+    return HolidayGeneration(
+      days: holidayGeneration.days,
+      lockedMonths: holidayGeneration.lockedMonths,
+      created: created,
+    );
+  }
 
   @override
   Future<ClosureDay> addClosureDay(

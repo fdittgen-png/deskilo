@@ -34,7 +34,9 @@ Future<FakeWorkspaceRepository> pumpFeatures(
   // #1339 — the responsive matrix asks for a narrow surface. Every
   // other caller keeps the tall one this file has always used, so
   // nothing existing changes.
-  Size size = const Size(800, 17000),
+  // 2026-09-16 — 103 manifest features (#1274) outgrow 17000 px, and a
+  // lazy list simply stops building the tail.
+  Size size = const Size(800, 18000),
 }) async {
   // Ten manifest features no longer fit the default 800×600 surface and
   // the lazy list drops off-screen tiles; keep every switch mounted.
@@ -101,7 +103,9 @@ void main() {
     // managedProfileAccess — narrowing who administers a profile is
     // opt-in, because the rule nobody narrowed is what #887 already did.
     // #985 — vatRateHistory and vatCounterparty are opt-in too.
-    expect(onCount, featureManifest.length - 20);
+    // #1274 — publicHolidays is the twenty-first: generating a year of
+    // closure days changes what a subscription includes.
+    expect(onCount, featureManifest.length - 21);
   });
 
   testWidgets(

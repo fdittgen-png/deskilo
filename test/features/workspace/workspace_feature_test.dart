@@ -16,6 +16,9 @@ import 'package:flutter_test/flutter_test.dart';
 /// a login surface. Shipping any of those ON would make the choice for
 /// them silently.
 const Set<WorkspaceFeature> defaultOffFeatures = {
+  // #1274 — generating a year of closure days changes what a
+  // subscription includes, so it is asked for and never assumed.
+  WorkspaceFeature.publicHolidays,
   WorkspaceFeature.adminSeatBlocking,
   WorkspaceFeature.accessorySupplements,
   WorkspaceFeature.onlinePayments,
@@ -110,6 +113,7 @@ void main() {
       'memberOrigin': true,
       'memberEnvironments': true,
       'workspaceLibrary': true,
+      'publicHolidays': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

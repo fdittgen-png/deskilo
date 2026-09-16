@@ -170,6 +170,22 @@ against a stale app.
 granularity, what a half-day is. **Closure days** are dates the space
 is shut: a booking touching one is refused with that reason named.
 
+**Public holidays** can be generated a year at a time instead of added
+one date at a time (#1274). Pick the year, read the list the server
+proposes, and confirm — generation is never automatic and never silent.
+Re-running a year adds nothing, so it is safe to repeat.
+
+A month that already carries an invoice is **skipped and named on
+screen**. A closure day there would change how many half-days that month
+included, and so a bill that was already issued; the rule is enforced in
+the database rather than the screen (ADR 0025). Correcting an invoiced
+month stays a deliberate act: add the day by hand and deal with the
+invoice.
+
+The dates come from the server, so the same list drives a template that
+configures a whole space. Switch on *Public holidays* to see the action;
+it is off until you ask for it.
+
 **Granularity** is what a booking may be — a half day, a full day, or a
 slot on a grid of N minutes. A booking that does not sit on the grid is
 refused and told the step.

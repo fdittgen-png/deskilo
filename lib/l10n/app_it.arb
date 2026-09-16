@@ -5239,6 +5239,129 @@
   "@profilesSitePick": {
     "description": "#974 profiles site: profilesSitePick"
   },
+  "featurePublicHolidaysTitle": "Giorni festivi",
+  "@featurePublicHolidaysTitle": {
+    "description": "#1274 public holidays: the feature switch title"
+  },
+  "featurePublicHolidaysDesc": "Il proprietario sceglie un anno, vede i giorni festivi che diventerebbero giorni di chiusura e conferma. Rilanciare un anno non aggiunge nulla, e un mese già fatturato viene saltato e nominato: generare i festivi non cambia mai una fattura già emessa.",
+  "@featurePublicHolidaysDesc": {
+    "description": "#1274 public holidays: the feature switch description"
+  },
+  "holidayNewYear": "Capodanno",
+  "@holidayNewYear": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayEasterMonday": "Lunedì dell'Angelo",
+  "@holidayEasterMonday": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayLabourDay": "Festa del Lavoro",
+  "@holidayLabourDay": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayVictory1945": "Vittoria 1945",
+  "@holidayVictory1945": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayAscension": "Ascensione",
+  "@holidayAscension": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayWhitMonday": "Lunedì di Pentecoste",
+  "@holidayWhitMonday": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayNationalDay": "Festa nazionale francese",
+  "@holidayNationalDay": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayAssumption": "Assunzione",
+  "@holidayAssumption": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayAllSaints": "Ognissanti",
+  "@holidayAllSaints": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayArmistice": "Armistizio 1918",
+  "@holidayArmistice": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayChristmas": "Natale",
+  "@holidayChristmas": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayGoodFriday": "Venerdì Santo",
+  "@holidayGoodFriday": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayGermanUnity": "Giorno dell'Unità tedesca",
+  "@holidayGermanUnity": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "holidayBoxingDay": "Santo Stefano",
+  "@holidayBoxingDay": {
+    "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "publicHolidaysAction": "Aggiungi i giorni festivi",
+  "@publicHolidaysAction": {
+    "description": "#1274 the action that opens the holiday preview"
+  },
+  "publicHolidaysSheetTitle": "Giorni festivi",
+  "@publicHolidaysSheetTitle": {
+    "description": "#1274 the preview sheet's title"
+  },
+  "publicHolidaysYear": "Anno",
+  "@publicHolidaysYear": {
+    "description": "#1274 the year field label"
+  },
+  "publicHolidaysCountry": "Paese",
+  "@publicHolidaysCountry": {
+    "description": "#1274 the country field label"
+  },
+  "publicHolidaysPreviewNone": "Nessun giorno festivo per quest'anno.",
+  "@publicHolidaysPreviewNone": {
+    "description": "#1274 the preview came back empty"
+  },
+  "publicHolidaysPresent": "Già un giorno di chiusura",
+  "@publicHolidaysPresent": {
+    "description": "#1274 this date is already a closure day"
+  },
+  "publicHolidaysLocked": "Mese fatturato — non creato",
+  "@publicHolidaysLocked": {
+    "description": "#1274 this date's month already carries an invoice"
+  },
+  "publicHolidaysLockedMonths": "Saltati, già fatturati: {months}",
+  "@publicHolidaysLockedMonths": {
+    "description": "#1274 the months skipped because they are invoiced",
+    "placeholders": {
+      "months": {
+        "type": "String"
+      }
+    }
+  },
+  "publicHolidaysConfirm": "Crea {count} giorni di chiusura",
+  "@publicHolidaysConfirm": {
+    "description": "#1274 confirm creating the previewed days",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "publicHolidaysNothingToCreate": "Niente da creare: tutti i giorni ci sono già.",
+  "@publicHolidaysNothingToCreate": {
+    "description": "#1274 nothing left to create"
+  },
+  "publicHolidaysCreated": "{count} giorni di chiusura creati",
+  "@publicHolidaysCreated": {
+    "description": "#1274 how many closure days were written",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "eventTypeRoleChange": "Cambio di ruolo",
   "eventRolePromote": "{actor} promuove un membro ad admin",
   "eventRoleDemote": "{actor} declassa un admin a membro",
