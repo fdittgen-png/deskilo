@@ -10,6 +10,7 @@ import 'package:deskilo/core/instance/instance_builder.dart';
 import 'package:deskilo/core/instance/instance_doctor.dart';
 import 'package:deskilo/core/instance/instance_security_checks.dart';
 import 'package:deskilo/core/instance/management_api.dart';
+import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_supabase_management.dart';
@@ -197,7 +198,7 @@ void main() {
 // questions of the live project.
 void _installChecks() {
   Map<String, Object?> row({
-    int migrations = 214,
+    int? marker = requiredSchemaVersion,
     int tables = 55,
     String noRls = '',
     String openPolicyless = '',
@@ -205,7 +206,7 @@ void _installChecks() {
     String buckets = 'avatars, floor-plans',
   }) =>
       {
-        'migrations_applied': migrations,
+        'marker': marker,
         'tables': tables,
         'tables_without_rls': noRls,
         'open_policyless': openPolicyless,
@@ -227,22 +228,42 @@ void _installChecks() {
     });
 
     test('an empty project is an ALARM and says which command fixes it', () {
-      final f = named(examine(row(migrations: 0, tables: 0)), 'Schema');
+      final f = named(examine(row(marker: null, tables: 0)), 'Schema');
       expect(f.level, DoctorLevel.alarm);
       expect(f.detail, contains('instance.dart install'));
     });
 
-    test('a half-installed schema is an alarm — it fails at the first '
-        'feature whose table is missing and says nothing until then', () {
-      final f = named(examine(row(migrations: 40, tables: 12)), 'Schema');
+    test('#1312 — behind by three names the three, in migration numbers', () {
+      final f = InstanceDoctor.checkSchema(
+        [row(marker: 223)],
+        required: 226,
+        bundleMigrations: const [
+          '0222_a.sql', '0223_b.sql', '0224_c.sql', '0225_d.sql', '0226_e.sql',
+        ],
+      ).single;
       expect(f.level, DoctorLevel.alarm);
-      expect(f.detail, contains('40 migrations'));
+      expect(f.title, 'Schema is behind');
+      expect(f.detail, contains('version 223'));
+      expect(f.detail, contains('behind by 3: 0224_c.sql, 0225_d.sql, 0226_e.sql'));
+      expect(f.detail, isNot(contains('0223_b.sql')));
+      expect(f.count, 3);
     });
 
-    test('MORE migrations than the floor is fine — a project may carry a '
-        'hand-applied fix, and refusing to start over that would be the '
-        'doctor causing the outage', () {
-      expect(examine(row(migrations: 9001)).where((f) => f.isProblem), isEmpty);
+    test('#1312 — a NEWER schema is fine: an older tool on a newer instance '
+        'is supported, and refusing it would be the doctor causing the '
+        'outage', () {
+      final f = InstanceDoctor.checkSchema([row(marker: 300)], required: 226).single;
+      expect(f.level, DoctorLevel.ok);
+      expect(f.detail, contains('ahead'));
+    });
+
+    test('#1312 — no row count decides anything: 9001 recorded rows and no '
+        'marker is still a schema without a version', () {
+      final r = row(marker: null)..['migrations_applied'] = 9001;
+      final f = named(examine(r), 'no version');
+      expect(f.level, DoctorLevel.alarm);
+      expect(f.detail, contains('predates migration 0226'));
+      expect(f.detail, contains('instance.dart record --ref'));
     });
 
     test('a table without RLS is an alarm, named', () {
@@ -282,17 +303,9 @@ void _installChecks() {
       expect(security.detail, contains('nothing about RLS'));
     });
 
-    test('#1314 — tables without recorded migrations are named, with the '
-        'remedy, instead of "no migration has ever run"', () {
-      final f = named(examine(row(migrations: -1, tables: 55)), 'not recorded');
-      expect(f.level, DoctorLevel.warn);
-      expect(f.detail, contains('55 tables'));
-      expect(f.detail, contains('instance.dart record --ref'));
-    });
-
     test('#1314 — no migrations table and no tables is still the empty '
         'project', () {
-      final f = named(examine(row(migrations: -1, tables: 0)), 'Schema');
+      final f = named(examine(row(marker: null, tables: 0)), 'Schema');
       expect(f.level, DoctorLevel.alarm);
       expect(f.detail, contains('instance.dart install'));
     });

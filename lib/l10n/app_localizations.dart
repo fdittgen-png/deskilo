@@ -15935,6 +15935,54 @@ abstract class AppLocalizations {
   /// **'The customer\'s VAT number is missing — a reverse-charged invoice must name it.'**
   String get invoiceGapMissingBuyerVatId;
 
+  /// #1312 Title of the screen shown when the server's schema is older than the app needs
+  ///
+  /// In en, this message translates to:
+  /// **'This server needs an update'**
+  String get schemaUpdateTitle;
+
+  /// #1312 Explanation on the schema-update screen
+  ///
+  /// In en, this message translates to:
+  /// **'This app needs version {version} of the DesKilo schema, and the server it connects to runs an older one. Until the server is updated, the app would fail in ways it could not explain, so it stops here.'**
+  String schemaUpdateBody(int version);
+
+  /// #1312 What the person running the server should do; the command stays untranslated
+  ///
+  /// In en, this message translates to:
+  /// **'If you run this server: apply the missing migrations with `dart run tool/instance.dart install --ref <project>`. Only what is missing runs.'**
+  String get schemaUpdateOperator;
+
+  /// #1312 What a member who does not run the server should do
+  ///
+  /// In en, this message translates to:
+  /// **'Otherwise: tell the person who runs your space. Nothing you entered is lost.'**
+  String get schemaUpdateMember;
+
+  /// #1312 Button that asks the server its version again
+  ///
+  /// In en, this message translates to:
+  /// **'Check again'**
+  String get schemaUpdateRetry;
+
+  /// #1312 Button opening Settings → Server
+  ///
+  /// In en, this message translates to:
+  /// **'Server settings'**
+  String get schemaUpdateServer;
+
+  /// #1312 Connection test result: schema older than the app
+  ///
+  /// In en, this message translates to:
+  /// **'Reached it, but its DesKilo schema is older than this app needs. Update the server before using it.'**
+  String get backendTestBehind;
+
+  /// #1312 Connection test result: schema newer than the app
+  ///
+  /// In en, this message translates to:
+  /// **'Reached it. Its schema is newer than this app — it works, and a newer app is available.'**
+  String get backendTestAhead;
+
   /// #903 seat day timeline: seatDayTitle
   ///
   /// In en, this message translates to:

@@ -21,6 +21,11 @@ class FakeSupabaseManagement implements SupabaseManagement {
   /// insert the installer sends with every migration.
   final recorded = <String, List<String>>{};
 
+  /// #1312 — each project's schema version marker, as the migrations the
+  /// installer ran wrote it (`set_deskilo_schema_version(N)`), or as a test
+  /// seeds it for a schema some other path applied.
+  final markers = <String, int>{};
+
   /// Rows recorded by OTHER tooling (timestamp versions), per project.
   int foreignRecorded = 0;
   String? failQueryContaining;
@@ -85,6 +90,10 @@ class FakeSupabaseManagement implements SupabaseManagement {
       throw ManagementApiException(400, failMessage);
     }
     (this.sql[ref] ??= []).add(sql);
+    for (final m in RegExp(r'set_deskilo_schema_version\((\d+)\)').allMatches(sql)) {
+      final v = int.parse(m.group(1)!);
+      if (v > (markers[ref] ?? 0)) markers[ref] = v;
+    }
     if (sql.contains('insert into supabase_migrations.schema_migrations')) {
       for (final m in RegExp(r"\('(\d{4})', '").allMatches(sql)) {
         final version = m.group(1)!;
@@ -127,6 +136,7 @@ class FakeSupabaseManagement implements SupabaseManagement {
           'present': versions.isNotEmpty || foreignRecorded > 0,
           'recorded': versions.length + foreignRecorded,
           'versions': versions.isEmpty ? null : versions.join(','),
+          'marker': markers[ref],
         },
       ];
     }

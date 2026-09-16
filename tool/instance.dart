@@ -118,8 +118,13 @@ Future<int> main(List<String> argv) async {
         // #1313 — the expected policies come from the file CI's replay
         // writes; without it drift simply is not judged.
         final policiesFile = File(instancePoliciesAssetPath);
+        // #1312 — the version is judged against the migrations this
+        // checkout would install, in numbers, and names what is missing.
+        final bundle = parseInstanceBundle(encodeInstanceBundle(buildInstanceBundle('.')));
         final findings = await InstanceDoctor(api).examine(
           ref,
+          required: int.parse(bundle.schemaVersion),
+          bundleMigrations: [for (final m in bundle.schema) m.name],
           expectedPolicies: policiesFile.existsSync()
               ? parseInstancePolicies(policiesFile.readAsStringSync())
               : const {},
@@ -145,7 +150,7 @@ Future<int> main(List<String> argv) async {
 Future<int> _install(InstanceBuilder builder, String ref, int? skip) async {
   final bundle = parseInstanceBundle(encodeInstanceBundle(buildInstanceBundle('.')));
   stdout.writeln('schema: ${bundle.schema.length} migrations '
-      '(${skip == null ? 'resuming from what the project recorded' : 'skipping $skip'})');
+      '(${skip == null ? 'resuming after the schema version, or what the project recorded' : 'skipping $skip'})');
   await builder.installSchema(ref, bundle, skip: skip, onProgress: (p) {
     if (p.current.isNotEmpty) stdout.writeln('  ${p.done + 1}/${p.total} ${p.current}');
   });

@@ -9135,6 +9135,36 @@ class AppLocalizationsEs extends AppLocalizations {
       'Falta el NIF-IVA del cliente — una factura con inversión del sujeto pasivo debe indicarlo.';
 
   @override
+  String get schemaUpdateTitle => 'Este servidor necesita una actualización';
+
+  @override
+  String schemaUpdateBody(int version) {
+    return 'Esta aplicación necesita la versión $version del esquema de DesKilo, y el servidor al que se conecta ejecuta una más antigua. Hasta que el servidor se actualice, la aplicación fallaría de formas que no podría explicar, así que se detiene aquí.';
+  }
+
+  @override
+  String get schemaUpdateOperator =>
+      'Si gestiona este servidor: aplique las migraciones que faltan con `dart run tool/instance.dart install --ref <proyecto>`. Solo se ejecuta lo que falta.';
+
+  @override
+  String get schemaUpdateMember =>
+      'Si no: avise a la persona que gestiona su espacio. No se pierde nada de lo que haya introducido.';
+
+  @override
+  String get schemaUpdateRetry => 'Comprobar de nuevo';
+
+  @override
+  String get schemaUpdateServer => 'Ajustes del servidor';
+
+  @override
+  String get backendTestBehind =>
+      'Conectado, pero su esquema de DesKilo es más antiguo de lo que necesita esta aplicación. Actualice el servidor antes de usarlo.';
+
+  @override
+  String get backendTestAhead =>
+      'Conectado. Su esquema es más reciente que esta aplicación: funciona, y hay una aplicación más reciente disponible.';
+
+  @override
   String seatDayTitle(String seat) {
     return 'Plaza $seat hoy';
   }

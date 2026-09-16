@@ -47,6 +47,10 @@ import '../features/profile/presentation/screens/consent_screen.dart';
 import '../features/profile/providers/profile_providers.dart';
 import '../features/profile/presentation/screens/privacy_screen.dart';
 import '../features/profile/presentation/screens/profiles_screen.dart';
+import '../features/profile/presentation/screens/schema_update_screen.dart';
+import '../core/backend/schema_version.dart';
+import '../core/instance/schema_compatibility.dart';
+import 'schema_gate.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
 import '../features/reservations/presentation/screens/reserve_screen.dart';
 import '../features/workspace/domain/workspace_feature.dart';
@@ -109,7 +113,8 @@ GoRouter router(Ref ref) {
     ..listen(kioskModeProvider, (_, _) => refresh.value++)
     // #751 — the consent gate reads the profile's accepted policy version:
     // re-evaluate when the profile resolves, and after an acceptance.
-    ..listen(myProfileProvider, (_, _) => refresh.value++);
+    ..listen(myProfileProvider, (_, _) => refresh.value++)
+    ..listen(schemaCompatibilityProvider, (_, _) => refresh.value++); // #1312
 
   /// Whether [feature] is enabled for the active workspace (#146).
   /// Defaults (everything ON) while the workspace is still loading, so
@@ -140,6 +145,14 @@ GoRouter router(Ref ref) {
     initialLocation: '/reserve',
     refreshListenable: refresh,
     redirect: (context, state) {
+      // #1312 — a server older than this app gates every route but the
+      // way out, and is then the ONLY rule: the way out must not bounce to
+      // sign-in. An unanswered check changes nothing.
+      final schema = ref.read(schemaCompatibilityProvider).value;
+      final schemaGate = schemaGateRedirect(schema, state.matchedLocation);
+      if (schema == SchemaCompatibility.behind || schemaGate != null) {
+        return schemaGate;
+      }
       final auth = ref.read(authStateProvider);
       if (auth.isLoading) return null;
       final signedIn = auth.value != null;
@@ -750,6 +763,9 @@ GoRouter router(Ref ref) {
           ),
         ],
       ),
+      // #1312 — where a server older than this app sends every route.
+      GoRoute(path: kSchemaUpdateRoute,
+          builder: (context, state) => const SchemaUpdateScreen()),
     ],
   );
   ref.onDispose(router.dispose);

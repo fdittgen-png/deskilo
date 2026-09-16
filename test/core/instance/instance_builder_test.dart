@@ -13,9 +13,9 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_supabase_management.dart';
 
 const _bundleJson = '''
-{"schema":[{"name":"0001_a.sql","sql":"create table a();"},
-           {"name":"0002_b.sql","sql":"create table b();"},
-           {"name":"0003_c.sql","sql":"create table c();"}],
+{"schema":[{"name":"0001_a.sql","sql":"create table a(); select public.set_deskilo_schema_version(1);"},
+           {"name":"0002_b.sql","sql":"create table b(); select public.set_deskilo_schema_version(2);"},
+           {"name":"0003_c.sql","sql":"create table c(); select public.set_deskilo_schema_version(3);"}],
  "functions":[{"slug":"send-push","verifyJwt":true,"files":[{"name":"index.ts","content":"x"}]},
               {"slug":"stripe-webhook","verifyJwt":false,"files":[{"name":"index.ts","content":"y"}]}]}
 ''';
@@ -165,6 +165,31 @@ void main() {
           reason: 're-running migrations on a working schema breaks it');
     });
 
+    test('#1312 — the marker decides where an upgrade starts, whatever was '
+        'recorded', () async {
+      // A schema some other path applied through 0002 — the CLI, a psql
+      // restore — carries its marker and no record this tooling wrote.
+      final api = FakeSupabaseManagement()..markers['ref-1'] = 2;
+      final builder = InstanceBuilder(api);
+      final bundle = parseInstanceBundle(_bundleJson);
+      expect(await builder.resumePoint('ref-1', bundle), 2);
+      await builder.installSchema('ref-1', bundle);
+      expect(api.sql['ref-1'], hasLength(1));
+      expect(api.sql['ref-1']!.single, contains('create table c();'),
+          reason: 'exactly the missing migration runs, once');
+      expect(api.markers['ref-1'], 3);
+      expect(await builder.resumePoint('ref-1', bundle), 3,
+          reason: 'a second upgrade has nothing left to run');
+    });
+
+    test('#1312 — the marker wins over foreign bookkeeping', () async {
+      final api = FakeSupabaseManagement()
+        ..foreignRecorded = 230
+        ..markers['ref-1'] = 1;
+      final bundle = parseInstanceBundle(_bundleJson);
+      expect(await InstanceBuilder(api).resumePoint('ref-1', bundle), 1);
+    });
+
     test('record marks the migrations a project already has, running none',
         () async {
       final api = FakeSupabaseManagement();
@@ -190,7 +215,7 @@ void main() {
       api.onQuery = (ref, sql) {
         if (sql == InstanceDoctor.schemaHealthSql) {
           return [
-            {'migrations_applied': (api.recorded[ref] ?? const []).length, 'tables': 3},
+            {'marker': api.markers[ref], 'tables': 3},
           ];
         }
         if (sql == InstanceDoctor.securityHealthSql) {
@@ -238,13 +263,14 @@ void main() {
 
       final findings = await InstanceDoctor(api).examine(
         'ref-1',
-        minimumMigrations: bundle.schema.length,
+        required: int.parse(bundle.schemaVersion),
+        bundleMigrations: [for (final m in bundle.schema) m.name],
         expectedPolicies: const {'public.invoices.invoices_select'},
       );
       expect(findings.where((f) => f.isProblem), isEmpty,
           reason: findings.join('\n'));
       expect(findings.firstWhere((f) => f.title == 'Schema').detail,
-          contains('3 migrations applied'));
+          contains('version 3, current'));
     });
   });
 }

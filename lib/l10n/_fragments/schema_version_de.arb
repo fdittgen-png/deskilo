@@ -1,0 +1,11 @@
+{
+  "@@locale": "de",
+  "schemaUpdateTitle": "Dieser Server muss aktualisiert werden",
+  "schemaUpdateBody": "Diese App benötigt Version {version} des DesKilo-Schemas, und der Server, mit dem sie sich verbindet, hat eine ältere. Bis der Server aktualisiert ist, würde die App auf eine Weise scheitern, die sie nicht erklären könnte – deshalb hält sie hier an.",
+  "schemaUpdateOperator": "Wenn Sie diesen Server betreiben: Spielen Sie die fehlenden Migrationen mit `dart run tool/instance.dart install --ref <projekt>` ein. Es läuft nur, was fehlt.",
+  "schemaUpdateMember": "Andernfalls: Sagen Sie der Person Bescheid, die Ihren Space betreibt. Nichts von dem, was Sie eingegeben haben, geht verloren.",
+  "schemaUpdateRetry": "Erneut prüfen",
+  "schemaUpdateServer": "Server-Einstellungen",
+  "backendTestBehind": "Erreicht, aber sein DesKilo-Schema ist älter, als diese App benötigt. Aktualisieren Sie den Server, bevor Sie ihn verwenden.",
+  "backendTestAhead": "Erreicht. Sein Schema ist neuer als diese App – es funktioniert, und eine neuere App ist verfügbar."
+}

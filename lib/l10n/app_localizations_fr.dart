@@ -9161,6 +9161,36 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le numéro de TVA du client manque — une facture en autoliquidation doit le porter.';
 
   @override
+  String get schemaUpdateTitle => 'Ce serveur doit être mis à jour';
+
+  @override
+  String schemaUpdateBody(int version) {
+    return 'Cette application a besoin de la version $version du schéma DesKilo, et le serveur auquel elle se connecte en exécute une plus ancienne. Tant que le serveur n\'est pas mis à jour, l\'application échouerait sans pouvoir expliquer pourquoi : elle s\'arrête donc ici.';
+  }
+
+  @override
+  String get schemaUpdateOperator =>
+      'Si vous gérez ce serveur : appliquez les migrations manquantes avec `dart run tool/instance.dart install --ref <projet>`. Seul ce qui manque est exécuté.';
+
+  @override
+  String get schemaUpdateMember =>
+      'Sinon : prévenez la personne qui gère votre espace. Rien de ce que vous avez saisi n\'est perdu.';
+
+  @override
+  String get schemaUpdateRetry => 'Vérifier à nouveau';
+
+  @override
+  String get schemaUpdateServer => 'Réglages du serveur';
+
+  @override
+  String get backendTestBehind =>
+      'Contacté, mais son schéma DesKilo est plus ancien que ce dont l\'application a besoin. Mettez le serveur à jour avant de l\'utiliser.';
+
+  @override
+  String get backendTestAhead =>
+      'Contacté. Son schéma est plus récent que l\'application — cela fonctionne, et une version plus récente de l\'application est disponible.';
+
+  @override
   String seatDayTitle(String seat) {
     return 'Place $seat aujourd\'hui';
   }
