@@ -94,7 +94,7 @@ actually moves.
 | document_design | reports | invoice_pdf_template | B | |
 | document_links | configuration | workspace_documents | B | |
 | **closure_days** | configuration | closure_days | B | **a mirror import replaces them**, so generated public holidays (#1274) can be removed by a deployment — ADR 0025 |
-| invitations | configuration | invitation_template, invitation_templates, whatsapp_group | B | whatsapp_group is A and should not travel — **F**, see gaps |
+| invitations | configuration | invitation_template, invitation_templates, whatsapp_group | B | whatsapp_group is A and should not travel — **F**, #1360 |
 | features | configuration | feature_flags | B | merge, not replace (0176) |
 
 ## Personal preferences — class D, never carried
@@ -131,7 +131,7 @@ not: they are per person, server-side, and cross-workspace.
 
 - **`whatsapp_group` travels with `invitations`.** It is one space's group
   link (class A), and a mirror import would point a second space at the
-  first one's WhatsApp group. Needs its own issue.
+  first one's WhatsApp group — #1360.
 - Everything else already has one: #1287, #1288, #1289, #1294, #1295,
   #1276.
 
