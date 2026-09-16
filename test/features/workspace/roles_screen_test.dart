@@ -92,6 +92,22 @@ void main() {
         contains(WorkspacePermission.issueInvoices),
       );
     });
+
+    test('#1333 — the adminInvoicing grant follows the requires chain, as '
+        'has_permission_raw does since 0227: stored on under Invoicing '
+        'switched off grants nothing', () {
+      final workspace = FakeWorkspaceRepository.withWorkspace()
+          .workspaces
+          .single
+          .copyWith(rolePermissions: const {}, featureFlags: const {
+        'adminInvoicing': true,
+        'invoicing': false,
+      });
+      expect(
+        permissionsForRole(PermissionRole.admin, workspace),
+        isNot(contains(WorkspacePermission.issueInvoices)),
+      );
+    });
   });
 
   testWidgets(

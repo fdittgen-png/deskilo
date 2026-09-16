@@ -159,10 +159,13 @@ Set<WorkspacePermission> permissionsForRole(
         }
       : defaultPermissionsFor(role);
   // Legacy compatibility: the adminInvoicing feature flag keeps
-  // granting invoicing to admins, exactly like the server helper.
+  // granting invoicing to admins, exactly like the server helper — and,
+  // like it since 0227 (#1333), only while the flag is EFFECTIVE: stored
+  // on under Invoicing switched off grants nothing.
   if (role == PermissionRole.admin &&
       workspace != null &&
-      workspace.featureFlags[WorkspaceFeature.adminInvoicing.name] == true) {
+      effectiveFeatures(resolveEnabledFeatures(workspace.featureFlags))
+          .contains(WorkspaceFeature.adminInvoicing)) {
     granted = {...granted, WorkspacePermission.issueInvoices};
   }
   // #989 — deployToProd implies deployToDev, as on the server.

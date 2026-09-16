@@ -10,13 +10,13 @@
 -- gates, and a configuration import that replaces the flag map without
 -- validating it.
 --
--- The assertions inside the TODO block are the red-first proofs of
--- #1332: they fail today, pg_prove reports them as TODO rather than as a
--- failure, and the pull request that fixes #1332 removes the TODO so they
--- become ordinary regressions. The two controls outside it pin the gates
--- that already work, so the file cannot pass by testing nothing.
+-- The six proofs of #1332 were written red first, inside a TODO block,
+-- while every gate still read one flag. 0227 (#1333) routes every gate
+-- through `feature_effective`; the TODO is gone and they are ordinary
+-- regressions now. The two controls pin the gates that always worked, so
+-- the file cannot pass by testing nothing.
 begin;
-select plan(8);
+select plan(12);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -86,8 +86,7 @@ select throws_matching(
   'control: set_feature_flags refuses a non-boolean value');
 reset role;
 
--- ------------------------------------------------------------ #1332, red first
-select todo_start('#1332 — server gates follow the requires chain; import validates the flag map');
+-- ------------------------------------------------------------ #1332, fixed by 0227
 
 select pg_temp.flags('{"moneyTab": false, "scheduledExpenses": true}');
 select pg_temp.act_as('owner');
@@ -144,7 +143,20 @@ select throws_matching(
   'an imported non-boolean flag value is refused');
 reset role;
 
-select todo_end();
+-- The helper itself: the chain, the default, and what is not a boolean.
+select is(public.feature_effective_in('{}'::jsonb, 'badgeSignIn'), false,
+  'badge sign-in is off by default');
+select is(public.feature_effective_in('{"badgeSignIn": true, "kioskMode": false}'::jsonb, 'badgeSignIn'),
+  false, 'a grandparent off switches the whole chain off');
+select is(public.feature_raw('{"levelBooking": "yes"}'::jsonb, 'levelBooking'), false,
+  '"yes" is not true');
+select pg_temp.act_as('owner');
+select is((select count(*)::int from jsonb_object_keys(
+    public.export_workspace_configuration(current_setting('deskilo.gates.ws')::uuid)
+      -> 'workspace' -> 'feature_flags')),
+  (select count(*)::int from jsonb_object_keys(public.feature_registry())),
+  'the export writes every registry key resolved');
+reset role;
 
 select * from finish();
 rollback;
