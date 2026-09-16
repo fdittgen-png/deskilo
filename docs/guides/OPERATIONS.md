@@ -141,8 +141,27 @@ doctor's "Schema is behind" alarm is for.
 |---|---|
 | App ← schema | an older app on a newer schema: **supported**, it ignores what it does not know |
 | App → schema | a newer app on an older schema: **not supported** — run `instance.dart install` |
+| Version | `select public.deskilo_schema_version();` — the number of the last migration applied, written by the migration itself (#1312). Readable without signing in. Row counts in `supabase_migrations` are not a version: hosted projects record timestamps there |
 | Bundle | `assets/instance/bundle.json` is generated from `supabase/migrations/` and pinned by `test/lint/instance_bundle_test.dart`, so it can never lag |
 | Postgres | the hosted projects run 17.x; `supabase/config.toml` pins the local stack to the same major so CI tests what production runs |
+
+## What a migration will do to your instance
+
+Every migration from 0226 on carries, on its second line, one of three
+tags (#1312):
+
+| tag | means |
+|---|---|
+| `-- risk: additive` | adds tables, columns, functions or policies; nothing existing changes shape |
+| `-- risk: transforming` | rewrites existing rows or function bodies; the data survives, its meaning may move |
+| `-- risk: destructive` | drops or deletes something; the file names the backup to take first |
+
+Before upgrading a customer instance, read the tags of the migrations it is
+missing — `grep -h '^-- risk:' supabase/migrations/0NNN_*.sql` over the
+range after its `deskilo_schema_version()`. A `destructive` one means the
+dump in *Backup* above, taken and verified, before anything runs. The
+forward-fix rule still holds; the tag only tells you which upgrades need a
+backup you have actually restored once.
 
 ## Disaster runbook
 
