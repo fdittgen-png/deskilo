@@ -217,7 +217,22 @@ const Map<String, int> _pairBudget = {
   'profile -> reservations': 5,
   // 2026-09-15 #1310 S0 30→31: the developer reservation dump asks for
   // the exportData permission before exporting anyone but the exporter.
-  'profile -> workspace': 31,
+  //
+  // 2026-09-16 #1307 31→35, and this one is a DELIBERATE trade, not
+  // drift. settings_screen.dart sat at exactly its length cap, so
+  // Settings could not be reorganized by ownership until something
+  // left; the Advanced section moved to widgets/. Splitting one file
+  // into two re-states the imports BOTH halves need —
+  // workspace_feature, workspace_permission and workspace_providers are
+  // each now imported twice inside profile/, because the screen still
+  // uses them for the personal and preferences sections.
+  //
+  // The fourth is application/set_workspace_dev_mode.dart. Keeping that
+  // decision in the widget would have cost one import less and broken
+  // `profile: 4 > 3` instead — a widget in profile/ reaching
+  // workspace/'s repository. ADR 0024 is the stronger rule, so the
+  // layer violation is fixed and the import ceiling pays for it.
+  'profile -> workspace': 35,
   'reservations -> calendar': 1,
   'reservations -> events': 5,
   'reservations -> members': 2,
