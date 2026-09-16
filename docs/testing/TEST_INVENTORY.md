@@ -4,7 +4,7 @@
 
 Every test file, classified for reliability and regression value (#1334). The classification is a function of each file — its header, its assertions, what it reads — so the rules below are the review surface, not the rows.
 
-**490 files, 3267 tests.**
+**491 files, 3269 tests.**
 
 | layer | files | tests |
 |---|---:|---:|
@@ -12,7 +12,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | database | 20 | 201 |
 | i18n | 3 | 5 |
 | journey | 1 | 3 |
-| lint | 64 | 176 |
+| lint | 65 | 178 |
 | perf | 1 | 4 |
 | property | 1 | 10 |
 | tool | 2 | 11 |
@@ -21,7 +21,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 
 | action | files |
 |---|---:|
-| KEEP | 490 |
+| KEEP | 491 |
 
 ## Rules
 
@@ -534,6 +534,7 @@ Every test file, classified for reliability and regression value (#1334). The cl
 | `test/lint/sign_out_test.dart` | lint | #1124 — a sign-out that does not drop the cache leaves the last principal's rows on the disk for the next one. | 3 | yes | repository sources | an architecture, security or process rule — #1124 | no | KEEP |  |
 | `test/lint/silent_rls_refusal_test.dart` | lint | #1269 — a write RLS refuses does not raise. It matches no rows. | 2 | yes | none | an architecture, security or process rule — #1269 | no | KEEP |  |
 | `test/lint/spdx_headers_test.dart` | lint | Licence lint: every source file declares 0BSD, and nothing declares anything else. | 1 | yes | none | an architecture, security or process rule | no | KEEP |  |
+| `test/lint/state_primitives_test.dart` | lint | #1305 S1 — an empty list must never look like a failed one. | 2 | yes | none | an architecture, security or process rule — #1305 | no | KEEP |  |
 | `test/lint/system_columns_test.dart` | lint | #992 — six system columns on every table: created_datetime, modified_datetime, company_id, site_id, created_by_user, modified_by_user. Migration 0183 added… | 4 | yes | repository sources | an architecture, security or process rule — #992 | no | KEEP |  |
 | `test/lint/test_inventory_test.dart` | lint | #1334 — the test inventory lists exactly the tests that exist. | 3 | yes | none | an architecture, security or process rule — #1334 | no | KEEP |  |
 | `test/lint/wire_enum_test.dart` | lint | #1148 — `Enum.values.byName` throws on a value it does not know, and a throw inside a row mapper empties the whole list on an older client. Data layers read… | 1 | yes | none | an architecture, security or process rule — #1148 | no | KEEP |  |
