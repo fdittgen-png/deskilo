@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: 0BSD
-import '../../../../core/demo/demo_mode.dart';
 import '../../../../core/l10n/lexicon.dart';
 import 'dart:async';
 
@@ -19,19 +18,15 @@ import '../../../../core/ui/motion.dart';
 import '../../../../core/ui/view_toggle.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../calendar/presentation/widgets/day_timeline.dart';
-import '../../../members/providers/directory_providers.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/level.dart';
-import '../../../plan/presentation/seat_occupancy.dart';
-import '../../../plan/presentation/widgets/plan_canvas.dart';
 import '../reserve_seat_actions.dart';
 import '../space_subjects.dart';
+import '../widgets/reserve_canvas.dart';
 import '../widgets/seat_list_view.dart';
 import '../../../plan/providers/default_level_controller.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/providers/plan_focus_controller.dart';
-import '../../../plan/presentation/widgets/seat_photos.dart';
-import '../../../profile/domain/profile.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/member.dart';
 import '../../domain/week_tap_window.dart';
@@ -934,21 +929,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     // not-on-Reserve bug. Fetch every key the window touches and merge by id.
     final reservations =
         reservationsAcrossWindow(ref, window.start, window.end);
-    final myMemberId = ref.watch(myMemberProvider).value?.id;
-    final seatDayOn = ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.seatDayTimeline);
     final names = ref.watch(memberNamesProvider).value ?? const {};
-    // #620 — occupant profile photos on every map, kiosk or not.
-    final photosOn = ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.planMemberPhotos);
-    final memberUserIds = {
-      for (final m in ref.watch(workspaceMembersProvider).value ?? <Member>[])
-        m.id: m.userId,
-    };
-    final memberProfiles =
-        ref.watch(memberProfilesProvider).value ?? const <String, Profile>{};
 
     // Floor switcher floats over the canvas (indoor-maps idiom, UX
     // pass) — hub-local browsing state (#187), never the plan tab's
@@ -985,141 +966,22 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                       onSeatTap(plan, seat, reservations, window),
                 ),
               ),
-            AsyncData(value: final plan) => SeatPhotoLoader(
+            AsyncData(value: final plan) => ReserveCanvas(
                 key: const ValueKey('reserve-canvas-view'),
-                seatUserIds: !photosOn
-                    ? const {}
-                    : {
-                        for (final seat in plan.seats)
-                          if (occupantOnSeat(
-                                plan: plan,
-                                seat: seat,
-                                reservations: reservations,
-                                from: window.start,
-                                to: window.end,
-                              )?.memberId
-                              case final occupantMemberId?)
-                            if (memberUserIds[occupantMemberId] case final userId?)
-                              if (memberProfiles[userId]?.hasAvatar ?? false)
-                                seat.id: userId,
-                      },
-                builder: (context, seatPhotos) => PlanCanvas(
-              blurLabels: ref.watch(demoModeControllerProvider).value ?? false,
-                seatPhotos: seatPhotos,
-                singleRoomByLevel: namesSingleRoomsByLevel(ref),
-                paintKey: const ValueKey('reserve-plan-canvas'),
                 plan: plan,
-                highlightedSeatId: _focusSeatId,
-                highlightedDeskId: _focusDeskId,
-                highlightedOfficeId: _focusOfficeId,
-                highlightLevel: _focusLevel,
-                // Double tap = whole-space reserve / check-in (field
-                // request); only registered while the feature is on.
-                onSpaceDoubleTap: ref
-                        .watch(enabledFeaturesSyncProvider)
-                        .contains(WorkspaceFeature.levelBooking)
-                    ? (desk, office) => showSpaceSheet(
-                          context,
-                          // #687 — without this the double-tap sheet
-                          // offered no subject picker at all, so a whole
-                          // room or table could only ever be booked for
-                          // yourself.
-                          members: spaceAssignmentCandidates(ref),
-                          kind: desk != null
-                              ? SpaceKind.desk
-                              : office != null
-                                  ? SpaceKind.office
-                                  : SpaceKind.level,
-                          level: level,
-                          office: office ??
-                              plan.offices
-                                  .where((o) => o.id == desk?.officeId)
-                                  .firstOrNull,
-                          desk: desk,
-                          plan: plan,
-                          // Seed the reserve picker with the hub's
-                          // selected day + period (0065).
-                          initialWindow:
-                              (start: window.start, end: window.end),
-                        )
-                    : null,
-                // Presence dots: same rule as the directory and Plan tab.
-                onlineSeatIds: onlineSeatIdsFor(
-                  plan: plan,
-                  reservations: reservations,
-                  members:
-                      ref.watch(workspaceMembersProvider).value ?? const [],
-                  profiles:
-                      ref.watch(memberProfilesProvider).value ?? const {},
-                  from: window.start,
-                  to: window.end,
-                  now: ref.watch(clockProvider).now(),
-                ),
-                deskOpacity: (ref
-                            .watch(currentWorkspaceProvider)
-                            .value
-                            ?.deskOpacity ??
-                        100) /
-                    100,
-                background:
-                    ref.watch(levelBackgroundProvider(level.id)).value,
-                images: {
-                  for (final image in plan.images)
-                    // Single watch per image (perf audit): the double watch
-                        // subscribed twice per image on every rebuild.
-                        image.id: ?ref.watch(planImageProvider(image.id)).value,
-                },
-                seatStates: seatStatesFor(
-                  plan: plan,
-                  reservations: reservations,
-                  myMemberId: myMemberId,
-                  from: window.start,
-                  to: window.end,
-                  dayOpen: dayOpen,
-                ),
-                // #575 — the day-phase rings on the hub's plan too.
-                seatDayPhases: seatDayPhasesFor(
-                  plan: plan,
-                  reservations: reservations,
-                  at: window.start,
-                  dayOpen: dayOpen,
-                ),
-                // #903 — the day's taken stretches: a seat booked for
-                // part of the day is drawn part-filled.
-                seatDaySegments: seatDayOn
-                    ? seatDaySegmentsFor(
-                        plan: plan,
-                        reservations: reservations,
-                        myMemberId: myMemberId,
-                        dayStart: _dayWindow(window.start).start,
-                        dayEnd: _dayWindow(window.start).end,
-                        dayOpen: dayOpen,
-                      )
-                    : const {},
-                seatLabels: {
-                  for (final seat in plan.seats)
-                    seat.id: occupantLabelFor(
-                      plan: plan,
-                      seat: seat,
-                      reservations: reservations,
-                      names: names,
-                      from: window.start,
-                      to: window.end,
-                    ),
-                },
-                // #462: the room/table itself reads reserved, with the
-                // occupant's name — for every user.
-                spaceOverlays: spaceOverlaysFor(
-                  plan: plan,
-                  reservations: reservations,
-                  names: names,
-                  myMemberId: myMemberId,
-                  from: window.start,
-                  to: window.end,
+                level: level,
+                reservations: reservations,
+                window: window,
+                dayOpen: dayOpen,
+                day: _dayWindow(window.start),
+                focus: (
+                  seatId: _focusSeatId,
+                  deskId: _focusDeskId,
+                  officeId: _focusOfficeId,
+                  level: _focusLevel,
                 ),
                 onSeatTap: (seat) =>
                     onSeatTap(plan, seat, reservations, window),
-              ),
               ),
             AsyncError() => Center(
                 child: Text(
