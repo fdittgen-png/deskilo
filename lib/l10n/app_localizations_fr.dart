@@ -10006,6 +10006,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get workspaceCurrencyLabel => 'Devise';
 
   @override
+  String get workspaceTimezoneHint => 'Europe/Paris';
+
+  @override
   String get workspaceTimezoneLabel => 'Fuseau horaire';
 
   @override

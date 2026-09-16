@@ -9978,6 +9978,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get workspaceCurrencyLabel => 'Moneda';
 
   @override
+  String get workspaceTimezoneHint => 'Europe/Madrid';
+
+  @override
   String get workspaceTimezoneLabel => 'Zona horaria';
 
   @override

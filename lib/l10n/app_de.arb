@@ -6794,6 +6794,7 @@
   "workspaceNameLabel": "Name des Workspace",
   "workspaceCountryLabel": "Land",
   "workspaceCurrencyLabel": "Währung",
+  "workspaceTimezoneHint": "Europe/Berlin",
   "workspaceTimezoneLabel": "Zeitzone",
   "onboardingCreateButton": "Workspace erstellen",
   "workspaceInviteCodeLabel": "Einladungscode",

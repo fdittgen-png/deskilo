@@ -9907,6 +9907,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get workspaceCurrencyLabel => 'Currency';
 
   @override
+  String get workspaceTimezoneHint => 'Europe/London';
+
+  @override
   String get workspaceTimezoneLabel => 'Time zone';
 
   @override

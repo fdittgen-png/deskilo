@@ -6,6 +6,7 @@
   "workspaceNameLabel": "Nom de l'espace",
   "workspaceCountryLabel": "Pays",
   "workspaceCurrencyLabel": "Devise",
+  "workspaceTimezoneHint": "Europe/Paris",
   "workspaceTimezoneLabel": "Fuseau horaire",
   "onboardingCreateButton": "Créer l'espace",
   "workspaceInviteCodeLabel": "Code d'invitation",

@@ -17447,6 +17447,12 @@ abstract class AppLocalizations {
   /// **'Currency'**
   String get workspaceCurrencyLabel;
 
+  /// Example IANA zone shown in the time-zone search field. The identifiers are not translated; the EXAMPLE is localized, so a reader is shown a city they recognise.
+  ///
+  /// In en, this message translates to:
+  /// **'Europe/London'**
+  String get workspaceTimezoneHint;
+
   /// Label of the IANA time-zone input
   ///
   /// In en, this message translates to:
