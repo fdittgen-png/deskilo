@@ -7759,6 +7759,223 @@ class AppLocalizationsEs extends AppLocalizations {
   String get profilesEmailCopied => 'Correo copiado.';
 
   @override
+  String get processWorkspaceAccess => 'Espacio y acceso';
+
+  @override
+  String get processSpaceManagement => 'Gestión de espacios';
+
+  @override
+  String get processReservationsUsage => 'Reservas y uso';
+
+  @override
+  String get processCoordination => 'Calendario y coordinación';
+
+  @override
+  String get processMembershipCommerce => 'Ofertas para miembros';
+
+  @override
+  String get processBillingPayments => 'Facturación y pagos';
+
+  @override
+  String get processDocumentsInformation => 'Documentos e información';
+
+  @override
+  String get processOperations => 'Operaciones y administración';
+
+  @override
+  String get processIntegrations => 'Integraciones y automatización';
+
+  @override
+  String get subprocessPeople => 'Personas y membresías';
+
+  @override
+  String get subprocessPhysicalAccess => 'Acceso físico';
+
+  @override
+  String get subprocessStructure => 'Estructura del espacio';
+
+  @override
+  String get subprocessAvailability => 'Días y horarios de apertura';
+
+  @override
+  String get subprocessPresentation => 'Presentación del espacio';
+
+  @override
+  String get subprocessReservations => 'Reservar puestos y espacios';
+
+  @override
+  String get subprocessAttendance => 'Asistencia y uso';
+
+  @override
+  String get subprocessCalendar => 'Vistas del calendario';
+
+  @override
+  String get subprocessDecisions => 'Decisiones y aprobaciones';
+
+  @override
+  String get subprocessCommunication => 'Comunicación entre miembros';
+
+  @override
+  String get subprocessPricing => 'Servicios y precios';
+
+  @override
+  String get subprocessRecords => 'Registros financieros';
+
+  @override
+  String get subprocessInvoicing => 'Facturación';
+
+  @override
+  String get subprocessCollection => 'Cobro de pagos';
+
+  @override
+  String get subprocessExpenses => 'Gastos compartidos';
+
+  @override
+  String get subprocessTax => 'Gestión del IVA';
+
+  @override
+  String get subprocessDocuments => 'Publicación de documentos';
+
+  @override
+  String get subprocessReportDesign => 'Diseño de informes';
+
+  @override
+  String get subprocessPrivacy => 'Acceso a datos y exportaciones';
+
+  @override
+  String get subprocessConfiguration => 'Configuración y despliegue';
+
+  @override
+  String get subprocessExperience => 'Uso de la aplicación';
+
+  @override
+  String get subprocessDelivery => 'Envío externo';
+
+  @override
+  String get processWorkspaceAccessDesc =>
+      'Gestionar membresías, roles y acceso al espacio.';
+
+  @override
+  String get processSpaceManagementDesc =>
+      'Organizar los espacios disponibles y sus horarios.';
+
+  @override
+  String get processReservationsUsageDesc =>
+      'Reservar plazas y registrar su uso.';
+
+  @override
+  String get processCoordinationDesc =>
+      'Coordinar actividades, mensajes y decisiones.';
+
+  @override
+  String get processMembershipCommerceDesc =>
+      'Definir precios de servicios y acuerdos con los miembros.';
+
+  @override
+  String get processBillingPaymentsDesc =>
+      'Facturar la actividad y conciliar los importes pendientes.';
+
+  @override
+  String get processDocumentsInformationDesc =>
+      'Crear, compartir y exportar información del espacio.';
+
+  @override
+  String get processOperationsDesc =>
+      'Gestionar la configuración y el uso de la aplicación.';
+
+  @override
+  String get processIntegrationsDesc =>
+      'Enviar notificaciones y documentos mediante servicios externos.';
+
+  @override
+  String get subprocessPeopleDesc =>
+      'Identificar miembros y gestionar sus membresías y permisos.';
+
+  @override
+  String get subprocessPhysicalAccessDesc =>
+      'Usar credenciales, etiquetas de puestos y el quiosco compartido.';
+
+  @override
+  String get subprocessStructureDesc =>
+      'Gestionar sedes y disponibilidad de elementos del plano.';
+
+  @override
+  String get subprocessAvailabilityDesc =>
+      'Definir horarios y generar días de cierre.';
+
+  @override
+  String get subprocessPresentationDesc =>
+      'Ayudar a reconocer personas y lugares en el plano.';
+
+  @override
+  String get subprocessReservationsDesc =>
+      'Reservar puestos o espacios completos según las reglas.';
+
+  @override
+  String get subprocessAttendanceDesc =>
+      'Registrar asistencia y cerrar entradas al final del día.';
+
+  @override
+  String get subprocessCalendarDesc =>
+      'Ver reservas y decisiones pendientes a lo largo del tiempo.';
+
+  @override
+  String get subprocessDecisionsDesc =>
+      'Revisar acciones y registrar las aprobaciones necesarias.';
+
+  @override
+  String get subprocessCommunicationDesc =>
+      'Intercambiar mensajes y seguir las novedades.';
+
+  @override
+  String get subprocessPricingDesc =>
+      'Fijar precios de servicios y accesorios y acordar condiciones.';
+
+  @override
+  String get subprocessRecordsDesc =>
+      'Comprender saldos, pagos y extractos de los miembros.';
+
+  @override
+  String get subprocessInvoicingDesc =>
+      'Emitir y seguir facturas inmutables hasta su liquidación.';
+
+  @override
+  String get subprocessCollectionDesc =>
+      'Cobrar pagos y reclamar facturas vencidas.';
+
+  @override
+  String get subprocessExpensesDesc =>
+      'Repartir costes, reponer suministros y programar gastos recurrentes.';
+
+  @override
+  String get subprocessTaxDesc =>
+      'Gestionar grupos, tipos y declaraciones de IVA.';
+
+  @override
+  String get subprocessDocumentsDesc =>
+      'Publicar documentos y generar archivos imprimibles.';
+
+  @override
+  String get subprocessReportDesignDesc =>
+      'Diseñar informes y mantener sus textos y diseños.';
+
+  @override
+  String get subprocessPrivacyDesc =>
+      'Consultar accesos a datos personales y exportar registros.';
+
+  @override
+  String get subprocessConfigurationDesc =>
+      'Transferir configuraciones, usar plantillas y gestionar instancias.';
+
+  @override
+  String get subprocessExperienceDesc =>
+      'Ajustar ayuda, navegación y preferencias de visualización.';
+
+  @override
+  String get subprocessDeliveryDesc =>
+      'Conectar notificaciones push, WhatsApp y envío de facturas electrónicas.';
+
+  @override
   String get whatsappTitle => 'WhatsApp';
 
   @override

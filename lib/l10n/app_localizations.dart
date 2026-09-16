@@ -13535,6 +13535,378 @@ abstract class AppLocalizations {
   /// **'E-mail copied.'**
   String get profilesEmailCopied;
 
+  /// No description provided for @processWorkspaceAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace & access'**
+  String get processWorkspaceAccess;
+
+  /// No description provided for @processSpaceManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Space management'**
+  String get processSpaceManagement;
+
+  /// No description provided for @processReservationsUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'Reservations & usage'**
+  String get processReservationsUsage;
+
+  /// No description provided for @processCoordination.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar & coordination'**
+  String get processCoordination;
+
+  /// No description provided for @processMembershipCommerce.
+  ///
+  /// In en, this message translates to:
+  /// **'Membership commerce'**
+  String get processMembershipCommerce;
+
+  /// No description provided for @processBillingPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing & payments'**
+  String get processBillingPayments;
+
+  /// No description provided for @processDocumentsInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Documents & information'**
+  String get processDocumentsInformation;
+
+  /// No description provided for @processOperations.
+  ///
+  /// In en, this message translates to:
+  /// **'Operations & administration'**
+  String get processOperations;
+
+  /// No description provided for @processIntegrations.
+  ///
+  /// In en, this message translates to:
+  /// **'Integrations & automation'**
+  String get processIntegrations;
+
+  /// No description provided for @subprocessPeople.
+  ///
+  /// In en, this message translates to:
+  /// **'People & membership'**
+  String get subprocessPeople;
+
+  /// No description provided for @subprocessPhysicalAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Physical access'**
+  String get subprocessPhysicalAccess;
+
+  /// No description provided for @subprocessStructure.
+  ///
+  /// In en, this message translates to:
+  /// **'Space structure'**
+  String get subprocessStructure;
+
+  /// No description provided for @subprocessAvailability.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening days & hours'**
+  String get subprocessAvailability;
+
+  /// No description provided for @subprocessPresentation.
+  ///
+  /// In en, this message translates to:
+  /// **'Space presentation'**
+  String get subprocessPresentation;
+
+  /// No description provided for @subprocessReservations.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking desks & spaces'**
+  String get subprocessReservations;
+
+  /// No description provided for @subprocessAttendance.
+  ///
+  /// In en, this message translates to:
+  /// **'Attendance & usage'**
+  String get subprocessAttendance;
+
+  /// No description provided for @subprocessCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar views'**
+  String get subprocessCalendar;
+
+  /// No description provided for @subprocessDecisions.
+  ///
+  /// In en, this message translates to:
+  /// **'Decisions & approvals'**
+  String get subprocessDecisions;
+
+  /// No description provided for @subprocessCommunication.
+  ///
+  /// In en, this message translates to:
+  /// **'Member communication'**
+  String get subprocessCommunication;
+
+  /// No description provided for @subprocessPricing.
+  ///
+  /// In en, this message translates to:
+  /// **'Services & pricing'**
+  String get subprocessPricing;
+
+  /// No description provided for @subprocessRecords.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial records'**
+  String get subprocessRecords;
+
+  /// No description provided for @subprocessInvoicing.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoicing'**
+  String get subprocessInvoicing;
+
+  /// No description provided for @subprocessCollection.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment collection'**
+  String get subprocessCollection;
+
+  /// No description provided for @subprocessExpenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared expenses'**
+  String get subprocessExpenses;
+
+  /// No description provided for @subprocessTax.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT management'**
+  String get subprocessTax;
+
+  /// No description provided for @subprocessDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'Document publication'**
+  String get subprocessDocuments;
+
+  /// No description provided for @subprocessReportDesign.
+  ///
+  /// In en, this message translates to:
+  /// **'Report design'**
+  String get subprocessReportDesign;
+
+  /// No description provided for @subprocessPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal data access & exports'**
+  String get subprocessPrivacy;
+
+  /// No description provided for @subprocessConfiguration.
+  ///
+  /// In en, this message translates to:
+  /// **'Configuration & deployment'**
+  String get subprocessConfiguration;
+
+  /// No description provided for @subprocessExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Application experience'**
+  String get subprocessExperience;
+
+  /// No description provided for @subprocessDelivery.
+  ///
+  /// In en, this message translates to:
+  /// **'External delivery'**
+  String get subprocessDelivery;
+
+  /// No description provided for @processWorkspaceAccessDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage membership, roles and access to the space.'**
+  String get processWorkspaceAccessDesc;
+
+  /// No description provided for @processSpaceManagementDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Organize the places members can use and when they open.'**
+  String get processSpaceManagementDesc;
+
+  /// No description provided for @processReservationsUsageDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve capacity and track its use.'**
+  String get processReservationsUsageDesc;
+
+  /// No description provided for @processCoordinationDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Coordinate activity, messages and decisions.'**
+  String get processCoordinationDesc;
+
+  /// No description provided for @processMembershipCommerceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Set service prices and member agreements.'**
+  String get processMembershipCommerceDesc;
+
+  /// No description provided for @processBillingPaymentsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn activity into invoices and reconcile what is owed.'**
+  String get processBillingPaymentsDesc;
+
+  /// No description provided for @processDocumentsInformationDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Create, share and export workspace information.'**
+  String get processDocumentsInformationDesc;
+
+  /// No description provided for @processOperationsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintain configuration and the application experience.'**
+  String get processOperationsDesc;
+
+  /// No description provided for @processIntegrationsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Deliver notifications and documents through external services.'**
+  String get processIntegrationsDesc;
+
+  /// No description provided for @subprocessPeopleDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Identify members and manage their membership and permissions.'**
+  String get subprocessPeopleDesc;
+
+  /// No description provided for @subprocessPhysicalAccessDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use badges, seat tags and the shared check-in kiosk.'**
+  String get subprocessPhysicalAccessDesc;
+
+  /// No description provided for @subprocessStructureDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage sites and the availability of plan objects.'**
+  String get subprocessStructureDesc;
+
+  /// No description provided for @subprocessAvailabilityDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Define working hours and generate closure days.'**
+  String get subprocessAvailabilityDesc;
+
+  /// No description provided for @subprocessPresentationDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Help members recognize people and places on the plan.'**
+  String get subprocessPresentationDesc;
+
+  /// No description provided for @subprocessReservationsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Book seats or whole spaces under the workspace rules.'**
+  String get subprocessReservationsDesc;
+
+  /// No description provided for @subprocessAttendanceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Record attendance and close check-ins at day end.'**
+  String get subprocessAttendanceDesc;
+
+  /// No description provided for @subprocessCalendarDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'See reservations and pending decisions over time.'**
+  String get subprocessCalendarDesc;
+
+  /// No description provided for @subprocessDecisionsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Review actions and record the required approvals.'**
+  String get subprocessDecisionsDesc;
+
+  /// No description provided for @subprocessCommunicationDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange messages and keep track of updates.'**
+  String get subprocessCommunicationDesc;
+
+  /// No description provided for @subprocessPricingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Price services and accessories and agree member terms.'**
+  String get subprocessPricingDesc;
+
+  /// No description provided for @subprocessRecordsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Understand balances, payments and member statements.'**
+  String get subprocessRecordsDesc;
+
+  /// No description provided for @subprocessInvoicingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue and follow immutable invoices through settlement.'**
+  String get subprocessInvoicingDesc;
+
+  /// No description provided for @subprocessCollectionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Collect payments and follow up overdue invoices.'**
+  String get subprocessCollectionDesc;
+
+  /// No description provided for @subprocessExpensesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Share costs, replenish supplies and schedule recurring expenses.'**
+  String get subprocessExpensesDesc;
+
+  /// No description provided for @subprocessTaxDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintain VAT groups, rates and declarations.'**
+  String get subprocessTaxDesc;
+
+  /// No description provided for @subprocessDocumentsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Publish documents and produce printable files.'**
+  String get subprocessDocumentsDesc;
+
+  /// No description provided for @subprocessReportDesignDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Design reports and maintain their text and layouts.'**
+  String get subprocessReportDesignDesc;
+
+  /// No description provided for @subprocessPrivacyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspect access to personal data and export records.'**
+  String get subprocessPrivacyDesc;
+
+  /// No description provided for @subprocessConfigurationDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer configuration, use templates and manage instances.'**
+  String get subprocessConfigurationDesc;
+
+  /// No description provided for @subprocessExperienceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust help, navigation and display preferences.'**
+  String get subprocessExperienceDesc;
+
+  /// No description provided for @subprocessDeliveryDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect push, WhatsApp and electronic invoice delivery.'**
+  String get subprocessDeliveryDesc;
+
   /// Settings tile and dialog title of the opt-in WhatsApp number on my profile (#223)
   ///
   /// In en, this message translates to:
