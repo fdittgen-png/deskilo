@@ -16,6 +16,8 @@ public.closure_days.closure_days_read
 public.closure_days.closure_days_write
 public.conversation_participants.conversation_participants_select
 public.conversations.conversations_select
+public.credit_products.credit_products_select
+public.credit_products.credit_products_write
 public.data_access_log.data_access_log_select
 public.deployments.deployments_select
 public.deskilo_schema_version.deskilo_schema_version_read
@@ -39,6 +41,8 @@ public.levels.levels_select
 public.levels.levels_write
 public.managed_identities.managed_identities_select
 public.member_badges.member_badges_select
+public.member_credit_uses.member_credit_uses_select
+public.member_credits.member_credits_select
 public.member_notes.member_notes_delete
 public.member_notes.member_notes_select
 public.members.members_delete_owner

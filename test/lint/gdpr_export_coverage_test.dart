@@ -83,6 +83,8 @@ const Set<String> _exported = {
   'member_notes',
   'events',
   'data_access_log',
+  // #1279 — carnets.
+  'member_credits',
 };
 
 Set<String> _tablesWithAMemberColumn() {

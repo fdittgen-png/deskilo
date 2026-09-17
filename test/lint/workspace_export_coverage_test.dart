@@ -152,6 +152,13 @@ const Map<String, String> _notExported = {
   'invoice_reminders': 'dunning state, regenerated from the invoices',
   'price_negotiations': 'a per-member agreed price; part of membership',
   'quota_extensions': 'a granted exception, part of membership',
+  'credit_products': 'configuration: the carnet catalogue (#1279)',
+  'member_credits':
+      '#1279 — a carnet sale; its charge is in ledger_entries, exported, and '
+          'the member\'s own copy is the subject-access export',
+  'member_credit_uses':
+      '#1279 — which reservation drew on which carnet; both reservations '
+          'and the sale\'s charge are exported',
   'workspace_creation_requests':
       '#1303 — the claim a creation request made, keyed by the creator; it '
           'belongs to the act of creating, and the workspace it made is the '
