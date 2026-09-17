@@ -23,7 +23,8 @@ values ('00000000-0000-4000-8000-000000001361', '00000000-0000-0000-0000-0000000
 
 select pg_temp.act_as('00000000-0000-4000-8000-000000001361');
 select set_config('deskilo.cr.ws',
-  public.create_workspace('Carnets', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null)::text, true);
+  public.create_workspace('Carnets', 'FR', 'EUR', 'Europe/Paris', 'dev', false,
+    '{"invoicing": true, "carnets": true}'::jsonb)::text, true);
 select set_config('deskilo.cr.me',
   (select id from public.members where workspace_id = current_setting('deskilo.cr.ws')::uuid
      and user_id = '00000000-0000-4000-8000-000000001361')::text, true);

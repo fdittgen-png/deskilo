@@ -31,7 +31,8 @@ values ('00000000-0000-4000-8000-000000001371', '00000000-0000-0000-0000-0000000
 
 select pg_temp.act_as('00000000-0000-4000-8000-000000001371');
 select set_config('deskilo.cc.ws',
-  public.create_workspace('Spend', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null)::text, true);
+  public.create_workspace('Spend', 'FR', 'EUR', 'Europe/Paris', 'dev', false,
+    '{"invoicing": true, "carnets": true}'::jsonb)::text, true);
 select public.apply_workspace_template(current_setting('deskilo.cc.ws')::uuid,
   (select id from public.workspace_templates where key = 'tiny'));
 
