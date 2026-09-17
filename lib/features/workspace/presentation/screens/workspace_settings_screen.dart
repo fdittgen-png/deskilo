@@ -35,6 +35,7 @@ import '../../../plan/providers/accessory_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/booking_granularity.dart';
+import '../../domain/workspace_settings_save.dart';
 import '../../domain/space_code_entries.dart';
 import '../widgets/space_codes_options_dialog.dart';
 import '../../domain/member.dart';
@@ -126,6 +127,9 @@ class _WorkspaceSettingsScreenState
   /// Seed the form ONCE from the loaded workspace; later rebuilds must
   /// not clobber the owner's in-progress edits.
   bool _seeded = false;
+
+  /// #1451 — the workspace row's version when the form was filled.
+  DateTime? _openedAt;
   bool _seededDefaults = false;
 
   @override
@@ -163,47 +167,41 @@ class _WorkspaceSettingsScreenState
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
       action: () async {
-          final repository = ref.read(workspaceRepositoryProvider);
-          await repository.updateWorkspaceLocale(
-            workspaceId,
-            countryCode: code,
-            currencyCode: _currency.text.trim().toUpperCase(),
-            timezone: _timezone.text.trim(),
-          );
-          // #231 — the WhatsApp group link rides the same Save through its
-          // own setter (setPaymentInstructions shape); '' clears it.
-          await repository.setWhatsappGroup(
-            workspaceId,
-            _whatsappGroup.text.trim(),
-          );
-          // 0060 — the invoice-letterhead address rides the same Save.
-          await repository.setWorkspaceAddress(
-            workspaceId,
-            _workspaceAddress.text.trim(),
-          );
-          // #486 — per-language invitation templates: the visible text
-          // is stashed first, empty drafts mean "built-in message for
-          // that language". The legacy single template (0049) is cleared
-          // — its content was seeded into every language's draft.
+          // #1451 — ONE command, one transaction, against the version the
+          // form was opened on. The visible template is stashed first;
+          // empty drafts mean "built-in message for that language".
           _templateDrafts[_templateLang] = _invitationTemplate.text;
-          await repository.setInvitationTemplates(
-            workspaceId,
-            Map.of(_templateDrafts),
-          );
-          await repository.setInvitationTemplate(workspaceId, '');
-          // #486 — the workspace's own language.
-          await repository.setWorkspaceLanguage(
-            workspaceId,
-            _defaultLocale,
-          );
-          // 0040 — desk transparency rides the same Save.
-          await repository.setDeskOpacity(workspaceId, _deskOpacity);
-          // #1294 — how a new member starts. Keyed, so every other
-          // billing rule survives (#1089).
-          await repository.setNewMemberDefaults(
-            workspaceId,
-            _newMemberDefaults,
-          );
+          try {
+            final saved =
+                await ref.read(workspaceRepositoryProvider).saveWorkspaceSettings(
+                  workspaceId,
+                  WorkspaceSettingsSave(
+                    expectedModifiedAt: _openedAt,
+                    countryCode: code,
+                    currencyCode: _currency.text.trim(),
+                    timezone: _timezone.text.trim(),
+                    whatsappGroup: _whatsappGroup.text.trim(),
+                    address: _workspaceAddress.text.trim(),
+                    defaultLocale: _defaultLocale,
+                    deskOpacity: _deskOpacity,
+                    invitationTemplates: Map.of(_templateDrafts),
+                    newMemberDefaults: _newMemberDefaults,
+                  ),
+                );
+            // The next Save compares against what was just committed.
+            _openedAt = saved.system.modifiedAt;
+          } on WorkspaceSettingsConflict {
+            // Nothing was written; everything typed stays on screen.
+            if (mounted) {
+              AppSnack.error(
+                context,
+                l10n?.workspaceSettingsConflict ??
+                    'Someone changed these settings while you were editing. '
+                        'Nothing was saved; your changes are still here.',
+              );
+            }
+            return;
+          }
           ref.invalidate(newMemberDefaultsProvider);
           // Every money surface watches the workspace chain — invalidating it
           // re-renders all amounts in the new currency immediately.
@@ -990,6 +988,7 @@ class _WorkspaceSettingsScreenState
       _workspaceAddress.text = workspace.address;
       _invitationTemplate.text = _templateDrafts[_templateLang] ?? '';
       _deskOpacity = workspace.deskOpacity;
+      _openedAt = workspace.system.modifiedAt;
     }
     // #1294 — read separately: it lives in billing_rules, not on the
     // workspace row the screen already holds. Seeded once, like the rest.

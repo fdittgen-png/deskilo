@@ -872,6 +872,8 @@ La schermata propria dello spazio, dall'alto in basso:
 - **Il questionario di configurazione** — <https://fdittgen-png.github.io/deskilo/setup.html> (il §1 lo spiega per esteso): la pagina autonoma che raccoglie un'intera configurazione *prima* che l'app esista. **Importa lo spazio (XML)** qui sopra è dove atterra il suo file — direttamente impostazioni, accessori e piantina; la sezione `<setup>` del file porta fatturazione, identità legale, ruoli e membri per le schermate a cui appartengono.
 - **Zona pericolosa** — **Reimposta lo spazio**: elimina tutte le prenotazioni, la contabilità e la piantina; conserva impostazioni e membri. Protetto da una conferma digitata.
 
+**Un solo salvataggio, tutto o niente (#1451).** **Salva** scrive l'intero modulo in una volta: paese, valuta e fuso orario, gruppo WhatsApp, indirizzo, lingua dello spazio, modelli di invito, trasparenza delle postazioni e come parte un nuovo membro. Se una parte viene rifiutata, non viene conservato nulla. Se qualcun altro ha modificato queste impostazioni mentre il modulo era aperto, non viene salvato nulla, l'app lo segnala e ciò che avete scritto resta sullo schermo. Premere di nuovo Salva dopo una connessione persa non salva nulla due volte.
+
 #### Paese
 
 Dove l'organizzazione ha sede. Decide la valuta predefinita, il catalogo

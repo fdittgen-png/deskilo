@@ -901,6 +901,8 @@ La pantalla propia del espacio, de arriba abajo:
 
 </details>
 
+**Un solo guardado, todo o nada (#1451).** **Guardar** escribe todo el formulario de una vez: país, moneda y zona horaria, grupo de WhatsApp, dirección, idioma del espacio, plantillas de invitación, transparencia de los puestos y cómo empieza un miembro nuevo. Si se rechaza una parte, no se conserva nada. Si otra persona cambió estos ajustes mientras el formulario estaba abierto, no se guarda nada, la app lo indica y lo que escribió sigue en pantalla. Volver a pulsar Guardar tras perder la conexión no guarda nada dos veces.
+
 <!-- anchor: user.workspace.settings.country -->
 #### País
 

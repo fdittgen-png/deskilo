@@ -896,6 +896,8 @@ L'écran de l'espace, de haut en bas :
 - **Le questionnaire de configuration** — <https://fdittgen-png.github.io/deskilo/setup.html> (le §1 l'explique en détail) : la page autonome qui recueille toute une configuration *avant* que l'app existe. **Importer l'espace (XML)** ci-dessus est l'endroit où atterrit son fichier — réglages, accessoires et plan directement ; la section `<setup>` du fichier porte facturation, identité légale, rôles et membres pour les écrans qui les gèrent.
 - **Zone de danger** — **Réinitialiser l'espace** : supprime toutes les réservations, la comptabilité et le plan ; conserve réglages et membres. Gardé par une confirmation tapée.
 
+**Un seul enregistrement, tout ou rien (#1451).** **Enregistrer** écrit tout le formulaire en une fois : pays, devise et fuseau, groupe WhatsApp, adresse, langue de l'espace, modèles d'invitation, transparence des bureaux et réglages d'un nouveau membre. Si une partie est refusée, rien n'est conservé. Si quelqu'un d'autre a modifié ces réglages pendant que le formulaire était ouvert, rien n'est enregistré, l'app le signale et votre saisie reste à l'écran. Réappuyer sur Enregistrer après une connexion perdue n'enregistre rien deux fois.
+
 #### Pays
 
 Où l'organisation est établie. Ce choix décide de la monnaie par défaut,

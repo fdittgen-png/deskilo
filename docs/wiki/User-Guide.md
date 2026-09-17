@@ -913,6 +913,8 @@ The workspace's own screen, top to bottom:
 
 </details>
 
+**One Save, all or nothing (#1451).** **Save** writes the whole form in one step: country, currency and time zone, the WhatsApp group, the address, the workspace language, the invitation templates, desk transparency and how a new member starts. If any of it is refused, none of it is kept. If someone else changed these settings while you had the form open, nothing is saved, the app says so, and what you typed stays on screen. Pressing Save again after a lost connection does not save anything twice.
+
 <!-- anchor: user.workspace.settings.country -->
 #### Country
 

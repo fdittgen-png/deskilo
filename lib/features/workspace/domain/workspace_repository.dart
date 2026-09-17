@@ -20,6 +20,7 @@ import 'site.dart';
 import 'template_outline.dart';
 import 'template_preview.dart';
 import 'template_publication.dart';
+import 'workspace_settings_save.dart';
 import 'workspace_template.dart';
 
 /// Pure-Dart workspace boundary. Supabase impl in data/, fake in tests.
@@ -640,6 +641,12 @@ abstract class WorkspaceRepository {
   /// Owner-only: set the desk fill opacity percentage (0040), clamped
   /// 20..100 server-side. Lower = more translucent desks.
   Future<void> setDeskOpacity(String workspaceId, int opacity);
+
+  /// #1451 — the Workspace settings Save, all or nothing, against the
+  /// version the form was opened on. Returns the saved workspace; throws
+  /// [WorkspaceSettingsConflict] when someone changed it meanwhile.
+  Future<Workspace> saveWorkspaceSettings(
+      String workspaceId, WorkspaceSettingsSave save);
 
   /// Owner-only, irreversible (0039): wipe all transactions (reservations,
   /// events, ledger, quota extensions) and the entire floor plan (levels,

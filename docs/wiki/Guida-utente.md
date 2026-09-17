@@ -907,6 +907,8 @@ La schermata propria dello spazio, dall'alto in basso:
 
 </details>
 
+**Un solo salvataggio, tutto o niente (#1451).** **Salva** scrive l'intero modulo in una volta: paese, valuta e fuso orario, gruppo WhatsApp, indirizzo, lingua dello spazio, modelli di invito, trasparenza delle postazioni e come parte un nuovo membro. Se una parte viene rifiutata, non viene conservato nulla. Se qualcun altro ha modificato queste impostazioni mentre il modulo era aperto, non viene salvato nulla, l'app lo segnala e ciò che avete scritto resta sullo schermo. Premere di nuovo Salva dopo una connessione persa non salva nulla due volte.
+
 <!-- anchor: user.workspace.settings.country -->
 #### Paese
 

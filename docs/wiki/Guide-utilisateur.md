@@ -931,6 +931,8 @@ L'écran de l'espace, de haut en bas :
 
 </details>
 
+**Un seul enregistrement, tout ou rien (#1451).** **Enregistrer** écrit tout le formulaire en une fois : pays, devise et fuseau, groupe WhatsApp, adresse, langue de l'espace, modèles d'invitation, transparence des bureaux et réglages d'un nouveau membre. Si une partie est refusée, rien n'est conservé. Si quelqu'un d'autre a modifié ces réglages pendant que le formulaire était ouvert, rien n'est enregistré, l'app le signale et votre saisie reste à l'écran. Réappuyer sur Enregistrer après une connexion perdue n'enregistre rien deux fois.
+
 <!-- anchor: user.workspace.settings.country -->
 #### Pays
 

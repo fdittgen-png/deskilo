@@ -494,4 +494,62 @@ void main() {
 
     expect(workspace.resetWorkspaceCalls, isEmpty);
   });
+
+  group('#1451 — one Save, one command, all or nothing', () {
+    Future<void> pickSwitzerland(WidgetTester tester) async {
+      await tester.tap(find.byKey(const Key('workspaceSettingsCountry')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Switzerland').last);
+      await tester.pumpAndSettle();
+    }
+
+    Future<void> tapSave(WidgetTester tester) async {
+      await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('Save sends every field as ONE command against the version '
+        'the form opened on', (tester) async {
+      final workspace = await pumpWorkspaceSettings(tester);
+      final opened = workspace.workspaces.first.system.modifiedAt;
+      await pickSwitzerland(tester);
+      await tapSave(tester);
+
+      expect(workspace.settingsSaves, hasLength(1));
+      final save = workspace.settingsSaves.single;
+      expect(save.expectedModifiedAt, opened);
+      expect(save.timezone, 'Europe/Zurich');
+      expect(save.toSettings().keys, containsAll(<String>[
+        'country_code', 'currency_code', 'timezone', 'whatsapp_group',
+        'address', 'default_locale', 'desk_opacity', 'invitation_templates',
+        'new_member_defaults',
+      ]));
+      expect(find.text('Workspace saved.'), findsOneWidget);
+    });
+
+    testWidgets('a conflict writes nothing, says so, and keeps what was typed',
+        (tester) async {
+      final workspace = await pumpWorkspaceSettings(tester)
+        ..settingsConflictNext = true;
+      await pickSwitzerland(tester);
+      await tapSave(tester);
+
+      expect(find.textContaining('Someone changed these settings'), findsOneWidget);
+      expect(find.text('Workspace saved.'), findsNothing);
+      expect(workspace.lastLocaleUpdate, isNull, reason: 'nothing was written');
+      expect(find.text('Europe/Zurich'), findsOneWidget, reason: 'the edit stays');
+    });
+
+    testWidgets('a failed Save shows no success and keeps the input',
+        (tester) async {
+      final workspace = await pumpWorkspaceSettings(tester)
+        ..settingsFailure = Exception('check constraint');
+      await pickSwitzerland(tester);
+      await tapSave(tester);
+
+      expect(find.text('Workspace saved.'), findsNothing);
+      expect(workspace.lastLocaleUpdate, isNull);
+      expect(find.text('Europe/Zurich'), findsOneWidget);
+    });
+  });
 }

@@ -116,6 +116,7 @@
     "description": "Owner settings entry + screen title for editing the workspace country/currency/time zone (#153)."
   },
   "workspaceSettingsSaved": "Workspace saved.",
+  "workspaceSettingsConflict": "Someone changed these settings while you were editing. Nothing was saved; your changes are still here.",
   "@workspaceSettingsSaved": {
     "description": "Snackbar after the workspace locale settings were persisted (#153)."
   },

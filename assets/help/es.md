@@ -866,6 +866,8 @@ La pantalla propia del espacio, de arriba abajo:
 - **El cuestionario de configuración** — <https://fdittgen-png.github.io/deskilo/setup.html> (el §1 lo explica por completo): la página independiente que recoge una configuración entera *antes* de que exista la app. **Importar el espacio (XML)** de arriba es donde aterriza su archivo — ajustes, accesorios y plano directamente; la sección `<setup>` del archivo lleva facturación, identidad legal, roles y miembros para las pantallas que los gobiernan.
 - **Zona de peligro** — **Restablecer el espacio**: borra todas las reservas, la contabilidad y el plano; conserva ajustes y miembros. Protegido por una confirmación escrita.
 
+**Un solo guardado, todo o nada (#1451).** **Guardar** escribe todo el formulario de una vez: país, moneda y zona horaria, grupo de WhatsApp, dirección, idioma del espacio, plantillas de invitación, transparencia de los puestos y cómo empieza un miembro nuevo. Si se rechaza una parte, no se conserva nada. Si otra persona cambió estos ajustes mientras el formulario estaba abierto, no se guarda nada, la app lo indica y lo que escribió sigue en pantalla. Volver a pulsar Guardar tras perder la conexión no guarda nada dos veces.
+
 #### País
 
 Donde está establecida la organización. Decide la moneda por defecto, el

@@ -10608,6 +10608,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get workspaceSettingsSaved => 'Espacio guardado.';
 
   @override
+  String get workspaceSettingsConflict =>
+      'Alguien cambió estos ajustes mientras los editaba. No se guardó nada; sus cambios siguen aquí.';
+
+  @override
   String get workspaceSettingsCurrencyHelper =>
       'Se propone según el país — cámbiala si tu comunidad factura en otra moneda.';
 

@@ -17,6 +17,7 @@ import '../domain/payment_instructions.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_feature.dart';
 import '../domain/workspace_repository.dart';
+import '../domain/workspace_settings_save.dart';
 import 'conversation_api.dart';
 import '../domain/workspace_document.dart';
 import '../domain/managed_access.dart';
@@ -1109,6 +1110,26 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   @override
   Future<void> removeClosureDay(String closureDayId) async {
     await _client.from('closure_days').delete().eq('id', closureDayId);
+  }
+
+  @override
+  Future<Workspace> saveWorkspaceSettings(
+      String workspaceId, WorkspaceSettingsSave save) async {
+    try {
+      final result = await _client.rpc<dynamic>('save_workspace_settings', params: {
+        'p_workspace_id': workspaceId,
+        'p_expected_modified': save.expectedModifiedAt?.toUtc().toIso8601String(),
+        'p_settings': save.toSettings(),
+      });
+      return _workspaceFromRow(Map<String, dynamic>.from(
+          (result as Map)['workspace'] as Map));
+    } on PostgrestException catch (e, st) {
+      // trace-exempt: a conflict is rethrown typed with its stack; the screen traces and explains it.
+      if (e.code == WorkspaceSettingsConflict.sqlState) {
+        Error.throwWithStackTrace(const WorkspaceSettingsConflict(), st);
+      }
+      rethrow;
+    }
   }
 
   @override

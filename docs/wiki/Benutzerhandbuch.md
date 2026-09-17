@@ -904,6 +904,8 @@ Der Bildschirm des Space, von oben nach unten:
 
 </details>
 
+**Ein Speichern, alles oder nichts (#1451).** **Speichern** schreibt das ganze Formular in einem Schritt: Land, Währung und Zeitzone, WhatsApp-Gruppe, Adresse, Sprache des Raums, Einladungsvorlagen, Transparenz der Tische und wie ein neues Mitglied startet. Wird ein Teil abgelehnt, bleibt nichts davon gespeichert. Hat jemand anderes diese Einstellungen geändert, während das Formular offen war, wird nichts gespeichert, die App sagt es, und Ihre Eingaben bleiben stehen. Erneutes Speichern nach einer verlorenen Verbindung speichert nichts doppelt.
+
 <!-- anchor: user.workspace.settings.country -->
 #### Land
 
