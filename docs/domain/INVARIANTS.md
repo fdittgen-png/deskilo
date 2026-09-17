@@ -14,6 +14,7 @@ visible rather than implicit.
 | an issued invoice cannot be edited or deleted | trigger `invoices_no_mutation` (0060, revised 0061) | `20_money_invariants.sql` |
 | a payment webhook delivered twice creates money once | `settle_online_payment`, `for update` + status guard (0205) | `20_money_invariants.sql`, `22_reconciliation.sql` |
 | a webhook whose amount disagrees with the intent is refused | `settle_online_payment` (0205, #1138) | `22_reconciliation.sql` |
+| a captured payment names the one credit it posted, and one credit settles one payment | `payment_intents.ledger_entry_id` + partial unique index + `payment_intents_ledger_matches` (0240, #1452) | `40_payment_ledger_association.sql` |
 | workspace A never reads workspace B | 83 RLS policies | `10_tenancy_isolation.sql`, `11_tenancy_matrix.sql` |
 | the server never *writes* a row across the tenancy line | nothing — it is checked after the fact | `reconcile_workspace()` (0213), `22_reconciliation.sql` |
 | a posted ledger amount never changes | trigger `ledger_entries_no_rewrite` (0212) | `21_ledger_append_only.sql` |
