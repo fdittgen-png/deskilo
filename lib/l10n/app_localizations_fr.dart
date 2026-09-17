@@ -3804,6 +3804,35 @@ class AppLocalizationsFr extends AppLocalizations {
   String get instanceChooseAnother => 'Choisir un autre projet';
 
   @override
+  String get instanceTokenReach =>
+      'Un jeton d\'accès personnel ouvre tout votre compte Supabase tant qu\'il existe. L\'assistant ne le garde qu\'en mémoire et vous dit quand vous pouvez le révoquer.';
+
+  @override
+  String get instanceRevokeToken =>
+      'Vous pouvez révoquer le jeton d\'accès maintenant : DesKilo n\'en a gardé aucune copie.';
+
+  @override
+  String get instanceDoctorIntro =>
+      'Avant que cet appareil l\'utilise, le contrôle de sécurité doit passer : une alarme garde le bouton désactivé jusqu\'à correction.';
+
+  @override
+  String get instanceDoctorRun => 'Lancer le contrôle de sécurité';
+
+  @override
+  String get instanceDoctorRunAgain => 'Vérifier à nouveau';
+
+  @override
+  String get instanceDoctorProtected => 'Protégé';
+
+  @override
+  String get instanceDoctorAttention => 'Attention requise';
+
+  @override
+  String instanceDoctorPassed(int count) {
+    return '$count contrôles réussis';
+  }
+
+  @override
   String get inviteSectionTitle => 'Inviter quelqu\'un';
 
   @override

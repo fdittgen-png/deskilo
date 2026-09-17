@@ -3799,6 +3799,35 @@ class AppLocalizationsDe extends AppLocalizations {
   String get instanceChooseAnother => 'Anderes Projekt wählen';
 
   @override
+  String get instanceTokenReach =>
+      'Ein persönliches Zugriffstoken öffnet Ihr ganzes Supabase-Konto, solange es besteht. Der Assistent hält es nur im Speicher und sagt Ihnen, wann Sie es widerrufen können.';
+
+  @override
+  String get instanceRevokeToken =>
+      'Sie können das Zugriffstoken jetzt widerrufen: DesKilo hat keine Kopie behalten.';
+
+  @override
+  String get instanceDoctorIntro =>
+      'Bevor dieses Gerät sie nutzt, muss die Sicherheitsprüfung bestehen: ein Alarm hält die Schaltfläche gesperrt, bis er behoben ist.';
+
+  @override
+  String get instanceDoctorRun => 'Sicherheitsprüfung starten';
+
+  @override
+  String get instanceDoctorRunAgain => 'Erneut prüfen';
+
+  @override
+  String get instanceDoctorProtected => 'Geschützt';
+
+  @override
+  String get instanceDoctorAttention => 'Handlungsbedarf';
+
+  @override
+  String instanceDoctorPassed(int count) {
+    return '$count Prüfungen bestanden';
+  }
+
+  @override
   String get inviteSectionTitle => 'Jemanden einladen';
 
   @override

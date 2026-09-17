@@ -17,6 +17,8 @@ class InstanceRunStep extends StatelessWidget {
     required this.progress,
     required this.retry,
     required this.onRun,
+    this.startLabel,
+    this.startIcon = Icons.play_arrow_outlined,
   });
 
   final String intro;
@@ -28,6 +30,10 @@ class InstanceRunStep extends StatelessWidget {
   /// A failure stopped the step: the button resumes rather than starts.
   final bool retry;
   final Future<void> Function() onRun;
+
+  /// The button before the step ran; "Start" when null.
+  final String? startLabel;
+  final IconData startIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +58,12 @@ class InstanceRunStep extends StatelessWidget {
         FilledButton.icon(
           key: ValueKey(buttonKey),
           onPressed: busy || done ? null : onRun,
-          icon: Icon(done ? Icons.check_circle_outline : Icons.play_arrow_outlined),
+          icon: Icon(done ? Icons.check_circle_outline : startIcon),
           label: Text(done
               ? (l10n?.commonDone ?? 'Done')
               : retry
                   ? (l10n?.instanceRetry ?? 'Retry from where it stopped')
-                  : (l10n?.commonStart ?? 'Start')),
+                  : (startLabel ?? l10n?.commonStart ?? 'Start')),
         ),
       ],
     );

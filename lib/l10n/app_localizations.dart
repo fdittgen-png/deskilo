@@ -6581,6 +6581,54 @@ abstract class AppLocalizations {
   /// **'Choose another project'**
   String get instanceChooseAnother;
 
+  /// #1308 instance wizard doctor and token
+  ///
+  /// In en, this message translates to:
+  /// **'A personal access token reaches your whole Supabase account for as long as it lives. The wizard holds it in memory only and tells you when you can revoke it.'**
+  String get instanceTokenReach;
+
+  /// #1308 instance wizard doctor and token
+  ///
+  /// In en, this message translates to:
+  /// **'You can revoke the access token now: DesKilo kept no copy.'**
+  String get instanceRevokeToken;
+
+  /// #1308 instance wizard doctor and token
+  ///
+  /// In en, this message translates to:
+  /// **'Before this device uses it, the security check must pass: an alarm keeps the button off until it is fixed.'**
+  String get instanceDoctorIntro;
+
+  /// #1308 instance wizard doctor and token
+  ///
+  /// In en, this message translates to:
+  /// **'Run the security check'**
+  String get instanceDoctorRun;
+
+  /// #1308 instance wizard doctor and token
+  ///
+  /// In en, this message translates to:
+  /// **'Check again'**
+  String get instanceDoctorRunAgain;
+
+  /// #1308 instance wizard doctor and token
+  ///
+  /// In en, this message translates to:
+  /// **'Protected'**
+  String get instanceDoctorProtected;
+
+  /// #1308 instance wizard doctor and token
+  ///
+  /// In en, this message translates to:
+  /// **'Attention required'**
+  String get instanceDoctorAttention;
+
+  /// #1308 instance wizard doctor and token
+  ///
+  /// In en, this message translates to:
+  /// **'{count} checks passed'**
+  String instanceDoctorPassed(int count);
+
   /// No description provided for @inviteSectionTitle.
   ///
   /// In en, this message translates to:

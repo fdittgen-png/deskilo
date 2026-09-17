@@ -3769,6 +3769,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get instanceChooseAnother => 'Choose another project';
 
   @override
+  String get instanceTokenReach =>
+      'A personal access token reaches your whole Supabase account for as long as it lives. The wizard holds it in memory only and tells you when you can revoke it.';
+
+  @override
+  String get instanceRevokeToken =>
+      'You can revoke the access token now: DesKilo kept no copy.';
+
+  @override
+  String get instanceDoctorIntro =>
+      'Before this device uses it, the security check must pass: an alarm keeps the button off until it is fixed.';
+
+  @override
+  String get instanceDoctorRun => 'Run the security check';
+
+  @override
+  String get instanceDoctorRunAgain => 'Check again';
+
+  @override
+  String get instanceDoctorProtected => 'Protected';
+
+  @override
+  String get instanceDoctorAttention => 'Attention required';
+
+  @override
+  String instanceDoctorPassed(int count) {
+    return '$count checks passed';
+  }
+
+  @override
   String get inviteSectionTitle => 'Invite someone';
 
   @override
