@@ -6353,6 +6353,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get onboardingCreateWithoutTemplate => 'Ohne Vorlage erstellen';
 
   @override
+  String onboardingTemplateSetsUp(String groups) {
+    return 'Richtet ein: $groups';
+  }
+
+  @override
   String get onboardingStartFrom => 'Beginnen mit';
 
   @override

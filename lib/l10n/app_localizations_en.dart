@@ -6295,6 +6295,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingCreateWithoutTemplate => 'Create without a template';
 
   @override
+  String onboardingTemplateSetsUp(String groups) {
+    return 'Sets up: $groups';
+  }
+
+  @override
   String get onboardingStartFrom => 'Start from';
 
   @override

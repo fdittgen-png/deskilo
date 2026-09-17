@@ -6359,6 +6359,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get onboardingCreateWithoutTemplate => 'Créer sans modèle';
 
   @override
+  String onboardingTemplateSetsUp(String groups) {
+    return 'Configure : $groups';
+  }
+
+  @override
   String get onboardingStartFrom => 'Partir de';
 
   @override

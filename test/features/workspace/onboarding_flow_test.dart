@@ -4,6 +4,8 @@
 // put, a member with a workspace never sees it.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
+import 'package:deskilo/features/workspace/domain/template_outline.dart';
+import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -312,6 +314,86 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(repo.workspaces, hasLength(1));
+      expect(repo.createRequests.last.templateId, isNull);
+    });
+  });
+
+  group('#1303 S3 — the confirm step says what the template sets up', () {
+    String tinyId(FakeWorkspaceRepository repo) =>
+        repo.templates.firstWhere((t) => t.key == 'tiny').id;
+
+    testWidgets('the groups the server outlines are named before Create',
+        (tester) async {
+      final repo = await pumpWithoutWorkspace(tester);
+      repo.templateOutlines[tinyId(repo)] = const TemplateOutline(
+        compatibility: TemplateCompatibility.supported,
+        groups: [TemplateGroup.space, TemplateGroup.hoursBooking],
+      );
+      await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
+      await useSuggested(tester);
+
+      expect(find.text('Sets up: Space & plan, Hours & booking'),
+          findsOneWidget);
+      expect(find.byKey(const ValueKey('onboarding-template-refused')),
+          findsNothing);
+    });
+
+    testWidgets('a template this server refuses holds Create back and '
+        'offers to create without it', (tester) async {
+      final repo = await pumpWithoutWorkspace(tester);
+      repo.templateOutlines[tinyId(repo)] = const TemplateOutline(
+        compatibility: TemplateCompatibility.notSupported,
+        reason: 'this server has no entity forms',
+        groups: [],
+      );
+      await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
+      await useSuggested(tester);
+
+      expect(find.byKey(const ValueKey('onboarding-template-refused')),
+          findsOneWidget);
+      expect(find.textContaining('this server has no entity forms'),
+          findsOneWidget);
+      expect(
+          tester
+              .widget<ButtonStyleButton>(find.descendant(
+                  of: find.byKey(const ValueKey('onboarding-create')),
+                  matching: find.byWidgetPredicate((w) => w is ButtonStyleButton),
+                  matchRoot: true))
+              .onPressed,
+          isNull,
+          reason: 'Create is held back');
+
+      final without =
+          find.byKey(const ValueKey('onboarding-create-without-template'));
+      await tester.ensureVisible(without);
+      await tester.tap(without);
+      await tester.pumpAndSettle();
+      expect(repo.workspaces, hasLength(1));
+      expect(repo.createRequests.last.templateId, isNull);
+    });
+
+    testWidgets('choosing the empty space shows no outline', (tester) async {
+      final repo = await pumpWithoutWorkspace(tester);
+      await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
+      await tester.pump();
+      await tester.tap(find.text('Next'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Next'));
+      await tester.pumpAndSettle();
+      final empty = find.byKey(const ValueKey('template-empty'));
+      await tester.scrollUntilVisible(empty, 200,
+          scrollable: find.descendant(
+              of: find.byKey(const ValueKey('template-gallery')),
+              matching: find.byType(Scrollable)));
+      await tester.tap(empty);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Next'));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const ValueKey('onboarding-confirm-groups')),
+          findsNothing);
+      await tester.tap(find.text('Create workspace'));
+      await tester.pumpAndSettle();
       expect(repo.createRequests.last.templateId, isNull);
     });
   });

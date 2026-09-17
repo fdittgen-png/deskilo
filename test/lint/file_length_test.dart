@@ -363,7 +363,7 @@ const Map<String, int> _baseline = {
   // grows by a method per capability; there is nothing here to extract.
   // 654→671 (2026-09-16): #1277 S2 — the two lexicon contracts. An interface grows by a
   // method per capability; there is nothing here to extract.
-  'lib/features/workspace/domain/workspace_repository.dart': 692, // 2026-09-17 #1280 S3 686→692: templatePublicationPreview and save's groups — interface only; // 2026-09-17 #1280 S2 681→686: previewWorkspaceTemplate — one interface method (the server computes the change-set), no logic to extract; // 2026-09-16 #1303 671→681: the request id and template parameters, documented; // 2026-09-11 #1120 the library surface of the interface, documented per method (was the 600 default)
+  'lib/features/workspace/domain/workspace_repository.dart': 696, // 2026-09-17 #1303 S3 692→696: workspaceTemplateOutline — one interface method, what a template sets up before a workspace exists; // 2026-09-17 #1280 S3 686→692: templatePublicationPreview and save's groups — interface only; // 2026-09-17 #1280 S2 681→686: previewWorkspaceTemplate — one interface method (the server computes the change-set), no logic to extract; // 2026-09-16 #1303 671→681: the request id and template parameters, documented; // 2026-09-11 #1120 the library surface of the interface, documented per method (was the 600 default)
   // 600→660 (2026-08-23): #600 the Booking policies section — three
   // switches + one write handler on the existing availability screen.
   // 660→730 (2026-08-25): #624 the outside-hours segmented control +
