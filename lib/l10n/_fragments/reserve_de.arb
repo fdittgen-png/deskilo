@@ -9,6 +9,8 @@
   "bookingMoreOptions": "Weitere Optionen",
   "bookingOpenDetails": "Details",
   "reserveViewMenu": "Ansicht",
+  "reserveStaleAvailability": "Offline — Verfügbarkeit von {time}. Ein frei angezeigter Platz kann inzwischen belegt sein.",
+  "reserveStaleRetry": "Erneut versuchen",
   "reserveDayView": "Tag",
   "reserveWeekView": "Woche",
   "reserveFullDayChip": "Ganzer Tag",

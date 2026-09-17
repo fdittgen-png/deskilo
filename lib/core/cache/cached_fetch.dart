@@ -3,6 +3,7 @@ import 'dart:async';
 
 import '../trace/trace_logger.dart';
 import 'cache_store.dart';
+import 'stale_reads.dart';
 
 /// How a read treats the cache (the tankstellen two-tier semantics).
 enum CacheReadMode {
@@ -48,12 +49,15 @@ Future<T> cachedFetch<T>({
     } else {
       unawaited(cache.invalidatePrefix(key));
     }
+    StaleReads.instance.fresh(key);
     return parse(raw);
   } catch (e, st) {
     final stale = await cache.get(key);
     if (stale != null) {
       TraceLogger.instance.warn('cache', 'stale served for $key',
           error: e, stackTrace: st);
+      // #1305 S3 — a screen showing this can say it is not live.
+      StaleReads.instance.served(key, stale.storedAt);
       return parse(stale.payload);
     }
     rethrow;

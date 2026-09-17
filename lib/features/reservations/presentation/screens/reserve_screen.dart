@@ -24,6 +24,7 @@ import '../space_subjects.dart';
 import '../widgets/reserve_canvas.dart';
 import '../widgets/reserve_view_menu.dart';
 import '../widgets/seat_list_view.dart';
+import '../widgets/stale_availability_banner.dart';
 import '../../../plan/providers/default_level_controller.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/providers/plan_focus_controller.dart';
@@ -716,9 +717,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // #606 — the hub's contextual how-to; gated inside the widget.
-          // #611 — MotionReveal eases it (and the closed-day banner
-          // below) in/out instead of popping; call-site wrap only.
+          // #606 hub how-to (gated inside); #611 MotionReveal eases it and the banners below.
           const MotionReveal(child: HelpHint(HelpHintId.reserve)),
           MotionReveal(
             child: dayOpen
@@ -731,6 +730,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                         key: ValueKey('reserve-availability-loading'),
                         minHeight: 2),
           ),
+          const MotionReveal(child: StaleAvailabilityBanner()), // #1305 S3
           // Two rows, and the split means something — HeaderControlRow
           // carries the why and the metrics (#699).
           HeaderControlRow(children: viewControls),

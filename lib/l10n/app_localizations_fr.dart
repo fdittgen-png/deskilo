@@ -9067,6 +9067,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reserveViewMenu => 'Vue';
 
   @override
+  String reserveStaleAvailability(String time) {
+    return 'Hors ligne — disponibilités au $time. Une place affichée libre a pu être prise depuis.';
+  }
+
+  @override
+  String get reserveStaleRetry => 'Réessayer';
+
+  @override
   String get reserveDayView => 'Jour';
 
   @override
