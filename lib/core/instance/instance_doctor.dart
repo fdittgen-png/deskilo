@@ -471,6 +471,10 @@ select
 bool hasProblem(List<DoctorFinding> findings) =>
     findings.any((f) => f.isProblem);
 
+/// #1308 — an alarm blocks; a warning is shown and does not.
+bool hasAlarm(List<DoctorFinding> findings) =>
+    findings.any((f) => f.level == DoctorLevel.alarm);
+
 /// The findings as a report — the same text on a terminal and in an issue.
 ///
 /// #1313 — [redacted] is for a run whose log is PUBLIC: the scheduled

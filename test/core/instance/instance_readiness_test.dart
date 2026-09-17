@@ -2,6 +2,7 @@
 //
 // #1308 S1 — an existing project gets a verdict before anything is
 // installed onto it, and reading it runs no SQL that writes.
+import 'package:deskilo/core/instance/instance_builder.dart';
 import 'package:deskilo/core/instance/instance_bundle.dart';
 import 'package:deskilo/core/instance/instance_readiness.dart';
 import 'package:deskilo/core/instance/management_api.dart';
@@ -12,7 +13,10 @@ import '../../helpers/fake_supabase_management.dart';
 const _bundle = InstanceBundle(schema: [
   (name: '0001_a.sql', sql: 'create table public.alpha (id int);'),
   (name: '0002_b.sql', sql: 'create table if not exists beta (id int);'),
-], functions: []);
+], functions: [
+  (slug: 'send-push', verifyJwt: true, files: []),
+  (slug: 'send-e-invoice', verifyJwt: true, files: []),
+]);
 
 SupabaseProject _project({String status = 'ACTIVE_HEALTHY'}) => (
       ref: 'p1',
@@ -100,5 +104,43 @@ void main() {
     final r = await _examine(api, status: 'PAUSED');
     expect(r.attention, InstanceAttention.notHealthy);
     expect(api.queriedSql, isEmpty);
+  });
+
+  group('#1308 S2 — resume from what the project holds', () {
+    test('missing functions and sign-in are read from the project', () async {
+      final api = _api(tables: 'alpha,beta')
+        ..markers['p1'] = 2
+        ..existingFunctions['p1'] = ['send-push']
+        ..authConfigs['p1'] = {
+          'site_url': InstanceAuthConfig.siteUrl,
+          'uri_allow_list': InstanceAuthConfig.redirectAllowList,
+          'mailer_autoconfirm': false,
+        };
+      final read = await InstanceReadinessCheck(api).read(_project(), _bundle);
+      expect(read.readiness.verdict, InstanceReadinessVerdict.current);
+      expect(read.remaining!.missingFunctions, ['send-e-invoice']);
+      expect(read.remaining!.signInConfigured, isTrue);
+      expect(read.endpoint!.url, 'https://p1.supabase.co');
+    });
+
+    test('a localhost Site URL is not configured, and a blocked project '
+        'reads nothing further', () async {
+      final api = _api()..authConfigs['p1'] = {'site_url': 'http://localhost:3000'};
+      final rest = await InstanceReadinessCheck(api).remaining('p1', _bundle);
+      expect(rest.signInConfigured, isFalse);
+      expect(rest.functionsDeployed, isFalse);
+
+      final blocked = await InstanceReadinessCheck(_api(tables: 'orders'))
+          .read(_project(), _bundle);
+      expect(blocked.remaining, isNull);
+      expect(blocked.endpoint, isNull);
+    });
+
+    test('deploying with `only` deploys just those slugs', () async {
+      final api = FakeSupabaseManagement();
+      await InstanceBuilder(api)
+          .deployFunctions('p1', _bundle, only: ['send-e-invoice']);
+      expect(api.deployed['p1']!.map((d) => d.slug), ['send-e-invoice']);
+    });
   });
 }

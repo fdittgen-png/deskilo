@@ -3801,6 +3801,35 @@ class AppLocalizationsIt extends AppLocalizations {
   String get instanceChooseAnother => 'Scegli un altro progetto';
 
   @override
+  String get instanceTokenReach =>
+      'Un token di accesso personale apre tutto il vostro account Supabase finché esiste. La procedura guidata lo tiene solo in memoria e vi dice quando potete revocarlo.';
+
+  @override
+  String get instanceRevokeToken =>
+      'Ora potete revocare il token di accesso: DesKilo non ne ha conservato alcuna copia.';
+
+  @override
+  String get instanceDoctorIntro =>
+      'Prima che questo dispositivo la usi, il controllo di sicurezza deve passare: un allarme tiene il pulsante disattivato finché non è risolto.';
+
+  @override
+  String get instanceDoctorRun => 'Avvia il controllo di sicurezza';
+
+  @override
+  String get instanceDoctorRunAgain => 'Controlla di nuovo';
+
+  @override
+  String get instanceDoctorProtected => 'Protetto';
+
+  @override
+  String get instanceDoctorAttention => 'Richiede attenzione';
+
+  @override
+  String instanceDoctorPassed(int count) {
+    return '$count controlli superati';
+  }
+
+  @override
   String get inviteSectionTitle => 'Invita qualcuno';
 
   @override

@@ -295,14 +295,21 @@ on conflict (version) do nothing;
     return chosen.length;
   }
 
+  /// Deploys the bundle's functions — or, with [only], just those slugs
+  /// (#1308: what a reopened project is still missing).
   Future<void> deployFunctions(
     String ref,
     InstanceBundle bundle, {
+    List<String>? only,
     void Function(InstanceProgress progress)? onProgress,
   }) async {
-    final total = bundle.functions.length;
+    final functions = [
+      for (final f in bundle.functions)
+        if (only == null || only.contains(f.slug)) f,
+    ];
+    final total = functions.length;
     for (var i = 0; i < total; i++) {
-      final f = bundle.functions[i];
+      final f = functions[i];
       onProgress?.call((done: i, total: total, current: f.slug));
       try {
         await api.deployFunction(ref,

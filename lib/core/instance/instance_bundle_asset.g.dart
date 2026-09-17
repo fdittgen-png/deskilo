@@ -122,3 +122,100 @@ final class SupabaseManagementFactoryProvider
 
 String _$supabaseManagementFactoryHash() =>
     r'938ee27ef80d5596031793011599613ea46b6472';
+
+/// #1308 S3 — the in-app doctor: the same `InstanceDoctor.examine` the CLI
+/// runs, judged against the bundle and the policy list this app carries.
+/// One runner for the wizard's finish and the Server screen's full check
+/// (#1309); tests replace it with canned findings.
+
+@ProviderFor(instanceDoctorRunner)
+final instanceDoctorRunnerProvider = InstanceDoctorRunnerProvider._();
+
+/// #1308 S3 — the in-app doctor: the same `InstanceDoctor.examine` the CLI
+/// runs, judged against the bundle and the policy list this app carries.
+/// One runner for the wizard's finish and the Server screen's full check
+/// (#1309); tests replace it with canned findings.
+
+final class InstanceDoctorRunnerProvider
+    extends
+        $FunctionalProvider<
+          Future<List<DoctorFinding>> Function(
+            SupabaseManagement api,
+            String projectRef,
+          ),
+          Future<List<DoctorFinding>> Function(
+            SupabaseManagement api,
+            String projectRef,
+          ),
+          Future<List<DoctorFinding>> Function(
+            SupabaseManagement api,
+            String projectRef,
+          )
+        >
+    with
+        $Provider<
+          Future<List<DoctorFinding>> Function(
+            SupabaseManagement api,
+            String projectRef,
+          )
+        > {
+  /// #1308 S3 — the in-app doctor: the same `InstanceDoctor.examine` the CLI
+  /// runs, judged against the bundle and the policy list this app carries.
+  /// One runner for the wizard's finish and the Server screen's full check
+  /// (#1309); tests replace it with canned findings.
+  InstanceDoctorRunnerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'instanceDoctorRunnerProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$instanceDoctorRunnerHash();
+
+  @$internal
+  @override
+  $ProviderElement<
+    Future<List<DoctorFinding>> Function(
+      SupabaseManagement api,
+      String projectRef,
+    )
+  >
+  $createElement($ProviderPointer pointer) => $ProviderElement(pointer);
+
+  @override
+  Future<List<DoctorFinding>> Function(
+    SupabaseManagement api,
+    String projectRef,
+  )
+  create(Ref ref) {
+    return instanceDoctorRunner(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(
+    Future<List<DoctorFinding>> Function(
+      SupabaseManagement api,
+      String projectRef,
+    )
+    value,
+  ) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride:
+          $SyncValueProvider<
+            Future<List<DoctorFinding>> Function(
+              SupabaseManagement api,
+              String projectRef,
+            )
+          >(value),
+    );
+  }
+}
+
+String _$instanceDoctorRunnerHash() =>
+    r'32b5debde7b5dd336655d5b77e364b80f1adbf2c';
