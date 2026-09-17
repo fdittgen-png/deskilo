@@ -9025,6 +9025,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reservationCancelledSnack => 'Reserva cancelada.';
 
   @override
+  String get bookingMoreOptions => 'Más opciones';
+
+  @override
+  String get bookingOpenDetails => 'Detalles';
+
+  @override
   String get reserveViewMenu => 'Vista';
 
   @override

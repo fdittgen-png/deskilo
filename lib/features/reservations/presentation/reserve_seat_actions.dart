@@ -38,6 +38,7 @@ import 'widgets/message_reserver.dart';
 import 'widgets/series_result_dialog.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/trace/guarded.dart';
+import 'widgets/reference_open.dart';
 
 /// ACTING ON A SEAT (#687), lifted out of the Reserve hub.
 ///
@@ -652,16 +653,14 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
             l10n?.planBookedForPending(who) ?? 'Sent to $who for confirmation.',
             replace: true,
           );
-        case Booked(:final checkedIn, :final start, :final end):
+        case Booked(:final reservationId, :final checkedIn, :final start, :final end):
           // #663: the Reserve hub reported every refusal and no success
           // at all — a booking simply happened, or appeared to. Say
           // which, and say it about what the SERVER did: reporting
           // `false` while it checked them in is the confirmation lying.
           announceBooking(context, l10n,
-              checkedIn: checkedIn,
-              start: start,
-              end: end,
-              spaceName: seat.name);
+              checkedIn: checkedIn, start: start, end: end, spaceName: seat.name,
+              onOpen: () => openReservationById(context, ref, reservationId));
         case SeriesBooked(:final result):
           await showSeriesResultDialog(context, result);
       }

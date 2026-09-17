@@ -9038,6 +9038,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reservationCancelledSnack => 'Reservierung storniert.';
 
   @override
+  String get bookingMoreOptions => 'Weitere Optionen';
+
+  @override
+  String get bookingOpenDetails => 'Details';
+
+  @override
   String get reserveViewMenu => 'Ansicht';
 
   @override

@@ -6040,6 +6040,8 @@
   "reservationEditTimes": "Modifica orario",
   "reservationUpdatedSnack": "Prenotazione aggiornata.",
   "reservationCancelledSnack": "Prenotazione annullata.",
+  "bookingMoreOptions": "Altre opzioni",
+  "bookingOpenDetails": "Dettagli",
   "reserveViewMenu": "Vista",
   "reserveDayView": "Giorno",
   "reserveWeekView": "Settimana",
