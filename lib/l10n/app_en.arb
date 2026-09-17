@@ -999,6 +999,14 @@
   "@billingAllowCustom": {
     "description": "Switch: members may hold a per-person negotiated percentage"
   },
+  "memberNoSubscription": "No subscription",
+  "@memberNoSubscription": {
+    "description": "A member without a monthly subscription (subscription_pct 0) — a visitor who buys carnets (#1279)"
+  },
+  "memberNoSubscriptionPaygHint": "No subscription is not possible with pay-as-you-go: choose blocked or a package first.",
+  "@memberNoSubscriptionPaygHint": {
+    "description": "Why No subscription is unavailable for a pay-as-you-go member (#1279)"
+  },
   "memberSubscriptionLabel": "Subscription",
   "@memberSubscriptionLabel": {
     "description": "Title of the per-member subscription picker dialog"

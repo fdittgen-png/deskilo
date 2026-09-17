@@ -426,8 +426,7 @@ class MembersScreen extends ConsumerWidget {
                       // subscription line.
                       if (!member.isKiosk)
                         Text(
-                          l10n?.percentValue(member.subscriptionPct) ??
-                              '${member.subscriptionPct}%',
+                          subscriptionText(l10n, member.subscriptionPct),
                         ),
                       if (member.isKiosk)
                         Text(l10n?.memberKioskLabel ?? 'Kiosk'),

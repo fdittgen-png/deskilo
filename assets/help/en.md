@@ -1150,6 +1150,8 @@ Your ledger answers *what do I owe, what am I owed* — and *how much can I stil
 - **Pay-as-you-go** — you can keep booking; each extra day bills at your fee tier's overage rate (shown on the card).
 - **Packages** — tap **Buy a package** and pick one of the owner's day packs; your days increase immediately and the price lands on this month's bill.
 
+A member can also have **no subscription** — a visitor who comes now and then (#1279): no monthly fee, no subscription line on the invoice, and no included half-days, so bookings need a package or credits. **No subscription** and **Pay-as-you-go** never combine, because that would book for free; the app and the server both refuse the pair.
+
 **The actions, grouped by meaning:**
 
 - **Pay** — **Record a payment** ("I paid") with its method, the **date the money moved** (defaults to today) and the **month it settles** (defaults to the running one, one step back for arrears, one forward for a prepayment) — the other side confirms. That month decides which bill and which invoice the credit lands on. **Pay online** (when enabled) pays the amount owed straight away — with **PayPal, a credit card (Stripe), Mollie, or Wero**, whichever the workspace enabled (several show a chooser).

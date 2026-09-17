@@ -1538,6 +1538,18 @@ abstract class AppLocalizations {
   /// **'Allow negotiated custom value'**
   String get billingAllowCustom;
 
+  /// A member without a monthly subscription (subscription_pct 0) — a visitor who buys carnets (#1279)
+  ///
+  /// In en, this message translates to:
+  /// **'No subscription'**
+  String get memberNoSubscription;
+
+  /// Why No subscription is unavailable for a pay-as-you-go member (#1279)
+  ///
+  /// In en, this message translates to:
+  /// **'No subscription is not possible with pay-as-you-go: choose blocked or a package first.'**
+  String get memberNoSubscriptionPaygHint;
+
   /// Title of the per-member subscription picker dialog
   ///
   /// In en, this message translates to:

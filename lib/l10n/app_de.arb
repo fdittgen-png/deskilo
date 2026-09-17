@@ -602,6 +602,8 @@
   "billingAddLevel": "Stufe hinzufügen",
   "billingLevelValue": "Stufe (1–100)",
   "billingAllowCustom": "Individuell verhandelten Wert erlauben",
+  "memberNoSubscription": "Kein Abo",
+  "memberNoSubscriptionPaygHint": "Kein Abo ist mit Bezahlung nach Verbrauch nicht möglich: zuerst Sperren oder ein Paket wählen.",
   "memberSubscriptionLabel": "Abo",
   "memberSubscriptionCustom": "Individuell (1–100)",
   "moneySubscriptionPct": "Abo {pct} %",

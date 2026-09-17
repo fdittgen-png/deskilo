@@ -836,6 +836,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get billingAllowCustom => 'Allow negotiated custom value';
 
   @override
+  String get memberNoSubscription => 'No subscription';
+
+  @override
+  String get memberNoSubscriptionPaygHint =>
+      'No subscription is not possible with pay-as-you-go: choose blocked or a package first.';
+
+  @override
   String get memberSubscriptionLabel => 'Subscription';
 
   @override

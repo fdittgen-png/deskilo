@@ -423,8 +423,7 @@ class _MemberPageBody extends ConsumerWidget {
           tileKey: const ValueKey('member-page-subscription'),
           icon: Icons.percent,
           title: l10n?.memberSubscriptionLabel ?? 'Subscription',
-          subtitle: l10n?.percentValue(member.subscriptionPct) ??
-              '${member.subscriptionPct}%',
+          subtitle: subscriptionText(l10n, member.subscriptionPct),
           onTap: () => pickMemberSubscription(context, ref, member),
         ),
       if (isOwner && !member.isKiosk && active)

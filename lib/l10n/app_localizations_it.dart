@@ -843,6 +843,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Consenti un valore personalizzato concordato';
 
   @override
+  String get memberNoSubscription => 'Senza abbonamento';
+
+  @override
+  String get memberNoSubscriptionPaygHint =>
+      'Senza abbonamento non è possibile con il pagamento a consumo: scegliete prima blocca o un pacchetto.';
+
+  @override
   String get memberSubscriptionLabel => 'Abbonamento';
 
   @override

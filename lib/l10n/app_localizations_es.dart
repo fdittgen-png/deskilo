@@ -841,6 +841,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get billingAllowCustom => 'Permitir un valor personalizado negociado';
 
   @override
+  String get memberNoSubscription => 'Sin suscripción';
+
+  @override
+  String get memberNoSubscriptionPaygHint =>
+      'Sin suscripción no es posible con pago por uso: elija primero bloquear o un paquete.';
+
+  @override
   String get memberSubscriptionLabel => 'Suscripción';
 
   @override

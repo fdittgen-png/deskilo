@@ -1144,6 +1144,8 @@ Tu cuenta responde *qué debo, qué me deben* — y *cuánto puedo reservar aún
 - **Pago por uso** — puedes seguir reservando; cada día extra se cobra a la tarifa de exceso de tu tramo (mostrada en la tarjeta).
 - **Paquetes** — toca **Comprar un paquete** y elige uno de los packs de días del propietario; tus días aumentan al momento y el precio entra en la factura de este mes.
 
+Un miembro también puede estar **sin suscripción** — un visitante ocasional (#1279): sin cuota mensual, sin línea de suscripción en la factura y sin medias jornadas incluidas, así que reserva con un paquete o con créditos. **Sin suscripción** y **Pago por uso** nunca se combinan, porque sería reservar gratis; la app y el servidor rechazan la combinación.
+
 **Las acciones, agrupadas por sentido:**
 
 - **Pagar** — **Registrar un pago** («he pagado») con su método, la **fecha en que se movió el dinero** (hoy por defecto) y el **mes que salda** (el mes en curso por defecto, un paso atrás para atrasos, uno adelante para un anticipo) — la otra parte confirma. Ese mes decide en qué factura y en qué documento entra el abono. **Pagar en línea** (cuando está activado) abona el importe adeudado al instante — con **PayPal, tarjeta (Stripe), Mollie o Wero**, según lo que el espacio haya activado (si hay varios, se muestra un selector).

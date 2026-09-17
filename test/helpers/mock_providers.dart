@@ -765,7 +765,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   @override
   Future<void> updateMemberSubscription(String memberId, int pct) async {
-    if (pct < 1 || pct > 100) throw StateError('pct out of range');
+    if (pct < 0 || pct > 100) throw StateError('pct out of range');
     if (myMember.id == memberId) {
       myMember = myMember.copyWith(subscriptionPct: pct);
       return;
