@@ -81,6 +81,7 @@ class TemplateGroupPreview {
     required this.state,
     required this.itemCount,
     this.reason,
+    this.customized = false,
   });
 
   final TemplateGroup group;
@@ -94,13 +95,18 @@ class TemplateGroupPreview {
   /// The server's reason code for [TemplateGroupState.needsAttention].
   final String? reason;
 
+  /// #1280 S4 — this workspace changed something here since it last
+  /// applied the same template. Offered, never ticked by default.
+  final bool customized;
+
   /// Offered for selection at all.
   bool get selectable =>
       group != TemplateGroup.unknown &&
       (state == TemplateGroupState.isNew || state == TemplateGroupState.change);
 
   /// Ticked when the sheet opens.
-  bool get selectedByDefault => state == TemplateGroupState.isNew && selectable;
+  bool get selectedByDefault =>
+      state == TemplateGroupState.isNew && selectable && !customized;
 }
 
 class TemplatePreview {
@@ -135,6 +141,7 @@ class TemplatePreview {
             state: TemplateGroupState.fromWire(raw['state'] as String?),
             itemCount: (raw['items'] as List?)?.length ?? 0,
             reason: raw['reason'] as String?,
+            customized: raw['customized'] == true,
           ),
     ];
     return TemplatePreview(

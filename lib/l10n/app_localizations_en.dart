@@ -6104,6 +6104,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get libraryPublishNothing => 'Choose at least one group.';
 
   @override
+  String get libraryCustomizedHere => 'Customized here';
+
+  @override
   String get libraryApply => 'Apply to this space';
 
   @override

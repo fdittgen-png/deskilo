@@ -6383,6 +6383,10 @@
   "@libraryPublishNothing": {
     "description": "Template publish flow (#1280): libraryPublishNothing"
   },
+  "libraryCustomizedHere": "Customized here",
+  "@libraryCustomizedHere": {
+    "description": "Template apply preview: this workspace changed the group since it last applied the same template (#1280)"
+  },
   "libraryApply": "Apply to this space",
   "libraryApplyConfirmTitle": "Apply « {name} »?",
   "@libraryApplyConfirmTitle": {

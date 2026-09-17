@@ -3829,6 +3829,7 @@
   "libraryPlanNames": "Diese Namen reisen mit dem Plan: {names}",
   "librarySaveTags": "Schlagwörter, durch Kommas getrennt",
   "libraryPublishNothing": "Wählen Sie mindestens eine Gruppe.",
+  "libraryCustomizedHere": "Hier angepasst",
   "libraryApply": "Auf diesen Raum anwenden",
   "libraryApplyConfirmTitle": "« {name} » anwenden?",
   "@libraryApplyConfirmTitle": {

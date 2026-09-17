@@ -190,7 +190,11 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
                     _GroupRow(
                       key: ValueKey('template-group-${g.wire}'),
                       title: templateGroupLabel(l10n, g.group),
-                      state: stateLabel(l10n, g.state),
+                      state: [
+                        stateLabel(l10n, g.state),
+                        if (g.customized)
+                          l10n?.libraryCustomizedHere ?? 'Customized here',
+                      ].join(' · '),
                       reason: reasonText(l10n, g.reason),
                       enabled: g.selectable && !_busy,
                       value: g.selectable ? selected.contains(g.wire) : null,

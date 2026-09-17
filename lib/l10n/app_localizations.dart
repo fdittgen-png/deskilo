@@ -10643,6 +10643,12 @@ abstract class AppLocalizations {
   /// **'Choose at least one group.'**
   String get libraryPublishNothing;
 
+  /// Template apply preview: this workspace changed the group since it last applied the same template (#1280)
+  ///
+  /// In en, this message translates to:
+  /// **'Customized here'**
+  String get libraryCustomizedHere;
+
   /// No description provided for @libraryApply.
   ///
   /// In en, this message translates to:

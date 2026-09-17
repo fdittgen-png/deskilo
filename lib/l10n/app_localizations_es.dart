@@ -6148,6 +6148,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get libraryPublishNothing => 'Elija al menos un grupo.';
 
   @override
+  String get libraryCustomizedHere => 'Personalizado aquí';
+
+  @override
   String get libraryApply => 'Aplicar a este espacio';
 
   @override
