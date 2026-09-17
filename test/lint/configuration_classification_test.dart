@@ -89,10 +89,23 @@ Set<String> deployableEntityKeys() {
     ..sort((a, b) => a.path.compareTo(b.path));
   expect(defining, isNotEmpty,
       reason: 'no migration defines deployable_entities()');
-  return RegExp(r"'key',\s*'([a-z_]+)'")
+  final keys = RegExp(r"'key',\s*'([a-z_]+)'")
       .allMatches(defining.last.readAsStringSync())
       .map((m) => m.group(1)!)
       .toSet();
+  // Later migrations add entities by anchored patch rather than by
+  // restating the function (0220 number_sequences, 0223 lexicon). An
+  // entity object always carries `'kind'` right after its key, which no
+  // other `'key'` in a migration does.
+  final start = defining.last.path.split('/').last;
+  for (final f in Directory('supabase/migrations').listSync().whereType<File>()) {
+    final name = f.path.split('/').last;
+    if (!name.endsWith('.sql') || name.compareTo(start) <= 0) continue;
+    keys.addAll(RegExp(r"'key',\s*'([a-z_]+)',\s*'kind'")
+        .allMatches(f.readAsStringSync())
+        .map((m) => m.group(1)!));
+  }
+  return keys;
 }
 
 /// Every name the matrix classifies.

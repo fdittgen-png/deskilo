@@ -623,7 +623,7 @@ applicazione viene registrata con ciò che lo spazio conteneva prima. Un
 modello creato da un DesKilo più recente che questo server non
 comprende viene rifiutato, mai applicato a metà.
 
-Due modelli sono integrati: **A tiny space** (due livelli, otto posti) e **Association de coworking (France)**. Il secondo è ciò di cui un'associazione di coworking francese ha di solito bisogno dal primo giorno: mezze giornate dalle 7 alle 13 e dalle 13 alle 19, dal lunedì al venerdì; quote al 50 % e al 100 % da 50 € e 100 €; niente IVA; il francese come lingua dello spazio; le convalide nel calendario, con la scheda eventi e l'elenco dei membri disattivati; e due piani pronti da prenotare (#1282). Paese, valuta e fuso orario vengono sempre dall'accoglienza.
+Due modelli sono integrati: **A tiny space** (due livelli, otto posti) e **Association de coworking (France)**. Il secondo è ciò di cui un'associazione di coworking francese ha di solito bisogno dal primo giorno: mezze giornate dalle 7 alle 13 e dalle 13 alle 19, dal lunedì al venerdì; le festività dell'anno e del successivo per il paese dello spazio come giorni di chiusura (mai in un mese già fatturato); quote al 50 % e al 100 % da 50 € e 100 €; niente IVA; il francese come lingua dello spazio, con le parole dell'associazione (*Place*, *Étage*, *Réservations*); le convalide nel calendario, con la scheda eventi e l'elenco dei membri disattivati; e due piani pronti da prenotare (#1282). Paese, valuta e fuso orario vengono sempre dall'accoglienza.
 
 Un nuovo spazio inizia sempre con una stanza, qualunque cosa dica questa
 funzione: l'accoglienza propone *Partire da* con il modello integrato

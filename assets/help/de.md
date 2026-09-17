@@ -603,7 +603,7 @@ jede Anwendung wird mit dem vorherigen Stand festgehalten. Eine Vorlage
 aus einem neueren DesKilo, die dieser Server nicht versteht, wird
 abgelehnt, nie halb angewendet.
 
-Zwei Vorlagen sind eingebaut: **A tiny space** (zwei Ebenen, acht Plätze) und **Association de coworking (France)**. Die zweite ist, was ein französischer Coworking-Verein meist vom ersten Tag an braucht: Halbtage von 7 bis 13 Uhr und von 13 bis 19 Uhr, Montag bis Freitag; Beiträge zu 50 % und 100 % mit 50 € und 100 €; keine Mehrwertsteuer; Französisch als Sprache des Raums; Validierungen im Kalender, Ereignis-Tab und Mitgliederverzeichnis ausgeschaltet; und zwei Etagen zum Buchen (#1282). Land, Währung und Zeitzone kommen immer aus der Einrichtung.
+Zwei Vorlagen sind eingebaut: **A tiny space** (zwei Ebenen, acht Plätze) und **Association de coworking (France)**. Die zweite ist, was ein französischer Coworking-Verein meist vom ersten Tag an braucht: Halbtage von 7 bis 13 Uhr und von 13 bis 19 Uhr, Montag bis Freitag; die Feiertage dieses und des nächsten Jahres für das Land des Raums als Schließtage (nie in einem schon abgerechneten Monat); Beiträge zu 50 % und 100 % mit 50 € und 100 €; keine Mehrwertsteuer; Französisch als Sprache des Raums, mit den Worten des Vereins (*Place*, *Étage*, *Réservations*); Validierungen im Kalender, Ereignis-Tab und Mitgliederverzeichnis ausgeschaltet; und zwei Etagen zum Buchen (#1282). Land, Währung und Zeitzone kommen immer aus der Einrichtung.
 
 Ein neuer Raum beginnt immer mit einem Zimmer, unabhängig von dieser
 Funktion: die Einrichtung bietet *Beginnen mit* an, die eingebaute

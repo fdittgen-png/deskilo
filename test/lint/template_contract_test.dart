@@ -101,6 +101,22 @@ List<String> checkTemplate(
     if (tables.containsKey(t)) fail('carries table "$t"');
   }
 
+  // ── holidays marker (0234): resolved per target, never dates ──
+  final holidays = config['holidays'];
+  if (holidays != null) {
+    final years = holidays is Map ? holidays['years'] : null;
+    final country = holidays is Map ? holidays['country'] : null;
+    if (years is! int || years < 1 || years > 3) {
+      fail('holidays marker years $years is not 1..3');
+    }
+    if (country != null && !RegExp(r'^[A-Z]{2}$').hasMatch('$country')) {
+      fail('holidays marker country "$country" is not an ISO code');
+    }
+    if (!entities.contains('closure_days')) {
+      fail('holidays marker without the closure_days entity is never applied');
+    }
+  }
+
   // ── features ──
   final flags = ws['feature_flags'];
   if (flags is Map) {
@@ -390,6 +406,20 @@ void main() {
       expect(problems, contains('fixture: fee bands 30–60 and 50–100 overlap'));
       expect(problems, contains('fixture: fee band price -1 is not a non-negative integer'));
       expect(problems, contains('fixture: working hours 780 / 420 / 1140 are not in order'));
+    });
+
+    test('a holidays marker that is not one', () {
+      final t = base();
+      (t['configuration'] as Map)['holidays'] = <String, dynamic>{
+        'years': 9,
+        'country': 'France',
+      };
+      final problems = checkTemplate(t, rules);
+      expect(problems, contains('fixture: holidays marker years 9 is not 1..3'));
+      expect(problems,
+          contains('fixture: holidays marker country "France" is not an ISO code'));
+      expect(problems, contains(
+          'fixture: holidays marker without the closure_days entity is never applied'));
     });
   });
 }
