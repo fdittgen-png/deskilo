@@ -19,7 +19,7 @@ three taps with one long scroll.
 | … with the events bell off (association) | launch | accept or decline | Calendar badge → **Accept** | — | request confirmed | **2** |
 | app open → invoice explained | launch | which invoice | the invoice row | pay, download, share | lines and total on screen | **3** |
 | app open → a workspace setting changed | launch | which setting | Settings → Availability → the day | hours, granularity, closures | opening days saved | **3** |
-| onboarding → usable workspace | onboarding | the space's name | **Create workspace** | country, currency, template, dev/prod pair | shell with a bookable room | **1** (+ the name) |
+| onboarding → usable workspace | onboarding | the space's name | **Use the suggested settings** → confirm → **Create workspace** | where (country, currency, pair), start from (template) | shell with a bookable room | **2** (+ the name) |
 
 ## What the numbers do not show yet
 

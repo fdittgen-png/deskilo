@@ -24,6 +24,13 @@ Future<FakeWorkspaceRepository> pumpWithoutWorkspace(
   return repo;
 }
 
+/// #1303 S2 — the name step's shortcut to the confirm step.
+Future<void> useSuggested(WidgetTester tester) async {
+  await tester.pump();
+  await tester.tap(find.byKey(const ValueKey('onboarding-use-suggested')));
+  await tester.pumpAndSettle();
+}
+
 void main() {
   testWidgets('signed-in user without workspace lands on onboarding',
       (tester) async {
@@ -40,6 +47,8 @@ void main() {
       find.byType(TextFormField).first,
       'Kraftwerk Coworking',
     );
+
+    await useSuggested(tester);
     // #987 — the pair checkbox pushed the button below the fold.
     await tester.ensureVisible(find.text('Create workspace'));
     await tester.tap(find.text('Create workspace'));
@@ -58,6 +67,8 @@ void main() {
       ..createFailure = StateError('the response was lost');
 
     await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
+
+    await useSuggested(tester);
     await tester.ensureVisible(find.text('Create workspace'));
     await tester.tap(find.text('Create workspace'));
     await tester.pumpAndSettle();
@@ -82,6 +93,7 @@ void main() {
       'as a second call that can fail on its own', (tester) async {
     final repo = await pumpWithoutWorkspace(tester);
     await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
+    await useSuggested(tester);
     await tester.ensureVisible(find.text('Create workspace'));
     await tester.tap(find.text('Create workspace'));
     await tester.pumpAndSettle();
@@ -103,6 +115,7 @@ void main() {
     ));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextFormField).first, 'Pézenas');
+    await useSuggested(tester);
     await tester.ensureVisible(find.text('Create workspace'));
     await tester.tap(find.text('Create workspace'));
     await tester.pumpAndSettle();
@@ -232,5 +245,74 @@ void main() {
 
     expect(find.byKey(const ValueKey('scan-join-camera')), findsOneWidget);
     expect(find.byType(ShellBottomBar), findsNothing);
+  });
+
+  group('#1303 S2 — creating is staged, and nothing typed is lost', () {
+    testWidgets('a step that is not filled in does not advance',
+        (tester) async {
+      await pumpWithoutWorkspace(tester);
+      await tester.tap(find.text('Next'));
+      await tester.pumpAndSettle();
+      expect(find.text('Required'), findsOneWidget);
+      expect(find.byKey(const ValueKey('onboarding-name')), findsOneWidget);
+    });
+
+    testWidgets('Back keeps the name and the chosen country; confirm shows '
+        'what will be created', (tester) async {
+      final repo = await pumpWithoutWorkspace(tester);
+      await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
+      await tester.pump();
+      await tester.tap(find.text('Next'));
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byKey(const ValueKey('onboarding-currency')), 'CHF');
+      await tester.tap(find.text('Back'));
+      await tester.pumpAndSettle();
+      expect(find.text('Kraftwerk'), findsOneWidget);
+
+      await tester.tap(find.text('Next'));
+      await tester.pumpAndSettle();
+      expect(find.text('CHF'), findsOneWidget, reason: 'the where step kept it');
+      await tester.tap(find.text('Next'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Next'));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const ValueKey('onboarding-confirm')), findsOneWidget);
+      expect(find.text('Kraftwerk'), findsOneWidget);
+      expect(find.textContaining('CHF'), findsOneWidget);
+      expect(
+          find.descendant(
+              of: find.byKey(const ValueKey('onboarding-confirm-template')),
+              matching: find.text('A tiny space')),
+          findsOneWidget);
+
+      await tester.tap(find.text('Create workspace'));
+      await tester.pumpAndSettle();
+      expect(repo.workspaces.single.currencyCode, 'CHF');
+    });
+
+    testWidgets('a creation that fails with a template offers to create '
+        'without one', (tester) async {
+      final repo = await pumpWithoutWorkspace(tester)
+        ..createFailure = StateError('the template cannot be applied');
+      await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
+      await useSuggested(tester);
+      await tester.tap(find.text('Create workspace'));
+      await tester.pumpAndSettle();
+      expect(repo.workspaces, isEmpty);
+
+      repo.createFailure = null;
+      ScaffoldMessenger.of(tester.element(find.text('Create workspace')))
+          .hideCurrentSnackBar();
+      await tester.pumpAndSettle();
+      final without =
+          find.byKey(const ValueKey('onboarding-create-without-template'));
+      await tester.ensureVisible(without);
+      await tester.tap(without);
+      await tester.pumpAndSettle();
+
+      expect(repo.workspaces, hasLength(1));
+      expect(repo.createRequests.last.templateId, isNull);
+    });
   });
 }

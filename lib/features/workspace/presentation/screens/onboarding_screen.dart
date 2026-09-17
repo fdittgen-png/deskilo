@@ -16,6 +16,7 @@ import '../../providers/workspace_providers.dart';
 import '../country_names.dart';
 import '../../domain/workspace.dart';
 import '../widgets/template_picker.dart';
+import '../../../../core/ui/wizard_scaffold.dart';
 
 /// First-run screen for a signed-in user without a workspace: create one
 /// (become owner) or join via invite code (spec §11 onboarding).
@@ -56,6 +57,17 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   bool _joinMode = false;
   bool _busy = false;
 
+  /// #1303 S2 — the create flow's step: name, where, start from, confirm.
+  int _step = 0;
+
+  /// A creation carrying a template failed: the confirm step offers to
+  /// create without one, so nobody is stuck on a template that cannot apply.
+  bool _failedWithTemplate = false;
+
+  static const _nameStep = 0;
+  static const _whereStep = 1;
+  static const _confirmStep = 3;
+
   @override
   void initState() {
     super.initState();
@@ -91,14 +103,37 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           if (mounted && context.canPop()) context.pop();
       },
     )) {
-      if (mounted) setState(() => _busy = false);
+      if (mounted) {
+        setState(() {
+          _busy = false;
+          _failedWithTemplate = _templateId != null;
+        });
+      }
       return;
     }
     if (mounted) setState(() => _busy = false);
   }
 
+  bool get _nameValid => _name.text.trim().isNotEmpty;
+  bool get _whereValid =>
+      _currency.text.trim().length == 3 && _timezone.text.trim().isNotEmpty;
+
+  /// Next from [_step]; a step that is not filled in shows why and stays.
+  void _next() {
+    final valid = switch (_step) {
+      _nameStep => _nameValid,
+      _whereStep => _whereValid,
+      _ => true,
+    };
+    if (!valid) {
+      _createFormKey.currentState?.validate();
+      return;
+    }
+    setState(() => _step = (_step + 1).clamp(0, _confirmStep));
+  }
+
   Future<void> _create() async {
-    if (!(_createFormKey.currentState?.validate() ?? false)) return;
+    if (!_nameValid || !_whereValid) return;
     await _run(() async {
       final repo = ref.read(workspaceRepositoryProvider);
       await repo.createWorkspace(
@@ -132,242 +167,348 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n?.onboardingTitle ?? 'Welcome to DesKilo'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            tooltip: l10n?.authSignOut ?? 'Sign out',
-            onPressed: () async => signOutAndForget(ref),
-          ),
-        ],
-      ),
-      body: Center(
+    final signOut = IconButton(
+      icon: const Icon(Icons.logout),
+      tooltip: l10n?.authSignOut ?? 'Sign out',
+      onPressed: () async => signOutAndForget(ref),
+    );
+    final modeSwitch = SegmentedButton<bool>(
+      segments: [
+        ButtonSegment(
+          value: false,
+          label: Text(l10n?.onboardingCreateTab ?? 'Create a workspace'),
+        ),
+        ButtonSegment(
+          value: true,
+          label: Text(l10n?.onboardingJoinTab ?? 'Join a workspace'),
+        ),
+      ],
+      selected: {_joinMode},
+      onSelectionChanged: (selection) =>
+          setState(() => _joinMode = selection.first),
+    );
+    if (_joinMode) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(l10n?.onboardingTitle ?? 'Welcome to DesKilo'),
+          actions: [signOut],
+        ),
+        body: _centered(Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [modeSwitch, const SizedBox(height: 24), _joinForm(l10n)],
+        )),
+      );
+    }
+    // #1303 S2 — creating is a staged flow: a person sees what will be
+    // created before it is, and Back keeps everything they typed.
+    return WizardScaffold(
+      title: l10n?.onboardingTitle ?? 'Welcome to DesKilo',
+      actions: [signOut],
+      steps: [
+        (name: 'name', label: l10n?.onboardingStepName ?? 'Name'),
+        (name: 'where', label: l10n?.onboardingStepWhere ?? 'Where'),
+        (name: 'start', label: l10n?.onboardingStartFrom ?? 'Start from'),
+        (name: 'confirm', label: l10n?.onboardingStepConfirm ?? 'Confirm'),
+      ],
+      index: _step,
+      onStepTap: _busy
+          ? null
+          : (i) {
+              if (i <= _step || (_nameValid && _whereValid)) {
+                setState(() => _step = i);
+              }
+            },
+      onBack: _step == 0 || _busy ? null : () => setState(() => _step--),
+      onNext: _busy ? null : _next,
+      onFinish: _busy ? null : _create,
+      finishKey: const ValueKey('onboarding-create'),
+      finishLabel: l10n?.onboardingCreateButton ?? 'Create workspace',
+      body: _centered(Form(
+        key: _createFormKey,
+        child: switch (_step) {
+          _nameStep => _nameStepBody(l10n, modeSwitch),
+          _whereStep => _whereStepBody(l10n),
+          _confirmStep => _confirmStepBody(l10n),
+          _ => _startFromStepBody(),
+        },
+      )),
+    );
+  }
+
+  Widget _centered(Widget child) => Center(
         child: SingleChildScrollView(
           padding: AppSpacing.xlAll,
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 480),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SegmentedButton<bool>(
-                  segments: [
-                    ButtonSegment(
-                      value: false,
-                      label: Text(
-                        l10n?.onboardingCreateTab ?? 'Create a workspace',
-                      ),
-                    ),
-                    ButtonSegment(
-                      value: true,
-                      label: Text(
-                        l10n?.onboardingJoinTab ?? 'Join a workspace',
-                      ),
-                    ),
-                  ],
-                  selected: {_joinMode},
-                  onSelectionChanged: (selection) =>
-                      setState(() => _joinMode = selection.first),
-                ),
-                const SizedBox(height: 24),
-                if (!_joinMode)
-                  Form(
-                    key: _createFormKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        TextFormField(
-                          controller: _name,
-                          decoration: InputDecoration(
-                            labelText:
-                                l10n?.workspaceNameLabel ?? 'Workspace name',
-                          ),
-                          validator: (v) => (v == null || v.trim().isEmpty)
-                              ? (l10n?.authFieldRequired ?? 'Required')
-                              : null,
-                        ),
-                        const SizedBox(height: 12),
-                        DropdownButtonFormField<String>(
-                          initialValue: _countryCode,
-                          decoration: InputDecoration(
-                            labelText: l10n?.workspaceCountryLabel ?? 'Country',
-                          ),
-                          items: [
-                            for (final country in CountryCatalog.countries)
-                              DropdownMenuItem(
-                                value: country.code,
-                                child:
-                                    Text(
-                                      localizedCountryName(
-                                          l10n, country.code),
-                                    ),
-                              ),
-                          ],
-                          onChanged: (code) {
-                            if (code == null) return;
-                            final country = CountryCatalog.byCode(code);
-                            setState(() {
-                              _countryCode = code;
-                              _currency.text = country.currencyCode;
-                              _timezone.text = country.defaultTimezone;
-                            });
-                          },
-                        ),
-                        const SizedBox(height: 12),
-                        TextFormField(
-                          controller: _currency,
-                          decoration: InputDecoration(
-                            labelText:
-                                l10n?.workspaceCurrencyLabel ?? 'Currency',
-                          ),
-                          validator: (v) =>
-                              (v == null || v.trim().length != 3)
-                                  ? (l10n?.authFieldRequired ?? 'Required')
-                                  : null,
-                        ),
-                        const SizedBox(height: 12),
-                        TextFormField(
-                          controller: _timezone,
-                          decoration: InputDecoration(
-                            labelText:
-                                l10n?.workspaceTimezoneLabel ?? 'Time zone',
-                          ),
-                          validator: (v) => (v == null || v.trim().isEmpty)
-                              ? (l10n?.authFieldRequired ?? 'Required')
-                              : null,
-                        ),
-                        const SizedBox(height: 12),
-                        DropdownButtonFormField<WorkspaceEnvironment>(
-                          key: const ValueKey('onboarding-environment'),
-                          initialValue: _environment,
-                          // The labels carry a dash and a clause; without
-                          // this the row sizes to its natural width and
-                          // overflows a narrow form.
-                          isExpanded: true,
-                          decoration: InputDecoration(
-                            labelText:
-                                l10n?.environmentLabel ?? 'Workspace type',
-                            helperMaxLines: 4,
-                            helperText: l10n?.environmentHint ??
-                                'A development workspace says so on every '
-                                    'screen and watermarks every document.',
-                          ),
-                          items: [
-                            DropdownMenuItem(
-                              value: WorkspaceEnvironment.development,
-                              child: Text(l10n?.environmentDev ??
-                                  'Development — for trying things out'),
-                            ),
-                            DropdownMenuItem(
-                              value: WorkspaceEnvironment.production,
-                              child: Text(l10n?.environmentProd ??
-                                  'Production — the invoices are owed'),
-                            ),
-                          ],
-                          onChanged: _busy
-                              ? null
-                              : (v) => setState(
-                                  () => _environment = v ?? _environment),
-                        ),
-                        // #987 — the pair: one to try things out, one
-                        // that is real, both yours from the start.
-                        CheckboxListTile(
-                          key: const ValueKey('onboarding-with-twin'),
-                          value: _withTwin,
-                          contentPadding: EdgeInsets.zero,
-                          controlAffinity: ListTileControlAffinity.leading,
-                          title: Text(l10n?.onboardingWithTwin ??
-                              'Create the development and production pair'),
-                          subtitle: Text(l10n?.onboardingWithTwinHint ??
-                              'Two workspaces with the same name: one to '
-                                  'try things out, one that is real. You '
-                                  'own both.'),
-                          onChanged: _busy
-                              ? null
-                              : (v) => setState(() => _withTwin = v ?? true),
-                        ),
-                        const SizedBox(height: 24),
-                        Consumer(builder: (context, ref, _) {
-                          final list = ref.watch(workspaceTemplatesProvider).value;
-                          if (!_templateResolved && list != null) {
-                            _templateResolved = true;
-                            _templateId =
-                                list.where((t) => t.key == 'tiny').map((t) => t.id).firstOrNull;
-                          }
-                          return TemplatePicker(
-                            selectedId: _templateId,
-                            onChanged: (id) => setState(() {
-                              _templateId = id;
-                              _templateResolved = true;
-                            }),
-                          );
-                        }),
-                        const SizedBox(height: AppSpacing.md),
-                        FilledButton(
-                          onPressed: _busy ? null : _create,
-                          child: Text(
-                            l10n?.onboardingCreateButton ??
-                                'Create workspace',
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                else
-                  Form(
-                    key: _joinFormKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        TextFormField(
-                          controller: _inviteCode,
-                          decoration: InputDecoration(
-                            labelText:
-                                l10n?.workspaceInviteCodeLabel ?? 'Invite code',
-                            helperText: l10n?.workspaceInvitePasteHint ??
-                                'Paste the whole invitation message — '
-                                    'the ID is found automatically.',
-                            helperMaxLines: 2,
-                          ),
-                          maxLines: null,
-                          textCapitalization: TextCapitalization.characters,
-                          validator: (v) => InviteUriCodec.extractCode(v ?? '')
-                                  .isEmpty
-                              ? (l10n?.workspaceInviteCodeInvalid ??
-                                  'No workspace ID found — paste the '
-                                      'invitation or type the ID.')
-                              : null,
-                        ),
-                        const SizedBox(height: 24),
-                        FilledButton(
-                          onPressed: _busy ? null : _join,
-                          child: Text(l10n?.onboardingJoinButton ?? 'Join'),
-                        ),
-                        const SizedBox(height: 8),
-                        OutlinedButton.icon(
-                          onPressed: _busy
-                              ? null
-                              : () async {
-                                  final code = await context
-                                      .push<String>('/scan-join');
-                                  if (code == null || code.isEmpty) return;
-                                  _inviteCode.text = code;
-                                  await _join();
-                                },
-                          icon: const Icon(Icons.qr_code_scanner),
-                          label: Text(
-                            l10n?.onboardingScanButton ?? 'Scan QR code',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-              ],
-            ),
+            child: child,
           ),
         ),
-      ),
-    );
+      );
+
+  Widget _nameStepBody(AppLocalizations? l10n, Widget modeSwitch) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          modeSwitch,
+          const SizedBox(height: 24),
+          TextFormField(
+            key: const ValueKey('onboarding-name'),
+            controller: _name,
+            decoration: InputDecoration(
+              labelText: l10n?.workspaceNameLabel ?? 'Workspace name',
+            ),
+            onChanged: (_) => setState(() {}),
+            validator: (v) => (v == null || v.trim().isEmpty)
+                ? (l10n?.authFieldRequired ?? 'Required')
+                : null,
+          ),
+          const SizedBox(height: AppSpacing.md),
+          // The suggested settings are the device's country and the builtin
+          // template: most people need nothing else, and still see the
+          // confirm step before anything is created.
+          TextButton.icon(
+            key: const ValueKey('onboarding-use-suggested'),
+            onPressed: _busy || !_nameValid
+                ? null
+                : () => setState(() => _step = _confirmStep),
+            icon: const Icon(Icons.fast_forward_outlined),
+            label: Text(
+                l10n?.onboardingUseSuggested ?? 'Use the suggested settings'),
+          ),
+        ],
+      );
+
+  Widget _whereStepBody(AppLocalizations? l10n) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          DropdownButtonFormField<String>(
+            initialValue: _countryCode,
+            decoration: InputDecoration(
+              labelText: l10n?.workspaceCountryLabel ?? 'Country',
+            ),
+            items: [
+              for (final country in CountryCatalog.countries)
+                DropdownMenuItem(
+                  value: country.code,
+                  child: Text(localizedCountryName(l10n, country.code)),
+                ),
+            ],
+            onChanged: (code) {
+              if (code == null) return;
+              final country = CountryCatalog.byCode(code);
+              setState(() {
+                _countryCode = code;
+                _currency.text = country.currencyCode;
+                _timezone.text = country.defaultTimezone;
+              });
+            },
+          ),
+          const SizedBox(height: 12),
+          TextFormField(
+            key: const ValueKey('onboarding-currency'),
+            controller: _currency,
+            decoration: InputDecoration(
+              labelText: l10n?.workspaceCurrencyLabel ?? 'Currency',
+            ),
+            validator: (v) => (v == null || v.trim().length != 3)
+                ? (l10n?.authFieldRequired ?? 'Required')
+                : null,
+          ),
+          const SizedBox(height: 12),
+          TextFormField(
+            key: const ValueKey('onboarding-timezone'),
+            controller: _timezone,
+            decoration: InputDecoration(
+              labelText: l10n?.workspaceTimezoneLabel ?? 'Time zone',
+            ),
+            validator: (v) => (v == null || v.trim().isEmpty)
+                ? (l10n?.authFieldRequired ?? 'Required')
+                : null,
+          ),
+          const SizedBox(height: 12),
+          DropdownButtonFormField<WorkspaceEnvironment>(
+            key: const ValueKey('onboarding-environment'),
+            initialValue: _environment,
+            // The labels carry a dash and a clause; without this the row
+            // sizes to its natural width and overflows a narrow form.
+            isExpanded: true,
+            decoration: InputDecoration(
+              labelText: l10n?.environmentLabel ?? 'Workspace type',
+              helperMaxLines: 4,
+              helperText: l10n?.environmentHint ??
+                  'A development workspace says so on every screen and '
+                      'watermarks every document.',
+            ),
+            items: [
+              DropdownMenuItem(
+                value: WorkspaceEnvironment.development,
+                child: Text(l10n?.environmentDev ??
+                    'Development — for trying things out'),
+              ),
+              DropdownMenuItem(
+                value: WorkspaceEnvironment.production,
+                child: Text(l10n?.environmentProd ??
+                    'Production — the invoices are owed'),
+              ),
+            ],
+            onChanged: _busy
+                ? null
+                : (v) => setState(() => _environment = v ?? _environment),
+          ),
+          // #987 — the pair: one to try things out, one that is real, both
+          // yours from the start.
+          CheckboxListTile(
+            key: const ValueKey('onboarding-with-twin'),
+            value: _withTwin,
+            contentPadding: EdgeInsets.zero,
+            controlAffinity: ListTileControlAffinity.leading,
+            title: Text(l10n?.onboardingWithTwin ??
+                'Create the development and production pair'),
+            subtitle: Text(l10n?.onboardingWithTwinHint ??
+                'Two workspaces with the same name: one to try things out, '
+                    'one that is real. You own both.'),
+            onChanged:
+                _busy ? null : (v) => setState(() => _withTwin = v ?? true),
+          ),
+        ],
+      );
+
+  Widget _startFromStepBody() => Consumer(builder: (context, ref, _) {
+        _resolveDefaultTemplate(ref);
+        return TemplatePicker(
+          selectedId: _templateId,
+          onChanged: (id) => setState(() {
+            _templateId = id;
+            _templateResolved = true;
+            _failedWithTemplate = false;
+          }),
+        );
+      });
+
+  /// 'tiny' is the builtin and the default, resolved by key once the list
+  /// arrives — whichever step first reads it.
+  void _resolveDefaultTemplate(WidgetRef ref) {
+    final list = ref.watch(workspaceTemplatesProvider).value;
+    if (!_templateResolved && list != null) {
+      _templateResolved = true;
+      _templateId =
+          list.where((t) => t.key == 'tiny').map((t) => t.id).firstOrNull;
+    }
   }
+
+  Widget _confirmStepBody(AppLocalizations? l10n) =>
+      Consumer(builder: (context, ref, _) {
+        _resolveDefaultTemplate(ref);
+        final templates = ref.watch(workspaceTemplatesProvider).value ?? const [];
+        final template =
+            templates.where((t) => t.id == _templateId).firstOrNull;
+        final environment = _environment == WorkspaceEnvironment.production
+            ? (l10n?.environmentProd ?? 'Production — the invoices are owed')
+            : (l10n?.environmentDev ?? 'Development — for trying things out');
+        return Column(
+          key: const ValueKey('onboarding-confirm'),
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(l10n?.onboardingConfirmIntro ?? 'This is what will be created:',
+                style: Theme.of(context).textTheme.titleMedium),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.business_outlined),
+              title: Text(_name.text.trim()),
+              subtitle: Text(environment),
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.public),
+              title: Text(localizedCountryName(l10n, _countryCode)),
+              subtitle: Text(
+                  '${_currency.text.trim().toUpperCase()} · ${_timezone.text.trim()}'),
+            ),
+            if (_withTwin)
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.copy_all_outlined),
+                title: Text(l10n?.onboardingWithTwin ??
+                    'Create the development and production pair'),
+              ),
+            ListTile(
+              key: const ValueKey('onboarding-confirm-template'),
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.grid_view_outlined),
+              title: Text(template?.name ??
+                  (l10n?.onboardingStartEmpty ?? 'Empty space')),
+              subtitle: template == null
+                  ? null
+                  : Text([
+                      l10n?.libraryCounts(template.counts.levels,
+                              template.counts.desks, template.counts.seats) ??
+                          '${template.counts.levels} levels · '
+                              '${template.counts.desks} desks · '
+                              '${template.counts.seats} seats',
+                      if (template.carriesConfiguration)
+                        l10n?.libraryCarriesSettings ?? 'with its settings',
+                    ].join(' · ')),
+            ),
+            if (_failedWithTemplate)
+              OutlinedButton(
+                key: const ValueKey('onboarding-create-without-template'),
+                onPressed: _busy
+                    ? null
+                    : () {
+                        setState(() {
+                          _templateId = null;
+                          _templateResolved = true;
+                          _failedWithTemplate = false;
+                        });
+                        _create();
+                      },
+                child: Text(l10n?.onboardingCreateWithoutTemplate ??
+                    'Create without a template'),
+              ),
+          ],
+        );
+      });
+
+  Widget _joinForm(AppLocalizations? l10n) => Form(
+        key: _joinFormKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextFormField(
+              controller: _inviteCode,
+              decoration: InputDecoration(
+                labelText: l10n?.workspaceInviteCodeLabel ?? 'Invite code',
+                helperText: l10n?.workspaceInvitePasteHint ??
+                    'Paste the whole invitation message — '
+                        'the ID is found automatically.',
+                helperMaxLines: 2,
+              ),
+              maxLines: null,
+              textCapitalization: TextCapitalization.characters,
+              validator: (v) => InviteUriCodec.extractCode(v ?? '').isEmpty
+                  ? (l10n?.workspaceInviteCodeInvalid ??
+                      'No workspace ID found — paste the invitation or '
+                          'type the ID.')
+                  : null,
+            ),
+            const SizedBox(height: 24),
+            FilledButton(
+              onPressed: _busy ? null : _join,
+              child: Text(l10n?.onboardingJoinButton ?? 'Join'),
+            ),
+            const SizedBox(height: 8),
+            OutlinedButton.icon(
+              onPressed: _busy
+                  ? null
+                  : () async {
+                      final code = await context.push<String>('/scan-join');
+                      if (code == null || code.isEmpty) return;
+                      _inviteCode.text = code;
+                      await _join();
+                    },
+              icon: const Icon(Icons.qr_code_scanner),
+              label: Text(l10n?.onboardingScanButton ?? 'Scan QR code'),
+            ),
+          ],
+        ),
+      );
 }

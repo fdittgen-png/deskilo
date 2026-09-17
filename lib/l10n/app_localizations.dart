@@ -10769,6 +10769,42 @@ abstract class AppLocalizations {
   /// **'Delete « {name} »? People you shared it with lose access.'**
   String libraryDeleteConfirm(String name);
 
+  /// #1303 staged onboarding: onboardingStepName
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get onboardingStepName;
+
+  /// #1303 staged onboarding: onboardingStepWhere
+  ///
+  /// In en, this message translates to:
+  /// **'Where'**
+  String get onboardingStepWhere;
+
+  /// #1303 staged onboarding: onboardingStepConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get onboardingStepConfirm;
+
+  /// #1303 staged onboarding: onboardingUseSuggested
+  ///
+  /// In en, this message translates to:
+  /// **'Use the suggested settings'**
+  String get onboardingUseSuggested;
+
+  /// #1303 staged onboarding: onboardingConfirmIntro
+  ///
+  /// In en, this message translates to:
+  /// **'This is what will be created:'**
+  String get onboardingConfirmIntro;
+
+  /// #1303 staged onboarding: onboardingCreateWithoutTemplate
+  ///
+  /// In en, this message translates to:
+  /// **'Create without a template'**
+  String get onboardingCreateWithoutTemplate;
+
   /// No description provided for @onboardingStartFrom.
   ///
   /// In en, this message translates to:

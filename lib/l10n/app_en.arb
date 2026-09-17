@@ -6425,6 +6425,30 @@
       }
     }
   },
+  "onboardingStepName": "Name",
+  "@onboardingStepName": {
+    "description": "#1303 staged onboarding: onboardingStepName"
+  },
+  "onboardingStepWhere": "Where",
+  "@onboardingStepWhere": {
+    "description": "#1303 staged onboarding: onboardingStepWhere"
+  },
+  "onboardingStepConfirm": "Confirm",
+  "@onboardingStepConfirm": {
+    "description": "#1303 staged onboarding: onboardingStepConfirm"
+  },
+  "onboardingUseSuggested": "Use the suggested settings",
+  "@onboardingUseSuggested": {
+    "description": "#1303 staged onboarding: onboardingUseSuggested"
+  },
+  "onboardingConfirmIntro": "This is what will be created:",
+  "@onboardingConfirmIntro": {
+    "description": "#1303 staged onboarding: onboardingConfirmIntro"
+  },
+  "onboardingCreateWithoutTemplate": "Create without a template",
+  "@onboardingCreateWithoutTemplate": {
+    "description": "#1303 staged onboarding: onboardingCreateWithoutTemplate"
+  },
   "onboardingStartFrom": "Start from",
   "onboardingStartEmpty": "Empty space",
   "onboardingStartEmptyDesc": "Draw your own plan from a blank canvas.",
