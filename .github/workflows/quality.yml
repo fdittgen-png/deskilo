@@ -156,7 +156,7 @@ jobs:
   database:
     name: quality · database
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: supabase/setup-cli@v1
@@ -248,6 +248,29 @@ jobs:
         continue-on-error: true
         run: bash scripts/edge_payment_check.sh
 
+      # #1337 — the install, the resume, the readiness verdict and the
+      # doctor were proven against a fake Management API only. This runs
+      # the real Dart code on databases that start as an empty Supabase
+      # project, through psql: install from empty, an interrupted install
+      # resumed, an upgrade from N, a foreign table that blocks, the marker
+      # after every migration, and a failing doctor probe. Function
+      # deploys and auth settings stay uncovered: no local Management API.
+      - uses: subosito/flutter-action@v2
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Install, resume and upgrade a real schema
+        id: lifecycle
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        run: |
+          flutter pub get
+          bash scripts/instance_lifecycle_check.sh
+
       - name: Rows
         if: always()
         run: |
@@ -272,6 +295,8 @@ jobs:
               "${{ steps.restore.outcome }}"
             printf 'Payments|%s|the real payment handler opens the caller'"'"'s intent; strangers and no token refused\n' \
               "${{ steps.payments.outcome }}"
+            printf 'Instance lifecycle|%s|empty install, interrupted resume, upgrade from N, foreign table blocks, marker per migration, doctor probe isolation\n' \
+              "${{ steps.lifecycle.outcome }}"
           } > report/database.psv
           cat report/database.psv
 
@@ -298,7 +323,8 @@ jobs:
                       "Policies equal the migrations=${{ steps.policies.outcome }}" \
                       "Two sessions, one seat=${{ steps.race.outcome }}" \
                       "Restore drill=${{ steps.restore.outcome }}" \
-                      "A member can start a payment=${{ steps.payments.outcome }}"; do
+                      "A member can start a payment=${{ steps.payments.outcome }}" \
+                      "Install, resume and upgrade a real schema=${{ steps.lifecycle.outcome }}"; do
             echo "$step"
             case "$step" in *=failure) status=1 ;; esac
           done

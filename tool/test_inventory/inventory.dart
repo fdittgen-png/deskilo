@@ -267,7 +267,7 @@ const missingCoverage = <(String, String, String)>[
   ('Number sequences: invalid pairs, no reuse', '#1338 / #1320', 'lands with the #1320 fix'),
   ('Restore drill: dump, restore into a fresh database, reconcile', '#1338 / #1310', 'the `Restore drill` step in quality · database (#1310 S1)'),
   ('Export completeness: paging, manifest, ZIP', '#1338 / #1310', '#1310 S2, blocked on #1312 for schema_version'),
-  ('Instance install, resume, doctor isolation', '#1337 / #1314', 'lands with #1314; schema marker with #1312'),
+  ('Instance install, resume, doctor isolation', '#1337 / #1314', 'the `Install, resume and upgrade a real schema` step in quality · database (#1337)'),
   ('Journeys: decision without the bell, onboarding retry', '#1339', 'with #1306 and #1303'),
   ('State model: stale, offline, empty, error', '#1339 / #1305', 'with #1305'),
 ];
