@@ -30,10 +30,12 @@ class ProcessDetails extends StatelessWidget {
               for (final subprocess in process.subprocesses)
                 ExpansionTile(
                   title: Text(processLabel(l10n, subprocess.key)),
-                  subtitle: Text('${processCopy(l10n, subprocess.key).description}\n${
-                      subprocess.capabilities.every(effectiveFeatures(raw).contains)
-                          ? l10n?.processAvailable ?? 'Available'
-                          : l10n?.processUnavailable ?? 'Unavailable'}'),
+                  subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Text(processCopy(l10n, subprocess.key).description),
+                    Text(subprocess.capabilities.every(effectiveFeatures(raw).contains)
+                        ? l10n?.processAvailable ?? 'Available'
+                        : l10n?.processUnavailable ?? 'Unavailable'),
+                  ]),
                   children: [
                     for (final feature in subprocess.capabilities)
                       ListTile(
@@ -111,9 +113,11 @@ class CapabilityDetails extends StatelessWidget {
                   ? l10n?.processAvailable ?? 'Available'
                   : l10n?.processUnavailable ?? 'Unavailable'),
             title: Text(featureName(l10n, child)),
-            subtitle: Text('${_home(l10n, child)}\n${
-                raw.contains(child) ? l10n?.processStoredOn ?? 'Saved on'
-                    : l10n?.processStoredOff ?? 'Saved off'}'),
+            subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(_home(l10n, child)),
+              Text(raw.contains(child) ? l10n?.processStoredOn ?? 'Saved on'
+                  : l10n?.processStoredOff ?? 'Saved off'),
+            ]),
           ),
         if (feature == WorkspaceFeature.adminInvoicing)
           Text(l10n?.processAdminGrant ??
