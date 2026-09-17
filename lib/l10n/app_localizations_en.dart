@@ -5964,6 +5964,103 @@ class AppLocalizationsEn extends AppLocalizations {
   String get libraryCarriesSettings => 'with its settings';
 
   @override
+  String get libraryPreviewChanges => 'Preview changes';
+
+  @override
+  String libraryPreviewTitle(String name) {
+    return 'What « $name » would change';
+  }
+
+  @override
+  String get libraryGroupSpace => 'Space & plan';
+
+  @override
+  String get libraryGroupHoursBooking => 'Hours & booking';
+
+  @override
+  String get libraryGroupPricingCredits => 'Prices & credits';
+
+  @override
+  String get libraryGroupCalendarNavigation => 'Calendar & closures';
+
+  @override
+  String get libraryGroupWording => 'Wording';
+
+  @override
+  String get libraryGroupRolesAccess => 'Roles & access';
+
+  @override
+  String get libraryGroupForms => 'Forms';
+
+  @override
+  String get libraryGroupAppearance => 'Appearance';
+
+  @override
+  String get libraryGroupDocumentsOperations => 'Documents & operations';
+
+  @override
+  String get libraryGroupUnknown => 'Other — this version cannot apply it';
+
+  @override
+  String get libraryStateNew => 'New';
+
+  @override
+  String get libraryStateChange => 'Changes what you have';
+
+  @override
+  String get libraryStateMatching => 'Already the same';
+
+  @override
+  String get libraryStateAttention => 'Needs attention';
+
+  @override
+  String get libraryReasonFeeSchedule =>
+      'Your fee schedule would be replaced as a whole.';
+
+  @override
+  String libraryApplyChanges(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Apply $count changes',
+      one: 'Apply 1 change',
+      zero: 'Nothing selected',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String libraryConfirmSensitive(String groups) {
+    return 'This changes $groups. Apply?';
+  }
+
+  @override
+  String libraryAppliedChanges(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count changes applied.',
+      one: '1 change applied.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get libraryNotSupported => 'This template cannot be applied here.';
+
+  @override
+  String get libraryPartial =>
+      'Part of this template cannot be applied here and is left out.';
+
+  @override
+  String get libraryNothingToApply =>
+      'Everything this template carries is already here.';
+
+  @override
+  String get libraryPreviewFailed =>
+      'The changes could not be previewed. Nothing was applied.';
+
+  @override
   String get libraryApply => 'Apply to this space';
 
   @override

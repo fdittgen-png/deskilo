@@ -17,6 +17,7 @@ import '../../profile/domain/personal_info.dart';
 import 'managed_access.dart';
 import 'workspace_overview.dart';
 import 'site.dart';
+import 'template_preview.dart';
 import 'workspace_template.dart';
 
 /// Pure-Dart workspace boundary. Supabase impl in data/, fake in tests.
@@ -657,6 +658,10 @@ abstract class WorkspaceRepository {
   /// refused for an unreadable template or an unknown snapshot format.
   Future<void> applyWorkspaceTemplate(String workspaceId, String templateId,
       {List<String>? groups});
+
+  /// #1280 — per group, what applying [templateId] here would change.
+  Future<TemplatePreview> previewWorkspaceTemplate(
+      String workspaceId, String templateId, {List<String>? groups});
 
   /// Snapshots [workspaceId] through `template_publication_rules` (#1276);
   /// the same key again updates in place and bumps the version.

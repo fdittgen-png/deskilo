@@ -6027,6 +6027,104 @@ class AppLocalizationsFr extends AppLocalizations {
   String get libraryCarriesSettings => 'avec ses réglages';
 
   @override
+  String get libraryPreviewChanges => 'Voir les changements';
+
+  @override
+  String libraryPreviewTitle(String name) {
+    return 'Ce que « $name » changerait';
+  }
+
+  @override
+  String get libraryGroupSpace => 'Espace et plan';
+
+  @override
+  String get libraryGroupHoursBooking => 'Horaires et réservation';
+
+  @override
+  String get libraryGroupPricingCredits => 'Prix et crédits';
+
+  @override
+  String get libraryGroupCalendarNavigation => 'Calendrier et fermetures';
+
+  @override
+  String get libraryGroupWording => 'Vocabulaire';
+
+  @override
+  String get libraryGroupRolesAccess => 'Rôles et accès';
+
+  @override
+  String get libraryGroupForms => 'Formulaires';
+
+  @override
+  String get libraryGroupAppearance => 'Apparence';
+
+  @override
+  String get libraryGroupDocumentsOperations => 'Documents et fonctionnement';
+
+  @override
+  String get libraryGroupUnknown =>
+      'Autre — cette version ne peut pas l\'appliquer';
+
+  @override
+  String get libraryStateNew => 'Nouveau';
+
+  @override
+  String get libraryStateChange => 'Modifie l\'existant';
+
+  @override
+  String get libraryStateMatching => 'Déjà identique';
+
+  @override
+  String get libraryStateAttention => 'À examiner';
+
+  @override
+  String get libraryReasonFeeSchedule =>
+      'Votre grille de frais serait remplacée en entier.';
+
+  @override
+  String libraryApplyChanges(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Appliquer $count changements',
+      one: 'Appliquer 1 changement',
+      zero: 'Rien de sélectionné',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String libraryConfirmSensitive(String groups) {
+    return 'Cela modifie : $groups. Appliquer ?';
+  }
+
+  @override
+  String libraryAppliedChanges(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count changements appliqués.',
+      one: '1 changement appliqué.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get libraryNotSupported => 'Ce modèle ne peut pas être appliqué ici.';
+
+  @override
+  String get libraryPartial =>
+      'Une partie de ce modèle ne peut pas être appliquée ici et est laissée de côté.';
+
+  @override
+  String get libraryNothingToApply =>
+      'Tout ce que porte ce modèle est déjà là.';
+
+  @override
+  String get libraryPreviewFailed =>
+      'Les changements n\'ont pas pu être prévisualisés. Rien n\'a été appliqué.';
+
+  @override
   String get libraryApply => 'Appliquer à cet espace';
 
   @override

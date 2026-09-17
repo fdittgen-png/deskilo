@@ -94,6 +94,7 @@ import 'in_memory_default_level_store.dart';
 import 'package:deskilo/features/workspace/domain/workspace_overview.dart';
 import 'package:deskilo/features/workspace/domain/site.dart';
 import 'fake_pref_stores.dart';
+import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
 
 /// In-memory [AuthRepository] for widget/unit tests (fakes over mocks).
@@ -1818,6 +1819,31 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     }
     appliedTemplates.add(
         (workspaceId: workspaceId, templateId: templateId, groups: groups));
+  }
+
+  /// #1280 — the preview a test wants the server to answer, by template id.
+  /// Without one, each entity group the template carries previews as new.
+  final templatePreviews = <String, TemplatePreview>{};
+
+  @override
+  Future<TemplatePreview> previewWorkspaceTemplate(
+      String workspaceId, String templateId, {List<String>? groups}) async {
+    final set = templatePreviews[templateId];
+    if (set != null) return set;
+    final t = templates.firstWhere((x) => x.id == templateId,
+        orElse: () => throw Exception('unknown template'));
+    return TemplatePreview(
+      compatibility: TemplateCompatibility.supported,
+      groups: [
+        if (t.entities.contains('floor_plan'))
+          TemplateGroupPreview(
+            group: TemplateGroup.space,
+            wire: 'space',
+            state: TemplateGroupState.isNew,
+            itemCount: t.counts.seats + t.counts.desks + t.counts.levels,
+          ),
+      ],
+    );
   }
 
   @override

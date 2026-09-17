@@ -10,6 +10,7 @@
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -81,6 +82,117 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('library-apply-confirm')));
     await tester.pumpAndSettle();
     expect(workspace.appliedTemplates.single.templateId, 'tpl-shared');
+  });
+
+  group('#1280 S2 — preview changes, apply only what was chosen', () {
+    TemplatePreview preview() => const TemplatePreview(
+          compatibility: TemplateCompatibility.supported,
+          groups: [
+            TemplateGroupPreview(
+                group: TemplateGroup.space,
+                wire: 'space',
+                state: TemplateGroupState.isNew,
+                itemCount: 3),
+            TemplateGroupPreview(
+                group: TemplateGroup.hoursBooking,
+                wire: 'hours_booking',
+                state: TemplateGroupState.change,
+                itemCount: 2),
+            TemplateGroupPreview(
+                group: TemplateGroup.wording,
+                wire: 'wording',
+                state: TemplateGroupState.matching,
+                itemCount: 0),
+            TemplateGroupPreview(
+                group: TemplateGroup.rolesAccess,
+                wire: 'roles_access',
+                state: TemplateGroupState.change,
+                itemCount: 1),
+            TemplateGroupPreview(
+                group: TemplateGroup.pricingCredits,
+                wire: 'pricing_credits',
+                state: TemplateGroupState.needsAttention,
+                itemCount: 1,
+                reason: 'fee_schedule_replaced_whole'),
+          ],
+        );
+
+    Future<FakeWorkspaceRepository> openSheet(WidgetTester tester) async {
+      final workspace = await _pumpLibrary(tester);
+      workspace.templatePreviews['tpl-shared'] = preview();
+      await tester.tap(find.byKey(const ValueKey('library-apply-studio')));
+      await tester.pumpAndSettle();
+      return workspace;
+    }
+
+    testWidgets('new is chosen, changes are not, and the button names the '
+        'count', (tester) async {
+      final workspace = await openSheet(tester);
+      expect(find.text('Apply 3 changes'), findsOneWidget,
+          reason: 'only the new group is ticked: existing configuration is '
+              'kept unless chosen');
+
+      await tester.tap(find.byKey(const ValueKey('template-group-hours_booking')));
+      await tester.pumpAndSettle();
+      expect(find.text('Apply 5 changes'), findsOneWidget);
+
+      await tester.tap(find.byKey(const ValueKey('library-apply-confirm')));
+      await tester.pumpAndSettle();
+      expect(workspace.appliedTemplates.single.groups,
+          ['hours_booking', 'space'],
+          reason: 'the request names exactly the chosen groups');
+      expect(find.text('5 changes applied.'), findsOneWidget);
+    });
+
+    testWidgets('a group needing attention shows why and cannot be chosen',
+        (tester) async {
+      await openSheet(tester);
+      final row = find.byKey(const ValueKey('template-group-pricing_credits'));
+      expect(find.descendant(of: row, matching: find.byType(Checkbox)),
+          findsNothing);
+      expect(
+          find.descendant(
+              of: row, matching: find.textContaining('replaced as a whole')),
+          findsOneWidget);
+    });
+
+    testWidgets('roles ask once more, and cancelling applies nothing',
+        (tester) async {
+      final workspace = await openSheet(tester);
+      await tester.tap(find.byKey(const ValueKey('template-group-roles_access')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('library-apply-confirm')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Roles & access'), findsWidgets);
+      expect(find.byKey(const ValueKey('library-apply-sensitive-confirm')),
+          findsOneWidget);
+
+      await tester.tap(find.text('Cancel'));
+      await tester.pumpAndSettle();
+      expect(workspace.appliedTemplates, isEmpty);
+
+      await tester.tap(find.byKey(const ValueKey('library-apply-confirm')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('library-apply-sensitive-confirm')));
+      await tester.pumpAndSettle();
+      expect(workspace.appliedTemplates.single.groups,
+          ['roles_access', 'space']);
+    });
+
+    testWidgets('a template this server cannot apply says so and offers no '
+        'button', (tester) async {
+      final workspace = await _pumpLibrary(tester);
+      workspace.templatePreviews['tpl-shared'] = const TemplatePreview(
+        compatibility: TemplateCompatibility.notSupported,
+        reason: 'template schema 9 is newer than this server',
+        groups: [],
+      );
+      await tester.tap(find.byKey(const ValueKey('library-apply-studio')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('template-apply-not-supported')),
+          findsOneWidget);
+      expect(find.byKey(const ValueKey('library-apply-confirm')), findsNothing);
+    });
   });
 
   test('a template key is what the column accepts', () {

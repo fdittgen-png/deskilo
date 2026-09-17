@@ -28,6 +28,122 @@
   "@libraryCarriesSettings": {
     "description": "Appended to a template card's plan counts when the template also carries configuration (hours, prices, rules) (#1280)"
   },
+  "libraryPreviewChanges": "Preview changes",
+  "@libraryPreviewChanges": {
+    "description": "Template apply preview (#1280): libraryPreviewChanges"
+  },
+  "libraryPreviewTitle": "What « {name} » would change",
+  "@libraryPreviewTitle": {
+    "description": "Template apply preview (#1280): libraryPreviewTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryGroupSpace": "Space & plan",
+  "@libraryGroupSpace": {
+    "description": "Template apply preview (#1280): libraryGroupSpace"
+  },
+  "libraryGroupHoursBooking": "Hours & booking",
+  "@libraryGroupHoursBooking": {
+    "description": "Template apply preview (#1280): libraryGroupHoursBooking"
+  },
+  "libraryGroupPricingCredits": "Prices & credits",
+  "@libraryGroupPricingCredits": {
+    "description": "Template apply preview (#1280): libraryGroupPricingCredits"
+  },
+  "libraryGroupCalendarNavigation": "Calendar & closures",
+  "@libraryGroupCalendarNavigation": {
+    "description": "Template apply preview (#1280): libraryGroupCalendarNavigation"
+  },
+  "libraryGroupWording": "Wording",
+  "@libraryGroupWording": {
+    "description": "Template apply preview (#1280): libraryGroupWording"
+  },
+  "libraryGroupRolesAccess": "Roles & access",
+  "@libraryGroupRolesAccess": {
+    "description": "Template apply preview (#1280): libraryGroupRolesAccess"
+  },
+  "libraryGroupForms": "Forms",
+  "@libraryGroupForms": {
+    "description": "Template apply preview (#1280): libraryGroupForms"
+  },
+  "libraryGroupAppearance": "Appearance",
+  "@libraryGroupAppearance": {
+    "description": "Template apply preview (#1280): libraryGroupAppearance"
+  },
+  "libraryGroupDocumentsOperations": "Documents & operations",
+  "@libraryGroupDocumentsOperations": {
+    "description": "Template apply preview (#1280): libraryGroupDocumentsOperations"
+  },
+  "libraryGroupUnknown": "Other — this version cannot apply it",
+  "@libraryGroupUnknown": {
+    "description": "Template apply preview (#1280): libraryGroupUnknown"
+  },
+  "libraryStateNew": "New",
+  "@libraryStateNew": {
+    "description": "Template apply preview (#1280): libraryStateNew"
+  },
+  "libraryStateChange": "Changes what you have",
+  "@libraryStateChange": {
+    "description": "Template apply preview (#1280): libraryStateChange"
+  },
+  "libraryStateMatching": "Already the same",
+  "@libraryStateMatching": {
+    "description": "Template apply preview (#1280): libraryStateMatching"
+  },
+  "libraryStateAttention": "Needs attention",
+  "@libraryStateAttention": {
+    "description": "Template apply preview (#1280): libraryStateAttention"
+  },
+  "libraryReasonFeeSchedule": "Your fee schedule would be replaced as a whole.",
+  "@libraryReasonFeeSchedule": {
+    "description": "Template apply preview (#1280): libraryReasonFeeSchedule"
+  },
+  "libraryApplyChanges": "{count, plural, =0{Nothing selected} =1{Apply 1 change} other{Apply {count} changes}}",
+  "@libraryApplyChanges": {
+    "description": "Template apply preview (#1280): libraryApplyChanges",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryConfirmSensitive": "This changes {groups}. Apply?",
+  "@libraryConfirmSensitive": {
+    "description": "Template apply preview (#1280): libraryConfirmSensitive",
+    "placeholders": {
+      "groups": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryAppliedChanges": "{count, plural, =1{1 change applied.} other{{count} changes applied.}}",
+  "@libraryAppliedChanges": {
+    "description": "Template apply preview (#1280): libraryAppliedChanges",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryNotSupported": "This template cannot be applied here.",
+  "@libraryNotSupported": {
+    "description": "Template apply preview (#1280): libraryNotSupported"
+  },
+  "libraryPartial": "Part of this template cannot be applied here and is left out.",
+  "@libraryPartial": {
+    "description": "Template apply preview (#1280): libraryPartial"
+  },
+  "libraryNothingToApply": "Everything this template carries is already here.",
+  "@libraryNothingToApply": {
+    "description": "Template apply preview (#1280): libraryNothingToApply"
+  },
+  "libraryPreviewFailed": "The changes could not be previewed. Nothing was applied.",
+  "@libraryPreviewFailed": {
+    "description": "Template apply sheet when the server preview could not be loaded (#1280)"
+  },
   "libraryApply": "Apply to this space",
   "libraryApplyConfirmTitle": "Apply « {name} »?",
   "@libraryApplyConfirmTitle": {

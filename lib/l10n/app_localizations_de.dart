@@ -6019,6 +6019,105 @@ class AppLocalizationsDe extends AppLocalizations {
   String get libraryCarriesSettings => 'mit ihren Einstellungen';
 
   @override
+  String get libraryPreviewChanges => 'Änderungen ansehen';
+
+  @override
+  String libraryPreviewTitle(String name) {
+    return 'Was « $name » ändern würde';
+  }
+
+  @override
+  String get libraryGroupSpace => 'Raum und Plan';
+
+  @override
+  String get libraryGroupHoursBooking => 'Zeiten und Buchung';
+
+  @override
+  String get libraryGroupPricingCredits => 'Preise und Guthaben';
+
+  @override
+  String get libraryGroupCalendarNavigation => 'Kalender und Schließtage';
+
+  @override
+  String get libraryGroupWording => 'Wortwahl';
+
+  @override
+  String get libraryGroupRolesAccess => 'Rollen und Zugriff';
+
+  @override
+  String get libraryGroupForms => 'Formulare';
+
+  @override
+  String get libraryGroupAppearance => 'Erscheinungsbild';
+
+  @override
+  String get libraryGroupDocumentsOperations => 'Dokumente und Betrieb';
+
+  @override
+  String get libraryGroupUnknown =>
+      'Anderes — diese Version kann es nicht anwenden';
+
+  @override
+  String get libraryStateNew => 'Neu';
+
+  @override
+  String get libraryStateChange => 'Ändert Bestehendes';
+
+  @override
+  String get libraryStateMatching => 'Schon gleich';
+
+  @override
+  String get libraryStateAttention => 'Braucht Aufmerksamkeit';
+
+  @override
+  String get libraryReasonFeeSchedule =>
+      'Ihre Gebührenstaffel würde als Ganzes ersetzt.';
+
+  @override
+  String libraryApplyChanges(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Änderungen anwenden',
+      one: '1 Änderung anwenden',
+      zero: 'Nichts ausgewählt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String libraryConfirmSensitive(String groups) {
+    return 'Das ändert: $groups. Anwenden?';
+  }
+
+  @override
+  String libraryAppliedChanges(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Änderungen angewendet.',
+      one: '1 Änderung angewendet.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get libraryNotSupported =>
+      'Diese Vorlage kann hier nicht angewendet werden.';
+
+  @override
+  String get libraryPartial =>
+      'Ein Teil dieser Vorlage kann hier nicht angewendet werden und bleibt außen vor.';
+
+  @override
+  String get libraryNothingToApply =>
+      'Alles, was diese Vorlage mitbringt, ist schon da.';
+
+  @override
+  String get libraryPreviewFailed =>
+      'Die Änderungen konnten nicht angezeigt werden. Es wurde nichts angewendet.';
+
+  @override
   String get libraryApply => 'Auf diesen Raum anwenden';
 
   @override
