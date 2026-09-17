@@ -482,6 +482,8 @@ L'inizio e la fine della giornata lavorativa. Insieme alla granularità
 decidono cos'è una mezza giornata — l'unità in cui contano ogni
 assegnazione, ogni quota e ogni riga di fattura.
 
+**Da dove vengono gli orari (#1307).** Un'etichetta sotto il titolo indica se gli orari sono il *Valore predefinito del prodotto*, vengono *Dal modello «…»* o sono un'*Impostazione dello spazio*. **Ripristina il modello** rimette gli orari dell'ultimo modello applicato; **Ripristina il valore predefinito** toglie gli orari propri dello spazio. La modifica resta nei campi sottostanti.
+
 #### Giorni di chiusura
 
 Date in cui lo spazio è chiuso qualunque sia il giorno della settimana:

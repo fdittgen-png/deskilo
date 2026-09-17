@@ -11273,6 +11273,19 @@
   },
   "workspaceSettingsSaved": "Workspace saved.",
   "workspaceSettingsConflict": "Someone changed these settings while you were editing. Nothing was saved; your changes are still here.",
+  "provenanceProductDefault": "Product default",
+  "provenanceFromTemplate": "From template «{name}»",
+  "@provenanceFromTemplate": {
+    "description": "#1307 S4 provenance chip",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "provenanceWorkspaceSetting": "Workspace setting",
+  "provenanceResetToTemplate": "Reset to template",
+  "provenanceResetToDefault": "Reset to product default",
   "@workspaceSettingsSaved": {
     "description": "Snackbar after the workspace locale settings were persisted (#153)."
   },

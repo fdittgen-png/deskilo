@@ -377,7 +377,7 @@ const Map<String, int> _baseline = {
   // holiday preview, which hands the sheet its command rather than
   // letting it reach for a repository (ADR 0024). The preview itself is
   // its own widget file.
-  'lib/features/workspace/presentation/screens/availability_screen.dart': 852, // 2026-09-08 #1019 nine help symbols now name the exact rule they document (HelpAnchor), one named argument per symbol
+  'lib/features/workspace/presentation/screens/availability_screen.dart': 854, // 2026-09-17 #1307 S4 852→854: the provenance row and its import — the row itself is widgets/work_hours_provenance_row.dart; // 2026-09-08 #1019 nine help symbols now name the exact rule they document (HelpAnchor), one named argument per symbol
   // 770→790 (2026-08-06): #513 setRolePermissions + role_permissions row.
   // 630→640 (2026-08-10): two-dot month markers (mine + others per day)
   // — a dozen lines of dot layout, no new concern worth a split.

@@ -483,6 +483,8 @@ Le début et la fin de la journée de travail. Avec la granularité, elles
 décident de ce qu'est une demi-journée — l'unité dans laquelle comptent
 toute allocation, tout quota et toute ligne de facture.
 
+**D'où viennent les horaires (#1307).** Une puce sous le titre indique si les horaires sont la *Valeur par défaut du produit*, viennent *Du modèle « … »* ou sont un *Réglage de l'espace*. **Revenir au modèle** remet les horaires livrés par le dernier modèle appliqué ; **Revenir à la valeur par défaut** retire les horaires propres à l'espace. La modification se fait toujours dans les champs en dessous.
+
 #### Jours de fermeture
 
 Des dates où l'espace est fermé quel que soit le jour de la semaine :

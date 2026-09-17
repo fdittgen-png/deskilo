@@ -19,6 +19,7 @@ import '../domain/workspace_feature.dart';
 import '../domain/workspace_repository.dart';
 import '../domain/feature_flags_write.dart';
 import '../domain/workspace_settings_save.dart';
+import 'supabase_workspace_provenance.dart';
 import 'conversation_api.dart';
 import '../domain/workspace_document.dart';
 import '../domain/managed_access.dart';
@@ -29,7 +30,7 @@ import '../../../core/data/enum_wire.dart';
 import 'supabase_workspace_templates.dart';
 
 class SupabaseWorkspaceRepository
-    with ConversationApi, SupabaseWorkspaceTemplates
+    with ConversationApi, SupabaseWorkspaceTemplates, SupabaseWorkspaceProvenance
     implements WorkspaceRepository {
   SupabaseWorkspaceRepository(this._client);
 

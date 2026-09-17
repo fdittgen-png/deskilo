@@ -10549,6 +10549,23 @@ class AppLocalizationsEn extends AppLocalizations {
       'Someone changed these settings while you were editing. Nothing was saved; your changes are still here.';
 
   @override
+  String get provenanceProductDefault => 'Product default';
+
+  @override
+  String provenanceFromTemplate(String name) {
+    return 'From template «$name»';
+  }
+
+  @override
+  String get provenanceWorkspaceSetting => 'Workspace setting';
+
+  @override
+  String get provenanceResetToTemplate => 'Reset to template';
+
+  @override
+  String get provenanceResetToDefault => 'Reset to product default';
+
+  @override
   String get workspaceSettingsCurrencyHelper =>
       'Defaults from the country — override if your community bills in another currency.';
 

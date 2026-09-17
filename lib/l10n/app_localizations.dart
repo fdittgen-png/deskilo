@@ -18503,6 +18503,36 @@ abstract class AppLocalizations {
   /// **'Someone changed these settings while you were editing. Nothing was saved; your changes are still here.'**
   String get workspaceSettingsConflict;
 
+  /// No description provided for @provenanceProductDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Product default'**
+  String get provenanceProductDefault;
+
+  /// #1307 S4 provenance chip
+  ///
+  /// In en, this message translates to:
+  /// **'From template «{name}»'**
+  String provenanceFromTemplate(String name);
+
+  /// No description provided for @provenanceWorkspaceSetting.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace setting'**
+  String get provenanceWorkspaceSetting;
+
+  /// No description provided for @provenanceResetToTemplate.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to template'**
+  String get provenanceResetToTemplate;
+
+  /// No description provided for @provenanceResetToDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to product default'**
+  String get provenanceResetToDefault;
+
   /// Helper under the currency field on the workspace settings screen (#153).
   ///
   /// In en, this message translates to:
