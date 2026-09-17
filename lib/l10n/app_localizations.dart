@@ -13913,6 +13913,60 @@ abstract class AppLocalizations {
   /// **'E-mail copied.'**
   String get profilesEmailCopied;
 
+  /// No description provided for @processDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Processes and dependencies'**
+  String get processDetails;
+
+  /// No description provided for @processUsedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Used by'**
+  String get processUsedBy;
+
+  /// No description provided for @processStoredOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on'**
+  String get processStoredOn;
+
+  /// No description provided for @processStoredOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved off'**
+  String get processStoredOff;
+
+  /// No description provided for @processHeldBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Held back by {names}'**
+  String processHeldBack(String names);
+
+  /// No description provided for @processTechnicalKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Technical key'**
+  String get processTechnicalKey;
+
+  /// No description provided for @processAdminGrant.
+  ///
+  /// In en, this message translates to:
+  /// **'When effective, this capability permits admins to issue invoices.'**
+  String get processAdminGrant;
+
+  /// No description provided for @processAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get processAvailable;
+
+  /// No description provided for @processUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Unavailable'**
+  String get processUnavailable;
+
   /// No description provided for @processWorkspaceAccess.
   ///
   /// In en, this message translates to:

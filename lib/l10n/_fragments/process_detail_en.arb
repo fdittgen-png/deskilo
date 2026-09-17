@@ -1,0 +1,18 @@
+{
+  "processDetails": "Processes and dependencies",
+  "processUsedBy": "Used by",
+  "processStoredOn": "Saved on",
+  "processStoredOff": "Saved off",
+  "processHeldBack": "Held back by {names}",
+  "processTechnicalKey": "Technical key",
+  "processAdminGrant": "When effective, this capability permits admins to issue invoices.",
+  "@processHeldBack": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "processAvailable": "Available",
+  "processUnavailable": "Unavailable"
+}

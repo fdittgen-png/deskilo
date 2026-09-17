@@ -557,6 +557,8 @@ Die Liste ist **hierarchisch**: eine Funktion, die eine andere braucht, sitzt ei
 <!-- anchor: user.features.switch -->
 #### Ein Funktionsschalter
 
+Öffnen Sie **Prozesse und Abhängigkeiten** unter Funktionen, um Prozesse und ihre Funktionen zu erkunden. Jede Funktion erklärt ihren gespeicherten Zustand, fehlende Voraussetzungen und die Funktionen, die sie verwenden, samt deren Prozessen. Dies beschreibt die aktuelle Konfiguration, nicht den Ursprung einer Auswahl. Der technische Schlüssel steht in einem aufklappbaren Abschnitt.
+
 Jede Funktionalität ist ein Schalter. Schalte ihn ein und **alle** ihre
 Oberflächen erscheinen — die Kachel, der Reiter, die Schaltfläche, der
 Deep Link; schalte ihn aus und keine bleibt, auch keine gemerkte URL.

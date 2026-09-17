@@ -529,6 +529,8 @@ The list is **hierarchical**: a feature that needs another sits indented under i
 
 #### A feature switch
 
+Open **Processes and dependencies** from Features to browse each process and its capabilities. A capability explains its saved state, missing prerequisites and the other capabilities that use it, including their business processes. This describes the current configuration, not who originally selected it. The technical key is available in an expandable section.
+
 Every functionality is one switch. Turn it on and **all** of its
 surfaces appear — the tile, the tab, the button, the deep link; turn it
 off and none of them remain, including a bookmarked URL. What a switch

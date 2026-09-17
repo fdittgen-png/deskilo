@@ -535,6 +535,8 @@ L'elenco è **gerarchico**: una funzionalità che ne richiede un'altra compare r
 
 #### Un interruttore di funzionalità
 
+Apri **Processi e dipendenze** da Funzionalità per esplorare ogni processo e le sue capacità. Ogni capacità spiega lo stato salvato, i prerequisiti mancanti e le capacità che la utilizzano, con i rispettivi processi. Viene descritta la configurazione attuale, non la cronologia delle scelte. La chiave tecnica è in una sezione espandibile.
+
 Ogni funzionalità è un interruttore. Accendilo e appaiono **tutte** le
 sue superfici — la scheda, la linguetta, il pulsante, il collegamento
 diretto; spegnilo e non ne resta nessuna, nemmeno un URL nei preferiti.

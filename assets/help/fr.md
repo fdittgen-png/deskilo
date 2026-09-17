@@ -536,6 +536,8 @@ La liste est **hiérarchique** : une fonctionnalité qui en nécessite une autre
 
 #### Un interrupteur de fonctionnalité
 
+Ouvrez **Processus et dépendances** depuis Fonctionnalités pour parcourir les processus et leurs capacités. Chaque capacité explique son état enregistré, les prérequis manquants et les capacités qui l’utilisent, avec leurs processus. Il s’agit de la configuration actuelle, pas de l’historique des choix. La clé technique se trouve dans une section dépliable.
+
 Chaque fonctionnalité est un interrupteur. Activez-le et **toutes** ses
 surfaces apparaissent — la tuile, l'onglet, le bouton, le lien profond ;
 désactivez-le et aucune ne demeure, pas même une URL en favori. Ce qu'un

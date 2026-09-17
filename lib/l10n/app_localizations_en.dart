@@ -7938,6 +7938,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profilesEmailCopied => 'E-mail copied.';
 
   @override
+  String get processDetails => 'Processes and dependencies';
+
+  @override
+  String get processUsedBy => 'Used by';
+
+  @override
+  String get processStoredOn => 'Saved on';
+
+  @override
+  String get processStoredOff => 'Saved off';
+
+  @override
+  String processHeldBack(String names) {
+    return 'Held back by $names';
+  }
+
+  @override
+  String get processTechnicalKey => 'Technical key';
+
+  @override
+  String get processAdminGrant =>
+      'When effective, this capability permits admins to issue invoices.';
+
+  @override
+  String get processAvailable => 'Available';
+
+  @override
+  String get processUnavailable => 'Unavailable';
+
+  @override
   String get processWorkspaceAccess => 'Workspace & access';
 
   @override

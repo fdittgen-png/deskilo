@@ -8016,6 +8016,36 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profilesEmailCopied => 'E-mail copié.';
 
   @override
+  String get processDetails => 'Processus et dépendances';
+
+  @override
+  String get processUsedBy => 'Utilisé par';
+
+  @override
+  String get processStoredOn => 'Activé dans les préférences';
+
+  @override
+  String get processStoredOff => 'Désactivé dans les préférences';
+
+  @override
+  String processHeldBack(String names) {
+    return 'Bloqué par $names';
+  }
+
+  @override
+  String get processTechnicalKey => 'Clé technique';
+
+  @override
+  String get processAdminGrant =>
+      'Lorsque cette fonctionnalité est effective, les administrateurs peuvent émettre des factures.';
+
+  @override
+  String get processAvailable => 'Disponible';
+
+  @override
+  String get processUnavailable => 'Indisponible';
+
+  @override
   String get processWorkspaceAccess => 'Espace et accès';
 
   @override

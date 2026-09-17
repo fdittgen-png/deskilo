@@ -534,6 +534,8 @@ La lista es **jerárquica**: una función que necesita otra aparece indentada ba
 
 #### Un interruptor de funcionalidad
 
+Abra **Procesos y dependencias** desde Funciones para explorar cada proceso y sus capacidades. Cada capacidad explica su estado guardado, los requisitos que faltan y las capacidades que la utilizan, con sus procesos. Se describe la configuración actual, no el historial de selección. La clave técnica aparece en una sección desplegable.
+
 Cada funcionalidad es un interruptor. Actívelo y aparecen **todas** sus
 superficies — la casilla, la pestaña, el botón, el enlace profundo;
 desactívelo y no queda ninguna, ni siquiera una URL guardada. Lo que un

@@ -5183,6 +5183,15 @@
   "@profilesEmailCopied": {
     "description": "#937 platform owner: profilesEmailCopied"
   },
+  "processDetails": "Processus et dépendances",
+  "processUsedBy": "Utilisé par",
+  "processStoredOn": "Activé dans les préférences",
+  "processStoredOff": "Désactivé dans les préférences",
+  "processHeldBack": "Bloqué par {names}",
+  "processTechnicalKey": "Clé technique",
+  "processAdminGrant": "Lorsque cette fonctionnalité est effective, les administrateurs peuvent émettre des factures.",
+  "processAvailable": "Disponible",
+  "processUnavailable": "Indisponible",
   "processWorkspaceAccess": "Espace et accès",
   "processSpaceManagement": "Gestion des lieux",
   "processReservationsUsage": "Réservations et utilisation",

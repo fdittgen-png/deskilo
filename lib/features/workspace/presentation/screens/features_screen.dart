@@ -10,14 +10,13 @@ import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/feature_capability_list.dart';
+import '../widgets/process_details.dart';
 import '../widgets/features_filter_bar.dart';
 import '../feature_copy.dart';
 import '../feature_names.dart';
 
 /// Owner-only feature management (#146): one switch per registry feature.
-/// Toggling writes the full flags map to the workspace row (owner RLS)
-/// and invalidates the workspace chain so the gates apply immediately —
-/// other members pick the flags up on their next connect/refetch.
+/// Toggling merges a delta and refetches the authoritative workspace.
 class FeaturesScreen extends ConsumerStatefulWidget {
   const FeaturesScreen({super.key});
 
@@ -145,7 +144,14 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.featuresTitle ?? 'Features')),
+      appBar: AppBar(title: Text(l10n?.featuresTitle ?? 'Features'), actions: [
+        IconButton(
+          tooltip: l10n?.processDetails ?? 'Processes and dependencies',
+          icon: const Icon(Icons.account_tree_outlined),
+          onPressed: workspace == null ? null : () => Navigator.of(context).push<void>(
+            MaterialPageRoute(builder: (_) => ProcessDetails(raw: raw))),
+        ),
+      ]),
       body: workspace == null
           ? const LoadingView()
           : Column(
