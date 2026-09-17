@@ -117,9 +117,12 @@ grep -vE "^[0-9]+; [0-9]+ [0-9]+ [A-Z][A-Z ]* ($DROP_SCHEMAS) " "$LIST" \
   | { if [ -n "$TRIGGERS" ]; then grep -vE " TRIGGER ($TRIGGERS) "; else cat; fi; } \
   > "$FILTERED"
 # Grants and comments on what those extensions own live in shared schemas
-# (`extensions`), so the schema filter cannot see them: name them.
+# (`extensions`), so the schema filter cannot see them: name them. The
+# empty search_path is pg_dump's, so an argument type an extension owns is
+# spelled schema-qualified here exactly as it is in the dump's list.
 MEMBERS="$(mktemp -t deskilo-lifecycle-members-XXXXXX)"
-asql -d postgres -At -v ON_ERROR_STOP=1 -c "
+asql -d postgres -q -At -v ON_ERROR_STOP=1 -c "
+  set search_path = '';
   select ' ' || n.nspname || ' ' || kind || ' ' || p.proname || '('
          || pg_get_function_identity_arguments(p.oid) || ') '
     from pg_proc p join pg_namespace n on n.oid = p.pronamespace
