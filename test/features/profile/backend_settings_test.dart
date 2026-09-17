@@ -11,12 +11,18 @@ import 'package:deskilo/core/backend/backend_uri.dart';
 import 'package:deskilo/core/backend/instance_facts.dart';
 import 'package:deskilo/core/backend/schema_version.dart';
 import 'package:deskilo/core/instance/schema_compatibility.dart';
+import 'package:deskilo/core/instance/instance_bundle_asset.dart';
+import 'package:deskilo/core/instance/instance_doctor.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
+import 'package:deskilo/core/trace/trace_logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:deskilo/features/profile/presentation/widgets/server_facts_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/fake_supabase_management.dart';
 import '../../helpers/mock_providers.dart';
 
 Future<InMemoryBackendSettingsStore> pumpServerScreen(
@@ -24,6 +30,7 @@ Future<InMemoryBackendSettingsStore> pumpServerScreen(
   BackendEndpoint? stored,
   SchemaVersionSource? schemaVersion,
   List<Uri>? launched,
+  List<Override> extra = const [],
 }) async {
   final store = InMemoryBackendSettingsStore()..value = stored;
   tester.view.physicalSize = const Size(800, 1600);
@@ -34,6 +41,7 @@ Future<InMemoryBackendSettingsStore> pumpServerScreen(
       overrides: [
         ...standardTestOverrides(
             backendSettings: store, schemaVersion: schemaVersion),
+        ...extra,
         if (launched != null)
           linkLauncherProvider.overrideWithValue((uri) async {
             launched.add(uri);
@@ -256,6 +264,57 @@ void main() {
           findsOneWidget);
       expect(find.textContaining('applies only what is missing'),
           findsOneWidget);
+    });
+
+    testWidgets('S2 — a full check runs the doctor with a pasted token that '
+        'is never stored', (tester) async {
+      SharedPreferences.setMockInitialValues({});
+      final tokens = <String>[];
+      final checked = <String>[];
+      await pumpServerScreen(tester, stored: custom, extra: [
+        supabaseManagementFactoryProvider.overrideWithValue((token) {
+          tokens.add(token);
+          return FakeSupabaseManagement();
+        }),
+        instanceDoctorRunnerProvider.overrideWithValue((api, ref) async {
+          checked.add(ref);
+          return const [
+            DoctorFinding(DoctorLevel.ok, 'Site URL', 'matches InstanceAuthConfig'),
+          ];
+        }),
+      ]);
+
+      final expand = find.byKey(const ValueKey('backend-full-check'));
+      await tester.ensureVisible(expand);
+      await tester.tap(expand);
+      await tester.pumpAndSettle();
+      await tester.enterText(
+          find.byKey(const ValueKey('backend-full-check-token')), 'sbp_check_secret');
+      final use = find.byKey(const ValueKey('backend-full-check-use-token'));
+      await tester.ensureVisible(use);
+      await tester.tap(use);
+      await tester.pumpAndSettle();
+      final run = find.byKey(const ValueKey('instance-doctor-run'));
+      await tester.ensureVisible(run);
+      await tester.tap(run);
+      await tester.pumpAndSettle();
+
+      expect(tokens, ['sbp_check_secret']);
+      expect(checked, ['abc123'], reason: 'the device project, by its ref');
+      expect(find.byKey(const ValueKey('instance-doctor-protected')), findsOneWidget);
+      final prefs = await SharedPreferences.getInstance();
+      for (final key in prefs.getKeys()) {
+        expect('${prefs.get(key)}', isNot(contains('sbp_check_secret')));
+      }
+      for (final e in TraceLogger.instance.entries) {
+        expect('$e', isNot(contains('sbp_check_secret')));
+      }
+    });
+
+    testWidgets('S2 — the app\'s own server offers no full check',
+        (tester) async {
+      await pumpServerScreen(tester);
+      expect(find.byKey(const ValueKey('backend-full-check')), findsNothing);
     });
   });
 }

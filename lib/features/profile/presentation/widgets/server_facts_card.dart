@@ -8,6 +8,7 @@ import '../../../../core/backend/schema_version.dart';
 import '../../../../core/instance/schema_compatibility.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../l10n/app_localizations.dart';
+import 'server_full_check.dart';
 
 /// #1309 S1 — which instance this device uses, who owns it, and whether it
 /// is current, answered without any credential.
@@ -70,6 +71,7 @@ class ServerFactsCard extends ConsumerWidget {
                 ),
               ),
             ),
+          if (projectRef != null) ServerFullCheck(projectRef: projectRef),
           if (version != null)
             ListTile(
               key: const ValueKey('backend-version'),

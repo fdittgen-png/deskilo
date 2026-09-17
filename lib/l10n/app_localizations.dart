@@ -15011,6 +15011,24 @@ abstract class AppLocalizations {
   /// **'This changes this device only and never touches your Supabase project.'**
   String get backendResetDeviceOnly;
 
+  /// No description provided for @backendFullCheckTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Run a full check'**
+  String get backendFullCheckTitle;
+
+  /// No description provided for @backendFullCheckHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste a personal access token for this check. It is used for this check only and never stored.'**
+  String get backendFullCheckHint;
+
+  /// No description provided for @backendFullCheckUseToken.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this token'**
+  String get backendFullCheckUseToken;
+
   /// No description provided for @backendServerSaved.
   ///
   /// In en, this message translates to:

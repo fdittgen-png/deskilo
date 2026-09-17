@@ -8598,6 +8598,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'This changes this device only and never touches your Supabase project.';
 
   @override
+  String get backendFullCheckTitle => 'Run a full check';
+
+  @override
+  String get backendFullCheckHint =>
+      'Paste a personal access token for this check. It is used for this check only and never stored.';
+
+  @override
+  String get backendFullCheckUseToken => 'Use this token';
+
+  @override
   String get backendServerSaved =>
       'Saved. Close and reopen the app to use the new server.';
 
