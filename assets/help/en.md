@@ -519,9 +519,11 @@ message is the rule.
 
 ### Features
 
+**Processes first** (#1327). The screen opens on one card per business process — *Workspace & access*, *Billing & payments* and the rest — rather than on a hundred switches. Each card says its state in words beside an icon: **Active** (every feature of the process works), **Partial** (some do), **Available** (none is on yet) or **Needs attention** (a feature is switched on but waits for a prerequisite that is off). It counts the active subprocesses and the features that are on, and warns when switching the whole process on would also need a feature from another process. Tap a card to see its subprocesses and what each feature is doing; tap a feature to reach its switch. One search field reaches processes, subprocesses and features, and shows each result under its path (*Workspace & access › Physical access*); the chips **All**, **Active**, **Available** and **Needs attention** narrow the cards — a partial process counts as both active and available. The **Switches** view, above the list, keeps every switch, their search and the **Changed** chip.
+
 ![](assets/help/images/features-tree.jpg)
 
-*The Features screen: every module with its description; an indented child needs its parent.*
+*The Features screen's Switches view: every module with its description; an indented child needs its parent.*
 
 Switch whole modules on or off per workspace — each toggle carries its description right on the screen: calendar tab, events tab, notification feed grouping, money tab, services, accessory supplements, online payments, invoices, admins issue invoices, invoice PDF template, payment reminders (dunning), VAT management, VAT declarations, e-invoice delivery to the customer, PDF export, series booking, booking for others, push notifications, admins may block seats, table/desk & level reservations, admins may assign levels, kiosk mode, RFID/NFC badges, QR badges, kiosk member photos, members directory, WhatsApp integration, space QR codes, chair NFC tags, member photos on the plan, co-owners, auto check-in/out, data export (Excel), working hours, booking policies, member notifications, document library, member reports, booking deletion requests, role management, plan-object deletion, contextual help hints, and interface animations. Switching a module off removes *all* of its screens and buttons for every member.
 

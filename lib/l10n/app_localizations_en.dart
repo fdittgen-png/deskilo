@@ -7991,6 +7991,74 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profilesEmailCopied => 'E-mail copied.';
 
   @override
+  String get featuresViewProcesses => 'Processes';
+
+  @override
+  String get featuresViewSwitches => 'Switches';
+
+  @override
+  String get processSearchLabel => 'Search processes and features';
+
+  @override
+  String get processFilterAll => 'All';
+
+  @override
+  String get processStateActive => 'Active';
+
+  @override
+  String get processStatePartial => 'Partial';
+
+  @override
+  String get processStateAvailable => 'Available';
+
+  @override
+  String get processStateNeedsAttention => 'Needs attention';
+
+  @override
+  String processSubprocessCount(int active, int total) {
+    return '$active of $total subprocesses active';
+  }
+
+  @override
+  String processFeatureCount(int enabled, int total) {
+    return '$enabled of $total features on';
+  }
+
+  @override
+  String processHeldBack(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count features are on but wait for a switched-off prerequisite',
+      one: '1 feature is on but waits for a switched-off prerequisite',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String processAlsoNeeds(String features) {
+    return 'Switching it all on also needs: $features';
+  }
+
+  @override
+  String get processFeatureOn => 'On';
+
+  @override
+  String get processFeatureOff => 'Off';
+
+  @override
+  String processFeatureWaiting(String feature) {
+    return 'On, waiting for $feature';
+  }
+
+  @override
+  String get processSwitchHint =>
+      'Tap a feature to change it among the switches.';
+
+  @override
+  String get processFilterEmpty => 'No process matches this filter.';
+
+  @override
   String get processWorkspaceAccess => 'Workspace & access';
 
   @override
