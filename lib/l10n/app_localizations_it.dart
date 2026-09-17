@@ -8153,7 +8153,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get processSwitchHint =>
-      'Tocca una funzionalità per cambiarla tra gli interruttori.';
+      'Tocca una funzionalità per leggere le dipendenze e la configurazione attuale.';
 
   @override
   String get processFilterEmpty =>

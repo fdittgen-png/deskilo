@@ -8153,7 +8153,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get processSwitchHint =>
-      'Tippen Sie auf eine Funktion, um sie bei den Schaltern zu ändern.';
+      'Tippen Sie auf eine Funktion, um ihre Abhängigkeiten und aktuelle Konfiguration zu lesen.';
 
   @override
   String get processFilterEmpty => 'Kein Prozess passt zu diesem Filter.';

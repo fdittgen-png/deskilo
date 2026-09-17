@@ -14132,7 +14132,7 @@ abstract class AppLocalizations {
   /// #1327 the process-first overview of the Features screen
   ///
   /// In en, this message translates to:
-  /// **'Tap a feature to change it among the switches.'**
+  /// **'Tap a feature to read its dependencies and current configuration.'**
   String get processSwitchHint;
 
   /// #1327 the process-first overview of the Features screen

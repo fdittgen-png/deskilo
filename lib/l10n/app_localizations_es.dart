@@ -8136,7 +8136,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get processSwitchHint =>
-      'Toque una función para cambiarla entre los interruptores.';
+      'Toque una función para ver sus dependencias y configuración actual.';
 
   @override
   String get processFilterEmpty => 'Ningún proceso coincide con este filtro.';

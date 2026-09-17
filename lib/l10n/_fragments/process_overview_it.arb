@@ -14,6 +14,6 @@
   "processFeatureOn": "Attiva",
   "processFeatureOff": "Disattivata",
   "processFeatureWaiting": "Attiva, in attesa di {feature}",
-  "processSwitchHint": "Tocca una funzionalità per cambiarla tra gli interruttori.",
+  "processSwitchHint": "Tocca una funzionalità per leggere le dipendenze e la configurazione attuale.",
   "processFilterEmpty": "Nessun processo corrisponde a questo filtro."
 }

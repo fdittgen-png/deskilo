@@ -4,7 +4,7 @@
 // and every card's state is the stored feature map read through the
 // registry, said in words beside an icon; search reaches every level
 // with its path, the filters narrow the cards, and a tapped feature
-// lands on its switch, which writes the same delta as before.
+// opens its read-only dependency explanation.
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -210,8 +210,7 @@ void main() {
     });
   });
 
-  testWidgets('a feature tapped on the overview lands on its switch, which '
-      'writes the same delta as ever', (tester) async {
+  testWidgets('a feature tapped on the overview opens read-only explanation', (tester) async {
     final workspace = await pumpFeatures(tester, switches: false);
 
     await tester.tap(find.byKey(const ValueKey('process-header-integrations')));
@@ -221,17 +220,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final tile = find.byKey(const ValueKey('feature-whatsappIntegration'));
-    expect(tile, findsOneWidget);
-    expect(
-      find.byType(SwitchListTile),
-      findsOneWidget,
-      reason: 'the switches view opens already searched to that feature',
-    );
-
-    await tester.tap(tile);
-    await tester.pumpAndSettle();
-    expect(workspace.flagWrites.last, {'whatsappIntegration': false});
+    expect(find.byType(SwitchListTile), findsNothing);
+    expect(find.text('Technical key'), findsOneWidget);
+    expect(workspace.flagWrites, isEmpty);
   });
 
   testWidgets('360 dp at twice the text size, cards open: nothing overflows', (

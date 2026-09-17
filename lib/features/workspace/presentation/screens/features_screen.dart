@@ -35,15 +35,6 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
   bool _changedOnly = false;
   bool _switches = false;
 
-  /// A feature tapped on the overview, shown among the switches — the
-  /// only place a flag is written until #1329's process activation.
-  void _openFeature(String name) => setState(() {
-        _switches = true;
-        _changedOnly = false;
-        _search.text = name;
-        _query = name;
-      });
-
   @override
   void dispose() {
     _search.dispose();
@@ -72,11 +63,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
     bool value,
   ) async {
     final l10n = AppLocalizations.of(context);
-    // #800 — switching one ON switches on everything it NEEDS.
-    //
-    // A switch that can be flipped green while the feature stays absent
-    // is the worst kind of setting: the owner has configured the thing
-    // and the app disagrees, with nothing on screen to explain it.
+    // Switching on includes the prerequisites named in the result.
     final alsoOn = alsoEnabledWith(raw: enabled, feature: feature);
     // #1327 — the write itself (the #963 delta, then the forced
     // refetch) is application/toggle_workspace_feature.dart's decision.
@@ -143,6 +130,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(l10n?.featuresTitle ?? 'Features'), actions: [
         IconButton(
+          key: const ValueKey('process-details-open'),
           tooltip: l10n?.processDetails ?? 'Processes and dependencies',
           icon: const Icon(Icons.account_tree_outlined),
           onPressed: workspace == null ? null : () => Navigator.of(context).push<void>(
@@ -161,7 +149,9 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
                   Expanded(
                     child: ProcessOverview(
                       raw: raw,
-                      onOpenFeature: (f) => _openFeature(featureName(l10n, f)),
+                      onOpenFeature: (f) => Navigator.of(context).push<void>(
+                        MaterialPageRoute(builder: (_) => CapabilityDetails(
+                          feature: f, raw: raw))),
                     ),
                   )
                 else ...[

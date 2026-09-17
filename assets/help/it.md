@@ -525,7 +525,7 @@ messaggio è la regola.
 
 ### Funzionalità
 
-**Prima i processi** (#1327). La schermata si apre con una scheda per ogni processo aziendale — *Spazio e accesso*, *Fatturazione e pagamenti* e gli altri — invece che con un centinaio di interruttori. Ogni scheda dice il suo stato a parole accanto a un'icona: **Attivo** (ogni funzionalità del processo funziona), **Parziale** (alcune), **Disponibile** (nessuna è ancora attiva) oppure **Da verificare** (una funzionalità è attiva ma attende un prerequisito disattivato). Conta i sottoprocessi attivi e le funzionalità attive, e avvisa quando attivare l'intero processo richiederebbe anche una funzionalità di un altro processo. Tocca una scheda per vederne i sottoprocessi e cosa fa ogni funzionalità; tocca una funzionalità per raggiungere il suo interruttore. Un solo campo di ricerca raggiunge processi, sottoprocessi e funzionalità, e mostra ogni risultato sotto il suo percorso (*Spazio e accesso › Accesso fisico*); i chip **Tutti**, **Attivo**, **Disponibile** e **Da verificare** restringono le schede — un processo parziale conta sia come attivo sia come disponibile. La vista **Interruttori**, sopra l'elenco, conserva ogni interruttore, la loro ricerca e il chip **Modificate**.
+**Prima i processi** (#1327). La schermata si apre con una scheda per ogni processo aziendale — *Spazio e accesso*, *Fatturazione e pagamenti* e gli altri — invece che con un centinaio di interruttori. Ogni scheda dice il suo stato a parole accanto a un'icona: **Attivo** (ogni funzionalità del processo funziona), **Parziale** (alcune), **Disponibile** (nessuna è ancora attiva) oppure **Da verificare** (una funzionalità è attiva ma attende un prerequisito disattivato). Conta i sottoprocessi attivi e le funzionalità attive, e avvisa quando attivare l'intero processo richiederebbe anche una funzionalità di un altro processo. Tocca una scheda per vederne i sottoprocessi e cosa fa ogni funzionalità; tocca una funzionalità per leggere le dipendenze e la configurazione attuale. Un solo campo di ricerca raggiunge processi, sottoprocessi e funzionalità, e mostra ogni risultato sotto il suo percorso (*Spazio e accesso › Accesso fisico*); i chip **Tutti**, **Attivo**, **Disponibile** e **Da verificare** restringono le schede — un processo parziale conta sia come attivo sia come disponibile. La vista **Interruttori**, sopra l'elenco, conserva ogni interruttore, la loro ricerca e il chip **Modificate**.
 
 ![](assets/help/images/features-tree.jpg)
 
@@ -537,7 +537,7 @@ L'elenco è **gerarchico**: una funzionalità che ne richiede un'altra compare r
 
 #### Un interruttore di funzionalità
 
-Apri **Processi e dipendenze** da Funzionalità per esplorare ogni processo e le sue capacità. Ogni capacità spiega lo stato salvato, i prerequisiti mancanti e le capacità che la utilizzano, con i rispettivi processi. Viene descritta la configurazione attuale, non la cronologia delle scelte. La chiave tecnica è in una sezione espandibile.
+Apri **Processi e dipendenze** da Funzionalità per esplorare ogni processo e le sue capacità. Ogni capacità spiega lo stato salvato, i prerequisiti mancanti e le capacità che la utilizzano, con i rispettivi processi. Viene descritta la configurazione attuale, non la cronologia delle scelte. La chiave tecnica è in una sezione espandibile. (#1328)
 
 Ogni funzionalità è un interruttore. Accendilo e appaiono **tutte** le
 sue superfici — la scheda, la linguetta, il pulsante, il collegamento

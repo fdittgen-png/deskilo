@@ -536,7 +536,7 @@ message is the rule.
 
 ### Features
 
-**Processes first** (#1327). The screen opens on one card per business process — *Workspace & access*, *Billing & payments* and the rest — rather than on a hundred switches. Each card says its state in words beside an icon: **Active** (every feature of the process works), **Partial** (some do), **Available** (none is on yet) or **Needs attention** (a feature is switched on but waits for a prerequisite that is off). It counts the active subprocesses and the features that are on, and warns when switching the whole process on would also need a feature from another process. Tap a card to see its subprocesses and what each feature is doing; tap a feature to reach its switch. One search field reaches processes, subprocesses and features, and shows each result under its path (*Workspace & access › Physical access*); the chips **All**, **Active**, **Available** and **Needs attention** narrow the cards — a partial process counts as both active and available. The **Switches** view, above the list, keeps every switch, their search and the **Changed** chip.
+**Processes first** (#1327). The screen opens on one card per business process — *Workspace & access*, *Billing & payments* and the rest — rather than on a hundred switches. Each card says its state in words beside an icon: **Active** (every feature of the process works), **Partial** (some do), **Available** (none is on yet) or **Needs attention** (a feature is switched on but waits for a prerequisite that is off). It counts the active subprocesses and the features that are on, and warns when switching the whole process on would also need a feature from another process. Tap a card to see its subprocesses and what each feature is doing; tap a feature to read its dependencies and current configuration. One search field reaches processes, subprocesses and features, and shows each result under its path (*Workspace & access › Physical access*); the chips **All**, **Active**, **Available** and **Needs attention** narrow the cards — a partial process counts as both active and available. The **Switches** view, above the list, keeps every switch, their search and the **Changed** chip.
 
 <p><img src="images/features-tree.jpg" width="240"></p>
 
@@ -555,7 +555,7 @@ The list is **hierarchical**: a feature that needs another sits indented under i
 <!-- anchor: user.features.switch -->
 #### A feature switch
 
-Open **Processes and dependencies** from Features to browse each process and its capabilities. A capability explains its saved state, missing prerequisites and the other capabilities that use it, including their business processes. This describes the current configuration, not who originally selected it. The technical key is available in an expandable section.
+Open **Processes and dependencies** from Features to browse each process and its capabilities. A capability explains its saved state, missing prerequisites and the other capabilities that use it, including their business processes. This describes the current configuration, not who originally selected it. The technical key is available in an expandable section. (#1328)
 
 Every functionality is one switch. Turn it on and **all** of its
 surfaces appear — the tile, the tab, the button, the deep link; turn it

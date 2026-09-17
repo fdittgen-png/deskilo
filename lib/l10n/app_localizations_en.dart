@@ -8083,7 +8083,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get processSwitchHint =>
-      'Tap a feature to change it among the switches.';
+      'Tap a feature to read its dependencies and current configuration.';
 
   @override
   String get processFilterEmpty => 'No process matches this filter.';

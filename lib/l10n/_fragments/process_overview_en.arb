@@ -90,7 +90,7 @@
       }
     }
   },
-  "processSwitchHint": "Tap a feature to change it among the switches.",
+  "processSwitchHint": "Tap a feature to read its dependencies and current configuration.",
   "@processSwitchHint": {
     "description": "#1327 the process-first overview of the Features screen"
   },

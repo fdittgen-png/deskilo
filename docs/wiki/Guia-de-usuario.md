@@ -541,7 +541,7 @@ y su valor: el mensaje es la regla.
 
 ### Funciones
 
-**Primero los procesos** (#1327). La pantalla se abre con una tarjeta por proceso de negocio — *Espacio y acceso*, *Facturación y pagos* y los demás — en lugar de un centenar de interruptores. Cada tarjeta dice su estado con palabras junto a un icono: **Activo** (todas las funciones del proceso funcionan), **Parcial** (algunas), **Disponible** (ninguna está activada aún) o **Requiere atención** (una función está activada pero espera un requisito desactivado). Cuenta los subprocesos activos y las funciones activadas, y avisa cuando activar todo el proceso necesitaría también una función de otro proceso. Toque una tarjeta para ver sus subprocesos y qué hace cada función; toque una función para llegar a su interruptor. Un único campo de búsqueda alcanza procesos, subprocesos y funciones, y muestra cada resultado bajo su ruta (*Espacio y acceso › Acceso físico*); los chips **Todos**, **Activo**, **Disponible** y **Requiere atención** acotan las tarjetas — un proceso parcial cuenta como activo y como disponible. La vista **Interruptores**, encima de la lista, conserva cada interruptor, su búsqueda y el chip **Modificadas**.
+**Primero los procesos** (#1327). La pantalla se abre con una tarjeta por proceso de negocio — *Espacio y acceso*, *Facturación y pagos* y los demás — en lugar de un centenar de interruptores. Cada tarjeta dice su estado con palabras junto a un icono: **Activo** (todas las funciones del proceso funcionan), **Parcial** (algunas), **Disponible** (ninguna está activada aún) o **Requiere atención** (una función está activada pero espera un requisito desactivado). Cuenta los subprocesos activos y las funciones activadas, y avisa cuando activar todo el proceso necesitaría también una función de otro proceso. Toque una tarjeta para ver sus subprocesos y qué hace cada función; toque una función para leer sus dependencias y configuración actual. Un único campo de búsqueda alcanza procesos, subprocesos y funciones, y muestra cada resultado bajo su ruta (*Espacio y acceso › Acceso físico*); los chips **Todos**, **Activo**, **Disponible** y **Requiere atención** acotan las tarjetas — un proceso parcial cuenta como activo y como disponible. La vista **Interruptores**, encima de la lista, conserva cada interruptor, su búsqueda y el chip **Modificadas**.
 
 <p><img src="images/features-tree.jpg" width="240"></p>
 
@@ -560,7 +560,7 @@ La lista es **jerárquica**: una función que necesita otra aparece indentada ba
 <!-- anchor: user.features.switch -->
 #### Un interruptor de funcionalidad
 
-Abra **Procesos y dependencias** desde Funciones para explorar cada proceso y sus capacidades. Cada capacidad explica su estado guardado, los requisitos que faltan y las capacidades que la utilizan, con sus procesos. Se describe la configuración actual, no el historial de selección. La clave técnica aparece en una sección desplegable.
+Abra **Procesos y dependencias** desde Funciones para explorar cada proceso y sus capacidades. Cada capacidad explica su estado guardado, los requisitos que faltan y las capacidades que la utilizan, con sus procesos. Se describe la configuración actual, no el historial de selección. La clave técnica aparece en una sección desplegable. (#1328)
 
 Cada funcionalidad es un interruptor. Actívelo y aparecen **todas** sus
 superficies — la casilla, la pestaña, el botón, el enlace profundo;

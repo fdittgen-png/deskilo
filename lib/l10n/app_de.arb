@@ -5219,7 +5219,7 @@
   "processFeatureOn": "An",
   "processFeatureOff": "Aus",
   "processFeatureWaiting": "An, wartet auf {feature}",
-  "processSwitchHint": "Tippen Sie auf eine Funktion, um sie bei den Schaltern zu ändern.",
+  "processSwitchHint": "Tippen Sie auf eine Funktion, um ihre Abhängigkeiten und aktuelle Konfiguration zu lesen.",
   "processFilterEmpty": "Kein Prozess passt zu diesem Filter.",
   "processWorkspaceAccess": "Arbeitsbereich und Zugang",
   "processSpaceManagement": "Raumverwaltung",

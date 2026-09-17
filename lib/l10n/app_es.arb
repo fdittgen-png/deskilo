@@ -5219,7 +5219,7 @@
   "processFeatureOn": "Activada",
   "processFeatureOff": "Desactivada",
   "processFeatureWaiting": "Activada, esperando {feature}",
-  "processSwitchHint": "Toque una función para cambiarla entre los interruptores.",
+  "processSwitchHint": "Toque una función para ver sus dependencias y configuración actual.",
   "processFilterEmpty": "Ningún proceso coincide con este filtro.",
   "processWorkspaceAccess": "Espacio y acceso",
   "processSpaceManagement": "Gestión de espacios",
