@@ -18,6 +18,7 @@ import 'managed_access.dart';
 import 'workspace_overview.dart';
 import 'site.dart';
 import 'template_preview.dart';
+import 'template_publication.dart';
 import 'workspace_template.dart';
 
 /// Pure-Dart workspace boundary. Supabase impl in data/, fake in tests.
@@ -672,7 +673,12 @@ abstract class WorkspaceRepository {
     String description = '',
     TemplateVisibility visibility = TemplateVisibility.private,
     List<String> tags = const [],
+    List<String>? groups,
   });
+
+  /// #1280 — what publishing [workspaceId] with [groups] would carry.
+  Future<TemplatePublication> templatePublicationPreview(String workspaceId,
+      {List<String>? groups});
 
   Future<void> setWorkspaceTemplateVisibility(
       String templateId, TemplateVisibility visibility);

@@ -55,7 +55,7 @@ final RegExp _repositoryUse =
 /// fails.
 const Map<String, int> _repositoryInWidgets = {
   'money': 25,
-  'workspace': 20,
+  'workspace': 19, // 2026-09-17 #1280 S3 20→19: the save sheet publishes through application/publish_template.dart
   'auth': 4,
   // Still 4 after #1234: `space_act_sheet.dart` moved its DECISION to
   // `application/act_on_space.dart` but still resolves the repository

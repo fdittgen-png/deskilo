@@ -6125,6 +6125,42 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Änderungen konnten nicht angezeigt werden. Es wurde nichts angewendet.';
 
   @override
+  String get libraryPublishGroups => 'Was mitreist';
+
+  @override
+  String get libraryNeverPublished => 'Nie veröffentlicht';
+
+  @override
+  String get libraryNeverSites => 'Standorte und ihre Adressen';
+
+  @override
+  String get libraryNeverPayment => 'Bankdaten';
+
+  @override
+  String get libraryNeverDocumentDesign => 'Dokumentgestaltung';
+
+  @override
+  String get libraryNeverDocumentLinks => 'Links zu Ihren Dokumenten';
+
+  @override
+  String get libraryNeverInvitations => 'Einladungstexte';
+
+  @override
+  String get libraryNeverIdentity =>
+      'Ihre Adresse, Rechtskennungen, Pflichtangaben und WhatsApp-Gruppe';
+
+  @override
+  String libraryPlanNames(String names) {
+    return 'Diese Namen reisen mit dem Plan: $names';
+  }
+
+  @override
+  String get librarySaveTags => 'Schlagwörter, durch Kommas getrennt';
+
+  @override
+  String get libraryPublishNothing => 'Wählen Sie mindestens eine Gruppe.';
+
+  @override
   String get libraryApply => 'Auf diesen Raum anwenden';
 
   @override

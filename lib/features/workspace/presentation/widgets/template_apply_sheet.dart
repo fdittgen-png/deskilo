@@ -10,6 +10,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../application/apply_template.dart';
 import '../../domain/template_preview.dart';
 import '../../domain/workspace_template.dart';
+import 'template_group_label.dart';
 
 /// #1280 S2 — flow B: apply a template to a workspace that already runs.
 ///
@@ -58,26 +59,6 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
   Set<String>? _selected;
   bool _busy = false;
 
-  static String groupLabel(AppLocalizations? l10n, TemplateGroup group) =>
-      switch (group) {
-        TemplateGroup.space => l10n?.libraryGroupSpace ?? 'Space & plan',
-        TemplateGroup.hoursBooking =>
-          l10n?.libraryGroupHoursBooking ?? 'Hours & booking',
-        TemplateGroup.pricingCredits =>
-          l10n?.libraryGroupPricingCredits ?? 'Prices & credits',
-        TemplateGroup.calendarNavigation =>
-          l10n?.libraryGroupCalendarNavigation ?? 'Calendar & closures',
-        TemplateGroup.wording => l10n?.libraryGroupWording ?? 'Wording',
-        TemplateGroup.rolesAccess =>
-          l10n?.libraryGroupRolesAccess ?? 'Roles & access',
-        TemplateGroup.forms => l10n?.libraryGroupForms ?? 'Forms',
-        TemplateGroup.appearance => l10n?.libraryGroupAppearance ?? 'Appearance',
-        TemplateGroup.documentsOperations =>
-          l10n?.libraryGroupDocumentsOperations ?? 'Documents & operations',
-        TemplateGroup.unknown => l10n?.libraryGroupUnknown ??
-            'Other — this version cannot apply it',
-      };
-
   static String stateLabel(AppLocalizations? l10n, TemplateGroupState state) =>
       switch (state) {
         TemplateGroupState.isNew => l10n?.libraryStateNew ?? 'New',
@@ -103,7 +84,7 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
     final sensitive = [
       for (final g in preview.groups)
         if (selected.contains(g.wire) && g.group.needsConfirmation)
-          groupLabel(l10n, g.group),
+          templateGroupLabel(l10n, g.group),
     ];
     if (sensitive.isNotEmpty) {
       final ok = await showDialog<bool>(
@@ -208,7 +189,7 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
                   for (final g in preview.groups)
                     _GroupRow(
                       key: ValueKey('template-group-${g.wire}'),
-                      title: groupLabel(l10n, g.group),
+                      title: templateGroupLabel(l10n, g.group),
                       state: stateLabel(l10n, g.state),
                       reason: reasonText(l10n, g.reason),
                       enabled: g.selectable && !_busy,

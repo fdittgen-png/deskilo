@@ -595,7 +595,7 @@ eingebaute, die öffentlichen und die mit Ihrer E-Mail-Adresse geteilten.
 
 **Ihre Vorlagen.** *Diesen Raum als Vorlage speichern* nimmt einen
 Schnappschuss Ihres Grundrisses. Preise, Planbilder und die Adresse Ihres
-Standorts werden vor dem Speichern entfernt. Jede Vorlage ist *Nur ich*,
+Standorts werden vor dem Speichern entfernt. Das Blatt fragt, **was mitreist** — haken Sie die zu veröffentlichenden Gruppen an, eine Vorlage nur mit Öffnungszeiten ist in Ordnung — und nennt, was den Raum **nie** verlässt (Bankdaten, Standorte und ihre Adressen, Rechtskennungen, Einladungstexte, Dokumentlinks und -gestaltung) und **welche Namen mit dem Plan reisen**, denn Räume und Tische werden nach Namen zusammengeführt und lassen sich daher nicht verbergen. Fügen Sie **Schlagwörter** hinzu, damit andere sie finden (#1280). Jede Vorlage ist *Nur ich*,
 bis Sie es ändern: *Von mir eingeladene Personen* (per E-Mail — die
 Einladung wirkt, sobald sich diese Adresse anmeldet; ob dort ein Konto
 besteht, wird nicht verraten) oder *Alle*, womit sie in die Bibliothek

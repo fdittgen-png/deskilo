@@ -6132,6 +6132,42 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les changements n\'ont pas pu être prévisualisés. Rien n\'a été appliqué.';
 
   @override
+  String get libraryPublishGroups => 'Ce qui voyage';
+
+  @override
+  String get libraryNeverPublished => 'Jamais publié';
+
+  @override
+  String get libraryNeverSites => 'Les sites et leurs adresses';
+
+  @override
+  String get libraryNeverPayment => 'Coordonnées bancaires';
+
+  @override
+  String get libraryNeverDocumentDesign => 'Mise en page des documents';
+
+  @override
+  String get libraryNeverDocumentLinks => 'Liens vers vos documents';
+
+  @override
+  String get libraryNeverInvitations => 'Textes d\'invitation';
+
+  @override
+  String get libraryNeverIdentity =>
+      'Votre adresse, vos identifiants légaux, mentions légales et groupe WhatsApp';
+
+  @override
+  String libraryPlanNames(String names) {
+    return 'Ces noms partent avec le plan : $names';
+  }
+
+  @override
+  String get librarySaveTags => 'Étiquettes, séparées par des virgules';
+
+  @override
+  String get libraryPublishNothing => 'Choisissez au moins un groupe.';
+
+  @override
   String get libraryApply => 'Appliquer à cet espace';
 
   @override

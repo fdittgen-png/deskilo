@@ -66,8 +66,12 @@ void main() {
     await tester.pumpAndSettle();
     await tester.enterText(
         find.byKey(const ValueKey('save-template-name')), 'Our loft');
+    await tester.pump();
+    await tester.ensureVisible(find.byKey(const ValueKey('save-template-confirm')));
     await tester.tap(find.byKey(const ValueKey('save-template-confirm')));
     await tester.pumpAndSettle();
+    expect(workspace.savedTemplateGroups.single, isNull,
+        reason: 'every group ticked publishes whatever the server allows');
     final mine = workspace.templates.where((t) => t.key == 'our_loft').single;
     expect(mine.visibility, TemplateVisibility.private,
         reason: 'sharing is asked for, never assumed');
@@ -82,6 +86,60 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('library-apply-confirm')));
     await tester.pumpAndSettle();
     expect(workspace.appliedTemplates.single.templateId, 'tpl-shared');
+  });
+
+  group('#1280 S3 — publishing chooses its groups and shows what stays home',
+      () {
+    Future<FakeWorkspaceRepository> openPublish(WidgetTester tester) async {
+      final workspace = await _pumpLibrary(tester);
+      await tester.tap(find.byKey(const ValueKey('library-save')));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+          find.byKey(const ValueKey('save-template-name')), 'Hours');
+      await tester.pump();
+      return workspace;
+    }
+
+    testWidgets('what never travels is named, and the plan names are shown',
+        (tester) async {
+      await openPublish(tester);
+      final never = tester
+          .widget<Text>(find.byKey(const ValueKey('save-template-never')))
+          .data!;
+      expect(never, contains('Bank details'));
+      expect(never, contains('legal identifiers'),
+          reason: 'identity travels with its legal keys stripped — say so');
+      expect(find.textContaining('Ground floor'), findsOneWidget);
+    });
+
+    testWidgets('unticking groups publishes only the rest, and the plan names '
+        'leave with the plan', (tester) async {
+      final workspace = await openPublish(tester);
+      for (final g in ['space', 'wording']) {
+        final box = find.byKey(ValueKey('save-template-group-$g'));
+        await tester.ensureVisible(box);
+        await tester.tap(box);
+        await tester.pumpAndSettle();
+      }
+      expect(find.byKey(const ValueKey('save-template-plan-names')), findsNothing);
+      await tester.ensureVisible(find.byKey(const ValueKey('save-template-confirm')));
+      await tester.tap(find.byKey(const ValueKey('save-template-confirm')));
+      await tester.pumpAndSettle();
+      expect(workspace.savedTemplateGroups.single, ['hours_booking']);
+    });
+
+    testWidgets('nothing ticked cannot be published', (tester) async {
+      await openPublish(tester);
+      for (final g in ['space', 'wording', 'hours_booking']) {
+        final box = find.byKey(ValueKey('save-template-group-$g'));
+        await tester.ensureVisible(box);
+        await tester.tap(box);
+        await tester.pumpAndSettle();
+      }
+      final button = tester.widget<ButtonStyleButton>(
+          find.byKey(const ValueKey('save-template-confirm')));
+      expect(button.onPressed, isNull);
+    });
   });
 
   group('#1280 S2 — preview changes, apply only what was chosen', () {

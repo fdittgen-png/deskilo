@@ -595,7 +595,7 @@ e-mail. *Ver los cambios* muestra, grupo por grupo, lo que la plantilla haría a
 
 **Sus plantillas.** *Guardar este espacio como plantilla* toma una
 instantánea de su plano. Los precios, las imágenes del plano y la
-dirección de su sede se eliminan antes de guardar. Cada plantilla es
+dirección de su sede se eliminan antes de guardar. La hoja pregunta **qué viaja** — marque los grupos que publicar, una plantilla solo de horarios está bien — y dice lo que **nunca** sale del espacio (datos bancarios, sedes y sus direcciones, identificadores legales, textos de invitación, enlaces y diseño de documentos) y **qué nombres viajan con el plano**, porque salas y mesas se fusionan por nombre y no pueden ocultarse. Añada **etiquetas** para que otros la encuentren (#1280). Cada plantilla es
 *Solo yo* hasta que decida lo contrario: *Personas que invito* (por
 e-mail — la invitación funciona en cuanto esa dirección inicia sesión,
 sin revelar si ya tiene cuenta) o *Todos*, que la coloca en la biblioteca.

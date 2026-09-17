@@ -6068,6 +6068,42 @@ class AppLocalizationsEn extends AppLocalizations {
       'The changes could not be previewed. Nothing was applied.';
 
   @override
+  String get libraryPublishGroups => 'What travels';
+
+  @override
+  String get libraryNeverPublished => 'Never published';
+
+  @override
+  String get libraryNeverSites => 'Sites and their addresses';
+
+  @override
+  String get libraryNeverPayment => 'Bank details';
+
+  @override
+  String get libraryNeverDocumentDesign => 'Document designs';
+
+  @override
+  String get libraryNeverDocumentLinks => 'Links to your documents';
+
+  @override
+  String get libraryNeverInvitations => 'Invitation texts';
+
+  @override
+  String get libraryNeverIdentity =>
+      'Your address, legal identifiers, legal mentions and WhatsApp group';
+
+  @override
+  String libraryPlanNames(String names) {
+    return 'These names go with the plan: $names';
+  }
+
+  @override
+  String get librarySaveTags => 'Tags, separated by commas';
+
+  @override
+  String get libraryPublishNothing => 'Choose at least one group.';
+
+  @override
   String get libraryApply => 'Apply to this space';
 
   @override
