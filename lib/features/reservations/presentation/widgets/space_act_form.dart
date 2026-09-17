@@ -11,6 +11,7 @@ import '../../domain/picked_time.dart';
 import '../../domain/walk_up_window.dart';
 import 'booking_range_text.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/theme/app_typography.dart';
 
 /// THE action + derived-period core of the kiosk one-sheet (#529),
 /// extracted for #622 so the app's scan flow offers the SAME options
@@ -345,9 +346,7 @@ class SpaceActFormState extends State<SpaceActForm> {
           Text(
             bookingRangeText(context, appFormatOf(context), l10n, _start, _end),
             key: ValueKey('$prefix-period-range'),
-            style: theme.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
+            style: theme.textTheme.bodyMedium?.emphasised,
           ),
           if (offerCheckIn)
             SwitchListTile(

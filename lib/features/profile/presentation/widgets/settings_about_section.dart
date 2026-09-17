@@ -8,6 +8,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
 import 'settings_section_header.dart';
+import '../../../../core/theme/app_typography.dart';
 
 // About-section facts (#560): proper nouns and URLs, identical in every
 // UI language — consts like the endonyms, not l10n keys.
@@ -96,9 +97,7 @@ List<Widget> aboutSettingsTiles(
               children: [
                 Text(
                   l10n?.aboutSupportTitle ?? 'Support this project',
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+                  style: Theme.of(context).textTheme.sectionTitle,
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
