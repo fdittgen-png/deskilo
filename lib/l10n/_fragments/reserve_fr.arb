@@ -6,6 +6,7 @@
   "reservationEditTimes": "Modifier l'horaire",
   "reservationUpdatedSnack": "Réservation mise à jour.",
   "reservationCancelledSnack": "Réservation annulée.",
+  "reserveViewMenu": "Vue",
   "reserveDayView": "Jour",
   "reserveWeekView": "Semaine",
   "reserveFullDayChip": "Journée entière",

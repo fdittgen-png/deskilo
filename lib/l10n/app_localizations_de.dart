@@ -9038,6 +9038,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reservationCancelledSnack => 'Reservierung storniert.';
 
   @override
+  String get reserveViewMenu => 'Ansicht';
+
+  @override
   String get reserveDayView => 'Tag';
 
   @override

@@ -35,6 +35,7 @@ import 'package:deskilo/app/shell/shell_center_button.dart';
 import '../../helpers/mock_providers.dart';
 import '../calendar/day_timeline_test.dart' show addSecondLevel;
 import '../plan/time_scroller_test.dart' show pickChipTime;
+import '../../helpers/reserve_view.dart';
 
 const _amChip = ValueKey('reserve-am-chip');
 const _pmChip = ValueKey('reserve-pm-chip');
@@ -217,7 +218,7 @@ void main() {
 
   testWidgets(
       'landscape splits the hub into a side panel + level (no overflow, the '
-      'four-view toggle scales to fit)', (tester) async {
+      'view menu fits)', (tester) async {
     await pumpHub(tester);
     // Rotate to a phone landscape after opening the hub.
     tester.view.physicalSize = const Size(760, 360);
@@ -283,10 +284,53 @@ void main() {
     expect(find.byKey(_pmChip), findsNothing);
     expect(find.byKey(_dayChip), findsNothing);
 
-    // Plan · Day · Week switch with the plan canvas as the default view.
+    // One View control with the plan canvas as the default view.
     expect(find.byKey(const ValueKey('reserve-view-switch')), findsOneWidget);
     expect(find.byKey(_canvasKey), findsOneWidget);
     expect(find.byType(DayTimeline), findsNothing);
+  });
+
+  testWidgets(
+      '#1301 S2 — the time views wait behind one named View control; '
+      'plan and list stay one tap apart', (tester) async {
+    await pumpHub(tester);
+
+    // First open: the booking surface and its name, no competing segments.
+    final viewControl = find.byKey(const ValueKey('reserve-view-switch'));
+    expect(find.descendant(of: viewControl, matching: find.text('Plan')),
+        findsOneWidget);
+    expect(find.byTooltip('Week'), findsNothing);
+    expect(find.byTooltip('Month'), findsNothing);
+    expect(find.byKey(const ValueKey('reserve-seat-view-switch')),
+        findsOneWidget);
+
+    // The menu names every view, the current one checked.
+    await tester.tap(viewControl);
+    await tester.pumpAndSettle();
+    for (final view in ['plan', 'day', 'week', 'month']) {
+      expect(find.byKey(ValueKey('reserve-view-$view')), findsOneWidget);
+    }
+    expect(
+        find.descendant(
+            of: find.byKey(const ValueKey('reserve-view-plan')),
+            matching: find.byIcon(Icons.check)),
+        findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('reserve-view-week')));
+    await tester.pumpAndSettle();
+    expect(find.descendant(of: viewControl, matching: find.text('Week')),
+        findsOneWidget);
+    // A time view has no map/list presentation to switch.
+    expect(find.byKey(const ValueKey('reserve-seat-view-switch')),
+        findsNothing);
+
+    // Back to the plan, then list and plan are a direct toggle.
+    await pickReserveView(tester, 'plan');
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('reserve-seat-view-switch')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(_canvasKey), findsNothing);
+    expect(find.descendant(of: viewControl, matching: find.text('Plan')),
+        findsOneWidget);
   });
 
   testWidgets(
@@ -447,7 +491,7 @@ void main() {
       ],
     );
 
-    await tester.tap(find.byTooltip('Day'));
+    await pickReserveView(tester, 'day');
     await tester.pumpAndSettle();
 
     // Everyone mode: the foreign block is visible and labelled.
@@ -469,7 +513,7 @@ void main() {
       '(master flake, CI #416 — the line crossed a block centre at tap '
       'time and swallowed the tap)', (tester) async {
     await pumpHub(tester);
-    await tester.tap(find.byTooltip('Day'));
+    await pickReserveView(tester, 'day');
     await tester.pumpAndSettle();
 
     final line =
@@ -483,7 +527,7 @@ void main() {
       'the seat row, and no pager', (tester) async {
     await pumpHub(tester);
 
-    await tester.tap(find.byTooltip('Week'));
+    await pickReserveView(tester, 'week');
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('reserve-week-grid')), findsOneWidget);
@@ -531,7 +575,7 @@ void main() {
       ],
     );
 
-    await tester.tap(find.byTooltip('Week'));
+    await pickReserveView(tester, 'week');
     await tester.pumpAndSettle();
 
     final brightness = _gridBrightness(tester);
@@ -580,7 +624,7 @@ void main() {
       ],
     );
 
-    await tester.tap(find.byTooltip('Week'));
+    await pickReserveView(tester, 'week');
     await tester.pumpAndSettle();
 
     final brightness = _gridBrightness(tester);
@@ -612,7 +656,7 @@ void main() {
       'Day view', (tester) async {
     await pumpHub(tester);
 
-    await tester.tap(find.byTooltip('Week'));
+    await pickReserveView(tester, 'week');
     await tester.pumpAndSettle();
 
     // A neighbouring day inside the same ISO week (Sundays step back).
@@ -663,7 +707,7 @@ void main() {
       ],
     );
 
-    await tester.tap(find.byTooltip('Week'));
+    await pickReserveView(tester, 'week');
     await tester.pumpAndSettle();
     await tester
         .tap(find.byKey(WeekGrid.cellKey('seat-4', today, morning: true)));
@@ -689,7 +733,7 @@ void main() {
       'level headers (#221 semantics)', (tester) async {
     await pumpHub(tester, twoLevels: true);
 
-    await tester.tap(find.byTooltip('Week'));
+    await pickReserveView(tester, 'week');
     await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(ChoiceChip, 'All levels').first);
     await tester.pumpAndSettle();
@@ -762,7 +806,7 @@ void main() {
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byTooltip('Week'));
+    await pickReserveView(tester, 'week');
     await tester.pumpAndSettle();
 
     // Both months around the boundary were fetched (month providers).
@@ -815,7 +859,7 @@ void main() {
 
     // Observable regardless of whether the day still has a strip pill:
     // the Day view timeline is on the picked day.
-    await tester.tap(find.byTooltip('Day'));
+    await pickReserveView(tester, 'day');
     await tester.pumpAndSettle();
     final timeline = tester.widget<DayTimeline>(find.byType(DayTimeline));
     expect(DateUtils.isSameDay(timeline.day, target), isTrue);
@@ -877,7 +921,7 @@ void main() {
       ],
     );
 
-    await tester.tap(find.byTooltip('Month'));
+    await pickReserveView(tester, 'month');
     await tester.pumpAndSettle();
 
     expect(find.byType(MonthGrid), findsOneWidget);
@@ -909,7 +953,7 @@ void main() {
         : DateTime(today.year, today.month, 1);
     await pumpHub(tester);
 
-    await tester.tap(find.byTooltip('Month'));
+    await pickReserveView(tester, 'month');
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(MonthGrid.cellKey(other)));
     await tester.pumpAndSettle();
@@ -930,7 +974,7 @@ void main() {
       granularity: BookingGranularity.halfDay,
     );
 
-    await tester.tap(find.byTooltip('Week'));
+    await pickReserveView(tester, 'week');
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(ValueKey(
       'week-free-seat-4-${WeekGrid.dayStampOf(today)}-am',
@@ -967,7 +1011,7 @@ void main() {
       ],
     );
 
-    await tester.tap(find.byTooltip('Week'));
+    await pickReserveView(tester, 'week');
     await tester.pumpAndSettle();
 
     expect(
@@ -988,7 +1032,7 @@ void main() {
       granularity: BookingGranularity.halfDay,
     );
 
-    await tester.tap(find.byTooltip('Day'));
+    await pickReserveView(tester, 'day');
     await tester.pumpAndSettle();
 
     // No reservations — but the seat row is there, not an empty hint.
@@ -1018,15 +1062,15 @@ void main() {
 
     expect(find.byKey(_amChip), findsOneWidget); // Plan view
 
-    await tester.tap(find.byTooltip('Day'));
+    await pickReserveView(tester, 'day');
     await tester.pumpAndSettle();
     expect(find.byKey(_amChip), findsOneWidget);
 
-    await tester.tap(find.byTooltip('Week'));
+    await pickReserveView(tester, 'week');
     await tester.pumpAndSettle();
     expect(find.byKey(_amChip), findsNothing);
 
-    await tester.tap(find.byTooltip('Month'));
+    await pickReserveView(tester, 'month');
     await tester.pumpAndSettle();
     expect(find.byKey(_amChip), findsNothing);
   });
@@ -1117,7 +1161,7 @@ void main() {
 
     expect(find.byKey(const ValueKey('reserve-closed-banner')), findsNothing,
         reason: 'the tap landed on the Monday after, which is open');
-    await tester.tap(find.byTooltip('Day'));
+    await pickReserveView(tester, 'day');
     await tester.pumpAndSettle();
     final timeline = tester.widget<DayTimeline>(find.byType(DayTimeline));
     expect(timeline.day.weekday, DateTime.monday);

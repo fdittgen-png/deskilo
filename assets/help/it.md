@@ -101,7 +101,7 @@ La piantina può somigliare al tuo spazio reale: il proprietario può mettere un
 
 Muoversi:
 
-- In alto: un interruttore **mappa / elenco** (l'elenco mostra gli stessi posti come righe), il **chip della data** (tocca per sfogliare un altro giorno) e i controlli della finestra, che seguono la granularità del tuo spazio (§8): tre **chip di fascia oraria** — mattina, pomeriggio, giornata intera — dove lo spazio prenota a mezze giornate; solo *Giornata intera* dove prenota a giornate; controlli **da → a** su una griglia di minuti o a orari liberi; e gli uni e gli altri con gli *orari reali*.
+- In alto: il controllo **Vista**, che nomina ciò che stai guardando (*Piantina ▾*) e apre le altre viste — **Giorno**, **Settimana** e **Mese**, per esplorare più che per prenotare (#1301); un interruttore **mappa / elenco** (l'elenco mostra gli stessi posti come righe), il **chip della data** (tocca per sfogliare un altro giorno) e i controlli della finestra, che seguono la granularità del tuo spazio (§8): tre **chip di fascia oraria** — mattina, pomeriggio, giornata intera — dove lo spazio prenota a mezze giornate; solo *Giornata intera* dove prenota a giornate; controlli **da → a** su una griglia di minuti o a orari liberi; e gli uni e gli altri con gli *orari reali*.
 - La tela **si adatta da sola** al tuo piano all'apertura o alla rotazione del dispositivo; **pizzica per zoomare** o usa i pulsanti **+ / −**, trascina le **barre di scorrimento** ai bordi e tocca il pulsante di **adattamento** per ricentrare.
 - Scegli il piano dalla **barra dei livelli** a destra (1, 2, …); la sua **icona livelli** agisce sull'intero livello (sotto). In **orizzontale**, i controlli passano in un pannello laterale e la piantina riempie lo schermo — comodo sui tablet.
 

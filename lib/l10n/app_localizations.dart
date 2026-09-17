@@ -15761,6 +15761,12 @@ abstract class AppLocalizations {
   /// **'Reservation cancelled.'**
   String get reservationCancelledSnack;
 
+  /// Name of the Reserve hub control that opens the list of views: Plan, Day, Week, Month (#1301)
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get reserveViewMenu;
+
   /// Reserve hub view segment showing the selected day's per-seat timeline (#208)
   ///
   /// In en, this message translates to:

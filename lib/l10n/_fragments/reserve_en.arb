@@ -32,6 +32,10 @@
   "@reservationCancelledSnack": {
     "description": "Snackbar after an own reservation was cancelled from the detail sheet"
   },
+  "reserveViewMenu": "View",
+  "@reserveViewMenu": {
+    "description": "Name of the Reserve hub control that opens the list of views: Plan, Day, Week, Month (#1301)"
+  },
   "reserveDayView": "Day",
   "@reserveDayView": {
     "description": "Reserve hub view segment showing the selected day's per-seat timeline (#208)"

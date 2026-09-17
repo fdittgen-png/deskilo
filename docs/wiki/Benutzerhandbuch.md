@@ -101,7 +101,7 @@ Der Plan kann wie dein echter Raum aussehen: die Inhaberin kann ein **Foto des R
 
 Navigation:
 
-- Oben: der **Karte/Liste**-Umschalter (die Liste zeigt dieselben Plätze als Zeilen), der **Datums-Chip** (antippen für einen anderen Tag) und die Fenster-Bedienelemente, die der Granularität deines Space folgen (§8): drei **Tageszeit-Chips** — Vormittag, Nachmittag, ganzer Tag —, wo der Space in Halbtagen bucht; nur *Ganzer Tag*, wo er in ganzen Tagen bucht; **Von → Bis**-Regler auf einem Minutenraster oder in freier Zeitwahl; und unter *echten Uhrzeiten* beides.
+- Oben: das **Ansicht**-Menü, das nennt, was du gerade siehst (*Plan ▾*), und die anderen Ansichten öffnet — **Tag**, **Woche** und **Monat**, zum Erkunden statt zum Buchen (#1301); der **Karte/Liste**-Umschalter (die Liste zeigt dieselben Plätze als Zeilen), der **Datums-Chip** (antippen für einen anderen Tag) und die Fenster-Bedienelemente, die der Granularität deines Space folgen (§8): drei **Tageszeit-Chips** — Vormittag, Nachmittag, ganzer Tag —, wo der Space in Halbtagen bucht; nur *Ganzer Tag*, wo er in ganzen Tagen bucht; **Von → Bis**-Regler auf einem Minutenraster oder in freier Zeitwahl; und unter *echten Uhrzeiten* beides.
 - Die Leinwand **passt sich automatisch ein**; **Pinch-Zoom** oder **+ / −**, **Scrollleisten** an den Rändern, **Einpassen**-Knopf zum Zentrieren.
 - Die Etage wählst du am **Ebenen-Rail** rechts (1, 2, …); sein **Ebenen-Icon** wirkt auf die ganze Etage (unten). Im **Querformat** wandern die Bedienelemente in ein Seitenpanel.
 

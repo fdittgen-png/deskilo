@@ -31,6 +31,7 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/reserve_view.dart';
 
 DateTime _at(int hour, [int minute = 0]) =>
     DateTime(kTestNow.year, kTestNow.month, kTestNow.day, hour, minute);
@@ -368,7 +369,7 @@ void main() {
         'Week view: a closed day is drawn closed and its free slot refuses '
         'with the closed sentence — no booking sheet', (tester) async {
       await pumpHub(tester, openWeekdays: _allWeekdaysExceptToday());
-      await tester.tap(find.byTooltip('Week'));
+      await pickReserveView(tester, 'week');
       await tester.pumpAndSettle();
       expect(find.byKey(WeekGrid.closedHeaderKey(kTestNow)), findsOneWidget);
       // The closed cell carries no free-slot affordance at all.
@@ -392,7 +393,7 @@ void main() {
         'Month view: a closed day says Closed instead of a free count',
         (tester) async {
       await pumpHub(tester, openWeekdays: _allWeekdaysExceptToday());
-      await tester.tap(find.byTooltip('Month'));
+      await pickReserveView(tester, 'month');
       await tester.pumpAndSettle();
       final cell = find.byKey(MonthGrid.cellKey(kTestNow));
       expect(cell, findsOneWidget);
@@ -424,7 +425,7 @@ void main() {
             const BookingPolicies(outsideHoursMode: OutsideHoursMode.off),
         granularity: BookingGranularity.halfDay,
       );
-      await tester.tap(find.byTooltip('Week'));
+      await pickReserveView(tester, 'week');
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(ValueKey(
         'week-free-seat-4-${WeekGrid.dayStampOf(kTestNow)}-pm',
@@ -448,7 +449,7 @@ void main() {
         policies: const BookingPolicies(advanceHorizonDays: 1),
         granularity: BookingGranularity.halfDay,
       );
-      await tester.tap(find.byTooltip('Week'));
+      await pickReserveView(tester, 'week');
       await tester.pumpAndSettle();
       // Two days ahead is beyond a 1-day horizon.
       final later = kTestNow.add(const Duration(days: 2));

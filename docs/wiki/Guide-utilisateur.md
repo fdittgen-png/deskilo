@@ -101,7 +101,7 @@ Le plan peut ressembler à votre espace réel : le propriétaire peut mettre une
 
 S'y déplacer :
 
-- En haut : la bascule **carte / liste** (la liste montre les mêmes places en lignes), la **puce de date** (touchez pour parcourir un autre jour) et les commandes de fenêtre, qui suivent la granularité de votre espace (§8) : trois **puces de moment** — matin, après-midi, journée — là où l'espace réserve par demi-journées ; seulement *Journée* là où il réserve par journées entières ; des commandes **de → à** sur une grille de minutes ou une plage horaire libre ; et les deux en *heures réelles*.
+- En haut : la commande **Vue**, qui nomme ce que vous regardez (*Plan ▾*) et ouvre les autres vues — **Jour**, **Semaine** et **Mois**, pour explorer plutôt que réserver (#1301) ; la bascule **carte / liste** (la liste montre les mêmes places en lignes), la **puce de date** (touchez pour parcourir un autre jour) et les commandes de fenêtre, qui suivent la granularité de votre espace (§8) : trois **puces de moment** — matin, après-midi, journée — là où l'espace réserve par demi-journées ; seulement *Journée* là où il réserve par journées entières ; des commandes **de → à** sur une grille de minutes ou une plage horaire libre ; et les deux en *heures réelles*.
 - Le canevas **s'ajuste automatiquement** à l'ouverture ou à la rotation ; **pincez pour zoomer** ou utilisez **+ / −**, tirez les **barres de défilement**, touchez le bouton **ajuster** pour recentrer.
 - Choisissez l'étage sur le **rail des niveaux** à droite (1, 2, …) ; son **icône calques** agit sur le niveau entier (ci-dessous). En **paysage**, les commandes passent dans un panneau latéral.
 
