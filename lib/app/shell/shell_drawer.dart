@@ -157,7 +157,13 @@ class ShellDrawer extends ConsumerWidget {
           leading: Icon(e.icon),
           title: Text(e.label),
           selected: e.selected,
-          trailing: e.key == 'drawer-events' && pendingEvents > 0
+          // Every badge opens the content it counts (#1306 S3): the events
+          // entry while the bell is on, the Calendar entry when the
+          // calendar carries the decisions instead.
+          trailing: pendingEvents > 0 &&
+                  (e.key == 'drawer-events' ||
+                      (e.key == 'drawer-tab-${ShellBranch.calendar}' &&
+                          decisionSignalOnCalendar(features)))
               ? Badge.count(count: pendingEvents)
               : null,
           onTap: e.onTap,
