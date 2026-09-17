@@ -10637,6 +10637,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get workspaceSettingsSaved => 'Espace enregistré.';
 
   @override
+  String get workspaceSettingsConflict =>
+      'Quelqu\'un a modifié ces réglages pendant votre saisie. Rien n\'a été enregistré ; vos modifications sont toujours là.';
+
+  @override
   String get workspaceSettingsCurrencyHelper =>
       'Proposée d\'après le pays — modifiable si votre communauté facture dans une autre devise.';
 

@@ -878,6 +878,8 @@ The workspace's own screen, top to bottom:
 - **The setup questionnaire** — <https://fdittgen-png.github.io/deskilo/setup.html> (§1 explains it in full): the standalone page that collects a whole configuration *before* the app exists. **Import the space (XML)** above is where its file lands — settings, accessories and floor plan directly; the file's `<setup>` section carries billing, legal identity, roles and members for the screens that own them.
 - **Danger zone** — **Reset the workspace**: deletes all reservations, the accounting and the floor plan; keeps settings and members. Guarded by a typed confirmation.
 
+**One Save, all or nothing (#1451).** **Save** writes the whole form in one step: country, currency and time zone, the WhatsApp group, the address, the workspace language, the invitation templates, desk transparency and how a new member starts. If any of it is refused, none of it is kept. If someone else changed these settings while you had the form open, nothing is saved, the app says so, and what you typed stays on screen. Pressing Save again after a lost connection does not save anything twice.
+
 #### Country
 
 Where the organisation is established. It decides the default currency,

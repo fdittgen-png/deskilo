@@ -97,6 +97,7 @@ import 'fake_pref_stores.dart';
 import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/features/workspace/domain/template_publication.dart';
+import 'package:deskilo/features/workspace/domain/workspace_settings_save.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
 import 'package:deskilo/features/money/domain/credit_product.dart';
 import 'package:deskilo/features/money/providers/credit_providers.dart';
@@ -1773,6 +1774,35 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   /// Last opacity passed to [setDeskOpacity]; also updates the seeded row.
   int? lastDeskOpacity;
+
+  /// #1451 — every Save sent as one command, and a conflict to raise next.
+  final settingsSaves = <WorkspaceSettingsSave>[];
+  bool settingsConflictNext = false;
+  Object? settingsFailure;
+
+  @override
+  Future<Workspace> saveWorkspaceSettings(
+      String workspaceId, WorkspaceSettingsSave save) async {
+    settingsSaves.add(save);
+    if (settingsConflictNext) {
+      settingsConflictNext = false;
+      throw const WorkspaceSettingsConflict();
+    }
+    if (settingsFailure case final failure?) throw failure;
+    // One transaction on the server; here the setters the older tests pin.
+    await updateWorkspaceLocale(workspaceId,
+        countryCode: save.countryCode,
+        currencyCode: save.currencyCode,
+        timezone: save.timezone);
+    await setWhatsappGroup(workspaceId, save.whatsappGroup.trim());
+    await setWorkspaceAddress(workspaceId, save.address.trim());
+    await setInvitationTemplates(workspaceId, save.invitationTemplates);
+    await setInvitationTemplate(workspaceId, '');
+    await setWorkspaceLanguage(workspaceId, save.defaultLocale);
+    await setDeskOpacity(workspaceId, save.deskOpacity);
+    await setNewMemberDefaults(workspaceId, save.newMemberDefaults);
+    return workspaces.firstWhere((w) => w.id == workspaceId);
+  }
 
   @override
   Future<void> setDeskOpacity(String workspaceId, int opacity) async {

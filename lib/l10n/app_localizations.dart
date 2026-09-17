@@ -18479,6 +18479,12 @@ abstract class AppLocalizations {
   /// **'Workspace saved.'**
   String get workspaceSettingsSaved;
 
+  /// No description provided for @workspaceSettingsConflict.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone changed these settings while you were editing. Nothing was saved; your changes are still here.'**
+  String get workspaceSettingsConflict;
+
   /// Helper under the currency field on the workspace settings screen (#153).
   ///
   /// In en, this message translates to:

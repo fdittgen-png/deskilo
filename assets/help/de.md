@@ -869,6 +869,8 @@ Der Bildschirm des Space, von oben nach unten:
 - **Der Einrichtungsfragebogen** — <https://fdittgen-png.github.io/deskilo/setup.html> (§1 erklärt ihn vollständig): die eigenständige Seite, die eine ganze Konfiguration sammelt, *bevor* die App existiert. **Space importieren (XML)** oben ist die Stelle, an der ihre Datei landet — Einstellungen, Zubehör und Grundriss direkt; der `<setup>`-Abschnitt der Datei trägt Abrechnung, rechtliche Identität, Rollen und Mitglieder für die Bildschirme, denen sie gehören.
 - **Gefahrenzone** — **Space zurücksetzen**: löscht alle Buchungen, die Buchhaltung und den Plan; behält Einstellungen und Mitglieder. Durch getippte Bestätigung geschützt.
 
+**Ein Speichern, alles oder nichts (#1451).** **Speichern** schreibt das ganze Formular in einem Schritt: Land, Währung und Zeitzone, WhatsApp-Gruppe, Adresse, Sprache des Raums, Einladungsvorlagen, Transparenz der Tische und wie ein neues Mitglied startet. Wird ein Teil abgelehnt, bleibt nichts davon gespeichert. Hat jemand anderes diese Einstellungen geändert, während das Formular offen war, wird nichts gespeichert, die App sagt es, und Ihre Eingaben bleiben stehen. Erneutes Speichern nach einer verlorenen Verbindung speichert nichts doppelt.
+
 #### Land
 
 Wo die Organisation ansässig ist. Es entscheidet über die

@@ -10622,6 +10622,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get workspaceSettingsSaved => 'Workspace gespeichert.';
 
   @override
+  String get workspaceSettingsConflict =>
+      'Jemand hat diese Einstellungen geändert, während Sie sie bearbeitet haben. Nichts wurde gespeichert; Ihre Änderungen sind noch da.';
+
+  @override
   String get workspaceSettingsCurrencyHelper =>
       'Wird vom Land vorbelegt — überschreiben, falls eure Community in einer anderen Währung abrechnet.';
 
