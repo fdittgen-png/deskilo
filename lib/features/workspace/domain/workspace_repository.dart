@@ -652,21 +652,21 @@ abstract class WorkspaceRepository {
   /// server decides; this is what it returned.
   Future<List<WorkspaceTemplate>> fetchWorkspaceTemplates();
 
-  /// Merges [templateId]'s floor plan into [workspaceId] — by name, never
-  /// wiping what is there (`merge_floor_plan`). Owner only; refused for a
-  /// template the caller may not read.
-  Future<void> applyWorkspaceTemplate(String workspaceId, String templateId);
+  /// Merges what [templateId] carries into [workspaceId], never wiping
+  /// (#1276); [groups] narrows it, null applies all. `manageConfiguration`;
+  /// refused for an unreadable template or an unknown snapshot format.
+  Future<void> applyWorkspaceTemplate(String workspaceId, String templateId,
+      {List<String>? groups});
 
-  /// Snapshots [workspaceId]'s floor plan as a template the workspace
-  /// owns. Prices, storage paths and the site name are stripped
-  /// server-side. Returns the template id; a second save with the same
-  /// key updates in place.
+  /// Snapshots [workspaceId] through `template_publication_rules` (#1276);
+  /// the same key again updates in place and bumps the version.
   Future<String> saveWorkspaceAsTemplate(
     String workspaceId, {
     required String key,
     required String name,
     String description = '',
     TemplateVisibility visibility = TemplateVisibility.private,
+    List<String> tags = const [],
   });
 
   Future<void> setWorkspaceTemplateVisibility(

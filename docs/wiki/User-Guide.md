@@ -588,11 +588,25 @@ name**; it never removes what you already have, and it asks first.
 
 **Your templates.** *Save this space as a template* snapshots your floor
 plan. Prices, plan images and your site's address are stripped before it
-is stored — a template is geometry and names, nothing about your money
-or your street. Each template is **Only me** until you say otherwise:
+is stored. Each template is **Only me** until you say otherwise:
 *People I invite* (by e-mail — the invitation works the moment that
 address signs in, and nothing is revealed about whether it already has
 an account) or *Everyone*, which puts it in the library.
+
+**More than a plan** (#1276). A template also carries how the space
+works: opening hours and booking rules, tariffs, services, packages,
+accessories, validation rules, the role matrix, reminders, closure days,
+number formats (never the counters), the lexicon and the feature profile.
+What belongs to your space alone never travels — sites and their
+addresses, your legal identifiers and VAT number, legal mentions, bank
+details, invitation texts, document links and document designs. The
+server strips them before the template is stored, whatever the app sent.
+Applying merges: fee bands, closure days and anything else the space
+already has stay where they are. Saving again under the same name
+updates the template and raises its version, and every application is
+recorded with what the space held before. A template made by a newer
+DesKilo that this server does not understand is refused, never
+half-applied.
 
 A new space always starts with a room, whatever this feature says:
 onboarding offers *Start from* with the built-in template selected.

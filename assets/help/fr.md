@@ -582,12 +582,27 @@ déjà n'est supprimé, et une confirmation est demandée.
 
 **Vos modèles.** *Enregistrer cet espace comme modèle* prend un instantané
 de votre plan. Les prix, les images du plan et l'adresse de votre site
-sont retirés avant l'enregistrement — un modèle, c'est de la géométrie et
-des noms, rien sur votre argent ni votre rue. Chaque modèle est *Moi
+sont retirés avant l'enregistrement. Chaque modèle est *Moi
 seulement* tant que vous n'en décidez pas autrement : *Les personnes que
 j'invite* (par e-mail — l'invitation fonctionne dès que cette adresse se
 connecte, sans rien révéler de l'existence d'un compte) ou *Tout le
 monde*, ce qui le place dans la bibliothèque.
+
+**Plus qu'un plan** (#1276). Un modèle emporte aussi la façon dont
+l'espace fonctionne : horaires et règles de réservation, tarifs,
+services, forfaits, accessoires, règles de validation, matrice des rôles,
+relances, jours de fermeture, formats de numérotation (jamais les
+compteurs), lexique et profil de fonctionnalités. Ce qui n'appartient
+qu'à votre espace ne voyage jamais : les sites et leurs adresses, vos
+identifiants légaux et numéro de TVA, les mentions légales, les
+coordonnées bancaires, les textes d'invitation, les liens et la mise en
+page des documents. Le serveur les retire avant d'enregistrer le modèle,
+quoi que l'application ait envoyé. Appliquer fusionne : les tranches de
+frais, les jours de fermeture et tout ce que l'espace a déjà restent en
+place. Enregistrer de nouveau sous le même nom met le modèle à jour et
+augmente sa version, et chaque application est consignée avec ce que
+l'espace contenait avant. Un modèle créé par un DesKilo plus récent que
+ce serveur ne comprend pas est refusé, jamais appliqué à moitié.
 
 Un nouvel espace démarre toujours avec une pièce, quelle que soit cette
 option : l'accueil propose *Partir de* avec le modèle intégré sélectionné.

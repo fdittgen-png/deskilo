@@ -26,10 +26,13 @@ mixin SupabaseWorkspaceTemplates {
     ];
   }
 
-  Future<void> applyWorkspaceTemplate(String workspaceId, String templateId) =>
+  Future<void> applyWorkspaceTemplate(String workspaceId, String templateId,
+          {List<String>? groups}) =>
       client.rpc<dynamic>('apply_workspace_template', params: {
         'p_workspace_id': workspaceId,
         'p_template_id': templateId,
+        // #1276 — null applies everything the template carries.
+        'p_groups': ?groups,
       });
 
   Future<String> saveWorkspaceAsTemplate(
@@ -38,6 +41,7 @@ mixin SupabaseWorkspaceTemplates {
     required String name,
     String description = '',
     TemplateVisibility visibility = TemplateVisibility.private,
+    List<String> tags = const [],
   }) async {
     final id = await client.rpc<dynamic>('save_workspace_as_template', params: {
       'p_workspace_id': workspaceId,
@@ -45,6 +49,7 @@ mixin SupabaseWorkspaceTemplates {
       'p_name': name,
       'p_description': description,
       'p_visibility': visibility.name,
+      'p_tags': tags,
     });
     return id as String;
   }

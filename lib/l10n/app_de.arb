@@ -3771,7 +3771,7 @@
   "bookingMembershipPaused": "Deine Mitgliedschaft ist pausiert — eine Administratorin reaktiviert sie unter Mitglieder.",
   "bookingNotAMember": "Du bist kein Mitglied dieses Raums mehr — bitte eine Administratorin um eine Einladung.",
   "featureWorkspaceLibraryTitle": "Raumbibliothek",
-  "featureWorkspaceLibraryDesc": "Speichern Sie den Grundriss dieses Raums als Vorlage, wählen Sie, wer sie sehen darf, laden Sie Personen per E-Mail ein und beginnen Sie mit dem, was andere anbieten.",
+  "featureWorkspaceLibraryDesc": "Speichern Sie den Grundriss dieses Raums und wie er arbeitet als Vorlage, wählen Sie, wer sie sehen darf, laden Sie Personen per E-Mail ein und beginnen Sie mit dem, was andere anbieten.",
   "libraryTitle": "Raumbibliothek",
   "libraryStartFrom": "Aus der Bibliothek beginnen",
   "libraryYours": "Ihre Vorlagen",
@@ -3799,7 +3799,7 @@
       }
     }
   },
-  "libraryApplyConfirmBody": "Ebenen, Räume, Tische und Plätze werden nach Namen hinzugefügt oder aktualisiert. Nichts Vorhandenes wird entfernt.",
+  "libraryApplyConfirmBody": "Der Grundriss wird nach Namen hinzugefügt oder aktualisiert, und die Einstellungen der Vorlage werden zusammengeführt. Nichts Vorhandenes wird entfernt.",
   "libraryApplied": "Vorlage angewendet.",
   "librarySave": "Diesen Raum als Vorlage speichern",
   "librarySaveName": "Name der Vorlage",

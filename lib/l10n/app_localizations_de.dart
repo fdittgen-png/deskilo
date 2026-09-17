@@ -5992,7 +5992,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureWorkspaceLibraryDesc =>
-      'Speichern Sie den Grundriss dieses Raums als Vorlage, wählen Sie, wer sie sehen darf, laden Sie Personen per E-Mail ein und beginnen Sie mit dem, was andere anbieten.';
+      'Speichern Sie den Grundriss dieses Raums und wie er arbeitet als Vorlage, wählen Sie, wer sie sehen darf, laden Sie Personen per E-Mail ein und beginnen Sie mit dem, was andere anbieten.';
 
   @override
   String get libraryTitle => 'Raumbibliothek';
@@ -6022,7 +6022,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get libraryApplyConfirmBody =>
-      'Ebenen, Räume, Tische und Plätze werden nach Namen hinzugefügt oder aktualisiert. Nichts Vorhandenes wird entfernt.';
+      'Der Grundriss wird nach Namen hinzugefügt oder aktualisiert, und die Einstellungen der Vorlage werden zusammengeführt. Nichts Vorhandenes wird entfernt.';
 
   @override
   String get libraryApplied => 'Vorlage angewendet.';

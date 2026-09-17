@@ -601,6 +601,21 @@ Einladung wirkt, sobald sich diese Adresse anmeldet; ob dort ein Konto
 besteht, wird nicht verraten) oder *Alle*, womit sie in die Bibliothek
 kommt.
 
+**Mehr als ein Grundriss** (#1276). Eine Vorlage trägt auch, wie der
+Raum arbeitet: Öffnungszeiten und Buchungsregeln, Tarife, Leistungen,
+Pakete, Zubehör, Validierungsregeln, die Rollenmatrix, Erinnerungen,
+Schließtage, Nummernformate (nie die Zähler), das Lexikon und das
+Funktionsprofil. Was nur Ihrem Raum gehört, reist nie mit — Standorte
+und ihre Adressen, Ihre Rechtskennungen und USt-IdNr., Pflichtangaben,
+Bankdaten, Einladungstexte, Dokumentlinks und Dokumentgestaltung. Der
+Server entfernt sie vor dem Speichern, egal was die App geschickt hat.
+Anwenden führt zusammen: Gebührenstufen, Schließtage und alles andere,
+was der Raum schon hat, bleiben bestehen. Erneutes Speichern unter
+demselben Namen aktualisiert die Vorlage und erhöht ihre Version, und
+jede Anwendung wird mit dem vorherigen Stand festgehalten. Eine Vorlage
+aus einem neueren DesKilo, die dieser Server nicht versteht, wird
+abgelehnt, nie halb angewendet.
+
 Ein neuer Raum beginnt immer mit einem Zimmer, unabhängig von dieser
 Funktion: die Einrichtung bietet *Beginnen mit* an, die eingebaute
 Vorlage vorausgewählt.

@@ -1803,18 +1803,21 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     ),
   ];
   final templateGrants = <String, List<String>>{};
-  final appliedTemplates = <({String workspaceId, String templateId})>[];
+  final appliedTemplates =
+      <({String workspaceId, String templateId, List<String>? groups})>[];
 
   @override
   Future<List<WorkspaceTemplate>> fetchWorkspaceTemplates() async =>
       List.of(templates);
 
   @override
-  Future<void> applyWorkspaceTemplate(String workspaceId, String templateId) async {
+  Future<void> applyWorkspaceTemplate(String workspaceId, String templateId,
+      {List<String>? groups}) async {
     if (!templates.any((t) => t.id == templateId)) {
       throw Exception('unknown template');
     }
-    appliedTemplates.add((workspaceId: workspaceId, templateId: templateId));
+    appliedTemplates.add(
+        (workspaceId: workspaceId, templateId: templateId, groups: groups));
   }
 
   @override
@@ -1824,6 +1827,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     required String name,
     String description = '',
     TemplateVisibility visibility = TemplateVisibility.private,
+    List<String> tags = const [],
   }) async {
     if (visibility == TemplateVisibility.builtin) {
       throw Exception('a workspace cannot publish a builtin template');
@@ -1832,7 +1836,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     final id = 'tpl-$key';
     templates.add(WorkspaceTemplate(
       id: id, key: key, name: name, description: description,
-      visibility: visibility, ownerWorkspaceId: workspaceId,
+      visibility: visibility, ownerWorkspaceId: workspaceId, tags: tags,
       floorPlan: const <Object?>[<String, Object?>{'name': 'Snapshot', 'offices': <Object?>[]}],
     ));
     return id;

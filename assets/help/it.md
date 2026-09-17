@@ -587,6 +587,22 @@ e-mail — l'invito funziona non appena quell'indirizzo accede, senza
 rivelare se esiste già un account) oppure *Tutti*, che lo mette in
 biblioteca.
 
+**Più di una pianta** (#1276). Un modello porta con sé anche il modo in
+cui lo spazio funziona: orari e regole di prenotazione, tariffe, servizi,
+pacchetti, accessori, regole di convalida, la matrice dei ruoli,
+promemoria, giorni di chiusura, formati di numerazione (mai i contatori),
+il lessico e il profilo delle funzioni. Ciò che appartiene solo al vostro
+spazio non viaggia mai: le sedi e i loro indirizzi, gli identificativi
+legali e la partita IVA, le menzioni legali, i dati bancari, i testi di
+invito, i collegamenti e l'impaginazione dei documenti. Il server li
+rimuove prima di salvare il modello, qualunque cosa abbia inviato l'app.
+Applicare unisce: le fasce di commissione, i giorni di chiusura e tutto
+ciò che lo spazio ha già restano al loro posto. Salvare di nuovo con lo
+stesso nome aggiorna il modello e ne aumenta la versione, e ogni
+applicazione viene registrata con ciò che lo spazio conteneva prima. Un
+modello creato da un DesKilo più recente che questo server non
+comprende viene rifiutato, mai applicato a metà.
+
 Un nuovo spazio inizia sempre con una stanza, qualunque cosa dica questa
 funzione: l'accoglienza propone *Partire da* con il modello integrato
 selezionato.
