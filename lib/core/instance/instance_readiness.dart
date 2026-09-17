@@ -7,6 +7,7 @@
 // reads. The wizard shows the verdict and runs nothing when the answer is
 // "needs attention".
 import 'instance_builder.dart';
+import 'instance_doctor.dart';
 import 'instance_bundle.dart';
 import 'management_api.dart';
 
@@ -169,5 +170,52 @@ select current_setting('server_version_num')::int as server_version_num,
   Future<int?> _marker(String ref) async {
     final rows = await api.query(ref, InstanceBuilder.recordedVersionsSql);
     return rows.isEmpty ? null : int.tryParse('${rows.first['marker'] ?? ''}');
+  }
+}
+
+/// #1308 S2 — what a project already carries beyond its schema, read from
+/// the project itself: DesKilo keeps no record of customer infrastructure.
+class InstanceRemaining {
+  const InstanceRemaining({
+    required this.missingFunctions,
+    required this.signInConfigured,
+  });
+
+  /// Bundle function slugs the project does not have yet.
+  final List<String> missingFunctions;
+
+  /// The live auth settings already pass the doctor's sign-in check.
+  final bool signInConfigured;
+
+  bool get functionsDeployed => missingFunctions.isEmpty;
+}
+
+extension InstanceRemainingRead on InstanceReadinessCheck {
+  /// The verdict, and — unless it blocks — what is left and the endpoint
+  /// once sign-in already passes: everything a reopened wizard resumes from.
+  Future<
+      ({
+        InstanceReadiness readiness,
+        InstanceRemaining? remaining,
+        ({String url, String key})? endpoint,
+      })> read(SupabaseProject project, InstanceBundle bundle) async {
+    final readiness = await examine(project, bundle);
+    final rest = readiness.blocks ? null : await remaining(project.ref, bundle);
+    final endpoint = rest?.signInConfigured ?? false
+        ? await InstanceBuilder(api).endpointOf(project.ref)
+        : null;
+    return (readiness: readiness, remaining: rest, endpoint: endpoint);
+  }
+
+  Future<InstanceRemaining> remaining(String ref, InstanceBundle bundle) async {
+    final deployed = (await api.listFunctions(ref)).toSet();
+    final auth = InstanceDoctor.checkAuthConfig(await api.authConfig(ref));
+    return InstanceRemaining(
+      missingFunctions: [
+        for (final f in bundle.functions)
+          if (!deployed.contains(f.slug)) f.slug,
+      ],
+      signInConfigured: auth.every((f) => !f.isProblem),
+    );
   }
 }

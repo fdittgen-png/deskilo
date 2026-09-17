@@ -53,6 +53,10 @@ abstract class SupabaseManagement {
   /// so a check can compare what IS configured with what should be.
   Future<Map<String, Object?>> authConfig(String ref);
 
+  /// #1308 — the slugs of the edge functions deployed on the project, so
+  /// a wizard reopened on it resumes instead of redeploying everything.
+  Future<List<String>> listFunctions(String ref);
+
   /// Deploys one edge function from its sources.
   Future<void> deployFunction(
     String ref, {
@@ -167,6 +171,15 @@ class DioSupabaseManagement implements SupabaseManagement {
     final config = await _call<Map<dynamic, dynamic>>(
         () => _dio.get('/v1/projects/$ref/config/auth'));
     return {for (final e in config.entries) '${e.key}': e.value as Object?};
+  }
+
+  @override
+  Future<List<String>> listFunctions(String ref) async {
+    final list = await _call<List<dynamic>>(
+        () => _dio.get('/v1/projects/$ref/functions'));
+    return [
+      for (final f in list.cast<Map<dynamic, dynamic>>()) '${f['slug']}',
+    ];
   }
 
   @override

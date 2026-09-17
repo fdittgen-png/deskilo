@@ -55,6 +55,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
   String _password = '';
   SupabaseProject? _project;
   InstanceReadiness? _readiness;
+  List<String>? _missingFunctions;
   String _status = '';
   InstanceBundle? _bundle;
   InstanceProgress? _progress;
@@ -157,12 +158,17 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
       });
       // #1308 — read what the project holds before anything runs on it.
       _bundle ??= await ref.read(instanceBundleLoaderProvider)();
-      final readiness =
-          await InstanceReadinessCheck(_api!).examine(ready, _bundle!);
+      // #1308 S2 — resume from what the project holds, not from this state.
+      final (:readiness, :remaining, :endpoint) =
+          await InstanceReadinessCheck(_api!).read(ready, _bundle!);
       setState(() {
         _project = ready;
         _readiness = readiness;
+        _endpoint = endpoint;
         _schemaInstalled = readiness.verdict == InstanceReadinessVerdict.current;
+        _missingFunctions = remaining?.missingFunctions;
+        _functionsDeployed = remaining?.functionsDeployed ?? false;
+        _signInConfigured = endpoint != null;
       });
     });
   }
@@ -190,7 +196,8 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
     if (ref == null) return;
     await _run('deploy functions', () async {
       _bundle ??= await this.ref.read(instanceBundleLoaderProvider)();
-      await _builder.deployFunctions(ref, _bundle!, onProgress: (p) {
+      await _builder.deployFunctions(ref, _bundle!, only: _missingFunctions,
+          onProgress: (p) {
         if (mounted) setState(() => _progress = p);
       });
       setState(() => _functionsDeployed = true);
@@ -331,7 +338,22 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
               onRun: _deployFunctions,
             ),
           ],
-        _Step.signIn => _signInStep(l10n),
+        _Step.signIn => [
+            InstanceRunStep(
+              intro: l10n?.instanceSignInExplain ??
+                  'Sign-in settings: e-mail confirmation on (a sign-up must click '
+                      'the link in its mail), and the app\'s links allowed for '
+                      'password resets and magic links.',
+              buttonKey: 'instance-apply-signin',
+              done: _signInConfigured,
+              busy: _busy,
+              progress: null,
+              retry: false,
+              onRun: _configureSignIn,
+              startLabel: l10n?.instanceApplySignIn ?? 'Apply the sign-in settings',
+              startIcon: Icons.tune,
+            ),
+          ],
         _Step.done => _doneStep(l10n),
       };
 
@@ -437,9 +459,8 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           InstanceReadinessCard(
             readiness: r,
             onChooseAnother: () => setState(() {
-              _project = null;
-              _readiness = null;
-              _schemaInstalled = false;
+              _project = _readiness = _missingFunctions = _endpoint = null;
+              _schemaInstalled = _functionsDeployed = _signInConfigured = false;
             }),
           ),
         if (_existing.isNotEmpty && _project == null) ...[
@@ -455,21 +476,6 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
               onTap: _busy ? null : () => _useExisting(p),
             ),
         ],
-      ];
-
-  List<Widget> _signInStep(AppLocalizations? l10n) => [
-        _text(l10n?.instanceSignInExplain ??
-            'Sign-in settings: e-mail confirmation on (a sign-up must click '
-                'the link in its mail), and the app\'s links allowed for '
-                'password resets and magic links.'),
-        FilledButton.icon(
-          key: const ValueKey('instance-apply-signin'),
-          onPressed: _busy || _signInConfigured ? null : _configureSignIn,
-          icon: Icon(_signInConfigured ? Icons.check_circle_outline : Icons.tune),
-          label: Text(_signInConfigured
-              ? (l10n?.commonDone ?? 'Done')
-              : (l10n?.instanceApplySignIn ?? 'Apply the sign-in settings')),
-        ),
       ];
 
   List<Widget> _doneStep(AppLocalizations? l10n) => [

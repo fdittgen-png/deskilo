@@ -190,4 +190,46 @@ void main() {
     expect(find.text('Done'), findsWidgets);
     expect(api.sql, isEmpty);
   });
+
+  testWidgets('#1308 S2 — reopened on a project that already has its schema, '
+      'some functions and sign-in, the wizard deploys only what is missing',
+      (tester) async {
+    final (:api, :store) = await _pump(tester);
+    api
+      ..projects.add((
+        ref: 'half1',
+        name: 'Half done',
+        organizationId: 'org-1',
+        region: 'eu-west-3',
+        status: 'ACTIVE_HEALTHY',
+      ))
+      ..markers['half1'] = 2
+      ..existingFunctions['half1'] = const []
+      ..authConfigs['half1'] = {
+        'site_url': 'https://fdittgen-png.github.io/deskilo/',
+        'uri_allow_list': 'deskilo://**,https://fdittgen-png.github.io/deskilo/**',
+        'mailer_autoconfirm': false,
+      }
+      ..onQuery = (ref, sql) => sql.contains('server_version_num')
+          ? [
+              {'server_version_num': 170006, 'public_tables': 'a,b'},
+            ]
+          : const [];
+    await _tap(tester, 'backend-new-instance');
+    await tester.enterText(find.byKey(const ValueKey('instance-token')), 'sbp_token');
+    await _tap(tester, 'instance-check-token');
+    await _tap(tester, 'wizard-next');
+    await _tap(tester, 'instance-existing-half1');
+    await _tap(tester, 'wizard-next'); // schema: current
+    await _tap(tester, 'wizard-next');
+    await _tap(tester, 'instance-deploy-functions');
+    expect(api.deployed['half1']!.map((d) => d.slug), ['send-push']);
+    await _tap(tester, 'wizard-next');
+    expect(api.authPatches['half1'], isNull,
+        reason: 'sign-in already passes, nothing is patched');
+    await _tap(tester, 'wizard-next');
+    await _tap(tester, 'instance-use-here');
+    expect(store.value?.url, 'https://half1.supabase.co');
+    expect(api.sql['half1'], isNull, reason: 'no schema SQL ran');
+  });
 }
