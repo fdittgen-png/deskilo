@@ -17,10 +17,10 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../plan/providers/floor_plan_providers.dart';
 import '../../domain/workspace_template.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/save_template_sheet.dart';
+import '../widgets/template_apply_sheet.dart';
 import '../widgets/template_gallery.dart';
 import '../widgets/template_share_sheet.dart';
 
@@ -62,7 +62,7 @@ class WorkspaceLibraryScreen extends ConsumerWidget {
                   ? TextButton(
                       key: ValueKey('library-apply-${t.key}'),
                       onPressed: () => _apply(context, ref, workspace.id, t),
-                      child: Text(l10n?.libraryApply ?? 'Apply to this space'),
+                      child: Text(l10n?.libraryPreviewChanges ?? 'Preview changes'),
                     )
                   : null,
             ),
@@ -99,41 +99,15 @@ class WorkspaceLibraryScreen extends ConsumerWidget {
     );
   }
 
+  /// #1280 S2 — the preview sheet decides what is applied; this only
+  /// announces the result.
   Future<void> _apply(BuildContext context, WidgetRef ref, String workspaceId,
       WorkspaceTemplate t) async {
     final l10n = AppLocalizations.of(context);
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n?.libraryApplyConfirmTitle(t.name) ?? 'Apply « ${t.name} »?'),
-        content: Text(l10n?.libraryApplyConfirmBody ??
-            'Levels, rooms, desks and seats are added or updated by name. '
-                'Nothing you already have is removed.'),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.of(ctx).pop(false),
-              child: Text(MaterialLocalizations.of(ctx).cancelButtonLabel)),
-          FilledButton(
-              key: const ValueKey('library-apply-confirm'),
-              onPressed: () => Navigator.of(ctx).pop(true),
-              child: Text(l10n?.libraryApply ?? 'Apply to this space')),
-        ],
-      ),
-    );
-    if (ok != true || !context.mounted) return;
-    if (await runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'apply template failed',
-      action: () => ref
-          .read(workspaceRepositoryProvider)
-          .applyWorkspaceTemplate(workspaceId, t.id),
-    )) {
-      ref.invalidate(levelsProvider);
-      if (context.mounted) {
-        AppSnack.success(context, l10n?.libraryApplied ?? 'Template applied.');
-      }
-    }
+    final count = await showTemplateApplySheet(context, ref, workspaceId, t);
+    if (count == null || !context.mounted) return;
+    AppSnack.success(
+        context, l10n?.libraryAppliedChanges(count) ?? '$count changes applied.');
   }
 
   Future<void> _menu(BuildContext context, WidgetRef ref,

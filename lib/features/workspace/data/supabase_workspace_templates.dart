@@ -6,6 +6,7 @@
 // class so the interface stays ONE thing the app reads through.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../domain/template_preview.dart';
 import '../domain/workspace_template.dart';
 
 mixin SupabaseWorkspaceTemplates {
@@ -34,6 +35,17 @@ mixin SupabaseWorkspaceTemplates {
         // #1276 — null applies everything the template carries.
         'p_groups': ?groups,
       });
+
+  Future<TemplatePreview> previewWorkspaceTemplate(
+      String workspaceId, String templateId, {List<String>? groups}) async {
+    final json = await client.rpc<dynamic>('preview_workspace_template', params: {
+      'p_workspace_id': workspaceId,
+      'p_template_id': templateId,
+      'p_groups': ?groups,
+    });
+    return TemplatePreview.fromJson(
+        Map<String, dynamic>.from(json as Map? ?? const <String, dynamic>{}));
+  }
 
   Future<String> saveWorkspaceAsTemplate(
     String workspaceId, {

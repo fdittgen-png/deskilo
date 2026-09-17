@@ -591,8 +591,7 @@ Toca un miembro para abrir su **ficha de gestión** — cada acción por miembro
 
 **Partir de la biblioteca.** Busque por nombre, descripción o etiqueta y afine con los chips de etiquetas — ambos se combinan; una tarjeta dice lo que aporta la plantilla: su plano en cifras, *con sus ajustes* cuando también viajan horarios, precios o reglas (#1280). Todas las plantillas que puede ver: la
 integrada, las públicas y las que alguien compartió con su dirección de
-e-mail. *Aplicar a este espacio* añade niveles, salas, mesas y plazas
-**por nombre**; nunca elimina lo que ya tiene, y pregunta antes.
+e-mail. *Ver los cambios* muestra, grupo por grupo, lo que la plantilla haría aquí: los grupos **Nuevo** van marcados, los que **cambian lo que tiene** se ofrecen sin marcar, los **ya iguales** no tienen nada que aplicar, y un grupo que **requiere atención** dice por qué y no se puede elegir. **Aplicar N cambios** aplica exactamente lo marcado — nunca la plantilla entera — y los precios o los roles piden una confirmación más. Niveles, salas, mesas y plazas se fusionan **por nombre**; nunca se elimina lo que ya tiene.
 
 **Sus plantillas.** *Guardar este espacio como plantilla* toma una
 instantánea de su plano. Los precios, las imágenes del plano y la

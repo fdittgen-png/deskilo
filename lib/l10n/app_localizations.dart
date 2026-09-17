@@ -10421,6 +10421,150 @@ abstract class AppLocalizations {
   /// **'with its settings'**
   String get libraryCarriesSettings;
 
+  /// Template apply preview (#1280): libraryPreviewChanges
+  ///
+  /// In en, this message translates to:
+  /// **'Preview changes'**
+  String get libraryPreviewChanges;
+
+  /// Template apply preview (#1280): libraryPreviewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What « {name} » would change'**
+  String libraryPreviewTitle(String name);
+
+  /// Template apply preview (#1280): libraryGroupSpace
+  ///
+  /// In en, this message translates to:
+  /// **'Space & plan'**
+  String get libraryGroupSpace;
+
+  /// Template apply preview (#1280): libraryGroupHoursBooking
+  ///
+  /// In en, this message translates to:
+  /// **'Hours & booking'**
+  String get libraryGroupHoursBooking;
+
+  /// Template apply preview (#1280): libraryGroupPricingCredits
+  ///
+  /// In en, this message translates to:
+  /// **'Prices & credits'**
+  String get libraryGroupPricingCredits;
+
+  /// Template apply preview (#1280): libraryGroupCalendarNavigation
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar & closures'**
+  String get libraryGroupCalendarNavigation;
+
+  /// Template apply preview (#1280): libraryGroupWording
+  ///
+  /// In en, this message translates to:
+  /// **'Wording'**
+  String get libraryGroupWording;
+
+  /// Template apply preview (#1280): libraryGroupRolesAccess
+  ///
+  /// In en, this message translates to:
+  /// **'Roles & access'**
+  String get libraryGroupRolesAccess;
+
+  /// Template apply preview (#1280): libraryGroupForms
+  ///
+  /// In en, this message translates to:
+  /// **'Forms'**
+  String get libraryGroupForms;
+
+  /// Template apply preview (#1280): libraryGroupAppearance
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get libraryGroupAppearance;
+
+  /// Template apply preview (#1280): libraryGroupDocumentsOperations
+  ///
+  /// In en, this message translates to:
+  /// **'Documents & operations'**
+  String get libraryGroupDocumentsOperations;
+
+  /// Template apply preview (#1280): libraryGroupUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'Other — this version cannot apply it'**
+  String get libraryGroupUnknown;
+
+  /// Template apply preview (#1280): libraryStateNew
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get libraryStateNew;
+
+  /// Template apply preview (#1280): libraryStateChange
+  ///
+  /// In en, this message translates to:
+  /// **'Changes what you have'**
+  String get libraryStateChange;
+
+  /// Template apply preview (#1280): libraryStateMatching
+  ///
+  /// In en, this message translates to:
+  /// **'Already the same'**
+  String get libraryStateMatching;
+
+  /// Template apply preview (#1280): libraryStateAttention
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention'**
+  String get libraryStateAttention;
+
+  /// Template apply preview (#1280): libraryReasonFeeSchedule
+  ///
+  /// In en, this message translates to:
+  /// **'Your fee schedule would be replaced as a whole.'**
+  String get libraryReasonFeeSchedule;
+
+  /// Template apply preview (#1280): libraryApplyChanges
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Nothing selected} =1{Apply 1 change} other{Apply {count} changes}}'**
+  String libraryApplyChanges(int count);
+
+  /// Template apply preview (#1280): libraryConfirmSensitive
+  ///
+  /// In en, this message translates to:
+  /// **'This changes {groups}. Apply?'**
+  String libraryConfirmSensitive(String groups);
+
+  /// Template apply preview (#1280): libraryAppliedChanges
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 change applied.} other{{count} changes applied.}}'**
+  String libraryAppliedChanges(int count);
+
+  /// Template apply preview (#1280): libraryNotSupported
+  ///
+  /// In en, this message translates to:
+  /// **'This template cannot be applied here.'**
+  String get libraryNotSupported;
+
+  /// Template apply preview (#1280): libraryPartial
+  ///
+  /// In en, this message translates to:
+  /// **'Part of this template cannot be applied here and is left out.'**
+  String get libraryPartial;
+
+  /// Template apply preview (#1280): libraryNothingToApply
+  ///
+  /// In en, this message translates to:
+  /// **'Everything this template carries is already here.'**
+  String get libraryNothingToApply;
+
+  /// Template apply sheet when the server preview could not be loaded (#1280)
+  ///
+  /// In en, this message translates to:
+  /// **'The changes could not be previewed. Nothing was applied.'**
+  String get libraryPreviewFailed;
+
   /// No description provided for @libraryApply.
   ///
   /// In en, this message translates to:
