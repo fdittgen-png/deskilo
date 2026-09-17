@@ -1,7 +1,7 @@
 {
   "@@locale": "fr",
   "featureWorkspaceLibraryTitle": "Bibliothèque d'espaces",
-  "featureWorkspaceLibraryDesc": "Enregistrez le plan de cet espace comme modèle, choisissez qui peut le voir, invitez des personnes par e-mail, et partez de ce que d'autres proposent.",
+  "featureWorkspaceLibraryDesc": "Enregistrez le plan de cet espace et sa façon de fonctionner comme modèle, choisissez qui peut le voir, invitez des personnes par e-mail, et partez de ce que d'autres proposent.",
   "libraryTitle": "Bibliothèque d'espaces",
   "libraryStartFrom": "Partir de la bibliothèque",
   "libraryYours": "Vos modèles",
@@ -29,7 +29,7 @@
       }
     }
   },
-  "libraryApplyConfirmBody": "Niveaux, bureaux, tables et places sont ajoutés ou mis à jour par leur nom. Rien de ce que vous avez déjà n'est supprimé.",
+  "libraryApplyConfirmBody": "Le plan est ajouté ou mis à jour par nom, et les réglages que porte le modèle sont fusionnés. Rien de ce que vous avez déjà n'est supprimé.",
   "libraryApplied": "Modèle appliqué.",
   "librarySave": "Enregistrer cet espace comme modèle",
   "librarySaveName": "Nom du modèle",

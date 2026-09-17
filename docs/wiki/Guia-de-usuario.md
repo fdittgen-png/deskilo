@@ -600,6 +600,22 @@ dirección de su sede se eliminan antes de guardar. Cada plantilla es
 e-mail — la invitación funciona en cuanto esa dirección inicia sesión,
 sin revelar si ya tiene cuenta) o *Todos*, que la coloca en la biblioteca.
 
+**Más que un plano** (#1276). Una plantilla también lleva cómo funciona
+el espacio: horarios y reglas de reserva, tarifas, servicios, paquetes,
+accesorios, reglas de validación, la matriz de roles, recordatorios,
+días de cierre, formatos de numeración (nunca los contadores), el léxico
+y el perfil de funciones. Lo que solo pertenece a su espacio nunca viaja:
+las sedes y sus direcciones, sus identificadores legales y número de
+IVA, las menciones legales, los datos bancarios, los textos de
+invitación, los enlaces y el diseño de los documentos. El servidor los
+elimina antes de guardar la plantilla, envíe lo que envíe la app.
+Aplicar fusiona: los tramos de comisión, los días de cierre y todo lo que
+el espacio ya tiene se quedan donde están. Guardar de nuevo con el mismo
+nombre actualiza la plantilla y sube su versión, y cada aplicación queda
+registrada con lo que el espacio tenía antes. Una plantilla creada por
+un DesKilo más reciente que este servidor no entiende se rechaza, nunca
+se aplica a medias.
+
 Un espacio nuevo siempre empieza con una sala, diga lo que diga esta
 función: la bienvenida ofrece *Partir de* con la plantilla integrada
 seleccionada.

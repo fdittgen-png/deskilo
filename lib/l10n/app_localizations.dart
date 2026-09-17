@@ -10376,7 +10376,7 @@ abstract class AppLocalizations {
   /// No description provided for @featureWorkspaceLibraryDesc.
   ///
   /// In en, this message translates to:
-  /// **'Save this space\'s floor plan as a template, choose who may see it, invite people by e-mail, and start from what others offer.'**
+  /// **'Save this space\'s floor plan and how it works as a template, choose who may see it, invite people by e-mail, and start from what others offer.'**
   String get featureWorkspaceLibraryDesc;
 
   /// No description provided for @libraryTitle.
@@ -10424,7 +10424,7 @@ abstract class AppLocalizations {
   /// No description provided for @libraryApplyConfirmBody.
   ///
   /// In en, this message translates to:
-  /// **'Levels, rooms, desks and seats are added or updated by name. Nothing you already have is removed.'**
+  /// **'The floor plan is added or updated by name, and the settings the template carries are merged in. Nothing you already have is removed.'**
   String get libraryApplyConfirmBody;
 
   /// No description provided for @libraryApplied.

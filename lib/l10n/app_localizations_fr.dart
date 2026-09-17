@@ -6000,7 +6000,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureWorkspaceLibraryDesc =>
-      'Enregistrez le plan de cet espace comme modèle, choisissez qui peut le voir, invitez des personnes par e-mail, et partez de ce que d\'autres proposent.';
+      'Enregistrez le plan de cet espace et sa façon de fonctionner comme modèle, choisissez qui peut le voir, invitez des personnes par e-mail, et partez de ce que d\'autres proposent.';
 
   @override
   String get libraryTitle => 'Bibliothèque d\'espaces';
@@ -6030,7 +6030,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get libraryApplyConfirmBody =>
-      'Niveaux, bureaux, tables et places sont ajoutés ou mis à jour par leur nom. Rien de ce que vous avez déjà n\'est supprimé.';
+      'Le plan est ajouté ou mis à jour par nom, et les réglages que porte le modèle sont fusionnés. Rien de ce que vous avez déjà n\'est supprimé.';
 
   @override
   String get libraryApplied => 'Modèle appliqué.';

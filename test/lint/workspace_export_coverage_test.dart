@@ -156,6 +156,9 @@ const Map<String, String> _notExported = {
       '#1303 — the claim a creation request made, keyed by the creator; it '
           'belongs to the act of creating, and the workspace it made is the '
           'export itself',
+  'workspace_template_applications':
+      '#1276 — when a template was applied and what the workspace held '
+          'before; the configuration it changed is exported itself',
   'reservation_requests':
       'a request that became a reservation or was refused — the '
           'reservations themselves are exported',

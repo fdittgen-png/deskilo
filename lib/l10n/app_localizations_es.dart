@@ -5981,7 +5981,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureWorkspaceLibraryDesc =>
-      'Guarde el plano de este espacio como plantilla, elija quién puede verla, invite a personas por e-mail y parta de lo que otros ofrecen.';
+      'Guarde el plano de este espacio y cómo funciona como plantilla, elija quién puede verla, invite a personas por e-mail y parta de lo que otros ofrecen.';
 
   @override
   String get libraryTitle => 'Biblioteca de espacios';
@@ -6011,7 +6011,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get libraryApplyConfirmBody =>
-      'Niveles, salas, mesas y plazas se añaden o actualizan por nombre. No se elimina nada de lo que ya tiene.';
+      'El plano se añade o actualiza por nombre, y los ajustes que lleva la plantilla se fusionan. No se elimina nada de lo que ya tiene.';
 
   @override
   String get libraryApplied => 'Plantilla aplicada.';

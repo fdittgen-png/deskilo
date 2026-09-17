@@ -6183,7 +6183,7 @@
     "description": "Refusal when an RPC answers 'not a member of this workspace' (#1030)"
   },
   "featureWorkspaceLibraryTitle": "Workspace library",
-  "featureWorkspaceLibraryDesc": "Save this space's floor plan as a template, choose who may see it, invite people by e-mail, and start from what others offer.",
+  "featureWorkspaceLibraryDesc": "Save this space's floor plan and how it works as a template, choose who may see it, invite people by e-mail, and start from what others offer.",
   "libraryTitle": "Workspace library",
   "libraryStartFrom": "Start from the library",
   "libraryYours": "Your templates",
@@ -6211,7 +6211,7 @@
       }
     }
   },
-  "libraryApplyConfirmBody": "Levels, rooms, desks and seats are added or updated by name. Nothing you already have is removed.",
+  "libraryApplyConfirmBody": "The floor plan is added or updated by name, and the settings the template carries are merged in. Nothing you already have is removed.",
   "libraryApplied": "Template applied.",
   "librarySave": "Save this space as a template",
   "librarySaveName": "Template name",

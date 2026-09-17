@@ -5937,7 +5937,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureWorkspaceLibraryDesc =>
-      'Save this space\'s floor plan as a template, choose who may see it, invite people by e-mail, and start from what others offer.';
+      'Save this space\'s floor plan and how it works as a template, choose who may see it, invite people by e-mail, and start from what others offer.';
 
   @override
   String get libraryTitle => 'Workspace library';
@@ -5967,7 +5967,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get libraryApplyConfirmBody =>
-      'Levels, rooms, desks and seats are added or updated by name. Nothing you already have is removed.';
+      'The floor plan is added or updated by name, and the settings the template carries are merged in. Nothing you already have is removed.';
 
   @override
   String get libraryApplied => 'Template applied.';

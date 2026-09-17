@@ -5992,7 +5992,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureWorkspaceLibraryDesc =>
-      'Salvate la pianta di questo spazio come modello, scegliete chi può vederla, invitate persone via e-mail e partite da ciò che altri offrono.';
+      'Salvate la pianta di questo spazio e il suo funzionamento come modello, scegliete chi può vederla, invitate persone via e-mail e partite da ciò che altri offrono.';
 
   @override
   String get libraryTitle => 'Biblioteca degli spazi';
@@ -6022,7 +6022,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get libraryApplyConfirmBody =>
-      'Livelli, stanze, scrivanie e posti vengono aggiunti o aggiornati per nome. Nulla di ciò che avete già viene rimosso.';
+      'La pianta viene aggiunta o aggiornata per nome, e le impostazioni del modello vengono unite. Nulla di ciò che avete già viene rimosso.';
 
   @override
   String get libraryApplied => 'Modello applicato.';

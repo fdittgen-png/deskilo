@@ -1,7 +1,7 @@
 {
   "@@locale": "it",
   "featureWorkspaceLibraryTitle": "Biblioteca degli spazi",
-  "featureWorkspaceLibraryDesc": "Salvate la pianta di questo spazio come modello, scegliete chi può vederla, invitate persone via e-mail e partite da ciò che altri offrono.",
+  "featureWorkspaceLibraryDesc": "Salvate la pianta di questo spazio e il suo funzionamento come modello, scegliete chi può vederla, invitate persone via e-mail e partite da ciò che altri offrono.",
   "libraryTitle": "Biblioteca degli spazi",
   "libraryStartFrom": "Partire dalla biblioteca",
   "libraryYours": "I vostri modelli",
@@ -29,7 +29,7 @@
       }
     }
   },
-  "libraryApplyConfirmBody": "Livelli, stanze, scrivanie e posti vengono aggiunti o aggiornati per nome. Nulla di ciò che avete già viene rimosso.",
+  "libraryApplyConfirmBody": "La pianta viene aggiunta o aggiornata per nome, e le impostazioni del modello vengono unite. Nulla di ciò che avete già viene rimosso.",
   "libraryApplied": "Modello applicato.",
   "librarySave": "Salva questo spazio come modello",
   "librarySaveName": "Nome del modello",

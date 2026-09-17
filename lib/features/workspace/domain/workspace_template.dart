@@ -39,6 +39,10 @@ class WorkspaceTemplate implements SystemStamped {
     this.visibility = TemplateVisibility.private,
     this.ownerWorkspaceId,
     this.floorPlan = const [],
+    this.entities = const ['floor_plan'],
+    this.schemaVersion = 1,
+    this.templateVersion = 1,
+    this.tags = const [],
     this.system = SystemColumns.none,
   });
 
@@ -59,6 +63,21 @@ class WorkspaceTemplate implements SystemStamped {
   /// storage paths and the site name are stripped server-side before a
   /// snapshot is stored (`strip_template_plan`).
   final List<Object?> floorPlan;
+
+  /// #1276 — the deployable entities the snapshot carries (0229). Everything
+  /// saved before it carries `floor_plan` alone and applies as it did.
+  final List<String> entities;
+
+  /// The snapshot's format; a server that does not know it refuses to apply.
+  final int schemaVersion;
+
+  /// Bumped each time the owners publish over the same key.
+  final int templateVersion;
+
+  final List<String> tags;
+
+  /// More than a floor plan: hours, prices, rules or features travel too.
+  bool get carriesConfiguration => entities.any((e) => e != 'floor_plan');
 
   bool get isBuiltin => visibility == TemplateVisibility.builtin;
 
@@ -91,6 +110,12 @@ class WorkspaceTemplate implements SystemStamped {
         visibility: TemplateVisibility.fromDb(row['visibility'] as String?),
         ownerWorkspaceId: row['owner_workspace_id'] as String?,
         floorPlan: (row['floor_plan'] as List?)?.cast<Object?>() ?? const [],
+        entities: [
+          for (final e in row['entities'] as List? ?? const ['floor_plan']) '$e'
+        ],
+        schemaVersion: (row['schema_version'] as num?)?.toInt() ?? 1,
+        templateVersion: (row['template_version'] as num?)?.toInt() ?? 1,
+        tags: [for (final t in row['tags'] as List? ?? const <Object?>[]) '$t'],
       );
 }
 

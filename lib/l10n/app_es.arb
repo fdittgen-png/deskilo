@@ -3771,7 +3771,7 @@
   "bookingMembershipPaused": "Su afiliación está en pausa — un administrador la reactiva en Miembros.",
   "bookingNotAMember": "Ya no es miembro de este espacio — pida una invitación a un administrador.",
   "featureWorkspaceLibraryTitle": "Biblioteca de espacios",
-  "featureWorkspaceLibraryDesc": "Guarde el plano de este espacio como plantilla, elija quién puede verla, invite a personas por e-mail y parta de lo que otros ofrecen.",
+  "featureWorkspaceLibraryDesc": "Guarde el plano de este espacio y cómo funciona como plantilla, elija quién puede verla, invite a personas por e-mail y parta de lo que otros ofrecen.",
   "libraryTitle": "Biblioteca de espacios",
   "libraryStartFrom": "Partir de la biblioteca",
   "libraryYours": "Sus plantillas",
@@ -3799,7 +3799,7 @@
       }
     }
   },
-  "libraryApplyConfirmBody": "Niveles, salas, mesas y plazas se añaden o actualizan por nombre. No se elimina nada de lo que ya tiene.",
+  "libraryApplyConfirmBody": "El plano se añade o actualiza por nombre, y los ajustes que lleva la plantilla se fusionan. No se elimina nada de lo que ya tiene.",
   "libraryApplied": "Plantilla aplicada.",
   "librarySave": "Guardar este espacio como plantilla",
   "librarySaveName": "Nombre de la plantilla",
