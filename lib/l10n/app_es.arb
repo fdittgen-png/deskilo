@@ -3790,6 +3790,8 @@
       }
     }
   },
+  "librarySearchHint": "Buscar plantillas",
+  "libraryCarriesSettings": "con sus ajustes",
   "libraryApply": "Aplicar a este espacio",
   "libraryApplyConfirmTitle": "¿Aplicar « {name} »?",
   "@libraryApplyConfirmTitle": {

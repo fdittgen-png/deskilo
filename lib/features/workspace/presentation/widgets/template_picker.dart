@@ -4,11 +4,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/workspace_template.dart';
 import '../../providers/workspace_providers.dart';
+import 'template_gallery.dart';
 
-/// #1120 — "Start from": the templates a person may read, as cards, one
-/// selected. Null selection means an empty canvas.
+/// #1120 — "Start from": the templates a person may read, one selected.
+/// Null selection means an empty canvas.
+///
+/// #1280 S1 — the cards are the shared [TemplateGallery], in a window of
+/// fixed height inside the onboarding form, so a hundred templates are
+/// searched and built lazily instead of wrapped into one tall block.
 ///
 /// No feature flag here on purpose: at onboarding there is no workspace
 /// yet to hold a flag, and a new space starting with a room is the whole
@@ -24,86 +28,34 @@ class TemplatePicker extends ConsumerWidget {
   final String? selectedId;
   final ValueChanged<String?> onChanged;
 
+  /// The gallery's window inside the scrolling onboarding form.
+  static const galleryHeight = 360.0;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
     final templates = ref.watch(workspaceTemplatesProvider).value ?? const [];
-    final sorted = [...templates]
-      ..sort((a, b) => a.isBuiltin == b.isBuiltin
-          ? a.name.compareTo(b.name)
-          : (a.isBuiltin ? -1 : 1));
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(l10n?.onboardingStartFrom ?? 'Start from',
-            style: theme.textTheme.titleSmall),
+            style: Theme.of(context).textTheme.titleSmall),
         const SizedBox(height: AppSpacing.sm),
-        Wrap(
-          spacing: AppSpacing.sm,
-          runSpacing: AppSpacing.sm,
-          children: [
-            for (final t in sorted)
-              _TemplateCard(
-                key: ValueKey('template-${t.key}'),
-                title: t.name,
-                subtitle: _counts(l10n, t),
-                selected: t.id == selectedId,
-                onTap: () => onChanged(t.id),
+        SizedBox(
+          height: galleryHeight,
+          child: TemplateGallery(
+            sections: [
+              TemplateGallerySection(
+                title: l10n?.onboardingStartFrom ?? 'Start from',
+                templates: templates,
               ),
-            _TemplateCard(
-              key: const ValueKey('template-empty'),
-              title: l10n?.onboardingStartEmpty ?? 'Empty space',
-              subtitle: l10n?.onboardingStartEmptyDesc ??
-                  'Draw your own plan from a blank canvas.',
-              selected: selectedId == null,
-              onTap: () => onChanged(null),
-            ),
-          ],
+            ],
+            selectedId: selectedId,
+            onSelected: onChanged,
+            offerEmpty: true,
+          ),
         ),
       ],
-    );
-  }
-
-  static String _counts(AppLocalizations? l10n, WorkspaceTemplate t) {
-    final c = t.counts;
-    return l10n?.libraryCounts(c.levels, c.desks, c.seats) ??
-        '${c.levels} levels · ${c.desks} desks · ${c.seats} seats';
-  }
-}
-
-class _TemplateCard extends StatelessWidget {
-  const _TemplateCard({
-    super.key,
-    required this.title,
-    required this.subtitle,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String title;
-  final String subtitle;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return ChoiceChip(
-      selected: selected,
-      onSelected: (_) => onTap(),
-      // #1191 — the chip's own tick would land on this.
-      showCheckmark: false,
-      avatar: Icon(selected ? Icons.check : Icons.grid_view_outlined,
-          size: 18),
-      label: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(title, style: theme.textTheme.bodyMedium),
-          Text(subtitle, style: theme.textTheme.bodySmall),
-        ],
-      ),
     );
   }
 }

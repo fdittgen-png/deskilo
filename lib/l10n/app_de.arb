@@ -3790,6 +3790,8 @@
       }
     }
   },
+  "librarySearchHint": "Vorlagen durchsuchen",
+  "libraryCarriesSettings": "mit ihren Einstellungen",
   "libraryApply": "Auf diesen Raum anwenden",
   "libraryApplyConfirmTitle": "« {name} » anwenden?",
   "@libraryApplyConfirmTitle": {

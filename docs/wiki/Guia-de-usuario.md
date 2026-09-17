@@ -589,7 +589,7 @@ Toca un miembro para abrir su **ficha de gestión** — cada acción por miembro
 
 *Ajustes → Biblioteca de espacios* (#1120), cuando la función está activa.
 
-**Partir de la biblioteca.** Todas las plantillas que puede ver: la
+**Partir de la biblioteca.** Busque por nombre, descripción o etiqueta y afine con los chips de etiquetas — ambos se combinan; una tarjeta dice lo que aporta la plantilla: su plano en cifras, *con sus ajustes* cuando también viajan horarios, precios o reglas (#1280). Todas las plantillas que puede ver: la
 integrada, las públicas y las que alguien compartió con su dirección de
 e-mail. *Aplicar a este espacio* añade niveles, salas, mesas y plazas
 **por nombre**; nunca elimina lo que ya tiene, y pregunta antes.

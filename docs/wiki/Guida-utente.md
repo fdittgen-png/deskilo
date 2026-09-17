@@ -591,7 +591,7 @@ Tocca un membro per aprire la sua **scheda di gestione** — ogni azione per mem
 *Impostazioni → Biblioteca degli spazi* (#1120), quando la funzione è
 attiva.
 
-**Partire dalla biblioteca.** Ogni modello che potete vedere: quello
+**Partire dalla biblioteca.** Cercate per nome, descrizione o etichetta e restringete con i chip delle etichette — le due cose si combinano; una scheda dice cosa dà il modello: la sua pianta in cifre, *con le sue impostazioni* quando viaggiano anche orari, prezzi o regole (#1280). Ogni modello che potete vedere: quello
 integrato, quelli pubblici e quelli che qualcuno ha condiviso con il
 vostro indirizzo e-mail. *Applica a questo spazio* aggiunge livelli,
 stanze, scrivanie e posti **per nome**; non rimuove mai ciò che avete

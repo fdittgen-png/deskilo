@@ -566,7 +566,7 @@ Tap a member to open their **management sheet** — every per-member action in o
 
 *Settings → Workspace library* (#1120), when the feature is on.
 
-**Start from the library.** Every template you may see — the built-in
+**Start from the library.** Search by name, description or tag, and narrow with the tag chips — the two combine, and a card says what the template gives: its plan in numbers, *with its settings* when hours, prices or rules travel too (#1280). Every template you may see — the built-in
 one, the public ones, and the ones somebody shared with your e-mail
 address. *Apply to this space* adds levels, rooms, desks and seats **by
 name**; it never removes what you already have, and it asks first.
