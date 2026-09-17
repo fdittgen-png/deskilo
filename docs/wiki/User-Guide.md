@@ -612,6 +612,8 @@ recorded with what the space held before. A template made by a newer
 DesKilo that this server does not understand is refused, never
 half-applied.
 
+Two templates are built in: **A tiny space** (two levels, eight seats) and **Association de coworking (France)**. The second is what a French coworking association usually needs from day one: half-days from 07:00 to 13:00 and 13:00 to 19:00, Monday to Friday; subscriptions at 50 % and 100 % charged 50 € and 100 €; no VAT; French as the workspace language; validations taken in the calendar, with the events tab and the members directory switched off; and two levels ready to book (#1282). Country, currency and time zone always come from onboarding.
+
 A new space always starts with a room, whatever this feature says:
 onboarding offers *Start from* with the built-in template selected.
 

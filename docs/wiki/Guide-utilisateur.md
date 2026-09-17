@@ -624,6 +624,8 @@ augmente sa version, et chaque application est consignée avec ce que
 l'espace contenait avant. Un modèle créé par un DesKilo plus récent que
 ce serveur ne comprend pas est refusé, jamais appliqué à moitié.
 
+Deux modèles sont intégrés : **A tiny space** (deux niveaux, huit places) et **Association de coworking (France)**. Le second est ce dont une association de coworking française a d'ordinaire besoin dès le premier jour : demi-journées de 7 h à 13 h et de 13 h à 19 h, du lundi au vendredi ; cotisations à 50 % et 100 % facturées 50 € et 100 € ; pas de TVA ; le français comme langue de l'espace ; les validations prises dans le calendrier, avec l'onglet événements et l'annuaire des membres désactivés ; et deux étages prêts à réserver (#1282). Le pays, la devise et le fuseau horaire viennent toujours de l'accueil.
+
 Un nouvel espace démarre toujours avec une pièce, quelle que soit cette
 option : l'accueil propose *Partir de* avec le modèle intégré sélectionné.
 
