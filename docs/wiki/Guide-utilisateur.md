@@ -598,7 +598,7 @@ avec votre adresse e-mail. *Voir les changements* montre, groupe par groupe, ce 
 
 **Vos modèles.** *Enregistrer cet espace comme modèle* prend un instantané
 de votre plan. Les prix, les images du plan et l'adresse de votre site
-sont retirés avant l'enregistrement. Chaque modèle est *Moi
+sont retirés avant l'enregistrement. La feuille demande **ce qui voyage** — cochez les groupes à publier, un modèle des seuls horaires convient très bien — et dit ce qui ne quitte **jamais** l'espace (coordonnées bancaires, sites et leurs adresses, identifiants légaux, textes d'invitation, liens et mise en page des documents) et **quels noms partent avec le plan**, car bureaux et tables fusionnent par nom et ne peuvent donc pas être masqués. Ajoutez des **étiquettes** pour qu'on le trouve (#1280). Chaque modèle est *Moi
 seulement* tant que vous n'en décidez pas autrement : *Les personnes que
 j'invite* (par e-mail — l'invitation fonctionne dès que cette adresse se
 connecte, sans rien révéler de l'existence d'un compte) ou *Tout le

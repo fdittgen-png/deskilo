@@ -580,7 +580,7 @@ vostro indirizzo e-mail. *Vedi le modifiche* mostra, gruppo per gruppo, cosa far
 
 **I vostri modelli.** *Salva questo spazio come modello* scatta
 un'istantanea della vostra pianta. Prezzi, immagini della pianta e
-indirizzo della sede vengono rimossi prima del salvataggio. Ogni modello
+indirizzo della sede vengono rimossi prima del salvataggio. La scheda chiede **cosa viaggia** — spuntate i gruppi da pubblicare, un modello dei soli orari va benissimo — e dice cosa non lascia **mai** lo spazio (dati bancari, sedi e loro indirizzi, identificativi legali, testi di invito, collegamenti e impaginazione dei documenti) e **quali nomi viaggiano con la pianta**, perché stanze e scrivanie si uniscono per nome e quindi non si possono nascondere. Aggiungete **etichette** perché altri lo trovino (#1280). Ogni modello
 è *Solo io* finché non decidete altrimenti: *Le persone che invito* (via
 e-mail — l'invito funziona non appena quell'indirizzo accede, senza
 rivelare se esiste già un account) oppure *Tutti*, che lo mette in

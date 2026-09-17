@@ -95,6 +95,7 @@ import 'package:deskilo/features/workspace/domain/workspace_overview.dart';
 import 'package:deskilo/features/workspace/domain/site.dart';
 import 'fake_pref_stores.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
+import 'package:deskilo/features/workspace/domain/template_publication.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
 
 /// In-memory [AuthRepository] for widget/unit tests (fakes over mocks).
@@ -1821,6 +1822,40 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
         (workspaceId: workspaceId, templateId: templateId, groups: groups));
   }
 
+  /// #1280 S3 — the groups each save asked for (null = everything allowed).
+  final savedTemplateGroups = <List<String>?>[];
+
+  /// #1280 S3 — what the fake server says publishing would carry.
+  TemplatePublication publication = const TemplatePublication(
+    published: [
+      PublishedEntity(entity: 'floor_plan', group: TemplateGroup.space),
+      PublishedEntity(
+          entity: 'identity',
+          group: TemplateGroup.wording,
+          stripped: ['address', 'vat_id']),
+      PublishedEntity(entity: 'booking_rules', group: TemplateGroup.hoursBooking),
+    ],
+    neverPublished: [
+      NeverPublished(entity: 'payment_instructions', reason: 'bank details'),
+      NeverPublished(entity: 'sites', reason: 'addresses'),
+    ],
+    planNames: ['Ground floor', 'Desk 1'],
+  );
+
+  @override
+  Future<TemplatePublication> templatePublicationPreview(String workspaceId,
+      {List<String>? groups}) async {
+    if (groups == null) return publication;
+    return TemplatePublication(
+      published: [
+        for (final p in publication.published)
+          if (groups.contains(p.group.wire)) p,
+      ],
+      neverPublished: publication.neverPublished,
+      planNames: groups.contains('space') ? publication.planNames : const [],
+    );
+  }
+
   /// #1280 — the preview a test wants the server to answer, by template id.
   /// Without one, each entity group the template carries previews as new.
   final templatePreviews = <String, TemplatePreview>{};
@@ -1854,7 +1889,9 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     String description = '',
     TemplateVisibility visibility = TemplateVisibility.private,
     List<String> tags = const [],
+    List<String>? groups,
   }) async {
+    savedTemplateGroups.add(groups);
     if (visibility == TemplateVisibility.builtin) {
       throw Exception('a workspace cannot publish a builtin template');
     }

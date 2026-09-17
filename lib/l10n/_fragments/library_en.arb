@@ -144,6 +144,55 @@
   "@libraryPreviewFailed": {
     "description": "Template apply sheet when the server preview could not be loaded (#1280)"
   },
+  "libraryPublishGroups": "What travels",
+  "@libraryPublishGroups": {
+    "description": "Template publish flow (#1280): libraryPublishGroups"
+  },
+  "libraryNeverPublished": "Never published",
+  "@libraryNeverPublished": {
+    "description": "Template publish flow (#1280): libraryNeverPublished"
+  },
+  "libraryNeverSites": "Sites and their addresses",
+  "@libraryNeverSites": {
+    "description": "Template publish flow (#1280): libraryNeverSites"
+  },
+  "libraryNeverPayment": "Bank details",
+  "@libraryNeverPayment": {
+    "description": "Template publish flow (#1280): libraryNeverPayment"
+  },
+  "libraryNeverDocumentDesign": "Document designs",
+  "@libraryNeverDocumentDesign": {
+    "description": "Template publish flow (#1280): libraryNeverDocumentDesign"
+  },
+  "libraryNeverDocumentLinks": "Links to your documents",
+  "@libraryNeverDocumentLinks": {
+    "description": "Template publish flow (#1280): libraryNeverDocumentLinks"
+  },
+  "libraryNeverInvitations": "Invitation texts",
+  "@libraryNeverInvitations": {
+    "description": "Template publish flow (#1280): libraryNeverInvitations"
+  },
+  "libraryNeverIdentity": "Your address, legal identifiers, legal mentions and WhatsApp group",
+  "@libraryNeverIdentity": {
+    "description": "Template publish flow (#1280): libraryNeverIdentity"
+  },
+  "libraryPlanNames": "These names go with the plan: {names}",
+  "@libraryPlanNames": {
+    "description": "Template publish flow (#1280): libraryPlanNames",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "librarySaveTags": "Tags, separated by commas",
+  "@librarySaveTags": {
+    "description": "Template publish flow (#1280): librarySaveTags"
+  },
+  "libraryPublishNothing": "Choose at least one group.",
+  "@libraryPublishNothing": {
+    "description": "Template publish flow (#1280): libraryPublishNothing"
+  },
   "libraryApply": "Apply to this space",
   "libraryApplyConfirmTitle": "Apply « {name} »?",
   "@libraryApplyConfirmTitle": {

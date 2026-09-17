@@ -10577,6 +10577,72 @@ abstract class AppLocalizations {
   /// **'The changes could not be previewed. Nothing was applied.'**
   String get libraryPreviewFailed;
 
+  /// Template publish flow (#1280): libraryPublishGroups
+  ///
+  /// In en, this message translates to:
+  /// **'What travels'**
+  String get libraryPublishGroups;
+
+  /// Template publish flow (#1280): libraryNeverPublished
+  ///
+  /// In en, this message translates to:
+  /// **'Never published'**
+  String get libraryNeverPublished;
+
+  /// Template publish flow (#1280): libraryNeverSites
+  ///
+  /// In en, this message translates to:
+  /// **'Sites and their addresses'**
+  String get libraryNeverSites;
+
+  /// Template publish flow (#1280): libraryNeverPayment
+  ///
+  /// In en, this message translates to:
+  /// **'Bank details'**
+  String get libraryNeverPayment;
+
+  /// Template publish flow (#1280): libraryNeverDocumentDesign
+  ///
+  /// In en, this message translates to:
+  /// **'Document designs'**
+  String get libraryNeverDocumentDesign;
+
+  /// Template publish flow (#1280): libraryNeverDocumentLinks
+  ///
+  /// In en, this message translates to:
+  /// **'Links to your documents'**
+  String get libraryNeverDocumentLinks;
+
+  /// Template publish flow (#1280): libraryNeverInvitations
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation texts'**
+  String get libraryNeverInvitations;
+
+  /// Template publish flow (#1280): libraryNeverIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'Your address, legal identifiers, legal mentions and WhatsApp group'**
+  String get libraryNeverIdentity;
+
+  /// Template publish flow (#1280): libraryPlanNames
+  ///
+  /// In en, this message translates to:
+  /// **'These names go with the plan: {names}'**
+  String libraryPlanNames(String names);
+
+  /// Template publish flow (#1280): librarySaveTags
+  ///
+  /// In en, this message translates to:
+  /// **'Tags, separated by commas'**
+  String get librarySaveTags;
+
+  /// Template publish flow (#1280): libraryPublishNothing
+  ///
+  /// In en, this message translates to:
+  /// **'Choose at least one group.'**
+  String get libraryPublishNothing;
+
   /// No description provided for @libraryApply.
   ///
   /// In en, this message translates to:

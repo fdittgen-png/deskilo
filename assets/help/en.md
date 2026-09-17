@@ -572,7 +572,7 @@ address. *Preview changes* shows, group by group, what the template would do her
 
 **Your templates.** *Save this space as a template* snapshots your floor
 plan. Prices, plan images and your site's address are stripped before it
-is stored. Each template is **Only me** until you say otherwise:
+is stored. The sheet asks **what travels** — tick the groups to publish, a template of opening hours alone is fine — and says what **never** leaves the space (bank details, sites and their addresses, legal identifiers, invitation texts, document links and designs) and **which names go with the plan**, because rooms and desks merge by name and so cannot be hidden. Add **tags** so others find it (#1280). Each template is **Only me** until you say otherwise:
 *People I invite* (by e-mail — the invitation works the moment that
 address signs in, and nothing is revealed about whether it already has
 an account) or *Everyone*, which puts it in the library.

@@ -7,6 +7,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/template_preview.dart';
+import '../domain/template_publication.dart';
 import '../domain/workspace_template.dart';
 
 mixin SupabaseWorkspaceTemplates {
@@ -54,6 +55,7 @@ mixin SupabaseWorkspaceTemplates {
     String description = '',
     TemplateVisibility visibility = TemplateVisibility.private,
     List<String> tags = const [],
+    List<String>? groups,
   }) async {
     final id = await client.rpc<dynamic>('save_workspace_as_template', params: {
       'p_workspace_id': workspaceId,
@@ -62,8 +64,18 @@ mixin SupabaseWorkspaceTemplates {
       'p_description': description,
       'p_visibility': visibility.name,
       'p_tags': tags,
+      // #1280 — null publishes every allowed group.
+      'p_groups': ?groups,
     });
     return id as String;
+  }
+
+  Future<TemplatePublication> templatePublicationPreview(String workspaceId,
+      {List<String>? groups}) async {
+    final json = await client.rpc<dynamic>('template_publication_preview',
+        params: {'p_workspace_id': workspaceId, 'p_groups': ?groups});
+    return TemplatePublication.fromJson(
+        Map<String, dynamic>.from(json as Map? ?? const <String, dynamic>{}));
   }
 
   Future<void> setWorkspaceTemplateVisibility(
