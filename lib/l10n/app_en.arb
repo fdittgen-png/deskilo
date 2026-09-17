@@ -8506,6 +8506,105 @@
   "@profilesEmailCopied": {
     "description": "#937 platform owner: profilesEmailCopied"
   },
+  "featuresViewProcesses": "Processes",
+  "@featuresViewProcesses": {
+    "description": "#1327 the process-first overview of the Features screen"
+  },
+  "featuresViewSwitches": "Switches",
+  "@featuresViewSwitches": {
+    "description": "#1327 the process-first overview of the Features screen"
+  },
+  "processSearchLabel": "Search processes and features",
+  "@processSearchLabel": {
+    "description": "#1327 the process-first overview of the Features screen"
+  },
+  "processFilterAll": "All",
+  "@processFilterAll": {
+    "description": "#1327 the process-first overview of the Features screen"
+  },
+  "processStateActive": "Active",
+  "@processStateActive": {
+    "description": "#1327 the process-first overview of the Features screen"
+  },
+  "processStatePartial": "Partial",
+  "@processStatePartial": {
+    "description": "#1327 the process-first overview of the Features screen"
+  },
+  "processStateAvailable": "Available",
+  "@processStateAvailable": {
+    "description": "#1327 the process-first overview of the Features screen"
+  },
+  "processStateNeedsAttention": "Needs attention",
+  "@processStateNeedsAttention": {
+    "description": "#1327 the process-first overview of the Features screen"
+  },
+  "processSubprocessCount": "{active} of {total} subprocesses active",
+  "@processSubprocessCount": {
+    "description": "#1327 the process-first overview of the Features screen",
+    "placeholders": {
+      "active": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "processFeatureCount": "{enabled} of {total} features on",
+  "@processFeatureCount": {
+    "description": "#1327 the process-first overview of the Features screen",
+    "placeholders": {
+      "enabled": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "processHeldBack": "{count, plural, =1{1 feature is on but waits for a switched-off prerequisite} other{{count} features are on but wait for a switched-off prerequisite}}",
+  "@processHeldBack": {
+    "description": "#1327 the process-first overview of the Features screen",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "processAlsoNeeds": "Switching it all on also needs: {features}",
+  "@processAlsoNeeds": {
+    "description": "#1327 the process-first overview of the Features screen",
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "processFeatureOn": "On",
+  "@processFeatureOn": {
+    "description": "#1327 the process-first overview of the Features screen"
+  },
+  "processFeatureOff": "Off",
+  "@processFeatureOff": {
+    "description": "#1327 the process-first overview of the Features screen"
+  },
+  "processFeatureWaiting": "On, waiting for {feature}",
+  "@processFeatureWaiting": {
+    "description": "#1327 the process-first overview of the Features screen",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "processSwitchHint": "Tap a feature to change it among the switches.",
+  "@processSwitchHint": {
+    "description": "#1327 the process-first overview of the Features screen"
+  },
+  "processFilterEmpty": "No process matches this filter.",
+  "@processFilterEmpty": {
+    "description": "#1327 the process-first overview of the Features screen"
+  },
   "processWorkspaceAccess": "Workspace & access",
   "processSpaceManagement": "Space management",
   "processReservationsUsage": "Reservations & usage",

@@ -8060,6 +8060,76 @@ class AppLocalizationsIt extends AppLocalizations {
   String get profilesEmailCopied => 'E-mail copiata.';
 
   @override
+  String get featuresViewProcesses => 'Processi';
+
+  @override
+  String get featuresViewSwitches => 'Interruttori';
+
+  @override
+  String get processSearchLabel => 'Cerca processi e funzionalità';
+
+  @override
+  String get processFilterAll => 'Tutti';
+
+  @override
+  String get processStateActive => 'Attivo';
+
+  @override
+  String get processStatePartial => 'Parziale';
+
+  @override
+  String get processStateAvailable => 'Disponibile';
+
+  @override
+  String get processStateNeedsAttention => 'Da verificare';
+
+  @override
+  String processSubprocessCount(int active, int total) {
+    return '$active di $total sottoprocessi attivi';
+  }
+
+  @override
+  String processFeatureCount(int enabled, int total) {
+    return '$enabled di $total funzionalità attive';
+  }
+
+  @override
+  String processHeldBack(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count funzionalità sono attive ma attendono un prerequisito disattivato',
+      one: '1 funzionalità è attiva ma attende un prerequisito disattivato',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String processAlsoNeeds(String features) {
+    return 'Attivare tutto richiede anche: $features';
+  }
+
+  @override
+  String get processFeatureOn => 'Attiva';
+
+  @override
+  String get processFeatureOff => 'Disattivata';
+
+  @override
+  String processFeatureWaiting(String feature) {
+    return 'Attiva, in attesa di $feature';
+  }
+
+  @override
+  String get processSwitchHint =>
+      'Tocca una funzionalità per cambiarla tra gli interruttori.';
+
+  @override
+  String get processFilterEmpty =>
+      'Nessun processo corrisponde a questo filtro.';
+
+  @override
   String get processWorkspaceAccess => 'Spazio e accesso';
 
   @override
