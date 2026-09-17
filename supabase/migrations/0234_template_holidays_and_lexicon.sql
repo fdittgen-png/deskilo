@@ -252,6 +252,7 @@ values (
       "calendarTab": true,
       "calendarValidations": true,
       "calendarViews": true,
+      "carnets": false,
       "coOwner": false,
       "configurationTransfer": false,
       "dataAccessLog": false,
