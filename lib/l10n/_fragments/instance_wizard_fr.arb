@@ -174,5 +174,24 @@
   "commonCopy": "Copier",
   "@commonCopy": {
     "description": "#977 instance wizard: commonCopy"
-  }
+  },
+  "instanceReadyInstall": "Le projet est vide : tout sera installé.",
+  "instanceReadyResume": "Une installation DesKilo s'est arrêtée en cours de route : il reste {pending} migrations, et seules celles-ci seront exécutées.",
+  "instanceReadyUpgrade": "La version {version} de DesKilo est installée : seules les {pending} migrations manquantes seront exécutées.",
+  "instanceReadyCurrent": "La version {version} de DesKilo est installée et à jour : le schéma n'a besoin de rien.",
+  "instanceReadyAttention": "Ce projet demande votre attention — rien n'a été installé.",
+  "instanceAttentionNotHealthy": "Supabase ne signale pas le projet comme opérationnel. Attendez qu'il le soit, ou restaurez-le dans le tableau de bord.",
+  "instanceAttentionPostgres": "Il tourne sous Postgres {found} ; DesKilo est conçu pour Postgres {supported}.",
+  "instanceAttentionForeign": "Son schéma public contient des tables que DesKilo ne crée pas ({tables}). L'installation y est refusée ; utilisez un projet vide.",
+  "instanceAttentionUnrecorded": "Les tables DesKilo sont là, mais aucune migration n'a été enregistrée. Enregistrez d'abord ce qu'il contient avec `dart run tool/instance.dart record`.",
+  "instanceAttentionOtherTooling": "Ses migrations ont été enregistrées par un autre outil : on ne peut pas savoir où DesKilo reprendrait. Utilisez un projet vide.",
+  "instanceChooseAnother": "Choisir un autre projet",
+  "instanceTokenReach": "Un jeton d'accès personnel ouvre tout votre compte Supabase tant qu'il existe. L'assistant ne le garde qu'en mémoire et vous dit quand vous pouvez le révoquer.",
+  "instanceRevokeToken": "Vous pouvez révoquer le jeton d'accès maintenant : DesKilo n'en a gardé aucune copie.",
+  "instanceDoctorIntro": "Avant que cet appareil l'utilise, le contrôle de sécurité doit passer : une alarme garde le bouton désactivé jusqu'à correction.",
+  "instanceDoctorRun": "Lancer le contrôle de sécurité",
+  "instanceDoctorRunAgain": "Vérifier à nouveau",
+  "instanceDoctorProtected": "Protégé",
+  "instanceDoctorAttention": "Attention requise",
+  "instanceDoctorPassed": "{count} contrôles réussis"
 }

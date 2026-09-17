@@ -34,7 +34,11 @@ void main() {
     expect(start, isNot(-1), reason: 'the FEATURES array must exist');
     final end = source.indexOf('\n];', start);
     final block = source.substring(start, end);
-    final row = RegExp(r"^ \['([A-Za-z]+)',.*,([01])\],$", multiLine: true);
+    // Key first, default last. Since #1366 a row is just [key, default] —
+    // the label comes from the app's ARB through web/setup_l10n.js — but a
+    // row with anything between the two still parses.
+    final row =
+        RegExp(r"^ \['([A-Za-z]+)',(?:.*,)?([01])\],$", multiLine: true);
     return {
       for (final m in row.allMatches(block))
         m.group(1)!: m.group(2) == '1',

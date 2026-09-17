@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,6 +7,7 @@ import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/instance/instance_builder.dart';
 import '../../../../core/instance/instance_bundle.dart';
 import '../../../../core/instance/instance_bundle_asset.dart';
+import '../../../../core/instance/instance_readiness.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/instance/management_api.dart';
@@ -18,6 +18,10 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
 import '../../../../core/ui/wizard_scaffold.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../../../core/instance/instance_doctor.dart';
+import '../widgets/instance_done_step.dart';
+import '../widgets/instance_readiness_card.dart';
+import '../widgets/instance_run_step.dart';
 
 /// #977 — a new instance for a person who runs a coworking space, not a
 /// database: paste one access token, name the project, and the wizard
@@ -36,7 +40,7 @@ enum _Step { account, project, schema, functions, signIn, done }
 
 class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
   static const String supabaseUrl = 'https://supabase.com';
-  static const String tokensUrl = 'https://supabase.com/dashboard/account/tokens';
+  static const String tokensUrl = supabaseTokensUrl;
 
   final _token = TextEditingController();
   final _name = TextEditingController();
@@ -51,6 +55,8 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
   String _region = 'eu-west-1';
   String _password = '';
   SupabaseProject? _project;
+  InstanceReadiness? _readiness;
+  List<String>? _missingFunctions;
   String _status = '';
   InstanceBundle? _bundle;
   InstanceProgress? _progress;
@@ -59,6 +65,8 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
   bool _functionsDeployed = false;
   bool _signInConfigured = false;
   ({String url, String key})? _endpoint;
+  /// #1308 S3 — the doctor's findings; the finish waits for them.
+  List<DoctorFinding>? _doctor;
 
   @override
   void initState() {
@@ -151,7 +159,20 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           onStatus: (s) {
         if (mounted) setState(() => _status = s);
       });
-      setState(() => _project = ready);
+      // #1308 — read what the project holds before anything runs on it.
+      _bundle ??= await ref.read(instanceBundleLoaderProvider)();
+      // #1308 S2 — resume from what the project holds, not from this state.
+      final (:readiness, :remaining, :endpoint) =
+          await InstanceReadinessCheck(_api!).read(ready, _bundle!);
+      setState(() {
+        _project = ready;
+        _readiness = readiness;
+        _endpoint = endpoint;
+        _schemaInstalled = readiness.verdict == InstanceReadinessVerdict.current;
+        _missingFunctions = remaining?.missingFunctions;
+        _functionsDeployed = remaining?.functionsDeployed ?? false;
+        _signInConfigured = endpoint != null;
+      });
     });
   }
 
@@ -178,7 +199,8 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
     if (ref == null) return;
     await _run('deploy functions', () async {
       _bundle ??= await this.ref.read(instanceBundleLoaderProvider)();
-      await _builder.deployFunctions(ref, _bundle!, onProgress: (p) {
+      await _builder.deployFunctions(ref, _bundle!, only: _missingFunctions,
+          onProgress: (p) {
         if (mounted) setState(() => _progress = p);
       });
       setState(() => _functionsDeployed = true);
@@ -219,7 +241,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
 
   bool get _nextEnabled => switch (_step) {
         _Step.account => _org != null && !_busy,
-        _Step.project => _project != null && !_busy,
+        _Step.project => _project != null && !(_readiness?.blocks ?? false) && !_busy,
         _Step.schema => _schemaInstalled && !_busy,
         _Step.functions => _functionsDeployed && !_busy,
         _Step.signIn => _signInConfigured && !_busy,
@@ -264,6 +286,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
                 _step = _Step.values[_step.index - 1];
               }),
       onFinish: _step == _Step.done && _endpoint != null && !_busy ? _useHere : null,
+      finishEnabled: _doctor != null && !hasAlarm(_doctor!),
       finishLabel: l10n?.instanceUseHere ?? 'Use this instance on this device',
       finishKey: const ValueKey('instance-use-here'),
       body: ListView(
@@ -295,48 +318,61 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
   List<Widget> _body(AppLocalizations? l10n) => switch (_step) {
         _Step.account => _account(l10n),
         _Step.project => _projectStep(l10n),
-        _Step.schema => _installStep(
-            l10n,
-            intro: l10n?.instanceInstallSchema(_bundle?.schema.length ?? 0) ??
-                'Install the schema: every migration of the app, in order.',
-            buttonKey: 'instance-install-schema',
-            done: _schemaInstalled,
-            onRun: _installSchema,
-            retry: _schemaDone > 0,
-          ),
-        _Step.functions => _installStep(
-            l10n,
-            intro: l10n?.instanceDeployFunctions(_bundle?.functions.length ?? 0) ??
-                'Deploy the functions: payments, e-invoices, push, badges.',
-            buttonKey: 'instance-deploy-functions',
-            done: _functionsDeployed,
-            onRun: _deployFunctions,
-            retry: false,
-          ),
-        _Step.signIn => _signInStep(l10n),
+        _Step.schema => [
+            InstanceRunStep(
+              intro: l10n?.instanceInstallSchema(_bundle?.schema.length ?? 0) ??
+                  'Install the schema: every migration of the app, in order.',
+              buttonKey: 'instance-install-schema',
+              done: _schemaInstalled,
+              busy: _busy,
+              progress: _progress,
+              retry: _schemaDone > 0 && _error != null,
+              onRun: _installSchema,
+            ),
+          ],
+        _Step.functions => [
+            InstanceRunStep(
+              intro: l10n?.instanceDeployFunctions(_bundle?.functions.length ?? 0) ??
+                  'Deploy the functions: payments, e-invoices, push, badges.',
+              buttonKey: 'instance-deploy-functions',
+              done: _functionsDeployed,
+              busy: _busy,
+              progress: _progress,
+              retry: false,
+              onRun: _deployFunctions,
+            ),
+          ],
+        _Step.signIn => [
+            InstanceRunStep(
+              intro: l10n?.instanceSignInExplain ??
+                  'Sign-in settings: e-mail confirmation on (a sign-up must click '
+                      'the link in its mail), and the app\'s links allowed for '
+                      'password resets and magic links.',
+              buttonKey: 'instance-apply-signin',
+              done: _signInConfigured,
+              busy: _busy,
+              progress: null,
+              retry: false,
+              onRun: _configureSignIn,
+              startLabel: l10n?.instanceApplySignIn ?? 'Apply the sign-in settings',
+              startIcon: Icons.tune,
+            ),
+          ],
         _Step.done => _doneStep(l10n),
       };
 
-  Widget _text(String s, {TextStyle? style}) =>
-      Padding(padding: const EdgeInsets.only(bottom: AppSpacing.sm), child: Text(s, style: style));
-
-  Widget _link(String url, {required String label}) => Row(children: [
-        Expanded(child: SelectableText(url)),
-        IconButton(
-          tooltip: label,
-          icon: const Icon(Icons.copy_outlined),
-          onPressed: () => Clipboard.setData(ClipboardData(text: url)),
-        ),
-      ]);
-
   List<Widget> _account(AppLocalizations? l10n) => [
-        _text(l10n?.instanceAccountIntro ??
+        WizardText(l10n?.instanceTokenReach ??
+            'A personal access token reaches your whole Supabase account for '
+                'as long as it lives. The wizard holds it in memory only and '
+                'tells you when you can revoke it.'),
+        WizardText(l10n?.instanceAccountIntro ??
             'Create a free account at supabase.com, then make a personal '
                 'access token (Account → Access Tokens) and paste it here. '
                 'The wizard uses it to create and set up the project; it is '
                 'never stored.'),
-        _link(supabaseUrl, label: l10n?.commonCopy ?? 'Copy'),
-        _link(tokensUrl, label: l10n?.commonCopy ?? 'Copy'),
+        CopyableLink(supabaseUrl, label: l10n?.commonCopy ?? 'Copy'),
+        CopyableLink(tokensUrl, label: l10n?.commonCopy ?? 'Copy'),
         TextField(
           key: const ValueKey('instance-token'),
           controller: _token,
@@ -355,7 +391,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
         ),
         if (_orgs.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.md),
-          _text(l10n?.instanceOrganisationLabel ?? 'Organisation',
+          WizardText(l10n?.instanceOrganisationLabel ?? 'Organisation',
               style: Theme.of(context).textTheme.labelLarge),
           RadioGroup<String>(
             groupValue: _org,
@@ -398,10 +434,10 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           onChanged: (v) => setState(() => _region = v ?? _region),
         ),
         const SizedBox(height: AppSpacing.sm),
-        _text(l10n?.instanceDatabasePassword ??
+        WizardText(l10n?.instanceDatabasePassword ??
             'Database password, chosen for you — copy it somewhere safe; '
                 'the app never needs it again.'),
-        _link(_password, label: l10n?.commonCopy ?? 'Copy'),
+        CopyableLink(_password, label: l10n?.commonCopy ?? 'Copy'),
         FilledButton.icon(
           key: const ValueKey('instance-create-project'),
           onPressed: _busy || _project != null || _name.text.trim().isEmpty
@@ -411,13 +447,21 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           label: Text(l10n?.instanceCreateProject ?? 'Create the project'),
         ),
         if (_status.isNotEmpty && _project == null)
-          _text(l10n?.instanceProjectStatus(_status) ?? 'Project status: $_status'),
+          WizardText(l10n?.instanceProjectStatus(_status) ?? 'Project status: $_status'),
         if (_project case final p?)
-          _text(l10n?.instanceProjectReady(p.ref) ?? 'Project ready: ${p.ref}',
+          WizardText(l10n?.instanceProjectReady(p.ref) ?? 'Project ready: ${p.ref}',
               style: Theme.of(context).textTheme.titleSmall),
+        if (_readiness case final r?)
+          InstanceReadinessCard(
+            readiness: r,
+            onChooseAnother: () => setState(() {
+              _project = _readiness = _missingFunctions = _endpoint = null;
+              _schemaInstalled = _functionsDeployed = _signInConfigured = false;
+            }),
+          ),
         if (_existing.isNotEmpty && _project == null) ...[
           const SizedBox(height: AppSpacing.md),
-          _text(l10n?.instanceUseExisting ?? 'Or use an existing project:',
+          WizardText(l10n?.instanceUseExisting ?? 'Or use an existing project:',
               style: Theme.of(context).textTheme.labelLarge),
           for (final p in _existing)
             ListTile(
@@ -430,62 +474,12 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
         ],
       ];
 
-  List<Widget> _installStep(
-    AppLocalizations? l10n, {
-    required String intro,
-    required String buttonKey,
-    required bool done,
-    required Future<void> Function() onRun,
-    required bool retry,
-  }) =>
-      [
-        _text(intro),
-        if (_progress case final p? when !done)
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              LinearProgressIndicator(value: p.total == 0 ? null : p.done / p.total),
-              const SizedBox(height: AppSpacing.xs),
-              _text(l10n?.instanceProgress(p.done, p.total, p.current) ??
-                  '${p.done} / ${p.total} · ${p.current}'),
-            ],
-          ),
-        FilledButton.icon(
-          key: ValueKey(buttonKey),
-          onPressed: _busy || done ? null : onRun,
-          icon: Icon(done ? Icons.check_circle_outline : Icons.play_arrow_outlined),
-          label: Text(done
-              ? (l10n?.commonDone ?? 'Done')
-              : retry && _error != null
-                  ? (l10n?.instanceRetry ?? 'Retry from where it stopped')
-                  : (l10n?.commonStart ?? 'Start')),
-        ),
-      ];
-
-  List<Widget> _signInStep(AppLocalizations? l10n) => [
-        _text(l10n?.instanceSignInExplain ??
-            'Sign-in settings: e-mail confirmation on (a sign-up must click '
-                'the link in its mail), and the app\'s links allowed for '
-                'password resets and magic links.'),
-        FilledButton.icon(
-          key: const ValueKey('instance-apply-signin'),
-          onPressed: _busy || _signInConfigured ? null : _configureSignIn,
-          icon: Icon(_signInConfigured ? Icons.check_circle_outline : Icons.tune),
-          label: Text(_signInConfigured
-              ? (l10n?.commonDone ?? 'Done')
-              : (l10n?.instanceApplySignIn ?? 'Apply the sign-in settings')),
-        ),
-      ];
-
   List<Widget> _doneStep(AppLocalizations? l10n) => [
-        _text(l10n?.instanceDoneIntro ??
-            'The instance is ready. Use it on this device, then share the '
-                'server QR from the Server screen so members join the same '
-                'one.'),
-        if (_endpoint case final e?) ...[
-          _link(e.url, label: l10n?.commonCopy ?? 'Copy'),
-          _text('${e.key.substring(0, e.key.length.clamp(0, 18))}…',
-              style: const TextStyle(fontFamily: 'monospace')),
-        ],
+        InstanceDoneStep(
+          endpoint: _endpoint,
+          api: _project == null ? null : _api,
+          projectRef: _project?.ref,
+          onChecked: (f) => setState(() => _doctor = f),
+        ),
       ];
 }

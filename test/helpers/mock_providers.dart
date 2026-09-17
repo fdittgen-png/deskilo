@@ -94,6 +94,7 @@ import 'in_memory_default_level_store.dart';
 import 'package:deskilo/features/workspace/domain/workspace_overview.dart';
 import 'package:deskilo/features/workspace/domain/site.dart';
 import 'fake_pref_stores.dart';
+import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/features/workspace/domain/template_publication.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
@@ -1880,6 +1881,23 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
             state: TemplateGroupState.isNew,
             itemCount: t.counts.seats + t.counts.desks + t.counts.levels,
           ),
+      ],
+    );
+  }
+
+  /// #1303 — outlines by template id; unset ids outline their plan.
+  final templateOutlines = <String, TemplateOutline>{};
+
+  @override
+  Future<TemplateOutline> workspaceTemplateOutline(String templateId) async {
+    final set = templateOutlines[templateId];
+    if (set != null) return set;
+    final t = templates.firstWhere((x) => x.id == templateId,
+        orElse: () => throw Exception('unknown template'));
+    return TemplateOutline(
+      compatibility: TemplateCompatibility.supported,
+      groups: [
+        if (t.entities.contains('floor_plan')) TemplateGroup.space,
       ],
     );
   }

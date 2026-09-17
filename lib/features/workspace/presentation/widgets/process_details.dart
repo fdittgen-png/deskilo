@@ -2,6 +2,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../application/process_status.dart';
+import 'process_card.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_process.dart';
 import '../feature_copy.dart';
@@ -21,23 +24,21 @@ class ProcessDetails extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(l10n?.processDetails ?? 'Processes and dependencies')),
       body: ListView(children: [
-        for (final process in processes)
+        for (final process in processStatuses(raw, processes: processes))
           ExpansionTile(
-            key: ValueKey('process-${process.key}'),
-            title: Text(processLabel(l10n, process.key)),
-            subtitle: Text(processCopy(l10n, process.key).description),
+            key: ValueKey('process-${process.process.key}'),
+            title: Text(processLabel(l10n, process.process.key)),
+            subtitle: Text(processCopy(l10n, process.process.key).description),
             children: [
               for (final subprocess in process.subprocesses)
                 ExpansionTile(
-                  title: Text(processLabel(l10n, subprocess.key)),
+                  title: Text(processLabel(l10n, subprocess.subprocess.key)),
                   subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text(processCopy(l10n, subprocess.key).description),
-                    Text(subprocess.capabilities.every(effectiveFeatures(raw).contains)
-                        ? l10n?.processAvailable ?? 'Available'
-                        : l10n?.processUnavailable ?? 'Unavailable'),
+                    Text(processCopy(l10n, subprocess.subprocess.key).description),
+                    Text(processStateLabel(l10n, subprocess.state)),
                   ]),
                   children: [
-                    for (final feature in subprocess.capabilities)
+                    for (final feature in subprocess.subprocess.capabilities)
                       ListTile(
                         title: Text(featureName(l10n, feature)),
                         subtitle: Text(_state(l10n, feature)),
@@ -59,7 +60,7 @@ class ProcessDetails extends StatelessWidget {
     final missing = requirementChain(feature).where((f) => !raw.contains(f));
     if (missing.isEmpty) return l10n?.processStoredOn ?? 'Saved on';
     final names = missing.map((f) => featureName(l10n, f)).join(', ');
-    return l10n?.processHeldBack(names) ?? 'Held back by $names';
+    return l10n?.processMissingPrerequisites(names) ?? 'Held back by $names';
   }
 }
 
@@ -93,9 +94,10 @@ class CapabilityDetails extends StatelessWidget {
             ? l10n?.processStoredOn ?? 'Saved on'
             : l10n?.processStoredOff ?? 'Saved off'),
         if (raw.contains(feature) && missing.isNotEmpty)
-          Text(l10n?.processHeldBack(missingNames) ?? 'Held back by $missingNames'),
-        for (final parent in parents)
+          Text(l10n?.processMissingPrerequisites(missingNames) ?? 'Held back by $missingNames'),
+        for (final (depth, parent) in parents.indexed)
           ListTile(
+            contentPadding: EdgeInsetsDirectional.only(start: (depth + 1) * AppSpacing.md),
             key: ValueKey('requires-${parent.dbKey}'),
             leading: Icon(effective.contains(parent) ? Icons.check : Icons.block,
               semanticLabel: effective.contains(parent)

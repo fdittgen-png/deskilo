@@ -39,6 +39,8 @@ final Map<String, ScreenPump> _screens = {
   'Alerts': (t) => pumpEvents(t),
   'Validation rules': (t) => pumpValidationSettings(t),
   'Features': (t) => pumpFeatures(t),
+  // #1327 — the view the screen opens on.
+  'Process overview': (t) => pumpFeatures(t, switches: false),
   'Accessories': (t) => pumpAccessories(t),
   'Level canvas': (t) => pumpCanvas(t),
 };

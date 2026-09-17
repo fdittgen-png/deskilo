@@ -3757,6 +3757,82 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commonCopy => 'Copier';
 
   @override
+  String get instanceReadyInstall => 'Le projet est vide : tout sera installé.';
+
+  @override
+  String instanceReadyResume(int pending) {
+    return 'Une installation DesKilo s\'est arrêtée en cours de route : il reste $pending migrations, et seules celles-ci seront exécutées.';
+  }
+
+  @override
+  String instanceReadyUpgrade(int version, int pending) {
+    return 'La version $version de DesKilo est installée : seules les $pending migrations manquantes seront exécutées.';
+  }
+
+  @override
+  String instanceReadyCurrent(int version) {
+    return 'La version $version de DesKilo est installée et à jour : le schéma n\'a besoin de rien.';
+  }
+
+  @override
+  String get instanceReadyAttention =>
+      'Ce projet demande votre attention — rien n\'a été installé.';
+
+  @override
+  String get instanceAttentionNotHealthy =>
+      'Supabase ne signale pas le projet comme opérationnel. Attendez qu\'il le soit, ou restaurez-le dans le tableau de bord.';
+
+  @override
+  String instanceAttentionPostgres(int found, int supported) {
+    return 'Il tourne sous Postgres $found ; DesKilo est conçu pour Postgres $supported.';
+  }
+
+  @override
+  String instanceAttentionForeign(String tables) {
+    return 'Son schéma public contient des tables que DesKilo ne crée pas ($tables). L\'installation y est refusée ; utilisez un projet vide.';
+  }
+
+  @override
+  String get instanceAttentionUnrecorded =>
+      'Les tables DesKilo sont là, mais aucune migration n\'a été enregistrée. Enregistrez d\'abord ce qu\'il contient avec `dart run tool/instance.dart record`.';
+
+  @override
+  String get instanceAttentionOtherTooling =>
+      'Ses migrations ont été enregistrées par un autre outil : on ne peut pas savoir où DesKilo reprendrait. Utilisez un projet vide.';
+
+  @override
+  String get instanceChooseAnother => 'Choisir un autre projet';
+
+  @override
+  String get instanceTokenReach =>
+      'Un jeton d\'accès personnel ouvre tout votre compte Supabase tant qu\'il existe. L\'assistant ne le garde qu\'en mémoire et vous dit quand vous pouvez le révoquer.';
+
+  @override
+  String get instanceRevokeToken =>
+      'Vous pouvez révoquer le jeton d\'accès maintenant : DesKilo n\'en a gardé aucune copie.';
+
+  @override
+  String get instanceDoctorIntro =>
+      'Avant que cet appareil l\'utilise, le contrôle de sécurité doit passer : une alarme garde le bouton désactivé jusqu\'à correction.';
+
+  @override
+  String get instanceDoctorRun => 'Lancer le contrôle de sécurité';
+
+  @override
+  String get instanceDoctorRunAgain => 'Vérifier à nouveau';
+
+  @override
+  String get instanceDoctorProtected => 'Protégé';
+
+  @override
+  String get instanceDoctorAttention => 'Attention requise';
+
+  @override
+  String instanceDoctorPassed(int count) {
+    return '$count contrôles réussis';
+  }
+
+  @override
   String get inviteSectionTitle => 'Inviter quelqu\'un';
 
   @override
@@ -6312,6 +6388,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get onboardingCreateWithoutTemplate => 'Créer sans modèle';
 
   @override
+  String onboardingTemplateSetsUp(String groups) {
+    return 'Configure : $groups';
+  }
+
+  @override
   String get onboardingStartFrom => 'Partir de';
 
   @override
@@ -8028,7 +8109,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get processStoredOff => 'Désactivé dans les préférences';
 
   @override
-  String processHeldBack(String names) {
+  String processMissingPrerequisites(String names) {
     return 'Bloqué par $names';
   }
 
@@ -8044,6 +8125,75 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get processUnavailable => 'Indisponible';
+
+  @override
+  String get featuresViewProcesses => 'Processus';
+
+  @override
+  String get featuresViewSwitches => 'Interrupteurs';
+
+  @override
+  String get processSearchLabel => 'Rechercher processus et fonctionnalités';
+
+  @override
+  String get processFilterAll => 'Tous';
+
+  @override
+  String get processStateActive => 'Actif';
+
+  @override
+  String get processStatePartial => 'Partiel';
+
+  @override
+  String get processStateAvailable => 'Disponible';
+
+  @override
+  String get processStateNeedsAttention => 'À vérifier';
+
+  @override
+  String processSubprocessCount(int active, int total) {
+    return '$active sous-processus actifs sur $total';
+  }
+
+  @override
+  String processFeatureCount(int enabled, int total) {
+    return '$enabled fonctionnalités actives sur $total';
+  }
+
+  @override
+  String processHeldBack(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count fonctionnalités sont activées mais attendent un prérequis désactivé',
+      one: '1 fonctionnalité est activée mais attend un prérequis désactivé',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String processAlsoNeeds(String features) {
+    return 'Tout activer nécessite aussi : $features';
+  }
+
+  @override
+  String get processFeatureOn => 'Activée';
+
+  @override
+  String get processFeatureOff => 'Désactivée';
+
+  @override
+  String processFeatureWaiting(String feature) {
+    return 'Activée, en attente de $feature';
+  }
+
+  @override
+  String get processSwitchHint =>
+      'Touchez une fonctionnalité pour lire ses dépendances et sa configuration actuelle.';
+
+  @override
+  String get processFilterEmpty => 'Aucun processus ne correspond à ce filtre.';
 
   @override
   String get processWorkspaceAccess => 'Espace et accès';
@@ -8505,6 +8655,56 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get backendServerReset => 'Utiliser le serveur de l\'app';
+
+  @override
+  String get backendOwnServer => 'Votre propre serveur';
+
+  @override
+  String backendProjectRef(String ref) {
+    return 'Votre projet Supabase $ref';
+  }
+
+  @override
+  String get backendOwnership =>
+      'Il appartient à votre organisation Supabase. DesKilo n\'y garde aucun accès.';
+
+  @override
+  String get backendOwnershipOther =>
+      'Il appartient à qui l\'exploite. DesKilo n\'y garde aucun accès.';
+
+  @override
+  String get backendOpenDashboard => 'Ouvrir dans Supabase';
+
+  @override
+  String backendVersionCurrent(int version) {
+    return 'À jour (schéma $version)';
+  }
+
+  @override
+  String backendVersionBehind(int version) {
+    return 'Mise à jour nécessaire : cette app a besoin du schéma $version';
+  }
+
+  @override
+  String get backendVersionBehindHow =>
+      'Son propriétaire le met à jour avec l\'assistant d\'installation ou `dart run tool/instance.dart install`, qui n\'applique que ce qui manque.';
+
+  @override
+  String get backendVersionAhead =>
+      'Le serveur est plus récent que cette app — mettez l\'app à jour dès que possible';
+
+  @override
+  String get backendVersionUnknown =>
+      'La version n\'a pas pu être vérifiée pour le moment';
+
+  @override
+  String backendLastOk(String time) {
+    return 'Dernier test réussi : $time';
+  }
+
+  @override
+  String get backendResetDeviceOnly =>
+      'Cela ne change que cet appareil et ne touche jamais à votre projet Supabase.';
 
   @override
   String get backendServerSaved =>

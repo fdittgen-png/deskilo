@@ -3,7 +3,7 @@
   "processUsedBy": "Verwendet von",
   "processStoredOn": "Als aktiv gespeichert",
   "processStoredOff": "Als inaktiv gespeichert",
-  "processHeldBack": "Durch {names} zurückgehalten",
+  "processMissingPrerequisites": "Durch {names} zurückgehalten",
   "processTechnicalKey": "Technischer Schlüssel",
   "processAdminGrant": "Wenn diese Funktion wirksam ist, dürfen Administratoren Rechnungen ausstellen.",
   "processAvailable": "Verfügbar",

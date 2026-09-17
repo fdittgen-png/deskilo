@@ -27,7 +27,7 @@ void main() {
 
   testWidgets('Features opens the read-only hierarchy', (tester) async {
     final repository = await pumpFeatures(tester);
-    await tester.tap(find.byIcon(Icons.account_tree_outlined));
+    await tester.tap(find.byKey(const ValueKey('process-details-open')));
     await tester.pumpAndSettle();
     expect(find.byType(ProcessDetails), findsOneWidget);
     expect(repository.flagWrites, isEmpty);

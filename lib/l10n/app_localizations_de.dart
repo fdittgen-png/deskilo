@@ -3751,6 +3751,83 @@ class AppLocalizationsDe extends AppLocalizations {
   String get commonCopy => 'Kopieren';
 
   @override
+  String get instanceReadyInstall =>
+      'Das Projekt ist leer: alles wird installiert.';
+
+  @override
+  String instanceReadyResume(int pending) {
+    return 'Eine DesKilo-Installation brach mittendrin ab: $pending Migrationen fehlen noch, und nur diese laufen.';
+  }
+
+  @override
+  String instanceReadyUpgrade(int version, int pending) {
+    return 'DesKilo-Version $version ist installiert: nur die $pending fehlenden Migrationen laufen.';
+  }
+
+  @override
+  String instanceReadyCurrent(int version) {
+    return 'DesKilo-Version $version ist installiert und aktuell: das Schema braucht nichts.';
+  }
+
+  @override
+  String get instanceReadyAttention =>
+      'Dieses Projekt braucht Aufmerksamkeit — nichts wurde installiert.';
+
+  @override
+  String get instanceAttentionNotHealthy =>
+      'Supabase meldet das Projekt nicht als betriebsbereit. Warten Sie, bis es das ist, oder stellen Sie es im Dashboard wieder her.';
+
+  @override
+  String instanceAttentionPostgres(int found, int supported) {
+    return 'Es läuft mit Postgres $found; DesKilo ist für Postgres $supported gebaut.';
+  }
+
+  @override
+  String instanceAttentionForeign(String tables) {
+    return 'Sein public-Schema enthält Tabellen, die DesKilo nicht anlegt ($tables). Dort wird nicht installiert; verwenden Sie ein leeres Projekt.';
+  }
+
+  @override
+  String get instanceAttentionUnrecorded =>
+      'DesKilo-Tabellen sind vorhanden, aber keine Migration wurde erfasst. Erfassen Sie zuerst den Stand mit `dart run tool/instance.dart record`.';
+
+  @override
+  String get instanceAttentionOtherTooling =>
+      'Seine Migrationen wurden von anderen Werkzeugen erfasst; wo DesKilo fortsetzen würde, lässt sich nicht lesen. Verwenden Sie ein leeres Projekt.';
+
+  @override
+  String get instanceChooseAnother => 'Anderes Projekt wählen';
+
+  @override
+  String get instanceTokenReach =>
+      'Ein persönliches Zugriffstoken öffnet Ihr ganzes Supabase-Konto, solange es besteht. Der Assistent hält es nur im Speicher und sagt Ihnen, wann Sie es widerrufen können.';
+
+  @override
+  String get instanceRevokeToken =>
+      'Sie können das Zugriffstoken jetzt widerrufen: DesKilo hat keine Kopie behalten.';
+
+  @override
+  String get instanceDoctorIntro =>
+      'Bevor dieses Gerät sie nutzt, muss die Sicherheitsprüfung bestehen: ein Alarm hält die Schaltfläche gesperrt, bis er behoben ist.';
+
+  @override
+  String get instanceDoctorRun => 'Sicherheitsprüfung starten';
+
+  @override
+  String get instanceDoctorRunAgain => 'Erneut prüfen';
+
+  @override
+  String get instanceDoctorProtected => 'Geschützt';
+
+  @override
+  String get instanceDoctorAttention => 'Handlungsbedarf';
+
+  @override
+  String instanceDoctorPassed(int count) {
+    return '$count Prüfungen bestanden';
+  }
+
+  @override
   String get inviteSectionTitle => 'Jemanden einladen';
 
   @override
@@ -6305,6 +6382,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get onboardingCreateWithoutTemplate => 'Ohne Vorlage erstellen';
 
   @override
+  String onboardingTemplateSetsUp(String groups) {
+    return 'Richtet ein: $groups';
+  }
+
+  @override
   String get onboardingStartFrom => 'Beginnen mit';
 
   @override
@@ -8018,7 +8100,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get processStoredOff => 'Als inaktiv gespeichert';
 
   @override
-  String processHeldBack(String names) {
+  String processMissingPrerequisites(String names) {
     return 'Durch $names zurückgehalten';
   }
 
@@ -8034,6 +8116,76 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get processUnavailable => 'Nicht verfügbar';
+
+  @override
+  String get featuresViewProcesses => 'Prozesse';
+
+  @override
+  String get featuresViewSwitches => 'Schalter';
+
+  @override
+  String get processSearchLabel => 'Prozesse und Funktionen suchen';
+
+  @override
+  String get processFilterAll => 'Alle';
+
+  @override
+  String get processStateActive => 'Aktiv';
+
+  @override
+  String get processStatePartial => 'Teilweise';
+
+  @override
+  String get processStateAvailable => 'Verfügbar';
+
+  @override
+  String get processStateNeedsAttention => 'Handlungsbedarf';
+
+  @override
+  String processSubprocessCount(int active, int total) {
+    return '$active von $total Teilprozessen aktiv';
+  }
+
+  @override
+  String processFeatureCount(int enabled, int total) {
+    return '$enabled von $total Funktionen an';
+  }
+
+  @override
+  String processHeldBack(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count Funktionen sind an, warten aber auf eine ausgeschaltete Voraussetzung',
+      one:
+          '1 Funktion ist an, wartet aber auf eine ausgeschaltete Voraussetzung',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String processAlsoNeeds(String features) {
+    return 'Alles einzuschalten braucht auch: $features';
+  }
+
+  @override
+  String get processFeatureOn => 'An';
+
+  @override
+  String get processFeatureOff => 'Aus';
+
+  @override
+  String processFeatureWaiting(String feature) {
+    return 'An, wartet auf $feature';
+  }
+
+  @override
+  String get processSwitchHint =>
+      'Tippen Sie auf eine Funktion, um ihre Abhängigkeiten und aktuelle Konfiguration zu lesen.';
+
+  @override
+  String get processFilterEmpty => 'Kein Prozess passt zu diesem Filter.';
 
   @override
   String get processWorkspaceAccess => 'Arbeitsbereich und Zugang';
@@ -8496,6 +8648,56 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get backendServerReset => 'Server der App verwenden';
+
+  @override
+  String get backendOwnServer => 'Ihr eigener Server';
+
+  @override
+  String backendProjectRef(String ref) {
+    return 'Ihr Supabase-Projekt $ref';
+  }
+
+  @override
+  String get backendOwnership =>
+      'Es gehört Ihrer Supabase-Organisation. DesKilo behält keinen Zugriff darauf.';
+
+  @override
+  String get backendOwnershipOther =>
+      'Er gehört dem, der ihn betreibt. DesKilo behält keinen Zugriff darauf.';
+
+  @override
+  String get backendOpenDashboard => 'In Supabase öffnen';
+
+  @override
+  String backendVersionCurrent(int version) {
+    return 'Aktuell (Schema $version)';
+  }
+
+  @override
+  String backendVersionBehind(int version) {
+    return 'Aktualisierung nötig: diese App braucht Schema $version';
+  }
+
+  @override
+  String get backendVersionBehindHow =>
+      'Sein Eigentümer aktualisiert ihn mit dem Einrichtungsassistenten oder `dart run tool/instance.dart install`, das nur Fehlendes anwendet.';
+
+  @override
+  String get backendVersionAhead =>
+      'Der Server ist neuer als diese App — aktualisieren Sie die App, sobald Sie können';
+
+  @override
+  String get backendVersionUnknown =>
+      'Die Version konnte gerade nicht geprüft werden';
+
+  @override
+  String backendLastOk(String time) {
+    return 'Letzter erfolgreicher Test: $time';
+  }
+
+  @override
+  String get backendResetDeviceOnly =>
+      'Das ändert nur dieses Gerät und berührt Ihr Supabase-Projekt nie.';
 
   @override
   String get backendServerSaved =>

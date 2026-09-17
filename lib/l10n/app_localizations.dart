@@ -6515,6 +6515,120 @@ abstract class AppLocalizations {
   /// **'Copy'**
   String get commonCopy;
 
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'The project is empty: everything will be installed.'**
+  String get instanceReadyInstall;
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'A DesKilo install stopped part-way: {pending} migrations remain and only those will run.'**
+  String instanceReadyResume(int pending);
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo version {version} is installed: only the {pending} missing migrations will run.'**
+  String instanceReadyUpgrade(int version, int pending);
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo version {version} is installed and current: the schema needs nothing.'**
+  String instanceReadyCurrent(int version);
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'This project needs attention — nothing was installed.'**
+  String get instanceReadyAttention;
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Supabase does not report the project as healthy. Wait until it is, or restore it in the dashboard.'**
+  String get instanceAttentionNotHealthy;
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'It runs Postgres {found}; DesKilo is built for Postgres {supported}.'**
+  String instanceAttentionPostgres(int found, int supported);
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Its public schema holds tables DesKilo does not create ({tables}). Installing there is refused; use an empty project.'**
+  String instanceAttentionForeign(String tables);
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo tables are there but no migration was recorded. Record what it has with `dart run tool/instance.dart record` first.'**
+  String get instanceAttentionUnrecorded;
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Its migrations were recorded by other tooling, so where DesKilo would resume cannot be read. Use an empty project.'**
+  String get instanceAttentionOtherTooling;
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Choose another project'**
+  String get instanceChooseAnother;
+
+  /// #1308 instance wizard doctor and token
+  ///
+  /// In en, this message translates to:
+  /// **'A personal access token reaches your whole Supabase account for as long as it lives. The wizard holds it in memory only and tells you when you can revoke it.'**
+  String get instanceTokenReach;
+
+  /// #1308 instance wizard doctor and token
+  ///
+  /// In en, this message translates to:
+  /// **'You can revoke the access token now: DesKilo kept no copy.'**
+  String get instanceRevokeToken;
+
+  /// #1308 instance wizard doctor and token
+  ///
+  /// In en, this message translates to:
+  /// **'Before this device uses it, the security check must pass: an alarm keeps the button off until it is fixed.'**
+  String get instanceDoctorIntro;
+
+  /// #1308 instance wizard doctor and token
+  ///
+  /// In en, this message translates to:
+  /// **'Run the security check'**
+  String get instanceDoctorRun;
+
+  /// #1308 instance wizard doctor and token
+  ///
+  /// In en, this message translates to:
+  /// **'Check again'**
+  String get instanceDoctorRunAgain;
+
+  /// #1308 instance wizard doctor and token
+  ///
+  /// In en, this message translates to:
+  /// **'Protected'**
+  String get instanceDoctorProtected;
+
+  /// #1308 instance wizard doctor and token
+  ///
+  /// In en, this message translates to:
+  /// **'Attention required'**
+  String get instanceDoctorAttention;
+
+  /// #1308 instance wizard doctor and token
+  ///
+  /// In en, this message translates to:
+  /// **'{count} checks passed'**
+  String instanceDoctorPassed(int count);
+
   /// No description provided for @inviteSectionTitle.
   ///
   /// In en, this message translates to:
@@ -10889,6 +11003,12 @@ abstract class AppLocalizations {
   /// **'Create without a template'**
   String get onboardingCreateWithoutTemplate;
 
+  /// #1303 S3 onboarding confirm: the groups a template configures
+  ///
+  /// In en, this message translates to:
+  /// **'Sets up: {groups}'**
+  String onboardingTemplateSetsUp(String groups);
+
   /// No description provided for @onboardingStartFrom.
   ///
   /// In en, this message translates to:
@@ -13937,11 +14057,11 @@ abstract class AppLocalizations {
   /// **'Saved off'**
   String get processStoredOff;
 
-  /// No description provided for @processHeldBack.
+  /// No description provided for @processMissingPrerequisites.
   ///
   /// In en, this message translates to:
   /// **'Held back by {names}'**
-  String processHeldBack(String names);
+  String processMissingPrerequisites(String names);
 
   /// No description provided for @processTechnicalKey.
   ///
@@ -13966,6 +14086,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unavailable'**
   String get processUnavailable;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Processes'**
+  String get featuresViewProcesses;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Switches'**
+  String get featuresViewSwitches;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Search processes and features'**
+  String get processSearchLabel;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get processFilterAll;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get processStateActive;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Partial'**
+  String get processStatePartial;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get processStateAvailable;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention'**
+  String get processStateNeedsAttention;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'{active} of {total} subprocesses active'**
+  String processSubprocessCount(int active, int total);
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'{enabled} of {total} features on'**
+  String processFeatureCount(int enabled, int total);
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 feature is on but waits for a switched-off prerequisite} other{{count} features are on but wait for a switched-off prerequisite}}'**
+  String processHeldBack(int count);
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Switching it all on also needs: {features}'**
+  String processAlsoNeeds(String features);
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get processFeatureOn;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get processFeatureOff;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'On, waiting for {feature}'**
+  String processFeatureWaiting(String feature);
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a feature to read its dependencies and current configuration.'**
+  String get processSwitchHint;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'No process matches this filter.'**
+  String get processFilterEmpty;
 
   /// No description provided for @processWorkspaceAccess.
   ///
@@ -14770,6 +14992,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Use the app\'s server'**
   String get backendServerReset;
+
+  /// No description provided for @backendOwnServer.
+  ///
+  /// In en, this message translates to:
+  /// **'Your own server'**
+  String get backendOwnServer;
+
+  /// #1309 Server screen
+  ///
+  /// In en, this message translates to:
+  /// **'Your Supabase project {ref}'**
+  String backendProjectRef(String ref);
+
+  /// No description provided for @backendOwnership.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Supabase organization owns it. DesKilo keeps no access to it.'**
+  String get backendOwnership;
+
+  /// No description provided for @backendOwnershipOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Whoever runs this server owns it. DesKilo keeps no access to it.'**
+  String get backendOwnershipOther;
+
+  /// No description provided for @backendOpenDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Open in Supabase'**
+  String get backendOpenDashboard;
+
+  /// #1309 Server screen
+  ///
+  /// In en, this message translates to:
+  /// **'Up to date (schema {version})'**
+  String backendVersionCurrent(int version);
+
+  /// #1309 Server screen
+  ///
+  /// In en, this message translates to:
+  /// **'Needs an update: this app needs schema {version}'**
+  String backendVersionBehind(int version);
+
+  /// No description provided for @backendVersionBehindHow.
+  ///
+  /// In en, this message translates to:
+  /// **'Its owner updates it with the setup wizard or `dart run tool/instance.dart install`, which applies only what is missing.'**
+  String get backendVersionBehindHow;
+
+  /// No description provided for @backendVersionAhead.
+  ///
+  /// In en, this message translates to:
+  /// **'The server is newer than this app — update the app when you can'**
+  String get backendVersionAhead;
+
+  /// No description provided for @backendVersionUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'The version could not be checked right now'**
+  String get backendVersionUnknown;
+
+  /// #1309 Server screen
+  ///
+  /// In en, this message translates to:
+  /// **'Last successful test: {time}'**
+  String backendLastOk(String time);
+
+  /// No description provided for @backendResetDeviceOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'This changes this device only and never touches your Supabase project.'**
+  String get backendResetDeviceOnly;
 
   /// No description provided for @backendServerSaved.
   ///

@@ -8,6 +8,11 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/backend/backend_config.dart';
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/backend_uri.dart';
+import 'package:deskilo/core/backend/instance_facts.dart';
+import 'package:deskilo/core/backend/schema_version.dart';
+import 'package:deskilo/core/instance/schema_compatibility.dart';
+import 'package:deskilo/core/links/link_launcher.dart';
+import 'package:deskilo/features/profile/presentation/widgets/server_facts_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,6 +22,8 @@ import '../../helpers/mock_providers.dart';
 Future<InMemoryBackendSettingsStore> pumpServerScreen(
   WidgetTester tester, {
   BackendEndpoint? stored,
+  SchemaVersionSource? schemaVersion,
+  List<Uri>? launched,
 }) async {
   final store = InMemoryBackendSettingsStore()..value = stored;
   tester.view.physicalSize = const Size(800, 1600);
@@ -24,7 +31,15 @@ Future<InMemoryBackendSettingsStore> pumpServerScreen(
   addTearDown(tester.view.reset);
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(backendSettings: store),
+      overrides: [
+        ...standardTestOverrides(
+            backendSettings: store, schemaVersion: schemaVersion),
+        if (launched != null)
+          linkLauncherProvider.overrideWithValue((uri) async {
+            launched.add(uri);
+            return true;
+          }),
+      ],
       child: const DeskiloApp(),
     ),
   );
@@ -181,5 +196,66 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('backend-reset')));
     await tester.pumpAndSettle();
     expect(store.value, isNull);
+  });
+
+  group('#1309 — which instance, who owns it, is it current', () {
+    const custom = BackendEndpoint(
+      'https://abc123.supabase.co',
+      'sb_publishable_0123456789abcdefghij',
+    );
+
+    test('the project ref and the dashboard come from the host alone', () {
+      expect(supabaseProjectRef('abc123.supabase.co'), 'abc123');
+      expect(supabaseProjectRef('ABC123.supabase.co'), 'abc123');
+      expect(supabaseProjectRef('db.example.org'), isNull);
+      expect(supabaseDashboardUri('abc123').toString(),
+          'https://supabase.com/dashboard/project/abc123');
+    });
+
+    testWidgets('a custom project names its ref, its owner and opens its '
+        'dashboard', (tester) async {
+      final launched = <Uri>[];
+      await pumpServerScreen(tester, stored: custom, launched: launched);
+
+      expect(find.text('Your Supabase project abc123'), findsOneWidget);
+      expect(find.textContaining('DesKilo keeps no access'), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('backend-open-dashboard')));
+      await tester.pumpAndSettle();
+      expect(launched.single.toString(),
+          'https://supabase.com/dashboard/project/abc123');
+      expect(find.byKey(const ValueKey('backend-reset-hint')), findsOneWidget);
+    });
+
+    testWidgets('the default server shows no dashboard link and no owner',
+        (tester) async {
+      await pumpServerScreen(tester);
+      expect(find.byKey(const ValueKey('backend-open-dashboard')), findsNothing);
+      expect(find.byKey(const ValueKey('backend-ownership')), findsNothing);
+      expect(find.text('Up to date (schema $requiredSchemaVersion)'),
+          findsOneWidget);
+    });
+
+    testWidgets('a server one schema behind says it needs an update and how',
+        (tester) async {
+      // The app refuses to start on an older schema, so the card is read on
+      // its own here — the same card the gate's Server link opens.
+      await tester.pumpWidget(ProviderScope(
+        overrides: standardTestOverrides(
+            schemaVersion:
+                const FixedSchemaVersionSource(requiredSchemaVersion - 1)),
+        child: const MaterialApp(
+          home: Scaffold(
+            body: ServerFactsCard(endpoint: custom, isDefault: false),
+          ),
+        ),
+      ));
+      await tester.pumpAndSettle();
+      expect(
+          find.text(
+              'Needs an update: this app needs schema $requiredSchemaVersion'),
+          findsOneWidget);
+      expect(find.textContaining('applies only what is missing'),
+          findsOneWidget);
+    });
   });
 }

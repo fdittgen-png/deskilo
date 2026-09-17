@@ -9,14 +9,19 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
+import '../../application/toggle_workspace_feature.dart';
 import '../widgets/feature_capability_list.dart';
 import '../widgets/process_details.dart';
 import '../widgets/features_filter_bar.dart';
+import '../widgets/features_view_switch.dart';
+import '../widgets/process_overview.dart';
 import '../feature_copy.dart';
 import '../feature_names.dart';
 
-/// Owner-only feature management (#146): one switch per registry feature.
-/// Toggling merges a delta and refetches the authoritative workspace.
+/// Owner-only feature management (#146). #1327 — it opens on the process
+/// overview; one switch per registry feature is the second view, kept
+/// whole for support (search, Changed, one flip). A toggle writes its
+/// delta and refetches, so the gates apply immediately.
 class FeaturesScreen extends ConsumerStatefulWidget {
   const FeaturesScreen({super.key});
 
@@ -28,6 +33,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
   final _search = TextEditingController();
   String _query = '';
   bool _changedOnly = false;
+  bool _switches = false;
 
   @override
   void dispose() {
@@ -48,9 +54,6 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
         (requires ?? '').toLowerCase().contains(needle);
   }
 
-  String _name(AppLocalizations? l10n, WorkspaceFeature feature) =>
-      featureName(l10n, feature);
-
   Future<void> _toggle(
     BuildContext context,
     WidgetRef ref,
@@ -60,40 +63,21 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
     bool value,
   ) async {
     final l10n = AppLocalizations.of(context);
-    // #800 — switching one ON switches on everything it NEEDS.
-    //
-    // A switch that can be flipped green while the feature stays absent
-    // is the worst kind of setting: the owner has configured the thing
-    // and the app disagrees, with nothing on screen to explain it.
+    // Switching on includes the prerequisites named in the result.
     final alsoOn = alsoEnabledWith(raw: enabled, feature: feature);
-    // #963 — write ONLY what this toggle changes; the server merges it
-    // into the row. A full map written from a stale copy of the row put
-    // the pilot's earlier switches back off.
-    final flags = {
-      for (final entry
-          in featureFlagsToggleDelta(feature: feature, value: value).entries)
-        entry.key.dbKey: entry.value,
-    };
+    // #1327 — the write itself (the #963 delta, then the forced
+    // refetch) is application/toggle_workspace_feature.dart's decision.
     if (!await runGuarded(
       context,
       domain: 'workspace',
       message: 'set feature flags failed',
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
-      action: () async {
-          await ref
-              .read(workspaceRepositoryProvider)
-              .setFeatureFlags(workspace.id, flags);
-      },
+      action: () => toggleWorkspaceFeature(ref,
+          workspace: workspace, feature: feature, value: value),
     )) {
       return;
     }
-    // The workspace chain re-derives enabledFeatures from the new row —
-    // that applies the gates locally right away. The read after the
-    // invalidation FORCES the fetch: the pilot's device skipped it twice
-    // out of three and the switch stayed where it was.
-    ref.invalidate(myWorkspacesProvider);
-    await ref.read(myWorkspacesProvider.future);
     // Naming what else came on: a cascade nobody sees is a surprise the
     // next time they read the list.
     if (value && alsoOn.isNotEmpty && context.mounted) {
@@ -134,7 +118,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
         continue;
       }
       if (!_matches(
-        _name(l10n, entry.feature),
+        featureName(l10n, entry.feature),
         featureDescription(l10n, entry.feature),
         requires,
       )) {
@@ -146,6 +130,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(l10n?.featuresTitle ?? 'Features'), actions: [
         IconButton(
+          key: const ValueKey('process-details-open'),
           tooltip: l10n?.processDetails ?? 'Processes and dependencies',
           icon: const Icon(Icons.account_tree_outlined),
           onPressed: workspace == null ? null : () => Navigator.of(context).push<void>(
@@ -156,33 +141,42 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
           ? const LoadingView()
           : Column(
               children: [
-                FeaturesFilterBar(
-                  controller: _search,
-                  onQuery: (value) => setState(() => _query = value.trim()),
-                  changedOnly: _changedOnly,
-                  onChangedOnly: (value) =>
-                      setState(() => _changedOnly = value),
-                  changedCount: changedCount,
+                FeaturesViewSwitch(
+                  switches: _switches,
+                  onChanged: (value) => setState(() => _switches = value),
                 ),
-                Expanded(
-                  child: FeatureCapabilityList(
-                    rows: rows,
-                    raw: raw,
-                    // Hidden while filtering: somebody who typed a name
-                    // is past being introduced. The list takes the
-                    // answer, not the filter state — "is the owner
-                    // filtering" is a question about these controls.
-                    showHint: _query.isEmpty && !_changedOnly,
-                    onChanged: (feature, value) => _toggle(
-                      context,
-                      ref,
-                      workspace,
-                      raw,
-                      feature,
-                      value,
+                if (!_switches)
+                  Expanded(
+                    child: ProcessOverview(
+                      raw: raw,
+                      onOpenFeature: (f) => Navigator.of(context).push<void>(
+                        MaterialPageRoute(builder: (_) => CapabilityDetails(
+                          feature: f, raw: raw))),
+                    ),
+                  )
+                else ...[
+                  FeaturesFilterBar(
+                    controller: _search,
+                    onQuery: (value) => setState(() => _query = value.trim()),
+                    changedOnly: _changedOnly,
+                    onChangedOnly: (value) =>
+                        setState(() => _changedOnly = value),
+                    changedCount: changedCount,
+                  ),
+                  Expanded(
+                    child: FeatureCapabilityList(
+                      rows: rows,
+                      raw: raw,
+                      // Hidden while filtering: somebody who typed a name
+                      // is past being introduced. The list takes the
+                      // answer, not the filter state — "is the owner
+                      // filtering" is a question about these controls.
+                      showHint: _query.isEmpty && !_changedOnly,
+                      onChanged: (feature, value) => _toggle(
+                          context, ref, workspace, raw, feature, value),
                     ),
                   ),
-                ),
+                ],
               ],
             ),
     );

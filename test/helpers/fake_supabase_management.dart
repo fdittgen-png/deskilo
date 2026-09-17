@@ -103,6 +103,19 @@ class FakeSupabaseManagement implements SupabaseManagement {
     }
   }
 
+  /// #1308 — functions a project carried before this fake deployed any.
+  final existingFunctions = <String, List<String>>{};
+
+  @override
+  Future<List<String>> listFunctions(String ref) async {
+    _auth();
+    return {
+      ...?existingFunctions[ref],
+      for (final d in deployed[ref] ?? const <({String slug, bool verifyJwt})>[])
+        d.slug,
+    }.toList();
+  }
+
   @override
   Future<void> deployFunction(String ref,
       {required String slug,
@@ -143,8 +156,12 @@ class FakeSupabaseManagement implements SupabaseManagement {
     return onQuery?.call(ref, sql) ?? queryRows;
   }
 
+  /// #1308 — per-project live auth config; falls back to [authConfigValue].
+  final authConfigs = <String, Map<String, Object?>>{};
+
   @override
-  Future<Map<String, Object?>> authConfig(String ref) async => authConfigValue;
+  Future<Map<String, Object?>> authConfig(String ref) async =>
+      authConfigs[ref] ?? authConfigValue;
 
   @override
   Future<void> patchAuthConfig(String ref, Map<String, Object?> config) async {
