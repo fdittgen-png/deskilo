@@ -15761,6 +15761,18 @@ abstract class AppLocalizations {
   /// **'Reservation cancelled.'**
   String get reservationCancelledSnack;
 
+  /// Booking sheet: the collapsed line holding the repeat picker and, for operators, taking the seat out of service (#1301)
+  ///
+  /// In en, this message translates to:
+  /// **'More options'**
+  String get bookingMoreOptions;
+
+  /// Action on the booking success message opening the new reservation's sheet (#1301)
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get bookingOpenDetails;
+
   /// Name of the Reserve hub control that opens the list of views: Plan, Day, Week, Month (#1301)
   ///
   /// In en, this message translates to:

@@ -274,6 +274,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('booking-day')));
     await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('booking-more-options')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('booking-repeat')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Weekly').last);

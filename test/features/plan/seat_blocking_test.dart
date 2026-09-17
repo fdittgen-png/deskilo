@@ -3,6 +3,7 @@
 // #161 — blocking and unblocking seats from the booking sheet, with the
 // affordance only for those allowed.
 import 'package:deskilo/app/app.dart';
+import 'package:flutter/foundation.dart' show ValueKey;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -92,6 +93,9 @@ void main() {
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
 
+    await tester.ensureVisible(find.byKey(const ValueKey('booking-more-options')));
+    await tester.tap(find.byKey(const ValueKey('booking-more-options')));
+    await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('Make not reservable'));
     await tester.tap(find.text('Make not reservable'));
     await tester.pumpAndSettle();
@@ -137,6 +141,14 @@ void main() {
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
 
+    // #1301 S3 — the affordance would live under More options: open it
+    // when present, so "nothing" is not merely "collapsed".
+    final more = find.byKey(const ValueKey('booking-more-options'));
+    if (more.evaluate().isNotEmpty) {
+      await tester.ensureVisible(more);
+      await tester.tap(more);
+      await tester.pumpAndSettle();
+    }
     expect(find.text('Make not reservable'), findsNothing);
   });
 
@@ -170,6 +182,9 @@ void main() {
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
 
+    await tester.ensureVisible(find.byKey(const ValueKey('booking-more-options')));
+    await tester.tap(find.byKey(const ValueKey('booking-more-options')));
+    await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('Make not reservable'));
     await tester.tap(find.text('Make not reservable'));
     await tester.pumpAndSettle();

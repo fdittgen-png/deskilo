@@ -25,10 +25,16 @@ void main() {
     final env = await pumpPlan(tester);
     await openFutureBookingSheet(tester);
 
+    // #1301 S3 — the repeat waits behind More options.
+    await tester.ensureVisible(find.byKey(const ValueKey('booking-more-options')));
+    await tester.tap(find.byKey(const ValueKey('booking-more-options')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Does not repeat'));
     await tester.tap(find.text('Does not repeat'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Weekly').last);
     await tester.pumpAndSettle();
+    await tester.ensureVisible(find.widgetWithText(FilledButton, 'Reserve'));
     await tester.tap(find.widgetWithText(FilledButton, 'Reserve'));
     await tester.pumpAndSettle();
 
@@ -72,10 +78,16 @@ void main() {
     );
     await openFutureBookingSheet(tester);
 
+    // #1301 S3 — the repeat waits behind More options.
+    await tester.ensureVisible(find.byKey(const ValueKey('booking-more-options')));
+    await tester.tap(find.byKey(const ValueKey('booking-more-options')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Does not repeat'));
     await tester.tap(find.text('Does not repeat'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Weekly').last);
     await tester.pumpAndSettle();
+    await tester.ensureVisible(find.widgetWithText(FilledButton, 'Reserve'));
     await tester.tap(find.widgetWithText(FilledButton, 'Reserve'));
     await tester.pumpAndSettle();
 

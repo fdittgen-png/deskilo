@@ -20,6 +20,7 @@ void announceBooking(
   required DateTime start,
   required DateTime end,
   String? spaceName,
+  VoidCallback? onOpen,
 }) {
   AppSnack.success(
     context,
@@ -32,5 +33,13 @@ void announceBooking(
       spaceName: spaceName,
     ),
     replace: true,
+    // #1301 S3 — the answer is the reservation itself, one tap away,
+    // with what can be done with it (check in, move, cancel) on its sheet.
+    action: onOpen == null
+        ? null
+        : SnackBarAction(
+            label: l10n?.bookingOpenDetails ?? 'Details',
+            onPressed: onOpen,
+          ),
   );
 }

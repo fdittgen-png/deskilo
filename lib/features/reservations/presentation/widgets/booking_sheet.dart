@@ -198,6 +198,7 @@ class _BookingSheetState extends State<BookingSheet> {
     // #814 — asked on EVERY build: the window changes with each chip,
     // picker and slider tick, and the verdict must follow it.
     final refusal = widget.refusalOf?.call(_start, _end);
+    final showRepeat = !widget.walkUp && !_forOther && widget.allowSeries;
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -346,31 +347,6 @@ class _BookingSheetState extends State<BookingSheet> {
                 onChanged: (id) => setState(() => _forMemberId = id),
               ),
 
-            // ── repeat (spec §5.2) — available whenever booking for self ──
-            if (!widget.walkUp && !_forOther && widget.allowSeries) ...[
-              DropdownButtonFormField<SeriesPattern?>(
-                key: const ValueKey('booking-repeat'),
-                initialValue: _pattern,
-                decoration: InputDecoration(
-                  labelText: l10n?.planRepeatLabel ?? 'Repeat',
-                ),
-                items: [
-                  for (final p in [null, ...SeriesPattern.values])
-                    DropdownMenuItem(
-                      value: p,
-                      child: Text(_patternLabel(l10n, p)),
-                    ),
-                ],
-                onChanged: (p) => setState(() => _pattern = p),
-              ),
-              if (_pattern != null)
-                _dateTile(
-                  label: l10n?.planUntilDateLabel ?? 'Repeat until',
-                  value: _until,
-                  onPicked: (d) => setState(() => _until = d),
-                ),
-            ],
-
             if (widget.capped && widget.cap != null)
               Text(
                 l10n?.planCappedByNext(
@@ -402,6 +378,55 @@ class _BookingSheetState extends State<BookingSheet> {
                     ),
                   ],
                 ),
+              ),
+            // #1301 S3 — place · date · time · confirm stay in view; what a
+            // member rarely needs (a repeat) and what only an operator
+            // does (taking the seat out of service) wait behind one line.
+            if (showRepeat || widget.allowBlocking)
+              ExpansionTile(
+                key: const ValueKey('booking-more-options'),
+                tilePadding: EdgeInsets.zero,
+                childrenPadding: EdgeInsets.zero,
+                initiallyExpanded: _pattern != null,
+                title: Text(l10n?.bookingMoreOptions ?? 'More options'),
+                children: [
+                  // ── repeat (spec §5.2) — available whenever booking for self ──
+                  if (showRepeat) ...[
+                    DropdownButtonFormField<SeriesPattern?>(
+                      key: const ValueKey('booking-repeat'),
+                      initialValue: _pattern,
+                      decoration: InputDecoration(
+                        labelText: l10n?.planRepeatLabel ?? 'Repeat',
+                      ),
+                      items: [
+                        for (final p in [null, ...SeriesPattern.values])
+                          DropdownMenuItem(
+                            value: p,
+                            child: Text(_patternLabel(l10n, p)),
+                          ),
+                      ],
+                      onChanged: (p) => setState(() => _pattern = p),
+                    ),
+                    if (_pattern != null)
+                      _dateTile(
+                        label: l10n?.planUntilDateLabel ?? 'Repeat until',
+                        value: _until,
+                        onPicked: (d) => setState(() => _until = d),
+                      ),
+                  ],
+                  if (widget.allowBlocking) ...[
+                    const SizedBox(height: 8),
+                    TextButton.icon(
+                      icon: const Icon(Icons.block),
+                      label: Text(
+                        l10n?.planMakeNotReservable ?? 'Make not reservable',
+                      ),
+                      onPressed: () => Navigator.of(context).pop(
+                        BookingChoice(_start, _end, null, null, null, block: true),
+                      ),
+                    ),
+                  ],
+                ],
               ),
             const SizedBox(height: 16),
             FilledButton(
@@ -436,18 +461,6 @@ class _BookingSheetState extends State<BookingSheet> {
                 value: _checkInNow,
                 onChanged: (v) => setState(() => _checkInNow = v),
               ),
-            if (widget.allowBlocking) ...[
-              const SizedBox(height: 8),
-              TextButton.icon(
-                icon: const Icon(Icons.block),
-                label: Text(
-                  l10n?.planMakeNotReservable ?? 'Make not reservable',
-                ),
-                onPressed: () => Navigator.of(context).pop(
-                  BookingChoice(_start, _end, null, null, null, block: true),
-                ),
-              ),
-            ],
           ],
         ),
       ),
