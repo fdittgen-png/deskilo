@@ -204,6 +204,50 @@
   "backendKeyLabel": "Publishable key",
   "backendServerRestartHint": "The app signs you out and applies the change on the next start.",
   "backendServerReset": "Use the app's server",
+  "backendOwnServer": "Your own server",
+  "backendProjectRef": "Your Supabase project {ref}",
+  "@backendProjectRef": {
+    "description": "#1309 Server screen",
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "backendOwnership": "Your Supabase organization owns it. DesKilo keeps no access to it.",
+  "backendOwnershipOther": "Whoever runs this server owns it. DesKilo keeps no access to it.",
+  "backendOpenDashboard": "Open in Supabase",
+  "backendVersionCurrent": "Up to date (schema {version})",
+  "@backendVersionCurrent": {
+    "description": "#1309 Server screen",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "backendVersionBehind": "Needs an update: this app needs schema {version}",
+  "@backendVersionBehind": {
+    "description": "#1309 Server screen",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "backendVersionBehindHow": "Its owner updates it with the setup wizard or `dart run tool/instance.dart install`, which applies only what is missing.",
+  "backendVersionAhead": "The server is newer than this app — update the app when you can",
+  "backendVersionUnknown": "The version could not be checked right now",
+  "backendLastOk": "Last successful test: {time}",
+  "@backendLastOk": {
+    "description": "#1309 Server screen",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "backendResetDeviceOnly": "This changes this device only and never touches your Supabase project.",
   "backendServerSaved": "Saved. Close and reopen the app to use the new server.",
   "backendErrorUrlEmpty": "Enter the project URL.",
   "backendErrorUrlNotHttps": "The URL must start with https://.",

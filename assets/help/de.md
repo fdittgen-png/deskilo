@@ -1786,6 +1786,8 @@ Der Test sagt dir, welcher Teil nicht stimmt, statt einfach fehlzuschlagen: *die
 
 **Mitglieder tippen davon nichts ein.** Sobald das Gerät der Inhaberin auf dem Server der Community läuft, zeigt die **QR-Schaltfläche** auf diesem Bildschirm einen Code; jedes Mitglied scannt ihn in seinen eigenen Einstellungen → Server und landet auf derselben Instanz.
 
+**Wem der Server gehört und ob er aktuell ist (#1309).** Bei einem eigenen Projekt nennt der Bildschirm es — *Ihr Supabase-Projekt ‹ref›* — und sagt, wem es gehört: Ihrer Supabase-Organisation. Das Projekt wurde dort mit Ihrem eigenen Token angelegt, das der Assistent nur im Speicher hielt; DesKilo behält also keinen Zugriff und kann es nicht verwaisen lassen. **In Supabase öffnen** führt zum Dashboard dieses Projekts, wo Supabase nach der Anmeldung fragt. Eine Versionszeile vergleicht das Schema des Servers mit dem, was diese App braucht: *Aktuell* oder *Aktualisierung nötig* samt dem Weg, nur Fehlendes anzuwenden. Nach einem erfolgreichen Test steht die Uhrzeit des letzten da. **Server der App verwenden** ändert nur dieses Gerät und berührt Ihr Supabase-Projekt nie.
+
 Das Umstellen meldet dich ab und greift beim nächsten Öffnen der App — die Sitzung gehörte zum anderen Server. **Server der App verwenden** kehrt jederzeit zum Standard zurück.
 
 ### Deine WhatsApp-Nummer

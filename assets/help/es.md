@@ -1794,6 +1794,8 @@ La prueba dice qué parte está mal en lugar de limitarse a fallar: *no se pudo 
 
 **Los miembros no escriben nada de esto.** En cuanto el dispositivo del propietario está en el servidor de la comunidad, el **botón QR** de esa pantalla muestra un código; cada miembro lo escanea en su propio Ajustes → Servidor y aterriza en la misma instancia.
 
+**De quién es el servidor y si está al día (#1309).** Para un proyecto propio, la pantalla lo nombra — *Su proyecto de Supabase ‹ref›* — y dice a quién pertenece: a su organización de Supabase. El proyecto se creó allí con su propio token, que el asistente solo guardó en memoria, así que DesKilo no conserva ningún acceso y no puede dejarlo huérfano. **Abrir en Supabase** lleva al panel de ese proyecto, donde Supabase le pide iniciar sesión. Una línea de versión compara el esquema del servidor con lo que esta app necesita: *Actualizado*, o *Necesita una actualización* con la forma de aplicar solo lo que falta. Tras una prueba correcta se muestra la hora de la última. **Usar el servidor de la app** cambia solo este dispositivo y nunca toca su proyecto de Supabase.
+
 Cambiar de servidor cierra tu sesión y surte efecto la próxima vez que abras la app — la sesión pertenecía al otro servidor. **Usar el servidor de la app** vuelve al predeterminado en cualquier momento.
 
 ### Su número de WhatsApp

@@ -1855,6 +1855,8 @@ Il test dice quale parte non va invece di limitarsi a fallire: *impossibile ragg
 
 **I membri non digitano nulla di tutto questo.** Una volta che il dispositivo del proprietario è sul server della comunità, il **pulsante QR** di quella schermata mostra un codice; ogni membro lo scansiona nelle proprie Impostazioni → Server e finisce sulla stessa istanza.
 
+**A chi appartiene il server, ed è aggiornato (#1309).** Per un progetto vostro la schermata lo nomina — *Il vostro progetto Supabase ‹ref›* — e dice a chi appartiene: alla vostra organizzazione Supabase. Il progetto è stato creato lì con il vostro token, che la procedura guidata ha tenuto solo in memoria: DesKilo non conserva alcun accesso e non può renderlo orfano. **Apri in Supabase** porta alla dashboard di quel progetto, dove Supabase chiede di accedere. Una riga di versione confronta lo schema del server con ciò che serve a questa app: *Aggiornato*, oppure *Serve un aggiornamento* con il modo di applicare solo ciò che manca. Dopo un test riuscito compare l'ora dell'ultimo. **Usa il server dell'app** cambia solo questo dispositivo e non tocca mai il vostro progetto Supabase.
+
 Il cambio ti disconnette e ha effetto alla prossima apertura dell'app — la sessione apparteneva all'altro server. **Usa il server dell'app** riporta al predefinito in qualsiasi momento.
 
 <!-- anchor: user.profile.settings.whatsapp -->

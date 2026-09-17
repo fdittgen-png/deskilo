@@ -212,7 +212,7 @@ const Map<String, int> _baseline = {
   'lib/features/money/presentation/widgets/report_field_picker.dart': 353, // 2026-09-06 #966 meanings + topic groups // 2026-09-02 #822 the page, undo/redo, guards // 2026-09-04 #875 layout drafts per kind, the panel mount and its three handlers — the panel and the actions themselves live in their own files // 2026-09-05 #880 the owner-texts drafts per language, merged into every preview/export, and the Texts panel mount
   'lib/features/workspace/domain/workspace_xml.dart': 943,
   'lib/features/profile/presentation/screens/new_instance_screen.dart': 486, // 2026-09-17 #1308 495→486: the readiness verdict and the run step left for widgets/instance_readiness_card.dart and widgets/instance_run_step.dart; // 2026-09-06 #977 six wizard steps // 2026-09-16 #1393 480→495: the wizard's help symbol — an instance and its bundle are explained in the guide, not on screen
-  'lib/features/profile/presentation/screens/backend_screen.dart': 381, // 2026-09-06 #977 the wizard button // 2026-09-06 #916 schema v3: plan attributes + the configuration section
+  'lib/features/profile/presentation/screens/backend_screen.dart': 374, // 2026-09-17 #1309 381→374: the instance facts and the reset action left for widgets/server_facts_card.dart; // 2026-09-06 #977 the wizard button // 2026-09-06 #916 schema v3: plan attributes + the configuration section
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.
   // 780→810 (2026-09-01): #814 closed columns.

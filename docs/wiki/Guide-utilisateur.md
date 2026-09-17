@@ -1883,6 +1883,8 @@ Le test dit quelle partie ne va pas au lieu d'échouer simplement : *impossible 
 
 **Les membres ne saisissent rien de tout cela.** Une fois l'appareil du propriétaire sur le serveur de la communauté, le **bouton QR** de cet écran affiche un code ; chaque membre le scanne depuis son propre Réglages → Serveur et arrive sur la même instance.
 
+**À qui appartient le serveur, et est-il à jour (#1309).** Pour un projet à vous, l'écran le nomme — *Votre projet Supabase ‹ref›* — et dit à qui il appartient : à votre organisation Supabase. Le projet y a été créé avec votre propre jeton, que l'assistant n'a gardé qu'en mémoire : DesKilo n'y garde aucun accès et ne peut pas le rendre orphelin. **Ouvrir dans Supabase** mène au tableau de bord de ce projet, où Supabase vous demande de vous connecter. Une ligne de version compare le schéma du serveur à ce dont cette app a besoin : *À jour*, ou *Mise à jour nécessaire* avec la façon de n'appliquer que ce qui manque. Après un test réussi, l'heure du dernier est affichée. **Utiliser le serveur de l'app** ne change que cet appareil et ne touche jamais à votre projet Supabase.
+
 Basculer vous déconnecte et prend effet à la prochaine ouverture de l'app — la session appartenait à l'autre serveur. **Utiliser le serveur de l'app** revient au défaut à tout moment.
 
 <!-- anchor: user.profile.settings.whatsapp -->

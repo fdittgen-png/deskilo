@@ -8503,6 +8503,56 @@ class AppLocalizationsEs extends AppLocalizations {
   String get backendServerReset => 'Usar el servidor de la app';
 
   @override
+  String get backendOwnServer => 'Su propio servidor';
+
+  @override
+  String backendProjectRef(String ref) {
+    return 'Su proyecto de Supabase $ref';
+  }
+
+  @override
+  String get backendOwnership =>
+      'Pertenece a su organización de Supabase. DesKilo no conserva ningún acceso.';
+
+  @override
+  String get backendOwnershipOther =>
+      'Pertenece a quien lo opera. DesKilo no conserva ningún acceso.';
+
+  @override
+  String get backendOpenDashboard => 'Abrir en Supabase';
+
+  @override
+  String backendVersionCurrent(int version) {
+    return 'Actualizado (esquema $version)';
+  }
+
+  @override
+  String backendVersionBehind(int version) {
+    return 'Necesita una actualización: esta app necesita el esquema $version';
+  }
+
+  @override
+  String get backendVersionBehindHow =>
+      'Su propietario lo actualiza con el asistente de instalación o `dart run tool/instance.dart install`, que aplica solo lo que falta.';
+
+  @override
+  String get backendVersionAhead =>
+      'El servidor es más reciente que esta app: actualice la app cuando pueda';
+
+  @override
+  String get backendVersionUnknown =>
+      'No se pudo comprobar la versión en este momento';
+
+  @override
+  String backendLastOk(String time) {
+    return 'Última prueba correcta: $time';
+  }
+
+  @override
+  String get backendResetDeviceOnly =>
+      'Esto cambia solo este dispositivo y nunca toca su proyecto de Supabase.';
+
+  @override
   String get backendServerSaved =>
       'Guardado. Cierra y vuelve a abrir la app para usar el nuevo servidor.';
 
