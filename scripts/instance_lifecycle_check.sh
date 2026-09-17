@@ -116,6 +116,36 @@ grep -vE "^[0-9]+; [0-9]+ [0-9]+ [A-Z][A-Z ]* ($DROP_SCHEMAS) " "$LIST" \
   | { if [ -n "$DROP_EXTENSIONS" ]; then grep -vE " EXTENSION (- )?($DROP_EXTENSIONS)( |$)"; else cat; fi; } \
   | { if [ -n "$TRIGGERS" ]; then grep -vE " TRIGGER ($TRIGGERS) "; else cat; fi; } \
   > "$FILTERED"
+# Grants and comments on what those extensions own live in shared schemas
+# (`extensions`), so the schema filter cannot see them: name them.
+MEMBERS="$(mktemp -t deskilo-lifecycle-members-XXXXXX)"
+asql -d postgres -At -v ON_ERROR_STOP=1 -c "
+  select ' ' || n.nspname || ' ' || kind || ' ' || p.proname || '('
+         || pg_get_function_identity_arguments(p.oid) || ') '
+    from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+    join pg_depend d on d.classid = 'pg_proc'::regclass and d.objid = p.oid and d.deptype = 'e'
+    join pg_extension e on e.oid = d.refobjid
+    cross join unnest(array['FUNCTION', 'PROCEDURE', 'AGGREGATE']) kind
+   where e.extname <> all (string_to_array('$HOSTED_EXTENSIONS', ' '))
+  union all
+  select ' ' || n.nspname || ' ' || kind || ' ' || t.typname || ' '
+    from pg_type t join pg_namespace n on n.oid = t.typnamespace
+    join pg_depend d on d.classid = 'pg_type'::regclass and d.objid = t.oid and d.deptype = 'e'
+    join pg_extension e on e.oid = d.refobjid
+    cross join unnest(array['TYPE', 'DOMAIN']) kind
+   where e.extname <> all (string_to_array('$HOSTED_EXTENSIONS', ' '))
+  union all
+  select ' ' || n.nspname || ' ' || kind || ' ' || c.relname || ' '
+    from pg_class c join pg_namespace n on n.oid = c.relnamespace
+    join pg_depend d on d.classid = 'pg_class'::regclass and d.objid = c.oid and d.deptype = 'e'
+    join pg_extension e on e.oid = d.refobjid
+    cross join unnest(array['TABLE', 'VIEW', 'SEQUENCE']) kind
+   where e.extname <> all (string_to_array('$HOSTED_EXTENSIONS', ' '))" > "$MEMBERS" \
+  || fail "could not list what the left-out extensions own"
+if [ -s "$MEMBERS" ]; then
+  grep -vF -f "$MEMBERS" "$FILTERED" > "$FILTERED.members" && mv "$FILTERED.members" "$FILTERED"
+fi
+rm -f "$MEMBERS"
 # The public schema's default privileges are the platform's, not ours.
 grep -E "^[0-9]+; [0-9]+ [0-9]+ DEFAULT ACL public " "$LIST" >> "$FILTERED"
 echo "restoring $(grep -cvE '^;' "$FILTERED") of $(grep -cvE '^;' "$LIST") schema entries"
@@ -136,14 +166,16 @@ admin pg_restore -C -s -f - "$IN_CONTAINER_DUMP" \
 echo "database settings: $(wc -l < "$PROPS" | tr -d ' ')"
 asql -d postgres -q -v ON_ERROR_STOP=1 < "$PROPS" || fail "could not copy the database settings"
 
-# Not --exit-on-error: an extension the stack carries and a new database
-# cannot take is reported, and the proof below decides whether it matters.
+# Every entry must restore: a platform object that silently failed would
+# make "empty project" mean less than it says.
 admin pg_restore "${HOST[@]}" -U supabase_admin -d "$EMPTY" -L "$IN_CONTAINER_LIST" \
   "$IN_CONTAINER_DUMP" 2> "$ERRORS"
-if [ -s "$ERRORS" ]; then
-  echo "pg_restore reported (not fatal by itself):"
-  grep -E 'error|ERROR' "$ERRORS" | head -20
+if grep -q 'error' "$ERRORS"; then
+  echo "pg_restore reported $(grep -c 'error: could not' "$ERRORS") errors; the first:"
+  awk '/error/ && n < 20 { print; n++ }' "$ERRORS"
+  fail "the empty project did not restore cleanly"
 fi
+echo "restore clean"
 
 # Proof that it is an empty Supabase project, before anything is installed.
 SHAPE="$(asql -d "$EMPTY" -At -v ON_ERROR_STOP=1 -c "
