@@ -592,8 +592,10 @@ las sedes y sus direcciones, sus identificadores legales y número de
 IVA, las menciones legales, los datos bancarios, los textos de
 invitación, los enlaces y el diseño de los documentos. El servidor los
 elimina antes de guardar la plantilla, envíe lo que envíe la app.
-Aplicar fusiona: los tramos de comisión, los días de cierre y todo lo que
-el espacio ya tiene se quedan donde están. Guardar de nuevo con el mismo
+Aplicar fusiona: los días de cierre, sus precios en el plano y todo lo
+que el espacio ya tiene se quedan donde están. Una excepción: una escala de comisiones de la plantilla sustituye la
+suya entera, porque sus tramos cubren juntos 0–100 % y dos escalas no se
+pueden entrelazar. Guardar de nuevo con el mismo
 nombre actualiza la plantilla y sube su versión, y cada aplicación queda
 registrada con lo que el espacio tenía antes. Una plantilla creada por
 un DesKilo más reciente que este servidor no entiende se rechaza, nunca

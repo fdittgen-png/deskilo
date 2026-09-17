@@ -609,8 +609,10 @@ Funktionsprofil. Was nur Ihrem Raum gehört, reist nie mit — Standorte
 und ihre Adressen, Ihre Rechtskennungen und USt-IdNr., Pflichtangaben,
 Bankdaten, Einladungstexte, Dokumentlinks und Dokumentgestaltung. Der
 Server entfernt sie vor dem Speichern, egal was die App geschickt hat.
-Anwenden führt zusammen: Gebührenstufen, Schließtage und alles andere,
-was der Raum schon hat, bleiben bestehen. Erneutes Speichern unter
+Anwenden führt zusammen: Schließtage, Ihre Preise im Plan und alles
+andere, was der Raum schon hat, bleiben bestehen. Eine Ausnahme: Eine Gebührenstaffel der Vorlage ersetzt Ihre als
+Ganzes, denn ihre Stufen decken gemeinsam 0–100 % ab und zwei Staffeln
+lassen sich nicht verschränken. Erneutes Speichern unter
 demselben Namen aktualisiert die Vorlage und erhöht ihre Version, und
 jede Anwendung wird mit dem vorherigen Stand festgehalten. Eine Vorlage
 aus einem neueren DesKilo, die dieser Server nicht versteht, wird

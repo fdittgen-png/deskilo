@@ -601,8 +601,10 @@ What belongs to your space alone never travels — sites and their
 addresses, your legal identifiers and VAT number, legal mentions, bank
 details, invitation texts, document links and document designs. The
 server strips them before the template is stored, whatever the app sent.
-Applying merges: fee bands, closure days and anything else the space
-already has stay where they are. Saving again under the same name
+Applying merges: closure days, your prices on the plan and anything
+else the space already has stay where they are. One exception: a fee schedule the template carries replaces yours as
+a whole, because its bands cover 0–100 % together and two schedules
+cannot be interleaved. Saving again under the same name
 updates the template and raises its version, and every application is
 recorded with what the space held before. A template made by a newer
 DesKilo that this server does not understand is refused, never

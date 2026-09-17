@@ -614,9 +614,11 @@ qu'à votre espace ne voyage jamais : les sites et leurs adresses, vos
 identifiants légaux et numéro de TVA, les mentions légales, les
 coordonnées bancaires, les textes d'invitation, les liens et la mise en
 page des documents. Le serveur les retire avant d'enregistrer le modèle,
-quoi que l'application ait envoyé. Appliquer fusionne : les tranches de
-frais, les jours de fermeture et tout ce que l'espace a déjà restent en
-place. Enregistrer de nouveau sous le même nom met le modèle à jour et
+quoi que l'application ait envoyé. Appliquer fusionne : les jours de
+fermeture, vos prix sur le plan et tout ce que l'espace a déjà restent
+en place. Une exception : une grille de frais
+portée par le modèle remplace la vôtre en entier, car ses tranches
+couvrent ensemble 0–100 % et deux grilles ne s'entrelacent pas. Enregistrer de nouveau sous le même nom met le modèle à jour et
 augmente sa version, et chaque application est consignée avec ce que
 l'espace contenait avant. Un modèle créé par un DesKilo plus récent que
 ce serveur ne comprend pas est refusé, jamais appliqué à moitié.
