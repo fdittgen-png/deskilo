@@ -174,5 +174,16 @@
   "commonCopy": "Kopieren",
   "@commonCopy": {
     "description": "#977 instance wizard: commonCopy"
-  }
+  },
+  "instanceReadyInstall": "Das Projekt ist leer: alles wird installiert.",
+  "instanceReadyResume": "Eine DesKilo-Installation brach mittendrin ab: {pending} Migrationen fehlen noch, und nur diese laufen.",
+  "instanceReadyUpgrade": "DesKilo-Version {version} ist installiert: nur die {pending} fehlenden Migrationen laufen.",
+  "instanceReadyCurrent": "DesKilo-Version {version} ist installiert und aktuell: das Schema braucht nichts.",
+  "instanceReadyAttention": "Dieses Projekt braucht Aufmerksamkeit — nichts wurde installiert.",
+  "instanceAttentionNotHealthy": "Supabase meldet das Projekt nicht als betriebsbereit. Warten Sie, bis es das ist, oder stellen Sie es im Dashboard wieder her.",
+  "instanceAttentionPostgres": "Es läuft mit Postgres {found}; DesKilo ist für Postgres {supported} gebaut.",
+  "instanceAttentionForeign": "Sein public-Schema enthält Tabellen, die DesKilo nicht anlegt ({tables}). Dort wird nicht installiert; verwenden Sie ein leeres Projekt.",
+  "instanceAttentionUnrecorded": "DesKilo-Tabellen sind vorhanden, aber keine Migration wurde erfasst. Erfassen Sie zuerst den Stand mit `dart run tool/instance.dart record`.",
+  "instanceAttentionOtherTooling": "Seine Migrationen wurden von anderen Werkzeugen erfasst; wo DesKilo fortsetzen würde, lässt sich nicht lesen. Verwenden Sie ein leeres Projekt.",
+  "instanceChooseAnother": "Anderes Projekt wählen"
 }

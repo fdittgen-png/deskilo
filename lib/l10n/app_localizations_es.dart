@@ -3749,6 +3749,54 @@ class AppLocalizationsEs extends AppLocalizations {
   String get commonCopy => 'Copiar';
 
   @override
+  String get instanceReadyInstall =>
+      'El proyecto está vacío: se instalará todo.';
+
+  @override
+  String instanceReadyResume(int pending) {
+    return 'Una instalación de DesKilo se detuvo a medias: quedan $pending migraciones y solo se ejecutarán esas.';
+  }
+
+  @override
+  String instanceReadyUpgrade(int version, int pending) {
+    return 'La versión $version de DesKilo está instalada: solo se ejecutarán las $pending migraciones que faltan.';
+  }
+
+  @override
+  String instanceReadyCurrent(int version) {
+    return 'La versión $version de DesKilo está instalada y al día: el esquema no necesita nada.';
+  }
+
+  @override
+  String get instanceReadyAttention =>
+      'Este proyecto requiere atención: no se instaló nada.';
+
+  @override
+  String get instanceAttentionNotHealthy =>
+      'Supabase no indica que el proyecto esté operativo. Espere a que lo esté o restáurelo en el panel.';
+
+  @override
+  String instanceAttentionPostgres(int found, int supported) {
+    return 'Usa Postgres $found; DesKilo está hecho para Postgres $supported.';
+  }
+
+  @override
+  String instanceAttentionForeign(String tables) {
+    return 'Su esquema public contiene tablas que DesKilo no crea ($tables). Se rechaza instalar ahí; use un proyecto vacío.';
+  }
+
+  @override
+  String get instanceAttentionUnrecorded =>
+      'Las tablas de DesKilo están, pero no se registró ninguna migración. Registre primero lo que tiene con `dart run tool/instance.dart record`.';
+
+  @override
+  String get instanceAttentionOtherTooling =>
+      'Sus migraciones las registró otra herramienta, así que no se puede saber dónde continuaría DesKilo. Use un proyecto vacío.';
+
+  @override
+  String get instanceChooseAnother => 'Elegir otro proyecto';
+
+  @override
   String get inviteSectionTitle => 'Invitar a alguien';
 
   @override

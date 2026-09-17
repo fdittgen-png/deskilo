@@ -125,4 +125,69 @@ void main() {
     expect(api.sql['ref1'], hasLength(2), reason: 'resumed after 0001, not from scratch');
     expect(find.byKey(const ValueKey('instance-error')), findsNothing);
   });
+
+  testWidgets('#1308 — an existing project with a foreign table is refused '
+      'before anything runs, and another can be chosen', (tester) async {
+    final (:api, store: _) = await _pump(tester);
+    api
+      ..projects.add((
+        ref: 'old1',
+        name: 'Shop',
+        organizationId: 'org-1',
+        region: 'eu-west-3',
+        status: 'ACTIVE_HEALTHY',
+      ))
+      ..onQuery = (ref, sql) => sql.contains('server_version_num')
+          ? [
+              {'server_version_num': 170006, 'public_tables': 'orders'},
+            ]
+          : const [];
+    await _tap(tester, 'backend-new-instance');
+    await tester.enterText(find.byKey(const ValueKey('instance-token')), 'sbp_token');
+    await _tap(tester, 'instance-check-token');
+    await _tap(tester, 'wizard-next');
+    await _tap(tester, 'instance-existing-old1');
+
+    expect(find.byKey(const ValueKey('instance-readiness-needsAttention')),
+        findsOneWidget);
+    expect(find.textContaining('orders'), findsOneWidget);
+    final next = tester.widget<ButtonStyleButton>(find.descendant(
+        of: find.byKey(const ValueKey('wizard-next')),
+        matching: find.byWidgetPredicate((w) => w is ButtonStyleButton),
+        matchRoot: true));
+    expect(next.onPressed, isNull, reason: 'nothing runs on this project');
+    expect(api.sql, isEmpty);
+
+    await _tap(tester, 'instance-choose-another');
+    expect(find.byKey(const ValueKey('instance-existing-old1')), findsOneWidget);
+  });
+
+  testWidgets('#1308 — an existing project at this version needs no schema',
+      (tester) async {
+    final (:api, store: _) = await _pump(tester);
+    api
+      ..projects.add((
+        ref: 'cur1',
+        name: 'Current',
+        organizationId: 'org-1',
+        region: 'eu-west-3',
+        status: 'ACTIVE_HEALTHY',
+      ))
+      ..markers['cur1'] = 2
+      ..onQuery = (ref, sql) => sql.contains('server_version_num')
+          ? [
+              {'server_version_num': 170006, 'public_tables': 'a,b'},
+            ]
+          : const [];
+    await _tap(tester, 'backend-new-instance');
+    await tester.enterText(find.byKey(const ValueKey('instance-token')), 'sbp_token');
+    await _tap(tester, 'instance-check-token');
+    await _tap(tester, 'wizard-next');
+    await _tap(tester, 'instance-existing-cur1');
+    expect(find.byKey(const ValueKey('instance-readiness-current')),
+        findsOneWidget);
+    await _tap(tester, 'wizard-next');
+    expect(find.text('Done'), findsWidgets);
+    expect(api.sql, isEmpty);
+  });
 }

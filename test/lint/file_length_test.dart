@@ -211,7 +211,7 @@ const Map<String, int> _baseline = {
   'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 1115, // 2026-09-11 #1061 1160→1101: the live-data switch moved to template_live_data.dart // 1180→1160 (2026-09-10): #1056 the app bar's undo/redo pair left for report_history_controls.dart
   'lib/features/money/presentation/widgets/report_field_picker.dart': 353, // 2026-09-06 #966 meanings + topic groups // 2026-09-02 #822 the page, undo/redo, guards // 2026-09-04 #875 layout drafts per kind, the panel mount and its three handlers — the panel and the actions themselves live in their own files // 2026-09-05 #880 the owner-texts drafts per language, merged into every preview/export, and the Texts panel mount
   'lib/features/workspace/domain/workspace_xml.dart': 943,
-  'lib/features/profile/presentation/screens/new_instance_screen.dart': 495, // 2026-09-06 #977 six wizard steps // 2026-09-16 #1393 480→495: the wizard's help symbol — an instance and its bundle are explained in the guide, not on screen
+  'lib/features/profile/presentation/screens/new_instance_screen.dart': 486, // 2026-09-17 #1308 495→486: the readiness verdict and the run step left for widgets/instance_readiness_card.dart and widgets/instance_run_step.dart; // 2026-09-06 #977 six wizard steps // 2026-09-16 #1393 480→495: the wizard's help symbol — an instance and its bundle are explained in the guide, not on screen
   'lib/features/profile/presentation/screens/backend_screen.dart': 381, // 2026-09-06 #977 the wizard button // 2026-09-06 #916 schema v3: plan attributes + the configuration section
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.
