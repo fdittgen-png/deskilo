@@ -13,6 +13,12 @@ the migration that inserts or updates the builtin carries the same payload.
   labels that exist, lexicon overrides that keep their placeholders, entities
   that exist, and nothing from the publication deny-list.
 
+A template may carry `configuration.holidays = {"years": 2, "country"?: "FR"}`
+instead of dated closure days: it is resolved per target workspace at preview
+and apply time (0234), for the target's country unless one is named, skipping
+invoiced months. Feature flags are written as `feature_profile` and expanded
+by `dart run tool/build_builtin_templates.dart`.
+
 Shape:
 
 ```json
