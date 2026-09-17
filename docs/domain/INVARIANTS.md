@@ -16,7 +16,7 @@ visible rather than implicit.
 | a webhook whose amount disagrees with the intent is refused | `settle_online_payment` (0205, #1138) | `22_reconciliation.sql` |
 | a captured payment names the one credit it posted, and one credit settles one payment | `payment_intents.ledger_entry_id` + partial unique index + `payment_intents_ledger_matches` (0240, #1452) | `40_payment_ledger_association.sql` |
 | workspace A never reads workspace B | 83 RLS policies | `10_tenancy_isolation.sql`, `11_tenancy_matrix.sql` |
-| the server never *writes* a row across the tenancy line | nothing — it is checked after the fact | `reconcile_workspace()` (0213), `22_reconciliation.sql` |
+| a financial row never points into another workspace (ledger, invoices, matches, payments, credits, reminders, transmissions, quota extensions, usage) | 22 composite foreign keys `(workspace_id, ref) → parent (workspace_id, id)` (0242, #1453); `reconcile_workspace()` (0213) stays as defence in depth | `42_tenant_reference_integrity.sql`, `22_reconciliation.sql` |
 | a posted ledger amount never changes | trigger `ledger_entries_no_rewrite` (0212) | `21_ledger_append_only.sql` |
 | a ledger row leaves only as a provisional payment credit | same trigger | `21_ledger_append_only.sql` |
 | every table with a `workspace_id` is isolated | its RLS policy | `11_tenancy_matrix.sql`, generated from the catalogue |
