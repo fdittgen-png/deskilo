@@ -106,6 +106,7 @@
   "onboardingUseSuggested": "Utiliser les réglages proposés",
   "onboardingConfirmIntro": "Voici ce qui sera créé :",
   "onboardingCreateWithoutTemplate": "Créer sans modèle",
+  "onboardingTemplateSetsUp": "Configure : {groups}",
   "onboardingStartFrom": "Partir de",
   "onboardingStartEmpty": "Espace vide",
   "onboardingStartEmptyDesc": "Dessinez votre propre plan sur une toile vierge."

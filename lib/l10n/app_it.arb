@@ -3891,6 +3891,7 @@
   "onboardingUseSuggested": "Usa le impostazioni proposte",
   "onboardingConfirmIntro": "Ecco cosa verrà creato:",
   "onboardingCreateWithoutTemplate": "Crea senza modello",
+  "onboardingTemplateSetsUp": "Configura: {groups}",
   "onboardingStartFrom": "Partire da",
   "onboardingStartEmpty": "Spazio vuoto",
   "onboardingStartEmptyDesc": "Disegnate la vostra pianta su una tela vuota.",

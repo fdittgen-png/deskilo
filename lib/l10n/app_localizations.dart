@@ -10889,6 +10889,12 @@ abstract class AppLocalizations {
   /// **'Create without a template'**
   String get onboardingCreateWithoutTemplate;
 
+  /// #1303 S3 onboarding confirm: the groups a template configures
+  ///
+  /// In en, this message translates to:
+  /// **'Sets up: {groups}'**
+  String onboardingTemplateSetsUp(String groups);
+
   /// No description provided for @onboardingStartFrom.
   ///
   /// In en, this message translates to:

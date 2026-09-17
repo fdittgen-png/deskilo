@@ -6518,6 +6518,15 @@
   "@onboardingCreateWithoutTemplate": {
     "description": "#1303 staged onboarding: onboardingCreateWithoutTemplate"
   },
+  "onboardingTemplateSetsUp": "Sets up: {groups}",
+  "@onboardingTemplateSetsUp": {
+    "description": "#1303 S3 onboarding confirm: the groups a template configures",
+    "placeholders": {
+      "groups": {
+        "type": "String"
+      }
+    }
+  },
   "onboardingStartFrom": "Start from",
   "onboardingStartEmpty": "Empty space",
   "onboardingStartEmptyDesc": "Draw your own plan from a blank canvas.",

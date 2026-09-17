@@ -106,6 +106,7 @@
   "onboardingUseSuggested": "Usar los ajustes propuestos",
   "onboardingConfirmIntro": "Esto es lo que se creará:",
   "onboardingCreateWithoutTemplate": "Crear sin plantilla",
+  "onboardingTemplateSetsUp": "Configura: {groups}",
   "onboardingStartFrom": "Partir de",
   "onboardingStartEmpty": "Espacio vacío",
   "onboardingStartEmptyDesc": "Dibuje su propio plano desde un lienzo en blanco."

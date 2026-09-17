@@ -11,10 +11,14 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../domain/invite_uri.dart';
+import '../../domain/template_outline.dart';
+import '../../domain/template_preview.dart';
 import '../../providers/workspace_providers.dart';
 import '../country_names.dart';
 import '../../domain/workspace.dart';
+import '../widgets/template_group_label.dart';
 import '../widgets/template_picker.dart';
 import '../../../../core/ui/wizard_scaffold.dart';
 
@@ -63,6 +67,35 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   /// A creation carrying a template failed: the confirm step offers to
   /// create without one, so nobody is stuck on a template that cannot apply.
   bool _failedWithTemplate = false;
+
+  /// #1303 S3 — what the chosen template sets up, asked once per choice.
+  String? _outlineFor;
+  Future<TemplateOutline>? _outline;
+  TemplateOutline? _outlineValue;
+
+  Future<TemplateOutline> _outlineOf(String templateId) {
+    if (_outlineFor != templateId || _outline == null) {
+      _outlineFor = templateId;
+      _outlineValue = null;
+      _outline = ref
+          .read(workspaceRepositoryProvider)
+          .workspaceTemplateOutline(templateId)
+          .then((outline) {
+        if (mounted && _outlineFor == templateId) {
+          setState(() => _outlineValue = outline);
+        }
+        return outline;
+      });
+    }
+    return _outline!;
+  }
+
+  /// The server already said this template cannot be applied: Create is
+  /// held back and "Create without a template" is offered instead.
+  bool get _templateRefused =>
+      _templateId != null &&
+      _outlineFor == _templateId &&
+      (_outlineValue?.refused ?? false);
 
   static const _nameStep = 0;
   static const _whereStep = 1;
@@ -221,6 +254,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       onBack: _step == 0 || _busy ? null : () => setState(() => _step--),
       onNext: _busy ? null : _next,
       onFinish: _busy ? null : _create,
+      finishEnabled: !_templateRefused,
       finishKey: const ValueKey('onboarding-create'),
       finishLabel: l10n?.onboardingCreateButton ?? 'Create workspace',
       body: _centered(Form(
@@ -448,7 +482,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         l10n?.libraryCarriesSettings ?? 'with its settings',
                     ].join(' · ')),
             ),
-            if (_failedWithTemplate)
+            if (template != null)
+              FutureBuilder<TemplateOutline>(
+                future: _outlineOf(template.id),
+                builder: (context, snap) => _outlineView(l10n, snap.data),
+              ),
+            if (_failedWithTemplate || _templateRefused)
               OutlinedButton(
                 key: const ValueKey('onboarding-create-without-template'),
                 onPressed: _busy
@@ -467,6 +506,42 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ],
         );
       });
+
+  /// Nothing while the outline loads or when it could not be read: the
+  /// creation checks the template again either way.
+  Widget _outlineView(AppLocalizations? l10n, TemplateOutline? outline) {
+    if (outline == null) return const SizedBox.shrink();
+    if (outline.refused) {
+      return InlineBanner(
+        key: const ValueKey('onboarding-template-refused'),
+        icon: Icons.block,
+        text: [
+          l10n?.libraryNotSupported ?? 'This template cannot be applied here.',
+          ?outline.reason,
+        ].join(' '),
+      );
+    }
+    final groups =
+        outline.groups.map((g) => templateGroupLabel(l10n, g)).join(', ');
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (outline.compatibility == TemplateCompatibility.partial)
+          InlineBanner(
+            key: const ValueKey('onboarding-template-partial'),
+            icon: Icons.info_outline,
+            severity: InlineBannerSeverity.info,
+            text: l10n?.libraryPartial ??
+                'Part of this template cannot be applied here and is left out.',
+          ),
+        if (groups.isNotEmpty)
+          Text(
+            l10n?.onboardingTemplateSetsUp(groups) ?? 'Sets up: $groups',
+            key: const ValueKey('onboarding-confirm-groups'),
+          ),
+      ],
+    );
+  }
 
   Widget _joinForm(AppLocalizations? l10n) => Form(
         key: _joinFormKey,
