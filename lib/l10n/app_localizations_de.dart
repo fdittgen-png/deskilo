@@ -3751,6 +3751,54 @@ class AppLocalizationsDe extends AppLocalizations {
   String get commonCopy => 'Kopieren';
 
   @override
+  String get instanceReadyInstall =>
+      'Das Projekt ist leer: alles wird installiert.';
+
+  @override
+  String instanceReadyResume(int pending) {
+    return 'Eine DesKilo-Installation brach mittendrin ab: $pending Migrationen fehlen noch, und nur diese laufen.';
+  }
+
+  @override
+  String instanceReadyUpgrade(int version, int pending) {
+    return 'DesKilo-Version $version ist installiert: nur die $pending fehlenden Migrationen laufen.';
+  }
+
+  @override
+  String instanceReadyCurrent(int version) {
+    return 'DesKilo-Version $version ist installiert und aktuell: das Schema braucht nichts.';
+  }
+
+  @override
+  String get instanceReadyAttention =>
+      'Dieses Projekt braucht Aufmerksamkeit — nichts wurde installiert.';
+
+  @override
+  String get instanceAttentionNotHealthy =>
+      'Supabase meldet das Projekt nicht als betriebsbereit. Warten Sie, bis es das ist, oder stellen Sie es im Dashboard wieder her.';
+
+  @override
+  String instanceAttentionPostgres(int found, int supported) {
+    return 'Es läuft mit Postgres $found; DesKilo ist für Postgres $supported gebaut.';
+  }
+
+  @override
+  String instanceAttentionForeign(String tables) {
+    return 'Sein public-Schema enthält Tabellen, die DesKilo nicht anlegt ($tables). Dort wird nicht installiert; verwenden Sie ein leeres Projekt.';
+  }
+
+  @override
+  String get instanceAttentionUnrecorded =>
+      'DesKilo-Tabellen sind vorhanden, aber keine Migration wurde erfasst. Erfassen Sie zuerst den Stand mit `dart run tool/instance.dart record`.';
+
+  @override
+  String get instanceAttentionOtherTooling =>
+      'Seine Migrationen wurden von anderen Werkzeugen erfasst; wo DesKilo fortsetzen würde, lässt sich nicht lesen. Verwenden Sie ein leeres Projekt.';
+
+  @override
+  String get instanceChooseAnother => 'Anderes Projekt wählen';
+
+  @override
   String get inviteSectionTitle => 'Jemanden einladen';
 
   @override

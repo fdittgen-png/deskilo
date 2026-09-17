@@ -3721,6 +3721,54 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonCopy => 'Copy';
 
   @override
+  String get instanceReadyInstall =>
+      'The project is empty: everything will be installed.';
+
+  @override
+  String instanceReadyResume(int pending) {
+    return 'A DesKilo install stopped part-way: $pending migrations remain and only those will run.';
+  }
+
+  @override
+  String instanceReadyUpgrade(int version, int pending) {
+    return 'DesKilo version $version is installed: only the $pending missing migrations will run.';
+  }
+
+  @override
+  String instanceReadyCurrent(int version) {
+    return 'DesKilo version $version is installed and current: the schema needs nothing.';
+  }
+
+  @override
+  String get instanceReadyAttention =>
+      'This project needs attention — nothing was installed.';
+
+  @override
+  String get instanceAttentionNotHealthy =>
+      'Supabase does not report the project as healthy. Wait until it is, or restore it in the dashboard.';
+
+  @override
+  String instanceAttentionPostgres(int found, int supported) {
+    return 'It runs Postgres $found; DesKilo is built for Postgres $supported.';
+  }
+
+  @override
+  String instanceAttentionForeign(String tables) {
+    return 'Its public schema holds tables DesKilo does not create ($tables). Installing there is refused; use an empty project.';
+  }
+
+  @override
+  String get instanceAttentionUnrecorded =>
+      'DesKilo tables are there but no migration was recorded. Record what it has with `dart run tool/instance.dart record` first.';
+
+  @override
+  String get instanceAttentionOtherTooling =>
+      'Its migrations were recorded by other tooling, so where DesKilo would resume cannot be read. Use an empty project.';
+
+  @override
+  String get instanceChooseAnother => 'Choose another project';
+
+  @override
   String get inviteSectionTitle => 'Invite someone';
 
   @override

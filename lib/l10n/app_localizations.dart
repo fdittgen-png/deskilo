@@ -6515,6 +6515,72 @@ abstract class AppLocalizations {
   /// **'Copy'**
   String get commonCopy;
 
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'The project is empty: everything will be installed.'**
+  String get instanceReadyInstall;
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'A DesKilo install stopped part-way: {pending} migrations remain and only those will run.'**
+  String instanceReadyResume(int pending);
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo version {version} is installed: only the {pending} missing migrations will run.'**
+  String instanceReadyUpgrade(int version, int pending);
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo version {version} is installed and current: the schema needs nothing.'**
+  String instanceReadyCurrent(int version);
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'This project needs attention — nothing was installed.'**
+  String get instanceReadyAttention;
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Supabase does not report the project as healthy. Wait until it is, or restore it in the dashboard.'**
+  String get instanceAttentionNotHealthy;
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'It runs Postgres {found}; DesKilo is built for Postgres {supported}.'**
+  String instanceAttentionPostgres(int found, int supported);
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Its public schema holds tables DesKilo does not create ({tables}). Installing there is refused; use an empty project.'**
+  String instanceAttentionForeign(String tables);
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo tables are there but no migration was recorded. Record what it has with `dart run tool/instance.dart record` first.'**
+  String get instanceAttentionUnrecorded;
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Its migrations were recorded by other tooling, so where DesKilo would resume cannot be read. Use an empty project.'**
+  String get instanceAttentionOtherTooling;
+
+  /// #1308 instance readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Choose another project'**
+  String get instanceChooseAnother;
+
   /// No description provided for @inviteSectionTitle.
   ///
   /// In en, this message translates to:

@@ -3753,6 +3753,54 @@ class AppLocalizationsIt extends AppLocalizations {
   String get commonCopy => 'Copia';
 
   @override
+  String get instanceReadyInstall =>
+      'Il progetto è vuoto: verrà installato tutto.';
+
+  @override
+  String instanceReadyResume(int pending) {
+    return 'Un\'installazione di DesKilo si è fermata a metà: restano $pending migrazioni e verranno eseguite solo quelle.';
+  }
+
+  @override
+  String instanceReadyUpgrade(int version, int pending) {
+    return 'La versione $version di DesKilo è installata: verranno eseguite solo le $pending migrazioni mancanti.';
+  }
+
+  @override
+  String instanceReadyCurrent(int version) {
+    return 'La versione $version di DesKilo è installata e aggiornata: lo schema non richiede nulla.';
+  }
+
+  @override
+  String get instanceReadyAttention =>
+      'Questo progetto richiede attenzione: non è stato installato nulla.';
+
+  @override
+  String get instanceAttentionNotHealthy =>
+      'Supabase non segnala il progetto come operativo. Attendete che lo sia, oppure ripristinatelo nella dashboard.';
+
+  @override
+  String instanceAttentionPostgres(int found, int supported) {
+    return 'Usa Postgres $found; DesKilo è pensato per Postgres $supported.';
+  }
+
+  @override
+  String instanceAttentionForeign(String tables) {
+    return 'Il suo schema public contiene tabelle che DesKilo non crea ($tables). L\'installazione lì è rifiutata; usate un progetto vuoto.';
+  }
+
+  @override
+  String get instanceAttentionUnrecorded =>
+      'Le tabelle di DesKilo ci sono, ma nessuna migrazione è stata registrata. Registrate prima ciò che contiene con `dart run tool/instance.dart record`.';
+
+  @override
+  String get instanceAttentionOtherTooling =>
+      'Le sue migrazioni sono state registrate da un altro strumento, quindi non si può sapere da dove DesKilo riprenderebbe. Usate un progetto vuoto.';
+
+  @override
+  String get instanceChooseAnother => 'Scegli un altro progetto';
+
+  @override
   String get inviteSectionTitle => 'Invita qualcuno';
 
   @override

@@ -8,6 +8,7 @@ import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/instance/instance_builder.dart';
 import '../../../../core/instance/instance_bundle.dart';
 import '../../../../core/instance/instance_bundle_asset.dart';
+import '../../../../core/instance/instance_readiness.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/instance/management_api.dart';
@@ -18,6 +19,8 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
 import '../../../../core/ui/wizard_scaffold.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../widgets/instance_readiness_card.dart';
+import '../widgets/instance_run_step.dart';
 
 /// #977 — a new instance for a person who runs a coworking space, not a
 /// database: paste one access token, name the project, and the wizard
@@ -51,6 +54,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
   String _region = 'eu-west-1';
   String _password = '';
   SupabaseProject? _project;
+  InstanceReadiness? _readiness;
   String _status = '';
   InstanceBundle? _bundle;
   InstanceProgress? _progress;
@@ -151,7 +155,15 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           onStatus: (s) {
         if (mounted) setState(() => _status = s);
       });
-      setState(() => _project = ready);
+      // #1308 — read what the project holds before anything runs on it.
+      _bundle ??= await ref.read(instanceBundleLoaderProvider)();
+      final readiness =
+          await InstanceReadinessCheck(_api!).examine(ready, _bundle!);
+      setState(() {
+        _project = ready;
+        _readiness = readiness;
+        _schemaInstalled = readiness.verdict == InstanceReadinessVerdict.current;
+      });
     });
   }
 
@@ -219,7 +231,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
 
   bool get _nextEnabled => switch (_step) {
         _Step.account => _org != null && !_busy,
-        _Step.project => _project != null && !_busy,
+        _Step.project => _project != null && !(_readiness?.blocks ?? false) && !_busy,
         _Step.schema => _schemaInstalled && !_busy,
         _Step.functions => _functionsDeployed && !_busy,
         _Step.signIn => _signInConfigured && !_busy,
@@ -295,24 +307,30 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
   List<Widget> _body(AppLocalizations? l10n) => switch (_step) {
         _Step.account => _account(l10n),
         _Step.project => _projectStep(l10n),
-        _Step.schema => _installStep(
-            l10n,
-            intro: l10n?.instanceInstallSchema(_bundle?.schema.length ?? 0) ??
-                'Install the schema: every migration of the app, in order.',
-            buttonKey: 'instance-install-schema',
-            done: _schemaInstalled,
-            onRun: _installSchema,
-            retry: _schemaDone > 0,
-          ),
-        _Step.functions => _installStep(
-            l10n,
-            intro: l10n?.instanceDeployFunctions(_bundle?.functions.length ?? 0) ??
-                'Deploy the functions: payments, e-invoices, push, badges.',
-            buttonKey: 'instance-deploy-functions',
-            done: _functionsDeployed,
-            onRun: _deployFunctions,
-            retry: false,
-          ),
+        _Step.schema => [
+            InstanceRunStep(
+              intro: l10n?.instanceInstallSchema(_bundle?.schema.length ?? 0) ??
+                  'Install the schema: every migration of the app, in order.',
+              buttonKey: 'instance-install-schema',
+              done: _schemaInstalled,
+              busy: _busy,
+              progress: _progress,
+              retry: _schemaDone > 0 && _error != null,
+              onRun: _installSchema,
+            ),
+          ],
+        _Step.functions => [
+            InstanceRunStep(
+              intro: l10n?.instanceDeployFunctions(_bundle?.functions.length ?? 0) ??
+                  'Deploy the functions: payments, e-invoices, push, badges.',
+              buttonKey: 'instance-deploy-functions',
+              done: _functionsDeployed,
+              busy: _busy,
+              progress: _progress,
+              retry: false,
+              onRun: _deployFunctions,
+            ),
+          ],
         _Step.signIn => _signInStep(l10n),
         _Step.done => _doneStep(l10n),
       };
@@ -415,6 +433,15 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
         if (_project case final p?)
           _text(l10n?.instanceProjectReady(p.ref) ?? 'Project ready: ${p.ref}',
               style: Theme.of(context).textTheme.titleSmall),
+        if (_readiness case final r?)
+          InstanceReadinessCard(
+            readiness: r,
+            onChooseAnother: () => setState(() {
+              _project = null;
+              _readiness = null;
+              _schemaInstalled = false;
+            }),
+          ),
         if (_existing.isNotEmpty && _project == null) ...[
           const SizedBox(height: AppSpacing.md),
           _text(l10n?.instanceUseExisting ?? 'Or use an existing project:',
@@ -428,38 +455,6 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
               onTap: _busy ? null : () => _useExisting(p),
             ),
         ],
-      ];
-
-  List<Widget> _installStep(
-    AppLocalizations? l10n, {
-    required String intro,
-    required String buttonKey,
-    required bool done,
-    required Future<void> Function() onRun,
-    required bool retry,
-  }) =>
-      [
-        _text(intro),
-        if (_progress case final p? when !done)
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              LinearProgressIndicator(value: p.total == 0 ? null : p.done / p.total),
-              const SizedBox(height: AppSpacing.xs),
-              _text(l10n?.instanceProgress(p.done, p.total, p.current) ??
-                  '${p.done} / ${p.total} · ${p.current}'),
-            ],
-          ),
-        FilledButton.icon(
-          key: ValueKey(buttonKey),
-          onPressed: _busy || done ? null : onRun,
-          icon: Icon(done ? Icons.check_circle_outline : Icons.play_arrow_outlined),
-          label: Text(done
-              ? (l10n?.commonDone ?? 'Done')
-              : retry && _error != null
-                  ? (l10n?.instanceRetry ?? 'Retry from where it stopped')
-                  : (l10n?.commonStart ?? 'Start')),
-        ),
       ];
 
   List<Widget> _signInStep(AppLocalizations? l10n) => [
