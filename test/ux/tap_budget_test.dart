@@ -27,10 +27,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../features/events/events_screen_test.dart' show pumpEvents, event;
 import '../helpers/fake_event_repository.dart';
+import '../helpers/fake_money_repository.dart';
 import '../helpers/mock_providers.dart';
 import '../features/reservations/reserve_hub_test.dart'
     show pumpHub, seatCenter;
 import 'package:deskilo/features/events/domain/workspace_event.dart';
+import 'package:deskilo/features/money/domain/money_face.dart';
+import 'package:deskilo/app/shell/shell_bottom_bar.dart';
+import '../features/money/money_faces_test.dart' show pumpFaces, openInvoice;
+import '../features/workspace/onboarding_flow_test.dart'
+    show pumpWithoutWorkspace;
 
 /// Counts the taps a path costs.
 ///
@@ -176,6 +182,79 @@ void main() {
         reason: 'with the bell off, deciding took ${taps.count} taps from '
             'launch, budget $bothDecisionBudget (#1306): one to reach the '
             'Calendar, one to decide.');
+  });
+
+  // #1247 — the three journeys that were not measured. Each counts from
+  // the screen the app is on at launch, and each asserts the journey
+  // actually arrived. docs/ux/JOURNEYS.md is the table.
+
+  testWidgets('app open to an invoice explained: the member sees its lines '
+      'and total', (tester) async {
+    const explainBudget = 3;
+    final money = FakeMoneyRepository();
+    final id = await openInvoice(money, ageDays: 3);
+    // pumpFaces boots the app AND taps the Money destination; that tap is
+    // part of this journey, so it is counted by hand.
+    await pumpFaces(tester, money: money, admin: false);
+    final taps = Taps()..count = 1;
+
+    await taps.on(tester, find.byKey(ValueKey('money-face-${MoneyFace.invoices.name}')));
+    await taps.on(tester, find.byKey(ValueKey('my-invoice-$id')));
+
+    expect(find.byKey(const ValueKey('invoice-detail-total')), findsOneWidget,
+        reason: 'the explanation is on screen: what it adds up to');
+    expect(find.byKey(const ValueKey('invoice-detail-line-0')), findsOneWidget,
+        reason: 'and why: the first line of what was charged');
+    expect(taps.count, lessThanOrEqualTo(explainBudget),
+        reason: 'explaining an invoice took ${taps.count} taps, budget '
+            '$explainBudget (#1247): Money, Invoices, the invoice.');
+  });
+
+  testWidgets('app open to a workspace setting changed: opening a day of the '
+      'week', (tester) async {
+    const settingBudget = 3;
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    await tester.pumpWidget(ProviderScope(
+      overrides: standardTestOverrides(workspace: workspace),
+      child: const DeskiloApp(),
+    ));
+    await tester.pumpAndSettle();
+    final taps = Taps();
+
+    await taps.on(tester, find.byTooltip('Settings'));
+    final tile = find.text('Availability');
+    await tester.scrollUntilVisible(tile, 200,
+        scrollable: find.byType(Scrollable).first);
+    await taps.on(tester, tile);
+    final before = List.of(workspace.openWeekdays['ws-1'] ?? const <int>[]);
+    await taps.on(tester, find.text('Sat'));
+
+    expect(workspace.openWeekdays['ws-1'], isNot(equals(before)),
+        reason: 'the setting was actually saved');
+    expect(taps.count, lessThanOrEqualTo(settingBudget),
+        reason: 'changing an opening day took ${taps.count} taps, budget '
+            '$settingBudget (#1247): Settings, Availability, the day.');
+  });
+
+  testWidgets('onboarding to a usable workspace: a name and one tap',
+      (tester) async {
+    const onboardingBudget = 1;
+    final repo = await pumpWithoutWorkspace(tester);
+    final taps = Taps();
+
+    // Typing the name is input, not a decision the counter charges for.
+    await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
+    final create = find.text('Create workspace');
+    await tester.ensureVisible(create);
+    await taps.on(tester, create);
+
+    expect(repo.workspaces, hasLength(1));
+    expect(repo.createRequests.single.templateId, isNotNull,
+        reason: 'usable means a room to book, not an empty space');
+    expect(find.byType(ShellBottomBar), findsOneWidget);
+    expect(taps.count, lessThanOrEqualTo(onboardingBudget),
+        reason: 'reaching a usable workspace took ${taps.count} taps, budget '
+            '$onboardingBudget (#1247).');
   });
 
   testWidgets('and the budgets are not vacuous — a path that completes in '
