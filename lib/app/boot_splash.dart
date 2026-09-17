@@ -6,6 +6,7 @@ import '../core/theme/app_radius.dart';
 import '../core/ui/motion.dart';
 import '../l10n/app_localizations.dart';
 import 'boot.dart';
+import '../core/theme/app_typography.dart';
 
 /// The branded boot splash (field request): shown from the very first
 /// Flutter frame until [bootReadyProvider] has warmed the data the home
@@ -64,9 +65,8 @@ class _SplashScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               AppLocalizations.of(context)?.appTitle ?? 'DesKilo',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
+              // The theme's titleLarge is already the w700 page title.
+              style: Theme.of(context).textTheme.pageTitle,
             ),
             const SizedBox(height: 32),
             SizedBox(

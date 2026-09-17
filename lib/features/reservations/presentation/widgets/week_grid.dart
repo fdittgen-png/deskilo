@@ -21,6 +21,7 @@ import '../../providers/reservation_providers.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../providers/browsed_level.dart';
+import '../../../../core/theme/app_typography.dart';
 
 /// Geometry of the Reserve hub's Week grid (#236). Pinned by test — treat
 /// these as part of the visual contract, not free-floating magic numbers.
@@ -448,9 +449,8 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: DateUtils.isSameDay(day, widget.selectedDay)
-                                ? style?.copyWith(
+                                ? style?.strong.copyWith(
                                     color: scheme.onPrimaryContainer,
-                                    fontWeight: FontWeight.bold,
                                   )
                                 : style?.copyWith(
                                     color: scheme.onSurfaceVariant,
@@ -729,10 +729,8 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
               : Center(
                   child: Text(
                     occupantInitial,
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    style: Theme.of(context).textTheme.labelSmall
+                        ?.emphasised.copyWith(color: Colors.white),
                   ),
                 ),
     );

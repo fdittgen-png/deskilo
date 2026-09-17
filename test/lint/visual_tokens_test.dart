@@ -59,6 +59,42 @@ const Map<String, int> _colorBaseline = {
   'lib/features/workspace/presentation/widgets/note_check.dart': 1,
 };
 
+/// #1304 S2 — presentation files still choosing a raw `FontWeight` → how
+/// many. Measured 2026-09-17 after the shell, Reserve, Settings and
+/// onboarding moved to `AppTypography` roles and `emphasised` / `strong`
+/// (46 → 40). The money screens hold most of what is left.
+const Map<String, int> _fontWeightBaseline = {
+  'lib/features/calendar/presentation/screens/calendar_screen.dart': 1,
+  'lib/features/calendar/presentation/widgets/day_timeline.dart': 1,
+  'lib/features/events/presentation/screens/events_screen.dart': 1,
+  'lib/features/members/presentation/screens/directory_screen.dart': 1,
+  'lib/features/members/presentation/widgets/managed_access_editor.dart': 1,
+  'lib/features/money/presentation/screens/invoice_register_screen.dart': 2,
+  'lib/features/money/presentation/widgets/account_card.dart': 1,
+  'lib/features/money/presentation/widgets/bill_view.dart': 3,
+  'lib/features/money/presentation/widgets/invoice_archive_tab.dart': 1,
+  'lib/features/money/presentation/widgets/invoice_detail_sheet.dart': 2,
+  'lib/features/money/presentation/widgets/invoice_form_sheet.dart': 2,
+  'lib/features/money/presentation/widgets/invoice_overview.dart': 1,
+  'lib/features/money/presentation/widgets/invoice_stage_strip.dart': 2,
+  'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 3,
+  'lib/features/money/presentation/widgets/money_faces_view.dart': 1,
+  'lib/features/money/presentation/widgets/my_invoices_list.dart': 1,
+  'lib/features/money/presentation/widgets/open_invoice_card.dart': 1,
+  'lib/features/money/presentation/widgets/report_layout_preview.dart': 1,
+  'lib/features/money/presentation/widgets/report_page_style.dart': 2,
+  'lib/features/money/presentation/widgets/report_preview.dart': 1,
+  'lib/features/money/presentation/widgets/report_visual_editor.dart': 1,
+  'lib/features/money/presentation/widgets/settlement_sheet.dart': 2,
+  'lib/features/plan/presentation/widgets/floor_plan_painter.dart': 2,
+  'lib/features/plan/presentation/widgets/plan_paint_helpers.dart': 1,
+  'lib/features/profile/presentation/widgets/member_avatar.dart': 1,
+  'lib/features/workspace/presentation/screens/members_screen.dart': 1,
+  'lib/features/workspace/presentation/screens/roles_screen.dart': 1,
+  'lib/features/workspace/presentation/widgets/conversation_row.dart': 1,
+  'lib/features/workspace/presentation/widgets/member_note_body.dart': 1,
+};
+
 bool _inScope(String path) =>
     path != 'lib/app/theme.dart' &&
     (path.contains('/presentation/') || path.startsWith('lib/app/'));
@@ -110,6 +146,16 @@ void main() {
             'Use the ColorScheme or a semantic token (AppStatusColors, '
             'SeatStateColors, OfficeColors) so the colour flips with the '
             'dark theme and contrast_test can see it (#1304).');
+  });
+
+  test('no screen grows a raw font weight (#1304)', () {
+    final problems =
+        ratchet(_count('fontWeight: FontWeight'), _fontWeightBaseline);
+    expect(problems, isEmpty,
+        reason: '${problems.join('\n')}\n\n'
+            'Use a role from AppTypography (sectionTitle, primaryValue…) or '
+            'the named weights `.emphasised` / `.strong` '
+            '(lib/core/theme/app_typography.dart, docs/ux/TYPOGRAPHY.md).');
   });
 
   group('the ratchet can fail', () {

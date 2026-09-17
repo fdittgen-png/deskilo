@@ -18,6 +18,7 @@ import '../../core/theme/status_colors.dart';
 import '../../features/workspace/domain/workspace.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../../core/theme/app_typography.dart';
 
 /// Wraps [child] with the development strip when the active workspace is
 /// a development one. Before a workspace is loaded there is nothing to
@@ -73,10 +74,11 @@ class _DevelopmentStrip extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelSmall
+                      ?.emphasised
+                      .copyWith(color: Colors.white),
                 ),
               ),
             ],
