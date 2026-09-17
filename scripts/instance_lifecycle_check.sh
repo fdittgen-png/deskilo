@@ -123,22 +123,24 @@ grep -vE "^[0-9]+; [0-9]+ [0-9]+ [A-Z][A-Z ]* ($DROP_SCHEMAS) " "$LIST" \
 MEMBERS="$(mktemp -t deskilo-lifecycle-members-XXXXXX)"
 asql -d postgres -q -At -v ON_ERROR_STOP=1 -c "
   set search_path = '';
-  select ' ' || n.nspname || ' ' || kind || ' ' || p.proname || '('
+  select distinct ' ' || n.nspname || ' ' || kind || ' ' || spelled || '('
          || pg_get_function_identity_arguments(p.oid) || ') '
     from pg_proc p join pg_namespace n on n.oid = p.pronamespace
     join pg_depend d on d.classid = 'pg_proc'::regclass and d.objid = p.oid and d.deptype = 'e'
     join pg_extension e on e.oid = d.refobjid
     cross join unnest(array['FUNCTION', 'PROCEDURE', 'AGGREGATE']) kind
+    -- a grant quotes a keyword name (\"is\"), the object's own tag does not
+    cross join unnest(array[quote_ident(p.proname), p.proname::text]) spelled
    where e.extname <> all (string_to_array('$HOSTED_EXTENSIONS', ' '))
   union all
-  select ' ' || n.nspname || ' ' || kind || ' ' || t.typname || ' '
+  select ' ' || n.nspname || ' ' || kind || ' ' || quote_ident(t.typname) || ' '
     from pg_type t join pg_namespace n on n.oid = t.typnamespace
     join pg_depend d on d.classid = 'pg_type'::regclass and d.objid = t.oid and d.deptype = 'e'
     join pg_extension e on e.oid = d.refobjid
     cross join unnest(array['TYPE', 'DOMAIN']) kind
    where e.extname <> all (string_to_array('$HOSTED_EXTENSIONS', ' '))
   union all
-  select ' ' || n.nspname || ' ' || kind || ' ' || c.relname || ' '
+  select ' ' || n.nspname || ' ' || kind || ' ' || quote_ident(c.relname) || ' '
     from pg_class c join pg_namespace n on n.oid = c.relnamespace
     join pg_depend d on d.classid = 'pg_class'::regclass and d.objid = c.oid and d.deptype = 'e'
     join pg_extension e on e.oid = d.refobjid
