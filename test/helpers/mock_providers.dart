@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:ui' show Locale;
+import 'package:deskilo/core/locale/device_locale.dart';
 import 'dart:typed_data' show Uint8List;
 import 'package:deskilo/features/workspace/domain/workspace_export_bundle.dart';
 import 'package:deskilo/features/workspace/providers/workspace_files_providers.dart';
@@ -1917,6 +1919,7 @@ List<Override> standardTestOverrides({
   DeploymentRepository? deployment,
   SchemaVersionSource? schemaVersion,
   WorkspaceFilesRepository? workspaceFiles,
+  Locale? deviceLocale,
 }) {
   return [
     // #1150 — a 24-hour clock for every test: `ClockPref.auto` renders
@@ -1927,6 +1930,9 @@ List<Override> standardTestOverrides({
       appFormatProvider.overrideWithValue(
         AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24, timeZoneMode: timeZoneMode),
       ),
+    // #1303 — a fixed device locale: onboarding seeds its country from it,
+    // and a test must not depend on the machine running it.
+    deviceLocaleProvider.overrideWithValue(deviceLocale ?? const Locale('de', 'DE')),
     // #1310 — the workspace's stored files, in memory.
     workspaceFilesRepositoryProvider
         .overrideWithValue(workspaceFiles ?? FakeWorkspaceFiles()),

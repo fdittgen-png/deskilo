@@ -93,6 +93,26 @@ void main() {
         reason: 'no separate apply call after the workspace exists');
   });
 
+  testWidgets('#1303 — the form starts in the device\'s country, with its '
+      'currency and time zone, not in Germany', (tester) async {
+    final repo = FakeWorkspaceRepository();
+    await tester.pumpWidget(ProviderScope(
+      overrides: standardTestOverrides(
+          workspace: repo, deviceLocale: const Locale('fr', 'FR')),
+      child: const DeskiloApp(),
+    ));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextFormField).first, 'Pézenas');
+    await tester.ensureVisible(find.text('Create workspace'));
+    await tester.tap(find.text('Create workspace'));
+    await tester.pumpAndSettle();
+
+    final created = repo.workspaces.single;
+    expect(created.countryCode, 'FR');
+    expect(created.currencyCode, 'EUR');
+    expect(created.timezone, 'Europe/Paris');
+  });
+
   testWidgets('joining with a valid invite code leads into the shell',
       (tester) async {
     await pumpWithoutWorkspace(tester);
