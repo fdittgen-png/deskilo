@@ -22,7 +22,9 @@ Edit ALL of these in the same commit:
    (keys `featureXxx`, `featureXxxDesc` + the feature's strings). NO `{`
    in message text unless it is an ICU placeholder — write "text.key",
    not "{{ text.key }}". Then `dart run tool/build_arb.dart && flutter gen-l10n`.
-4. `web/setup.html` — a FEATURES line + the REQUIRES map entry.
+4. `web/setup.html` — a FEATURES line `['key',0|1],` (no label: name and
+   description come from the ARB) + the REQUIRES map entry. Then
+   `dart run tool/build_setup_l10n.dart` and commit `web/setup_l10n.js`.
 5. `test/lint/feature_registry_test.dart` — pin = the enum's size, with a
    dated `// N→N+1 (date): #issue …` changelog line.
 6. Budgets: `test/lint/file_length_test.dart` — bump WITH a dated reason
