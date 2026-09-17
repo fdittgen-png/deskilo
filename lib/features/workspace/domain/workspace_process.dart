@@ -109,6 +109,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.accessorySupplements,
       WorkspaceFeature.priceNegotiations,
       WorkspaceFeature.memberPaymentTerms,
+      WorkspaceFeature.carnets,
     ]),
   ]),
   WorkspaceProcess('billingPayments', [

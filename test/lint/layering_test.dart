@@ -195,7 +195,7 @@ const Map<String, int> _pairBudget = {
   // +1, not +2.
   'kiosk -> reservations': 10,
   'kiosk -> workspace': 7,
-  'members -> money': 8,
+  'members -> money': 9, // 2026-09-17 #1279 the member page hosts the carnet tile 8→9
   'members -> plan': 3,
   'members -> profile': 9,
   'members -> reservations': 14,
@@ -208,7 +208,7 @@ const Map<String, int> _pairBudget = {
   'money -> reservations': 13,
   // 2026-09-15 #1310 S0 112→113: the invoice register asks for the
   // exportData permission before offering the accounting export.
-  'money -> workspace': 113,
+  'money -> workspace': 116, // 2026-09-17 #1279 carnets read the current workspace and its feature flag 113→116
   'plan -> events': 1,
   'plan -> members': 1,
   'plan -> money': 4,

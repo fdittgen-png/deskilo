@@ -198,7 +198,11 @@ enum WorkspaceFeature {
   /// second room brings both names back; the editor always shows rooms.
   singleRoomLevelNames,
   publicHolidays,
-  workspaceVocabulary;
+  workspaceVocabulary,
+
+  /// #1279 — carnets: prepaid half-days a workspace sells, spent across
+  /// months when a member books beyond their subscription, charged once.
+  carnets;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1133,6 +1137,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     surface: FeatureSurface.everywhere,
     tier: FeatureTier.platform,
     defaultOn: false,
+  ),
+  // #1279 — selling prepaid half-days is an offer a workspace makes on
+  // purpose, and it bills through the invoices: Platform, off.
+  WorkspaceFeature.carnets: FeatureManifestEntry(
+    feature: WorkspaceFeature.carnets,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+    requires: WorkspaceFeature.invoicing,
   ),
 };
 

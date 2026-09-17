@@ -1401,6 +1401,58 @@ class AppLocalizationsFr extends AppLocalizations {
   String get calendarEventActionRefused => 'refusé';
 
   @override
+  String get featureCarnetsTitle => 'Carnets';
+
+  @override
+  String get featureCarnetsDesc =>
+      'Vendre des carnets de demi-journées, dépensés sur plusieurs mois quand un membre réserve au-delà de son abonnement, facturés une seule fois à la vente.';
+
+  @override
+  String get carnetsTitle => 'Carnets';
+
+  @override
+  String get carnetsEmpty => 'Aucun carnet pour l\'instant.';
+
+  @override
+  String get carnetName => 'Nom';
+
+  @override
+  String get carnetHalfDays => 'Demi-journées';
+
+  @override
+  String get carnetPrice => 'Prix';
+
+  @override
+  String get carnetValidity => 'Validité (mois, vide = n\'expire jamais)';
+
+  @override
+  String get carnetAdd => 'Ajouter un carnet';
+
+  @override
+  String carnetSummary(int halfDays, String price) {
+    return '$halfDays demi-journées · $price';
+  }
+
+  @override
+  String carnetBalance(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count demi-journées restantes',
+      one: '1 demi-journée restante',
+      zero: 'Plus de demi-journée',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get carnetSell => 'Vendre un carnet';
+
+  @override
+  String get carnetSold =>
+      'Carnet vendu — facturé une fois sur la facture du mois.';
+
+  @override
   String get invoicePurchaseOrder => 'N° d\'engagement';
 
   @override

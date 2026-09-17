@@ -1,0 +1,15 @@
+{
+  "featureCarnetsTitle": "Mehrfachkarten",
+  "featureCarnetsDesc": "Mehrfachkarten mit Halbtagen verkaufen, die über Monate verbraucht werden, wenn ein Mitglied über sein Abo hinaus bucht — einmal beim Verkauf berechnet.",
+  "carnetsTitle": "Mehrfachkarten",
+  "carnetsEmpty": "Noch keine Mehrfachkarte.",
+  "carnetName": "Name",
+  "carnetHalfDays": "Halbtage",
+  "carnetPrice": "Preis",
+  "carnetValidity": "Gültig (Monate, leer = läuft nie ab)",
+  "carnetAdd": "Mehrfachkarte hinzufügen",
+  "carnetSummary": "{halfDays} Halbtage · {price}",
+  "carnetBalance": "{count, plural, =0{Keine Halbtage übrig} =1{1 Halbtag übrig} other{{count} Halbtage übrig}}",
+  "carnetSell": "Mehrfachkarte verkaufen",
+  "carnetSold": "Mehrfachkarte verkauft — einmal auf der Monatsabrechnung berechnet."
+}

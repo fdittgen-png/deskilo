@@ -439,6 +439,9 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
               'When a level holds only one room, the booking views name the '
                   'level instead of the room. Adding a second room brings '
                   'both names back; the plan editor always shows the rooms.',
+        WorkspaceFeature.carnets => l10n?.featureCarnetsDesc ??
+            'Sell carnets of half-days that are spent across months when a '
+                'member books beyond their subscription, charged once at the sale.',
         WorkspaceFeature.publicHolidays =>
           l10n?.featurePublicHolidaysDesc ??
               'An owner picks a year and sees the public holidays that '

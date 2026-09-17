@@ -2492,6 +2492,84 @@ abstract class AppLocalizations {
   /// **'refused'**
   String get calendarEventActionRefused;
 
+  /// #1279 carnets: featureCarnetsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Carnets'**
+  String get featureCarnetsTitle;
+
+  /// #1279 carnets: featureCarnetsDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Sell carnets of half-days that are spent across months when a member books beyond their subscription, charged once at the sale.'**
+  String get featureCarnetsDesc;
+
+  /// #1279 carnets: carnetsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Carnets'**
+  String get carnetsTitle;
+
+  /// #1279 carnets: carnetsEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No carnet yet.'**
+  String get carnetsEmpty;
+
+  /// #1279 carnets: carnetName
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get carnetName;
+
+  /// #1279 carnets: carnetHalfDays
+  ///
+  /// In en, this message translates to:
+  /// **'Half-days'**
+  String get carnetHalfDays;
+
+  /// #1279 carnets: carnetPrice
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get carnetPrice;
+
+  /// #1279 carnets: carnetValidity
+  ///
+  /// In en, this message translates to:
+  /// **'Valid for (months, empty = never expires)'**
+  String get carnetValidity;
+
+  /// #1279 carnets: carnetAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Add carnet'**
+  String get carnetAdd;
+
+  /// #1279 carnets: carnetSummary
+  ///
+  /// In en, this message translates to:
+  /// **'{halfDays} half-days · {price}'**
+  String carnetSummary(int halfDays, String price);
+
+  /// #1279 carnets: carnetBalance
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No half-days left} =1{1 half-day left} other{{count} half-days left}}'**
+  String carnetBalance(int count);
+
+  /// #1279 carnets: carnetSell
+  ///
+  /// In en, this message translates to:
+  /// **'Sell a carnet'**
+  String get carnetSell;
+
+  /// #1279 carnets: carnetSold
+  ///
+  /// In en, this message translates to:
+  /// **'Carnet sold — charged once on this month\'s bill.'**
+  String get carnetSold;
+
   /// #922 chorus pro: invoicePurchaseOrder
   ///
   /// In en, this message translates to:

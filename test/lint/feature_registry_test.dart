@@ -128,7 +128,10 @@ import 'package:flutter_test/flutter_test.dart';
 //   `everywhere`, because the legend, the shell destinations and the
 //   booking sheet all read them. Platform, default OFF: a space that
 //   keeps the product's vocabulary is not shown a control for it.
-const int _expectedFeatureCount = 104;
+// 104→105 (2026-09-17): #1279 carnets — prepaid half-days sold once and
+//   spent across months beyond a subscription. Platform, default OFF,
+//   under invoicing.
+const int _expectedFeatureCount = 105;
 
 void main() {
   _tierPins();

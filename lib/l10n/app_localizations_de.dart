@@ -1400,6 +1400,58 @@ class AppLocalizationsDe extends AppLocalizations {
   String get calendarEventActionRefused => 'abgelehnt';
 
   @override
+  String get featureCarnetsTitle => 'Mehrfachkarten';
+
+  @override
+  String get featureCarnetsDesc =>
+      'Mehrfachkarten mit Halbtagen verkaufen, die über Monate verbraucht werden, wenn ein Mitglied über sein Abo hinaus bucht — einmal beim Verkauf berechnet.';
+
+  @override
+  String get carnetsTitle => 'Mehrfachkarten';
+
+  @override
+  String get carnetsEmpty => 'Noch keine Mehrfachkarte.';
+
+  @override
+  String get carnetName => 'Name';
+
+  @override
+  String get carnetHalfDays => 'Halbtage';
+
+  @override
+  String get carnetPrice => 'Preis';
+
+  @override
+  String get carnetValidity => 'Gültig (Monate, leer = läuft nie ab)';
+
+  @override
+  String get carnetAdd => 'Mehrfachkarte hinzufügen';
+
+  @override
+  String carnetSummary(int halfDays, String price) {
+    return '$halfDays Halbtage · $price';
+  }
+
+  @override
+  String carnetBalance(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Halbtage übrig',
+      one: '1 Halbtag übrig',
+      zero: 'Keine Halbtage übrig',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get carnetSell => 'Mehrfachkarte verkaufen';
+
+  @override
+  String get carnetSold =>
+      'Mehrfachkarte verkauft — einmal auf der Monatsabrechnung berechnet.';
+
+  @override
   String get invoicePurchaseOrder => 'Auftragsnummer';
 
   @override
