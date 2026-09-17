@@ -162,6 +162,9 @@ jobs:
       - uses: supabase/setup-cli@v1
         with:
           version: latest
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
 
       # The assertion nobody had ever made before #1226: that every
       # migration replays onto an EMPTY database, in order, without the
@@ -235,6 +238,16 @@ jobs:
         continue-on-error: true
         run: bash scripts/restore_check.sh
 
+      # #1450 — the SQL tests inject a caller and `deno check` reads types;
+      # neither shows how an Edge function composes its clients. This runs
+      # the real payment handler with real signed-in users against the
+      # replayed database and a local provider stub.
+      - name: A member can start a payment
+        id: payments
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        run: bash scripts/edge_payment_check.sh
+
       - name: Rows
         if: always()
         run: |
@@ -257,6 +270,8 @@ jobs:
               "${{ steps.policies.outcome }}"
             printf 'Restore drill|%s|seeded, dumped, restored into a fresh database, counts equal and reconciled\n' \
               "${{ steps.restore.outcome }}"
+            printf 'Payments|%s|the real payment handler opens the caller'"'"'s intent; strangers and no token refused\n' \
+              "${{ steps.payments.outcome }}"
           } > report/database.psv
           cat report/database.psv
 
@@ -282,7 +297,8 @@ jobs:
                       "Database disciplines=${{ steps.pgtap.outcome }}" \
                       "Policies equal the migrations=${{ steps.policies.outcome }}" \
                       "Two sessions, one seat=${{ steps.race.outcome }}" \
-                      "Restore drill=${{ steps.restore.outcome }}"; do
+                      "Restore drill=${{ steps.restore.outcome }}" \
+                      "A member can start a payment=${{ steps.payments.outcome }}"; do
             echo "$step"
             case "$step" in *=failure) status=1 ;; esac
           done
