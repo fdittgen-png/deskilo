@@ -21,6 +21,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/reserve_view.dart';
 
 DateTime _at(int hour, [int minute = 0]) => DateTime(
     kTestNow.year, kTestNow.month, kTestNow.day, hour, minute);
@@ -259,7 +260,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Reserve'));
     await tester.pumpAndSettle();
-    await tester.tap(find.byTooltip('Day'));
+    await pickReserveView(tester, 'day');
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('timeline-block-res-own')));
     await tester.pumpAndSettle();
@@ -419,7 +420,7 @@ void main() {
     await tester.tap(find.byTooltip('Reserve'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byTooltip('Day'));
+    await pickReserveView(tester, 'day');
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('timeline-block-res-own')));
     await tester.pumpAndSettle();

@@ -8963,6 +8963,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reservationCancelledSnack => 'Reservation cancelled.';
 
   @override
+  String get reserveViewMenu => 'View';
+
+  @override
   String get reserveDayView => 'Day';
 
   @override

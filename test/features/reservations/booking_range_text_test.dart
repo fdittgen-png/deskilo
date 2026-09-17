@@ -15,6 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/test_clock.dart';
 
 import 'reserve_hub_test.dart' show pumpHub;
+import '../../helpers/reserve_view.dart';
 
 void main() {
   tearDown(WorkspaceTime.reset);
@@ -80,7 +81,7 @@ void main() {
       ),
     ]);
 
-    await tester.tap(find.byTooltip('Day'));
+    await pickReserveView(tester, 'day');
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('timeline-block-res-own')));
     await tester.pumpAndSettle();

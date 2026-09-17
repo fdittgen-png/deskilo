@@ -101,7 +101,7 @@ El plano puede parecerse a tu espacio real: el propietario puede poner una **fot
 
 Moverse:
 
-- A lo largo del borde superior: un conmutador **mapa / lista** (la lista muestra los mismos puestos como filas), el **chip de fecha** (tócalo para navegar a otro día) y los controles de ventana, que siguen la granularidad de tu espacio (§8): tres **chips de franja** — mañana, tarde, día completo — donde el espacio reserva por medias jornadas; solo *Día completo* donde reserva por jornadas enteras; controles **de → a** sobre una rejilla de minutos o un rango horario libre; y ambos a la vez con *horas reales*.
+- A lo largo del borde superior: el control **Vista**, que nombra lo que estás viendo (*Plano ▾*) y abre las demás vistas — **Día**, **Semana** y **Mes**, para explorar más que para reservar (#1301); un conmutador **mapa / lista** (la lista muestra los mismos puestos como filas), el **chip de fecha** (tócalo para navegar a otro día) y los controles de ventana, que siguen la granularidad de tu espacio (§8): tres **chips de franja** — mañana, tarde, día completo — donde el espacio reserva por medias jornadas; solo *Día completo* donde reserva por jornadas enteras; controles **de → a** sobre una rejilla de minutos o un rango horario libre; y ambos a la vez con *horas reales*.
 - El lienzo **se ajusta solo** a tu planta al abrir o al girar el dispositivo; **pellizca para hacer zoom** o usa los botones **+ / −**, arrastra las **barras de desplazamiento** en los bordes y toca el botón de **ajuste** para recentrar.
 - Elige la planta en la **barra de plantas** a la derecha (1, 2, …); su **icono de capas** actúa sobre la planta entera (abajo). En **horizontal**, los controles pasan a un panel lateral y el plano llena la pantalla — útil en tabletas.
 

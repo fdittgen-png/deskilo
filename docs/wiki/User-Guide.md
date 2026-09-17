@@ -101,7 +101,7 @@ The plan can look like your real space: the owner can put a **photo of the room 
 
 Getting around:
 
-- Along the top: a **map / list** toggle (the list shows the same seats as rows), the **date chip** (tap to browse another day) and the window controls, which follow your workspace's granularity (§8): three **day-part chips** — morning, afternoon, full day — where the workspace books half-days; only *Full day* where it books whole days; **from → to** controls on a minute grid or a free time range; and both under *real hours*.
+- Along the top: the **View** control, which names what you are looking at (*Plan ▾*) and opens the other views — **Day**, **Week** and **Month**, for exploring rather than booking (#1301); a **map / list** toggle (the list shows the same seats as rows), the **date chip** (tap to browse another day) and the window controls, which follow your workspace's granularity (§8): three **day-part chips** — morning, afternoon, full day — where the workspace books half-days; only *Full day* where it books whole days; **from → to** controls on a minute grid or a free time range; and both under *real hours*.
 - The canvas **auto-fits** your floor when it opens or when you rotate the device; **pinch to zoom** or use the **+ / −** buttons, drag the **scrollbars** along the edges, and tap the **fit** button to re-centre.
 - Pick the floor from the **level rail** on the right (1, 2, …); its **layers icon** acts on the whole level (below). In **landscape**, the controls move into a side panel so the plan fills the screen — handy on tablets.
 

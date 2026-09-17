@@ -15,7 +15,6 @@ import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/motion.dart';
-import '../../../../core/ui/view_toggle.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../calendar/presentation/widgets/day_timeline.dart';
 import '../../../plan/domain/half_day_windows.dart';
@@ -23,6 +22,7 @@ import '../../../plan/domain/level.dart';
 import '../reserve_seat_actions.dart';
 import '../space_subjects.dart';
 import '../widgets/reserve_canvas.dart';
+import '../widgets/reserve_view_menu.dart';
 import '../widgets/seat_list_view.dart';
 import '../../../plan/providers/default_level_controller.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
@@ -78,13 +78,6 @@ abstract final class ReserveHubMetrics {
   static const int lastSlotHour = 23;
   static const int lastSlotMinute = 45;
 }
-
-/// The three hub views under the date strip and window chips.
-/// #687 — `list` is the plan's SEAT LIST, ported from the deleted Plan
-/// tab. It sits in the main toggle rather than in a second one nested
-/// inside the plan view: two toggles meant two map icons in one toolbar,
-/// which is confusing to look at and ambiguous to tap.
-enum _ReserveView { plan, list, day, week, month }
 
 /// Reserve hub (#208, epic #204): full-screen route pushed by the bottom
 /// bar's raised centre button (#207). Top→bottom: a horizontal date-pill
@@ -154,7 +147,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
   DateTime? _windowStart;
   DateTime? _windowEnd;
 
-  _ReserveView _view = _ReserveView.plan;
+  ReserveView _view = ReserveView.plan;
 
   // #1269 — the browsed level lives in [BrowsedLevel] now, shared with
   // the day and week views. It used to be a `State` field here and one
@@ -163,7 +156,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
 
   /// The seat LIST and the MAP are the same view with two
   /// presentations, so both render the plan surface below.
-  bool get _seatList => _view == _ReserveView.list;
+  bool get _seatList => _view == ReserveView.list;
 
   // #687 — "Show on plan" (#182/#576) lands HERE now that the hub is the
   // only map surface. PlanCanvas has always taken these; the hub simply
@@ -453,7 +446,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     // follow it: the member asked to be taken somewhere.
     ref.read(browsedLevelProvider.notifier).select(focus.levelId);
     setState(() {
-      _view = _ReserveView.plan;
+      _view = ReserveView.plan;
       _focusSeatId = focus.seatId;
       _focusDeskId = focus.deskId;
       _focusOfficeId = focus.officeId;
@@ -610,42 +603,9 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     Widget header() {
       // ROW 1 — what you are looking at.
       final viewControls = <Widget>[
-              ViewToggle<_ReserveView>(
-              key: const ValueKey('reserve-view-switch'),
-              options: [
-                ViewToggleOption(
-                  value: _ReserveView.plan,
-                  // The Plan TAB's own former icon, now free and already
-                  // meaning "the plan" to anyone who used it.
-                  //
-                  // Not a map icon (the map/list button beside this row
-                  // owns that metaphor) and not a seat icon (the raised
-                  // Reserve button owns THAT). Three collisions in a row
-                  // is a sign the toolbar is icon-dense; each one was a
-                  // real ambiguity a user would meet, not just a finder
-                  // the tests tripped over.
-                  icon: Icons.grid_view_outlined,
-                  tooltip: lexiconText(context, key: 'tabPlan', fallback: l10n?.tabPlan ?? 'Plan'),
-                ),
-                ViewToggleOption(
-                  value: _ReserveView.day,
-                  icon: Icons.view_timeline_outlined,
-                  tooltip: lexiconText(context, key: 'reserveDayView', fallback: l10n?.reserveDayView ?? 'Day'),
-                ),
-                ViewToggleOption(
-                  value: _ReserveView.week,
-                  icon: Icons.view_week_outlined,
-                  tooltip: lexiconText(context, key: 'reserveWeekView', fallback: l10n?.reserveWeekView ?? 'Week'),
-                ),
-                ViewToggleOption(
-                  value: _ReserveView.month,
-                  icon: Icons.calendar_month_outlined,
-                  tooltip: lexiconText(context, key: 'reserveMonthView', fallback: l10n?.reserveMonthView ?? 'Month'),
-                ),
-              ],
-              selected: _view,
-              // No re-entry syncing needed since #236: the week grid
-              // derives its week from the selected day on every build.
+            // #1301 S2 — the time views behind one named control.
+            ReserveViewMenu(
+              view: _view,
               onChanged: (view) => setState(() => _view = view),
             ),
             // 'Now' returns to today AND to the live window — parity
@@ -671,7 +631,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
             // A second two-segment toggle would have shown two map icons
             // in one row; this shows one, and never the one you are
             // already looking at.
-            if (_view == _ReserveView.plan || _view == _ReserveView.list)
+            if (_view == ReserveView.plan || _view == ReserveView.list)
               IconButton(
                 key: const ValueKey('reserve-seat-view-switch'),
                 tooltip: _seatList
@@ -681,8 +641,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                   _seatList ? Icons.map_outlined : Icons.view_list_outlined,
                 ),
                 onPressed: () => setState(() => _view = _seatList
-                    ? _ReserveView.plan
-                    : _ReserveView.list),
+                    ? ReserveView.plan
+                    : ReserveView.list),
               ),
       ];
       // ROW 2 — WHEN you are looking at it, plus how the plan draws.
@@ -733,7 +693,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
             // filter + booking window) and Day (the window a free-row
             // tap books). Week books per tapped half, Month is an
             // overview — no chips.
-            if (_view != _ReserveView.week && _view != _ReserveView.month)
+            if (_view != ReserveView.week && _view != ReserveView.month)
               Padding(
                 padding: const EdgeInsets.only(left: AppSpacing.xs),
                 child: WindowControls(
@@ -777,9 +737,9 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
           HeaderControlRow(children: whenControls),
           if (gateOn)
             SeatLegend(
-              showClosed: _view == _ReserveView.week ||
-                  _view == _ReserveView.month ||
-                  _view == _ReserveView.day,
+              showClosed: _view == ReserveView.week ||
+                  _view == ReserveView.month ||
+                  _view == ReserveView.day,
             ),
         ],
       );
@@ -807,19 +767,19 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 // presentations; _planView picks between them and keys
                 // its own child, so the cross-fade (#209) happens
                 // inside rather than swapping the whole surface.
-                _ReserveView.plan || _ReserveView.list => KeyedSubtree(
+                ReserveView.plan || ReserveView.list => KeyedSubtree(
                     key: const ValueKey('reserve-plan-view'),
                     child: _planView(l10n, window, dayOpen: dayOpen),
                   ),
-                _ReserveView.day => KeyedSubtree(
+                ReserveView.day => KeyedSubtree(
                     key: const ValueKey('reserve-day-view'),
                     child: _dayView(),
                   ),
-                _ReserveView.week => KeyedSubtree(
+                ReserveView.week => KeyedSubtree(
                     key: const ValueKey('reserve-week-view'),
                     child: _weekView(),
                   ),
-                _ReserveView.month => KeyedSubtree(
+                ReserveView.month => KeyedSubtree(
                     key: const ValueKey('reserve-month-view'),
                     child: _monthView(),
                   ),
@@ -1145,7 +1105,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
       myMemberId: myMemberId,
       onDaySelected: (day) {
         _selectDay(day);
-        setState(() => _view = _ReserveView.day);
+        setState(() => _view = ReserveView.day);
       },
       onReservationTap: _detailSheet,
       isDayOpen: _isDayOpen,
@@ -1177,7 +1137,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
       isDayOpen: _isDayOpen,
       onDaySelected: (day) {
         _selectDay(day);
-        setState(() => _view = _ReserveView.day);
+        setState(() => _view = ReserveView.day);
       },
     );
   }

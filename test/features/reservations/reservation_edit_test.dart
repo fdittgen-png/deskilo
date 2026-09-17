@@ -15,6 +15,7 @@ import 'reserve_hub_test.dart' show pumpHub;
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 
 import '../../helpers/test_clock.dart';
+import '../../helpers/reserve_view.dart';
 
 Reservation _mine(
   DateTime day, {
@@ -59,7 +60,7 @@ Future<void> openDetail(WidgetTester tester) async {
   await tester.tap(find.text('${_seedDay.day}').last);
   await tester.tap(find.text('OK'));
   await tester.pumpAndSettle();
-  await tester.tap(find.byTooltip('Day'));
+  await pickReserveView(tester, 'day');
   await tester.pumpAndSettle();
   await tester.tap(find.byKey(const ValueKey('timeline-block-res-own')));
   await tester.pumpAndSettle();
