@@ -57,6 +57,7 @@
   "libraryPlanNames": "Ces noms partent avec le plan : {names}",
   "librarySaveTags": "Étiquettes, séparées par des virgules",
   "libraryPublishNothing": "Choisissez au moins un groupe.",
+  "libraryCustomizedHere": "Personnalisé ici",
   "libraryApply": "Appliquer à cet espace",
   "libraryApplyConfirmTitle": "Appliquer « {name} » ?",
   "@libraryApplyConfirmTitle": {

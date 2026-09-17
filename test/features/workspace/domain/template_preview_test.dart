@@ -55,6 +55,27 @@ void main() {
     expect(p.applicable, isTrue);
   });
 
+  test('#1280 S4 — a group customized here is offered, never pre-ticked', () {
+    final p = TemplatePreview.fromJson(<String, dynamic>{
+      'compatibility': 'supported',
+      'groups': [
+        {
+          'group': 'calendar_navigation',
+          'state': 'new',
+          'customized': true,
+          'items': [<String, Object?>{}],
+        },
+        {'group': 'space', 'state': 'new', 'items': [<String, Object?>{}]},
+      ],
+    });
+    final cal = p.groups.first;
+    expect(cal.customized, isTrue);
+    expect(cal.selectable, isTrue);
+    expect(cal.selectedByDefault, isFalse);
+    expect(p.groups.last.customized, isFalse);
+    expect(p.groups.last.selectedByDefault, isTrue);
+  });
+
   test('not supported is not applicable', () {
     final p = TemplatePreview.fromJson(<String, dynamic>{
       'compatibility': 'not_supported',

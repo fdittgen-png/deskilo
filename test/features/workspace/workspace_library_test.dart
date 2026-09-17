@@ -202,6 +202,34 @@ void main() {
       expect(find.text('5 changes applied.'), findsOneWidget);
     });
 
+    testWidgets('#1280 S4 — what was customized here says so and is not '
+        'ticked', (tester) async {
+      final workspace = await _pumpLibrary(tester);
+      workspace.templatePreviews['tpl-shared'] = const TemplatePreview(
+        compatibility: TemplateCompatibility.supported,
+        groups: [
+          TemplateGroupPreview(
+              group: TemplateGroup.calendarNavigation,
+              wire: 'calendar_navigation',
+              state: TemplateGroupState.isNew,
+              itemCount: 2,
+              customized: true),
+          TemplateGroupPreview(
+              group: TemplateGroup.space,
+              wire: 'space',
+              state: TemplateGroupState.isNew,
+              itemCount: 1),
+        ],
+      );
+      await tester.tap(find.byKey(const ValueKey('library-apply-studio')));
+      await tester.pumpAndSettle();
+      final row = find.byKey(const ValueKey('template-group-calendar_navigation'));
+      expect(find.descendant(of: row, matching: find.textContaining('Customized here')),
+          findsOneWidget);
+      expect(find.text('Apply 1 change'), findsOneWidget,
+          reason: 'only the untouched group is ticked');
+    });
+
     testWidgets('a group needing attention shows why and cannot be chosen',
         (tester) async {
       await openSheet(tester);

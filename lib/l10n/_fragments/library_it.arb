@@ -57,6 +57,7 @@
   "libraryPlanNames": "Questi nomi viaggiano con la pianta: {names}",
   "librarySaveTags": "Etichette, separate da virgole",
   "libraryPublishNothing": "Scegliete almeno un gruppo.",
+  "libraryCustomizedHere": "Personalizzato qui",
   "libraryApply": "Applica a questo spazio",
   "libraryApplyConfirmTitle": "Applicare « {name} »?",
   "@libraryApplyConfirmTitle": {

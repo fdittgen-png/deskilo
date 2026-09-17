@@ -6161,6 +6161,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get libraryPublishNothing => 'Wählen Sie mindestens eine Gruppe.';
 
   @override
+  String get libraryCustomizedHere => 'Hier angepasst';
+
+  @override
   String get libraryApply => 'Auf diesen Raum anwenden';
 
   @override

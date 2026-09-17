@@ -3829,6 +3829,7 @@
   "libraryPlanNames": "Estos nombres viajan con el plano: {names}",
   "librarySaveTags": "Etiquetas, separadas por comas",
   "libraryPublishNothing": "Elija al menos un grupo.",
+  "libraryCustomizedHere": "Personalizado aquí",
   "libraryApply": "Aplicar a este espacio",
   "libraryApplyConfirmTitle": "¿Aplicar « {name} »?",
   "@libraryApplyConfirmTitle": {
