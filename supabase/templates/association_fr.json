@@ -1,7 +1,7 @@
 {
   "key": "association_fr",
   "name": "Association de coworking (France)",
-  "description": "Pour une association de coworking en France : demi-journées de 7 h à 13 h et de 13 h à 19 h du lundi au vendredi, cotisations à 50 % et 100 %, un calendrier où se prennent les validations, et deux étages prêts à réserver.",
+  "description": "Pour une association de coworking en France : demi-journées de 7 h à 13 h et de 13 h à 19 h du lundi au vendredi, jours fériés de l'année et de la suivante, cotisations à 50 % et 100 %, un calendrier où se prennent les validations, les mots de l'association, et deux étages prêts à réserver.",
   "sort_order": 1,
   "visibility": "builtin",
   "schema_version": 1,
@@ -15,6 +15,8 @@
     "tariffs",
     "floor_plan",
     "booking_rules",
+    "closure_days",
+    "lexicon",
     "features"
   ],
   "feature_profile": {
@@ -165,6 +167,13 @@
         "workspaceLibrary": false,
         "workspaceStatus": false,
         "workspaceVocabulary": false
+      },
+      "lexicon": {
+        "fr": {
+          "spaceKindSeat": "Place",
+          "spaceKindLevel": "Étage",
+          "shellReserveButton": "Réservations"
+        }
       }
     },
     "tables": {
@@ -182,6 +191,9 @@
           "overage_fee_cents": 0
         }
       ]
+    },
+    "holidays": {
+      "years": 2
     }
   },
   "floor_plan": [
