@@ -1,10 +1,12 @@
 # DesKilo
 
-**Coworking management for community-run spaces** — booking, membership, money and governance in one app you host yourself. Free, privacy-first, 0BSD.
+**Bookings, memberships and shared finances for community-run coworking spaces.**
 
-The desk-booking tools stop at the desk. DesKilo carries the part that decides whether a community can actually run itself: memberships and quotas, a shared ledger, expenses, invoices with VAT and e-invoicing, payment reconciliation, and an approval trail that records who agreed to what. Mobile-first — Android, iOS, Windows, macOS and the browser. Sibling of [Sparkilo](https://github.com/fdittgen-png/tankstellen).
+DesKilo helps small coworking communities answer three everyday questions: **Where can I work? What do I owe? Who needs to approve this?** It connects a visual floor plan with membership allowances, member balances, shared expenses and approval workflows, so the people running the space can keep daily activity and its financial consequences together.
 
-[![CI](https://github.com/fdittgen-png/deskilo/actions/workflows/ci.yml/badge.svg)](https://github.com/fdittgen-png/deskilo/actions/workflows/ci.yml)
+Built for independent spaces, associations and member-run collectives that want control over their rules and data. Open source under the permissive **0BSD license**, with a Flutter app and a backend you can run on your own Supabase instance. Currently in **beta and active dogfooding**.
+
+[![Quality checks](https://github.com/fdittgen-png/deskilo/actions/workflows/quality.yml/badge.svg?branch=master)](https://github.com/fdittgen-png/deskilo/actions/workflows/quality.yml)
 [![License: 0BSD](https://img.shields.io/badge/License-0BSD-green.svg)](LICENSE)
 [![Flutter](https://img.shields.io/badge/Flutter-3.44.9-blue.svg)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.12.2-blue.svg)](https://dart.dev)
@@ -21,75 +23,104 @@ The desk-booking tools stop at the desk. DesKilo carries the part that decides w
   </a>
 </p>
 
-> **Not yet on the public stores.** Android is in **closed testing** and iPhone on **TestFlight** — the two buttons above are how you get in, and both were checked live. A Google Play *store* badge would 404 today, so there is not one; it goes here the day the listing is public.
+[Explore the illustrated user guide](docs/wiki/User-Guide.md) · [Configure a workspace](docs/wiki/Admin-Configuration-Guide.md) · [Releases](https://github.com/fdittgen-png/deskilo/releases) · [Roadmap](https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+is%3Aopen+label%3Aepic)
 
-## Data protection (GDPR)
+## What your community can do
 
-DesKilo is built for the EU General Data Protection Regulation, and the store
-listings say so.
+| Need | What DesKilo brings together |
+|---|---|
+| **Find and book a place** | Visual floor plans, live occupancy, reservations, recurring bookings, check-in/out, opening hours and closure rules. |
+| **Manage membership fairly** | Membership plans, usage quotas, day packages, overage rules and per-member settings. |
+| **Understand the money** | A ledger per member connecting subscription charges, extra usage, approved community expenses, recorded payments and statements. |
+| **Share responsibility** | Roles, invitations, member confirmations and configurable approval quorums, with an event history of decisions. |
+| **Prepare documents** | Invoices and corrections, VAT configuration, PDF statements and reports, and customizable document layouts. |
+| **Run the space your way** | A floor-plan editor, workspace modules with declared dependencies, configuration import/export and multiple workspace profiles. |
 
-- **Where:** Supabase, EU region (eu-central-1). No tracking, analytics or ad SDK
-  in any flavour; the F-Droid build carries no Google services at all.
-- **Who may read what** is enforced on the server (row-level security and
-  `has_permission()`), never only in the app: reservations are visible inside a
-  workspace; alerts to the people involved and the admins; **messages only to the
-  participants of a conversation, whatever their role**; **invoices and payments
-  only to the member and holders of the finance permission**.
-- **Access log:** every read of a member's finances by someone else is written by
-  the server (`data_access_log`, migration 0133) and shown to the subject.
-- **Your rights, as buttons** — the shield button in the top bar (Privacy & data): who can see my data,
-  who accessed it, export everything (art. 20), leave with erasure (art. 17).
-- **Retention:** accounting records (ledger, invoices) stay for the statutory
-  period, referenced by id, not by name.
-- Policy: https://fdittgen-png.github.io/deskilo/privacy.html
+For example, a member can reserve a desk, consume their allowance and see the resulting charges in their statement. When that member buys supplies for the space, an approved expense can credit their account. Administrators and members follow the same records and confirmation workflow.
 
-## The leitmotiv
+Additional modules include a members directory, messaging, QR/NFC check-in and kiosk workflows, local reminders and push notifications. Availability depends on the workspace's configuration, device capabilities and connected services.
 
-Every feature must serve at least one of:
+**Languages:** English · Français · Deutsch · Español · Italiano. UI translations and bundled in-app help are maintained in these five languages.
 
-1. **Know where you can sit** — live floor plan, check-in/out, reservations.
-2. **Know what you owe / are owed** — subscription, extra usage, community expenses, one transparent ledger per member.
-3. **Run the space without a landlord platform** — self-organized roles, no vendor lock-in, self-hostable data.
+## Try it
 
-## What it does
+Android is distributed through a **closed test**, and iPhone through **TestFlight**. The buttons above lead to those testing channels; access depends on tester enrollment and availability. Windows and macOS build and release workflows are also included; see [Releases](https://github.com/fdittgen-png/deskilo/releases) for published packages.
 
-- **Visual floor plan** drawn by the workspace owner in the built-in grid editor (levels → offices → desks → seats); a bookable seat is a 6×4-square slot with a chair, amenities, and optional paid accessories.
-- **Tap-to-check-in** on the plan, walk-up or on a reservation; no-show auto-release; a time scroller browses occupancy at any moment, with a seat × day week view.
-- **Reservations** — half-day, full-day or flexible granularity (per-workspace rule), open-weekday and closure-day aware, from the Reserve hub, the plan, or the calendar.
-- **Members directory** — who's in, custom status, reservation chips (checked-in / reserved now / next upcoming), one-tap WhatsApp, workspace group link.
-- **Roles & invites** — owner / co-owner / admin / member; single-use personal invitations minted by an owner, plus the workspace's own walk-in QR; every join lands pending until it is validated.
-- **Membership plans & billing** — percentage subscriptions with fee bands on a quota + overage model (half-day units); currency from the workspace country; day packages and a per-member over-consumption policy.
-- **One ledger per member** — subscription charges, overage, service consumption, community-expense credits, recorded payments, monthly statements with paid/unpaid status and PDF bill export.
-- **Community expenses & services** — a member buys something for the space, an admin approves, the amount is credited against their next statement; owner-defined service catalog for extras.
-- **Online payments** — PayPal, Stripe, Mollie and Wero, opt-in per workspace; the app opens the provider's own hosted page and settles the ledger from a signed webhook, so no payment SDK is ever linked into the build.
-- **Invoicing** — immutable signed invoices derived from the month's tracked data, with a void/replacement chain, PDF export, reminders and payment-linked matching; EN 16931 e-invoices as UBL or as a Factur-X hybrid PDF, plus SAF-T/FEC accounting export and VAT management.
-- **Kiosk mode** — a wall tablet in locked plan view; members check in by scanning a QR badge or tapping an RFID card, whose credential is stored only as a hash.
-- **Events & confirmation protocol** — an auditable event feed; anything an admin does *for somebody else* stays pending until that person confirms, under a per-workspace validation quorum.
-- **Workspace portability** — the whole floor-plan configuration exports/imports as XML; feature flags let each community switch modules on or off.
-- **Notifications** — local check-in reminders plus FCM push (confirmations, overrules) with the app-icon badge.
-- **In-app help** in every language, compiled from the wiki user guides and available offline.
+The **web app is the live application** and requires sign-in and workspace access. Its current *Demo mode* blurs selected displayed fields while continuing to use the connected workspace and allowing real actions. Evaluate it with a dedicated development workspace or your own test instance.
 
-Full product spec: [`docs/SPECIFICATION.md`](docs/SPECIFICATION.md) · architecture, implementation notes and user guides (EN/FR): [project wiki](https://github.com/fdittgen-png/deskilo/wiki).
+The [illustrated user guide](docs/wiki/User-Guide.md) lets you explore the workflows before setting up an account. The [setup questionnaire](https://fdittgen-png.github.io/deskilo/setup.html) helps a community prepare its booking, membership and governance rules.
 
-## Status
+## Current maturity
 
-Feature-complete for the v1 scope and in dogfooding: **123 SQL migrations**, **1 575 tests**, five locales, **eight Supabase Edge Functions**.
+DesKilo has substantial implemented functionality and is being refined through dogfooding. It is best suited today to communities willing to run a pilot, verify their own workflows and contribute feedback. Public store releases, integration validation, usability and operational hardening remain active work.
 
-**Shipping.** One `release-train.yml` dispatch builds every platform from the SAME commit, so testers on Android and iPhone are never comparing different code: Play **closed alpha** and **TestFlight external** both carry build 1600111. macOS ships a DMG and Windows an MSI on every version tag; the browser build deploys on demand to the Pages URL above.
+Some capabilities need particular care when planning a pilot:
 
-**Still open.** Play *production* is gated on Google's own rule — twelve testers opted in to the closed test for fourteen continuous days — not on a build. Also outstanding: an end-to-end e-invoice transmission against a real provider account, and the Apple App Store submission. See the [Epics](https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+label%3Aepic) for the roadmap.
+| Area | Current scope |
+|---|---|
+| **Membership and financial records** | The code includes billing rules, member ledgers, reconciliation, invoice history and database invariants. This is community management software; accounting acceptance needs validation for the operator's own use. |
+| **Online payments** | Provider integration code exists for Stripe, PayPal, Mollie and Wero, including hosted checkout and webhook handling. CI runs the real order handler against a local provider stub; live provider reliability is still being validated. Confirm the complete payment and reconciliation flow with your provider before relying on it; recorded payments support pilots in the meantime. |
+| **Electronic invoicing and accounting exports** | Structured invoice generation and export code is present. Real provider transmission and acceptance by accounting systems need validation for each intended setup; the project makes no certification claim. |
+| **Deployment and recovery** | Instance tooling, migration checks and backup/restore procedures are provided. Running a community instance still requires someone responsible for configuration, upgrades and recovery. |
 
-## Stack (principles)
+Follow the [open issues](https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+is%3Aopen) and [latest quality-check runs](https://github.com/fdittgen-png/deskilo/actions/workflows/quality.yml) for the current state of work and validation.
 
-Flutter 3.44.9 / Dart 3.12.2 · Riverpod 3 (codegen) · freezed · go_router · flex_color_scheme (Material 3) · Hive · Supabase (RLS Postgres, self-hostable) · ARB localization (EN canonical + FR/DE/ES/IT). Firebase Cloud Messaging is the push transport (ADR 0011) and the only Google dependency; no tracking, no analytics, no GPL dependencies.
+## Your data and your instance
 
-## Languages
+DesKilo's schema, access policies, server functions and client code are in this repository. A community can use its own hosted Supabase project or operate Supabase itself, and point the app at that backend through **Settings → Advanced → Server**.
 
-English (default) · Français · Deutsch · Español · Italiano — every user-facing string is translatable; contributions for further locales welcome.
+The code includes workspace-scoped server permissions, personal-data export and deletion flows, and access-log features. Hosting location, access management, retention and backups depend on the operator's setup. These controls support privacy-conscious operation; compliance depends on how the instance is configured and used.
+
+Store builds use Firebase Cloud Messaging for push notifications. A separate [FOSS build path](docs/guides/fdroid.md) excludes Google services. See the [privacy policy](https://fdittgen-png.github.io/deskilo/privacy.html) for the project's published data-handling information.
+
+There is no software license fee. Hosting, payment processing and other external services may have their own costs.
+
+## Run or develop your own deployment
+
+A working deployment needs the **full Supabase backend**: PostgreSQL and migrations, Auth, Storage, Realtime and the required Edge Functions. Authentication redirects, service credentials and backups also need configuration.
+
+1. Read the [instance guide](docs/wiki/Admin-Technical-Guide.md#instances) for the in-app wizard and command-line tooling. The reference deployment uses hosted Supabase; operating the Supabase platform itself is a separate infrastructure task.
+2. Follow [Building & running](docs/wiki/Implementation.md#building--running) for the pinned Flutter setup, localization/code generation and platform build instructions.
+3. Connect the client to your instance, configure the workspace, and follow the [operations guide](docs/guides/OPERATIONS.md) for health checks, backup, restore and upgrades.
+
+For a local development backend, the repository supports the Supabase CLI workflow described in [Backend / migrations](docs/wiki/Implementation.md#backend--migrations). Review the [release guide](docs/guides/RELEASING.md) when distributing builds.
+
+## Engineering approach
+
+The client is organized by feature and uses **Flutter/Dart, Riverpod, Freezed, GoRouter and Material 3**. Supabase supplies Auth, PostgreSQL, Storage and Realtime; Edge Functions handle server-side integrations. A shared client keeps the mobile, browser and desktop experiences in one codebase, while platform capabilities and distribution still require their own validation.
+
+PostgreSQL carries core authorization and consistency rules, including booking conflict protection and financial invariants. This gives concurrent clients a shared source of truth and makes the database part of the application that must be tested and upgraded with care.
+
+The [quality workflow](.github/workflows/quality.yml) is configured to exercise:
+
+- Flutter analysis, tests, localization checks and coverage;
+- architecture, accessibility and security checks;
+- migration replay onto a fresh database and PostgreSQL authorization/invariant tests;
+- competing booking requests, financial reconciliation and webhook idempotency;
+- a database backup/restore drill.
+
+The [test inventory](docs/testing/TEST_INVENTORY.md), [domain invariants](docs/domain/INVARIANTS.md) and [architecture decisions](docs/decisions/) make that work inspectable. Check the latest CI run for actual results on the current commit.
+
+## Documentation
+
+| Start here | Contents |
+|---|---|
+| [Project wiki](https://github.com/fdittgen-png/deskilo/wiki) | Product, user and administrator documentation. |
+| [User guide](docs/wiki/User-Guide.md) | Illustrated everyday workflows. |
+| [Configuration guide](docs/wiki/Admin-Configuration-Guide.md) | Booking rules, memberships, roles and workspace settings. |
+| [Technical admin guide](docs/wiki/Admin-Technical-Guide.md) | Reports, integrations and instances. |
+| [Architecture](docs/wiki/Architecture.md) | Client structure, backend model and platform choices. |
+| [Implementation](docs/wiki/Implementation.md) | Development setup, builds, testing and contribution patterns. |
+| [Product specification](docs/SPECIFICATION.md) | Product intent and scope; consult issues and implementation for delivery status. |
+| [Operations](docs/guides/OPERATIONS.md) | Instance health, backup, restore and recovery. |
 
 ## Contributing
 
-Issue-first, PR < 400 lines, conventional commits, TDD. See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`docs/AGENT_RULES.md`](docs/AGENT_RULES.md).
+Contributions are welcome in code, testing, translations, documentation and feedback from real coworking communities. Useful bug reports include the app version, platform, relevant workspace rules, reproduction steps and expected behavior, with personal information removed.
+
+Development is issue-first, with focused pull requests, conventional commits and appropriate tests. Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [project rules](docs/AGENT_RULES.md) before starting work.
+
+DesKilo is a sibling project of [Sparkilo](https://github.com/fdittgen-png/tankstellen).
 
 ## License
 
