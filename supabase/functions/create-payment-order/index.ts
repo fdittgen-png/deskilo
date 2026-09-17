@@ -86,6 +86,12 @@ async function effectiveConfig(
 const missingFields = (config: Record<string, string>, provider: Provider) =>
   REQUIRED[provider].filter((f) => !config[f]);
 
+/** Stripe's API root. `STRIPE_API_BASE` exists for the CI check
+ * (scripts/edge_payment_check.sh), which answers from a local stub so no
+ * request ever leaves the runner. */
+const stripeApi = () =>
+  Deno.env.get("STRIPE_API_BASE") ?? "https://api.stripe.com";
+
 const paypalApi = (env?: string) =>
   env === "live"
     ? "https://api-m.paypal.com"
@@ -158,7 +164,7 @@ async function createStripeSession(
     "line_items[0][price_data][unit_amount]": String(amountCents),
     "line_items[0][price_data][product_data][name]": `DesKilo ${reference}`,
   });
-  const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+  const res = await fetch(`${stripeApi()}/v1/checkout/sessions`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${cfg.secret_key}`,
@@ -317,7 +323,22 @@ Deno.serve(async (req: Request): Promise<Response> => {
   // #928 — a readable per-workspace reference (PAY-2026-0117) drawn by
   // the number-sequence framework inside the intent's own insert; the
   // provider's order id is patched in once the provider has answered.
-  const { data: opened, error: openError } = await admin.rpc(
+  //
+  // #1450 — the intent is opened AS THE CALLER. `open_payment_intent`
+  // checks `my_active_member` (0210), which reads `auth.uid()`; the
+  // service-role client carries no user, so every payment failed with
+  // intent_open_failed before reaching a provider. `getUser(token)` above
+  // verifies the token; it does not make later calls run as that user.
+  // Credentials and the order-id patch stay on the privileged client.
+  const caller = createClient(
+    Deno.env.get("SUPABASE_URL")!,
+    Deno.env.get("SUPABASE_ANON_KEY")!,
+    {
+      global: { headers: { Authorization: `Bearer ${token}` } },
+      auth: { persistSession: false, autoRefreshToken: false },
+    },
+  );
+  const { data: opened, error: openError } = await caller.rpc(
     "open_payment_intent",
     {
       p_workspace_id: workspaceId,
