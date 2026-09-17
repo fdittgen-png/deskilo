@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'reserve_hub_test.dart' show pumpHub;
+import '../../helpers/reserve_view.dart';
 
 /// The hub's plan-view level rail (a column of 48dp pills).
 Finder _planLevel(String id) =>
@@ -29,9 +30,9 @@ Finder _chip(String name) => find.widgetWithText(ChoiceChip, name);
 bool _chipSelected(WidgetTester tester, Finder f) =>
     tester.widget<ChoiceChip>(f).selected;
 
-/// Taps the Day / Plan / Week segment of the view toggle.
-Future<void> _switchTo(WidgetTester tester, String tooltip) async {
-  await tester.tap(find.byTooltip(tooltip));
+/// Chooses Day / Plan / Week / Month from the View menu (#1301 S2).
+Future<void> _switchTo(WidgetTester tester, String view) async {
+  await pickReserveView(tester, view.toLowerCase());
   await tester.pumpAndSettle();
 }
 
