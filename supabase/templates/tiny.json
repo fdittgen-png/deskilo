@@ -1,0 +1,180 @@
+{
+  "key": "tiny",
+  "name": "A tiny space",
+  "description": "Two levels, four desks, eight seats — enough to book, scan and browse from the first minute.",
+  "sort_order": 0,
+  "visibility": "builtin",
+  "schema_version": 1,
+  "tags": [],
+  "entities": [
+    "floor_plan"
+  ],
+  "configuration": {
+    "workspace": {},
+    "tables": {}
+  },
+  "floor_plan": [
+    {
+      "name": "Ground floor",
+      "sort_order": 0,
+      "bookable_as_whole": false,
+      "price_cents": 0,
+      "background_path": "",
+      "site": null,
+      "images": [],
+      "offices": [
+        {
+          "name": "Main room",
+          "color": 0,
+          "bookable_as_whole": true,
+          "price_cents": 0,
+          "x": 0,
+          "y": 0,
+          "w": 40,
+          "h": 24,
+          "desks": [
+            {
+              "name": "Desk 1",
+              "x": 2,
+              "y": 2,
+              "w": 14,
+              "h": 8,
+              "bookable_as_whole": true,
+              "price_cents": 0,
+              "seats": [
+                {
+                  "name": "A1",
+                  "x": 4,
+                  "y": 4,
+                  "orientation": "n",
+                  "chair": "standard",
+                  "amenities": [],
+                  "accessories": []
+                },
+                {
+                  "name": "A2",
+                  "x": 12,
+                  "y": 4,
+                  "orientation": "n",
+                  "chair": "standard",
+                  "amenities": [],
+                  "accessories": []
+                }
+              ]
+            },
+            {
+              "name": "Desk 2",
+              "x": 22,
+              "y": 2,
+              "w": 14,
+              "h": 8,
+              "bookable_as_whole": true,
+              "price_cents": 0,
+              "seats": [
+                {
+                  "name": "B1",
+                  "x": 24,
+                  "y": 4,
+                  "orientation": "n",
+                  "chair": "standard",
+                  "amenities": [],
+                  "accessories": []
+                },
+                {
+                  "name": "B2",
+                  "x": 32,
+                  "y": 4,
+                  "orientation": "n",
+                  "chair": "standard",
+                  "amenities": [],
+                  "accessories": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "First floor",
+      "sort_order": 1,
+      "bookable_as_whole": false,
+      "price_cents": 0,
+      "background_path": "",
+      "site": null,
+      "images": [],
+      "offices": [
+        {
+          "name": "Upper room",
+          "color": 0,
+          "bookable_as_whole": true,
+          "price_cents": 0,
+          "x": 0,
+          "y": 0,
+          "w": 40,
+          "h": 24,
+          "desks": [
+            {
+              "name": "Desk 3",
+              "x": 2,
+              "y": 2,
+              "w": 14,
+              "h": 8,
+              "bookable_as_whole": true,
+              "price_cents": 0,
+              "seats": [
+                {
+                  "name": "C1",
+                  "x": 4,
+                  "y": 4,
+                  "orientation": "n",
+                  "chair": "standard",
+                  "amenities": [],
+                  "accessories": []
+                },
+                {
+                  "name": "C2",
+                  "x": 12,
+                  "y": 4,
+                  "orientation": "n",
+                  "chair": "standard",
+                  "amenities": [],
+                  "accessories": []
+                }
+              ]
+            },
+            {
+              "name": "Desk 4",
+              "x": 22,
+              "y": 2,
+              "w": 14,
+              "h": 8,
+              "bookable_as_whole": true,
+              "price_cents": 0,
+              "seats": [
+                {
+                  "name": "D1",
+                  "x": 24,
+                  "y": 4,
+                  "orientation": "n",
+                  "chair": "standard",
+                  "amenities": [],
+                  "accessories": []
+                },
+                {
+                  "name": "D2",
+                  "x": 32,
+                  "y": 4,
+                  "orientation": "n",
+                  "chair": "standard",
+                  "amenities": [],
+                  "accessories": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
