@@ -289,11 +289,41 @@ $$;
 revoke execute on function public.imported_feature_flags(jsonb) from public, anon;
 grant execute on function public.imported_feature_flags(jsonb) to authenticated;
 
+-- Replay (#1419 follow-up). The anchors below were read from the HOSTED
+-- bodies, which wrap lines differently from the bodies a replay from the
+-- migration files builds: `supabase db reset` stopped here on the first
+-- anchor. On the hosted project the exact text matches first, so what it
+-- applied is unchanged; a replay falls back to the same text with every
+-- whitespace run matched as whitespace. Every miss is reported at once.
+create or replace function pg_temp.anchor_replace(p_def text, p_old text, p_new text)
+returns text
+language plpgsql
+as $f$
+declare
+  v_pattern text;
+  v_out text;
+begin
+  if position(p_old in p_def) > 0 then
+    return replace(p_def, p_old, p_new);
+  end if;
+  -- Trimmed first: a leading run would swallow the newline that ends a
+  -- preceding `--` comment and comment the patched line out.
+  v_pattern := regexp_replace(btrim(p_old, E' \t\n'), '([.^$*+?()\[\]{}|\\])', '\\\1', 'g');
+  v_pattern := regexp_replace(v_pattern, '\s+', '\\s*', 'g');
+  v_out := regexp_replace(p_def, v_pattern, replace(btrim(p_new, E' \t\n'), '\', '\\'), 'g');
+  return case when v_out = p_def then null else v_out end;
+end
+$f$;
+
+revoke execute on function pg_temp.anchor_replace(text, text, text) from public;
+
 do $patch$
 declare
   v_def text;
   v_old text;
   v_new text;
+  v_patched text;
+  v_missing text[] := '{}';
 begin
   -- admin_create_reservation_for
   v_def := pg_get_functiondef('public.admin_create_reservation_for(uuid, uuid, uuid, timestamp with time zone, timestamp with time zone, uuid)'::regprocedure);
@@ -301,10 +331,8 @@ begin
       (select w.feature_flags -> 'adminLevelAssign' = to_jsonb(true)
          from public.workspaces w where w.id = p_workspace_id), false) then$anchor$;
   v_new := $anchor$       and not public.feature_effective(p_workspace_id, 'adminLevelAssign') then$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the admin_create_reservation_for anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'admin_create_reservation_for'::text; else execute v_patched; end if;
 
   -- badge_auth_verify
   v_def := pg_get_functiondef('public.badge_auth_verify(text, text)'::regprocedure);
@@ -312,10 +340,8 @@ begin
      and coalesce(w.feature_flags -> 'nfcBadges' = to_jsonb(true), true)
      and coalesce(w.feature_flags -> 'kioskMode' = to_jsonb(true), true)$anchor$;
   v_new := $anchor$  select public.feature_effective_in(w.feature_flags, 'badgeSignIn')$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the badge_auth_verify anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'badge_auth_verify'::text; else execute v_patched; end if;
 
   -- check_in_reservation
   v_def := pg_get_functiondef('public.check_in_reservation(uuid)'::regprocedure);
@@ -324,58 +350,46 @@ begin
         from public.workspaces w where w.id = v_res.workspace_id
       ), true)$anchor$;
   v_new := $anchor$      and public.feature_effective(v_res.workspace_id, 'bookForOthers')$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the check_in_reservation anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'check_in_reservation'::text; else execute v_patched; end if;
 
   -- create_expense_schedule
   v_def := pg_get_functiondef('public.create_expense_schedule(uuid, text, integer, date, text, integer, integer, date, text)'::regprocedure);
   v_old := $anchor$  if not coalesce((select w.feature_flags ->> 'scheduledExpenses'
                      from public.workspaces w where w.id = p_workspace_id)::boolean, true) then$anchor$;
   v_new := $anchor$  if not public.feature_effective(p_workspace_id, 'scheduledExpenses') then$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the create_expense_schedule anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'create_expense_schedule'::text; else execute v_patched; end if;
 
   -- delete_plan_object
   v_def := pg_get_functiondef('public.delete_plan_object(text, uuid)'::regprocedure);
   v_old := $anchor$  select coalesce(w.feature_flags -> 'planObjectDelete' <> to_jsonb(false), true)
     into v_enabled from public.workspaces w where w.id = v_workspace_id;$anchor$;
   v_new := $anchor$  v_enabled := public.feature_effective(v_workspace_id, 'planObjectDelete');$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the delete_plan_object anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'delete_plan_object'::text; else execute v_patched; end if;
 
   -- level_booking_enabled
   v_def := pg_get_functiondef('public.level_booking_enabled(uuid)'::regprocedure);
   v_old := $anchor$  select coalesce(w.feature_flags -> 'levelBooking' = to_jsonb(true), false)
     from public.workspaces w where w.id = p_workspace_id;$anchor$;
   v_new := $anchor$  select public.feature_effective(p_workspace_id, 'levelBooking');$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the level_booking_enabled anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'level_booking_enabled'::text; else execute v_patched; end if;
 
   -- member_statement
   v_def := pg_get_functiondef('public.member_statement(uuid, text)'::regprocedure);
   v_old := $anchor$         coalesce(feature_flags -> 'accessorySupplements' = to_jsonb(true), false),$anchor$;
   v_new := $anchor$         public.feature_effective_in(feature_flags, 'accessorySupplements'),$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the member_statement anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'member_statement'::text; else execute v_patched; end if;
 
   -- propose_price_negotiation
   v_def := pg_get_functiondef('public.propose_price_negotiation(uuid, integer, integer, numeric, text, date, integer, jsonb)'::regprocedure);
   v_old := $anchor$  if not coalesce((select w.feature_flags ->> 'priceNegotiations' from public.workspaces w where w.id = v_member.workspace_id)::boolean, true) then$anchor$;
   v_new := $anchor$  if not public.feature_effective(v_member.workspace_id, 'priceNegotiations') then$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the propose_price_negotiation anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'propose_price_negotiation'::text; else execute v_patched; end if;
 
   -- set_seat_block
   v_def := pg_get_functiondef('public.set_seat_block(uuid, timestamp with time zone, timestamp with time zone)'::regprocedure);
@@ -384,19 +398,15 @@ begin
         from public.workspaces w where w.id = v_workspace_id
       ), false)$anchor$;
   v_new := $anchor$      and public.feature_effective(v_workspace_id, 'adminSeatBlocking')$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the set_seat_block anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'set_seat_block'::text; else execute v_patched; end if;
 
   -- settle_invoices
   v_def := pg_get_functiondef('public.settle_invoices(uuid, uuid, uuid[], text)'::regprocedure);
   v_old := $anchor$  if not coalesce((v_workspace.feature_flags ->> 'invoiceSettlement')::boolean, true) then$anchor$;
   v_new := $anchor$  if not public.feature_effective_in(v_workspace.feature_flags, 'invoiceSettlement') then$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the settle_invoices anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'settle_invoices'::text; else execute v_patched; end if;
 
   -- stamp_accessory_supplements_since
   v_def := pg_get_functiondef('public.stamp_accessory_supplements_since()'::regprocedure);
@@ -406,38 +416,30 @@ begin
     new.feature_flags -> 'accessorySupplements' = to_jsonb(true), false);$anchor$;
   v_new := $anchor$  v_old boolean := public.feature_effective_in(old.feature_flags, 'accessorySupplements');
   v_new boolean := public.feature_effective_in(new.feature_flags, 'accessorySupplements');$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the stamp_accessory_supplements_since anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'stamp_accessory_supplements_since'::text; else execute v_patched; end if;
 
   -- sweep_billing_invoices
   v_def := pg_get_functiondef('public.sweep_billing_invoices(uuid)'::regprocedure);
   v_old := $anchor$       and coalesce((w.feature_flags ->> 'moneyTab')::boolean, true)
        and coalesce((w.feature_flags ->> 'invoicing')::boolean, true)$anchor$;
   v_new := $anchor$       and public.feature_effective_in(w.feature_flags, 'invoicing')$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the sweep_billing_invoices anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'sweep_billing_invoices'::text; else execute v_patched; end if;
 
   -- sweep_billing_invoices
   v_def := pg_get_functiondef('public.sweep_billing_invoices(uuid)'::regprocedure);
   v_old := $anchor$and coalesce((v_flags ->> 'subscriptionInvoices')::boolean, true)$anchor$;
   v_new := $anchor$and public.feature_effective_in(v_flags, 'subscriptionInvoices')$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the sweep_billing_invoices anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'sweep_billing_invoices'::text; else execute v_patched; end if;
 
   -- sweep_billing_invoices
   v_def := pg_get_functiondef('public.sweep_billing_invoices(uuid)'::regprocedure);
   v_old := $anchor$and coalesce((v_flags ->> 'usageInvoices')::boolean, true)$anchor$;
   v_new := $anchor$and public.feature_effective_in(v_flags, 'usageInvoices')$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the sweep_billing_invoices anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'sweep_billing_invoices'::text; else execute v_patched; end if;
 
   -- sweep_day_end
   v_def := pg_get_functiondef('public.sweep_day_end(uuid)'::regprocedure);
@@ -446,20 +448,16 @@ begin
     from public.workspaces w where w.id = p_workspace_id
   ), false) then$anchor$;
   v_new := $anchor$  if not public.feature_effective(p_workspace_id, 'autoCheckInOut') then$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the sweep_day_end anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'sweep_day_end'::text; else execute v_patched; end if;
 
   -- sweep_expense_schedules
   v_def := pg_get_functiondef('public.sweep_expense_schedules(uuid)'::regprocedure);
   v_old := $anchor$       and coalesce((w.feature_flags ->> 'moneyTab')::boolean, true)
        and coalesce((w.feature_flags ->> 'scheduledExpenses')::boolean, true)$anchor$;
   v_new := $anchor$       and public.feature_effective_in(w.feature_flags, 'scheduledExpenses')$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the sweep_expense_schedules anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'sweep_expense_schedules'::text; else execute v_patched; end if;
 
   -- sweep_payment_reminders
   v_def := pg_get_functiondef('public.sweep_payment_reminders(uuid)'::regprocedure);
@@ -468,38 +466,33 @@ begin
        and coalesce((w.feature_flags ->> 'moneyTab')::boolean, true)
        and coalesce((w.feature_flags ->> 'paymentReminders')::boolean, true)$anchor$;
   v_new := $anchor$       and public.feature_effective_in(w.feature_flags, 'paymentReminders')$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the sweep_payment_reminders anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'sweep_payment_reminders'::text; else execute v_patched; end if;
 
   -- has_permission_raw
   v_def := pg_get_functiondef('public.has_permission_raw(uuid, text)'::regprocedure);
   v_old := $anchor$or (perm = 'issueInvoices' and coalesce(w.feature_flags -> 'adminInvoicing' = to_jsonb(true), false))$anchor$;
   v_new := $anchor$or (perm = 'issueInvoices' and public.feature_effective_in(w.feature_flags, 'adminInvoicing'))$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the has_permission_raw anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'has_permission_raw'::text; else execute v_patched; end if;
 
   -- import_workspace_configuration
   v_def := pg_get_functiondef('public.import_workspace_configuration(uuid, jsonb, text)'::regprocedure);
   v_old := $anchor$feature_flags = case when v_ws ? 'feature_flags' then v_ws->'feature_flags' else w.feature_flags end$anchor$;
   v_new := $anchor$feature_flags = case when v_ws ? 'feature_flags' then public.imported_feature_flags(v_ws->'feature_flags') else w.feature_flags end$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the import_workspace_configuration anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'import_workspace_configuration'::text; else execute v_patched; end if;
 
   -- export_workspace_configuration
   v_def := pg_get_functiondef('public.export_workspace_configuration(uuid)'::regprocedure);
   v_old := $anchor$'feature_flags', coalesce(w.feature_flags, '{}'::jsonb),$anchor$;
   v_new := $anchor$'feature_flags', public.resolved_feature_flags(w.feature_flags),$anchor$;
-  if position(v_old in v_def) = 0 then
-    raise exception '0227: the export_workspace_configuration anchor did not match';
-  end if;
-  execute replace(v_def, v_old, v_new);
+  v_patched := pg_temp.anchor_replace(v_def, v_old, v_new);
+  if v_patched is null then v_missing := v_missing || 'export_workspace_configuration'::text; else execute v_patched; end if;
 
+  if cardinality(v_missing) > 0 then
+    raise exception '0227: anchors did not match: %', array_to_string(v_missing, ', ');
+  end if;
 end
 $patch$;
 
