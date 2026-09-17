@@ -3941,6 +3941,43 @@
   "@instanceChooseAnother": {
     "description": "#1308 instance readiness"
   },
+  "instanceTokenReach": "A personal access token reaches your whole Supabase account for as long as it lives. The wizard holds it in memory only and tells you when you can revoke it.",
+  "@instanceTokenReach": {
+    "description": "#1308 instance wizard doctor and token"
+  },
+  "instanceRevokeToken": "You can revoke the access token now: DesKilo kept no copy.",
+  "@instanceRevokeToken": {
+    "description": "#1308 instance wizard doctor and token"
+  },
+  "instanceDoctorIntro": "Before this device uses it, the security check must pass: an alarm keeps the button off until it is fixed.",
+  "@instanceDoctorIntro": {
+    "description": "#1308 instance wizard doctor and token"
+  },
+  "instanceDoctorRun": "Run the security check",
+  "@instanceDoctorRun": {
+    "description": "#1308 instance wizard doctor and token"
+  },
+  "instanceDoctorRunAgain": "Check again",
+  "@instanceDoctorRunAgain": {
+    "description": "#1308 instance wizard doctor and token"
+  },
+  "instanceDoctorProtected": "Protected",
+  "@instanceDoctorProtected": {
+    "description": "#1308 instance wizard doctor and token"
+  },
+  "instanceDoctorAttention": "Attention required",
+  "@instanceDoctorAttention": {
+    "description": "#1308 instance wizard doctor and token"
+  },
+  "instanceDoctorPassed": "{count} checks passed",
+  "@instanceDoctorPassed": {
+    "description": "#1308 instance wizard doctor and token",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "inviteSectionTitle": "Invite someone",
   "inviteViaWhatsapp": "WhatsApp",
   "inviteViaSms": "SMS",

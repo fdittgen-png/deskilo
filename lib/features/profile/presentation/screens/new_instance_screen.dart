@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,6 +18,8 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
 import '../../../../core/ui/wizard_scaffold.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../../../core/instance/instance_doctor.dart';
+import '../widgets/instance_done_step.dart';
 import '../widgets/instance_readiness_card.dart';
 import '../widgets/instance_run_step.dart';
 
@@ -39,7 +40,7 @@ enum _Step { account, project, schema, functions, signIn, done }
 
 class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
   static const String supabaseUrl = 'https://supabase.com';
-  static const String tokensUrl = 'https://supabase.com/dashboard/account/tokens';
+  static const String tokensUrl = supabaseTokensUrl;
 
   final _token = TextEditingController();
   final _name = TextEditingController();
@@ -64,6 +65,8 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
   bool _functionsDeployed = false;
   bool _signInConfigured = false;
   ({String url, String key})? _endpoint;
+  /// #1308 S3 — the doctor's findings; the finish waits for them.
+  List<DoctorFinding>? _doctor;
 
   @override
   void initState() {
@@ -283,6 +286,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
                 _step = _Step.values[_step.index - 1];
               }),
       onFinish: _step == _Step.done && _endpoint != null && !_busy ? _useHere : null,
+      finishEnabled: _doctor != null && !hasAlarm(_doctor!),
       finishLabel: l10n?.instanceUseHere ?? 'Use this instance on this device',
       finishKey: const ValueKey('instance-use-here'),
       body: ListView(
@@ -357,26 +361,18 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
         _Step.done => _doneStep(l10n),
       };
 
-  Widget _text(String s, {TextStyle? style}) =>
-      Padding(padding: const EdgeInsets.only(bottom: AppSpacing.sm), child: Text(s, style: style));
-
-  Widget _link(String url, {required String label}) => Row(children: [
-        Expanded(child: SelectableText(url)),
-        IconButton(
-          tooltip: label,
-          icon: const Icon(Icons.copy_outlined),
-          onPressed: () => Clipboard.setData(ClipboardData(text: url)),
-        ),
-      ]);
-
   List<Widget> _account(AppLocalizations? l10n) => [
-        _text(l10n?.instanceAccountIntro ??
+        WizardText(l10n?.instanceTokenReach ??
+            'A personal access token reaches your whole Supabase account for '
+                'as long as it lives. The wizard holds it in memory only and '
+                'tells you when you can revoke it.'),
+        WizardText(l10n?.instanceAccountIntro ??
             'Create a free account at supabase.com, then make a personal '
                 'access token (Account → Access Tokens) and paste it here. '
                 'The wizard uses it to create and set up the project; it is '
                 'never stored.'),
-        _link(supabaseUrl, label: l10n?.commonCopy ?? 'Copy'),
-        _link(tokensUrl, label: l10n?.commonCopy ?? 'Copy'),
+        CopyableLink(supabaseUrl, label: l10n?.commonCopy ?? 'Copy'),
+        CopyableLink(tokensUrl, label: l10n?.commonCopy ?? 'Copy'),
         TextField(
           key: const ValueKey('instance-token'),
           controller: _token,
@@ -395,7 +391,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
         ),
         if (_orgs.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.md),
-          _text(l10n?.instanceOrganisationLabel ?? 'Organisation',
+          WizardText(l10n?.instanceOrganisationLabel ?? 'Organisation',
               style: Theme.of(context).textTheme.labelLarge),
           RadioGroup<String>(
             groupValue: _org,
@@ -438,10 +434,10 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           onChanged: (v) => setState(() => _region = v ?? _region),
         ),
         const SizedBox(height: AppSpacing.sm),
-        _text(l10n?.instanceDatabasePassword ??
+        WizardText(l10n?.instanceDatabasePassword ??
             'Database password, chosen for you — copy it somewhere safe; '
                 'the app never needs it again.'),
-        _link(_password, label: l10n?.commonCopy ?? 'Copy'),
+        CopyableLink(_password, label: l10n?.commonCopy ?? 'Copy'),
         FilledButton.icon(
           key: const ValueKey('instance-create-project'),
           onPressed: _busy || _project != null || _name.text.trim().isEmpty
@@ -451,9 +447,9 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           label: Text(l10n?.instanceCreateProject ?? 'Create the project'),
         ),
         if (_status.isNotEmpty && _project == null)
-          _text(l10n?.instanceProjectStatus(_status) ?? 'Project status: $_status'),
+          WizardText(l10n?.instanceProjectStatus(_status) ?? 'Project status: $_status'),
         if (_project case final p?)
-          _text(l10n?.instanceProjectReady(p.ref) ?? 'Project ready: ${p.ref}',
+          WizardText(l10n?.instanceProjectReady(p.ref) ?? 'Project ready: ${p.ref}',
               style: Theme.of(context).textTheme.titleSmall),
         if (_readiness case final r?)
           InstanceReadinessCard(
@@ -465,7 +461,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           ),
         if (_existing.isNotEmpty && _project == null) ...[
           const SizedBox(height: AppSpacing.md),
-          _text(l10n?.instanceUseExisting ?? 'Or use an existing project:',
+          WizardText(l10n?.instanceUseExisting ?? 'Or use an existing project:',
               style: Theme.of(context).textTheme.labelLarge),
           for (final p in _existing)
             ListTile(
@@ -479,14 +475,11 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
       ];
 
   List<Widget> _doneStep(AppLocalizations? l10n) => [
-        _text(l10n?.instanceDoneIntro ??
-            'The instance is ready. Use it on this device, then share the '
-                'server QR from the Server screen so members join the same '
-                'one.'),
-        if (_endpoint case final e?) ...[
-          _link(e.url, label: l10n?.commonCopy ?? 'Copy'),
-          _text('${e.key.substring(0, e.key.length.clamp(0, 18))}…',
-              style: const TextStyle(fontFamily: 'monospace')),
-        ],
+        InstanceDoneStep(
+          endpoint: _endpoint,
+          api: _project == null ? null : _api,
+          projectRef: _project?.ref,
+          onChecked: (f) => setState(() => _doctor = f),
+        ),
       ];
 }

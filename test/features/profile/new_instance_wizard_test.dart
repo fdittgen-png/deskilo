@@ -7,6 +7,9 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/instance/instance_bundle.dart';
 import 'package:deskilo/core/instance/instance_bundle_asset.dart';
+import 'package:deskilo/core/instance/instance_doctor.dart';
+import 'package:deskilo/core/trace/trace_logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -19,8 +22,16 @@ const _bundleJson = '''
  "functions":[{"slug":"send-push","verifyJwt":true,"files":[{"name":"index.ts","content":"x"}]}]}
 ''';
 
+/// #1308 S3 — what the in-app doctor answers; a healthy project by default.
+List<DoctorFinding> _doctorFindings = const [
+  DoctorFinding(DoctorLevel.ok, 'Site URL', 'matches InstanceAuthConfig'),
+];
+
 Future<({FakeSupabaseManagement api, InMemoryBackendSettingsStore store})> _pump(
     WidgetTester tester) async {
+  _doctorFindings = const [
+    DoctorFinding(DoctorLevel.ok, 'Site URL', 'matches InstanceAuthConfig'),
+  ];
   final api = FakeSupabaseManagement()..readyAfterPolls = 1;
   final store = InMemoryBackendSettingsStore();
   tester.view.physicalSize = const Size(800, 1600);
@@ -33,6 +44,8 @@ Future<({FakeSupabaseManagement api, InMemoryBackendSettingsStore store})> _pump
         supabaseManagementFactoryProvider.overrideWithValue((_) => api),
         instanceBundleLoaderProvider
             .overrideWithValue(() async => parseInstanceBundle(_bundleJson)),
+        instanceDoctorRunnerProvider
+            .overrideWithValue((api, ref) async => _doctorFindings),
       ],
       child: const DeskiloApp(),
     ),
@@ -90,6 +103,8 @@ void main() {
     await _tap(tester, 'wizard-next');
 
     expect(find.textContaining('https://ref1.supabase.co'), findsOneWidget);
+    await _tap(tester, 'instance-doctor-run');
+    expect(find.byKey(const ValueKey('instance-doctor-protected')), findsOneWidget);
     await _tap(tester, 'instance-use-here');
     expect(store.value?.url, 'https://ref1.supabase.co');
     expect(store.value?.key, startsWith('sb_publishable_'));
@@ -228,8 +243,73 @@ void main() {
     expect(api.authPatches['half1'], isNull,
         reason: 'sign-in already passes, nothing is patched');
     await _tap(tester, 'wizard-next');
+    await _tap(tester, 'instance-doctor-run');
     await _tap(tester, 'instance-use-here');
     expect(store.value?.url, 'https://half1.supabase.co');
     expect(api.sql['half1'], isNull, reason: 'no schema SQL ran');
+  });
+
+  group('#1308 S3/S4 — the device switches only after the doctor passes', () {
+    Future<FakeSupabaseManagement> toDone(WidgetTester tester) async {
+      final (:api, store: _) = await _pump(tester);
+      await _tap(tester, 'backend-new-instance');
+      await tester.enterText(find.byKey(const ValueKey('instance-token')), 'sbp_secret_token');
+      await _tap(tester, 'instance-check-token');
+      await _tap(tester, 'wizard-next');
+      await tester.enterText(find.byKey(const ValueKey('instance-project-name')), 'P');
+      await tester.pumpAndSettle();
+      await _tap(tester, 'instance-create-project');
+      await _tap(tester, 'wizard-next');
+      await _tap(tester, 'instance-install-schema');
+      await _tap(tester, 'wizard-next');
+      await _tap(tester, 'instance-deploy-functions');
+      await _tap(tester, 'wizard-next');
+      await _tap(tester, 'instance-apply-signin');
+      await _tap(tester, 'wizard-next');
+      return api;
+    }
+
+    ButtonStyleButton useHere(WidgetTester tester) =>
+        tester.widget<ButtonStyleButton>(find.descendant(
+            of: find.byKey(const ValueKey('instance-use-here')),
+            matching: find.byWidgetPredicate((w) => w is ButtonStyleButton),
+            matchRoot: true));
+
+    testWidgets('before the check and on an alarm, use-here is off and the '
+        'finding is named', (tester) async {
+      await toDone(tester);
+      expect(useHere(tester).onPressed, isNull, reason: 'the doctor has not run');
+      _doctorFindings = const [
+        DoctorFinding(DoctorLevel.alarm, 'Site URL is not the app', 'is localhost'),
+      ];
+      await _tap(tester, 'instance-doctor-run');
+      expect(find.byKey(const ValueKey('instance-doctor-attention')), findsOneWidget);
+      expect(find.text('Site URL is not the app'), findsOneWidget);
+      expect(useHere(tester).onPressed, isNull);
+    });
+
+    testWidgets('a warning is shown and does not block', (tester) async {
+      await toDone(tester);
+      _doctorFindings = const [
+        DoctorFinding(DoctorLevel.warn, 'Sign-ups', 'no rows came back'),
+      ];
+      await _tap(tester, 'instance-doctor-run');
+      expect(find.text('Sign-ups'), findsOneWidget);
+      expect(useHere(tester).onPressed, isNotNull);
+    });
+
+    testWidgets('the token reaches neither preferences nor the trace log, and '
+        'the wizard says it can be revoked', (tester) async {
+      SharedPreferences.setMockInitialValues({});
+      await toDone(tester);
+      expect(find.textContaining('revoke the access token'), findsOneWidget);
+      final prefs = await SharedPreferences.getInstance();
+      for (final key in prefs.getKeys()) {
+        expect('${prefs.get(key)}', isNot(contains('sbp_secret_token')));
+      }
+      for (final e in TraceLogger.instance.entries) {
+        expect('$e', isNot(contains('sbp_secret_token')));
+      }
+    });
   });
 }
