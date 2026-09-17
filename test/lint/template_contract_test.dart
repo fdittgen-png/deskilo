@@ -16,6 +16,7 @@ import 'dart:io';
 
 import 'package:deskilo/core/l10n/lexicon.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
+import 'package:deskilo/features/workspace/domain/template_feature_profile.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -277,11 +278,38 @@ void main() {
       final latest = migrations.lastWhere(
           (f) => insert.hasMatch(f.readAsStringSync()),
           orElse: () => fail('$key: no migration inserts this builtin'));
-      final plan =
-          jsonDecode(insert.firstMatch(latest.readAsStringSync())!.group(1)!);
+      final text = latest.readAsStringSync();
+      final plan = jsonDecode(insert.firstMatch(text)!.group(1)!);
+      final name = latest.path.split('/').last;
       expect(plan, b['floor_plan'],
-          reason: '$key: supabase/templates/$key.json and '
-              '${latest.path.split('/').last} carry different floor plans');
+          reason: '$key: supabase/templates/$key.json and $name carry '
+              'different floor plans');
+      // A builtin with configuration carries it in the same insert.
+      final cfg = RegExp(
+              "insert into public\\.workspace_templates[^;]*?'$key'[^;]*?\\\$cfg\\\$(.*?)\\\$cfg\\\$",
+              dotAll: true)
+          .firstMatch(text);
+      final configuration = b['configuration'] as Map?;
+      final carries = configuration != null &&
+          ((configuration['workspace'] as Map?)?.isNotEmpty == true ||
+              (configuration['tables'] as Map?)?.isNotEmpty == true);
+      if (carries || cfg != null) {
+        expect(cfg, isNotNull, reason: '$key: $name inserts no configuration');
+        expect(jsonDecode(cfg!.group(1)!), configuration,
+            reason: '$key: supabase/templates/$key.json and $name carry '
+                'different configurations');
+      }
+    }
+  });
+
+  test('a feature profile and the flags it expands to agree', () {
+    for (final b in _builtins()) {
+      final expanded = expandTemplateProfile(b);
+      if (expanded == null) continue;
+      final flags = ((b['configuration'] as Map)['workspace'] as Map)['feature_flags'];
+      expect(flags, expanded,
+          reason: '${b['key']}: run `dart run tool/build_builtin_templates.dart` '
+              'after changing feature_profile or the registry');
     }
   });
 

@@ -620,6 +620,8 @@ registrada con lo que el espacio tenía antes. Una plantilla creada por
 un DesKilo más reciente que este servidor no entiende se rechaza, nunca
 se aplica a medias.
 
+Hay dos plantillas integradas: **A tiny space** (dos plantas, ocho puestos) y **Association de coworking (France)**. La segunda es lo que suele necesitar una asociación de coworking francesa desde el primer día: medias jornadas de 7 h a 13 h y de 13 h a 19 h, de lunes a viernes; cuotas al 50 % y al 100 % de 50 € y 100 €; sin IVA; el francés como idioma del espacio; las validaciones en el calendario, con la pestaña de eventos y el directorio de miembros desactivados; y dos plantas listas para reservar (#1282). El país, la moneda y la zona horaria vienen siempre de la bienvenida.
+
 Un espacio nuevo siempre empieza con una sala, diga lo que diga esta
 función: la bienvenida ofrece *Partir de* con la plantilla integrada
 seleccionada.
