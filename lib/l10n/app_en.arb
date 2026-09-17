@@ -1622,6 +1622,71 @@
   "@calendarEventActionRefused": {
     "description": "#843 - verb of a refused decision"
   },
+  "featureCarnetsTitle": "Carnets",
+  "@featureCarnetsTitle": {
+    "description": "#1279 carnets: featureCarnetsTitle"
+  },
+  "featureCarnetsDesc": "Sell carnets of half-days that are spent across months when a member books beyond their subscription, charged once at the sale.",
+  "@featureCarnetsDesc": {
+    "description": "#1279 carnets: featureCarnetsDesc"
+  },
+  "carnetsTitle": "Carnets",
+  "@carnetsTitle": {
+    "description": "#1279 carnets: carnetsTitle"
+  },
+  "carnetsEmpty": "No carnet yet.",
+  "@carnetsEmpty": {
+    "description": "#1279 carnets: carnetsEmpty"
+  },
+  "carnetName": "Name",
+  "@carnetName": {
+    "description": "#1279 carnets: carnetName"
+  },
+  "carnetHalfDays": "Half-days",
+  "@carnetHalfDays": {
+    "description": "#1279 carnets: carnetHalfDays"
+  },
+  "carnetPrice": "Price",
+  "@carnetPrice": {
+    "description": "#1279 carnets: carnetPrice"
+  },
+  "carnetValidity": "Valid for (months, empty = never expires)",
+  "@carnetValidity": {
+    "description": "#1279 carnets: carnetValidity"
+  },
+  "carnetAdd": "Add carnet",
+  "@carnetAdd": {
+    "description": "#1279 carnets: carnetAdd"
+  },
+  "carnetSummary": "{halfDays} half-days · {price}",
+  "@carnetSummary": {
+    "description": "#1279 carnets: carnetSummary",
+    "placeholders": {
+      "halfDays": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "carnetBalance": "{count, plural, =0{No half-days left} =1{1 half-day left} other{{count} half-days left}}",
+  "@carnetBalance": {
+    "description": "#1279 carnets: carnetBalance",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "carnetSell": "Sell a carnet",
+  "@carnetSell": {
+    "description": "#1279 carnets: carnetSell"
+  },
+  "carnetSold": "Carnet sold — charged once on this month's bill.",
+  "@carnetSold": {
+    "description": "#1279 carnets: carnetSold"
+  },
   "invoicePurchaseOrder": "Engagement number",
   "@invoicePurchaseOrder": {
     "description": "#922 chorus pro: invoicePurchaseOrder"

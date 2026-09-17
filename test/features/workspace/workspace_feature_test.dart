@@ -16,6 +16,8 @@ import 'package:flutter_test/flutter_test.dart';
 /// a login surface. Shipping any of those ON would make the choice for
 /// them silently.
 const Set<WorkspaceFeature> defaultOffFeatures = {
+  // #1279 — selling carnets is an offer a workspace makes on purpose.
+  WorkspaceFeature.carnets,
   // #1277 — renaming the product's words is asked for, never assumed:
   // a space that keeps the product's vocabulary is not shown a control
   // for changing it.
@@ -119,6 +121,7 @@ void main() {
       'workspaceLibrary': true,
       'publicHolidays': true,
       'workspaceVocabulary': true,
+      'carnets': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

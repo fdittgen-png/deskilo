@@ -97,6 +97,9 @@ import 'fake_pref_stores.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/features/workspace/domain/template_publication.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
+import 'package:deskilo/features/money/domain/credit_product.dart';
+import 'package:deskilo/features/money/providers/credit_providers.dart';
+import 'fake_credit_repository.dart';
 
 /// In-memory [AuthRepository] for widget/unit tests (fakes over mocks).
 class FakeAuthRepository implements AuthRepository {
@@ -1964,6 +1967,7 @@ List<Override> standardTestOverrides({
   EventRepository? events,
   CalendarRepository? calendar,
   MoneyRepository? money,
+  CreditRepository? credits,
   NotificationService? notifications,
   ActiveWorkspaceStore? activeWorkspace,
   FakeQrScanner? qrScan,
@@ -2041,6 +2045,8 @@ List<Override> standardTestOverrides({
         .overrideWithValue(calendar ?? FakeCalendarRepository()),
     moneyRepositoryProvider
         .overrideWithValue(money ?? FakeMoneyRepository()),
+    creditRepositoryProvider
+        .overrideWithValue(credits ?? FakeCreditRepository()),
     notificationServiceProvider
         .overrideWithValue(notifications ?? FakeNotificationService()),
     activeWorkspaceStoreProvider

@@ -1393,6 +1393,57 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calendarEventActionRefused => 'refused';
 
   @override
+  String get featureCarnetsTitle => 'Carnets';
+
+  @override
+  String get featureCarnetsDesc =>
+      'Sell carnets of half-days that are spent across months when a member books beyond their subscription, charged once at the sale.';
+
+  @override
+  String get carnetsTitle => 'Carnets';
+
+  @override
+  String get carnetsEmpty => 'No carnet yet.';
+
+  @override
+  String get carnetName => 'Name';
+
+  @override
+  String get carnetHalfDays => 'Half-days';
+
+  @override
+  String get carnetPrice => 'Price';
+
+  @override
+  String get carnetValidity => 'Valid for (months, empty = never expires)';
+
+  @override
+  String get carnetAdd => 'Add carnet';
+
+  @override
+  String carnetSummary(int halfDays, String price) {
+    return '$halfDays half-days · $price';
+  }
+
+  @override
+  String carnetBalance(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count half-days left',
+      one: '1 half-day left',
+      zero: 'No half-days left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get carnetSell => 'Sell a carnet';
+
+  @override
+  String get carnetSold => 'Carnet sold — charged once on this month\'s bill.';
+
+  @override
   String get invoicePurchaseOrder => 'Engagement number';
 
   @override

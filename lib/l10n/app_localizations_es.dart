@@ -1398,6 +1398,58 @@ class AppLocalizationsEs extends AppLocalizations {
   String get calendarEventActionRefused => 'rechazado';
 
   @override
+  String get featureCarnetsTitle => 'Bonos';
+
+  @override
+  String get featureCarnetsDesc =>
+      'Vender bonos de medias jornadas que se gastan a lo largo de los meses cuando un miembro reserva más allá de su suscripción, cobrados una sola vez en la venta.';
+
+  @override
+  String get carnetsTitle => 'Bonos';
+
+  @override
+  String get carnetsEmpty => 'Aún no hay bonos.';
+
+  @override
+  String get carnetName => 'Nombre';
+
+  @override
+  String get carnetHalfDays => 'Medias jornadas';
+
+  @override
+  String get carnetPrice => 'Precio';
+
+  @override
+  String get carnetValidity => 'Validez (meses, vacío = no caduca)';
+
+  @override
+  String get carnetAdd => 'Añadir bono';
+
+  @override
+  String carnetSummary(int halfDays, String price) {
+    return '$halfDays medias jornadas · $price';
+  }
+
+  @override
+  String carnetBalance(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Quedan $count medias jornadas',
+      one: 'Queda 1 media jornada',
+      zero: 'No quedan medias jornadas',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get carnetSell => 'Vender un bono';
+
+  @override
+  String get carnetSold =>
+      'Bono vendido — cobrado una vez en la factura del mes.';
+
+  @override
   String get invoicePurchaseOrder => 'N.º de compromiso';
 
   @override

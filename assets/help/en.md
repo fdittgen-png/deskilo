@@ -1154,6 +1154,8 @@ Your ledger answers *what do I owe, what am I owed* — and *how much can I stil
 
 A member can also have **no subscription** — a visitor who comes now and then (#1279): no monthly fee, no subscription line on the invoice, and no included half-days, so bookings need a package or credits. **No subscription** and **Pay-as-you-go** never combine, because that would book for free; the app and the server both refuse the pair.
 
+**Carnets** (Features → *Carnets*, under invoicing; off by default) are prepaid half-days (#1279). The owner defines them in **Billing** (name, half-days, price, and a validity in months, or none, so they never expire), and whoever issues invoices sells one from a member's page. The sale is charged **once**, on that month's bill. After that, every half-day a member books beyond what their subscription includes is taken from their carnets, soonest-expiring first, across as many months as it lasts; cancelling a booking gives its half-day back. Spending posts nothing to the bill, and a half-day a carnet covered is never billed as overage too. The member page shows how many half-days are left.
+
 **The actions, grouped by meaning:**
 
 - **Pay** — **Record a payment** ("I paid") with its method, the **date the money moved** (defaults to today) and the **month it settles** (defaults to the running one, one step back for arrears, one forward for a prepayment) — the other side confirms. That month decides which bill and which invoice the credit lands on. **Pay online** (when enabled) pays the amount owed straight away — with **PayPal, a credit card (Stripe), Mollie, or Wero**, whichever the workspace enabled (several show a chooser).

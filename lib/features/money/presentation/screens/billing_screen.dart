@@ -17,6 +17,8 @@ import '../../providers/money_providers.dart';
 import '../../domain/vat_rate.dart';
 import '../vat_price_label.dart';
 import '../widgets/vat_rate_field.dart';
+import '../widgets/carnets_editor.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 
 /// Owner-only billing editor (#128, ADR 0008): the fee bands pricing the
 /// percentage subscriptions, and the subscription levels members may pick
@@ -757,6 +759,8 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           value: _pkgVatRateId,
           onChanged: (id) => setState(() => _pkgVatRateId = id),
         ),
+        if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.carnets))
+          ...const [Divider(height: 32), CarnetsEditor()], // #1279
       ],
     );
   }

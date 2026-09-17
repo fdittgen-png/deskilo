@@ -1401,6 +1401,58 @@ class AppLocalizationsIt extends AppLocalizations {
   String get calendarEventActionRefused => 'rifiutato';
 
   @override
+  String get featureCarnetsTitle => 'Carnet';
+
+  @override
+  String get featureCarnetsDesc =>
+      'Vendere carnet di mezze giornate, consumati nell\'arco dei mesi quando un membro prenota oltre il suo abbonamento, addebitati una sola volta alla vendita.';
+
+  @override
+  String get carnetsTitle => 'Carnet';
+
+  @override
+  String get carnetsEmpty => 'Nessun carnet per ora.';
+
+  @override
+  String get carnetName => 'Nome';
+
+  @override
+  String get carnetHalfDays => 'Mezze giornate';
+
+  @override
+  String get carnetPrice => 'Prezzo';
+
+  @override
+  String get carnetValidity => 'Validità (mesi, vuoto = non scade mai)';
+
+  @override
+  String get carnetAdd => 'Aggiungi carnet';
+
+  @override
+  String carnetSummary(int halfDays, String price) {
+    return '$halfDays mezze giornate · $price';
+  }
+
+  @override
+  String carnetBalance(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mezze giornate rimaste',
+      one: '1 mezza giornata rimasta',
+      zero: 'Nessuna mezza giornata rimasta',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get carnetSell => 'Vendi un carnet';
+
+  @override
+  String get carnetSold =>
+      'Carnet venduto — addebitato una volta sulla fattura del mese.';
+
+  @override
   String get invoicePurchaseOrder => 'N. impegno';
 
   @override
