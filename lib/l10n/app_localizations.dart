@@ -15935,6 +15935,18 @@ abstract class AppLocalizations {
   /// **'View'**
   String get reserveViewMenu;
 
+  /// Reserve hub banner while availability comes from the offline cache; time is when it was saved (#1305)
+  ///
+  /// In en, this message translates to:
+  /// **'Offline — availability as of {time}. A seat shown free may have been taken since.'**
+  String reserveStaleAvailability(String time);
+
+  /// No description provided for @reserveStaleRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get reserveStaleRetry;
+
   /// Reserve hub view segment showing the selected day's per-seat timeline (#208)
   ///
   /// In en, this message translates to:

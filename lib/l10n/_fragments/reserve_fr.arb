@@ -9,6 +9,8 @@
   "bookingMoreOptions": "Plus d'options",
   "bookingOpenDetails": "Détails",
   "reserveViewMenu": "Vue",
+  "reserveStaleAvailability": "Hors ligne — disponibilités au {time}. Une place affichée libre a pu être prise depuis.",
+  "reserveStaleRetry": "Réessayer",
   "reserveDayView": "Jour",
   "reserveWeekView": "Semaine",
   "reserveFullDayChip": "Journée entière",

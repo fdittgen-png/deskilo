@@ -9,6 +9,8 @@
   "bookingMoreOptions": "Más opciones",
   "bookingOpenDetails": "Detalles",
   "reserveViewMenu": "Vista",
+  "reserveStaleAvailability": "Sin conexión — disponibilidad de las {time}. Un puesto que aparece libre puede haberse ocupado desde entonces.",
+  "reserveStaleRetry": "Reintentar",
   "reserveDayView": "Día",
   "reserveWeekView": "Semana",
   "reserveFullDayChip": "Día completo",

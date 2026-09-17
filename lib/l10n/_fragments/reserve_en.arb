@@ -44,6 +44,16 @@
   "@reserveViewMenu": {
     "description": "Name of the Reserve hub control that opens the list of views: Plan, Day, Week, Month (#1301)"
   },
+  "reserveStaleAvailability": "Offline — availability as of {time}. A seat shown free may have been taken since.",
+  "@reserveStaleAvailability": {
+    "description": "Reserve hub banner while availability comes from the offline cache; time is when it was saved (#1305)",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reserveStaleRetry": "Retry",
   "reserveDayView": "Day",
   "@reserveDayView": {
     "description": "Reserve hub view segment showing the selected day's per-seat timeline (#208)"

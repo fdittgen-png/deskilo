@@ -9075,6 +9075,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reserveViewMenu => 'View';
 
   @override
+  String reserveStaleAvailability(String time) {
+    return 'Offline — availability as of $time. A seat shown free may have been taken since.';
+  }
+
+  @override
+  String get reserveStaleRetry => 'Retry';
+
+  @override
   String get reserveDayView => 'Day';
 
   @override

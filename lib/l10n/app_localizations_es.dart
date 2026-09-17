@@ -9137,6 +9137,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reserveViewMenu => 'Vista';
 
   @override
+  String reserveStaleAvailability(String time) {
+    return 'Sin conexión — disponibilidad de las $time. Un puesto que aparece libre puede haberse ocupado desde entonces.';
+  }
+
+  @override
+  String get reserveStaleRetry => 'Reintentar';
+
+  @override
   String get reserveDayView => 'Día';
 
   @override

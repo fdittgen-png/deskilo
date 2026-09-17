@@ -9152,6 +9152,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reserveViewMenu => 'Ansicht';
 
   @override
+  String reserveStaleAvailability(String time) {
+    return 'Offline — Verfügbarkeit von $time. Ein frei angezeigter Platz kann inzwischen belegt sein.';
+  }
+
+  @override
+  String get reserveStaleRetry => 'Erneut versuchen';
+
+  @override
   String get reserveDayView => 'Tag';
 
   @override
