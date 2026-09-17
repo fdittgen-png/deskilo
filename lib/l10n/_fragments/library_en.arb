@@ -20,6 +20,14 @@
       }
     }
   },
+  "librarySearchHint": "Search templates",
+  "@librarySearchHint": {
+    "description": "Hint of the template gallery search field (name, description, tags) (#1280)"
+  },
+  "libraryCarriesSettings": "with its settings",
+  "@libraryCarriesSettings": {
+    "description": "Appended to a template card's plan counts when the template also carries configuration (hours, prices, rules) (#1280)"
+  },
   "libraryApply": "Apply to this space",
   "libraryApplyConfirmTitle": "Apply « {name} »?",
   "@libraryApplyConfirmTitle": {

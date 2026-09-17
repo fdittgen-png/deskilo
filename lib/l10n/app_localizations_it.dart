@@ -6013,6 +6013,12 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get librarySearchHint => 'Cerca modelli';
+
+  @override
+  String get libraryCarriesSettings => 'con le sue impostazioni';
+
+  @override
   String get libraryApply => 'Applica a questo spazio';
 
   @override

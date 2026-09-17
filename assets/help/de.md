@@ -571,7 +571,7 @@ Ein Mitglied antippen öffnet sein **Verwaltungsblatt** — jede Mitglieds-Aktio
 
 *Einstellungen → Raumbibliothek* (#1120), wenn die Funktion aktiv ist.
 
-**Aus der Bibliothek beginnen.** Jede Vorlage, die Sie sehen dürfen — die
+**Aus der Bibliothek beginnen.** Suchen Sie nach Name, Beschreibung oder Schlagwort und grenzen Sie mit den Schlagwort-Chips ein — beides kombiniert sich; eine Karte sagt, was die Vorlage mitbringt: ihren Plan in Zahlen, *mit ihren Einstellungen*, wenn auch Öffnungszeiten, Preise oder Regeln mitreisen (#1280). Jede Vorlage, die Sie sehen dürfen — die
 eingebaute, die öffentlichen und die mit Ihrer E-Mail-Adresse geteilten.
 *Auf diesen Raum anwenden* fügt Ebenen, Räume, Tische und Plätze **nach
 Namen** hinzu; Vorhandenes wird nie entfernt, und es wird vorher gefragt.

@@ -574,7 +574,7 @@ Touchez un membre pour sa **feuille de gestion** — chaque action par membre au
 *Réglages → Bibliothèque d'espaces* (#1120), quand la fonctionnalité est
 activée.
 
-**Partir de la bibliothèque.** Tous les modèles que vous pouvez voir : le
+**Partir de la bibliothèque.** Cherchez par nom, description ou étiquette, et affinez avec les puces d'étiquettes — les deux se combinent ; une carte dit ce que donne le modèle : son plan en chiffres, *avec ses réglages* quand horaires, prix ou règles voyagent aussi (#1280). Tous les modèles que vous pouvez voir : le
 modèle intégré, les modèles publics, et ceux que quelqu'un a partagés
 avec votre adresse e-mail. *Appliquer à cet espace* ajoute niveaux,
 bureaux, tables et places **par leur nom** ; rien de ce que vous avez

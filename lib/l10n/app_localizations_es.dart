@@ -6002,6 +6002,12 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get librarySearchHint => 'Buscar plantillas';
+
+  @override
+  String get libraryCarriesSettings => 'con sus ajustes';
+
+  @override
   String get libraryApply => 'Aplicar a este espacio';
 
   @override

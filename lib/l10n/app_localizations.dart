@@ -10409,6 +10409,18 @@ abstract class AppLocalizations {
   /// **'{levels} levels · {desks} desks · {seats} seats'**
   String libraryCounts(int levels, int desks, int seats);
 
+  /// Hint of the template gallery search field (name, description, tags) (#1280)
+  ///
+  /// In en, this message translates to:
+  /// **'Search templates'**
+  String get librarySearchHint;
+
+  /// Appended to a template card's plan counts when the template also carries configuration (hours, prices, rules) (#1280)
+  ///
+  /// In en, this message translates to:
+  /// **'with its settings'**
+  String get libraryCarriesSettings;
+
   /// No description provided for @libraryApply.
   ///
   /// In en, this message translates to:

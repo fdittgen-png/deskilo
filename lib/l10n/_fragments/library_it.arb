@@ -20,6 +20,8 @@
       }
     }
   },
+  "librarySearchHint": "Cerca modelli",
+  "libraryCarriesSettings": "con le sue impostazioni",
   "libraryApply": "Applica a questo spazio",
   "libraryApplyConfirmTitle": "Applicare « {name} »?",
   "@libraryApplyConfirmTitle": {

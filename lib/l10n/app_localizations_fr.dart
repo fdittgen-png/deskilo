@@ -6021,6 +6021,12 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get librarySearchHint => 'Rechercher un modèle';
+
+  @override
+  String get libraryCarriesSettings => 'avec ses réglages';
+
+  @override
   String get libraryApply => 'Appliquer à cet espace';
 
   @override

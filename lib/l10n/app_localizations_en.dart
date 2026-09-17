@@ -5958,6 +5958,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get librarySearchHint => 'Search templates';
+
+  @override
+  String get libraryCarriesSettings => 'with its settings';
+
+  @override
   String get libraryApply => 'Apply to this space';
 
   @override

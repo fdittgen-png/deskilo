@@ -21,6 +21,7 @@ import '../../../plan/providers/floor_plan_providers.dart';
 import '../../domain/workspace_template.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/save_template_sheet.dart';
+import '../widgets/template_gallery.dart';
 import '../widgets/template_share_sheet.dart';
 
 class WorkspaceLibraryScreen extends ConsumerWidget {
@@ -29,7 +30,6 @@ class WorkspaceLibraryScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final me = ref.watch(myMemberProvider).value;
     final all = ref.watch(workspaceTemplatesProvider).value ?? const [];
@@ -47,21 +47,18 @@ class WorkspaceLibraryScreen extends ConsumerWidget {
               label: Text(l10n?.librarySave ?? 'Save this space as a template'),
             )
           : null,
-      body: ListView(
-        // #1181 — the publish button overlays this list; it ends above it.
-        padding: const EdgeInsets.all(AppSpacing.md)
-            .add(const EdgeInsets.only(bottom: kFabSafeBottom)),
-        children: [
-          Text(l10n?.libraryStartFrom ?? 'Start from the library',
-              style: theme.textTheme.titleMedium),
-          const SizedBox(height: AppSpacing.sm),
-          if (library.isEmpty)
-            Text(l10n?.libraryEmpty ?? 'Nothing here yet.',
-                style: theme.textTheme.bodySmall),
-          for (final t in library)
-            _TemplateTile(
-              template: t,
-              trailing: canPublish && workspace != null
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md)
+            .add(const EdgeInsets.only(top: AppSpacing.md)),
+        // #1280 S1 — the shared gallery: lazy, searchable, tag-filtered.
+        child: TemplateGallery(
+          // #1181 — the publish button overlays this list; it ends above it.
+          padding: const EdgeInsets.only(bottom: kFabSafeBottom),
+          sections: [
+            TemplateGallerySection(
+              title: l10n?.libraryStartFrom ?? 'Start from the library',
+              templates: library,
+              trailingFor: (t) => canPublish && workspace != null
                   ? TextButton(
                       key: ValueKey('library-apply-${t.key}'),
                       onPressed: () => _apply(context, ref, workspace.id, t),
@@ -69,17 +66,10 @@ class WorkspaceLibraryScreen extends ConsumerWidget {
                     )
                   : null,
             ),
-          const SizedBox(height: AppSpacing.lg),
-          Text(l10n?.libraryYours ?? 'Your templates',
-              style: theme.textTheme.titleMedium),
-          const SizedBox(height: AppSpacing.sm),
-          if (mine.isEmpty)
-            Text(l10n?.libraryEmpty ?? 'Nothing here yet.',
-                style: theme.textTheme.bodySmall),
-          for (final t in mine)
-            _TemplateTile(
-              template: t,
-              trailing: canPublish
+            TemplateGallerySection(
+              title: l10n?.libraryYours ?? 'Your templates',
+              templates: mine,
+              trailingFor: (t) => canPublish
                   ? PopupMenuButton<String>(
                       key: ValueKey('library-menu-${t.key}'),
                       onSelected: (v) => _menu(context, ref, t, v),
@@ -103,8 +93,8 @@ class WorkspaceLibraryScreen extends ConsumerWidget {
                     )
                   : null,
             ),
-          const SizedBox(height: 80),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -189,39 +179,5 @@ class WorkspaceLibraryScreen extends ConsumerWidget {
           ref.invalidate(workspaceTemplatesProvider);
         }
     }
-  }
-}
-
-class _TemplateTile extends StatelessWidget {
-  const _TemplateTile({required this.template, this.trailing});
-  final WorkspaceTemplate template;
-  final Widget? trailing;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final c = template.counts;
-    final visibility = switch (template.visibility) {
-      TemplateVisibility.builtin => l10n?.libraryVisibilityBuiltin ?? 'Built in',
-      TemplateVisibility.private => l10n?.libraryVisibilityPrivate ?? 'Only me',
-      TemplateVisibility.shared => l10n?.libraryVisibilityShared ?? 'People I invite',
-      TemplateVisibility.public => l10n?.libraryVisibilityPublic ?? 'Everyone (the library)',
-      TemplateVisibility.unknown => '',
-    };
-    return Card(
-      child: ListTile(
-        key: ValueKey('library-template-${template.key}'),
-        leading: const Icon(Icons.grid_view_outlined),
-        title: Text(template.name),
-        subtitle: Text([
-          l10n?.libraryCounts(c.levels, c.desks, c.seats) ??
-              '${c.levels} levels · ${c.desks} desks · ${c.seats} seats',
-          if (template.description.isNotEmpty) template.description,
-          if (visibility.isNotEmpty) visibility,
-        ].join('\n')),
-        isThreeLine: template.description.isNotEmpty,
-        trailing: trailing,
-      ),
-    );
   }
 }

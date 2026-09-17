@@ -6013,6 +6013,12 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get librarySearchHint => 'Vorlagen durchsuchen';
+
+  @override
+  String get libraryCarriesSettings => 'mit ihren Einstellungen';
+
+  @override
   String get libraryApply => 'Auf diesen Raum anwenden';
 
   @override
