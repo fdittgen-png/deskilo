@@ -57,7 +57,7 @@ class ProcessDetails extends StatelessWidget {
     final missing = requirementChain(feature).where((f) => !raw.contains(f));
     if (missing.isEmpty) return l10n?.processStoredOn ?? 'Saved on';
     final names = missing.map((f) => featureName(l10n, f)).join(', ');
-    return l10n?.processHeldBack(names) ?? 'Held back by $names';
+    return l10n?.processMissingPrerequisites(names) ?? 'Held back by $names';
   }
 }
 
@@ -91,7 +91,7 @@ class CapabilityDetails extends StatelessWidget {
             ? l10n?.processStoredOn ?? 'Saved on'
             : l10n?.processStoredOff ?? 'Saved off'),
         if (raw.contains(feature) && missing.isNotEmpty)
-          Text(l10n?.processHeldBack(missingNames) ?? 'Held back by $missingNames'),
+          Text(l10n?.processMissingPrerequisites(missingNames) ?? 'Held back by $missingNames'),
         for (final parent in parents)
           ListTile(
             key: ValueKey('requires-${parent.dbKey}'),

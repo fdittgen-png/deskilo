@@ -3,10 +3,10 @@
   "processUsedBy": "Used by",
   "processStoredOn": "Saved on",
   "processStoredOff": "Saved off",
-  "processHeldBack": "Held back by {names}",
+  "processMissingPrerequisites": "Held back by {names}",
   "processTechnicalKey": "Technical key",
   "processAdminGrant": "When effective, this capability permits admins to issue invoices.",
-  "@processHeldBack": {
+  "@processMissingPrerequisites": {
     "placeholders": {
       "names": {
         "type": "String"

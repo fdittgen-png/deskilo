@@ -14009,11 +14009,11 @@ abstract class AppLocalizations {
   /// **'Saved off'**
   String get processStoredOff;
 
-  /// No description provided for @processHeldBack.
+  /// No description provided for @processMissingPrerequisites.
   ///
   /// In en, this message translates to:
   /// **'Held back by {names}'**
-  String processHeldBack(String names);
+  String processMissingPrerequisites(String names);
 
   /// No description provided for @processTechnicalKey.
   ///
@@ -14038,6 +14038,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unavailable'**
   String get processUnavailable;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Processes'**
+  String get featuresViewProcesses;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Switches'**
+  String get featuresViewSwitches;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Search processes and features'**
+  String get processSearchLabel;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get processFilterAll;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get processStateActive;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Partial'**
+  String get processStatePartial;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get processStateAvailable;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention'**
+  String get processStateNeedsAttention;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'{active} of {total} subprocesses active'**
+  String processSubprocessCount(int active, int total);
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'{enabled} of {total} features on'**
+  String processFeatureCount(int enabled, int total);
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 feature is on but waits for a switched-off prerequisite} other{{count} features are on but wait for a switched-off prerequisite}}'**
+  String processHeldBack(int count);
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Switching it all on also needs: {features}'**
+  String processAlsoNeeds(String features);
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get processFeatureOn;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get processFeatureOff;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'On, waiting for {feature}'**
+  String processFeatureWaiting(String feature);
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a feature to change it among the switches.'**
+  String get processSwitchHint;
+
+  /// #1327 the process-first overview of the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'No process matches this filter.'**
+  String get processFilterEmpty;
 
   /// No description provided for @processWorkspaceAccess.
   ///

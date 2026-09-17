@@ -66,6 +66,9 @@ final Map<String, ScreenPump> _screens = {
   'Invoices': (t, size) => pumpInvoices(t, size: size),
   'Validation rules': (t, size) => pumpValidationSettings(t, size: size),
   'Features': (t, size) => pumpFeatures(t, size: size),
+  // #1327 — the view the screen opens on.
+  'Process overview': (t, size) =>
+      pumpFeatures(t, size: size, switches: false),
   'Accessories': (t, size) => pumpAccessories(t, size: size),
 };
 

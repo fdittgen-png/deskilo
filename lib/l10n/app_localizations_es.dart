@@ -8055,7 +8055,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get processStoredOff => 'Guardado como inactivo';
 
   @override
-  String processHeldBack(String names) {
+  String processMissingPrerequisites(String names) {
     return 'Bloqueado por $names';
   }
 
@@ -8071,6 +8071,75 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get processUnavailable => 'No disponible';
+
+  @override
+  String get featuresViewProcesses => 'Procesos';
+
+  @override
+  String get featuresViewSwitches => 'Interruptores';
+
+  @override
+  String get processSearchLabel => 'Buscar procesos y funciones';
+
+  @override
+  String get processFilterAll => 'Todos';
+
+  @override
+  String get processStateActive => 'Activo';
+
+  @override
+  String get processStatePartial => 'Parcial';
+
+  @override
+  String get processStateAvailable => 'Disponible';
+
+  @override
+  String get processStateNeedsAttention => 'Requiere atención';
+
+  @override
+  String processSubprocessCount(int active, int total) {
+    return '$active de $total subprocesos activos';
+  }
+
+  @override
+  String processFeatureCount(int enabled, int total) {
+    return '$enabled de $total funciones activadas';
+  }
+
+  @override
+  String processHeldBack(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count funciones están activadas pero esperan un requisito desactivado',
+      one: '1 función está activada pero espera un requisito desactivado',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String processAlsoNeeds(String features) {
+    return 'Activarlo todo también necesita: $features';
+  }
+
+  @override
+  String get processFeatureOn => 'Activada';
+
+  @override
+  String get processFeatureOff => 'Desactivada';
+
+  @override
+  String processFeatureWaiting(String feature) {
+    return 'Activada, esperando $feature';
+  }
+
+  @override
+  String get processSwitchHint =>
+      'Toque una función para cambiarla entre los interruptores.';
+
+  @override
+  String get processFilterEmpty => 'Ningún proceso coincide con este filtro.';
 
   @override
   String get processWorkspaceAccess => 'Espacio y acceso';

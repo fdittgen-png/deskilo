@@ -3,7 +3,7 @@
   "processUsedBy": "Utilizado por",
   "processStoredOn": "Guardado como activo",
   "processStoredOff": "Guardado como inactivo",
-  "processHeldBack": "Bloqueado por {names}",
+  "processMissingPrerequisites": "Bloqueado por {names}",
   "processTechnicalKey": "Clave técnica",
   "processAdminGrant": "Cuando esta función es efectiva, los administradores pueden emitir facturas.",
   "processAvailable": "Disponible",

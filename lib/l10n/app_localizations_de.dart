@@ -8071,7 +8071,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get processStoredOff => 'Als inaktiv gespeichert';
 
   @override
-  String processHeldBack(String names) {
+  String processMissingPrerequisites(String names) {
     return 'Durch $names zurückgehalten';
   }
 
@@ -8087,6 +8087,76 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get processUnavailable => 'Nicht verfügbar';
+
+  @override
+  String get featuresViewProcesses => 'Prozesse';
+
+  @override
+  String get featuresViewSwitches => 'Schalter';
+
+  @override
+  String get processSearchLabel => 'Prozesse und Funktionen suchen';
+
+  @override
+  String get processFilterAll => 'Alle';
+
+  @override
+  String get processStateActive => 'Aktiv';
+
+  @override
+  String get processStatePartial => 'Teilweise';
+
+  @override
+  String get processStateAvailable => 'Verfügbar';
+
+  @override
+  String get processStateNeedsAttention => 'Handlungsbedarf';
+
+  @override
+  String processSubprocessCount(int active, int total) {
+    return '$active von $total Teilprozessen aktiv';
+  }
+
+  @override
+  String processFeatureCount(int enabled, int total) {
+    return '$enabled von $total Funktionen an';
+  }
+
+  @override
+  String processHeldBack(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count Funktionen sind an, warten aber auf eine ausgeschaltete Voraussetzung',
+      one:
+          '1 Funktion ist an, wartet aber auf eine ausgeschaltete Voraussetzung',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String processAlsoNeeds(String features) {
+    return 'Alles einzuschalten braucht auch: $features';
+  }
+
+  @override
+  String get processFeatureOn => 'An';
+
+  @override
+  String get processFeatureOff => 'Aus';
+
+  @override
+  String processFeatureWaiting(String feature) {
+    return 'An, wartet auf $feature';
+  }
+
+  @override
+  String get processSwitchHint =>
+      'Tippen Sie auf eine Funktion, um sie bei den Schaltern zu ändern.';
+
+  @override
+  String get processFilterEmpty => 'Kein Prozess passt zu diesem Filter.';
 
   @override
   String get processWorkspaceAccess => 'Arbeitsbereich und Zugang';

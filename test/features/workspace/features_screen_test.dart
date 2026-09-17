@@ -37,6 +37,10 @@ Future<FakeWorkspaceRepository> pumpFeatures(
   // 2026-09-16 — 103 manifest features (#1274) outgrow 17000 px, and a
   // lazy list simply stops building the tail.
   Size size = const Size(800, 18000),
+  // #1327 — the screen opens on the process overview. Every caller of
+  // this helper pins the switches, so it opens that view unless asked
+  // not to.
+  bool switches = true,
 }) async {
   // Ten manifest features no longer fit the default 800×600 surface and
   // the lazy list drops off-screen tiles; keep every switch mounted.
@@ -60,6 +64,10 @@ Future<FakeWorkspaceRepository> pumpFeatures(
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.toggle_on_outlined));
   await tester.pumpAndSettle();
+  if (switches) {
+    await tester.tap(find.byKey(const ValueKey('features-view-switches')));
+    await tester.pumpAndSettle();
+  }
   return workspace;
 }
 

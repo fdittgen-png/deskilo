@@ -268,6 +268,18 @@ is written to `platform_access_log`, readable by that workspace's owners.
 An owner must always have an e-mail address (`user_has_email`, enforced at
 `create_workspace` and `activate_co_owner`). Do not "fix" the missing flag.
 
+## The Features screen's process overview has no feature flag (#1327)
+
+The third exception. The overview is a second presentation of the
+registry itself, on the one screen where flags are managed: it reads the
+stored feature map and writes nothing, so there is no functionality for
+a flag to remove. A flag here would also be a switch that hides the way
+flags are shown — turned off, it changes nothing a member can do and
+only moves the owner's own settings screen. The switches stay one tap
+away on the same screen, and every write still goes through
+`featureFlagsToggleDelta`. When process activation writes flags (#1329),
+that write is a functionality and follows the normal rule.
+
 ## Validation domains grow in FOUR places (#767/#769)
 
 A new server-side validation domain (`events_type_check` +

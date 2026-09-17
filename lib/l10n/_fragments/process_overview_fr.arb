@@ -1,0 +1,19 @@
+{
+  "featuresViewProcesses": "Processus",
+  "featuresViewSwitches": "Interrupteurs",
+  "processSearchLabel": "Rechercher processus et fonctionnalités",
+  "processFilterAll": "Tous",
+  "processStateActive": "Actif",
+  "processStatePartial": "Partiel",
+  "processStateAvailable": "Disponible",
+  "processStateNeedsAttention": "À vérifier",
+  "processSubprocessCount": "{active} sous-processus actifs sur {total}",
+  "processFeatureCount": "{enabled} fonctionnalités actives sur {total}",
+  "processHeldBack": "{count, plural, =1{1 fonctionnalité est activée mais attend un prérequis désactivé} other{{count} fonctionnalités sont activées mais attendent un prérequis désactivé}}",
+  "processAlsoNeeds": "Tout activer nécessite aussi : {features}",
+  "processFeatureOn": "Activée",
+  "processFeatureOff": "Désactivée",
+  "processFeatureWaiting": "Activée, en attente de {feature}",
+  "processSwitchHint": "Touchez une fonctionnalité pour la modifier parmi les interrupteurs.",
+  "processFilterEmpty": "Aucun processus ne correspond à ce filtre."
+}
