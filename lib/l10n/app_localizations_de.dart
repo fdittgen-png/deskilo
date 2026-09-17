@@ -8670,6 +8670,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das ändert nur dieses Gerät und berührt Ihr Supabase-Projekt nie.';
 
   @override
+  String get backendFullCheckTitle => 'Vollständige Prüfung starten';
+
+  @override
+  String get backendFullCheckHint =>
+      'Fügen Sie für diese Prüfung ein persönliches Zugriffstoken ein. Es dient nur dieser Prüfung und wird nie gespeichert.';
+
+  @override
+  String get backendFullCheckUseToken => 'Dieses Token verwenden';
+
+  @override
   String get backendServerSaved =>
       'Gespeichert. Schließe die App und öffne sie erneut, um den neuen Server zu nutzen.';
 

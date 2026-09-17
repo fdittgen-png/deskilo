@@ -8677,6 +8677,16 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cela ne change que cet appareil et ne touche jamais à votre projet Supabase.';
 
   @override
+  String get backendFullCheckTitle => 'Lancer un contrôle complet';
+
+  @override
+  String get backendFullCheckHint =>
+      'Collez un jeton d\'accès personnel pour ce contrôle. Il ne sert qu\'à ce contrôle et n\'est jamais enregistré.';
+
+  @override
+  String get backendFullCheckUseToken => 'Utiliser ce jeton';
+
+  @override
   String get backendServerSaved =>
       'Enregistré. Fermez puis rouvrez l\'app pour utiliser le nouveau serveur.';
 
