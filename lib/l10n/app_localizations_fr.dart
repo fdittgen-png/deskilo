@@ -3757,6 +3757,53 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commonCopy => 'Copier';
 
   @override
+  String get instanceReadyInstall => 'Le projet est vide : tout sera installé.';
+
+  @override
+  String instanceReadyResume(int pending) {
+    return 'Une installation DesKilo s\'est arrêtée en cours de route : il reste $pending migrations, et seules celles-ci seront exécutées.';
+  }
+
+  @override
+  String instanceReadyUpgrade(int version, int pending) {
+    return 'La version $version de DesKilo est installée : seules les $pending migrations manquantes seront exécutées.';
+  }
+
+  @override
+  String instanceReadyCurrent(int version) {
+    return 'La version $version de DesKilo est installée et à jour : le schéma n\'a besoin de rien.';
+  }
+
+  @override
+  String get instanceReadyAttention =>
+      'Ce projet demande votre attention — rien n\'a été installé.';
+
+  @override
+  String get instanceAttentionNotHealthy =>
+      'Supabase ne signale pas le projet comme opérationnel. Attendez qu\'il le soit, ou restaurez-le dans le tableau de bord.';
+
+  @override
+  String instanceAttentionPostgres(int found, int supported) {
+    return 'Il tourne sous Postgres $found ; DesKilo est conçu pour Postgres $supported.';
+  }
+
+  @override
+  String instanceAttentionForeign(String tables) {
+    return 'Son schéma public contient des tables que DesKilo ne crée pas ($tables). L\'installation y est refusée ; utilisez un projet vide.';
+  }
+
+  @override
+  String get instanceAttentionUnrecorded =>
+      'Les tables DesKilo sont là, mais aucune migration n\'a été enregistrée. Enregistrez d\'abord ce qu\'il contient avec `dart run tool/instance.dart record`.';
+
+  @override
+  String get instanceAttentionOtherTooling =>
+      'Ses migrations ont été enregistrées par un autre outil : on ne peut pas savoir où DesKilo reprendrait. Utilisez un projet vide.';
+
+  @override
+  String get instanceChooseAnother => 'Choisir un autre projet';
+
+  @override
   String get inviteSectionTitle => 'Inviter quelqu\'un';
 
   @override
@@ -6312,6 +6359,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get onboardingCreateWithoutTemplate => 'Créer sans modèle';
 
   @override
+  String onboardingTemplateSetsUp(String groups) {
+    return 'Configure : $groups';
+  }
+
+  @override
   String get onboardingStartFrom => 'Partir de';
 
   @override
@@ -8505,6 +8557,56 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get backendServerReset => 'Utiliser le serveur de l\'app';
+
+  @override
+  String get backendOwnServer => 'Votre propre serveur';
+
+  @override
+  String backendProjectRef(String ref) {
+    return 'Votre projet Supabase $ref';
+  }
+
+  @override
+  String get backendOwnership =>
+      'Il appartient à votre organisation Supabase. DesKilo n\'y garde aucun accès.';
+
+  @override
+  String get backendOwnershipOther =>
+      'Il appartient à qui l\'exploite. DesKilo n\'y garde aucun accès.';
+
+  @override
+  String get backendOpenDashboard => 'Ouvrir dans Supabase';
+
+  @override
+  String backendVersionCurrent(int version) {
+    return 'À jour (schéma $version)';
+  }
+
+  @override
+  String backendVersionBehind(int version) {
+    return 'Mise à jour nécessaire : cette app a besoin du schéma $version';
+  }
+
+  @override
+  String get backendVersionBehindHow =>
+      'Son propriétaire le met à jour avec l\'assistant d\'installation ou `dart run tool/instance.dart install`, qui n\'applique que ce qui manque.';
+
+  @override
+  String get backendVersionAhead =>
+      'Le serveur est plus récent que cette app — mettez l\'app à jour dès que possible';
+
+  @override
+  String get backendVersionUnknown =>
+      'La version n\'a pas pu être vérifiée pour le moment';
+
+  @override
+  String backendLastOk(String time) {
+    return 'Dernier test réussi : $time';
+  }
+
+  @override
+  String get backendResetDeviceOnly =>
+      'Cela ne change que cet appareil et ne touche jamais à votre projet Supabase.';
 
   @override
   String get backendServerSaved =>

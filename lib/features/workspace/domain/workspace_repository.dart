@@ -17,6 +17,7 @@ import '../../profile/domain/personal_info.dart';
 import 'managed_access.dart';
 import 'workspace_overview.dart';
 import 'site.dart';
+import 'template_outline.dart';
 import 'template_preview.dart';
 import 'template_publication.dart';
 import 'workspace_template.dart';
@@ -663,6 +664,9 @@ abstract class WorkspaceRepository {
   /// #1280 — per group, what applying [templateId] here would change.
   Future<TemplatePreview> previewWorkspaceTemplate(
       String workspaceId, String templateId, {List<String>? groups});
+
+  /// #1303 — what [templateId] sets up, asked before any workspace exists.
+  Future<TemplateOutline> workspaceTemplateOutline(String templateId);
 
   /// Snapshots [workspaceId] through `template_publication_rules` (#1276);
   /// the same key again updates in place and bumps the version.

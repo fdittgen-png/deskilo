@@ -3866,6 +3866,81 @@
   "@commonCopy": {
     "description": "#977 instance wizard: commonCopy"
   },
+  "instanceReadyInstall": "The project is empty: everything will be installed.",
+  "@instanceReadyInstall": {
+    "description": "#1308 instance readiness"
+  },
+  "instanceReadyResume": "A DesKilo install stopped part-way: {pending} migrations remain and only those will run.",
+  "@instanceReadyResume": {
+    "description": "#1308 instance readiness",
+    "placeholders": {
+      "pending": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceReadyUpgrade": "DesKilo version {version} is installed: only the {pending} missing migrations will run.",
+  "@instanceReadyUpgrade": {
+    "description": "#1308 instance readiness",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      },
+      "pending": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceReadyCurrent": "DesKilo version {version} is installed and current: the schema needs nothing.",
+  "@instanceReadyCurrent": {
+    "description": "#1308 instance readiness",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceReadyAttention": "This project needs attention — nothing was installed.",
+  "@instanceReadyAttention": {
+    "description": "#1308 instance readiness"
+  },
+  "instanceAttentionNotHealthy": "Supabase does not report the project as healthy. Wait until it is, or restore it in the dashboard.",
+  "@instanceAttentionNotHealthy": {
+    "description": "#1308 instance readiness"
+  },
+  "instanceAttentionPostgres": "It runs Postgres {found}; DesKilo is built for Postgres {supported}.",
+  "@instanceAttentionPostgres": {
+    "description": "#1308 instance readiness",
+    "placeholders": {
+      "found": {
+        "type": "int"
+      },
+      "supported": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceAttentionForeign": "Its public schema holds tables DesKilo does not create ({tables}). Installing there is refused; use an empty project.",
+  "@instanceAttentionForeign": {
+    "description": "#1308 instance readiness",
+    "placeholders": {
+      "tables": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceAttentionUnrecorded": "DesKilo tables are there but no migration was recorded. Record what it has with `dart run tool/instance.dart record` first.",
+  "@instanceAttentionUnrecorded": {
+    "description": "#1308 instance readiness"
+  },
+  "instanceAttentionOtherTooling": "Its migrations were recorded by other tooling, so where DesKilo would resume cannot be read. Use an empty project.",
+  "@instanceAttentionOtherTooling": {
+    "description": "#1308 instance readiness"
+  },
+  "instanceChooseAnother": "Choose another project",
+  "@instanceChooseAnother": {
+    "description": "#1308 instance readiness"
+  },
   "inviteSectionTitle": "Invite someone",
   "inviteViaWhatsapp": "WhatsApp",
   "inviteViaSms": "SMS",
@@ -6518,6 +6593,15 @@
   "@onboardingCreateWithoutTemplate": {
     "description": "#1303 staged onboarding: onboardingCreateWithoutTemplate"
   },
+  "onboardingTemplateSetsUp": "Sets up: {groups}",
+  "@onboardingTemplateSetsUp": {
+    "description": "#1303 S3 onboarding confirm: the groups a template configures",
+    "placeholders": {
+      "groups": {
+        "type": "String"
+      }
+    }
+  },
   "onboardingStartFrom": "Start from",
   "onboardingStartEmpty": "Empty space",
   "onboardingStartEmptyDesc": "Draw your own plan from a blank canvas.",
@@ -8704,6 +8788,50 @@
   "backendKeyLabel": "Publishable key",
   "backendServerRestartHint": "The app signs you out and applies the change on the next start.",
   "backendServerReset": "Use the app's server",
+  "backendOwnServer": "Your own server",
+  "backendProjectRef": "Your Supabase project {ref}",
+  "@backendProjectRef": {
+    "description": "#1309 Server screen",
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "backendOwnership": "Your Supabase organization owns it. DesKilo keeps no access to it.",
+  "backendOwnershipOther": "Whoever runs this server owns it. DesKilo keeps no access to it.",
+  "backendOpenDashboard": "Open in Supabase",
+  "backendVersionCurrent": "Up to date (schema {version})",
+  "@backendVersionCurrent": {
+    "description": "#1309 Server screen",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "backendVersionBehind": "Needs an update: this app needs schema {version}",
+  "@backendVersionBehind": {
+    "description": "#1309 Server screen",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "backendVersionBehindHow": "Its owner updates it with the setup wizard or `dart run tool/instance.dart install`, which applies only what is missing.",
+  "backendVersionAhead": "The server is newer than this app — update the app when you can",
+  "backendVersionUnknown": "The version could not be checked right now",
+  "backendLastOk": "Last successful test: {time}",
+  "@backendLastOk": {
+    "description": "#1309 Server screen",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "backendResetDeviceOnly": "This changes this device only and never touches your Supabase project.",
   "backendServerSaved": "Saved. Close and reopen the app to use the new server.",
   "backendErrorUrlEmpty": "Enter the project URL.",
   "backendErrorUrlNotHttps": "The URL must start with https://.",

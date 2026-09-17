@@ -211,8 +211,8 @@ const Map<String, int> _baseline = {
   'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 1115, // 2026-09-11 #1061 1160→1101: the live-data switch moved to template_live_data.dart // 1180→1160 (2026-09-10): #1056 the app bar's undo/redo pair left for report_history_controls.dart
   'lib/features/money/presentation/widgets/report_field_picker.dart': 353, // 2026-09-06 #966 meanings + topic groups // 2026-09-02 #822 the page, undo/redo, guards // 2026-09-04 #875 layout drafts per kind, the panel mount and its three handlers — the panel and the actions themselves live in their own files // 2026-09-05 #880 the owner-texts drafts per language, merged into every preview/export, and the Texts panel mount
   'lib/features/workspace/domain/workspace_xml.dart': 943,
-  'lib/features/profile/presentation/screens/new_instance_screen.dart': 495, // 2026-09-06 #977 six wizard steps // 2026-09-16 #1393 480→495: the wizard's help symbol — an instance and its bundle are explained in the guide, not on screen
-  'lib/features/profile/presentation/screens/backend_screen.dart': 381, // 2026-09-06 #977 the wizard button // 2026-09-06 #916 schema v3: plan attributes + the configuration section
+  'lib/features/profile/presentation/screens/new_instance_screen.dart': 486, // 2026-09-17 #1308 495→486: the readiness verdict and the run step left for widgets/instance_readiness_card.dart and widgets/instance_run_step.dart; // 2026-09-06 #977 six wizard steps // 2026-09-16 #1393 480→495: the wizard's help symbol — an instance and its bundle are explained in the guide, not on screen
+  'lib/features/profile/presentation/screens/backend_screen.dart': 374, // 2026-09-17 #1309 381→374: the instance facts and the reset action left for widgets/server_facts_card.dart; // 2026-09-06 #977 the wizard button // 2026-09-06 #916 schema v3: plan attributes + the configuration section
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.
   // 780→810 (2026-09-01): #814 closed columns.
@@ -363,7 +363,7 @@ const Map<String, int> _baseline = {
   // grows by a method per capability; there is nothing here to extract.
   // 654→671 (2026-09-16): #1277 S2 — the two lexicon contracts. An interface grows by a
   // method per capability; there is nothing here to extract.
-  'lib/features/workspace/domain/workspace_repository.dart': 692, // 2026-09-17 #1280 S3 686→692: templatePublicationPreview and save's groups — interface only; // 2026-09-17 #1280 S2 681→686: previewWorkspaceTemplate — one interface method (the server computes the change-set), no logic to extract; // 2026-09-16 #1303 671→681: the request id and template parameters, documented; // 2026-09-11 #1120 the library surface of the interface, documented per method (was the 600 default)
+  'lib/features/workspace/domain/workspace_repository.dart': 696, // 2026-09-17 #1303 S3 692→696: workspaceTemplateOutline — one interface method, what a template sets up before a workspace exists; // 2026-09-17 #1280 S3 686→692: templatePublicationPreview and save's groups — interface only; // 2026-09-17 #1280 S2 681→686: previewWorkspaceTemplate — one interface method (the server computes the change-set), no logic to extract; // 2026-09-16 #1303 671→681: the request id and template parameters, documented; // 2026-09-11 #1120 the library surface of the interface, documented per method (was the 600 default)
   // 600→660 (2026-08-23): #600 the Booking policies section — three
   // switches + one write handler on the existing availability screen.
   // 660→730 (2026-08-25): #624 the outside-hours segmented control +

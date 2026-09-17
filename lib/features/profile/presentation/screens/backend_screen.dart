@@ -10,12 +10,14 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
 import '../widgets/backend_how_to.dart';
+import '../widgets/server_facts_card.dart';
 
 /// #780 — Settings → Server: which Supabase instance this device talks
 /// to, configured entirely in the UI.
@@ -39,6 +41,7 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
   bool _prefilled = false;
   bool _testing = false;
   BackendProbeResult? _result;
+  DateTime? _lastOk;
 
   @override
   void dispose() {
@@ -97,6 +100,14 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
                     ),
             ),
           ),
+          if (endpoint != null) ...[
+            const SizedBox(height: AppSpacing.sm),
+            ServerFactsCard(
+              endpoint: endpoint,
+              isDefault: isDefault,
+              lastSuccessfulTest: _lastOk,
+            ),
+          ],
           const SizedBox(height: AppSpacing.sm),
           BackendHowTo(topic: topic),
           const SizedBox(height: AppSpacing.sm),
@@ -177,12 +188,7 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
           ),
           if (!isDefault) ...[
             const SizedBox(height: AppSpacing.sm),
-            TextButton(
-              key: const ValueKey('backend-reset'),
-              onPressed: () => _apply(null),
-              child: Text(
-                  l10n?.backendServerReset ?? "Use the app's server"),
-            ),
+            ServerResetAction(onReset: () => _apply(null)),
           ],
         ],
       ),
@@ -328,6 +334,7 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
     setState(() {
       _testing = false;
       _result = result;
+      if (result == BackendProbeResult.ok) _lastOk = ref.read(clockProvider).now();
     });
   }
 

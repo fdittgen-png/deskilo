@@ -3721,6 +3721,54 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonCopy => 'Copy';
 
   @override
+  String get instanceReadyInstall =>
+      'The project is empty: everything will be installed.';
+
+  @override
+  String instanceReadyResume(int pending) {
+    return 'A DesKilo install stopped part-way: $pending migrations remain and only those will run.';
+  }
+
+  @override
+  String instanceReadyUpgrade(int version, int pending) {
+    return 'DesKilo version $version is installed: only the $pending missing migrations will run.';
+  }
+
+  @override
+  String instanceReadyCurrent(int version) {
+    return 'DesKilo version $version is installed and current: the schema needs nothing.';
+  }
+
+  @override
+  String get instanceReadyAttention =>
+      'This project needs attention — nothing was installed.';
+
+  @override
+  String get instanceAttentionNotHealthy =>
+      'Supabase does not report the project as healthy. Wait until it is, or restore it in the dashboard.';
+
+  @override
+  String instanceAttentionPostgres(int found, int supported) {
+    return 'It runs Postgres $found; DesKilo is built for Postgres $supported.';
+  }
+
+  @override
+  String instanceAttentionForeign(String tables) {
+    return 'Its public schema holds tables DesKilo does not create ($tables). Installing there is refused; use an empty project.';
+  }
+
+  @override
+  String get instanceAttentionUnrecorded =>
+      'DesKilo tables are there but no migration was recorded. Record what it has with `dart run tool/instance.dart record` first.';
+
+  @override
+  String get instanceAttentionOtherTooling =>
+      'Its migrations were recorded by other tooling, so where DesKilo would resume cannot be read. Use an empty project.';
+
+  @override
+  String get instanceChooseAnother => 'Choose another project';
+
+  @override
   String get inviteSectionTitle => 'Invite someone';
 
   @override
@@ -6247,6 +6295,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingCreateWithoutTemplate => 'Create without a template';
 
   @override
+  String onboardingTemplateSetsUp(String groups) {
+    return 'Sets up: $groups';
+  }
+
+  @override
   String get onboardingStartFrom => 'Start from';
 
   @override
@@ -8426,6 +8479,56 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get backendServerReset => 'Use the app\'s server';
+
+  @override
+  String get backendOwnServer => 'Your own server';
+
+  @override
+  String backendProjectRef(String ref) {
+    return 'Your Supabase project $ref';
+  }
+
+  @override
+  String get backendOwnership =>
+      'Your Supabase organization owns it. DesKilo keeps no access to it.';
+
+  @override
+  String get backendOwnershipOther =>
+      'Whoever runs this server owns it. DesKilo keeps no access to it.';
+
+  @override
+  String get backendOpenDashboard => 'Open in Supabase';
+
+  @override
+  String backendVersionCurrent(int version) {
+    return 'Up to date (schema $version)';
+  }
+
+  @override
+  String backendVersionBehind(int version) {
+    return 'Needs an update: this app needs schema $version';
+  }
+
+  @override
+  String get backendVersionBehindHow =>
+      'Its owner updates it with the setup wizard or `dart run tool/instance.dart install`, which applies only what is missing.';
+
+  @override
+  String get backendVersionAhead =>
+      'The server is newer than this app — update the app when you can';
+
+  @override
+  String get backendVersionUnknown =>
+      'The version could not be checked right now';
+
+  @override
+  String backendLastOk(String time) {
+    return 'Last successful test: $time';
+  }
+
+  @override
+  String get backendResetDeviceOnly =>
+      'This changes this device only and never touches your Supabase project.';
 
   @override
   String get backendServerSaved =>

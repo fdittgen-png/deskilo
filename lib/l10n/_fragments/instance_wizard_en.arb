@@ -174,5 +174,80 @@
   "commonCopy": "Copy",
   "@commonCopy": {
     "description": "#977 instance wizard: commonCopy"
+  },
+  "instanceReadyInstall": "The project is empty: everything will be installed.",
+  "@instanceReadyInstall": {
+    "description": "#1308 instance readiness"
+  },
+  "instanceReadyResume": "A DesKilo install stopped part-way: {pending} migrations remain and only those will run.",
+  "@instanceReadyResume": {
+    "description": "#1308 instance readiness",
+    "placeholders": {
+      "pending": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceReadyUpgrade": "DesKilo version {version} is installed: only the {pending} missing migrations will run.",
+  "@instanceReadyUpgrade": {
+    "description": "#1308 instance readiness",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      },
+      "pending": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceReadyCurrent": "DesKilo version {version} is installed and current: the schema needs nothing.",
+  "@instanceReadyCurrent": {
+    "description": "#1308 instance readiness",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceReadyAttention": "This project needs attention — nothing was installed.",
+  "@instanceReadyAttention": {
+    "description": "#1308 instance readiness"
+  },
+  "instanceAttentionNotHealthy": "Supabase does not report the project as healthy. Wait until it is, or restore it in the dashboard.",
+  "@instanceAttentionNotHealthy": {
+    "description": "#1308 instance readiness"
+  },
+  "instanceAttentionPostgres": "It runs Postgres {found}; DesKilo is built for Postgres {supported}.",
+  "@instanceAttentionPostgres": {
+    "description": "#1308 instance readiness",
+    "placeholders": {
+      "found": {
+        "type": "int"
+      },
+      "supported": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceAttentionForeign": "Its public schema holds tables DesKilo does not create ({tables}). Installing there is refused; use an empty project.",
+  "@instanceAttentionForeign": {
+    "description": "#1308 instance readiness",
+    "placeholders": {
+      "tables": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceAttentionUnrecorded": "DesKilo tables are there but no migration was recorded. Record what it has with `dart run tool/instance.dart record` first.",
+  "@instanceAttentionUnrecorded": {
+    "description": "#1308 instance readiness"
+  },
+  "instanceAttentionOtherTooling": "Its migrations were recorded by other tooling, so where DesKilo would resume cannot be read. Use an empty project.",
+  "@instanceAttentionOtherTooling": {
+    "description": "#1308 instance readiness"
+  },
+  "instanceChooseAnother": "Choose another project",
+  "@instanceChooseAnother": {
+    "description": "#1308 instance readiness"
   }
 }

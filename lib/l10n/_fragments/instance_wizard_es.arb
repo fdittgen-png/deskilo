@@ -174,5 +174,16 @@
   "commonCopy": "Copiar",
   "@commonCopy": {
     "description": "#977 instance wizard: commonCopy"
-  }
+  },
+  "instanceReadyInstall": "El proyecto está vacío: se instalará todo.",
+  "instanceReadyResume": "Una instalación de DesKilo se detuvo a medias: quedan {pending} migraciones y solo se ejecutarán esas.",
+  "instanceReadyUpgrade": "La versión {version} de DesKilo está instalada: solo se ejecutarán las {pending} migraciones que faltan.",
+  "instanceReadyCurrent": "La versión {version} de DesKilo está instalada y al día: el esquema no necesita nada.",
+  "instanceReadyAttention": "Este proyecto requiere atención: no se instaló nada.",
+  "instanceAttentionNotHealthy": "Supabase no indica que el proyecto esté operativo. Espere a que lo esté o restáurelo en el panel.",
+  "instanceAttentionPostgres": "Usa Postgres {found}; DesKilo está hecho para Postgres {supported}.",
+  "instanceAttentionForeign": "Su esquema public contiene tablas que DesKilo no crea ({tables}). Se rechaza instalar ahí; use un proyecto vacío.",
+  "instanceAttentionUnrecorded": "Las tablas de DesKilo están, pero no se registró ninguna migración. Registre primero lo que tiene con `dart run tool/instance.dart record`.",
+  "instanceAttentionOtherTooling": "Sus migraciones las registró otra herramienta, así que no se puede saber dónde continuaría DesKilo. Use un proyecto vacío.",
+  "instanceChooseAnother": "Elegir otro proyecto"
 }
