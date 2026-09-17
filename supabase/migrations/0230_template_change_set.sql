@@ -66,12 +66,36 @@
 -- the target is unchanged.
 
 -- ── the writer: merge that never collides ──────────────────────────────
+-- Anchors go through the same whitespace-tolerant replace as 0227: the
+-- hosted body and the body a replay builds from the files wrap lines
+-- differently. The exact text matches first on the hosted project.
+create or replace function pg_temp.anchor_replace(p_def text, p_old text, p_new text)
+returns text
+language plpgsql
+as $f$
+declare
+  v_pattern text;
+  v_out text;
+begin
+  if position(p_old in p_def) > 0 then
+    return replace(p_def, p_old, p_new);
+  end if;
+  v_pattern := regexp_replace(btrim(p_old, E' \t\n'), '([.^$*+?()\[\]{}|\\])', '\\\1', 'g');
+  v_pattern := regexp_replace(v_pattern, '\s+', '\\s*', 'g');
+  v_out := regexp_replace(p_def, v_pattern, replace(btrim(p_new, E' \t\n'), '\', '\\'), 'g');
+  return case when v_out = p_def then null else v_out end;
+end
+$f$;
+
+revoke execute on function pg_temp.anchor_replace(text, text, text) from public;
+
 do $migration$
 declare
   v_def text;
-  v_before text;
-  v_anchor text;
+  v_next text;
+  v_missing text[] := '{}';
   v_count int;
+  v_step record;
 begin
   select pg_get_functiondef(p.oid) into v_def
     from pg_proc p join pg_namespace n on n.oid = p.pronamespace
@@ -81,62 +105,60 @@ begin
     raise exception '0230: import_workspace_configuration(uuid, jsonb, text) not found';
   end if;
 
-  -- An unknown mode used to behave as a half-merge.
-  v_anchor := 'if p_configuration is null or jsonb_typeof(p_configuration) <> ''object'' then';
-  if position(v_anchor in v_def) = 0 then raise exception '0230: mode guard anchor missing'; end if;
-  v_def := replace(v_def, v_anchor,
-    'if p_mode not in (''mirror'', ''merge'') then raise exception ''unknown import mode %'', p_mode; end if;' || E'\n  ' || v_anchor);
+  for v_step in
+    select * from (values
+      -- An unknown mode used to behave as a half-merge.
+      (1, 'mode guard',
+       $a$if p_configuration is null or jsonb_typeof(p_configuration) <> 'object' then$a$,
+       $a$if p_mode not in ('mirror', 'merge') then raise exception 'unknown import mode %', p_mode; end if;
+  if p_configuration is null or jsonb_typeof(p_configuration) <> 'object' then$a$),
+      -- Fee bands: a schedule is replaced whole unless the snapshot has none.
+      (2, 'fee bands',
+       $a$if p_mode = 'mirror' then delete from public.fee_bands where workspace_id = p_workspace_id; end if;$a$,
+       $a$if p_mode = 'mirror' or jsonb_array_length(v_t->'fee_bands') > 0 then delete from public.fee_bands where workspace_id = p_workspace_id; end if;$a$),
+      -- Closure days: additive. In mirror the table was just emptied.
+      (3, 'closure days',
+       $a$from jsonb_array_elements(v_t->'closure_days') e;$a$,
+       $a$from jsonb_array_elements(v_t->'closure_days') e
+    on conflict (workspace_id, day) do nothing;$a$),
+      -- Validation policies: keyed by event type.
+      (4, 'validation policies',
+       $a$from jsonb_array_elements(v_t->'validation_policies') e;$a$,
+       $a$from jsonb_array_elements(v_t->'validation_policies') e
+    on conflict on constraint validation_policies_workspace_id_event_type_key do update set required_count = excluded.required_count, admins_may_validate = excluded.admins_may_validate, owner_required = excluded.owner_required, auto_validate_admin = excluded.auto_validate_admin, auto_validate_owner = excluded.auto_validate_owner, validator_scope = excluded.validator_scope, owner_may_self_validate = excluded.owner_may_self_validate, sequential = excluded.sequential;$a$),
+      -- Documents: additive by title and address.
+      (5, 'documents',
+       $a$from jsonb_array_elements(v_t->'workspace_documents') e;$a$,
+       $a$from jsonb_array_elements(v_t->'workspace_documents') e
+     where p_mode = 'mirror' or not exists (select 1 from public.workspace_documents d where d.workspace_id = p_workspace_id and d.title = e.value->>'title' and d.url = e.value->>'url');$a$),
+      -- VAT rates: the target keeps the default it has.
+      (6, 'VAT insert',
+       $a$coalesce((v_row->>'is_default')::boolean, false), coalesce((v_row->>'active')::boolean, true),$a$,
+       $a$case when p_mode = 'merge' and exists (select 1 from public.vat_rates d where d.workspace_id = p_workspace_id and d.is_default) then false else coalesce((v_row->>'is_default')::boolean, false) end, coalesce((v_row->>'active')::boolean, true),$a$),
+      (7, 'VAT update',
+       $a$is_default = coalesce((v_row->>'is_default')::boolean, false),
+               active = coalesce((v_row->>'active')::boolean, true),$a$,
+       $a$is_default = case when p_mode = 'merge' then is_default or (coalesce((v_row->>'is_default')::boolean, false) and not exists (select 1 from public.vat_rates d where d.workspace_id = p_workspace_id and d.is_default and d.id <> v_id)) else coalesce((v_row->>'is_default')::boolean, false) end,
+               active = coalesce((v_row->>'active')::boolean, true),$a$)
+    ) as t(ord, name, old_text, new_text)
+    order by ord
+  loop
+    v_next := pg_temp.anchor_replace(v_def, v_step.old_text, v_step.new_text);
+    if v_next is null then
+      v_missing := v_missing || v_step.name::text;
+    else
+      v_def := v_next;
+    end if;
+  end loop;
+  if cardinality(v_missing) > 0 then
+    raise exception '0230: anchors did not match: %', array_to_string(v_missing, ', ');
+  end if;
 
-  -- Fee bands: a schedule is replaced whole, in both modes, unless the
-  -- snapshot carries none.
-  v_anchor := 'if p_mode = ''mirror'' then delete from public.fee_bands where workspace_id = p_workspace_id; end if;';
-  if position(v_anchor in v_def) = 0 then raise exception '0230: fee band anchor missing'; end if;
-  v_def := replace(v_def, v_anchor,
-    'if p_mode = ''mirror'' or jsonb_array_length(v_t->''fee_bands'') > 0 then delete from public.fee_bands where workspace_id = p_workspace_id; end if;');
-
-  -- Closure days: additive. In mirror the table was just emptied.
-  v_anchor := 'from jsonb_array_elements(v_t->''closure_days'') e;';
-  select count(*) into v_count from regexp_matches(v_def, 'from jsonb_array_elements\(v_t->''closure_days''\) e;', 'g');
-  if v_count <> 1 then raise exception '0230: closure day anchor matched % times', v_count; end if;
-  v_def := replace(v_def, v_anchor,
-    'from jsonb_array_elements(v_t->''closure_days'') e' || E'\n    ' || 'on conflict (workspace_id, day) do nothing;');
-
-  -- Validation policies: keyed by event type.
-  v_anchor := 'from jsonb_array_elements(v_t->''validation_policies'') e;';
-  select count(*) into v_count from regexp_matches(v_def, 'from jsonb_array_elements\(v_t->''validation_policies''\) e;', 'g');
-  if v_count <> 1 then raise exception '0230: validation policy anchor matched % times', v_count; end if;
-  v_def := replace(v_def, v_anchor,
-    'from jsonb_array_elements(v_t->''validation_policies'') e' || E'\n    ' ||
-    'on conflict on constraint validation_policies_workspace_id_event_type_key do update set ' ||
-    'required_count = excluded.required_count, admins_may_validate = excluded.admins_may_validate, ' ||
-    'owner_required = excluded.owner_required, auto_validate_admin = excluded.auto_validate_admin, ' ||
-    'auto_validate_owner = excluded.auto_validate_owner, validator_scope = excluded.validator_scope, ' ||
-    'owner_may_self_validate = excluded.owner_may_self_validate, sequential = excluded.sequential;');
-
-  -- Documents: additive by title and address.
-  v_anchor := 'from jsonb_array_elements(v_t->''workspace_documents'') e;';
-  select count(*) into v_count from regexp_matches(v_def, 'from jsonb_array_elements\(v_t->''workspace_documents''\) e;', 'g');
-  if v_count <> 1 then raise exception '0230: document anchor matched % times', v_count; end if;
-  v_def := replace(v_def, v_anchor,
-    'from jsonb_array_elements(v_t->''workspace_documents'') e' || E'\n     ' ||
-    'where p_mode = ''mirror'' or not exists (select 1 from public.workspace_documents d where d.workspace_id = p_workspace_id and d.title = e.value->>''title'' and d.url = e.value->>''url'');');
-
-  -- VAT rates: the target keeps the default it has.
-  v_anchor := 'coalesce((v_row->>''is_default'')::boolean, false), coalesce((v_row->>''active'')::boolean, true),';
-  select count(*) into v_count from regexp_matches(v_def,
-    'coalesce\(\(v_row->>''is_default''\)::boolean, false\), coalesce\(\(v_row->>''active''\)::boolean, true\),', 'g');
-  if v_count <> 1 then raise exception '0230: VAT insert anchor matched % times', v_count; end if;
-  v_def := replace(v_def, v_anchor,
-    'case when p_mode = ''merge'' and exists (select 1 from public.vat_rates d where d.workspace_id = p_workspace_id and d.is_default) then false else coalesce((v_row->>''is_default'')::boolean, false) end, coalesce((v_row->>''active'')::boolean, true),');
-
-  v_before := v_def;
-  v_def := regexp_replace(v_def,
-    'is_default = coalesce\(\(v_row->>''is_default''\)::boolean, false\),(\s+)active = coalesce\(\(v_row->>''active''\)::boolean, true\),',
-    'is_default = case when p_mode = ''merge'' then is_default or (coalesce((v_row->>''is_default'')::boolean, false) and not exists (select 1 from public.vat_rates d where d.workspace_id = p_workspace_id and d.is_default and d.id <> v_id)) else coalesce((v_row->>''is_default'')::boolean, false) end,\1active = coalesce((v_row->>''active'')::boolean, true),');
-  if v_def = v_before then raise exception '0230: VAT update anchor missing'; end if;
-
+  -- Each anchor must have landed exactly once where it matters.
   select count(*) into v_count from regexp_matches(v_def, 'p_mode = ''merge''', 'g');
   if v_count <> 2 then raise exception '0230: expected 2 merge-only VAT branches, built %', v_count; end if;
+  select count(*) into v_count from regexp_matches(v_def, 'on conflict \(workspace_id, day\) do nothing', 'g');
+  if v_count <> 1 then raise exception '0230: expected 1 additive closure insert, built %', v_count; end if;
 
   execute v_def;
 end
