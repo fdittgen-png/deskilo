@@ -41,5 +41,9 @@ void main() {
     // testing nothing.
     expect(out, contains('steps: 12'));
     expect(out, contains('features: ${WorkspaceFeature.values.length}'));
+    // #1366 — and it ran in every language, with the same answers giving
+    // the same XML in each.
+    expect(out, contains('locales: en,fr,de,es,it'));
+    expect(out, contains('xml: byte-identical in 5 locales'));
   });
 }
