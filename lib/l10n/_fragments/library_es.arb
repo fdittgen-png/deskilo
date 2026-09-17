@@ -88,6 +88,12 @@
       }
     }
   },
+  "onboardingStepName": "Nombre",
+  "onboardingStepWhere": "Dónde",
+  "onboardingStepConfirm": "Confirmar",
+  "onboardingUseSuggested": "Usar los ajustes propuestos",
+  "onboardingConfirmIntro": "Esto es lo que se creará:",
+  "onboardingCreateWithoutTemplate": "Crear sin plantilla",
   "onboardingStartFrom": "Partir de",
   "onboardingStartEmpty": "Espacio vacío",
   "onboardingStartEmptyDesc": "Dibuje su propio plano desde un lienzo en blanco."

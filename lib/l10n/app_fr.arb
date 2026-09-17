@@ -3860,6 +3860,12 @@
       }
     }
   },
+  "onboardingStepName": "Nom",
+  "onboardingStepWhere": "Où",
+  "onboardingStepConfirm": "Confirmer",
+  "onboardingUseSuggested": "Utiliser les réglages proposés",
+  "onboardingConfirmIntro": "Voici ce qui sera créé :",
+  "onboardingCreateWithoutTemplate": "Créer sans modèle",
   "onboardingStartFrom": "Partir de",
   "onboardingStartEmpty": "Espace vide",
   "onboardingStartEmptyDesc": "Dessinez votre propre plan sur une toile vierge.",

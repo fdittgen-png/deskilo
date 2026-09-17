@@ -3860,6 +3860,12 @@
       }
     }
   },
+  "onboardingStepName": "Name",
+  "onboardingStepWhere": "Wo",
+  "onboardingStepConfirm": "Bestätigen",
+  "onboardingUseSuggested": "Vorgeschlagene Einstellungen verwenden",
+  "onboardingConfirmIntro": "Das wird erstellt:",
+  "onboardingCreateWithoutTemplate": "Ohne Vorlage erstellen",
   "onboardingStartFrom": "Beginnen mit",
   "onboardingStartEmpty": "Leerer Raum",
   "onboardingStartEmptyDesc": "Zeichnen Sie Ihren eigenen Plan auf einer leeren Fläche.",

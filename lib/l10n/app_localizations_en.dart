@@ -6139,6 +6139,24 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get onboardingStepName => 'Name';
+
+  @override
+  String get onboardingStepWhere => 'Where';
+
+  @override
+  String get onboardingStepConfirm => 'Confirm';
+
+  @override
+  String get onboardingUseSuggested => 'Use the suggested settings';
+
+  @override
+  String get onboardingConfirmIntro => 'This is what will be created:';
+
+  @override
+  String get onboardingCreateWithoutTemplate => 'Create without a template';
+
+  @override
   String get onboardingStartFrom => 'Start from';
 
   @override

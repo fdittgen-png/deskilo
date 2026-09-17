@@ -236,14 +236,18 @@ void main() {
             '$settingBudget (#1247): Settings, Availability, the day.');
   });
 
-  testWidgets('onboarding to a usable workspace: a name and one tap',
-      (tester) async {
-    const onboardingBudget = 1;
+  testWidgets('onboarding to a usable workspace: a name, the suggested '
+      'settings, and Create', (tester) async {
+    // 1 → 2 (#1303 S2): the second tap is the confirm step — a person sees
+    // the country, the pair and the template before anything is created.
+    const onboardingBudget = 2;
     final repo = await pumpWithoutWorkspace(tester);
     final taps = Taps();
 
     // Typing the name is input, not a decision the counter charges for.
     await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
+    await tester.pump();
+    await taps.on(tester, find.byKey(const ValueKey('onboarding-use-suggested')));
     final create = find.text('Create workspace');
     await tester.ensureVisible(create);
     await taps.on(tester, create);
