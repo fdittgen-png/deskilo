@@ -15,12 +15,14 @@ import '../../money/presentation/invoice_documents.dart';
 import '../../money/presentation/report_facts_of.dart';
 import '../../money/presentation/report_strings_l10n.dart';
 import '../../money/presentation/report_layout_actions.dart';
-import '../../money/providers/money_providers.dart';
 import '../domain/member.dart';
 import '../domain/site.dart';
 import '../domain/overage_policy.dart';
 import '../providers/workspace_providers.dart';
 import 'widgets/badge_manager_dialog.dart';
+
+export 'member_subscription_action.dart';
+export 'subscription_text.dart';
 import '../../money/domain/report_data_letters.dart';
 
 /// The admin actions on ONE member (#825) — subscription, overage
@@ -29,89 +31,6 @@ import '../../money/domain/report_data_letters.dart';
 /// and the Members & plans screen run the SAME code with the same
 /// guards, dialogs and invalidations. Each takes the screen's context
 /// and ref; each is a no-op when the pick is cancelled or unchanged.
-
-Future<void> pickMemberSubscription(
-  BuildContext context,
-  WidgetRef ref,
-  Member member,
-) async {
-  final l10n = AppLocalizations.of(context);
-  final offered =
-      (await ref.read(subscriptionLevelsProvider.future)).offeredLevels;
-  if (!context.mounted) return;
-
-  final custom = TextEditingController();
-  final pct = await showDialog<int>(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: Text(l10n?.memberSubscriptionLabel ?? 'Subscription'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Wrap(
-            spacing: 8,
-            runSpacing: 4,
-            children: [
-              for (final level in offered)
-                ChoiceChip(
-                  label: Text(l10n?.percentValue(level) ?? '$level%'),
-                  selected: member.subscriptionPct == level,
-                  onSelected: (_) => Navigator.of(context).pop(level),
-                ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          // The owner may always negotiate a free value, even when
-          // allow_custom hides it from member-facing pickers.
-          TextField(
-            controller: custom,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              labelText: l10n?.memberSubscriptionCustom ?? 'Custom (1–100)',
-              suffixIcon: HelpDot(
-                  l10n?.helpHintMembersTopic ?? 'Members & plans',
-                anchor: HelpAnchor.membersSubscription,
-              ),
-            ),
-          ),
-        ],
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
-        ),
-        FilledButton(
-          onPressed: () {
-            final value = int.tryParse(custom.text.trim());
-            if (value == null || value < 1 || value > 100) return;
-            Navigator.of(context).pop(value);
-          },
-          child: Text(l10n?.commonSave ?? 'Save'),
-        ),
-      ],
-    ),
-  );
-  if (pct == null || pct == member.subscriptionPct) return;
-  if (!context.mounted) return;
-
-  if (!await runGuarded(
-    context,
-    domain: 'workspace',
-    message: 'member subscription update failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
-    action: () async {
-        await ref
-            .read(workspaceRepositoryProvider)
-            .updateMemberSubscription(member.id, pct);
-    },
-  )) {
-    return;
-  }
-  ref.invalidate(workspaceMembersProvider);
-}
 
 /// Sets how the member is treated once they have used their whole
 /// monthly entitlement (migration 0041): block, pay-as-you-go, or buy a
@@ -147,7 +66,11 @@ Future<void> pickMemberOveragePolicy(
       children: [
         for (final (policy, label) in options)
           SimpleDialogOption(
-            onPressed: () => Navigator.of(context).pop(policy),
+            key: ValueKey('overage-policy-${policy.name}'),
+            // #1279 — pay-as-you-go without a subscription is booking free.
+            onPressed: policy == OveragePolicy.payg && member.subscriptionPct == 0
+                ? null
+                : () => Navigator.of(context).pop(policy),
             child: Row(
               children: [
                 Icon(

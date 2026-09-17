@@ -82,7 +82,7 @@ const Map<String, int> _baseline = {
   'lib/features/reservations/presentation/widgets/space_act_sheet.dart': 1,
   'lib/features/reservations/presentation/widgets/space_scan.dart': 4,
   'lib/features/workspace/presentation/excel_export.dart': 1,
-  'lib/features/workspace/presentation/member_admin_actions.dart': 14,
+  'lib/features/workspace/presentation/member_admin_actions.dart': 13,
   'lib/features/workspace/presentation/member_vat_treatment.dart': 1,
   'lib/features/workspace/presentation/screens/availability_screen.dart': 2,
   'lib/features/workspace/presentation/screens/deployment_screen.dart': 3,

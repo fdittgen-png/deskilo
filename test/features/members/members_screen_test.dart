@@ -200,6 +200,46 @@ void main() {
     expect(workspace.otherMembers.single.subscriptionPct, 37);
   });
 
+  testWidgets('#1279 — a member can have no subscription, and then not '
+      'pay as they go', (tester) async {
+    final workspace = await pumpMembers(tester);
+
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Subscription'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('member-subscription-none')));
+    await tester.pumpAndSettle();
+    expect(workspace.otherMembers.single.subscriptionPct, 0);
+    expect(find.text('No subscription'), findsWidgets);
+
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('When days run out'));
+    await tester.pumpAndSettle();
+    final payg = tester.widget<SimpleDialogOption>(
+        find.byKey(const ValueKey('overage-policy-payg')));
+    expect(payg.onPressed, isNull,
+        reason: 'pay-as-you-go without a subscription would book for free');
+  });
+
+  testWidgets('#1279 — a pay-as-you-go member is not offered No subscription',
+      (tester) async {
+    final workspace = await pumpMembers(tester);
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('When days run out'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Charge overage (pay-as-you-go)'));
+    await tester.pumpAndSettle();
+    expect(workspace.otherMembers.single.overagePolicy, OveragePolicy.payg);
+
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Subscription'));
+    await tester.pumpAndSettle();
+    final chip = tester.widget<ChoiceChip>(
+        find.byKey(const ValueKey('member-subscription-none')));
+    expect(chip.onSelected, isNull);
+    expect(find.textContaining('not possible with pay-as-you-go'), findsOneWidget);
+  });
+
   testWidgets('the owner records a service onto another member\'s bill (#129)',
       (tester) async {
     final money = FakeMoneyRepository();

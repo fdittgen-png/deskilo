@@ -843,6 +843,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get billingAllowCustom => 'Autoriser une valeur libre négociée';
 
   @override
+  String get memberNoSubscription => 'Sans abonnement';
+
+  @override
+  String get memberNoSubscriptionPaygHint =>
+      'Sans abonnement n\'est pas possible avec le paiement à l\'usage : choisissez d\'abord bloquer ou un forfait.';
+
+  @override
   String get memberSubscriptionLabel => 'Abonnement';
 
   @override

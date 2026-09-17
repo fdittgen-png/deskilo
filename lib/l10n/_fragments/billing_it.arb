@@ -14,6 +14,8 @@
   "billingAddLevel": "Aggiungi livello",
   "billingLevelValue": "Livello (1–100)",
   "billingAllowCustom": "Consenti un valore personalizzato concordato",
+  "memberNoSubscription": "Senza abbonamento",
+  "memberNoSubscriptionPaygHint": "Senza abbonamento non è possibile con il pagamento a consumo: scegliete prima blocca o un pacchetto.",
   "memberSubscriptionLabel": "Abbonamento",
   "memberSubscriptionCustom": "Personalizzato (1–100)",
   "moneySubscriptionPct": "Abbonamento {pct} %",

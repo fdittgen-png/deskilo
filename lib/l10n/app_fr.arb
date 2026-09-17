@@ -602,6 +602,8 @@
   "billingAddLevel": "Ajouter un niveau",
   "billingLevelValue": "Niveau (1–100)",
   "billingAllowCustom": "Autoriser une valeur libre négociée",
+  "memberNoSubscription": "Sans abonnement",
+  "memberNoSubscriptionPaygHint": "Sans abonnement n'est pas possible avec le paiement à l'usage : choisissez d'abord bloquer ou un forfait.",
   "memberSubscriptionLabel": "Abonnement",
   "memberSubscriptionCustom": "Personnalisé (1–100)",
   "moneySubscriptionPct": "Abonnement {pct} %",

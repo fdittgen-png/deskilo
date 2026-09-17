@@ -1186,6 +1186,8 @@ Dein Konto beantwortet *was schulde ich, was schuldet man mir* — und *wie viel
 - **Nach Verbrauch** — weiterbuchen; jeder Extra-Tag kostet den Überziehungssatz deiner Stufe.
 - **Pakete** — **Paket kaufen**, ein Tagespaket wählen; Tage steigen sofort, der Preis landet auf der Monatsabrechnung.
 
+Ein Mitglied kann auch **kein Abo** haben — ein gelegentlicher Besucher (#1279): keine Monatsgebühr, keine Abo-Zeile auf der Rechnung und keine inklusiven Halbtage, gebucht wird also über ein Paket oder Guthaben. **Kein Abo** und **Nach Verbrauch** gehen nie zusammen, denn das hieße kostenlos buchen; App und Server lehnen die Kombination ab.
+
 **Die Aktionen, nach Sinn gruppiert:**
 
 - **Zahlen** — **Zahlung erfassen** („ich habe gezahlt") mit Methode, dem **Datum der Geldbewegung** (Standard: heute) und dem **Monat, den sie begleicht** (Standard: der laufende; ein Schritt zurück für Rückstand, vor für Vorauszahlung) — die andere Seite bestätigt. Dieser Monat entscheidet, auf welcher Abrechnung und Rechnung die Gutschrift landet. **Online zahlen** (falls aktiv) begleicht den fälligen Betrag sofort — **PayPal, Kreditkarte (Stripe), Mollie oder Wero**.

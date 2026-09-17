@@ -1154,6 +1154,8 @@ Il tuo conto risponde a *quanto devo, quanto mi devono* — e *quanto posso anco
 - **A consumo** — continui a prenotare; ogni giorno extra viene addebitato alla tariffa extra della tua fascia (mostrata sulla scheda).
 - **Pacchetti** — tocca **Acquista un pacchetto** e scegli uno dei pacchetti di giorni del proprietario; i tuoi giorni aumentano subito e il prezzo finisce sull'estratto del mese.
 
+Un membro può anche essere **senza abbonamento** — un visitatore occasionale (#1279): nessuna quota mensile, nessuna riga di abbonamento in fattura e nessuna mezza giornata inclusa, quindi prenota con un pacchetto o con crediti. **Senza abbonamento** e **A consumo** non si combinano mai, perché significherebbe prenotare gratis; l'app e il server rifiutano la combinazione.
+
 **Le azioni, raggruppate per significato:**
 
 - **Pagare** — **Registra un pagamento** («ho pagato») con il metodo, la **data in cui il denaro si è mosso** (oggi per impostazione predefinita) e il **mese che salda** (quello in corso per impostazione predefinita, un passo indietro per gli arretrati, uno avanti per un anticipo) — l'altra parte conferma. Quel mese decide su quale estratto e su quale fattura finisce l'accredito. **Paga online** (quando attivo) salda subito l'importo dovuto — con **PayPal, carta di credito (Stripe), Mollie o Wero**, secondo ciò che lo spazio ha attivato (se più di uno, appare un selettore).

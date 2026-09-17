@@ -1231,6 +1231,8 @@ Votre compte répond à *que dois-je, que me doit-on* — et *combien puis-je en
 - **Au compteur** — vous continuez à réserver ; chaque jour en plus se facture au tarif de dépassement de votre palier (affiché sur la carte).
 - **Forfaits** — touchez **Acheter un forfait** et choisissez un pack de jours ; vos jours augmentent immédiatement et le prix atterrit sur le relevé du mois.
 
+Un membre peut aussi être **sans abonnement** — un visiteur de passage (#1279) : pas de cotisation mensuelle, pas de ligne d'abonnement sur la facture, et aucune demi-journée incluse, donc ses réservations passent par un forfait ou des crédits. **Sans abonnement** et le **paiement à l'usage** ne se combinent jamais, car ce serait réserver gratuitement ; l'app comme le serveur refusent la combinaison.
+
 **Les actions, groupées par sens :**
 
 - **Payer** — **Enregistrer un paiement** (« j'ai payé ») avec sa méthode, la **date où l'argent a bougé** (défaut : aujourd'hui) et le **mois qu'il règle** (défaut : le mois courant, un cran en arrière pour un arriéré, un en avant pour une avance) — l'autre partie confirme. Ce mois décide sur quel relevé et quelle facture le crédit atterrit. **Payer en ligne** (si activé) règle le montant dû sur-le-champ — **PayPal, carte bancaire (Stripe), Mollie ou Wero**, selon ce que l'espace a activé (plusieurs = un sélecteur).

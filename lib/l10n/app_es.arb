@@ -602,6 +602,8 @@
   "billingAddLevel": "Añadir nivel",
   "billingLevelValue": "Nivel (1–100)",
   "billingAllowCustom": "Permitir un valor personalizado negociado",
+  "memberNoSubscription": "Sin suscripción",
+  "memberNoSubscriptionPaygHint": "Sin suscripción no es posible con pago por uso: elija primero bloquear o un paquete.",
   "memberSubscriptionLabel": "Suscripción",
   "memberSubscriptionCustom": "Personalizado (1–100)",
   "moneySubscriptionPct": "Suscripción {pct} %",

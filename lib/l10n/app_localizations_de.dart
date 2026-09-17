@@ -841,6 +841,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get billingAllowCustom => 'Individuell verhandelten Wert erlauben';
 
   @override
+  String get memberNoSubscription => 'Kein Abo';
+
+  @override
+  String get memberNoSubscriptionPaygHint =>
+      'Kein Abo ist mit Bezahlung nach Verbrauch nicht möglich: zuerst Sperren oder ein Paket wählen.';
+
+  @override
   String get memberSubscriptionLabel => 'Abo';
 
   @override
