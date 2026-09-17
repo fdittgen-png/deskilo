@@ -613,8 +613,10 @@ spazio non viaggia mai: le sedi e i loro indirizzi, gli identificativi
 legali e la partita IVA, le menzioni legali, i dati bancari, i testi di
 invito, i collegamenti e l'impaginazione dei documenti. Il server li
 rimuove prima di salvare il modello, qualunque cosa abbia inviato l'app.
-Applicare unisce: le fasce di commissione, i giorni di chiusura e tutto
-ciò che lo spazio ha già restano al loro posto. Salvare di nuovo con lo
+Applicare unisce: i giorni di chiusura, i vostri prezzi sulla pianta e
+tutto ciò che lo spazio ha già restano al loro posto. Un'eccezione: una scala di commissioni portata dal
+modello sostituisce la vostra per intero, perché le sue fasce coprono
+insieme 0–100 % e due scale non si possono intrecciare. Salvare di nuovo con lo
 stesso nome aggiorna il modello e ne aumenta la versione, e ogni
 applicazione viene registrata con ciò che lo spazio conteneva prima. Un
 modello creato da un DesKilo più recente che questo server non

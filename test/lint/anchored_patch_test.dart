@@ -29,6 +29,14 @@ import 'package:flutter_test/flutter_test.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
+  // #1276 S3/0230 re-creates preview_deployment as a caller of
+  // configuration_change_set. The body was read from pg_get_functiondef on
+  // the LIVE project, so 0190's design-image additions are carried forward
+  // verbatim. A rolled-back harness captured the old output for all eight
+  // live and fixture pair directions, applied 0230, and compared: identical.
+  // The one deliberate difference is number series, which the old
+  // entity_row_key misreported as removed and re-added.
+  'preview_deployment@0230',
   // #1276 S1/0219 restates deployable_entities to add `merge_policy` and
   // `group` to each of the eighteen entities. The new body was built FROM
   // `pg_get_functiondef` on the live project — the post-patch state by
