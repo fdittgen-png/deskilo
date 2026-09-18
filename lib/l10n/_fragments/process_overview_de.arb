@@ -38,5 +38,17 @@
   "processConflict": "Jemand hat die Funktionen inzwischen geändert. Dies ist die aktualisierte Vorschau — prüfen Sie sie erneut.",
   "processUnconfirmed": "Die Änderung wurde geschrieben, aber die App konnte sie nicht bestätigen. Schließen und öffnen Sie die Funktionen erneut, um den aktuellen Stand zu sehen.",
   "processApplied": "{count} Funktionen geändert.",
-  "processChangeFailed": "Die Funktionen konnten nicht geändert werden. Nichts wurde geschrieben; versuchen Sie es erneut."
+  "processChangeFailed": "Die Funktionen konnten nicht geändert werden. Nichts wurde geschrieben; versuchen Sie es erneut.",
+  "featureDetailProvides": "Bietet",
+  "featureDetailRequires": "Benötigt",
+  "featureDetailUsedBy": "Verwendet von",
+  "featureDetailTechnical": "Technische Details",
+  "featureDetailKey": "Technischer Schlüssel",
+  "featureDetailChange": "Bei den Schaltern ändern",
+  "featureDetailOn": "Eingeschaltet.",
+  "featureDetailOnNeededBy": "Eingeschaltet und benötigt von {names}.",
+  "featureDetailHeldBack": "Eingeschaltet, aber blockiert: sie benötigt {feature}, das ausgeschaltet ist.",
+  "featureDetailOff": "Ausgeschaltet.",
+  "featureDetailNone": "Nichts.",
+  "featureDetailGrantsPermission": "Gewährt Administratoren die Berechtigung „{permission}“."
 }

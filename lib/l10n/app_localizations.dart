@@ -14273,6 +14273,78 @@ abstract class AppLocalizations {
   /// **'The features could not be changed. Nothing was written; try again.'**
   String get processChangeFailed;
 
+  /// #1328 the read-only capability detail
+  ///
+  /// In en, this message translates to:
+  /// **'Provides'**
+  String get featureDetailProvides;
+
+  /// #1328 the read-only capability detail
+  ///
+  /// In en, this message translates to:
+  /// **'Requires'**
+  String get featureDetailRequires;
+
+  /// #1328 the read-only capability detail
+  ///
+  /// In en, this message translates to:
+  /// **'Used by'**
+  String get featureDetailUsedBy;
+
+  /// #1328 the read-only capability detail
+  ///
+  /// In en, this message translates to:
+  /// **'Technical details'**
+  String get featureDetailTechnical;
+
+  /// #1328 the read-only capability detail
+  ///
+  /// In en, this message translates to:
+  /// **'Technical key'**
+  String get featureDetailKey;
+
+  /// #1328 the read-only capability detail
+  ///
+  /// In en, this message translates to:
+  /// **'Change it among the switches'**
+  String get featureDetailChange;
+
+  /// #1328 the read-only capability detail
+  ///
+  /// In en, this message translates to:
+  /// **'Switched on.'**
+  String get featureDetailOn;
+
+  /// #1328 the read-only capability detail
+  ///
+  /// In en, this message translates to:
+  /// **'Switched on, and needed by {names}.'**
+  String featureDetailOnNeededBy(String names);
+
+  /// #1328 the read-only capability detail
+  ///
+  /// In en, this message translates to:
+  /// **'Switched on, but held back: it needs {feature}, which is off.'**
+  String featureDetailHeldBack(String feature);
+
+  /// #1328 the read-only capability detail
+  ///
+  /// In en, this message translates to:
+  /// **'Switched off.'**
+  String get featureDetailOff;
+
+  /// #1328 the read-only capability detail
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing.'**
+  String get featureDetailNone;
+
+  /// #1328 the read-only capability detail
+  ///
+  /// In en, this message translates to:
+  /// **'Grants administrators the permission \"{permission}\".'**
+  String featureDetailGrantsPermission(String permission);
+
   /// No description provided for @processWorkspaceAccess.
   ///
   /// In en, this message translates to:

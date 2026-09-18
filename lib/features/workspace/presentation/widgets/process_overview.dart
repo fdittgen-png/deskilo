@@ -9,6 +9,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../application/process_status.dart';
 import '../../domain/workspace_feature.dart';
 import '../process_search.dart';
+import 'feature_detail_sheet.dart';
 import 'process_card.dart';
 import 'process_change_sheet.dart';
 
@@ -53,9 +54,17 @@ class _ProcessOverviewState extends State<ProcessOverview> {
     super.dispose();
   }
 
+  /// #1328 — a feature is explained first; the switch is one step further.
+  void _explain(WorkspaceFeature feature) => showFeatureDetailSheet(
+        context,
+        feature: feature,
+        raw: widget.raw,
+        onChange: widget.onOpenFeature,
+      );
+
   void _openHit(ProcessSearchHit hit) {
     if (hit.feature case final feature?) {
-      widget.onOpenFeature(feature);
+      _explain(feature);
       return;
     }
     setState(() {
@@ -153,7 +162,7 @@ class _ProcessOverviewState extends State<ProcessOverview> {
                       final key = status.process.key;
                       if (!_expanded.remove(key)) _expanded.add(key);
                     }),
-                    onOpenFeature: widget.onOpenFeature,
+                    onOpenFeature: _explain,
                     onChange: (activate, keys) => _change(
                       context,
                       status.process.key,

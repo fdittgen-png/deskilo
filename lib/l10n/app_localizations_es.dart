@@ -8233,6 +8233,48 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudieron cambiar las funcionalidades. No se escribió nada; inténtelo de nuevo.';
 
   @override
+  String get featureDetailProvides => 'Aporta';
+
+  @override
+  String get featureDetailRequires => 'Requiere';
+
+  @override
+  String get featureDetailUsedBy => 'Usada por';
+
+  @override
+  String get featureDetailTechnical => 'Detalles técnicos';
+
+  @override
+  String get featureDetailKey => 'Clave técnica';
+
+  @override
+  String get featureDetailChange => 'Cambiarla entre los interruptores';
+
+  @override
+  String get featureDetailOn => 'Activada.';
+
+  @override
+  String featureDetailOnNeededBy(String names) {
+    return 'Activada y necesaria para $names.';
+  }
+
+  @override
+  String featureDetailHeldBack(String feature) {
+    return 'Activada, pero retenida: necesita $feature, que está desactivada.';
+  }
+
+  @override
+  String get featureDetailOff => 'Desactivada.';
+
+  @override
+  String get featureDetailNone => 'Nada.';
+
+  @override
+  String featureDetailGrantsPermission(String permission) {
+    return 'Concede a los administradores el permiso «$permission».';
+  }
+
+  @override
   String get processWorkspaceAccess => 'Espacio y acceso';
 
   @override

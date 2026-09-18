@@ -7,6 +7,7 @@
 // lands on its switch, which writes the same delta as before.
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
+import 'package:deskilo/features/workspace/presentation/feature_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -212,28 +213,119 @@ void main() {
     });
   });
 
-  testWidgets('a feature tapped on the overview lands on its switch, which '
-      'writes the same delta as ever', (tester) async {
+  testWidgets('a feature tapped on the overview is explained first, and its '
+      'switch is one step further, which writes the same delta', (tester) async {
     final workspace = await pumpFeatures(tester, switches: false);
 
     await tester.tap(find.byKey(const ValueKey('process-header-integrations')));
     await tester.pumpAndSettle();
-    await tester.tap(
-      find.byKey(const ValueKey('process-feature-whatsappIntegration')),
-    );
+    final row = find.byKey(const ValueKey('process-feature-whatsappIntegration'));
+    await tester.ensureVisible(row);
+    await tester.tap(row);
     await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('feature-detail-whatsappIntegration')),
+        findsOneWidget);
 
+    await tester.tap(find.byKey(const ValueKey('feature-detail-change')));
+    await tester.pumpAndSettle();
     final tile = find.byKey(const ValueKey('feature-whatsappIntegration'));
-    expect(tile, findsOneWidget);
-    expect(
-      find.byType(SwitchListTile),
-      findsOneWidget,
-      reason: 'the switches view opens already searched to that feature',
-    );
-
-    await tester.tap(tile);
+    expect(tile, findsOneWidget, reason: 'the switches view, searched to it');
+    await tester.tap(find.descendant(of: tile, matching: find.byType(Switch)));
     await tester.pumpAndSettle();
     expect(workspace.flagWrites.last, {'whatsappIntegration': false});
+  });
+
+  group('#1328 — a capability explains itself from the registry', () {
+    testWidgets('path, provides, requires with its cross-process label, used '
+        'by, and the technical key behind a disclosure', (tester) async {
+      // A feature whose nearest prerequisite lives in another process,
+      // found from the registry so the test follows the manifest.
+      late WorkspaceFeature feature;
+      late WorkspaceFeature parent;
+      outer:
+      for (final process in workspaceProcesses) {
+        for (final sub in process.subprocesses) {
+          for (final f in sub.capabilities) {
+            final chain = requirementChain(f);
+            if (chain.isEmpty || internalCapabilities.containsKey(f)) continue;
+            final home = homeProcessOf(chain.first);
+            if (home != null && home != process.key) {
+              feature = f;
+              parent = chain.first;
+              break outer;
+            }
+          }
+        }
+      }
+      await pumpFeatures(tester, switches: false);
+      final process = homeProcessOf(feature)!;
+      await tester.tap(find.byKey(ValueKey('process-header-$process')));
+      await tester.pumpAndSettle();
+      final row = find.byKey(ValueKey('process-feature-${feature.name}'));
+      await tester.ensureVisible(row);
+      await tester.tap(row);
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const ValueKey('feature-detail-path')), findsOneWidget);
+      expect(find.byKey(ValueKey('feature-detail-requires-${parent.name}')),
+          findsOneWidget);
+      expect(
+          find.descendant(
+              of: find.byKey(ValueKey('feature-detail-requires-${parent.name}')),
+              matching: find.textContaining('in ')),
+          findsOneWidget,
+          reason: 'the cross-process edge is said in words');
+      // Every Requires row IS the registry chain, in order — nothing else.
+      for (final f in requirementChain(feature)) {
+        expect(find.byKey(ValueKey('feature-detail-requires-${f.name}')),
+            findsOneWidget);
+      }
+      for (final f in dependentFeatures(feature)) {
+        if (internalCapabilities.containsKey(f)) continue;
+        expect(find.byKey(ValueKey('feature-detail-used-by-${f.name}')),
+            findsOneWidget);
+      }
+      expect(find.byKey(const ValueKey('feature-detail-db-key')), findsNothing,
+          reason: 'technical, behind the disclosure');
+      await tester.tap(find.byKey(const ValueKey('feature-detail-technical')));
+      await tester.pumpAndSettle();
+      expect(find.text(feature.dbKey), findsOneWidget);
+    });
+
+    testWidgets('why it is on or off says only what is true: held back names '
+        'the switched-off prerequisite', (tester) async {
+      final workspace = await _pumpOverview(tester);
+      final raw = resolveEnabledFeatures(workspace.workspaces[0].featureFlags);
+      final effective = effectiveFeatures(raw);
+      final held = raw.firstWhere(
+          (f) => !effective.contains(f) && !internalCapabilities.containsKey(f));
+      final waiting = requirementChain(held).firstWhere((p) => !raw.contains(p));
+      final process = homeProcessOf(held)!;
+      await tester.tap(find.byKey(ValueKey('process-header-$process')));
+      await tester.pumpAndSettle();
+      final row = find.byKey(ValueKey('process-feature-${held.name}'));
+      await tester.ensureVisible(row);
+      await tester.tap(row);
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('feature-detail-why-held-back')),
+          findsOneWidget);
+      expect(find.textContaining(featureName(null, waiting)), findsWidgets);
+      expect(find.textContaining('through process'), findsNothing,
+          reason: 'no invented provenance');
+    });
+
+    testWidgets('the one flag that grants a permission says so', (tester) async {
+      await pumpFeatures(tester, switches: false);
+      final process = homeProcessOf(WorkspaceFeature.adminInvoicing)!;
+      await tester.tap(find.byKey(ValueKey('process-header-$process')));
+      await tester.pumpAndSettle();
+      final row = find.byKey(const ValueKey('process-feature-adminInvoicing'));
+      await tester.ensureVisible(row);
+      await tester.tap(row);
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('feature-detail-permission')),
+          findsOneWidget);
+    });
   });
 
   testWidgets('360 dp at twice the text size, cards open: nothing overflows', (

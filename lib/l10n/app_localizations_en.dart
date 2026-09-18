@@ -8178,6 +8178,48 @@ class AppLocalizationsEn extends AppLocalizations {
       'The features could not be changed. Nothing was written; try again.';
 
   @override
+  String get featureDetailProvides => 'Provides';
+
+  @override
+  String get featureDetailRequires => 'Requires';
+
+  @override
+  String get featureDetailUsedBy => 'Used by';
+
+  @override
+  String get featureDetailTechnical => 'Technical details';
+
+  @override
+  String get featureDetailKey => 'Technical key';
+
+  @override
+  String get featureDetailChange => 'Change it among the switches';
+
+  @override
+  String get featureDetailOn => 'Switched on.';
+
+  @override
+  String featureDetailOnNeededBy(String names) {
+    return 'Switched on, and needed by $names.';
+  }
+
+  @override
+  String featureDetailHeldBack(String feature) {
+    return 'Switched on, but held back: it needs $feature, which is off.';
+  }
+
+  @override
+  String get featureDetailOff => 'Switched off.';
+
+  @override
+  String get featureDetailNone => 'Nothing.';
+
+  @override
+  String featureDetailGrantsPermission(String permission) {
+    return 'Grants administrators the permission \"$permission\".';
+  }
+
+  @override
   String get processWorkspaceAccess => 'Workspace & access';
 
   @override

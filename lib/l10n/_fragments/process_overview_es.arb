@@ -38,5 +38,17 @@
   "processConflict": "Alguien cambió las funcionalidades mientras tanto. Esta es la vista previa actualizada: revísela de nuevo.",
   "processUnconfirmed": "El cambio se escribió, pero la app no pudo confirmarlo. Cierre y vuelva a abrir las funcionalidades para ver el estado actual.",
   "processApplied": "{count} funcionalidades cambiadas.",
-  "processChangeFailed": "No se pudieron cambiar las funcionalidades. No se escribió nada; inténtelo de nuevo."
+  "processChangeFailed": "No se pudieron cambiar las funcionalidades. No se escribió nada; inténtelo de nuevo.",
+  "featureDetailProvides": "Aporta",
+  "featureDetailRequires": "Requiere",
+  "featureDetailUsedBy": "Usada por",
+  "featureDetailTechnical": "Detalles técnicos",
+  "featureDetailKey": "Clave técnica",
+  "featureDetailChange": "Cambiarla entre los interruptores",
+  "featureDetailOn": "Activada.",
+  "featureDetailOnNeededBy": "Activada y necesaria para {names}.",
+  "featureDetailHeldBack": "Activada, pero retenida: necesita {feature}, que está desactivada.",
+  "featureDetailOff": "Desactivada.",
+  "featureDetailNone": "Nada.",
+  "featureDetailGrantsPermission": "Concede a los administradores el permiso «{permission}»."
 }
