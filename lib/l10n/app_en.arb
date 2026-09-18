@@ -8782,6 +8782,69 @@
   "@processChangeFailed": {
     "description": "#1329 the process change preview and apply"
   },
+  "featureDetailProvides": "Provides",
+  "@featureDetailProvides": {
+    "description": "#1328 the read-only capability detail"
+  },
+  "featureDetailRequires": "Requires",
+  "@featureDetailRequires": {
+    "description": "#1328 the read-only capability detail"
+  },
+  "featureDetailUsedBy": "Used by",
+  "@featureDetailUsedBy": {
+    "description": "#1328 the read-only capability detail"
+  },
+  "featureDetailTechnical": "Technical details",
+  "@featureDetailTechnical": {
+    "description": "#1328 the read-only capability detail"
+  },
+  "featureDetailKey": "Technical key",
+  "@featureDetailKey": {
+    "description": "#1328 the read-only capability detail"
+  },
+  "featureDetailChange": "Change it among the switches",
+  "@featureDetailChange": {
+    "description": "#1328 the read-only capability detail"
+  },
+  "featureDetailOn": "Switched on.",
+  "@featureDetailOn": {
+    "description": "#1328 the read-only capability detail"
+  },
+  "featureDetailOnNeededBy": "Switched on, and needed by {names}.",
+  "@featureDetailOnNeededBy": {
+    "description": "#1328 the read-only capability detail",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "featureDetailHeldBack": "Switched on, but held back: it needs {feature}, which is off.",
+  "@featureDetailHeldBack": {
+    "description": "#1328 the read-only capability detail",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "featureDetailOff": "Switched off.",
+  "@featureDetailOff": {
+    "description": "#1328 the read-only capability detail"
+  },
+  "featureDetailNone": "Nothing.",
+  "@featureDetailNone": {
+    "description": "#1328 the read-only capability detail"
+  },
+  "featureDetailGrantsPermission": "Grants administrators the permission \"{permission}\".",
+  "@featureDetailGrantsPermission": {
+    "description": "#1328 the read-only capability detail",
+    "placeholders": {
+      "permission": {
+        "type": "String"
+      }
+    }
+  },
   "processWorkspaceAccess": "Workspace & access",
   "processSpaceManagement": "Space management",
   "processReservationsUsage": "Reservations & usage",
