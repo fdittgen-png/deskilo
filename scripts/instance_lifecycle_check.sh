@@ -57,14 +57,17 @@ admin() { docker exec -i -e PGPASSWORD=postgres "$C" "$@"; }
 HOST=(-h 127.0.0.1)
 asql() { admin psql -X "${HOST[@]}" -U supabase_admin "$@"; }
 
+# KEEP_EMPTY=1 leaves the empty project behind for the populated upgrade
+# check (#1338), which copies it the way the three databases below are.
 cleanup() {
   for db in "$INSTALL" "$RESUME" "$FOREIGN" "$EMPTY"; do
+    [ "$db" = "$EMPTY" ] && [ "${KEEP_EMPTY:-}" = 1 ] && [ "${1:-}" = end ] && continue
     asql -d postgres -q -c "drop database if exists $db with (force)" >/dev/null 2>&1
   done
   admin rm -f "$IN_CONTAINER_DUMP" "$IN_CONTAINER_LIST" >/dev/null 2>&1
   rm -f "${LIST:-}" "${PROPS:-}" "${ERRORS:-}"
 }
-trap cleanup EXIT
+trap 'cleanup end' EXIT
 
 if ! asql -d postgres -At -c 'select current_user' >/dev/null; then
   HOST=()

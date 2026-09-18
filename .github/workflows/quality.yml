@@ -287,9 +287,26 @@ jobs:
         id: lifecycle
         if: steps.migrations.outcome == 'success'
         continue-on-error: true
+        env:
+          KEEP_EMPTY: '1'
         run: |
           flutter pub get
           bash scripts/instance_lifecycle_check.sh
+
+      # #1338 — the replay proves the migrations run and the drill proves
+      # a current backup comes back; neither says what the next twenty
+      # migrations do to an instance that already holds issued invoices,
+      # posted credits and captured payments. This installs a supported
+      # populated baseline (0226) on the empty project the lifecycle check
+      # left behind, seeds that archive, upgrades it, and compares every
+      # signed field, hash, posting and payment relation before and after;
+      # then applies a deliberately destructive control through the same
+      # path to prove the comparison can fail.
+      - name: A populated instance upgrades and keeps its archives
+        id: archive
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        run: bash scripts/populated_upgrade_check.sh
 
       - name: Rows
         if: always()
@@ -319,6 +336,8 @@ jobs:
               "${{ steps.payments.outcome }}"
             printf 'Instance lifecycle|%s|empty install, interrupted resume, upgrade from N, foreign table blocks, marker per migration, doctor probe isolation\n' \
               "${{ steps.lifecycle.outcome }}"
+            printf 'Archive preservation|%s|a populated 0226 instance upgraded to the tip: signed fields, hashes and postings byte-equal, legacy stays unverifiable, a destructive control is caught\n' \
+              "${{ steps.archive.outcome }}"
           } > report/database.psv
           cat report/database.psv
 
@@ -347,7 +366,8 @@ jobs:
                       "Two owners, one decision=${{ steps.flags.outcome }}" \
                       "Restore drill=${{ steps.restore.outcome }}" \
                       "A member can start a payment=${{ steps.payments.outcome }}" \
-                      "Install, resume and upgrade a real schema=${{ steps.lifecycle.outcome }}"; do
+                      "Install, resume and upgrade a real schema=${{ steps.lifecycle.outcome }}" \
+                      "A populated instance upgrades and keeps its archives=${{ steps.archive.outcome }}"; do
             echo "$step"
             case "$step" in *=failure) status=1 ;; esac
           done

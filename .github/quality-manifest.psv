@@ -27,3 +27,4 @@ Policy drift|database|step|conditional||live policies equal the set the migratio
 Restore drill|database|step|conditional||seeded, dumped, restored into a fresh database, counts equal and reconciled
 Payments|database|step|conditional||the real payment handler opens the caller's intent; strangers and no token refused
 Instance lifecycle|database|step|conditional||empty install, interrupted resume, upgrade from N, foreign table blocks, marker per migration, doctor probe isolation
+Archive preservation|database|step|conditional||a populated 0226 instance upgraded to the tip: signed fields, hashes and postings byte-equal, legacy stays unverifiable, a destructive control is caught
