@@ -40,6 +40,15 @@ begin
   insert into public.seats (workspace_id, desk_id, x, y)
   values (ws, desk, 1, 1) returning id into seat;
 
+  -- The bookings below are for TOMORROW through the real RPC, and the
+  -- closed-day gate (#186) refuses a Saturday: open every weekday, as
+  -- 35_zero_subscription and 37_credit_consumption do, so the file does
+  -- not turn red on a Friday.
+  update public.workspaces
+     set booking_rules = coalesce(booking_rules, '{}'::jsonb)
+       || '{"open_weekdays": [1, 2, 3, 4, 5, 6, 7]}'::jsonb
+   where id = ws;
+
   perform set_config('deskilo.queue.ws', ws::text, false);
   perform set_config('deskilo.queue.seat', seat::text, false);
   perform set_config('deskilo.queue.u_mine', u_mine::text, false);
