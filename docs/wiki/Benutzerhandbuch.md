@@ -492,6 +492,8 @@ Anfang und Ende des Arbeitstages. Zusammen mit der Granularität
 entscheiden sie, was ein halber Tag ist — die Einheit, in der jedes
 Kontingent, jede Quote und jede Rechnungszeile zählt.
 
+**Woher die Zeiten stammen (#1307).** Ein Chip unter der Überschrift zeigt, ob die Zeiten der *Produktstandard* sind, *Aus Vorlage „…“* stammen oder eine *Einstellung des Raums* sind. **Auf Vorlage zurücksetzen** stellt die Zeiten der zuletzt angewendeten Vorlage wieder her; **Auf Produktstandard zurücksetzen** entfernt die eigenen Zeiten des Raums. Bearbeitet wird weiterhin in den Feldern darunter.
+
 <!-- anchor: user.workspace.availability.closure-days -->
 #### Schließtage
 

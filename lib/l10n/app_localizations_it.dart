@@ -10640,6 +10640,23 @@ class AppLocalizationsIt extends AppLocalizations {
       'Qualcuno ha modificato queste impostazioni mentre le stavate modificando. Non è stato salvato nulla; le vostre modifiche sono ancora qui.';
 
   @override
+  String get provenanceProductDefault => 'Valore predefinito del prodotto';
+
+  @override
+  String provenanceFromTemplate(String name) {
+    return 'Dal modello «$name»';
+  }
+
+  @override
+  String get provenanceWorkspaceSetting => 'Impostazione dello spazio';
+
+  @override
+  String get provenanceResetToTemplate => 'Ripristina il modello';
+
+  @override
+  String get provenanceResetToDefault => 'Ripristina il valore predefinito';
+
+  @override
   String get workspaceSettingsCurrencyHelper =>
       'Proposta in base al paese — modificala se la tua community fattura in un’altra valuta.';
 

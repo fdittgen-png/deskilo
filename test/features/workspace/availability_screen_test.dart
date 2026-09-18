@@ -7,7 +7,9 @@ import 'dart:async';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
+import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
+import 'package:deskilo/features/workspace/domain/work_hours_provenance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -496,5 +498,67 @@ void main() {
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull, reason: 'no overflow at 360dp');
     expect(tester.getSize(control).width, lessThanOrEqualTo(360.0));
+  });
+
+  group('#1307 S4 — where the working day came from, and the way back', () {
+    const templateHours = WorkHours(
+      startMinutes: 7 * 60,
+      halfBoundaryMinutes: 13 * 60,
+      endMinutes: 19 * 60,
+      halfDayHours: 4,
+      fullDayHours: 8,
+    );
+
+    Future<void> tapKey(WidgetTester tester, String key) async {
+      final finder = find.byKey(ValueKey(key));
+      await tester.ensureVisible(finder);
+      await tester.pumpAndSettle();
+      await tester.tap(finder);
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('the product default says so and offers no reset',
+        (tester) async {
+      await pumpAvailability(tester);
+      expect(find.byKey(const ValueKey('work-hours-provenance-productDefault')),
+          findsOneWidget);
+      expect(find.byKey(const ValueKey('work-hours-reset-template')), findsNothing);
+      expect(find.byKey(const ValueKey('work-hours-reset-default')), findsNothing);
+    });
+
+    testWidgets('a workspace edit over a template offers both resets, and each '
+        'writes what it names', (tester) async {
+      final workspace = FakeWorkspaceRepository.withWorkspace()
+        ..workHoursProvenance['ws-1'] = const WorkHoursProvenance(
+          origin: WorkHoursOrigin.workspace,
+          templateName: 'Association',
+          templateHours: templateHours,
+        );
+      await pumpAvailability(tester, workspace: workspace);
+      expect(find.text('Workspace setting'), findsOneWidget);
+
+      await tapKey(tester, 'work-hours-reset-template');
+      expect(workspace.workHours['ws-1']?.startMinutes, 7 * 60);
+      expect(workspace.workHours['ws-1']?.endMinutes, 19 * 60);
+
+      await tapKey(tester, 'work-hours-reset-default');
+      expect(workspace.workHoursResets, ['ws-1']);
+      expect(find.byKey(const ValueKey('work-hours-provenance-productDefault')),
+          findsOneWidget, reason: 're-asked after the reset');
+    });
+
+    testWidgets('hours that still match the template name it and offer only '
+        'the product default', (tester) async {
+      final workspace = FakeWorkspaceRepository.withWorkspace()
+        ..workHoursProvenance['ws-1'] = const WorkHoursProvenance(
+          origin: WorkHoursOrigin.template,
+          templateName: 'Association',
+          templateHours: templateHours,
+        );
+      await pumpAvailability(tester, workspace: workspace);
+      expect(find.text('From template «Association»'), findsOneWidget);
+      expect(find.byKey(const ValueKey('work-hours-reset-template')), findsNothing);
+      expect(find.byKey(const ValueKey('work-hours-reset-default')), findsOneWidget);
+    });
   });
 }

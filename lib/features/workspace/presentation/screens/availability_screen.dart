@@ -17,6 +17,7 @@ import '../../domain/booking_policies.dart';
 import '../../domain/closure_day.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/work_hours_provenance_row.dart';
 import '../widgets/availability_tiles.dart';
 import '../../application/generate_public_holidays.dart';
 import '../widgets/public_holidays_sheet.dart';
@@ -488,6 +489,7 @@ class AvailabilityScreen extends ConsumerWidget {
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
+                const WorkHoursProvenanceRow(),
                 WorkTimeTile(
                   keySuffix: 'start',
                   title: l10n?.availabilityWorkStart ?? 'Day starts',

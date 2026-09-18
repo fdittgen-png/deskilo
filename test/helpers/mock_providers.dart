@@ -99,6 +99,7 @@ import 'fake_pref_stores.dart';
 import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/features/workspace/domain/template_publication.dart';
+import 'package:deskilo/features/workspace/domain/work_hours_provenance.dart';
 import 'package:deskilo/features/workspace/domain/workspace_settings_save.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
 import 'package:deskilo/features/money/domain/credit_product.dart';
@@ -1716,6 +1717,21 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   @override
   Future<void> setWorkHours(String workspaceId, WorkHours hours) async {
     workHours[workspaceId] = hours;
+  }
+
+  /// #1307 S4 — provenance per workspace; unset reads as the product default.
+  final workHoursProvenance = <String, WorkHoursProvenance>{};
+  final workHoursResets = <String>[];
+
+  @override
+  Future<WorkHoursProvenance> fetchWorkHoursProvenance(String workspaceId) async =>
+      workHoursProvenance[workspaceId] ?? WorkHoursProvenance.productDefault;
+
+  @override
+  Future<void> resetWorkHoursToDefault(String workspaceId) async {
+    workHoursResets.add(workspaceId);
+    workHours.remove(workspaceId);
+    workHoursProvenance[workspaceId] = WorkHoursProvenance.productDefault;
   }
 
   /// One-off closure days across workspaces (#127).

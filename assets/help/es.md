@@ -483,6 +483,8 @@ El principio y el final de la jornada. Junto con la granularidad deciden
 qué es media jornada — la unidad en la que cuentan toda asignación, toda
 cuota y toda línea de factura.
 
+**De dónde vienen los horarios (#1307).** Una etiqueta bajo el título indica si los horarios son el *Valor predeterminado del producto*, vienen *De la plantilla «…»* o son un *Ajuste del espacio*. **Volver a la plantilla** repone los horarios de la última plantilla aplicada; **Volver al valor predeterminado** quita los horarios propios del espacio. La edición sigue en los campos de abajo.
+
 #### Días de cierre
 
 Fechas en que el espacio está cerrado sea cual sea el día de la semana:

@@ -490,6 +490,8 @@ The start and end of the working day. With the granularity, they decide
 what a half-day is — which is the unit every allowance, every quota and
 every invoice line counts in.
 
+**Where the hours came from (#1307).** A chip under the heading says whether the hours are the *Product default*, came *From template «…»*, or are a *Workspace setting*. **Reset to template** puts back the hours the last applied template delivered; **Reset to product default** removes the workspace's own hours. Editing stays in the fields below.
+
 <!-- anchor: user.workspace.availability.closure-days -->
 #### Closure days
 

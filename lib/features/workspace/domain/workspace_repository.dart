@@ -20,6 +20,7 @@ import 'site.dart';
 import 'template_outline.dart';
 import 'template_preview.dart';
 import 'template_publication.dart';
+import 'work_hours_provenance.dart';
 import 'workspace_settings_save.dart';
 import 'workspace_template.dart';
 
@@ -435,6 +436,11 @@ abstract class WorkspaceRepository {
   /// Owner-only (RLS-enforced): persist the working day inside
   /// booking_rules without clobbering its other keys.
   Future<void> setWorkHours(String workspaceId, WorkHours hours);
+
+  /// #1307 S4 — where the working day came from, and the way back to the
+  /// product's own hours (the keys removed).
+  Future<WorkHoursProvenance> fetchWorkHoursProvenance(String workspaceId);
+  Future<void> resetWorkHoursToDefault(String workspaceId);
 
   /// The three #600 booking-policy switches (booking_rules keys).
   Future<BookingPolicies> fetchBookingPolicies(String workspaceId);

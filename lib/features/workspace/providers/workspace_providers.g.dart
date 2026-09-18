@@ -785,6 +785,56 @@ final class WorkHoursProvider
 
 String _$workHoursHash() => r'3633e9e8c3605565e56f1c45673591d292c221de';
 
+/// #1307 S4 — where the active workspace's working day came from. Watches
+/// [workHoursProvider], so an edit or a reset re-asks.
+
+@ProviderFor(workHoursProvenance)
+final workHoursProvenanceProvider = WorkHoursProvenanceProvider._();
+
+/// #1307 S4 — where the active workspace's working day came from. Watches
+/// [workHoursProvider], so an edit or a reset re-asks.
+
+final class WorkHoursProvenanceProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<WorkHoursProvenance>,
+          WorkHoursProvenance,
+          FutureOr<WorkHoursProvenance>
+        >
+    with
+        $FutureModifier<WorkHoursProvenance>,
+        $FutureProvider<WorkHoursProvenance> {
+  /// #1307 S4 — where the active workspace's working day came from. Watches
+  /// [workHoursProvider], so an edit or a reset re-asks.
+  WorkHoursProvenanceProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'workHoursProvenanceProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$workHoursProvenanceHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<WorkHoursProvenance> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<WorkHoursProvenance> create(Ref ref) {
+    return workHoursProvenance(ref);
+  }
+}
+
+String _$workHoursProvenanceHash() =>
+    r'01abb85fafea3f0a30700a038ad0464844a0a61c';
+
 /// Notes visible to me in the active workspace (#456), newest first —
 /// the shell listens and surfaces arrivals as local notifications.
 

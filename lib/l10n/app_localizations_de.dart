@@ -10636,6 +10636,23 @@ class AppLocalizationsDe extends AppLocalizations {
       'Jemand hat diese Einstellungen geändert, während Sie sie bearbeitet haben. Nichts wurde gespeichert; Ihre Änderungen sind noch da.';
 
   @override
+  String get provenanceProductDefault => 'Produktstandard';
+
+  @override
+  String provenanceFromTemplate(String name) {
+    return 'Aus Vorlage „$name“';
+  }
+
+  @override
+  String get provenanceWorkspaceSetting => 'Einstellung des Raums';
+
+  @override
+  String get provenanceResetToTemplate => 'Auf Vorlage zurücksetzen';
+
+  @override
+  String get provenanceResetToDefault => 'Auf Produktstandard zurücksetzen';
+
+  @override
   String get workspaceSettingsCurrencyHelper =>
       'Wird vom Land vorbelegt — überschreiben, falls eure Community in einer anderen Währung abrechnet.';
 

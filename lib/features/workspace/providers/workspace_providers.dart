@@ -17,6 +17,7 @@ import '../domain/member_note.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_feature.dart';
 import '../domain/workspace_permission.dart';
+import '../domain/work_hours_provenance.dart';
 import '../domain/workspace_repository.dart';
 import '../application/set_wording_term.dart';
 import '../domain/new_member_defaults.dart';
@@ -247,6 +248,17 @@ Future<WorkHours> workHours(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return WorkHours.defaults;
   return repository.fetchWorkHours(workspace.id);
+}
+
+/// #1307 S4 — where the active workspace's working day came from. Watches
+/// [workHoursProvider], so an edit or a reset re-asks.
+@riverpod
+Future<WorkHoursProvenance> workHoursProvenance(Ref ref) async {
+  final repository = ref.watch(workspaceRepositoryProvider);
+  await ref.watch(workHoursProvider.future);
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return WorkHoursProvenance.productDefault;
+  return repository.fetchWorkHoursProvenance(workspace.id);
 }
 
 /// Notes visible to me in the active workspace (#456), newest first —
