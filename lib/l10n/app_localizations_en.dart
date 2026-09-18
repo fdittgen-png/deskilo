@@ -8088,6 +8088,96 @@ class AppLocalizationsEn extends AppLocalizations {
   String get processFilterEmpty => 'No process matches this filter.';
 
   @override
+  String get processSwitchOn => 'Switch on';
+
+  @override
+  String get processSwitchOff => 'Switch off';
+
+  @override
+  String processSheetTitleOn(String name) {
+    return 'Switch on $name';
+  }
+
+  @override
+  String processSheetTitleOff(String name) {
+    return 'Switch off $name';
+  }
+
+  @override
+  String get processSectionSwitchedOn => 'Switched on';
+
+  @override
+  String get processSectionAlsoNeeded => 'Also needed';
+
+  @override
+  String get processSectionAlreadyOn => 'Already on';
+
+  @override
+  String get processSectionWorksAgain => 'Works again';
+
+  @override
+  String get processSectionSwitchedOff => 'Switched off';
+
+  @override
+  String get processSectionKeptWaiting => 'Stops working; its setting is kept';
+
+  @override
+  String get processSectionAlsoOff => 'Also switched off';
+
+  @override
+  String processNeededBy(String features) {
+    return 'needed by $features';
+  }
+
+  @override
+  String processInProcess(String process) {
+    return 'in $process';
+  }
+
+  @override
+  String processBlockedIntro(String feature, String features) {
+    return '$feature is still needed by: $features';
+  }
+
+  @override
+  String get processKeepDependants => 'Switch off anyway, keep their settings';
+
+  @override
+  String processRemoveDependants(int count) {
+    return 'Also switch off the $count dependants';
+  }
+
+  @override
+  String processConfirmOn(int count) {
+    return 'Switch on $count features';
+  }
+
+  @override
+  String processConfirmOff(int count) {
+    return 'Switch off $count features';
+  }
+
+  @override
+  String get processNothingToDo => 'Already the case — nothing to change.';
+
+  @override
+  String get processConflict =>
+      'Someone changed the features meanwhile. This is the updated preview — check it again.';
+
+  @override
+  String get processUnconfirmed =>
+      'The change was written, but the app could not confirm it. Close and reopen the features to see the current state.';
+
+  @override
+  String processApplied(int count) {
+    return '$count features changed.';
+  }
+
+  @override
+  String get processChangeFailed =>
+      'The features could not be changed. Nothing was written; try again.';
+
+  @override
   String get processWorkspaceAccess => 'Workspace & access';
 
   @override

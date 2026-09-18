@@ -14135,6 +14135,144 @@ abstract class AppLocalizations {
   /// **'No process matches this filter.'**
   String get processFilterEmpty;
 
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'Switch on'**
+  String get processSwitchOn;
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'Switch off'**
+  String get processSwitchOff;
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'Switch on {name}'**
+  String processSheetTitleOn(String name);
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'Switch off {name}'**
+  String processSheetTitleOff(String name);
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'Switched on'**
+  String get processSectionSwitchedOn;
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'Also needed'**
+  String get processSectionAlsoNeeded;
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'Already on'**
+  String get processSectionAlreadyOn;
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'Works again'**
+  String get processSectionWorksAgain;
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'Switched off'**
+  String get processSectionSwitchedOff;
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'Stops working; its setting is kept'**
+  String get processSectionKeptWaiting;
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'Also switched off'**
+  String get processSectionAlsoOff;
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'needed by {features}'**
+  String processNeededBy(String features);
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'in {process}'**
+  String processInProcess(String process);
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'{feature} is still needed by: {features}'**
+  String processBlockedIntro(String feature, String features);
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'Switch off anyway, keep their settings'**
+  String get processKeepDependants;
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'Also switch off the {count} dependants'**
+  String processRemoveDependants(int count);
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'Switch on {count} features'**
+  String processConfirmOn(int count);
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'Switch off {count} features'**
+  String processConfirmOff(int count);
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'Already the case — nothing to change.'**
+  String get processNothingToDo;
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'Someone changed the features meanwhile. This is the updated preview — check it again.'**
+  String get processConflict;
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'The change was written, but the app could not confirm it. Close and reopen the features to see the current state.'**
+  String get processUnconfirmed;
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'{count} features changed.'**
+  String processApplied(int count);
+
+  /// #1329 the process change preview and apply
+  ///
+  /// In en, this message translates to:
+  /// **'The features could not be changed. Nothing was written; try again.'**
+  String get processChangeFailed;
+
   /// No description provided for @processWorkspaceAccess.
   ///
   /// In en, this message translates to:

@@ -238,3 +238,17 @@ List<String> validateProcessRegistry(
   }
   return errors;
 }
+
+/// The process whose subprocess names [feature], or null for a capability
+/// no subprocess lists (an internal one reached through `requires`).
+String? homeProcessOf(
+  WorkspaceFeature feature, {
+  List<WorkspaceProcess> processes = workspaceProcesses,
+}) {
+  for (final process in processes) {
+    for (final subprocess in process.subprocesses) {
+      if (subprocess.capabilities.contains(feature)) return process.key;
+    }
+  }
+  return null;
+}

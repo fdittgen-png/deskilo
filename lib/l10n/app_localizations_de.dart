@@ -8158,6 +8158,98 @@ class AppLocalizationsDe extends AppLocalizations {
   String get processFilterEmpty => 'Kein Prozess passt zu diesem Filter.';
 
   @override
+  String get processSwitchOn => 'Einschalten';
+
+  @override
+  String get processSwitchOff => 'Ausschalten';
+
+  @override
+  String processSheetTitleOn(String name) {
+    return '$name einschalten';
+  }
+
+  @override
+  String processSheetTitleOff(String name) {
+    return '$name ausschalten';
+  }
+
+  @override
+  String get processSectionSwitchedOn => 'Eingeschaltet';
+
+  @override
+  String get processSectionAlsoNeeded => 'Ebenfalls nötig';
+
+  @override
+  String get processSectionAlreadyOn => 'Bereits an';
+
+  @override
+  String get processSectionWorksAgain => 'Funktionieren wieder';
+
+  @override
+  String get processSectionSwitchedOff => 'Ausgeschaltet';
+
+  @override
+  String get processSectionKeptWaiting =>
+      'Funktionieren nicht mehr; die Einstellung bleibt';
+
+  @override
+  String get processSectionAlsoOff => 'Ebenfalls ausgeschaltet';
+
+  @override
+  String processNeededBy(String features) {
+    return 'benötigt von $features';
+  }
+
+  @override
+  String processInProcess(String process) {
+    return 'in $process';
+  }
+
+  @override
+  String processBlockedIntro(String feature, String features) {
+    return '$feature wird noch benötigt von: $features';
+  }
+
+  @override
+  String get processKeepDependants =>
+      'Trotzdem ausschalten, Einstellungen behalten';
+
+  @override
+  String processRemoveDependants(int count) {
+    return 'Auch die $count abhängigen Funktionen ausschalten';
+  }
+
+  @override
+  String processConfirmOn(int count) {
+    return '$count Funktionen einschalten';
+  }
+
+  @override
+  String processConfirmOff(int count) {
+    return '$count Funktionen ausschalten';
+  }
+
+  @override
+  String get processNothingToDo => 'Ist bereits so — nichts zu ändern.';
+
+  @override
+  String get processConflict =>
+      'Jemand hat die Funktionen inzwischen geändert. Dies ist die aktualisierte Vorschau — prüfen Sie sie erneut.';
+
+  @override
+  String get processUnconfirmed =>
+      'Die Änderung wurde geschrieben, aber die App konnte sie nicht bestätigen. Schließen und öffnen Sie die Funktionen erneut, um den aktuellen Stand zu sehen.';
+
+  @override
+  String processApplied(int count) {
+    return '$count Funktionen geändert.';
+  }
+
+  @override
+  String get processChangeFailed =>
+      'Die Funktionen konnten nicht geändert werden. Nichts wurde geschrieben; versuchen Sie es erneut.';
+
+  @override
   String get processWorkspaceAccess => 'Arbeitsbereich und Zugang';
 
   @override

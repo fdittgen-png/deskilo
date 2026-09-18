@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/process_status.dart';
 import '../../domain/workspace_feature.dart';
 import '../process_search.dart';
 import 'process_card.dart';
+import 'process_change_sheet.dart';
 
 /// The Features screen's primary view (#1327): one card per business
 /// process instead of a hundred switches.
@@ -74,6 +76,28 @@ class _ProcessOverviewState extends State<ProcessOverview> {
     });
   }
 
+  /// #1329 — the one preview-and-apply sheet; success is said only once
+  /// the sheet came back with what the server confirmed.
+  Future<void> _change(
+    BuildContext context,
+    String processKey,
+    List<String> subprocessKeys,
+    bool activate,
+  ) async {
+    final written = await showProcessChangeSheet(
+      context,
+      processKey: processKey,
+      subprocessKeys: subprocessKeys,
+      activate: activate,
+    );
+    if (written == null || !context.mounted) return;
+    final l10n = AppLocalizations.of(context);
+    AppSnack.success(
+      context,
+      l10n?.processApplied(written) ?? '$written features changed.',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -130,6 +154,12 @@ class _ProcessOverviewState extends State<ProcessOverview> {
                       if (!_expanded.remove(key)) _expanded.add(key);
                     }),
                     onOpenFeature: widget.onOpenFeature,
+                    onChange: (activate, keys) => _change(
+                      context,
+                      status.process.key,
+                      keys,
+                      activate,
+                    ),
                   ),
                 ),
           ],

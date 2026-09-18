@@ -51,6 +51,7 @@ class ProcessCard extends StatelessWidget {
     required this.expanded,
     required this.onToggle,
     required this.onOpenFeature,
+    this.onChange,
     this.subprocessKeys = const {},
   });
 
@@ -58,6 +59,11 @@ class ProcessCard extends StatelessWidget {
   final bool expanded;
   final VoidCallback onToggle;
   final ValueChanged<WorkspaceFeature> onOpenFeature;
+
+  /// #1329 — switch a whole process, or one subprocess, on or off: the
+  /// host opens the one preview-and-apply sheet. Null keeps the card
+  /// read-only.
+  final void Function(bool activate, List<String> subprocessKeys)? onChange;
 
   /// Keys for the subprocess rows, so a search hit can scroll to one.
   final Map<String, GlobalKey> subprocessKeys;
@@ -148,6 +154,7 @@ class ProcessCard extends StatelessWidget {
                     status: status,
                     subprocessKeys: subprocessKeys,
                     onOpenFeature: onOpenFeature,
+                    onChange: onChange,
                   )
                 : const SizedBox.shrink(),
           ),
@@ -226,11 +233,13 @@ class _Detail extends StatelessWidget {
     required this.status,
     required this.subprocessKeys,
     required this.onOpenFeature,
+    required this.onChange,
   });
 
   final ProcessStatus status;
   final Map<String, GlobalKey> subprocessKeys;
   final ValueChanged<WorkspaceFeature> onOpenFeature;
+  final void Function(bool activate, List<String> subprocessKeys)? onChange;
 
   @override
   Widget build(BuildContext context) {
@@ -240,6 +249,17 @@ class _Detail extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Divider(height: 1),
+        if (onChange case final change?)
+          _ChangeActions(
+            keyPrefix: 'process',
+            id: status.process.key,
+            canSwitchOn: status.state != ProcessState.active,
+            canSwitchOff: status.enabledCount > 0,
+            onChange: (activate) => change(
+              activate,
+              [for (final s in status.subprocesses) s.subprocess.key],
+            ),
+          ),
         Padding(
           padding: const EdgeInsets.fromLTRB(
             AppSpacing.md,
@@ -259,6 +279,17 @@ class _Detail extends StatelessWidget {
           _SubprocessHeading(
             key: subprocessKeys[sub.subprocess.key],
             status: sub,
+            actions: onChange == null
+                ? null
+                : _ChangeActions(
+                    keyPrefix: 'sub',
+                    id: sub.subprocess.key,
+                    compact: true,
+                    canSwitchOn: sub.state != ProcessState.active,
+                    canSwitchOff: sub.enabled.isNotEmpty,
+                    onChange: (activate) =>
+                        onChange!(activate, [sub.subprocess.key]),
+                  ),
           ),
           for (final feature in sub.subprocess.capabilities)
             if (_stateOf(sub, feature) case final line?)
@@ -316,9 +347,10 @@ typedef _FeatureLine = ({
 });
 
 class _SubprocessHeading extends StatelessWidget {
-  const _SubprocessHeading({super.key, required this.status});
+  const _SubprocessHeading({super.key, required this.status, this.actions});
 
   final SubprocessStatus status;
+  final Widget? actions;
 
   @override
   Widget build(BuildContext context) {
@@ -356,8 +388,73 @@ class _SubprocessHeading extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.xs),
             _StateLine(state: status.state, label: '$stateLabel · $count'),
+            ?actions,
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Switch on / Switch off for a process or a subprocess (#1329). Only
+/// the choice that changes something is offered.
+class _ChangeActions extends StatelessWidget {
+  const _ChangeActions({
+    required this.keyPrefix,
+    required this.id,
+    required this.canSwitchOn,
+    required this.canSwitchOff,
+    required this.onChange,
+    this.compact = false,
+  });
+
+  final String keyPrefix;
+  final String id;
+  final bool canSwitchOn;
+  final bool canSwitchOff;
+  final bool compact;
+  final ValueChanged<bool> onChange;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final on = l10n?.processSwitchOn ?? 'Switch on';
+    final off = l10n?.processSwitchOff ?? 'Switch off';
+    return Padding(
+      padding: compact
+          ? const EdgeInsets.only(top: AppSpacing.xs)
+          : const EdgeInsets.fromLTRB(
+              AppSpacing.md, AppSpacing.sm, AppSpacing.md, 0),
+      child: Wrap(
+        spacing: AppSpacing.sm,
+        children: [
+          if (canSwitchOn)
+            compact
+                ? TextButton(
+                    key: ValueKey('$keyPrefix-on-$id'),
+                    onPressed: () => onChange(true),
+                    child: Text(on),
+                  )
+                : FilledButton.tonalIcon(
+                    key: ValueKey('$keyPrefix-on-$id'),
+                    onPressed: () => onChange(true),
+                    icon: const Icon(Icons.toggle_on_outlined),
+                    label: Text(on),
+                  ),
+          if (canSwitchOff)
+            compact
+                ? TextButton(
+                    key: ValueKey('$keyPrefix-off-$id'),
+                    onPressed: () => onChange(false),
+                    child: Text(off),
+                  )
+                : OutlinedButton.icon(
+                    key: ValueKey('$keyPrefix-off-$id'),
+                    onPressed: () => onChange(false),
+                    icon: const Icon(Icons.toggle_off_outlined),
+                    label: Text(off),
+                  ),
+        ],
       ),
     );
   }

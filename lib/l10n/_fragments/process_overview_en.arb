@@ -97,5 +97,145 @@
   "processFilterEmpty": "No process matches this filter.",
   "@processFilterEmpty": {
     "description": "#1327 the process-first overview of the Features screen"
+  },
+  "processSwitchOn": "Switch on",
+  "@processSwitchOn": {
+    "description": "#1329 the process change preview and apply"
+  },
+  "processSwitchOff": "Switch off",
+  "@processSwitchOff": {
+    "description": "#1329 the process change preview and apply"
+  },
+  "processSheetTitleOn": "Switch on {name}",
+  "@processSheetTitleOn": {
+    "description": "#1329 the process change preview and apply",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "processSheetTitleOff": "Switch off {name}",
+  "@processSheetTitleOff": {
+    "description": "#1329 the process change preview and apply",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "processSectionSwitchedOn": "Switched on",
+  "@processSectionSwitchedOn": {
+    "description": "#1329 the process change preview and apply"
+  },
+  "processSectionAlsoNeeded": "Also needed",
+  "@processSectionAlsoNeeded": {
+    "description": "#1329 the process change preview and apply"
+  },
+  "processSectionAlreadyOn": "Already on",
+  "@processSectionAlreadyOn": {
+    "description": "#1329 the process change preview and apply"
+  },
+  "processSectionWorksAgain": "Works again",
+  "@processSectionWorksAgain": {
+    "description": "#1329 the process change preview and apply"
+  },
+  "processSectionSwitchedOff": "Switched off",
+  "@processSectionSwitchedOff": {
+    "description": "#1329 the process change preview and apply"
+  },
+  "processSectionKeptWaiting": "Stops working; its setting is kept",
+  "@processSectionKeptWaiting": {
+    "description": "#1329 the process change preview and apply"
+  },
+  "processSectionAlsoOff": "Also switched off",
+  "@processSectionAlsoOff": {
+    "description": "#1329 the process change preview and apply"
+  },
+  "processNeededBy": "needed by {features}",
+  "@processNeededBy": {
+    "description": "#1329 the process change preview and apply",
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "processInProcess": "in {process}",
+  "@processInProcess": {
+    "description": "#1329 the process change preview and apply",
+    "placeholders": {
+      "process": {
+        "type": "String"
+      }
+    }
+  },
+  "processBlockedIntro": "{feature} is still needed by: {features}",
+  "@processBlockedIntro": {
+    "description": "#1329 the process change preview and apply",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      },
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "processKeepDependants": "Switch off anyway, keep their settings",
+  "@processKeepDependants": {
+    "description": "#1329 the process change preview and apply"
+  },
+  "processRemoveDependants": "Also switch off the {count} dependants",
+  "@processRemoveDependants": {
+    "description": "#1329 the process change preview and apply",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "processConfirmOn": "Switch on {count} features",
+  "@processConfirmOn": {
+    "description": "#1329 the process change preview and apply",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "processConfirmOff": "Switch off {count} features",
+  "@processConfirmOff": {
+    "description": "#1329 the process change preview and apply",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "processNothingToDo": "Already the case — nothing to change.",
+  "@processNothingToDo": {
+    "description": "#1329 the process change preview and apply"
+  },
+  "processConflict": "Someone changed the features meanwhile. This is the updated preview — check it again.",
+  "@processConflict": {
+    "description": "#1329 the process change preview and apply"
+  },
+  "processUnconfirmed": "The change was written, but the app could not confirm it. Close and reopen the features to see the current state.",
+  "@processUnconfirmed": {
+    "description": "#1329 the process change preview and apply"
+  },
+  "processApplied": "{count} features changed.",
+  "@processApplied": {
+    "description": "#1329 the process change preview and apply",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "processChangeFailed": "The features could not be changed. Nothing was written; try again.",
+  "@processChangeFailed": {
+    "description": "#1329 the process change preview and apply"
   }
 }
