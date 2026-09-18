@@ -29,7 +29,7 @@ Totals by layer and by action: run the tool — they are printed, not committed,
 | Number sequences: invalid pairs, no reuse | #1338 / #1320 | lands with the #1320 fix |
 | Restore drill: dump, restore into a fresh database, reconcile | #1338 / #1310 | the `Restore drill` step in quality · database (#1310 S1) |
 | Export completeness: paging, manifest, ZIP | #1338 / #1310 | #1310 S2, blocked on #1312 for schema_version |
-| Instance install, resume, doctor isolation | #1337 / #1314 | lands with #1314; schema marker with #1312 |
+| Instance install, resume, doctor isolation | #1337 / #1314 | the `Install, resume and upgrade a real schema` step in quality · database (#1337) |
 | Journeys: decision without the bell, onboarding retry | #1339 | with #1306 and #1303 |
 | State model: stale, offline, empty, error | #1339 / #1305 | with #1305 |
 
@@ -570,5 +570,6 @@ Totals by layer and by action: run the tool — they are printed, not committed,
 | `test/perf/floor_plan_painter_test.dart` | perf | #1236 — the first performance budget this repository holds that is not a flake threshold. | 4 | yes | none | a performance or property contract — #1236 | no | KEEP |  |
 | `test/property/money_properties_test.dart` | property | #1232 — property-based tests, on the arithmetic that must never invent or lose a cent. | 10 | yes | none | a performance or property contract — #1232, #1251 | no | KEEP |  |
 | `test/tool/media_cli_test.dart` | tool | #1017 — the only judgement the screenshot pipeline makes on its own: how far the second capture of a form slides up over the first. | 5 | yes | none | a repository tool — #1017 | no | KEEP |  |
+| `test/tool/psql_management_test.dart` | tool | #1337 — the psql adapter under the lifecycle check answers the way the Management API does: a migration is ONE query, rows come back typed, and a database… | 8 | yes | none | a repository tool — #1337 | no | KEEP |  |
 | `test/tool/report_cli_test.dart` | tool | #875 — the local report runner works from a cold shell. | 6 | yes | repository sources, temp filesystem | a repository tool — #875 | no | KEEP |  |
 | `test/ux/tap_budget_test.dart` | journey | #1247 — the UX score, as a build output. | 7 | yes | fakes | a user journey budget — #1247, #1225, #1306 | no | KEEP |  |
