@@ -208,7 +208,10 @@ Future<ProcessApplyResult> applyProcessChange(
   required Workspace workspace,
   required ProcessChangePlan plan,
 }) async {
-  if (plan.isBlocked || plan.flags.isEmpty) {
+  // A refused deactivation has an empty delta; one the owner resolved
+  // (kept or removed the dependants) carries its flags and still reports
+  // `isBlocked`, which is the resolver's answer, not a veto on the write.
+  if (plan.flags.isEmpty) {
     return ProcessApplyResult.nothingToDo;
   }
   await ref.read(workspaceRepositoryProvider).setFeatureFlags(

@@ -5,10 +5,12 @@
 // registry, said in words beside an icon; search reaches every level
 // with its path, the filters narrow the cards, and a tapped feature
 // lands on its switch, which writes the same delta as before.
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/mock_providers.dart';
 import 'features_screen_test.dart' show pumpFeatures;
 
 /// One stored map that puts four processes in four different states:
@@ -40,7 +42,7 @@ Finder _card(String key) => find.byKey(ValueKey('process-$key'));
 Finder _inCard(String key, String text) =>
     find.descendant(of: _card(key), matching: find.text(text));
 
-Future<void> _pumpOverview(
+Future<FakeWorkspaceRepository> _pumpOverview(
   WidgetTester tester, {
   Size size = const Size(800, 4000),
 }) => pumpFeatures(tester, featureFlags: _fixture, size: size, switches: false);
@@ -275,5 +277,133 @@ void main() {
       ),
       findsNothing,
     );
+  });
+
+  group('#1329 — a process is switched through ONE preview, and the write '
+      'is conditioned on what it showed', () {
+    Future<void> tapKey(WidgetTester tester, String key) async {
+      final finder = find.byKey(ValueKey(key));
+      await tester.ensureVisible(finder);
+      await tester.pumpAndSettle();
+      await tester.tap(finder);
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('Switch on shows the preview, and confirming writes the '
+        'delta with the read-set; success is said after the refetch',
+        (tester) async {
+      final workspace = await _pumpOverview(tester);
+      await tester.tap(find.byKey(const ValueKey('process-header-coordination')));
+      await tester.pumpAndSettle();
+      await tapKey(tester, 'process-on-coordination');
+
+      expect(find.byKey(const ValueKey('process-change-sheet')), findsOneWidget);
+      expect(find.byKey(const ValueKey('process-change-section-on')), findsOneWidget);
+      expect(workspace.flagWrites, isEmpty, reason: 'nothing before confirm');
+
+      await tapKey(tester, 'process-change-confirm');
+      expect(workspace.flagWrites, hasLength(1));
+      final written = workspace.flagWrites.single;
+      expect(written['calendarHub'], isTrue);
+      expect(written.values.every((bool v) => v), isTrue);
+      final expected = workspace.flagExpectations.single!;
+      expect(expected.keys, containsAll(written.keys),
+          reason: 'the read-set covers every written key');
+      expect(expected['calendarHub'], isFalse, reason: 'as it was read');
+      expect(find.byKey(const ValueKey('process-change-sheet')), findsNothing);
+      expect(find.textContaining('features changed.'), findsOneWidget);
+    });
+
+    testWidgets('a conflict writes nothing, refetches and shows the updated '
+        'preview to confirm again — the old delta is never replayed',
+        (tester) async {
+      final workspace = await _pumpOverview(tester)..flagConflictNext = true;
+      await tester.tap(find.byKey(const ValueKey('process-header-coordination')));
+      await tester.pumpAndSettle();
+      await tapKey(tester, 'process-on-coordination');
+      await tapKey(tester, 'process-change-confirm');
+
+      expect(workspace.flagWrites, isEmpty, reason: 'the conflict wrote nothing');
+      expect(find.byKey(const ValueKey('process-change-conflict')), findsOneWidget);
+      expect(find.byKey(const ValueKey('process-change-sheet')), findsOneWidget,
+          reason: 'still open, on the refreshed preview');
+      expect(find.textContaining('features changed.'), findsNothing);
+
+      await tapKey(tester, 'process-change-confirm');
+      expect(workspace.flagWrites, hasLength(1));
+      expect(workspace.flagExpectations, hasLength(2),
+          reason: 'the second attempt carried its own read-set');
+    });
+
+    testWidgets('a stale read-set on the fake is refused the way the server '
+        'refuses it', (tester) async {
+      final workspace = await _pumpOverview(tester);
+      await tester.tap(find.byKey(const ValueKey('process-header-coordination')));
+      await tester.pumpAndSettle();
+      await tapKey(tester, 'process-on-coordination');
+      // Someone else switches a prerequisite on behind the preview.
+      workspace.workspaces[0] = workspace.workspaces[0].copyWith(
+        featureFlags: {...workspace.workspaces[0].featureFlags, 'calendarHub': true},
+      );
+      await tapKey(tester, 'process-change-confirm');
+      expect(workspace.flagWrites, isEmpty);
+      expect(find.byKey(const ValueKey('process-change-conflict')), findsOneWidget);
+    });
+
+    testWidgets('switching off a prerequisite that others still need is '
+        'refused first, and the owner chooses how', (tester) async {
+      // Integrations is fully on: switching its whole process off orphans
+      // nothing in the fixture, so ask for one subprocess whose feature
+      // has a stored-on dependant elsewhere — find it from the registry.
+      final workspace = await _pumpOverview(tester);
+      final raw = resolveEnabledFeatures(workspace.workspaces[0].featureFlags);
+      String? subKey;
+      String? processKey;
+      for (final process in workspaceProcesses) {
+        for (final sub in process.subprocesses) {
+          for (final feature in sub.capabilities) {
+            if (!raw.contains(feature)) continue;
+            final dependants = dependentFeatures(feature)
+                .where((d) => raw.contains(d) && !sub.capabilities.contains(d));
+            if (dependants.isNotEmpty) {
+              subKey = sub.key;
+              processKey = process.key;
+              break;
+            }
+          }
+          if (subKey != null) break;
+        }
+        if (subKey != null) break;
+      }
+      expect(subKey, isNotNull, reason: 'the fixture has an on prerequisite');
+
+      await tester.tap(find.byKey(ValueKey('process-header-$processKey')));
+      await tester.pumpAndSettle();
+      await tapKey(tester, 'sub-off-$subKey');
+      expect(find.byKey(const ValueKey('process-change-keep')), findsOneWidget);
+      final confirm = tester.widget<FilledButton>(
+          find.byKey(const ValueKey('process-change-confirm')));
+      expect(confirm.onPressed, isNull, reason: 'refused until a choice is made');
+
+      await tapKey(tester, 'process-change-keep');
+      expect(find.byKey(const ValueKey('process-change-section-kept')), findsOneWidget);
+      await tapKey(tester, 'process-change-confirm');
+      final written = workspace.flagWrites.single;
+      expect(written.values.every((bool v) => !v), isTrue);
+      expect(written.keys,
+          everyElement(isIn([for (final f in raw) f.dbKey])));
+      for (final sub in workspaceProcesses.expand((p) => p.subprocesses)) {
+        if (sub.key != subKey) continue;
+        for (final f in sub.capabilities) {
+          if (raw.contains(f) && !internalCapabilities.containsKey(f)) {
+            expect(written[f.dbKey], isFalse);
+          }
+        }
+      }
+      // The stored dependants were not written.
+      expect(workspace.flagExpectations.single!.length,
+          greaterThan(written.length),
+          reason: 'the read-set includes the dependants the delta leaves alone');
+    });
   });
 }
