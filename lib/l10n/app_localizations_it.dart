@@ -6397,6 +6397,19 @@ class AppLocalizationsIt extends AppLocalizations {
       'Disegnate la vostra pianta su una tela vuota.';
 
   @override
+  String libraryProcessOn(String feature) {
+    return '$feature attiva';
+  }
+
+  @override
+  String libraryProcessOff(String feature) {
+    return '$feature disattivata';
+  }
+
+  @override
+  String get libraryProcessTechnical => 'Tecnico';
+
+  @override
   String get featureManagedProfileAccess => 'Chi amministra un profilo';
 
   @override

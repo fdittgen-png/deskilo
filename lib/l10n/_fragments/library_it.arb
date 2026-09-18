@@ -109,5 +109,27 @@
   "onboardingTemplateSetsUp": "Configura: {groups}",
   "onboardingStartFrom": "Partire da",
   "onboardingStartEmpty": "Spazio vuoto",
-  "onboardingStartEmptyDesc": "Disegnate la vostra pianta su una tela vuota."
+  "onboardingStartEmptyDesc": "Disegnate la vostra pianta su una tela vuota.",
+  "libraryProcessOn": "{feature} attiva",
+  "@libraryProcessOn": {
+    "description": "Template apply preview (#1330): a feature the group switches on, under its process",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryProcessOff": "{feature} disattivata",
+  "@libraryProcessOff": {
+    "description": "Template apply preview (#1330): a feature the group switches off, under its process",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryProcessTechnical": "Tecnico",
+  "@libraryProcessTechnical": {
+    "description": "Template apply preview (#1330): the heading for reserved capabilities no process lists"
+  }
 }

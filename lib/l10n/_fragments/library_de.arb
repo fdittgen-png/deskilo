@@ -109,5 +109,27 @@
   "onboardingTemplateSetsUp": "Richtet ein: {groups}",
   "onboardingStartFrom": "Beginnen mit",
   "onboardingStartEmpty": "Leerer Raum",
-  "onboardingStartEmptyDesc": "Zeichnen Sie Ihren eigenen Plan auf einer leeren Fläche."
+  "onboardingStartEmptyDesc": "Zeichnen Sie Ihren eigenen Plan auf einer leeren Fläche.",
+  "libraryProcessOn": "{feature} an",
+  "@libraryProcessOn": {
+    "description": "Template apply preview (#1330): a feature the group switches on, under its process",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryProcessOff": "{feature} aus",
+  "@libraryProcessOff": {
+    "description": "Template apply preview (#1330): a feature the group switches off, under its process",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryProcessTechnical": "Technisch",
+  "@libraryProcessTechnical": {
+    "description": "Template apply preview (#1330): the heading for reserved capabilities no process lists"
+  }
 }

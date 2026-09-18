@@ -6642,6 +6642,28 @@
   "onboardingStartFrom": "Start from",
   "onboardingStartEmpty": "Empty space",
   "onboardingStartEmptyDesc": "Draw your own plan from a blank canvas.",
+  "libraryProcessOn": "{feature} on",
+  "@libraryProcessOn": {
+    "description": "Template apply preview (#1330): a feature the group switches on, under its process",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryProcessOff": "{feature} off",
+  "@libraryProcessOff": {
+    "description": "Template apply preview (#1330): a feature the group switches off, under its process",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryProcessTechnical": "Technical",
+  "@libraryProcessTechnical": {
+    "description": "Template apply preview (#1330): the heading for reserved capabilities no process lists"
+  },
   "featureManagedProfileAccess": "Who administers a profile",
   "@featureManagedProfileAccess": {
     "description": "#914 managed profile access: name"

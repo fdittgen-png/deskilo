@@ -11027,6 +11027,24 @@ abstract class AppLocalizations {
   /// **'Draw your own plan from a blank canvas.'**
   String get onboardingStartEmptyDesc;
 
+  /// Template apply preview (#1330): a feature the group switches on, under its process
+  ///
+  /// In en, this message translates to:
+  /// **'{feature} on'**
+  String libraryProcessOn(String feature);
+
+  /// Template apply preview (#1330): a feature the group switches off, under its process
+  ///
+  /// In en, this message translates to:
+  /// **'{feature} off'**
+  String libraryProcessOff(String feature);
+
+  /// Template apply preview (#1330): the heading for reserved capabilities no process lists
+  ///
+  /// In en, this message translates to:
+  /// **'Technical'**
+  String get libraryProcessTechnical;
+
   /// #914 managed profile access: name
   ///
   /// In en, this message translates to:
