@@ -26,3 +26,4 @@ Query budgets|database|step|conditional||indexes exist, the planner uses them at
 Policy drift|database|step|conditional||live policies equal the set the migrations build
 Restore drill|database|step|conditional||seeded, dumped, restored into a fresh database, counts equal and reconciled
 Payments|database|step|conditional||the real payment handler opens the caller's intent; strangers and no token refused
+Instance lifecycle|database|step|conditional||empty install, interrupted resume, upgrade from N, foreign table blocks, marker per migration, doctor probe isolation
