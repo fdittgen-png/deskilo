@@ -30,8 +30,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:deskilo/features/workspace/presentation/feature_copy.dart';
 import 'package:deskilo/features/workspace/presentation/feature_names.dart';
+import 'package:deskilo/features/workspace/presentation/process_names.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -147,6 +149,89 @@ void main() {
           '(ARB or web/setup_l10n/*.json) — run '
           '`dart run tool/build_setup_l10n.dart` and commit the result',
     );
+  });
+
+  // #1330 — the page groups its switches by the app's process registry.
+  // The structure is generated (setup_catalogue.js), the words ride in the
+  // l10n resource; neither may drift from workspace_process.dart.
+  group('process catalogue', () {
+    test('web/setup_catalogue.js is what build_setup_l10n produces today', () {
+      expect(
+        File(setupCatalogueOutput).readAsStringSync(),
+        buildSetupCatalogue(),
+        reason:
+            'the setup questionnaire\'s process catalogue drifted from '
+            'workspaceProcesses — run `dart run tool/build_setup_l10n.dart` '
+            'and commit the result',
+      );
+    });
+
+    test('the catalogue is the registry: every process, every subprocess, '
+        'every capability, in order', () {
+      const prefix = 'window.SETUP_PROCESSES=';
+      final js = File(setupCatalogueOutput).readAsStringSync();
+      final start = js.indexOf(prefix);
+      final decoded =
+          jsonDecode(js.substring(start + prefix.length, js.lastIndexOf(';')))
+              as List<dynamic>;
+      final want = [
+        for (final p in workspaceProcesses)
+          {
+            'key': p.key,
+            'subprocesses': [
+              for (final sp in p.subprocesses)
+                {
+                  'key': sp.key,
+                  'features': [for (final f in sp.capabilities) f.name],
+                },
+            ],
+          },
+      ];
+      expect(decoded, want);
+      // Every switch the page offers has exactly one home, or is a
+      // reserved flag the page lists under "Technical".
+      final placed = <String>[
+        for (final p in workspaceProcesses)
+          for (final sp in p.subprocesses)
+            for (final f in sp.capabilities) f.name,
+      ];
+      expect(placed.toSet().length, placed.length, reason: 'a feature twice');
+      final internal = internalCapabilities.keys.map((f) => f.name).toSet();
+      expect(
+        WorkspaceFeature.values.map((f) => f.name).toSet(),
+        placed.toSet().union(internal),
+      );
+    });
+
+    for (final locale in setupLocales) {
+      test('every process and subprocess reads in $locale exactly as the app '
+          'names it', () {
+        final l10n = lookupAppLocalizations(Locale(locale));
+        final processes = resource[locale]['process'] as Map<String, dynamic>;
+        final subprocesses =
+            resource[locale]['subprocess'] as Map<String, dynamic>;
+        final wrong = <String>[];
+        for (final p in workspaceProcesses) {
+          final copy = processCopy(l10n, p.key);
+          final row = processes[p.key] as List<dynamic>?;
+          if (row == null ||
+              row[0] != copy.title ||
+              row[1] != copy.description) {
+            wrong.add(p.key);
+          }
+          for (final sp in p.subprocesses) {
+            final sub = processCopy(l10n, sp.key);
+            final subRow = subprocesses[sp.key] as List<dynamic>?;
+            if (subRow == null ||
+                subRow[0] != sub.title ||
+                subRow[1] != sub.description) {
+              wrong.add(sp.key);
+            }
+          }
+        }
+        expect(wrong, isEmpty);
+      });
+    }
   });
 
   group('page strings', () {
@@ -266,9 +351,13 @@ void main() {
     test('loads the resource before its own script and hardcodes no '
         'language', () {
       final resourceTag = html.indexOf('<script src="setup_l10n.js"></script>');
+      final catalogueTag =
+          html.indexOf('<script src="setup_catalogue.js"></script>');
       final inline = html.indexOf('<script>');
       expect(resourceTag, isNot(-1));
       expect(resourceTag, lessThan(inline));
+      expect(catalogueTag, isNot(-1));
+      expect(catalogueTag, lessThan(inline));
       expect(html, isNot(contains('lang="fr"')));
       expect(
         RegExp('<title>DesKilo</title>').hasMatch(html),

@@ -20,6 +20,7 @@ import fs from 'fs';
 //     byte-identical XML in all five languages?
 const html = fs.readFileSync(new URL('../../web/setup.html', import.meta.url), 'utf8');
 const l10nSource = fs.readFileSync(new URL('../../web/setup_l10n.js', import.meta.url), 'utf8');
+const catalogueSource = fs.readFileSync(new URL('../../web/setup_catalogue.js', import.meta.url), 'utf8');
 const src = /<script>([\s\S]*)<\/script>/.exec(html)[1];
 const LOCALES = ['en', 'fr', 'de', 'es', 'it'];
 
@@ -120,7 +121,8 @@ function load(locale, stored, { browser = 'fr-FR', remembered = null } = {}) {
   globalThis.Blob = class { constructor(parts){ xml = parts.join(''); } };
   globalThis.URL = { createObjectURL:()=>'blob:', revokeObjectURL(){} };
   globalThis.DOMParser = class { parseFromString(){ return {querySelector:()=>null, querySelectorAll:()=>[]} } };
-  // The repository's own two files, evaluated the way the browser would.
+  // The repository's own three files, evaluated the way the browser would.
+  eval(catalogueSource);
   eval(l10nSource);
   eval(src + `
 ;globalThis.__STEPS=STEPS; globalThis.__FEATURES=FEATURES; globalThis.__exportXml=exportXml; globalThis.__S=S;
@@ -217,6 +219,19 @@ const reference = xmls.en;
 if (!reference || !reference.includes('<deskilo-workspace version="3">')) fail('no XML exported');
 for (const locale of LOCALES) if (xmls[locale] !== reference) fail(`[${locale}] exported XML differs from en`);
 
+// #1330 — the features step shows every switch exactly once, under its
+// process; the harness would still pass with an empty catalogue otherwise.
+{
+  load('en', null);
+  const step = globalThis.__STEPS.find(s => s.id === 'features');
+  const shown = [];
+  const walk = (n) => { for (const c of (n.children || [])) { if (typeof c !== 'object') continue; if (c.tagName === 'INPUT') shown.push(c); walk(c); } };
+  for (const k of step.build()) walk(k);
+  if (shown.length !== globalThis.__FEATURES.length) fail(`the features step shows ${shown.length} switches for ${globalThis.__FEATURES.length} features`);
+  const processes = globalThis.window.SETUP_PROCESSES.length;
+  if (!processes) fail('the process catalogue is empty');
+  console.log('processes:', processes);
+}
 console.log('steps:', globalThis.__STEPS.length, '| features:', globalThis.__FEATURES.length);
 console.log('locales:', LOCALES.join(','));
 if (failed) { console.log(`\n${failed} failure(s)`); process.exit(1); }

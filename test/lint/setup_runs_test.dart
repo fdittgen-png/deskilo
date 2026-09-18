@@ -18,6 +18,7 @@
 import 'dart:io';
 
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -41,6 +42,8 @@ void main() {
     // testing nothing.
     expect(out, contains('steps: 12'));
     expect(out, contains('features: ${WorkspaceFeature.values.length}'));
+    // #1330 — and grouped every switch under a process of the registry.
+    expect(out, contains('processes: ${workspaceProcesses.length}'));
     // #1366 — and it ran in every language, with the same answers giving
     // the same XML in each.
     expect(out, contains('locales: en,fr,de,es,it'));

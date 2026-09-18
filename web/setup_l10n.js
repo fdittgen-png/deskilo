@@ -156,10 +156,12 @@ window.SETUP_L10N={
    "identityWarnCurrency": "The currency {currency} is not the country's ({expected}): intended for a cross-border workspace, otherwise a mistake.",
    "featuresTitle": "Features",
    "featuresWhy": "Tick what your workspace uses: the following steps will only ask about those features. Everything can be changed later in the app (Settings → Features), and switching a feature off deletes nothing.",
-   "featuresIndentHint": "An indented feature depends on the one above it: it is only offered while its parent is on.",
+   "featuresIndentHint": "An indented feature depends on another one: it is only offered while that one is on, and its row says which.",
    "featuresAlsoEnables": "{desc} — also switches on {list}.",
    "featuresWaitingFor": "{desc} — waiting for {feature}.",
    "featuresOkCount": "{n} of {total} features active.",
+   "featuresTechnical": "Technical",
+   "featuresTechnicalHint": "Reserved switches no business process lists yet.",
    "featuresWarnMoney": "Money tab off: no subscriptions, services or invoices will be asked about.",
    "featuresWarnOnline": "Online payments: the PayPal/Stripe/Mollie/Wero keys are entered in the app (Settings → Online payments), never here.",
    "featuresWarnKiosk": "Kiosk mode without NFC or QR badges: members will identify themselves by e-mail or code.",
@@ -562,6 +564,10 @@ window.SETUP_L10N={
    "reviewNothingLost": "Nothing is lost: your answers stay saved in this browser while you go back.",
    "reviewComplete": "Configuration complete and consistent.",
    "reviewImportHint": "Export the XML, then import it in the app: Workspace settings → Import workspace.",
+   "reviewProcesses": "Processes",
+   "reviewProcessCount": "{n} of {total} capabilities on: {list}",
+   "reviewProcessOff": "not used",
+   "reviewWaitingFor": "{feature} is ticked but waits for {parent}",
    "renderStepFailed": "This step could not be displayed.",
    "renderStepFailedHint": "This is a fault in the assistant, not in your answers — they are intact. The other steps work; report it with this detail:",
    "exportNeedsName": "Enter the workspace name (section 1).",
@@ -992,6 +998,134 @@ window.SETUP_L10N={
     "Sell carnets of half-days that are spent across months when a member books beyond their subscription, charged once at the sale."
    ]
   },
+  "process": {
+   "workspaceAccess": [
+    "Workspace & access",
+    "Manage membership, roles and access to the space."
+   ],
+   "spaceManagement": [
+    "Space management",
+    "Organize the places members can use and when they open."
+   ],
+   "reservationsUsage": [
+    "Reservations & usage",
+    "Reserve capacity and track its use."
+   ],
+   "coordination": [
+    "Calendar & coordination",
+    "Coordinate activity, messages and decisions."
+   ],
+   "membershipCommerce": [
+    "Membership commerce",
+    "Set service prices and member agreements."
+   ],
+   "billingPayments": [
+    "Billing & payments",
+    "Turn activity into invoices and reconcile what is owed."
+   ],
+   "documentsInformation": [
+    "Documents & information",
+    "Create, share and export workspace information."
+   ],
+   "operations": [
+    "Operations & administration",
+    "Maintain configuration and the application experience."
+   ],
+   "integrations": [
+    "Integrations & automation",
+    "Deliver notifications and documents through external services."
+   ]
+  },
+  "subprocess": {
+   "people": [
+    "People & membership",
+    "Identify members and manage their membership and permissions."
+   ],
+   "physicalAccess": [
+    "Physical access",
+    "Use badges, seat tags and the shared check-in kiosk."
+   ],
+   "structure": [
+    "Space structure",
+    "Manage sites and the availability of plan objects."
+   ],
+   "availability": [
+    "Opening days & hours",
+    "Define working hours and generate closure days."
+   ],
+   "presentation": [
+    "Space presentation",
+    "Help members recognize people and places on the plan."
+   ],
+   "reservations": [
+    "Booking desks & spaces",
+    "Book seats or whole spaces under the workspace rules."
+   ],
+   "attendance": [
+    "Attendance & usage",
+    "Record attendance and close check-ins at day end."
+   ],
+   "calendar": [
+    "Calendar views",
+    "See reservations and pending decisions over time."
+   ],
+   "decisions": [
+    "Decisions & approvals",
+    "Review actions and record the required approvals."
+   ],
+   "communication": [
+    "Member communication",
+    "Exchange messages and keep track of updates."
+   ],
+   "pricing": [
+    "Services & pricing",
+    "Price services and accessories and agree member terms."
+   ],
+   "records": [
+    "Financial records",
+    "Understand balances, payments and member statements."
+   ],
+   "invoicing": [
+    "Invoicing",
+    "Issue and follow immutable invoices through settlement."
+   ],
+   "collection": [
+    "Payment collection",
+    "Collect payments and follow up overdue invoices."
+   ],
+   "expenses": [
+    "Shared expenses",
+    "Share costs, replenish supplies and schedule recurring expenses."
+   ],
+   "tax": [
+    "VAT management",
+    "Maintain VAT groups, rates and declarations."
+   ],
+   "documents": [
+    "Document publication",
+    "Publish documents and produce printable files."
+   ],
+   "reportDesign": [
+    "Report design",
+    "Design reports and maintain their text and layouts."
+   ],
+   "privacy": [
+    "Personal data access & exports",
+    "Inspect access to personal data and export records."
+   ],
+   "configuration": [
+    "Configuration & deployment",
+    "Transfer configuration, use templates and manage instances."
+   ],
+   "experience": [
+    "Application experience",
+    "Adjust help, navigation and display preferences."
+   ],
+   "delivery": [
+    "External delivery",
+    "Connect push, WhatsApp and electronic invoice delivery."
+   ]
+  },
   "perm": {
    "manageRoles": "Manage roles & permissions",
    "manageMembers": "Manage members",
@@ -1227,10 +1361,12 @@ window.SETUP_L10N={
    "identityWarnCurrency": "La devise {currency} n'est pas celle du pays ({expected}) : voulu pour un espace transfrontalier, sinon une erreur.",
    "featuresTitle": "Fonctionnalités",
    "featuresWhy": "Cochez ce que votre espace utilise : les étapes suivantes ne poseront que les questions de ces fonctionnalités. Tout reste modifiable ensuite dans l'app (Réglages → Fonctionnalités), et une fonctionnalité désactivée n'efface rien.",
-   "featuresIndentHint": "Une fonctionnalité en retrait dépend de celle au-dessus : elle n'est proposée que si son parent est activé.",
+   "featuresIndentHint": "Une fonctionnalité en retrait dépend d'une autre : elle n'est proposée que si celle-ci est activée, et sa ligne dit laquelle.",
    "featuresAlsoEnables": "{desc} — active aussi {list}.",
    "featuresWaitingFor": "{desc} — en attente de {feature}.",
    "featuresOkCount": "{n} fonctionnalités actives sur {total}.",
+   "featuresTechnical": "Technique",
+   "featuresTechnicalHint": "Interrupteurs réservés qu'aucun processus métier ne liste encore.",
    "featuresWarnMoney": "Onglet Finances désactivé : ni abonnements, ni services, ni factures ne seront demandés.",
    "featuresWarnOnline": "Paiements en ligne : les clés PayPal/Stripe/Mollie/Wero se saisissent dans l'app (Réglages → Paiements en ligne), jamais ici.",
    "featuresWarnKiosk": "Mode borne sans badge NFC ni QR : les membres se reconnaîtront par e-mail ou code.",
@@ -1633,6 +1769,10 @@ window.SETUP_L10N={
    "reviewNothingLost": "Rien n'est perdu : vos réponses restent enregistrées dans ce navigateur pendant que vous revenez en arrière.",
    "reviewComplete": "Configuration complète et cohérente.",
    "reviewImportHint": "Exportez le XML, puis importez-le dans l'app : Réglages de l'espace → Importer l'espace.",
+   "reviewProcesses": "Processus",
+   "reviewProcessCount": "{n} capacités sur {total} activées : {list}",
+   "reviewProcessOff": "non utilisé",
+   "reviewWaitingFor": "{feature} est coché mais attend {parent}",
    "renderStepFailed": "Cette étape n'a pas pu s'afficher.",
    "renderStepFailedHint": "C'est un défaut de l'assistant, pas de vos réponses — elles sont intactes. Les autres étapes fonctionnent ; signalez-le avec ce détail :",
    "exportNeedsName": "Renseignez le nom de l'espace (section 1).",
@@ -2063,6 +2203,134 @@ window.SETUP_L10N={
     "Vendre des carnets de demi-journées, dépensés sur plusieurs mois quand un membre réserve au-delà de son abonnement, facturés une seule fois à la vente."
    ]
   },
+  "process": {
+   "workspaceAccess": [
+    "Espace et accès",
+    "Gérer les adhésions, les rôles et l’accès aux locaux."
+   ],
+   "spaceManagement": [
+    "Gestion des lieux",
+    "Organiser les lieux accessibles aux membres et leurs horaires."
+   ],
+   "reservationsUsage": [
+    "Réservations et utilisation",
+    "Réserver les places et suivre leur utilisation."
+   ],
+   "coordination": [
+    "Calendrier et coordination",
+    "Coordonner les activités, les messages et les décisions."
+   ],
+   "membershipCommerce": [
+    "Offres aux membres",
+    "Définir les prix des services et les accords avec les membres."
+   ],
+   "billingPayments": [
+    "Facturation et paiements",
+    "Facturer l’activité et suivre les sommes dues."
+   ],
+   "documentsInformation": [
+    "Documents et informations",
+    "Créer, partager et exporter les informations de l’espace."
+   ],
+   "operations": [
+    "Exploitation et administration",
+    "Gérer la configuration et l’utilisation de l’application."
+   ],
+   "integrations": [
+    "Intégrations et automatisation",
+    "Envoyer les notifications et documents par des services externes."
+   ]
+  },
+  "subprocess": {
+   "people": [
+    "Personnes et adhésions",
+    "Identifier les membres et gérer leurs adhésions et droits."
+   ],
+   "physicalAccess": [
+    "Accès aux locaux",
+    "Utiliser les badges, les étiquettes des places et la borne partagée."
+   ],
+   "structure": [
+    "Structure des lieux",
+    "Gérer les sites et la disponibilité des objets du plan."
+   ],
+   "availability": [
+    "Jours et heures d’ouverture",
+    "Définir les horaires et générer les jours de fermeture."
+   ],
+   "presentation": [
+    "Présentation des lieux",
+    "Aider les membres à reconnaître les personnes et lieux sur le plan."
+   ],
+   "reservations": [
+    "Réservation des postes et espaces",
+    "Réserver des places ou des espaces selon les règles de l’espace."
+   ],
+   "attendance": [
+    "Présence et utilisation",
+    "Enregistrer la présence et clôturer les pointages en fin de journée."
+   ],
+   "calendar": [
+    "Vues du calendrier",
+    "Voir les réservations et décisions en attente dans le temps."
+   ],
+   "decisions": [
+    "Décisions et validations",
+    "Examiner les actions et enregistrer les validations requises."
+   ],
+   "communication": [
+    "Communication entre membres",
+    "Échanger des messages et suivre les nouveautés."
+   ],
+   "pricing": [
+    "Services et tarification",
+    "Tarifer les services et accessoires et convenir des conditions des membres."
+   ],
+   "records": [
+    "Suivi financier",
+    "Comprendre les soldes, paiements et relevés des membres."
+   ],
+   "invoicing": [
+    "Facturation",
+    "Émettre et suivre les factures immuables jusqu’au règlement."
+   ],
+   "collection": [
+    "Encaissement",
+    "Encaisser les paiements et relancer les factures échues."
+   ],
+   "expenses": [
+    "Dépenses partagées",
+    "Répartir les coûts, réapprovisionner et planifier les dépenses récurrentes."
+   ],
+   "tax": [
+    "Gestion de la TVA",
+    "Gérer les groupes, taux et déclarations de TVA."
+   ],
+   "documents": [
+    "Publication des documents",
+    "Publier les documents et produire les fichiers imprimables."
+   ],
+   "reportDesign": [
+    "Conception des rapports",
+    "Concevoir les rapports et gérer leurs textes et mises en page."
+   ],
+   "privacy": [
+    "Accès aux données et exports",
+    "Consulter les accès aux données personnelles et exporter les données."
+   ],
+   "configuration": [
+    "Configuration et déploiement",
+    "Transférer la configuration, utiliser des modèles et gérer les instances."
+   ],
+   "experience": [
+    "Utilisation de l’application",
+    "Adapter l’aide, la navigation et les préférences d’affichage."
+   ],
+   "delivery": [
+    "Envoi externe",
+    "Connecter les notifications push, WhatsApp et l’envoi de factures électroniques."
+   ]
+  },
   "perm": {
    "manageRoles": "Gérer les rôles et permissions",
    "manageMembers": "Gérer les membres",
@@ -2298,10 +2566,12 @@ window.SETUP_L10N={
    "identityWarnCurrency": "Die Währung {currency} ist nicht die des Landes ({expected}): gewollt bei einem grenzüberschreitenden Workspace, sonst ein Fehler.",
    "featuresTitle": "Funktionen",
    "featuresWhy": "Kreuzen Sie an, was Ihr Workspace nutzt: Die folgenden Schritte fragen nur nach diesen Funktionen. Alles lässt sich später in der App ändern (Einstellungen → Funktionen), und das Deaktivieren einer Funktion löscht nichts.",
-   "featuresIndentHint": "Eine eingerückte Funktion hängt von der darüber ab: Sie wird nur angeboten, solange die übergeordnete aktiv ist.",
+   "featuresIndentHint": "Eine eingerückte Funktion hängt von einer anderen ab: Sie wird nur angeboten, solange diese aktiv ist, und ihre Zeile nennt sie.",
    "featuresAlsoEnables": "{desc} — aktiviert auch {list}.",
    "featuresWaitingFor": "{desc} — wartet auf {feature}.",
    "featuresOkCount": "{n} von {total} Funktionen aktiv.",
+   "featuresTechnical": "Technisch",
+   "featuresTechnicalHint": "Reservierte Schalter, die noch kein Geschäftsprozess aufführt.",
    "featuresWarnMoney": "Finanzen-Tab deaktiviert: Es werden weder Abos noch Services noch Rechnungen abgefragt.",
    "featuresWarnOnline": "Online-Zahlungen: Die PayPal-/Stripe-/Mollie-/Wero-Schlüssel werden in der App eingegeben (Einstellungen → Online-Zahlungen), nie hier.",
    "featuresWarnKiosk": "Kiosk-Modus ohne NFC- oder QR-Badges: Mitglieder identifizieren sich per E-Mail oder Code.",
@@ -2704,6 +2974,10 @@ window.SETUP_L10N={
    "reviewNothingLost": "Nichts geht verloren: Ihre Antworten bleiben in diesem Browser gespeichert, während Sie zurückgehen.",
    "reviewComplete": "Konfiguration vollständig und stimmig.",
    "reviewImportHint": "Exportieren Sie das XML und importieren Sie es dann in der App: Workspace-Einstellungen → Workspace importieren.",
+   "reviewProcesses": "Prozesse",
+   "reviewProcessCount": "{n} von {total} Fähigkeiten aktiv: {list}",
+   "reviewProcessOff": "nicht genutzt",
+   "reviewWaitingFor": "{feature} ist angekreuzt, wartet aber auf {parent}",
    "renderStepFailed": "Dieser Schritt konnte nicht angezeigt werden.",
    "renderStepFailedHint": "Das ist ein Fehler des Assistenten, nicht Ihrer Antworten — sie sind unversehrt. Die anderen Schritte funktionieren; melden Sie es mit diesem Detail:",
    "exportNeedsName": "Geben Sie den Namen des Workspace ein (Abschnitt 1).",
@@ -3134,6 +3408,134 @@ window.SETUP_L10N={
     "Mehrfachkarten mit Halbtagen verkaufen, die über Monate verbraucht werden, wenn ein Mitglied über sein Abo hinaus bucht — einmal beim Verkauf berechnet."
    ]
   },
+  "process": {
+   "workspaceAccess": [
+    "Arbeitsbereich und Zugang",
+    "Mitgliedschaften, Rollen und Zugang zum Arbeitsbereich verwalten."
+   ],
+   "spaceManagement": [
+    "Raumverwaltung",
+    "Nutzbare Räume und ihre Öffnungszeiten organisieren."
+   ],
+   "reservationsUsage": [
+    "Buchungen und Nutzung",
+    "Plätze buchen und ihre Nutzung erfassen."
+   ],
+   "coordination": [
+    "Kalender und Koordination",
+    "Aktivitäten, Nachrichten und Entscheidungen koordinieren."
+   ],
+   "membershipCommerce": [
+    "Mitgliedschaftsangebote",
+    "Leistungspreise und Mitgliedsvereinbarungen festlegen."
+   ],
+   "billingPayments": [
+    "Abrechnung und Zahlungen",
+    "Aktivitäten abrechnen und offene Beträge abstimmen."
+   ],
+   "documentsInformation": [
+    "Dokumente und Informationen",
+    "Informationen des Arbeitsbereichs erstellen, teilen und exportieren."
+   ],
+   "operations": [
+    "Betrieb und Verwaltung",
+    "Konfiguration und App-Bedienung verwalten."
+   ],
+   "integrations": [
+    "Integrationen und Automatisierung",
+    "Benachrichtigungen und Dokumente über externe Dienste versenden."
+   ]
+  },
+  "subprocess": {
+   "people": [
+    "Personen und Mitgliedschaften",
+    "Mitglieder identifizieren sowie Mitgliedschaften und Rechte verwalten."
+   ],
+   "physicalAccess": [
+    "Zutritt",
+    "Ausweise, Platz-Tags und das gemeinsame Check-in-Terminal nutzen."
+   ],
+   "structure": [
+    "Raumstruktur",
+    "Standorte und die Verfügbarkeit von Planobjekten verwalten."
+   ],
+   "availability": [
+    "Öffnungstage und Zeiten",
+    "Arbeitszeiten festlegen und Schließtage erzeugen."
+   ],
+   "presentation": [
+    "Raumdarstellung",
+    "Personen und Plätze auf dem Plan erkennbar machen."
+   ],
+   "reservations": [
+    "Plätze und Räume buchen",
+    "Plätze oder ganze Räume nach den geltenden Regeln buchen."
+   ],
+   "attendance": [
+    "Anwesenheit und Nutzung",
+    "Anwesenheit erfassen und Check-ins am Tagesende abschließen."
+   ],
+   "calendar": [
+    "Kalenderansichten",
+    "Buchungen und offene Entscheidungen im Zeitverlauf sehen."
+   ],
+   "decisions": [
+    "Entscheidungen und Freigaben",
+    "Aktionen prüfen und erforderliche Freigaben erfassen."
+   ],
+   "communication": [
+    "Mitgliederkommunikation",
+    "Nachrichten austauschen und Änderungen verfolgen."
+   ],
+   "pricing": [
+    "Leistungen und Preise",
+    "Leistungen und Zubehör bepreisen und Mitgliedskonditionen vereinbaren."
+   ],
+   "records": [
+    "Finanzübersicht",
+    "Salden, Zahlungen und Mitgliedsabrechnungen nachvollziehen."
+   ],
+   "invoicing": [
+    "Rechnungsstellung",
+    "Unveränderliche Rechnungen erstellen und bis zum Ausgleich verfolgen."
+   ],
+   "collection": [
+    "Zahlungseingang",
+    "Zahlungen einziehen und überfällige Rechnungen nachverfolgen."
+   ],
+   "expenses": [
+    "Gemeinsame Ausgaben",
+    "Kosten verteilen, Vorräte auffüllen und wiederkehrende Ausgaben planen."
+   ],
+   "tax": [
+    "Umsatzsteuerverwaltung",
+    "Umsatzsteuergruppen, Steuersätze und Meldungen verwalten."
+   ],
+   "documents": [
+    "Dokumentbereitstellung",
+    "Dokumente bereitstellen und druckbare Dateien erzeugen."
+   ],
+   "reportDesign": [
+    "Berichtsgestaltung",
+    "Berichte gestalten sowie Texte und Layouts pflegen."
+   ],
+   "privacy": [
+    "Datenzugriff und Exporte",
+    "Zugriffe auf personenbezogene Daten prüfen und Daten exportieren."
+   ],
+   "configuration": [
+    "Konfiguration und Bereitstellung",
+    "Konfiguration übertragen, Vorlagen nutzen und Instanzen verwalten."
+   ],
+   "experience": [
+    "App-Bedienung",
+    "Hilfe, Navigation und Anzeigeeinstellungen anpassen."
+   ],
+   "delivery": [
+    "Externer Versand",
+    "Push, WhatsApp und den elektronischen Rechnungsversand anbinden."
+   ]
+  },
   "perm": {
    "manageRoles": "Rollen & Berechtigungen verwalten",
    "manageMembers": "Mitglieder verwalten",
@@ -3369,10 +3771,12 @@ window.SETUP_L10N={
    "identityWarnCurrency": "La moneda {currency} no es la del país ({expected}): intencionado para un espacio transfronterizo; si no, es un error.",
    "featuresTitle": "Funciones",
    "featuresWhy": "Marca lo que usa tu espacio: los pasos siguientes solo harán las preguntas de esas funciones. Todo se puede cambiar después en la app (Ajustes → Funciones), y desactivar una función no borra nada.",
-   "featuresIndentHint": "Una función con sangría depende de la de arriba: solo se ofrece si su función principal está activada.",
+   "featuresIndentHint": "Una función con sangría depende de otra: solo se ofrece mientras esa esté activada, y su fila indica cuál.",
    "featuresAlsoEnables": "{desc} — activa también {list}.",
    "featuresWaitingFor": "{desc} — a la espera de {feature}.",
    "featuresOkCount": "{n} de {total} funciones activas.",
+   "featuresTechnical": "Técnico",
+   "featuresTechnicalHint": "Interruptores reservados que ningún proceso de negocio incluye todavía.",
    "featuresWarnMoney": "Pestaña Finanzas desactivada: no se preguntará por suscripciones, servicios ni facturas.",
    "featuresWarnOnline": "Pagos en línea: las claves de PayPal/Stripe/Mollie/Wero se introducen en la app (Ajustes → Pagos en línea), nunca aquí.",
    "featuresWarnKiosk": "Modo quiosco sin credenciales NFC ni QR: los miembros se identificarán por correo electrónico o código.",
@@ -3775,6 +4179,10 @@ window.SETUP_L10N={
    "reviewNothingLost": "No se pierde nada: tus respuestas siguen guardadas en este navegador mientras vuelves atrás.",
    "reviewComplete": "Configuración completa y coherente.",
    "reviewImportHint": "Exporta el XML y luego impórtalo en la app: Ajustes del espacio → Importar el espacio.",
+   "reviewProcesses": "Procesos",
+   "reviewProcessCount": "{n} de {total} capacidades activas: {list}",
+   "reviewProcessOff": "sin usar",
+   "reviewWaitingFor": "{feature} está marcada pero espera a {parent}",
    "renderStepFailed": "Este paso no se ha podido mostrar.",
    "renderStepFailedHint": "Es un fallo del asistente, no de tus respuestas — están intactas. Los demás pasos funcionan; notifícalo con este detalle:",
    "exportNeedsName": "Indica el nombre del espacio (sección 1).",
@@ -4205,6 +4613,134 @@ window.SETUP_L10N={
     "Vender bonos de medias jornadas que se gastan a lo largo de los meses cuando un miembro reserva más allá de su suscripción, cobrados una sola vez en la venta."
    ]
   },
+  "process": {
+   "workspaceAccess": [
+    "Espacio y acceso",
+    "Gestionar membresías, roles y acceso al espacio."
+   ],
+   "spaceManagement": [
+    "Gestión de espacios",
+    "Organizar los espacios disponibles y sus horarios."
+   ],
+   "reservationsUsage": [
+    "Reservas y uso",
+    "Reservar plazas y registrar su uso."
+   ],
+   "coordination": [
+    "Calendario y coordinación",
+    "Coordinar actividades, mensajes y decisiones."
+   ],
+   "membershipCommerce": [
+    "Ofertas para miembros",
+    "Definir precios de servicios y acuerdos con los miembros."
+   ],
+   "billingPayments": [
+    "Facturación y pagos",
+    "Facturar la actividad y conciliar los importes pendientes."
+   ],
+   "documentsInformation": [
+    "Documentos e información",
+    "Crear, compartir y exportar información del espacio."
+   ],
+   "operations": [
+    "Operaciones y administración",
+    "Gestionar la configuración y el uso de la aplicación."
+   ],
+   "integrations": [
+    "Integraciones y automatización",
+    "Enviar notificaciones y documentos mediante servicios externos."
+   ]
+  },
+  "subprocess": {
+   "people": [
+    "Personas y membresías",
+    "Identificar miembros y gestionar sus membresías y permisos."
+   ],
+   "physicalAccess": [
+    "Acceso físico",
+    "Usar credenciales, etiquetas de puestos y el quiosco compartido."
+   ],
+   "structure": [
+    "Estructura del espacio",
+    "Gestionar sedes y disponibilidad de elementos del plano."
+   ],
+   "availability": [
+    "Días y horarios de apertura",
+    "Definir horarios y generar días de cierre."
+   ],
+   "presentation": [
+    "Presentación del espacio",
+    "Ayudar a reconocer personas y lugares en el plano."
+   ],
+   "reservations": [
+    "Reservar puestos y espacios",
+    "Reservar puestos o espacios completos según las reglas."
+   ],
+   "attendance": [
+    "Asistencia y uso",
+    "Registrar asistencia y cerrar entradas al final del día."
+   ],
+   "calendar": [
+    "Vistas del calendario",
+    "Ver reservas y decisiones pendientes a lo largo del tiempo."
+   ],
+   "decisions": [
+    "Decisiones y aprobaciones",
+    "Revisar acciones y registrar las aprobaciones necesarias."
+   ],
+   "communication": [
+    "Comunicación entre miembros",
+    "Intercambiar mensajes y seguir las novedades."
+   ],
+   "pricing": [
+    "Servicios y precios",
+    "Fijar precios de servicios y accesorios y acordar condiciones."
+   ],
+   "records": [
+    "Registros financieros",
+    "Comprender saldos, pagos y extractos de los miembros."
+   ],
+   "invoicing": [
+    "Facturación",
+    "Emitir y seguir facturas inmutables hasta su liquidación."
+   ],
+   "collection": [
+    "Cobro de pagos",
+    "Cobrar pagos y reclamar facturas vencidas."
+   ],
+   "expenses": [
+    "Gastos compartidos",
+    "Repartir costes, reponer suministros y programar gastos recurrentes."
+   ],
+   "tax": [
+    "Gestión del IVA",
+    "Gestionar grupos, tipos y declaraciones de IVA."
+   ],
+   "documents": [
+    "Publicación de documentos",
+    "Publicar documentos y generar archivos imprimibles."
+   ],
+   "reportDesign": [
+    "Diseño de informes",
+    "Diseñar informes y mantener sus textos y diseños."
+   ],
+   "privacy": [
+    "Acceso a datos y exportaciones",
+    "Consultar accesos a datos personales y exportar registros."
+   ],
+   "configuration": [
+    "Configuración y despliegue",
+    "Transferir configuraciones, usar plantillas y gestionar instancias."
+   ],
+   "experience": [
+    "Uso de la aplicación",
+    "Ajustar ayuda, navegación y preferencias de visualización."
+   ],
+   "delivery": [
+    "Envío externo",
+    "Conectar notificaciones push, WhatsApp y envío de facturas electrónicas."
+   ]
+  },
   "perm": {
    "manageRoles": "Gestionar roles y permisos",
    "manageMembers": "Gestionar miembros",
@@ -4440,10 +4976,12 @@ window.SETUP_L10N={
    "identityWarnCurrency": "La valuta {currency} non è quella del paese ({expected}): voluto per uno spazio transfrontaliero, altrimenti è un errore.",
    "featuresTitle": "Funzionalità",
    "featuresWhy": "Seleziona ciò che il tuo spazio utilizza: i passaggi successivi porranno solo le domande relative a queste funzionalità. Tutto resta modificabile in seguito nell'app (Impostazioni → Funzionalità), e disattivare una funzionalità non cancella nulla.",
-   "featuresIndentHint": "Una funzionalità rientrata dipende da quella sopra: viene proposta solo se la funzionalità principale è attiva.",
+   "featuresIndentHint": "Una funzionalità rientrata dipende da un'altra: viene proposta solo finché quella è attiva, e la sua riga indica quale.",
    "featuresAlsoEnables": "{desc} — attiva anche {list}.",
    "featuresWaitingFor": "{desc} — in attesa di {feature}.",
    "featuresOkCount": "{n} funzionalità attive su {total}.",
+   "featuresTechnical": "Tecnico",
+   "featuresTechnicalHint": "Interruttori riservati che nessun processo aziendale elenca ancora.",
    "featuresWarnMoney": "Scheda Finanze disattivata: non verranno chiesti abbonamenti, servizi né fatture.",
    "featuresWarnOnline": "Pagamenti online: le chiavi PayPal/Stripe/Mollie/Wero si inseriscono nell'app (Impostazioni → Pagamenti online), mai qui.",
    "featuresWarnKiosk": "Modalità chiosco senza badge NFC né QR: i membri si identificheranno tramite e-mail o codice.",
@@ -4846,6 +5384,10 @@ window.SETUP_L10N={
    "reviewNothingLost": "Non si perde nulla: le tue risposte restano salvate in questo browser mentre torni indietro.",
    "reviewComplete": "Configurazione completa e coerente.",
    "reviewImportHint": "Esporta l'XML, poi importalo nell'app: Impostazioni dello spazio → Importa lo spazio.",
+   "reviewProcesses": "Processi",
+   "reviewProcessCount": "{n} capacità su {total} attive: {list}",
+   "reviewProcessOff": "non usato",
+   "reviewWaitingFor": "{feature} è selezionata ma attende {parent}",
    "renderStepFailed": "Questo passaggio non è stato visualizzato.",
    "renderStepFailedHint": "È un difetto dell'assistente, non delle tue risposte — sono intatte. Gli altri passaggi funzionano; segnalalo con questo dettaglio:",
    "exportNeedsName": "Inserisci il nome dello spazio (sezione 1).",
@@ -5274,6 +5816,134 @@ window.SETUP_L10N={
    "carnets": [
     "Carnet",
     "Vendere carnet di mezze giornate, consumati nell'arco dei mesi quando un membro prenota oltre il suo abbonamento, addebitati una sola volta alla vendita."
+   ]
+  },
+  "process": {
+   "workspaceAccess": [
+    "Spazio e accesso",
+    "Gestire adesioni, ruoli e accesso allo spazio."
+   ],
+   "spaceManagement": [
+    "Gestione degli spazi",
+    "Organizzare gli spazi disponibili e i loro orari."
+   ],
+   "reservationsUsage": [
+    "Prenotazioni e utilizzo",
+    "Prenotare posti e registrarne l’utilizzo."
+   ],
+   "coordination": [
+    "Calendario e coordinamento",
+    "Coordinare attività, messaggi e decisioni."
+   ],
+   "membershipCommerce": [
+    "Offerte per i membri",
+    "Definire prezzi dei servizi e accordi con i membri."
+   ],
+   "billingPayments": [
+    "Fatturazione e pagamenti",
+    "Fatturare le attività e riconciliare gli importi dovuti."
+   ],
+   "documentsInformation": [
+    "Documenti e informazioni",
+    "Creare, condividere ed esportare informazioni dello spazio."
+   ],
+   "operations": [
+    "Operazioni e amministrazione",
+    "Gestire la configurazione e l’utilizzo dell’applicazione."
+   ],
+   "integrations": [
+    "Integrazioni e automazione",
+    "Inviare notifiche e documenti tramite servizi esterni."
+   ]
+  },
+  "subprocess": {
+   "people": [
+    "Persone e adesioni",
+    "Identificare i membri e gestirne adesioni e permessi."
+   ],
+   "physicalAccess": [
+    "Accesso fisico",
+    "Usare badge, tag delle postazioni e il chiosco condiviso."
+   ],
+   "structure": [
+    "Struttura dello spazio",
+    "Gestire sedi e disponibilità degli elementi della planimetria."
+   ],
+   "availability": [
+    "Giorni e orari di apertura",
+    "Definire orari e generare giorni di chiusura."
+   ],
+   "presentation": [
+    "Presentazione dello spazio",
+    "Aiutare a riconoscere persone e luoghi sulla planimetria."
+   ],
+   "reservations": [
+    "Prenotare postazioni e spazi",
+    "Prenotare posti o interi spazi secondo le regole."
+   ],
+   "attendance": [
+    "Presenze e utilizzo",
+    "Registrare presenze e chiudere gli ingressi a fine giornata."
+   ],
+   "calendar": [
+    "Viste del calendario",
+    "Visualizzare prenotazioni e decisioni in sospeso nel tempo."
+   ],
+   "decisions": [
+    "Decisioni e approvazioni",
+    "Esaminare le azioni e registrare le approvazioni richieste."
+   ],
+   "communication": [
+    "Comunicazione tra membri",
+    "Scambiare messaggi e seguire gli aggiornamenti."
+   ],
+   "pricing": [
+    "Servizi e prezzi",
+    "Definire prezzi di servizi e accessori e concordare le condizioni."
+   ],
+   "records": [
+    "Registrazioni finanziarie",
+    "Comprendere saldi, pagamenti ed estratti dei membri."
+   ],
+   "invoicing": [
+    "Fatturazione",
+    "Emettere e seguire fatture immutabili fino al saldo."
+   ],
+   "collection": [
+    "Incasso dei pagamenti",
+    "Incassare pagamenti e sollecitare fatture scadute."
+   ],
+   "expenses": [
+    "Spese condivise",
+    "Ripartire costi, rifornire materiali e pianificare spese ricorrenti."
+   ],
+   "tax": [
+    "Gestione dell’IVA",
+    "Gestire gruppi, aliquote e dichiarazioni IVA."
+   ],
+   "documents": [
+    "Pubblicazione dei documenti",
+    "Pubblicare documenti e generare file stampabili."
+   ],
+   "reportDesign": [
+    "Progettazione dei rapporti",
+    "Progettare rapporti e gestirne testi e impaginazioni."
+   ],
+   "privacy": [
+    "Accesso ai dati ed esportazioni",
+    "Consultare gli accessi ai dati personali ed esportare i dati."
+   ],
+   "configuration": [
+    "Configurazione e distribuzione",
+    "Trasferire configurazioni, usare modelli e gestire istanze."
+   ],
+   "experience": [
+    "Utilizzo dell’applicazione",
+    "Adattare guida, navigazione e preferenze di visualizzazione."
+   ],
+   "delivery": [
+    "Invio esterno",
+    "Collegare notifiche push, WhatsApp e invio delle fatture elettroniche."
    ]
   },
   "perm": {
