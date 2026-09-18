@@ -163,7 +163,7 @@ const Map<String, int> _baseline = {
   // documents. A flat registry of constants is the one shape where
   // extraction is the wrong answer: splitting it would put one identity
   // in two files and the lint's left-hand side in neither.
-  'lib/core/help/help_anchors.dart': 650,
+  'lib/core/help/help_anchors.dart': 651, // 2026-09-18 #1289 650→651: the colours anchor — this file IS the anchor registry and grows by one entry per documented surface
   // 1570→1600 (2026-09-16): #1294 — the new-member defaults ride this
   // screen's one Save. The tiles themselves are their own file
   // (new_member_defaults_tiles.dart); what is left here is the
@@ -173,7 +173,7 @@ const Map<String, int> _baseline = {
   // 1613→1637 (2026-09-16): #1277 S3 — the Wording row: a ListTile opening the editor, with
   // its help anchor. The editor itself is its own screen precisely
   // so this file did not absorb it.
-  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1655, // 2026-09-18 #1289 1637→1655: the XML import measures a brand seed the document carries and says which pair refused it; the decision itself is application/apply_brand_seed.dart // // 2026-09-15 #1310 S0 1564→1570: every bulk export asks for the exportData permission // // 2026-09-14 #1269 1552→1564: the invitation-language chips carry a label now, plus the paragraph on why an unlabelled row of language chips reads as THE language setting // 2026-09-11 #1154 1605→1572: the 577-line build() became three section methods; the reset dialog moved to widgets/reset_confirm_dialog.dart
+  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1636, // 2026-09-18 #1289 1637→1636: the brand-seed decision left for application/apply_brand_seed.dart and the two rows that open a screen of their own for widgets/workspace_own_screens.dart // // 2026-09-15 #1310 S0 1564→1570: every bulk export asks for the exportData permission // // 2026-09-14 #1269 1552→1564: the invitation-language chips carry a label now, plus the paragraph on why an unlabelled row of language chips reads as THE language setting // 2026-09-11 #1154 1605→1572: the 577-line build() became three section methods; the reset dialog moved to widgets/reset_confirm_dialog.dart
   // 600→640 (2026-08-05): #492 the request-deletion dialog + flow.
   // 640→760 (2026-08-22): #574 the running-booking extension flow.
   // 760→880 (2026-08-25): #638 the symmetric END-EARLIER flow — the

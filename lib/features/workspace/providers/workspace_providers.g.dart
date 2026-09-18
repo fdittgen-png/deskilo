@@ -672,6 +672,63 @@ final class WordingTermsProvider
 
 String _$wordingTermsHash() => r'0679271af9729a2b06ad2b402ec8316756281bfd';
 
+/// #1289 — the decision to give this space its own colour. The contrast
+/// check is the app's one implementation (`DeskiloTheme.refusals`),
+/// handed in here so `application/` stays pure Dart.
+
+@ProviderFor(workspaceColours)
+final workspaceColoursProvider = WorkspaceColoursProvider._();
+
+/// #1289 — the decision to give this space its own colour. The contrast
+/// check is the app's one implementation (`DeskiloTheme.refusals`),
+/// handed in here so `application/` stays pure Dart.
+
+final class WorkspaceColoursProvider
+    extends
+        $FunctionalProvider<
+          WorkspaceColours,
+          WorkspaceColours,
+          WorkspaceColours
+        >
+    with $Provider<WorkspaceColours> {
+  /// #1289 — the decision to give this space its own colour. The contrast
+  /// check is the app's one implementation (`DeskiloTheme.refusals`),
+  /// handed in here so `application/` stays pure Dart.
+  WorkspaceColoursProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'workspaceColoursProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceColoursHash();
+
+  @$internal
+  @override
+  $ProviderElement<WorkspaceColours> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  WorkspaceColours create(Ref ref) {
+    return workspaceColours(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(WorkspaceColours value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<WorkspaceColours>(value),
+    );
+  }
+}
+
+String _$workspaceColoursHash() => r'46fc158f4b53c1b99d72050628f81618ae6f4361';
+
 /// #1277 — the active workspace's own words for allow-listed product
 /// terms, `{locale: {key: text}}`.
 ///

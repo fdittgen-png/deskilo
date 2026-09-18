@@ -10660,6 +10660,58 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get coloursTitle => 'Colori';
+
+  @override
+  String get coloursIntro =>
+      'Un colore, e l’app ne deriva i temi chiaro e scuro. Tutto il resto mantiene la palette del prodotto.';
+
+  @override
+  String get coloursHexLabel => 'Colore';
+
+  @override
+  String get coloursHexHint =>
+      'Sei cifre esadecimali. Lasciare vuoto per i colori del prodotto.';
+
+  @override
+  String get coloursPreview => 'Come appare';
+
+  @override
+  String get coloursLight => 'Chiaro';
+
+  @override
+  String get coloursDark => 'Scuro';
+
+  @override
+  String get coloursReset => 'Colori del prodotto';
+
+  @override
+  String get coloursResetDone => 'I colori del prodotto sono tornati.';
+
+  @override
+  String get coloursNeverTheirs =>
+      'Il marchio DesKilo, i colori degli stati dei posti e il banner di produzione sono del prodotto, in ogni spazio.';
+
+  @override
+  String coloursApplied(String hex) {
+    return '$hex applicato. L’app ne deriva i temi.';
+  }
+
+  @override
+  String coloursMalformed(String text) {
+    return '$text non è un colore: scrivetelo come #RRGGBB.';
+  }
+
+  @override
+  String coloursRefused(String pair) {
+    return 'Rifiutato: $pair sarebbe illeggibile con questo colore.';
+  }
+
+  @override
+  String get coloursSaveFailed =>
+      'Non è stato possibile salvare il colore. Nulla è cambiato.';
+
+  @override
   String get onboardingTitle => 'Benvenuto su DesKilo';
 
   @override
