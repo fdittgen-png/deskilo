@@ -52,6 +52,14 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
+      # #1446 C3 — the packages, keyed on the lockfile: a miss resolves
+      # them from pub.dev as before; a hit is the same tree pub would
+      # resolve, so nothing about the candidate is inferred from it.
+      - uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-
       - run: flutter pub get
 
       # The gates that are not a discipline row: they are preconditions,
@@ -67,58 +75,43 @@ jobs:
       - name: Analyze (lib + test)
         run: flutter analyze
 
-      # ONE run of the suite, with coverage, for the whole report. The
-      # discipline steps below re-run small subsets of it — seconds each —
-      # because a table that cannot say WHICH discipline regressed is the
-      # thing this workflow exists to replace.
+      # #1446 C1 — ONE run of the suite, with coverage, for the whole
+      # report. The discipline rows below are derived from this run's JSON
+      # stream by test identity (tool/quality_rows.dart against
+      # .github/quality-manifest.psv) instead of starting Flutter five more
+      # times for the same tests. The exit code is captured as the verdict
+      # and written beside the stream; nothing in between may replace it.
       - name: Tests with coverage
-        run: flutter test --coverage
-
-      # Every discipline runs even when an earlier one failed: a report
-      # that stops at the first red row tells you less than no report.
-      - name: Architecture
-        id: architecture
+        id: tests
         continue-on-error: true
         run: |
-          flutter test test/lint/layering_test.dart \
-            test/lint/file_length_test.dart \
-            test/lint/route_registry_test.dart \
-            test/lint/feature_registry_test.dart
+          mkdir -p report
+          set +e
+          flutter test --coverage --file-reporter json:report/tests.jsonl
+          code=$?
+          set -e
+          echo "$code" > report/tests-exit.txt
+          echo "exit=$code" >> "$GITHUB_OUTPUT"
+          exit "$code"
 
-      - name: Security
-        id: security
+      # Every discipline row, from that one stream. A stream that was cut
+      # short, loaded nothing, or holds something the reader does not
+      # understand makes every row red and this step red — a reporting
+      # failure is a failure, not a green table.
+      - name: Discipline rows from the test stream
+        id: rows
+        if: always()
         continue-on-error: true
         run: |
-          flutter test test/lint/migration_grants_test.dart \
-            test/lint/grant_table_policy_test.dart \
-            test/lint/edge_function_auth_test.dart \
-            test/lint/anchored_patch_test.dart
-
-      - name: Accessibility
-        id: accessibility
-        continue-on-error: true
-        run: |
-          flutter test test/a11y \
-            test/core/ui/touch_target_guard_test.dart \
-            test/lint/contrast_test.dart
-
-      - name: Localization
-        id: localization
-        continue-on-error: true
-        run: |
-          flutter test test/i18n \
-            test/lint/l10n_completeness_test.dart \
-            test/lint/legal_terms_test.dart
-
-      - name: Privacy
-        id: privacy
-        continue-on-error: true
-        run: |
-          flutter test test/lint/privacy_claims_test.dart \
-            test/lint/privacy_policy_version_test.dart
+          dart run tool/quality_rows.dart \
+            --events report/tests.jsonl \
+            --exit-code "$(cat report/tests-exit.txt 2>/dev/null || echo 1)" \
+            --manifest .github/quality-manifest.psv \
+            --out report/tests.psv
 
       - name: Coverage
         id: coverage
+        if: always()
         continue-on-error: true
         run: bash scripts/coverage_gate.sh
 
@@ -137,21 +130,37 @@ jobs:
         if: always()
         run: |
           mkdir -p report
-          {
-            printf 'Architecture|%s|layering, coupling volume, route and feature registries\n' "${{ steps.architecture.outcome }}"
-            printf 'Security|%s|definer grants, grant-vs-policy, edge auth, anchored patches\n' "${{ steps.security.outcome }}"
-            printf 'Accessibility|%s|8 screens x 4 guidelines, 48dp targets, WCAG AA contrast\n' "${{ steps.accessibility.outcome }}"
-            printf 'Localization|%s|5 locales, screen overflow, pinned legal terms\n' "${{ steps.localization.outcome }}"
-            printf 'Privacy|%s|no claim the code does not keep, retention matrix, erasure\n' "${{ steps.privacy.outcome }}"
-            printf 'Coverage|%s|%s\n' "${{ steps.coverage.outcome }}" "$(cat report/coverage-line.txt 2>/dev/null || echo 'not measured')"
-          } > report/code.psv
-          cat report/code.psv
+          # The test-derived rows are already in report/tests.psv; a rows
+          # step that could not run leaves a red Tests row so the report
+          # still says what happened.
+          [ -f report/tests.psv ] || echo 'Tests|failure|the rows step did not run' > report/tests.psv
+          printf 'Coverage|%s|%s\n' "${{ steps.coverage.outcome }}" \
+            "$(cat report/coverage-line.txt 2>/dev/null || echo 'not measured')" > report/code.psv
+          cat report/tests.psv report/code.psv
 
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: quality-code
-          path: report/
+          path: |
+            report/*.psv
+            report/tests-exit.txt
+
+      # #1446 — the required context carries the WHOLE result of this job.
+      # Until now the coverage gate ran continue-on-error and only the
+      # final report noticed, and the report is not a required context:
+      # a coverage regression could not block a merge. It can now.
+      - name: Gate
+        if: always()
+        run: |
+          status=0
+          for step in "Tests=${{ steps.tests.outcome }}" \
+                      "Discipline rows=${{ steps.rows.outcome }}" \
+                      "Coverage=${{ steps.coverage.outcome }}"; do
+            echo "$step"
+            case "$step" in *=failure) status=1 ;; esac
+          done
+          exit $status
 
   database:
     name: quality · database
@@ -358,7 +367,7 @@ jobs:
           path: report
 
       - name: DESKILO QUALITY REPORT
-        run: bash scripts/quality_report.sh report
+        run: bash scripts/quality_report.sh report .github/quality-manifest.psv
 
       - uses: actions/upload-artifact@v4
         if: always()

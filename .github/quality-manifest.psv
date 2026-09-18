@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: 0BSD
+#
+# #1446 C0 — every row the quality report must contain, and where its
+# evidence comes from. `scripts/quality_report.sh` fails when a row named
+# here is missing, and when a row arrives that is not named here: a
+# renamed step cannot silently drop out of the gate.
+#
+# name|job|kind|conditional|paths|evidence
+#   kind `tests`: derived from the one JSON test stream over `paths`
+#   kind `step`:  its own workflow step reports the outcome
+#   conditional:  a `skipped` outcome is acceptable, because the row
+#                 depends on an earlier row of the same job
+Tests|code|step|||the whole Flutter suite, one run, exit code and stream agree
+Architecture|code|tests||test/lint/layering_test.dart,test/lint/file_length_test.dart,test/lint/route_registry_test.dart,test/lint/feature_registry_test.dart|layering, coupling volume, route and feature registries
+Security|code|tests||test/lint/migration_grants_test.dart,test/lint/grant_table_policy_test.dart,test/lint/edge_function_auth_test.dart,test/lint/anchored_patch_test.dart|definer grants, grant-vs-policy, edge auth, anchored patches
+Accessibility|code|tests||test/a11y/,test/core/ui/touch_target_guard_test.dart,test/lint/contrast_test.dart|8 screens x 4 guidelines, 48dp targets, WCAG AA contrast
+Localization|code|tests||test/i18n/,test/lint/l10n_completeness_test.dart,test/lint/legal_terms_test.dart|5 locales, screen overflow, pinned legal terms
+Privacy|code|tests||test/lint/privacy_claims_test.dart,test/lint/privacy_policy_version_test.dart|no claim the code does not keep, retention matrix, erasure
+Coverage|code|step|||by layer and in total, scripts/coverage_gate.sh
+Migration safety|database|step|||every migration replayed from empty
+Tenant isolation|database|step|conditional||workspace-scoped tables swept for read, update and delete, both roles
+Financial invariants|database|step|conditional||append-only ledger, reconciliation, webhook idempotency
+Concurrency|database|step|conditional||two sessions race for one seat, exactly one wins
+Conditional writes|database|step|conditional||two owners decide on one feature map, the second is refused under the lock
+Query budgets|database|step|conditional||indexes exist, the planner uses them at 5 000 rows
+Policy drift|database|step|conditional||live policies equal the set the migrations build
+Restore drill|database|step|conditional||seeded, dumped, restored into a fresh database, counts equal and reconciled
+Payments|database|step|conditional||the real payment handler opens the caller's intent; strangers and no token refused
+Instance lifecycle|database|step|conditional||empty install, interrupted resume, upgrade from N, foreign table blocks, marker per migration, doctor probe isolation
