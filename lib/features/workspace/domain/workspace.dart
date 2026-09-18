@@ -42,6 +42,12 @@ sealed class Workspace with _$Workspace implements SystemStamped {
     /// (see workspace_permission.dart). Owners are never stored.
     @Default(<String, dynamic>{}) Map<String, dynamic> rolePermissions,
 
+    /// #1289 — the workspace's colours as stored (`workspaces.branding`):
+    /// `seed_color` #RRGGBB, `office_palette` [#RRGGBB…], `seat_palette`
+    /// key. Empty for a workspace that chose nothing, which is almost all
+    /// of them; read through [WorkspaceBranding].
+    @Default(<String, dynamic>{}) Map<String, dynamic> branding,
+
     /// Workspace-wide developer mode (#419, 0081): admin/owner-set,
     /// applies to every member on every device (realtime-pushed).
     /// Distinct from [environment] — this one only opens the e-invoice

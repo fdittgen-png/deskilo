@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../core/theme/contrast.dart';
+import '../core/theme/contrast_audit.dart';
 
 import '../core/theme/app_radius.dart';
 import '../core/theme/shell_metrics.dart';
@@ -232,6 +233,23 @@ abstract final class DeskiloTheme {
       animations: animations,
     );
   }
+
+  /// #1289 — why a brand seed cannot be used: every pair that would read
+  /// below its floor, in the three schemes it derives, through the one
+  /// checker the accessibility lint runs. Empty means it may be used.
+  ///
+  /// This is the refusal itself: a colour is measured at the moment it is
+  /// chosen (a questionnaire's document, an import, a template, later a
+  /// picker) rather than stored and discovered by a member who cannot
+  /// read the screen.
+  static List<ContrastFailure> refusals(Color brand) => [
+        for (final scheme in [
+          light(brand: brand),
+          dark(brand: brand),
+          warm(brand: brand),
+        ])
+          ...auditThemeContrast(scheme),
+      ];
 
   static ThemeData warm({bool animations = true, Color? brand}) {
     return _finish(

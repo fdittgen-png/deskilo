@@ -47,7 +47,9 @@ Map<String, Color> candidateSeeds() {
   return seeds;
 }
 
-/// The failing pairs of one seed across the three schemes, keyed by scheme.
+/// The failing pairs of one seed across the three schemes, keyed by
+/// scheme — through `DeskiloTheme.refusals`, the refusal itself, so the
+/// survey measures exactly what the import and the picker will run.
 Map<String, List<ContrastFailure>> auditSeed(Color seed) => {
       'light': auditThemeContrast(DeskiloTheme.light(brand: seed)),
       'dark': auditThemeContrast(DeskiloTheme.dark(brand: seed)),
@@ -61,6 +63,15 @@ void main() {
         DeskiloTheme.light().colorScheme);
     expect(DeskiloTheme.dark(brand: null).colorScheme,
         DeskiloTheme.dark().colorScheme);
+  });
+
+  test('the refusal is the survey: DeskiloTheme.refusals sees exactly the '
+      'failures of the three schemes', () {
+    const seed = Color(0xFF1F3A5F);
+    expect(
+      DeskiloTheme.refusals(seed).map((f) => f.pair),
+      [for (final e in auditSeed(seed).values) ...e.map((f) => f.pair)],
+    );
   });
 
   test('the survey: how many candidate seeds pass every pair in every scheme',

@@ -1868,6 +1868,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get deployEntityFeatures => 'Fonctionnalités';
 
   @override
+  String get deployEntityBranding => 'Couleurs';
+
+  @override
   String get helpTopicDeployment => 'Déployer';
 
   @override
@@ -10653,6 +10656,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get wordingSurfaceBooking => 'Réservation';
+
+  @override
+  String get featureWorkspaceBrandingTitle => 'Couleurs de l’espace';
+
+  @override
+  String get featureWorkspaceBrandingDesc =>
+      'L’espace choisit une couleur de marque dont l’application dérive ses thèmes clair et sombre, et les couleurs de remplissage de ses salles. Une couleur qui rendrait l’application illisible est refusée avec la raison ; la palette du produit reste la valeur par défaut.';
+
+  @override
+  String brandColorRefused(String color, String pair) {
+    return 'La couleur $color n’a pas été appliquée : $pair serait illisible.';
+  }
 
   @override
   String get onboardingTitle => 'Bienvenue sur DesKilo';

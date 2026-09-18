@@ -2217,6 +2217,10 @@
   "@deployEntityFeatures": {
     "description": "#988/#990 deployments: deployEntityFeatures"
   },
+  "deployEntityBranding": "Colours",
+  "@deployEntityBranding": {
+    "description": "#1289 deployments: deployEntityBranding — the workspace colours entity"
+  },
   "helpTopicDeployment": "Deploying",
   "helpTopicEnvironments": "Environments",
   "@helpTopicDeployment": {
@@ -11380,6 +11384,26 @@
   "wordingSurfaceBooking": "Booking",
   "@wordingSurfaceBooking": {
     "description": "#1277 the wording editor: surface name, booking"
+  },
+  "featureWorkspaceBrandingTitle": "Workspace colours",
+  "@featureWorkspaceBrandingTitle": {
+    "description": "#1289 workspace branding: the feature switch title"
+  },
+  "featureWorkspaceBrandingDesc": "The workspace chooses a brand colour the app derives its light and dark themes from, and the fill colours of its rooms. A colour that would make the app unreadable is refused with the reason; the product's own palette stays the default.",
+  "@featureWorkspaceBrandingDesc": {
+    "description": "#1289 workspace branding: the feature switch description"
+  },
+  "brandColorRefused": "The colour {color} was not applied: {pair} would be unreadable.",
+  "@brandColorRefused": {
+    "description": "#1289 workspace branding: an imported brand colour the app refuses, naming the pair that would be unreadable",
+    "placeholders": {
+      "color": {
+        "type": "String"
+      },
+      "pair": {
+        "type": "String"
+      }
+    }
   },
   "onboardingTitle": "Welcome to DesKilo",
   "@onboardingTitle": {

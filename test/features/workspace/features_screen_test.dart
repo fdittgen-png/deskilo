@@ -114,7 +114,8 @@ void main() {
     // #1274 — publicHolidays is the twenty-first: generating a year of
     // closure days changes what a subscription includes.
     // #1279 — carnets is the twenty-second: selling prepaid half-days.
-    expect(onCount, featureManifest.length - 23);
+    // #1289 — workspaceBranding is the twenty-third: colours are chosen.
+    expect(onCount, featureManifest.length - 24);
   });
 
   testWidgets(

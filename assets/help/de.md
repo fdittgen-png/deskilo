@@ -938,6 +938,22 @@ Die Begriffe sind nach ihrem Ort gruppiert und nicht nach Namen
 aufgelistet — zwei davon lauten auf Englisch *Reserve*, und die Gruppe
 unterscheidet sie.
 
+**Die eigene Farbe des Bereichs (#1289).** Mit eingeschalteten *Farben
+des Arbeitsbereichs* (*Einstellungen → Funktionen*) trägt der Bereich
+eine Markenfarbe, aus der die App ihr helles und dunkles Thema ableitet
+— eine Farbe hinein, beide Themen stimmig, statt zwanzig Werte, von
+denen einer falsch ist. Die Farbe kommt mit der Datei des
+Konfigurationsassistenten, einem importierten Bereichs-XML
+(`brand-color` an `<settings>`) oder einer Vorlage und reist als Gruppe
+*Farben* zu einem Zwilling.
+
+Die App behält ihre Kontrastgarantien, welche Farbe sie auch erhält: wo
+ein Ton auf einer Fläche zu hell zum Lesen wäre, dunkelt die App ihn ab
+— der Farbton gehört Ihnen, die Lesbarkeit dem Produkt — und eine
+Farbe, die sie nicht lesbar machen könnte, wird abgelehnt, mit Nennung
+des Paares. Die DesKilo-Marke, die Farben der Platzzustände und das
+Produktions-Banner gehören nie einem Bereich.
+
 #### Transparenz der Tische
 
 Wie viel des Hintergrundbildes unter einem Tisch im Plan durchscheint.

@@ -165,6 +165,7 @@
         "vatReport": false,
         "whatsappIntegration": false,
         "workingHours": true,
+        "workspaceBranding": false,
         "workspaceLibrary": false,
         "workspaceStatus": false,
         "workspaceVocabulary": false

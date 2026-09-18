@@ -57,7 +57,8 @@ window.SETUP_PROCESSES=[
      "planMemberPhotos",
      "uniqueMonograms",
      "singleRoomLevelNames",
-     "workspaceVocabulary"
+     "workspaceVocabulary",
+     "workspaceBranding"
     ]
    }
   ]

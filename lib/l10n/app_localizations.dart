@@ -3306,6 +3306,12 @@ abstract class AppLocalizations {
   /// **'Features'**
   String get deployEntityFeatures;
 
+  /// #1289 deployments: deployEntityBranding — the workspace colours entity
+  ///
+  /// In en, this message translates to:
+  /// **'Colours'**
+  String get deployEntityBranding;
+
   /// Guide-heading needle for the deployment help symbols (#1022)
   ///
   /// In en, this message translates to:
@@ -18460,6 +18466,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Booking'**
   String get wordingSurfaceBooking;
+
+  /// #1289 workspace branding: the feature switch title
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace colours'**
+  String get featureWorkspaceBrandingTitle;
+
+  /// #1289 workspace branding: the feature switch description
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace chooses a brand colour the app derives its light and dark themes from, and the fill colours of its rooms. A colour that would make the app unreadable is refused with the reason; the product\'s own palette stays the default.'**
+  String get featureWorkspaceBrandingDesc;
+
+  /// #1289 workspace branding: an imported brand colour the app refuses, naming the pair that would be unreadable
+  ///
+  /// In en, this message translates to:
+  /// **'The colour {color} was not applied: {pair} would be unreadable.'**
+  String brandColorRefused(String color, String pair);
 
   /// App-bar title of the first-run onboarding screen
   ///

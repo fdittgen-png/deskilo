@@ -17,7 +17,7 @@ import 'package:flutter_test/flutter_test.dart';
 const _pageOutput = '''
 <?xml version="1.0" encoding="UTF-8"?>
 <deskilo-workspace version="2">
-  <settings name="pezenas1" country="FR" currency="EUR" timezone="Europe/Paris">
+  <settings name="pezenas1" country="FR" currency="EUR" timezone="Europe/Paris" brand-color="#1F3A5F">
     <feature key="calendarTab" enabled="true"/>
     <feature key="levelBooking" enabled="false"/>
     <payment-instruction key="iban" value="FR76 0000 1111"/>
@@ -75,6 +75,8 @@ void main() {
     final data = parseWorkspaceXml(_pageOutput);
     expect(data.settings.name, 'pezenas1');
     expect(data.settings.featureFlags['levelBooking'], isFalse);
+    // #1289 — the brand seed rides on <settings>, optional.
+    expect(data.settings.brandColor, '#1F3A5F');
     expect(data.settings.paymentInstructions['iban'], 'FR76 0000 1111');
     expect(data.accessories.single.name, 'Écran');
     expect(data.accessories.single.supplementCents, 2000);

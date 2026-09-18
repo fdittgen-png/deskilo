@@ -7,6 +7,7 @@ import '../../plan/domain/grid_geometry.dart';
 import '../../plan/domain/level.dart';
 import '../../plan/domain/seat.dart';
 import 'workspace.dart';
+import 'workspace_branding.dart';
 import 'workspace_xml_configuration.dart';
 
 /// Versioned XML interchange format for a workspace configuration
@@ -84,6 +85,9 @@ abstract final class WorkspaceXmlSchema {
   static const String countryAttr = 'country';
   static const String currencyAttr = 'currency';
   static const String timezoneAttr = 'timezone';
+
+  /// #1289 — the brand seed on `<settings>`, `#RRGGBB`; optional.
+  static const String brandColorAttr = 'brand-color';
 
   static const String featureElement = 'feature';
   static const String keyAttr = 'key';
@@ -174,12 +178,18 @@ class WorkspaceXmlSettings {
     required this.timezone,
     this.featureFlags = const {},
     this.paymentInstructions = const {},
+    this.brandColor,
   });
 
   final String name;
   final String countryCode;
   final String currencyCode;
   final String timezone;
+
+  /// #1289 — the brand seed as `#RRGGBB`, null when the document carries
+  /// none. The import writes it through `set_workspace_branding`, which
+  /// validates the shape; the contrast rule is the app's, at import too.
+  final String? brandColor;
 
   /// Explicit per-workspace feature overrides (#146). Absent key =
   /// registry default, exactly like [Workspace.featureFlags].
@@ -196,6 +206,7 @@ class WorkspaceXmlSettings {
       other.countryCode == countryCode &&
       other.currencyCode == currencyCode &&
       other.timezone == timezone &&
+      other.brandColor == brandColor &&
       _mapEquals(other.featureFlags, featureFlags) &&
       _mapEquals(other.paymentInstructions, paymentInstructions);
 
@@ -474,6 +485,12 @@ String buildWorkspaceXml({
       builder.attribute(
           WorkspaceXmlSchema.currencyAttr, workspace.currencyCode);
       builder.attribute(WorkspaceXmlSchema.timezoneAttr, workspace.timezone);
+      // #1289 — the brand seed, when the space chose one.
+      if (WorkspaceBranding.fromJson(workspace.branding).seedArgb
+          case final argb?) {
+        builder.attribute(
+            WorkspaceXmlSchema.brandColorAttr, hexOfColor(argb));
+      }
       for (final key in flagKeys) {
         final value = workspace.featureFlags[key];
         if (value is! bool) continue; // defensive: only bools are flags
@@ -756,6 +773,10 @@ WorkspaceXmlSettings _parseSettings(XmlElement element) {
     timezone: _requireAttribute(element, WorkspaceXmlSchema.timezoneAttr),
     featureFlags: featureFlags,
     paymentInstructions: paymentInstructions,
+    brandColor: switch (element.getAttribute(WorkspaceXmlSchema.brandColorAttr)) {
+      final v? when v.trim().isNotEmpty => v.trim(),
+      _ => null,
+    },
   );
 }
 

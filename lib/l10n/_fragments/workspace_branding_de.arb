@@ -1,0 +1,22 @@
+{
+  "featureWorkspaceBrandingTitle": "Farben des Arbeitsbereichs",
+  "@featureWorkspaceBrandingTitle": {
+    "description": "#1289 workspace branding: the feature switch title"
+  },
+  "featureWorkspaceBrandingDesc": "Der Arbeitsbereich wählt eine Markenfarbe, aus der die App ihr helles und dunkles Thema ableitet, sowie die Füllfarben seiner Räume. Eine Farbe, die die App unlesbar machen würde, wird mit Begründung abgelehnt; die Palette des Produkts bleibt der Standard.",
+  "@featureWorkspaceBrandingDesc": {
+    "description": "#1289 workspace branding: the feature switch description"
+  },
+  "brandColorRefused": "Die Farbe {color} wurde nicht übernommen: {pair} wäre unlesbar.",
+  "@brandColorRefused": {
+    "description": "#1289 workspace branding: an imported brand colour the app refuses, naming the pair that would be unreadable",
+    "placeholders": {
+      "color": {
+        "type": "String"
+      },
+      "pair": {
+        "type": "String"
+      }
+    }
+  }
+}

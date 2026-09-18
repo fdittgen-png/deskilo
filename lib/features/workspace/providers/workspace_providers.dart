@@ -10,6 +10,7 @@ import '../../../core/time/work_hours.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../data/supabase_workspace_repository.dart';
 import '../domain/booking_granularity.dart';
+import '../domain/workspace_branding.dart';
 import '../domain/booking_policies.dart';
 import '../domain/closure_day.dart';
 import '../domain/member.dart';
@@ -378,6 +379,23 @@ Future<Set<WorkspaceFeature>> enabledFeatures(Ref ref) async {
 Set<WorkspaceFeature> enabledFeaturesSync(Ref ref) =>
     ref.watch(enabledFeaturesProvider).value ??
     effectiveFeatures(resolveEnabledFeatures(const {}));
+
+/// #1289 — the active workspace's brand seed (opaque ARGB), or null for
+/// the product's own palette: null while the flag is off, while nothing
+/// is loaded yet, and for a workspace that chose nothing. The theme reads
+/// this and nothing else, so a test that injects no workspace sees the
+/// product colours — branding is off by default in tests by construction.
+@Riverpod(keepAlive: true)
+int? workspaceBrandSeed(Ref ref) {
+  if (!ref.watch(enabledFeaturesSyncProvider).contains(
+        WorkspaceFeature.workspaceBranding,
+      )) {
+    return null;
+  }
+  final workspace = ref.watch(currentWorkspaceProvider).value;
+  if (workspace == null) return null;
+  return WorkspaceBranding.fromJson(workspace.branding).seedArgb;
+}
 
 /// #513 — MY effective permissions under the workspace's role matrix.
 /// The one client-side gate: screens ask for a permission, never for a

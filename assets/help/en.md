@@ -942,6 +942,21 @@ when its wording later changes.
 Terms are grouped by where they appear, not listed by name — two of
 them read *Reserve* in English and the group is what tells them apart.
 
+**The space's own colour (#1289).** With *Workspace colours* switched on
+(*Settings → Features*), the space carries a brand colour and the app
+derives its light and dark themes from it — one colour in, both themes
+coherent, rather than twenty values and one of them wrong. The colour
+arrives with the setup questionnaire's file, an imported workspace XML
+(`brand-color` on `<settings>`) or a template, and travels to a twin as
+the *Colours* group.
+
+The app keeps its own contrast guarantees whatever colour it is given:
+where a shade would be too pale to read on a surface, the app deepens
+that shade — the hue is yours, the legibility is the product's — and a
+colour it could not make readable is refused, naming the pair. The
+DesKilo mark, the seat-state colours and the production banner are
+never a workspace's to restyle.
+
 #### Desk transparency
 
 How much of the background image shows through a desk on the plan. Turn

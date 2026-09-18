@@ -570,6 +570,7 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
             row['feature_flags'] as Map<String, dynamic>? ?? const {},
         rolePermissions:
             row['role_permissions'] as Map<String, dynamic>? ?? const {},
+        branding: row['branding'] as Map<String, dynamic>? ?? const {},
         devMode: row['dev_mode'] as bool? ?? false,
         // #917 — a row without the column is a space that predates
         // 0160, and those are development spaces.
@@ -1002,6 +1003,18 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
       'p_key': key,
       'p_text': text,
     });
+  }
+
+  @override
+  Future<Map<String, dynamic>> setWorkspaceBranding(
+    String workspaceId,
+    Map<String, dynamic> delta,
+  ) async {
+    final out = await _client.rpc<dynamic>('set_workspace_branding', params: {
+      'p_workspace_id': workspaceId,
+      'p_branding': delta,
+    });
+    return Map<String, dynamic>.from(out as Map? ?? const <String, dynamic>{});
   }
 
   /// THE merge-preserving policy write (#600/#624): one booking_rules

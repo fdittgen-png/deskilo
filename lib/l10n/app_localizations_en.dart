@@ -1857,6 +1857,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deployEntityFeatures => 'Features';
 
   @override
+  String get deployEntityBranding => 'Colours';
+
+  @override
   String get helpTopicDeployment => 'Deploying';
 
   @override
@@ -10550,6 +10553,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wordingSurfaceBooking => 'Booking';
+
+  @override
+  String get featureWorkspaceBrandingTitle => 'Workspace colours';
+
+  @override
+  String get featureWorkspaceBrandingDesc =>
+      'The workspace chooses a brand colour the app derives its light and dark themes from, and the fill colours of its rooms. A colour that would make the app unreadable is refused with the reason; the product\'s own palette stays the default.';
+
+  @override
+  String brandColorRefused(String color, String pair) {
+    return 'The colour $color was not applied: $pair would be unreadable.';
+  }
 
   @override
   String get onboardingTitle => 'Welcome to DesKilo';

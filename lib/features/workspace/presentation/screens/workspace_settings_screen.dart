@@ -49,6 +49,8 @@ import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
 import '../../domain/workspace_import.dart';
 import '../../domain/workspace_xml_configuration.dart';
+import '../../../../app/theme.dart';
+import '../../application/apply_brand_seed.dart';
 import '../../domain/workspace_xml.dart';
 import '../../../money/providers/money_providers.dart';
 import '../../providers/workspace_import_providers.dart';
@@ -891,6 +893,15 @@ class _WorkspaceSettingsScreenState
         PaymentInstructions.fromDb(data.settings.paymentInstructions),
       );
       await repository.setFeatureFlags(workspace.id, data.settings.featureFlags);
+      // #1289 — a brand seed the document carries is measured before it
+      // is written; refused, the rest of the import still applies.
+      final brandRefused = await applyImportedBrandSeed(
+        repository,
+        workspace.id,
+        data.settings.brandColor,
+        check: (argb) =>
+            [for (final f in DeskiloTheme.refusals(Color(argb))) f.pair],
+      );
 
       ref.invalidate(myWorkspacesProvider);
       ref.invalidate(levelsProvider);
@@ -907,6 +918,14 @@ class _WorkspaceSettingsScreenState
       if (!mounted) return;
       // Re-seed the form so the imported settings show immediately.
       setState(() => _seeded = false);
+      if (brandRefused.isNotEmpty) {
+        AppSnack.error(
+          context,
+          l10n?.brandColorRefused(data.settings.brandColor ?? '', brandRefused) ??
+              'The colour ${data.settings.brandColor} was not applied: '
+                  '$brandRefused would be unreadable.',
+        );
+      }
       if (planKept) {
         AppSnack.info(
           context,

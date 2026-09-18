@@ -1387,6 +1387,10 @@
   "@deployEntityFeatures": {
     "description": "#988/#990 deployments: deployEntityFeatures"
   },
+  "deployEntityBranding": "Colori",
+  "@deployEntityBranding": {
+    "description": "#1289 deployments: deployEntityBranding — the workspace colours entity"
+  },
   "helpTopicDeployment": "Distribuire",
   "helpTopicEnvironments": "Ambienti",
   "developerMode": "Modalità sviluppatore",
@@ -6978,6 +6982,26 @@
   "wordingSurfaceBooking": "Prenotazione",
   "@wordingSurfaceBooking": {
     "description": "#1277 the wording editor: surface name, booking"
+  },
+  "featureWorkspaceBrandingTitle": "Colori dello spazio",
+  "@featureWorkspaceBrandingTitle": {
+    "description": "#1289 workspace branding: the feature switch title"
+  },
+  "featureWorkspaceBrandingDesc": "Lo spazio sceglie un colore del marchio da cui l’app deriva i temi chiaro e scuro, e i colori di riempimento delle sue sale. Un colore che renderebbe l’app illeggibile viene rifiutato con la motivazione; la palette del prodotto resta quella predefinita.",
+  "@featureWorkspaceBrandingDesc": {
+    "description": "#1289 workspace branding: the feature switch description"
+  },
+  "brandColorRefused": "Il colore {color} non è stato applicato: {pair} sarebbe illeggibile.",
+  "@brandColorRefused": {
+    "description": "#1289 workspace branding: an imported brand colour the app refuses, naming the pair that would be unreadable",
+    "placeholders": {
+      "color": {
+        "type": "String"
+      },
+      "pair": {
+        "type": "String"
+      }
+    }
   },
   "onboardingTitle": "Benvenuto su DesKilo",
   "onboardingCreateTab": "Crea uno spazio",

@@ -63,6 +63,7 @@ configuration.
 | default_locale | `workspaces.default_locale` | B | yes | replace | — | `workspace_language_test` |
 | invitation_template, invitation_templates | `workspaces.*` | B | yes | replace | — | — |
 | lexicon | `workspaces.lexicon` jsonb | B | yes | **merge** — keyed on (locale, key) (0223) | #1277 | `26_workspace_lexicon` |
+| branding | `workspaces.branding` jsonb | B | yes | **merge** — keyed on `seed_color` / `office_palette` / `seat_palette` (0246); colours only, the emblem is a storage file | #1289 | `50_workspace_branding` |
 | whatsapp_group | `workspaces.whatsapp_group` | A | no — identity (with a space's own twins) | replace | #1360 | `18_configuration_merge` |
 | role_permissions | `workspaces.role_permissions` jsonb | B | yes | replace | #1287 | `roles_screen_test` |
 | subscription_vat_rate_id | `workspaces.subscription_vat_rate_id` | B | yes — by natural key | replace | — | — |
@@ -98,6 +99,7 @@ actually moves.
 | invitations | configuration | invitation_template, invitation_templates | B | wording only. `whatsapp_group` was here until #1360, and a template that carried the wording carried the group link with it |
 | number_sequences | configuration | number_sequences | B | **format only** — `prefix`, `suffix`, `date_part`, `digits`, `reset`, `gapless`. `period_key` and `next_value` are class E and never exported (#1295) |
 | lexicon | configuration | lexicon | B | allow-listed product terminology only, per locale. `keyed_update`, so a template supplying French words cannot delete the German ones a space already wrote |
+| branding | configuration | branding | B | the brand seed, the office fills and a curated seat-palette key — group `appearance`, `keyed_update`. Never the emblem (a storage file), never status or environment colours (#1289) |
 | features | configuration | feature_flags | B | merge, not replace (0176) |
 
 ## Personal preferences — class D, never carried

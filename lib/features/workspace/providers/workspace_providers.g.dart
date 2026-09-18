@@ -1157,6 +1157,65 @@ final class EnabledFeaturesSyncProvider
 String _$enabledFeaturesSyncHash() =>
     r'c52b3f67c83044e46408ec70a8fcdfda35485b80';
 
+/// #1289 — the active workspace's brand seed (opaque ARGB), or null for
+/// the product's own palette: null while the flag is off, while nothing
+/// is loaded yet, and for a workspace that chose nothing. The theme reads
+/// this and nothing else, so a test that injects no workspace sees the
+/// product colours — branding is off by default in tests by construction.
+
+@ProviderFor(workspaceBrandSeed)
+final workspaceBrandSeedProvider = WorkspaceBrandSeedProvider._();
+
+/// #1289 — the active workspace's brand seed (opaque ARGB), or null for
+/// the product's own palette: null while the flag is off, while nothing
+/// is loaded yet, and for a workspace that chose nothing. The theme reads
+/// this and nothing else, so a test that injects no workspace sees the
+/// product colours — branding is off by default in tests by construction.
+
+final class WorkspaceBrandSeedProvider
+    extends $FunctionalProvider<int?, int?, int?>
+    with $Provider<int?> {
+  /// #1289 — the active workspace's brand seed (opaque ARGB), or null for
+  /// the product's own palette: null while the flag is off, while nothing
+  /// is loaded yet, and for a workspace that chose nothing. The theme reads
+  /// this and nothing else, so a test that injects no workspace sees the
+  /// product colours — branding is off by default in tests by construction.
+  WorkspaceBrandSeedProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'workspaceBrandSeedProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceBrandSeedHash();
+
+  @$internal
+  @override
+  $ProviderElement<int?> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  int? create(Ref ref) {
+    return workspaceBrandSeed(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(int? value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<int?>(value),
+    );
+  }
+}
+
+String _$workspaceBrandSeedHash() =>
+    r'2c79ad4af1690dfc3228e144aa89ec9c4729ec19';
+
 /// #513 — MY effective permissions under the workspace's role matrix.
 /// The one client-side gate: screens ask for a permission, never for a
 /// role flag. Falls back to {} while member/workspace load.

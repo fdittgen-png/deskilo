@@ -502,6 +502,17 @@ abstract class WorkspaceRepository {
     String? text,
   );
 
+  /// #1289 — writes a branding DELTA through `set_workspace_branding`:
+  /// a key set to null is removed, a value replaces it, every other key
+  /// survives (the server merges). The server refuses a key outside the
+  /// three it defines and a colour that is not `#RRGGBB`; the contrast
+  /// refusal is the client's, before this is called. Returns the map as
+  /// stored.
+  Future<Map<String, dynamic>> setWorkspaceBranding(
+    String workspaceId,
+    Map<String, dynamic> delta,
+  );
+
   /// #1294 — the workspace's fallback default booking period
   /// (`booking_rules.default_period`), used only when the device holds
   /// no choice of its own. Null when unset or blank.

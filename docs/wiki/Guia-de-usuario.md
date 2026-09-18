@@ -974,6 +974,21 @@ Los términos se agrupan por dónde aparecen, no se listan por nombre —
 dos de ellos se leen *Reserve* en inglés, y el grupo es lo que los
 distingue.
 
+**El color propio del espacio (#1289).** Con *Colores del espacio*
+activado (*Ajustes → Funciones*), el espacio lleva un color de marca
+del que la aplicación deriva sus temas claro y oscuro — un color de
+entrada, dos temas coherentes, en vez de veinte valores y uno de ellos
+mal. El color llega con el archivo del asistente de configuración, un
+XML de espacio importado (`brand-color` en `<settings>`) o una
+plantilla, y viaja a un gemelo como el grupo *Colores*.
+
+La aplicación mantiene sus garantías de contraste sea cual sea el color
+recibido: donde un tono resultaría demasiado claro para leerse sobre una
+superficie, la aplicación lo oscurece — el tono es suyo, la legibilidad
+es del producto — y un color que no pudiera hacer legible se rechaza,
+indicando el par. La marca DesKilo, los colores de los estados de plaza
+y el banner de producción nunca son de un espacio.
+
 <!-- anchor: user.workspace.settings.desk-transparency -->
 #### Transparencia de las mesas
 

@@ -939,6 +939,21 @@ I termini sono raggruppati per punto di comparsa, non elencati per
 nome — due di essi si leggono *Reserve* in inglese, ed è il gruppo a
 distinguerli.
 
+**Il colore dello spazio (#1289).** Con *Colori dello spazio* attivo
+(*Impostazioni → Funzionalità*), lo spazio porta un colore del marchio
+da cui l'app deriva i temi chiaro e scuro — un colore in ingresso, due
+temi coerenti, invece di venti valori di cui uno sbagliato. Il colore
+arriva con il file dell'assistente di configurazione, un XML di spazio
+importato (`brand-color` su `<settings>`) o un modello, e viaggia verso
+un gemello come gruppo *Colori*.
+
+L'app mantiene le proprie garanzie di contrasto qualunque colore
+riceva: dove una tinta risulterebbe troppo chiara per essere letta su
+una superficie, l'app la scurisce — la tinta è vostra, la leggibilità è
+del prodotto — e un colore che non potrebbe rendere leggibile viene
+rifiutato, indicando la coppia. Il marchio DesKilo, i colori degli
+stati dei posti e il banner di produzione non sono mai di uno spazio.
+
 #### Trasparenza dei tavoli
 
 Quanto l'immagine di sfondo traspare sotto un tavolo nella piantina.
