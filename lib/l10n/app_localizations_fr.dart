@@ -6403,6 +6403,19 @@ class AppLocalizationsFr extends AppLocalizations {
       'Dessinez votre propre plan sur une toile vierge.';
 
   @override
+  String libraryProcessOn(String feature) {
+    return '$feature activé';
+  }
+
+  @override
+  String libraryProcessOff(String feature) {
+    return '$feature désactivé';
+  }
+
+  @override
+  String get libraryProcessTechnical => 'Technique';
+
+  @override
   String get featureManagedProfileAccess => 'Qui administre un profil';
 
   @override

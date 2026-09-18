@@ -6397,6 +6397,19 @@ class AppLocalizationsDe extends AppLocalizations {
       'Zeichnen Sie Ihren eigenen Plan auf einer leeren Fläche.';
 
   @override
+  String libraryProcessOn(String feature) {
+    return '$feature an';
+  }
+
+  @override
+  String libraryProcessOff(String feature) {
+    return '$feature aus';
+  }
+
+  @override
+  String get libraryProcessTechnical => 'Technisch';
+
+  @override
   String get featureManagedProfileAccess => 'Wer ein Profil verwaltet';
 
   @override

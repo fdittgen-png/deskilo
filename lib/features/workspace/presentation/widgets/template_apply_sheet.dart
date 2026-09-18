@@ -9,7 +9,10 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/apply_template.dart';
 import '../../domain/template_preview.dart';
+import '../../domain/template_process_view.dart';
 import '../../domain/workspace_template.dart';
+import '../feature_names.dart';
+import '../process_names.dart';
 import 'template_group_label.dart';
 
 /// #1280 S2 — flow B: apply a template to a workspace that already runs.
@@ -201,6 +204,13 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
                       onChanged: (on) => setState(() => on
                           ? selected.add(g.wire)
                           : selected.remove(g.wire)),
+                      // #1330 — the flips this group makes, by process.
+                      detail: g.featureChanges.isEmpty
+                          ? null
+                          : _ProcessChanges(
+                              groups: processViewOf(g.featureChanges),
+                              wire: g.wire,
+                            ),
                     ),
                   const SizedBox(height: AppSpacing.md),
                   FilledButton(
@@ -230,12 +240,16 @@ class _GroupRow extends StatelessWidget {
     required this.enabled,
     required this.value,
     required this.onChanged,
+    this.detail,
   });
 
   final String title;
   final String state;
   final String? reason;
   final bool enabled;
+
+  /// Shown under the row: what the group changes, in business terms.
+  final Widget? detail;
 
   /// Null when the group is not selectable at all.
   final bool? value;
@@ -244,22 +258,76 @@ class _GroupRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final subtitle = [state, ?reason].join(' — ');
+    final Widget row;
     if (value == null) {
-      return ListTile(
+      row = ListTile(
         contentPadding: EdgeInsets.zero,
         leading: const Icon(Icons.remove_circle_outline),
         title: Text(title),
         subtitle: Text(subtitle),
         enabled: false,
       );
+    } else {
+      row = CheckboxListTile(
+        contentPadding: EdgeInsets.zero,
+        controlAffinity: ListTileControlAffinity.leading,
+        title: Text(title),
+        subtitle: Text(subtitle),
+        value: value,
+        onChanged: enabled ? (v) => onChanged(v ?? false) : null,
+      );
     }
-    return CheckboxListTile(
-      contentPadding: EdgeInsets.zero,
-      controlAffinity: ListTileControlAffinity.leading,
-      title: Text(title),
-      subtitle: Text(subtitle),
-      value: value,
-      onChanged: enabled ? (v) => onChanged(v ?? false) : null,
+    if (detail == null) return row;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [row, detail!],
+    );
+  }
+}
+
+/// #1330 — the same change-set the server will apply, grouped by the
+/// business process each flip belongs to. Read-only: the group above is
+/// what gets ticked, a process is where a flip is shown.
+class _ProcessChanges extends StatelessWidget {
+  const _ProcessChanges({required this.groups, required this.wire});
+
+  final List<ProcessChangeGroup> groups;
+  final String wire;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AppSpacing.xl,
+        bottom: AppSpacing.sm,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (final g in groups) ...[
+            Text(
+              g.processKey == null
+                  ? (l10n?.libraryProcessTechnical ?? 'Technical')
+                  : processLabel(l10n, g.processKey!),
+              key: ValueKey('template-process-$wire-${g.processKey ?? 'technical'}'),
+              style: theme.textTheme.labelLarge,
+            ),
+            for (final c in g.changes)
+              Text(
+                c.enabled
+                    ? (l10n?.libraryProcessOn(featureName(l10n, c.feature)) ??
+                        '${featureName(l10n, c.feature)} on')
+                    : (l10n?.libraryProcessOff(featureName(l10n, c.feature)) ??
+                        '${featureName(l10n, c.feature)} off'),
+                key: ValueKey('template-process-feature-${c.feature.name}'),
+                style: theme.textTheme.bodySmall,
+              ),
+            const SizedBox(height: AppSpacing.xs),
+          ],
+        ],
+      ),
     );
   }
 }

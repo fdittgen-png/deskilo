@@ -3914,6 +3914,28 @@
   "onboardingStartFrom": "Partir de",
   "onboardingStartEmpty": "Espacio vacío",
   "onboardingStartEmptyDesc": "Dibuje su propio plano desde un lienzo en blanco.",
+  "libraryProcessOn": "{feature} activada",
+  "@libraryProcessOn": {
+    "description": "Template apply preview (#1330): a feature the group switches on, under its process",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryProcessOff": "{feature} desactivada",
+  "@libraryProcessOff": {
+    "description": "Template apply preview (#1330): a feature the group switches off, under its process",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryProcessTechnical": "Técnico",
+  "@libraryProcessTechnical": {
+    "description": "Template apply preview (#1330): the heading for reserved capabilities no process lists"
+  },
   "featureManagedProfileAccess": "Quién administra un perfil",
   "@featureManagedProfileAccess": {
     "description": "#914 managed profile access: name"

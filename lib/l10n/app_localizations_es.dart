@@ -6384,6 +6384,19 @@ class AppLocalizationsEs extends AppLocalizations {
       'Dibuje su propio plano desde un lienzo en blanco.';
 
   @override
+  String libraryProcessOn(String feature) {
+    return '$feature activada';
+  }
+
+  @override
+  String libraryProcessOff(String feature) {
+    return '$feature desactivada';
+  }
+
+  @override
+  String get libraryProcessTechnical => 'Técnico';
+
+  @override
   String get featureManagedProfileAccess => 'Quién administra un perfil';
 
   @override

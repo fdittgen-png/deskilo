@@ -6,6 +6,7 @@
 // The client never compares configurations itself: the server's
 // change-set is the one the apply will perform, so a preview drawn from
 // anything else could promise a change that does not happen.
+import 'workspace_feature.dart';
 
 /// The groups a template is applied by — the only vocabulary the UI shows
 /// (#1276 decision 2). Wire names are `deployable_entities().group`;
@@ -82,6 +83,7 @@ class TemplateGroupPreview {
     required this.itemCount,
     this.reason,
     this.customized = false,
+    this.featureChanges = const {},
   });
 
   final TemplateGroup group;
@@ -98,6 +100,12 @@ class TemplateGroupPreview {
   /// #1280 S4 — this workspace changed something here since it last
   /// applied the same template. Offered, never ticked by default.
   final bool customized;
+
+  /// #1330 — the feature flags this group would flip, `dbKey -> on`, read
+  /// from the server's `feature_flags` item: the map before, resolved
+  /// against the registry the way the app reads any stored map (an absent
+  /// key is its default), against the map after. Only what differs.
+  final Map<String, bool> featureChanges;
 
   /// Offered for selection at all.
   bool get selectable =>
@@ -119,6 +127,11 @@ class TemplatePreview {
   final TemplateCompatibility compatibility;
   final String? reason;
   final List<TemplateGroupPreview> groups;
+
+  /// Every feature flip the whole template would make, across groups.
+  Map<String, bool> get featureChanges => {
+        for (final g in groups) ...g.featureChanges,
+      };
 
   bool get applicable =>
       compatibility == TemplateCompatibility.supported ||
@@ -142,6 +155,7 @@ class TemplatePreview {
             itemCount: (raw['items'] as List?)?.length ?? 0,
             reason: raw['reason'] as String?,
             customized: raw['customized'] == true,
+            featureChanges: featureChangesOf(raw['items'] as List?),
           ),
     ];
     return TemplatePreview(
@@ -152,3 +166,26 @@ class TemplatePreview {
     );
   }
 }
+
+/// The flips a group's items announce for `feature_flags`, or nothing.
+///
+/// A `workspace` item carries the whole map before and after; the delta
+/// is computed here, once, from the server's own two maps — never from a
+/// copy of the row the client holds (#1329 decision 2).
+Map<String, bool> featureChangesOf(List<dynamic>? items) {
+  final out = <String, bool>{};
+  for (final item in items ?? const <Object?>[]) {
+    if (item is! Map || item['key'] != 'feature_flags') continue;
+    final before = resolveEnabledFeatures(_flagMap(item['before']));
+    final after = resolveEnabledFeatures(_flagMap(item['after']));
+    for (final f in WorkspaceFeature.values) {
+      final was = before.contains(f);
+      final will = after.contains(f);
+      if (was != will) out[f.dbKey] = will;
+    }
+  }
+  return out;
+}
+
+Map<String, dynamic> _flagMap(Object? raw) =>
+    raw is Map ? Map<String, dynamic>.from(raw) : const <String, dynamic>{};

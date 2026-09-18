@@ -109,5 +109,27 @@
   "onboardingTemplateSetsUp": "Configure : {groups}",
   "onboardingStartFrom": "Partir de",
   "onboardingStartEmpty": "Espace vide",
-  "onboardingStartEmptyDesc": "Dessinez votre propre plan sur une toile vierge."
+  "onboardingStartEmptyDesc": "Dessinez votre propre plan sur une toile vierge.",
+  "libraryProcessOn": "{feature} activé",
+  "@libraryProcessOn": {
+    "description": "Template apply preview (#1330): a feature the group switches on, under its process",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryProcessOff": "{feature} désactivé",
+  "@libraryProcessOff": {
+    "description": "Template apply preview (#1330): a feature the group switches off, under its process",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryProcessTechnical": "Technique",
+  "@libraryProcessTechnical": {
+    "description": "Template apply preview (#1330): the heading for reserved capabilities no process lists"
+  }
 }

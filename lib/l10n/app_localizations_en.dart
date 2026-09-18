@@ -6339,6 +6339,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'Draw your own plan from a blank canvas.';
 
   @override
+  String libraryProcessOn(String feature) {
+    return '$feature on';
+  }
+
+  @override
+  String libraryProcessOff(String feature) {
+    return '$feature off';
+  }
+
+  @override
+  String get libraryProcessTechnical => 'Technical';
+
+  @override
   String get featureManagedProfileAccess => 'Who administers a profile';
 
   @override
