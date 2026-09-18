@@ -53,18 +53,24 @@ ThemeData _finish(ThemeData base, {required bool animations}) {
   // the audit test (test/lint/contrast_test.dart) measures exactly these
   // and found the dark primary's label at 3.2:1, the light outline at
   // 2.9:1, dark error text at 4.2:1. Each is nudged in lightness only.
+  // #1289 — the fills first, then their labels against the FINAL fill:
+  // a seed that has to be darkened to read as text on a surface (yellow,
+  // sky) or lightened in the dark scheme (navy) would otherwise keep a
+  // label that was checked against the colour it no longer is.
+  final primary = Contrast.ensure(raw.primary, raw.surfaceContainerHighest);
+  final error = Contrast.ensure(raw.error, raw.surfaceContainerHighest);
   final scheme = raw.copyWith(
-    onPrimary: Contrast.ensure(raw.onPrimary, raw.primary),
+    onPrimary: Contrast.ensure(raw.onPrimary, primary),
     onSecondaryContainer:
         Contrast.ensure(raw.onSecondaryContainer, raw.secondaryContainer),
     onPrimaryContainer:
         Contrast.ensure(raw.onPrimaryContainer, raw.primaryContainer),
-    onError: Contrast.ensure(raw.onError, raw.error),
+    onError: Contrast.ensure(raw.onError, error),
     onErrorContainer: Contrast.ensure(raw.onErrorContainer, raw.errorContainer),
     onSecondary: Contrast.ensure(raw.onSecondary, raw.secondary),
     onTertiary: Contrast.ensure(raw.onTertiary, raw.tertiary),
-    error: Contrast.ensure(raw.error, raw.surfaceContainerHighest),
-    primary: Contrast.ensure(raw.primary, raw.surfaceContainerHighest),
+    error: error,
+    primary: primary,
     onSurfaceVariant:
         Contrast.ensure(raw.onSurfaceVariant, raw.surfaceContainerHighest),
     // Against the container the outline sits on most and contrasts with
@@ -189,15 +195,24 @@ class _ReducedMotionAware extends PageTransitionsBuilder {
   }
 }
 
+/// #1289 — a workspace's brand seed, derived into a whole scheme the way
+/// the product's own is: one colour in, secondary and tertiary derived,
+/// containers derived, then the same `_finish` nudges. Null is the
+/// product palette, pixel-identical to before the seed existed.
+FlexSchemeColor _colorsFor(Color? brand) => brand == null
+    ? _burntOrange
+    : FlexSchemeColor.from(primary: brand, brightness: Brightness.light);
+
 /// The three DesKilo themes: [light], [dark], and the signature
 /// orange-forward [warm] (the analog of Sparkilo's eco theme).
 /// [animations] carries the `uiAnimations` feature (#611) into the
 /// route-transition theme; everything else is identical either way.
+/// [brand] is a workspace's seed colour (#1289), null for the product's.
 abstract final class DeskiloTheme {
-  static ThemeData light({bool animations = true}) {
+  static ThemeData light({bool animations = true, Color? brand}) {
     return _finish(
       FlexThemeData.light(
-        colors: _burntOrange,
+        colors: _colorsFor(brand),
         blendLevel: 8,
         subThemesData: _subThemes,
         useMaterial3: true,
@@ -206,10 +221,10 @@ abstract final class DeskiloTheme {
     );
   }
 
-  static ThemeData dark({bool animations = true}) {
+  static ThemeData dark({bool animations = true, Color? brand}) {
     return _finish(
       FlexThemeData.dark(
-        colors: _burntOrange.toDark(28),
+        colors: _colorsFor(brand).toDark(28),
         blendLevel: 22,
         subThemesData: _subThemes,
         useMaterial3: true,
@@ -218,10 +233,10 @@ abstract final class DeskiloTheme {
     );
   }
 
-  static ThemeData warm({bool animations = true}) {
+  static ThemeData warm({bool animations = true, Color? brand}) {
     return _finish(
       FlexThemeData.light(
-        colors: _burntOrange,
+        colors: _colorsFor(brand),
         blendLevel: 20,
         // custom pulls the scheme's appBarColor (the warm container tint).
         appBarStyle: FlexAppBarStyle.custom,
