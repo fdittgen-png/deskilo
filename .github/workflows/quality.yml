@@ -34,6 +34,48 @@ env:
   FLUTTER_VERSION: "3.44.9"
 
 jobs:
+  # #1446 C2 — which work this change REQUIRES, decided by the checked-in
+  # classifier from the complete diff (full git data, NUL-delimited names,
+  # renames counted twice). It selects work, never whether a run may
+  # report: every required context below still reports. Anything the
+  # classifier cannot prove independent runs everything; so does every
+  # push to master, the nightly run and a manual dispatch.
+  classify:
+    name: classify the change
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      database: ${{ steps.verdict.outputs.database }}
+      web: ${{ steps.verdict.outputs.web }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - id: verdict
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          mkdir -p report
+          nobase=""
+          if [ "$EVENT" = "pull_request" ]; then
+            if [ -n "$BASE" ] && git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+              git diff --name-status -z "$BASE" HEAD > report/changes.nul
+            else
+              nobase="--no-base"
+            fi
+          fi
+          dart run tool/ci_classify.dart --event "$EVENT" \
+            --changes report/changes.nul $nobase \
+            --out report/classification.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: quality-classification
+          path: report/classification.txt
+
   code:
     # The name is the REQUIRED STATUS CHECK on master, and this job is
     # what now does that work — the l10n gate, analyze, the suite with
@@ -166,12 +208,21 @@ jobs:
     name: quality · database
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    needs: [classify]
+    env:
+      # #1446 C2 — `required` runs the job as always; `not_applicable`
+      # writes every database row as such, with the classifier's reason,
+      # and the report accepts that only because the classification
+      # artifact says so.
+      DB_REQUIRED: ${{ needs.classify.outputs.database == 'required' }}
     steps:
       - uses: actions/checkout@v4
       - uses: supabase/setup-cli@v1
+        if: env.DB_REQUIRED == 'true'
         with:
           version: latest
       - uses: denoland/setup-deno@v2
+        if: env.DB_REQUIRED == 'true'
         with:
           deno-version: v2.x
 
@@ -183,6 +234,7 @@ jobs:
       # needed to.
       - name: Migration safety
         id: migrations
+        if: env.DB_REQUIRED == 'true'
         continue-on-error: true
         run: supabase start
 
@@ -312,6 +364,14 @@ jobs:
         if: always()
         run: |
           mkdir -p report
+          if [ "$DB_REQUIRED" != "true" ]; then
+            # The classifier stood this job down: every row says so, with
+            # its reason, and the report cross-checks the classification.
+            reason=$(gh api "repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" --jq '.artifacts[]|select(.name=="quality-classification")|.id' >/dev/null 2>&1; echo "classifier stood the database job down")
+            awk -F'|' '!/^[[:space:]]*(#|$)/ && $2 == "database" {print $1"|not_applicable|"r}' r="$reason" .github/quality-manifest.psv > report/database.psv
+            cat report/database.psv
+            exit 0
+          fi
           count=$(ls supabase/tests/database/*.sql | wc -l | tr -d ' ')
           migrations=$(ls supabase/migrations/*.sql | wc -l | tr -d ' ')
           tenancy=$(sed -n 's/.*tenancy matrix: \([0-9]*\) tables covered.*/\1/p' report-pgtap.log 2>/dev/null | head -1)
@@ -358,6 +418,10 @@ jobs:
       - name: Gate
         if: always()
         run: |
+          if [ "$DB_REQUIRED" != "true" ]; then
+            echo "database work not required for this change (see report/classification.txt)"
+            exit 0
+          fi
           status=0
           for step in "Migration safety=${{ steps.migrations.outcome }}" \
                       "Database disciplines=${{ steps.pgtap.outcome }}" \
