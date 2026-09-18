@@ -40,6 +40,27 @@ Steps of twenty seconds or more, median over the runs that ran them:
   database failures include a day on which every run booked a Saturday
   (`24_booking_idempotency.sql`, fixed by #1476).
 
+## What runs for which change (C2)
+
+`tool/ci_classify.dart` reads the complete pull-request diff (`git diff
+--name-status -z base head` over full git data, renames counted under
+both names) and says, per heavy discipline, `required` or
+`not_applicable` with its reason and the classifier version. It starts
+from a positive list of paths that cannot reach the database job —
+docs, help assets, localisation, presentation and provider code, the
+platform folders, widget and unit tests — and everything else, every
+push to master, the nightly run, a dispatch, a missing base, an empty
+diff, or a change to a workflow, script, generator, lockfile or the
+classifier itself, runs everything. The code job always runs: the
+Flutter suite is the required context, and a wiki or setup change is
+its concern (help generation, parity tests), not a docs stub.
+
+When the database job is stood down it still reports: every database
+row says `not_applicable` with the reason, and `scripts/quality_report.sh`
+accepts that only because `report/classification.txt`, the classifier's
+own verdict, says so. The browser build keeps its own path trigger,
+which the classifier's `web` verdict mirrors.
+
 ## The gate
 
 `.github/quality-manifest.psv` names every row the report must carry

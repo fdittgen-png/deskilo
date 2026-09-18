@@ -30,6 +30,11 @@ fi
 status=0
 expected=$(grep -vE '^[[:space:]]*(#|$)' "$MANIFEST" | cut -d'|' -f1)
 conditional=$(grep -vE '^[[:space:]]*(#|$)' "$MANIFEST" | awk -F'|' '$4 == "conditional" {print $1}')
+# #1446 C2 — a row may say `not_applicable` only for a job the checked-in
+# classifier stood down, and the classifier's own verdict travels as
+# report/classification.txt. A row claiming it without that evidence fails.
+stood_down=$( [ -f "$DIR/classification.txt" ] && awk -F'|' '$2 == "not_applicable" {print $1}' "$DIR/classification.txt" || true)
+job_of() { grep -vE '^[[:space:]]*(#|$)' "$MANIFEST" | awk -F'|' -v n="$1" '$1 == n {print $2}'; }
 
 {
   echo '## DESKILO QUALITY REPORT'
@@ -44,6 +49,12 @@ conditional=$(grep -vE '^[[:space:]]*(#|$)' "$MANIFEST" | awk -F'|' '$4 == "cond
           mark='⏭️ SKIPPED (waits on an earlier row)'
         else
           mark='❌ FAIL (did not run)'
+        fi ;;
+      not_applicable)
+        if printf '%s\n' "$stood_down" | grep -qxF "$(job_of "$name")"; then
+          mark='➖ NOT APPLICABLE (classifier)'
+        else
+          mark='❌ FAIL (claims not applicable without the classifier)'
         fi ;;
       *)       mark='❌ FAIL' ;;
     esac
@@ -86,6 +97,11 @@ while IFS='|' read -r name outcome detail; do
     skipped)
       if ! printf '%s\n' "$conditional" | grep -qxF "$name"; then
         echo "::error::'$name' did not run and is not conditional"
+        status=1
+      fi ;;
+    not_applicable)
+      if ! printf '%s\n' "$stood_down" | grep -qxF "$(job_of "$name")"; then
+        echo "::error::'$name' claims not applicable, but the classifier did not stand its job down"
         status=1
       fi ;;
     *)
