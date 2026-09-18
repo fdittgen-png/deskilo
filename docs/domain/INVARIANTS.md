@@ -72,6 +72,46 @@ signatures would destroy the only evidence that they were ever different
 — and an auditor will ask. `signature_algo` has been stamped since 0152,
 so every invoice issued after it answers `verified` or `altered`.
 
+## What the populated upgrade proves, and what it cannot (#1338)
+
+The replay from empty proves the migrations run; the restore drill
+proves a current backup comes back whole. Neither said what the next
+migrations do to an instance that already holds an archive — which is
+how the paragraph above came to be written. Since #1338 the database job
+installs a **supported populated baseline** (0226, the first schema that
+writes its own marker), seeds `supabase/restore/archive_seed.sql` on it,
+runs every later migration over it, and compares
+(`scripts/populated_upgrade_check.sh`).
+
+**Proven, on every run:**
+
+- every signed field, stored hash, algorithm stamp, posting and payment
+  relation of the archive is byte-equal before and after the upgrade;
+- an invoice signed the modern way (`signature_algo` 7) reads `verified`
+  after the upgrade, and a synthetic alteration behind the guard reads
+  `altered`;
+- a legacy invoice with no algorithm stamp reads `unverifiable` before
+  AND after — no migration recomputed its hash to make it look better;
+- the permitted transitions (void, settle) still work on the upgraded
+  schema, and an edit or a delete still raises *"invoices are immutable"*;
+- the 0240 association backfill associates a captured intent only when
+  exactly one credit matches it and that credit matches nothing else; the
+  ambiguous pair stays unassociated and `reconcile_workspace` names both;
+- the comparison can fail: `supabase/restore/destructive_control.sql`
+  "repairs" the legacy hash through the same apply path, and the check
+  passes only when the snapshot diff names that invoice.
+
+**Historical, and stays so:** the pilot's pre-0152 invoices. The check
+prevents a recurrence; it cannot reconstruct evidence the backfills
+already replaced, and it does not claim those invoices are anything but
+`unverifiable`.
+
+**Still unproved:** baselines other than 0226 (the baseline is a
+parameter of the script, not a second script — add one when a supported
+instance stands on another version), storage objects (a document's PDF
+is not in the database), and an upgrade interrupted mid-way through the
+populated schema (the lifecycle check proves the resume on an empty one).
+
 ## Event validation: what `43` proves, and what it does not
 
 `43_event_validation_rules.sql` drives the real RPCs as `authenticated`

@@ -30,6 +30,7 @@ Totals by layer and by action: run the tool — they are printed, not committed,
 | Restore drill: dump, restore into a fresh database, reconcile | #1338 / #1310 | the `Restore drill` step in quality · database (#1310 S1) |
 | Export completeness: paging, manifest, ZIP | #1338 / #1310 | #1310 S2, blocked on #1312 for schema_version |
 | Instance install, resume, doctor isolation | #1337 / #1314 | the `Install, resume and upgrade a real schema` step in quality · database (#1337) |
+| Populated upgrade preserves financial archives | #1338 | the `A populated instance upgrades and keeps its archives` step in quality · database: baseline 0226 + `supabase/restore/archive_seed.sql`, upgraded to the tip, snapshot byte-equal, legacy stays unverifiable, destructive control caught (#1338) |
 | Journeys: decision without the bell, onboarding retry | #1339 | with #1306 and #1303 |
 | State model: stale, offline, empty, error | #1339 / #1305 | with #1305 |
 
