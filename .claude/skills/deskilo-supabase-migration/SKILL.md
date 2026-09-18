@@ -21,6 +21,9 @@ Pick fixtures by name (`workspaces.name ilike 'COWORKONTI%'`), never by id.
 Test the negative paths in nested `begin … exception when others then v_err := sqlerrm; end;`.
 Only then `apply_migration` with the SAME SQL (plus the header comment),
 then a `select` that proves columns/functions/triggers exist.
+Then `dart run tool/record_applied_migrations.dart` and commit
+`supabase/APPLIED.sha256` in the same PR (#1455): an applied
+file may never change again, and the lint enforces it.
 
 ## 2. Patching a long function you do not own
 ```

@@ -222,6 +222,18 @@ jobs:
           fi
           echo "policies: $(wc -l < replay-policies.txt | tr -d ' ') match"
 
+      # #1455 — the effective SQL contract, read from the replay: the
+      # signatures, grants and body digests a reviewer would otherwise have
+      # to reconstruct from fifty anchored patches. Committed, like the
+      # policy manifest; the full definitions ride the artifact.
+      - name: Effective contract
+        id: contract
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        run: |
+          bash scripts/contract_check.sh \
+            "$(supabase status -o env | sed -n 's/^DB_URL="\(.*\)"$/\1/p')"
+
       # #1232 — the one property no pgTAP file can make, because every
       # one of them runs in a single transaction and a race needs two
       # connections. Two real psql processes, one seat.
@@ -313,6 +325,8 @@ jobs:
               "${{ steps.pgtap.outcome }}"
             printf 'Policy drift|%s|live policies equal the set the migrations build\n' \
               "${{ steps.policies.outcome }}"
+            printf 'Effective contract|%s|routines, grants, constraints and triggers of the replay equal the committed contract\n' \
+              "${{ steps.contract.outcome }}"
             printf 'Restore drill|%s|seeded, dumped, restored into a fresh database, counts equal and reconciled\n' \
               "${{ steps.restore.outcome }}"
             printf 'Payments|%s|the real payment handler opens the caller'"'"'s intent; strangers and no token refused\n' \
@@ -343,6 +357,7 @@ jobs:
           for step in "Migration safety=${{ steps.migrations.outcome }}" \
                       "Database disciplines=${{ steps.pgtap.outcome }}" \
                       "Policies equal the migrations=${{ steps.policies.outcome }}" \
+                      "Effective contract=${{ steps.contract.outcome }}" \
                       "Two sessions, one seat=${{ steps.race.outcome }}" \
                       "Two owners, one decision=${{ steps.flags.outcome }}" \
                       "Restore drill=${{ steps.restore.outcome }}" \
