@@ -224,6 +224,17 @@ jobs:
           bash scripts/concurrency_check.sh \
             "$(supabase status -o env | sed -n 's/^DB_URL="\(.*\)"$/\1/p')"
 
+      # #1329 — the feature-flag write compares its read-set and merges
+      # under ONE row lock. Two real sessions prove there is no window
+      # between the comparison and the write.
+      - name: Two owners, one decision
+        id: flags
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        run: |
+          bash scripts/feature_flags_race.sh \
+            "$(supabase status -o env | sed -n 's/^DB_URL="\(.*\)"$/\1/p')"
+
       # #1310 — OPERATIONS.md has documented the dump and the restore
       # since the day it was written, and nothing had ever executed it.
       # A backup procedure that has never been restored is a hope, not a
@@ -264,6 +275,8 @@ jobs:
               "${{ steps.pgtap.outcome }}"
             printf 'Concurrency|%s|two sessions race for one seat, exactly one wins\n' \
               "${{ steps.race.outcome }}"
+            printf 'Conditional writes|%s|two owners decide on one feature map, the second is refused under the lock\n' \
+              "${{ steps.flags.outcome }}"
             printf 'Query budgets|%s|indexes exist, the planner uses them at 5 000 rows\n' \
               "${{ steps.pgtap.outcome }}"
             printf 'Policy drift|%s|live policies equal the set the migrations build\n' \
@@ -297,6 +310,7 @@ jobs:
                       "Database disciplines=${{ steps.pgtap.outcome }}" \
                       "Policies equal the migrations=${{ steps.policies.outcome }}" \
                       "Two sessions, one seat=${{ steps.race.outcome }}" \
+                      "Two owners, one decision=${{ steps.flags.outcome }}" \
                       "Restore drill=${{ steps.restore.outcome }}" \
                       "A member can start a payment=${{ steps.payments.outcome }}"; do
             echo "$step"

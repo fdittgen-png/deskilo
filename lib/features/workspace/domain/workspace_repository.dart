@@ -390,7 +390,13 @@ abstract class WorkspaceRepository {
   /// Merges [flags] into the workspace's stored feature flags (#963):
   /// only the keys named here change, every other key stays as it is.
   /// Owner-only.
-  Future<void> setFeatureFlags(String workspaceId, Map<String, bool> flags);
+  ///
+  /// #1329 — [expected] is the read-set a preview rested on: key → the
+  /// value it was read as. The server compares it under the row lock and
+  /// throws [FeatureFlagsConflict] instead of writing when any of it
+  /// moved. Null keeps the unconditional merge.
+  Future<void> setFeatureFlags(String workspaceId, Map<String, bool> flags,
+      {Map<String, bool>? expected});
 
   /// Workspace-wide developer mode (#419, 0081): admin/owner only —
   /// the server enforces via set_dev_mode.

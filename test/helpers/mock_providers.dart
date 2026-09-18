@@ -42,7 +42,9 @@ import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
+import 'package:deskilo/features/workspace/domain/feature_flags_write.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
 import 'package:deskilo/core/notifications/notification_providers.dart';
@@ -1164,16 +1166,38 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   @override
   Future<void> setFeatureFlags(
     String workspaceId,
-    Map<String, bool> flags,
-  ) async {
+    Map<String, bool> flags, {
+    Map<String, bool>? expected,
+  }) async {
     final i = workspaces.indexWhere((w) => w.id == workspaceId);
     if (i < 0) throw StateError('unknown workspace $workspaceId');
+    flagExpectations.add(expected == null ? null : Map.of(expected));
+    if (flagConflictNext) {
+      flagConflictNext = false;
+      throw FeatureFlagsConflict(expected?.keys.take(1).toList() ?? const []);
+    }
+    // #1329 — the server compares the read-set through the registry
+    // defaults (feature_raw); the fake resolves the same way.
+    if (expected != null) {
+      final current = resolveEnabledFeatures(workspaces[i].featureFlags);
+      final stale = [
+        for (final e in expected.entries)
+          if (current.any((WorkspaceFeature f) => f.dbKey == e.key) != e.value)
+            e.key,
+      ]..sort();
+      if (stale.isNotEmpty) throw FeatureFlagsConflict(stale);
+    }
     flagWrites.add(Map.of(flags));
     // A MERGE, like set_feature_flags (0176, #963).
     workspaces[i] = workspaces[i].copyWith(
       featureFlags: {...workspaces[i].featureFlags, ...flags},
     );
   }
+
+  /// #1329 — the read-set of every write (null for an unconditional one),
+  /// and a switch to answer the next write with a conflict.
+  final flagExpectations = <Map<String, bool>?>[];
+  bool flagConflictNext = false;
 
   /// Every flag map handed to [setFeatureFlags], in order (#963 pins
   /// that a toggle writes only what it changes).
