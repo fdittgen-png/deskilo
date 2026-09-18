@@ -17,6 +17,10 @@ import 'lint_sources.dart';
 /// Files allowed to call `setFeatureFlags` with a map that is NOT a
 /// toggle delta. May only shrink.
 const _exceptions = <String, String>{
+  'lib/features/workspace/application/process_activation.dart':
+      'the ONE process write (#1329, ADR 0027): the delta comes from the '
+          '#1326 resolver, not from a toggle, and goes with the read-set '
+          'the preview rested on so the server can refuse a stale decision',
   'lib/features/workspace/presentation/screens/workspace_settings_screen.dart':
       'the workspace XML import (#916) writes the imported map whole — it '
           'is not a toggle, the server merges it, and #1329 routes it '

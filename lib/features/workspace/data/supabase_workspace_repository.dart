@@ -17,6 +17,7 @@ import '../domain/payment_instructions.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_feature.dart';
 import '../domain/workspace_repository.dart';
+import '../domain/feature_flags_write.dart';
 import '../domain/workspace_settings_save.dart';
 import 'conversation_api.dart';
 import '../domain/workspace_document.dart';
@@ -600,15 +601,33 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   @override
   Future<void> setFeatureFlags(
     String workspaceId,
-    Map<String, bool> flags,
-  ) async {
+    Map<String, bool> flags, {
+    Map<String, bool>? expected,
+  }) async {
     // #963 — a MERGE (0176): the row keeps every key this write does
     // not name, so a caller holding an older copy of the row can no
     // longer put the other switches back to what it remembered.
-    await _client.rpc<dynamic>('set_feature_flags', params: {
-      'p_workspace_id': workspaceId,
-      'p_flags': flags,
-    });
+    // #1329 — with a read-set, the merge is refused if any of it moved.
+    try {
+      await _client.rpc<dynamic>('set_feature_flags', params: {
+        'p_workspace_id': workspaceId,
+        'p_flags': flags,
+        'p_expected': ?expected,
+      });
+    } on PostgrestException catch (e, st) {
+      // trace-exempt: a conflict is rethrown typed with its stack; the caller traces and explains it.
+      if (e.code == FeatureFlagsConflict.sqlState) {
+        final named = e.message.split(':').last;
+        Error.throwWithStackTrace(
+          FeatureFlagsConflict([
+            for (final k in named.split(','))
+              if (k.trim().isNotEmpty) k.trim(),
+          ]),
+          st,
+        );
+      }
+      rethrow;
+    }
   }
 
   @override
