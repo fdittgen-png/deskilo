@@ -44,6 +44,8 @@ textarea{min-height:70px}
 .check .d{font-size:.8rem;color:var(--muted)}
 .check.child{margin-left:28px}
 .check.off{opacity:.55}
+.subhead{margin:10px 0 0;font-size:.85rem;font-weight:600;color:var(--muted)}
+.finding.off{opacity:.6}
 table{width:100%;border-collapse:collapse;margin-top:8px}
 th{text-align:left;font-size:.8rem;color:var(--muted);padding:4px 6px}
 td{padding:3px 3px;vertical-align:top}
@@ -118,6 +120,7 @@ input.missing,select.missing,textarea.missing{border-color:var(--err);background
   <button class="btn ghost" onclick="if(confirm(T('setupClearAnswersConfirm'))){localStorage.removeItem(LS);localStorage.removeItem(LS+'-step');location.reload()}" data-t="setupReset"></button>
   <span class="saved" id="saved"></span>
 </footer>
+<script src="setup_catalogue.js"></script>
 <script src="setup_l10n.js"></script>
 <script>
 'use strict';
@@ -153,6 +156,13 @@ function T(key,params){
 const cat=(section,key)=>L10N[LANG]?.[section]?.[key]??L10N.en?.[section]?.[key];
 const featureTitle=k=>(cat('feature',k)||[k])[0];
 const featureDesc=k=>(cat('feature',k)||[k,''])[1];
+// #1330 — the business processes the switches are grouped by. The
+// structure is generated from the app's registry (setup_catalogue.js), the
+// words come with the rest of the catalogue; the XML stays feature-keyed.
+const PROCESSES=window.SETUP_PROCESSES||[];
+const processTitle=k=>(cat('process',k)||[k])[0];
+const processDesc=k=>(cat('process',k)||[k,''])[1];
+const subprocessTitle=k=>(cat('subprocess',k)||[k])[0];
 const permName=p=>cat('perm',p)||p;
 const domainName=d=>cat('domain',d)||d;
 const countryName=c=>cat('country',c)||c;
@@ -404,6 +414,9 @@ function set(path,val){const p=path.split('.');let o=S;while(p.length>1)o=o[p.sh
 const REQUIRES={carnets:'invoicing',configurationTransfer:'dataExport',services:'moneyTab',accessorySupplements:'moneyTab',onlinePayments:'moneyTab',invoicing:'moneyTab',adminInvoicing:'invoicing',adminLevelAssign:'levelBooking',nfcBadges:'kioskMode',whatsappIntegration:'membersDirectory',invoicePdfTemplate:'invoicing',dunning:'invoicing',vatManagement:'invoicing',vatDeclarations:'vatManagement',einvoiceCustomerDelivery:'invoicing',notificationGrouping:'eventsTab',qrBadges:'kioskMode',kioskMemberPhotos:'kioskMode',badgeSignIn:'nfcBadges',paymentReminders:'dunning',supplyExpenses:'services',priceNegotiations:'moneyTab',scheduledExpenses:'moneyTab',memberReports:'moneyTab',financeFaces:'moneyTab',dataAccessLog:'moneyTab',subscriptionInvoices:'invoicing',usageInvoices:'invoicing',invoiceSettlement:'invoicing',invoiceJourney:'invoicing',bookingGate:'bookingPolicies',calendarViews:'calendarHub',reportDesigner:'invoicePdfTemplate',memberEnvironments:'environmentPairs',memberOrigin:'membersDirectory',memberPage:'membersDirectory',invoicingWizard:'invoicing',expenseRepartition:'invoicing',settlementFold:'invoiceSettlement',richMessageRefs:'memberNotifications',calendarValidations:'calendarHub',usageRecords:'invoicing',reportDesignExchange:'reportDesigner',invoiceAddressWindow:'invoicing',reportLayouts:'reportDesigner',managedProfiles:'membersDirectory',managedProfileAccess:'managedProfiles',numberSequences:'invoicing',workspaceStatus:'invoicing',siteDocuments:'multiSite',vatGroups:'vatManagement',vatRateHistory:'vatManagement',vatCounterparty:'vatManagement',deployments:'environmentPairs',expenseRepartitionWizard:'expenseRepartition',memberPaymentTerms:'invoicing',reportTexts:'reportDesigner',usageReport:'usageRecords',vatReport:'vatDeclarations',letterStandard:'reportLayouts'};
 const EU=new Set(['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GR','HR','HU','IE','IT','LT','LU','LV','MT','NL','PL','PT','RO','SE','SI','SK']);
 const on=k=>{let f=k;while(f){if(!S.features[f])return false;f=REQUIRES[f]}return true};
+const FEATURE_KEYS=new Set(FEATURES.map(([k])=>k));
+// The nearest prerequisite that is off — why a ticked feature is not on.
+const waitsFor=k=>{let f=REQUIRES[k];while(f&&S.features[f])f=REQUIRES[f];return f};
 // #800 — ticking a feature switches on everything it needs.
 const enableWith=k=>{S.features[k]=true;let f=REQUIRES[k];while(f){S.features[f]=true;f=REQUIRES[f]}};
 const alsoEnabled=k=>{const r=[];let f=REQUIRES[k];while(f){if(!S.features[f])r.push(featureTitle(f));f=REQUIRES[f]}return r};
@@ -563,10 +576,18 @@ const STEPS=[
 
 {id:'features',get title(){return T('featuresTitle')},get why(){return T('featuresWhy')},
  build(){const kids=[h('p',{class:'hint'},T('featuresIndentHint')),help('features')];
-  for(const[k]of FEATURES){const name=featureTitle(k),d=featureDesc(k);const parent=REQUIRES[k];const also=alsoEnabled(k);
-   const note=(!S.features[k]&&also.length)?T('featuresAlsoEnables',{desc:d,list:quotedList(also)}):(S.features[k]&&parent&&!on(parent)?T('featuresWaitingFor',{desc:d,feature:quoted(featureTitle(parent))}):d);
-   kids.push(checkbox(name,note,S.features[k],v=>{if(v)enableWith(k);else S.features[k]=false;save()},(parent?'child':'')));
-   const fh=helpIcon(FEATURE_HELP[k]);if(fh)kids[kids.length-1].querySelector('span').insertBefore(fh,kids[kids.length-1].querySelector('span div'));}
+  const row=k=>{const name=featureTitle(k),d=featureDesc(k);const parent=REQUIRES[k];const also=alsoEnabled(k);
+   const note=(!S.features[k]&&also.length)?T('featuresAlsoEnables',{desc:d,list:quotedList(also)}):(S.features[k]&&parent&&!on(parent)?T('featuresWaitingFor',{desc:d,feature:quoted(featureTitle(waitsFor(k)))}):d);
+   const c=checkbox(name,note,S.features[k],v=>{if(v)enableWith(k);else S.features[k]=false;save()},(parent?'child':''));
+   const fh=helpIcon(FEATURE_HELP[k]);if(fh)c.querySelector('span').insertBefore(fh,c.querySelector('span div'));return c};
+  // #1330 — one card per business process, the same switches underneath;
+  // a switch no process lists yet (a reserved flag) is offered last.
+  const placed=new Set();
+  for(const p of PROCESSES){const feats=p.subprocesses.flatMap(sp=>sp.features).filter(k=>FEATURE_KEYS.has(k));if(!feats.length)continue;
+   kids.push(h('div',{class:'card'},lbl(processTitle(p.key)),h('p',{class:'hint'},processDesc(p.key)),
+    ...p.subprocesses.flatMap(sp=>{const own=sp.features.filter(k=>FEATURE_KEYS.has(k));return own.length?[h('div',{class:'subhead'},subprocessTitle(sp.key)),...own.map(k=>{placed.add(k);return row(k)})]:[]})))}
+  const rest=FEATURES.map(([k])=>k).filter(k=>!placed.has(k));
+  if(rest.length)kids.push(h('div',{class:'card'},lbl(T('featuresTechnical')),h('p',{class:'hint'},T('featuresTechnicalHint')),...rest.map(row)));
   return kids},
  check(){const f=[];const n=FEATURES.filter(([k])=>on(k)).length;f.push(F.ok(T('featuresOkCount',{n,total:FEATURES.length})));
   if(!on('moneyTab'))f.push(F.warn(T('featuresWarnMoney'),'features'));
@@ -849,6 +870,13 @@ const STEPS=[
 {id:'review',get title(){return T('reviewTitle')},get why(){return T('reviewWhy')},
  build(){const all=findings();const c={ok:0,warn:0,err:0};all.forEach(x=>c[x.lvl]++);
   const k=[h('div',{class:'summary'},h('b',{class:'ok'},'✓ '+T('reviewChecked',{n:c.ok})),h('b',{class:'warn'},'⚠ '+T('reviewWarnings',{n:c.warn})),h('b',{class:'err'},'✕ '+T('reviewBlockers',{n:c.err})))];
+  // #1330 — what the answers mean in business terms: each process, the
+  // subprocesses in use, and a ticked switch that waits for a prerequisite.
+  k.push(h('div',{class:'card'},lbl(T('reviewProcesses')),...PROCESSES.map(p=>{
+   const feats=p.subprocesses.flatMap(sp=>sp.features).filter(k=>FEATURE_KEYS.has(k));const n=feats.filter(on).length;
+   const subs=p.subprocesses.filter(sp=>sp.features.some(k=>FEATURE_KEYS.has(k)&&on(k))).map(sp=>subprocessTitle(sp.key));
+   const waiting=feats.filter(k=>S.features[k]&&!on(k)).map(k=>T('reviewWaitingFor',{feature:featureTitle(k),parent:featureTitle(waitsFor(k))}));
+   return h('div',{class:'finding '+(n?'ok':'off')},h('span',{class:'lvl'},n?'✓':'–'),h('span',{},processTitle(p.key)+' — '+(n?T('reviewProcessCount',{n,total:feats.length,list:subs.join(T('listSep'))}):T('reviewProcessOff')),...waiting.map(w=>h('div',{class:'d'},w))))})));
   for(const st of STEPS){if(st.id==='review')continue;const rows=all.filter(x=>x.from===st.id);if(!rows.length)continue;
    k.push(h('div',{class:'card'},h('label',{},(STEPS.indexOf(st)+1)+' · '+st.title+(st.applies&&!st.applies()?' — '+T('reviewNotApplicable'):'')),...rows.map(x=>h('div',{class:'finding '+x.lvl},h('span',{class:'lvl'},x.lvl==='ok'?'✓':x.lvl==='warn'?'⚠':'✕'),h('span',{},x.t),x.lvl!=='ok'&&x.step?h('button',{class:'chip',type:'button',onclick:()=>go(x.step)},T('reviewFix')):null))))}
   const gate=h('div',{class:'gate'+(c.err?'':' ok')});

@@ -87,6 +87,37 @@ void main() {
     });
   });
 
+  // #1330 — `REQUIRES` mirrors featureManifest so `on()` / `enableWith()`
+  // agree with the app's effectiveFeatures / featureFlagsAfterToggle. It
+  // matched by discipline only (59/59 when audited); now it is pinned.
+  group('dependencies', () {
+    test('REQUIRES equals featureManifest.requires, entry for entry', () {
+      final start = html.indexOf('const REQUIRES={');
+      expect(start, isNot(-1));
+      final block = html.substring(start, html.indexOf('};', start));
+      final inHtml = {
+        for (final m in RegExp(r"([A-Za-z]+):'([A-Za-z]+)'").allMatches(block))
+          m.group(1)!: m.group(2)!,
+      };
+      final inApp = {
+        for (final e in featureManifest.entries)
+          if (e.value.requires != null) e.key.name: e.value.requires!.name,
+      };
+      expect(inHtml, inApp,
+          reason: 'REQUIRES in web/setup.html drifted from featureManifest');
+    });
+
+    test('processes are presentation only: the XML carries no process key',
+        () {
+      // The page groups by process (setup_catalogue.js) and the import
+      // reads features; a process element or attribute in the export
+      // would be a second payload nothing consumes.
+      expect(html, isNot(contains('<process')));
+      expect(html, isNot(contains('process=')));
+      expect(html, isNot(contains('subprocess=')));
+    });
+  });
+
   group('booking rules', () {
     // Wire keys, not labels: the questionnaire's XML is what carries an
     // answer into the app, so the key is the contract. Labels are prose

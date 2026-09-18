@@ -90,7 +90,9 @@ A parameter change therefore lands as one commit touching all of:
 
 1. the domain class (`BookingPolicies`, the feature registry, …) and its settings screen,
 2. the five guides + regenerated `assets/help/*.md`,
-3. `web/setup.html` — the **field**, the **XML export** and the **XML import**,
+3. `web/setup.html` — the **field**, the **XML export** and the **XML import**
+   (a new feature also goes into `workspaceProcesses`; `dart run tool/build_setup_l10n.dart`
+   then regenerates `web/setup_catalogue.js`, the process grouping the page shows — #1330),
 4. the jsdom harness that drives the page.
 
 `test/lint/setup_html_test.dart` enforces the mechanical half: every `WorkspaceFeature`
