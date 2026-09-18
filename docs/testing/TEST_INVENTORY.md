@@ -30,7 +30,6 @@ Totals by layer and by action: run the tool — they are printed, not committed,
 | Restore drill: dump, restore into a fresh database, reconcile | #1338 / #1310 | the `Restore drill` step in quality · database (#1310 S1) |
 | Export completeness: paging, manifest, ZIP | #1338 / #1310 | #1310 S2, blocked on #1312 for schema_version |
 | Instance install, resume, doctor isolation | #1337 / #1314 | the `Install, resume and upgrade a real schema` step in quality · database (#1337) |
-| Populated upgrade preserves financial archives | #1338 | the `A populated instance upgrades and keeps its archives` step in quality · database: baseline 0226 + `supabase/restore/archive_seed.sql`, upgraded to the tip, snapshot byte-equal, legacy stays unverifiable, destructive control caught (#1338) |
 | Journeys: decision without the bell, onboarding retry | #1339 | with #1306 and #1303 |
 | State model: stale, offline, empty, error | #1339 / #1305 | with #1305 |
 
@@ -558,9 +557,9 @@ Totals by layer and by action: run the tool — they are printed, not committed,
 | `test/lint/report_kind_registry_test.dart` | lint | #864 — a report kind added later must gain export, import, a label and defaults, or fail here. | 7 | yes | repository sources | an architecture, security or process rule — #864 | no | KEEP |  |
 | `test/lint/rls_matrix_gate_test.dart` | lint | #1321 — a row policy asks the role matrix, never "admin or owner". | 2 | yes | repository sources | an architecture, security or process rule — #1321, #513, #982 | no | KEEP |  |
 | `test/lint/route_registry_test.dart` | lint | Route-registry lint: a new route cannot be added silently. | 1 | yes | repository sources | an architecture, security or process rule — #486, #500, #513 | no | KEEP |  |
-| `test/lint/setup_html_test.dart` | lint | The setup questionnaire NEVER lags the app (#653). `web/setup.html` is what a new owner answers BEFORE opening DesKilo, and it is published at the URL all five… | 6 | yes | repository sources | an architecture, security or process rule — #653, #634, #1366 | no | KEEP |  |
-| `test/lint/setup_l10n_test.dart` | lint | The setup questionnaire speaks the app's five languages (#1366). | 9 | yes | none | an architecture, security or process rule — #1366 | no | KEEP |  |
-| `test/lint/setup_runs_test.dart` | lint | `web/setup.html` is ~900 lines of dense JavaScript with no build step, and nothing in CI ever executed it. So a plain `ReferenceError` in one step shipped to… | 1 | yes | none | an architecture, security or process rule — #1366 | no | KEEP |  |
+| `test/lint/setup_html_test.dart` | lint | The setup questionnaire NEVER lags the app (#653). `web/setup.html` is what a new owner answers BEFORE opening DesKilo, and it is published at the URL all five… | 8 | yes | repository sources | an architecture, security or process rule — #653, #634, #1366 | no | KEEP |  |
+| `test/lint/setup_l10n_test.dart` | lint | The setup questionnaire speaks the app's five languages (#1366). | 12 | yes | none | an architecture, security or process rule — #1366, #1330 | no | KEEP |  |
+| `test/lint/setup_runs_test.dart` | lint | `web/setup.html` is ~900 lines of dense JavaScript with no build step, and nothing in CI ever executed it. So a plain `ReferenceError` in one step shipped to… | 1 | yes | none | an architecture, security or process rule — #1330, #1366 | no | KEEP |  |
 | `test/lint/sign_out_test.dart` | lint | #1124 — a sign-out that does not drop the cache leaves the last principal's rows on the disk for the next one. | 3 | yes | repository sources | an architecture, security or process rule — #1124 | no | KEEP |  |
 | `test/lint/silent_rls_refusal_test.dart` | lint | #1269 — a write RLS refuses does not raise. It matches no rows. | 2 | yes | none | an architecture, security or process rule — #1269 | no | KEEP |  |
 | `test/lint/spdx_headers_test.dart` | lint | Licence lint: every source file declares 0BSD, and nothing declares anything else. | 1 | yes | none | an architecture, security or process rule | no | KEEP |  |
