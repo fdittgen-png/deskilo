@@ -47,6 +47,10 @@ on:
       - web/**
       - lib/**
       - pubspec.yaml
+      # #1446 — a dependency bump or a runtime asset can break the browser
+      # build just as well; they were never a trigger.
+      - pubspec.lock
+      - assets/**
 
 env:
   FLUTTER_VERSION: "3.44.9"
