@@ -17,6 +17,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/book_repartition.dart';
 import '../../domain/expense_repartition.dart';
 import '../../domain/workspace_status.dart';
 import '../../providers/money_providers.dart';
@@ -102,26 +103,40 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
     if (workspace == null || cents == null || shares.isEmpty) return;
     setState(() => _busy = true);
     final rule = _effectiveRule();
+    BookRepartitionOutcome? outcome;
     final ok = await runGuarded(
       context,
       domain: 'money',
       message: 'repartition wizard failed',
       errorText: l10n?.workspaceGenericError ?? 'Something went wrong. Please try again.',
       action: () async {
-        final repo = ref.read(moneyRepositoryProvider);
-        await repo.distributeExpense(
+        // The order is the decision, so it lives in the command
+        // (#1532): the rule first, the money second.
+        outcome = await bookRepartition(
+          ref.read(moneyRepositoryProvider),
           workspaceId: workspace.id,
           title: _title.text.trim(),
           amountCents: cents,
-          method: rule.method,
           period: _period,
+          rule: rule,
           shares: shares,
+          remember: _remember,
         );
-        if (_remember) await repo.setRepartitionRule(workspace.id, rule);
       },
     );
     if (!mounted) return;
     setState(() => _busy = false);
+    // `RepartitionNotBooked` is a refusal, not a crash: the rule could
+    // not be saved and NOTHING was distributed, so the sheet stays open
+    // on the same amounts and Book can simply be pressed again.
+    if (ok && outcome is RepartitionNotBooked) {
+      AppSnack.error(
+          context,
+          l10n?.repartitionRuleNotSaved ??
+              'The rule could not be saved, so nothing was shared. '
+                  'Try again.');
+      return;
+    }
     if (ok) {
       ref.invalidate(repartitionRuleProvider);
       AppSnack.success(context, l10n?.repartitionBooked ?? 'Repartition booked.');

@@ -11766,6 +11766,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get repartitionSharesTotal => 'Total de las partes';
 
   @override
+  String get repartitionRuleNotSaved =>
+      'No se pudo guardar la regla, así que no se repartió nada. Inténtalo de nuevo.';
+
+  @override
   String get repartitionBooked => 'Reparto contabilizado.';
 
   @override

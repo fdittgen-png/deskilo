@@ -12803,6 +12803,10 @@
   "@repartitionSharesTotal": {
     "description": "#934 workspace status / repartition wizard: repartitionSharesTotal"
   },
+  "repartitionRuleNotSaved": "The rule could not be saved, so nothing was shared. Try again.",
+  "@repartitionRuleNotSaved": {
+    "description": "#1532: repartitionRuleNotSaved"
+  },
   "repartitionBooked": "Repartition booked.",
   "@repartitionBooked": {
     "description": "#934 workspace status / repartition wizard: repartitionBooked"

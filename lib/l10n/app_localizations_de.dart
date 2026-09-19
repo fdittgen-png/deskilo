@@ -11782,6 +11782,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get repartitionSharesTotal => 'Summe der Anteile';
 
   @override
+  String get repartitionRuleNotSaved =>
+      'Die Regel konnte nicht gespeichert werden, also wurde nichts verteilt. Bitte erneut versuchen.';
+
+  @override
   String get repartitionBooked => 'Umlage gebucht.';
 
   @override

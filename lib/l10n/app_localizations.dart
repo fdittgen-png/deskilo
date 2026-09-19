@@ -20549,6 +20549,12 @@ abstract class AppLocalizations {
   /// **'Total of the shares'**
   String get repartitionSharesTotal;
 
+  /// #1532: repartitionRuleNotSaved
+  ///
+  /// In en, this message translates to:
+  /// **'The rule could not be saved, so nothing was shared. Try again.'**
+  String get repartitionRuleNotSaved;
+
   /// #934 workspace status / repartition wizard: repartitionBooked
   ///
   /// In en, this message translates to:

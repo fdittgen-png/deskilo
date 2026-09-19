@@ -128,6 +128,10 @@
   "@repartitionSharesTotal": {
     "description": "#934 workspace status / repartition wizard: repartitionSharesTotal"
   },
+  "repartitionRuleNotSaved": "La regola non è stata salvata, quindi non è stato ripartito nulla. Riprova.",
+  "@repartitionRuleNotSaved": {
+    "description": "#1532: repartitionRuleNotSaved"
+  },
   "repartitionBooked": "Ripartizione registrata.",
   "@repartitionBooked": {
     "description": "#934 workspace status / repartition wizard: repartitionBooked"

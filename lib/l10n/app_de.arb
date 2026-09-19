@@ -8159,6 +8159,10 @@
   "@repartitionSharesTotal": {
     "description": "#934 workspace status / repartition wizard: repartitionSharesTotal"
   },
+  "repartitionRuleNotSaved": "Die Regel konnte nicht gespeichert werden, also wurde nichts verteilt. Bitte erneut versuchen.",
+  "@repartitionRuleNotSaved": {
+    "description": "#1532: repartitionRuleNotSaved"
+  },
   "repartitionBooked": "Umlage gebucht.",
   "@repartitionBooked": {
     "description": "#934 workspace status / repartition wizard: repartitionBooked"
