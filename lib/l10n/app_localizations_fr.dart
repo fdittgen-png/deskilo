@@ -1690,6 +1690,19 @@ class AppLocalizationsFr extends AppLocalizations {
       'Noms, courriels, téléphones et adresses sont floutés à l\'écran de cet appareil — pour les captures d\'écran et les vidéos.';
 
   @override
+  String get demoSessionBadge => 'Démo';
+
+  @override
+  String get demoSessionReset => 'Réinitialiser la démo';
+
+  @override
+  String get demoSessionResetDone => 'La démo est revenue à son état initial.';
+
+  @override
+  String get demoSessionBadgeHint =>
+      'Vous explorez un espace de démonstration. Rien ici ne quitte cet appareil.';
+
+  @override
   String get deploymentConfirmTitleDev => 'Déployer dans cette DEV ?';
 
   @override

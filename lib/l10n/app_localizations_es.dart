@@ -1688,6 +1688,19 @@ class AppLocalizationsEs extends AppLocalizations {
       'Nombres, correos, teléfonos y direcciones se difuminan en la pantalla de este dispositivo — para capturas de pantalla y vídeos.';
 
   @override
+  String get demoSessionBadge => 'Demo';
+
+  @override
+  String get demoSessionReset => 'Reiniciar la demo';
+
+  @override
+  String get demoSessionResetDone => 'La demo ha vuelto a su estado inicial.';
+
+  @override
+  String get demoSessionBadgeHint =>
+      'Estás explorando un espacio de demostración. Nada de esto sale de este dispositivo.';
+
+  @override
   String get deploymentConfirmTitleDev => '¿Desplegar en este DEV?';
 
   @override

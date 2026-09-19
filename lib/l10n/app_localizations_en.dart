@@ -1679,6 +1679,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'Names, e-mails, phones and addresses are blurred on this device\'s screen — for screenshots and videos.';
 
   @override
+  String get demoSessionBadge => 'Demo';
+
+  @override
+  String get demoSessionReset => 'Reset the demo';
+
+  @override
+  String get demoSessionResetDone => 'The demo is back as it started.';
+
+  @override
+  String get demoSessionBadgeHint =>
+      'You are exploring a demonstration space. Nothing here leaves this device.';
+
+  @override
   String get deploymentConfirmTitleDev => 'Deploy into this DEV?';
 
   @override
