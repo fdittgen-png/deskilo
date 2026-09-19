@@ -163,29 +163,75 @@ Duration paintCost(FloorPlan plan, ColorScheme scheme, {int times = 5}) {
   return best;
 }
 
+/// The calls that grew faster than the plan did, as `name: a → b`.
+///
+/// The rule as a function rather than a loop of `expect`s, so it can be
+/// held to its own standard below: a call that does not scale at all
+/// (the background, the grid) is fine; one that scales must scale by
+/// four when the plan grows four times, not by sixteen. Five is slack.
+List<String> superlinearCalls(Map<String, int> small, Map<String, int> large) {
+  final out = <String>[];
+  for (final call in small.keys) {
+    final a = small[call]!;
+    final b = large[call] ?? 0;
+    if (b > a * 5) out.add('$call: $a → $b');
+  }
+  return out;
+}
+
 void main() {
   const scheme = ColorScheme.light();
 
   test('the work the painter asks for is LINEAR in what is on the plan',
       () {
-    final small = countFor(buildPlan(100), scheme);
-    final large = countFor(buildPlan(400), scheme);
+    final over = superlinearCalls(
+      countFor(buildPlan(100), scheme),
+      countFor(buildPlan(400), scheme),
+    );
+    expect(
+      over,
+      isEmpty,
+      reason: 'these grew faster than the plan when it grew 4x — linear '
+          'work would be about 4x. The usual cause is a lookup that scans '
+          'a list INSIDE a loop over another: plan.seatsOf(desk.id) inside '
+          'the desk loop, or desks.where(...) inside the seat loop. Hoist '
+          'it into a map built once.\n${over.join('\n')}',
+    );
+  });
 
-    for (final call in small.keys) {
-      final a = small[call]!;
-      final b = large[call] ?? 0;
-      // A call that does not scale at all (the background, the grid) is
-      // fine; one that scales must scale by four, not by sixteen.
-      expect(
-        b,
-        lessThanOrEqualTo(a * 5),
-        reason: '`$call` went from $a to $b when the plan grew 4x. Linear '
-            'work would be about 4x. The usual cause is a lookup that '
-            'scans a list INSIDE a loop over another — plan.seatsOf('
-            'desk.id) inside the desk loop, or desks.where(...) inside '
-            'the seat loop. Hoist it into a map built once.',
-      );
-    }
+  test('#1456 — the guard is shown to fail on the regression it exists '
+      'for, and to tolerate the growth that is fine', () {
+    // A performance guard nobody has seen fail is a decoration. This
+    // drives the same rule the painter is held to, with the counts a
+    // quadratic loop would produce and the counts a correct one would.
+    const small = {'drawRRect': 100, 'drawParagraph': 100, 'drawRect': 3};
+
+    expect(
+      superlinearCalls(small, const {
+        'drawRRect': 1600, // 4x the plan, 16x the work: seats inside desks
+        'drawParagraph': 400,
+        'drawRect': 3,
+      }),
+      ['drawRRect: 100 → 1600'],
+      reason: 'quadratic growth must be named, and only the call that did it',
+    );
+
+    expect(
+      superlinearCalls(small, const {
+        'drawRRect': 400,
+        'drawParagraph': 420, // linear, plus a little for a bigger canvas
+        'drawRect': 3,
+      }),
+      isEmpty,
+      reason: 'linear growth, and a constant call that did not move, are '
+          'what a correct painter looks like at four times the size',
+    );
+
+    expect(
+      superlinearCalls(small, const {'drawRRect': 0, 'drawRect': 3}),
+      isEmpty,
+      reason: 'a call that disappeared is not a regression this rule owns',
+    );
   });
 
   test('and the painter is not quietly doing more per seat than it was',
