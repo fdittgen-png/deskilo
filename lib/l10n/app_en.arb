@@ -1977,6 +1977,14 @@
   "@courtesyHintManaged": {
     "description": "Form-of-address hint on a MANAGED profile — the subject is somebody else, so third person (#1177)"
   },
+  "featureCustomFieldsTitle": "Questions this space asks",
+  "@featureCustomFieldsTitle": {
+    "description": "#1288 custom fields: featureCustomFieldsTitle"
+  },
+  "featureCustomFieldsDesc": "The workspace may ask its own questions inside the identity form — a committee role, a joining date, an emergency contact. The answers belong to the membership, so a question asked here never follows somebody elsewhere.",
+  "@featureCustomFieldsDesc": {
+    "description": "#1288 custom fields: featureCustomFieldsDesc"
+  },
   "featureCustomRolesTitle": "Roles this space defines",
   "@featureCustomRolesTitle": {
     "description": "#1287 custom roles: the feature switch title"

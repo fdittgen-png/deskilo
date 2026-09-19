@@ -1147,6 +1147,14 @@
     "description": "#912 courtesy title: courtesyMrs"
   },
   "courtesyHintManaged": "Imprimée devant leur nom sur les documents. « Aucune » n'imprime que le nom.",
+  "featureCustomFieldsTitle": "Les questions de cet espace",
+  "@featureCustomFieldsTitle": {
+    "description": "#1288 custom fields: featureCustomFieldsTitle"
+  },
+  "featureCustomFieldsDesc": "L'espace peut poser ses propres questions dans le formulaire d'identité : une fonction au bureau, une date d'adhésion, un contact d'urgence. Les réponses appartiennent à l'adhésion : une question posée ici ne suit personne ailleurs.",
+  "@featureCustomFieldsDesc": {
+    "description": "#1288 custom fields: featureCustomFieldsDesc"
+  },
   "featureCustomRolesTitle": "Rôles définis par cet espace",
   "@featureCustomRolesTitle": {
     "description": "#1287 custom roles: the feature switch title"

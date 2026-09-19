@@ -34,6 +34,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.coOwner,
       WorkspaceFeature.roleManagement,
       WorkspaceFeature.customRoles,
+      WorkspaceFeature.customFields,
       WorkspaceFeature.personalInfo,
       WorkspaceFeature.managedProfiles,
       WorkspaceFeature.managedProfileAccess,

@@ -469,4 +469,10 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'secretary — each adding permissions on top of a '
                   'member\'s role. They never take a permission away, and '
                   'an owner always keeps every one.',
+        WorkspaceFeature.customFields =>
+          l10n?.featureCustomFieldsDesc ??
+              'The workspace may ask its own questions inside the identity '
+                  'form — a committee role, a joining date, an emergency '
+                  'contact. The answers belong to the membership, so a '
+                  'question asked here never follows somebody elsewhere.',
       };

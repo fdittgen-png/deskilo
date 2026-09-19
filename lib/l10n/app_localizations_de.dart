@@ -1674,6 +1674,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wird auf Dokumenten vor ihrem Namen gedruckt. „Keine“ druckt nur den Namen.';
 
   @override
+  String get featureCustomFieldsTitle => 'Fragen dieses Bereichs';
+
+  @override
+  String get featureCustomFieldsDesc =>
+      'Der Bereich kann im Identitätsformular eigene Fragen stellen — eine Funktion im Vorstand, ein Eintrittsdatum, ein Notfallkontakt. Die Antworten gehören zur Mitgliedschaft, eine hier gestellte Frage folgt also niemandem anderswohin.';
+
+  @override
   String get featureCustomRolesTitle => 'Rollen, die dieser Bereich festlegt';
 
   @override

@@ -214,7 +214,14 @@ enum WorkspaceFeature {
   /// permissions on top of a member's base role (ADR 0029). Off, the
   /// four built-in roles are all there are, which is what every space
   /// had before.
-  customRoles;
+  customRoles,
+
+  /// #1288 — questions a workspace asks its members beyond the identity
+  /// form's own fields: a committee role, a joining date, an emergency
+  /// contact. The definitions travel with a template; the answers are
+  /// keyed to the MEMBERSHIP, so one space's question never follows
+  /// somebody into another. Off, the identity form is what it was.
+  customFields;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1174,6 +1181,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // top of whatever the space already has.
   WorkspaceFeature.customRoles: FeatureManifestEntry(
     feature: WorkspaceFeature.customRoles,
+    surface: FeatureSurface.settings,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+  ),
+  // #1288 — it requires nothing: a space with no questions defined
+  // renders the identity form it always rendered, and the flag only
+  // decides whether the section can exist at all.
+  WorkspaceFeature.customFields: FeatureManifestEntry(
+    feature: WorkspaceFeature.customFields,
     surface: FeatureSurface.settings,
     tier: FeatureTier.platform,
     defaultOn: false,

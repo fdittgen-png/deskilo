@@ -79,6 +79,7 @@
         "carnets": false,
         "coOwner": false,
         "configurationTransfer": false,
+        "customFields": false,
         "customRoles": false,
         "dataAccessLog": false,
         "dataExport": true,

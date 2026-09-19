@@ -1007,6 +1007,10 @@ window.SETUP_L10N={
    "customRoles": [
     "Roles this space defines",
     "The workspace may define roles of its own — a treasurer, a secretary — each adding permissions on top of a member's role. They never take a permission away, and an owner always keeps every one."
+   ],
+   "customFields": [
+    "Questions this space asks",
+    "The workspace may ask its own questions inside the identity form — a committee role, a joining date, an emergency contact. The answers belong to the membership, so a question asked here never follows somebody elsewhere."
    ]
   },
   "process": {
@@ -2223,6 +2227,10 @@ window.SETUP_L10N={
    "customRoles": [
     "Rôles définis par cet espace",
     "L’espace peut définir ses propres rôles — un trésorier, un secrétaire — qui ajoutent des permissions à celles du rôle d’un membre. Ils n’en retirent jamais, et un propriétaire les conserve toutes."
+   ],
+   "customFields": [
+    "Les questions de cet espace",
+    "L'espace peut poser ses propres questions dans le formulaire d'identité : une fonction au bureau, une date d'adhésion, un contact d'urgence. Les réponses appartiennent à l'adhésion : une question posée ici ne suit personne ailleurs."
    ]
   },
   "process": {
@@ -3439,6 +3447,10 @@ window.SETUP_L10N={
    "customRoles": [
     "Rollen, die dieser Bereich festlegt",
     "Der Arbeitsbereich kann eigene Rollen festlegen — Kassenwart, Schriftführer — die Berechtigungen zur Rolle eines Mitglieds hinzufügen. Sie nehmen nie eine weg, und ein Eigentümer behält immer alle."
+   ],
+   "customFields": [
+    "Fragen dieses Bereichs",
+    "Der Bereich kann im Identitätsformular eigene Fragen stellen — eine Funktion im Vorstand, ein Eintrittsdatum, ein Notfallkontakt. Die Antworten gehören zur Mitgliedschaft, eine hier gestellte Frage folgt also niemandem anderswohin."
    ]
   },
   "process": {
@@ -4655,6 +4667,10 @@ window.SETUP_L10N={
    "customRoles": [
     "Roles que define este espacio",
     "El espacio puede definir sus propios roles — tesorero, secretario — que añaden permisos a los del rol de un miembro. Nunca quitan ninguno, y un propietario los conserva todos."
+   ],
+   "customFields": [
+    "Las preguntas de este espacio",
+    "El espacio puede hacer sus propias preguntas dentro del formulario de identidad: un cargo en la junta, una fecha de alta, un contacto de emergencia. Las respuestas pertenecen a la membresía, así que una pregunta hecha aquí no sigue a nadie a otro sitio."
    ]
   },
   "process": {
@@ -5871,6 +5887,10 @@ window.SETUP_L10N={
    "customRoles": [
     "Ruoli definiti da questo spazio",
     "Lo spazio può definire ruoli propri — un tesoriere, un segretario — che aggiungono permessi a quelli del ruolo di un membro. Non ne tolgono mai, e un proprietario li mantiene tutti."
+   ],
+   "customFields": [
+    "Le domande di questo spazio",
+    "Lo spazio può porre le proprie domande dentro il modulo d'identità: un incarico nel direttivo, una data di adesione, un contatto d'emergenza. Le risposte appartengono all'iscrizione, quindi una domanda posta qui non segue nessuno altrove."
    ]
   },
   "process": {

@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "featureCustomFieldsTitle": "Questions this space asks",
+  "@featureCustomFieldsTitle": {
+    "description": "#1288 custom fields: featureCustomFieldsTitle"
+  },
+  "featureCustomFieldsDesc": "The workspace may ask its own questions inside the identity form — a committee role, a joining date, an emergency contact. The answers belong to the membership, so a question asked here never follows somebody elsewhere.",
+  "@featureCustomFieldsDesc": {
+    "description": "#1288 custom fields: featureCustomFieldsDesc"
+  }
+}

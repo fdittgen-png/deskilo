@@ -89,6 +89,9 @@ const Set<String> _exported = {
   // #1287 — which roles this member was given, and when. 0247 adds the
   // key by an anchored patch, not a restatement.
   'workspace_role_members',
+  // #1288 — the answers this member gave to the workspace's own
+  // questions, with the question in every language it was asked. 0248.
+  'workspace_field_values',
   // #1238 — the six the export was missing, added by migration 0209.
   'price_negotiations',
   'quota_extensions',

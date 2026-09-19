@@ -96,6 +96,23 @@ const Map<String, String> _notExported = {
           'deployment may add to production is a decision, not a '
           'default. Tracked as #1505, with the screen that creates them',
 
+  // --- the workspace's own questions (#1288) ------------------------
+  'workspace_field_definitions':
+      'a question the workspace asks IS configuration and should travel '
+          'with a template — S5 of #1288 registers it as an entity, with '
+          'the conflict rules a type change needs. Until then it stays '
+          'out rather than travelling half-defined',
+  'workspace_field_labels': 'the question in each language; it travels, '
+      'or not, with the definition above',
+  'workspace_field_options': 'the choices of a choice question; as above',
+  'workspace_field_option_labels': 'the choices in each language; as above',
+  'workspace_field_values':
+      'an answer is the member\'s personal data, not the operator\'s copy '
+          'of their space — export_my_data carries it (0248), and a '
+          'template must never carry answers',
+  'workspace_field_value_options':
+      'which choices one member made; personal in the same way',
+
   // --- secrets: exporting them would hand over a credential ---------
   'payment_credentials':
       'a payment provider secret. An export is copied, mailed and left '
