@@ -1,0 +1,106 @@
+{
+  "@@locale": "en",
+  "workspaceFieldsTitle": "Questions from {workspace}",
+  "@workspaceFieldsTitle": {
+    "description": "#1288 custom fields: workspaceFieldsTitle",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceFieldsOptional": "optional",
+  "@workspaceFieldsOptional": {
+    "description": "#1288 custom fields: workspaceFieldsOptional"
+  },
+  "fieldProblemRequired": "Please answer this.",
+  "@fieldProblemRequired": {
+    "description": "#1288 custom fields: fieldProblemRequired"
+  },
+  "fieldProblemTooShort": "At least {count} characters.",
+  "@fieldProblemTooShort": {
+    "description": "#1288 custom fields: fieldProblemTooShort",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "fieldProblemTooLong": "At most {count} characters.",
+  "@fieldProblemTooLong": {
+    "description": "#1288 custom fields: fieldProblemTooLong",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "fieldProblemTooSmall": "At least {min}.",
+  "@fieldProblemTooSmall": {
+    "description": "#1288 custom fields: fieldProblemTooSmall",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldProblemTooLarge": "At most {max}.",
+  "@fieldProblemTooLarge": {
+    "description": "#1288 custom fields: fieldProblemTooLarge",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldProblemNotWhole": "A whole number, please.",
+  "@fieldProblemNotWhole": {
+    "description": "#1288 custom fields: fieldProblemNotWhole"
+  },
+  "fieldProblemNotANumber": "A number, please.",
+  "@fieldProblemNotANumber": {
+    "description": "#1288 custom fields: fieldProblemNotANumber"
+  },
+  "fieldProblemNotADate": "A date, please.",
+  "@fieldProblemNotADate": {
+    "description": "#1288 custom fields: fieldProblemNotADate"
+  },
+  "fieldProblemNotAChoice": "Please pick from the list.",
+  "@fieldProblemNotAChoice": {
+    "description": "#1288 custom fields: fieldProblemNotAChoice"
+  },
+  "fieldProblemTooEarly": "Not before {date}.",
+  "@fieldProblemTooEarly": {
+    "description": "#1288 custom fields: fieldProblemTooEarly",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldProblemTooLate": "Not after {date}.",
+  "@fieldProblemTooLate": {
+    "description": "#1288 custom fields: fieldProblemTooLate",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldProblemNotAnEmail": "That is not an e-mail address.",
+  "@fieldProblemNotAnEmail": {
+    "description": "#1288 custom fields: fieldProblemNotAnEmail"
+  },
+  "fieldProblemNotAPhone": "That is not a telephone number.",
+  "@fieldProblemNotAPhone": {
+    "description": "#1288 custom fields: fieldProblemNotAPhone"
+  },
+  "fieldProblemNotAUrl": "That is not a web address.",
+  "@fieldProblemNotAUrl": {
+    "description": "#1288 custom fields: fieldProblemNotAUrl"
+  },
+  "workspaceFieldsSaveFailed": "Your answers to this space's questions were not saved. Your other details were.",
+  "@workspaceFieldsSaveFailed": {
+    "description": "#1288 custom fields: workspaceFieldsSaveFailed"
+  }
+}

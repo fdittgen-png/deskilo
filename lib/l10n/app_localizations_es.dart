@@ -1681,6 +1681,72 @@ class AppLocalizationsEs extends AppLocalizations {
       'El espacio puede hacer sus propias preguntas dentro del formulario de identidad: un cargo en la junta, una fecha de alta, un contacto de emergencia. Las respuestas pertenecen a la membresía, así que una pregunta hecha aquí no sigue a nadie a otro sitio.';
 
   @override
+  String workspaceFieldsTitle(String workspace) {
+    return 'Preguntas de $workspace';
+  }
+
+  @override
+  String get workspaceFieldsOptional => 'opcional';
+
+  @override
+  String get fieldProblemRequired => 'Responde, por favor.';
+
+  @override
+  String fieldProblemTooShort(int count) {
+    return 'Al menos $count caracteres.';
+  }
+
+  @override
+  String fieldProblemTooLong(int count) {
+    return 'Como máximo $count caracteres.';
+  }
+
+  @override
+  String fieldProblemTooSmall(String min) {
+    return 'Al menos $min.';
+  }
+
+  @override
+  String fieldProblemTooLarge(String max) {
+    return 'Como máximo $max.';
+  }
+
+  @override
+  String get fieldProblemNotWhole => 'Un número entero, por favor.';
+
+  @override
+  String get fieldProblemNotANumber => 'Un número, por favor.';
+
+  @override
+  String get fieldProblemNotADate => 'Una fecha, por favor.';
+
+  @override
+  String get fieldProblemNotAChoice => 'Elige de la lista.';
+
+  @override
+  String fieldProblemTooEarly(String date) {
+    return 'No antes del $date.';
+  }
+
+  @override
+  String fieldProblemTooLate(String date) {
+    return 'No después del $date.';
+  }
+
+  @override
+  String get fieldProblemNotAnEmail => 'Eso no es una dirección de correo.';
+
+  @override
+  String get fieldProblemNotAPhone => 'Eso no es un número de teléfono.';
+
+  @override
+  String get fieldProblemNotAUrl => 'Eso no es una dirección web.';
+
+  @override
+  String get workspaceFieldsSaveFailed =>
+      'Tus respuestas a las preguntas de este espacio no se han guardado. El resto de tus datos sí.';
+
+  @override
   String get featureCustomRolesTitle => 'Roles que define este espacio';
 
   @override

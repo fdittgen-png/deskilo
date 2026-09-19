@@ -1147,6 +1147,109 @@
     "description": "#912 courtesy title: courtesyMrs"
   },
   "courtesyHintManaged": "Stampata prima del loro nome sui documenti. «Nessuna» stampa solo il nome.",
+  "workspaceFieldsTitle": "Domande di {workspace}",
+  "@workspaceFieldsTitle": {
+    "description": "#1288 custom fields: workspaceFieldsTitle",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceFieldsOptional": "facoltativo",
+  "@workspaceFieldsOptional": {
+    "description": "#1288 custom fields: workspaceFieldsOptional"
+  },
+  "fieldProblemRequired": "Rispondi, per favore.",
+  "@fieldProblemRequired": {
+    "description": "#1288 custom fields: fieldProblemRequired"
+  },
+  "fieldProblemTooShort": "Almeno {count} caratteri.",
+  "@fieldProblemTooShort": {
+    "description": "#1288 custom fields: fieldProblemTooShort",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "fieldProblemTooLong": "Al massimo {count} caratteri.",
+  "@fieldProblemTooLong": {
+    "description": "#1288 custom fields: fieldProblemTooLong",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "fieldProblemTooSmall": "Almeno {min}.",
+  "@fieldProblemTooSmall": {
+    "description": "#1288 custom fields: fieldProblemTooSmall",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldProblemTooLarge": "Al massimo {max}.",
+  "@fieldProblemTooLarge": {
+    "description": "#1288 custom fields: fieldProblemTooLarge",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldProblemNotWhole": "Un numero intero, per favore.",
+  "@fieldProblemNotWhole": {
+    "description": "#1288 custom fields: fieldProblemNotWhole"
+  },
+  "fieldProblemNotANumber": "Un numero, per favore.",
+  "@fieldProblemNotANumber": {
+    "description": "#1288 custom fields: fieldProblemNotANumber"
+  },
+  "fieldProblemNotADate": "Una data, per favore.",
+  "@fieldProblemNotADate": {
+    "description": "#1288 custom fields: fieldProblemNotADate"
+  },
+  "fieldProblemNotAChoice": "Scegli dalla lista.",
+  "@fieldProblemNotAChoice": {
+    "description": "#1288 custom fields: fieldProblemNotAChoice"
+  },
+  "fieldProblemTooEarly": "Non prima del {date}.",
+  "@fieldProblemTooEarly": {
+    "description": "#1288 custom fields: fieldProblemTooEarly",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldProblemTooLate": "Non dopo il {date}.",
+  "@fieldProblemTooLate": {
+    "description": "#1288 custom fields: fieldProblemTooLate",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldProblemNotAnEmail": "Non è un indirizzo e-mail.",
+  "@fieldProblemNotAnEmail": {
+    "description": "#1288 custom fields: fieldProblemNotAnEmail"
+  },
+  "fieldProblemNotAPhone": "Non è un numero di telefono.",
+  "@fieldProblemNotAPhone": {
+    "description": "#1288 custom fields: fieldProblemNotAPhone"
+  },
+  "fieldProblemNotAUrl": "Non è un indirizzo web.",
+  "@fieldProblemNotAUrl": {
+    "description": "#1288 custom fields: fieldProblemNotAUrl"
+  },
+  "workspaceFieldsSaveFailed": "Le tue risposte alle domande di questo spazio non sono state salvate. Il resto dei tuoi dati sì.",
+  "@workspaceFieldsSaveFailed": {
+    "description": "#1288 custom fields: workspaceFieldsSaveFailed"
+  },
   "featureCustomFieldsTitle": "Le domande di questo spazio",
   "@featureCustomFieldsTitle": {
     "description": "#1288 custom fields: featureCustomFieldsTitle"

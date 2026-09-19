@@ -1147,6 +1147,109 @@
     "description": "#912 courtesy title: courtesyMrs"
   },
   "courtesyHintManaged": "Imprimée devant leur nom sur les documents. « Aucune » n'imprime que le nom.",
+  "workspaceFieldsTitle": "Questions de {workspace}",
+  "@workspaceFieldsTitle": {
+    "description": "#1288 custom fields: workspaceFieldsTitle",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceFieldsOptional": "facultatif",
+  "@workspaceFieldsOptional": {
+    "description": "#1288 custom fields: workspaceFieldsOptional"
+  },
+  "fieldProblemRequired": "Merci de répondre.",
+  "@fieldProblemRequired": {
+    "description": "#1288 custom fields: fieldProblemRequired"
+  },
+  "fieldProblemTooShort": "Au moins {count} caractères.",
+  "@fieldProblemTooShort": {
+    "description": "#1288 custom fields: fieldProblemTooShort",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "fieldProblemTooLong": "Au plus {count} caractères.",
+  "@fieldProblemTooLong": {
+    "description": "#1288 custom fields: fieldProblemTooLong",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "fieldProblemTooSmall": "Au moins {min}.",
+  "@fieldProblemTooSmall": {
+    "description": "#1288 custom fields: fieldProblemTooSmall",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldProblemTooLarge": "Au plus {max}.",
+  "@fieldProblemTooLarge": {
+    "description": "#1288 custom fields: fieldProblemTooLarge",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldProblemNotWhole": "Un nombre entier, merci.",
+  "@fieldProblemNotWhole": {
+    "description": "#1288 custom fields: fieldProblemNotWhole"
+  },
+  "fieldProblemNotANumber": "Un nombre, merci.",
+  "@fieldProblemNotANumber": {
+    "description": "#1288 custom fields: fieldProblemNotANumber"
+  },
+  "fieldProblemNotADate": "Une date, merci.",
+  "@fieldProblemNotADate": {
+    "description": "#1288 custom fields: fieldProblemNotADate"
+  },
+  "fieldProblemNotAChoice": "Choisissez dans la liste.",
+  "@fieldProblemNotAChoice": {
+    "description": "#1288 custom fields: fieldProblemNotAChoice"
+  },
+  "fieldProblemTooEarly": "Pas avant le {date}.",
+  "@fieldProblemTooEarly": {
+    "description": "#1288 custom fields: fieldProblemTooEarly",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldProblemTooLate": "Pas après le {date}.",
+  "@fieldProblemTooLate": {
+    "description": "#1288 custom fields: fieldProblemTooLate",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldProblemNotAnEmail": "Ce n'est pas une adresse e-mail.",
+  "@fieldProblemNotAnEmail": {
+    "description": "#1288 custom fields: fieldProblemNotAnEmail"
+  },
+  "fieldProblemNotAPhone": "Ce n'est pas un numéro de téléphone.",
+  "@fieldProblemNotAPhone": {
+    "description": "#1288 custom fields: fieldProblemNotAPhone"
+  },
+  "fieldProblemNotAUrl": "Ce n'est pas une adresse web.",
+  "@fieldProblemNotAUrl": {
+    "description": "#1288 custom fields: fieldProblemNotAUrl"
+  },
+  "workspaceFieldsSaveFailed": "Vos réponses aux questions de cet espace n'ont pas été enregistrées. Le reste de vos informations, si.",
+  "@workspaceFieldsSaveFailed": {
+    "description": "#1288 custom fields: workspaceFieldsSaveFailed"
+  },
   "featureCustomFieldsTitle": "Les questions de cet espace",
   "@featureCustomFieldsTitle": {
     "description": "#1288 custom fields: featureCustomFieldsTitle"

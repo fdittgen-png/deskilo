@@ -235,7 +235,7 @@ const Map<String, int> _pairBudget = {
   // `profile: 4 > 3` instead — a widget in profile/ reaching
   // workspace/'s repository. ADR 0024 is the stronger rule, so the
   // layer violation is fixed and the import ceiling pays for it.
-  'profile -> workspace': 34, // 2026-09-19 #1380 35→34: the demo-mode switch left Settings with its feature-flag import
+  'profile -> workspace': 38, // 2026-09-19 #1288 S2b 34→38: the identity form's section reads the workspace's own questions — the definitions, the validator, the repository and its providers all live in workspace/, and duplicating them in profile/ to keep a number down would be worse; // 2026-09-19 #1380 35→34: the demo-mode switch left Settings with its feature-flag import
   'reservations -> calendar': 1,
   'reservations -> events': 5,
   'reservations -> members': 2,
