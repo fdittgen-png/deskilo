@@ -31,6 +31,7 @@ const Map<String, int> _baseline = {
   // the interface each implements, not a file that grew: MoneyRepository
   // alone is ~90 methods. They are budgeted, so a NEW method still has
   // to be a decision, and they may only shrink.
+  'lib/core/demo/data/workspace_repository.dart': 1827, // 2026-09-19 #1373 moved out of test/helpers/mock_providers.dart, which is 2358→408 lines
   'lib/core/demo/data/money_repository.dart': 1800, // 2026-09-19 #1373 moved from test/helpers/fake_money_repository.dart
   'lib/core/demo/data/reservation_repository.dart': 678, // 2026-09-19 #1373 moved from test/helpers/fake_reservation_repository.dart
 
