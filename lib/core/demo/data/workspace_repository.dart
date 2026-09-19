@@ -713,9 +713,13 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     required String city,
     required String postalCode,
     required String vatAccount,
+    required Map<String, Object?> invoiceLegal,
   }) async {
     final i = workspaces.indexWhere((w) => w.id == workspaceId);
     if (i < 0) return;
+    // One copyWith, like the server's one row update: the identity and
+    // the mentions that go on the invoice with it move together or not
+    // at all (#1532).
     workspaces[i] = workspaces[i].copyWith(
       vatRegime: vatRegime,
       vatId: vatId.trim(),
@@ -725,6 +729,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       city: city.trim(),
       postalCode: postalCode.trim(),
       vatAccount: vatAccount.trim(),
+      invoiceLegal: Map<String, dynamic>.from(invoiceLegal),
     );
   }
 
@@ -841,17 +846,6 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       for (final entry in templates.entries)
         if (entry.value.trim().isNotEmpty) entry.key: entry.value.trim(),
     });
-  }
-
-  @override
-  Future<void> setInvoiceLegal(
-    String workspaceId,
-    Map<String, Object?> legal,
-  ) async {
-    final i = workspaces.indexWhere((w) => w.id == workspaceId);
-    if (i < 0) return;
-    workspaces[i] =
-        workspaces[i].copyWith(invoiceLegal: Map<String, dynamic>.from(legal));
   }
 
   @override

@@ -102,6 +102,18 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           'Something went wrong. Please try again.',
       action: () async {
         final repository = ref.read(workspaceRepositoryProvider);
+        // #869 — the envelope choice lives in the document template;
+        // read-modify-write so an editor design is never clobbered here.
+        // FIRST on purpose (#1532): a separate aggregate that cannot
+        // join the row update below, so one must be able to fail alone —
+        // and a stray window is cosmetic, a stray identity is not.
+        await ref.read(moneyRepositoryProvider).setInvoicePdfTemplate(
+              workspace.id,
+              (ref.read(invoicePdfTemplateProvider).value ??
+                      InvoicePdfTemplate.empty)
+                  .copyWith(addressWindow: _addressWindow),
+            );
+        // Identity and mentions: one statement, one row update.
         await repository.setLegalIdentity(
           workspace.id,
           vatRegime: vatRegimeWire(_regime),
@@ -112,19 +124,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           city: _city.text,
           postalCode: _postalCode.text,
           vatAccount: _vatAccount.text,
-        );
-        // #869 — the envelope choice lives in the document template
-        // beside the bands; read-modify-write so a design saved from
-        // the editor is never clobbered by this screen.
-        await ref.read(moneyRepositoryProvider).setInvoicePdfTemplate(
-              workspace.id,
-              (ref.read(invoicePdfTemplateProvider).value ??
-                      InvoicePdfTemplate.empty)
-                  .copyWith(addressWindow: _addressWindow),
-            );
-        await repository.setInvoiceLegal(
-          workspace.id,
-          InvoiceLegal(
+          invoiceLegal: InvoiceLegal(
             sellerKind: _sellerKind,
             legalForm: _legalForm.text,
             registration: _registration.text,
