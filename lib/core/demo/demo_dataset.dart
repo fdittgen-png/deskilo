@@ -61,12 +61,15 @@ const demoCast = <DemoPerson>[
     name: 'Bruno Kessler',
     subscriptionPct: 50,
   ),
-  // Checked in right now, so the plan shows an occupied seat.
+  // Checked in right now, so the plan shows an occupied seat — and an
+  // administrator, which is the Admin persona of #1376: somebody who
+  // runs the day without owning the space.
   DemoPerson(
     memberId: 'member-3',
     userId: 'user-3',
     name: 'Chiara Rossi',
     subscriptionPct: 100,
+    isAdmin: true,
   ),
   // Waiting to be admitted: the decision surfaces need a decision.
   DemoPerson(
@@ -88,20 +91,32 @@ const demoCast = <DemoPerson>[
 ];
 
 /// Seeds [workspaces] with the cast.
-void seedDemoPeople(FakeWorkspaceRepository workspaces) {
+void seedDemoPeople(FakeWorkspaceRepository workspaces) =>
+    seedDemoPeopleAs(workspaces, demoCast.first);
+
+/// Seeds the cast with [me] as the signed-in member (#1376).
+///
+/// The visitor is one of the cast rather than a sixth invisible person,
+/// so a persona has real bookings, real bills and a place on the plan.
+/// Everybody else is in `otherMembers`, which is what the directory,
+/// the plan and the money screens read.
+void seedDemoPeopleAs(FakeWorkspaceRepository workspaces, DemoPerson me) {
+  Member memberOf(DemoPerson person) => Member(
+        id: person.memberId,
+        workspaceId: 'ws-1',
+        userId: person.userId,
+        isAdmin: person.isAdmin,
+        isOwner: person.isOwner,
+        status: person.status,
+        subscriptionPct: person.subscriptionPct,
+      );
+
+  workspaces.myMember = memberOf(me);
   workspaces.otherMembers
     ..clear()
     ..addAll([
-      for (final person in demoCast.skip(1))
-        Member(
-          id: person.memberId,
-          workspaceId: 'ws-1',
-          userId: person.userId,
-          isAdmin: person.isAdmin,
-          isOwner: person.isOwner,
-          status: person.status,
-          subscriptionPct: person.subscriptionPct,
-        ),
+      for (final person in demoCast)
+        if (person.memberId != me.memberId) memberOf(person),
     ]);
 }
 

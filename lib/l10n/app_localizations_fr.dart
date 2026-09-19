@@ -1703,6 +1703,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vous explorez un espace de démonstration. Rien ici ne quitte cet appareil.';
 
   @override
+  String get demoSessionViewAs => 'Voir en tant que';
+
+  @override
+  String get demoPersonaMember => 'Un membre';
+
+  @override
+  String get demoPersonaAdmin => 'Un administrateur';
+
+  @override
+  String get demoPersonaOwner => 'Le propriétaire';
+
+  @override
   String get deploymentConfirmTitleDev => 'Déployer dans cette DEV ?';
 
   @override

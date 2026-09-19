@@ -1179,6 +1179,22 @@
   "@demoSessionBadgeHint": {
     "description": "#1375 demo session: demoSessionBadgeHint"
   },
+  "demoSessionViewAs": "Voir en tant que",
+  "@demoSessionViewAs": {
+    "description": "#1376 demo personas: demoSessionViewAs"
+  },
+  "demoPersonaMember": "Un membre",
+  "@demoPersonaMember": {
+    "description": "#1376 demo personas: demoPersonaMember"
+  },
+  "demoPersonaAdmin": "Un administrateur",
+  "@demoPersonaAdmin": {
+    "description": "#1376 demo personas: demoPersonaAdmin"
+  },
+  "demoPersonaOwner": "Le propriétaire",
+  "@demoPersonaOwner": {
+    "description": "#1376 demo personas: demoPersonaOwner"
+  },
   "deploymentConfirmTitleDev": "Déployer dans cette DEV ?",
   "@deploymentConfirmTitleDev": {
     "description": "#1006 deployment confirmation: deploymentConfirmTitleDev"

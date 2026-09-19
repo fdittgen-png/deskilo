@@ -25,12 +25,17 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'demo_fixture.dart';
+import 'demo_persona.dart';
 
 part 'demo_session.g.dart';
 
 /// The data one Demo session runs on, and which session it is.
 class DemoSession {
-  const DemoSession({required this.fixture, required this.generation});
+  const DemoSession({
+    required this.fixture,
+    required this.generation,
+    required this.persona,
+  });
 
   /// Every repository this session reads and writes.
   final DemoFixture fixture;
@@ -40,6 +45,17 @@ class DemoSession {
   /// The scope is keyed on it, so a reset disposes the widget tree that
   /// held the old fixture rather than asking every screen to refresh.
   final int generation;
+
+  /// Who the visitor is looking through (#1376).
+  final DemoPersona persona;
+
+  /// What the Demo scope is keyed on.
+  ///
+  /// A persona change is in it as well as a reset: a screen built for an
+  /// owner must not survive the switch to a member, which is how a
+  /// privileged control would stay on screen after the authority behind
+  /// it went away.
+  String get scopeKey => 'demo-$generation-${persona.name}';
 }
 
 /// The owner of the current session. It lives ABOVE the Demo scope: a
@@ -48,8 +64,11 @@ class DemoSession {
 @Riverpod(keepAlive: true)
 class DemoSessionController extends _$DemoSessionController {
   @override
-  DemoSession build() =>
-      DemoSession(fixture: DemoFixture.build(), generation: 0);
+  DemoSession build() => DemoSession(
+        fixture: DemoFixture.build(),
+        generation: 0,
+        persona: initialDemoPersona,
+      );
 
   /// Restores the canonical dataset.
   ///
@@ -61,6 +80,24 @@ class DemoSessionController extends _$DemoSessionController {
     state = DemoSession(
       fixture: DemoFixture.build(now: seededAt),
       generation: state.generation + 1,
+      persona: initialDemoPersona,
+    );
+  }
+
+  /// Looks at the same space through [persona] (#1376).
+  ///
+  /// The data survives: this is a change of viewpoint, not of dataset, so
+  /// a visitor can book as a member and then see the booking as the
+  /// owner. What does not survive is the widget tree — [DemoSession.scopeKey]
+  /// carries the persona, so every permission-sensitive provider is
+  /// disposed and re-read under the new identity.
+  void viewAs(DemoPersona persona) {
+    if (persona == state.persona) return;
+    state.fixture.becomePersona(persona);
+    state = DemoSession(
+      fixture: state.fixture,
+      generation: state.generation,
+      persona: persona,
     );
   }
 }
