@@ -46,7 +46,7 @@ Additional modules include a members directory, messaging, QR/NFC check-in and k
 
 Android is distributed through a **closed test**, and iPhone through **TestFlight**. The buttons above lead to those testing channels; access depends on tester enrollment and availability. Windows and macOS build and release workflows are also included; see [Releases](https://github.com/fdittgen-png/deskilo/releases) for published packages.
 
-The **web app is the live application** and requires sign-in and workspace access. Its current *Demo mode* blurs selected displayed fields while continuing to use the connected workspace and allowing real actions. Evaluate it with a dedicated development workspace or your own test instance.
+The **web app is the live application** and requires sign-in and workspace access. *Demo* is a separate, self-contained workspace: invented people, invented bookings, invented money, and no backend behind it — nothing you do there can reach a real space, and nothing it shows belongs to anybody. Evaluate the product there, or with a development workspace of your own.
 
 The [illustrated user guide](docs/wiki/User-Guide.md) lets you explore the workflows before setting up an account. The [setup questionnaire](https://fdittgen-png.github.io/deskilo/setup.html) helps a community prepare its booking, membership and governance rules.
 

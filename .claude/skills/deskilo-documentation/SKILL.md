@@ -107,15 +107,20 @@ free the next time that screen is photographed: `media ingest --screen
 every language keeps working. Nobody re-shoots eighty screens in an
 afternoon; everybody shoots the screen they are already documenting.
 
-So: **set the device to English before a batch**, next to setting Demo
-mode on.
+So: **set the device to English before a batch**, next to entering the
+Demo workspace.
 
 ## Screenshots carry personal data, and `docs/media/source/` is in git
 
-Demo mode exists for exactly this — *"Names, e-mails, phones and
-addresses are blurred on this device's screen — for screenshots and
-videos"* — and a batch shot with it OFF cannot be published: it reaches
-the public wiki AND `assets/help/images/` inside every store build.
+**Shoot in the Demo workspace.** The old Demo *mode* blurred fields on a
+live workspace; it is gone (#1380), and the blur is forbidden by
+`no_render_tree_blur_test` because it failed OPEN — one string nobody
+registered stayed in the clear, in the recording nobody re-watches.
+Today's Demo is a different thing: a self-contained workspace of invented
+people with no backend behind it, so there is nothing on screen to leak.
+
+A batch shot against a REAL workspace cannot be published: it reaches the
+public wiki AND `assets/help/images/` inside every store build.
 
 The 2026-09-09 batch carried a full IBAN, a customer's business address,
 five people's names, three e-mail addresses and a live join QR. Note that
@@ -123,9 +128,14 @@ five people's names, three e-mail addresses and a live join QR. Note that
 committing them writes the data into repository history, where removing
 it means a force-pushed rewrite rather than a follow-up commit.
 
-Ask before ingesting: re-shoot with Demo mode on, or redact first. A
-rendered PDF may defeat Demo mode — put a placeholder IBAN in Payment
-instructions before shooting the invoice screens.
+And redaction by hand misses things. The #1199 sweep pixelated 25 of the
+85 published images and still left a member's telephone number legible in
+`member-profile-sheet.jpg` for ten days (#1514). That is the argument for
+shooting in Demo rather than cleaning up afterwards: one forgotten band
+is published in two places and written into history.
+
+Ask before ingesting: re-shoot in Demo, or redact first — and check the
+result, band by band.
 
 ## The text
 Written from the app, not from memory of the app: the ARB fragments give
