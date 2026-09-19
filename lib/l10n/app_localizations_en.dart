@@ -1704,6 +1704,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get demoPersonaOwner => 'The owner';
 
   @override
+  String get demoSessionLeave => 'Leave the demo';
+
+  @override
+  String get demoEntryAction => 'Explore the demo workspace';
+
+  @override
+  String get demoEntryTitle => 'A workspace to look around';
+
+  @override
+  String get demoEntryBody =>
+      'Everything in it is made up: the people, the bookings and the bills are invented for the demonstration. Nothing you do here reaches a real workspace, nothing leaves this device, and no account is needed. Reset puts it back whenever you like.';
+
+  @override
+  String get demoEntryStart => 'Start exploring';
+
+  @override
   String get deploymentConfirmTitleDev => 'Deploy into this DEV?';
 
   @override

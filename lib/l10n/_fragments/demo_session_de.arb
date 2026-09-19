@@ -31,5 +31,25 @@
   "demoPersonaOwner": "Die Inhaberin",
   "@demoPersonaOwner": {
     "description": "#1376 demo personas: demoPersonaOwner"
+  },
+  "demoSessionLeave": "Demo verlassen",
+  "@demoSessionLeave": {
+    "description": "#1379 demo entry: demoSessionLeave"
+  },
+  "demoEntryAction": "Den Demobereich erkunden",
+  "@demoEntryAction": {
+    "description": "#1379 demo entry: demoEntryAction"
+  },
+  "demoEntryTitle": "Ein Bereich zum Umsehen",
+  "@demoEntryTitle": {
+    "description": "#1379 demo entry: demoEntryTitle"
+  },
+  "demoEntryBody": "Alles darin ist erfunden: die Personen, die Buchungen und die Rechnungen sind für die Demonstration ausgedacht. Nichts davon erreicht einen echten Bereich, nichts verlässt dieses Gerät, und ein Konto ist nicht nötig. Das Zurücksetzen stellt alles wieder her, wann immer Sie möchten.",
+  "@demoEntryBody": {
+    "description": "#1379 demo entry: demoEntryBody"
+  },
+  "demoEntryStart": "Loslegen",
+  "@demoEntryStart": {
+    "description": "#1379 demo entry: demoEntryStart"
   }
 }

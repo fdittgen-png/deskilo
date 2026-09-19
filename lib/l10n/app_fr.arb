@@ -1195,6 +1195,26 @@
   "@demoPersonaOwner": {
     "description": "#1376 demo personas: demoPersonaOwner"
   },
+  "demoSessionLeave": "Quitter la démo",
+  "@demoSessionLeave": {
+    "description": "#1379 demo entry: demoSessionLeave"
+  },
+  "demoEntryAction": "Explorer l'espace de démonstration",
+  "@demoEntryAction": {
+    "description": "#1379 demo entry: demoEntryAction"
+  },
+  "demoEntryTitle": "Un espace où regarder",
+  "@demoEntryTitle": {
+    "description": "#1379 demo entry: demoEntryTitle"
+  },
+  "demoEntryBody": "Tout y est inventé : les personnes, les réservations et les factures sont créées pour la démonstration. Rien de ce que vous y faites n'atteint un espace réel, rien ne quitte cet appareil, et aucun compte n'est nécessaire. La réinitialisation le remet en état quand vous voulez.",
+  "@demoEntryBody": {
+    "description": "#1379 demo entry: demoEntryBody"
+  },
+  "demoEntryStart": "Commencer",
+  "@demoEntryStart": {
+    "description": "#1379 demo entry: demoEntryStart"
+  },
   "deploymentConfirmTitleDev": "Déployer dans cette DEV ?",
   "@deploymentConfirmTitleDev": {
     "description": "#1006 deployment confirmation: deploymentConfirmTitleDev"

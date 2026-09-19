@@ -3018,6 +3018,36 @@ abstract class AppLocalizations {
   /// **'The owner'**
   String get demoPersonaOwner;
 
+  /// #1379 demo entry: demoSessionLeave
+  ///
+  /// In en, this message translates to:
+  /// **'Leave the demo'**
+  String get demoSessionLeave;
+
+  /// #1379 demo entry: demoEntryAction
+  ///
+  /// In en, this message translates to:
+  /// **'Explore the demo workspace'**
+  String get demoEntryAction;
+
+  /// #1379 demo entry: demoEntryTitle
+  ///
+  /// In en, this message translates to:
+  /// **'A workspace to look around'**
+  String get demoEntryTitle;
+
+  /// #1379 demo entry: demoEntryBody
+  ///
+  /// In en, this message translates to:
+  /// **'Everything in it is made up: the people, the bookings and the bills are invented for the demonstration. Nothing you do here reaches a real workspace, nothing leaves this device, and no account is needed. Reset puts it back whenever you like.'**
+  String get demoEntryBody;
+
+  /// #1379 demo entry: demoEntryStart
+  ///
+  /// In en, this message translates to:
+  /// **'Start exploring'**
+  String get demoEntryStart;
+
   /// #1006 deployment confirmation: deploymentConfirmTitleDev
   ///
   /// In en, this message translates to:

@@ -53,7 +53,9 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: root,
-        child: const MaterialApp(home: DemoWorkspace(child: _Levels())),
+        child: const DemoWorkspace(
+          child: MaterialApp(home: DemoControls(child: _Levels())),
+        ),
       ),
     );
     await tester.pumpAndSettle();
@@ -66,7 +68,9 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: root,
-        child: const MaterialApp(home: DemoWorkspace(child: _Levels())),
+        child: const DemoWorkspace(
+          child: MaterialApp(home: DemoControls(child: _Levels())),
+        ),
       ),
     );
     await tester.pumpAndSettle();
@@ -91,7 +95,9 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: root,
-        child: const MaterialApp(home: DemoWorkspace(child: _Levels())),
+        child: const DemoWorkspace(
+          child: MaterialApp(home: DemoControls(child: _Levels())),
+        ),
       ),
     );
     await tester.pumpAndSettle();
@@ -119,7 +125,9 @@ void main() {
     final handle = tester.ensureSemantics();
     await tester.pumpWidget(
       const ProviderScope(
-        child: MaterialApp(home: DemoWorkspace(child: SizedBox())),
+        child: DemoWorkspace(
+          child: MaterialApp(home: DemoControls(child: SizedBox())),
+        ),
       ),
     );
     await tester.pumpAndSettle();
