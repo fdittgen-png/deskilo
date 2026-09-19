@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'dart:ui' show Locale;
 import 'package:deskilo/core/locale/device_locale.dart';
-import 'dart:typed_data' show Uint8List;
 import 'package:deskilo/features/workspace/domain/workspace_export_bundle.dart';
 import 'package:deskilo/features/workspace/providers/workspace_files_providers.dart';
 import 'package:deskilo/core/backend/schema_version.dart';
@@ -13,6 +12,8 @@ import 'fake_deployment_repository.dart';
 import 'package:deskilo/core/demo/data/auth_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 export 'package:deskilo/core/demo/data/auth_repository.dart';
+import 'package:deskilo/core/demo/data/stores.dart';
+export 'package:deskilo/core/demo/data/stores.dart';
 export 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/core/demo/demo_mode.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
@@ -239,71 +240,9 @@ List<Override> standardTestOverrides({
   ];
 }
 
-/// In-memory [CacheStore] so widget tests never touch the filesystem.
-class InMemoryCacheStore implements CacheStore {
-  final Map<String, CacheEntry> entries = {};
 
-  @override
-  Future<CacheEntry?> get(String key) async => entries[key];
 
-  @override
-  Future<void> put(String key, Object? payload,
-      {required Duration ttl}) async {
-    entries[key] =
-        // Real clock on purpose: freshness is measured against the wall
-        // clock inside CacheStore, so a pinned storedAt would make every
-        // entry read as expired.
-        CacheEntry(payload: payload, storedAt: DateTime.now(), ttl: ttl);
-  }
 
-  @override
-  Future<void> invalidatePrefix(String prefix) async {
-    entries.removeWhere((key, _) => key.startsWith(prefix));
-  }
-
-  @override
-  Future<int> evictExpired() async {
-    final before = entries.length;
-    entries.removeWhere((_, e) => e.age > e.ttl * 3);
-    return before - entries.length;
-  }
-}
-
-/// In-memory [FrontCameraStore] so widget tests never touch
-/// SharedPreferences; front camera by default, like production.
-/// #780 — the device's chosen Supabase endpoint; null = the app's own.
-class InMemoryBackendSettingsStore implements BackendSettingsStore {
-  BackendEndpoint? value;
-
-  @override
-  Future<BackendEndpoint?> read() async => value;
-
-  @override
-  Future<void> write(BackendEndpoint? endpoint) async => value = endpoint;
-}
-
-class InMemoryFrontCameraStore implements FrontCameraStore {
-  /// Null = never chosen (#773): the surface's own default applies.
-  bool? value;
-
-  @override
-  Future<bool?> read() async => value;
-
-  @override
-  Future<void> write(bool enabled) async => value = enabled;
-}
-
-/// In-memory [ActiveWorkspaceStore] so widget tests never touch
-/// SharedPreferences platform channels.
-class InMemoryActiveWorkspaceStore implements ActiveWorkspaceStore {
-  String? value;
-
-  @override
-  Future<String?> read() async => value;
-
-  @override
-  Future<void> write(String? workspaceId) async => value = workspaceId;
-}
 
 /// Fake RFID/NFC reader: [available] toggles the tap path ([deviceStatus]
 /// pins a precise state instead); [startFails] simulates a session that
@@ -339,17 +278,6 @@ class FakeNfcUidReader extends NfcUidReader {
   void tap(String uid) => _onUid?.call(uid);
 }
 
-/// In-memory [DefaultWorkspaceStore] (#322) so widget tests never touch
-/// SharedPreferences.
-class InMemoryDefaultWorkspaceStore implements DefaultWorkspaceStore {
-  String? value;
-
-  @override
-  Future<String?> read() async => value;
-
-  @override
-  Future<void> write(String? workspaceId) async => value = workspaceId;
-}
 
 /// Fake camera QR scanner (K3): [build] renders a keyed placeholder and
 /// captures the sheet's onCode callback; [emit] simulates a decoded QR.
@@ -372,13 +300,6 @@ class FakeQrScanner {
   void emit(String code) => _onCode?.call(code);
 }
 
-/// App-icon badge fake (#426): records every count written.
-class FakeAppBadge implements AppBadge {
-  final counts = <int>[];
-
-  @override
-  Future<void> update(int count) async => counts.add(count);
-}
 
 /// #1312 — a server whose `deskilo_schema_version()` answers [version];
 /// null is a server that predates the marker.
@@ -395,14 +316,3 @@ class FixedSchemaVersionSource implements SchemaVersionSource {
   }
 }
 
-/// #1310 — a workspace's stored files, keyed by path under its prefix.
-class FakeWorkspaceFiles implements WorkspaceFilesRepository {
-  FakeWorkspaceFiles([Map<String, List<int>>? files]) : files = files ?? {};
-  final Map<String, List<int>> files;
-  @override
-  Future<List<String>> listFiles(String workspaceId) async =>
-      files.keys.toList()..sort();
-  @override
-  Future<Uint8List> download(String workspaceId, String path) async =>
-      Uint8List.fromList(files[path]!);
-}
