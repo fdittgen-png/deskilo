@@ -1683,6 +1683,72 @@ class AppLocalizationsIt extends AppLocalizations {
       'Lo spazio può porre le proprie domande dentro il modulo d\'identità: un incarico nel direttivo, una data di adesione, un contatto d\'emergenza. Le risposte appartengono all\'iscrizione, quindi una domanda posta qui non segue nessuno altrove.';
 
   @override
+  String workspaceFieldsTitle(String workspace) {
+    return 'Domande di $workspace';
+  }
+
+  @override
+  String get workspaceFieldsOptional => 'facoltativo';
+
+  @override
+  String get fieldProblemRequired => 'Rispondi, per favore.';
+
+  @override
+  String fieldProblemTooShort(int count) {
+    return 'Almeno $count caratteri.';
+  }
+
+  @override
+  String fieldProblemTooLong(int count) {
+    return 'Al massimo $count caratteri.';
+  }
+
+  @override
+  String fieldProblemTooSmall(String min) {
+    return 'Almeno $min.';
+  }
+
+  @override
+  String fieldProblemTooLarge(String max) {
+    return 'Al massimo $max.';
+  }
+
+  @override
+  String get fieldProblemNotWhole => 'Un numero intero, per favore.';
+
+  @override
+  String get fieldProblemNotANumber => 'Un numero, per favore.';
+
+  @override
+  String get fieldProblemNotADate => 'Una data, per favore.';
+
+  @override
+  String get fieldProblemNotAChoice => 'Scegli dalla lista.';
+
+  @override
+  String fieldProblemTooEarly(String date) {
+    return 'Non prima del $date.';
+  }
+
+  @override
+  String fieldProblemTooLate(String date) {
+    return 'Non dopo il $date.';
+  }
+
+  @override
+  String get fieldProblemNotAnEmail => 'Non è un indirizzo e-mail.';
+
+  @override
+  String get fieldProblemNotAPhone => 'Non è un numero di telefono.';
+
+  @override
+  String get fieldProblemNotAUrl => 'Non è un indirizzo web.';
+
+  @override
+  String get workspaceFieldsSaveFailed =>
+      'Le tue risposte alle domande di questo spazio non sono state salvate. Il resto dei tuoi dati sì.';
+
+  @override
   String get featureCustomRolesTitle => 'Ruoli definiti da questo spazio';
 
   @override

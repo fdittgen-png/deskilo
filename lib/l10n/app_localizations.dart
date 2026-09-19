@@ -2958,6 +2958,108 @@ abstract class AppLocalizations {
   /// **'The workspace may ask its own questions inside the identity form — a committee role, a joining date, an emergency contact. The answers belong to the membership, so a question asked here never follows somebody elsewhere.'**
   String get featureCustomFieldsDesc;
 
+  /// #1288 custom fields: workspaceFieldsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Questions from {workspace}'**
+  String workspaceFieldsTitle(String workspace);
+
+  /// #1288 custom fields: workspaceFieldsOptional
+  ///
+  /// In en, this message translates to:
+  /// **'optional'**
+  String get workspaceFieldsOptional;
+
+  /// #1288 custom fields: fieldProblemRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Please answer this.'**
+  String get fieldProblemRequired;
+
+  /// #1288 custom fields: fieldProblemTooShort
+  ///
+  /// In en, this message translates to:
+  /// **'At least {count} characters.'**
+  String fieldProblemTooShort(int count);
+
+  /// #1288 custom fields: fieldProblemTooLong
+  ///
+  /// In en, this message translates to:
+  /// **'At most {count} characters.'**
+  String fieldProblemTooLong(int count);
+
+  /// #1288 custom fields: fieldProblemTooSmall
+  ///
+  /// In en, this message translates to:
+  /// **'At least {min}.'**
+  String fieldProblemTooSmall(String min);
+
+  /// #1288 custom fields: fieldProblemTooLarge
+  ///
+  /// In en, this message translates to:
+  /// **'At most {max}.'**
+  String fieldProblemTooLarge(String max);
+
+  /// #1288 custom fields: fieldProblemNotWhole
+  ///
+  /// In en, this message translates to:
+  /// **'A whole number, please.'**
+  String get fieldProblemNotWhole;
+
+  /// #1288 custom fields: fieldProblemNotANumber
+  ///
+  /// In en, this message translates to:
+  /// **'A number, please.'**
+  String get fieldProblemNotANumber;
+
+  /// #1288 custom fields: fieldProblemNotADate
+  ///
+  /// In en, this message translates to:
+  /// **'A date, please.'**
+  String get fieldProblemNotADate;
+
+  /// #1288 custom fields: fieldProblemNotAChoice
+  ///
+  /// In en, this message translates to:
+  /// **'Please pick from the list.'**
+  String get fieldProblemNotAChoice;
+
+  /// #1288 custom fields: fieldProblemTooEarly
+  ///
+  /// In en, this message translates to:
+  /// **'Not before {date}.'**
+  String fieldProblemTooEarly(String date);
+
+  /// #1288 custom fields: fieldProblemTooLate
+  ///
+  /// In en, this message translates to:
+  /// **'Not after {date}.'**
+  String fieldProblemTooLate(String date);
+
+  /// #1288 custom fields: fieldProblemNotAnEmail
+  ///
+  /// In en, this message translates to:
+  /// **'That is not an e-mail address.'**
+  String get fieldProblemNotAnEmail;
+
+  /// #1288 custom fields: fieldProblemNotAPhone
+  ///
+  /// In en, this message translates to:
+  /// **'That is not a telephone number.'**
+  String get fieldProblemNotAPhone;
+
+  /// #1288 custom fields: fieldProblemNotAUrl
+  ///
+  /// In en, this message translates to:
+  /// **'That is not a web address.'**
+  String get fieldProblemNotAUrl;
+
+  /// #1288 custom fields: workspaceFieldsSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'Your answers to this space\'s questions were not saved. Your other details were.'**
+  String get workspaceFieldsSaveFailed;
+
   /// #1287 custom roles: the feature switch title
   ///
   /// In en, this message translates to:

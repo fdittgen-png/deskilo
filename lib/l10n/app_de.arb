@@ -1155,6 +1155,109 @@
   "@featureCustomFieldsDesc": {
     "description": "#1288 custom fields: featureCustomFieldsDesc"
   },
+  "workspaceFieldsTitle": "Fragen von {workspace}",
+  "@workspaceFieldsTitle": {
+    "description": "#1288 custom fields: workspaceFieldsTitle",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceFieldsOptional": "optional",
+  "@workspaceFieldsOptional": {
+    "description": "#1288 custom fields: workspaceFieldsOptional"
+  },
+  "fieldProblemRequired": "Bitte beantworten.",
+  "@fieldProblemRequired": {
+    "description": "#1288 custom fields: fieldProblemRequired"
+  },
+  "fieldProblemTooShort": "Mindestens {count} Zeichen.",
+  "@fieldProblemTooShort": {
+    "description": "#1288 custom fields: fieldProblemTooShort",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "fieldProblemTooLong": "Höchstens {count} Zeichen.",
+  "@fieldProblemTooLong": {
+    "description": "#1288 custom fields: fieldProblemTooLong",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "fieldProblemTooSmall": "Mindestens {min}.",
+  "@fieldProblemTooSmall": {
+    "description": "#1288 custom fields: fieldProblemTooSmall",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldProblemTooLarge": "Höchstens {max}.",
+  "@fieldProblemTooLarge": {
+    "description": "#1288 custom fields: fieldProblemTooLarge",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldProblemNotWhole": "Bitte eine ganze Zahl.",
+  "@fieldProblemNotWhole": {
+    "description": "#1288 custom fields: fieldProblemNotWhole"
+  },
+  "fieldProblemNotANumber": "Bitte eine Zahl.",
+  "@fieldProblemNotANumber": {
+    "description": "#1288 custom fields: fieldProblemNotANumber"
+  },
+  "fieldProblemNotADate": "Bitte ein Datum.",
+  "@fieldProblemNotADate": {
+    "description": "#1288 custom fields: fieldProblemNotADate"
+  },
+  "fieldProblemNotAChoice": "Bitte aus der Liste wählen.",
+  "@fieldProblemNotAChoice": {
+    "description": "#1288 custom fields: fieldProblemNotAChoice"
+  },
+  "fieldProblemTooEarly": "Nicht vor dem {date}.",
+  "@fieldProblemTooEarly": {
+    "description": "#1288 custom fields: fieldProblemTooEarly",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldProblemTooLate": "Nicht nach dem {date}.",
+  "@fieldProblemTooLate": {
+    "description": "#1288 custom fields: fieldProblemTooLate",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldProblemNotAnEmail": "Das ist keine E-Mail-Adresse.",
+  "@fieldProblemNotAnEmail": {
+    "description": "#1288 custom fields: fieldProblemNotAnEmail"
+  },
+  "fieldProblemNotAPhone": "Das ist keine Telefonnummer.",
+  "@fieldProblemNotAPhone": {
+    "description": "#1288 custom fields: fieldProblemNotAPhone"
+  },
+  "fieldProblemNotAUrl": "Das ist keine Webadresse.",
+  "@fieldProblemNotAUrl": {
+    "description": "#1288 custom fields: fieldProblemNotAUrl"
+  },
+  "workspaceFieldsSaveFailed": "Ihre Antworten auf die Fragen dieses Bereichs wurden nicht gespeichert. Ihre übrigen Angaben schon.",
+  "@workspaceFieldsSaveFailed": {
+    "description": "#1288 custom fields: workspaceFieldsSaveFailed"
+  },
   "featureCustomRolesTitle": "Rollen, die dieser Bereich festlegt",
   "@featureCustomRolesTitle": {
     "description": "#1287 custom roles: the feature switch title"

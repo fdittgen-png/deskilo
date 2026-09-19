@@ -63,6 +63,9 @@ import 'package:deskilo/features/profile/providers/profile_providers.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo/core/demo/data/workspace_fields_repository.dart';
+import 'package:deskilo/features/workspace/domain/workspace_fields_repository.dart';
+import 'package:deskilo/features/workspace/providers/workspace_fields_providers.dart';
 import 'package:flutter_riverpod/misc.dart';
 
 import 'fake_accessory_repository.dart';
@@ -127,6 +130,7 @@ List<Override> standardTestOverrides({
   DeploymentRepository? deployment,
   SchemaVersionSource? schemaVersion,
   WorkspaceFilesRepository? workspaceFiles,
+  WorkspaceFieldsRepository? fields,
   Locale? deviceLocale,
 }) {
   return [
@@ -144,6 +148,9 @@ List<Override> standardTestOverrides({
     // #1310 — the workspace's stored files, in memory.
     workspaceFilesRepositoryProvider
         .overrideWithValue(workspaceFiles ?? FakeWorkspaceFiles()),
+    // #1288 — the workspace's own questions, in memory.
+    workspaceFieldsRepositoryProvider
+        .overrideWithValue(fields ?? FakeWorkspaceFields()),
     // #1312 — the server answers with exactly this app's schema, so no
     // test is sent to the update screen unless it says otherwise.
     schemaVersionSourceProvider.overrideWithValue(
