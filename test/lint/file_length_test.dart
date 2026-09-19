@@ -26,6 +26,14 @@ const int _budget = 600;
 /// Grandfathered files at their size when this ratchet landed
 /// (2026-08-01), rounded up to the next 10 for edit headroom.
 const Map<String, int> _baseline = {
+  // ADR 0028 (#1373) — the suite's in-memory repositories moved here so
+  // Demo can run the real app against them. Their size is the surface of
+  // the interface each implements, not a file that grew: MoneyRepository
+  // alone is ~90 methods. They are budgeted, so a NEW method still has
+  // to be a decision, and they may only shrink.
+  'lib/core/demo/data/money_repository.dart': 1800, // 2026-09-19 #1373 moved from test/helpers/fake_money_repository.dart
+  'lib/core/demo/data/reservation_repository.dart': 678, // 2026-09-19 #1373 moved from test/helpers/fake_reservation_repository.dart
+
   // 1510→1530 (2026-08-02): #408 presence rule — the sheets moved to
   // check_in_sheets.dart; what remains is the admin-for-others gate and
   // its action/error handling, which need the screen's ref and context.
