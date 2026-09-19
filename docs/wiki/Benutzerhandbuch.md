@@ -1997,6 +1997,11 @@ Nichts davon erreicht einen echten Bereich, und nichts verlässt das
 Gerät. Das Verlassen vergisst die Sitzung, und das Schließen der App
 ebenso: der nächste Besuch beginnt wieder im selben erfundenen Bereich.
 
+Er ist kein Weg, einen **echten** Bereich zu zeigen, ohne dessen
+Mitglieder zu zeigen. Alles darin ist erfunden, es gibt also nichts zu
+verbergen; ein echter Bereich auf dem Bildschirm zeigt weiterhin die
+echten Personen darin.
+
 <!-- anchor: user.profile.settings.front-camera -->
 ### Frontkamera zum Scannen
 

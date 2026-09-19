@@ -1922,6 +1922,10 @@ Nothing done inside it reaches a real workspace, and nothing leaves the
 device. Leaving forgets the session, and so does closing the app: the
 next visit starts from the same invented space.
 
+It is not a way to show a **real** space without showing its members.
+Everything in the demo is invented, so there is nothing to hide; a real
+workspace on screen still shows the real people in it.
+
 ### Front camera for scanning
 
 Uses the front lens instead of the back one. For a wall-mounted tablet
