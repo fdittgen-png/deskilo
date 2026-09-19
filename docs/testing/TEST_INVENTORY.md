@@ -19,19 +19,7 @@ Totals by layer and by action: run the tool — they are printed, not committed,
 
 ## Coverage still to add
 
-| gap | issue | status |
-|---|---|---|
-| Database executes as a CI gate | #1335 | pgTAP gate, write isolation (PR for #1335) |
-| Role matrix on row policies | #1321 | 13_matrix_policies.sql (PR for #1321) |
-| Server feature gates follow requires | #1332 | 14_feature_gates.sql TODO proofs; green with the #1332 fix |
-| Process registry, resolver, preview == apply | #1336 | blocked on #1325, #1326, #1329 |
-| Template merge, idempotency, allow-list, provenance | #1338 | blocked on #1276 |
-| Number sequences: invalid pairs, no reuse | #1338 / #1320 | lands with the #1320 fix |
-| Restore drill: dump, restore into a fresh database, reconcile | #1338 / #1310 | the `Restore drill` step in quality · database (#1310 S1) |
-| Export completeness: paging, manifest, ZIP | #1338 / #1310 | #1310 S2, blocked on #1312 for schema_version |
-| Instance install, resume, doctor isolation | #1337 / #1314 | the `Install, resume and upgrade a real schema` step in quality · database (#1337) |
-| Journeys: decision without the bell, onboarding retry | #1339 | with #1306 and #1303 |
-| State model: stale, offline, empty, error | #1339 / #1305 | with #1305 |
+Nothing named and uncovered. The eleven gaps this table tracked are closed, and each artefact was checked present rather than inferred from its issue being shut (#1334). A row returns here when somebody names a gap and the issue that owns it.
 
 ## Files
 
