@@ -8209,6 +8209,10 @@
   "workspaceXmlImportPreviewAccessories": "Accesorios: {count}",
   "workspaceXmlImportPreviewWarning": "El plano actual se eliminará y sustituirá, y los ajustes del espacio se sobrescribirán. Esta acción no se puede deshacer.",
   "workspaceXmlImportConfirm": "Sustituir e importar",
+  "workspaceXmlImportPartial": "Parte de la importación se aplicó antes de detenerse: revisa los ajustes y el plano abajo.",
+  "@workspaceXmlImportPartial": {
+    "description": "#1532: workspaceXmlImportPartial"
+  },
   "workspaceXmlImportSuccess": "Espacio importado.",
   "workspaceXmlErrorMalformed": "El archivo no es un XML legible.",
   "workspaceXmlErrorWrongRoot": "Este no es un archivo de espacio de DesKilo.",

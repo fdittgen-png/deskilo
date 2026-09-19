@@ -732,6 +732,9 @@ class _WorkspaceSettingsScreenState
   Future<void> _importXml(Workspace workspace) async {
     final l10n = AppLocalizations.of(context);
     setState(() => _busy = true);
+    // #1532 — how far the import got, so a stop partway is not reported
+    // as if nothing had happened. Out here because the catch reads it.
+    var anythingApplied = false;
     try {
       final pick = ref.read(filePickerProvider);
       final file = await pick(XTypeGroup(
@@ -863,6 +866,7 @@ class _WorkspaceSettingsScreenState
       if (applyConfiguration) {
         await importRepository.importConfiguration(
             workspace.id, configuration);
+        anythingApplied = true;
       }
       // The floor plan is the step that can refuse (owner check,
       // reservations). With a configuration already applied the refusal
@@ -870,6 +874,7 @@ class _WorkspaceSettingsScreenState
       var planKept = false;
       try {
         await importRepository.importFloorPlan(workspace.id, data);
+        anythingApplied = true;
       } on PostgrestException catch (e, st) {
         if (!applyConfiguration ||
             !e.message.contains(kWorkspaceHasReservationsError)) {
@@ -893,6 +898,7 @@ class _WorkspaceSettingsScreenState
         workspace.id,
         PaymentInstructions.fromDb(data.settings.paymentInstructions),
       );
+      anythingApplied = true;
       await repository.setFeatureFlags(workspace.id, data.settings.featureFlags);
       // #1289 — a brand seed the document carries is measured before it
       // is written; refused, the rest of the import still applies.
@@ -956,6 +962,7 @@ class _WorkspaceSettingsScreenState
             : (l10n?.workspaceGenericError ??
                 'Something went wrong. Please try again.'),
       );
+      if (anythingApplied) _sayPartial(context, l10n);
     } catch (e, st) {
       debugPrint('workspace XML import failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'workspace XML import failed',
@@ -966,6 +973,7 @@ class _WorkspaceSettingsScreenState
         l10n?.workspaceGenericError ??
             'Something went wrong. Please try again.',
       );
+      if (anythingApplied) _sayPartial(context, l10n);
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -1634,3 +1642,15 @@ class _WorkspaceSettingsScreenState
       ];
 }
 
+
+/// #1532 — the import applies several things in sequence, and its
+/// partial steps are deliberate (#916, #1289). What was missing is that
+/// nobody said so: a floor plan already replaced is not nothing, and
+/// being told only that the import failed leaves the owner to find out.
+void _sayPartial(BuildContext context, AppLocalizations? l10n) =>
+    AppSnack.info(
+      context,
+      l10n?.workspaceXmlImportPartial ??
+          'Part of the import was applied before it stopped — check the '
+              'settings and the floor plan below.',
+    );

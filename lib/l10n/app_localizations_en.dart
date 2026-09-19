@@ -11763,6 +11763,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get workspaceXmlImportConfirm => 'Replace and import';
 
   @override
+  String get workspaceXmlImportPartial =>
+      'Part of the import was applied before it stopped — check the settings and the floor plan below.';
+
+  @override
   String get workspaceXmlImportSuccess => 'Workspace imported.';
 
   @override
