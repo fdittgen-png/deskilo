@@ -16,6 +16,7 @@ none: it is read as reassurance.
 | Isolation: the overrides are complete, and no outward edge is live | `test/core/demo/demo_scope_test.dart` |
 | Isolation reaches the providers screens actually read | `test/core/demo/demo_scope_reach_test.dart` |
 | The canonical dataset is coherent, and its cast is stable | `test/core/demo/demo_dataset_test.dart` |
+| The cast is a whole person on screen — a name, an e-mail, a number that could reach nobody — so a guide image can be shot here instead of in a real space (#1514) | `test/core/demo/demo_identity_test.dart` |
 | Reset to baseline, and the fence against an in-flight write | `test/core/demo/demo_session_test.dart` |
 | Personas resolve through the real permission model | `test/core/demo/demo_persona_test.dart` |
 | The bar: where it mounts, 360 dp, reduced motion, the persona ring | `test/core/demo/demo_bar_mount_test.dart` |

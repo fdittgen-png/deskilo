@@ -69,7 +69,10 @@ class FakeProfileRepository implements ProfileRepository {
             .toList();
 
   final List<Profile> profiles;
-  final String myUserId;
+  /// Who is signed in. Mutable so a Demo persona switch can move it
+  /// (#1514/#1376): the profile rows stay, the "mine" pointer moves,
+  /// exactly as signing in as somebody else does.
+  String myUserId;
 
   /// When true, every write throws — for failure-path tests.
   bool failing = false;

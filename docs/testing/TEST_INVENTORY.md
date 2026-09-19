@@ -112,6 +112,7 @@ Totals by layer and by action: run the tool — they are printed, not committed,
 | `test/core/demo/demo_bar_mount_test.dart` | widget | #1379 — the Demo bar works where it is actually mounted. | 3 | yes | none | user-visible behaviour — #1379, #1381 | no | KEEP |  |
 | `test/core/demo/demo_dataset_test.dart` | unit | #1374 — the session a visitor lands in is coherent, and says so when it is not. | 5 | yes | none | a domain rule — #1374 | no | KEEP |  |
 | `test/core/demo/demo_entry_test.dart` | widget | #1379 — walking in, and walking out. | 3 | yes | none | user-visible behaviour — #1379 | no | KEEP |  |
+| `test/core/demo/demo_identity_test.dart` | unit | #1514 — the Demo cast is a whole person, not an id. | 5 | yes | none | a domain rule — #1514 | no | KEEP |  |
 | `test/core/demo/demo_persona_test.dart` | unit | #1376 — a persona is an identity, not a pretend role. | 9 | yes | none | a domain rule — #1376 | no | KEEP |  |
 | `test/core/demo/demo_scope_reach_test.dart` | widget | #1373 / #1375 — the Demo scope reaches the providers the SCREENS read, not only the ones the overrides name. | 1 | yes | none | user-visible behaviour — #1373, #1375 | no | KEEP |  |
 | `test/core/demo/demo_scope_test.dart` | unit | #1373 — the isolation the Demo environment claims, proven. | 6 | yes | repository sources | a domain rule — #1373, #1377 | no | KEEP |  |

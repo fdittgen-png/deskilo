@@ -15,10 +15,12 @@ import '../../features/plan/domain/seat.dart';
 import '../../features/events/domain/workspace_event.dart';
 import '../../features/money/domain/invoice.dart';
 import '../../features/reservations/domain/reservation.dart';
+import '../../features/profile/domain/profile.dart';
 import '../../features/workspace/domain/member.dart';
 import 'data/event_repository.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/money_repository.dart';
+import 'data/profile_repository.dart';
 import 'data/reservation_repository.dart';
 import 'data/workspace_repository.dart';
 
@@ -33,6 +35,9 @@ class DemoPerson {
     this.status = MemberStatus.active,
     this.isAdmin = false,
     this.isOwner = false,
+    this.email = '',
+    this.phone = '',
+    this.address = '',
   });
 
   final String memberId;
@@ -42,6 +47,17 @@ class DemoPerson {
   final MemberStatus status;
   final bool isAdmin;
   final bool isOwner;
+
+  /// #1514 — the contact block a guide screenshot exists to document.
+  ///
+  /// Invented, and obviously so: `@example.test` is reserved by RFC 2606
+  /// and can never reach anybody, and the numbers are France's fictional
+  /// `+3363998xxxx` range. A demonstration that shows blank fields where
+  /// the product shows an address is not a demonstration of the product,
+  /// and it is what sends somebody back to shooting a real workspace.
+  final String email;
+  final String phone;
+  final String address;
 }
 
 /// Five people, each with a reason to exist on screen.
@@ -55,6 +71,9 @@ const demoCast = <DemoPerson>[
     subscriptionPct: 100,
     isAdmin: true,
     isOwner: true,
+    email: 'ada.lindqvist@example.test',
+    phone: '+33639980101',
+    address: '12 rue des Lilas\n34120 Pézenas',
   ),
   // A half-time member with an unpaid bill: the money screens need
   // somebody who owes something, and the dunning rules need a target.
@@ -63,6 +82,9 @@ const demoCast = <DemoPerson>[
     userId: 'user-2',
     name: 'Bruno Kessler',
     subscriptionPct: 50,
+    email: 'bruno.kessler@example.test',
+    phone: '+33639980102',
+    address: '5 place du Marché\n34120 Pézenas',
   ),
   // Checked in right now, so the plan shows an occupied seat — and an
   // administrator, which is the Admin persona of #1376: somebody who
@@ -73,6 +95,9 @@ const demoCast = <DemoPerson>[
     name: 'Chiara Rossi',
     subscriptionPct: 100,
     isAdmin: true,
+    email: 'chiara.rossi@example.test',
+    phone: '+33639980103',
+    address: '8 chemin de la Source\n34120 Pézenas',
   ),
   // Waiting to be admitted: the decision surfaces need a decision.
   DemoPerson(
@@ -81,6 +106,8 @@ const demoCast = <DemoPerson>[
     name: 'Dov Meir',
     subscriptionPct: 50,
     status: MemberStatus.pending,
+    email: 'dov.meir@example.test',
+    phone: '+33639980104',
   ),
   // Paused: a status that is neither active nor gone, which the members
   // screen must render honestly.
@@ -90,6 +117,9 @@ const demoCast = <DemoPerson>[
     name: 'Elise Fontaine',
     subscriptionPct: 100,
     status: MemberStatus.paused,
+    email: 'elise.fontaine@example.test',
+    phone: '+33639980105',
+    address: '3 avenue de la Gare\n34120 Pézenas',
   ),
 ];
 
@@ -121,6 +151,48 @@ void seedDemoPeopleAs(FakeWorkspaceRepository workspaces, DemoPerson me) {
       for (final person in demoCast)
         if (person.memberId != me.memberId) memberOf(person),
     ]);
+
+  // #1514 — the names and e-mails the screens actually read. `Member`
+  // carries neither: a directory row is named through `fetchMemberNames`
+  // and the contact block through `fetchMemberEmails`. Without these the
+  // cast exists in the fixture and nowhere a person can see, which is
+  // what made a demonstration screenshot look emptier than the product
+  // and sent the last batch back to a real workspace.
+  workspaces.memberNames
+    ..clear()
+    ..addEntries([
+      for (final person in demoCast) MapEntry(person.memberId, person.name),
+    ]);
+  workspaces.memberEmails
+    ..clear()
+    ..addEntries([
+      for (final person in demoCast)
+        if (person.email.isNotEmpty) MapEntry(person.memberId, person.email),
+    ]);
+}
+
+/// The cast's own profile rows (#1514).
+///
+/// `Profile` is where a display name, a telephone number and a postal
+/// address live; `Member` has none of them. This is what lets the
+/// profile sheet, the directory and an invoice's recipient block render
+/// a whole person in Demo — the condition under which "shoot in Demo"
+/// can replace redacting a real workspace band by band.
+FakeProfileRepository demoProfiles({DemoPerson? me}) {
+  final visitor = me ?? demoCast.first;
+  return FakeProfileRepository(
+    myUserId: visitor.userId,
+    profiles: [
+      for (final person in demoCast)
+        Profile(
+          id: person.userId,
+          displayName: person.name,
+          whatsapp: person.phone,
+          address: person.address,
+          countryCode: 'FR',
+        ),
+    ],
+  );
 }
 
 /// Seeds bookings around [now]: one finished yesterday, one happening

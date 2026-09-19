@@ -99,7 +99,7 @@ class DemoFixture {
       money: money,
       credits: FakeCreditRepository(),
       accessories: FakeAccessoryRepository(),
-      profiles: FakeProfileRepository(),
+      profiles: demoProfiles(),
       deployments: FakeDeploymentRepository(),
       files: FakeWorkspaceFiles(),
       imports: InMemoryWorkspaceImport(),
@@ -151,6 +151,10 @@ class DemoFixture {
   /// because a Demo branch hid anything.
   void becomePersona(DemoPersona persona) {
     seedDemoPeopleAs(workspaces, persona.person);
+    // The profile rows stay; the "mine" pointer moves with the persona,
+    // so Settings shows that person's own name and contact block
+    // instead of the first member's (#1514).
+    profiles.myUserId = persona.userId;
     auth.signInAs(persona.userId);
   }
 }
