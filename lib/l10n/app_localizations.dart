@@ -2946,6 +2946,18 @@ abstract class AppLocalizations {
   /// **'Printed before their name on documents. \"None\" prints the name alone.'**
   String get courtesyHintManaged;
 
+  /// #1288 custom fields: featureCustomFieldsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Questions this space asks'**
+  String get featureCustomFieldsTitle;
+
+  /// #1288 custom fields: featureCustomFieldsDesc
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace may ask its own questions inside the identity form — a committee role, a joining date, an emergency contact. The answers belong to the membership, so a question asked here never follows somebody elsewhere.'**
+  String get featureCustomFieldsDesc;
+
   /// #1287 custom roles: the feature switch title
   ///
   /// In en, this message translates to:

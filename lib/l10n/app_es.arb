@@ -1147,6 +1147,14 @@
     "description": "#912 courtesy title: courtesyMrs"
   },
   "courtesyHintManaged": "Se imprime delante de su nombre en los documentos. «Ninguno» imprime solo el nombre.",
+  "featureCustomFieldsTitle": "Las preguntas de este espacio",
+  "@featureCustomFieldsTitle": {
+    "description": "#1288 custom fields: featureCustomFieldsTitle"
+  },
+  "featureCustomFieldsDesc": "El espacio puede hacer sus propias preguntas dentro del formulario de identidad: un cargo en la junta, una fecha de alta, un contacto de emergencia. Las respuestas pertenecen a la membresía, así que una pregunta hecha aquí no sigue a nadie a otro sitio.",
+  "@featureCustomFieldsDesc": {
+    "description": "#1288 custom fields: featureCustomFieldsDesc"
+  },
   "featureCustomRolesTitle": "Roles que define este espacio",
   "@featureCustomRolesTitle": {
     "description": "#1287 custom roles: the feature switch title"

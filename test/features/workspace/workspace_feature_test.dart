@@ -22,6 +22,7 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.workspaceBranding,
   // #1287 — four roles is the product's answer; a fifth is asked for.
   WorkspaceFeature.customRoles,
+  WorkspaceFeature.customFields,
   // #1277 — renaming the product's words is asked for, never assumed:
   // a space that keeps the product's vocabulary is not shown a control
   // for changing it.
@@ -128,6 +129,7 @@ void main() {
       'carnets': true,
       'workspaceBranding': true,
       'customRoles': true,
+      'customFields': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

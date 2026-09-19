@@ -12,6 +12,7 @@ window.SETUP_PROCESSES=[
      "coOwner",
      "roleManagement",
      "customRoles",
+     "customFields",
      "personalInfo",
      "managedProfiles",
      "managedProfileAccess",

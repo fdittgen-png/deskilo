@@ -1665,6 +1665,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Printed before their name on documents. \"None\" prints the name alone.';
 
   @override
+  String get featureCustomFieldsTitle => 'Questions this space asks';
+
+  @override
+  String get featureCustomFieldsDesc =>
+      'The workspace may ask its own questions inside the identity form — a committee role, a joining date, an emergency contact. The answers belong to the membership, so a question asked here never follows somebody elsewhere.';
+
+  @override
   String get featureCustomRolesTitle => 'Roles this space defines';
 
   @override

@@ -1676,6 +1676,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Stampata prima del loro nome sui documenti. «Nessuna» stampa solo il nome.';
 
   @override
+  String get featureCustomFieldsTitle => 'Le domande di questo spazio';
+
+  @override
+  String get featureCustomFieldsDesc =>
+      'Lo spazio può porre le proprie domande dentro il modulo d\'identità: un incarico nel direttivo, una data di adesione, un contatto d\'emergenza. Le risposte appartengono all\'iscrizione, quindi una domanda posta qui non segue nessuno altrove.';
+
+  @override
   String get featureCustomRolesTitle => 'Ruoli definiti da questo spazio';
 
   @override

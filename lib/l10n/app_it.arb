@@ -1147,6 +1147,14 @@
     "description": "#912 courtesy title: courtesyMrs"
   },
   "courtesyHintManaged": "Stampata prima del loro nome sui documenti. «Nessuna» stampa solo il nome.",
+  "featureCustomFieldsTitle": "Le domande di questo spazio",
+  "@featureCustomFieldsTitle": {
+    "description": "#1288 custom fields: featureCustomFieldsTitle"
+  },
+  "featureCustomFieldsDesc": "Lo spazio può porre le proprie domande dentro il modulo d'identità: un incarico nel direttivo, una data di adesione, un contatto d'emergenza. Le risposte appartengono all'iscrizione, quindi una domanda posta qui non segue nessuno altrove.",
+  "@featureCustomFieldsDesc": {
+    "description": "#1288 custom fields: featureCustomFieldsDesc"
+  },
   "featureCustomRolesTitle": "Ruoli definiti da questo spazio",
   "@featureCustomRolesTitle": {
     "description": "#1287 custom roles: the feature switch title"

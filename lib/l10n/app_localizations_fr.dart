@@ -1676,6 +1676,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Imprimée devant leur nom sur les documents. « Aucune » n\'imprime que le nom.';
 
   @override
+  String get featureCustomFieldsTitle => 'Les questions de cet espace';
+
+  @override
+  String get featureCustomFieldsDesc =>
+      'L\'espace peut poser ses propres questions dans le formulaire d\'identité : une fonction au bureau, une date d\'adhésion, un contact d\'urgence. Les réponses appartiennent à l\'adhésion : une question posée ici ne suit personne ailleurs.';
+
+  @override
   String get featureCustomRolesTitle => 'Rôles définis par cet espace';
 
   @override

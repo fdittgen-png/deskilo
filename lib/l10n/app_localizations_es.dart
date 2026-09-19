@@ -1674,6 +1674,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Se imprime delante de su nombre en los documentos. «Ninguno» imprime solo el nombre.';
 
   @override
+  String get featureCustomFieldsTitle => 'Las preguntas de este espacio';
+
+  @override
+  String get featureCustomFieldsDesc =>
+      'El espacio puede hacer sus propias preguntas dentro del formulario de identidad: un cargo en la junta, una fecha de alta, un contacto de emergencia. Las respuestas pertenecen a la membresía, así que una pregunta hecha aquí no sigue a nadie a otro sitio.';
+
+  @override
   String get featureCustomRolesTitle => 'Roles que define este espacio';
 
   @override

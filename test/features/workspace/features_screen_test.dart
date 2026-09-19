@@ -116,7 +116,7 @@ void main() {
     // #1279 — carnets is the twenty-second: selling prepaid half-days.
     // #1289 — workspaceBranding is the twenty-third: colours are chosen.
     // #1287 — customRoles is the twenty-fourth: a bureau asks for it.
-    expect(onCount, featureManifest.length - 25);
+    expect(onCount, featureManifest.length - 26);
   });
 
   testWidgets(

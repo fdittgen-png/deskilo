@@ -1147,6 +1147,14 @@
     "description": "#912 courtesy title: courtesyMrs"
   },
   "courtesyHintManaged": "Wird auf Dokumenten vor ihrem Namen gedruckt. „Keine“ druckt nur den Namen.",
+  "featureCustomFieldsTitle": "Fragen dieses Bereichs",
+  "@featureCustomFieldsTitle": {
+    "description": "#1288 custom fields: featureCustomFieldsTitle"
+  },
+  "featureCustomFieldsDesc": "Der Bereich kann im Identitätsformular eigene Fragen stellen — eine Funktion im Vorstand, ein Eintrittsdatum, ein Notfallkontakt. Die Antworten gehören zur Mitgliedschaft, eine hier gestellte Frage folgt also niemandem anderswohin.",
+  "@featureCustomFieldsDesc": {
+    "description": "#1288 custom fields: featureCustomFieldsDesc"
+  },
   "featureCustomRolesTitle": "Rollen, die dieser Bereich festlegt",
   "@featureCustomRolesTitle": {
     "description": "#1287 custom roles: the feature switch title"
