@@ -43,6 +43,12 @@ class ColourRefused extends ColourOutcome {
   final String pair;
 }
 
+/// More fills than the plan's palette may hold; [most] is the limit.
+class ColourTooMany extends ColourOutcome {
+  const ColourTooMany(this.most);
+  final int most;
+}
+
 class WorkspaceColours {
   const WorkspaceColours(this._workspaces, this._check);
   final WorkspaceRepository _workspaces;
@@ -70,6 +76,36 @@ class WorkspaceColours {
       {BrandingKeys.seedColor: hex},
     );
     return ColourApplied(hex);
+  }
+
+  /// The workspace's own office fills, in order.
+  ///
+  /// At most eight, each `#RRGGBB` — the server refuses anything else
+  /// (0246), and an empty list is a RESET to the product's palette
+  /// rather than a workspace with no colours at all.
+  Future<ColourOutcome> chooseOfficePalette({
+    required String workspaceId,
+    required List<String> fills,
+  }) async {
+    if (fills.isEmpty) {
+      await _workspaces.setWorkspaceBranding(
+        workspaceId,
+        {BrandingKeys.officePalette: null},
+      );
+      return const ColourReset();
+    }
+    final hexes = <String>[];
+    for (final fill in fills) {
+      final argb = parseHexColor(fill.trim());
+      if (argb == null) return ColourMalformed(fill.trim());
+      hexes.add(hexOfColor(argb));
+    }
+    if (hexes.length > 8) return const ColourTooMany(8);
+    await _workspaces.setWorkspaceBranding(
+      workspaceId,
+      {BrandingKeys.officePalette: hexes},
+    );
+    return ColourApplied(hexes.join(' '));
   }
 
   /// REMOVES the seed rather than storing the product's own colour as

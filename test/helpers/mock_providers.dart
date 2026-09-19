@@ -1273,7 +1273,12 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     String workspaceId,
     Map<String, dynamic> delta,
   ) async {
-    final current = Map<String, dynamic>.from(brandings[workspaceId] ?? {});
+    // The server merges into the row, so the fake starts from what the
+    // workspace carries — not from an empty map, which would make a
+    // reset of one key look like a reset of all of them.
+    final stored = workspaces.where((w) => w.id == workspaceId).firstOrNull;
+    final current = Map<String, dynamic>.from(
+        brandings[workspaceId] ?? stored?.branding ?? const {});
     for (final e in delta.entries) {
       if (e.value == null) {
         current.remove(e.key);

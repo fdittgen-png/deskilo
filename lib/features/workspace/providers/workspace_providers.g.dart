@@ -1273,6 +1273,59 @@ final class WorkspaceBrandSeedProvider
 String _$workspaceBrandSeedHash() =>
     r'2c79ad4af1690dfc3228e144aa89ec9c4729ec19';
 
+/// #1289 — the workspace's own office fills, empty for the product's
+/// palette. Same gate as the seed: off the flag, and off a workspace
+/// that chose nothing, the plan paints exactly as it always has.
+
+@ProviderFor(workspaceOfficePalette)
+final workspaceOfficePaletteProvider = WorkspaceOfficePaletteProvider._();
+
+/// #1289 — the workspace's own office fills, empty for the product's
+/// palette. Same gate as the seed: off the flag, and off a workspace
+/// that chose nothing, the plan paints exactly as it always has.
+
+final class WorkspaceOfficePaletteProvider
+    extends $FunctionalProvider<List<Color>, List<Color>, List<Color>>
+    with $Provider<List<Color>> {
+  /// #1289 — the workspace's own office fills, empty for the product's
+  /// palette. Same gate as the seed: off the flag, and off a workspace
+  /// that chose nothing, the plan paints exactly as it always has.
+  WorkspaceOfficePaletteProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'workspaceOfficePaletteProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceOfficePaletteHash();
+
+  @$internal
+  @override
+  $ProviderElement<List<Color>> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  List<Color> create(Ref ref) {
+    return workspaceOfficePalette(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(List<Color> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<List<Color>>(value),
+    );
+  }
+}
+
+String _$workspaceOfficePaletteHash() =>
+    r'779fc713f7248d5558aa6e267ff4b154c2c53f86';
+
 /// #513 — MY effective permissions under the workspace's role matrix.
 /// The one client-side gate: screens ask for a permission, never for a
 /// role flag. Falls back to {} while member/workspace load.

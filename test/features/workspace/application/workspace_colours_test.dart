@@ -64,4 +64,41 @@ void main() {
     expect(repository.brandings['ws-1'], {'seat_palette': 'default'},
         reason: 'the seed goes, the rest of the map stays');
   });
+
+  test('room fills are stored as an ordered list, upper-case, and an empty '
+      'list is a reset', () async {
+    final repository = FakeWorkspaceRepository();
+    final colours = WorkspaceColours(repository, _refuseYellow);
+
+    expect(
+      await colours.chooseOfficePalette(
+          workspaceId: 'ws-1', fills: [' #ebdcc9 ', '#CFE3DC']),
+      isA<ColourApplied>(),
+    );
+    expect(repository.brandings['ws-1'],
+        {'office_palette': ['#EBDCC9', '#CFE3DC']});
+
+    expect(
+      await colours.chooseOfficePalette(workspaceId: 'ws-1', fills: const []),
+      isA<ColourReset>(),
+    );
+    expect(repository.brandings['ws-1'], isEmpty);
+  });
+
+  test('a fill that is not a colour, and more fills than the plan paints, '
+      'are refused and write nothing', () async {
+    final repository = FakeWorkspaceRepository();
+    final colours = WorkspaceColours(repository, _refuseYellow);
+
+    final bad = await colours
+        .chooseOfficePalette(workspaceId: 'ws-1', fills: ['#EBDCC9', 'teal']);
+    expect((bad as ColourMalformed).text, 'teal');
+
+    final many = await colours.chooseOfficePalette(
+      workspaceId: 'ws-1',
+      fills: [for (var i = 0; i < 9; i++) '#00000$i'],
+    );
+    expect((many as ColourTooMany).most, 8);
+    expect(repository.brandings, isEmpty);
+  });
 }

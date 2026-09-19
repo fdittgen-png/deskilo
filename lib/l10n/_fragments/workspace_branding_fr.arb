@@ -89,5 +89,44 @@
   "coloursSaveFailed": "La couleur n’a pas pu être enregistrée. Rien n’a changé.",
   "@coloursSaveFailed": {
     "description": "#1289 colours screen: the write failed and nothing changed"
+  },
+  "coloursRooms": "Couleurs des salles",
+  "@coloursRooms": {
+    "description": "#1289 colours screen: the office-fill palette heading"
+  },
+  "coloursRoomsProduct": "La palette du produit. Ajoutez une couleur pour utiliser la vôtre.",
+  "@coloursRoomsProduct": {
+    "description": "#1289 colours screen: no own fills yet"
+  },
+  "coloursRoomsAdd": "Ajouter une couleur",
+  "@coloursRoomsAdd": {
+    "description": "#1289 colours screen: the add-a-fill field and button"
+  },
+  "coloursRoomsOwn": "{n} couleurs à vous, dans cet ordre.",
+  "@coloursRoomsOwn": {
+    "description": "#1289 colours screen: how many own fills, order matters",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "coloursRoomsSaved": "{n} couleurs de salles enregistrées.",
+  "@coloursRoomsSaved": {
+    "description": "#1289 colours screen: the fills were stored",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "coloursTooMany": "Le plan peint au plus {most} couleurs de salles.",
+  "@coloursTooMany": {
+    "description": "#1289 colours screen: more fills than the plan can use",
+    "placeholders": {
+      "most": {
+        "type": "int"
+      }
+    }
   }
 }

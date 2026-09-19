@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'dart:ui' as ui;
 
-import 'package:flutter/foundation.dart' show mapEquals, setEquals;
+import 'package:flutter/foundation.dart' show listEquals, mapEquals, setEquals;
 import 'package:flutter/material.dart';
 
 import 'plan_paint_helpers.dart';
@@ -23,6 +23,9 @@ class FloorPlanPainter extends CustomPainter {
   /// #970 — demo mode: occupant labels painted as a smear.
   final bool blurLabels;
 
+  /// #1289 — the workspace's own office fills, empty for the product's.
+  final List<Color> officePalette;
+
   FloorPlanPainter({
     required this.plan,
     this.blurLabels = false,
@@ -43,6 +46,7 @@ class FloorPlanPainter extends CustomPainter {
     this.highlightedOfficeId,
     this.highlightLevel = false,
     this.deskOpacity = 1,
+    this.officePalette = const [],
     this.spaceOverlays,
     this.onlineSeatIds = const {},
     this.semanticLabels,
@@ -234,7 +238,9 @@ class FloorPlanPainter extends CustomPainter {
       final rect = _toPx(office.rect);
       canvas.drawRect(
         rect,
-        Paint()..color = OfficeColors.of(office.color).withValues(alpha: 0.55),
+        Paint()
+          ..color = OfficeColors.of(office.color, from: officePalette)
+              .withValues(alpha: 0.55),
       );
       // Whole-office/level reservation (#462): the ROOM itself says so
       // — state-coloured wash, accent border, occupant in the label.
@@ -739,6 +745,7 @@ class FloorPlanPainter extends CustomPainter {
       oldDelegate.highlightedOfficeId != highlightedOfficeId ||
       oldDelegate.highlightLevel != highlightLevel ||
       oldDelegate.deskOpacity != deskOpacity ||
+      !listEquals(oldDelegate.officePalette, officePalette) ||
       !setEquals(oldDelegate.onlineSeatIds, onlineSeatIds) ||
       oldDelegate.cellSize != cellSize;
 

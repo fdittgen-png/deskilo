@@ -7074,6 +7074,45 @@
   "@coloursSaveFailed": {
     "description": "#1289 colours screen: the write failed and nothing changed"
   },
+  "coloursRooms": "Raumfarben",
+  "@coloursRooms": {
+    "description": "#1289 colours screen: the office-fill palette heading"
+  },
+  "coloursRoomsProduct": "Die Produktpalette. Fügen Sie eine Farbe hinzu, um Ihre eigene zu verwenden.",
+  "@coloursRoomsProduct": {
+    "description": "#1289 colours screen: no own fills yet"
+  },
+  "coloursRoomsAdd": "Farbe hinzufügen",
+  "@coloursRoomsAdd": {
+    "description": "#1289 colours screen: the add-a-fill field and button"
+  },
+  "coloursRoomsOwn": "{n} eigene Farben, in dieser Reihenfolge.",
+  "@coloursRoomsOwn": {
+    "description": "#1289 colours screen: how many own fills, order matters",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "coloursRoomsSaved": "{n} Raumfarben gespeichert.",
+  "@coloursRoomsSaved": {
+    "description": "#1289 colours screen: the fills were stored",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "coloursTooMany": "Der Plan malt höchstens {most} Raumfarben.",
+  "@coloursTooMany": {
+    "description": "#1289 colours screen: more fills than the plan can use",
+    "placeholders": {
+      "most": {
+        "type": "int"
+      }
+    }
+  },
   "onboardingTitle": "Willkommen bei DesKilo",
   "onboardingCreateTab": "Workspace erstellen",
   "onboardingJoinTab": "Workspace beitreten",

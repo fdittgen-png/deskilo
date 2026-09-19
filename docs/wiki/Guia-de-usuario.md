@@ -999,6 +999,13 @@ mismo modo antes de guardarse.
 La marca DesKilo, los colores de los estados de plaza y el banner de
 producción nunca son de un espacio.
 
+**Colores de las salas.** Bajo el color de marca, *Colores de las salas*
+pinta el plano con sus propios tonos en vez de los ocho del producto.
+Añada hasta ocho — el plano lee el orden, así que una sala conserva su
+color cuando añade otro —, toque uno para quitarlo y **Colores del
+producto** devuelve la paleta. Si lo deja vacío, el plano se ve
+exactamente como siempre.
+
 <!-- anchor: user.workspace.settings.desk-transparency -->
 #### Transparencia de las mesas
 

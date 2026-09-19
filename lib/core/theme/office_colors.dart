@@ -15,5 +15,15 @@ abstract final class OfficeColors {
     Color(0xFFD9E4E8), // mist
   ];
 
-  static Color of(int index) => palette[index % palette.length];
+  /// The fill for an office's stored colour index.
+  ///
+  /// #1289 — a workspace may supply its own palette; [from] is that
+  /// list, empty for the product's. The index is the office's own and
+  /// never moves: a space with three colours simply cycles through
+  /// three, so an office keeps the same slot when the palette changes
+  /// size.
+  static Color of(int index, {List<Color> from = const []}) {
+    final colours = from.isEmpty ? palette : from;
+    return colours[index % colours.length];
+  }
 }

@@ -1005,6 +1005,13 @@ Speichern auf dieselbe Weise gemessen.
 Die DesKilo-Marke, die Farben der Platzzustände und das
 Produktions-Banner gehören nie einem Bereich.
 
+**Raumfarben.** Unter der Markenfarbe malt *Raumfarben* den Plan mit
+Ihren eigenen Tönen statt mit den acht des Produkts. Fügen Sie bis zu
+acht hinzu — der Plan liest die Reihenfolge, ein Raum behält also seine
+Farbe, wenn Sie eine weitere ergänzen — tippen Sie eine an, um sie zu
+entfernen, und **Produktfarben** gibt die Palette zurück. Bleibt es
+leer, sieht der Plan genau aus wie bisher.
+
 <!-- anchor: user.workspace.settings.desk-transparency -->
 #### Transparenz der Tische
 

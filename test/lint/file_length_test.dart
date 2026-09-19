@@ -39,7 +39,7 @@ const Map<String, int> _baseline = {
   // new 700 (2026-08-22): #575 day-phase rings + #576 space rings.
 // 700→740 (2026-08-24): #618 the occupant photo marker — clipped
   // photo draw beside the initial disc, one concern, same method.
-    'lib/features/plan/presentation/widgets/floor_plan_painter.dart': 783, // 2026-09-15 #1273 772→783: singleRoomLevelNames — the label rule and its flag // // 2026-09-13 #1216 750→780: the dropTargets parameter and the paragraph explaining why an EMPTY set differs from null; the drawing itself went to widgets/drop_target_paint.dart // 2026-09-06 #970 the demo blur on painted labels
+    'lib/features/plan/presentation/widgets/floor_plan_painter.dart': 790, // 2026-09-19 #1289 783→790: the office palette is a painter parameter, its doc, and its line in shouldRepaint // // 2026-09-15 #1273 772→783: singleRoomLevelNames — the label rule and its flag // // 2026-09-13 #1216 750→780: the dropTargets parameter and the paragraph explaining why an EMPTY set differs from null; the drawing itself went to widgets/drop_target_paint.dart // 2026-09-06 #970 the demo blur on painted labels
   // 1290→1330 (2026-08-02): #395 Excel-export tile — feature lines, the
   // orchestration itself lives in excel_export.dart.
   'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1044, // 2026-09-13 #1235 1063→1044: the name-this-room dialog moved to text_prompt_dialog.dart, paying for the canvas's screen-reader name // 2026-09-11 #1154 1250→1132: the office and desk sheets became one space_properties_sheet.dart // 2026-08 #585 seat NFC field
@@ -328,7 +328,7 @@ const Map<String, int> _baseline = {
   // combined reserve+check-in action, warm granularity).
   // 653→657 (2026-09-16): #1277 S2 — the kiosk installs the workspace's own words on its
   // own route, the same out-of-shell rule as the working day.
-  'lib/features/kiosk/presentation/screens/kiosk_screen.dart': 657, // 2026-09-15 #1273 652→653: singleRoomLevelNames — the label rule and its flag //
+  'lib/features/kiosk/presentation/screens/kiosk_screen.dart': 658, // 2026-09-19 #1289 657→658: the kiosk plan paints the workspace's own room colours // // 2026-09-15 #1273 652→653: singleRoomLevelNames — the label rule and its flag //
   // 600→640 (2026-08-04): #446 fetchWorkHours/setWorkHours — two new
   // repository surfaces (merge-preserving booking_rules writes), not
   // accretion. 640→660: #456 sendMemberNote/fetchMyNotes. 660→690:

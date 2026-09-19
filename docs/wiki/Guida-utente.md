@@ -1007,6 +1007,13 @@ modo prima di essere salvato.
 Il marchio DesKilo, i colori degli stati dei posti e il banner di
 produzione non sono mai di uno spazio.
 
+**Colori delle sale.** Sotto il colore del marchio, *Colori delle sale*
+dipinge la piantina con le vostre tinte invece delle otto del prodotto.
+Aggiungetene fino a otto — la piantina legge l'ordine, quindi una sala
+mantiene il suo colore quando ne aggiungete un'altra — toccatene uno per
+rimuoverlo, e **Colori del prodotto** restituisce la palette. Se lo
+lasciate vuoto, la piantina resta esattamente com'era.
+
 <!-- anchor: user.workspace.settings.desk-transparency -->
 #### Trasparenza dei tavoli
 

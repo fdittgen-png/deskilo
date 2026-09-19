@@ -10619,6 +10619,31 @@ class AppLocalizationsEn extends AppLocalizations {
       'The colour could not be saved. Nothing changed.';
 
   @override
+  String get coloursRooms => 'Room colours';
+
+  @override
+  String get coloursRoomsProduct =>
+      'The product palette. Add a colour to use your own.';
+
+  @override
+  String get coloursRoomsAdd => 'Add a colour';
+
+  @override
+  String coloursRoomsOwn(int n) {
+    return '$n of your own colours, in order.';
+  }
+
+  @override
+  String coloursRoomsSaved(int n) {
+    return '$n room colours saved.';
+  }
+
+  @override
+  String coloursTooMany(int most) {
+    return 'The plan paints at most $most room colours.';
+  }
+
+  @override
   String get onboardingTitle => 'Welcome to DesKilo';
 
   @override

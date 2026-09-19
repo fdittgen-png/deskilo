@@ -965,6 +965,13 @@ before it is stored.
 The DesKilo mark, the colours of the seat states and the production
 banner are never a workspace's to restyle.
 
+**Room colours.** Under the brand colour, *Room colours* paints the plan
+with your own fills instead of the product's eight. Add up to eight —
+the order is what the plan reads, so a room keeps its colour when you
+add another — tap one to remove it, and **Product colours** hands the
+palette back. Leave it empty and the plan looks exactly as it always
+has.
+
 #### Desk transparency
 
 How much of the background image shows through a desk on the plan. Turn

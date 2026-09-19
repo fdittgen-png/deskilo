@@ -43,6 +43,8 @@ class PlanCanvas extends StatefulWidget {
     super.key,
     required this.paintKey,
     required this.plan,
+    // #1289 — the workspace's own office fills; empty is the product's.
+    this.officePalette = const [],
     required this.seatStates,
     this.seatDayPhases = const {},
     this.seatDaySegments = const {},
@@ -71,6 +73,9 @@ class PlanCanvas extends StatefulWidget {
   final Key paintKey;
 
   final FloorPlan plan;
+
+  /// #1289 — the workspace's own office fills, empty for the product's.
+  final List<Color> officePalette;
   final Map<String, SeatState> seatStates;
 
   /// The browsed day's per-seat phase rings (#575).
@@ -246,6 +251,7 @@ class _PlanCanvasState extends State<PlanCanvas>
               size: PlanCanvasMetrics.size,
               painter: FloorPlanPainter(
                 plan: widget.plan,
+                officePalette: widget.officePalette,
                 singleRoomByLevel: widget.singleRoomByLevel,
                 blurLabels: widget.blurLabels,
                 cellSize: PlanCanvasMetrics.cellSize,
