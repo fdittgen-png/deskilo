@@ -49,18 +49,22 @@ for that reason.
 
 **2. A role is a row, not an enum value.**
 
-`workspace_roles (workspace_id, key, permissions text[], sort_order)`
-with `key` stable, and the human names as **per-locale columns on the
-role row** — not lexicon overrides (#1277 renames product terminology,
-and a role a workspace invented is not the product's word).
+`workspace_roles (workspace_id, key, permissions text[], names jsonb,
+sort_order, active)` with `key` stable, and the human names as a
+**per-locale map on the role row** — not lexicon overrides (#1277
+renames the *product's* terminology, and a role a workspace invented is
+not the product's word). A map rather than five columns, so a sixth
+locale is a value and not a migration.
 
 Membership is a join table, so a person can be both trésorier and member,
 and so that granting is a row rather than an edit to a person.
 
 **3. One resolution, in two implementations that must agree.**
 
-`has_permission` gains the custom grants; the Dart `effectivePermissions`
-mirrors it. That pair already exists and the mirror is already a known
+`has_permission` gains the custom grants — validated against
+`role_permission_catalog()` (0195), the catalogue that already exists,
+so a custom role can never hold a permission the product does not have.
+The Dart `effectivePermissions` mirrors it. That pair already exists and the mirror is already a known
 hazard, so this extends the pinned test rather than adding a second
 mechanism. The addition is a union:
 
