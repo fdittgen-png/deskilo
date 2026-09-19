@@ -26,6 +26,7 @@ class PersonalInfoForm extends StatefulWidget {
     this.saving = false,
     this.intro,
     this.managed = false,
+    this.extraSection,
   });
 
   final PersonalInfo initial;
@@ -39,6 +40,12 @@ class PersonalInfoForm extends StatefulWidget {
   /// Replaces the "printed on YOUR documents" line — an admin editing a
   /// managed member (#887) is told whose data this is instead.
   final String? intro;
+
+  /// #1288 — the workspace's own questions, rendered just above Save so
+  /// one Save sends the whole form. The host owns the section's answers
+  /// and sends them; this form only makes room for it, which is what
+  /// keeps PersonalInfoForm the ONE identity form.
+  final Widget? extraSection;
 
   /// #1177 — the form is editing SOMEBODY ELSE. The subject decides the
   /// person the hints are written in: "your name" is right on your own
@@ -316,6 +323,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           ),
           child: Text(preview, style: theme.textTheme.bodyMedium),
         ),
+        if (widget.extraSection != null) widget.extraSection!,
         const SizedBox(height: AppSpacing.lg),
         FilledButton(
           key: const ValueKey('personal-info-save'),

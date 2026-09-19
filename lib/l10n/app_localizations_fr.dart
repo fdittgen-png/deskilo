@@ -1683,6 +1683,72 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'espace peut poser ses propres questions dans le formulaire d\'identité : une fonction au bureau, une date d\'adhésion, un contact d\'urgence. Les réponses appartiennent à l\'adhésion : une question posée ici ne suit personne ailleurs.';
 
   @override
+  String workspaceFieldsTitle(String workspace) {
+    return 'Questions de $workspace';
+  }
+
+  @override
+  String get workspaceFieldsOptional => 'facultatif';
+
+  @override
+  String get fieldProblemRequired => 'Merci de répondre.';
+
+  @override
+  String fieldProblemTooShort(int count) {
+    return 'Au moins $count caractères.';
+  }
+
+  @override
+  String fieldProblemTooLong(int count) {
+    return 'Au plus $count caractères.';
+  }
+
+  @override
+  String fieldProblemTooSmall(String min) {
+    return 'Au moins $min.';
+  }
+
+  @override
+  String fieldProblemTooLarge(String max) {
+    return 'Au plus $max.';
+  }
+
+  @override
+  String get fieldProblemNotWhole => 'Un nombre entier, merci.';
+
+  @override
+  String get fieldProblemNotANumber => 'Un nombre, merci.';
+
+  @override
+  String get fieldProblemNotADate => 'Une date, merci.';
+
+  @override
+  String get fieldProblemNotAChoice => 'Choisissez dans la liste.';
+
+  @override
+  String fieldProblemTooEarly(String date) {
+    return 'Pas avant le $date.';
+  }
+
+  @override
+  String fieldProblemTooLate(String date) {
+    return 'Pas après le $date.';
+  }
+
+  @override
+  String get fieldProblemNotAnEmail => 'Ce n\'est pas une adresse e-mail.';
+
+  @override
+  String get fieldProblemNotAPhone => 'Ce n\'est pas un numéro de téléphone.';
+
+  @override
+  String get fieldProblemNotAUrl => 'Ce n\'est pas une adresse web.';
+
+  @override
+  String get workspaceFieldsSaveFailed =>
+      'Vos réponses aux questions de cet espace n\'ont pas été enregistrées. Le reste de vos informations, si.';
+
+  @override
   String get featureCustomRolesTitle => 'Rôles définis par cet espace';
 
   @override
