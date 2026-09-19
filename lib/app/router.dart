@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import '../features/workspace/presentation/screens/colours_screen.dart';
+import '../features/workspace/presentation/screens/questions_screen.dart';
 import '../features/workspace/presentation/screens/deployment_screen.dart';
 import '../features/workspace/presentation/screens/wording_screen.dart';
 import 'package:flutter/foundation.dart';
@@ -609,6 +610,13 @@ GoRouter router(Ref ref) {
                 ? null
                 : '/settings',
         builder: (context, state) => const ColoursScreen(),
+      ),
+      // #1288 — the questions this space asks its members.
+      GoRoute(
+        path: '/settings/questions',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.customFields) ? null : '/settings',
+        builder: (context, state) => const QuestionsScreen(),
       ),
       // #925 — how every journal numbers its documents, one screen.
       GoRoute(

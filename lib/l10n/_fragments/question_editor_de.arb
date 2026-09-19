@@ -1,0 +1,152 @@
+{
+  "@@locale": "de",
+  "questionsTitle": "Fragen dieses Bereichs",
+  "@questionsTitle": {
+    "description": "#1288 the question editor: questionsTitle"
+  },
+  "questionsSubtitle": "Sie erscheinen in den persönlichen Angaben, unter dem Namen Ihres Bereichs.",
+  "@questionsSubtitle": {
+    "description": "#1288 the question editor: questionsSubtitle"
+  },
+  "questionsEmpty": "Noch keine Fragen.",
+  "@questionsEmpty": {
+    "description": "#1288 the question editor: questionsEmpty"
+  },
+  "questionsAdd": "Frage hinzufügen",
+  "@questionsAdd": {
+    "description": "#1288 the question editor: questionsAdd"
+  },
+  "questionsInactive": "Zurückgestellt",
+  "@questionsInactive": {
+    "description": "#1288 the question editor: questionsInactive"
+  },
+  "questionEditorKey": "Schlüssel",
+  "@questionEditorKey": {
+    "description": "#1288 the question editor: questionEditorKey"
+  },
+  "questionEditorKeyHelp": "Kleinbuchstaben, Ziffern und Unterstriche. Er ändert sich nie: die Antworten hängen daran.",
+  "@questionEditorKeyHelp": {
+    "description": "#1288 the question editor: questionEditorKeyHelp"
+  },
+  "questionEditorType": "Antworttyp",
+  "@questionEditorType": {
+    "description": "#1288 the question editor: questionEditorType"
+  },
+  "questionEditorLabelFor": "Beschriftung ({locale})",
+  "@questionEditorLabelFor": {
+    "description": "#1288 the question editor: questionEditorLabelFor",
+    "placeholders": {
+      "locale": {
+        "type": "String"
+      }
+    }
+  },
+  "questionEditorRequired": "Muss beantwortet werden",
+  "@questionEditorRequired": {
+    "description": "#1288 the question editor: questionEditorRequired"
+  },
+  "questionEditorPersonal": "Das ist eine personenbezogene Angabe",
+  "@questionEditorPersonal": {
+    "description": "#1288 the question editor: questionEditorPersonal"
+  },
+  "questionEditorPersonalHelp": "Wird beim Austritt gelöscht und liegt dem Datenexport bei. Lassen Sie es an, außer die Antwort betrifft wirklich den Bereich und nicht die Person.",
+  "@questionEditorPersonalHelp": {
+    "description": "#1288 the question editor: questionEditorPersonalHelp"
+  },
+  "questionEditorVisibility": "Wer die Antwort sieht",
+  "@questionEditorVisibility": {
+    "description": "#1288 the question editor: questionEditorVisibility"
+  },
+  "questionEditorVisibilitySelf": "Nur das Mitglied",
+  "@questionEditorVisibilitySelf": {
+    "description": "#1288 the question editor: questionEditorVisibilitySelf"
+  },
+  "questionEditorVisibilityManagers": "Das Mitglied und wer personenbezogene Daten sehen darf",
+  "@questionEditorVisibilityManagers": {
+    "description": "#1288 the question editor: questionEditorVisibilityManagers"
+  },
+  "questionEditorVisibilityMembers": "Alle Mitglieder des Bereichs",
+  "@questionEditorVisibilityMembers": {
+    "description": "#1288 the question editor: questionEditorVisibilityMembers"
+  },
+  "questionEditorContexts": "Wo sie gestellt wird",
+  "@questionEditorContexts": {
+    "description": "#1288 the question editor: questionEditorContexts"
+  },
+  "questionEditorContextProfile": "Die Angaben des Mitglieds",
+  "@questionEditorContextProfile": {
+    "description": "#1288 the question editor: questionEditorContextProfile"
+  },
+  "questionEditorContextManaged": "Die Angaben eines verwalteten Mitglieds",
+  "@questionEditorContextManaged": {
+    "description": "#1288 the question editor: questionEditorContextManaged"
+  },
+  "questionEditorContextJoin": "Beim Beitritt",
+  "@questionEditorContextJoin": {
+    "description": "#1288 the question editor: questionEditorContextJoin"
+  },
+  "questionEditorMaxLength": "Längste Antwort (Zeichen)",
+  "@questionEditorMaxLength": {
+    "description": "#1288 the question editor: questionEditorMaxLength"
+  },
+  "questionEditorMin": "Kleinste Zahl",
+  "@questionEditorMin": {
+    "description": "#1288 the question editor: questionEditorMin"
+  },
+  "questionEditorMax": "Größte Zahl",
+  "@questionEditorMax": {
+    "description": "#1288 the question editor: questionEditorMax"
+  },
+  "questionEditorChoices": "Auswahlmöglichkeiten, eine pro Zeile",
+  "@questionEditorChoices": {
+    "description": "#1288 the question editor: questionEditorChoices"
+  },
+  "questionEditorPreview": "So wird es aussehen",
+  "@questionEditorPreview": {
+    "description": "#1288 the question editor: questionEditorPreview"
+  },
+  "questionEditorSave": "Frage speichern",
+  "@questionEditorSave": {
+    "description": "#1288 the question editor: questionEditorSave"
+  },
+  "questionEditorSaveFailed": "Die Frage wurde nicht gespeichert.",
+  "@questionEditorSaveFailed": {
+    "description": "#1288 the question editor: questionEditorSaveFailed"
+  },
+  "questionEditorActive": "Wird gestellt",
+  "@questionEditorActive": {
+    "description": "#1288 the question editor: questionEditorActive"
+  },
+  "questionTypeText": "Eine kurze Antwort",
+  "@questionTypeText": {
+    "description": "#1288 the question editor: questionTypeText"
+  },
+  "questionTypeLongText": "Eine lange Antwort",
+  "@questionTypeLongText": {
+    "description": "#1288 the question editor: questionTypeLongText"
+  },
+  "questionTypeInteger": "Eine ganze Zahl",
+  "@questionTypeInteger": {
+    "description": "#1288 the question editor: questionTypeInteger"
+  },
+  "questionTypeDecimal": "Eine Zahl",
+  "@questionTypeDecimal": {
+    "description": "#1288 the question editor: questionTypeDecimal"
+  },
+  "questionTypeDate": "Ein Datum",
+  "@questionTypeDate": {
+    "description": "#1288 the question editor: questionTypeDate"
+  },
+  "questionTypeBoolean": "Ja oder nein",
+  "@questionTypeBoolean": {
+    "description": "#1288 the question editor: questionTypeBoolean"
+  },
+  "questionTypeSingleChoice": "Eines aus einer Liste",
+  "@questionTypeSingleChoice": {
+    "description": "#1288 the question editor: questionTypeSingleChoice"
+  },
+  "questionTypeMultiChoice": "Mehrere aus einer Liste",
+  "@questionTypeMultiChoice": {
+    "description": "#1288 the question editor: questionTypeMultiChoice"
+  }
+}

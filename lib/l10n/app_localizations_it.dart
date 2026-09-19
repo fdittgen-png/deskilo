@@ -9129,6 +9129,121 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get questionsTitle => 'Le domande di questo spazio';
+
+  @override
+  String get questionsSubtitle =>
+      'Compaiono dentro le informazioni personali, sotto il nome del tuo spazio.';
+
+  @override
+  String get questionsEmpty => 'Ancora nessuna domanda.';
+
+  @override
+  String get questionsAdd => 'Aggiungi una domanda';
+
+  @override
+  String get questionsInactive => 'Messa da parte';
+
+  @override
+  String get questionEditorKey => 'Chiave';
+
+  @override
+  String get questionEditorKeyHelp =>
+      'Minuscole, cifre e trattini bassi. Non cambia mai: le risposte vi si appoggiano.';
+
+  @override
+  String get questionEditorType => 'Tipo di risposta';
+
+  @override
+  String questionEditorLabelFor(String locale) {
+    return 'Etichetta ($locale)';
+  }
+
+  @override
+  String get questionEditorRequired => 'Deve essere risposta';
+
+  @override
+  String get questionEditorPersonal => 'È un dato personale';
+
+  @override
+  String get questionEditorPersonalHelp =>
+      'Cancellato quando la persona esce, e incluso nella sua esportazione dei dati. Lascialo attivo a meno che la risposta riguardi davvero lo spazio e non la persona.';
+
+  @override
+  String get questionEditorVisibility => 'Chi vede la risposta';
+
+  @override
+  String get questionEditorVisibilitySelf => 'Solo il membro';
+
+  @override
+  String get questionEditorVisibilityManagers =>
+      'Il membro, e chi può vedere i dati personali';
+
+  @override
+  String get questionEditorVisibilityMembers => 'Tutti i membri dello spazio';
+
+  @override
+  String get questionEditorContexts => 'Dove viene posta';
+
+  @override
+  String get questionEditorContextProfile => 'Le informazioni del membro';
+
+  @override
+  String get questionEditorContextManaged =>
+      'Le informazioni di un membro gestito';
+
+  @override
+  String get questionEditorContextJoin => 'All\'iscrizione';
+
+  @override
+  String get questionEditorMaxLength => 'Risposta più lunga (caratteri)';
+
+  @override
+  String get questionEditorMin => 'Numero minimo';
+
+  @override
+  String get questionEditorMax => 'Numero massimo';
+
+  @override
+  String get questionEditorChoices => 'Scelte, una per riga';
+
+  @override
+  String get questionEditorPreview => 'Come apparirà';
+
+  @override
+  String get questionEditorSave => 'Salva la domanda';
+
+  @override
+  String get questionEditorSaveFailed => 'La domanda non è stata salvata.';
+
+  @override
+  String get questionEditorActive => 'Posta adesso';
+
+  @override
+  String get questionTypeText => 'Una risposta breve';
+
+  @override
+  String get questionTypeLongText => 'Una risposta lunga';
+
+  @override
+  String get questionTypeInteger => 'Un numero intero';
+
+  @override
+  String get questionTypeDecimal => 'Un numero';
+
+  @override
+  String get questionTypeDate => 'Una data';
+
+  @override
+  String get questionTypeBoolean => 'Sì o no';
+
+  @override
+  String get questionTypeSingleChoice => 'Una di un elenco';
+
+  @override
+  String get questionTypeMultiChoice => 'Diverse di un elenco';
+
+  @override
   String get eventTypeRoleChange => 'Cambio di ruolo';
 
   @override

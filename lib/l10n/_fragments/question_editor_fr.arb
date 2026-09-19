@@ -1,0 +1,152 @@
+{
+  "@@locale": "fr",
+  "questionsTitle": "Les questions de cet espace",
+  "@questionsTitle": {
+    "description": "#1288 the question editor: questionsTitle"
+  },
+  "questionsSubtitle": "Elles apparaissent dans les informations personnelles, sous le nom de votre espace.",
+  "@questionsSubtitle": {
+    "description": "#1288 the question editor: questionsSubtitle"
+  },
+  "questionsEmpty": "Aucune question pour l'instant.",
+  "@questionsEmpty": {
+    "description": "#1288 the question editor: questionsEmpty"
+  },
+  "questionsAdd": "Ajouter une question",
+  "@questionsAdd": {
+    "description": "#1288 the question editor: questionsAdd"
+  },
+  "questionsInactive": "Mise de côté",
+  "@questionsInactive": {
+    "description": "#1288 the question editor: questionsInactive"
+  },
+  "questionEditorKey": "Clé",
+  "@questionEditorKey": {
+    "description": "#1288 the question editor: questionEditorKey"
+  },
+  "questionEditorKeyHelp": "Minuscules, chiffres et tirets bas. Elle ne change jamais : les réponses s'y rattachent.",
+  "@questionEditorKeyHelp": {
+    "description": "#1288 the question editor: questionEditorKeyHelp"
+  },
+  "questionEditorType": "Type de réponse",
+  "@questionEditorType": {
+    "description": "#1288 the question editor: questionEditorType"
+  },
+  "questionEditorLabelFor": "Libellé ({locale})",
+  "@questionEditorLabelFor": {
+    "description": "#1288 the question editor: questionEditorLabelFor",
+    "placeholders": {
+      "locale": {
+        "type": "String"
+      }
+    }
+  },
+  "questionEditorRequired": "Réponse obligatoire",
+  "@questionEditorRequired": {
+    "description": "#1288 the question editor: questionEditorRequired"
+  },
+  "questionEditorPersonal": "C'est une donnée personnelle",
+  "@questionEditorPersonal": {
+    "description": "#1288 the question editor: questionEditorPersonal"
+  },
+  "questionEditorPersonalHelp": "Effacée au départ du membre, et incluse dans son export de données. Laissez activé sauf si la réponse concerne vraiment l'espace et non la personne.",
+  "@questionEditorPersonalHelp": {
+    "description": "#1288 the question editor: questionEditorPersonalHelp"
+  },
+  "questionEditorVisibility": "Qui voit la réponse",
+  "@questionEditorVisibility": {
+    "description": "#1288 the question editor: questionEditorVisibility"
+  },
+  "questionEditorVisibilitySelf": "Le membre seulement",
+  "@questionEditorVisibilitySelf": {
+    "description": "#1288 the question editor: questionEditorVisibilitySelf"
+  },
+  "questionEditorVisibilityManagers": "Le membre, et qui peut voir les données personnelles",
+  "@questionEditorVisibilityManagers": {
+    "description": "#1288 the question editor: questionEditorVisibilityManagers"
+  },
+  "questionEditorVisibilityMembers": "Tous les membres de l'espace",
+  "@questionEditorVisibilityMembers": {
+    "description": "#1288 the question editor: questionEditorVisibilityMembers"
+  },
+  "questionEditorContexts": "Où elle est posée",
+  "@questionEditorContexts": {
+    "description": "#1288 the question editor: questionEditorContexts"
+  },
+  "questionEditorContextProfile": "Les informations du membre",
+  "@questionEditorContextProfile": {
+    "description": "#1288 the question editor: questionEditorContextProfile"
+  },
+  "questionEditorContextManaged": "Les informations d'un membre géré",
+  "@questionEditorContextManaged": {
+    "description": "#1288 the question editor: questionEditorContextManaged"
+  },
+  "questionEditorContextJoin": "À l'adhésion",
+  "@questionEditorContextJoin": {
+    "description": "#1288 the question editor: questionEditorContextJoin"
+  },
+  "questionEditorMaxLength": "Réponse la plus longue (caractères)",
+  "@questionEditorMaxLength": {
+    "description": "#1288 the question editor: questionEditorMaxLength"
+  },
+  "questionEditorMin": "Nombre minimum",
+  "@questionEditorMin": {
+    "description": "#1288 the question editor: questionEditorMin"
+  },
+  "questionEditorMax": "Nombre maximum",
+  "@questionEditorMax": {
+    "description": "#1288 the question editor: questionEditorMax"
+  },
+  "questionEditorChoices": "Choix, un par ligne",
+  "@questionEditorChoices": {
+    "description": "#1288 the question editor: questionEditorChoices"
+  },
+  "questionEditorPreview": "Aperçu",
+  "@questionEditorPreview": {
+    "description": "#1288 the question editor: questionEditorPreview"
+  },
+  "questionEditorSave": "Enregistrer la question",
+  "@questionEditorSave": {
+    "description": "#1288 the question editor: questionEditorSave"
+  },
+  "questionEditorSaveFailed": "La question n'a pas été enregistrée.",
+  "@questionEditorSaveFailed": {
+    "description": "#1288 the question editor: questionEditorSaveFailed"
+  },
+  "questionEditorActive": "Posée actuellement",
+  "@questionEditorActive": {
+    "description": "#1288 the question editor: questionEditorActive"
+  },
+  "questionTypeText": "Une réponse courte",
+  "@questionTypeText": {
+    "description": "#1288 the question editor: questionTypeText"
+  },
+  "questionTypeLongText": "Une réponse longue",
+  "@questionTypeLongText": {
+    "description": "#1288 the question editor: questionTypeLongText"
+  },
+  "questionTypeInteger": "Un nombre entier",
+  "@questionTypeInteger": {
+    "description": "#1288 the question editor: questionTypeInteger"
+  },
+  "questionTypeDecimal": "Un nombre",
+  "@questionTypeDecimal": {
+    "description": "#1288 the question editor: questionTypeDecimal"
+  },
+  "questionTypeDate": "Une date",
+  "@questionTypeDate": {
+    "description": "#1288 the question editor: questionTypeDate"
+  },
+  "questionTypeBoolean": "Oui ou non",
+  "@questionTypeBoolean": {
+    "description": "#1288 the question editor: questionTypeBoolean"
+  },
+  "questionTypeSingleChoice": "Un choix dans une liste",
+  "@questionTypeSingleChoice": {
+    "description": "#1288 the question editor: questionTypeSingleChoice"
+  },
+  "questionTypeMultiChoice": "Plusieurs choix dans une liste",
+  "@questionTypeMultiChoice": {
+    "description": "#1288 the question editor: questionTypeMultiChoice"
+  }
+}

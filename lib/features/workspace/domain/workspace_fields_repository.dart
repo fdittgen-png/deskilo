@@ -29,4 +29,19 @@ abstract class WorkspaceFieldsRepository {
     required WorkspaceFieldContext context,
     required Map<String, Object?> answers,
   });
+
+  /// Defines or redefines a question (#1288 S4). Owner-only on the
+  /// server; the key identifies it and may not change, which is what
+  /// makes the answers keep meaning something.
+  ///
+  /// Returns the definition's id, so the choices can be written next.
+  Future<String> setField(String workspaceId, WorkspaceField field);
+
+  /// Replaces the choices of a choice question, wholesale.
+  ///
+  /// Wholesale because that is the only shape that can express "this one
+  /// is gone" — and the server refuses to remove a choice somebody has
+  /// already made, which is a conflict a person decides rather than a
+  /// cascade.
+  Future<void> setOptions(String definitionId, List<WorkspaceFieldOption> options);
 }

@@ -53,7 +53,7 @@ import 'lint_sources.dart';
 /// fails.
 const Map<String, int> _repositoryInWidgets = {
   'money': 24, // 2026-09-18 #1449 25→24: the register-payment sheet asks application/record_payment.dart which month a payment belongs to
-  'workspace': 19, // 2026-09-17 #1280 S3 20→19: the save sheet publishes through application/publish_template.dart
+  'workspace': 20, // 2026-09-19 #1288 S4 19→20: the question editor screen resolves the fields repository to define a question — the same shape every settings screen has, and the decision it makes is the server's; // 2026-09-17 #1280 S3 20→19: the save sheet publishes through application/publish_template.dart
   'auth': 4,
   // Still 4 after #1234: `space_act_sheet.dart` moved its DECISION to
   // `application/act_on_space.dart` but still resolves the repository
@@ -235,7 +235,7 @@ const Map<String, int> _pairBudget = {
   // `profile: 4 > 3` instead — a widget in profile/ reaching
   // workspace/'s repository. ADR 0024 is the stronger rule, so the
   // layer violation is fixed and the import ceiling pays for it.
-  'profile -> workspace': 38, // 2026-09-19 #1288 S2b 34→38: the identity form's section reads the workspace's own questions — the definitions, the validator, the repository and its providers all live in workspace/, and duplicating them in profile/ to keep a number down would be worse; // 2026-09-19 #1380 35→34: the demo-mode switch left Settings with its feature-flag import
+  'profile -> workspace': 37, // 2026-09-19 #1288 S4 38→37: the questions section moved to workspace/, where the questions are defined; // 2026-09-19 #1288 S2b 34→38: the identity form's section reads the workspace's own questions — the definitions, the validator, the repository and its providers all live in workspace/, and duplicating them in profile/ to keep a number down would be worse; // 2026-09-19 #1380 35→34: the demo-mode switch left Settings with its feature-flag import
   'reservations -> calendar': 1,
   'reservations -> events': 5,
   'reservations -> members': 2,

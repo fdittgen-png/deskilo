@@ -16,8 +16,8 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/domain/workspace_field.dart';
-import '../../../workspace/domain/workspace_field_answer.dart';
+import '../../domain/workspace_field.dart';
+import '../../domain/workspace_field_answer.dart';
 
 /// The answers a section holds, so the host's Save can read them without
 /// the section having to own a save of its own.

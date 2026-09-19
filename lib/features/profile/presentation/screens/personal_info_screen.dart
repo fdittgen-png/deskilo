@@ -18,7 +18,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/personal_info.dart';
 import '../../providers/profile_providers.dart';
 import '../widgets/personal_info_form.dart';
-import '../widgets/workspace_fields_section.dart';
+import '../../../workspace/presentation/widgets/workspace_fields_section.dart';
 
 class PersonalInfoScreen extends ConsumerStatefulWidget {
   const PersonalInfoScreen({super.key});

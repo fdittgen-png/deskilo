@@ -9509,6 +9509,155 @@
       }
     }
   },
+  "questionsTitle": "Questions this space asks",
+  "@questionsTitle": {
+    "description": "#1288 the question editor: questionsTitle"
+  },
+  "questionsSubtitle": "They appear inside personal information, under your space's name.",
+  "@questionsSubtitle": {
+    "description": "#1288 the question editor: questionsSubtitle"
+  },
+  "questionsEmpty": "No questions yet.",
+  "@questionsEmpty": {
+    "description": "#1288 the question editor: questionsEmpty"
+  },
+  "questionsAdd": "Add a question",
+  "@questionsAdd": {
+    "description": "#1288 the question editor: questionsAdd"
+  },
+  "questionsInactive": "Put aside",
+  "@questionsInactive": {
+    "description": "#1288 the question editor: questionsInactive"
+  },
+  "questionEditorKey": "Key",
+  "@questionEditorKey": {
+    "description": "#1288 the question editor: questionEditorKey"
+  },
+  "questionEditorKeyHelp": "Lower-case letters, digits and underscores. It never changes: the answers point at it.",
+  "@questionEditorKeyHelp": {
+    "description": "#1288 the question editor: questionEditorKeyHelp"
+  },
+  "questionEditorType": "Answer type",
+  "@questionEditorType": {
+    "description": "#1288 the question editor: questionEditorType"
+  },
+  "questionEditorLabelFor": "Label ({locale})",
+  "@questionEditorLabelFor": {
+    "description": "#1288 the question editor: questionEditorLabelFor",
+    "placeholders": {
+      "locale": {
+        "type": "String"
+      }
+    }
+  },
+  "questionEditorRequired": "Must be answered",
+  "@questionEditorRequired": {
+    "description": "#1288 the question editor: questionEditorRequired"
+  },
+  "questionEditorPersonal": "This is personal data",
+  "@questionEditorPersonal": {
+    "description": "#1288 the question editor: questionEditorPersonal"
+  },
+  "questionEditorPersonalHelp": "Erased when the member leaves, and carried in their data export. Leave it on unless the answer is really about the space rather than the person.",
+  "@questionEditorPersonalHelp": {
+    "description": "#1288 the question editor: questionEditorPersonalHelp"
+  },
+  "questionEditorVisibility": "Who can see the answer",
+  "@questionEditorVisibility": {
+    "description": "#1288 the question editor: questionEditorVisibility"
+  },
+  "questionEditorVisibilitySelf": "Only the member",
+  "@questionEditorVisibilitySelf": {
+    "description": "#1288 the question editor: questionEditorVisibilitySelf"
+  },
+  "questionEditorVisibilityManagers": "The member, and whoever may see personal data",
+  "@questionEditorVisibilityManagers": {
+    "description": "#1288 the question editor: questionEditorVisibilityManagers"
+  },
+  "questionEditorVisibilityMembers": "Every member of the space",
+  "@questionEditorVisibilityMembers": {
+    "description": "#1288 the question editor: questionEditorVisibilityMembers"
+  },
+  "questionEditorContexts": "Where it is asked",
+  "@questionEditorContexts": {
+    "description": "#1288 the question editor: questionEditorContexts"
+  },
+  "questionEditorContextProfile": "A member's own information",
+  "@questionEditorContextProfile": {
+    "description": "#1288 the question editor: questionEditorContextProfile"
+  },
+  "questionEditorContextManaged": "A managed member's information",
+  "@questionEditorContextManaged": {
+    "description": "#1288 the question editor: questionEditorContextManaged"
+  },
+  "questionEditorContextJoin": "When joining",
+  "@questionEditorContextJoin": {
+    "description": "#1288 the question editor: questionEditorContextJoin"
+  },
+  "questionEditorMaxLength": "Longest answer (characters)",
+  "@questionEditorMaxLength": {
+    "description": "#1288 the question editor: questionEditorMaxLength"
+  },
+  "questionEditorMin": "Smallest number",
+  "@questionEditorMin": {
+    "description": "#1288 the question editor: questionEditorMin"
+  },
+  "questionEditorMax": "Largest number",
+  "@questionEditorMax": {
+    "description": "#1288 the question editor: questionEditorMax"
+  },
+  "questionEditorChoices": "Choices, one per line",
+  "@questionEditorChoices": {
+    "description": "#1288 the question editor: questionEditorChoices"
+  },
+  "questionEditorPreview": "How it will look",
+  "@questionEditorPreview": {
+    "description": "#1288 the question editor: questionEditorPreview"
+  },
+  "questionEditorSave": "Save the question",
+  "@questionEditorSave": {
+    "description": "#1288 the question editor: questionEditorSave"
+  },
+  "questionEditorSaveFailed": "The question was not saved.",
+  "@questionEditorSaveFailed": {
+    "description": "#1288 the question editor: questionEditorSaveFailed"
+  },
+  "questionEditorActive": "Asked now",
+  "@questionEditorActive": {
+    "description": "#1288 the question editor: questionEditorActive"
+  },
+  "questionTypeText": "A short answer",
+  "@questionTypeText": {
+    "description": "#1288 the question editor: questionTypeText"
+  },
+  "questionTypeLongText": "A long answer",
+  "@questionTypeLongText": {
+    "description": "#1288 the question editor: questionTypeLongText"
+  },
+  "questionTypeInteger": "A whole number",
+  "@questionTypeInteger": {
+    "description": "#1288 the question editor: questionTypeInteger"
+  },
+  "questionTypeDecimal": "A number",
+  "@questionTypeDecimal": {
+    "description": "#1288 the question editor: questionTypeDecimal"
+  },
+  "questionTypeDate": "A date",
+  "@questionTypeDate": {
+    "description": "#1288 the question editor: questionTypeDate"
+  },
+  "questionTypeBoolean": "Yes or no",
+  "@questionTypeBoolean": {
+    "description": "#1288 the question editor: questionTypeBoolean"
+  },
+  "questionTypeSingleChoice": "One of a list",
+  "@questionTypeSingleChoice": {
+    "description": "#1288 the question editor: questionTypeSingleChoice"
+  },
+  "questionTypeMultiChoice": "Several of a list",
+  "@questionTypeMultiChoice": {
+    "description": "#1288 the question editor: questionTypeMultiChoice"
+  },
   "eventTypeRoleChange": "Role change",
   "@eventTypeRoleChange": {
     "description": "Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card"
