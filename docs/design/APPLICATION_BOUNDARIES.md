@@ -107,7 +107,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/money/domain/invoice_pdf.dart` | 1050 |
 | `lib/features/editor/presentation/screens/level_canvas_screen.dart` | 1044 |
 | `lib/features/profile/presentation/screens/settings_screen.dart` | 1039 |
-| `lib/features/money/presentation/invoice_actions.dart` | 1011 |
+| `lib/features/money/presentation/invoice_actions.dart` | 1027 |
 | `lib/features/money/presentation/widgets/report_visual_editor.dart` | 981 |
 | `lib/features/workspace/domain/workspace_xml.dart` | 964 |
 | `lib/features/members/presentation/screens/member_page.dart` | 947 |

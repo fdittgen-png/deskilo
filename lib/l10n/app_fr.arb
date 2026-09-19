@@ -2648,6 +2648,10 @@
   "invoicePdfReserved": "réservé",
   "invoicePdfPage": "Page",
   "invoiceRemindAction": "Envoyer un rappel",
+  "invoiceReminderNotSent": "Rien n’a été envoyé, donc rien n’a été enregistré.",
+  "@invoiceReminderNotSent": {
+    "description": "#1532: invoiceReminderNotSent"
+  },
   "invoiceReminded": "Rappel enregistré.",
   "invoiceRemindedBadge": "Rappelé ×{count}",
   "@invoiceRemindedBadge": {

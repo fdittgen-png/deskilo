@@ -4184,6 +4184,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceRemindAction => 'Zahlungserinnerung senden';
 
   @override
+  String get invoiceReminderNotSent =>
+      'Es wurde nichts versendet, also auch nichts vermerkt.';
+
+  @override
   String get invoiceReminded => 'Erinnerung erfasst.';
 
   @override

@@ -4154,6 +4154,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceRemindAction => 'Send a reminder';
 
   @override
+  String get invoiceReminderNotSent =>
+      'Nothing was sent, so nothing was recorded.';
+
+  @override
   String get invoiceReminded => 'Reminder recorded.';
 
   @override

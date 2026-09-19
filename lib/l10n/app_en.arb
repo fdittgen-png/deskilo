@@ -4404,6 +4404,10 @@
   "@invoiceRemindAction": {
     "description": "Issuer menu: record + share a payment reminder (0066)"
   },
+  "invoiceReminderNotSent": "Nothing was sent, so nothing was recorded.",
+  "@invoiceReminderNotSent": {
+    "description": "#1532: invoiceReminderNotSent"
+  },
   "invoiceReminded": "Reminder recorded.",
   "@invoiceReminded": {
     "description": "Snackbar after a reminder was recorded"

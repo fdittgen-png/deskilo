@@ -15,6 +15,8 @@
 // that wants to show a share can show a simulated one.
 import 'dart:typed_data';
 
+import '../share/file_sharer.dart';
+
 /// Everything a session was asked to send outwards, in order.
 class DemoOutwardEdges {
   final List<String> savedFiles = [];
@@ -37,13 +39,16 @@ class DemoOutwardEdges {
     return 'demo://$fileName';
   }
 
-  Future<void> shareFile({
+  Future<FileShareOutcome> shareFile({
     required Uint8List bytes,
     required String fileName,
     required String mimeType,
     String? text,
   }) async {
     sharedFiles.add(fileName);
+    // Demo shares nothing anywhere; `sent` keeps the journeys reading
+    // like the real thing (#1532).
+    return FileShareOutcome.sent;
   }
 
   Future<void> shareText(String text) async => sharedTexts.add(text);

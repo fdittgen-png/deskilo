@@ -338,6 +338,7 @@ void main() {
       money: await seededMoney(),
       sharer: ({required bytes, required fileName, required mimeType, text}) async {
         shared.add((name: fileName, mime: mimeType, bytes: bytes));
+              return FileShareOutcome.sent;
       },
     );
 
@@ -658,6 +659,7 @@ void main() {
       sharer: ({required bytes, required fileName, required mimeType, text})
           async {
         shared.add((name: fileName, mime: mimeType, text: text));
+              return FileShareOutcome.sent;
       },
     );
     final invoice = money.invoices.single;
@@ -725,6 +727,7 @@ void main() {
       sharer: ({required bytes, required fileName, required mimeType, text})
           async {
         shared.add((name: fileName, mime: mimeType, bytes: bytes));
+              return FileShareOutcome.sent;
       },
     );
     final invoice = money.invoices.single;
@@ -863,6 +866,7 @@ void main() {
       sharer: ({required bytes, required fileName, required mimeType, text})
           async {
         shared.add((name: fileName, mime: mimeType));
+              return FileShareOutcome.sent;
       },
     );
 
@@ -900,6 +904,7 @@ void main() {
       sharer: ({required bytes, required fileName, required mimeType, text})
           async {
         shared.add(fileName);
+              return FileShareOutcome.sent;
       },
     );
     final invoice = money.invoices.single;
@@ -944,6 +949,7 @@ void main() {
       sharer: ({required bytes, required fileName, required mimeType, text})
           async {
         sharedTexts.add(text);
+              return FileShareOutcome.sent;
       },
     );
     final invoice = money.invoices.single;
@@ -1214,6 +1220,7 @@ void main() {
       sharer: ({required bytes, required fileName, required mimeType, text})
           async {
         shared.add(bytes);
+              return FileShareOutcome.sent;
       },
     );
 

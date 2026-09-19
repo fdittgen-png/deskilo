@@ -4186,6 +4186,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceRemindAction => 'Invia un promemoria';
 
   @override
+  String get invoiceReminderNotSent =>
+      'Non è stato inviato nulla, quindi non è stato registrato nulla.';
+
+  @override
   String get invoiceReminded => 'Promemoria registrato.';
 
   @override

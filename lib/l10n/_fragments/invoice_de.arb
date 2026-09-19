@@ -55,6 +55,10 @@
   "invoicePdfReserved": "reserviert",
   "invoicePdfPage": "Seite",
   "invoiceRemindAction": "Zahlungserinnerung senden",
+  "invoiceReminderNotSent": "Es wurde nichts versendet, also auch nichts vermerkt.",
+  "@invoiceReminderNotSent": {
+    "description": "#1532: invoiceReminderNotSent"
+  },
   "invoiceReminded": "Erinnerung erfasst.",
   "invoiceRemindedBadge": "Erinnert ×{count}",
   "@invoiceRemindedBadge": {

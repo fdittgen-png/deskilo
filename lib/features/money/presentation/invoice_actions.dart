@@ -25,6 +25,7 @@ import '../domain/invoice_ubl.dart';
 import '../domain/invoice_ubl_check.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/invoice_pdf_template.dart';
+import '../application/send_reminder.dart';
 import '../domain/dunning.dart';
 import '../domain/invoice_report.dart';
 import 'report_layout_actions.dart';
@@ -529,6 +530,7 @@ Future<void> remindInvoice(
   final sent =
       ref.read(invoiceRemindersProvider).value?[invoice.id]?.count ?? 0;
   final level = (sent + 1).clamp(1, rules.levels);
+  SendReminderOutcome? outcome;
   if (!await runGuarded(
     context,
     domain: 'money',
@@ -545,15 +547,29 @@ Future<void> remindInvoice(
         invoice,
         level: level,
       );
-      await ref.read(moneyRepositoryProvider).remindInvoice(invoice.id);
-      await ref.read(fileSharerProvider)(
+      // The ORDER is the decision, so it lives in the command (#1532):
+      // the letter goes out, and the level is recorded only if it did.
+      outcome = await sendReminder(
+        repository: ref.read(moneyRepositoryProvider),
+        share: ref.read(fileSharerProvider),
+        invoiceId: invoice.id,
+        level: level,
         bytes: Uint8List.fromList(pdf.bytes),
         fileName: pdf.fileName,
-        mimeType: 'application/pdf',
-        text: message,
+        message: message,
       );
     },
   )) {
+    return;
+  }
+  // Nothing left the device and nothing was recorded. "Reminder
+  // recorded." would be false, and an error would be false too.
+  if (outcome is ReminderNotSent) {
+    if (!context.mounted) return;
+    AppSnack.info(
+        context,
+        l10n?.invoiceReminderNotSent ??
+            'Nothing was sent, so nothing was recorded.');
     return;
   }
   ref.invalidate(invoiceRemindersProvider);
