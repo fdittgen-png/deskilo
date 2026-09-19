@@ -20,15 +20,12 @@ import 'drop_target_paint.dart';
 /// canvas (#34/#35) and the live floor plan (Epic #4): passing [seatStates]
 /// switches seats to live state colors + occupant labels.
 class FloorPlanPainter extends CustomPainter {
-  /// #970 — demo mode: occupant labels painted as a smear.
-  final bool blurLabels;
 
   /// #1289 — the workspace's own office fills, empty for the product's.
   final List<Color> officePalette;
 
   FloorPlanPainter({
     required this.plan,
-    this.blurLabels = false,
     required this.cellSize,
     required this.colorScheme,
     this.brightness = Brightness.light,
@@ -266,8 +263,7 @@ class FloorPlanPainter extends CustomPainter {
         if (officeLabel.isNotEmpty) {
           drawLabel(canvas, officeLabel, rect, colorScheme.onSurface);
         }
-        drawReservedChip(canvas, rect, overlay.label, accent, blur: blurLabels,
-            checkedIn: overlay.state == SeatState.occupied);
+        drawReservedChip(canvas, rect, overlay.label, accent,             checkedIn: overlay.state == SeatState.occupied);
       } else {
         canvas.drawRect(rect, officeBorder);
         if (_labelsOffices) {
@@ -323,8 +319,7 @@ class FloorPlanPainter extends CustomPainter {
         // one for the same booking — a whole-office/level overlay
         // covers its desks too, and stacked identical chips are noise.
         if (spaceOverlays?[desk.officeId] == null) {
-          drawReservedChip(canvas, rect, overlay.label, accent, blur: blurLabels,
-              checkedIn: overlay.state == SeatState.occupied);
+          drawReservedChip(canvas, rect, overlay.label, accent,               checkedIn: overlay.state == SeatState.occupied);
         }
       } else {
         canvas.drawRRect(rrect, deskBorder);
@@ -473,7 +468,7 @@ class FloorPlanPainter extends CustomPainter {
         // Editor mode: name + orientation so the owner can place seats.
         _orientationArrow(canvas, seat, rect, accent);
         if (label.isNotEmpty) {
-          drawLabel(canvas, label, rect, colorScheme.onSurface, center: true, blur: blurLabels);
+          drawLabel(canvas, label, rect, colorScheme.onSurface, center: true);
         }
       }
     }

@@ -168,8 +168,14 @@ enum WorkspaceFeature {
   /// bar with the round button, or the menu the web uses.
   navigationStyle,
 
-  /// #970 — demo mode: a per-device switch that replaces every name,
-  /// e-mail and address on screen by invented ones.
+  /// #1372 — the demonstration workspace: an invented space anyone can
+  /// open from the sign-in screen, with its own people, bookings and
+  /// bills, and no account. Off, the offer does not appear.
+  ///
+  /// It used to mean the blur of #970, which anonymised a LIVE workspace
+  /// for a recording. That was retired in #1380: the recording problem
+  /// is #1514's and has nothing to do with a space full of invented
+  /// people.
   demoMode,
 
   /// #977 — the wizard that creates and configures a new instance.

@@ -2029,14 +2029,17 @@ Si l'application navigue par une barre en bas ou un rail latéral. Sur
 grand écran le rail laisse plus de place au plan ; sur téléphone la barre
 est plus facile à atteindre.
 
-<!-- anchor: user.profile.settings.demo-mode -->
-### Mode démonstration
+### L'espace de démonstration
 
-Remplace à l'écran les noms et les montants par des équivalents
-plausibles, pour montrer un espace à un visiteur sans montrer les
-affaires de personne. Cela ne change que l'affichage : rien n'est touché
-dans les données, et rien de ce que vous faites ne se comporte
-différemment.
+Un espace inventé que chacun peut ouvrir depuis l'écran de connexion,
+sans compte. Il a ses propres personnes, ses propres réservations et ses
+propres factures, et une **Réinitialisation** qui remet tout exactement
+en place. **Voir en tant que** regarde le même espace en tant que
+membre, administrateur ou propriétaire, pour voir ce que chacun voit.
+
+Rien de ce qui s'y fait n'atteint un espace réel, et rien ne quitte
+l'appareil. Quitter oublie la session, et fermer l'application aussi :
+la visite suivante repart du même espace inventé.
 
 <!-- anchor: user.profile.settings.front-camera -->
 ### Caméra frontale pour scanner

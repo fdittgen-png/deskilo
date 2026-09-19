@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/demo/demo_mode.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/push/push_status_tile.dart';
 import '../../../../core/scan/front_camera.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/application/set_workspace_dev_mode.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import 'backend_settings_tile.dart';
@@ -78,25 +76,5 @@ List<Widget> advancedSettingsTiles(
               leading: const Icon(Icons.receipt_long_outlined),
               title: Text(l10n?.developerTitle ?? 'Developer'),
               onTap: () => context.push('/developer'),
-            ),
-          // #970 — demo mode: invented names, e-mails and addresses on
-          // this device, for screenshots and recordings.
-          if (ref
-              .watch(enabledFeaturesSyncProvider)
-              .contains(WorkspaceFeature.demoMode))
-            SwitchListTile(
-              key: const ValueKey('settings-demo-mode'),
-              secondary: const Icon(Icons.visibility_off_outlined),
-              title: HelpDotTitle(
-                l10n?.demoModeTitle ?? 'Demo mode',
-                l10n?.helpTopicSettings ?? 'Settings & profile',
-                anchor: HelpAnchor.profileDemoMode,
-              ),
-              subtitle: Text(l10n?.demoModeSubtitle ??
-                  'Names, e-mails, phones and addresses are blurred on '
-                      'this device\'s screen — for screenshots and videos.'),
-              value: ref.watch(demoModeControllerProvider).value ?? false,
-              onChanged: (on) =>
-                  ref.read(demoModeControllerProvider.notifier).set(on),
             ),
       ];

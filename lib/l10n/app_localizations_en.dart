@@ -1672,18 +1672,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'The workspace may define roles of its own — a treasurer, a secretary — each adding permissions on top of a member\'s role. They never take a permission away, and an owner always keeps every one.';
 
   @override
-  String get featureDemoMode => 'Demo mode';
+  String get featureDemoMode => 'The demo workspace';
 
   @override
   String get featureDemoModeDesc =>
-      'A switch in each member\'s settings: while it is on, every name, e-mail, phone and postal address on their screen is blurred in place, so screenshots and videos carry no personal data. Off: the switch is hidden.';
-
-  @override
-  String get demoModeTitle => 'Demo mode';
-
-  @override
-  String get demoModeSubtitle =>
-      'Names, e-mails, phones and addresses are blurred on this device\'s screen — for screenshots and videos.';
+      'An invented workspace anyone can open from the sign-in screen, with its own people, bookings and bills. Nothing done in it reaches a real workspace or leaves the device, and no account is needed. Off: the offer does not appear.';
 
   @override
   String get demoSessionBadge => 'Demo';

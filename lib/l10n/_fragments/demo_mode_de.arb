@@ -1,19 +1,11 @@
 {
   "@@locale": "de",
-  "featureDemoMode": "Demomodus",
+  "featureDemoMode": "Der Demobereich",
   "@featureDemoMode": {
-    "description": "#970 demo mode: featureDemoMode"
+    "description": "#1380 the demo workspace: featureDemoMode"
   },
-  "featureDemoModeDesc": "Ein Schalter in den Einstellungen jedes Mitglieds: solange er an ist, wird jeder Name, jede E-Mail, Telefonnummer und Postadresse auf dem Bildschirm an Ort und Stelle unscharf gemacht, damit Screenshots und Videos keine persönlichen Daten tragen. Aus: der Schalter ist verborgen.",
+  "featureDemoModeDesc": "Ein erfundener Bereich, den jede Person vom Anmeldebildschirm aus öffnen kann, mit eigenen Personen, Buchungen und Rechnungen. Nichts davon erreicht einen echten Bereich oder verlässt das Gerät, und ein Konto ist nicht nötig. Aus: das Angebot erscheint nicht.",
   "@featureDemoModeDesc": {
-    "description": "#970 demo mode: featureDemoModeDesc"
-  },
-  "demoModeTitle": "Demomodus",
-  "@demoModeTitle": {
-    "description": "#970 demo mode: demoModeTitle"
-  },
-  "demoModeSubtitle": "Namen, E-Mails, Telefonnummern und Adressen werden auf dem Bildschirm dieses Geräts unscharf gemacht — für Screenshots und Videos.",
-  "@demoModeSubtitle": {
-    "description": "#970 demo mode: demoModeSubtitle"
+    "description": "#1380 the demo workspace: featureDemoModeDesc"
   }
 }

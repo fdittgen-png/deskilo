@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/demo/demo_mode.dart';
 import '../../../../core/time/clock.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../plan/domain/floor_plan.dart';
@@ -104,7 +103,6 @@ class ReserveCanvas extends ConsumerWidget {
             },
       builder: (context, seatPhotos) => PlanCanvas(
         officePalette: ref.watch(workspaceOfficePaletteProvider),
-        blurLabels: ref.watch(demoModeControllerProvider).value ?? false,
         seatPhotos: seatPhotos,
         singleRoomByLevel: namesSingleRoomsByLevel(ref),
         paintKey: const ValueKey('reserve-plan-canvas'),

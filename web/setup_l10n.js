@@ -965,8 +965,8 @@ window.SETUP_L10N={
     "Each member picks in their settings how the app navigates: the classic bottom bar with the round Reserve button, or the menu the web uses. Off: every device keeps its platform's default."
    ],
    "demoMode": [
-    "Demo mode",
-    "A switch in each member's settings: while it is on, every name, e-mail, phone and postal address on their screen is blurred in place, so screenshots and videos carry no personal data. Off: the switch is hidden."
+    "The demo workspace",
+    "An invented workspace anyone can open from the sign-in screen, with its own people, bookings and bills. Nothing done in it reaches a real workspace or leaves the device, and no account is needed. Off: the offer does not appear."
    ],
    "instanceWizard": [
     "Instance wizard",
@@ -2181,8 +2181,8 @@ window.SETUP_L10N={
     "Chaque membre choisit dans ses réglages comment l'application navigue : la barre classique avec le bouton rond Réserver, ou le menu comme sur le web. Désactivé : chaque appareil garde le défaut de sa plateforme."
    ],
    "demoMode": [
-    "Mode démo",
-    "Un interrupteur dans les réglages de chaque membre : tant qu'il est activé, chaque nom, courriel, téléphone et adresse postale à l'écran est flouté sur place, pour des captures et vidéos sans données personnelles. Désactivé : l'interrupteur est masqué."
+    "L'espace de démonstration",
+    "Un espace inventé que chacun peut ouvrir depuis l'écran de connexion, avec ses propres personnes, réservations et factures. Rien de ce qui s'y fait n'atteint un espace réel ni ne quitte l'appareil, et aucun compte n'est nécessaire. Désactivé : la proposition n'apparaît pas."
    ],
    "instanceWizard": [
     "Assistant d'instance",
@@ -3397,8 +3397,8 @@ window.SETUP_L10N={
     "Jedes Mitglied wählt in seinen Einstellungen, wie die App navigiert: die klassische untere Leiste mit dem runden Reservieren-Knopf oder das Menü wie im Web. Aus: jedes Gerät behält den Standard seiner Plattform."
    ],
    "demoMode": [
-    "Demomodus",
-    "Ein Schalter in den Einstellungen jedes Mitglieds: solange er an ist, wird jeder Name, jede E-Mail, Telefonnummer und Postadresse auf dem Bildschirm an Ort und Stelle unscharf gemacht, damit Screenshots und Videos keine persönlichen Daten tragen. Aus: der Schalter ist verborgen."
+    "Der Demobereich",
+    "Ein erfundener Bereich, den jede Person vom Anmeldebildschirm aus öffnen kann, mit eigenen Personen, Buchungen und Rechnungen. Nichts davon erreicht einen echten Bereich oder verlässt das Gerät, und ein Konto ist nicht nötig. Aus: das Angebot erscheint nicht."
    ],
    "instanceWizard": [
     "Instanz-Assistent",
@@ -4613,8 +4613,8 @@ window.SETUP_L10N={
     "Cada miembro elige en sus ajustes cómo navega la app: la barra inferior clásica con el botón redondo Reservar, o el menú como en la web. Desactivado: cada dispositivo conserva el valor por defecto de su plataforma."
    ],
    "demoMode": [
-    "Modo demo",
-    "Un interruptor en los ajustes de cada miembro: mientras está activado, cada nombre, correo, teléfono y dirección postal en su pantalla se difumina en su sitio, para que las capturas y los vídeos no lleven datos personales. Desactivado: el interruptor se oculta."
+    "El espacio de demostración",
+    "Un espacio inventado que cualquiera puede abrir desde la pantalla de inicio de sesión, con sus propias personas, reservas y facturas. Nada de lo que se hace allí llega a un espacio real ni sale del dispositivo, y no hace falta ninguna cuenta. Desactivado: la propuesta no aparece."
    ],
    "instanceWizard": [
     "Asistente de instancia",
@@ -5829,8 +5829,8 @@ window.SETUP_L10N={
     "Ogni membro sceglie nelle impostazioni come naviga l'app: la barra inferiore classica con il pulsante rotondo Prenota, o il menu come sul web. Disattivato: ogni dispositivo mantiene il valore predefinito della sua piattaforma."
    ],
    "demoMode": [
-    "Modalità demo",
-    "Un interruttore nelle impostazioni di ogni membro: finché è attivo, ogni nome, e-mail, telefono e indirizzo postale sullo schermo è sfocato sul posto, così screenshot e video non portano dati personali. Disattivato: l'interruttore è nascosto."
+    "Lo spazio dimostrativo",
+    "Uno spazio inventato che chiunque può aprire dalla schermata di accesso, con le proprie persone, prenotazioni e fatture. Nulla di ciò che vi si fa raggiunge uno spazio reale o lascia il dispositivo, e non serve alcun account. Spento: la proposta non compare."
    ],
    "instanceWizard": [
     "Assistente istanza",

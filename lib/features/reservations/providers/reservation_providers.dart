@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: 0BSD
-import '../../../core/demo/demo_mode.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' show WidgetRef;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -64,7 +63,6 @@ Future<Map<String, String>> memberNames(Ref ref) async {
   final names =
       await ref.watch(workspaceRepositoryProvider).fetchMemberNames(workspace.id);
   // #970 — demo mode blurs these names wherever they are printed.
-  registerSensitiveNames(names);
   return names;
 }
 

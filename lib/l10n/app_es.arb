@@ -1155,21 +1155,13 @@
   "@featureCustomRolesDesc": {
     "description": "#1287 custom roles: the feature switch description"
   },
-  "featureDemoMode": "Modo demo",
+  "featureDemoMode": "El espacio de demostración",
   "@featureDemoMode": {
-    "description": "#970 demo mode: featureDemoMode"
+    "description": "#1380 the demo workspace: featureDemoMode"
   },
-  "featureDemoModeDesc": "Un interruptor en los ajustes de cada miembro: mientras está activado, cada nombre, correo, teléfono y dirección postal en su pantalla se difumina en su sitio, para que las capturas y los vídeos no lleven datos personales. Desactivado: el interruptor se oculta.",
+  "featureDemoModeDesc": "Un espacio inventado que cualquiera puede abrir desde la pantalla de inicio de sesión, con sus propias personas, reservas y facturas. Nada de lo que se hace allí llega a un espacio real ni sale del dispositivo, y no hace falta ninguna cuenta. Desactivado: la propuesta no aparece.",
   "@featureDemoModeDesc": {
-    "description": "#970 demo mode: featureDemoModeDesc"
-  },
-  "demoModeTitle": "Modo demo",
-  "@demoModeTitle": {
-    "description": "#970 demo mode: demoModeTitle"
-  },
-  "demoModeSubtitle": "Nombres, correos, teléfonos y direcciones se difuminan en la pantalla de este dispositivo — para capturas de pantalla y vídeos.",
-  "@demoModeSubtitle": {
-    "description": "#970 demo mode: demoModeSubtitle"
+    "description": "#1380 the demo workspace: featureDemoModeDesc"
   },
   "demoSessionBadge": "Demo",
   "@demoSessionBadge": {

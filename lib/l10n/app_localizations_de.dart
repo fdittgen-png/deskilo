@@ -1681,18 +1681,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Arbeitsbereich kann eigene Rollen festlegen — Kassenwart, Schriftführer — die Berechtigungen zur Rolle eines Mitglieds hinzufügen. Sie nehmen nie eine weg, und ein Eigentümer behält immer alle.';
 
   @override
-  String get featureDemoMode => 'Demomodus';
+  String get featureDemoMode => 'Der Demobereich';
 
   @override
   String get featureDemoModeDesc =>
-      'Ein Schalter in den Einstellungen jedes Mitglieds: solange er an ist, wird jeder Name, jede E-Mail, Telefonnummer und Postadresse auf dem Bildschirm an Ort und Stelle unscharf gemacht, damit Screenshots und Videos keine persönlichen Daten tragen. Aus: der Schalter ist verborgen.';
-
-  @override
-  String get demoModeTitle => 'Demomodus';
-
-  @override
-  String get demoModeSubtitle =>
-      'Namen, E-Mails, Telefonnummern und Adressen werden auf dem Bildschirm dieses Geräts unscharf gemacht — für Screenshots und Videos.';
+      'Ein erfundener Bereich, den jede Person vom Anmeldebildschirm aus öffnen kann, mit eigenen Personen, Buchungen und Rechnungen. Nichts davon erreicht einen echten Bereich oder verlässt das Gerät, und ein Konto ist nicht nötig. Aus: das Angebot erscheint nicht.';
 
   @override
   String get demoSessionBadge => 'Demo';

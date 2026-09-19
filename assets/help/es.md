@@ -1925,12 +1925,18 @@ Si la app navega con una barra inferior o un raíl lateral. En pantalla
 ancha el raíl da más sitio al plano; en el teléfono la barra queda más a
 mano.
 
-### Modo demostración
+### El espacio de demostración
 
-Sustituye en pantalla los nombres y los importes por otros verosímiles,
-para enseñar un espacio a una visita sin enseñar los asuntos de nadie.
-Solo cambia lo que se ve: nada se toca en los datos, y nada de lo que
-haga se comporta distinto.
+Un espacio inventado que cualquiera puede abrir desde la pantalla de
+inicio de sesión, sin cuenta. Tiene sus propias personas, sus propias
+reservas y sus propias facturas, y un **Reinicio** que lo deja todo
+exactamente como estaba. **Ver como** mira el mismo espacio como
+miembro, como administradora o como propietaria, para ver lo que cada
+una ve.
+
+Nada de lo que se hace allí llega a un espacio real, y nada sale del
+dispositivo. Salir olvida la sesión, y cerrar la aplicación también: la
+siguiente visita parte del mismo espacio inventado.
 
 ### Cámara frontal para escanear
 

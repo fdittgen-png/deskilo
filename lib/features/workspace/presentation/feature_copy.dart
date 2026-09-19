@@ -274,10 +274,10 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'terminal. Off: the manual steps only.',
         WorkspaceFeature.demoMode =>
           l10n?.featureDemoModeDesc ??
-              'A switch in each member\'s settings: while it is on, every '
-                  'name, e-mail, phone and postal address on their screen is '
-                  'blurred in place, so screenshots and videos carry no '
-                  'personal data. Off: the switch is hidden.',
+              'An invented workspace anyone can open from the sign-in '
+                  'screen, with its own people, bookings and bills. Nothing '
+                  'done in it reaches a real workspace or leaves the device, '
+                  'and no account is needed. Off: the offer does not appear.',
         WorkspaceFeature.navigationStyle =>
           l10n?.featureNavigationStyleDesc ??
               'Each member picks in their settings how the app navigates: '

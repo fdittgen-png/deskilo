@@ -2958,29 +2958,17 @@ abstract class AppLocalizations {
   /// **'The workspace may define roles of its own — a treasurer, a secretary — each adding permissions on top of a member\'s role. They never take a permission away, and an owner always keeps every one.'**
   String get featureCustomRolesDesc;
 
-  /// #970 demo mode: featureDemoMode
+  /// #1380 the demo workspace: featureDemoMode
   ///
   /// In en, this message translates to:
-  /// **'Demo mode'**
+  /// **'The demo workspace'**
   String get featureDemoMode;
 
-  /// #970 demo mode: featureDemoModeDesc
+  /// #1380 the demo workspace: featureDemoModeDesc
   ///
   /// In en, this message translates to:
-  /// **'A switch in each member\'s settings: while it is on, every name, e-mail, phone and postal address on their screen is blurred in place, so screenshots and videos carry no personal data. Off: the switch is hidden.'**
+  /// **'An invented workspace anyone can open from the sign-in screen, with its own people, bookings and bills. Nothing done in it reaches a real workspace or leaves the device, and no account is needed. Off: the offer does not appear.'**
   String get featureDemoModeDesc;
-
-  /// #970 demo mode: demoModeTitle
-  ///
-  /// In en, this message translates to:
-  /// **'Demo mode'**
-  String get demoModeTitle;
-
-  /// #970 demo mode: demoModeSubtitle
-  ///
-  /// In en, this message translates to:
-  /// **'Names, e-mails, phones and addresses are blurred on this device\'s screen — for screenshots and videos.'**
-  String get demoModeSubtitle;
 
   /// #1375 demo session: demoSessionBadge
   ///

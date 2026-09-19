@@ -238,7 +238,7 @@ const Map<String, int> _pairBudget = {
   // `profile: 4 > 3` instead — a widget in profile/ reaching
   // workspace/'s repository. ADR 0024 is the stronger rule, so the
   // layer violation is fixed and the import ceiling pays for it.
-  'profile -> workspace': 35,
+  'profile -> workspace': 34, // 2026-09-19 #1380 35→34: the demo-mode switch left Settings with its feature-flag import
   'reservations -> calendar': 1,
   'reservations -> events': 5,
   'reservations -> members': 2,
