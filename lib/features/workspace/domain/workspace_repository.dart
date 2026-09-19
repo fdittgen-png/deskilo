@@ -180,11 +180,9 @@ abstract class WorkspaceRepository {
   /// (`invoice_legal`, 0094).
   ///
   /// One row update, because they are one statement about the seller.
-  /// They used to be two calls from the same Save, and when the second
-  /// failed the VAT regime and VAT id had already changed while the
-  /// mentions and the exigibility had not — every invoice issued
-  /// afterwards carried a legal block that contradicted itself, under a
-  /// message saying the save had failed (#1532).
+  /// As two calls from the same Save, a failure on the second left the
+  /// VAT regime changed and the mentions not — every invoice after it
+  /// carrying a legal block that contradicted itself (#1532).
   Future<void> setLegalIdentity(
     String workspaceId, {
     required String vatRegime,

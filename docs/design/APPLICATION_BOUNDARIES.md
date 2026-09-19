@@ -123,11 +123,11 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/calendar/presentation/widgets/day_timeline.dart` | 776 |
 | `lib/features/money/presentation/screens/billing_screen.dart` | 767 |
 | `lib/features/reservations/presentation/reserve_seat_actions.dart` | 750 |
-| `lib/features/workspace/domain/workspace_repository.dart` | 746 |
+| `lib/features/workspace/domain/workspace_repository.dart` | 744 |
 | `lib/features/workspace/presentation/member_admin_actions.dart` | 703 |
 | `lib/core/demo/data/reservation_repository.dart` | 678 |
 | `lib/features/calendar/presentation/screens/calendar_screen.dart` | 676 |
-| `lib/features/money/presentation/screens/legal_identity_screen.dart` | 662 |
+| `lib/features/money/presentation/screens/legal_identity_screen.dart` | 656 |
 | `lib/features/kiosk/presentation/screens/kiosk_screen.dart` | 655 |
 | `lib/core/help/help_anchors.dart` | 649 |
 | `lib/features/plan/data/supabase_floor_plan_repository.dart` | 631 |
