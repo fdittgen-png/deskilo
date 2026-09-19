@@ -30,18 +30,23 @@ abstract class ProfileRepository {
   /// out.
   Future<void> updateStatusText(String statusText);
 
-  /// Postal address (0060), printed on invoices; '' clears it.
-  Future<void> updateAddress(String address);
 
   /// #886 — the whole structured identity in one write (the form saves
   /// every field together, so a half-saved address cannot exist).
   Future<void> updatePersonalInfo(PersonalInfo info);
 
-  /// The two facts an EN 16931 e-invoice needs about the CUSTOMER (0069):
-  /// the address country (BT-55, mandatory — '' lets the invoice fall back
-  /// to the workspace's country) and the VAT id of a business member
-  /// (BT-48; '' = none). Self-only.
-  Future<void> updateTaxIdentity({
+  /// Everything printed about this member as the CUSTOMER of an
+  /// invoice, in ONE write: the postal address (0060, '' clears it), the
+  /// address country an EN 16931 invoice needs (BT-55, '' falls back to
+  /// the workspace's) and the VAT id of a business member (BT-48, '' =
+  /// none). Self-only.
+  ///
+  /// One write for the same reason [updatePersonalInfo] is one: the form
+  /// saves them together, and they are one block on the document. As two
+  /// calls, a failure on the second billed the member at their new
+  /// address under their old VAT identity (#1532).
+  Future<void> updateInvoiceIdentity({
+    required String address,
     required String countryCode,
     required String vatId,
   });

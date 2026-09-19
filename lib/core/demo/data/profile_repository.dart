@@ -11,13 +11,6 @@ import 'fixture_clock.dart';
 
 /// In-memory [ProfileRepository] for widget/unit tests (#223).
 class FakeProfileRepository implements ProfileRepository {
-  @override
-  Future<void> updateAddress(String address) async {
-    if (failing) throw StateError('address write failed');
-    final mine = _mine;
-    if (mine != null) _replaceMine(mine.copyWith(address: address.trim()));
-  }
-
   /// #886 — the last identity written, for assertions.
   PersonalInfo? lastPersonalInfo;
 
@@ -32,14 +25,17 @@ class FakeProfileRepository implements ProfileRepository {
   }
 
   @override
-  Future<void> updateTaxIdentity({
+  Future<void> updateInvoiceIdentity({
+    required String address,
     required String countryCode,
     required String vatId,
   }) async {
-    if (failing) throw StateError('tax identity write failed');
+    if (failing) throw StateError('invoice identity write failed');
     final mine = _mine;
+    // One copyWith, like the server's one row update (#1532).
     if (mine != null) {
       _replaceMine(mine.copyWith(
+        address: address.trim(),
         countryCode: countryCode.trim().toUpperCase(),
         vatId: vatId.trim(),
       ));
