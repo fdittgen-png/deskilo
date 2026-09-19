@@ -9,10 +9,14 @@
 // live one untouched, and no repository provider the app declares is
 // left out of the list.
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
+import 'package:deskilo/core/files/file_saver.dart';
+import 'package:deskilo/core/links/link_launcher.dart';
+import 'package:deskilo/core/share/text_sharer.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -85,6 +89,40 @@ void main() {
           'demoOverrides and to demoOverriddenProviders, or write down in '
           'the ADR why Demo may reach a server for them.\n'
           '${missing.join(', ')}',
+    );
+  });
+
+  test('#1377 — every outward edge the app owns is inert in Demo, and a '
+      'session can say nothing left it', () async {
+    final fixture = DemoFixture.build();
+    final container = ProviderContainer(overrides: demoOverrides(fixture));
+    addTearDown(container.dispose);
+
+    expect(fixture.outward.nothingLeft, isTrue);
+
+    // The four edges, exercised through the providers a screen uses.
+    await container.read(fileSaverProvider)(
+        bytes: Uint8List(0), fileName: 'statement.pdf');
+    await container.read(textSharerProvider)('come and work here');
+    await container.read(linkLauncherProvider)(Uri.parse('https://example.org'));
+
+    expect(fixture.outward.savedFiles, ['statement.pdf']);
+    expect(fixture.outward.sharedTexts, ['come and work here']);
+    expect(fixture.outward.openedLinks.single.host, 'example.org');
+    expect(fixture.outward.nothingLeft, isFalse,
+        reason: 'the session records what it was ASKED to send, so a '
+            'journey can assert it stayed inside the app');
+  });
+
+  test('#1377 — the outward edges the app declares are all covered', () {
+    // The same shape as the repository check: the app cannot grow a new
+    // way out without Demo saying what it resolves to.
+    expect(
+      outwardEdgeProviders.difference(demoOverriddenProviders),
+      {'pushConnectorProvider', 'pushEndpointRepositoryProvider'},
+      reason: 'push is the one edge Demo does not override, because a '
+          'Demo session never signs in to a real project and the '
+          'bootstrap never runs. If that changes, override it here.',
     );
   });
 }

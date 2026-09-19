@@ -30,6 +30,13 @@ import '../../features/workspace/providers/deployment_providers.dart';
 import '../../features/workspace/providers/workspace_files_providers.dart';
 import '../../features/workspace/providers/workspace_import_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import '../badge/app_badge.dart';
+import '../files/file_saver.dart';
+import '../notifications/notification_providers.dart';
+import '../realtime/realtime_providers.dart';
+import '../links/link_launcher.dart';
+import '../share/file_sharer.dart';
+import '../share/text_sharer.dart';
 import '../time/clock.dart';
 import 'demo_fixture.dart';
 
@@ -58,6 +65,18 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       deploymentRepositoryProvider.overrideWithValue(fixture.deployments),
       workspaceFilesRepositoryProvider.overrideWithValue(fixture.files),
       workspaceImportRepositoryProvider.overrideWithValue(fixture.imports),
+
+      // #1377 — the ways an effect could leave the app, each pointed at
+      // something inert. A payment, an invitation, an e-invoice and a
+      // webhook all travel through a repository above; what is left is
+      // the app's own outward edges, and Demo holds none of them.
+      realtimeSyncProvider.overrideWithValue(fixture.realtime),
+      notificationServiceProvider.overrideWithValue(fixture.notifications),
+      appBadgeProvider.overrideWithValue(fixture.badge),
+      fileSaverProvider.overrideWithValue(fixture.outward.saveFile),
+      fileSharerProvider.overrideWithValue(fixture.outward.shareFile),
+      textSharerProvider.overrideWithValue(fixture.outward.shareText),
+      linkLauncherProvider.overrideWithValue(fixture.outward.openLink),
     ];
 
 /// The providers a Demo scope must override, by name.
@@ -80,4 +99,26 @@ const Set<String> demoOverriddenProviders = {
   'deploymentRepositoryProvider',
   'workspaceFilesRepositoryProvider',
   'workspaceImportRepositoryProvider',
+  'realtimeSyncProvider',
+  'notificationServiceProvider',
+  'appBadgeProvider',
+  'fileSaverProvider',
+  'fileSharerProvider',
+  'textSharerProvider',
+  'linkLauncherProvider',
+};
+
+/// The app's outward edges: the providers through which something could
+/// leave the device or the backend. Demo overrides every one of them,
+/// and `demo_scope_test` fails when the app grows another.
+const Set<String> outwardEdgeProviders = {
+  'realtimeSyncProvider',
+  'notificationServiceProvider',
+  'appBadgeProvider',
+  'fileSaverProvider',
+  'fileSharerProvider',
+  'textSharerProvider',
+  'linkLauncherProvider',
+  'pushConnectorProvider',
+  'pushEndpointRepositoryProvider',
 };

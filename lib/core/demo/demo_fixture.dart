@@ -23,10 +23,13 @@ import 'data/floor_plan_repository.dart';
 import 'data/money_repository.dart';
 import 'data/profile_repository.dart';
 import 'data/deployment_repository.dart';
+import 'data/notification_service.dart';
+import 'data/realtime_sync.dart';
 import 'data/reservation_repository.dart';
 import 'data/stores.dart';
 import 'data/workspace_repository.dart';
 import 'demo_dataset.dart';
+import 'demo_outward_edges.dart';
 
 /// Everything one Demo session runs on. Built once per session and
 /// thrown away when it ends: a reset is a new [DemoFixture], never a
@@ -46,6 +49,10 @@ class DemoFixture {
     required this.deployments,
     required this.files,
     required this.imports,
+    required this.realtime,
+    required this.notifications,
+    required this.badge,
+    required this.outward,
     required this.seededAt,
   });
 
@@ -88,6 +95,10 @@ class DemoFixture {
       deployments: FakeDeploymentRepository(),
       files: FakeWorkspaceFiles(),
       imports: InMemoryWorkspaceImport(),
+      realtime: FakeRealtimeSync(),
+      notifications: FakeNotificationService(),
+      badge: FakeAppBadge(),
+      outward: DemoOutwardEdges(),
       seededAt: today,
     );
   }
@@ -105,6 +116,12 @@ class DemoFixture {
   final FakeDeploymentRepository deployments;
   final FakeWorkspaceFiles files;
   final InMemoryWorkspaceImport imports;
+  final FakeRealtimeSync realtime;
+  final FakeNotificationService notifications;
+  final FakeAppBadge badge;
+
+  /// #1377 — what a demo session TRIED to send outwards, and never did.
+  final DemoOutwardEdges outward;
 
   /// The instant this session believes it is.
   final DateTime seededAt;
