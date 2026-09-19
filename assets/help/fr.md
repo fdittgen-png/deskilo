@@ -965,21 +965,30 @@ Les termes sont regroupés par endroit d'apparition, et non listés par
 nom — deux d'entre eux se lisent *Reserve* en anglais, et c'est le
 groupe qui les distingue.
 
-**La couleur de l'espace (#1289).** Avec *Couleurs de l'espace* activé
-(*Paramètres → Fonctionnalités*), l'espace porte une couleur de marque
-dont l'application dérive ses thèmes clair et sombre — une couleur en
-entrée, deux thèmes cohérents, plutôt que vingt valeurs dont une est
-fausse. La couleur arrive avec le fichier de l'assistant de
-configuration, un XML d'espace importé (`brand-color` sur `<settings>`)
-ou un modèle, et voyage vers un jumeau dans le groupe *Couleurs*.
+#### Couleurs
+
+*Paramètres → Espace → Couleurs*, avec *Couleurs de l'espace* activé
+(*Paramètres → Fonctionnalités*). Choisissez l'une des huit couleurs ou
+saisissez n'importe quel `#RRGGBB` : l'écran montre ce que cela donne
+avant d'enregistrer — le thème clair et le thème sombre que
+l'application en dérive, côte à côte.
 
 L'application conserve ses garanties de contraste quelle que soit la
-couleur reçue : là où une teinte serait trop claire pour être lue sur
-une surface, l'application la fonce — la teinte est la vôtre, la
-lisibilité est celle du produit — et une couleur qu'elle ne pourrait
-pas rendre lisible est refusée, en nommant la paire. La marque DesKilo,
-les couleurs des états de place et le bandeau de production ne sont
-jamais à la main d'un espace.
+couleur reçue. Là où une teinte serait trop claire pour être lue sur une
+surface, l'application la fonce — la teinte est la vôtre, la lisibilité
+est celle du produit — et une couleur qu'elle ne pourrait pas rendre
+lisible est refusée, en nommant la paire, sans rien enregistrer.
+**Couleurs du produit** supprime la vôtre au lieu d'enregistrer celle du
+produit à sa place : cet espace suit le produit lorsque sa palette
+change.
+
+La couleur arrive aussi avec le fichier de l'assistant de
+configuration, un XML d'espace importé (`brand-color` sur `<settings>`)
+ou un modèle, et voyage vers un jumeau dans le groupe *Couleurs* —
+mesurée de la même façon avant d'être enregistrée.
+
+La marque DesKilo, les couleurs des états de place et le bandeau de
+production ne sont jamais à la main d'un espace.
 
 #### Transparence des tables
 

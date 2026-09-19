@@ -974,20 +974,30 @@ Los términos se agrupan por dónde aparecen, no se listan por nombre —
 dos de ellos se leen *Reserve* en inglés, y el grupo es lo que los
 distingue.
 
-**El color propio del espacio (#1289).** Con *Colores del espacio*
-activado (*Ajustes → Funciones*), el espacio lleva un color de marca
-del que la aplicación deriva sus temas claro y oscuro — un color de
-entrada, dos temas coherentes, en vez de veinte valores y uno de ellos
-mal. El color llega con el archivo del asistente de configuración, un
-XML de espacio importado (`brand-color` en `<settings>`) o una
-plantilla, y viaja a un gemelo como el grupo *Colores*.
+<!-- anchor: user.workspace.settings.colours -->
+#### Colores
+
+*Ajustes → Espacio → Colores*, con *Colores del espacio* activado
+(*Ajustes → Funciones*). Elija uno de los ocho colores o escriba
+cualquier `#RRGGBB`: la pantalla muestra lo que hace antes de guardar —
+el tema claro y el oscuro que la aplicación deriva de él, uno al lado
+del otro.
 
 La aplicación mantiene sus garantías de contraste sea cual sea el color
-recibido: donde un tono resultaría demasiado claro para leerse sobre una
+recibido. Donde un tono resultaría demasiado claro para leerse sobre una
 superficie, la aplicación lo oscurece — el tono es suyo, la legibilidad
 es del producto — y un color que no pudiera hacer legible se rechaza,
-indicando el par. La marca DesKilo, los colores de los estados de plaza
-y el banner de producción nunca son de un espacio.
+indicando el par, sin guardar nada. **Colores del producto** elimina el
+suyo en vez de guardar el del producto en su lugar: este espacio sigue
+al producto cuando su paleta cambia más adelante.
+
+El color también llega con el archivo del asistente de configuración, un
+XML de espacio importado (`brand-color` en `<settings>`) o una
+plantilla, y viaja a un gemelo como el grupo *Colores* — medido del
+mismo modo antes de guardarse.
+
+La marca DesKilo, los colores de los estados de plaza y el banner de
+producción nunca son de un espacio.
 
 <!-- anchor: user.workspace.settings.desk-transparency -->
 #### Transparencia de las mesas

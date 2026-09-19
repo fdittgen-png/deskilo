@@ -942,20 +942,28 @@ when its wording later changes.
 Terms are grouped by where they appear, not listed by name — two of
 them read *Reserve* in English and the group is what tells them apart.
 
-**The space's own colour (#1289).** With *Workspace colours* switched on
-(*Settings → Features*), the space carries a brand colour and the app
-derives its light and dark themes from it — one colour in, both themes
-coherent, rather than twenty values and one of them wrong. The colour
-arrives with the setup questionnaire's file, an imported workspace XML
-(`brand-color` on `<settings>`) or a template, and travels to a twin as
-the *Colours* group.
+#### Colours
 
-The app keeps its own contrast guarantees whatever colour it is given:
-where a shade would be too pale to read on a surface, the app deepens
+*Settings → Workspace → Colours*, with *Workspace colours* switched on
+(*Settings → Features*). Pick one of the eight colours or type any
+`#RRGGBB`, and the screen shows what it does before you save: the light
+and the dark theme the app derives from it, side by side.
+
+The app keeps its own contrast guarantees whatever colour it is given.
+Where a shade would be too pale to read on a surface, the app deepens
 that shade — the hue is yours, the legibility is the product's — and a
-colour it could not make readable is refused, naming the pair. The
-DesKilo mark, the seat-state colours and the production banner are
-never a workspace's to restyle.
+colour it could not make readable is refused, naming the pair, and
+nothing is saved. **Product colours** removes your colour rather than
+storing the product's in its place, so this space follows the product
+when its palette later changes.
+
+The colour also arrives with the setup questionnaire's file, an
+imported workspace XML (`brand-color` on `<settings>`) or a template,
+and travels to a twin as the *Colours* group — measured the same way
+before it is stored.
+
+The DesKilo mark, the colours of the seat states and the production
+banner are never a workspace's to restyle.
 
 #### Desk transparency
 

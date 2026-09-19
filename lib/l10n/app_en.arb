@@ -11405,6 +11405,77 @@
       }
     }
   },
+  "coloursTitle": "Colours",
+  "@coloursTitle": {
+    "description": "#1289 colours screen: the title"
+  },
+  "coloursIntro": "One colour, and the app derives its light and dark themes from it. Everything else keeps the product palette.",
+  "@coloursIntro": {
+    "description": "#1289 colours screen: what choosing a colour does"
+  },
+  "coloursHexLabel": "Colour",
+  "@coloursHexLabel": {
+    "description": "#1289 colours screen: the hex field label"
+  },
+  "coloursHexHint": "Six hexadecimal digits. Leave empty for the product colours.",
+  "@coloursHexHint": {
+    "description": "#1289 colours screen: the hex field hint"
+  },
+  "coloursPreview": "What it looks like",
+  "@coloursPreview": {
+    "description": "#1289 colours screen: the preview heading"
+  },
+  "coloursLight": "Light",
+  "@coloursLight": {
+    "description": "#1289 colours screen: the light scheme sample"
+  },
+  "coloursDark": "Dark",
+  "@coloursDark": {
+    "description": "#1289 colours screen: the dark scheme sample"
+  },
+  "coloursReset": "Product colours",
+  "@coloursReset": {
+    "description": "#1289 colours screen: the reset button"
+  },
+  "coloursResetDone": "The product colours are back.",
+  "@coloursResetDone": {
+    "description": "#1289 colours screen: the reset confirmation"
+  },
+  "coloursNeverTheirs": "The DesKilo mark, the colours of the seat states and the production banner are the product’s, in every space.",
+  "@coloursNeverTheirs": {
+    "description": "#1289 colours screen: what a workspace may never restyle"
+  },
+  "coloursApplied": "{hex} applied. The app derives its themes from it.",
+  "@coloursApplied": {
+    "description": "#1289 colours screen: the colour was stored",
+    "placeholders": {
+      "hex": {
+        "type": "String"
+      }
+    }
+  },
+  "coloursMalformed": "{text} is not a colour: write it as #RRGGBB.",
+  "@coloursMalformed": {
+    "description": "#1289 colours screen: what was typed is not a colour",
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "coloursRefused": "Refused: {pair} would be unreadable with this colour.",
+  "@coloursRefused": {
+    "description": "#1289 colours screen: the colour is refused, naming the pair",
+    "placeholders": {
+      "pair": {
+        "type": "String"
+      }
+    }
+  },
+  "coloursSaveFailed": "The colour could not be saved. Nothing changed.",
+  "@coloursSaveFailed": {
+    "description": "#1289 colours screen: the write failed and nothing changed"
+  },
   "onboardingTitle": "Welcome to DesKilo",
   "@onboardingTitle": {
     "description": "App-bar title of the first-run onboarding screen"
