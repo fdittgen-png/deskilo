@@ -9947,6 +9947,26 @@ class AppLocalizationsIt extends AppLocalizations {
   String get legendMine => 'Mia';
 
   @override
+  String get legendUnavailable => 'Non disponibile';
+
+  @override
+  String get legendProfileTitle => 'Cosa distingue la pianta';
+
+  @override
+  String get legendProfileSimple => 'Meno stati';
+
+  @override
+  String get legendProfileSimpleDesc =>
+      'Libero · Riservato · Il mio · Non disponibile. Un posto riservato e uno dove qualcuno è arrivato si assomigliano.';
+
+  @override
+  String get legendProfileFull => 'Tutti gli stati';
+
+  @override
+  String get legendProfileFullDesc =>
+      'Libero · Riservato · Presente · Il mio · Bloccato: si vede chi è arrivato.';
+
+  @override
   String get legendBlocked => 'Bloccata';
 
   @override

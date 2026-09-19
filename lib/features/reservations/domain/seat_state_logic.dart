@@ -5,6 +5,7 @@
 import '../../../core/theme/seat_state_colors.dart';
 import '../../plan/domain/floor_plan.dart';
 import '../../plan/domain/seat.dart';
+import '../../../core/theme/seat_legend_profile.dart';
 import 'reservation.dart';
 
 export '../../../core/theme/seat_state_colors.dart'
@@ -29,7 +30,39 @@ String? _officeIdOf(FloorPlan plan, Seat seat) =>
 /// active-window slice; whole-space bookings (desk/office/level) mark all
 /// their seats. [myMemberId] marks the caller's own bookings as
 /// [SeatState.mine].
+/// #1281 — the profile folds the state BEFORE anything paints it.
+///
+/// Doing it here rather than at each of the twenty-one places that pick
+/// a colour is the whole point: under [LegendProfile.simple] the value
+/// `occupied` is never produced, so no surface can paint a colour the
+/// legend does not list. The legend lists the distinct results of
+/// `legendGroupOf`, so the two cannot disagree.
+SeatState _asProfiled(SeatState state, LegendProfile profile) =>
+    profile == LegendProfile.simple && state == SeatState.occupied
+        ? SeatState.reserved
+        : state;
+
 SeatState seatStateAt({
+  required FloorPlan plan,
+  required Seat seat,
+  required List<Reservation> reservations,
+  required String? myMemberId,
+  required DateTime at,
+  LegendProfile profile = LegendProfile.full,
+}) {
+  return _asProfiled(
+    _seatStateAt(
+      plan: plan,
+      seat: seat,
+      reservations: reservations,
+      myMemberId: myMemberId,
+      at: at,
+    ),
+    profile,
+  );
+}
+
+SeatState _seatStateAt({
   required FloorPlan plan,
   required Seat seat,
   required List<Reservation> reservations,
@@ -71,6 +104,28 @@ Reservation? reservationOnSeatAt({
 /// counts, so a seat is only [SeatState.free] when it is free for the
 /// WHOLE window. Live mode keeps using the instant-based [seatStateAt].
 SeatState seatStateInRange({
+  required FloorPlan plan,
+  required Seat seat,
+  required List<Reservation> reservations,
+  required String? myMemberId,
+  required DateTime from,
+  required DateTime to,
+  LegendProfile profile = LegendProfile.full,
+}) {
+  return _asProfiled(
+    _seatStateInRange(
+      plan: plan,
+      seat: seat,
+      reservations: reservations,
+      myMemberId: myMemberId,
+      from: from,
+      to: to,
+    ),
+    profile,
+  );
+}
+
+SeatState _seatStateInRange({
   required FloorPlan plan,
   required Seat seat,
   required List<Reservation> reservations,

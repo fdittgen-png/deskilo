@@ -70,6 +70,30 @@
   "legendReserved": "Reservada",
   "legendOccupied": "Con check-in",
   "legendMine": "Mía",
+  "legendUnavailable": "No disponible",
+  "@legendUnavailable": {
+    "description": "#1281: legendUnavailable"
+  },
+  "legendProfileTitle": "Lo que el plano distingue",
+  "@legendProfileTitle": {
+    "description": "#1281: legendProfileTitle"
+  },
+  "legendProfileSimple": "Menos estados",
+  "@legendProfileSimple": {
+    "description": "#1281: legendProfileSimple"
+  },
+  "legendProfileSimpleDesc": "Libre · Reservada · La mía · No disponible. Una plaza reservada y otra donde alguien ha llegado se ven igual.",
+  "@legendProfileSimpleDesc": {
+    "description": "#1281: legendProfileSimpleDesc"
+  },
+  "legendProfileFull": "Todos los estados",
+  "@legendProfileFull": {
+    "description": "#1281: legendProfileFull"
+  },
+  "legendProfileFullDesc": "Libre · Reservada · Presente · La mía · Bloqueada: se ve quién ha llegado.",
+  "@legendProfileFullDesc": {
+    "description": "#1281: legendProfileFullDesc"
+  },
   "legendBlocked": "Bloqueada",
   "legendClosed": "Día cerrado",
   "reserveClosedShort": "Cerrado",

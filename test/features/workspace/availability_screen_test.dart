@@ -248,7 +248,12 @@ void main() {
       );
     await pumpAvailability(tester, workspace: workspace);
 
-    await tester.tap(find.byIcon(Icons.delete_outline));
+    // #1281 added the legend-profile choice above the closure list, so
+    // the delete control starts below the fold. Scrolled to, not
+    // tapped blind: a missed tap here read as "the delete did nothing".
+    await tester.ensureVisible(find.byIcon(Icons.delete_outline).first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.delete_outline).first);
     await tester.pumpAndSettle();
 
     expect(workspace.closureDays, isEmpty);

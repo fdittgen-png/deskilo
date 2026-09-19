@@ -128,6 +128,30 @@
   "legendReserved": "Reserved",
   "legendOccupied": "Checked in",
   "legendMine": "Mine",
+  "legendUnavailable": "Unavailable",
+  "@legendUnavailable": {
+    "description": "#1281: legendUnavailable"
+  },
+  "legendProfileTitle": "What the plan tells apart",
+  "@legendProfileTitle": {
+    "description": "#1281: legendProfileTitle"
+  },
+  "legendProfileSimple": "Fewer states",
+  "@legendProfileSimple": {
+    "description": "#1281: legendProfileSimple"
+  },
+  "legendProfileSimpleDesc": "Free · Reserved · Mine · Unavailable. A booked seat and one somebody has checked into look the same.",
+  "@legendProfileSimpleDesc": {
+    "description": "#1281: legendProfileSimpleDesc"
+  },
+  "legendProfileFull": "Every state",
+  "@legendProfileFull": {
+    "description": "#1281: legendProfileFull"
+  },
+  "legendProfileFullDesc": "Free · Reserved · Checked in · Mine · Blocked — you can see who has arrived.",
+  "@legendProfileFullDesc": {
+    "description": "#1281: legendProfileFullDesc"
+  },
   "legendBlocked": "Blocked",
   "legendClosed": "Closed day",
   "reserveClosedShort": "Closed",

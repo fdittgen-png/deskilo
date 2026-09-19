@@ -70,6 +70,30 @@
   "legendReserved": "Réservée",
   "legendOccupied": "Présent",
   "legendMine": "La mienne",
+  "legendUnavailable": "Indisponible",
+  "@legendUnavailable": {
+    "description": "#1281: legendUnavailable"
+  },
+  "legendProfileTitle": "Ce que le plan distingue",
+  "@legendProfileTitle": {
+    "description": "#1281: legendProfileTitle"
+  },
+  "legendProfileSimple": "Moins d’états",
+  "@legendProfileSimple": {
+    "description": "#1281: legendProfileSimple"
+  },
+  "legendProfileSimpleDesc": "Place libre · Place réservée · Ma place · Place non disponible. Une place réservée et une place où quelqu’un est arrivé se ressemblent.",
+  "@legendProfileSimpleDesc": {
+    "description": "#1281: legendProfileSimpleDesc"
+  },
+  "legendProfileFull": "Tous les états",
+  "@legendProfileFull": {
+    "description": "#1281: legendProfileFull"
+  },
+  "legendProfileFullDesc": "Libre · Réservée · Présent · La mienne · Bloquée — vous voyez qui est arrivé.",
+  "@legendProfileFullDesc": {
+    "description": "#1281: legendProfileFullDesc"
+  },
   "legendBlocked": "Bloquée",
   "legendClosed": "Jour fermé",
   "reserveClosedShort": "Fermé",

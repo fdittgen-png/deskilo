@@ -6614,6 +6614,30 @@
   "legendReserved": "Prenotata",
   "legendOccupied": "Con check-in",
   "legendMine": "Mia",
+  "legendUnavailable": "Non disponibile",
+  "@legendUnavailable": {
+    "description": "#1281: legendUnavailable"
+  },
+  "legendProfileTitle": "Cosa distingue la pianta",
+  "@legendProfileTitle": {
+    "description": "#1281: legendProfileTitle"
+  },
+  "legendProfileSimple": "Meno stati",
+  "@legendProfileSimple": {
+    "description": "#1281: legendProfileSimple"
+  },
+  "legendProfileSimpleDesc": "Libero · Riservato · Il mio · Non disponibile. Un posto riservato e uno dove qualcuno è arrivato si assomigliano.",
+  "@legendProfileSimpleDesc": {
+    "description": "#1281: legendProfileSimpleDesc"
+  },
+  "legendProfileFull": "Tutti gli stati",
+  "@legendProfileFull": {
+    "description": "#1281: legendProfileFull"
+  },
+  "legendProfileFullDesc": "Libero · Riservato · Presente · Il mio · Bloccato: si vede chi è arrivato.",
+  "@legendProfileFullDesc": {
+    "description": "#1281: legendProfileFullDesc"
+  },
   "legendBlocked": "Bloccata",
   "legendClosed": "Giorno chiuso",
   "reserveClosedShort": "Chiuso",

@@ -6614,6 +6614,30 @@
   "legendReserved": "Reserviert",
   "legendOccupied": "Eingecheckt",
   "legendMine": "Meine",
+  "legendUnavailable": "Nicht verfügbar",
+  "@legendUnavailable": {
+    "description": "#1281: legendUnavailable"
+  },
+  "legendProfileTitle": "Was der Plan unterscheidet",
+  "@legendProfileTitle": {
+    "description": "#1281: legendProfileTitle"
+  },
+  "legendProfileSimple": "Weniger Zustände",
+  "@legendProfileSimple": {
+    "description": "#1281: legendProfileSimple"
+  },
+  "legendProfileSimpleDesc": "Frei · Reserviert · Meiner · Nicht verfügbar. Ein reservierter Platz und einer, an dem jemand eingecheckt ist, sehen gleich aus.",
+  "@legendProfileSimpleDesc": {
+    "description": "#1281: legendProfileSimpleDesc"
+  },
+  "legendProfileFull": "Alle Zustände",
+  "@legendProfileFull": {
+    "description": "#1281: legendProfileFull"
+  },
+  "legendProfileFullDesc": "Frei · Reserviert · Anwesend · Meiner · Gesperrt — Sie sehen, wer da ist.",
+  "@legendProfileFullDesc": {
+    "description": "#1281: legendProfileFullDesc"
+  },
   "legendBlocked": "Gesperrt",
   "legendClosed": "Geschlossen",
   "reserveClosedShort": "Zu",

@@ -9929,6 +9929,26 @@ class AppLocalizationsEs extends AppLocalizations {
   String get legendMine => 'Mía';
 
   @override
+  String get legendUnavailable => 'No disponible';
+
+  @override
+  String get legendProfileTitle => 'Lo que el plano distingue';
+
+  @override
+  String get legendProfileSimple => 'Menos estados';
+
+  @override
+  String get legendProfileSimpleDesc =>
+      'Libre · Reservada · La mía · No disponible. Una plaza reservada y otra donde alguien ha llegado se ven igual.';
+
+  @override
+  String get legendProfileFull => 'Todos los estados';
+
+  @override
+  String get legendProfileFullDesc =>
+      'Libre · Reservada · Presente · La mía · Bloqueada: se ve quién ha llegado.';
+
+  @override
   String get legendBlocked => 'Bloqueada';
 
   @override

@@ -1125,6 +1125,15 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setLegendProfile(
+    String workspaceId,
+    LegendProfile profile,
+  ) async {
+    final p = bookingPolicies[workspaceId] ?? const BookingPolicies();
+    bookingPolicies[workspaceId] = p.copyWith(legendProfile: profile);
+  }
+
+  @override
   Future<void> setOutsideHoursMode(
     String workspaceId,
     OutsideHoursMode mode,

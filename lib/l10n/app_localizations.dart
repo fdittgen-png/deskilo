@@ -17219,6 +17219,42 @@ abstract class AppLocalizations {
   /// **'Mine'**
   String get legendMine;
 
+  /// #1281: legendUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Unavailable'**
+  String get legendUnavailable;
+
+  /// #1281: legendProfileTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What the plan tells apart'**
+  String get legendProfileTitle;
+
+  /// #1281: legendProfileSimple
+  ///
+  /// In en, this message translates to:
+  /// **'Fewer states'**
+  String get legendProfileSimple;
+
+  /// #1281: legendProfileSimpleDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Free · Reserved · Mine · Unavailable. A booked seat and one somebody has checked into look the same.'**
+  String get legendProfileSimpleDesc;
+
+  /// #1281: legendProfileFull
+  ///
+  /// In en, this message translates to:
+  /// **'Every state'**
+  String get legendProfileFull;
+
+  /// #1281: legendProfileFullDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Free · Reserved · Checked in · Mine · Blocked — you can see who has arrived.'**
+  String get legendProfileFullDesc;
+
   /// No description provided for @legendBlocked.
   ///
   /// In en, this message translates to:
