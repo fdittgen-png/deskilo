@@ -2005,6 +2005,11 @@ Nada de lo que se hace allí llega a un espacio real, y nada sale del
 dispositivo. Salir olvida la sesión, y cerrar la aplicación también: la
 siguiente visita parte del mismo espacio inventado.
 
+No es una forma de mostrar un espacio **real** sin mostrar a sus
+miembros. Todo lo que hay en él es inventado, así que no hay nada que
+ocultar; un espacio real en pantalla sigue mostrando a las personas
+reales que están en él.
+
 <!-- anchor: user.profile.settings.front-camera -->
 ### Cámara frontal para escanear
 

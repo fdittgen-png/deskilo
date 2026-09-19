@@ -15,6 +15,7 @@
 // class of mistake produces. Mounting it inside `home` instead would
 // give it an Overlay and prove nothing.
 import 'package:deskilo/core/demo/demo_persona.dart';
+import 'package:deskilo/core/motion/motion.dart';
 import 'package:deskilo/core/demo/demo_session.dart';
 import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
 import 'package:flutter/material.dart';
@@ -71,6 +72,44 @@ void main() {
       DemoPersona.member,
     );
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('the bar honours reduced motion, because it has no motion to '
+      'reduce', (tester) async {
+    // #1381 — the Demo surfaces are the bar and the entry sheet. Neither
+    // animates, so the check is that turning motion off changes nothing
+    // and breaks nothing: a Demo-specific surface that only worked with
+    // animations on would be a surface nobody with the accessibility
+    // setting could use.
+    final container = ProviderContainer();
+    addTearDown(container.dispose);
+
+    Future<String> barText({required bool animations}) async {
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: MotionSettings(
+            animationsEnabled: animations,
+            child: const DemoWorkspace(
+              child: MaterialApp(
+                home: DemoControls(child: Scaffold(body: SizedBox())),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      return tester
+          .widgetList<Text>(find.byType(Text))
+          .map((t) => t.data ?? '')
+          .join('|');
+    }
+
+    final moving = await barText(animations: true);
+    final still = await barText(animations: false);
+    expect(still, moving);
+    expect(still, contains('Demo'));
   });
 
   testWidgets('the bar fits a 360 dp screen without overflowing', (

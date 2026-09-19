@@ -108,7 +108,7 @@ Totals by layer and by action: run the tool — they are printed, not committed,
 | `test/core/cache/stale_reads_test.dart` | unit | #1305 S3 — a read answered from the stale tier is remembered until the network answers again, so a screen can tell live data from saved data. | 3 | yes | fakes | a domain rule — #1305 | no | KEEP |  |
 | `test/core/data/retry_test.dart` | unit | #1241 step 2 — the retry, and the two things it must NOT do. | 6 | yes | none | a domain rule — #1241 | no | KEEP |  |
 | `test/core/data/system_columns_test.dart` | unit | #992 — the six system columns as one value: read tolerantly, equal by value, never written by the client, and a breach of the server's invariant reported… | 5 | yes | none | a domain rule — #992 | no | KEEP |  |
-| `test/core/demo/demo_bar_mount_test.dart` | widget | #1379 — the Demo bar works where it is actually mounted. | 2 | yes | none | user-visible behaviour — #1379 | no | KEEP |  |
+| `test/core/demo/demo_bar_mount_test.dart` | widget | #1379 — the Demo bar works where it is actually mounted. | 3 | yes | none | user-visible behaviour — #1379, #1381 | no | KEEP |  |
 | `test/core/demo/demo_dataset_test.dart` | unit | #1374 — the session a visitor lands in is coherent, and says so when it is not. | 5 | yes | none | a domain rule — #1374 | no | KEEP |  |
 | `test/core/demo/demo_entry_test.dart` | widget | #1379 — walking in, and walking out. | 3 | yes | none | user-visible behaviour — #1379 | no | KEEP |  |
 | `test/core/demo/demo_persona_test.dart` | unit | #1376 — a persona is an identity, not a pretend role. | 9 | yes | none | a domain rule — #1376 | no | KEEP |  |
@@ -531,6 +531,7 @@ Totals by layer and by action: run the tool — they are printed, not committed,
 | `test/lint/contrast_test.dart` | lint | #721 — WCAG AA over the shipped schemes, measured, not hoped. | 2 | yes | none | an architecture, security or process rule — #721, #1289 | no | KEEP |  |
 | `test/lint/database_clock_test.dart` | lint | #1334 — a database test may not depend on the hour the pipeline runs. | 2 | yes | repository sources, temp filesystem | an architecture, security or process rule — #1334, #1476 | no | KEEP |  |
 | `test/lint/definer_caller_guard_test.dart` | lint | #1228 — a SECURITY DEFINER function a client can call checks who is calling. | 1 | yes | repository sources | an architecture, security or process rule — #1228, #1226 | no | KEEP |  |
+| `test/lint/demo_coverage_test.dart` | lint | #1381 — the Demo coverage map names files that exist. | 3 | yes | repository sources | an architecture, security or process rule — #1381 | no | KEEP |  |
 | `test/lint/dependency_map_test.dart` | lint | #1449 checkpoint 1 — the dependency map says what the tree says. | 3 | yes | repository sources | an architecture, security or process rule — #1449 | no | KEEP |  |
 | `test/lint/distinct_tile_labels_test.dart` | lint | #1057 — two rows of one list must not carry the same label. | 2 | yes | repository sources | an architecture, security or process rule — #1057, #1058 | no | KEEP |  |
 | `test/lint/edge_function_auth_test.dart` | lint | #1078 — an edge function must know WHO is asking before it answers, and it must resolve that caller to ONE member row. | 4 | yes | repository sources | an architecture, security or process rule — #1078, #1092 | no | KEEP |  |

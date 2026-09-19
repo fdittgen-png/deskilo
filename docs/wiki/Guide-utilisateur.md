@@ -2041,6 +2041,11 @@ Rien de ce qui s'y fait n'atteint un espace réel, et rien ne quitte
 l'appareil. Quitter oublie la session, et fermer l'application aussi :
 la visite suivante repart du même espace inventé.
 
+Ce n'est pas un moyen de montrer un espace **réel** sans montrer ses
+membres. Tout y est inventé, donc il n'y a rien à masquer ; un espace
+réel affiché à l'écran montre toujours les vraies personnes qui s'y
+trouvent.
+
 <!-- anchor: user.profile.settings.front-camera -->
 ### Caméra frontale pour scanner
 

@@ -1945,6 +1945,11 @@ Nulla di ciò che vi si fa raggiunge uno spazio reale e nulla lascia il
 dispositivo. Uscire dimentica la sessione, e chiudere l'applicazione
 pure: la visita successiva riparte dallo stesso spazio inventato.
 
+Non è un modo per mostrare uno spazio **reale** senza mostrarne i
+membri. Tutto ciò che contiene è inventato, quindi non c'è nulla da
+nascondere; uno spazio reale sullo schermo continua a mostrare le
+persone reali che vi si trovano.
+
 ### Fotocamera frontale per scansionare
 
 Usa l'obiettivo anteriore invece del posteriore. Per un tablet a muro la
