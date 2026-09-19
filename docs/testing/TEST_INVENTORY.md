@@ -604,5 +604,5 @@ Totals by layer and by action: run the tool — they are printed, not committed,
 | `test/tool/quality_report_test.dart` | tool | #1446 / #1334 — the gate's own red controls. | 8 | yes | temp filesystem | a repository tool — #1446, #1334 | no | KEEP |  |
 | `test/tool/quality_rows_test.dart` | tool | #1446 C1 — the discipline rows come from one test stream, and a stream that cannot be trusted makes red rows, never green ones. | 9 | yes | none | a repository tool — #1446 | no | KEEP |  |
 | `test/tool/report_cli_test.dart` | tool | #875 — the local report runner works from a cold shell. | 6 | yes | repository sources, temp filesystem | a repository tool — #875 | no | KEEP |  |
-| `test/ux/demo_journeys_test.dart` | journey | #1378 — the journeys a visitor can actually walk in the demonstration space. | 4 | yes | none | a user journey budget — #1378, #1374 | no | KEEP |  |
+| `test/ux/demo_journeys_test.dart` | journey | #1378 — the journeys a visitor can actually walk in the demonstration space. | 7 | yes | none | a user journey budget — #1378, #1374 | no | KEEP |  |
 | `test/ux/tap_budget_test.dart` | journey | #1247 — the UX score, as a build output. | 7 | yes | fakes | a user journey budget — #1247, #1225, #1306 | no | KEEP |  |
