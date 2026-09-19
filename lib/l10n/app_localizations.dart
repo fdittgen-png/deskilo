@@ -15785,6 +15785,222 @@ abstract class AppLocalizations {
   /// **'{count} closure days created'**
   String publicHolidaysCreated(int count);
 
+  /// #1288 the question editor: questionsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Questions this space asks'**
+  String get questionsTitle;
+
+  /// #1288 the question editor: questionsSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'They appear inside personal information, under your space\'s name.'**
+  String get questionsSubtitle;
+
+  /// #1288 the question editor: questionsEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No questions yet.'**
+  String get questionsEmpty;
+
+  /// #1288 the question editor: questionsAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Add a question'**
+  String get questionsAdd;
+
+  /// #1288 the question editor: questionsInactive
+  ///
+  /// In en, this message translates to:
+  /// **'Put aside'**
+  String get questionsInactive;
+
+  /// #1288 the question editor: questionEditorKey
+  ///
+  /// In en, this message translates to:
+  /// **'Key'**
+  String get questionEditorKey;
+
+  /// #1288 the question editor: questionEditorKeyHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Lower-case letters, digits and underscores. It never changes: the answers point at it.'**
+  String get questionEditorKeyHelp;
+
+  /// #1288 the question editor: questionEditorType
+  ///
+  /// In en, this message translates to:
+  /// **'Answer type'**
+  String get questionEditorType;
+
+  /// #1288 the question editor: questionEditorLabelFor
+  ///
+  /// In en, this message translates to:
+  /// **'Label ({locale})'**
+  String questionEditorLabelFor(String locale);
+
+  /// #1288 the question editor: questionEditorRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Must be answered'**
+  String get questionEditorRequired;
+
+  /// #1288 the question editor: questionEditorPersonal
+  ///
+  /// In en, this message translates to:
+  /// **'This is personal data'**
+  String get questionEditorPersonal;
+
+  /// #1288 the question editor: questionEditorPersonalHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Erased when the member leaves, and carried in their data export. Leave it on unless the answer is really about the space rather than the person.'**
+  String get questionEditorPersonalHelp;
+
+  /// #1288 the question editor: questionEditorVisibility
+  ///
+  /// In en, this message translates to:
+  /// **'Who can see the answer'**
+  String get questionEditorVisibility;
+
+  /// #1288 the question editor: questionEditorVisibilitySelf
+  ///
+  /// In en, this message translates to:
+  /// **'Only the member'**
+  String get questionEditorVisibilitySelf;
+
+  /// #1288 the question editor: questionEditorVisibilityManagers
+  ///
+  /// In en, this message translates to:
+  /// **'The member, and whoever may see personal data'**
+  String get questionEditorVisibilityManagers;
+
+  /// #1288 the question editor: questionEditorVisibilityMembers
+  ///
+  /// In en, this message translates to:
+  /// **'Every member of the space'**
+  String get questionEditorVisibilityMembers;
+
+  /// #1288 the question editor: questionEditorContexts
+  ///
+  /// In en, this message translates to:
+  /// **'Where it is asked'**
+  String get questionEditorContexts;
+
+  /// #1288 the question editor: questionEditorContextProfile
+  ///
+  /// In en, this message translates to:
+  /// **'A member\'s own information'**
+  String get questionEditorContextProfile;
+
+  /// #1288 the question editor: questionEditorContextManaged
+  ///
+  /// In en, this message translates to:
+  /// **'A managed member\'s information'**
+  String get questionEditorContextManaged;
+
+  /// #1288 the question editor: questionEditorContextJoin
+  ///
+  /// In en, this message translates to:
+  /// **'When joining'**
+  String get questionEditorContextJoin;
+
+  /// #1288 the question editor: questionEditorMaxLength
+  ///
+  /// In en, this message translates to:
+  /// **'Longest answer (characters)'**
+  String get questionEditorMaxLength;
+
+  /// #1288 the question editor: questionEditorMin
+  ///
+  /// In en, this message translates to:
+  /// **'Smallest number'**
+  String get questionEditorMin;
+
+  /// #1288 the question editor: questionEditorMax
+  ///
+  /// In en, this message translates to:
+  /// **'Largest number'**
+  String get questionEditorMax;
+
+  /// #1288 the question editor: questionEditorChoices
+  ///
+  /// In en, this message translates to:
+  /// **'Choices, one per line'**
+  String get questionEditorChoices;
+
+  /// #1288 the question editor: questionEditorPreview
+  ///
+  /// In en, this message translates to:
+  /// **'How it will look'**
+  String get questionEditorPreview;
+
+  /// #1288 the question editor: questionEditorSave
+  ///
+  /// In en, this message translates to:
+  /// **'Save the question'**
+  String get questionEditorSave;
+
+  /// #1288 the question editor: questionEditorSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The question was not saved.'**
+  String get questionEditorSaveFailed;
+
+  /// #1288 the question editor: questionEditorActive
+  ///
+  /// In en, this message translates to:
+  /// **'Asked now'**
+  String get questionEditorActive;
+
+  /// #1288 the question editor: questionTypeText
+  ///
+  /// In en, this message translates to:
+  /// **'A short answer'**
+  String get questionTypeText;
+
+  /// #1288 the question editor: questionTypeLongText
+  ///
+  /// In en, this message translates to:
+  /// **'A long answer'**
+  String get questionTypeLongText;
+
+  /// #1288 the question editor: questionTypeInteger
+  ///
+  /// In en, this message translates to:
+  /// **'A whole number'**
+  String get questionTypeInteger;
+
+  /// #1288 the question editor: questionTypeDecimal
+  ///
+  /// In en, this message translates to:
+  /// **'A number'**
+  String get questionTypeDecimal;
+
+  /// #1288 the question editor: questionTypeDate
+  ///
+  /// In en, this message translates to:
+  /// **'A date'**
+  String get questionTypeDate;
+
+  /// #1288 the question editor: questionTypeBoolean
+  ///
+  /// In en, this message translates to:
+  /// **'Yes or no'**
+  String get questionTypeBoolean;
+
+  /// #1288 the question editor: questionTypeSingleChoice
+  ///
+  /// In en, this message translates to:
+  /// **'One of a list'**
+  String get questionTypeSingleChoice;
+
+  /// #1288 the question editor: questionTypeMultiChoice
+  ///
+  /// In en, this message translates to:
+  /// **'Several of a list'**
+  String get questionTypeMultiChoice;
+
   /// Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card
   ///
   /// In en, this message translates to:

@@ -9055,6 +9055,120 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get questionsTitle => 'Questions this space asks';
+
+  @override
+  String get questionsSubtitle =>
+      'They appear inside personal information, under your space\'s name.';
+
+  @override
+  String get questionsEmpty => 'No questions yet.';
+
+  @override
+  String get questionsAdd => 'Add a question';
+
+  @override
+  String get questionsInactive => 'Put aside';
+
+  @override
+  String get questionEditorKey => 'Key';
+
+  @override
+  String get questionEditorKeyHelp =>
+      'Lower-case letters, digits and underscores. It never changes: the answers point at it.';
+
+  @override
+  String get questionEditorType => 'Answer type';
+
+  @override
+  String questionEditorLabelFor(String locale) {
+    return 'Label ($locale)';
+  }
+
+  @override
+  String get questionEditorRequired => 'Must be answered';
+
+  @override
+  String get questionEditorPersonal => 'This is personal data';
+
+  @override
+  String get questionEditorPersonalHelp =>
+      'Erased when the member leaves, and carried in their data export. Leave it on unless the answer is really about the space rather than the person.';
+
+  @override
+  String get questionEditorVisibility => 'Who can see the answer';
+
+  @override
+  String get questionEditorVisibilitySelf => 'Only the member';
+
+  @override
+  String get questionEditorVisibilityManagers =>
+      'The member, and whoever may see personal data';
+
+  @override
+  String get questionEditorVisibilityMembers => 'Every member of the space';
+
+  @override
+  String get questionEditorContexts => 'Where it is asked';
+
+  @override
+  String get questionEditorContextProfile => 'A member\'s own information';
+
+  @override
+  String get questionEditorContextManaged => 'A managed member\'s information';
+
+  @override
+  String get questionEditorContextJoin => 'When joining';
+
+  @override
+  String get questionEditorMaxLength => 'Longest answer (characters)';
+
+  @override
+  String get questionEditorMin => 'Smallest number';
+
+  @override
+  String get questionEditorMax => 'Largest number';
+
+  @override
+  String get questionEditorChoices => 'Choices, one per line';
+
+  @override
+  String get questionEditorPreview => 'How it will look';
+
+  @override
+  String get questionEditorSave => 'Save the question';
+
+  @override
+  String get questionEditorSaveFailed => 'The question was not saved.';
+
+  @override
+  String get questionEditorActive => 'Asked now';
+
+  @override
+  String get questionTypeText => 'A short answer';
+
+  @override
+  String get questionTypeLongText => 'A long answer';
+
+  @override
+  String get questionTypeInteger => 'A whole number';
+
+  @override
+  String get questionTypeDecimal => 'A number';
+
+  @override
+  String get questionTypeDate => 'A date';
+
+  @override
+  String get questionTypeBoolean => 'Yes or no';
+
+  @override
+  String get questionTypeSingleChoice => 'One of a list';
+
+  @override
+  String get questionTypeMultiChoice => 'Several of a list';
+
+  @override
   String get eventTypeRoleChange => 'Role change';
 
   @override

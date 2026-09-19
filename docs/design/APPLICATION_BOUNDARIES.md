@@ -15,14 +15,14 @@ A repository read from `presentation/` is **not** a defect by itself. What #1234
 | Booking | `calendar` | 1 |
 | Booking | `editor` | 3 |
 | Finance | `money` | 24 |
-| Workspace configuration | `workspace` | 19 |
+| Workspace configuration | `workspace` | 20 |
 | Workspace configuration | `members` | 2 |
 | Workspace configuration | `profile` | 3 |
 | — | `auth` | 4 |
 | — | `events` | 1 |
 | — | `kiosk` | 1 |
 
-**64 files** across 11 features. `test/lint/layering_test.dart` holds each feature's number as a ceiling that may only fall.
+**65 files** across 11 features. `test/lint/layering_test.dart` holds each feature's number as a ceiling that may only fall.
 
 ## Cross-feature imports, by direction
 
@@ -33,7 +33,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `money -> workspace` | 116 |
 | `reservations -> plan` | 68 |
 | `reservations -> workspace` | 53 |
-| `profile -> workspace` | 38 |
+| `profile -> workspace` | 37 |
 | `members -> workspace` | 34 |
 | `workspace -> money` | 34 |
 | `money -> events` | 30 |
@@ -85,7 +85,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**54 directed relationships, 688 imports.**
+**54 directed relationships, 687 imports.**
 
 Reciprocal (19): `calendar <-> money`, `calendar <-> reservations`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
@@ -119,8 +119,8 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/money/presentation/widgets/invoicing_dashboard.dart` | 850 |
 | `lib/features/reservations/presentation/widgets/week_grid.dart` | 807 |
 | `lib/features/plan/presentation/widgets/floor_plan_painter.dart` | 785 |
+| `lib/app/router.dart` | 780 |
 | `lib/features/calendar/presentation/widgets/day_timeline.dart` | 776 |
-| `lib/app/router.dart` | 772 |
 | `lib/features/money/presentation/screens/billing_screen.dart` | 767 |
 | `lib/features/reservations/presentation/reserve_seat_actions.dart` | 750 |
 | `lib/features/workspace/domain/workspace_repository.dart` | 745 |

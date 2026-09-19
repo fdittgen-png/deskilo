@@ -1,0 +1,152 @@
+{
+  "@@locale": "it",
+  "questionsTitle": "Le domande di questo spazio",
+  "@questionsTitle": {
+    "description": "#1288 the question editor: questionsTitle"
+  },
+  "questionsSubtitle": "Compaiono dentro le informazioni personali, sotto il nome del tuo spazio.",
+  "@questionsSubtitle": {
+    "description": "#1288 the question editor: questionsSubtitle"
+  },
+  "questionsEmpty": "Ancora nessuna domanda.",
+  "@questionsEmpty": {
+    "description": "#1288 the question editor: questionsEmpty"
+  },
+  "questionsAdd": "Aggiungi una domanda",
+  "@questionsAdd": {
+    "description": "#1288 the question editor: questionsAdd"
+  },
+  "questionsInactive": "Messa da parte",
+  "@questionsInactive": {
+    "description": "#1288 the question editor: questionsInactive"
+  },
+  "questionEditorKey": "Chiave",
+  "@questionEditorKey": {
+    "description": "#1288 the question editor: questionEditorKey"
+  },
+  "questionEditorKeyHelp": "Minuscole, cifre e trattini bassi. Non cambia mai: le risposte vi si appoggiano.",
+  "@questionEditorKeyHelp": {
+    "description": "#1288 the question editor: questionEditorKeyHelp"
+  },
+  "questionEditorType": "Tipo di risposta",
+  "@questionEditorType": {
+    "description": "#1288 the question editor: questionEditorType"
+  },
+  "questionEditorLabelFor": "Etichetta ({locale})",
+  "@questionEditorLabelFor": {
+    "description": "#1288 the question editor: questionEditorLabelFor",
+    "placeholders": {
+      "locale": {
+        "type": "String"
+      }
+    }
+  },
+  "questionEditorRequired": "Deve essere risposta",
+  "@questionEditorRequired": {
+    "description": "#1288 the question editor: questionEditorRequired"
+  },
+  "questionEditorPersonal": "È un dato personale",
+  "@questionEditorPersonal": {
+    "description": "#1288 the question editor: questionEditorPersonal"
+  },
+  "questionEditorPersonalHelp": "Cancellato quando la persona esce, e incluso nella sua esportazione dei dati. Lascialo attivo a meno che la risposta riguardi davvero lo spazio e non la persona.",
+  "@questionEditorPersonalHelp": {
+    "description": "#1288 the question editor: questionEditorPersonalHelp"
+  },
+  "questionEditorVisibility": "Chi vede la risposta",
+  "@questionEditorVisibility": {
+    "description": "#1288 the question editor: questionEditorVisibility"
+  },
+  "questionEditorVisibilitySelf": "Solo il membro",
+  "@questionEditorVisibilitySelf": {
+    "description": "#1288 the question editor: questionEditorVisibilitySelf"
+  },
+  "questionEditorVisibilityManagers": "Il membro, e chi può vedere i dati personali",
+  "@questionEditorVisibilityManagers": {
+    "description": "#1288 the question editor: questionEditorVisibilityManagers"
+  },
+  "questionEditorVisibilityMembers": "Tutti i membri dello spazio",
+  "@questionEditorVisibilityMembers": {
+    "description": "#1288 the question editor: questionEditorVisibilityMembers"
+  },
+  "questionEditorContexts": "Dove viene posta",
+  "@questionEditorContexts": {
+    "description": "#1288 the question editor: questionEditorContexts"
+  },
+  "questionEditorContextProfile": "Le informazioni del membro",
+  "@questionEditorContextProfile": {
+    "description": "#1288 the question editor: questionEditorContextProfile"
+  },
+  "questionEditorContextManaged": "Le informazioni di un membro gestito",
+  "@questionEditorContextManaged": {
+    "description": "#1288 the question editor: questionEditorContextManaged"
+  },
+  "questionEditorContextJoin": "All'iscrizione",
+  "@questionEditorContextJoin": {
+    "description": "#1288 the question editor: questionEditorContextJoin"
+  },
+  "questionEditorMaxLength": "Risposta più lunga (caratteri)",
+  "@questionEditorMaxLength": {
+    "description": "#1288 the question editor: questionEditorMaxLength"
+  },
+  "questionEditorMin": "Numero minimo",
+  "@questionEditorMin": {
+    "description": "#1288 the question editor: questionEditorMin"
+  },
+  "questionEditorMax": "Numero massimo",
+  "@questionEditorMax": {
+    "description": "#1288 the question editor: questionEditorMax"
+  },
+  "questionEditorChoices": "Scelte, una per riga",
+  "@questionEditorChoices": {
+    "description": "#1288 the question editor: questionEditorChoices"
+  },
+  "questionEditorPreview": "Come apparirà",
+  "@questionEditorPreview": {
+    "description": "#1288 the question editor: questionEditorPreview"
+  },
+  "questionEditorSave": "Salva la domanda",
+  "@questionEditorSave": {
+    "description": "#1288 the question editor: questionEditorSave"
+  },
+  "questionEditorSaveFailed": "La domanda non è stata salvata.",
+  "@questionEditorSaveFailed": {
+    "description": "#1288 the question editor: questionEditorSaveFailed"
+  },
+  "questionEditorActive": "Posta adesso",
+  "@questionEditorActive": {
+    "description": "#1288 the question editor: questionEditorActive"
+  },
+  "questionTypeText": "Una risposta breve",
+  "@questionTypeText": {
+    "description": "#1288 the question editor: questionTypeText"
+  },
+  "questionTypeLongText": "Una risposta lunga",
+  "@questionTypeLongText": {
+    "description": "#1288 the question editor: questionTypeLongText"
+  },
+  "questionTypeInteger": "Un numero intero",
+  "@questionTypeInteger": {
+    "description": "#1288 the question editor: questionTypeInteger"
+  },
+  "questionTypeDecimal": "Un numero",
+  "@questionTypeDecimal": {
+    "description": "#1288 the question editor: questionTypeDecimal"
+  },
+  "questionTypeDate": "Una data",
+  "@questionTypeDate": {
+    "description": "#1288 the question editor: questionTypeDate"
+  },
+  "questionTypeBoolean": "Sì o no",
+  "@questionTypeBoolean": {
+    "description": "#1288 the question editor: questionTypeBoolean"
+  },
+  "questionTypeSingleChoice": "Una di un elenco",
+  "@questionTypeSingleChoice": {
+    "description": "#1288 the question editor: questionTypeSingleChoice"
+  },
+  "questionTypeMultiChoice": "Diverse di un elenco",
+  "@questionTypeMultiChoice": {
+    "description": "#1288 the question editor: questionTypeMultiChoice"
+  }
+}

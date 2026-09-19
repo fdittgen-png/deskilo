@@ -9111,6 +9111,122 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get questionsTitle => 'Las preguntas de este espacio';
+
+  @override
+  String get questionsSubtitle =>
+      'Aparecen dentro de la información personal, bajo el nombre de tu espacio.';
+
+  @override
+  String get questionsEmpty => 'Todavía no hay preguntas.';
+
+  @override
+  String get questionsAdd => 'Añadir una pregunta';
+
+  @override
+  String get questionsInactive => 'Apartada';
+
+  @override
+  String get questionEditorKey => 'Clave';
+
+  @override
+  String get questionEditorKeyHelp =>
+      'Minúsculas, dígitos y guiones bajos. No cambia nunca: las respuestas se apoyan en ella.';
+
+  @override
+  String get questionEditorType => 'Tipo de respuesta';
+
+  @override
+  String questionEditorLabelFor(String locale) {
+    return 'Etiqueta ($locale)';
+  }
+
+  @override
+  String get questionEditorRequired => 'Debe responderse';
+
+  @override
+  String get questionEditorPersonal => 'Es un dato personal';
+
+  @override
+  String get questionEditorPersonalHelp =>
+      'Se borra cuando la persona se va, y viaja en su exportación de datos. Déjalo activado salvo que la respuesta sea realmente del espacio y no de la persona.';
+
+  @override
+  String get questionEditorVisibility => 'Quién ve la respuesta';
+
+  @override
+  String get questionEditorVisibilitySelf => 'Solo el miembro';
+
+  @override
+  String get questionEditorVisibilityManagers =>
+      'El miembro, y quien puede ver datos personales';
+
+  @override
+  String get questionEditorVisibilityMembers =>
+      'Todos los miembros del espacio';
+
+  @override
+  String get questionEditorContexts => 'Dónde se pregunta';
+
+  @override
+  String get questionEditorContextProfile => 'La información del miembro';
+
+  @override
+  String get questionEditorContextManaged =>
+      'La información de un miembro gestionado';
+
+  @override
+  String get questionEditorContextJoin => 'Al unirse';
+
+  @override
+  String get questionEditorMaxLength => 'Respuesta más larga (caracteres)';
+
+  @override
+  String get questionEditorMin => 'Número mínimo';
+
+  @override
+  String get questionEditorMax => 'Número máximo';
+
+  @override
+  String get questionEditorChoices => 'Opciones, una por línea';
+
+  @override
+  String get questionEditorPreview => 'Cómo se verá';
+
+  @override
+  String get questionEditorSave => 'Guardar la pregunta';
+
+  @override
+  String get questionEditorSaveFailed => 'La pregunta no se ha guardado.';
+
+  @override
+  String get questionEditorActive => 'Se pregunta ahora';
+
+  @override
+  String get questionTypeText => 'Una respuesta corta';
+
+  @override
+  String get questionTypeLongText => 'Una respuesta larga';
+
+  @override
+  String get questionTypeInteger => 'Un número entero';
+
+  @override
+  String get questionTypeDecimal => 'Un número';
+
+  @override
+  String get questionTypeDate => 'Una fecha';
+
+  @override
+  String get questionTypeBoolean => 'Sí o no';
+
+  @override
+  String get questionTypeSingleChoice => 'Una de una lista';
+
+  @override
+  String get questionTypeMultiChoice => 'Varias de una lista';
+
+  @override
   String get eventTypeRoleChange => 'Cambio de rol';
 
   @override

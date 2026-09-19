@@ -5805,6 +5805,155 @@
       }
     }
   },
+  "questionsTitle": "Las preguntas de este espacio",
+  "@questionsTitle": {
+    "description": "#1288 the question editor: questionsTitle"
+  },
+  "questionsSubtitle": "Aparecen dentro de la información personal, bajo el nombre de tu espacio.",
+  "@questionsSubtitle": {
+    "description": "#1288 the question editor: questionsSubtitle"
+  },
+  "questionsEmpty": "Todavía no hay preguntas.",
+  "@questionsEmpty": {
+    "description": "#1288 the question editor: questionsEmpty"
+  },
+  "questionsAdd": "Añadir una pregunta",
+  "@questionsAdd": {
+    "description": "#1288 the question editor: questionsAdd"
+  },
+  "questionsInactive": "Apartada",
+  "@questionsInactive": {
+    "description": "#1288 the question editor: questionsInactive"
+  },
+  "questionEditorKey": "Clave",
+  "@questionEditorKey": {
+    "description": "#1288 the question editor: questionEditorKey"
+  },
+  "questionEditorKeyHelp": "Minúsculas, dígitos y guiones bajos. No cambia nunca: las respuestas se apoyan en ella.",
+  "@questionEditorKeyHelp": {
+    "description": "#1288 the question editor: questionEditorKeyHelp"
+  },
+  "questionEditorType": "Tipo de respuesta",
+  "@questionEditorType": {
+    "description": "#1288 the question editor: questionEditorType"
+  },
+  "questionEditorLabelFor": "Etiqueta ({locale})",
+  "@questionEditorLabelFor": {
+    "description": "#1288 the question editor: questionEditorLabelFor",
+    "placeholders": {
+      "locale": {
+        "type": "String"
+      }
+    }
+  },
+  "questionEditorRequired": "Debe responderse",
+  "@questionEditorRequired": {
+    "description": "#1288 the question editor: questionEditorRequired"
+  },
+  "questionEditorPersonal": "Es un dato personal",
+  "@questionEditorPersonal": {
+    "description": "#1288 the question editor: questionEditorPersonal"
+  },
+  "questionEditorPersonalHelp": "Se borra cuando la persona se va, y viaja en su exportación de datos. Déjalo activado salvo que la respuesta sea realmente del espacio y no de la persona.",
+  "@questionEditorPersonalHelp": {
+    "description": "#1288 the question editor: questionEditorPersonalHelp"
+  },
+  "questionEditorVisibility": "Quién ve la respuesta",
+  "@questionEditorVisibility": {
+    "description": "#1288 the question editor: questionEditorVisibility"
+  },
+  "questionEditorVisibilitySelf": "Solo el miembro",
+  "@questionEditorVisibilitySelf": {
+    "description": "#1288 the question editor: questionEditorVisibilitySelf"
+  },
+  "questionEditorVisibilityManagers": "El miembro, y quien puede ver datos personales",
+  "@questionEditorVisibilityManagers": {
+    "description": "#1288 the question editor: questionEditorVisibilityManagers"
+  },
+  "questionEditorVisibilityMembers": "Todos los miembros del espacio",
+  "@questionEditorVisibilityMembers": {
+    "description": "#1288 the question editor: questionEditorVisibilityMembers"
+  },
+  "questionEditorContexts": "Dónde se pregunta",
+  "@questionEditorContexts": {
+    "description": "#1288 the question editor: questionEditorContexts"
+  },
+  "questionEditorContextProfile": "La información del miembro",
+  "@questionEditorContextProfile": {
+    "description": "#1288 the question editor: questionEditorContextProfile"
+  },
+  "questionEditorContextManaged": "La información de un miembro gestionado",
+  "@questionEditorContextManaged": {
+    "description": "#1288 the question editor: questionEditorContextManaged"
+  },
+  "questionEditorContextJoin": "Al unirse",
+  "@questionEditorContextJoin": {
+    "description": "#1288 the question editor: questionEditorContextJoin"
+  },
+  "questionEditorMaxLength": "Respuesta más larga (caracteres)",
+  "@questionEditorMaxLength": {
+    "description": "#1288 the question editor: questionEditorMaxLength"
+  },
+  "questionEditorMin": "Número mínimo",
+  "@questionEditorMin": {
+    "description": "#1288 the question editor: questionEditorMin"
+  },
+  "questionEditorMax": "Número máximo",
+  "@questionEditorMax": {
+    "description": "#1288 the question editor: questionEditorMax"
+  },
+  "questionEditorChoices": "Opciones, una por línea",
+  "@questionEditorChoices": {
+    "description": "#1288 the question editor: questionEditorChoices"
+  },
+  "questionEditorPreview": "Cómo se verá",
+  "@questionEditorPreview": {
+    "description": "#1288 the question editor: questionEditorPreview"
+  },
+  "questionEditorSave": "Guardar la pregunta",
+  "@questionEditorSave": {
+    "description": "#1288 the question editor: questionEditorSave"
+  },
+  "questionEditorSaveFailed": "La pregunta no se ha guardado.",
+  "@questionEditorSaveFailed": {
+    "description": "#1288 the question editor: questionEditorSaveFailed"
+  },
+  "questionEditorActive": "Se pregunta ahora",
+  "@questionEditorActive": {
+    "description": "#1288 the question editor: questionEditorActive"
+  },
+  "questionTypeText": "Una respuesta corta",
+  "@questionTypeText": {
+    "description": "#1288 the question editor: questionTypeText"
+  },
+  "questionTypeLongText": "Una respuesta larga",
+  "@questionTypeLongText": {
+    "description": "#1288 the question editor: questionTypeLongText"
+  },
+  "questionTypeInteger": "Un número entero",
+  "@questionTypeInteger": {
+    "description": "#1288 the question editor: questionTypeInteger"
+  },
+  "questionTypeDecimal": "Un número",
+  "@questionTypeDecimal": {
+    "description": "#1288 the question editor: questionTypeDecimal"
+  },
+  "questionTypeDate": "Una fecha",
+  "@questionTypeDate": {
+    "description": "#1288 the question editor: questionTypeDate"
+  },
+  "questionTypeBoolean": "Sí o no",
+  "@questionTypeBoolean": {
+    "description": "#1288 the question editor: questionTypeBoolean"
+  },
+  "questionTypeSingleChoice": "Una de una lista",
+  "@questionTypeSingleChoice": {
+    "description": "#1288 the question editor: questionTypeSingleChoice"
+  },
+  "questionTypeMultiChoice": "Varias de una lista",
+  "@questionTypeMultiChoice": {
+    "description": "#1288 the question editor: questionTypeMultiChoice"
+  },
   "eventTypeRoleChange": "Cambio de rol",
   "eventRolePromote": "{actor} promueve a un miembro a admin",
   "eventRoleDemote": "{actor} degrada a un admin a miembro",

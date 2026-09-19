@@ -488,6 +488,7 @@ Totals by layer and by action: run the tool — they are printed, not committed,
 | `test/features/workspace/public_holidays_flow_test.dart` | widget | #1274 — an owner previews a year's public holidays, then confirms. | 4 | yes | fakes | user-visible behaviour — #1274 | no | KEEP |  |
 | `test/features/workspace/public_holidays_test.dart` | unit | #1274 — the client reads the server's answer and never recomputes it. | 5 | yes | none | a domain rule — #1274 | no | KEEP |  |
 | `test/features/workspace/qr_png_test.dart` | widget | buildQrPng returns a decodable PNG of the requested size. | 1 | yes | real async I/O | user-visible behaviour | no | KEEP |  |
+| `test/features/workspace/question_editor_test.dart` | widget | #1288 S4 — defining a question without a migration. | 8 | yes | none | user-visible behaviour — #1288 | no | KEEP |  |
 | `test/features/workspace/reference_locale_test.dart` | widget | #1179 — a message reference is written ONCE, in the workspace's language. | 4 | yes | fakes | user-visible behaviour — #1179 | no | KEEP |  |
 | `test/features/workspace/role_permission_delta_test.dart` | unit | #1089 — the role matrix is written one permission at a time. | 2 | yes | fakes | a domain rule — #1089 | no | KEEP |  |
 | `test/features/workspace/roles_screen_test.dart` | widget | #513 — CENTRALIZED role management: one permission catalog, one matrix per workspace. The owner always holds everything (locked row); whoever holds manageRoles… | 7 | yes | fakes, repository sources | user-visible behaviour — #513, #881, #982 | no | KEEP |  |

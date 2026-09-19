@@ -9130,6 +9130,121 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get questionsTitle => 'Fragen dieses Bereichs';
+
+  @override
+  String get questionsSubtitle =>
+      'Sie erscheinen in den persönlichen Angaben, unter dem Namen Ihres Bereichs.';
+
+  @override
+  String get questionsEmpty => 'Noch keine Fragen.';
+
+  @override
+  String get questionsAdd => 'Frage hinzufügen';
+
+  @override
+  String get questionsInactive => 'Zurückgestellt';
+
+  @override
+  String get questionEditorKey => 'Schlüssel';
+
+  @override
+  String get questionEditorKeyHelp =>
+      'Kleinbuchstaben, Ziffern und Unterstriche. Er ändert sich nie: die Antworten hängen daran.';
+
+  @override
+  String get questionEditorType => 'Antworttyp';
+
+  @override
+  String questionEditorLabelFor(String locale) {
+    return 'Beschriftung ($locale)';
+  }
+
+  @override
+  String get questionEditorRequired => 'Muss beantwortet werden';
+
+  @override
+  String get questionEditorPersonal => 'Das ist eine personenbezogene Angabe';
+
+  @override
+  String get questionEditorPersonalHelp =>
+      'Wird beim Austritt gelöscht und liegt dem Datenexport bei. Lassen Sie es an, außer die Antwort betrifft wirklich den Bereich und nicht die Person.';
+
+  @override
+  String get questionEditorVisibility => 'Wer die Antwort sieht';
+
+  @override
+  String get questionEditorVisibilitySelf => 'Nur das Mitglied';
+
+  @override
+  String get questionEditorVisibilityManagers =>
+      'Das Mitglied und wer personenbezogene Daten sehen darf';
+
+  @override
+  String get questionEditorVisibilityMembers => 'Alle Mitglieder des Bereichs';
+
+  @override
+  String get questionEditorContexts => 'Wo sie gestellt wird';
+
+  @override
+  String get questionEditorContextProfile => 'Die Angaben des Mitglieds';
+
+  @override
+  String get questionEditorContextManaged =>
+      'Die Angaben eines verwalteten Mitglieds';
+
+  @override
+  String get questionEditorContextJoin => 'Beim Beitritt';
+
+  @override
+  String get questionEditorMaxLength => 'Längste Antwort (Zeichen)';
+
+  @override
+  String get questionEditorMin => 'Kleinste Zahl';
+
+  @override
+  String get questionEditorMax => 'Größte Zahl';
+
+  @override
+  String get questionEditorChoices => 'Auswahlmöglichkeiten, eine pro Zeile';
+
+  @override
+  String get questionEditorPreview => 'So wird es aussehen';
+
+  @override
+  String get questionEditorSave => 'Frage speichern';
+
+  @override
+  String get questionEditorSaveFailed => 'Die Frage wurde nicht gespeichert.';
+
+  @override
+  String get questionEditorActive => 'Wird gestellt';
+
+  @override
+  String get questionTypeText => 'Eine kurze Antwort';
+
+  @override
+  String get questionTypeLongText => 'Eine lange Antwort';
+
+  @override
+  String get questionTypeInteger => 'Eine ganze Zahl';
+
+  @override
+  String get questionTypeDecimal => 'Eine Zahl';
+
+  @override
+  String get questionTypeDate => 'Ein Datum';
+
+  @override
+  String get questionTypeBoolean => 'Ja oder nein';
+
+  @override
+  String get questionTypeSingleChoice => 'Eines aus einer Liste';
+
+  @override
+  String get questionTypeMultiChoice => 'Mehrere aus einer Liste';
+
+  @override
   String get eventTypeRoleChange => 'Rollenwechsel';
 
   @override

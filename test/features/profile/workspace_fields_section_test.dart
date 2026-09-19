@@ -8,7 +8,7 @@
 // read them. The rule itself is `fieldProblem`, tested separately; here
 // the question is whether a member can answer and be told when they have
 // not.
-import 'package:deskilo/features/profile/presentation/widgets/workspace_fields_section.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/workspace_fields_section.dart';
 import 'package:deskilo/features/workspace/domain/workspace_field.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';

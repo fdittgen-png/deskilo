@@ -127,6 +127,43 @@ class SupabaseWorkspaceFields implements WorkspaceFieldsRepository {
   }
 
   @override
+  Future<String> setField(String workspaceId, WorkspaceField field) async {
+    final id = await _client.rpc<dynamic>('set_workspace_field', params: {
+      'p_workspace_id': workspaceId,
+      'p_key': field.key,
+      'p_type': field.type.wireName,
+      'p_labels': field.labels,
+      'p_required': field.required,
+      'p_personal_data': field.personalData,
+      'p_visibility': field.visibility.name,
+      'p_contexts': [for (final c in field.contexts) c.wireName],
+      'p_group_key': field.groupKey,
+      'p_sort_order': field.sortOrder,
+      'p_validation': field.validation,
+      'p_active': field.active,
+    });
+    return '$id';
+  }
+
+  @override
+  Future<void> setOptions(
+    String definitionId,
+    List<WorkspaceFieldOption> options,
+  ) =>
+      _client.rpc<void>('set_workspace_field_options', params: {
+        'p_definition_id': definitionId,
+        'p_options': [
+          for (final o in options)
+            {
+              'key': o.key,
+              'labels': o.labels,
+              'sort_order': o.sortOrder,
+              'active': o.active,
+            },
+        ],
+      });
+
+  @override
   Future<void> saveAnswers({
     required String memberId,
     required WorkspaceFieldContext context,

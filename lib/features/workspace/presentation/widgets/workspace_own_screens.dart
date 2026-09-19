@@ -52,6 +52,19 @@ class WorkspaceOwnScreens extends ConsumerWidget {
             path: '/settings/colours',
             helpTopic: helpTopic,
           ),
+        // #1288 — the questions this space asks its members.
+        if (features.contains(WorkspaceFeature.customFields))
+          _Row(
+            rowKey: 'workspaceSettingsQuestions',
+            icon: Icons.help_outline,
+            title: l10n?.questionsTitle ?? 'Questions this space asks',
+            anchor: HelpAnchor.workspaceWording,
+            subtitle: l10n?.questionsSubtitle ??
+                "They appear inside personal information, under your "
+                    "space's name.",
+            path: '/settings/questions',
+            helpTopic: helpTopic,
+          ),
       ],
     );
   }
