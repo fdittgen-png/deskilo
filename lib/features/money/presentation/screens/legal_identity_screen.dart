@@ -102,6 +102,24 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           'Something went wrong. Please try again.',
       action: () async {
         final repository = ref.read(workspaceRepositoryProvider);
+        // #869 — the envelope choice lives in the document template
+        // beside the bands; read-modify-write so a design saved from
+        // the editor is never clobbered by this screen.
+        //
+        // It goes FIRST on purpose (#1532). It is a separate aggregate
+        // and cannot join the row update below, so one of the two has to
+        // be able to fail alone — and this is the harmless one. A window
+        // saved without the identity is a cosmetic choice the next Save
+        // repeats; an identity saved without its mentions is an invoice
+        // that contradicts itself.
+        await ref.read(moneyRepositoryProvider).setInvoicePdfTemplate(
+              workspace.id,
+              (ref.read(invoicePdfTemplateProvider).value ??
+                      InvoicePdfTemplate.empty)
+                  .copyWith(addressWindow: _addressWindow),
+            );
+        // The identity and the mentions are ONE statement about the
+        // seller, so they are one row update.
         await repository.setLegalIdentity(
           workspace.id,
           vatRegime: vatRegimeWire(_regime),
@@ -112,19 +130,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           city: _city.text,
           postalCode: _postalCode.text,
           vatAccount: _vatAccount.text,
-        );
-        // #869 — the envelope choice lives in the document template
-        // beside the bands; read-modify-write so a design saved from
-        // the editor is never clobbered by this screen.
-        await ref.read(moneyRepositoryProvider).setInvoicePdfTemplate(
-              workspace.id,
-              (ref.read(invoicePdfTemplateProvider).value ??
-                      InvoicePdfTemplate.empty)
-                  .copyWith(addressWindow: _addressWindow),
-            );
-        await repository.setInvoiceLegal(
-          workspace.id,
-          InvoiceLegal(
+          invoiceLegal: InvoiceLegal(
             sellerKind: _sellerKind,
             legalForm: _legalForm.text,
             registration: _registration.text,

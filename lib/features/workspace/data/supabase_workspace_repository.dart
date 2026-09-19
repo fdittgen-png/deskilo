@@ -285,10 +285,13 @@ class SupabaseWorkspaceRepository
     required String city,
     required String postalCode,
     required String vatAccount,
+    required Map<String, Object?> invoiceLegal,
   }) async {
     // Owner-only via workspaces_update RLS; the 0069 column checks cap
-    // every field. Written as one row update so an identity can never be
-    // half-declared.
+    // every field. ONE row update, so an identity can never be
+    // half-declared — and the statutory mentions ride in it, because a
+    // VAT regime saved without them is the same half-declaration one
+    // level up (#1532).
     await _updateWorkspaceRow(workspaceId, {
       'vat_regime': vatRegime,
       'vat_id': vatId.trim(),
@@ -298,6 +301,7 @@ class SupabaseWorkspaceRepository
       'city': city.trim(),
       'postal_code': postalCode.trim(),
       'vat_account': vatAccount.trim(),
+      'invoice_legal': invoiceLegal,
     });
   }
 
@@ -372,15 +376,6 @@ class SupabaseWorkspaceRepository
   }
 
   @override
-  Future<void> setInvoiceLegal(
-    String workspaceId,
-    Map<String, Object?> legal,
-  ) async {
-    // Owner-only via workspaces_update RLS; the whole jsonb is replaced
-    // (0094) — the mentions are one coherent statement, not a delta.
-    await _updateWorkspaceRow(workspaceId, {'invoice_legal': legal});
-  }
-
   @override
   Future<void> setWorkspaceAddress(String workspaceId, String address) async {
     // Owner-only via workspaces_update RLS; 0060 caps at 400 chars.

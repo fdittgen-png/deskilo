@@ -175,9 +175,16 @@ abstract class WorkspaceRepository {
 
   /// Owner-only (RLS workspaces_update): the LEGAL IDENTITY an EN 16931
   /// e-invoice requires (0069) — VAT regime plus the identifier that
-  /// regime demands, the exemption reason and the structured address.
-  /// Written atomically: a half-declared identity would produce XML that
-  /// fails validation in a different way each time.
+  /// regime demands, the exemption reason and the structured address —
+  /// **and the statutory mentions that go on the invoice with it**
+  /// (`invoice_legal`, 0094).
+  ///
+  /// One row update, because they are one statement about the seller.
+  /// They used to be two calls from the same Save, and when the second
+  /// failed the VAT regime and VAT id had already changed while the
+  /// mentions and the exigibility had not — every invoice issued
+  /// afterwards carried a legal block that contradicted itself, under a
+  /// message saying the save had failed (#1532).
   Future<void> setLegalIdentity(
     String workspaceId, {
     required String vatRegime,
@@ -188,6 +195,7 @@ abstract class WorkspaceRepository {
     required String city,
     required String postalCode,
     required String vatAccount,
+    required Map<String, Object?> invoiceLegal,
   });
 
   /// Owner-only: the subscription tariff's VAT rate (#542) — '' resets
@@ -238,13 +246,6 @@ abstract class WorkspaceRepository {
   Future<void> setInvitationTemplates(
     String workspaceId,
     Map<String, String> templates,
-  );
-
-  /// Owner-only (workspaces_update RLS): replace the legal invoice
-  /// mentions jsonb (0094) — the InvoiceLegal.toJson() map, trimmed.
-  Future<void> setInvoiceLegal(
-    String workspaceId,
-    Map<String, Object?> legal,
   );
 
   /// Owner-only (workspaces_update RLS): set the invitation message
