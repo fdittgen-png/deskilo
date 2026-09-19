@@ -17267,6 +17267,96 @@ abstract class AppLocalizations {
   /// **'The customer\'s VAT number is missing — a reverse-charged invoice must name it.'**
   String get invoiceGapMissingBuyerVatId;
 
+  /// #1528 the roles of a space: rolesOfSpaceTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Roles this space defines'**
+  String get rolesOfSpaceTitle;
+
+  /// #1528 the roles of a space: rolesOfSpaceSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Each one adds permissions on top of a member\'s role. None ever takes one away, and an owner always keeps every one.'**
+  String get rolesOfSpaceSubtitle;
+
+  /// #1528 the roles of a space: rolesOfSpaceEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No roles yet.'**
+  String get rolesOfSpaceEmpty;
+
+  /// #1528 the roles of a space: rolesOfSpaceAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Add a role'**
+  String get rolesOfSpaceAdd;
+
+  /// #1528 the roles of a space: rolesOfSpaceInactive
+  ///
+  /// In en, this message translates to:
+  /// **'Put aside'**
+  String get rolesOfSpaceInactive;
+
+  /// #1528 the roles of a space: roleEditorKey
+  ///
+  /// In en, this message translates to:
+  /// **'Key'**
+  String get roleEditorKey;
+
+  /// #1528 the roles of a space: roleEditorKeyHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Lower-case letters, digits and underscores. It never changes: the people who hold the role point at it.'**
+  String get roleEditorKeyHelp;
+
+  /// #1528 the roles of a space: roleEditorNameFor
+  ///
+  /// In en, this message translates to:
+  /// **'Name ({locale})'**
+  String roleEditorNameFor(String locale);
+
+  /// #1528 the roles of a space: roleEditorPermissions
+  ///
+  /// In en, this message translates to:
+  /// **'What it adds'**
+  String get roleEditorPermissions;
+
+  /// #1528 the roles of a space: roleEditorActive
+  ///
+  /// In en, this message translates to:
+  /// **'In use'**
+  String get roleEditorActive;
+
+  /// #1528 the roles of a space: roleEditorSave
+  ///
+  /// In en, this message translates to:
+  /// **'Save the role'**
+  String get roleEditorSave;
+
+  /// #1528 the roles of a space: roleEditorSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The role was not saved.'**
+  String get roleEditorSaveFailed;
+
+  /// #1528 the roles of a space: roleEditorHolders
+  ///
+  /// In en, this message translates to:
+  /// **'Who holds it'**
+  String get roleEditorHolders;
+
+  /// #1528 the roles of a space: roleEditorNobody
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody yet.'**
+  String get roleEditorNobody;
+
+  /// #1528 the roles of a space: roleEditorNotYourself
+  ///
+  /// In en, this message translates to:
+  /// **'You cannot give a role to yourself.'**
+  String get roleEditorNotYourself;
+
   /// #1312 Title of the screen shown when the server's schema is older than the app needs
   ///
   /// In en, this message translates to:

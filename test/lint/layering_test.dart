@@ -53,7 +53,7 @@ import 'lint_sources.dart';
 /// fails.
 const Map<String, int> _repositoryInWidgets = {
   'money': 24, // 2026-09-18 #1449 25→24: the register-payment sheet asks application/record_payment.dart which month a payment belongs to
-  'workspace': 20, // 2026-09-19 #1288 S4 19→20: the question editor screen resolves the fields repository to define a question — the same shape every settings screen has, and the decision it makes is the server's; // 2026-09-17 #1280 S3 20→19: the save sheet publishes through application/publish_template.dart
+  'workspace': 21, // 2026-09-19 #1528 20→21: the screen that defines a workspace's own roles resolves the roles repository, the same shape the questions editor has and the same one every settings screen has; // 2026-09-19 #1288 S4 19→20: the question editor screen resolves the fields repository to define a question — the same shape every settings screen has, and the decision it makes is the server's; // 2026-09-17 #1280 S3 20→19: the save sheet publishes through application/publish_template.dart
   'auth': 4,
   // Still 4 after #1234: `space_act_sheet.dart` moved its DECISION to
   // `application/act_on_space.dart` but still resolves the repository

@@ -9973,6 +9973,56 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die USt-IdNr. des Kunden fehlt — eine Reverse-Charge-Rechnung muss sie nennen.';
 
   @override
+  String get rolesOfSpaceTitle => 'Rollen dieses Bereichs';
+
+  @override
+  String get rolesOfSpaceSubtitle =>
+      'Jede ergänzt die Rechte der Rolle eines Mitglieds. Keine nimmt etwas weg, und eine Inhaberin behält alle.';
+
+  @override
+  String get rolesOfSpaceEmpty => 'Noch keine Rollen.';
+
+  @override
+  String get rolesOfSpaceAdd => 'Rolle hinzufügen';
+
+  @override
+  String get rolesOfSpaceInactive => 'Zurückgestellt';
+
+  @override
+  String get roleEditorKey => 'Schlüssel';
+
+  @override
+  String get roleEditorKeyHelp =>
+      'Kleinbuchstaben, Ziffern und Unterstriche. Er ändert sich nie: die Personen mit der Rolle hängen daran.';
+
+  @override
+  String roleEditorNameFor(String locale) {
+    return 'Name ($locale)';
+  }
+
+  @override
+  String get roleEditorPermissions => 'Was sie ergänzt';
+
+  @override
+  String get roleEditorActive => 'In Gebrauch';
+
+  @override
+  String get roleEditorSave => 'Rolle speichern';
+
+  @override
+  String get roleEditorSaveFailed => 'Die Rolle wurde nicht gespeichert.';
+
+  @override
+  String get roleEditorHolders => 'Wer sie hat';
+
+  @override
+  String get roleEditorNobody => 'Noch niemand.';
+
+  @override
+  String get roleEditorNotYourself =>
+      'Sie können sich selbst keine Rolle geben.';
+
+  @override
   String get schemaUpdateTitle => 'Dieser Server muss aktualisiert werden';
 
   @override

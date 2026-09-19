@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import '../features/workspace/presentation/screens/colours_screen.dart';
 import '../features/workspace/presentation/screens/questions_screen.dart';
+import '../features/workspace/presentation/screens/roles_of_space_screen.dart';
 import '../features/workspace/presentation/screens/deployment_screen.dart';
 import '../features/workspace/presentation/screens/wording_screen.dart';
 import 'package:flutter/foundation.dart';
@@ -610,6 +611,13 @@ GoRouter router(Ref ref) {
                 ? null
                 : '/settings',
         builder: (context, state) => const ColoursScreen(),
+      ),
+      // #1528 — the roles this space defines for itself.
+      GoRoute(
+        path: '/settings/roles-of-this-space',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.customRoles) ? null : '/settings',
+        builder: (context, state) => const RolesOfSpaceScreen(),
       ),
       // #1288 — the questions this space asks its members.
       GoRoute(

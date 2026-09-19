@@ -6635,6 +6635,71 @@
   "@invoiceGapMissingBuyerVatId": {
     "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
   },
+  "rolesOfSpaceTitle": "Los roles de este espacio",
+  "@rolesOfSpaceTitle": {
+    "description": "#1528 the roles of a space: rolesOfSpaceTitle"
+  },
+  "rolesOfSpaceSubtitle": "Cada uno añade permisos a los del rol de un miembro. Ninguno quita nada, y una propietaria los conserva todos.",
+  "@rolesOfSpaceSubtitle": {
+    "description": "#1528 the roles of a space: rolesOfSpaceSubtitle"
+  },
+  "rolesOfSpaceEmpty": "Todavía no hay roles.",
+  "@rolesOfSpaceEmpty": {
+    "description": "#1528 the roles of a space: rolesOfSpaceEmpty"
+  },
+  "rolesOfSpaceAdd": "Añadir un rol",
+  "@rolesOfSpaceAdd": {
+    "description": "#1528 the roles of a space: rolesOfSpaceAdd"
+  },
+  "rolesOfSpaceInactive": "Apartado",
+  "@rolesOfSpaceInactive": {
+    "description": "#1528 the roles of a space: rolesOfSpaceInactive"
+  },
+  "roleEditorKey": "Clave",
+  "@roleEditorKey": {
+    "description": "#1528 the roles of a space: roleEditorKey"
+  },
+  "roleEditorKeyHelp": "Minúsculas, dígitos y guiones bajos. No cambia nunca: las personas con el rol se apoyan en ella.",
+  "@roleEditorKeyHelp": {
+    "description": "#1528 the roles of a space: roleEditorKeyHelp"
+  },
+  "roleEditorNameFor": "Nombre ({locale})",
+  "@roleEditorNameFor": {
+    "description": "#1528 the roles of a space: roleEditorNameFor",
+    "placeholders": {
+      "locale": {
+        "type": "String"
+      }
+    }
+  },
+  "roleEditorPermissions": "Lo que añade",
+  "@roleEditorPermissions": {
+    "description": "#1528 the roles of a space: roleEditorPermissions"
+  },
+  "roleEditorActive": "En uso",
+  "@roleEditorActive": {
+    "description": "#1528 the roles of a space: roleEditorActive"
+  },
+  "roleEditorSave": "Guardar el rol",
+  "@roleEditorSave": {
+    "description": "#1528 the roles of a space: roleEditorSave"
+  },
+  "roleEditorSaveFailed": "El rol no se ha guardado.",
+  "@roleEditorSaveFailed": {
+    "description": "#1528 the roles of a space: roleEditorSaveFailed"
+  },
+  "roleEditorHolders": "Quién lo tiene",
+  "@roleEditorHolders": {
+    "description": "#1528 the roles of a space: roleEditorHolders"
+  },
+  "roleEditorNobody": "Nadie todavía.",
+  "@roleEditorNobody": {
+    "description": "#1528 the roles of a space: roleEditorNobody"
+  },
+  "roleEditorNotYourself": "No puedes darte un rol a ti misma.",
+  "@roleEditorNotYourself": {
+    "description": "#1528 the roles of a space: roleEditorNotYourself"
+  },
   "schemaUpdateTitle": "Este servidor necesita una actualización",
   "schemaUpdateBody": "Esta aplicación necesita la versión {version} del esquema de DesKilo, y el servidor al que se conecta ejecuta una más antigua. Hasta que el servidor se actualice, la aplicación fallaría de formas que no podría explicar, así que se detiene aquí.",
   "schemaUpdateOperator": "Si gestiona este servidor: aplique las migraciones que faltan con `dart run tool/instance.dart install --ref <proyecto>`. Solo se ejecuta lo que falta.",

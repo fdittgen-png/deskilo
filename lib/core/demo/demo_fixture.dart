@@ -28,6 +28,7 @@ import 'data/realtime_sync.dart';
 import 'data/reservation_repository.dart';
 import 'data/stores.dart';
 import 'data/workspace_fields_repository.dart';
+import 'data/workspace_roles_repository.dart';
 import 'data/workspace_repository.dart';
 import 'demo_dataset.dart';
 import 'demo_outward_edges.dart';
@@ -52,6 +53,7 @@ class DemoFixture {
     required this.files,
     required this.imports,
     required this.fields,
+    required this.roles,
     required this.realtime,
     required this.notifications,
     required this.badge,
@@ -102,6 +104,7 @@ class DemoFixture {
       files: FakeWorkspaceFiles(),
       imports: InMemoryWorkspaceImport(),
       fields: FakeWorkspaceFields(),
+      roles: FakeWorkspaceRoles(),
       realtime: FakeRealtimeSync(),
       notifications: FakeNotificationService(),
       badge: FakeAppBadge(),
@@ -126,6 +129,9 @@ class DemoFixture {
 
   /// #1288 — the workspace's own questions, and the answers.
   final FakeWorkspaceFields fields;
+
+  /// #1528 — the roles this space defined itself.
+  final FakeWorkspaceRoles roles;
   final FakeRealtimeSync realtime;
   final FakeNotificationService notifications;
   final FakeAppBadge badge;

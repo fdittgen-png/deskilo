@@ -9985,6 +9985,56 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le numéro de TVA du client manque — une facture en autoliquidation doit le porter.';
 
   @override
+  String get rolesOfSpaceTitle => 'Les rôles de cet espace';
+
+  @override
+  String get rolesOfSpaceSubtitle =>
+      'Chacun ajoute des permissions à celles du rôle d\'un membre. Aucun n\'en retire, et un propriétaire les garde toutes.';
+
+  @override
+  String get rolesOfSpaceEmpty => 'Aucun rôle pour l\'instant.';
+
+  @override
+  String get rolesOfSpaceAdd => 'Ajouter un rôle';
+
+  @override
+  String get rolesOfSpaceInactive => 'Mis de côté';
+
+  @override
+  String get roleEditorKey => 'Clé';
+
+  @override
+  String get roleEditorKeyHelp =>
+      'Minuscules, chiffres et tirets bas. Elle ne change jamais : les personnes qui tiennent le rôle s\'y rattachent.';
+
+  @override
+  String roleEditorNameFor(String locale) {
+    return 'Nom ($locale)';
+  }
+
+  @override
+  String get roleEditorPermissions => 'Ce qu\'il ajoute';
+
+  @override
+  String get roleEditorActive => 'En usage';
+
+  @override
+  String get roleEditorSave => 'Enregistrer le rôle';
+
+  @override
+  String get roleEditorSaveFailed => 'Le rôle n\'a pas été enregistré.';
+
+  @override
+  String get roleEditorHolders => 'Qui le tient';
+
+  @override
+  String get roleEditorNobody => 'Personne pour l\'instant.';
+
+  @override
+  String get roleEditorNotYourself =>
+      'Vous ne pouvez pas vous attribuer un rôle.';
+
+  @override
   String get schemaUpdateTitle => 'Ce serveur doit être mis à jour';
 
   @override

@@ -52,6 +52,18 @@ class WorkspaceOwnScreens extends ConsumerWidget {
             path: '/settings/colours',
             helpTopic: helpTopic,
           ),
+        // #1528 — the roles this space defines for itself.
+        if (features.contains(WorkspaceFeature.customRoles))
+          _Row(
+            rowKey: 'workspaceSettingsRolesOfSpace',
+            icon: Icons.badge_outlined,
+            title: l10n?.rolesOfSpaceTitle ?? 'Roles this space defines',
+            anchor: HelpAnchor.workspaceWording,
+            subtitle: l10n?.rolesOfSpaceSubtitle ??
+                "Each one adds permissions on top of a member's role.",
+            path: '/settings/roles-of-this-space',
+            helpTopic: helpTopic,
+          ),
         // #1288 — the questions this space asks its members.
         if (features.contains(WorkspaceFeature.customFields))
           _Row(

@@ -1,0 +1,68 @@
+{
+  "@@locale": "de",
+  "rolesOfSpaceTitle": "Rollen dieses Bereichs",
+  "@rolesOfSpaceTitle": {
+    "description": "#1528 the roles of a space: rolesOfSpaceTitle"
+  },
+  "rolesOfSpaceSubtitle": "Jede ergänzt die Rechte der Rolle eines Mitglieds. Keine nimmt etwas weg, und eine Inhaberin behält alle.",
+  "@rolesOfSpaceSubtitle": {
+    "description": "#1528 the roles of a space: rolesOfSpaceSubtitle"
+  },
+  "rolesOfSpaceEmpty": "Noch keine Rollen.",
+  "@rolesOfSpaceEmpty": {
+    "description": "#1528 the roles of a space: rolesOfSpaceEmpty"
+  },
+  "rolesOfSpaceAdd": "Rolle hinzufügen",
+  "@rolesOfSpaceAdd": {
+    "description": "#1528 the roles of a space: rolesOfSpaceAdd"
+  },
+  "rolesOfSpaceInactive": "Zurückgestellt",
+  "@rolesOfSpaceInactive": {
+    "description": "#1528 the roles of a space: rolesOfSpaceInactive"
+  },
+  "roleEditorKey": "Schlüssel",
+  "@roleEditorKey": {
+    "description": "#1528 the roles of a space: roleEditorKey"
+  },
+  "roleEditorKeyHelp": "Kleinbuchstaben, Ziffern und Unterstriche. Er ändert sich nie: die Personen mit der Rolle hängen daran.",
+  "@roleEditorKeyHelp": {
+    "description": "#1528 the roles of a space: roleEditorKeyHelp"
+  },
+  "roleEditorNameFor": "Name ({locale})",
+  "@roleEditorNameFor": {
+    "description": "#1528 the roles of a space: roleEditorNameFor",
+    "placeholders": {
+      "locale": {
+        "type": "String"
+      }
+    }
+  },
+  "roleEditorPermissions": "Was sie ergänzt",
+  "@roleEditorPermissions": {
+    "description": "#1528 the roles of a space: roleEditorPermissions"
+  },
+  "roleEditorActive": "In Gebrauch",
+  "@roleEditorActive": {
+    "description": "#1528 the roles of a space: roleEditorActive"
+  },
+  "roleEditorSave": "Rolle speichern",
+  "@roleEditorSave": {
+    "description": "#1528 the roles of a space: roleEditorSave"
+  },
+  "roleEditorSaveFailed": "Die Rolle wurde nicht gespeichert.",
+  "@roleEditorSaveFailed": {
+    "description": "#1528 the roles of a space: roleEditorSaveFailed"
+  },
+  "roleEditorHolders": "Wer sie hat",
+  "@roleEditorHolders": {
+    "description": "#1528 the roles of a space: roleEditorHolders"
+  },
+  "roleEditorNobody": "Noch niemand.",
+  "@roleEditorNobody": {
+    "description": "#1528 the roles of a space: roleEditorNobody"
+  },
+  "roleEditorNotYourself": "Sie können sich selbst keine Rolle geben.",
+  "@roleEditorNotYourself": {
+    "description": "#1528 the roles of a space: roleEditorNotYourself"
+  }
+}
