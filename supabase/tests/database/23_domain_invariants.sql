@@ -38,6 +38,18 @@ begin
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by)
   values ('Elsewhere', 'FR', 'EUR', 'Europe/Paris', u_outsider) returning id into other_ws;
 
+  -- The owner checks in at "now", so the fixture must be inside its own
+  -- working day whatever hour the pipeline runs: a run at 01:47 Paris on
+  -- a Sunday was refused by the check-in window and the closed-day gate,
+  -- and the file read as a broken invariant rather than as a clock.
+  -- Every weekday open, the day 00:00–24:00 (the shape 24_booking_idempotency
+  -- and 35_zero_subscription already use for the weekday half).
+  update public.workspaces
+     set booking_rules = coalesce(booking_rules, '{}'::jsonb)
+       || '{"open_weekdays": [1, 2, 3, 4, 5, 6, 7],
+             "work_start_minutes": 0, "work_end_minutes": 1440}'::jsonb
+   where id in (ws, other_ws);
+
   insert into public.members (workspace_id, user_id, is_owner, is_admin)
   values (ws, u_owner, true, true) returning id into m_owner;
   insert into public.members (workspace_id, user_id, is_owner, is_admin)

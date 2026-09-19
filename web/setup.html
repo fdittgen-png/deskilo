@@ -190,6 +190,7 @@ const FEATURES=[
  ['carnets',0],
  ['publicHolidays',0],
  ['workspaceVocabulary',0],
+ ['workspaceBranding',0],
  ['calendarTab',1],
  ['eventsTab',1],
  ['moneyTab',1],
@@ -357,7 +358,7 @@ function newOffice(n){return {name:T('defaultOffice',{n}),bookable:false,price:'
 
 // ------------------------------------------------------------------ state
 const DEFAULTS={
- name:'',country:'FR',currency:'EUR',timezone:'Europe/Paris',environment:'dev',language:'',address:'',whatsapp:'',
+ name:'',country:'FR',currency:'EUR',timezone:'Europe/Paris',environment:'dev',language:'',address:'',whatsapp:'',brandColor:'',
  weekdays:['1','2','3','4','5'],granularity:'half_day',dayStart:'08:00',boundary:'12:00',dayEnd:'17:00',closures:[],
  halfDayHours:'4',fullDayHours:'8',deskOpacity:'100',
  horizonDays:'90',minDuration:'30',maxDuration:'1440',
@@ -571,8 +572,11 @@ const STEPS=[
   selectEl(T('identityTimezone'),'timezone',TIMEZONES.map(t=>[t,t]),T('identityTimezoneHint'),null,'region'),
   selectEl(T('identityLanguage'),'language',langOpts(),T('identityLanguageHint'),null,'language'),
   input(T('identityAddress'),'address',T('identityAddressHint'),'text',T('identityAddressPlaceholder'),'identity'),
+  // #1289 — the brand seed; the app derives its themes from it and
+  // refuses one that cannot be read, so the page only checks the shape.
+  input(T('identityBrandColor'),'brandColor',T('identityBrandColorHint'),'text','#C2410C','identity'),
  ]},
- check(){const f=[];if(!S.name.trim())f.push(F.err(T('identityErrName'),'identity'));else f.push(F.ok(T('identityOk',{name:S.name.trim(),country:countryName(country()[0]),currency:S.currency,timezone:S.timezone})));if(S.currency!==country()[1])f.push(F.warn(T('identityWarnCurrency',{currency:S.currency,expected:country()[1]}),'identity'));return f}},
+ check(){const f=[];if(!S.name.trim())f.push(F.err(T('identityErrName'),'identity'));if(S.brandColor.trim()&&!/^#[0-9a-f]{6}$/i.test(S.brandColor.trim()))f.push(F.err(T('identityErrBrandColor'),'identity'));else f.push(F.ok(T('identityOk',{name:S.name.trim(),country:countryName(country()[0]),currency:S.currency,timezone:S.timezone})));if(S.currency!==country()[1])f.push(F.warn(T('identityWarnCurrency',{currency:S.currency,expected:country()[1]}),'identity'));return f}},
 
 {id:'features',get title(){return T('featuresTitle')},get why(){return T('featuresWhy')},
  build(){const kids=[h('p',{class:'hint'},T('featuresIndentHint')),help('features')];
@@ -1002,7 +1006,7 @@ function exportXml(){
  push('<?xml version="1.0" encoding="UTF-8"?>');
  push('<deskilo-workspace version="3">');
  // settings — app-importable
- push(`  <settings name="${esc(S.name)}" country="${esc(S.country)}" currency="${esc(S.currency)}" timezone="${esc(S.timezone)}" environment="${esc(S.environment)}">`);
+ push(`  <settings name="${esc(S.name)}" country="${esc(S.country)}" currency="${esc(S.currency)}" timezone="${esc(S.timezone)}" environment="${esc(S.environment)}"${S.brandColor.trim()?` brand-color="${esc(S.brandColor.trim().toUpperCase())}"`:''}>`);
  for(const[k]of FEATURES)push(`    <feature key="${k}" enabled="${!!S.features[k]}"/>`);
  for(const[k,v]of Object.entries(S.pay))if(String(v).trim())push(`    <payment-instruction key="${k}" value="${esc(v.trim())}"/>`);
  push('  </settings>');
@@ -1087,7 +1091,7 @@ function parseBack(text){
  const doc=new DOMParser().parseFromString(text,'application/xml');
  if(doc.querySelector('parsererror'))throw new Error(T('loadMalformed'));
  const root=doc.documentElement;if(root.tagName!=='deskilo-workspace')throw new Error(T('loadWrongRoot'));
- const st=root.querySelector('settings');if(st){S.name=st.getAttribute('name')||'';S.country=st.getAttribute('country')||'FR';S.currency=st.getAttribute('currency')||'EUR';S.timezone=st.getAttribute('timezone')||'Europe/Paris';S.environment=st.getAttribute('environment')||'dev';
+ const st=root.querySelector('settings');if(st){S.name=st.getAttribute('name')||'';S.country=st.getAttribute('country')||'FR';S.currency=st.getAttribute('currency')||'EUR';S.timezone=st.getAttribute('timezone')||'Europe/Paris';S.environment=st.getAttribute('environment')||'dev';S.brandColor=st.getAttribute('brand-color')||'';
   st.querySelectorAll('feature').forEach(f=>S.features[f.getAttribute('key')]=f.getAttribute('enabled')==='true');
   Object.keys(S.pay).forEach(k=>S.pay[k]='');st.querySelectorAll('payment-instruction').forEach(p=>{S.pay[p.getAttribute('key')]=p.getAttribute('value')||''});}
  S.accessories=[...root.querySelectorAll('accessories > accessory')].map(a=>({name:a.getAttribute('name'),supp:String((parseInt(a.getAttribute('supplement-cents'))||0)/100)}));

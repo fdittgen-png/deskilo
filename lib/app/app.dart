@@ -35,6 +35,10 @@ class DeskiloApp extends ConsumerWidget {
     final animations = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.uiAnimations);
+    // #1289 — the workspace's brand seed, when it chose one and the flag
+    // is on; null derives the product's own palette, pixel for pixel.
+    final seed = ref.watch(workspaceBrandSeedProvider);
+    final brand = seed == null ? null : Color(seed);
     return MaterialApp.router(
       onGenerateTitle: (context) =>
           AppLocalizations.of(context)?.appTitle ?? 'DesKilo',
@@ -47,8 +51,8 @@ class DeskiloApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       // null keeps the standard system-locale resolution (#147).
       locale: ref.watch(localeControllerProvider).value,
-      theme: DeskiloTheme.light(animations: animations),
-      darkTheme: DeskiloTheme.dark(animations: animations),
+      theme: DeskiloTheme.light(animations: animations, brand: brand),
+      darkTheme: DeskiloTheme.dark(animations: animations, brand: brand),
       // null follows the system brightness (#160).
       themeMode:
           ref.watch(themeControllerProvider).value ?? ThemeMode.system,

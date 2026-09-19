@@ -63,7 +63,7 @@ const marked = (attr) => [...html.matchAll(new RegExp(`${attr}="(\\w+)"`, 'g'))]
 // the page, not from these answers.
 const everyFeature = (features) => Object.fromEntries(features.map(f => [f[0], true]));
 const answers = (features) => ({
-  name:'Harness Space', country:'FR', currency:'EUR', timezone:'Europe/Paris', environment:'prod', language:'de',
+  name:'Harness Space', country:'FR', currency:'EUR', timezone:'Europe/Paris', environment:'prod', language:'de', brandColor:'#1f3a5f',
   address:'1 Harness Road', whatsapp:'https://chat.whatsapp.com/harness',
   weekdays:['1','2','3','4','5','6'], granularity:'hours', dayStart:'07:30', boundary:'12:30', dayEnd:'19:00',
   closures:['2026-12-25'], halfDayHours:'4', fullDayHours:'9', deskOpacity:'80',

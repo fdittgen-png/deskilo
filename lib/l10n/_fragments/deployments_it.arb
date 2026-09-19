@@ -168,6 +168,10 @@
   "@deployEntityFeatures": {
     "description": "#988/#990 deployments: deployEntityFeatures"
   },
+  "deployEntityBranding": "Colori",
+  "@deployEntityBranding": {
+    "description": "#1289 deployments: deployEntityBranding — the workspace colours entity"
+  },
   "helpTopicDeployment": "Distribuire",
   "helpTopicEnvironments": "Ambienti"
 }

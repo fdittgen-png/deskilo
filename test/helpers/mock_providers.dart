@@ -1265,6 +1265,28 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   }
 
   /// #1277 — workspaceId -> locale -> key -> the workspace's word.
+  /// #1289 — branding as the server would store it, by workspace id.
+  final Map<String, Map<String, dynamic>> brandings = {};
+
+  @override
+  Future<Map<String, dynamic>> setWorkspaceBranding(
+    String workspaceId,
+    Map<String, dynamic> delta,
+  ) async {
+    final current = Map<String, dynamic>.from(brandings[workspaceId] ?? {});
+    for (final e in delta.entries) {
+      if (e.value == null) {
+        current.remove(e.key);
+      } else {
+        current[e.key] = e.value;
+      }
+    }
+    brandings[workspaceId] = current;
+    final i = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (i >= 0) workspaces[i] = workspaces[i].copyWith(branding: current);
+    return current;
+  }
+
   final Map<String, Map<String, Map<String, String>>> lexicons = {};
 
   @override

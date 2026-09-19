@@ -980,6 +980,31 @@ Die Begriffe sind nach ihrem Ort gruppiert und nicht nach Namen
 aufgelistet — zwei davon lauten auf Englisch *Reserve*, und die Gruppe
 unterscheidet sie.
 
+<!-- anchor: user.workspace.settings.colours -->
+#### Farben
+
+*Einstellungen → Arbeitsbereich → Farben*, mit eingeschalteten *Farben
+des Arbeitsbereichs* (*Einstellungen → Funktionen*). Wählen Sie eine der
+acht Farben oder geben Sie ein beliebiges `#RRGGBB` ein: Der Bildschirm
+zeigt vor dem Speichern, was daraus wird — das helle und das dunkle
+Thema, das die App daraus ableitet, nebeneinander.
+
+Die App behält ihre Kontrastgarantien, welche Farbe sie auch erhält. Wo
+ein Ton auf einer Fläche zu hell zum Lesen wäre, dunkelt die App ihn ab
+— der Farbton gehört Ihnen, die Lesbarkeit dem Produkt — und eine Farbe,
+die sie nicht lesbar machen könnte, wird abgelehnt, mit Nennung des
+Paares, und nichts wird gespeichert. **Produktfarben** entfernt Ihre
+Farbe, statt die des Produkts an ihrer Stelle zu speichern: Dieser
+Bereich folgt dem Produkt, wenn sich dessen Palette später ändert.
+
+Die Farbe kommt auch mit der Datei des Konfigurationsassistenten, einem
+importierten Bereichs-XML (`brand-color` an `<settings>`) oder einer
+Vorlage und reist als Gruppe *Farben* zu einem Zwilling — vor dem
+Speichern auf dieselbe Weise gemessen.
+
+Die DesKilo-Marke, die Farben der Platzzustände und das
+Produktions-Banner gehören nie einem Bereich.
+
 <!-- anchor: user.workspace.settings.desk-transparency -->
 #### Transparenz der Tische
 

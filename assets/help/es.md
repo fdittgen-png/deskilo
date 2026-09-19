@@ -932,6 +932,30 @@ Los términos se agrupan por dónde aparecen, no se listan por nombre —
 dos de ellos se leen *Reserve* en inglés, y el grupo es lo que los
 distingue.
 
+#### Colores
+
+*Ajustes → Espacio → Colores*, con *Colores del espacio* activado
+(*Ajustes → Funciones*). Elija uno de los ocho colores o escriba
+cualquier `#RRGGBB`: la pantalla muestra lo que hace antes de guardar —
+el tema claro y el oscuro que la aplicación deriva de él, uno al lado
+del otro.
+
+La aplicación mantiene sus garantías de contraste sea cual sea el color
+recibido. Donde un tono resultaría demasiado claro para leerse sobre una
+superficie, la aplicación lo oscurece — el tono es suyo, la legibilidad
+es del producto — y un color que no pudiera hacer legible se rechaza,
+indicando el par, sin guardar nada. **Colores del producto** elimina el
+suyo en vez de guardar el del producto en su lugar: este espacio sigue
+al producto cuando su paleta cambia más adelante.
+
+El color también llega con el archivo del asistente de configuración, un
+XML de espacio importado (`brand-color` en `<settings>`) o una
+plantilla, y viaja a un gemelo como el grupo *Colores* — medido del
+mismo modo antes de guardarse.
+
+La marca DesKilo, los colores de los estados de plaza y el banner de
+producción nunca son de un espacio.
+
 #### Transparencia de las mesas
 
 Cuánto se transparenta la imagen de fondo bajo una mesa del plano. Súbala

@@ -3306,6 +3306,12 @@ abstract class AppLocalizations {
   /// **'Features'**
   String get deployEntityFeatures;
 
+  /// #1289 deployments: deployEntityBranding — the workspace colours entity
+  ///
+  /// In en, this message translates to:
+  /// **'Colours'**
+  String get deployEntityBranding;
+
   /// Guide-heading needle for the deployment help symbols (#1022)
   ///
   /// In en, this message translates to:
@@ -18460,6 +18466,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Booking'**
   String get wordingSurfaceBooking;
+
+  /// #1289 workspace branding: the feature switch title
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace colours'**
+  String get featureWorkspaceBrandingTitle;
+
+  /// #1289 workspace branding: the feature switch description
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace chooses a brand colour the app derives its light and dark themes from, and the fill colours of its rooms. A colour that would make the app unreadable is refused with the reason; the product\'s own palette stays the default.'**
+  String get featureWorkspaceBrandingDesc;
+
+  /// #1289 workspace branding: an imported brand colour the app refuses, naming the pair that would be unreadable
+  ///
+  /// In en, this message translates to:
+  /// **'The colour {color} was not applied: {pair} would be unreadable.'**
+  String brandColorRefused(String color, String pair);
+
+  /// #1289 colours screen: the title
+  ///
+  /// In en, this message translates to:
+  /// **'Colours'**
+  String get coloursTitle;
+
+  /// #1289 colours screen: what choosing a colour does
+  ///
+  /// In en, this message translates to:
+  /// **'One colour, and the app derives its light and dark themes from it. Everything else keeps the product palette.'**
+  String get coloursIntro;
+
+  /// #1289 colours screen: the hex field label
+  ///
+  /// In en, this message translates to:
+  /// **'Colour'**
+  String get coloursHexLabel;
+
+  /// #1289 colours screen: the hex field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Six hexadecimal digits. Leave empty for the product colours.'**
+  String get coloursHexHint;
+
+  /// #1289 colours screen: the preview heading
+  ///
+  /// In en, this message translates to:
+  /// **'What it looks like'**
+  String get coloursPreview;
+
+  /// #1289 colours screen: the light scheme sample
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get coloursLight;
+
+  /// #1289 colours screen: the dark scheme sample
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get coloursDark;
+
+  /// #1289 colours screen: the reset button
+  ///
+  /// In en, this message translates to:
+  /// **'Product colours'**
+  String get coloursReset;
+
+  /// #1289 colours screen: the reset confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'The product colours are back.'**
+  String get coloursResetDone;
+
+  /// #1289 colours screen: what a workspace may never restyle
+  ///
+  /// In en, this message translates to:
+  /// **'The DesKilo mark, the colours of the seat states and the production banner are the product’s, in every space.'**
+  String get coloursNeverTheirs;
+
+  /// #1289 colours screen: the colour was stored
+  ///
+  /// In en, this message translates to:
+  /// **'{hex} applied. The app derives its themes from it.'**
+  String coloursApplied(String hex);
+
+  /// #1289 colours screen: what was typed is not a colour
+  ///
+  /// In en, this message translates to:
+  /// **'{text} is not a colour: write it as #RRGGBB.'**
+  String coloursMalformed(String text);
+
+  /// #1289 colours screen: the colour is refused, naming the pair
+  ///
+  /// In en, this message translates to:
+  /// **'Refused: {pair} would be unreadable with this colour.'**
+  String coloursRefused(String pair);
+
+  /// #1289 colours screen: the write failed and nothing changed
+  ///
+  /// In en, this message translates to:
+  /// **'The colour could not be saved. Nothing changed.'**
+  String get coloursSaveFailed;
 
   /// App-bar title of the first-run onboarding screen
   ///

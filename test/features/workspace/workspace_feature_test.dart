@@ -18,6 +18,8 @@ import 'package:flutter_test/flutter_test.dart';
 const Set<WorkspaceFeature> defaultOffFeatures = {
   // #1279 — selling carnets is an offer a workspace makes on purpose.
   WorkspaceFeature.carnets,
+  // #1289 — colours are a statement a workspace makes on purpose.
+  WorkspaceFeature.workspaceBranding,
   // #1277 — renaming the product's words is asked for, never assumed:
   // a space that keeps the product's vocabulary is not shown a control
   // for changing it.
@@ -122,6 +124,7 @@ void main() {
       'publicHolidays': true,
       'workspaceVocabulary': true,
       'carnets': true,
+      'workspaceBranding': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

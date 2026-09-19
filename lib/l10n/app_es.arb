@@ -1387,6 +1387,10 @@
   "@deployEntityFeatures": {
     "description": "#988/#990 deployments: deployEntityFeatures"
   },
+  "deployEntityBranding": "Colores",
+  "@deployEntityBranding": {
+    "description": "#1289 deployments: deployEntityBranding — the workspace colours entity"
+  },
   "helpTopicDeployment": "Desplegar",
   "helpTopicEnvironments": "Entornos",
   "developerMode": "Modo desarrollador",
@@ -6978,6 +6982,97 @@
   "wordingSurfaceBooking": "Reserva",
   "@wordingSurfaceBooking": {
     "description": "#1277 the wording editor: surface name, booking"
+  },
+  "featureWorkspaceBrandingTitle": "Colores del espacio",
+  "@featureWorkspaceBrandingTitle": {
+    "description": "#1289 workspace branding: the feature switch title"
+  },
+  "featureWorkspaceBrandingDesc": "El espacio elige un color de marca del que la aplicación deriva sus temas claro y oscuro, y los colores de relleno de sus salas. Un color que haría ilegible la aplicación se rechaza con el motivo; la paleta del producto sigue siendo la predeterminada.",
+  "@featureWorkspaceBrandingDesc": {
+    "description": "#1289 workspace branding: the feature switch description"
+  },
+  "brandColorRefused": "El color {color} no se aplicó: {pair} sería ilegible.",
+  "@brandColorRefused": {
+    "description": "#1289 workspace branding: an imported brand colour the app refuses, naming the pair that would be unreadable",
+    "placeholders": {
+      "color": {
+        "type": "String"
+      },
+      "pair": {
+        "type": "String"
+      }
+    }
+  },
+  "coloursTitle": "Colores",
+  "@coloursTitle": {
+    "description": "#1289 colours screen: the title"
+  },
+  "coloursIntro": "Un color, y la aplicación deriva de él sus temas claro y oscuro. Todo lo demás conserva la paleta del producto.",
+  "@coloursIntro": {
+    "description": "#1289 colours screen: what choosing a colour does"
+  },
+  "coloursHexLabel": "Color",
+  "@coloursHexLabel": {
+    "description": "#1289 colours screen: the hex field label"
+  },
+  "coloursHexHint": "Seis dígitos hexadecimales. Déjelo vacío para los colores del producto.",
+  "@coloursHexHint": {
+    "description": "#1289 colours screen: the hex field hint"
+  },
+  "coloursPreview": "Cómo se ve",
+  "@coloursPreview": {
+    "description": "#1289 colours screen: the preview heading"
+  },
+  "coloursLight": "Claro",
+  "@coloursLight": {
+    "description": "#1289 colours screen: the light scheme sample"
+  },
+  "coloursDark": "Oscuro",
+  "@coloursDark": {
+    "description": "#1289 colours screen: the dark scheme sample"
+  },
+  "coloursReset": "Colores del producto",
+  "@coloursReset": {
+    "description": "#1289 colours screen: the reset button"
+  },
+  "coloursResetDone": "Los colores del producto han vuelto.",
+  "@coloursResetDone": {
+    "description": "#1289 colours screen: the reset confirmation"
+  },
+  "coloursNeverTheirs": "La marca DesKilo, los colores de los estados de plaza y el banner de producción son del producto, en todos los espacios.",
+  "@coloursNeverTheirs": {
+    "description": "#1289 colours screen: what a workspace may never restyle"
+  },
+  "coloursApplied": "{hex} aplicado. La aplicación deriva de él sus temas.",
+  "@coloursApplied": {
+    "description": "#1289 colours screen: the colour was stored",
+    "placeholders": {
+      "hex": {
+        "type": "String"
+      }
+    }
+  },
+  "coloursMalformed": "{text} no es un color: escríbalo como #RRGGBB.",
+  "@coloursMalformed": {
+    "description": "#1289 colours screen: what was typed is not a colour",
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "coloursRefused": "Rechazado: {pair} sería ilegible con este color.",
+  "@coloursRefused": {
+    "description": "#1289 colours screen: the colour is refused, naming the pair",
+    "placeholders": {
+      "pair": {
+        "type": "String"
+      }
+    }
+  },
+  "coloursSaveFailed": "No se pudo guardar el color. Nada ha cambiado.",
+  "@coloursSaveFailed": {
+    "description": "#1289 colours screen: the write failed and nothing changed"
   },
   "onboardingTitle": "Bienvenido a DesKilo",
   "onboardingCreateTab": "Crear un espacio",

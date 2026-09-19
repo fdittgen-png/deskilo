@@ -1857,6 +1857,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deployEntityFeatures => 'Features';
 
   @override
+  String get deployEntityBranding => 'Colours';
+
+  @override
   String get helpTopicDeployment => 'Deploying';
 
   @override
@@ -10550,6 +10553,70 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wordingSurfaceBooking => 'Booking';
+
+  @override
+  String get featureWorkspaceBrandingTitle => 'Workspace colours';
+
+  @override
+  String get featureWorkspaceBrandingDesc =>
+      'The workspace chooses a brand colour the app derives its light and dark themes from, and the fill colours of its rooms. A colour that would make the app unreadable is refused with the reason; the product\'s own palette stays the default.';
+
+  @override
+  String brandColorRefused(String color, String pair) {
+    return 'The colour $color was not applied: $pair would be unreadable.';
+  }
+
+  @override
+  String get coloursTitle => 'Colours';
+
+  @override
+  String get coloursIntro =>
+      'One colour, and the app derives its light and dark themes from it. Everything else keeps the product palette.';
+
+  @override
+  String get coloursHexLabel => 'Colour';
+
+  @override
+  String get coloursHexHint =>
+      'Six hexadecimal digits. Leave empty for the product colours.';
+
+  @override
+  String get coloursPreview => 'What it looks like';
+
+  @override
+  String get coloursLight => 'Light';
+
+  @override
+  String get coloursDark => 'Dark';
+
+  @override
+  String get coloursReset => 'Product colours';
+
+  @override
+  String get coloursResetDone => 'The product colours are back.';
+
+  @override
+  String get coloursNeverTheirs =>
+      'The DesKilo mark, the colours of the seat states and the production banner are the product’s, in every space.';
+
+  @override
+  String coloursApplied(String hex) {
+    return '$hex applied. The app derives its themes from it.';
+  }
+
+  @override
+  String coloursMalformed(String text) {
+    return '$text is not a colour: write it as #RRGGBB.';
+  }
+
+  @override
+  String coloursRefused(String pair) {
+    return 'Refused: $pair would be unreadable with this colour.';
+  }
+
+  @override
+  String get coloursSaveFailed =>
+      'The colour could not be saved. Nothing changed.';
 
   @override
   String get onboardingTitle => 'Welcome to DesKilo';

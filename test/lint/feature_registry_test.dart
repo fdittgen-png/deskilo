@@ -131,7 +131,11 @@ import 'package:flutter_test/flutter_test.dart';
 // 104→105 (2026-09-17): #1279 carnets — prepaid half-days sold once and
 //   spent across months beyond a subscription. Platform, default OFF,
 //   under invoicing.
-const int _expectedFeatureCount = 105;
+// 105→106 (2026-09-18): #1289 workspaceBranding — a brand seed colour the
+//   themes derive from and the office fills, carried by a template.
+//   Everywhere, because the theme is the whole app. Platform, default
+//   OFF: the product's palette is the default and needs no switch.
+const int _expectedFeatureCount = 106;
 
 void main() {
   _tierPins();

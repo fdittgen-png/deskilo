@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import '../../../core/demo/demo_mode.dart';
+import 'package:flutter/material.dart' show Color;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -7,7 +8,10 @@ import '../../../core/storage/active_workspace_store.dart';
 import '../../../core/storage/note_seen_store.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/time/work_hours.dart';
+import '../../../app/theme.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../application/workspace_colours.dart';
+import '../domain/workspace_branding.dart';
 import '../data/supabase_workspace_repository.dart';
 import '../domain/booking_granularity.dart';
 import '../domain/booking_policies.dart';
@@ -215,6 +219,15 @@ Future<NewMemberDefaults> newMemberDefaults(Ref ref) async {
 WordingTerms wordingTerms(Ref ref) =>
     WordingTerms(ref.watch(workspaceRepositoryProvider));
 
+/// #1289 — the decision to give this space its own colour. The contrast
+/// check is the app's one implementation (`DeskiloTheme.refusals`),
+/// handed in here so `application/` stays pure Dart.
+@riverpod
+WorkspaceColours workspaceColours(Ref ref) => WorkspaceColours(
+      ref.watch(workspaceRepositoryProvider),
+      (argb) => [for (final f in DeskiloTheme.refusals(Color(argb))) f.pair],
+    );
+
 /// #1277 — the active workspace's own words for allow-listed product
 /// terms, `{locale: {key: text}}`.
 ///
@@ -378,6 +391,23 @@ Future<Set<WorkspaceFeature>> enabledFeatures(Ref ref) async {
 Set<WorkspaceFeature> enabledFeaturesSync(Ref ref) =>
     ref.watch(enabledFeaturesProvider).value ??
     effectiveFeatures(resolveEnabledFeatures(const {}));
+
+/// #1289 — the active workspace's brand seed (opaque ARGB), or null for
+/// the product's own palette: null while the flag is off, while nothing
+/// is loaded yet, and for a workspace that chose nothing. The theme reads
+/// this and nothing else, so a test that injects no workspace sees the
+/// product colours — branding is off by default in tests by construction.
+@Riverpod(keepAlive: true)
+int? workspaceBrandSeed(Ref ref) {
+  if (!ref.watch(enabledFeaturesSyncProvider).contains(
+        WorkspaceFeature.workspaceBranding,
+      )) {
+    return null;
+  }
+  final workspace = ref.watch(currentWorkspaceProvider).value;
+  if (workspace == null) return null;
+  return WorkspaceBranding.fromJson(workspace.branding).seedArgb;
+}
 
 /// #513 — MY effective permissions under the workspace's role matrix.
 /// The one client-side gate: screens ask for a permission, never for a

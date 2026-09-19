@@ -1868,6 +1868,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get deployEntityFeatures => 'Funktionen';
 
   @override
+  String get deployEntityBranding => 'Farben';
+
+  @override
   String get helpTopicDeployment => 'Deployen';
 
   @override
@@ -10638,6 +10641,70 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get wordingSurfaceBooking => 'Buchung';
+
+  @override
+  String get featureWorkspaceBrandingTitle => 'Farben des Arbeitsbereichs';
+
+  @override
+  String get featureWorkspaceBrandingDesc =>
+      'Der Arbeitsbereich wählt eine Markenfarbe, aus der die App ihr helles und dunkles Thema ableitet, sowie die Füllfarben seiner Räume. Eine Farbe, die die App unlesbar machen würde, wird mit Begründung abgelehnt; die Palette des Produkts bleibt der Standard.';
+
+  @override
+  String brandColorRefused(String color, String pair) {
+    return 'Die Farbe $color wurde nicht übernommen: $pair wäre unlesbar.';
+  }
+
+  @override
+  String get coloursTitle => 'Farben';
+
+  @override
+  String get coloursIntro =>
+      'Eine Farbe, und die App leitet daraus ihr helles und dunkles Thema ab. Alles Übrige behält die Produktpalette.';
+
+  @override
+  String get coloursHexLabel => 'Farbe';
+
+  @override
+  String get coloursHexHint =>
+      'Sechs Hexadezimalziffern. Leer lassen für die Produktfarben.';
+
+  @override
+  String get coloursPreview => 'So sieht es aus';
+
+  @override
+  String get coloursLight => 'Hell';
+
+  @override
+  String get coloursDark => 'Dunkel';
+
+  @override
+  String get coloursReset => 'Produktfarben';
+
+  @override
+  String get coloursResetDone => 'Die Produktfarben sind zurück.';
+
+  @override
+  String get coloursNeverTheirs =>
+      'Die DesKilo-Marke, die Farben der Platzzustände und das Produktions-Banner gehören dem Produkt, in jedem Bereich.';
+
+  @override
+  String coloursApplied(String hex) {
+    return '$hex übernommen. Die App leitet daraus ihre Themen ab.';
+  }
+
+  @override
+  String coloursMalformed(String text) {
+    return '$text ist keine Farbe: als #RRGGBB schreiben.';
+  }
+
+  @override
+  String coloursRefused(String pair) {
+    return 'Abgelehnt: $pair wäre mit dieser Farbe unlesbar.';
+  }
+
+  @override
+  String get coloursSaveFailed =>
+      'Die Farbe konnte nicht gespeichert werden. Es hat sich nichts geändert.';
 
   @override
   String get onboardingTitle => 'Willkommen bei DesKilo';

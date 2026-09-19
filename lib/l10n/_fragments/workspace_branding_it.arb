@@ -1,0 +1,93 @@
+{
+  "featureWorkspaceBrandingTitle": "Colori dello spazio",
+  "@featureWorkspaceBrandingTitle": {
+    "description": "#1289 workspace branding: the feature switch title"
+  },
+  "featureWorkspaceBrandingDesc": "Lo spazio sceglie un colore del marchio da cui l’app deriva i temi chiaro e scuro, e i colori di riempimento delle sue sale. Un colore che renderebbe l’app illeggibile viene rifiutato con la motivazione; la palette del prodotto resta quella predefinita.",
+  "@featureWorkspaceBrandingDesc": {
+    "description": "#1289 workspace branding: the feature switch description"
+  },
+  "brandColorRefused": "Il colore {color} non è stato applicato: {pair} sarebbe illeggibile.",
+  "@brandColorRefused": {
+    "description": "#1289 workspace branding: an imported brand colour the app refuses, naming the pair that would be unreadable",
+    "placeholders": {
+      "color": {
+        "type": "String"
+      },
+      "pair": {
+        "type": "String"
+      }
+    }
+  },
+  "coloursTitle": "Colori",
+  "@coloursTitle": {
+    "description": "#1289 colours screen: the title"
+  },
+  "coloursIntro": "Un colore, e l’app ne deriva i temi chiaro e scuro. Tutto il resto mantiene la palette del prodotto.",
+  "@coloursIntro": {
+    "description": "#1289 colours screen: what choosing a colour does"
+  },
+  "coloursHexLabel": "Colore",
+  "@coloursHexLabel": {
+    "description": "#1289 colours screen: the hex field label"
+  },
+  "coloursHexHint": "Sei cifre esadecimali. Lasciare vuoto per i colori del prodotto.",
+  "@coloursHexHint": {
+    "description": "#1289 colours screen: the hex field hint"
+  },
+  "coloursPreview": "Come appare",
+  "@coloursPreview": {
+    "description": "#1289 colours screen: the preview heading"
+  },
+  "coloursLight": "Chiaro",
+  "@coloursLight": {
+    "description": "#1289 colours screen: the light scheme sample"
+  },
+  "coloursDark": "Scuro",
+  "@coloursDark": {
+    "description": "#1289 colours screen: the dark scheme sample"
+  },
+  "coloursReset": "Colori del prodotto",
+  "@coloursReset": {
+    "description": "#1289 colours screen: the reset button"
+  },
+  "coloursResetDone": "I colori del prodotto sono tornati.",
+  "@coloursResetDone": {
+    "description": "#1289 colours screen: the reset confirmation"
+  },
+  "coloursNeverTheirs": "Il marchio DesKilo, i colori degli stati dei posti e il banner di produzione sono del prodotto, in ogni spazio.",
+  "@coloursNeverTheirs": {
+    "description": "#1289 colours screen: what a workspace may never restyle"
+  },
+  "coloursApplied": "{hex} applicato. L’app ne deriva i temi.",
+  "@coloursApplied": {
+    "description": "#1289 colours screen: the colour was stored",
+    "placeholders": {
+      "hex": {
+        "type": "String"
+      }
+    }
+  },
+  "coloursMalformed": "{text} non è un colore: scrivetelo come #RRGGBB.",
+  "@coloursMalformed": {
+    "description": "#1289 colours screen: what was typed is not a colour",
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "coloursRefused": "Rifiutato: {pair} sarebbe illeggibile con questo colore.",
+  "@coloursRefused": {
+    "description": "#1289 colours screen: the colour is refused, naming the pair",
+    "placeholders": {
+      "pair": {
+        "type": "String"
+      }
+    }
+  },
+  "coloursSaveFailed": "Non è stato possibile salvare il colore. Nulla è cambiato.",
+  "@coloursSaveFailed": {
+    "description": "#1289 colours screen: the write failed and nothing changed"
+  }
+}

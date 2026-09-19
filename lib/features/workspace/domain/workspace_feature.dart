@@ -202,7 +202,13 @@ enum WorkspaceFeature {
 
   /// #1279 — carnets: prepaid half-days a workspace sells, spent across
   /// months when a member books beyond their subscription, charged once.
-  carnets;
+  carnets,
+
+  /// #1289 — workspace branding: a brand seed colour the app's light,
+  /// dark and warm themes derive from, an office fill palette and a
+  /// curated seat palette, carried by a template. Off, the app is
+  /// pixel-identical to the product's own palette.
+  workspaceBranding;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1146,6 +1152,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.invoicing,
+  ),
+  // #1289 — colours are a statement a workspace makes on purpose; the
+  // product's own palette is the default and needs no switch: Platform,
+  // off. Everywhere, because the theme is the whole app.
+  WorkspaceFeature.workspaceBranding: FeatureManifestEntry(
+    feature: WorkspaceFeature.workspaceBranding,
+    surface: FeatureSurface.everywhere,
+    tier: FeatureTier.platform,
+    defaultOn: false,
   ),
 };
 

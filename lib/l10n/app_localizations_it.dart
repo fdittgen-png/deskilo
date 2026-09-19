@@ -1869,6 +1869,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get deployEntityFeatures => 'Funzionalità';
 
   @override
+  String get deployEntityBranding => 'Colori';
+
+  @override
   String get helpTopicDeployment => 'Distribuire';
 
   @override
@@ -10643,6 +10646,70 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get wordingSurfaceBooking => 'Prenotazione';
+
+  @override
+  String get featureWorkspaceBrandingTitle => 'Colori dello spazio';
+
+  @override
+  String get featureWorkspaceBrandingDesc =>
+      'Lo spazio sceglie un colore del marchio da cui l’app deriva i temi chiaro e scuro, e i colori di riempimento delle sue sale. Un colore che renderebbe l’app illeggibile viene rifiutato con la motivazione; la palette del prodotto resta quella predefinita.';
+
+  @override
+  String brandColorRefused(String color, String pair) {
+    return 'Il colore $color non è stato applicato: $pair sarebbe illeggibile.';
+  }
+
+  @override
+  String get coloursTitle => 'Colori';
+
+  @override
+  String get coloursIntro =>
+      'Un colore, e l’app ne deriva i temi chiaro e scuro. Tutto il resto mantiene la palette del prodotto.';
+
+  @override
+  String get coloursHexLabel => 'Colore';
+
+  @override
+  String get coloursHexHint =>
+      'Sei cifre esadecimali. Lasciare vuoto per i colori del prodotto.';
+
+  @override
+  String get coloursPreview => 'Come appare';
+
+  @override
+  String get coloursLight => 'Chiaro';
+
+  @override
+  String get coloursDark => 'Scuro';
+
+  @override
+  String get coloursReset => 'Colori del prodotto';
+
+  @override
+  String get coloursResetDone => 'I colori del prodotto sono tornati.';
+
+  @override
+  String get coloursNeverTheirs =>
+      'Il marchio DesKilo, i colori degli stati dei posti e il banner di produzione sono del prodotto, in ogni spazio.';
+
+  @override
+  String coloursApplied(String hex) {
+    return '$hex applicato. L’app ne deriva i temi.';
+  }
+
+  @override
+  String coloursMalformed(String text) {
+    return '$text non è un colore: scrivetelo come #RRGGBB.';
+  }
+
+  @override
+  String coloursRefused(String pair) {
+    return 'Rifiutato: $pair sarebbe illeggibile con questo colore.';
+  }
+
+  @override
+  String get coloursSaveFailed =>
+      'Non è stato possibile salvare il colore. Nulla è cambiato.';
 
   @override
   String get onboardingTitle => 'Benvenuto su DesKilo';

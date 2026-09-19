@@ -439,5 +439,6 @@ String deploymentEntityName(AppLocalizations? l10n, String key) =>
       'closure_days' => l10n?.deployEntityClosureDays ?? 'Closure days',
       'invitations' => l10n?.deployEntityInvitations ?? 'Invitation templates',
       'features' => l10n?.deployEntityFeatures ?? 'Features',
+      'branding' => l10n?.deployEntityBranding ?? 'Colours',
       _ => key,
     };

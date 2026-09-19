@@ -138,6 +138,8 @@ window.SETUP_L10N={
    "identityWhy": "The name, the country and the currency decide everything that follows: the currencies and time zones offered, the invoice format, the payment methods, VAT.",
    "identityName": "Workspace name *",
    "identityNameHint": "The name shown everywhere: app, invoices, invitations.",
+   "identityBrandColor": "Brand colour",
+   "identityBrandColorHint": "Optional: a #RRGGBB colour the app derives its light and dark themes from. The app refuses one that would be unreadable, naming the pair.",
    "identityEnvironment": "Workspace type",
    "identityEnvironmentHint": "A development workspace says so on every screen and watermarks “DEVELOPMENT” on every document. Only choose “production” if the invoices it issues will really be owed. Default: development.",
    "identityCountry": "Country",
@@ -152,6 +154,7 @@ window.SETUP_L10N={
    "identityAddressHint": "Printed on invoices and on the kiosk receipt.",
    "identityAddressPlaceholder": "12 Example Street, London SW1A 1AA",
    "identityErrName": "The workspace name is missing.",
+   "identityErrBrandColor": "The brand colour must be written #RRGGBB.",
    "identityOk": "Workspace “{name}” — {country}, {currency}, {timezone}",
    "identityWarnCurrency": "The currency {currency} is not the country's ({expected}): intended for a cross-border workspace, otherwise a mistake.",
    "featuresTitle": "Features",
@@ -996,6 +999,10 @@ window.SETUP_L10N={
    "carnets": [
     "Carnets",
     "Sell carnets of half-days that are spent across months when a member books beyond their subscription, charged once at the sale."
+   ],
+   "workspaceBranding": [
+    "Workspace colours",
+    "The workspace chooses a brand colour the app derives its light and dark themes from, and the fill colours of its rooms. A colour that would make the app unreadable is refused with the reason; the product's own palette stays the default."
    ]
   },
   "process": {
@@ -1343,6 +1350,8 @@ window.SETUP_L10N={
    "identityWhy": "Le nom, le pays et la devise déterminent tout ce qui suit : les devises et fuseaux proposés, le format des factures, les moyens de paiement, la TVA.",
    "identityName": "Nom de l'espace *",
    "identityNameHint": "Le nom affiché partout : app, factures, invitations.",
+   "identityBrandColor": "Couleur de marque",
+   "identityBrandColorHint": "Facultatif : une couleur #RRGGBB dont l’application dérive ses thèmes clair et sombre. L’application refuse une couleur illisible, en nommant la paire.",
    "identityEnvironment": "Type d'espace",
    "identityEnvironmentHint": "Un espace de développement l'annonce sur chaque écran et filigrane « DÉVELOPPEMENT » sur chaque document. Ne choisissez « production » que si les factures qui en sortiront sont réellement dues. Par défaut : développement.",
    "identityCountry": "Pays",
@@ -1357,6 +1366,7 @@ window.SETUP_L10N={
    "identityAddressHint": "Imprimée sur les factures et le reçu de la borne.",
    "identityAddressPlaceholder": "12 rue Exemple, 34120 Pézenas",
    "identityErrName": "Le nom de l'espace manque.",
+   "identityErrBrandColor": "La couleur de marque s’écrit #RRGGBB.",
    "identityOk": "Espace « {name} » — {country}, {currency}, {timezone}",
    "identityWarnCurrency": "La devise {currency} n'est pas celle du pays ({expected}) : voulu pour un espace transfrontalier, sinon une erreur.",
    "featuresTitle": "Fonctionnalités",
@@ -2201,6 +2211,10 @@ window.SETUP_L10N={
    "carnets": [
     "Carnets",
     "Vendre des carnets de demi-journées, dépensés sur plusieurs mois quand un membre réserve au-delà de son abonnement, facturés une seule fois à la vente."
+   ],
+   "workspaceBranding": [
+    "Couleurs de l’espace",
+    "L’espace choisit une couleur de marque dont l’application dérive ses thèmes clair et sombre, et les couleurs de remplissage de ses salles. Une couleur qui rendrait l’application illisible est refusée avec la raison ; la palette du produit reste la valeur par défaut."
    ]
   },
   "process": {
@@ -2548,6 +2562,8 @@ window.SETUP_L10N={
    "identityWhy": "Name, Land und Währung bestimmen alles Weitere: die angebotenen Währungen und Zeitzonen, das Rechnungsformat, die Zahlungswege, die Umsatzsteuer.",
    "identityName": "Name des Workspace *",
    "identityNameHint": "Der überall angezeigte Name: App, Rechnungen, Einladungen.",
+   "identityBrandColor": "Markenfarbe",
+   "identityBrandColorHint": "Optional: eine #RRGGBB-Farbe, aus der die App ihr helles und dunkles Thema ableitet. Eine unlesbare Farbe lehnt die App ab und nennt das Paar.",
    "identityEnvironment": "Art des Workspace",
    "identityEnvironmentHint": "Ein Entwicklungs-Workspace weist auf jedem Bildschirm darauf hin und versieht jedes Dokument mit dem Wasserzeichen „ENTWICKLUNG“. Wählen Sie „Produktion“ nur, wenn die ausgestellten Rechnungen tatsächlich geschuldet sein werden. Standard: Entwicklung.",
    "identityCountry": "Land",
@@ -2562,6 +2578,7 @@ window.SETUP_L10N={
    "identityAddressHint": "Wird auf Rechnungen und dem Kiosk-Beleg gedruckt.",
    "identityAddressPlaceholder": "Musterstraße 12, 10115 Berlin",
    "identityErrName": "Der Name des Workspace fehlt.",
+   "identityErrBrandColor": "Die Markenfarbe wird als #RRGGBB geschrieben.",
    "identityOk": "Workspace „{name}“ — {country}, {currency}, {timezone}",
    "identityWarnCurrency": "Die Währung {currency} ist nicht die des Landes ({expected}): gewollt bei einem grenzüberschreitenden Workspace, sonst ein Fehler.",
    "featuresTitle": "Funktionen",
@@ -3406,6 +3423,10 @@ window.SETUP_L10N={
    "carnets": [
     "Mehrfachkarten",
     "Mehrfachkarten mit Halbtagen verkaufen, die über Monate verbraucht werden, wenn ein Mitglied über sein Abo hinaus bucht — einmal beim Verkauf berechnet."
+   ],
+   "workspaceBranding": [
+    "Farben des Arbeitsbereichs",
+    "Der Arbeitsbereich wählt eine Markenfarbe, aus der die App ihr helles und dunkles Thema ableitet, sowie die Füllfarben seiner Räume. Eine Farbe, die die App unlesbar machen würde, wird mit Begründung abgelehnt; die Palette des Produkts bleibt der Standard."
    ]
   },
   "process": {
@@ -3753,6 +3774,8 @@ window.SETUP_L10N={
    "identityWhy": "El nombre, el país y la moneda determinan todo lo que sigue: las monedas y zonas horarias propuestas, el formato de las facturas, los medios de pago, el IVA.",
    "identityName": "Nombre del espacio *",
    "identityNameHint": "El nombre que se muestra en todas partes: app, facturas, invitaciones.",
+   "identityBrandColor": "Color de marca",
+   "identityBrandColorHint": "Opcional: un color #RRGGBB del que la aplicación deriva sus temas claro y oscuro. La aplicación rechaza uno ilegible, indicando el par.",
    "identityEnvironment": "Tipo de espacio",
    "identityEnvironmentHint": "Un espacio de desarrollo lo indica en cada pantalla y pone la marca de agua «DESARROLLO» en cada documento. Elige «producción» solo si las facturas que salgan de él se deben de verdad. Predeterminado: desarrollo.",
    "identityCountry": "País",
@@ -3767,6 +3790,7 @@ window.SETUP_L10N={
    "identityAddressHint": "Se imprime en las facturas y en el recibo del quiosco.",
    "identityAddressPlaceholder": "Calle Mayor 12, 28013 Madrid",
    "identityErrName": "Falta el nombre del espacio.",
+   "identityErrBrandColor": "El color de marca se escribe #RRGGBB.",
    "identityOk": "Espacio «{name}» — {country}, {currency}, {timezone}",
    "identityWarnCurrency": "La moneda {currency} no es la del país ({expected}): intencionado para un espacio transfronterizo; si no, es un error.",
    "featuresTitle": "Funciones",
@@ -4611,6 +4635,10 @@ window.SETUP_L10N={
    "carnets": [
     "Bonos",
     "Vender bonos de medias jornadas que se gastan a lo largo de los meses cuando un miembro reserva más allá de su suscripción, cobrados una sola vez en la venta."
+   ],
+   "workspaceBranding": [
+    "Colores del espacio",
+    "El espacio elige un color de marca del que la aplicación deriva sus temas claro y oscuro, y los colores de relleno de sus salas. Un color que haría ilegible la aplicación se rechaza con el motivo; la paleta del producto sigue siendo la predeterminada."
    ]
   },
   "process": {
@@ -4958,6 +4986,8 @@ window.SETUP_L10N={
    "identityWhy": "Il nome, il paese e la valuta determinano tutto ciò che segue: le valute e i fusi orari proposti, il formato delle fatture, i metodi di pagamento, l'IVA.",
    "identityName": "Nome dello spazio *",
    "identityNameHint": "Il nome mostrato ovunque: app, fatture, inviti.",
+   "identityBrandColor": "Colore del marchio",
+   "identityBrandColorHint": "Facoltativo: un colore #RRGGBB da cui l’app deriva i temi chiaro e scuro. L’app rifiuta un colore illeggibile, indicando la coppia.",
    "identityEnvironment": "Tipo di spazio",
    "identityEnvironmentHint": "Uno spazio di sviluppo lo segnala su ogni schermata e applica la filigrana «SVILUPPO» su ogni documento. Scegli «produzione» solo se le fatture che emetterà saranno realmente dovute. Predefinito: sviluppo.",
    "identityCountry": "Paese",
@@ -4972,6 +5002,7 @@ window.SETUP_L10N={
    "identityAddressHint": "Stampato sulle fatture e sulla ricevuta del chiosco.",
    "identityAddressPlaceholder": "Via Roma 12, 20121 Milano",
    "identityErrName": "Manca il nome dello spazio.",
+   "identityErrBrandColor": "Il colore del marchio si scrive #RRGGBB.",
    "identityOk": "Spazio «{name}» — {country}, {currency}, {timezone}",
    "identityWarnCurrency": "La valuta {currency} non è quella del paese ({expected}): voluto per uno spazio transfrontaliero, altrimenti è un errore.",
    "featuresTitle": "Funzionalità",
@@ -5816,6 +5847,10 @@ window.SETUP_L10N={
    "carnets": [
     "Carnet",
     "Vendere carnet di mezze giornate, consumati nell'arco dei mesi quando un membro prenota oltre il suo abbonamento, addebitati una sola volta alla vendita."
+   ],
+   "workspaceBranding": [
+    "Colori dello spazio",
+    "Lo spazio sceglie un colore del marchio da cui l’app deriva i temi chiaro e scuro, e i colori di riempimento delle sue sale. Un colore che renderebbe l’app illeggibile viene rifiutato con la motivazione; la palette del prodotto resta quella predefinita."
    ]
   },
   "process": {
