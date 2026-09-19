@@ -1003,6 +1003,10 @@ window.SETUP_L10N={
    "workspaceBranding": [
     "Workspace colours",
     "The workspace chooses a brand colour the app derives its light and dark themes from, and the fill colours of its rooms. A colour that would make the app unreadable is refused with the reason; the product's own palette stays the default."
+   ],
+   "customRoles": [
+    "Roles this space defines",
+    "The workspace may define roles of its own — a treasurer, a secretary — each adding permissions on top of a member's role. They never take a permission away, and an owner always keeps every one."
    ]
   },
   "process": {
@@ -2215,6 +2219,10 @@ window.SETUP_L10N={
    "workspaceBranding": [
     "Couleurs de l’espace",
     "L’espace choisit une couleur de marque dont l’application dérive ses thèmes clair et sombre, et les couleurs de remplissage de ses salles. Une couleur qui rendrait l’application illisible est refusée avec la raison ; la palette du produit reste la valeur par défaut."
+   ],
+   "customRoles": [
+    "Rôles définis par cet espace",
+    "L’espace peut définir ses propres rôles — un trésorier, un secrétaire — qui ajoutent des permissions à celles du rôle d’un membre. Ils n’en retirent jamais, et un propriétaire les conserve toutes."
    ]
   },
   "process": {
@@ -3427,6 +3435,10 @@ window.SETUP_L10N={
    "workspaceBranding": [
     "Farben des Arbeitsbereichs",
     "Der Arbeitsbereich wählt eine Markenfarbe, aus der die App ihr helles und dunkles Thema ableitet, sowie die Füllfarben seiner Räume. Eine Farbe, die die App unlesbar machen würde, wird mit Begründung abgelehnt; die Palette des Produkts bleibt der Standard."
+   ],
+   "customRoles": [
+    "Rollen, die dieser Bereich festlegt",
+    "Der Arbeitsbereich kann eigene Rollen festlegen — Kassenwart, Schriftführer — die Berechtigungen zur Rolle eines Mitglieds hinzufügen. Sie nehmen nie eine weg, und ein Eigentümer behält immer alle."
    ]
   },
   "process": {
@@ -4639,6 +4651,10 @@ window.SETUP_L10N={
    "workspaceBranding": [
     "Colores del espacio",
     "El espacio elige un color de marca del que la aplicación deriva sus temas claro y oscuro, y los colores de relleno de sus salas. Un color que haría ilegible la aplicación se rechaza con el motivo; la paleta del producto sigue siendo la predeterminada."
+   ],
+   "customRoles": [
+    "Roles que define este espacio",
+    "El espacio puede definir sus propios roles — tesorero, secretario — que añaden permisos a los del rol de un miembro. Nunca quitan ninguno, y un propietario los conserva todos."
    ]
   },
   "process": {
@@ -5851,6 +5867,10 @@ window.SETUP_L10N={
    "workspaceBranding": [
     "Colori dello spazio",
     "Lo spazio sceglie un colore del marchio da cui l’app deriva i temi chiaro e scuro, e i colori di riempimento delle sue sale. Un colore che renderebbe l’app illeggibile viene rifiutato con la motivazione; la palette del prodotto resta quella predefinita."
+   ],
+   "customRoles": [
+    "Ruoli definiti da questo spazio",
+    "Lo spazio può definire ruoli propri — un tesoriere, un segretario — che aggiungono permessi a quelli del ruolo di un membro. Non ne tolgono mai, e un proprietario li mantiene tutti."
    ]
   },
   "process": {

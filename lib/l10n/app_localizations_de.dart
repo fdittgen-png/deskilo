@@ -1674,6 +1674,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wird auf Dokumenten vor ihrem Namen gedruckt. „Keine“ druckt nur den Namen.';
 
   @override
+  String get featureCustomRolesTitle => 'Rollen, die dieser Bereich festlegt';
+
+  @override
+  String get featureCustomRolesDesc =>
+      'Der Arbeitsbereich kann eigene Rollen festlegen — Kassenwart, Schriftführer — die Berechtigungen zur Rolle eines Mitglieds hinzufügen. Sie nehmen nie eine weg, und ein Eigentümer behält immer alle.';
+
+  @override
   String get featureDemoMode => 'Demomodus';
 
   @override

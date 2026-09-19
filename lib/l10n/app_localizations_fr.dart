@@ -1676,6 +1676,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Imprimée devant leur nom sur les documents. « Aucune » n\'imprime que le nom.';
 
   @override
+  String get featureCustomRolesTitle => 'Rôles définis par cet espace';
+
+  @override
+  String get featureCustomRolesDesc =>
+      'L’espace peut définir ses propres rôles — un trésorier, un secrétaire — qui ajoutent des permissions à celles du rôle d’un membre. Ils n’en retirent jamais, et un propriétaire les conserve toutes.';
+
+  @override
   String get featureDemoMode => 'Mode démo';
 
   @override

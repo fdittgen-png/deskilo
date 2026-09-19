@@ -463,4 +463,10 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'rooms. A colour that would make the app unreadable is '
                   'refused with the reason; the product\'s own palette '
                   'stays the default.',
+        WorkspaceFeature.customRoles =>
+          l10n?.featureCustomRolesDesc ??
+              'The workspace may define roles of its own — a treasurer, a '
+                  'secretary — each adding permissions on top of a '
+                  'member\'s role. They never take a permission away, and '
+                  'an owner always keeps every one.',
       };

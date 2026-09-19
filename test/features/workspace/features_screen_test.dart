@@ -115,7 +115,8 @@ void main() {
     // closure days changes what a subscription includes.
     // #1279 — carnets is the twenty-second: selling prepaid half-days.
     // #1289 — workspaceBranding is the twenty-third: colours are chosen.
-    expect(onCount, featureManifest.length - 24);
+    // #1287 — customRoles is the twenty-fourth: a bureau asks for it.
+    expect(onCount, featureManifest.length - 25);
   });
 
   testWidgets(

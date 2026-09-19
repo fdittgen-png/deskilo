@@ -1,0 +1,10 @@
+{
+  "featureCustomRolesTitle": "Roles que define este espacio",
+  "@featureCustomRolesTitle": {
+    "description": "#1287 custom roles: the feature switch title"
+  },
+  "featureCustomRolesDesc": "El espacio puede definir sus propios roles — tesorero, secretario — que añaden permisos a los del rol de un miembro. Nunca quitan ninguno, y un propietario los conserva todos.",
+  "@featureCustomRolesDesc": {
+    "description": "#1287 custom roles: the feature switch description"
+  }
+}

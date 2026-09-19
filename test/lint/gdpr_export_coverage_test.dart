@@ -19,21 +19,38 @@ import 'package:flutter_test/flutter_test.dart';
 /// The LATEST definition of `export_my_data` across every migration —
 /// an anchored patch may redefine it, and reading the first definition
 /// would test a function the database no longer has.
+///
+/// Two idioms add a table to the export, and both count here. A later
+/// migration may restate the whole function, and it may instead patch
+/// it in place (`pg_get_functiondef` + an anchored replace, the house
+/// idiom for a function too long to restate — 0247 adds `custom_roles`
+/// that way). Reading only the restatements would report a table as
+/// missing that the database has returned for months.
 String _latestExportBody() {
   final dir = Directory('supabase/migrations');
   final files = dir.listSync().whereType<File>().toList()
     ..sort((File a, File b) => a.path.compareTo(b.path));
   var body = '';
+  final patches = <String>[];
   for (final f in files) {
     if (!f.path.endsWith('.sql')) continue;
     final sql = f.readAsStringSync();
     final at = sql.indexOf(
         'create or replace function public.export_my_data');
-    if (at < 0) continue;
-    final end = sql.indexOf(r'$$;', at);
-    body = end < 0 ? sql.substring(at) : sql.substring(at, end);
+    if (at >= 0) {
+      final end = sql.indexOf(r'$$;', at);
+      body = end < 0 ? sql.substring(at) : sql.substring(at, end);
+      patches.clear();
+    }
+    // An anchored patch: from the read of the current definition to the
+    // assertion that the anchor matched is exactly the new text.
+    final patch = sql.indexOf("pg_get_functiondef('public.export_my_data");
+    if (patch >= 0) {
+      final end = sql.indexOf('if v_patched is null', patch);
+      patches.add(end < 0 ? sql.substring(patch) : sql.substring(patch, end));
+    }
   }
-  return body;
+  return body.isEmpty ? '' : '$body\n${patches.join('\n')}';
 }
 
 /// Tables with a member or user column that `export_my_data` does not
@@ -69,6 +86,9 @@ const Map<String, String> _notExported = {
 /// What `export_my_data` returns today.
 const Set<String> _exported = {
   'members',
+  // #1287 — which roles this member was given, and when. 0247 adds the
+  // key by an anchored patch, not a restatement.
+  'workspace_role_members',
   // #1238 — the six the export was missing, added by migration 0209.
   'price_negotiations',
   'quota_extensions',

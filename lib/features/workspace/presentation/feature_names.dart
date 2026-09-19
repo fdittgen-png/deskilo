@@ -221,4 +221,6 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureWorkspaceVocabularyTitle ?? 'Workspace vocabulary',
       WorkspaceFeature.workspaceBranding =>
         l10n?.featureWorkspaceBrandingTitle ?? 'Workspace colours',
+      WorkspaceFeature.customRoles =>
+        l10n?.featureCustomRolesTitle ?? 'Roles this space defines',
     };

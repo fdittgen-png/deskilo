@@ -1674,6 +1674,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Se imprime delante de su nombre en los documentos. «Ninguno» imprime solo el nombre.';
 
   @override
+  String get featureCustomRolesTitle => 'Roles que define este espacio';
+
+  @override
+  String get featureCustomRolesDesc =>
+      'El espacio puede definir sus propios roles — tesorero, secretario — que añaden permisos a los del rol de un miembro. Nunca quitan ninguno, y un propietario los conserva todos.';
+
+  @override
   String get featureDemoMode => 'Modo demo';
 
   @override

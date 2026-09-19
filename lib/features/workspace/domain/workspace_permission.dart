@@ -177,12 +177,25 @@ Set<WorkspacePermission> permissionsForRole(
 
 /// The effective permissions of [member] — the single client-side
 /// entry point (myPermissionsProvider wraps it).
+///
+/// [custom] is what the workspace's own roles grant this member (#1287).
+/// It is ADDITIVE and never subtracts, so a member keeps everything their
+/// base role holds; and it counts only while `customRoles` is effective,
+/// which is what `has_permission_raw` does on the server. Switching the
+/// feature off therefore withdraws the grants here and there together.
 Set<WorkspacePermission> effectivePermissions(
   Member? member,
-  Workspace? workspace,
-) {
+  Workspace? workspace, {
+  Set<WorkspacePermission> custom = const {},
+}) {
   if (member == null || member.status != MemberStatus.active) {
     return const {};
   }
-  return permissionsForRole(permissionRoleOf(member), workspace);
+  final base = permissionsForRole(permissionRoleOf(member), workspace);
+  if (custom.isEmpty || workspace == null) return base;
+  final features = effectiveFeatures(
+    resolveEnabledFeatures(workspace.featureFlags),
+  );
+  if (!features.contains(WorkspaceFeature.customRoles)) return base;
+  return {...base, ...custom};
 }

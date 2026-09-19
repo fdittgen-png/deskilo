@@ -2946,6 +2946,18 @@ abstract class AppLocalizations {
   /// **'Printed before their name on documents. \"None\" prints the name alone.'**
   String get courtesyHintManaged;
 
+  /// #1287 custom roles: the feature switch title
+  ///
+  /// In en, this message translates to:
+  /// **'Roles this space defines'**
+  String get featureCustomRolesTitle;
+
+  /// #1287 custom roles: the feature switch description
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace may define roles of its own — a treasurer, a secretary — each adding permissions on top of a member\'s role. They never take a permission away, and an owner always keeps every one.'**
+  String get featureCustomRolesDesc;
+
   /// #970 demo mode: featureDemoMode
   ///
   /// In en, this message translates to:
