@@ -11,6 +11,7 @@
 // Everything is placed relative to [DemoFixture.seededAt], never to a
 // literal date, so a demo opened next year still shows a booking for
 // today (ADR 0028).
+import '../../features/plan/domain/seat.dart';
 import '../../features/money/domain/invoice.dart';
 import '../../features/reservations/domain/reservation.dart';
 import '../../features/workspace/domain/member.dart';
@@ -122,12 +123,41 @@ void seedDemoPeopleAs(FakeWorkspaceRepository workspaces, DemoPerson me) {
 
 /// Seeds bookings around [now]: one finished yesterday, one happening
 /// today, one next week — the three states the Reserve screens show.
+/// #1378 — a demonstration plan a visitor can book on.
+///
+/// `seedSmallPlan` gives one seat, and the dataset books it, so the first
+/// journey the issue asks for — choose a seat and reserve it — had no
+/// free seat to choose. The demo desk therefore seats four: enough that
+/// the plan reads as a room in use, and enough that there is somewhere
+/// to sit.
+void seedDemoPlan(FakeFloorPlanRepository plan) {
+  plan.seedSmallPlan();
+  final first = plan.seats.single;
+  for (var i = 1; i < 4; i++) {
+    plan.seats.add(
+      Seat(
+        id: 'demo-seat-\$i',
+        workspaceId: first.workspaceId,
+        deskId: first.deskId,
+        name: 'A\${i + 1}',
+        x: first.x + i * 3,
+        y: first.y,
+        orientation: first.orientation,
+        chair: first.chair,
+        amenities: first.amenities,
+      ),
+    );
+  }
+}
+
 void seedDemoReservations(
   FakeReservationRepository reservations,
   FakeFloorPlanRepository plan,
   DateTime now,
 ) {
-  final seatId = plan.seats.isEmpty ? 'seat-1' : plan.seats.first.id;
+  // The LAST seat, so the first one stays free: a visitor must be able to
+  // book something on the plan they land on (#1378).
+  final seatId = plan.seats.isEmpty ? 'seat-1' : plan.seats.last.id;
   final morning = DateTime(now.year, now.month, now.day, 9);
   reservations.reservations
     ..clear()

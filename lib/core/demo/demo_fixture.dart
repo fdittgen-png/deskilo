@@ -62,7 +62,8 @@ class DemoFixture {
   factory DemoFixture.build({DateTime? now}) {
     final today = now ?? kTestNow;
     final workspaces = FakeWorkspaceRepository.withWorkspace();
-    final floorPlan = FakeFloorPlanRepository()..seedSmallPlan();
+    final floorPlan = FakeFloorPlanRepository();
+    seedDemoPlan(floorPlan);
     final reservations = FakeReservationRepository();
     final money = FakeMoneyRepository();
     // The cast first: everything below points at it (#1374).
