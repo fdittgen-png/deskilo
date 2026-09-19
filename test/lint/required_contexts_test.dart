@@ -1,0 +1,105 @@
+// SPDX-License-Identifier: 0BSD
+//
+// #1446 — a required status context that no job emits jams every pull
+// request.
+//
+// `scripts/branch_protection.sh` carries `TARGET_CHECKS`: the contexts
+// master should require. GitHub matches a required context by its
+// STRING, against the `name:` a workflow job publishes. So the two are
+// one coupling with nothing holding it together — rename a job in
+// `quality.yml` and the script goes on naming a context that will never
+// arrive. Nobody finds out until an owner runs `apply`, and then every
+// PR is unmergeable, waiting for a check that cannot report.
+//
+// The script's own header says as much about the first one:
+//
+//   it kept this name when ci.yml folded into `CI · Quality report`,
+//   because the name IS the required context and a rename makes every
+//   pull request unmergeable until protection is updated in lockstep.
+//
+// That is a comment. This is the check.
+//
+// It deliberately does NOT read the live settings: an API call needs a
+// token, and #1446 is explicit that unreadable settings are not green
+// enforcement evidence. What a test can prove offline is that the
+// committed target is internally consistent — which is the half that
+// breaks by accident.
+import 'dart:io';
+
+import 'package:flutter_test/flutter_test.dart';
+
+/// The contexts `branch_protection.sh` would require.
+List<String> _targetChecks() {
+  final sh = File('scripts/branch_protection.sh').readAsStringSync();
+  final block = RegExp(r'TARGET_CHECKS=\((.*?)\n\)', dotAll: true)
+      .firstMatch(sh)
+      ?.group(1);
+  expect(block, isNotNull,
+      reason: 'TARGET_CHECKS is the list this lint exists to guard; if it '
+          'moved, the guard is measuring nothing');
+  return RegExp(r'^\s*"([^"]+)"\s*$', multiLine: true)
+      .allMatches(block!)
+      .map((m) => m.group(1)!)
+      .toList();
+}
+
+/// Every `name:` a job in [workflow] publishes.
+Set<String> _jobNames(String workflow) => RegExp(r'^\s{4}name:\s*(.+?)\s*$',
+        multiLine: true)
+    .allMatches(File('.github/workflows/$workflow').readAsStringSync())
+    .map((m) => m.group(1)!)
+    .toSet();
+
+void main() {
+  test('the list this lint guards is still there and still has entries', () {
+    expect(_targetChecks(), isNotEmpty,
+        reason: 'an empty parse would make every assertion below vacuous');
+  });
+
+  test('every required context is a job some workflow actually emits', () {
+    final emitted = <String>{
+      for (final file in Directory('.github/workflows')
+          .listSync()
+          .whereType<File>()
+          .where((f) => f.path.endsWith('.yml')))
+        ..._jobNames(file.uri.pathSegments.last),
+    };
+
+    final missing =
+        _targetChecks().where((c) => !emitted.contains(c)).toList();
+
+    expect(
+      missing,
+      isEmpty,
+      reason: 'these contexts would be REQUIRED on master and no job '
+          'publishes them:\n  ${missing.join('\n  ')}\n\n'
+          'GitHub matches a required context by its exact string. A '
+          'context nothing emits never reports, so every pull request '
+          'waits for it forever. Rename the job and the script in the '
+          'same commit, or do not rename it.',
+    );
+  });
+
+  test('the one context master requires today is among them', () {
+    // The branch API reports only this one as required (#1446). It is
+    // the one that must never drift, because it is load-bearing right
+    // now rather than aspirationally.
+    expect(
+      _targetChecks(),
+      contains('analyze · l10n gate · test · coverage'),
+      reason: 'dropping it from the target list would make `apply` '
+          'REMOVE the only protection master has',
+    );
+  });
+
+  test('the check can fail — a context nothing emits is caught', () {
+    // The guard on the guard: if the job-name parse silently returned
+    // nothing, the test above would pass on an empty set and prove the
+    // opposite of what it claims.
+    final emitted = _jobNames('quality.yml');
+    expect(emitted, contains('analyze · l10n gate · test · coverage'),
+        reason: 'the workflow parse found no job names, so the emptiness '
+            'above would have been meaningless');
+    expect(emitted, isNot(contains('a context nobody emits')));
+  });
+}
