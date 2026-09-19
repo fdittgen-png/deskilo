@@ -154,6 +154,12 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
       (name: 'book', label: l10n?.repartitionStepBook ?? 'Book'),
     ];
     final workspace = ref.watch(currentWorkspaceProvider).value;
+    // Watched, not merely read: `_pool()` reads these two, and a `read`
+    // on an auto-disposed async provider that nothing is subscribed to
+    // answers `loading` — an empty member pool, so an empty share list,
+    // so a Book button that is offered and does nothing (#1532).
+    ref.watch(workspaceMembersProvider);
+    ref.watch(memberNamesProvider);
     final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
     String money(int c) => currency.formatMinor(c);
     final rule = _effectiveRule();
