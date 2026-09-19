@@ -12,9 +12,11 @@
 // literal date, so a demo opened next year still shows a booking for
 // today (ADR 0028).
 import '../../features/plan/domain/seat.dart';
+import '../../features/events/domain/workspace_event.dart';
 import '../../features/money/domain/invoice.dart';
 import '../../features/reservations/domain/reservation.dart';
 import '../../features/workspace/domain/member.dart';
+import 'data/event_repository.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/money_repository.dart';
 import 'data/reservation_repository.dart';
@@ -195,6 +197,30 @@ void seedDemoReservations(
 /// Seeds last month's bills: Ada's settled, Bruno's still open. Two
 /// invoices are enough for the archive, the statement and the reminder
 /// rules to have something true to say.
+/// #1378 — a decision waiting to be made.
+///
+/// The Events tab of an empty demo says "nothing to decide", which is the
+/// one thing a demonstration of a validation workflow must not say. Dov
+/// is the cast's pending member (#1374), so his own request to join is
+/// the decision that is already there when a visitor arrives.
+void seedDemoEvents(FakeEventRepository events, DateTime now) {
+  events.events
+    ..clear()
+    ..add(
+      WorkspaceEvent(
+        id: 'demo-join-request',
+        workspaceId: 'ws-1',
+        type: EventType.memberJoin,
+        action: EventAction.submitted,
+        actorMemberId: 'member-4',
+        subjectMemberId: 'member-4',
+        payload: const {'reason': 'demo'},
+        status: EventStatus.pending,
+        createdAt: now.subtract(const Duration(days: 2)),
+      ),
+    );
+}
+
 void seedDemoMoney(FakeMoneyRepository money, DateTime now) {
   final lastMonth = DateTime(now.year, now.month - 1, 28);
   final period =

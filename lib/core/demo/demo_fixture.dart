@@ -66,10 +66,12 @@ class DemoFixture {
     seedDemoPlan(floorPlan);
     final reservations = FakeReservationRepository();
     final money = FakeMoneyRepository();
+    final events = FakeEventRepository();
     // The cast first: everything below points at it (#1374).
     seedDemoPeople(workspaces);
     seedDemoReservations(reservations, floorPlan, today);
     seedDemoMoney(money, today);
+    seedDemoEvents(events, today);
     final problems = validateDemoFixture(
       workspaces: workspaces,
       plan: floorPlan,
@@ -88,7 +90,7 @@ class DemoFixture {
       workspaces: workspaces,
       floorPlan: floorPlan,
       reservations: reservations,
-      events: FakeEventRepository(),
+      events: events,
       calendar: FakeCalendarRepository(),
       money: money,
       credits: FakeCreditRepository(),

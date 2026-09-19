@@ -22,6 +22,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_center_button.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
+import 'package:deskilo/features/events/domain/workspace_event.dart';
+import 'package:deskilo/features/money/domain/expense_schedule.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 
 import '../helpers/demo_journey.dart';
 import '../features/reservations/reserve_hub_test.dart' show seatCenter;
@@ -102,6 +105,72 @@ void main() {
       reason: 'the persona is the identity the whole app reads, so every '
           'permission gate below answers differently without a single '
           'demo-specific branch',
+    );
+  });
+
+  testWidgets('journey: handle a confirmation — a decision is waiting when '
+      'a visitor arrives, and answering it settles the event', (tester) async {
+    final journey = await pumpDemo(tester, openHub: false);
+    final pending = journey.fixture.events.events
+        .where((e) => e.status == EventStatus.pending)
+        .toList();
+    expect(
+      pending,
+      hasLength(1),
+      reason: 'a demonstration of a validation workflow must not open on '
+          '"nothing to decide"',
+    );
+
+    // The owner answers, through the same repository call the Events
+    // screen makes.
+    journey.fixture.events.respondingMemberId = DemoPersona.owner.memberId;
+    await journey.fixture.events.respond(pending.single.id, accept: true);
+
+    expect(journey.fixture.events.decisions, hasLength(1));
+    expect(journey.fixture.events.decisions.single.accept, isTrue);
+  });
+
+  testWidgets('journey: run an expense — a recurring cost is created and '
+      'the space carries it afterwards', (tester) async {
+    final journey = await pumpDemo(tester, openHub: false);
+    final before = await journey.fixture.money.fetchExpenseSchedules('ws-1');
+
+    await journey.fixture.money.createExpenseSchedule(
+      workspaceId: 'ws-1',
+      title: 'Coffee',
+      amountCents: 4500,
+      startsOn: journey.fixture.seededAt,
+      unit: ScheduleUnit.month,
+    );
+
+    final after = await journey.fixture.money.fetchExpenseSchedules('ws-1');
+    expect(after.length, before.length + 1);
+    expect(after.last.title, 'Coffee');
+    expect(after.last.amountCents, 4500);
+  });
+
+  testWidgets('journey: configure the workspace — an owner turns a feature '
+      'off and the space stops offering it', (tester) async {
+    final journey = await pumpDemo(tester, openHub: false);
+    final workspace = (await journey.fixture.workspaces.fetchMyWorkspaces())
+        .single;
+
+    expect(
+      effectiveFeatures(resolveEnabledFeatures(workspace.featureFlags)),
+      contains(WorkspaceFeature.membersDirectory),
+    );
+
+    await journey.fixture.workspaces.setFeatureFlags(
+      workspace.id,
+      const {'membersDirectory': false},
+    );
+
+    final after = (await journey.fixture.workspaces.fetchMyWorkspaces()).single;
+    expect(
+      effectiveFeatures(resolveEnabledFeatures(after.featureFlags)),
+      isNot(contains(WorkspaceFeature.membersDirectory)),
+      reason: 'the demo reads the same registry the live app reads, so a '
+          'configuration change demonstrates itself',
     );
   });
 
