@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart' show Color;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../application/start_conversation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/storage/active_workspace_store.dart';
@@ -139,6 +140,13 @@ Future<Workspace?> currentWorkspace(Ref ref) async {
 
 /// All memberships of the active workspace (owner management + event
 /// decider computation, #107).
+/// #1449 — the decisions behind starting a conversation: whether picking
+/// a second person makes it a group, and that a name already taken is a
+/// correction rather than a failure.
+@riverpod
+Conversations startConversationCommand(Ref ref) =>
+    Conversations(ref.watch(workspaceRepositoryProvider));
+
 @riverpod
 Future<List<Member>> workspaceMembers(Ref ref) async {
   // #1218 — the repository is watched BEFORE the gap: a bare
