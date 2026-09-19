@@ -103,6 +103,7 @@ class ReserveCanvas extends ConsumerWidget {
                       seat.id: userId,
             },
       builder: (context, seatPhotos) => PlanCanvas(
+        officePalette: ref.watch(workspaceOfficePaletteProvider),
         blurLabels: ref.watch(demoModeControllerProvider).value ?? false,
         seatPhotos: seatPhotos,
         singleRoomByLevel: namesSingleRoomsByLevel(ref),

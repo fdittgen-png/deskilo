@@ -87,6 +87,41 @@ void main() {
     expect(find.byKey(const ValueKey('colours-never')), findsOneWidget);
   });
 
+  testWidgets('room colours: the product palette shows until the space '
+      'adds one of its own, and the order is what is stored',
+      (tester) async {
+    final workspace = await _pump(tester);
+    expect(find.byKey(const ValueKey('colours-room-0')), findsOneWidget);
+    expect(find.text('The product palette. Add a colour to use your own.'),
+        findsOneWidget);
+
+    for (final hex in ['#EBDCC9', '#CFE3DC']) {
+      await tester.enterText(
+          find.byKey(const ValueKey('colours-room-hex')), hex);
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('colours-room-add')));
+      await tester.pumpAndSettle();
+    }
+    await tester.tap(find.byKey(const ValueKey('colours-rooms-save')));
+    await tester.pumpAndSettle();
+
+    expect(workspace.brandings['ws-1'],
+        {'office_palette': ['#EBDCC9', '#CFE3DC']});
+  });
+
+  testWidgets('room colours: the reset removes the list, not the seed',
+      (tester) async {
+    final workspace = await _pump(tester, branding: {
+      'seed_color': '#1F3A5F',
+      'office_palette': ['#EBDCC9'],
+    });
+    await tester.tap(find.byKey(const ValueKey('colours-rooms-reset')));
+    await tester.pumpAndSettle();
+
+    expect(workspace.brandings['ws-1'], {'seed_color': '#1F3A5F'},
+        reason: 'the fills go, the brand colour stays');
+  });
+
   testWidgets('360 dp: no overflow', (tester) async {
     await _pump(tester, size: const Size(360, 1600));
     expect(tester.takeException(), isNull);

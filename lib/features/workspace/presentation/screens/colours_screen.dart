@@ -20,6 +20,7 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/workspace_colours.dart';
 import '../../domain/workspace_branding.dart';
+import '../widgets/office_palette_editor.dart';
 import '../../providers/workspace_providers.dart';
 
 /// Colours an owner can reach in one tap. Not a restriction — the field
@@ -48,6 +49,7 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
   final _field = TextEditingController();
   bool _seeded = false;
   bool _busy = false;
+  List<String>? _fills;
 
   @override
   void dispose() {
@@ -90,7 +92,58 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
       case ColourRefused(:final pair):
         AppSnack.error(context,
             l10n?.coloursRefused(pair) ?? 'Refused: $pair would be unreadable.');
+      case ColourTooMany(:final most):
+        AppSnack.error(
+            context,
+            l10n?.coloursTooMany(most) ??
+                'The plan paints at most $most room colours.');
       case null:
+        break;
+    }
+  }
+
+  /// The room fills, written as one list: the order is what the plan
+  /// reads, so a partial write would repaint the wrong rooms.
+  Future<void> _saveFills(List<String> fills) async {
+    final l10n = AppLocalizations.of(context);
+    final errorText = l10n?.coloursSaveFailed ??
+        'The colour could not be saved. Nothing changed.';
+    final colours = ref.read(workspaceColoursProvider);
+    final workspace = await ref.read(currentWorkspaceProvider.future);
+    if (workspace == null || !mounted) return;
+    setState(() => _busy = true);
+    ColourOutcome? outcome;
+    final ok = await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'workspace room colours save failed',
+      errorText: errorText,
+      action: () async => outcome = await colours.chooseOfficePalette(
+        workspaceId: workspace.id,
+        fills: fills,
+      ),
+    );
+    if (!mounted) return;
+    setState(() => _busy = false);
+    if (!ok) return;
+    ref.invalidate(myWorkspacesProvider);
+    switch (outcome) {
+      case ColourReset():
+        setState(() => _fills = const []);
+        AppSnack.success(
+            context, l10n?.coloursResetDone ?? 'The product colours are back.');
+      case ColourApplied():
+        AppSnack.success(context,
+            l10n?.coloursRoomsSaved(fills.length) ?? '${fills.length} saved.');
+      case ColourMalformed(:final text):
+        AppSnack.error(context,
+            l10n?.coloursMalformed(text) ?? '$text is not a #RRGGBB colour.');
+      case ColourTooMany(:final most):
+        AppSnack.error(
+            context,
+            l10n?.coloursTooMany(most) ??
+                'The plan paints at most $most room colours.');
+      case ColourRefused() || null:
         break;
     }
   }
@@ -103,7 +156,9 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
     if (!_seeded && workspace != null) {
       _seeded = true;
       _field.text = stored.seedArgb == null ? '' : hexOfColor(stored.seedArgb!);
+      _fills = [for (final c in stored.officePalette) hexOfColor(c)];
     }
+    final fills = _fills ?? const <String>[];
     final typed = parseHexColor(_field.text);
     final refusals = typed == null ? const <String>[] : [
       for (final f in DeskiloTheme.refusals(Color(typed))) f.pair,
@@ -188,6 +243,14 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
                 child: Text(l10n?.coloursReset ?? 'Product colours'),
               ),
             ],
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          OfficePaletteEditor(
+            fills: fills,
+            busy: _busy,
+            onChanged: (next) => setState(() => _fills = next),
+            onSave: () => _saveFills(fills),
+            onReset: () => _saveFills(const []),
           ),
           const SizedBox(height: AppSpacing.md),
           Text(

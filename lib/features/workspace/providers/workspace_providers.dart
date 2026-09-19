@@ -409,6 +409,25 @@ int? workspaceBrandSeed(Ref ref) {
   return WorkspaceBranding.fromJson(workspace.branding).seedArgb;
 }
 
+/// #1289 — the workspace's own office fills, empty for the product's
+/// palette. Same gate as the seed: off the flag, and off a workspace
+/// that chose nothing, the plan paints exactly as it always has.
+@Riverpod(keepAlive: true)
+List<Color> workspaceOfficePalette(Ref ref) {
+  if (!ref.watch(enabledFeaturesSyncProvider).contains(
+        WorkspaceFeature.workspaceBranding,
+      )) {
+    return const [];
+  }
+  final workspace = ref.watch(currentWorkspaceProvider).value;
+  if (workspace == null) return const [];
+  return [
+    for (final argb
+        in WorkspaceBranding.fromJson(workspace.branding).officePalette)
+      Color(argb),
+  ];
+}
+
 /// #513 — MY effective permissions under the workspace's role matrix.
 /// The one client-side gate: screens ask for a permission, never for a
 /// role flag. Falls back to {} while member/workspace load.

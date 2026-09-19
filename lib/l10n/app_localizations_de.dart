@@ -10707,6 +10707,31 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Farbe konnte nicht gespeichert werden. Es hat sich nichts geändert.';
 
   @override
+  String get coloursRooms => 'Raumfarben';
+
+  @override
+  String get coloursRoomsProduct =>
+      'Die Produktpalette. Fügen Sie eine Farbe hinzu, um Ihre eigene zu verwenden.';
+
+  @override
+  String get coloursRoomsAdd => 'Farbe hinzufügen';
+
+  @override
+  String coloursRoomsOwn(int n) {
+    return '$n eigene Farben, in dieser Reihenfolge.';
+  }
+
+  @override
+  String coloursRoomsSaved(int n) {
+    return '$n Raumfarben gespeichert.';
+  }
+
+  @override
+  String coloursTooMany(int most) {
+    return 'Der Plan malt höchstens $most Raumfarben.';
+  }
+
+  @override
   String get onboardingTitle => 'Willkommen bei DesKilo';
 
   @override

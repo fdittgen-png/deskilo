@@ -18569,6 +18569,42 @@ abstract class AppLocalizations {
   /// **'The colour could not be saved. Nothing changed.'**
   String get coloursSaveFailed;
 
+  /// #1289 colours screen: the office-fill palette heading
+  ///
+  /// In en, this message translates to:
+  /// **'Room colours'**
+  String get coloursRooms;
+
+  /// #1289 colours screen: no own fills yet
+  ///
+  /// In en, this message translates to:
+  /// **'The product palette. Add a colour to use your own.'**
+  String get coloursRoomsProduct;
+
+  /// #1289 colours screen: the add-a-fill field and button
+  ///
+  /// In en, this message translates to:
+  /// **'Add a colour'**
+  String get coloursRoomsAdd;
+
+  /// #1289 colours screen: how many own fills, order matters
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of your own colours, in order.'**
+  String coloursRoomsOwn(int n);
+
+  /// #1289 colours screen: the fills were stored
+  ///
+  /// In en, this message translates to:
+  /// **'{n} room colours saved.'**
+  String coloursRoomsSaved(int n);
+
+  /// #1289 colours screen: more fills than the plan can use
+  ///
+  /// In en, this message translates to:
+  /// **'The plan paints at most {most} room colours.'**
+  String coloursTooMany(int most);
+
   /// App-bar title of the first-run onboarding screen
   ///
   /// In en, this message translates to:

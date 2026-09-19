@@ -1033,6 +1033,13 @@ mesurée de la même façon avant d'être enregistrée.
 La marque DesKilo, les couleurs des états de place et le bandeau de
 production ne sont jamais à la main d'un espace.
 
+**Couleurs des salles.** Sous la couleur de marque, *Couleurs des salles*
+peint le plan avec vos propres teintes plutôt que les huit du produit.
+Ajoutez-en jusqu'à huit — l'ordre est ce que le plan lit, une salle
+garde donc sa couleur quand vous en ajoutez une autre — touchez une
+couleur pour la retirer, et **Couleurs du produit** rend la palette.
+Laissez vide et le plan reste exactement comme avant.
+
 <!-- anchor: user.workspace.settings.desk-transparency -->
 #### Transparence des tables
 
