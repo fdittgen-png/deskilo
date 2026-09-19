@@ -1171,6 +1171,58 @@
   "@demoModeSubtitle": {
     "description": "#970 demo mode: demoModeSubtitle"
   },
+  "demoSessionBadge": "Demo",
+  "@demoSessionBadge": {
+    "description": "#1375 demo session: demoSessionBadge"
+  },
+  "demoSessionReset": "Demo zurücksetzen",
+  "@demoSessionReset": {
+    "description": "#1375 demo session: demoSessionReset"
+  },
+  "demoSessionResetDone": "Die Demo ist wieder im Ausgangszustand.",
+  "@demoSessionResetDone": {
+    "description": "#1375 demo session: demoSessionResetDone"
+  },
+  "demoSessionBadgeHint": "Sie erkunden einen Demonstrationsbereich. Nichts davon verlässt dieses Gerät.",
+  "@demoSessionBadgeHint": {
+    "description": "#1375 demo session: demoSessionBadgeHint"
+  },
+  "demoSessionViewAs": "Ansicht als",
+  "@demoSessionViewAs": {
+    "description": "#1376 demo personas: demoSessionViewAs"
+  },
+  "demoPersonaMember": "Ein Mitglied",
+  "@demoPersonaMember": {
+    "description": "#1376 demo personas: demoPersonaMember"
+  },
+  "demoPersonaAdmin": "Eine Verwaltung",
+  "@demoPersonaAdmin": {
+    "description": "#1376 demo personas: demoPersonaAdmin"
+  },
+  "demoPersonaOwner": "Die Inhaberin",
+  "@demoPersonaOwner": {
+    "description": "#1376 demo personas: demoPersonaOwner"
+  },
+  "demoSessionLeave": "Demo verlassen",
+  "@demoSessionLeave": {
+    "description": "#1379 demo entry: demoSessionLeave"
+  },
+  "demoEntryAction": "Den Demobereich erkunden",
+  "@demoEntryAction": {
+    "description": "#1379 demo entry: demoEntryAction"
+  },
+  "demoEntryTitle": "Ein Bereich zum Umsehen",
+  "@demoEntryTitle": {
+    "description": "#1379 demo entry: demoEntryTitle"
+  },
+  "demoEntryBody": "Alles darin ist erfunden: die Personen, die Buchungen und die Rechnungen sind für die Demonstration ausgedacht. Nichts davon erreicht einen echten Bereich, nichts verlässt dieses Gerät, und ein Konto ist nicht nötig. Das Zurücksetzen stellt alles wieder her, wann immer Sie möchten.",
+  "@demoEntryBody": {
+    "description": "#1379 demo entry: demoEntryBody"
+  },
+  "demoEntryStart": "Loslegen",
+  "@demoEntryStart": {
+    "description": "#1379 demo entry: demoEntryStart"
+  },
   "deploymentConfirmTitleDev": "In diese DEV ausrollen?",
   "@deploymentConfirmTitleDev": {
     "description": "#1006 deployment confirmation: deploymentConfirmTitleDev"

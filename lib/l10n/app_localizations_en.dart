@@ -1686,6 +1686,47 @@ class AppLocalizationsEn extends AppLocalizations {
       'Names, e-mails, phones and addresses are blurred on this device\'s screen — for screenshots and videos.';
 
   @override
+  String get demoSessionBadge => 'Demo';
+
+  @override
+  String get demoSessionReset => 'Reset the demo';
+
+  @override
+  String get demoSessionResetDone => 'The demo is back as it started.';
+
+  @override
+  String get demoSessionBadgeHint =>
+      'You are exploring a demonstration space. Nothing here leaves this device.';
+
+  @override
+  String get demoSessionViewAs => 'View as';
+
+  @override
+  String get demoPersonaMember => 'A member';
+
+  @override
+  String get demoPersonaAdmin => 'An administrator';
+
+  @override
+  String get demoPersonaOwner => 'The owner';
+
+  @override
+  String get demoSessionLeave => 'Leave the demo';
+
+  @override
+  String get demoEntryAction => 'Explore the demo workspace';
+
+  @override
+  String get demoEntryTitle => 'A workspace to look around';
+
+  @override
+  String get demoEntryBody =>
+      'Everything in it is made up: the people, the bookings and the bills are invented for the demonstration. Nothing you do here reaches a real workspace, nothing leaves this device, and no account is needed. Reset puts it back whenever you like.';
+
+  @override
+  String get demoEntryStart => 'Start exploring';
+
+  @override
   String get deploymentConfirmTitleDev => 'Deploy into this DEV?';
 
   @override

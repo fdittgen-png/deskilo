@@ -2982,6 +2982,84 @@ abstract class AppLocalizations {
   /// **'Names, e-mails, phones and addresses are blurred on this device\'s screen — for screenshots and videos.'**
   String get demoModeSubtitle;
 
+  /// #1375 demo session: demoSessionBadge
+  ///
+  /// In en, this message translates to:
+  /// **'Demo'**
+  String get demoSessionBadge;
+
+  /// #1375 demo session: demoSessionReset
+  ///
+  /// In en, this message translates to:
+  /// **'Reset the demo'**
+  String get demoSessionReset;
+
+  /// #1375 demo session: demoSessionResetDone
+  ///
+  /// In en, this message translates to:
+  /// **'The demo is back as it started.'**
+  String get demoSessionResetDone;
+
+  /// #1375 demo session: demoSessionBadgeHint
+  ///
+  /// In en, this message translates to:
+  /// **'You are exploring a demonstration space. Nothing here leaves this device.'**
+  String get demoSessionBadgeHint;
+
+  /// #1376 demo personas: demoSessionViewAs
+  ///
+  /// In en, this message translates to:
+  /// **'View as'**
+  String get demoSessionViewAs;
+
+  /// #1376 demo personas: demoPersonaMember
+  ///
+  /// In en, this message translates to:
+  /// **'A member'**
+  String get demoPersonaMember;
+
+  /// #1376 demo personas: demoPersonaAdmin
+  ///
+  /// In en, this message translates to:
+  /// **'An administrator'**
+  String get demoPersonaAdmin;
+
+  /// #1376 demo personas: demoPersonaOwner
+  ///
+  /// In en, this message translates to:
+  /// **'The owner'**
+  String get demoPersonaOwner;
+
+  /// #1379 demo entry: demoSessionLeave
+  ///
+  /// In en, this message translates to:
+  /// **'Leave the demo'**
+  String get demoSessionLeave;
+
+  /// #1379 demo entry: demoEntryAction
+  ///
+  /// In en, this message translates to:
+  /// **'Explore the demo workspace'**
+  String get demoEntryAction;
+
+  /// #1379 demo entry: demoEntryTitle
+  ///
+  /// In en, this message translates to:
+  /// **'A workspace to look around'**
+  String get demoEntryTitle;
+
+  /// #1379 demo entry: demoEntryBody
+  ///
+  /// In en, this message translates to:
+  /// **'Everything in it is made up: the people, the bookings and the bills are invented for the demonstration. Nothing you do here reaches a real workspace, nothing leaves this device, and no account is needed. Reset puts it back whenever you like.'**
+  String get demoEntryBody;
+
+  /// #1379 demo entry: demoEntryStart
+  ///
+  /// In en, this message translates to:
+  /// **'Start exploring'**
+  String get demoEntryStart;
+
   /// #1006 deployment confirmation: deploymentConfirmTitleDev
   ///
   /// In en, this message translates to:

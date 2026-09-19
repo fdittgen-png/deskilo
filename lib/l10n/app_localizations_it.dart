@@ -1697,6 +1697,47 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nomi, e-mail, telefoni e indirizzi sono sfocati sullo schermo di questo dispositivo — per screenshot e video.';
 
   @override
+  String get demoSessionBadge => 'Demo';
+
+  @override
+  String get demoSessionReset => 'Reimposta la demo';
+
+  @override
+  String get demoSessionResetDone => 'La demo è tornata come all\'inizio.';
+
+  @override
+  String get demoSessionBadgeHint =>
+      'Stai esplorando uno spazio dimostrativo. Nulla di tutto questo lascia questo dispositivo.';
+
+  @override
+  String get demoSessionViewAs => 'Vedi come';
+
+  @override
+  String get demoPersonaMember => 'Un membro';
+
+  @override
+  String get demoPersonaAdmin => 'Un\'amministratrice';
+
+  @override
+  String get demoPersonaOwner => 'La proprietaria';
+
+  @override
+  String get demoSessionLeave => 'Esci dalla demo';
+
+  @override
+  String get demoEntryAction => 'Esplora lo spazio dimostrativo';
+
+  @override
+  String get demoEntryTitle => 'Uno spazio da guardare';
+
+  @override
+  String get demoEntryBody =>
+      'Tutto qui dentro è inventato: le persone, le prenotazioni e le fatture sono create per la dimostrazione. Nulla di ciò che fai raggiunge uno spazio reale, nulla lascia questo dispositivo e non serve alcun account. Il ripristino rimette tutto com\'era quando vuoi.';
+
+  @override
+  String get demoEntryStart => 'Inizia';
+
+  @override
   String get deploymentConfirmTitleDev => 'Distribuire in questo DEV?';
 
   @override

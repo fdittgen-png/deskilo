@@ -30,6 +30,7 @@ import 'data/stores.dart';
 import 'data/workspace_repository.dart';
 import 'demo_dataset.dart';
 import 'demo_outward_edges.dart';
+import 'demo_persona.dart';
 
 /// Everything one Demo session runs on. Built once per session and
 /// thrown away when it ends: a reset is a new [DemoFixture], never a
@@ -82,7 +83,7 @@ class DemoFixture {
           '${problems.join('; ')}');
     }
     return DemoFixture._(
-      auth: FakeAuthRepository.signedIn(),
+      auth: FakeAuthRepository(userId: initialDemoPersona.userId),
       workspaces: workspaces,
       floorPlan: floorPlan,
       reservations: reservations,
@@ -125,4 +126,16 @@ class DemoFixture {
 
   /// The instant this session believes it is.
   final DateTime seededAt;
+
+  /// Looks at the same space through [persona] (#1376).
+  ///
+  /// The DATA is untouched: only who the fixture answers `fetchMyMember`
+  /// with, and the signed-in user beside it, change. Everything above
+  /// reads permissions the way it does in live mode, so a member sees a
+  /// member's product because `effectivePermissions` says so and not
+  /// because a Demo branch hid anything.
+  void becomePersona(DemoPersona persona) {
+    seedDemoPeopleAs(workspaces, persona.person);
+    auth.signInAs(persona.userId);
+  }
 }

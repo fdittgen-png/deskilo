@@ -1,0 +1,55 @@
+{
+  "@@locale": "es",
+  "demoSessionBadge": "Demo",
+  "@demoSessionBadge": {
+    "description": "#1375 demo session: demoSessionBadge"
+  },
+  "demoSessionReset": "Reiniciar la demo",
+  "@demoSessionReset": {
+    "description": "#1375 demo session: demoSessionReset"
+  },
+  "demoSessionResetDone": "La demo ha vuelto a su estado inicial.",
+  "@demoSessionResetDone": {
+    "description": "#1375 demo session: demoSessionResetDone"
+  },
+  "demoSessionBadgeHint": "Estás explorando un espacio de demostración. Nada de esto sale de este dispositivo.",
+  "@demoSessionBadgeHint": {
+    "description": "#1375 demo session: demoSessionBadgeHint"
+  },
+  "demoSessionViewAs": "Ver como",
+  "@demoSessionViewAs": {
+    "description": "#1376 demo personas: demoSessionViewAs"
+  },
+  "demoPersonaMember": "Un miembro",
+  "@demoPersonaMember": {
+    "description": "#1376 demo personas: demoPersonaMember"
+  },
+  "demoPersonaAdmin": "Una administradora",
+  "@demoPersonaAdmin": {
+    "description": "#1376 demo personas: demoPersonaAdmin"
+  },
+  "demoPersonaOwner": "La propietaria",
+  "@demoPersonaOwner": {
+    "description": "#1376 demo personas: demoPersonaOwner"
+  },
+  "demoSessionLeave": "Salir de la demo",
+  "@demoSessionLeave": {
+    "description": "#1379 demo entry: demoSessionLeave"
+  },
+  "demoEntryAction": "Explorar el espacio de demostración",
+  "@demoEntryAction": {
+    "description": "#1379 demo entry: demoEntryAction"
+  },
+  "demoEntryTitle": "Un espacio para mirar",
+  "@demoEntryTitle": {
+    "description": "#1379 demo entry: demoEntryTitle"
+  },
+  "demoEntryBody": "Todo en él es inventado: las personas, las reservas y las facturas se han creado para la demostración. Nada de lo que hagas aquí llega a un espacio real, nada sale de este dispositivo y no hace falta ninguna cuenta. Reiniciar lo deja como estaba cuando quieras.",
+  "@demoEntryBody": {
+    "description": "#1379 demo entry: demoEntryBody"
+  },
+  "demoEntryStart": "Empezar",
+  "@demoEntryStart": {
+    "description": "#1379 demo entry: demoEntryStart"
+  }
+}

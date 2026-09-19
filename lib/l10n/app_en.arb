@@ -2001,6 +2001,58 @@
   "@demoModeSubtitle": {
     "description": "#970 demo mode: demoModeSubtitle"
   },
+  "demoSessionBadge": "Demo",
+  "@demoSessionBadge": {
+    "description": "#1375 demo session: demoSessionBadge"
+  },
+  "demoSessionReset": "Reset the demo",
+  "@demoSessionReset": {
+    "description": "#1375 demo session: demoSessionReset"
+  },
+  "demoSessionResetDone": "The demo is back as it started.",
+  "@demoSessionResetDone": {
+    "description": "#1375 demo session: demoSessionResetDone"
+  },
+  "demoSessionBadgeHint": "You are exploring a demonstration space. Nothing here leaves this device.",
+  "@demoSessionBadgeHint": {
+    "description": "#1375 demo session: demoSessionBadgeHint"
+  },
+  "demoSessionViewAs": "View as",
+  "@demoSessionViewAs": {
+    "description": "#1376 demo personas: demoSessionViewAs"
+  },
+  "demoPersonaMember": "A member",
+  "@demoPersonaMember": {
+    "description": "#1376 demo personas: demoPersonaMember"
+  },
+  "demoPersonaAdmin": "An administrator",
+  "@demoPersonaAdmin": {
+    "description": "#1376 demo personas: demoPersonaAdmin"
+  },
+  "demoPersonaOwner": "The owner",
+  "@demoPersonaOwner": {
+    "description": "#1376 demo personas: demoPersonaOwner"
+  },
+  "demoSessionLeave": "Leave the demo",
+  "@demoSessionLeave": {
+    "description": "#1379 demo entry: demoSessionLeave"
+  },
+  "demoEntryAction": "Explore the demo workspace",
+  "@demoEntryAction": {
+    "description": "#1379 demo entry: demoEntryAction"
+  },
+  "demoEntryTitle": "A workspace to look around",
+  "@demoEntryTitle": {
+    "description": "#1379 demo entry: demoEntryTitle"
+  },
+  "demoEntryBody": "Everything in it is made up: the people, the bookings and the bills are invented for the demonstration. Nothing you do here reaches a real workspace, nothing leaves this device, and no account is needed. Reset puts it back whenever you like.",
+  "@demoEntryBody": {
+    "description": "#1379 demo entry: demoEntryBody"
+  },
+  "demoEntryStart": "Start exploring",
+  "@demoEntryStart": {
+    "description": "#1379 demo entry: demoEntryStart"
+  },
   "deploymentConfirmTitleDev": "Deploy into this DEV?",
   "@deploymentConfirmTitleDev": {
     "description": "#1006 deployment confirmation: deploymentConfirmTitleDev"

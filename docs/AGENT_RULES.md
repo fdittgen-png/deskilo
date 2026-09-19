@@ -44,6 +44,19 @@ Every `WorkspaceFeature` also belongs to exactly one primary subprocess in
 Regenerate `docs/design/process-catalogue.md` with
 `dart run tool/build_process_catalogue.dart` after changing either registry.
 
+## Run the preflight before you push (#1447)
+
+`dart run tool/preflight.dart` selects the generators your change
+implicates, runs them in dependency order, and tells you which generated
+files were out of date. Every one of those files has a drift gate in CI,
+so a generator forgotten locally costs a full round trip to learn
+something the working tree already knew. Exit 1 means "commit what I just
+rewrote"; exit 2 means a generator failed.
+
+It does not replace `flutter analyze --fatal-infos lib test tool` or the
+suite, and it selects nothing for a path it does not recognise — see
+`docs/ci/LOCAL_PREFLIGHT.md`.
+
 ## Testing rules
 
 - TDD pyramid 70/20/10. Bug fixes: write the failing test FIRST, calling the exact method the failing UI calls.

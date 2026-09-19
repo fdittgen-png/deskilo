@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../../core/demo/presentation/demo_entry_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
@@ -453,6 +454,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                               : const SizedBox.shrink(),
                     ),
                   const SizedBox(height: 12),
+                  // #1379 — no account is needed to look around, so the
+                  // offer sits beside the two that do need one.
+                  const DemoEntryButton(),
                   TextButton(
                     onPressed: _busy
                         ? null

@@ -1171,6 +1171,58 @@
   "@demoModeSubtitle": {
     "description": "#970 demo mode: demoModeSubtitle"
   },
+  "demoSessionBadge": "Demo",
+  "@demoSessionBadge": {
+    "description": "#1375 demo session: demoSessionBadge"
+  },
+  "demoSessionReset": "Reimposta la demo",
+  "@demoSessionReset": {
+    "description": "#1375 demo session: demoSessionReset"
+  },
+  "demoSessionResetDone": "La demo è tornata come all'inizio.",
+  "@demoSessionResetDone": {
+    "description": "#1375 demo session: demoSessionResetDone"
+  },
+  "demoSessionBadgeHint": "Stai esplorando uno spazio dimostrativo. Nulla di tutto questo lascia questo dispositivo.",
+  "@demoSessionBadgeHint": {
+    "description": "#1375 demo session: demoSessionBadgeHint"
+  },
+  "demoSessionViewAs": "Vedi come",
+  "@demoSessionViewAs": {
+    "description": "#1376 demo personas: demoSessionViewAs"
+  },
+  "demoPersonaMember": "Un membro",
+  "@demoPersonaMember": {
+    "description": "#1376 demo personas: demoPersonaMember"
+  },
+  "demoPersonaAdmin": "Un'amministratrice",
+  "@demoPersonaAdmin": {
+    "description": "#1376 demo personas: demoPersonaAdmin"
+  },
+  "demoPersonaOwner": "La proprietaria",
+  "@demoPersonaOwner": {
+    "description": "#1376 demo personas: demoPersonaOwner"
+  },
+  "demoSessionLeave": "Esci dalla demo",
+  "@demoSessionLeave": {
+    "description": "#1379 demo entry: demoSessionLeave"
+  },
+  "demoEntryAction": "Esplora lo spazio dimostrativo",
+  "@demoEntryAction": {
+    "description": "#1379 demo entry: demoEntryAction"
+  },
+  "demoEntryTitle": "Uno spazio da guardare",
+  "@demoEntryTitle": {
+    "description": "#1379 demo entry: demoEntryTitle"
+  },
+  "demoEntryBody": "Tutto qui dentro è inventato: le persone, le prenotazioni e le fatture sono create per la dimostrazione. Nulla di ciò che fai raggiunge uno spazio reale, nulla lascia questo dispositivo e non serve alcun account. Il ripristino rimette tutto com'era quando vuoi.",
+  "@demoEntryBody": {
+    "description": "#1379 demo entry: demoEntryBody"
+  },
+  "demoEntryStart": "Inizia",
+  "@demoEntryStart": {
+    "description": "#1379 demo entry: demoEntryStart"
+  },
   "deploymentConfirmTitleDev": "Distribuire in questo DEV?",
   "@deploymentConfirmTitleDev": {
     "description": "#1006 deployment confirmation: deploymentConfirmTitleDev"

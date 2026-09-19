@@ -1697,6 +1697,47 @@ class AppLocalizationsFr extends AppLocalizations {
       'Noms, courriels, téléphones et adresses sont floutés à l\'écran de cet appareil — pour les captures d\'écran et les vidéos.';
 
   @override
+  String get demoSessionBadge => 'Démo';
+
+  @override
+  String get demoSessionReset => 'Réinitialiser la démo';
+
+  @override
+  String get demoSessionResetDone => 'La démo est revenue à son état initial.';
+
+  @override
+  String get demoSessionBadgeHint =>
+      'Vous explorez un espace de démonstration. Rien ici ne quitte cet appareil.';
+
+  @override
+  String get demoSessionViewAs => 'Voir en tant que';
+
+  @override
+  String get demoPersonaMember => 'Un membre';
+
+  @override
+  String get demoPersonaAdmin => 'Un administrateur';
+
+  @override
+  String get demoPersonaOwner => 'Le propriétaire';
+
+  @override
+  String get demoSessionLeave => 'Quitter la démo';
+
+  @override
+  String get demoEntryAction => 'Explorer l\'espace de démonstration';
+
+  @override
+  String get demoEntryTitle => 'Un espace où regarder';
+
+  @override
+  String get demoEntryBody =>
+      'Tout y est inventé : les personnes, les réservations et les factures sont créées pour la démonstration. Rien de ce que vous y faites n\'atteint un espace réel, rien ne quitte cet appareil, et aucun compte n\'est nécessaire. La réinitialisation le remet en état quand vous voulez.';
+
+  @override
+  String get demoEntryStart => 'Commencer';
+
+  @override
   String get deploymentConfirmTitleDev => 'Déployer dans cette DEV ?';
 
   @override

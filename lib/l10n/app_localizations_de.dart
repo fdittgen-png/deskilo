@@ -1695,6 +1695,47 @@ class AppLocalizationsDe extends AppLocalizations {
       'Namen, E-Mails, Telefonnummern und Adressen werden auf dem Bildschirm dieses Geräts unscharf gemacht — für Screenshots und Videos.';
 
   @override
+  String get demoSessionBadge => 'Demo';
+
+  @override
+  String get demoSessionReset => 'Demo zurücksetzen';
+
+  @override
+  String get demoSessionResetDone => 'Die Demo ist wieder im Ausgangszustand.';
+
+  @override
+  String get demoSessionBadgeHint =>
+      'Sie erkunden einen Demonstrationsbereich. Nichts davon verlässt dieses Gerät.';
+
+  @override
+  String get demoSessionViewAs => 'Ansicht als';
+
+  @override
+  String get demoPersonaMember => 'Ein Mitglied';
+
+  @override
+  String get demoPersonaAdmin => 'Eine Verwaltung';
+
+  @override
+  String get demoPersonaOwner => 'Die Inhaberin';
+
+  @override
+  String get demoSessionLeave => 'Demo verlassen';
+
+  @override
+  String get demoEntryAction => 'Den Demobereich erkunden';
+
+  @override
+  String get demoEntryTitle => 'Ein Bereich zum Umsehen';
+
+  @override
+  String get demoEntryBody =>
+      'Alles darin ist erfunden: die Personen, die Buchungen und die Rechnungen sind für die Demonstration ausgedacht. Nichts davon erreicht einen echten Bereich, nichts verlässt dieses Gerät, und ein Konto ist nicht nötig. Das Zurücksetzen stellt alles wieder her, wann immer Sie möchten.';
+
+  @override
+  String get demoEntryStart => 'Loslegen';
+
+  @override
   String get deploymentConfirmTitleDev => 'In diese DEV ausrollen?';
 
   @override
