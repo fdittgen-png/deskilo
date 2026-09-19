@@ -19,19 +19,7 @@ Totals by layer and by action: run the tool — they are printed, not committed,
 
 ## Coverage still to add
 
-| gap | issue | status |
-|---|---|---|
-| Database executes as a CI gate | #1335 | pgTAP gate, write isolation (PR for #1335) |
-| Role matrix on row policies | #1321 | 13_matrix_policies.sql (PR for #1321) |
-| Server feature gates follow requires | #1332 | 14_feature_gates.sql TODO proofs; green with the #1332 fix |
-| Process registry, resolver, preview == apply | #1336 | blocked on #1325, #1326, #1329 |
-| Template merge, idempotency, allow-list, provenance | #1338 | blocked on #1276 |
-| Number sequences: invalid pairs, no reuse | #1338 / #1320 | lands with the #1320 fix |
-| Restore drill: dump, restore into a fresh database, reconcile | #1338 / #1310 | the `Restore drill` step in quality · database (#1310 S1) |
-| Export completeness: paging, manifest, ZIP | #1338 / #1310 | #1310 S2, blocked on #1312 for schema_version |
-| Instance install, resume, doctor isolation | #1337 / #1314 | the `Install, resume and upgrade a real schema` step in quality · database (#1337) |
-| Journeys: decision without the bell, onboarding retry | #1339 | with #1306 and #1303 |
-| State model: stale, offline, empty, error | #1339 / #1305 | with #1305 |
+Nothing named and uncovered. The eleven gaps this table tracked are closed, and each artefact was checked present rather than inferred from its issue being shut (#1334). A row returns here when somebody names a gap and the issue that owns it.
 
 ## Files
 
@@ -278,7 +266,7 @@ Totals by layer and by action: run the tool — they are printed, not committed,
 | `test/features/money/layout_render_test.dart` | unit | #875 — a layout prints where it says. | 11 | yes | none | a domain rule — #875, #886 | shares a test name with test/features/money/layout_page_view_test.dart | KEEP |  |
 | `test/features/money/layout_storage_test.dart` | unit | #875 — where a positioned layout lives, and that it survives. | 5 | yes | none | a domain rule — #875 | shares a test name with test/features/money/report_texts_test.dart | KEEP |  |
 | `test/features/money/layout_xml_test.dart` | unit | #875 — the layout vocabulary, read and written. | 17 | yes | none | a domain rule — #875 | no | KEEP |  |
-| `test/features/money/legal_identity_atomic_test.dart` | unit | #1532 — the VAT regime and the mentions that go on the invoice with it are one statement, so they are one write. | 3 | yes | none | a domain rule — #1532 | no | KEEP |  |
+| `test/features/money/legal_identity_atomic_test.dart` | unit | #1532 — the VAT regime and the mentions that go on the invoice with it are one statement, so they are one write. | 3 | yes | none | a domain rule — #1532 | shares a test name with test/features/profile/invoice_identity_atomic_test.dart | KEEP |  |
 | `test/features/money/legal_identity_test.dart` | widget | The workspace's LEGAL IDENTITY (0069) — the data EN 16931 cannot do without. The screen asks for the VAT regime first because the regime decides which… | 10 | yes | fakes | user-visible behaviour — #480, #484, #896 | no | KEEP |  |
 | `test/features/money/legal_invoice_test.dart` | unit | Legal-valid invoices (#480): the InvoiceLegal mentions, the statutory defaults, the new report variables (seller identity, client address, line qty/unit… | 17 | yes | repository sources | a domain rule — #480, #886, #482 | no | KEEP |  |
 | `test/features/money/letter_standard_test.dart` | unit | #874 — every document sent to a person conforms to the letter standard when it has no design of its own: proven on the PDF the default positioned layouts… | 3 | yes | none | a domain rule — #874, #902 | no | KEEP |  |
@@ -381,7 +369,7 @@ Totals by layer and by action: run the tool — they are printed, not committed,
 | `test/features/profile/default_profile_test.dart` | widget | Default profile (#322): with several profiles the user checks ONE as the start-up default — the app opens on it at every start, while in-session switching… | 3 | yes | fakes | user-visible behaviour — #322, #458 | no | KEEP |  |
 | `test/features/profile/developer_screen_test.dart` | widget | Developer mode: the trace list newest first, level filters, export to a .log file, and clear. | 7 | yes | fakes | user-visible behaviour — #147, #188, #419 | no | KEEP |  |
 | `test/features/profile/front_camera_setting_test.dart` | widget | The front-camera switch in Settings → Preferences: on by default, toggling writes the device-local preference the badge scanner reads. | 1 | yes | fakes | user-visible behaviour | no | KEEP |  |
-| `test/features/profile/invoice_identity_atomic_test.dart` | unit | #1532 — a member's address and tax identity are one write. | 3 | yes | none | a domain rule — #1532, #886 | no | KEEP |  |
+| `test/features/profile/invoice_identity_atomic_test.dart` | unit | #1532 — a member's address and tax identity are one write. | 3 | yes | none | a domain rule — #1532, #886 | shares a test name with test/features/money/legal_identity_atomic_test.dart | KEEP |  |
 | `test/features/profile/language_selection_test.dart` | widget | Choosing a language in Settings switches the app immediately and persists; System default clears it. | 4 | yes | fakes | user-visible behaviour | no | KEEP |  |
 | `test/features/profile/member_monogram_test.dart` | unit | #793 — the Membres list drew three identical `M` circles: Mathieu, mathieu.bouchard and marion.blein.gauthier all rendered as one letter, so the glyph shown… | 14 | yes | none | a domain rule — #793 | no | KEEP |  |
 | `test/features/profile/navigation_selection_test.dart` | widget | #969 — the Navigation tile beside the theme: choosing the menu swaps the bottom bar for the drawer at once; the web never sees the tile. | 2 | yes | fakes | user-visible behaviour — #969 | no | KEEP |  |

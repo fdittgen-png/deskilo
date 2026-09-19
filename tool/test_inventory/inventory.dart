@@ -264,19 +264,23 @@ List<TestFileEntry> classify({String root = '.'}) {
 
 /// Coverage #1334 found missing, and the issue that owns each gap. Kept
 /// here so the inventory states what is NOT yet a test next to what is.
-const missingCoverage = <(String, String, String)>[
-  ('Database executes as a CI gate', '#1335', 'pgTAP gate, write isolation (PR for #1335)'),
-  ('Role matrix on row policies', '#1321', '13_matrix_policies.sql (PR for #1321)'),
-  ('Server feature gates follow requires', '#1332', '14_feature_gates.sql TODO proofs; green with the #1332 fix'),
-  ('Process registry, resolver, preview == apply', '#1336', 'blocked on #1325, #1326, #1329'),
-  ('Template merge, idempotency, allow-list, provenance', '#1338', 'blocked on #1276'),
-  ('Number sequences: invalid pairs, no reuse', '#1338 / #1320', 'lands with the #1320 fix'),
-  ('Restore drill: dump, restore into a fresh database, reconcile', '#1338 / #1310', 'the `Restore drill` step in quality · database (#1310 S1)'),
-  ('Export completeness: paging, manifest, ZIP', '#1338 / #1310', '#1310 S2, blocked on #1312 for schema_version'),
-  ('Instance install, resume, doctor isolation', '#1337 / #1314', 'the `Install, resume and upgrade a real schema` step in quality · database (#1337)'),
-  ('Journeys: decision without the bell, onboarding retry', '#1339', 'with #1306 and #1303'),
-  ('State model: stale, offline, empty, error', '#1339 / #1305', 'with #1305'),
-];
+/// Gaps somebody has NAMED and not yet covered.
+///
+/// Empty is the correct state, not a missing section. It held eleven
+/// rows — the database as a CI gate, the role matrix on row policies,
+/// server feature gates, preview == apply, template merge and
+/// provenance, number-sequence reuse, the restore drill, export
+/// completeness, instance install/resume, the bell-less decision
+/// journey, the state model — and every issue behind them is closed and
+/// every artefact verified present: `13_matrix_policies.sql`,
+/// `14_feature_gates.sql`, the `Restore drill` and `Install, resume and
+/// upgrade a real schema` steps in `quality · database`, and
+/// `test/ux/`. Checked 2026-09-19 (#1334).
+///
+/// A row goes back in when somebody names a gap, with the issue that
+/// owns it. A table that lists gaps which are no longer gaps is worse
+/// than an empty one: it teaches the reader to skim it.
+const missingCoverage = <(String, String, String)>[];
 
 String _cell(String s) => s.replaceAll('|', r'\|').replaceAll('\n', ' ');
 
@@ -333,11 +337,19 @@ String render(List<TestFileEntry> entries) {
     ..writeln('- **DELETE / REPLACE / MOVE** are never assigned by rule. They need a named stronger test, recorded in the replacement column by the pull request that makes the change.')
     ..writeln()
     ..writeln('## Coverage still to add')
-    ..writeln()
-    ..writeln('| gap | issue | status |')
-    ..writeln('|---|---|---|');
-  for (final (gap, issue, status) in missingCoverage) {
-    b.writeln('| ${_cell(gap)} | $issue | ${_cell(status)} |');
+    ..writeln();
+  if (missingCoverage.isEmpty) {
+    b.writeln('Nothing named and uncovered. The eleven gaps this table '
+        'tracked are closed, and each artefact was checked present rather '
+        'than inferred from its issue being shut (#1334). A row returns '
+        'here when somebody names a gap and the issue that owns it.');
+  } else {
+    b
+      ..writeln('| gap | issue | status |')
+      ..writeln('|---|---|---|');
+    for (final (gap, issue, status) in missingCoverage) {
+      b.writeln('| ${_cell(gap)} | $issue | ${_cell(status)} |');
+    }
   }
 
   b
