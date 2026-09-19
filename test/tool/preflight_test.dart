@@ -63,6 +63,18 @@ void main() {
     );
   });
 
+  test('a feature source selects the dependency map, which counts them', () {
+    expect(
+      _commands(['lib/features/money/presentation/widgets/a_sheet.dart']),
+      contains('dart run tool/dependency_map.dart'),
+    );
+    expect(
+      _commands(['lib/core/demo/demo_session.dart']),
+      isNot(contains('dart run tool/dependency_map.dart')),
+      reason: 'the map counts cross-FEATURE relationships',
+    );
+  });
+
   test('a generated output selects nothing by itself — otherwise running a '
       'generator would select it again forever', () {
     expect(_commands(['lib/l10n/app_fr.arb']), isEmpty);
