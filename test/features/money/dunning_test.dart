@@ -8,6 +8,7 @@ import 'dart:typed_data';
 
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:flutter/material.dart';
+import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
@@ -127,6 +128,7 @@ void main() {
         String? text,
       }) async {
         shared.add((name: fileName, bytes: bytes));
+        return FileShareOutcome.sent;
       },
     );
     final invoice = money.invoices.single;

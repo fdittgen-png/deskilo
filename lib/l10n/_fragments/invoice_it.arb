@@ -55,6 +55,10 @@
   "invoicePdfReserved": "riservato",
   "invoicePdfPage": "Pagina",
   "invoiceRemindAction": "Invia un promemoria",
+  "invoiceReminderNotSent": "Non è stato inviato nulla, quindi non è stato registrato nulla.",
+  "@invoiceReminderNotSent": {
+    "description": "#1532: invoiceReminderNotSent"
+  },
   "invoiceReminded": "Promemoria registrato.",
   "invoiceRemindedBadge": "Sollecitato ×{count}",
   "@invoiceRemindedBadge": {

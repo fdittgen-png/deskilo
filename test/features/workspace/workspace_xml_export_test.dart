@@ -148,6 +148,7 @@ void main() {
       saver: ({required bytes, required fileName}) async => '/local/$fileName',
       sharer: ({required bytes, required fileName, required mimeType, String? text}) async {
         shared.add('$fileName:$mimeType');
+              return FileShareOutcome.sent;
       },
     );
     final tile = find.byKey(const Key('workspaceSettingsExportXml'));

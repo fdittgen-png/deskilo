@@ -7265,6 +7265,12 @@ abstract class AppLocalizations {
   /// **'Send a reminder'**
   String get invoiceRemindAction;
 
+  /// #1532: invoiceReminderNotSent
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was sent, so nothing was recorded.'**
+  String get invoiceReminderNotSent;
+
   /// Snackbar after a reminder was recorded
   ///
   /// In en, this message translates to:
