@@ -230,6 +230,10 @@ select is(
 
 -- ── the questions travel; the answers never do (0250) ────────────────
 
+-- The owner again: the member erased their membership above, and
+-- exporting a configuration is the owner's in any case.
+select pg_temp.act_as('owner');
+
 select is(
   (select e->>'merge_policy' || '/' || (e->>'group')
      from jsonb_array_elements(public.deployable_entities()) e

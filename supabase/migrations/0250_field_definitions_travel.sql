@@ -209,6 +209,20 @@ begin
   if v_patched is null then v_missing := v_missing || 'export'::text;
   else execute v_patched; end if;
 
+  -- Every deployable entity is classified for publication
+  -- (`31_template_snapshots`), and a question is a form, not a secret:
+  -- it names what the space asks, in the languages it asks it. What a
+  -- published template must never carry is an ANSWER, and the entity
+  -- does not reach the values table at all.
+  v_def := pg_get_functiondef('public.template_publication_rules()'::regprocedure);
+  v_patched := pg_temp.anchor_replace(v_def,
+    $a$    'features', jsonb_build_object('allowed', true)$a$,
+    $a$    'field_definitions', jsonb_build_object('allowed', true,
+      'reason', 'the questions and their wording; an answer is a fact about a person and never travels (#1288)'),
+    'features', jsonb_build_object('allowed', true)$a$);
+  if v_patched is null then v_missing := v_missing || 'publication'::text;
+  else execute v_patched; end if;
+
   v_def := pg_get_functiondef('public.import_workspace_configuration(uuid, jsonb, text)'::regprocedure);
   v_patched := pg_temp.anchor_replace(v_def,
     $a$  if v_t ? 'closure_days' then$a$,
