@@ -1715,6 +1715,22 @@ class AppLocalizationsIt extends AppLocalizations {
   String get demoPersonaOwner => 'La proprietaria';
 
   @override
+  String get demoSessionLeave => 'Esci dalla demo';
+
+  @override
+  String get demoEntryAction => 'Esplora lo spazio dimostrativo';
+
+  @override
+  String get demoEntryTitle => 'Uno spazio da guardare';
+
+  @override
+  String get demoEntryBody =>
+      'Tutto qui dentro è inventato: le persone, le prenotazioni e le fatture sono create per la dimostrazione. Nulla di ciò che fai raggiunge uno spazio reale, nulla lascia questo dispositivo e non serve alcun account. Il ripristino rimette tutto com\'era quando vuoi.';
+
+  @override
+  String get demoEntryStart => 'Inizia';
+
+  @override
   String get deploymentConfirmTitleDev => 'Distribuire in questo DEV?';
 
   @override

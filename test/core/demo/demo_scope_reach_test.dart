@@ -43,7 +43,7 @@ void main() {
       'to the fixture', (tester) async {
     await tester.pumpWidget(
       const ProviderScope(
-        child: MaterialApp(home: DemoWorkspace(child: _Probe())),
+        child: DemoWorkspace(child: MaterialApp(home: _Probe())),
       ),
     );
     await tester.pumpAndSettle();

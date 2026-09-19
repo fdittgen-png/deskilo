@@ -51,7 +51,7 @@ final class DemoSessionControllerProvider
 }
 
 String _$demoSessionControllerHash() =>
-    r'9ecaff355cbcd277d95579d732407824f8fdf424';
+    r'40e603012358843a0890ed703d4dcb88e5853668';
 
 /// The owner of the current session. It lives ABOVE the Demo scope: a
 /// provider inside the scope would be disposed by the very reset it was

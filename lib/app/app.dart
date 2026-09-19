@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/demo/demo_entry.dart';
+import '../core/demo/presentation/demo_workspace.dart';
 import '../core/locale/locale_controller.dart';
 import '../core/motion/motion.dart';
 import '../core/presence/presence_providers.dart';
@@ -16,6 +18,23 @@ import 'boot_splash.dart';
 import 'router.dart';
 import 'theme.dart';
 import 'shell/development_banner.dart';
+
+/// The composition root: the real app, or the demonstration space
+/// wrapped around it (#1379).
+///
+/// The demo is not a different app and has no screens of its own. It is
+/// the same [DeskiloApp], built inside a container whose repositories are
+/// the fixture's — so the router, the shell and every screen below are
+/// the ones a member uses, reading synthetic data.
+class DeskiloRoot extends ConsumerWidget {
+  const DeskiloRoot({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) =>
+      ref.watch(demoEntryProvider)
+          ? const DemoWorkspace(child: DeskiloApp())
+          : const DeskiloApp();
+}
 
 /// Composition root of DesKilo.
 class DeskiloApp extends ConsumerWidget {
@@ -67,8 +86,13 @@ class DeskiloApp extends ConsumerWidget {
       builder: (context, child) => MotionSettings(
         animationsEnabled: animations,
         child: DemoBlurLayer(
-          child: DevelopmentBanner(
-            child: BootSplash(child: SystemInsetsGuard(child: child)),
+          // #1379 — the demonstration bar renders INSIDE the app, where a
+          // theme and five languages exist. In live mode there is no
+          // DemoEnvironment above it and it returns its child untouched.
+          child: DemoControls(
+            child: DevelopmentBanner(
+              child: BootSplash(child: SystemInsetsGuard(child: child)),
+            ),
           ),
         ),
       ),

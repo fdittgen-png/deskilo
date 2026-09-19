@@ -31,5 +31,25 @@
   "demoPersonaOwner": "The owner",
   "@demoPersonaOwner": {
     "description": "#1376 demo personas: demoPersonaOwner"
+  },
+  "demoSessionLeave": "Leave the demo",
+  "@demoSessionLeave": {
+    "description": "#1379 demo entry: demoSessionLeave"
+  },
+  "demoEntryAction": "Explore the demo workspace",
+  "@demoEntryAction": {
+    "description": "#1379 demo entry: demoEntryAction"
+  },
+  "demoEntryTitle": "A workspace to look around",
+  "@demoEntryTitle": {
+    "description": "#1379 demo entry: demoEntryTitle"
+  },
+  "demoEntryBody": "Everything in it is made up: the people, the bookings and the bills are invented for the demonstration. Nothing you do here reaches a real workspace, nothing leaves this device, and no account is needed. Reset puts it back whenever you like.",
+  "@demoEntryBody": {
+    "description": "#1379 demo entry: demoEntryBody"
+  },
+  "demoEntryStart": "Start exploring",
+  "@demoEntryStart": {
+    "description": "#1379 demo entry: demoEntryStart"
   }
 }

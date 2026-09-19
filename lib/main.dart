@@ -74,7 +74,7 @@ Future<void> main() async {
       overrides: [
         notificationServiceProvider.overrideWithValue(notifications),
       ],
-      child: const DeskiloApp(),
+      child: const DeskiloRoot(),
     ),
   );
 }
