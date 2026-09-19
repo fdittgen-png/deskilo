@@ -64,6 +64,7 @@ Future<BookRepartitionOutcome> _book(
     );
 
 void main() {
+  _distributionGroup();
   test('a refused rule distributes nothing at all', () async {
     final repo = _RuleRefuses();
 
@@ -112,5 +113,47 @@ void main() {
         reason: 'the refusing rule writer is never called');
     expect((outcome as RepartitionBooked).ruleRemembered, isFalse);
     expect(repo.repartitions, hasLength(1));
+  });
+}
+
+// ── #1449: distributing, and learning which of the two things happened ──
+
+void _distributionGroup() {
+  group('distribute says whether the shares booked or are waiting', () {
+    test('booked, when no validation rule holds them', () async {
+      final repo = FakeMoneyRepository();
+
+      final done = await Repartitions(repo).distribute(
+        workspaceId: 'ws-1',
+        title: 'Internet',
+        amountCents: 1000,
+        method: RepartitionMethod.equal,
+        period: '2026-09',
+        shares: _shares,
+      );
+
+      expect(done.pending, isFalse,
+          reason: 'the person is told the shares appear on the next '
+              'usage invoice, which is only true when nothing holds them');
+      expect(done.id, isNotEmpty);
+    });
+
+    test('waiting, when one does', () async {
+      final repo = FakeMoneyRepository()..repartitionPolicyConfigured = true;
+
+      final done = await Repartitions(repo).distribute(
+        workspaceId: 'ws-1',
+        title: 'Internet',
+        amountCents: 1000,
+        method: RepartitionMethod.equal,
+        period: '2026-09',
+        shares: _shares,
+      );
+
+      expect(done.pending, isTrue,
+          reason: 'the sheet used to discover this by re-reading what it '
+              'had just written; the derivation belongs with the rule, '
+              'and the two sentences a person reads depend on it');
+    });
   });
 }

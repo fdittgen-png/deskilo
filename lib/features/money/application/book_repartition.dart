@@ -55,6 +55,83 @@ class RepartitionNotBooked extends BookRepartitionOutcome {
 /// caller's problem to report, and the rule — if any — is a harmless
 /// leftover. Only the rule's own failure is folded into an outcome,
 /// because that is the one that must leave nothing behind.
+/// Sharing a cost, as the decisions behind it.
+///
+/// A class behind a provider rather than a free function (#1449): the
+/// free form left every caller resolving the repository to hand it over,
+/// so the widgets stayed counted and the point of the extraction was
+/// only half made.
+class Repartitions {
+  const Repartitions(this._money);
+
+  final MoneyRepository _money;
+
+  /// Distributes [shares], then says whether they BOOKED or were merely
+  /// FILED awaiting a validation rule.
+  ///
+  /// The second half is a decision and not a formality: the server
+  /// answers one of two things, and which one changes what the person
+  /// is told — *shares booked, they appear on the next usage invoice*
+  /// against *shares filed, they book once validated*. The sheet
+  /// discovered it by re-reading what it had just written, which is
+  /// exactly the derivation that belongs with the rule rather than in a
+  /// widget.
+  Future<DistributedExpense> distribute({
+    required String workspaceId,
+    required String title,
+    required int amountCents,
+    required RepartitionMethod method,
+    required String period,
+    required List<RepartitionShare> shares,
+  }) async {
+    final id = await _money.distributeExpense(
+      workspaceId: workspaceId,
+      title: title,
+      amountCents: amountCents,
+      method: method,
+      period: period,
+      shares: shares,
+    );
+    final filed = (await _money.fetchExpenseRepartitions(workspaceId))
+        .where((r) => r.id == id)
+        .firstOrNull;
+    return DistributedExpense(id: id, pending: filed?.isPending ?? false);
+  }
+
+  /// The wizard's path: remember the rule, then move the money.
+  Future<BookRepartitionOutcome> book({
+    required String workspaceId,
+    required String title,
+    required int amountCents,
+    required String period,
+    required RepartitionRule rule,
+    required List<RepartitionShare> shares,
+    bool remember = true,
+  }) =>
+      bookRepartition(
+        _money,
+        workspaceId: workspaceId,
+        title: title,
+        amountCents: amountCents,
+        period: period,
+        rule: rule,
+        shares: shares,
+        remember: remember,
+      );
+}
+
+/// A cost that reached the ledger, and whether it is waiting on a
+/// validation rule before it counts.
+class DistributedExpense {
+  const DistributedExpense({required this.id, required this.pending});
+
+  final String id;
+
+  /// True when a validation policy holds the shares until somebody
+  /// decides. The words a person reads depend on it.
+  final bool pending;
+}
+
 Future<BookRepartitionOutcome> bookRepartition(
   MoneyRepository repository, {
   required String workspaceId,

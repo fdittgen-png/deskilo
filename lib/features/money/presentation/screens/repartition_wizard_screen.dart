@@ -112,8 +112,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
       action: () async {
         // The order is the decision, so it lives in the command
         // (#1532): the rule first, the money second.
-        outcome = await bookRepartition(
-          ref.read(moneyRepositoryProvider),
+        outcome = await ref.read(repartitionsProvider).book(
           workspaceId: workspace.id,
           title: _title.text.trim(),
           amountCents: cents,

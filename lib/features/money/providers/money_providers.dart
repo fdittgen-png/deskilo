@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/trace/traced.dart';
 
+import '../application/book_repartition.dart';
 import '../application/record_payment.dart';
 import '../application/save_legal_identity.dart';
 import '../domain/invoice.dart';
@@ -51,6 +52,12 @@ Payments payments(Ref ref) => Payments(ref.watch(moneyRepositoryProvider));
 /// #1449 — the decision behind the legal-identity Save: which of the two
 /// aggregates is written first, and therefore which one can be left
 /// behind alone.
+/// #1449 — sharing a cost: the order of the two writes, and whether the
+/// shares booked or are waiting on a validation rule.
+@riverpod
+Repartitions repartitions(Ref ref) =>
+    Repartitions(ref.watch(moneyRepositoryProvider));
+
 @riverpod
 LegalIdentity legalIdentity(Ref ref) => LegalIdentity(
       ref.watch(moneyRepositoryProvider),
