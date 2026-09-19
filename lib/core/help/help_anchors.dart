@@ -286,7 +286,6 @@ abstract final class HelpAnchor {
   static const profileNavigation = 'user.profile.settings.navigation';
 
   /// Plausible names and amounts, display only.
-  static const profileDemoMode = 'user.profile.settings.demo-mode';
 
   /// The front lens, for a wall tablet.
   static const profileFrontCamera = 'user.profile.settings.front-camera';
@@ -601,7 +600,6 @@ abstract final class HelpAnchor {
     profileLanguage,
     profileTheme,
     profileNavigation,
-    profileDemoMode,
     profileFrontCamera,
     validationOverview,
     validationRequiredCount,

@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: 0BSD
 import '../core/ui/system_insets_guard.dart';
-import '../core/demo/demo_blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -85,14 +84,12 @@ class DeskiloApp extends ConsumerWidget {
       // #970 — the demo blur sits above everything, banner included.
       builder: (context, child) => MotionSettings(
         animationsEnabled: animations,
-        child: DemoBlurLayer(
-          // #1379 — the demonstration bar renders INSIDE the app, where a
-          // theme and five languages exist. In live mode there is no
-          // DemoEnvironment above it and it returns its child untouched.
-          child: DemoControls(
-            child: DevelopmentBanner(
-              child: BootSplash(child: SystemInsetsGuard(child: child)),
-            ),
+        // #1379 — the demonstration bar renders INSIDE the app, where a
+        // theme and five languages exist. In live mode there is no
+        // DemoEnvironment above it and it returns its child untouched.
+        child: DemoControls(
+          child: DevelopmentBanner(
+            child: BootSplash(child: SystemInsetsGuard(child: child)),
           ),
         ),
       ),

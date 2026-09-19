@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: 0BSD
-import '../../../core/demo/demo_mode.dart';
 import 'dart:typed_data';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -231,10 +230,6 @@ Future<List<Invoice>> invoices(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   final all = await ref.watch(moneyRepositoryProvider).fetchInvoices(workspace.id);
-  // #970 — demo mode blurs the frozen buyer wherever it is printed.
-  for (final invoice in all) {
-    demoSensitive.addAll(sensitiveOfInvoice(invoice));
-  }
   return all;
 }
 

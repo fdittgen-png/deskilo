@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: 0BSD
-import '../../../../core/demo/demo_mode.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -215,7 +214,6 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                 badgeToken: request.badgeToken,
               );
       // #970 — demo mode blurs the name the badge resolved to.
-      demoSensitive.addAll([identity.name]);
       await ref.read(reservationRepositoryProvider).kioskAct(
             workspaceId: workspace.id,
             badgeToken: request.badgeToken,
@@ -487,7 +485,6 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                         },
                   builder: (context, seatPhotos) => PlanCanvas(
                     officePalette: ref.watch(workspaceOfficePaletteProvider),
-              blurLabels: ref.watch(demoModeControllerProvider).value ?? false,
                     seatPhotos: seatPhotos,
                     singleRoomByLevel: namesSingleRoomsByLevel(ref),
                     paintKey: const ValueKey('kiosk-plan-canvas'),

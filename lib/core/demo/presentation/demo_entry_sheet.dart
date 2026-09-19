@@ -9,6 +9,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../features/workspace/domain/workspace_feature.dart';
+import '../../../features/workspace/providers/workspace_providers.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../theme/app_spacing.dart';
 import '../demo_entry.dart';
@@ -21,6 +23,14 @@ class DemoEntryButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // The flag gates the offer (HARD RULE #502). At the sign-in screen no
+    // workspace is chosen yet, so this resolves to the registry default;
+    // inside a space it is that space's answer.
+    if (!ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.demoMode)) {
+      return const SizedBox.shrink();
+    }
     final l10n = AppLocalizations.of(context);
     return TextButton.icon(
       key: buttonKey,

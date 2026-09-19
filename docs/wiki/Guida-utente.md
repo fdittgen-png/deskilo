@@ -1886,7 +1886,7 @@ La tua schermata personale, dall'alto in basso:
 - **Il mio account** (#1307) — chi sei e come l'app ti parla, in tutti i tuoi spazi: la tua **foto**; **Informazioni personali** (o **Indirizzo**) — il tuo indirizzo postale (stampato sulle tue fatture), il paese e la partita IVA facoltativa; **WhatsApp** — il tuo numero, visibile agli altri membri solo se lo imposti (§6); **Regione e formati**; **Account collegati** — collega un accesso Google al tuo account email; **Il mio badge** (§8); **Lingua** (predefinita di sistema o una delle cinque); **Tema** (sistema / chiaro / scuro); **Navigazione** (predefinito del dispositivo, la barra inferiore classica con il pulsante rotondo, o il menu come sul web — sul web il menu è l'unica navigazione, quindi la scelta non è offerta lì); e **Mostra di nuovo i suggerimenti di aiuto**, che riporta indietro ogni suggerimento contestuale che avevi chiuso. Quei suggerimenti sono piccoli caroselli sui moduli stessi: scorri avanti e indietro tra più suggerimenti per schermata, ognuno con un collegamento *Scopri di più* che salta direttamente alla sezione corrispondente di questa guida.
 - **La mia iscrizione** — il tuo posto in *questo* spazio: **Stato** — una riga libera (40 caratteri) mostrata nell'elenco; **Periodo di prenotazione predefinito** (la finestra su cui si aprono le schede di prenotazione, così la tua solita mezza giornata o il tuo solito da–a è già compilato); le tue **Condizioni di pagamento**; **Documenti** — la biblioteca documenti dello spazio (§11d). L'elenco è la destinazione **Membri** della barra inferiore, non una voce qui.
 - **Questo spazio**, **Amministrazione** e **Governance** — solo per chi detiene il permesso che ogni voce richiede (§8): come funziona lo spazio, la gestione dei suoi membri e dispositivi, e che cosa è lo spazio.
-- **Avanzate** — questo dispositivo: il **server** con cui parla, lo stato delle sue notifiche push, **Scansiona con la fotocamera frontale** (per i tablet a parete), l'interruttore della **Modalità sviluppatore** a livello di spazio, la schermata delle tracce **Sviluppatore** (§8 pagamenti) e la **Modalità demo** (su questo dispositivo ogni nome, e-mail, telefono e indirizzo postale sullo schermo è sfocato sul posto — il testo reale, ammorbidito fino all'illeggibile, il layout intatto — così screenshot e registrazioni non portano dati personali; nulla è nascosto e ogni modulo resta modificabile).
+- **Avanzate** — questo dispositivo: il **server** con cui parla, lo stato delle sue notifiche push, **Scansiona con la fotocamera frontale** (per i tablet a parete), l'interruttore della **Modalità sviluppatore** a livello di spazio, la schermata delle tracce **Sviluppatore** (§8 pagamenti).
 - **Aiuto e informazioni** — **Aiuto**, la guida integrata nella tua lingua; la versione dell'app, l'autore (Florian DITTGEN), la licenza open source (0BSD) con il codice su GitHub, l'informativa sulla privacy, un link per segnalare bug, e come **sostenere il progetto** (PayPal, Revolut).
 - **Esci**.
 
@@ -2000,13 +2000,17 @@ Se l'app naviga con una barra in basso o una guida laterale. Su schermo
 largo la guida lascia più spazio alla piantina; sul telefono la barra è
 più facile da raggiungere.
 
-<!-- anchor: user.profile.settings.demo-mode -->
-### Modalità dimostrazione
+### Lo spazio dimostrativo
 
-Sostituisce a schermo nomi e importi con altri plausibili, per mostrare
-uno spazio a un visitatore senza mostrare gli affari di nessuno. Cambia
-solo ciò che si vede: nulla viene toccato nei dati, e nulla di ciò che
-fai si comporta diversamente.
+Uno spazio inventato che chiunque può aprire dalla schermata di accesso,
+senza account. Ha le proprie persone, le proprie prenotazioni e le
+proprie fatture, e un **Ripristino** che rimette tutto esattamente com'era.
+**Vedi come** guarda lo stesso spazio come membro, come amministratrice o
+come proprietaria, per vedere ciò che ciascuna vede.
+
+Nulla di ciò che vi si fa raggiunge uno spazio reale e nulla lascia il
+dispositivo. Uscire dimentica la sessione, e chiudere l'applicazione
+pure: la visita successiva riparte dallo stesso spazio inventato.
 
 <!-- anchor: user.profile.settings.front-camera -->
 ### Fotocamera frontale per scansionare

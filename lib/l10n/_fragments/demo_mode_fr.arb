@@ -1,19 +1,11 @@
 {
   "@@locale": "fr",
-  "featureDemoMode": "Mode démo",
+  "featureDemoMode": "L'espace de démonstration",
   "@featureDemoMode": {
-    "description": "#970 demo mode: featureDemoMode"
+    "description": "#1380 the demo workspace: featureDemoMode"
   },
-  "featureDemoModeDesc": "Un interrupteur dans les réglages de chaque membre : tant qu'il est activé, chaque nom, courriel, téléphone et adresse postale à l'écran est flouté sur place, pour des captures et vidéos sans données personnelles. Désactivé : l'interrupteur est masqué.",
+  "featureDemoModeDesc": "Un espace inventé que chacun peut ouvrir depuis l'écran de connexion, avec ses propres personnes, réservations et factures. Rien de ce qui s'y fait n'atteint un espace réel ni ne quitte l'appareil, et aucun compte n'est nécessaire. Désactivé : la proposition n'apparaît pas.",
   "@featureDemoModeDesc": {
-    "description": "#970 demo mode: featureDemoModeDesc"
-  },
-  "demoModeTitle": "Mode démo",
-  "@demoModeTitle": {
-    "description": "#970 demo mode: demoModeTitle"
-  },
-  "demoModeSubtitle": "Noms, courriels, téléphones et adresses sont floutés à l'écran de cet appareil — pour les captures d'écran et les vidéos.",
-  "@demoModeSubtitle": {
-    "description": "#970 demo mode: demoModeSubtitle"
+    "description": "#1380 the demo workspace: featureDemoModeDesc"
   }
 }

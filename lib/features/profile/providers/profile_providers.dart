@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: 0BSD
-import '../../../core/demo/demo_mode.dart';
 import 'dart:typed_data';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -29,7 +28,6 @@ Future<Profile?> myProfile(Ref ref) async {
   if (!signedIn) return null;
   final profile = await ref.watch(profileRepositoryProvider).fetchMyProfile();
   // #970 — demo mode blurs my own details wherever they are printed.
-  if (profile != null) demoSensitive.addAll(sensitiveOfProfile(profile));
   return profile;
 }
 

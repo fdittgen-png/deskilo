@@ -1993,21 +1993,13 @@
   "@featureCustomRolesDesc": {
     "description": "#1287 custom roles: the feature switch description"
   },
-  "featureDemoMode": "Demo mode",
+  "featureDemoMode": "The demo workspace",
   "@featureDemoMode": {
-    "description": "#970 demo mode: featureDemoMode"
+    "description": "#1380 the demo workspace: featureDemoMode"
   },
-  "featureDemoModeDesc": "A switch in each member's settings: while it is on, every name, e-mail, phone and postal address on their screen is blurred in place, so screenshots and videos carry no personal data. Off: the switch is hidden.",
+  "featureDemoModeDesc": "An invented workspace anyone can open from the sign-in screen, with its own people, bookings and bills. Nothing done in it reaches a real workspace or leaves the device, and no account is needed. Off: the offer does not appear.",
   "@featureDemoModeDesc": {
-    "description": "#970 demo mode: featureDemoModeDesc"
-  },
-  "demoModeTitle": "Demo mode",
-  "@demoModeTitle": {
-    "description": "#970 demo mode: demoModeTitle"
-  },
-  "demoModeSubtitle": "Names, e-mails, phones and addresses are blurred on this device's screen — for screenshots and videos.",
-  "@demoModeSubtitle": {
-    "description": "#970 demo mode: demoModeSubtitle"
+    "description": "#1380 the demo workspace: featureDemoModeDesc"
   },
   "demoSessionBadge": "Demo",
   "@demoSessionBadge": {

@@ -1985,13 +1985,17 @@ Ob die App über eine untere Leiste oder eine seitliche Schiene
 navigiert. Auf breitem Bildschirm gibt die Schiene dem Plan mehr Raum;
 auf dem Telefon ist die Leiste leichter zu erreichen.
 
-<!-- anchor: user.profile.settings.demo-mode -->
-### Demomodus
+### Der Demobereich
 
-Ersetzt Namen und Beträge auf dem Bildschirm durch plausible, damit ein
-Raum einem Besuch gezeigt werden kann, ohne jemandes Geschäfte zu
-zeigen. Es ändert nur die Anzeige: an den Daten wird nichts angefasst,
-und nichts, was du tust, verhält sich anders.
+Ein erfundener Bereich, den jede Person vom Anmeldebildschirm aus öffnen
+kann, ohne Konto. Er hat eigene Personen, eigene Buchungen und eigene
+Rechnungen sowie ein **Zurücksetzen**, das alles genau so wiederherstellt.
+**Ansicht als** zeigt denselben Bereich als Mitglied, als Verwaltung oder
+als Inhaberin, sodass sichtbar wird, was jede von ihnen sieht.
+
+Nichts davon erreicht einen echten Bereich, und nichts verlässt das
+Gerät. Das Verlassen vergisst die Sitzung, und das Schließen der App
+ebenso: der nächste Besuch beginnt wieder im selben erfundenen Bereich.
 
 <!-- anchor: user.profile.settings.front-camera -->
 ### Frontkamera zum Scannen
