@@ -59,7 +59,7 @@ suite, and it selects nothing for a path it does not recognise — see
 
 ## Testing rules
 
-- TDD pyramid 70/20/10. Bug fixes: write the failing test FIRST, calling the exact method the failing UI calls.
+- TDD pyramid 70/20/10 — the target, never a claim about the suite as it is; `dart run tool/test_inventory.dart` prints that (#1334). Bug fixes: write the failing test FIRST, calling the exact method the failing UI calls.
 - Twin-bug audit before closing: grep for the same anti-pattern elsewhere; fix all occurrences in one PR.
 - Producer + consumer ship together — never merge the reader half of a feature without the writer.
 - If a fix adds an affordance (button, banner), a test must tap it.
@@ -86,6 +86,28 @@ suite, and it selects nothing for a path it does not recognise — see
   with `untilReal` (`test/helpers/real_async.dart`), never a fixed delay.
   A file whose widget structure IS the contract says so with a
   `// test-inventory: structure is the invariant — <reason>` comment.
+
+## Never write a count of this repository down (#1334)
+
+`docs/PROJECT_OVERVIEW.md`, `CONTRIBUTING.md`, `docs/wiki/Implementation.md`
+and this file may not state how many migrations, feature flags, ARB keys,
+tests, routes or workflows exist. Every such number was correct when it
+was typed and wrong within weeks — the overview's migration and feature
+counts were off by a factor of three, and §D of that document records the
+same numbers being corrected by hand once already, in August, before they
+rotted again (#1334).
+
+Name the command and let it answer:
+
+```bash
+dart run tool/project_scale.dart     # the repository's size, row by row
+dart run tool/test_inventory.dart    # the suite, by layer and by action
+```
+
+`no_frozen_counts_test` enforces it. A section that records what was true
+on a given day keeps its numbers by saying so in its heading —
+`<!-- dated: YYYY-MM-DD — why -->` — because history is allowed to be
+dated; a claim about today is not.
 
 ## Git rules
 

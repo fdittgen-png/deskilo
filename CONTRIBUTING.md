@@ -22,7 +22,7 @@ Full rules for humans and AI agents: [`docs/AGENT_RULES.md`](docs/AGENT_RULES.md
 
 ## Testing
 
-TDD pyramid: ~70% unit / 20% widget / 10% integration. Bug fixes start with a failing test that fails for the same reason the app fails. Fakes preferred over mocks. Accessibility assertions (tap-target guideline) on interactive screens.
+TDD pyramid: ~70% unit / 20% widget / 10% integration — the intended shape, not a measured one. `dart run tool/test_inventory.dart` prints what the suite actually is (#1334). Bug fixes start with a failing test that fails for the same reason the app fails. Fakes preferred over mocks. Accessibility assertions (tap-target guideline) on interactive screens.
 
 ## Architecture
 
