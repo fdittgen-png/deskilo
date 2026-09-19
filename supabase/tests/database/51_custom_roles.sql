@@ -214,13 +214,19 @@ create or replace function pg_temp.far() returns uuid language sql as $$
   select current_setting('deskilo.roles.far')::uuid;
 $$;
 
+-- The export is taken ONCE, while the source's owner is still the
+-- caller: only an owner exports a configuration, and the space it lands
+-- in has a different one. Reading it again from inside the import would
+-- ask the wrong person.
 create or replace function pg_temp.config() returns jsonb language sql as $$
-  select public.export_workspace_configuration(pg_temp.ws());
+  select current_setting('deskilo.roles.config')::jsonb;
 $$;
 
 select pg_temp.act_as('owner');
 select public.set_workspace_role(pg_temp.ws(), 'treasurer', array['issueInvoices'],
   '{"en": "Treasurer", "fr": "Trésorier"}'::jsonb, 3, true);
+select set_config('deskilo.roles.config',
+  public.export_workspace_configuration(pg_temp.ws())::text, false);
 
 select is(
   (select e.value - 'sort_order' - 'active'
