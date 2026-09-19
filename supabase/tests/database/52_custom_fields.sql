@@ -13,7 +13,7 @@
 -- need a second role and would prove nothing more: the policy IS that
 -- function, and a test that re-implements the rule agrees with itself.
 begin;
-select plan(20);
+select plan(24);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -195,6 +195,38 @@ select throws_matching(
   'cannot change while it has answers',
   'a type change under existing answers would reinterpret them; #1288 '
   'calls that a conflict, and a conflict is something a person decides');
+
+-- ── erasure reaches the answers, and stops there (0249) ──────────────
+
+select pg_temp.act_as('owner');
+select public.set_workspace_field(pg_temp.ws(), 'shirt', 'text',
+  '{"en": "Shirt size"}'::jsonb, false, false, 'members');
+
+select pg_temp.act_as('plain');
+select lives_ok(
+  format($$ select public.set_member_field_values(%L, 'profile', '{"committee": "tresorier", "shirt": "M"}'::jsonb) $$, pg_temp.member('plain')),
+  'the member answers a personal question and a non-personal one');
+
+select lives_ok(
+  format($$ select public.erase_my_membership(%L) $$, pg_temp.ws()),
+  'and then leaves');
+
+select is(
+  (select count(*)::int from public.workspace_field_values v
+     join public.workspace_field_definitions d on d.id = v.definition_id
+    where v.member_id = pg_temp.member('plain') and d.personal_data),
+  0,
+  'the answers to the PERSONAL questions are gone — erasure is erasure');
+
+select is(
+  (select v.text_value from public.workspace_field_values v
+     join public.workspace_field_definitions d on d.id = v.definition_id
+    where v.member_id = pg_temp.member('plain') and not d.personal_data),
+  'M',
+  'and the one the owner marked NOT personal stays: a size for the '
+  'association''s next order is the space''s operational data, not a '
+  'fact about a person. Deleting everything would be simpler and would '
+  'throw that away; deleting nothing would be a broken promise');
 
 select ok(
   not has_table_privilege('authenticated', 'public.workspace_field_values', 'INSERT')

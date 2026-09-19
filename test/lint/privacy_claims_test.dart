@@ -20,6 +20,9 @@ import 'package:flutter_test/flutter_test.dart';
 /// The migration that owns export and erasure.
 const _erasure = 'supabase/migrations/0133_calendar_hub.sql';
 
+/// #1288 S3 — erasure was extended here, by an anchored patch.
+const _erasureExtension = 'supabase/migrations/0249_field_erasure.sql';
+
 /// Every document that could repeat the claim, in every language it is
 /// written in.
 ///
@@ -101,24 +104,51 @@ void main() {
     }
   });
 
-  test('erasure still touches exactly the four tables the policy names',
-      () {
-    final sql = File(_erasure).readAsStringSync();
-    final body = sql.substring(sql.indexOf('erase_my_membership'));
-    // The four the retention matrix in PRIVACY.md describes.
+  test('erasure still touches exactly the tables the policy names', () {
+    // Erasure is defined in one migration and EXTENDED in another, so
+    // both are read: a later anchored patch that added a table without
+    // a row in the retention matrix is exactly what this catches.
+    final body = [
+      File(_erasure)
+          .readAsStringSync()
+          .substring(File(_erasure).readAsStringSync().indexOf(
+                'erase_my_membership',
+              )),
+      File(_erasureExtension).readAsStringSync(),
+    ].join('\n');
+
+    // The rows the retention matrix in PRIVACY.md describes.
     for (final table in [
       'public.reservations',
       'public.member_notes',
       'public.members',
       'public.profiles',
+      // #1288 S3 — the answers to the workspace's own questions, where
+      // the question is marked personal data.
+      'public.workspace_field_values',
+      'public.workspace_field_value_options',
     ]) {
       expect(body, contains(table), reason: 'erasure should touch $table');
     }
     expect(
-      body.substring(0, body.indexOf(r'$$;')).contains('ledger_entries'),
+      body.contains('ledger_entries'),
       isFalse,
       reason: 'if erasure starts touching the ledger, PRIVACY.md has to '
           'say so — that is the whole point of this pair of tests',
+    );
+  });
+
+  test('erasure keeps the answers the owner marked NON-personal', () {
+    // The whole point of the personal_data flag: a shirt size for the
+    // association's next order is the workspace's operational data, not
+    // a fact about a person, and it survives.
+    final body = File(_erasureExtension).readAsStringSync();
+    expect(
+      body,
+      contains('d.personal_data'),
+      reason: 'erasure that deleted every answer would be simpler and '
+          'would throw away data the workspace still needs; erasure that '
+          'deleted none would be a broken promise',
     );
   });
 
