@@ -274,8 +274,8 @@ select ok(
 select pg_temp.act_as('owner');
 
 select throws_matching(
-  format($$ select public.save_workspace_field(%L, 'shirt', 'single_choice',
-    '{"en":"Shirt"}'::jsonb, false, true, 'self', array['profile'], 'general',
+  format($$ select public.save_workspace_field(%L, 'badge', 'single_choice',
+    '{"en":"Badge"}'::jsonb, false, true, 'self', array['profile'], 'general',
     0, '{}'::jsonb, true, '[{"key":"NOT A KEY","labels":{"en":"L"}}]'::jsonb) $$,
     pg_temp.ws()),
   'a choice key is lower-case letters',
@@ -284,7 +284,7 @@ select throws_matching(
 
 select is(
   (select count(*)::int from public.workspace_field_definitions
-    where workspace_id = pg_temp.ws() and key = 'shirt'),
+    where workspace_id = pg_temp.ws() and key = 'badge'),
   0,
   'and the question does not exist afterwards. One transaction: the '
   'definition goes back with the choices that were refused, instead of '
