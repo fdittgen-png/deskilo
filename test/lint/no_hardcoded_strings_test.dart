@@ -28,6 +28,11 @@ void main() {
       var count = 0;
       for (var i = 0; i < lines.length; i++) {
         final line = lines[i];
+        // A comment explaining the rule is not a violation of it — the
+        // trap this repository has now fallen into three times, most
+        // recently on the line documenting why an enum value takes a
+        // named argument (`Text('` hides inside `longText('…')`).
+        if (line.trimLeft().startsWith('//')) continue;
         if (_textLiteral.hasMatch(line) && !_fallbackLiteral.hasMatch(line)) {
           count++;
           violations.add('${file.path}:${i + 1}: $line');

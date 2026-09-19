@@ -28,6 +28,7 @@ import '../../features/reservations/providers/reservation_providers.dart';
 import '../../features/calendar/providers/calendar_providers.dart';
 import '../../features/workspace/providers/deployment_providers.dart';
 import '../../features/workspace/providers/workspace_files_providers.dart';
+import '../../features/workspace/providers/workspace_fields_providers.dart';
 import '../../features/workspace/providers/workspace_import_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../badge/app_badge.dart';
@@ -65,6 +66,7 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       deploymentRepositoryProvider.overrideWithValue(fixture.deployments),
       workspaceFilesRepositoryProvider.overrideWithValue(fixture.files),
       workspaceImportRepositoryProvider.overrideWithValue(fixture.imports),
+      workspaceFieldsRepositoryProvider.overrideWithValue(fixture.fields),
 
       // #1377 — the ways an effect could leave the app, each pointed at
       // something inert. A payment, an invitation, an e-invoice and a
@@ -99,6 +101,7 @@ const Set<String> demoOverriddenProviders = {
   'deploymentRepositoryProvider',
   'workspaceFilesRepositoryProvider',
   'workspaceImportRepositoryProvider',
+  'workspaceFieldsRepositoryProvider',
   'realtimeSyncProvider',
   'notificationServiceProvider',
   'appBadgeProvider',
