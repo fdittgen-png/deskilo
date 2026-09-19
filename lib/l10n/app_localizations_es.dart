@@ -11842,6 +11842,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get workspaceXmlImportConfirm => 'Sustituir e importar';
 
   @override
+  String get workspaceXmlImportPartial =>
+      'Parte de la importación se aplicó antes de detenerse: revisa los ajustes y el plano abajo.';
+
+  @override
   String get workspaceXmlImportSuccess => 'Espacio importado.';
 
   @override

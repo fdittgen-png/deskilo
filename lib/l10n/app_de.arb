@@ -8209,6 +8209,10 @@
   "workspaceXmlImportPreviewAccessories": "Zubehör: {count}",
   "workspaceXmlImportPreviewWarning": "Der aktuelle Raumplan wird gelöscht und ersetzt, die Workspace-Einstellungen werden überschrieben. Das kann nicht rückgängig gemacht werden.",
   "workspaceXmlImportConfirm": "Ersetzen und importieren",
+  "workspaceXmlImportPartial": "Ein Teil des Imports wurde übernommen, bevor er abbrach — prüfen Sie die Einstellungen und den Plan unten.",
+  "@workspaceXmlImportPartial": {
+    "description": "#1532: workspaceXmlImportPartial"
+  },
   "workspaceXmlImportSuccess": "Workspace importiert.",
   "workspaceXmlErrorMalformed": "Die Datei ist kein lesbares XML.",
   "workspaceXmlErrorWrongRoot": "Das ist keine DesKilo-Workspace-Datei.",

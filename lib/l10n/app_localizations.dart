@@ -20674,6 +20674,12 @@ abstract class AppLocalizations {
   /// **'Replace and import'**
   String get workspaceXmlImportConfirm;
 
+  /// #1532: workspaceXmlImportPartial
+  ///
+  /// In en, this message translates to:
+  /// **'Part of the import was applied before it stopped — check the settings and the floor plan below.'**
+  String get workspaceXmlImportPartial;
+
   /// Snackbar after a successful XML import (#165)
   ///
   /// In en, this message translates to:

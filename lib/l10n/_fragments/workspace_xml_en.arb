@@ -59,6 +59,10 @@
   "@workspaceXmlImportConfirm": {
     "description": "Destructive confirm button of the import preview dialog (#165)"
   },
+  "workspaceXmlImportPartial": "Part of the import was applied before it stopped — check the settings and the floor plan below.",
+  "@workspaceXmlImportPartial": {
+    "description": "#1532: workspaceXmlImportPartial"
+  },
   "workspaceXmlImportSuccess": "Workspace imported.",
   "@workspaceXmlImportSuccess": {
     "description": "Snackbar after a successful XML import (#165)"

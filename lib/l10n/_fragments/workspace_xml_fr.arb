@@ -10,6 +10,10 @@
   "workspaceXmlImportPreviewAccessories": "Accessoires : {count}",
   "workspaceXmlImportPreviewWarning": "Le plan actuel sera supprimé et remplacé, et les paramètres de l'espace seront écrasés. Cette action est irréversible.",
   "workspaceXmlImportConfirm": "Remplacer et importer",
+  "workspaceXmlImportPartial": "Une partie de l’import a été appliquée avant l’arrêt — vérifiez les paramètres et le plan ci-dessous.",
+  "@workspaceXmlImportPartial": {
+    "description": "#1532: workspaceXmlImportPartial"
+  },
   "workspaceXmlImportSuccess": "Espace importé.",
   "workspaceXmlErrorMalformed": "Le fichier n'est pas un XML lisible.",
   "workspaceXmlErrorWrongRoot": "Ce n'est pas un fichier d'espace DesKilo.",
