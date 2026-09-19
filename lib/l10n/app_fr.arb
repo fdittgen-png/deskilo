@@ -1556,6 +1556,10 @@
   },
   "helpTopicDeployment": "Déployer",
   "helpTopicEnvironments": "Environnements",
+  "deployEntityFieldDefinitions": "Les questions de l'espace",
+  "@deployEntityFieldDefinitions": {
+    "description": "#1288 S5: deployEntityFieldDefinitions"
+  },
   "developerMode": "Mode développeur",
   "developerModeWorkspaceHint": "S'applique à tous les membres de cet espace.",
   "developerTitle": "Développeur",

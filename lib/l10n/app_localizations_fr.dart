@@ -1991,6 +1991,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get helpTopicEnvironments => 'Environnements';
 
   @override
+  String get deployEntityFieldDefinitions => 'Les questions de l\'espace';
+
+  @override
   String get developerMode => 'Mode développeur';
 
   @override

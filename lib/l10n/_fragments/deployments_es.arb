@@ -173,5 +173,9 @@
     "description": "#1289 deployments: deployEntityBranding — the workspace colours entity"
   },
   "helpTopicDeployment": "Desplegar",
-  "helpTopicEnvironments": "Entornos"
+  "helpTopicEnvironments": "Entornos",
+  "deployEntityFieldDefinitions": "Las preguntas del espacio",
+  "@deployEntityFieldDefinitions": {
+    "description": "#1288 S5: deployEntityFieldDefinitions"
+  }
 }
