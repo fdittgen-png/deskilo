@@ -15,7 +15,7 @@
 -- step — it is that a role arriving in another space holds nobody, and
 -- grants nothing until somebody there gives it to somebody.
 begin;
-select plan(27);
+select plan(28);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
