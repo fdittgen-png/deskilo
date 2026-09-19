@@ -103,9 +103,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('The owner'), findsOneWidget);
 
+    // One tap per persona: owner → member, the ring the bar cycles.
     await tester.tap(find.byKey(DemoControls.viewAsKey));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('A member').last);
     await tester.pumpAndSettle();
 
     final session = root.read(demoSessionControllerProvider);
