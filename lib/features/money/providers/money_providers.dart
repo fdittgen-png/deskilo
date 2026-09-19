@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../core/trace/traced.dart';
 
 import '../application/record_payment.dart';
+import '../application/save_legal_identity.dart';
 import '../domain/invoice.dart';
 import '../domain/billing_rules.dart';
 import '../domain/dunning.dart';
@@ -46,6 +47,15 @@ MoneyRepository moneyRepository(Ref ref) =>
 /// enough to send.
 @riverpod
 Payments payments(Ref ref) => Payments(ref.watch(moneyRepositoryProvider));
+
+/// #1449 — the decision behind the legal-identity Save: which of the two
+/// aggregates is written first, and therefore which one can be left
+/// behind alone.
+@riverpod
+LegalIdentity legalIdentity(Ref ref) => LegalIdentity(
+      ref.watch(moneyRepositoryProvider),
+      ref.watch(workspaceRepositoryProvider),
+    );
 
 @riverpod
 Future<Statement?> myStatement(Ref ref, String period) async {

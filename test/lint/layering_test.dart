@@ -52,7 +52,7 @@ import 'lint_sources.dart';
 /// from the map, after which any widget in it touching a repository
 /// fails.
 const Map<String, int> _repositoryInWidgets = {
-  'money': 24, // 2026-09-18 #1449 25→24: the register-payment sheet asks application/record_payment.dart which month a payment belongs to
+  'money': 23, // 2026-09-19 #1449 24→23: the legal-identity screen asks application/save_legal_identity.dart which aggregate is written first, and resolves no repository at all // 2026-09-18 #1449 25→24: the register-payment sheet asks application/record_payment.dart which month a payment belongs to
   'workspace': 21, // 2026-09-19 #1528 20→21: the screen that defines a workspace's own roles resolves the roles repository, the same shape the questions editor has and the same one every settings screen has; // 2026-09-19 #1288 S4 19→20: the question editor screen resolves the fields repository to define a question — the same shape every settings screen has, and the decision it makes is the server's; // 2026-09-17 #1280 S3 20→19: the save sheet publishes through application/publish_template.dart
   'auth': 4,
   // Still 4 after #1234: `space_act_sheet.dart` moved its DECISION to
@@ -205,7 +205,7 @@ const Map<String, int> _pairBudget = {
   'money -> reservations': 13,
   // 2026-09-15 #1310 S0 112→113: the invoice register asks for the
   // exportData permission before offering the accounting export.
-  'money -> workspace': 116, // 2026-09-17 #1279 carnets read the current workspace and its feature flag 113→116
+  'money -> workspace': 117, // 2026-09-19 #1449 116→117: save_legal_identity.dart names WorkspaceRepository — the command writes both aggregates, which is the point of it; the SCREEN stopped importing it, so the coupling moved from presentation into application where it is one line // 2026-09-17 #1279 carnets read the current workspace and its feature flag 113→116
   'plan -> events': 1,
   'plan -> members': 1,
   'plan -> money': 4,

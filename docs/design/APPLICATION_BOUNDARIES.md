@@ -14,7 +14,7 @@ A repository read from `presentation/` is **not** a defect by itself. What #1234
 | Booking | `plan` | 2 |
 | Booking | `calendar` | 1 |
 | Booking | `editor` | 3 |
-| Finance | `money` | 24 |
+| Finance | `money` | 23 |
 | Workspace configuration | `workspace` | 21 |
 | Workspace configuration | `members` | 2 |
 | Workspace configuration | `profile` | 3 |
@@ -22,7 +22,7 @@ A repository read from `presentation/` is **not** a defect by itself. What #1234
 | — | `events` | 1 |
 | — | `kiosk` | 1 |
 
-**66 files** across 11 features. `test/lint/layering_test.dart` holds each feature's number as a ceiling that may only fall.
+**65 files** across 11 features. `test/lint/layering_test.dart` holds each feature's number as a ceiling that may only fall.
 
 ## Cross-feature imports, by direction
 
@@ -30,7 +30,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 
 | pair | imports |
 |---|---|
-| `money -> workspace` | 116 |
+| `money -> workspace` | 117 |
 | `reservations -> plan` | 68 |
 | `reservations -> workspace` | 53 |
 | `profile -> workspace` | 37 |
@@ -85,7 +85,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**54 directed relationships, 687 imports.**
+**54 directed relationships, 688 imports.**
 
 Reciprocal (19): `calendar <-> money`, `calendar <-> reservations`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
@@ -127,9 +127,9 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/workspace/presentation/member_admin_actions.dart` | 703 |
 | `lib/core/demo/data/reservation_repository.dart` | 678 |
 | `lib/features/calendar/presentation/screens/calendar_screen.dart` | 676 |
-| `lib/features/money/presentation/screens/legal_identity_screen.dart` | 656 |
 | `lib/features/kiosk/presentation/screens/kiosk_screen.dart` | 655 |
 | `lib/core/help/help_anchors.dart` | 649 |
+| `lib/features/money/presentation/screens/legal_identity_screen.dart` | 649 |
 | `lib/features/plan/data/supabase_floor_plan_repository.dart` | 631 |
 | `lib/features/money/presentation/report_defaults.dart` | 628 |
 | `lib/features/money/presentation/invoice_documents.dart` | 610 |
