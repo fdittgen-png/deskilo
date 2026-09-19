@@ -1,0 +1,19 @@
+{
+  "@@locale": "de",
+  "demoSessionBadge": "Demo",
+  "@demoSessionBadge": {
+    "description": "#1375 demo session: demoSessionBadge"
+  },
+  "demoSessionReset": "Demo zurücksetzen",
+  "@demoSessionReset": {
+    "description": "#1375 demo session: demoSessionReset"
+  },
+  "demoSessionResetDone": "Die Demo ist wieder im Ausgangszustand.",
+  "@demoSessionResetDone": {
+    "description": "#1375 demo session: demoSessionResetDone"
+  },
+  "demoSessionBadgeHint": "Sie erkunden einen Demonstrationsbereich. Nichts davon verlässt dieses Gerät.",
+  "@demoSessionBadgeHint": {
+    "description": "#1375 demo session: demoSessionBadgeHint"
+  }
+}

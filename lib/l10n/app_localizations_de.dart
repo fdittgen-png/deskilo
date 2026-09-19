@@ -1688,6 +1688,19 @@ class AppLocalizationsDe extends AppLocalizations {
       'Namen, E-Mails, Telefonnummern und Adressen werden auf dem Bildschirm dieses Geräts unscharf gemacht — für Screenshots und Videos.';
 
   @override
+  String get demoSessionBadge => 'Demo';
+
+  @override
+  String get demoSessionReset => 'Demo zurücksetzen';
+
+  @override
+  String get demoSessionResetDone => 'Die Demo ist wieder im Ausgangszustand.';
+
+  @override
+  String get demoSessionBadgeHint =>
+      'Sie erkunden einen Demonstrationsbereich. Nichts davon verlässt dieses Gerät.';
+
+  @override
   String get deploymentConfirmTitleDev => 'In diese DEV ausrollen?';
 
   @override

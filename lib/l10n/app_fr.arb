@@ -1163,6 +1163,22 @@
   "@demoModeSubtitle": {
     "description": "#970 demo mode: demoModeSubtitle"
   },
+  "demoSessionBadge": "Démo",
+  "@demoSessionBadge": {
+    "description": "#1375 demo session: demoSessionBadge"
+  },
+  "demoSessionReset": "Réinitialiser la démo",
+  "@demoSessionReset": {
+    "description": "#1375 demo session: demoSessionReset"
+  },
+  "demoSessionResetDone": "La démo est revenue à son état initial.",
+  "@demoSessionResetDone": {
+    "description": "#1375 demo session: demoSessionResetDone"
+  },
+  "demoSessionBadgeHint": "Vous explorez un espace de démonstration. Rien ici ne quitte cet appareil.",
+  "@demoSessionBadgeHint": {
+    "description": "#1375 demo session: demoSessionBadgeHint"
+  },
   "deploymentConfirmTitleDev": "Déployer dans cette DEV ?",
   "@deploymentConfirmTitleDev": {
     "description": "#1006 deployment confirmation: deploymentConfirmTitleDev"

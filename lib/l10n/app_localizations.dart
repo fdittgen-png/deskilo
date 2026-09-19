@@ -2970,6 +2970,30 @@ abstract class AppLocalizations {
   /// **'Names, e-mails, phones and addresses are blurred on this device\'s screen — for screenshots and videos.'**
   String get demoModeSubtitle;
 
+  /// #1375 demo session: demoSessionBadge
+  ///
+  /// In en, this message translates to:
+  /// **'Demo'**
+  String get demoSessionBadge;
+
+  /// #1375 demo session: demoSessionReset
+  ///
+  /// In en, this message translates to:
+  /// **'Reset the demo'**
+  String get demoSessionReset;
+
+  /// #1375 demo session: demoSessionResetDone
+  ///
+  /// In en, this message translates to:
+  /// **'The demo is back as it started.'**
+  String get demoSessionResetDone;
+
+  /// #1375 demo session: demoSessionBadgeHint
+  ///
+  /// In en, this message translates to:
+  /// **'You are exploring a demonstration space. Nothing here leaves this device.'**
+  String get demoSessionBadgeHint;
+
   /// #1006 deployment confirmation: deploymentConfirmTitleDev
   ///
   /// In en, this message translates to:

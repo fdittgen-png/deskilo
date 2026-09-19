@@ -1690,6 +1690,19 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nomi, e-mail, telefoni e indirizzi sono sfocati sullo schermo di questo dispositivo — per screenshot e video.';
 
   @override
+  String get demoSessionBadge => 'Demo';
+
+  @override
+  String get demoSessionReset => 'Reimposta la demo';
+
+  @override
+  String get demoSessionResetDone => 'La demo è tornata come all\'inizio.';
+
+  @override
+  String get demoSessionBadgeHint =>
+      'Stai esplorando uno spazio dimostrativo. Nulla di tutto questo lascia questo dispositivo.';
+
+  @override
   String get deploymentConfirmTitleDev => 'Distribuire in questo DEV?';
 
   @override
