@@ -739,12 +739,12 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
           l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
       action: () async {
-        final repository = ref.read(profileRepositoryProvider);
-        await repository.updateAddress(_controller.text);
-        await repository.updateTaxIdentity(
-          countryCode: _countryCode ?? '',
-          vatId: _vatId.text,
-        );
+        // One write: one invoice block (#1532, and its repository doc).
+        await ref.read(profileRepositoryProvider).updateInvoiceIdentity(
+              address: _controller.text,
+              countryCode: _countryCode ?? '',
+              vatId: _vatId.text,
+            );
       },
     )) {
       if (mounted) setState(() => _saving = false);

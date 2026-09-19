@@ -73,17 +73,6 @@ class SupabaseProfileRepository implements ProfileRepository {
   }
 
   @override
-  Future<void> updateAddress(String address) async {
-    final userId = _client.auth.currentUser?.id;
-    if (userId == null) {
-      throw StateError('cannot update the profile while signed out');
-    }
-    // Self-only via profiles_update RLS (0002); 0060 caps at 400 chars.
-    await _client
-        .from('profiles')
-        .update({'address': address.trim()})
-        .eq('id', userId);
-  }
 
   @override
   Future<void> updatePersonalInfo(PersonalInfo info) async {
@@ -101,7 +90,8 @@ class SupabaseProfileRepository implements ProfileRepository {
   }
 
   @override
-  Future<void> updateTaxIdentity({
+  Future<void> updateInvoiceIdentity({
+    required String address,
     required String countryCode,
     required String vatId,
   }) async {
@@ -109,11 +99,17 @@ class SupabaseProfileRepository implements ProfileRepository {
     if (userId == null) {
       throw StateError('cannot update the profile while signed out');
     }
-    // Self-only via profiles_update RLS; the 0069 column checks enforce
-    // the two-letter shape and the length.
+    // Self-only via profiles_update RLS (0002); 0060 caps the address at
+    // 400 chars and the 0069 column checks enforce the country's
+    // two-letter shape and the VAT id's length.
+    //
+    // ONE update: these three are one block on the invoice, and as two
+    // calls a failure on the second billed the member at their new
+    // address under their old VAT identity (#1532).
     await _client
         .from('profiles')
         .update({
+          'address': address.trim(),
           'country_code': countryCode.trim().toUpperCase(),
           'vat_id': vatId.trim(),
         })
