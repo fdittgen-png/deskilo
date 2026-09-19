@@ -964,6 +964,19 @@ modo prima di essere salvato.
 Il marchio DesKilo, i colori degli stati dei posti e il banner di
 produzione non sono mai di uno spazio.
 
+**Emblema.** Il piccolo segno proprio dello spazio, mostrato **sotto** il
+nome dell'app nel menu — e da nessun'altra parte. Scegliete un PNG, un
+JPEG o un WebP: l'app lo ridisegna a un massimo di 512 pixel e salva
+quel risultato; i metadati del file, che per una foto indicano dove è
+stata scattata, non lasciano mai il vostro dispositivo. **Rimuovi** lo
+toglie. Uno spazio senza emblema, o un'immagine lenta o non
+decodificabile, appare esattamente come prima.
+
+L'emblema non sostituisce mai il logo DesKilo e non compare nel
+selettore dei profili, dove il pallino colorato dice se uno spazio è
+reale o un luogo di prova — un segnale di sicurezza non è uno spazio
+pubblicitario.
+
 **Colori delle sale.** Sotto il colore del marchio, *Colori delle sale*
 dipinge la piantina con le vostre tinte invece delle otto del prodotto.
 Aggiungetene fino a otto — la piantina legge l'ordine, quindi una sala

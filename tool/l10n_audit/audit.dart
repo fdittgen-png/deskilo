@@ -62,6 +62,10 @@ bool _onlyInterpolations(String literal) {
 /// token the engine substitutes, never prose.
 final _placeholderOnly = RegExp(r'^[\s{}|\w.—-]*\{\{[^}]*\}\}[\s{}|\w.—-]*$');
 
+/// A colour written as its own code (`#EBDCC9`): the example beside a
+/// colour field, and a thing no language spells differently.
+final _colourCode = RegExp(r'^#[0-9A-Fa-f]{3,8}$');
+
 /// A literal that is a key, a path, a wire value or a format — never
 /// prose. Judged on the literal alone, so the rule can be read.
 final _technical = RegExp(
@@ -188,6 +192,7 @@ List<Finding> auditSource(String path, String source) {
       final literal = _literalAt(line, at);
       if (literal == null || literal.trim().isEmpty) continue;
       if (_technical.hasMatch(literal)) continue;
+      if (_colourCode.hasMatch(literal)) continue;
       if (_localizedInterpolation.hasMatch(literal)) continue;
       if (_placeholderOnly.hasMatch(literal)) continue;
       if (_onlyInterpolations(literal)) continue;

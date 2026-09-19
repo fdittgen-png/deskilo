@@ -18605,6 +18605,60 @@ abstract class AppLocalizations {
   /// **'The plan paints at most {most} room colours.'**
   String coloursTooMany(int most);
 
+  /// #1289 emblem: the section heading
+  ///
+  /// In en, this message translates to:
+  /// **'Emblem'**
+  String get emblemTitle;
+
+  /// #1289 emblem: what it is and what happens to the file
+  ///
+  /// In en, this message translates to:
+  /// **'A small image shown beneath the app’s own name in the menu. It is redrawn at most 512 pixels wide and stored without the file’s metadata.'**
+  String get emblemHint;
+
+  /// #1289 emblem: the pick button
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an image'**
+  String get emblemChoose;
+
+  /// #1289 emblem: the remove button
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get emblemRemove;
+
+  /// #1289 emblem: stored
+  ///
+  /// In en, this message translates to:
+  /// **'Emblem saved.'**
+  String get emblemSaved;
+
+  /// #1289 emblem: removed
+  ///
+  /// In en, this message translates to:
+  /// **'Emblem removed.'**
+  String get emblemRemoved;
+
+  /// #1289 emblem: the write failed and nothing changed
+  ///
+  /// In en, this message translates to:
+  /// **'The emblem could not be saved. Nothing changed.'**
+  String get emblemFailed;
+
+  /// #1289 emblem: the file could not be decoded
+  ///
+  /// In en, this message translates to:
+  /// **'That file is not an image.'**
+  String get emblemNotAnImage;
+
+  /// #1289 emblem: still too heavy after re-encoding
+  ///
+  /// In en, this message translates to:
+  /// **'That image is too heavy for a mark shown at 28 pixels.'**
+  String get emblemTooHeavy;
+
   /// App-bar title of the first-run onboarding screen
   ///
   /// In en, this message translates to:

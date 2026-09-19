@@ -10747,6 +10747,36 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get emblemTitle => 'Emblème';
+
+  @override
+  String get emblemHint =>
+      'Une petite image affichée sous le nom de l’application dans le menu. Elle est redessinée à 512 pixels au plus et enregistrée sans les métadonnées du fichier.';
+
+  @override
+  String get emblemChoose => 'Choisir une image';
+
+  @override
+  String get emblemRemove => 'Retirer';
+
+  @override
+  String get emblemSaved => 'Emblème enregistré.';
+
+  @override
+  String get emblemRemoved => 'Emblème retiré.';
+
+  @override
+  String get emblemFailed =>
+      'L’emblème n’a pas pu être enregistré. Rien n’a changé.';
+
+  @override
+  String get emblemNotAnImage => 'Ce fichier n’est pas une image.';
+
+  @override
+  String get emblemTooHeavy =>
+      'Cette image est trop lourde pour une marque affichée à 28 pixels.';
+
+  @override
   String get onboardingTitle => 'Bienvenue sur DesKilo';
 
   @override

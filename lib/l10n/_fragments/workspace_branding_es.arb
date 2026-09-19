@@ -128,5 +128,41 @@
         "type": "int"
       }
     }
+  },
+  "emblemTitle": "Emblema",
+  "@emblemTitle": {
+    "description": "#1289 emblem: the section heading"
+  },
+  "emblemHint": "Una imagen pequeña que aparece bajo el nombre de la aplicación en el menú. Se redibuja a 512 píxeles como máximo y se guarda sin los metadatos del archivo.",
+  "@emblemHint": {
+    "description": "#1289 emblem: what it is and what happens to the file"
+  },
+  "emblemChoose": "Elegir una imagen",
+  "@emblemChoose": {
+    "description": "#1289 emblem: the pick button"
+  },
+  "emblemRemove": "Quitar",
+  "@emblemRemove": {
+    "description": "#1289 emblem: the remove button"
+  },
+  "emblemSaved": "Emblema guardado.",
+  "@emblemSaved": {
+    "description": "#1289 emblem: stored"
+  },
+  "emblemRemoved": "Emblema quitado.",
+  "@emblemRemoved": {
+    "description": "#1289 emblem: removed"
+  },
+  "emblemFailed": "No se pudo guardar el emblema. Nada ha cambiado.",
+  "@emblemFailed": {
+    "description": "#1289 emblem: the write failed and nothing changed"
+  },
+  "emblemNotAnImage": "Ese archivo no es una imagen.",
+  "@emblemNotAnImage": {
+    "description": "#1289 emblem: the file could not be decoded"
+  },
+  "emblemTooHeavy": "Esa imagen es demasiado pesada para una marca que se muestra a 28 píxeles.",
+  "@emblemTooHeavy": {
+    "description": "#1289 emblem: still too heavy after re-encoding"
   }
 }

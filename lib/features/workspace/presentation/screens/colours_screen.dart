@@ -22,6 +22,7 @@ import '../../application/workspace_colours.dart';
 import '../../domain/workspace_branding.dart';
 import '../widgets/office_palette_editor.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/emblem_editor.dart';
 
 /// Colours an owner can reach in one tap. Not a restriction — the field
 /// takes any `#RRGGBB` — but a colour wheel answers "which of the
@@ -252,6 +253,8 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
             onSave: () => _saveFills(fills),
             onReset: () => _saveFills(const []),
           ),
+          const SizedBox(height: AppSpacing.lg),
+          if (workspace != null) EmblemEditor(workspaceId: workspace.id),
           const SizedBox(height: AppSpacing.md),
           Text(
             l10n?.coloursNeverTheirs ??

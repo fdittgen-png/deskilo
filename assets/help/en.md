@@ -965,6 +965,18 @@ before it is stored.
 The DesKilo mark, the colours of the seat states and the production
 banner are never a workspace's to restyle.
 
+**Emblem.** The space's own small mark, shown **beneath** the app's name
+in the menu — and nowhere else. Choose a PNG, JPEG or WebP and the app
+redraws it at 512 pixels at most and stores that: the file's own
+metadata, which for a photograph includes where it was taken, never
+leaves your device. **Remove** takes it away. A space without one, or a
+mark that is slow or will not decode, renders exactly as it always has.
+
+The mark never replaces the DesKilo logo, and it is not shown on the
+profile switcher, where the coloured circle says whether a space is a
+real one or a place to try things out — a safety signal is not a
+branding opportunity.
+
 **Room colours.** Under the brand colour, *Room colours* paints the plan
 with your own fills instead of the product's eight. Add up to eight —
 the order is what the plan reads, so a room keeps its colour when you

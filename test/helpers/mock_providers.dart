@@ -1268,6 +1268,24 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   /// #1289 — branding as the server would store it, by workspace id.
   final Map<String, Map<String, dynamic>> brandings = {};
 
+  /// #1289 — the emblem's bytes by workspace id; absent is a space with
+  /// no emblem, which is almost all of them.
+  final Map<String, Uint8List> emblems = {};
+
+  @override
+  Future<void> setWorkspaceEmblem(String workspaceId, Uint8List png) async {
+    emblems[workspaceId] = png;
+  }
+
+  @override
+  Future<Uint8List?> fetchWorkspaceEmblem(String workspaceId) async =>
+      emblems[workspaceId];
+
+  @override
+  Future<void> clearWorkspaceEmblem(String workspaceId) async {
+    emblems.remove(workspaceId);
+  }
+
   @override
   Future<Map<String, dynamic>> setWorkspaceBranding(
     String workspaceId,

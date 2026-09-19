@@ -962,6 +962,19 @@ Speichern auf dieselbe Weise gemessen.
 Die DesKilo-Marke, die Farben der Platzzustände und das
 Produktions-Banner gehören nie einem Bereich.
 
+**Emblem.** Das eigene kleine Zeichen des Bereichs, **unter** dem Namen
+der App im Menü — und sonst nirgends. Wählen Sie ein PNG, JPEG oder
+WebP: Die App zeichnet es auf höchstens 512 Pixel neu und speichert
+dieses Ergebnis; die Metadaten der Datei, die bei einem Foto den
+Aufnahmeort enthalten, verlassen Ihr Gerät nie. **Entfernen** nimmt es
+weg. Ein Bereich ohne Emblem, oder ein Bild, das langsam ist oder sich
+nicht dekodieren lässt, sieht genau aus wie bisher.
+
+Das Emblem ersetzt nie das DesKilo-Logo, und es erscheint nicht in der
+Profilauswahl, wo der farbige Punkt sagt, ob ein Bereich echt ist oder
+ein Ort zum Ausprobieren — ein Sicherheitssignal ist keine
+Werbefläche.
+
 **Raumfarben.** Unter der Markenfarbe malt *Raumfarben* den Plan mit
 Ihren eigenen Tönen statt mit den acht des Produkts. Fügen Sie bis zu
 acht hinzu — der Plan liest die Reihenfolge, ein Raum behält also seine

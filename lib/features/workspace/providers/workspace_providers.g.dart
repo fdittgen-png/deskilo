@@ -1326,6 +1326,191 @@ final class WorkspaceOfficePaletteProvider
 String _$workspaceOfficePaletteHash() =>
     r'779fc713f7248d5558aa6e267ff4b154c2c53f86';
 
+/// #1289 — one workspace's emblem, or null when it has none or the flag
+/// is off. Kept alive and keyed, so the drawer and the switcher share
+/// one download per space rather than one per widget.
+
+@ProviderFor(workspaceEmblemOf)
+final workspaceEmblemOfProvider = WorkspaceEmblemOfFamily._();
+
+/// #1289 — one workspace's emblem, or null when it has none or the flag
+/// is off. Kept alive and keyed, so the drawer and the switcher share
+/// one download per space rather than one per widget.
+
+final class WorkspaceEmblemOfProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Uint8List?>,
+          Uint8List?,
+          FutureOr<Uint8List?>
+        >
+    with $FutureModifier<Uint8List?>, $FutureProvider<Uint8List?> {
+  /// #1289 — one workspace's emblem, or null when it has none or the flag
+  /// is off. Kept alive and keyed, so the drawer and the switcher share
+  /// one download per space rather than one per widget.
+  WorkspaceEmblemOfProvider._({
+    required WorkspaceEmblemOfFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'workspaceEmblemOfProvider',
+         isAutoDispose: false,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceEmblemOfHash();
+
+  @override
+  String toString() {
+    return r'workspaceEmblemOfProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<Uint8List?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Uint8List?> create(Ref ref) {
+    final argument = this.argument as String;
+    return workspaceEmblemOf(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is WorkspaceEmblemOfProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$workspaceEmblemOfHash() => r'75727ddccede0b9c87bd64738cc7ebea877f7d3f';
+
+/// #1289 — one workspace's emblem, or null when it has none or the flag
+/// is off. Kept alive and keyed, so the drawer and the switcher share
+/// one download per space rather than one per widget.
+
+final class WorkspaceEmblemOfFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<Uint8List?>, String> {
+  WorkspaceEmblemOfFamily._()
+    : super(
+        retry: null,
+        name: r'workspaceEmblemOfProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: false,
+      );
+
+  /// #1289 — one workspace's emblem, or null when it has none or the flag
+  /// is off. Kept alive and keyed, so the drawer and the switcher share
+  /// one download per space rather than one per widget.
+
+  WorkspaceEmblemOfProvider call(String workspaceId) =>
+      WorkspaceEmblemOfProvider._(argument: workspaceId, from: this);
+
+  @override
+  String toString() => r'workspaceEmblemOfProvider';
+}
+
+/// The active workspace's emblem; null while nothing is loaded.
+
+@ProviderFor(workspaceEmblem)
+final workspaceEmblemProvider = WorkspaceEmblemProvider._();
+
+/// The active workspace's emblem; null while nothing is loaded.
+
+final class WorkspaceEmblemProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Uint8List?>,
+          Uint8List?,
+          FutureOr<Uint8List?>
+        >
+    with $FutureModifier<Uint8List?>, $FutureProvider<Uint8List?> {
+  /// The active workspace's emblem; null while nothing is loaded.
+  WorkspaceEmblemProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'workspaceEmblemProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceEmblemHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Uint8List?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Uint8List?> create(Ref ref) {
+    return workspaceEmblem(ref);
+  }
+}
+
+String _$workspaceEmblemHash() => r'216e6c69ac9db8f25ac6dfae0ca62c30d2d9f8cc';
+
+/// #1289 — the decision behind choosing an emblem. The re-encode needs
+/// the engine, so it is handed in here and `application/` stays pure.
+
+@ProviderFor(emblems)
+final emblemsProvider = EmblemsProvider._();
+
+/// #1289 — the decision behind choosing an emblem. The re-encode needs
+/// the engine, so it is handed in here and `application/` stays pure.
+
+final class EmblemsProvider
+    extends $FunctionalProvider<Emblems, Emblems, Emblems>
+    with $Provider<Emblems> {
+  /// #1289 — the decision behind choosing an emblem. The re-encode needs
+  /// the engine, so it is handed in here and `application/` stays pure.
+  EmblemsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'emblemsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$emblemsHash();
+
+  @$internal
+  @override
+  $ProviderElement<Emblems> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  Emblems create(Ref ref) {
+    return emblems(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Emblems value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Emblems>(value),
+    );
+  }
+}
+
+String _$emblemsHash() => r'10e3bfbef40c8ee6018446dbb61c415e2109a784';
+
 /// #513 — MY effective permissions under the workspace's role matrix.
 /// The one client-side gate: screens ask for a permission, never for a
 /// role flag. Falls back to {} while member/workspace load.

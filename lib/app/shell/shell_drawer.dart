@@ -14,6 +14,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/navigation/navigation_style.dart';
 import '../../core/theme/app_spacing.dart';
+import '../../features/workspace/presentation/widgets/workspace_emblem.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
@@ -177,10 +178,19 @@ class ShellDrawer extends ConsumerWidget {
           children: [
             Padding(
               padding: AppSpacing.lgAll,
-              child: Text(
-                workspace?.name ?? 'DesKilo',
-                key: const ValueKey('drawer-workspace-name'),
-                style: theme.textTheme.titleLarge,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    workspace?.name ?? 'DesKilo',
+                    key: const ValueKey('drawer-workspace-name'),
+                    style: theme.textTheme.titleLarge,
+                  ),
+                  // #1289 — the space's own mark, beneath the product's
+                  // name, and nothing at all when it has none.
+                  const WorkspaceEmblem(key: ValueKey('drawer-emblem')),
+                ],
               ),
             ),
             for (final e in navigation) tile(e),

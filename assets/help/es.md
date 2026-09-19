@@ -956,6 +956,19 @@ mismo modo antes de guardarse.
 La marca DesKilo, los colores de los estados de plaza y el banner de
 producción nunca son de un espacio.
 
+**Emblema.** La pequeña marca propia del espacio, mostrada **bajo** el
+nombre de la aplicación en el menú — y en ningún otro sitio. Elija un
+PNG, JPEG o WebP: la aplicación lo redibuja a 512 píxeles como máximo y
+guarda ese resultado; los metadatos del archivo, que en una foto indican
+dónde se tomó, nunca salen de su dispositivo. **Quitar** lo elimina. Un
+espacio sin emblema, o una imagen lenta o que no se puede decodificar,
+se ve exactamente como siempre.
+
+El emblema nunca sustituye al logotipo de DesKilo y no aparece en el
+selector de perfiles, donde el círculo de color indica si un espacio es
+real o un lugar de pruebas — una señal de seguridad no es un espacio
+publicitario.
+
 **Colores de las salas.** Bajo el color de marca, *Colores de las salas*
 pinta el plano con sus propios tonos en vez de los ocho del producto.
 Añada hasta ocho — el plano lee el orden, así que una sala conserva su
