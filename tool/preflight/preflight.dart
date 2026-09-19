@@ -77,6 +77,10 @@ const List<({String command, String owns})> _order = [
     command: 'dart run tool/test_inventory.dart',
     owns: 'docs/testing/TEST_INVENTORY.md',
   ),
+  (
+    command: 'dart run tool/dependency_map.dart',
+    owns: 'docs/design/APPLICATION_BOUNDARIES.md',
+  ),
 ];
 
 bool _isFeatureRegistry(String p) =>
@@ -136,6 +140,14 @@ List<Step> preflightSteps(Iterable<String> paths) {
     }
     if (p.startsWith('test/') && p.endsWith('.dart')) {
       select('dart run tool/test_inventory.dart', p);
+    }
+    // #1449 — the map counts imports and repository reads across
+    // features, so any feature source can move it.
+    if (p.startsWith('lib/features/') &&
+        p.endsWith('.dart') &&
+        !p.endsWith('.g.dart') &&
+        !p.endsWith('.freezed.dart')) {
+      select('dart run tool/dependency_map.dart', p);
     }
   }
 
