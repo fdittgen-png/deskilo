@@ -26,6 +26,7 @@ import 'data/deployment_repository.dart';
 import 'data/reservation_repository.dart';
 import 'data/stores.dart';
 import 'data/workspace_repository.dart';
+import 'demo_dataset.dart';
 
 /// Everything one Demo session runs on. Built once per session and
 /// thrown away when it ends: a reset is a new [DemoFixture], never a
@@ -55,6 +56,24 @@ class DemoFixture {
     final workspaces = FakeWorkspaceRepository.withWorkspace();
     final floorPlan = FakeFloorPlanRepository()..seedSmallPlan();
     final reservations = FakeReservationRepository();
+    final money = FakeMoneyRepository();
+    // The cast first: everything below points at it (#1374).
+    seedDemoPeople(workspaces);
+    seedDemoReservations(reservations, floorPlan, today);
+    seedDemoMoney(money, today);
+    final problems = validateDemoFixture(
+      workspaces: workspaces,
+      plan: floorPlan,
+      reservations: reservations,
+      money: money,
+    );
+    if (problems.isNotEmpty) {
+      // Fails closed, and says what is wrong: a session that points at a
+      // member or a seat that does not exist looks fine until a screen
+      // opens it (#1373's "missing context fails closed").
+      throw StateError('the demo session is not coherent: '
+          '${problems.join('; ')}');
+    }
     return DemoFixture._(
       auth: FakeAuthRepository.signedIn(),
       workspaces: workspaces,
@@ -62,7 +81,7 @@ class DemoFixture {
       reservations: reservations,
       events: FakeEventRepository(),
       calendar: FakeCalendarRepository(),
-      money: FakeMoneyRepository(),
+      money: money,
       credits: FakeCreditRepository(),
       accessories: FakeAccessoryRepository(),
       profiles: FakeProfileRepository(),
