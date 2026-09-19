@@ -13,7 +13,7 @@
 -- need a second role and would prove nothing more: the policy IS that
 -- function, and a test that re-implements the rule agrees with itself.
 begin;
-select plan(27);
+select plan(30);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -265,6 +265,44 @@ select ok(
   and not has_table_privilege('authenticated', 'public.workspace_field_definitions', 'INSERT'),
   'neither a definition nor an answer takes a write from a signed-in '
   'client: both arrive through a definer that validated them');
+
+-- ── #1532: the question and its choices are one save ─────────────────
+--
+-- Two calls meant a refused choice arrived after the definition had
+-- already landed, and the screen said "The question was not saved."
+
+select pg_temp.act_as('owner');
+
+select throws_matching(
+  format($$ select public.save_workspace_field(%L, 'shirt', 'single_choice',
+    '{"en":"Shirt"}'::jsonb, false, true, 'self', array['profile'], 'general',
+    0, '{}'::jsonb, true, '[{"key":"NOT A KEY","labels":{"en":"L"}}]'::jsonb) $$,
+    pg_temp.ws()),
+  'a choice key is lower-case letters',
+  'a malformed choice is refused, exactly as set_workspace_field_options '
+  'refuses it — the composite adds no authority and removes no rule');
+
+select is(
+  (select count(*)::int from public.workspace_field_definitions
+    where workspace_id = pg_temp.ws() and key = 'shirt'),
+  0,
+  'and the question does not exist afterwards. One transaction: the '
+  'definition goes back with the choices that were refused, instead of '
+  'sitting there live with none while the owner is told nothing saved');
+
+select public.save_workspace_field(pg_temp.ws(), 'diet', 'single_choice',
+  '{"en":"Diet"}'::jsonb, false, true, 'self', array['profile'], 'general',
+  0, '{}'::jsonb, true,
+  '[{"key":"vegan","labels":{"en":"Vegan"}},
+    {"key":"other","labels":{"en":"Other"}}]'::jsonb);
+
+select is(
+  (select count(*)::int from public.workspace_field_options o
+     join public.workspace_field_definitions d on d.id = o.definition_id
+    where d.workspace_id = pg_temp.ws() and d.key = 'diet'),
+  2,
+  'and the happy path writes the question and both its choices in that '
+  'same one call');
 
 select * from finish();
 rollback;

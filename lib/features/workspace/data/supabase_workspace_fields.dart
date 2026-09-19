@@ -127,8 +127,15 @@ class SupabaseWorkspaceFields implements WorkspaceFieldsRepository {
   }
 
   @override
-  Future<String> setField(String workspaceId, WorkspaceField field) async {
-    final id = await _client.rpc<dynamic>('set_workspace_field', params: {
+  Future<String> saveField(
+    String workspaceId,
+    WorkspaceField field, {
+    List<WorkspaceFieldOption>? options,
+  }) async {
+    // ONE call: 0252 writes the definition and its choices in one
+    // transaction, so a refused choice takes the definition back with
+    // it (#1532).
+    final id = await _client.rpc<dynamic>('save_workspace_field', params: {
       'p_workspace_id': workspaceId,
       'p_key': field.key,
       'p_type': field.type.wireName,
@@ -141,27 +148,20 @@ class SupabaseWorkspaceFields implements WorkspaceFieldsRepository {
       'p_sort_order': field.sortOrder,
       'p_validation': field.validation,
       'p_active': field.active,
+      'p_options': options == null
+          ? null
+          : [
+              for (final o in options)
+                {
+                  'key': o.key,
+                  'labels': o.labels,
+                  'sort_order': o.sortOrder,
+                  'active': o.active,
+                },
+            ],
     });
     return '$id';
   }
-
-  @override
-  Future<void> setOptions(
-    String definitionId,
-    List<WorkspaceFieldOption> options,
-  ) =>
-      _client.rpc<void>('set_workspace_field_options', params: {
-        'p_definition_id': definitionId,
-        'p_options': [
-          for (final o in options)
-            {
-              'key': o.key,
-              'labels': o.labels,
-              'sort_order': o.sortOrder,
-              'active': o.active,
-            },
-        ],
-      });
 
   @override
   Future<void> saveAnswers({

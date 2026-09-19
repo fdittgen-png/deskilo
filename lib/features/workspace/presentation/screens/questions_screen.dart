@@ -67,14 +67,18 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
       // Its own sentence: the server refuses a type change under
       // existing answers and a choice somebody has already made, and an
       // owner needs to know THAT rather than that something went wrong.
+      //
+      // It is also TRUE, which it was not until 0252. This used to be
+      // two calls, and when the choices were refused the question had
+      // already landed — live for members, a choice question with no
+      // choices — under a message saying it had not been saved (#1532).
       errorText: l10n?.questionEditorSaveFailed ??
           'The question was not saved.',
-      action: () async {
-        final id = await repository.setField(workspaceId, draft);
-        if (draft.type.isChoice) {
-          await repository.setOptions(id, draft.options);
-        }
-      },
+      action: () => repository.saveField(
+        workspaceId,
+        draft,
+        options: draft.type.isChoice ? draft.options : null,
+      ),
     );
     if (!mounted) return;
     setState(() => _saving = false);

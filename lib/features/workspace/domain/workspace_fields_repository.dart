@@ -30,18 +30,26 @@ abstract class WorkspaceFieldsRepository {
     required Map<String, Object?> answers,
   });
 
-  /// Defines or redefines a question (#1288 S4). Owner-only on the
-  /// server; the key identifies it and may not change, which is what
-  /// makes the answers keep meaning something.
+  /// Defines or redefines a question **and its choices**, in one
+  /// server transaction (#1288 S4, made atomic by #1532).
   ///
-  /// Returns the definition's id, so the choices can be written next.
-  Future<String> setField(String workspaceId, WorkspaceField field);
-
-  /// Replaces the choices of a choice question, wholesale.
+  /// Owner-only on the server; the key identifies the question and may
+  /// not change, which is what makes the answers keep meaning
+  /// something.
   ///
-  /// Wholesale because that is the only shape that can express "this one
-  /// is gone" — and the server refuses to remove a choice somebody has
-  /// already made, which is a conflict a person decides rather than a
-  /// cascade.
-  Future<void> setOptions(String definitionId, List<WorkspaceFieldOption> options);
+  /// The choices travel with the definition because the two are one
+  /// decision. Saving them separately meant a refused choice — a
+  /// malformed key, or removing one somebody had already made — left a
+  /// live choice question with no choices, under a message saying the
+  /// question had not been saved.
+  ///
+  /// [options] is null for a question that has no choices, which is not
+  /// the same as an empty list: an empty list asks for every existing
+  /// choice to be removed, and the server refuses that once somebody has
+  /// chosen one.
+  Future<String> saveField(
+    String workspaceId,
+    WorkspaceField field, {
+    List<WorkspaceFieldOption>? options,
+  });
 }
