@@ -564,6 +564,66 @@ constraint workspace_documents.workspace_documents_provider_check CHECK ((provid
 constraint workspace_documents.workspace_documents_title_check CHECK (((char_length(title) >= 1) AND (char_length(title) <= 120)))
 constraint workspace_documents.workspace_documents_url_check CHECK (((url ~~ 'https://%'::text) AND (char_length(url) <= 500)))
 constraint workspace_documents.workspace_documents_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint workspace_field_definitions.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint workspace_field_definitions.system_company_present CHECK ((company_id IS NOT NULL))
+constraint workspace_field_definitions.workspace_field_definitions_key_check CHECK ((key ~ '^[a-z][a-z0-9_]{1,40}$'::text))
+constraint workspace_field_definitions.workspace_field_definitions_pkey PRIMARY KEY (id)
+constraint workspace_field_definitions.workspace_field_definitions_type_check CHECK ((type = ANY (ARRAY['text'::text, 'long_text'::text, 'integer'::text, 'decimal'::text, 'date'::text, 'boolean'::text, 'single_choice'::text, 'multi_choice'::text])))
+constraint workspace_field_definitions.workspace_field_definitions_visibility_check CHECK ((visibility = ANY (ARRAY['self'::text, 'managers'::text, 'members'::text])))
+constraint workspace_field_definitions.workspace_field_definitions_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint workspace_field_labels.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint workspace_field_labels.system_company_present CHECK ((company_id IS NOT NULL))
+constraint workspace_field_labels.workspace_field_labels_definition_id_fkey FOREIGN KEY (definition_id) REFERENCES workspace_field_definitions(id) ON DELETE CASCADE
+constraint workspace_field_labels.workspace_field_labels_label_check CHECK ((btrim(label) <> ''::text))
+constraint workspace_field_labels.workspace_field_labels_locale_check CHECK ((locale = ANY (ARRAY['en'::text, 'fr'::text, 'de'::text, 'es'::text, 'it'::text])))
+constraint workspace_field_labels.workspace_field_labels_pkey PRIMARY KEY (id)
+constraint workspace_field_labels.workspace_field_labels_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint workspace_field_option_labels.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint workspace_field_option_labels.system_company_present CHECK ((company_id IS NOT NULL))
+constraint workspace_field_option_labels.workspace_field_option_labels_label_check CHECK ((btrim(label) <> ''::text))
+constraint workspace_field_option_labels.workspace_field_option_labels_locale_check CHECK ((locale = ANY (ARRAY['en'::text, 'fr'::text, 'de'::text, 'es'::text, 'it'::text])))
+constraint workspace_field_option_labels.workspace_field_option_labels_option_id_fkey FOREIGN KEY (option_id) REFERENCES workspace_field_options(id) ON DELETE CASCADE
+constraint workspace_field_option_labels.workspace_field_option_labels_pkey PRIMARY KEY (id)
+constraint workspace_field_option_labels.workspace_field_option_labels_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint workspace_field_options.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint workspace_field_options.system_company_present CHECK ((company_id IS NOT NULL))
+constraint workspace_field_options.workspace_field_options_definition_id_fkey FOREIGN KEY (definition_id) REFERENCES workspace_field_definitions(id) ON DELETE CASCADE
+constraint workspace_field_options.workspace_field_options_key_check CHECK ((key ~ '^[a-z0-9][a-z0-9_]{0,40}$'::text))
+constraint workspace_field_options.workspace_field_options_pkey PRIMARY KEY (id)
+constraint workspace_field_options.workspace_field_options_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint workspace_field_value_options.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint workspace_field_value_options.system_company_present CHECK ((company_id IS NOT NULL))
+constraint workspace_field_value_options.workspace_field_value_options_option_id_fkey FOREIGN KEY (option_id) REFERENCES workspace_field_options(id) ON DELETE CASCADE
+constraint workspace_field_value_options.workspace_field_value_options_pkey PRIMARY KEY (id)
+constraint workspace_field_value_options.workspace_field_value_options_value_id_fkey FOREIGN KEY (value_id) REFERENCES workspace_field_values(id) ON DELETE CASCADE
+constraint workspace_field_value_options.workspace_field_value_options_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint workspace_field_values.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint workspace_field_values.system_company_present CHECK ((company_id IS NOT NULL))
+constraint workspace_field_values.workspace_field_values_definition_id_fkey FOREIGN KEY (definition_id) REFERENCES workspace_field_definitions(id) ON DELETE CASCADE
+constraint workspace_field_values.workspace_field_values_member_id_fkey FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE
+constraint workspace_field_values.workspace_field_values_one_column CHECK ((((((
+CASE
+    WHEN (text_value IS NOT NULL) THEN 1
+    ELSE 0
+END +
+CASE
+    WHEN (integer_value IS NOT NULL) THEN 1
+    ELSE 0
+END) +
+CASE
+    WHEN (decimal_value IS NOT NULL) THEN 1
+    ELSE 0
+END) +
+CASE
+    WHEN (date_value IS NOT NULL) THEN 1
+    ELSE 0
+END) +
+CASE
+    WHEN (boolean_value IS NOT NULL) THEN 1
+    ELSE 0
+END) <= 1))
+constraint workspace_field_values.workspace_field_values_pkey PRIMARY KEY (id)
+constraint workspace_field_values.workspace_field_values_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint workspace_role_members.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint workspace_role_members.system_company_present CHECK ((company_id IS NOT NULL))
 constraint workspace_role_members.workspace_role_members_member_id_fkey FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE
@@ -698,12 +758,16 @@ routine public.event_type_view_permissions(p_type text) -> text[] | function | i
 routine public.event_types_in_view() -> TABLE(ws_id uuid, event_type text) | function | definer | stable | exec:authenticated,service_role | body:9b491b3a3a5f
 routine public.export_entities(p_workspace_id uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:918db3b450bc
 routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:50db203e93fa
-routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f0fa0891e09d
+routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9f29855f8d96
 routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:800517829eeb
 routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:99a275c44fd9
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f195c36ad44b
-routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:1438b1b0fed9
+routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:74015952a96f
+routine public.field_answer_problem(p_definition_id uuid, p_answer jsonb) -> text | function | definer | stable | exec:authenticated,service_role | body:dfc73d4d2ec2
+routine public.field_contexts() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:233e963064a5
+routine public.field_named_validators() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:da8e3e411961
+routine public.field_validation_keys() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:43485317584a
 routine public.floor_plan_rows(p_tree jsonb) -> TABLE(key text, data jsonb) | function | invoker | immutable | exec:authenticated,service_role | body:a75fadf6de56
 routine public.gen_invite_code() -> text | function | invoker | volatile | exec:service_role | body:250cc8705573
 routine public.generate_closure_days(p_workspace_id uuid, p_country text, p_year integer, p_apply boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1ab7539721fe
@@ -766,6 +830,7 @@ routine public.member_credit_balance_of(p_member_id uuid, p_at timestamp with ti
 routine public.member_credit_uses_in_period(p_member_id uuid, p_from timestamp with time zone, p_to timestamp with time zone) -> integer | function | definer | stable | exec:service_role | body:0e54da7e9595
 routine public.member_custom_permissions(p_member_id uuid) -> text[] | function | definer | stable | exec:authenticated,service_role | body:8e86a2f81494
 routine public.member_emails(p_workspace_id uuid) -> TABLE(member_id uuid, email text) | function | definer | stable | exec:authenticated,service_role | body:54fc35fcd54a
+routine public.member_field_readable(p_member_id uuid, p_definition_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:33df597324ef
 routine public.member_has_permission(p_member_id uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:72a50d0622b7
 routine public.member_price_negotiation(p_member_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:748e36d6fe4e
 routine public.member_quota_shortfall(p_member_id uuid, p_at timestamp with time zone) -> integer | function | definer | stable | exec:service_role | body:0ca76ea1d43f
@@ -870,6 +935,7 @@ routine public.set_feature_flags(p_workspace_id uuid, p_flags jsonb, p_expected 
 routine public.set_invoice_pdf_template(p_workspace_id uuid, p_template jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:eef14ac15c75
 routine public.set_level_site(p_level_id uuid, p_site_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:cf95d0712a42
 routine public.set_managed_access(p_member_id uuid, p_access jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:f73d20426e36
+routine public.set_member_field_values(p_member_id uuid, p_context text, p_answers jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:5ded60bff456
 routine public.set_member_home_site(p_member_id uuid, p_site_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:026f44f7c8bd
 routine public.set_member_kiosk(p_member_id uuid, p_is_kiosk boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:c67a43bc3830
 routine public.set_member_level_permission(p_member_id uuid, p_allowed boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:eba23ebd31f5
@@ -886,6 +952,8 @@ routine public.set_vat_rates(p_workspace_id uuid, p_rates jsonb) -> void | funct
 routine public.set_workspace_branding(p_workspace_id uuid, p_branding jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3ebab45e4070
 routine public.set_workspace_code(p_workspace_id uuid, p_code text) -> text | function | definer | volatile | exec:authenticated,service_role | body:f840df34b4ba
 routine public.set_workspace_environment(p_workspace_id uuid, p_environment text) -> void | function | definer | volatile | exec:authenticated,service_role | body:91e4a2526e19
+routine public.set_workspace_field(p_workspace_id uuid, p_key text, p_type text, p_labels jsonb, p_required boolean, p_personal_data boolean, p_visibility text, p_contexts text[], p_group_key text, p_sort_order integer, p_validation jsonb, p_active boolean) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:711e9b8b9d4c
+routine public.set_workspace_field_options(p_definition_id uuid, p_options jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:5610a9730c82
 routine public.set_workspace_lexicon_term(p_workspace_id uuid, p_locale text, p_key text, p_text text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:287438eabf6b
 routine public.set_workspace_role(p_workspace_id uuid, p_key text, p_permissions text[], p_names jsonb, p_sort_order integer, p_active boolean) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:d95f7b49cf2b
 routine public.set_workspace_template_visibility(p_template_id uuid, p_visibility text) -> void | function | definer | volatile | exec:authenticated,service_role | body:5d4873a900a0
@@ -1030,6 +1098,12 @@ trigger vat_declarations.zz_system_columns_stamp CREATE TRIGGER zz_system_column
 trigger vat_rates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.vat_rates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_creation_requests.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_creation_requests FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_documents.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_documents FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger workspace_field_definitions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_field_definitions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger workspace_field_labels.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_field_labels FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger workspace_field_option_labels.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_field_option_labels FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger workspace_field_options.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_field_options FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger workspace_field_value_options.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_field_value_options FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger workspace_field_values.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_field_values FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_role_members.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_role_members FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_roles.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_roles FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_template_applications.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_template_applications FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
