@@ -15,6 +15,7 @@ import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/billing_rules.dart';
 import '../../domain/invoice.dart';
+import '../../application/settle_invoices.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_status.dart';
 import '../period_label.dart';
@@ -40,33 +41,32 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
   int _index = 0;
   bool _busy = false;
 
-  List<Invoice> _candidates(String memberId) => [
-        for (final entry in ref.watch(invoicingOverviewProvider).value?.open ??
-            const <OpenInvoiceEntry>[])
-          if (entry.invoice.memberId == memberId &&
-              !entry.invoice.isVoided &&
-              entry.invoice.settledByInvoiceId == null &&
-              entry.invoice.kind != InvoiceKind.settlement &&
-              entry.pendingMatch == null)
-            entry.invoice,
-      ];
+  /// #1449 — the eligibility rule itself lives in
+  /// `application/settle_invoices.dart`, where it is a unit test rather
+  /// than five conditions inside a builder.
+  List<Invoice> _candidates(String memberId) => settlementCandidates(
+        ref.watch(invoicingOverviewProvider).value?.open ??
+            const <OpenInvoiceEntry>[],
+        memberId,
+      );
 
   Future<void> _settle(List<Invoice> chosen) async {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     final memberId = _memberId;
-    if (workspace == null || memberId == null || chosen.length < 2) return;
+    if (workspace == null || memberId == null || !isRegrouping(chosen)) {
+      return;
+    }
     setState(() => _busy = true);
     String number;
     try {
-      final id = await ref.read(moneyRepositoryProvider).settleInvoices(
+      // The write and the look-up that follows it are one decision
+      // (#1449): what the person is told is the new document's NUMBER.
+      number = await ref.read(settlementsProvider).settle(
             workspaceId: workspace.id,
             memberId: memberId,
             invoiceIds: chosen.map((i) => i.id).toList(),
           );
-      final fresh =
-          await ref.read(moneyRepositoryProvider).fetchInvoices(workspace.id);
-      number = fresh.where((i) => i.id == id).firstOrNull?.number ?? id;
     } catch (e, st) {
       TraceLogger.instance
           .error('money', 'settle invoices failed', error: e, stackTrace: st);

@@ -6,6 +6,7 @@ import '../../../core/trace/traced.dart';
 
 import '../application/book_repartition.dart';
 import '../application/record_payment.dart';
+import '../application/settle_invoices.dart';
 import '../application/save_legal_identity.dart';
 import '../domain/invoice.dart';
 import '../domain/billing_rules.dart';
@@ -54,6 +55,12 @@ Payments payments(Ref ref) => Payments(ref.watch(moneyRepositoryProvider));
 /// behind alone.
 /// #1449 — sharing a cost: the order of the two writes, and whether the
 /// shares booked or are waiting on a validation rule.
+/// #1449 — regrouping invoices: which may join, and the number the
+/// person is told afterwards.
+@riverpod
+Settlements settlements(Ref ref) =>
+    Settlements(ref.watch(moneyRepositoryProvider));
+
 @riverpod
 Repartitions repartitions(Ref ref) =>
     Repartitions(ref.watch(moneyRepositoryProvider));
