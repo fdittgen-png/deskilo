@@ -15,7 +15,6 @@ export 'package:deskilo/core/demo/data/auth_repository.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
 export 'package:deskilo/core/demo/data/stores.dart';
 export 'package:deskilo/core/demo/data/workspace_repository.dart';
-import 'package:deskilo/core/demo/demo_mode.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'dart:async';
 import 'package:flutter/foundation.dart' show ValueChanged;
@@ -124,7 +123,6 @@ List<Override> standardTestOverrides({
   HelpHintStore? helpHints,
   ShellFlagStore? shellBarHidden,
   ShellFlagStore? shellSwipeCoach,
-  DemoModeStore? demoMode,
   NavigationStyleStore? navigationStyle,
   DeploymentRepository? deployment,
   SchemaVersionSource? schemaVersion,
@@ -151,7 +149,6 @@ List<Override> standardTestOverrides({
     schemaVersionSourceProvider.overrideWithValue(
         schemaVersion ?? const FixedSchemaVersionSource(requiredSchemaVersion)),
     // #969/#970 — the per-device preferences, in memory by default.
-    demoModeStoreProvider.overrideWithValue(demoMode ?? InMemoryDemoModeStore()),
     navigationStyleStoreProvider.overrideWithValue(
         navigationStyle ?? InMemoryNavigationStyleStore()),
     // No-op realtime by default: the real impl touches Supabase.instance,

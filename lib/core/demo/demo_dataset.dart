@@ -11,9 +11,12 @@
 // Everything is placed relative to [DemoFixture.seededAt], never to a
 // literal date, so a demo opened next year still shows a booking for
 // today (ADR 0028).
+import '../../features/plan/domain/seat.dart';
+import '../../features/events/domain/workspace_event.dart';
 import '../../features/money/domain/invoice.dart';
 import '../../features/reservations/domain/reservation.dart';
 import '../../features/workspace/domain/member.dart';
+import 'data/event_repository.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/money_repository.dart';
 import 'data/reservation_repository.dart';
@@ -122,12 +125,41 @@ void seedDemoPeopleAs(FakeWorkspaceRepository workspaces, DemoPerson me) {
 
 /// Seeds bookings around [now]: one finished yesterday, one happening
 /// today, one next week — the three states the Reserve screens show.
+/// #1378 — a demonstration plan a visitor can book on.
+///
+/// `seedSmallPlan` gives one seat, and the dataset books it, so the first
+/// journey the issue asks for — choose a seat and reserve it — had no
+/// free seat to choose. The demo desk therefore seats four: enough that
+/// the plan reads as a room in use, and enough that there is somewhere
+/// to sit.
+void seedDemoPlan(FakeFloorPlanRepository plan) {
+  plan.seedSmallPlan();
+  final first = plan.seats.single;
+  for (var i = 1; i < 4; i++) {
+    plan.seats.add(
+      Seat(
+        id: 'demo-seat-\$i',
+        workspaceId: first.workspaceId,
+        deskId: first.deskId,
+        name: 'A\${i + 1}',
+        x: first.x + i * 3,
+        y: first.y,
+        orientation: first.orientation,
+        chair: first.chair,
+        amenities: first.amenities,
+      ),
+    );
+  }
+}
+
 void seedDemoReservations(
   FakeReservationRepository reservations,
   FakeFloorPlanRepository plan,
   DateTime now,
 ) {
-  final seatId = plan.seats.isEmpty ? 'seat-1' : plan.seats.first.id;
+  // The LAST seat, so the first one stays free: a visitor must be able to
+  // book something on the plan they land on (#1378).
+  final seatId = plan.seats.isEmpty ? 'seat-1' : plan.seats.last.id;
   final morning = DateTime(now.year, now.month, now.day, 9);
   reservations.reservations
     ..clear()
@@ -165,6 +197,30 @@ void seedDemoReservations(
 /// Seeds last month's bills: Ada's settled, Bruno's still open. Two
 /// invoices are enough for the archive, the statement and the reminder
 /// rules to have something true to say.
+/// #1378 — a decision waiting to be made.
+///
+/// The Events tab of an empty demo says "nothing to decide", which is the
+/// one thing a demonstration of a validation workflow must not say. Dov
+/// is the cast's pending member (#1374), so his own request to join is
+/// the decision that is already there when a visitor arrives.
+void seedDemoEvents(FakeEventRepository events, DateTime now) {
+  events.events
+    ..clear()
+    ..add(
+      WorkspaceEvent(
+        id: 'demo-join-request',
+        workspaceId: 'ws-1',
+        type: EventType.memberJoin,
+        action: EventAction.submitted,
+        actorMemberId: 'member-4',
+        subjectMemberId: 'member-4',
+        payload: const {'reason': 'demo'},
+        status: EventStatus.pending,
+        createdAt: now.subtract(const Duration(days: 2)),
+      ),
+    );
+}
+
 void seedDemoMoney(FakeMoneyRepository money, DateTime now) {
   final lastMonth = DateTime(now.year, now.month - 1, 28);
   final period =

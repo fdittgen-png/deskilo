@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/real_async.dart';
+
 import '../../helpers/mock_providers.dart';
 
 Future<Uint8List> _png(int size) async {
@@ -81,7 +83,12 @@ void main() {
     await tester.runAsync(() async {
       await tester.tap(find.byKey(const ValueKey('emblem-pick')));
       await tester.pump();
-      await Future<void>.delayed(const Duration(milliseconds: 50));
+      // Poll the observable result, never a fixed delay (#1334): the
+      // codec takes as long as the machine takes.
+      await untilReal(
+        () => workspace.emblems['ws-1'] != null,
+        what: 'the emblem was decoded, re-drawn and stored',
+      );
     });
     await tester.pumpAndSettle();
 

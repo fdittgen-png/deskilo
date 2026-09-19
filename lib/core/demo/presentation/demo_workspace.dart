@@ -126,6 +126,11 @@ class DemoControls extends StatelessWidget {
 
   final Widget child;
 
+  /// The next persona in the ring — owner, member, administrator, round
+  /// again — so one control covers all three.
+  static DemoPersona _next(DemoPersona persona) =>
+      DemoPersona.values[(persona.index + 1) % DemoPersona.values.length];
+
   /// The persona's own name, in the reader's language.
   static String personaLabel(AppLocalizations? l10n, DemoPersona persona) =>
       switch (persona) {
@@ -169,28 +174,18 @@ class DemoControls extends StatelessWidget {
                           ),
                     ),
                   ),
-                  PopupMenuButton<DemoPersona>(
+                  // A cycling button, not a menu: this bar renders in
+                  // the app's own `builder`, ABOVE the Navigator, so it
+                  // has no Overlay to put a popup or a tooltip in. Three
+                  // personas make one tap each the compact answer.
+                  TextButton.icon(
                     key: viewAsKey,
-                    tooltip: l10n?.demoSessionViewAs ?? 'View as',
-                    onSelected: env.onViewAs,
-                    itemBuilder: (context) => [
-                      for (final p in DemoPersona.values)
-                        PopupMenuItem(
-                          value: p,
-                          child: Text(personaLabel(l10n, p)),
-                        ),
-                    ],
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.visibility_outlined, size: 18),
-                        const SizedBox(width: AppSpacing.xs),
-                        // The active persona is on screen at all times, so
-                        // "why can I not see that button" always has an
-                        // answer in view.
-                        Text(personaLabel(l10n, persona)),
-                      ],
-                    ),
+                    icon: const Icon(Icons.visibility_outlined, size: 18),
+                    // The active persona is on screen at all times, so
+                    // "why can I not see that button" always has an
+                    // answer in view.
+                    label: Text(personaLabel(l10n, persona)),
+                    onPressed: () => env.onViewAs(_next(persona)),
                   ),
                   TextButton.icon(
                     key: resetKey,

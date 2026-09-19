@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: 0BSD
-import '../../../core/demo/demo_mode.dart';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart' show Color;
@@ -499,7 +498,6 @@ Future<Map<String, String>> memberEmails(Ref ref) async {
       .watch(workspaceRepositoryProvider)
       .fetchMemberEmails(workspace.id);
   // #970 — demo mode blurs these addresses wherever they are printed.
-  demoSensitive.addAll(emails.values);
   return emails;
 }
 
@@ -531,7 +529,6 @@ Future<PersonalInfo> managedIdentity(Ref ref, String memberId) async {
         .watch(workspaceRepositoryProvider)
         .managedIdentityOf(memberId);
     // #970 — demo mode blurs these details wherever they are printed.
-    demoSensitive.addAll(sensitiveOfPersonalInfo(identity));
     return identity;
   } catch (e, st) {
     // Refused is a legitimate answer, not a failure to report: an admin

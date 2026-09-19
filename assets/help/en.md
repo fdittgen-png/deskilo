@@ -1806,7 +1806,7 @@ Your personal screen, top to bottom:
 - **My account** (#1307) — who you are and how the app speaks to you, on every workspace: your **photo**; **Personal information** (or **Address**) — your postal address (printed on your invoices), country and optional VAT number; **WhatsApp** — your number, visible to fellow members only if you set it (§6); **Region & formats**; **Linked accounts** — attach a Google sign-in to your email account; **My badge** (§8); **Language** (system default or one of five); **Theme** (system / light / dark); **Navigation** (default for the device, the classic bottom bar with the round button, or the menu like the web — on the web the menu is the only navigation, so the choice is not offered there); and **Show help hints again** — which brings back every contextual tip you dismissed. Those tips are small carousels on the forms themselves: swipe forward and back through several *astuces* per screen, each with a *Learn more* link that jumps straight to the matching section of this guide.
 - **My membership** — your standing in *this* workspace: **Status** — a free line (40 characters) shown in the directory; **Default booking period** (the window the booking sheets open on, so your usual half-day or from–to is already filled in); your **Payment conditions**; **Documents** — the workspace's document library (§11d). The directory itself is the **Members** destination of the bottom bar, not an entry here.
 - **This workspace**, **Administration** and **Governance** — only for whoever holds the permission each entry needs (§8): how the space works, running its people and devices, and what the space is.
-- **Advanced** — this device: the **server** it talks to, its push-notification status, **Scan with the front camera** (for wall tablets), the workspace-wide **Developer mode** switch, the **Developer** trace screen (§8 payments), and **Demo mode** (on this device every name, e-mail, phone and postal address on screen is blurred in place — the real text, softened until unreadable, the layout untouched — so screenshots and recordings carry no personal data; nothing is hidden and every form stays editable).
+- **Advanced** — this device: the **server** it talks to, its push-notification status, **Scan with the front camera** (for wall tablets), the workspace-wide **Developer mode** switch, the **Developer** trace screen (§8 payments).
 - **Help & about** — **Help**, the built-in guide in your language; the app version, the author (Florian DITTGEN), the open-source licence (0BSD) with the source on GitHub, the privacy policy, a bug-report/feature link, and how to **support the project** (PayPal, Revolut).
 - **Sign out**.
 
@@ -1910,12 +1910,17 @@ Whether the app navigates by a bottom bar or a side rail. On a wide
 screen the rail gives the plan more room; on a phone the bar is easier
 to reach.
 
-### Demo mode
+### The demo workspace
 
-Replaces the names and amounts on screen with plausible ones, so a space
-can be shown to a visitor without showing anybody's business. It changes
-the display only: nothing in the data is touched, and nothing you do
-while it is on behaves differently.
+An invented workspace anybody can open from the sign-in screen, without
+an account. It has its own people, its own bookings and its own bills,
+and a **Reset** that puts everything back exactly as it was. **View as**
+looks at the same space as a member, an administrator or the owner, so
+you can see what each of them sees.
+
+Nothing done inside it reaches a real workspace, and nothing leaves the
+device. Leaving forgets the session, and so does closing the app: the
+next visit starts from the same invented space.
 
 ### Front camera for scanning
 

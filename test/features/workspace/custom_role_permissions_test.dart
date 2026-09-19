@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: 0BSD
+//
+// #1287 — the client's half of the union that 0247 added to
+// `has_permission_raw`. The rule is the same on both sides and stated
+// twice on purpose: the server refuses the write, the client decides
+// what to show, and a screen that disagrees with the database is a
+// support call either way.
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// #1287 — the client's half of the union that 0247 added to
-/// `has_permission_raw`. The rule is the same on both sides and stated
-/// twice on purpose: the server refuses the write, the client decides
-/// what to show, and a screen that disagrees with the database is a
-/// support call either way.
 void main() {
   const member = Member(
     id: 'm',

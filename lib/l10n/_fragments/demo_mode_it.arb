@@ -1,19 +1,11 @@
 {
   "@@locale": "it",
-  "featureDemoMode": "Modalità demo",
+  "featureDemoMode": "Lo spazio dimostrativo",
   "@featureDemoMode": {
-    "description": "#970 demo mode: featureDemoMode"
+    "description": "#1380 the demo workspace: featureDemoMode"
   },
-  "featureDemoModeDesc": "Un interruttore nelle impostazioni di ogni membro: finché è attivo, ogni nome, e-mail, telefono e indirizzo postale sullo schermo è sfocato sul posto, così screenshot e video non portano dati personali. Disattivato: l'interruttore è nascosto.",
+  "featureDemoModeDesc": "Uno spazio inventato che chiunque può aprire dalla schermata di accesso, con le proprie persone, prenotazioni e fatture. Nulla di ciò che vi si fa raggiunge uno spazio reale o lascia il dispositivo, e non serve alcun account. Spento: la proposta non compare.",
   "@featureDemoModeDesc": {
-    "description": "#970 demo mode: featureDemoModeDesc"
-  },
-  "demoModeTitle": "Modalità demo",
-  "@demoModeTitle": {
-    "description": "#970 demo mode: demoModeTitle"
-  },
-  "demoModeSubtitle": "Nomi, e-mail, telefoni e indirizzi sono sfocati sullo schermo di questo dispositivo — per screenshot e video.",
-  "@demoModeSubtitle": {
-    "description": "#970 demo mode: demoModeSubtitle"
+    "description": "#1380 the demo workspace: featureDemoModeDesc"
   }
 }

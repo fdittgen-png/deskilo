@@ -1690,18 +1690,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Lo spazio può definire ruoli propri — un tesoriere, un segretario — che aggiungono permessi a quelli del ruolo di un membro. Non ne tolgono mai, e un proprietario li mantiene tutti.';
 
   @override
-  String get featureDemoMode => 'Modalità demo';
+  String get featureDemoMode => 'Lo spazio dimostrativo';
 
   @override
   String get featureDemoModeDesc =>
-      'Un interruttore nelle impostazioni di ogni membro: finché è attivo, ogni nome, e-mail, telefono e indirizzo postale sullo schermo è sfocato sul posto, così screenshot e video non portano dati personali. Disattivato: l\'interruttore è nascosto.';
-
-  @override
-  String get demoModeTitle => 'Modalità demo';
-
-  @override
-  String get demoModeSubtitle =>
-      'Nomi, e-mail, telefoni e indirizzi sono sfocati sullo schermo di questo dispositivo — per screenshot e video.';
+      'Uno spazio inventato che chiunque può aprire dalla schermata di accesso, con le proprie persone, prenotazioni e fatture. Nulla di ciò che vi si fa raggiunge uno spazio reale o lascia il dispositivo, e non serve alcun account. Spento: la proposta non compare.';
 
   @override
   String get demoSessionBadge => 'Demo';

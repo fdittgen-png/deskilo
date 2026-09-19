@@ -139,7 +139,7 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.multiSite => l10n?.featureMultiSite ?? 'Sites',
       WorkspaceFeature.siteDocuments =>
         l10n?.featureSiteDocuments ?? 'Sites on documents',
-      WorkspaceFeature.demoMode => l10n?.featureDemoMode ?? 'Demo mode',
+      WorkspaceFeature.demoMode => l10n?.featureDemoMode ?? 'The demo workspace',
       WorkspaceFeature.instanceWizard =>
         l10n?.featureInstanceWizard ?? 'Instance wizard',
       WorkspaceFeature.navigationStyle =>

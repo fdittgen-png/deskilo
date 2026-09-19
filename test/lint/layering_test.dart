@@ -21,6 +21,8 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../tool/layering/analysis.dart' as layering;
+
 import 'lint_sources.dart';
 
 /// Every ordered feature→feature import pair that exists today.
@@ -34,10 +36,6 @@ import 'lint_sources.dart';
 /// sat 656 import statements. A pair already on the list could grow
 /// without limit, and `money -> workspace` had reached 111, which is not
 /// a dependency but a merger. The counts may only fall.
-/// A widget reaching a repository: `ref.read(xRepositoryProvider)` or
-/// `ref.watch(...)`, which is the exact shape #1234 counted 125 of.
-final RegExp _repositoryUse =
-    RegExp(r'ref\.(read|watch)\(\s*[a-zA-Z]+RepositoryProvider');
 
 /// How many widget FILES in each feature still reach a repository
 /// directly (#1234). 66 of them, and this is the ratchet that empties
@@ -153,7 +151,6 @@ const Set<String> _knownPairs = {
   'workspace -> reservations',
 };
 
-final _importRe = RegExp("import '([^']+)'");
 
 /// The number of imports behind each committed pair — a ceiling, never
 /// a target. It may only go DOWN: a refactor that removes coupling
@@ -238,7 +235,7 @@ const Map<String, int> _pairBudget = {
   // `profile: 4 > 3` instead — a widget in profile/ reaching
   // workspace/'s repository. ADR 0024 is the stronger rule, so the
   // layer violation is fixed and the import ceiling pays for it.
-  'profile -> workspace': 35,
+  'profile -> workspace': 34, // 2026-09-19 #1380 35→34: the demo-mode switch left Settings with its feature-flag import
   'reservations -> calendar': 1,
   'reservations -> events': 5,
   'reservations -> members': 2,
@@ -304,45 +301,9 @@ const Set<String> _backendTypeOutsideData = {
   'lib/features/workspace/presentation/widgets/badge_manager_dialog.dart',
 };
 
-/// Resolves [import] against [fromDir] to a repo-relative path, or null
-/// for package/dart imports. Hand-rolled so this test needs no
-/// dependency beyond dart:io.
-String? _resolveRelative(String fromDir, String import) {
-  if (!import.startsWith('.')) return null;
-  final parts = <String>[...fromDir.split('/')];
-  for (final seg in import.split('/')) {
-    if (seg == '.' || seg.isEmpty) continue;
-    if (seg == '..') {
-      parts.removeLast();
-    } else {
-      parts.add(seg);
-    }
-  }
-  return parts.join('/');
-}
 
 /// The feature a repo-relative path belongs to, or null.
-/// Source with `//` comments removed.
-///
-/// A lint that scans raw text reports the comment EXPLAINING the rule as
-/// a violation of it — which this repository has learned twice now. The
-/// paragraph above this test contains `ref.read(xRepositoryProvider)`
-/// and must not count.
-String _withoutComments(String source) => source
-    .split('\n')
-    .map((line) {
-      final at = line.indexOf('//');
-      return at < 0 ? line : line.substring(0, at);
-    })
-    .join('\n');
 
-String? _featureOf(String path) {
-  final parts = path.split('/');
-  if (parts.length > 2 && parts[0] == 'lib' && parts[1] == 'features') {
-    return parts[2];
-  }
-  return null;
-}
 
 void main() {
   test('presentation/ never imports data/ (AGENT_RULES layering)', () {
@@ -351,12 +312,12 @@ void main() {
       if (!file.path.contains('/presentation/')) continue;
       final lines = file.readAsLinesSync();
       for (var i = 0; i < lines.length; i++) {
-        final m = _importRe.firstMatch(lines[i]);
+        final m = layering.importRe.firstMatch(lines[i]);
         if (m == null) continue;
         final imp = m.group(1)!;
         final resolved = imp.startsWith('package:deskilo/')
             ? imp.replaceFirst('package:deskilo/', 'lib/')
-            : _resolveRelative(
+            : layering.resolveRelative(
                 file.path.substring(0, file.path.lastIndexOf('/')), imp);
         if (resolved != null && resolved.contains('/data/')) {
           violations.add('${file.path}:${i + 1}: ${lines[i].trim()}');
@@ -389,10 +350,10 @@ void main() {
     final offenders = <String, List<String>>{};
     for (final file in _featureFiles()) {
       if (!file.path.contains('/presentation/')) continue;
-      final feature = _featureOf(file.path);
+      final feature = layering.featureOf(file.path);
       if (feature == null) continue;
-      final text = _withoutComments(file.readAsStringSync());
-      if (!_repositoryUse.hasMatch(text)) continue;
+      final text = layering.withoutComments(file.readAsStringSync());
+      if (!layering.repositoryUse.hasMatch(text)) continue;
       (offenders[feature] ??= []).add(file.path);
     }
 
@@ -518,16 +479,16 @@ void main() {
     final live = <String>{};
     final counts = <String, int>{};
     for (final file in _featureFiles()) {
-      final src = _featureOf(file.path)!;
-      for (final m in _importRe.allMatches(file.readAsStringSync())) {
+      final src = layering.featureOf(file.path)!;
+      for (final m in layering.importRe.allMatches(file.readAsStringSync())) {
         final imp = m.group(1)!;
         String? target;
         if (imp.startsWith('package:deskilo/features/')) {
           target = imp.split('/')[2];
         } else {
-          final resolved = _resolveRelative(
+          final resolved = layering.resolveRelative(
               file.path.substring(0, file.path.lastIndexOf('/')), imp);
-          if (resolved != null) target = _featureOf(resolved);
+          if (resolved != null) target = layering.featureOf(resolved);
         }
         if (target != null && target != src) {
           live.add('$src -> $target');

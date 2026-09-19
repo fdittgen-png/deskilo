@@ -62,13 +62,16 @@ class DemoFixture {
   factory DemoFixture.build({DateTime? now}) {
     final today = now ?? kTestNow;
     final workspaces = FakeWorkspaceRepository.withWorkspace();
-    final floorPlan = FakeFloorPlanRepository()..seedSmallPlan();
+    final floorPlan = FakeFloorPlanRepository();
+    seedDemoPlan(floorPlan);
     final reservations = FakeReservationRepository();
     final money = FakeMoneyRepository();
+    final events = FakeEventRepository();
     // The cast first: everything below points at it (#1374).
     seedDemoPeople(workspaces);
     seedDemoReservations(reservations, floorPlan, today);
     seedDemoMoney(money, today);
+    seedDemoEvents(events, today);
     final problems = validateDemoFixture(
       workspaces: workspaces,
       plan: floorPlan,
@@ -87,7 +90,7 @@ class DemoFixture {
       workspaces: workspaces,
       floorPlan: floorPlan,
       reservations: reservations,
-      events: FakeEventRepository(),
+      events: events,
       calendar: FakeCalendarRepository(),
       money: money,
       credits: FakeCreditRepository(),
