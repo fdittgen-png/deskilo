@@ -10577,6 +10577,71 @@
   "@invoiceGapMissingBuyerVatId": {
     "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
   },
+  "rolesOfSpaceTitle": "Roles this space defines",
+  "@rolesOfSpaceTitle": {
+    "description": "#1528 the roles of a space: rolesOfSpaceTitle"
+  },
+  "rolesOfSpaceSubtitle": "Each one adds permissions on top of a member's role. None ever takes one away, and an owner always keeps every one.",
+  "@rolesOfSpaceSubtitle": {
+    "description": "#1528 the roles of a space: rolesOfSpaceSubtitle"
+  },
+  "rolesOfSpaceEmpty": "No roles yet.",
+  "@rolesOfSpaceEmpty": {
+    "description": "#1528 the roles of a space: rolesOfSpaceEmpty"
+  },
+  "rolesOfSpaceAdd": "Add a role",
+  "@rolesOfSpaceAdd": {
+    "description": "#1528 the roles of a space: rolesOfSpaceAdd"
+  },
+  "rolesOfSpaceInactive": "Put aside",
+  "@rolesOfSpaceInactive": {
+    "description": "#1528 the roles of a space: rolesOfSpaceInactive"
+  },
+  "roleEditorKey": "Key",
+  "@roleEditorKey": {
+    "description": "#1528 the roles of a space: roleEditorKey"
+  },
+  "roleEditorKeyHelp": "Lower-case letters, digits and underscores. It never changes: the people who hold the role point at it.",
+  "@roleEditorKeyHelp": {
+    "description": "#1528 the roles of a space: roleEditorKeyHelp"
+  },
+  "roleEditorNameFor": "Name ({locale})",
+  "@roleEditorNameFor": {
+    "description": "#1528 the roles of a space: roleEditorNameFor",
+    "placeholders": {
+      "locale": {
+        "type": "String"
+      }
+    }
+  },
+  "roleEditorPermissions": "What it adds",
+  "@roleEditorPermissions": {
+    "description": "#1528 the roles of a space: roleEditorPermissions"
+  },
+  "roleEditorActive": "In use",
+  "@roleEditorActive": {
+    "description": "#1528 the roles of a space: roleEditorActive"
+  },
+  "roleEditorSave": "Save the role",
+  "@roleEditorSave": {
+    "description": "#1528 the roles of a space: roleEditorSave"
+  },
+  "roleEditorSaveFailed": "The role was not saved.",
+  "@roleEditorSaveFailed": {
+    "description": "#1528 the roles of a space: roleEditorSaveFailed"
+  },
+  "roleEditorHolders": "Who holds it",
+  "@roleEditorHolders": {
+    "description": "#1528 the roles of a space: roleEditorHolders"
+  },
+  "roleEditorNobody": "Nobody yet.",
+  "@roleEditorNobody": {
+    "description": "#1528 the roles of a space: roleEditorNobody"
+  },
+  "roleEditorNotYourself": "You cannot give a role to yourself.",
+  "@roleEditorNotYourself": {
+    "description": "#1528 the roles of a space: roleEditorNotYourself"
+  },
   "schemaUpdateTitle": "This server needs an update",
   "@schemaUpdateTitle": {
     "description": "#1312 Title of the screen shown when the server's schema is older than the app needs"

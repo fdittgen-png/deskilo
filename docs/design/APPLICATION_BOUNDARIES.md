@@ -15,14 +15,14 @@ A repository read from `presentation/` is **not** a defect by itself. What #1234
 | Booking | `calendar` | 1 |
 | Booking | `editor` | 3 |
 | Finance | `money` | 24 |
-| Workspace configuration | `workspace` | 20 |
+| Workspace configuration | `workspace` | 21 |
 | Workspace configuration | `members` | 2 |
 | Workspace configuration | `profile` | 3 |
 | — | `auth` | 4 |
 | — | `events` | 1 |
 | — | `kiosk` | 1 |
 
-**65 files** across 11 features. `test/lint/layering_test.dart` holds each feature's number as a ceiling that may only fall.
+**66 files** across 11 features. `test/lint/layering_test.dart` holds each feature's number as a ceiling that may only fall.
 
 ## Cross-feature imports, by direction
 
@@ -118,8 +118,8 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/workspace/presentation/screens/availability_screen.dart` | 854 |
 | `lib/features/money/presentation/widgets/invoicing_dashboard.dart` | 850 |
 | `lib/features/reservations/presentation/widgets/week_grid.dart` | 807 |
+| `lib/app/router.dart` | 788 |
 | `lib/features/plan/presentation/widgets/floor_plan_painter.dart` | 785 |
-| `lib/app/router.dart` | 780 |
 | `lib/features/calendar/presentation/widgets/day_timeline.dart` | 776 |
 | `lib/features/money/presentation/screens/billing_screen.dart` | 767 |
 | `lib/features/reservations/presentation/reserve_seat_actions.dart` | 750 |

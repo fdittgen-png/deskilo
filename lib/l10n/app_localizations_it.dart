@@ -9976,6 +9976,55 @@ class AppLocalizationsIt extends AppLocalizations {
       'Manca la partita IVA del cliente — una fattura in inversione contabile deve indicarla.';
 
   @override
+  String get rolesOfSpaceTitle => 'I ruoli di questo spazio';
+
+  @override
+  String get rolesOfSpaceSubtitle =>
+      'Ognuno aggiunge permessi a quelli del ruolo di un membro. Nessuno ne toglie, e una proprietaria li mantiene tutti.';
+
+  @override
+  String get rolesOfSpaceEmpty => 'Ancora nessun ruolo.';
+
+  @override
+  String get rolesOfSpaceAdd => 'Aggiungi un ruolo';
+
+  @override
+  String get rolesOfSpaceInactive => 'Messo da parte';
+
+  @override
+  String get roleEditorKey => 'Chiave';
+
+  @override
+  String get roleEditorKeyHelp =>
+      'Minuscole, cifre e trattini bassi. Non cambia mai: le persone che hanno il ruolo vi si appoggiano.';
+
+  @override
+  String roleEditorNameFor(String locale) {
+    return 'Nome ($locale)';
+  }
+
+  @override
+  String get roleEditorPermissions => 'Cosa aggiunge';
+
+  @override
+  String get roleEditorActive => 'In uso';
+
+  @override
+  String get roleEditorSave => 'Salva il ruolo';
+
+  @override
+  String get roleEditorSaveFailed => 'Il ruolo non è stato salvato.';
+
+  @override
+  String get roleEditorHolders => 'Chi lo ha';
+
+  @override
+  String get roleEditorNobody => 'Ancora nessuno.';
+
+  @override
+  String get roleEditorNotYourself => 'Non puoi darti un ruolo da sola.';
+
+  @override
   String get schemaUpdateTitle => 'Questo server deve essere aggiornato';
 
   @override

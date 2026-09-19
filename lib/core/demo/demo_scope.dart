@@ -30,6 +30,7 @@ import '../../features/workspace/providers/deployment_providers.dart';
 import '../../features/workspace/providers/workspace_files_providers.dart';
 import '../../features/workspace/providers/workspace_fields_providers.dart';
 import '../../features/workspace/providers/workspace_import_providers.dart';
+import '../../features/workspace/providers/workspace_roles_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../badge/app_badge.dart';
 import '../files/file_saver.dart';
@@ -67,6 +68,7 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       workspaceFilesRepositoryProvider.overrideWithValue(fixture.files),
       workspaceImportRepositoryProvider.overrideWithValue(fixture.imports),
       workspaceFieldsRepositoryProvider.overrideWithValue(fixture.fields),
+      workspaceRolesRepositoryProvider.overrideWithValue(fixture.roles),
 
       // #1377 — the ways an effect could leave the app, each pointed at
       // something inert. A payment, an invitation, an e-invoice and a
@@ -102,6 +104,7 @@ const Set<String> demoOverriddenProviders = {
   'workspaceFilesRepositoryProvider',
   'workspaceImportRepositoryProvider',
   'workspaceFieldsRepositoryProvider',
+  'workspaceRolesRepositoryProvider',
   'realtimeSyncProvider',
   'notificationServiceProvider',
   'appBadgeProvider',

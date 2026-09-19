@@ -9888,6 +9888,55 @@ class AppLocalizationsEn extends AppLocalizations {
       'The customer\'s VAT number is missing — a reverse-charged invoice must name it.';
 
   @override
+  String get rolesOfSpaceTitle => 'Roles this space defines';
+
+  @override
+  String get rolesOfSpaceSubtitle =>
+      'Each one adds permissions on top of a member\'s role. None ever takes one away, and an owner always keeps every one.';
+
+  @override
+  String get rolesOfSpaceEmpty => 'No roles yet.';
+
+  @override
+  String get rolesOfSpaceAdd => 'Add a role';
+
+  @override
+  String get rolesOfSpaceInactive => 'Put aside';
+
+  @override
+  String get roleEditorKey => 'Key';
+
+  @override
+  String get roleEditorKeyHelp =>
+      'Lower-case letters, digits and underscores. It never changes: the people who hold the role point at it.';
+
+  @override
+  String roleEditorNameFor(String locale) {
+    return 'Name ($locale)';
+  }
+
+  @override
+  String get roleEditorPermissions => 'What it adds';
+
+  @override
+  String get roleEditorActive => 'In use';
+
+  @override
+  String get roleEditorSave => 'Save the role';
+
+  @override
+  String get roleEditorSaveFailed => 'The role was not saved.';
+
+  @override
+  String get roleEditorHolders => 'Who holds it';
+
+  @override
+  String get roleEditorNobody => 'Nobody yet.';
+
+  @override
+  String get roleEditorNotYourself => 'You cannot give a role to yourself.';
+
+  @override
   String get schemaUpdateTitle => 'This server needs an update';
 
   @override

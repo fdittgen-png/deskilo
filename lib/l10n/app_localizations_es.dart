@@ -9959,6 +9959,55 @@ class AppLocalizationsEs extends AppLocalizations {
       'Falta el NIF-IVA del cliente — una factura con inversión del sujeto pasivo debe indicarlo.';
 
   @override
+  String get rolesOfSpaceTitle => 'Los roles de este espacio';
+
+  @override
+  String get rolesOfSpaceSubtitle =>
+      'Cada uno añade permisos a los del rol de un miembro. Ninguno quita nada, y una propietaria los conserva todos.';
+
+  @override
+  String get rolesOfSpaceEmpty => 'Todavía no hay roles.';
+
+  @override
+  String get rolesOfSpaceAdd => 'Añadir un rol';
+
+  @override
+  String get rolesOfSpaceInactive => 'Apartado';
+
+  @override
+  String get roleEditorKey => 'Clave';
+
+  @override
+  String get roleEditorKeyHelp =>
+      'Minúsculas, dígitos y guiones bajos. No cambia nunca: las personas con el rol se apoyan en ella.';
+
+  @override
+  String roleEditorNameFor(String locale) {
+    return 'Nombre ($locale)';
+  }
+
+  @override
+  String get roleEditorPermissions => 'Lo que añade';
+
+  @override
+  String get roleEditorActive => 'En uso';
+
+  @override
+  String get roleEditorSave => 'Guardar el rol';
+
+  @override
+  String get roleEditorSaveFailed => 'El rol no se ha guardado.';
+
+  @override
+  String get roleEditorHolders => 'Quién lo tiene';
+
+  @override
+  String get roleEditorNobody => 'Nadie todavía.';
+
+  @override
+  String get roleEditorNotYourself => 'No puedes darte un rol a ti misma.';
+
+  @override
   String get schemaUpdateTitle => 'Este servidor necesita una actualización';
 
   @override
