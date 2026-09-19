@@ -110,6 +110,7 @@ Totals by layer and by action: run the tool — they are printed, not committed,
 | `test/core/demo/demo_dataset_test.dart` | unit | #1374 — the session a visitor lands in is coherent, and says so when it is not. | 5 | yes | none | a domain rule — #1374 | no | KEEP |  |
 | `test/core/demo/demo_mode_test.dart` | unit | #970 — demo mode: the registry of personal strings and the switch. | 3 | yes | fakes | a domain rule — #970 | no | KEEP |  |
 | `test/core/demo/demo_persona_test.dart` | unit | #1376 — a persona is an identity, not a pretend role. | 9 | yes | none | a domain rule — #1376 | no | KEEP |  |
+| `test/core/demo/demo_scope_reach_test.dart` | widget | #1373 / #1375 — the Demo scope reaches the providers the SCREENS read, not only the ones the overrides name. | 1 | yes | none | user-visible behaviour — #1373, #1375 | no | KEEP |  |
 | `test/core/demo/demo_scope_test.dart` | unit | #1373 — the isolation the Demo environment claims, proven. | 6 | yes | repository sources | a domain rule — #1373, #1377 | no | KEEP |  |
 | `test/core/demo/demo_session_test.dart` | unit | #1375 — Demo behaves like a real workspace, and Reset puts it back. | 7 | yes | none | a domain rule — #1375 | no | KEEP |  |
 | `test/core/demo/demo_workspace_test.dart` | widget | #1375 — the Reset control, driven the way a visitor drives it. | 3 | yes | none | user-visible behaviour — #1375 | no | KEEP |  |
