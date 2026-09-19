@@ -19,6 +19,7 @@ import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/expense_repartition.dart';
 import '../../providers/expense_repartition_providers.dart';
+import '../../application/book_repartition.dart';
 import '../../providers/money_providers.dart';
 import '../period_label.dart';
 import 'wizard_scaffold.dart';
@@ -105,40 +106,39 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
     final cents = _cents;
     if (workspace == null || cents == null || shares.isEmpty) return;
     setState(() => _busy = true);
-    final repo = ref.read(moneyRepositoryProvider);
-    String? id;
+    DistributedExpense? done;
     final ok = await runGuarded(
       context,
       domain: 'money',
       message: 'distribute expense failed',
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
+      // Distributing and then learning WHICH of the two things happened
+      // is one decision, so it lives in the command (#1449).
       action: () async {
-        id = await repo.distributeExpense(
-          workspaceId: workspace.id,
-          title: _title.text.trim(),
-          amountCents: cents,
-          method: _method,
-          period: _period,
-          shares: shares,
-        );
+        done = await ref.read(repartitionsProvider).distribute(
+              workspaceId: workspace.id,
+              title: _title.text.trim(),
+              amountCents: cents,
+              method: _method,
+              period: _period,
+              shares: shares,
+            );
       },
     );
     if (!mounted) return;
     setState(() => _busy = false);
-    if (!ok || id == null) return;
+    final outcome = done;
+    if (!ok || outcome == null) return;
     ref
       ..invalidate(expenseRepartitionsProvider)
       ..invalidate(eventsProvider)
       ..invalidate(invoicingOverviewProvider);
-    final filed = (await repo.fetchExpenseRepartitions(workspace.id))
-        .where((r) => r.id == id)
-        .firstOrNull;
     if (!mounted) return;
     Navigator.of(context).pop();
     AppSnack.success(
       context,
-      (filed?.isPending ?? false)
+      outcome.pending
           ? (l10n?.repartitionFiledPending ??
               'Shares filed — they book once validated.')
           : (l10n?.repartitionFiled ??

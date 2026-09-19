@@ -109,20 +109,67 @@ String _$paymentsHash() => r'54e542be93d1801d2528087cec596766efad0ffb';
 /// #1449 — the decision behind the legal-identity Save: which of the two
 /// aggregates is written first, and therefore which one can be left
 /// behind alone.
+/// #1449 — sharing a cost: the order of the two writes, and whether the
+/// shares booked or are waiting on a validation rule.
 
-@ProviderFor(legalIdentity)
-final legalIdentityProvider = LegalIdentityProvider._();
+@ProviderFor(repartitions)
+final repartitionsProvider = RepartitionsProvider._();
 
 /// #1449 — the decision behind the legal-identity Save: which of the two
 /// aggregates is written first, and therefore which one can be left
 /// behind alone.
+/// #1449 — sharing a cost: the order of the two writes, and whether the
+/// shares booked or are waiting on a validation rule.
+
+final class RepartitionsProvider
+    extends $FunctionalProvider<Repartitions, Repartitions, Repartitions>
+    with $Provider<Repartitions> {
+  /// #1449 — the decision behind the legal-identity Save: which of the two
+  /// aggregates is written first, and therefore which one can be left
+  /// behind alone.
+  /// #1449 — sharing a cost: the order of the two writes, and whether the
+  /// shares booked or are waiting on a validation rule.
+  RepartitionsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'repartitionsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$repartitionsHash();
+
+  @$internal
+  @override
+  $ProviderElement<Repartitions> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  Repartitions create(Ref ref) {
+    return repartitions(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Repartitions value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Repartitions>(value),
+    );
+  }
+}
+
+String _$repartitionsHash() => r'c71888e14b6f28a005e593090293cff440157b47';
+
+@ProviderFor(legalIdentity)
+final legalIdentityProvider = LegalIdentityProvider._();
 
 final class LegalIdentityProvider
     extends $FunctionalProvider<LegalIdentity, LegalIdentity, LegalIdentity>
     with $Provider<LegalIdentity> {
-  /// #1449 — the decision behind the legal-identity Save: which of the two
-  /// aggregates is written first, and therefore which one can be left
-  /// behind alone.
   LegalIdentityProvider._()
     : super(
         from: null,
