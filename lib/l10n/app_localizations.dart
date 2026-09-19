@@ -3516,6 +3516,12 @@ abstract class AppLocalizations {
   /// **'Environments'**
   String get helpTopicEnvironments;
 
+  /// #1288 S5: deployEntityFieldDefinitions
+  ///
+  /// In en, this message translates to:
+  /// **'Questions the space asks'**
+  String get deployEntityFieldDefinitions;
+
   /// Settings toggle enabling the local diagnostics screen
   ///
   /// In en, this message translates to:

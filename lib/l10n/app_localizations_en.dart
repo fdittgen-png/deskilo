@@ -1980,6 +1980,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpTopicEnvironments => 'Environments';
 
   @override
+  String get deployEntityFieldDefinitions => 'Questions the space asks';
+
+  @override
   String get developerMode => 'Developer mode';
 
   @override

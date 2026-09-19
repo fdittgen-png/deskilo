@@ -13,7 +13,7 @@
 -- need a second role and would prove nothing more: the policy IS that
 -- function, and a test that re-implements the rule agrees with itself.
 begin;
-select plan(24);
+select plan(27);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -227,6 +227,38 @@ select is(
   'association''s next order is the space''s operational data, not a '
   'fact about a person. Deleting everything would be simpler and would '
   'throw that away; deleting nothing would be a broken promise');
+
+-- ── the questions travel; the answers never do (0250) ────────────────
+
+-- The owner again: the member erased their membership above, and
+-- exporting a configuration is the owner's in any case.
+select pg_temp.act_as('owner');
+
+select is(
+  (select e->>'merge_policy' || '/' || (e->>'group')
+     from jsonb_array_elements(public.deployable_entities()) e
+    where e->>'key' = 'field_definitions'),
+  'keyed_update/forms',
+  'the questions are a deployable entity, keyed on the question''s own '
+  'key so a redeployment updates rather than duplicates');
+
+select is(
+  (select jsonb_array_length(
+      public.export_workspace_configuration(pg_temp.ws())
+        #> '{tables,workspace_field_definitions}') > 0),
+  true,
+  'and they are in what a template actually carries, not only in the '
+  'helper that builds them');
+
+select is(
+  (select count(*)::int
+     from jsonb_array_elements(
+       public.export_workspace_configuration(pg_temp.ws())
+         #> '{tables,workspace_field_definitions}') e
+    where e.value ? 'answer' or e.value ? 'values'),
+  0,
+  'an ANSWER never travels: it is a fact about a person, and the person '
+  'does not exist in the space the template is applied to');
 
 select ok(
   not has_table_privilege('authenticated', 'public.workspace_field_values', 'INSERT')

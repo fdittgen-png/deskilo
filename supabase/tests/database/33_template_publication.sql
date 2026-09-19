@@ -58,9 +58,14 @@ select is(
   'a template without the space group carries no plan');
 
 select pg_temp.act_as('00000000-0000-4000-8000-0000000012e1');
+-- The group has to be one no entity belongs to, which is the whole
+-- point: a chosen group that yields nothing publishable is refused
+-- rather than saved as an empty template. `forms` was that group until
+-- #1288 put the workspace's own questions in it, so the name moved and
+-- the rule did not.
 select throws_like(
   $$ select public.save_workspace_as_template(current_setting('deskilo.pub.ws')::uuid,
-       'forms_only', 'Forms', '', 'private', '{}', array['forms']) $$,
+       'empty_group', 'Nothing', '', 'private', '{}', array['nothing_publishable']) $$,
   '%carry nothing that may be published%',
   'groups with nothing publishable are refused, not saved empty');
 

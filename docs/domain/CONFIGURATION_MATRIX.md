@@ -100,6 +100,7 @@ actually moves.
 | number_sequences | configuration | number_sequences | B | **format only** — `prefix`, `suffix`, `date_part`, `digits`, `reset`, `gapless`. `period_key` and `next_value` are class E and never exported (#1295) |
 | lexicon | configuration | lexicon | B | allow-listed product terminology only, per locale. `keyed_update`, so a template supplying French words cannot delete the German ones a space already wrote |
 | branding | configuration | branding | B | the brand seed, the office fills and a curated seat-palette key — group `appearance`, `keyed_update`. Never the emblem (a storage file), never status or environment colours (#1289) |
+| field_definitions | configuration | workspace_field_definitions | B | the questions the space asks its members, with their labels in every language, their choices and their rules — group `forms`, `keyed_update` on the question's own key (0250). Never an ANSWER: that is a fact about a person, and the person does not exist in the space a template is applied to. A type change while answers point at the question is a conflict, never a merge (#1288) |
 | features | configuration | feature_flags | B | merge, not replace (0176) |
 
 ## Personal preferences — class D, never carried

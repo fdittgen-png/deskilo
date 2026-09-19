@@ -440,5 +440,7 @@ String deploymentEntityName(AppLocalizations? l10n, String key) =>
       'invitations' => l10n?.deployEntityInvitations ?? 'Invitation templates',
       'features' => l10n?.deployEntityFeatures ?? 'Features',
       'branding' => l10n?.deployEntityBranding ?? 'Colours',
+      'field_definitions' =>
+        l10n?.deployEntityFieldDefinitions ?? 'Questions the space asks',
       _ => key,
     };

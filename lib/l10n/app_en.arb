@@ -2392,6 +2392,10 @@
   "@helpTopicEnvironments": {
     "description": "Guide-heading needle for the environments help symbols (#1022)"
   },
+  "deployEntityFieldDefinitions": "Questions the space asks",
+  "@deployEntityFieldDefinitions": {
+    "description": "#1288 S5: deployEntityFieldDefinitions"
+  },
   "developerMode": "Developer mode",
   "@developerMode": {
     "description": "Settings toggle enabling the local diagnostics screen"
