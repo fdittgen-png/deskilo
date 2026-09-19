@@ -1080,6 +1080,11 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
       _mergeBookingRule(workspaceId, key, enabled);
 
   @override
+  Future<void> setLegendProfile(String workspaceId, LegendProfile profile) =>
+      _mergeBookingRule(
+          workspaceId, BookingPolicies.legendProfileKey, profile.wire);
+
+  @override
   Future<void> setOutsideHoursMode(
     String workspaceId,
     OutsideHoursMode mode,

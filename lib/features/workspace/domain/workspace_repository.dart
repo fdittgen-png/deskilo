@@ -455,6 +455,10 @@ abstract class WorkspaceRepository {
 
   /// Writes the #624 outside-hours mode (`outside_hours_mode` string
   /// key), preserving the other booking_rules.
+  /// #1281 — `legend_profile`: how many states the plan tells apart.
+  /// Owner-only, like every other booking rule.
+  Future<void> setLegendProfile(String workspaceId, LegendProfile profile);
+
   Future<void> setOutsideHoursMode(
     String workspaceId,
     OutsideHoursMode mode,

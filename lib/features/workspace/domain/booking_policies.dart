@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/theme/seat_legend_profile.dart';
+
+export '../../../core/theme/seat_legend_profile.dart'
+    show LegendProfile, SeatGroup, SeatStateKind, legendGroupOf;
 
 /// #634 — THE one answer to "what may happen outside the configured
 /// working day?" (`booking_rules.outside_hours_mode`). Four mutually
@@ -82,6 +86,7 @@ class BookingPolicies {
     this.advanceHorizonDays = defaultHorizonDays,
     this.minDurationMinutes = defaultMinDuration,
     this.maxDurationMinutes = defaultMaxDuration,
+    this.legendProfile = LegendProfile.full,
   });
 
   /// `allow_past_bookings` — ON lets a member record a booking that
@@ -116,7 +121,13 @@ class BookingPolicies {
   /// natural ceiling and [maxDurationCeiling] is exactly that.
   final int maxDurationMinutes;
 
+  /// `legend_profile` (#1281) — how many states the plan tells apart,
+  /// for the legend AND the canvas. [LegendProfile.full] is today's
+  /// behaviour and the default.
+  final LegendProfile legendProfile;
+
   static const allowPastBookingsKey = 'allow_past_bookings';
+  static const legendProfileKey = 'legend_profile';
   static const adminCheckOutKey = 'admin_check_out';
 
   /// #600's retired switch (#634). READ-ONLY legacy: it no longer has a
@@ -172,6 +183,7 @@ class BookingPolicies {
         rules?[outsideHoursModeKey],
         gridWithinHours: on(gridWithinHoursKey),
       ),
+      legendProfile: LegendProfile.fromWire(rules?[legendProfileKey]),
       simultaneousReservations:
           simultaneousFromWire(rules?[simultaneousReservationsKey]),
       advanceHorizonDays: intFromWire(
@@ -253,8 +265,10 @@ class BookingPolicies {
     int? advanceHorizonDays,
     int? minDurationMinutes,
     int? maxDurationMinutes,
+    LegendProfile? legendProfile,
   }) =>
       BookingPolicies(
+        legendProfile: legendProfile ?? this.legendProfile,
         allowPastBookings: allowPastBookings ?? this.allowPastBookings,
         adminCheckOut: adminCheckOut ?? this.adminCheckOut,
         outsideHoursMode: outsideHoursMode ?? this.outsideHoursMode,

@@ -31,7 +31,7 @@ const Map<String, int> _baseline = {
   // the interface each implements, not a file that grew: MoneyRepository
   // alone is ~90 methods. They are budgeted, so a NEW method still has
   // to be a decision, and they may only shrink.
-  'lib/core/demo/data/workspace_repository.dart': 1827, // 2026-09-19 #1373 moved out of test/helpers/mock_providers.dart, which is 2358→408 lines
+  'lib/core/demo/data/workspace_repository.dart': 1830, // 2026-09-19 #1281 1827→1830: setLegendProfile, the fake's mirror of the booking-rule write // 2026-09-19 #1373 moved out of test/helpers/mock_providers.dart, which is 2358→408 lines
   'lib/core/demo/data/money_repository.dart': 1800, // 2026-09-19 #1373 moved from test/helpers/fake_money_repository.dart
   'lib/core/demo/data/reservation_repository.dart': 678, // 2026-09-19 #1373 moved from test/helpers/fake_reservation_repository.dart
 
@@ -372,7 +372,7 @@ const Map<String, int> _baseline = {
   // grows by a method per capability; there is nothing here to extract.
   // 654→671 (2026-09-16): #1277 S2 — the two lexicon contracts. An interface grows by a
   // method per capability; there is nothing here to extract.
-  'lib/features/workspace/domain/workspace_repository.dart': 745, // 2026-09-19 #1289 726→745: the three emblem methods and the paragraph saying why they need no bucket of their own // // 2026-09-18 #1289 715→726: the setWorkspaceBranding contract and the paragraph that says what the server validates // // 2026-09-18 #1307 S4 709→715 on top of #1329: fetchWorkHoursProvenance and resetWorkHoursToDefault, documented; // 2026-09-18 #1329 703→709: the read-set parameter, documented; // 2026-09-17 #1451 696→703: saveWorkspaceSettings, the one-command Save, documented; // 2026-09-17 #1303 S3 692→696: workspaceTemplateOutline — one interface method, what a template sets up before a workspace exists; // 2026-09-17 #1280 S3 686→692: templatePublicationPreview and save's groups — interface only; // 2026-09-17 #1280 S2 681→686: previewWorkspaceTemplate — one interface method (the server computes the change-set), no logic to extract; // 2026-09-16 #1303 671→681: the request id and template parameters, documented; // 2026-09-11 #1120 the library surface of the interface, documented per method (was the 600 default)
+  'lib/features/workspace/domain/workspace_repository.dart': 748, // 2026-09-19 #1281 745→748: setLegendProfile — one interface method for a parameter the plan reads, documented // 2026-09-19 #1289 726→745: the three emblem methods and the paragraph saying why they need no bucket of their own // // 2026-09-18 #1289 715→726: the setWorkspaceBranding contract and the paragraph that says what the server validates // // 2026-09-18 #1307 S4 709→715 on top of #1329: fetchWorkHoursProvenance and resetWorkHoursToDefault, documented; // 2026-09-18 #1329 703→709: the read-set parameter, documented; // 2026-09-17 #1451 696→703: saveWorkspaceSettings, the one-command Save, documented; // 2026-09-17 #1303 S3 692→696: workspaceTemplateOutline — one interface method, what a template sets up before a workspace exists; // 2026-09-17 #1280 S3 686→692: templatePublicationPreview and save's groups — interface only; // 2026-09-17 #1280 S2 681→686: previewWorkspaceTemplate — one interface method (the server computes the change-set), no logic to extract; // 2026-09-16 #1303 671→681: the request id and template parameters, documented; // 2026-09-11 #1120 the library surface of the interface, documented per method (was the 600 default)
   // 600→660 (2026-08-23): #600 the Booking policies section — three
   // switches + one write handler on the existing availability screen.
   // 660→730 (2026-08-25): #624 the outside-hours segmented control +
@@ -386,7 +386,7 @@ const Map<String, int> _baseline = {
   // holiday preview, which hands the sheet its command rather than
   // letting it reach for a repository (ADR 0024). The preview itself is
   // its own widget file.
-  'lib/features/workspace/presentation/screens/availability_screen.dart': 854, // 2026-09-17 #1307 S4 852→854: the provenance row and its import — the row itself is widgets/work_hours_provenance_row.dart; // 2026-09-08 #1019 nine help symbols now name the exact rule they document (HelpAnchor), one named argument per symbol
+  'lib/features/workspace/presentation/screens/availability_screen.dart': 856, // 2026-09-19 #1281 854→856: the legend-profile row and its import — the control itself is widgets/legend_profile_tile.dart // 2026-09-17 #1307 S4 852→854: the provenance row and its import — the row itself is widgets/work_hours_provenance_row.dart; // 2026-09-08 #1019 nine help symbols now name the exact rule they document (HelpAnchor), one named argument per symbol
   // 770→790 (2026-08-06): #513 setRolePermissions + role_permissions row.
   // 630→640 (2026-08-10): two-dot month markers (mine + others per day)
   // — a dozen lines of dot layout, no new concern worth a split.

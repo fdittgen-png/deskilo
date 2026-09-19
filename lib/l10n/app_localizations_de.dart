@@ -9944,6 +9944,26 @@ class AppLocalizationsDe extends AppLocalizations {
   String get legendMine => 'Meine';
 
   @override
+  String get legendUnavailable => 'Nicht verfügbar';
+
+  @override
+  String get legendProfileTitle => 'Was der Plan unterscheidet';
+
+  @override
+  String get legendProfileSimple => 'Weniger Zustände';
+
+  @override
+  String get legendProfileSimpleDesc =>
+      'Frei · Reserviert · Meiner · Nicht verfügbar. Ein reservierter Platz und einer, an dem jemand eingecheckt ist, sehen gleich aus.';
+
+  @override
+  String get legendProfileFull => 'Alle Zustände';
+
+  @override
+  String get legendProfileFullDesc =>
+      'Frei · Reserviert · Anwesend · Meiner · Gesperrt — Sie sehen, wer da ist.';
+
+  @override
   String get legendBlocked => 'Gesperrt';
 
   @override

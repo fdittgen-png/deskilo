@@ -9859,6 +9859,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get legendMine => 'Mine';
 
   @override
+  String get legendUnavailable => 'Unavailable';
+
+  @override
+  String get legendProfileTitle => 'What the plan tells apart';
+
+  @override
+  String get legendProfileSimple => 'Fewer states';
+
+  @override
+  String get legendProfileSimpleDesc =>
+      'Free · Reserved · Mine · Unavailable. A booked seat and one somebody has checked into look the same.';
+
+  @override
+  String get legendProfileFull => 'Every state';
+
+  @override
+  String get legendProfileFullDesc =>
+      'Free · Reserved · Checked in · Mine · Blocked — you can see who has arrived.';
+
+  @override
   String get legendBlocked => 'Blocked';
 
   @override

@@ -364,7 +364,7 @@ const DEFAULTS={
  weekdays:['1','2','3','4','5'],granularity:'half_day',dayStart:'08:00',boundary:'12:00',dayEnd:'17:00',closures:[],
  halfDayHours:'4',fullDayHours:'8',deskOpacity:'100',
  horizonDays:'90',minDuration:'30',maxDuration:'1440',
- policies:{allowPast:false,adminCheckout:false,outsideHours:'charged',simultaneous:'1'},
+ policies:{allowPast:false,adminCheckout:false,outsideHours:'charged',simultaneous:'1',legendProfile:'full'},
  invites:{fr:'',en:'',de:'',es:'',it:''},
  einvoice:{url:'',token:'',header:'',field:'',uatUrl:'',uatToken:'',devUrl:'',devToken:'',
            customerUrl:'',customerToken:'',customerHeader:'',customerField:''},
@@ -616,6 +616,8 @@ const STEPS=[
    checkbox(T('availAllowPast'),T('availAllowPastDesc'),S.policies.allowPast,v=>{S.policies.allowPast=v;save()},'','booking'),
    checkbox(T('availAdminCheckout'),T('availAdminCheckoutDesc'),S.policies.adminCheckout,v=>{S.policies.adminCheckout=v;save()},'','booking'),
    selectEl(T('availOutsideHours'),'policies.outsideHours',outsideOpts(),T('availOutsideHoursHint'),null,'booking'),
+   // #1281 — the legend and the plan's colours follow one choice.
+   selectEl(T('availLegendProfile'),'policies.legendProfile',[['full',T('availLegendFull')],['simple',T('availLegendSimple')]],T('availLegendProfileHint'),null,'booking'),
    input(T('availSimultaneous'),'policies.simultaneous',T('availSimultaneousHint'),'number','1','booking'))}
   else k.push(needs('bookingPolicies'),h('p',{class:'hint'},T('availNoPoliciesHint')));
   k.push(lbl(T('availLimits'),'limits'),help('limits'),
@@ -979,7 +981,7 @@ function configurationTree(){
   default_locale:S.language||'',whatsapp_group:on('whatsappIntegration')?(S.whatsapp||''):'',desk_opacity:int(S.deskOpacity,100),
   invitation_templates:Object.fromEntries(Object.entries(S.invites).filter(([,v])=>String(v).trim()).map(([k,v])=>[k,String(v).trim()])),
   vat_regime:S.vatRegime||'not_subject',vat_id:S.vatId||'',legal_id:S.regNumber||'',tax_exemption_reason:S.exemption||'',
-  booking_rules:{granularity:S.granularity,open_weekdays:S.weekdays.map(d=>int(d,1)),outside_hours_mode:on('bookingPolicies')?(S.policies.outsideHours||'charged'):'charged',
+  booking_rules:{granularity:S.granularity,open_weekdays:S.weekdays.map(d=>int(d,1)),outside_hours_mode:on('bookingPolicies')?(S.policies.outsideHours||'charged'):'charged',legend_profile:S.policies.legendProfile||'full',
    advance_horizon_days:int(S.horizonDays,90),min_duration_minutes:int(S.minDuration,30),max_duration_minutes:int(S.maxDuration,1440)},
   subscription_levels:{enabled_presets:(S.subLevels||[]).map(x=>int(x,0)).filter(x=>x>0),extra_levels:[],allow_custom:false},
   invoice_legal:{legal_form:S.mentions.legalForm||'',registration:S.mentions.register||'',payment_terms:S.mentions.terms||'',late_penalty:S.mentions.penalty||'',
@@ -1042,7 +1044,7 @@ function exportXml(){
  if(on('configurationTransfer')){const tree=configurationTree();push('  <configuration>');Object.keys(tree).sort().forEach(k=>cfgField(push,4,k,tree[k]));push('  </configuration>')}
  // setup extension — read back by the configurator
  push('  <setup>');
- push(`    <availability granularity="${S.granularity}" day-start="${S.dayStart}" half-boundary="${S.boundary}" day-end="${S.dayEnd}" open-weekdays="${S.weekdays.join(',')}" allow-past-bookings="${on('bookingPolicies')&&!!S.policies.allowPast}" outside-hours-mode="${on('bookingPolicies')?(S.policies.outsideHours||'charged'):'charged'}" simultaneous-reservations="${on('bookingPolicies')?(S.policies.simultaneous||'1'):'1'}" admin-check-out="${on('bookingPolicies')&&!!S.policies.adminCheckout}" advance-horizon-days="${S.horizonDays}" min-duration-minutes="${S.minDuration}" max-duration-minutes="${S.maxDuration}">`);
+ push(`    <availability granularity="${S.granularity}" day-start="${S.dayStart}" half-boundary="${S.boundary}" day-end="${S.dayEnd}" open-weekdays="${S.weekdays.join(',')}" allow-past-bookings="${on('bookingPolicies')&&!!S.policies.allowPast}" outside-hours-mode="${on('bookingPolicies')?(S.policies.outsideHours||'charged'):'charged'}" simultaneous-reservations="${on('bookingPolicies')?(S.policies.simultaneous||'1'):'1'}" admin-check-out="${on('bookingPolicies')&&!!S.policies.adminCheckout}" advance-horizon-days="${S.horizonDays}" min-duration-minutes="${S.minDuration}" max-duration-minutes="${S.maxDuration}" legend-profile="${S.policies.legendProfile||'full'}">`);
  S.closures.filter(Boolean).forEach(c=>push(`      <closure day="${esc(c)}"/>`));
  if(S.granularity==='hours')push(`      <hour-equivalents half-day="${S.halfDayHours}" full-day="${S.fullDayHours}"/>`);
  push('    </availability>');
@@ -1100,7 +1102,7 @@ function parseBack(text){
  const lvls=[...root.querySelectorAll('floor-plan > level')];
  if(lvls.length)S.levels=lvls.map(l=>({name:l.getAttribute('name'),site:l.getAttribute('site')||'',offices:[...l.querySelectorAll('office')].map(o=>({name:o.getAttribute('name'),bookable:o.getAttribute('bookable-as-whole')==='true',price:'',desks:[...o.querySelectorAll('desk')].map(d=>{const seats=[...d.querySelectorAll('seat')];const first=seats[0]?.getAttribute('name')||XML_SEAT_FALLBACK+' 1';return{name:d.getAttribute('name'),seats:seats.length,prefix:first.replace(/\s*\d+$/,'')||XML_SEAT_FALLBACK}})}))}));
  const su=root.querySelector('setup');if(!su)return;
- const av=su.querySelector('availability');if(av){S.granularity=av.getAttribute('granularity')||S.granularity;S.dayStart=av.getAttribute('day-start')||S.dayStart;S.boundary=av.getAttribute('half-boundary')||S.boundary;S.dayEnd=av.getAttribute('day-end')||S.dayEnd;S.weekdays=(av.getAttribute('open-weekdays')||'1,2,3,4,5').split(',');S.closures=[...av.querySelectorAll('closure')].map(c=>c.getAttribute('day'));S.policies={allowPast:av.getAttribute('allow-past-bookings')==='true',adminCheckout:(av.getAttribute('admin-check-out')??av.getAttribute('admin-checkout'))==='true',outsideHours:av.getAttribute('outside-hours-mode')||(av.getAttribute('grid-within-hours')==='true'?'walkup_only':'charged'),simultaneous:av.getAttribute('simultaneous-reservations')||'1'};
+ const av=su.querySelector('availability');if(av){S.granularity=av.getAttribute('granularity')||S.granularity;S.dayStart=av.getAttribute('day-start')||S.dayStart;S.boundary=av.getAttribute('half-boundary')||S.boundary;S.dayEnd=av.getAttribute('day-end')||S.dayEnd;S.weekdays=(av.getAttribute('open-weekdays')||'1,2,3,4,5').split(',');S.closures=[...av.querySelectorAll('closure')].map(c=>c.getAttribute('day'));S.policies={allowPast:av.getAttribute('allow-past-bookings')==='true',adminCheckout:(av.getAttribute('admin-check-out')??av.getAttribute('admin-checkout'))==='true',outsideHours:av.getAttribute('outside-hours-mode')||(av.getAttribute('grid-within-hours')==='true'?'walkup_only':'charged'),simultaneous:av.getAttribute('simultaneous-reservations')||'1',legendProfile:av.getAttribute('legend-profile')||'full'};
   S.horizonDays=av.getAttribute('advance-horizon-days')||S.horizonDays;
   S.minDuration=av.getAttribute('min-duration-minutes')||S.minDuration;
   S.maxDuration=av.getAttribute('max-duration-minutes')||S.maxDuration;

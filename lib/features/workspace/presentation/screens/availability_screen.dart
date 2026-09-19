@@ -17,6 +17,7 @@ import '../../domain/booking_policies.dart';
 import '../../domain/closure_day.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/legend_profile_tile.dart';
 import '../widgets/work_hours_provenance_row.dart';
 import '../widgets/availability_tiles.dart';
 import '../../application/generate_public_holidays.dart';
@@ -598,6 +599,7 @@ class AvailabilityScreen extends ConsumerWidget {
                 // (#600's grid switch folded in). Radio rows, not a
                 // four-way SegmentedButton: four labels do not fit a
                 // 360dp phone.
+                LegendProfileTile(policies: policies),
                 ListTile(
                   title: HelpDotTitle(
                     l10n?.policyOutsideHoursTitle ??
