@@ -48,4 +48,4 @@ final class FileSharerProvider
   }
 }
 
-String _$fileSharerHash() => r'8fc3ead61c08576f36aa8846ab0f75deb1c70ce6';
+String _$fileSharerHash() => r'09198598fb479f2af9d4d31e3928ca6bf73cf278';

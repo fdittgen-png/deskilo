@@ -100,45 +100,38 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
       message: 'legal identity save failed',
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
-      action: () async {
-        final repository = ref.read(workspaceRepositoryProvider);
-        // #869 — the envelope choice lives in the document template;
-        // read-modify-write so an editor design is never clobbered here.
-        // FIRST on purpose (#1532): a separate aggregate that cannot
-        // join the row update below, so one must be able to fail alone —
-        // and a stray window is cosmetic, a stray identity is not.
-        await ref.read(moneyRepositoryProvider).setInvoicePdfTemplate(
-              workspace.id,
-              (ref.read(invoicePdfTemplateProvider).value ??
-                      InvoicePdfTemplate.empty)
-                  .copyWith(addressWindow: _addressWindow),
-            );
-        // Identity and mentions: one statement, one row update.
-        await repository.setLegalIdentity(
-          workspace.id,
-          vatRegime: vatRegimeWire(_regime),
-          vatId: _vatId.text,
-          legalId: _legalId.text,
-          taxExemptionReason: _reason.text,
-          street: _street.text,
-          city: _city.text,
-          postalCode: _postalCode.text,
-          vatAccount: _vatAccount.text,
-          invoiceLegal: InvoiceLegal(
-            sellerKind: _sellerKind,
-            legalForm: _legalForm.text,
-            registration: _registration.text,
-            paymentTerms: _paymentTerms.text,
-            latePenalty: _latePenalty.text,
-            recoveryIndemnity: _recovery.text,
-            escompte: _escompte.text,
-            insurance: _insurance.text,
-            specialMentions: _special.text,
-            reverseChargeOptIn: _reverseCharge,
-            vatExigibility: _exigibility,
-          ).toJson(),
-        );
-      },
+      // The ORDER is the decision and it lives in the command (#1449):
+      // the template first, because a stray window is cosmetic and a
+      // stray identity is an invoice that contradicts itself.
+      action: () => ref.read(legalIdentityProvider).save(
+            (
+              workspaceId: workspace.id,
+              vatRegime: vatRegimeWire(_regime),
+              vatId: _vatId.text,
+              legalId: _legalId.text,
+              taxExemptionReason: _reason.text,
+              street: _street.text,
+              city: _city.text,
+              postalCode: _postalCode.text,
+              vatAccount: _vatAccount.text,
+              invoiceLegal: InvoiceLegal(
+                sellerKind: _sellerKind,
+                legalForm: _legalForm.text,
+                registration: _registration.text,
+                paymentTerms: _paymentTerms.text,
+                latePenalty: _latePenalty.text,
+                recoveryIndemnity: _recovery.text,
+                escompte: _escompte.text,
+                insurance: _insurance.text,
+                specialMentions: _special.text,
+                reverseChargeOptIn: _reverseCharge,
+                vatExigibility: _exigibility,
+              ).toJson(),
+              addressWindow: _addressWindow,
+            ),
+            currentTemplate: ref.read(invoicePdfTemplateProvider).value ??
+                InvoicePdfTemplate.empty,
+          ),
     );
     if (!mounted) return;
     setState(() => _saving = false);

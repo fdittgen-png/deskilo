@@ -106,6 +106,58 @@ final class PaymentsProvider
 
 String _$paymentsHash() => r'54e542be93d1801d2528087cec596766efad0ffb';
 
+/// #1449 — the decision behind the legal-identity Save: which of the two
+/// aggregates is written first, and therefore which one can be left
+/// behind alone.
+
+@ProviderFor(legalIdentity)
+final legalIdentityProvider = LegalIdentityProvider._();
+
+/// #1449 — the decision behind the legal-identity Save: which of the two
+/// aggregates is written first, and therefore which one can be left
+/// behind alone.
+
+final class LegalIdentityProvider
+    extends $FunctionalProvider<LegalIdentity, LegalIdentity, LegalIdentity>
+    with $Provider<LegalIdentity> {
+  /// #1449 — the decision behind the legal-identity Save: which of the two
+  /// aggregates is written first, and therefore which one can be left
+  /// behind alone.
+  LegalIdentityProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'legalIdentityProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$legalIdentityHash();
+
+  @$internal
+  @override
+  $ProviderElement<LegalIdentity> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  LegalIdentity create(Ref ref) {
+    return legalIdentity(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(LegalIdentity value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<LegalIdentity>(value),
+    );
+  }
+}
+
+String _$legalIdentityHash() => r'48006c020ed354f6e11bb7a88371ce8ad6ac140d';
+
 @ProviderFor(myStatement)
 final myStatementProvider = MyStatementFamily._();
 
