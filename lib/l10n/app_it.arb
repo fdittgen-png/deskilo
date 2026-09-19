@@ -7113,6 +7113,42 @@
       }
     }
   },
+  "emblemTitle": "Emblema",
+  "@emblemTitle": {
+    "description": "#1289 emblem: the section heading"
+  },
+  "emblemHint": "Una piccola immagine mostrata sotto il nome dell’app nel menu. Viene ridisegnata a un massimo di 512 pixel e salvata senza i metadati del file.",
+  "@emblemHint": {
+    "description": "#1289 emblem: what it is and what happens to the file"
+  },
+  "emblemChoose": "Scegli un’immagine",
+  "@emblemChoose": {
+    "description": "#1289 emblem: the pick button"
+  },
+  "emblemRemove": "Rimuovi",
+  "@emblemRemove": {
+    "description": "#1289 emblem: the remove button"
+  },
+  "emblemSaved": "Emblema salvato.",
+  "@emblemSaved": {
+    "description": "#1289 emblem: stored"
+  },
+  "emblemRemoved": "Emblema rimosso.",
+  "@emblemRemoved": {
+    "description": "#1289 emblem: removed"
+  },
+  "emblemFailed": "Non è stato possibile salvare l’emblema. Nulla è cambiato.",
+  "@emblemFailed": {
+    "description": "#1289 emblem: the write failed and nothing changed"
+  },
+  "emblemNotAnImage": "Quel file non è un’immagine.",
+  "@emblemNotAnImage": {
+    "description": "#1289 emblem: the file could not be decoded"
+  },
+  "emblemTooHeavy": "Quell’immagine è troppo pesante per un segno mostrato a 28 pixel.",
+  "@emblemTooHeavy": {
+    "description": "#1289 emblem: still too heavy after re-encoding"
+  },
   "onboardingTitle": "Benvenuto su DesKilo",
   "onboardingCreateTab": "Crea uno spazio",
   "onboardingJoinTab": "Unisciti a uno spazio",

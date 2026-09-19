@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:typed_data';
 import '../../../core/validation/pending_validation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -1003,6 +1004,44 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
       'p_key': key,
       'p_text': text,
     });
+  }
+
+  /// The one place the emblem's path is written down.
+  static String emblemPath(String workspaceId) =>
+      '$workspaceId/brand/emblem.png';
+
+  @override
+  Future<void> setWorkspaceEmblem(String workspaceId, Uint8List png) async {
+    await _client.storage
+        .from('floor-plans')
+        .uploadBinary(
+          emblemPath(workspaceId),
+          png,
+          fileOptions: const FileOptions(
+            contentType: 'image/png',
+            upsert: true,
+          ),
+        );
+  }
+
+  @override
+  Future<Uint8List?> fetchWorkspaceEmblem(String workspaceId) async {
+    try {
+      return await _client.storage
+          .from('floor-plans')
+          .download(emblemPath(workspaceId));
+    } on StorageException {
+      // No object, or not readable by this member: the app renders as it
+      // always did. Not a fault worth surfacing (#1289).
+      return null;
+    }
+  }
+
+  @override
+  Future<void> clearWorkspaceEmblem(String workspaceId) async {
+    await _client.storage
+        .from('floor-plans')
+        .remove([emblemPath(workspaceId)]);
   }
 
   @override

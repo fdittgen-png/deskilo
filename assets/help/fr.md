@@ -990,6 +990,19 @@ mesurée de la même façon avant d'être enregistrée.
 La marque DesKilo, les couleurs des états de place et le bandeau de
 production ne sont jamais à la main d'un espace.
 
+**Emblème.** La petite marque de l'espace, affichée **sous** le nom de
+l'application dans le menu — et nulle part ailleurs. Choisissez un PNG,
+un JPEG ou un WebP : l'application le redessine à 512 pixels au plus et
+enregistre ce résultat ; les métadonnées du fichier, qui pour une photo
+indiquent où elle a été prise, ne quittent jamais votre appareil.
+**Retirer** l'enlève. Un espace sans emblème, ou une image lente ou
+illisible, s'affiche exactement comme avant.
+
+L'emblème ne remplace jamais le logo DesKilo, et il n'apparaît pas dans
+le sélecteur de profils, où la pastille colorée dit si un espace est
+réel ou un lieu d'essai — un signal de sécurité n'est pas un espace
+publicitaire.
+
 **Couleurs des salles.** Sous la couleur de marque, *Couleurs des salles*
 peint le plan avec vos propres teintes plutôt que les huit du produit.
 Ajoutez-en jusqu'à huit — l'ordre est ce que le plan lit, une salle

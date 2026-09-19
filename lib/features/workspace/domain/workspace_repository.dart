@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:typed_data';
+
 import '../../../core/time/work_hours.dart';
 import 'booking_granularity.dart';
 import 'booking_policies.dart';
@@ -512,6 +514,23 @@ abstract class WorkspaceRepository {
     String workspaceId,
     Map<String, dynamic> delta,
   );
+
+  /// #1289 — the workspace's emblem, stored at `<workspace>/brand/emblem.png`
+  /// in the `floor-plans` bucket: its storage policies already scope the
+  /// first folder to the workspace (members read, owners write — 0036),
+  /// so the emblem needs no bucket and no policy of its own.
+  ///
+  /// [png] is what `emblemPngOf` produced: bounded, re-drawn, metadata
+  /// gone. Uploading replaces whatever was there.
+  Future<void> setWorkspaceEmblem(String workspaceId, Uint8List png);
+
+  /// The emblem's bytes, or null when the space has none — absent is the
+  /// normal case and never an error.
+  Future<Uint8List?> fetchWorkspaceEmblem(String workspaceId);
+
+  /// Removes the emblem. A space with no emblem renders exactly as one
+  /// that never had one.
+  Future<void> clearWorkspaceEmblem(String workspaceId);
 
   /// #1294 — the workspace's fallback default booking period
   /// (`booking_rules.default_period`), used only when the device holds

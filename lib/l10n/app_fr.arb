@@ -7113,6 +7113,42 @@
       }
     }
   },
+  "emblemTitle": "Emblème",
+  "@emblemTitle": {
+    "description": "#1289 emblem: the section heading"
+  },
+  "emblemHint": "Une petite image affichée sous le nom de l’application dans le menu. Elle est redessinée à 512 pixels au plus et enregistrée sans les métadonnées du fichier.",
+  "@emblemHint": {
+    "description": "#1289 emblem: what it is and what happens to the file"
+  },
+  "emblemChoose": "Choisir une image",
+  "@emblemChoose": {
+    "description": "#1289 emblem: the pick button"
+  },
+  "emblemRemove": "Retirer",
+  "@emblemRemove": {
+    "description": "#1289 emblem: the remove button"
+  },
+  "emblemSaved": "Emblème enregistré.",
+  "@emblemSaved": {
+    "description": "#1289 emblem: stored"
+  },
+  "emblemRemoved": "Emblème retiré.",
+  "@emblemRemoved": {
+    "description": "#1289 emblem: removed"
+  },
+  "emblemFailed": "L’emblème n’a pas pu être enregistré. Rien n’a changé.",
+  "@emblemFailed": {
+    "description": "#1289 emblem: the write failed and nothing changed"
+  },
+  "emblemNotAnImage": "Ce fichier n’est pas une image.",
+  "@emblemNotAnImage": {
+    "description": "#1289 emblem: the file could not be decoded"
+  },
+  "emblemTooHeavy": "Cette image est trop lourde pour une marque affichée à 28 pixels.",
+  "@emblemTooHeavy": {
+    "description": "#1289 emblem: still too heavy after re-encoding"
+  },
   "onboardingTitle": "Bienvenue sur DesKilo",
   "onboardingCreateTab": "Créer un espace",
   "onboardingJoinTab": "Rejoindre un espace",

@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import '../../../core/demo/demo_mode.dart';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart' show Color;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -9,6 +11,8 @@ import '../../../core/storage/note_seen_store.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/time/work_hours.dart';
 import '../../../app/theme.dart';
+import '../../../core/images/emblem_bytes.dart';
+import '../application/set_workspace_emblem.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../application/workspace_colours.dart';
 import '../domain/workspace_branding.dart';
@@ -427,6 +431,42 @@ List<Color> workspaceOfficePalette(Ref ref) {
       Color(argb),
   ];
 }
+
+/// #1289 — one workspace's emblem, or null when it has none or the flag
+/// is off. Kept alive and keyed, so the drawer and the switcher share
+/// one download per space rather than one per widget.
+@Riverpod(keepAlive: true)
+Future<Uint8List?> workspaceEmblemOf(Ref ref, String workspaceId) async {
+  if (!ref.watch(enabledFeaturesSyncProvider).contains(
+        WorkspaceFeature.workspaceBranding,
+      )) {
+    return null;
+  }
+  return ref.watch(workspaceRepositoryProvider)
+      .fetchWorkspaceEmblem(workspaceId);
+}
+
+/// The active workspace's emblem; null while nothing is loaded.
+@Riverpod(keepAlive: true)
+Future<Uint8List?> workspaceEmblem(Ref ref) async {
+  // #1218 — the dependencies are registered BEFORE the gap: a bare
+  // `ref.watch` on the far side throws outright if this provider was
+  // disposed while the future was in flight.
+  final mine = ref.watch(myWorkspacesProvider.future);
+  final active = ref.watch(activeWorkspaceIdProvider.future);
+  final workspaces = await mine;
+  final chosen = await active;
+  final workspace = workspaces.where((w) => w.id == chosen).firstOrNull ??
+      (workspaces.isEmpty ? null : workspaces.first);
+  if (workspace == null) return null;
+  return ref.read(workspaceEmblemOfProvider(workspace.id).future);
+}
+
+/// #1289 — the decision behind choosing an emblem. The re-encode needs
+/// the engine, so it is handed in here and `application/` stays pure.
+@riverpod
+Emblems emblems(Ref ref) =>
+    Emblems(ref.watch(workspaceRepositoryProvider), emblemPngOf);
 
 /// #513 — MY effective permissions under the workspace's role matrix.
 /// The one client-side gate: screens ask for a permission, never for a

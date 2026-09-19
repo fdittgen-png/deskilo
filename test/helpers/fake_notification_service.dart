@@ -1,35 +1,5 @@
 // SPDX-License-Identifier: 0BSD
-import 'package:deskilo/core/notifications/notification_service.dart';
-
-/// Captures reminder scheduling for assertions.
-class FakeNotificationService implements NotificationService {
-  final rescheduleCalls = <List<ReminderRequest>>[];
-
-  List<ReminderRequest> get lastReminders =>
-      rescheduleCalls.isEmpty ? const [] : rescheduleCalls.last;
-
-  @override
-  Future<void> rescheduleCheckInReminders(
-    List<ReminderRequest> reminders,
-  ) async {
-    rescheduleCalls.add(reminders);
-  }
-
-  final shown = <({String title, String body})>[];
-
-  @override
-  Future<void> showNow({required String title, required String body}) async {
-    shown.add((title: title, body: body));
-  }
-
-  @override
-  Future<bool?> notificationsEnabled() async => true;
-
-  /// Every syncPendingNotifications call (#432); last = current mirror.
-  final pendingSyncs = <List<PendingNotice>>[];
-
-  @override
-  Future<void> syncPendingNotifications(List<PendingNotice> notices) async {
-    pendingSyncs.add(notices);
-  }
-}
+//
+// Moved to lib/core/demo/data by ADR 0028 — an inert implementation is
+// what Demo mounts so an effect has nowhere to go.
+export 'package:deskilo/core/demo/data/notification_service.dart';

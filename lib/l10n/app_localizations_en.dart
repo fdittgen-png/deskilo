@@ -10644,6 +10644,35 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get emblemTitle => 'Emblem';
+
+  @override
+  String get emblemHint =>
+      'A small image shown beneath the app’s own name in the menu. It is redrawn at most 512 pixels wide and stored without the file’s metadata.';
+
+  @override
+  String get emblemChoose => 'Choose an image';
+
+  @override
+  String get emblemRemove => 'Remove';
+
+  @override
+  String get emblemSaved => 'Emblem saved.';
+
+  @override
+  String get emblemRemoved => 'Emblem removed.';
+
+  @override
+  String get emblemFailed => 'The emblem could not be saved. Nothing changed.';
+
+  @override
+  String get emblemNotAnImage => 'That file is not an image.';
+
+  @override
+  String get emblemTooHeavy =>
+      'That image is too heavy for a mark shown at 28 pixels.';
+
+  @override
   String get onboardingTitle => 'Welcome to DesKilo';
 
   @override

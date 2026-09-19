@@ -26,6 +26,12 @@ import 'lint_sources.dart';
 /// request — the moment one exception is granted for convenience the
 /// ratchet stops working, because the next person cites the precedent.
 const _exempt = <String, String>{
+  // ADR 0028 (#1373) — the in-memory cache store, moved from
+  // test/helpers by the Demo work. Freshness inside `CacheStore` is
+  // measured against the wall clock, so a pinned `storedAt` would make
+  // every entry read as expired the moment it was written.
+  'lib/core/demo/data/stores.dart':
+      'the in-memory cache stamps entries with the clock CacheStore compares them against',
   // The seam itself: SystemClock is what `DateTime.now()` is for.
   'lib/core/time/clock.dart': 'defines SystemClock',
 

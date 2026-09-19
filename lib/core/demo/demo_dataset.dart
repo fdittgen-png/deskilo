@@ -1,0 +1,256 @@
+// SPDX-License-Identifier: 0BSD
+//
+// #1374 — the people, rooms, bookings and bills a visitor explores.
+//
+// One cast, consistent across every screen: the person whose booking is
+// on the plan is the person on the invoice and the person whose request
+// is waiting for a decision. Small on purpose — five people and a
+// handful of records tell a story; two hundred tell none — and every
+// value is obviously fictional, so a screenshot is safe to publish.
+//
+// Everything is placed relative to [DemoFixture.seededAt], never to a
+// literal date, so a demo opened next year still shows a booking for
+// today (ADR 0028).
+import '../../features/money/domain/invoice.dart';
+import '../../features/reservations/domain/reservation.dart';
+import '../../features/workspace/domain/member.dart';
+import 'data/floor_plan_repository.dart';
+import 'data/money_repository.dart';
+import 'data/reservation_repository.dart';
+import 'data/workspace_repository.dart';
+
+/// The cast. Ids are stable so a story can be told about them in tests
+/// and in the guides.
+class DemoPerson {
+  const DemoPerson({
+    required this.memberId,
+    required this.userId,
+    required this.name,
+    required this.subscriptionPct,
+    this.status = MemberStatus.active,
+    this.isAdmin = false,
+    this.isOwner = false,
+  });
+
+  final String memberId;
+  final String userId;
+  final String name;
+  final int subscriptionPct;
+  final MemberStatus status;
+  final bool isAdmin;
+  final bool isOwner;
+}
+
+/// Five people, each with a reason to exist on screen.
+const demoCast = <DemoPerson>[
+  // The visitor: an owner, so every administrative surface has something
+  // to show. Her own booking is today's.
+  DemoPerson(
+    memberId: 'member-1',
+    userId: 'user-1',
+    name: 'Ada Lindqvist',
+    subscriptionPct: 100,
+    isAdmin: true,
+    isOwner: true,
+  ),
+  // A half-time member with an unpaid bill: the money screens need
+  // somebody who owes something, and the dunning rules need a target.
+  DemoPerson(
+    memberId: 'member-2',
+    userId: 'user-2',
+    name: 'Bruno Kessler',
+    subscriptionPct: 50,
+  ),
+  // Checked in right now, so the plan shows an occupied seat.
+  DemoPerson(
+    memberId: 'member-3',
+    userId: 'user-3',
+    name: 'Chiara Rossi',
+    subscriptionPct: 100,
+  ),
+  // Waiting to be admitted: the decision surfaces need a decision.
+  DemoPerson(
+    memberId: 'member-4',
+    userId: 'user-4',
+    name: 'Dov Meir',
+    subscriptionPct: 50,
+    status: MemberStatus.pending,
+  ),
+  // Paused: a status that is neither active nor gone, which the members
+  // screen must render honestly.
+  DemoPerson(
+    memberId: 'member-5',
+    userId: 'user-5',
+    name: 'Elise Fontaine',
+    subscriptionPct: 100,
+    status: MemberStatus.paused,
+  ),
+];
+
+/// Seeds [workspaces] with the cast.
+void seedDemoPeople(FakeWorkspaceRepository workspaces) {
+  workspaces.otherMembers
+    ..clear()
+    ..addAll([
+      for (final person in demoCast.skip(1))
+        Member(
+          id: person.memberId,
+          workspaceId: 'ws-1',
+          userId: person.userId,
+          isAdmin: person.isAdmin,
+          isOwner: person.isOwner,
+          status: person.status,
+          subscriptionPct: person.subscriptionPct,
+        ),
+    ]);
+}
+
+/// Seeds bookings around [now]: one finished yesterday, one happening
+/// today, one next week — the three states the Reserve screens show.
+void seedDemoReservations(
+  FakeReservationRepository reservations,
+  FakeFloorPlanRepository plan,
+  DateTime now,
+) {
+  final seatId = plan.seats.isEmpty ? 'seat-1' : plan.seats.first.id;
+  final morning = DateTime(now.year, now.month, now.day, 9);
+  reservations.reservations
+    ..clear()
+    ..addAll([
+      Reservation(
+        id: 'demo-past',
+        workspaceId: 'ws-1',
+        seatId: seatId,
+        memberId: 'member-2',
+        startsAt: morning.subtract(const Duration(days: 1)),
+        endsAt: morning.subtract(const Duration(days: 1)).add(const Duration(hours: 8)),
+        status: ReservationStatus.completed,
+      ),
+      Reservation(
+        id: 'demo-today',
+        workspaceId: 'ws-1',
+        seatId: seatId,
+        memberId: 'member-3',
+        startsAt: morning,
+        endsAt: morning.add(const Duration(hours: 8)),
+        status: ReservationStatus.checkedIn,
+      ),
+      Reservation(
+        id: 'demo-next-week',
+        workspaceId: 'ws-1',
+        seatId: seatId,
+        memberId: 'member-1',
+        startsAt: morning.add(const Duration(days: 7)),
+        endsAt: morning.add(const Duration(days: 7, hours: 8)),
+        status: ReservationStatus.reserved,
+      ),
+    ]);
+}
+
+/// Seeds last month's bills: Ada's settled, Bruno's still open. Two
+/// invoices are enough for the archive, the statement and the reminder
+/// rules to have something true to say.
+void seedDemoMoney(FakeMoneyRepository money, DateTime now) {
+  final lastMonth = DateTime(now.year, now.month - 1, 28);
+  final period =
+      '${lastMonth.year}-${lastMonth.month.toString().padLeft(2, '0')}';
+  money.invoices
+    ..clear()
+    ..addAll([
+      _demoInvoice(
+        id: 'demo-invoice-ada',
+        memberId: 'member-1',
+        memberName: 'Ada Lindqvist',
+        number: 'F-2026-0007',
+        issuedAt: lastMonth,
+        period: period,
+        totalCents: 18000,
+      ),
+      _demoInvoice(
+        id: 'demo-invoice-bruno',
+        memberId: 'member-2',
+        memberName: 'Bruno Kessler',
+        number: 'F-2026-0008',
+        issuedAt: lastMonth,
+        period: period,
+        totalCents: 9000,
+      ),
+    ]);
+}
+
+Invoice _demoInvoice({
+  required String id,
+  required String memberId,
+  required String memberName,
+  required String number,
+  required DateTime issuedAt,
+  required String period,
+  required int totalCents,
+}) =>
+    Invoice(
+      id: id,
+      workspaceId: 'ws-1',
+      memberId: memberId,
+      number: number,
+      issuedAt: issuedAt,
+      period: period,
+      title: period,
+      // The line's label is the period itself: this file is pure Dart
+      // and has no localizations, and an English sentence would read as
+      // English in a French demo. A line a visitor can read in any
+      // language is the honest choice here; prose belongs to the
+      // journeys (#1378), which have a BuildContext.
+      lines: [InvoiceLine(label: period, amountCents: totalCents)],
+      totalCents: totalCents,
+      currency: 'EUR',
+      memberName: memberName,
+      memberAddress: '',
+      workspaceName: 'Test Space',
+      workspaceAddress: '',
+      issuerName: 'Ada Lindqvist',
+      signature: 'demo',
+    );
+
+/// What is wrong with a seeded session, or nothing.
+///
+/// A fixture that points at a member or a seat that does not exist looks
+/// fine until a screen opens it, so the session says so at build time
+/// rather than on a visitor's screen (#1374).
+List<String> validateDemoFixture({
+  required FakeWorkspaceRepository workspaces,
+  required FakeFloorPlanRepository plan,
+  required FakeReservationRepository reservations,
+  required FakeMoneyRepository money,
+}) {
+  final problems = <String>[];
+  final memberIds = {
+    workspaces.myMember.id,
+    for (final m in workspaces.otherMembers) m.id,
+  };
+  final seatIds = {for (final s in plan.seats) s.id};
+
+  for (final reservation in reservations.reservations) {
+    if (!memberIds.contains(reservation.memberId)) {
+      problems.add('reservation ${reservation.id}: no member '
+          '${reservation.memberId}');
+    }
+    if (reservation.seatId != null && !seatIds.contains(reservation.seatId)) {
+      problems.add('reservation ${reservation.id}: no seat '
+          '${reservation.seatId}');
+    }
+    if (!reservation.endsAt.isAfter(reservation.startsAt)) {
+      problems.add('reservation ${reservation.id}: ends before it starts');
+    }
+  }
+  for (final invoice in money.invoices) {
+    if (!memberIds.contains(invoice.memberId)) {
+      problems.add('invoice ${invoice.number}: no member ${invoice.memberId}');
+    }
+    if (invoice.totalCents <= 0) {
+      problems.add('invoice ${invoice.number}: nothing to pay');
+    }
+  }
+  if (plan.seats.isEmpty) problems.add('the plan has no seat to book');
+  if (memberIds.length < 2) problems.add('a space of one is not a space');
+  return problems;
+}

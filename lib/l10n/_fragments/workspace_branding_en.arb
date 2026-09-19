@@ -128,5 +128,41 @@
         "type": "int"
       }
     }
+  },
+  "emblemTitle": "Emblem",
+  "@emblemTitle": {
+    "description": "#1289 emblem: the section heading"
+  },
+  "emblemHint": "A small image shown beneath the app’s own name in the menu. It is redrawn at most 512 pixels wide and stored without the file’s metadata.",
+  "@emblemHint": {
+    "description": "#1289 emblem: what it is and what happens to the file"
+  },
+  "emblemChoose": "Choose an image",
+  "@emblemChoose": {
+    "description": "#1289 emblem: the pick button"
+  },
+  "emblemRemove": "Remove",
+  "@emblemRemove": {
+    "description": "#1289 emblem: the remove button"
+  },
+  "emblemSaved": "Emblem saved.",
+  "@emblemSaved": {
+    "description": "#1289 emblem: stored"
+  },
+  "emblemRemoved": "Emblem removed.",
+  "@emblemRemoved": {
+    "description": "#1289 emblem: removed"
+  },
+  "emblemFailed": "The emblem could not be saved. Nothing changed.",
+  "@emblemFailed": {
+    "description": "#1289 emblem: the write failed and nothing changed"
+  },
+  "emblemNotAnImage": "That file is not an image.",
+  "@emblemNotAnImage": {
+    "description": "#1289 emblem: the file could not be decoded"
+  },
+  "emblemTooHeavy": "That image is too heavy for a mark shown at 28 pixels.",
+  "@emblemTooHeavy": {
+    "description": "#1289 emblem: still too heavy after re-encoding"
   }
 }
