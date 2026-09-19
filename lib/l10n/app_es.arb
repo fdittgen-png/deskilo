@@ -1560,6 +1560,10 @@
   "@deployEntityFieldDefinitions": {
     "description": "#1288 S5: deployEntityFieldDefinitions"
   },
+  "deployEntityWorkspaceRoles": "Los roles propios del espacio",
+  "@deployEntityWorkspaceRoles": {
+    "description": "#1505: deployEntityWorkspaceRoles"
+  },
   "developerMode": "Modo desarrollador",
   "developerModeWorkspaceHint": "Se aplica a todos los miembros de este espacio.",
   "developerTitle": "Desarrollador",

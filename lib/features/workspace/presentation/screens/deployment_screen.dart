@@ -442,5 +442,7 @@ String deploymentEntityName(AppLocalizations? l10n, String key) =>
       'branding' => l10n?.deployEntityBranding ?? 'Colours',
       'field_definitions' =>
         l10n?.deployEntityFieldDefinitions ?? 'Questions the space asks',
+      'workspace_roles' =>
+        l10n?.deployEntityWorkspaceRoles ?? 'Roles the space defines',
       _ => key,
     };

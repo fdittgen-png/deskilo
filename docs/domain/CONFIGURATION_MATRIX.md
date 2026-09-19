@@ -90,7 +90,8 @@ actually moves.
 | sites | master_data | sites | B | |
 | booking_rules | configuration | booking_rules, desk_opacity | B | |
 | validation_rules | configuration | validation_policies | B | |
-| roles | configuration | role_permissions | B | #1287 would make the roles themselves configurable |
+| roles | configuration | role_permissions | B | the matrix of the four roles the product decided |
+| workspace_roles | configuration | workspace_roles | B | the roles the space invented for itself — key, names per locale, permissions, order — group `roles_access`, `keyed_update` on the role's own key (0251). Never `workspace_role_members`: a grant names a member, members do not travel, and a role that arrives holds NOBODY until an owner assigns it (#1505) |
 | payment_instructions | configuration | payment_instructions | B | |
 | reminders | configuration | dunning_rules | B | |
 | document_design | reports | invoice_pdf_template | B | |

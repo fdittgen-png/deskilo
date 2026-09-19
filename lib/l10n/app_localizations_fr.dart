@@ -1994,6 +1994,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get deployEntityFieldDefinitions => 'Les questions de l\'espace';
 
   @override
+  String get deployEntityWorkspaceRoles => 'Les rôles propres à l\'espace';
+
+  @override
   String get developerMode => 'Mode développeur';
 
   @override

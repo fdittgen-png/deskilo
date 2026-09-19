@@ -91,19 +91,18 @@ const Map<String, String> _notExported = {
           'where that person does not exist. It IS the subject\'s own '
           'data, so export_my_data carries it (0247)',
   'workspace_roles':
-      'the roles a workspace invented for itself ARE configuration and '
-          'should travel, but a role definition is authority: what a '
-          'deployment may add to production is a decision, not a '
-          'default. Tracked as #1505, with the screen that creates them',
+      'configuration: the roles a workspace invented for itself. They '
+          'travel with a template and a deployment as their own entity '
+          '(0251, #1505) — the definitions only, which is what makes it '
+          'safe, because a role that arrives holds nobody',
 
   // --- the workspace's own questions (#1288) ------------------------
   'workspace_field_definitions':
-      'a question the workspace asks IS configuration and should travel '
-          'with a template — S5 of #1288 registers it as an entity, with '
-          'the conflict rules a type change needs. Until then it stays '
-          'out rather than travelling half-defined',
-  'workspace_field_labels': 'the question in each language; it travels, '
-      'or not, with the definition above',
+      'configuration: a question the workspace asks. It travels with a '
+          'template as its own entity, with the conflict rules a type '
+          'change needs (0250, #1288 S5)',
+  'workspace_field_labels': 'the question in each language; it travels '
+      'with the definition above',
   'workspace_field_options': 'the choices of a choice question; as above',
   'workspace_field_option_labels': 'the choices in each language; as above',
   'workspace_field_values':

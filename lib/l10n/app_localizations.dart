@@ -3522,6 +3522,12 @@ abstract class AppLocalizations {
   /// **'Questions the space asks'**
   String get deployEntityFieldDefinitions;
 
+  /// #1505: deployEntityWorkspaceRoles
+  ///
+  /// In en, this message translates to:
+  /// **'Roles the space defines'**
+  String get deployEntityWorkspaceRoles;
+
   /// Settings toggle enabling the local diagnostics screen
   ///
   /// In en, this message translates to:

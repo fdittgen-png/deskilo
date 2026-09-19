@@ -41,3 +41,9 @@ key.properties
 # originals in docs/media/source/ carry the same identity, so
 # `dart run tool/media.dart index` rebuilds it.
 .media-workbench/
+
+# sed -i.orig leftovers; one reached git four times before #1505 removed it
+*.orig
+
+# where the suite logs go (deskilo-ship-feature step 3)
+scratchpad/

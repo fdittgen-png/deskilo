@@ -183,5 +183,9 @@
   "deployEntityFieldDefinitions": "Questions the space asks",
   "@deployEntityFieldDefinitions": {
     "description": "#1288 S5: deployEntityFieldDefinitions"
+  },
+  "deployEntityWorkspaceRoles": "Roles the space defines",
+  "@deployEntityWorkspaceRoles": {
+    "description": "#1505: deployEntityWorkspaceRoles"
   }
 }

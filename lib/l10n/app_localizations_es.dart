@@ -1993,6 +1993,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get deployEntityFieldDefinitions => 'Las preguntas del espacio';
 
   @override
+  String get deployEntityWorkspaceRoles => 'Los roles propios del espacio';
+
+  @override
   String get developerMode => 'Modo desarrollador';
 
   @override
