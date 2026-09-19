@@ -111,24 +111,71 @@ String _$paymentsHash() => r'54e542be93d1801d2528087cec596766efad0ffb';
 /// behind alone.
 /// #1449 — sharing a cost: the order of the two writes, and whether the
 /// shares booked or are waiting on a validation rule.
+/// #1449 — regrouping invoices: which may join, and the number the
+/// person is told afterwards.
 
-@ProviderFor(repartitions)
-final repartitionsProvider = RepartitionsProvider._();
+@ProviderFor(settlements)
+final settlementsProvider = SettlementsProvider._();
 
 /// #1449 — the decision behind the legal-identity Save: which of the two
 /// aggregates is written first, and therefore which one can be left
 /// behind alone.
 /// #1449 — sharing a cost: the order of the two writes, and whether the
 /// shares booked or are waiting on a validation rule.
+/// #1449 — regrouping invoices: which may join, and the number the
+/// person is told afterwards.
 
-final class RepartitionsProvider
-    extends $FunctionalProvider<Repartitions, Repartitions, Repartitions>
-    with $Provider<Repartitions> {
+final class SettlementsProvider
+    extends $FunctionalProvider<Settlements, Settlements, Settlements>
+    with $Provider<Settlements> {
   /// #1449 — the decision behind the legal-identity Save: which of the two
   /// aggregates is written first, and therefore which one can be left
   /// behind alone.
   /// #1449 — sharing a cost: the order of the two writes, and whether the
   /// shares booked or are waiting on a validation rule.
+  /// #1449 — regrouping invoices: which may join, and the number the
+  /// person is told afterwards.
+  SettlementsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'settlementsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$settlementsHash();
+
+  @$internal
+  @override
+  $ProviderElement<Settlements> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  Settlements create(Ref ref) {
+    return settlements(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Settlements value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Settlements>(value),
+    );
+  }
+}
+
+String _$settlementsHash() => r'fa30fa6168d42ff910d1a264ec0d142e7eb2fe14';
+
+@ProviderFor(repartitions)
+final repartitionsProvider = RepartitionsProvider._();
+
+final class RepartitionsProvider
+    extends $FunctionalProvider<Repartitions, Repartitions, Repartitions>
+    with $Provider<Repartitions> {
   RepartitionsProvider._()
     : super(
         from: null,
