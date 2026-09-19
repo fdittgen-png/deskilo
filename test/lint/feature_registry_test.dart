@@ -135,7 +135,11 @@ import 'package:flutter_test/flutter_test.dart';
 //   themes derive from and the office fills, carried by a template.
 //   Everywhere, because the theme is the whole app. Platform, default
 //   OFF: the product's palette is the default and needs no switch.
-const int _expectedFeatureCount = 106;
+// 106→107 (2026-09-19): #1287 customRoles — roles a workspace defines
+//   itself, additive on top of the built-in four (ADR 0029). Settings,
+//   Platform, default OFF: four roles is the product's answer and needs
+//   no switch.
+const int _expectedFeatureCount = 107;
 
 void main() {
   _tierPins();

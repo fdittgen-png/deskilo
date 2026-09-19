@@ -208,7 +208,13 @@ enum WorkspaceFeature {
   /// dark and warm themes derive from, an office fill palette and a
   /// curated seat palette, carried by a template. Off, the app is
   /// pixel-identical to the product's own palette.
-  workspaceBranding;
+  workspaceBranding,
+
+  /// #1287 — roles a workspace defines itself, each an ADDITIVE set of
+  /// permissions on top of a member's base role (ADR 0029). Off, the
+  /// four built-in roles are all there are, which is what every space
+  /// had before.
+  customRoles;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1159,6 +1165,16 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.workspaceBranding: FeatureManifestEntry(
     feature: WorkspaceFeature.workspaceBranding,
     surface: FeatureSurface.everywhere,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+  ),
+  // #1287 — a space with four roles is the product's answer and needs no
+  // switch; a bureau with a trésorier asks for this one. Platform, off,
+  // and it requires nothing: custom roles are additive, so they work on
+  // top of whatever the space already has.
+  WorkspaceFeature.customRoles: FeatureManifestEntry(
+    feature: WorkspaceFeature.customRoles,
+    surface: FeatureSurface.settings,
     tier: FeatureTier.platform,
     defaultOn: false,
   ),

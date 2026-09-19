@@ -1665,6 +1665,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Printed before their name on documents. \"None\" prints the name alone.';
 
   @override
+  String get featureCustomRolesTitle => 'Roles this space defines';
+
+  @override
+  String get featureCustomRolesDesc =>
+      'The workspace may define roles of its own — a treasurer, a secretary — each adding permissions on top of a member\'s role. They never take a permission away, and an owner always keeps every one.';
+
+  @override
   String get featureDemoMode => 'Demo mode';
 
   @override

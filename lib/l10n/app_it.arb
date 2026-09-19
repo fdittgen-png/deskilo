@@ -1147,6 +1147,14 @@
     "description": "#912 courtesy title: courtesyMrs"
   },
   "courtesyHintManaged": "Stampata prima del loro nome sui documenti. «Nessuna» stampa solo il nome.",
+  "featureCustomRolesTitle": "Ruoli definiti da questo spazio",
+  "@featureCustomRolesTitle": {
+    "description": "#1287 custom roles: the feature switch title"
+  },
+  "featureCustomRolesDesc": "Lo spazio può definire ruoli propri — un tesoriere, un segretario — che aggiungono permessi a quelli del ruolo di un membro. Non ne tolgono mai, e un proprietario li mantiene tutti.",
+  "@featureCustomRolesDesc": {
+    "description": "#1287 custom roles: the feature switch description"
+  },
   "featureDemoMode": "Modalità demo",
   "@featureDemoMode": {
     "description": "#970 demo mode: featureDemoMode"

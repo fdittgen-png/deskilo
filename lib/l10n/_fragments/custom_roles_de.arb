@@ -1,0 +1,10 @@
+{
+  "featureCustomRolesTitle": "Rollen, die dieser Bereich festlegt",
+  "@featureCustomRolesTitle": {
+    "description": "#1287 custom roles: the feature switch title"
+  },
+  "featureCustomRolesDesc": "Der Arbeitsbereich kann eigene Rollen festlegen — Kassenwart, Schriftführer — die Berechtigungen zur Rolle eines Mitglieds hinzufügen. Sie nehmen nie eine weg, und ein Eigentümer behält immer alle.",
+  "@featureCustomRolesDesc": {
+    "description": "#1287 custom roles: the feature switch description"
+  }
+}

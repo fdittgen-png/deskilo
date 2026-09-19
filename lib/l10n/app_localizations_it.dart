@@ -1676,6 +1676,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Stampata prima del loro nome sui documenti. «Nessuna» stampa solo il nome.';
 
   @override
+  String get featureCustomRolesTitle => 'Ruoli definiti da questo spazio';
+
+  @override
+  String get featureCustomRolesDesc =>
+      'Lo spazio può definire ruoli propri — un tesoriere, un segretario — che aggiungono permessi a quelli del ruolo di un membro. Non ne tolgono mai, e un proprietario li mantiene tutti.';
+
+  @override
   String get featureDemoMode => 'Modalità demo';
 
   @override

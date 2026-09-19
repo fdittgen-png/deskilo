@@ -84,6 +84,18 @@ const Set<String> _exported = {
 /// quietly becomes partial, so each one is an argument somebody has to
 /// disagree with in review.
 const Map<String, String> _notExported = {
+  // --- authority a copy must not carry by itself (#1287) ------------
+  'workspace_role_members':
+      'a grant names a member, and members do not travel — a role given '
+          'to somebody in the development twin means nothing in a space '
+          'where that person does not exist. It IS the subject\'s own '
+          'data, so export_my_data carries it (0247)',
+  'workspace_roles':
+      'the roles a workspace invented for itself ARE configuration and '
+          'should travel, but a role definition is authority: what a '
+          'deployment may add to production is a decision, not a '
+          'default. Tracked as #1505, with the screen that creates them',
+
   // --- secrets: exporting them would hand over a credential ---------
   'payment_credentials':
       'a payment provider secret. An export is copied, mailed and left '
