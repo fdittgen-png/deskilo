@@ -6,6 +6,7 @@
 // wired to them: a screen INSIDE the Demo scope reads the fixture, a tap
 // on Reset replaces the scope, and the screen that comes back is reading
 // the canonical dataset again without anyone telling it to refresh.
+import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_session.dart';
 import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
@@ -79,6 +80,37 @@ void main() {
       before,
       reason: 'the rebuilt scope handed the screen a fresh fixture',
     );
+  });
+
+  testWidgets('View as switches the identity and rebuilds the subtree', (
+    tester,
+  ) async {
+    final root = ProviderContainer();
+    addTearDown(root.dispose);
+
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: root,
+        child: const MaterialApp(home: DemoWorkspace(child: _Levels())),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('The owner'), findsOneWidget);
+
+    await tester.tap(find.byKey(DemoControls.viewAsKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('A member').last);
+    await tester.pumpAndSettle();
+
+    final session = root.read(demoSessionControllerProvider);
+    expect(session.persona, DemoPersona.member);
+    expect(session.fixture.auth.currentUserId, DemoPersona.member.userId);
+    expect(
+      session.generation,
+      0,
+      reason: 'a viewpoint changed, not the dataset',
+    );
+    expect(find.text('A member'), findsOneWidget);
   });
 
   testWidgets('the bar says what this space is, for a screen reader too', (

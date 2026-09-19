@@ -2994,6 +2994,30 @@ abstract class AppLocalizations {
   /// **'You are exploring a demonstration space. Nothing here leaves this device.'**
   String get demoSessionBadgeHint;
 
+  /// #1376 demo personas: demoSessionViewAs
+  ///
+  /// In en, this message translates to:
+  /// **'View as'**
+  String get demoSessionViewAs;
+
+  /// #1376 demo personas: demoPersonaMember
+  ///
+  /// In en, this message translates to:
+  /// **'A member'**
+  String get demoPersonaMember;
+
+  /// #1376 demo personas: demoPersonaAdmin
+  ///
+  /// In en, this message translates to:
+  /// **'An administrator'**
+  String get demoPersonaAdmin;
+
+  /// #1376 demo personas: demoPersonaOwner
+  ///
+  /// In en, this message translates to:
+  /// **'The owner'**
+  String get demoPersonaOwner;
+
   /// #1006 deployment confirmation: deploymentConfirmTitleDev
   ///
   /// In en, this message translates to:

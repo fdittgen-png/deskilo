@@ -132,6 +132,10 @@ class FakeAuthRepository implements AuthRepository {
   @override
   String? get currentUserId => _userId;
 
+  /// Signs in as [id] without a network round trip (#1376): the Demo
+  /// persona switch, and nothing else, uses it.
+  void signInAs(String id) => _setUser(id);
+
   void _setUser(String? id) {
     _userId = id;
     _controller.add(id);

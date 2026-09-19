@@ -1701,6 +1701,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Sie erkunden einen Demonstrationsbereich. Nichts davon verlässt dieses Gerät.';
 
   @override
+  String get demoSessionViewAs => 'Ansicht als';
+
+  @override
+  String get demoPersonaMember => 'Ein Mitglied';
+
+  @override
+  String get demoPersonaAdmin => 'Eine Verwaltung';
+
+  @override
+  String get demoPersonaOwner => 'Die Inhaberin';
+
+  @override
   String get deploymentConfirmTitleDev => 'In diese DEV ausrollen?';
 
   @override

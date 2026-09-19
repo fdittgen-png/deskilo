@@ -15,5 +15,21 @@
   "demoSessionBadgeHint": "Stai esplorando uno spazio dimostrativo. Nulla di tutto questo lascia questo dispositivo.",
   "@demoSessionBadgeHint": {
     "description": "#1375 demo session: demoSessionBadgeHint"
+  },
+  "demoSessionViewAs": "Vedi come",
+  "@demoSessionViewAs": {
+    "description": "#1376 demo personas: demoSessionViewAs"
+  },
+  "demoPersonaMember": "Un membro",
+  "@demoPersonaMember": {
+    "description": "#1376 demo personas: demoPersonaMember"
+  },
+  "demoPersonaAdmin": "Un'amministratrice",
+  "@demoPersonaAdmin": {
+    "description": "#1376 demo personas: demoPersonaAdmin"
+  },
+  "demoPersonaOwner": "La proprietaria",
+  "@demoPersonaOwner": {
+    "description": "#1376 demo personas: demoPersonaOwner"
   }
 }
