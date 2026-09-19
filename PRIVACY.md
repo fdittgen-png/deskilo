@@ -81,6 +81,18 @@ processes that payment under its own privacy policy.
 | Audit and decision trail | proving who approved what | the statutory period | kept |
 | Badge hashes | opening the door | until revoked | revoked immediately |
 | Diagnostic trace | fixing a fault you report | on your device only, 512 KiB, oldest discarded | delete the app, or clear it in Settings |
+| Answers to the space's own questions, marked personal | a committee role, a joining date, an emergency contact the space asked for | while you are a member of that space | deleted |
+| Answers marked NOT personal | the space's own operational data, such as a size for a group order | for the life of the space | kept |
+
+A space can ask questions of its own beyond the fields above, and the
+owner marks each one as personal or not when they define it. That single
+mark decides everything: whether the answer travels in your data export,
+whether it is deleted when you erase, and which row of this table it
+falls under. The safe answer is the default — a new question is personal
+until somebody deliberately says it is not.
+
+A refusal from the server names the question and the rule it broke, never
+the answer, so an answer cannot reach a log through an error message.
 
 The statutory period is set by the country of the workspace, not of the
 member — it is the community's bookkeeping obligation, not yours. In
