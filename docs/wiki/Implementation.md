@@ -37,7 +37,7 @@ tool/ tools/ scripts/     # repo tooling
 - **GitHub Flow**: branch off `master`, conventional commits (`feat(scope): …`), one concern per branch, **every change is a PR < 400 lines** (excluding generated), squash-merge, `Closes #NN`, no direct commits to master.
 - **No hard-coded user-facing strings** — ARB only, lint-ratcheted; the key-parity CI gate fails if any locale misses a key.
 - **Clean codegen before push** — generated files (`*.g.dart`, `*.freezed.dart`, `app_localizations*.dart`) are committed and must be regenerated, never hand-edited.
-- **TDD pyramid 70/20/10** (unit/widget/integration), coverage gate, **fakes over mocks**, failing test before any bug fix, twin-bug audit (grep for the same pattern elsewhere), producer + consumer ship together.
+- **TDD pyramid 70/20/10** (unit/widget/integration) as the intended shape — `dart run tool/test_inventory.dart` prints the observed one (#1334) —, coverage gate by layer, **fakes over mocks**, failing test before any bug fix, twin-bug audit (grep for the same pattern elsewhere), producer + consumer ship together.
 - **SPDX header** (`// SPDX-License-Identifier: 0BSD`) in every file.
 
 ## Building & running

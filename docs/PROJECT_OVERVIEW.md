@@ -95,24 +95,37 @@ integration_test/       end-to-end flows (app_boot_test.dart etc.)
 tool/                   build_arb.dart, build_help.dart, store_assets/
 tools/                  upload_to_play.py, upload_listing.py
 scripts/                gen_app_icon.py, sign_and_notarize_macos.sh
-.github/                10 workflows, 3 issue templates, PR template
+.github/                workflows, issue templates, PR template
 ```
 
 ### Current scale
 
-| Metric | Value |
-|---|---|
-| Dart source files (`lib/`) | 293 |
-| Test files (`test/` + `integration_test/`) | 161 |
-| Test cases (`flutter test`) | 1 013 (1 011 green + [2 date-dependent failures](#c-two-date-dependent-tests-fail-from-2026-08-01--new)) |
-| SQL migrations in the repo | 73 (`0001` … `0073`) |
-| Supabase Edge Functions | 5 |
-| ARB translation keys per locale | 944 × 5 locales |
-| ARB fragment groups | 38 |
-| Files carrying an SPDX 0BSD header | 470 |
-| go_router routes | 34 |
-| Toggleable per-workspace features | 21 |
-| GitHub Actions workflows | 10 |
+```bash
+dart run tool/project_scale.dart
+```
+
+It prints the table: hand-written and generated Dart files, test files,
+migrations, Edge Functions, ARB keys and fragment groups, routes, feature
+flags and workflows — each with the path it counted, so a surprising
+number can be checked.
+
+The numbers are **not written down here**, and that is the point. This
+section used to carry a table of them — migrations, feature flags, ARB
+keys, test cases — all written in good faith by somebody who had just
+counted, and every one of them wrong by a factor of two to four before
+anybody read it again (#1334). A count in prose is wrong by the next
+merge; the command is right by construction.
+
+`test/lint/no_frozen_counts_test.dart` keeps them out: this document,
+`CONTRIBUTING.md`, the wiki's `Implementation.md` and `AGENT_RULES.md`
+may not state how many of something the repository holds. A section that
+records what was true on a given day says so in its heading
+(`<!-- dated: YYYY-MM-DD — why -->`) and keeps its numbers, because
+history is allowed to be dated.
+
+`test/tool/project_scale_test.dart` ties each measure to an authority
+that already exists — the feature-registry pin, `requiredSchemaVersion`,
+the test inventory's own file list — so the tool cannot drift either.
 
 ### Toolchain
 
@@ -309,7 +322,10 @@ The router's `refreshListenable` watches `enabledFeaturesProvider`, so toggling 
 
 ### Routes
 
-34 routes: `/auth` `/onboarding` `/plan` (+ `level/:levelId`) `/reserve` `/calendar` `/events` `/pending` `/money` `/billing` `/invoices` `/invoice-register` `/services` `/members` `/directory` `/editor` `/settings` `/workspace-settings` `/workspace-code` `/features` `/availability` `/validation` `/accessories` `/payment-config` `/einvoice-config` `/legal-identity` `/vat` `/nfc-config` `/kiosk` `/kiosk-gate` `/scan-join` `/profiles` `/linked-accounts` `/help` `/developer`.
+Every route is declared in `lib/app/router.dart` and pinned by
+`test/lint/route_registry_test.dart`, which is the list worth reading:
+it is the one that cannot be out of date. `dart run tool/project_scale.dart`
+counts them.
 
 ### Shared building blocks
 
@@ -672,7 +688,13 @@ dart run build_runner build --delete-conflicting-outputs   # riverpod/freezed/js
 
 ### The pyramid
 
-**70 % unit / 20 % widget / 10 % integration.** 1 013 test cases across 161 files.
+**70 % unit / 20 % widget / 10 % integration** — the intended shape, not
+a measurement. `dart run tool/test_inventory.dart` prints the observed
+distribution by layer, and it has never matched: the suite is widget-heavy
+because most of this product's invariants are things a person can see. The
+target is kept because it is still the right pressure — push an invariant
+down to the layer that can state it cheaply — and the gap is reported
+rather than rounded away (#1334).
 
 Run `flutter test` **bare**. Piping it (`| tail`, `| grep`) yields the pipe's exit code, not the suite's, so a red run reads as green.
 
@@ -700,13 +722,21 @@ Widget tests pump the whole `DeskiloApp` with `ProviderScope(overrides: standard
 
 ### Coverage gate
 
-CI enforces **≥ 45 % line coverage**, computed from `coverage/lcov.info` by summing `LF:`/`LH:` records.
+`scripts/coverage_gate.sh` gates **by layer**, from `coverage/lcov.info`:
+`domain/` 85 %, `presentation/` 80 %, `lib/core/` 75 %, and 65 % over
+`lib/` as a whole. `data/` has no floor on purpose — it is thin wrappers
+over PostgREST, and covering it against a fake proves the fake works;
+`supabase/tests/database/` covers it against a real database instead.
+
+The floors ratchet: raise one when the margin grows, never lower one to
+make a branch green. The script's header carries the measurement each
+floor came from (#1244).
 
 ---
 
 ## 13. CI on GitHub
 
-Ten workflows in `.github/workflows/`. All pin `FLUTTER_VERSION: "3.41.9"`.
+The workflows live in `.github/workflows/` and all pin `FLUTTER_VERSION`. `dart run tool/project_scale.dart` counts them; `.github/workflows/README.md` says what each is for.
 
 ### `ci.yml` — the gate on every push and PR
 
@@ -716,7 +746,7 @@ Runs on push to `master` and on every pull request. Concurrency group `ci-${{ gi
 3. **l10n gate** — `dart run tool/build_arb.dart && flutter gen-l10n`, then `git diff --exit-code -- lib/l10n`. Any drift fails with an actionable error naming HARD RULE #4.
 4. **Analyze** — `flutter analyze` (lib + test)
 5. **Tests with coverage** — `flutter test --coverage`
-6. **Coverage gate** — fails below 45 %
+6. **Coverage gate** — `scripts/coverage_gate.sh`, per layer (above)
 
 ### `android-boot.yml` — release-launch aliveness on a real emulator
 
@@ -1005,6 +1035,8 @@ Both need their clock pinned rather than their string bumped, or they will fail 
 
 ### D. Counts in the README and wiki — **FIXED** ✅
 
+<!-- dated: 2026-08-22 — a record of corrections made then, not a claim about today. Every number below rotted again within weeks, which is why #1334 replaced hand-counting with `dart run tool/project_scale.dart`. -->
+
 | Claim | Source | Corrected to |
 |---|---|---|
 | "30 SQL migrations" | `README.md` §Status | 73 |
@@ -1052,9 +1084,14 @@ windows/installer/deskilo.wxs
 
 `flutter_launcher_icons.yaml` sets `adaptive_icon_background: "#D32F2F"` — a red. The brand primary is burnt orange `#C2410C` (ADR/design system). Possibly deliberate for contrast against the foreground artwork, but it is the one color in the repo that does not come from the token set.
 
-### I. Coverage gate is well below the stated pyramid
+### I. Coverage gate is well below the stated pyramid — FIXED (#1244)
 
-CI enforces **≥ 45 %** line coverage while the methodology describes a 70/20/10 TDD pyramid with a "coverage gate". 45 % is a floor that a 1 000-test suite clears comfortably; it is not a meaningful ratchet. Raising it incrementally would make it one.
+This said CI enforced a single **≥ 45 %** line-coverage floor, which a
+large suite clears without trying. It no longer does: `scripts/coverage_gate.sh`
+gates **by layer**, with the floors and their reasoning in its header, and
+`data/` deliberately has none because testing a thin PostgREST wrapper
+against a fake proves the fake works — what covers that layer is
+`supabase/tests/database/` against a real database.
 
 
 ### K. Factur-X conformance is asserted by unit test, not by a validator
