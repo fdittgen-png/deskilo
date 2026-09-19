@@ -52,11 +52,62 @@ final class MoneyRepositoryProvider
 String _$moneyRepositoryHash() => r'db19ef8c61f5e7ef3494784dfcae5ed1c82e378b';
 
 /// The signed-in member's statement for a period ('yyyy-MM').
+/// #1449 — the decision behind Register payment: the sheet says what was
+/// chosen, this says which month it belongs to and whether there is
+/// enough to send.
+
+@ProviderFor(payments)
+final paymentsProvider = PaymentsProvider._();
+
+/// The signed-in member's statement for a period ('yyyy-MM').
+/// #1449 — the decision behind Register payment: the sheet says what was
+/// chosen, this says which month it belongs to and whether there is
+/// enough to send.
+
+final class PaymentsProvider
+    extends $FunctionalProvider<Payments, Payments, Payments>
+    with $Provider<Payments> {
+  /// The signed-in member's statement for a period ('yyyy-MM').
+  /// #1449 — the decision behind Register payment: the sheet says what was
+  /// chosen, this says which month it belongs to and whether there is
+  /// enough to send.
+  PaymentsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'paymentsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$paymentsHash();
+
+  @$internal
+  @override
+  $ProviderElement<Payments> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  Payments create(Ref ref) {
+    return payments(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Payments value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Payments>(value),
+    );
+  }
+}
+
+String _$paymentsHash() => r'54e542be93d1801d2528087cec596766efad0ffb';
 
 @ProviderFor(myStatement)
 final myStatementProvider = MyStatementFamily._();
-
-/// The signed-in member's statement for a period ('yyyy-MM').
 
 final class MyStatementProvider
     extends
@@ -66,7 +117,6 @@ final class MyStatementProvider
           FutureOr<Statement?>
         >
     with $FutureModifier<Statement?>, $FutureProvider<Statement?> {
-  /// The signed-in member's statement for a period ('yyyy-MM').
   MyStatementProvider._({
     required MyStatementFamily super.from,
     required String super.argument,
@@ -112,8 +162,6 @@ final class MyStatementProvider
 
 String _$myStatementHash() => r'987ba26ea591e7d142bdfb733b7db94b95fc0364';
 
-/// The signed-in member's statement for a period ('yyyy-MM').
-
 final class MyStatementFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<Statement?>, String> {
   MyStatementFamily._()
@@ -124,8 +172,6 @@ final class MyStatementFamily extends $Family
         $allTransitiveDependencies: null,
         isAutoDispose: true,
       );
-
-  /// The signed-in member's statement for a period ('yyyy-MM').
 
   MyStatementProvider call(String period) =>
       MyStatementProvider._(argument: period, from: this);

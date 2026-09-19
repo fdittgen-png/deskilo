@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/trace/traced.dart';
 
+import '../application/record_payment.dart';
 import '../domain/invoice.dart';
 import '../domain/billing_rules.dart';
 import '../domain/dunning.dart';
@@ -41,6 +42,12 @@ MoneyRepository moneyRepository(Ref ref) =>
     SupabaseMoneyRepository(Supabase.instance.client);
 
 /// The signed-in member's statement for a period ('yyyy-MM').
+/// #1449 — the decision behind Register payment: the sheet says what was
+/// chosen, this says which month it belongs to and whether there is
+/// enough to send.
+@riverpod
+Payments payments(Ref ref) => Payments(ref.watch(moneyRepositoryProvider));
+
 @riverpod
 Future<Statement?> myStatement(Ref ref, String period) async {
   // #1218 — the repository is watched BEFORE the gap: a bare

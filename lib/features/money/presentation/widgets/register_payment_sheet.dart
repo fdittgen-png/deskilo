@@ -73,23 +73,23 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
     final cents = _cents;
     if (workspace == null || memberId == null || cents == null) return;
     setState(() => _busy = true);
-    final period =
-        '${_paidOn.year}-${_paidOn.month.toString().padLeft(2, '0')}';
+    // The month a payment belongs to is the decision, and it lives in
+    // application/record_payment.dart — not in this widget (#1449).
+    final payments = ref.read(paymentsProvider);
     final ok = await runGuarded(
       context,
       domain: 'money',
       message: 'register payment failed',
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
-      action: () => ref.read(moneyRepositoryProvider).recordPayment(
-            workspaceId: workspace.id,
-            memberId: memberId,
-            amountCents: cents,
-            note: _note.text.trim(),
-            method: _method,
-            paidOn: _paidOn,
-            period: period,
-          ),
+      action: () => payments.record(
+        workspaceId: workspace.id,
+        memberId: memberId,
+        amountCents: cents,
+        note: _note.text,
+        method: _method,
+        paidOn: _paidOn,
+      ),
     );
     if (!mounted) return;
     setState(() => _busy = false);

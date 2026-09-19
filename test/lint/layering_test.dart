@@ -54,7 +54,7 @@ final RegExp _repositoryUse =
 /// from the map, after which any widget in it touching a repository
 /// fails.
 const Map<String, int> _repositoryInWidgets = {
-  'money': 25,
+  'money': 24, // 2026-09-18 #1449 25→24: the register-payment sheet asks application/record_payment.dart which month a payment belongs to
   'workspace': 19, // 2026-09-17 #1280 S3 20→19: the save sheet publishes through application/publish_template.dart
   'auth': 4,
   // Still 4 after #1234: `space_act_sheet.dart` moved its DECISION to
