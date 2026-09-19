@@ -9,14 +9,21 @@
 -- owner's, `assign_workspace_role` belongs to whoever manages the roles.
 -- Neither table has a write policy, which the last test states directly:
 -- a grant row can only be born inside a definer that checked something.
+--
+-- The last section is #1505: the DEFINITIONS travel with a template and a
+-- deployment, the grants never do. What makes that safe is not a review
+-- step — it is that a role arriving in another space holds nobody, and
+-- grants nothing until somebody there gives it to somebody.
 begin;
-select plan(20);
+select plan(28);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
   u_owner uuid := '00000000-0000-4000-8000-0000000000e1';
   u_plain uuid := '00000000-0000-4000-8000-0000000000e2';
+  u_far   uuid := '00000000-0000-4000-8000-0000000000e3';
   ws uuid;
+  far uuid;
   m_owner uuid;
   m_plain uuid;
 begin
@@ -25,7 +32,9 @@ begin
   values (u_owner, '00000000-0000-0000-0000-000000000000', 'authenticated',
           'authenticated', 'roles-owner@deskilo.test', '', now(), now(), now()),
          (u_plain, '00000000-0000-0000-0000-000000000000', 'authenticated',
-          'authenticated', 'roles-plain@deskilo.test', '', now(), now(), now());
+          'authenticated', 'roles-plain@deskilo.test', '', now(), now(), now()),
+         (u_far, '00000000-0000-0000-0000-000000000000', 'authenticated',
+          'authenticated', 'roles-far@deskilo.test', '', now(), now(), now());
 
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by)
   values ('Custom roles', 'FR', 'EUR', 'Europe/Paris', u_owner) returning id into ws;
@@ -34,7 +43,15 @@ begin
   insert into public.members (workspace_id, user_id, is_owner, is_admin)
   values (ws, u_plain, false, false) returning id into m_plain;
 
+  -- The space a template lands in: another owner, nobody in common.
+  insert into public.workspaces (name, country_code, currency_code, timezone, created_by)
+  values ('Far away', 'FR', 'EUR', 'Europe/Paris', u_far) returning id into far;
+  insert into public.members (workspace_id, user_id, is_owner, is_admin)
+  values (far, u_far, true, true);
+
   perform set_config('deskilo.roles.ws', ws::text, false);
+  perform set_config('deskilo.roles.far', far::text, false);
+  perform set_config('deskilo.roles.farowner', u_far::text, false);
   perform set_config('deskilo.roles.owner', u_owner::text, false);
   perform set_config('deskilo.roles.plain', u_plain::text, false);
   perform set_config('deskilo.roles.m_owner', m_owner::text, false);
@@ -190,6 +207,87 @@ select ok(
   and not has_table_privilege('authenticated', 'public.workspace_roles', 'INSERT'),
   'neither table takes a write from a signed-in client: a grant row exists '
   'only because a definer checked who was asking');
+
+-- ── #1505: the definitions travel, the holders stay ──────────────────
+
+create or replace function pg_temp.far() returns uuid language sql as $$
+  select current_setting('deskilo.roles.far')::uuid;
+$$;
+
+-- The export is taken ONCE, while the source's owner is still the
+-- caller: only an owner exports a configuration, and the space it lands
+-- in has a different one. Reading it again from inside the import would
+-- ask the wrong person.
+create or replace function pg_temp.config() returns jsonb language sql as $$
+  select current_setting('deskilo.roles.config')::jsonb;
+$$;
+
+select pg_temp.act_as('owner');
+select public.set_workspace_role(pg_temp.ws(), 'treasurer', array['issueInvoices'],
+  '{"en": "Treasurer", "fr": "Trésorier"}'::jsonb, 3, true);
+select set_config('deskilo.roles.config',
+  public.export_workspace_configuration(pg_temp.ws())::text, false);
+
+select is(
+  (select e.value - 'sort_order' - 'active'
+     from jsonb_array_elements(pg_temp.config() #> '{tables,workspace_roles}') e
+    where e.value->>'key' = 'treasurer'),
+  '{"key": "treasurer", "names": {"en": "Treasurer", "fr": "Trésorier"},
+    "permissions": ["issueInvoices"]}'::jsonb,
+  'the configuration export carries the role a space invented: its key, its '
+  'name in every language the space wrote, and what it grants');
+
+select ok(
+  pg_temp.config()::text not like '%workspace_role_members%'
+  and pg_temp.config()::text not like ('%' || pg_temp.member('plain')::text || '%'),
+  'and carries no holder — neither the junction table nor the id of the '
+  'member who holds the role appears anywhere in the export');
+
+select pg_temp.act_as('farowner');
+select lives_ok(
+  format($$ select public.import_workspace_configuration(%L, %L::jsonb, 'merge') $$,
+         pg_temp.far(), pg_temp.config()),
+  'another space imports the configuration');
+
+select is(
+  (select r.names->>'fr' || ' ' || array_to_string(r.permissions, ',')
+     from public.workspace_roles r
+    where r.workspace_id = pg_temp.far() and r.key = 'treasurer'),
+  'Trésorier issueInvoices',
+  'the role arrives whole, in the language the space wrote it');
+
+select is(
+  (select count(*)::int from public.workspace_role_members rm
+     join public.workspace_roles r on r.id = rm.role_id
+    where r.workspace_id = pg_temp.far()),
+  0,
+  'and NOBODY holds it there. That is the answer #1505 asked for: a role '
+  'that arrives grants nothing until an owner gives it to somebody, and '
+  'assign_workspace_role needs manageRoles and refuses the caller');
+
+select throws_matching(
+  format($$ select public.workspace_roles_import(%L,
+    '[{"key": "admin", "names": {"en": "Admin"}}]'::jsonb, 'merge') $$, pg_temp.far()),
+  'built-in roles are not redefined',
+  'a template cannot redefine a built-in role by arriving with its key — '
+  'the import refuses exactly what set_workspace_role refuses');
+
+select throws_matching(
+  format($$ select public.workspace_roles_import(%L,
+    '[{"key": "ghost", "permissions": ["notAPermission"]}]'::jsonb, 'merge') $$,
+    pg_temp.far()),
+  'unknown permission',
+  'nor can it carry a permission the product does not have: every one is '
+  'checked against role_permission_catalog()');
+
+select is(
+  (select e.value->>'merge_policy' || ' ' || (e.value->>'group') || ' ' ||
+          (public.template_publication_rules() #>> '{workspace_roles,allowed}')
+     from jsonb_array_elements(public.deployable_entities()) e
+    where e.value->>'key' = 'workspace_roles'),
+  'keyed_update roles_access true',
+  'and the entity is registered the way the matrix says: keyed on the '
+  'role''s own key, in the roles group, publishable in a template');
 
 select * from finish();
 rollback;

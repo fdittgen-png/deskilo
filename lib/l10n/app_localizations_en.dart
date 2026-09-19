@@ -1983,6 +1983,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deployEntityFieldDefinitions => 'Questions the space asks';
 
   @override
+  String get deployEntityWorkspaceRoles => 'Roles the space defines';
+
+  @override
   String get developerMode => 'Developer mode';
 
   @override

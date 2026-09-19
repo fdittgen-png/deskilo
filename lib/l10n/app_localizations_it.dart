@@ -1995,6 +1995,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get deployEntityFieldDefinitions => 'Le domande dello spazio';
 
   @override
+  String get deployEntityWorkspaceRoles => 'I ruoli propri dello spazio';
+
+  @override
   String get developerMode => 'Modalità sviluppatore';
 
   @override

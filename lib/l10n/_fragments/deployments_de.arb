@@ -177,5 +177,9 @@
   "deployEntityFieldDefinitions": "Fragen des Bereichs",
   "@deployEntityFieldDefinitions": {
     "description": "#1288 S5: deployEntityFieldDefinitions"
+  },
+  "deployEntityWorkspaceRoles": "Eigene Rollen des Bereichs",
+  "@deployEntityWorkspaceRoles": {
+    "description": "#1505: deployEntityWorkspaceRoles"
   }
 }

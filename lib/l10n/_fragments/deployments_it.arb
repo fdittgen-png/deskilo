@@ -177,5 +177,9 @@
   "deployEntityFieldDefinitions": "Le domande dello spazio",
   "@deployEntityFieldDefinitions": {
     "description": "#1288 S5: deployEntityFieldDefinitions"
+  },
+  "deployEntityWorkspaceRoles": "I ruoli propri dello spazio",
+  "@deployEntityWorkspaceRoles": {
+    "description": "#1505: deployEntityWorkspaceRoles"
   }
 }

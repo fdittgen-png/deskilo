@@ -1994,6 +1994,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get deployEntityFieldDefinitions => 'Fragen des Bereichs';
 
   @override
+  String get deployEntityWorkspaceRoles => 'Eigene Rollen des Bereichs';
+
+  @override
   String get developerMode => 'Entwicklermodus';
 
   @override
