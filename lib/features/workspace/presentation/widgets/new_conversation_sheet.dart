@@ -11,6 +11,7 @@ import '../../domain/conversation.dart';
 import '../../domain/member.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/conversation_providers.dart';
+import '../../application/start_conversation.dart';
 import '../../providers/workspace_providers.dart';
 import 'conversation_avatar.dart';
 
@@ -68,7 +69,11 @@ class _NewConversationSheetState
   }
 
   /// A group needs a name; a one-to-one thread is titled by the person.
-  bool get _isGroup => _hub ? _groupMode : _selected.length > 1;
+  bool get _isGroup => Conversations.isGroup(
+        hub: _hub,
+        groupMode: _groupMode,
+        selected: _selected.length,
+      );
 
   bool get _hub => ref
       .read(enabledFeaturesSyncProvider)
@@ -259,19 +264,18 @@ class _NewConversationSheetState
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     setState(() => _busy = true);
-    final repo = ref.read(workspaceRepositoryProvider);
-    String id;
+    // Both rules live in the command (#1449): what a second person
+    // means, and that a taken name is a correction rather than a
+    // failure. `runGuarded` cannot express the second — it resolves its
+    // message before the action runs.
+    late final StartConversationOutcome outcome;
     try {
-      id = _isGroup
-          ? await repo.createGroupConversation(
-              workspace.id,
-              title: _groupName.text.trim(),
-              memberIds: _selected.toList(),
-            )
-          : await repo.openDirectConversation(
-              workspace.id,
-              otherMemberId: _selected.single,
-            );
+      outcome = await ref.read(startConversationCommandProvider).start(
+            workspaceId: workspace.id,
+            group: _isGroup,
+            title: _groupName.text,
+            memberIds: _selected.toList(),
+          );
     } catch (e, st) {
       TraceLogger.instance.error(
         'messaging',
@@ -281,23 +285,26 @@ class _NewConversationSheetState
       );
       if (!mounted) return;
       setState(() => _busy = false);
-      // #694 — a name that is simply TAKEN is not "something went
-      // wrong": it is one word to change, and saying so is the whole
-      // difference between a dead end and a correction. The server pins
-      // the substring; runGuarded could not be used here because it
-      // resolves its message before the action runs.
-      final taken = '$e'.contains('a group with that name already exists');
       AppSnack.error(
         context,
-        taken
-            ? (l10n?.newGroupNameTaken ??
-                'A group with that name already exists here. Pick another.')
-            : (l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.'),
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
         replace: true,
       );
       return;
     }
+    if (!mounted) return;
+    if (outcome is GroupNameTaken) {
+      setState(() => _busy = false);
+      AppSnack.error(
+        context,
+        l10n?.newGroupNameTaken ??
+            'A group with that name already exists here. Pick another.',
+        replace: true,
+      );
+      return;
+    }
+    final id = (outcome as ConversationStarted).id;
     if (!mounted) return;
     setState(() => _busy = false);
     // The list behind is stale the moment a thread exists.

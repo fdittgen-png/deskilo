@@ -15,14 +15,14 @@ A repository read from `presentation/` is **not** a defect by itself. What #1234
 | Booking | `calendar` | 1 |
 | Booking | `editor` | 3 |
 | Finance | `money` | 21 |
-| Workspace configuration | `workspace` | 21 |
+| Workspace configuration | `workspace` | 20 |
 | Workspace configuration | `members` | 2 |
 | Workspace configuration | `profile` | 3 |
 | — | `auth` | 4 |
 | — | `events` | 1 |
 | — | `kiosk` | 1 |
 
-**63 files** across 11 features. `test/lint/layering_test.dart` holds each feature's number as a ceiling that may only fall.
+**62 files** across 11 features. `test/lint/layering_test.dart` holds each feature's number as a ceiling that may only fall.
 
 ## Cross-feature imports, by direction
 

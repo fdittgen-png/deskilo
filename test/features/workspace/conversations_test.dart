@@ -14,6 +14,7 @@
 import 'dart:io';
 
 import 'package:deskilo/features/workspace/domain/conversation.dart';
+import 'package:deskilo/features/workspace/application/start_conversation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
@@ -187,12 +188,27 @@ void main() {
       final schema = File('supabase/migrations/0125_conversations.sql')
           .readAsStringSync();
       expect(schema, contains("(kind = 'direct' and title is null)"));
+      // #821 — with the hub on, a switch says "group"; off, two picks do.
+      //
+      // #1449 — this used to assert the SHEET's source text. The rule
+      // moved into `Conversations.isGroup`, so it is asserted by
+      // running it: `test/features/workspace/application/
+      // start_conversation_test.dart` covers both directions, which a
+      // string match never did — it would have passed on a line that
+      // was present and unreachable.
+      expect(
+        Conversations.isGroup(hub: false, groupMode: false, selected: 2),
+        isTrue,
+        reason: 'outside the hub, two picks make a group',
+      );
+      expect(
+        Conversations.isGroup(hub: true, groupMode: false, selected: 2),
+        isFalse,
+        reason: 'inside it, the switch is the answer',
+      );
       final sheet = File('lib/features/workspace/presentation/widgets/'
               'new_conversation_sheet.dart')
           .readAsStringSync();
-      // #821 — with the hub on, a switch says "group"; off, two picks do.
-      expect(sheet,
-          contains('bool get _isGroup => _hub ? _groupMode : _selected.length > 1;'));
       expect(sheet, contains("if (_isGroup)"),
           reason: 'the name field appears only once it means something');
     });
@@ -512,11 +528,16 @@ void main() {
     test('the refusal reaches the user as one word to change', () {
       // "Something went wrong" for a name that is simply taken is a dead
       // end; naming it is a correction.
+      // #1449 — the wording the server refuses with is now a named
+      // constant beside the rule that reads it, so the two sides of the
+      // coupling are visible to whoever changes either. The SQL half is
+      // asserted just above; this is the client half.
+      expect(sql, contains(kGroupNameTakenError));
       final sheet = File('lib/features/workspace/presentation/widgets/'
               'new_conversation_sheet.dart')
           .readAsStringSync();
-      expect(sheet, contains("contains('a group with that name already exists')"));
-      expect(sheet, contains('newGroupNameTaken'));
+      expect(sheet, contains('newGroupNameTaken'),
+          reason: 'the sheet still owns the WORDS a person reads');
     });
 
     test('a group is a different SHAPE, not a different colour', () {
