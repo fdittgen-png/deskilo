@@ -15,6 +15,8 @@
 
 import 'dart:io';
 
+import '../layering/analysis.dart' show withoutComments;
+
 /// One classified test file.
 class TestFileEntry {
   TestFileEntry({
@@ -176,12 +178,16 @@ List<TestFileEntry> classify({String root = '.'}) {
     if (source.contains('Directory.systemTemp')) deps.add('temp filesystem');
     if (source.contains('runAsync')) deps.add('real async I/O');
 
+    // Comments stripped first: a rule that scans raw text reports the
+    // paragraph EXPLAINING it as a violation of it, which is how this
+    // file came to classify itself as needing refactoring.
+    final code = withoutComments(source);
     final nondeterminism = <String>[
-      if (source.contains('DateTime.now()') && layer != 'lint')
+      if (code.contains('DateTime.now()') && layer != 'lint')
         'real clock (exempt-listed)',
-      if (RegExp(r'\bRandom\(\)').hasMatch(source)) 'unseeded Random',
+      if (RegExp(r'\bRandom\(\)').hasMatch(code)) 'unseeded Random',
       if (RegExp(r'Future(?:<\w+>)?\.delayed\(\s*(?:const\s+)?Duration\((?!\))')
-          .hasMatch(source))
+          .hasMatch(code))
         'real delay',
     ];
 

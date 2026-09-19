@@ -55,4 +55,28 @@ void main() {
       expect(actions, contains(e.action), reason: e.path);
     }
   });
+
+  // #1334 — the ratchet reached zero, so it is an invariant now.
+  //
+  // A ratchet at zero that only compares is a gate nothing can trip. The
+  // two files that still needed it were a test whose header paragraph
+  // had drifted below the imports, and one that waited a fixed 50 ms
+  // for a codec instead of polling the result. Both are cheap to
+  // fix and impossible to notice later, which is exactly the class of
+  // thing a gate should catch on the way in.
+  test('no test file needs refactoring: every one states its invariant '
+      'and is deterministic', () {
+    final needing = [
+      for (final e in classify())
+        if (e.action == 'KEEP+REFACTOR') '${e.path}: ${e.invariant}',
+    ]..sort();
+    expect(
+      needing,
+      isEmpty,
+      reason: 'a file is KEEP+REFACTOR when it states no invariant in its '
+          'header paragraph, uses an unseeded random source, or waits a '
+          'real non-zero delay instead of polling with untilReal. State '
+          'the invariant; poll the result:\n${needing.join('\n')}',
+    );
+  });
 }
