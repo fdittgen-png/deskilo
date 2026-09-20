@@ -43,5 +43,9 @@
   "newMemberOveragePackage": "Muss ein Paket kaufen",
   "@newMemberOveragePackage": {
     "description": "#1294 overage policy: must buy a package"
+  },
+  "newMemberDefaultsUnavailable": "Diese konnten gerade nicht gelesen werden. Das Speichern lässt sie unverändert.",
+  "@newMemberDefaultsUnavailable": {
+    "description": "#1563 shown when the new-member defaults could not be read, so Save omits them"
   }
 }

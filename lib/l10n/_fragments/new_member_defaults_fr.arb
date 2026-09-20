@@ -43,5 +43,9 @@
   "newMemberOveragePackage": "Doit acheter un forfait",
   "@newMemberOveragePackage": {
     "description": "#1294 overage policy: must buy a package"
+  },
+  "newMemberDefaultsUnavailable": "Impossible de les lire pour l'instant. L'enregistrement les laisse telles quelles.",
+  "@newMemberDefaultsUnavailable": {
+    "description": "#1563 shown when the new-member defaults could not be read, so Save omits them"
   }
 }

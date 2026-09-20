@@ -15,6 +15,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/new_member_defaults.dart';
 import '../../domain/overage_policy.dart';
@@ -26,9 +28,19 @@ class NewMemberDefaultsTiles extends StatelessWidget {
     required this.enabled,
     required this.onSubscriptionChanged,
     required this.onOveragePolicyChanged,
+    this.failed = false,
+    this.onRetry,
   });
 
-  final NewMemberDefaults defaults;
+  /// #1563 — null while the separate `billing_rules` read is in flight or
+  /// has failed. The controls are not offered then, and the screen sends
+  /// no `new_member_defaults` key at all: a form that renders before its
+  /// value arrives must not save the fallback over what is configured.
+  final NewMemberDefaults? defaults;
+
+  /// The read answered with a failure rather than not having answered.
+  final bool failed;
+  final VoidCallback? onRetry;
   final bool enabled;
   final ValueChanged<int> onSubscriptionChanged;
   final ValueChanged<OveragePolicy> onOveragePolicyChanged;
@@ -43,20 +55,45 @@ class NewMemberDefaultsTiles extends StatelessWidget {
           l10n?.newMemberOveragePackage ?? 'Must buy a package',
       };
 
+  /// The section's heading, shown whatever state the read is in — the
+  /// rows below it are what appears or does not.
+  Widget _heading(ThemeData theme, AppLocalizations? l10n) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+        child: Text(
+          l10n?.newMemberDefaultsTitle ?? 'New members',
+          style: theme.textTheme.titleMedium,
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    final defaults = this.defaults;
+    if (defaults == null) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _heading(theme, l10n),
+          if (failed)
+            InlineBanner(
+              icon: Icons.cloud_off_outlined,
+              text: l10n?.newMemberDefaultsUnavailable ??
+                  'These could not be read just now. Saving leaves them '
+                      'exactly as they are.',
+              actionLabel:
+                  onRetry == null ? null : (l10n?.commonRetry ?? 'Try again'),
+              onAction: onRetry,
+            )
+          else
+            const SizedBox(height: 80, child: LoadingView()),
+        ],
+      );
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-          child: Text(
-            l10n?.newMemberDefaultsTitle ?? 'New members',
-            style: theme.textTheme.titleMedium,
-          ),
-        ),
+        _heading(theme, l10n),
         Text(
           defaults.configured
               ? (l10n?.newMemberDefaultsConfigured ??

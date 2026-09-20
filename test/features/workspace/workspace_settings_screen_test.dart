@@ -2,8 +2,12 @@
 //
 // Workspace settings seed from the workspace and save identity, languages,
 // invitation templates and currency (#486, #711).
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
+import 'package:deskilo/features/workspace/domain/new_member_defaults.dart';
+import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,10 +15,28 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
 
+/// #1563 — the new-member defaults are read separately from the workspace
+/// row, so the form can render — and save — before they arrive. This fake
+/// holds that read open, which the other tests here settle first.
+class _GatedDefaults extends FakeWorkspaceRepository {
+  _GatedDefaults() : super.withWorkspace();
+
+  Completer<NewMemberDefaults> gate = Completer<NewMemberDefaults>();
+  int reads = 0;
+
+  @override
+  Future<NewMemberDefaults> fetchNewMemberDefaults(String workspaceId) {
+    reads++;
+    return gate.future;
+  }
+}
+
 Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   WidgetTester tester, {
   FileSaver? saver,
   FakeFloorPlanRepository? floorPlan,
+  FakeWorkspaceRepository? repository,
+  bool settle = true,
 }) async {
   // The settings form grew past the default 800px test viewport (#155,
   // three more payment fields in #192, the WhatsApp-group section in
@@ -25,7 +47,7 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
-  final workspace = FakeWorkspaceRepository.withWorkspace();
+  final workspace = repository ?? FakeWorkspaceRepository.withWorkspace();
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
@@ -39,7 +61,14 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
   await tester.tap(find.text('Workspace'));
-  await tester.pumpAndSettle();
+  if (settle) {
+    await tester.pumpAndSettle();
+  } else {
+    // #1563 — a read still in flight leaves a spinner on screen, and a
+    // spinner never settles.
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+  }
   return workspace;
 }
 
@@ -550,6 +579,82 @@ void main() {
       expect(find.text('Workspace saved.'), findsNothing);
       expect(workspace.lastLocaleUpdate, isNull);
       expect(find.text('Europe/Zurich'), findsOneWidget);
+    });
+  });
+
+  group('#1563 — an unloaded new-member default is never saved', () {
+    const configured = NewMemberDefaults(
+      subscriptionPct: 50,
+      overagePolicy: OveragePolicy.payg,
+      configured: true,
+    );
+
+    Future<_GatedDefaults> open(WidgetTester tester) async {
+      final workspace = _GatedDefaults();
+      workspace.newMemberDefaults['ws-1'] = configured;
+      await pumpWorkspaceSettings(tester,
+          repository: workspace, settle: false);
+      return workspace;
+    }
+
+    Future<void> saveAnUnrelatedField(WidgetTester tester) async {
+      final field = find.byKey(const Key('workspaceSettingsAddress'));
+      await tester.ensureVisible(field);
+      await tester.enterText(field, '2 Place du Marché');
+      await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+    }
+
+    testWidgets('a Save while the defaults read is in flight sends no '
+        'defaults at all', (tester) async {
+      final workspace = await open(tester);
+      expect(find.byKey(const ValueKey('new-member-pct-down')), findsNothing,
+          reason: 'nothing to change before the value has arrived');
+
+      await saveAnUnrelatedField(tester);
+
+      final sent = workspace.settingsSaves.single;
+      expect(sent.newMemberDefaults, isNull);
+      expect(sent.toSettings().containsKey('new_member_defaults'), isFalse,
+          reason: 'the server keeps what it has when the key is absent');
+      expect(workspace.newMemberDefaults['ws-1'], configured,
+          reason: 'the configured 50 % / pay-as-you-go survived the Save');
+      expect(workspace.workspaces[0].address, '2 Place du Marché',
+          reason: 'the field that WAS edited still saved');
+    });
+
+    testWidgets('a failed read says so, offers the read again, and an '
+        'intentional edit afterwards saves normally', (tester) async {
+      final workspace = await open(tester);
+      workspace.gate.completeError(Exception('offline'));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('could not be read'), findsOneWidget);
+
+      // Saving over a FAILED read sends nothing either.
+      await saveAnUnrelatedField(tester);
+      expect(workspace.settingsSaves.single.newMemberDefaults, isNull);
+      expect(workspace.newMemberDefaults['ws-1'], configured);
+
+      // Try again: this time the server answers, and the controls appear
+      // on the configured value rather than on the product fallback.
+      workspace.gate = Completer<NewMemberDefaults>();
+      await tester.tap(find.text('Try again'));
+      workspace.gate.complete(configured);
+      await tester.pumpAndSettle();
+      expect(workspace.reads, greaterThan(1));
+      expect(find.text('50%'), findsOneWidget);
+
+      final down = find.byKey(const ValueKey('new-member-pct-down'));
+      await tester.ensureVisible(down);
+      await tester.tap(down);
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+      await tester.pumpAndSettle();
+
+      expect(workspace.newMemberDefaults['ws-1']?.subscriptionPct, 45);
+      expect(workspace.newMemberDefaults['ws-1']?.overagePolicy,
+          OveragePolicy.payg);
     });
   });
 }

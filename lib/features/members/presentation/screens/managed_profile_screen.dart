@@ -10,7 +10,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/trace/refusal_text.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../profile/domain/personal_info.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -61,6 +64,9 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
     if (!ok) return;
     ref.invalidate(workspaceMembersProvider);
     ref.invalidate(memberNamesProvider);
+    // #1561 — and the identity itself, or the member page it returns to
+    // keeps printing the address that was just replaced.
+    if (editing != null) ref.invalidate(managedIdentityProvider(editing));
     AppSnack.success(
       context,
       editing == null
@@ -75,6 +81,28 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
     }
   }
 
+  /// #1561 — THE form. It seeds its controllers in `initState`, and
+  /// `update_managed_identity` (0161) replaces the whole stored row, so
+  /// it is built only once [initial] is the identity being edited: a
+  /// form opened on `PersonalInfo.empty` while the read is in flight
+  /// saves blanks over a complete identity.
+  Widget _form(
+    AppLocalizations? l10n,
+    PersonalInfo initial,
+    String workspaceCountry,
+  ) =>
+      PersonalInfoForm(
+        managed: true,
+        key: ValueKey('managed-form-${widget.memberId}'),
+        initial: initial,
+        workspaceCountry: workspaceCountry,
+        saving: _saving,
+        intro: l10n?.managedProfileIntro ??
+            'This person has no account yet. You book, invoice and '
+                'manage for them; hand the profile over when they join.',
+        onSave: _save,
+      );
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -82,6 +110,38 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
     final existing = members.where((m) => m.id == widget.memberId).firstOrNull;
     final workspaceCountry =
         ref.watch(currentWorkspaceProvider).value?.countryCode ?? '';
+    final editing = widget.memberId;
+    // #915 — the identity comes from behind the access rule; #1561 — and
+    // which answer the rule gave decides what this screen offers at all.
+    final read =
+        editing == null ? null : ref.watch(managedIdentityProvider(editing));
+    final value = read?.value;
+    final Widget slot;
+    if (read == null) {
+      slot = _form(l10n, PersonalInfo.empty, workspaceCountry);
+    } else if (read.hasError && !read.isLoading) {
+      slot = InlineBanner(
+        icon: Icons.cloud_off_outlined,
+        // A known refusal says so; anything else is a fault worth retrying.
+        text: knownRefusalText(l10n, read.error!) ??
+            l10n?.managedProfileIdentityUnavailable ??
+            'These details could not be read, so there is nothing to '
+                'edit yet. Nothing has been changed.',
+        actionLabel: l10n?.commonRetry ?? 'Try again',
+        onAction: () => ref.invalidate(managedIdentityProvider(editing!)),
+      );
+    } else if (value == null) {
+      slot = const SizedBox(height: 160, child: LoadingView());
+    } else if (value.refused) {
+      slot = InlineBanner(
+        icon: Icons.lock_outline,
+        text: l10n?.refusalPermission ??
+            'You do not have the permission for this. An owner of the '
+                'space can grant it in Role management.',
+      );
+    } else {
+      slot = _form(l10n, value.identity, workspaceCountry);
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n?.managedProfileTitle ?? 'Managed profile'),
@@ -94,24 +154,7 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                PersonalInfoForm(
-                  managed: true,
-              // Rebuilt when the member arrives so the fields prefill.
-              key: ValueKey('managed-form-${existing?.id}'),
-              // #915 — the identity comes from behind the access rule;
-              // an admin the rule does not name edits nothing.
-              initial: existing == null
-                  ? PersonalInfo.empty
-                  : (ref.watch(managedIdentityProvider(existing.id)).value ??
-                      PersonalInfo.empty),
-              workspaceCountry: workspaceCountry,
-              saving: _saving,
-              intro:
-                  l10n?.managedProfileIntro ??
-                  'This person has no account yet. You book, invoice and '
-                      'manage for them; hand the profile over when they join.',
-              onSave: _save,
-                ),
+                slot,
                 // #914 — who may administer this one, once the profile
                 // exists to be administered.
                 if (existing != null &&

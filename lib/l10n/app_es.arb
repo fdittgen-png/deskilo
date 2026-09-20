@@ -4223,6 +4223,10 @@
   "@managedProfileIntro": {
     "description": "#887 managed profiles: managedProfileIntro"
   },
+  "managedProfileIdentityUnavailable": "No se han podido leer estos datos, así que todavía no hay nada que editar. No se ha cambiado nada.",
+  "@managedProfileIdentityUnavailable": {
+    "description": "#1561 shown when the managed identity could not be read, so the form is not offered"
+  },
   "membersTitle": "Miembros y planes",
   "membersPlanNone": "Sin plan",
   "memberRoleOwner": "Propietario",
@@ -4988,6 +4992,10 @@
   "newMemberOveragePackage": "Debe comprar un paquete",
   "@newMemberOveragePackage": {
     "description": "#1294 overage policy: must buy a package"
+  },
+  "newMemberDefaultsUnavailable": "No se han podido leer ahora mismo. Al guardar se quedan como están.",
+  "@newMemberDefaultsUnavailable": {
+    "description": "#1563 shown when the new-member defaults could not be read, so Save omits them"
   },
   "featureNumberSequences": "Series de numeración",
   "@featureNumberSequences": {
