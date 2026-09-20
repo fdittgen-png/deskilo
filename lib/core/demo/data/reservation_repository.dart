@@ -633,6 +633,8 @@ class FakeReservationRepository implements ReservationRepository {
   @override
   Future<SeriesResult> convertToSeries(
     String reservationId, {
+    required DateTime start,
+    required DateTime end,
     required SeriesPattern pattern,
     required DateTime until,
   }) async {
@@ -654,11 +656,14 @@ class FakeReservationRepository implements ReservationRepository {
     // The cancel happens first here too, so the series sees the seat and
     // the member as free — exactly as the server's transaction does.
     reservations[i] = original.copyWith(status: ReservationStatus.cancelled);
+    // #1562 — the repeat is built from the window the member chose, not
+    // from the one that happens to be stored. `convert_to_series` (0256)
+    // takes the same pair and defaults it to the stored row.
     final result = await createSeries(
       workspaceId: original.workspaceId,
       seatId: original.seatId,
-      firstStart: original.startsAt,
-      firstEnd: original.endsAt,
+      firstStart: start,
+      firstEnd: end,
       pattern: pattern,
       until: until,
     );

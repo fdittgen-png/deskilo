@@ -33,7 +33,7 @@ const Map<String, int> _baseline = {
   // to be a decision, and they may only shrink.
   'lib/core/demo/data/workspace_repository.dart': 1830, // 2026-09-19 #1281 1827→1830: setLegendProfile, the fake's mirror of the booking-rule write // 2026-09-19 #1373 moved out of test/helpers/mock_providers.dart, which is 2358→408 lines
   'lib/core/demo/data/money_repository.dart': 1800, // 2026-09-19 #1373 moved from test/helpers/fake_money_repository.dart
-  'lib/core/demo/data/reservation_repository.dart': 695, // 2026-09-19 #1565 678→695: the signed-in member is READ on every call instead of captured once, so a Demo persona switch re-attributes the bookings that follow it — the constructor seam, the getter and the paragraph saying why // 2026-09-19 #1373 moved from test/helpers/fake_reservation_repository.dart
+  'lib/core/demo/data/reservation_repository.dart': 700, // 2026-09-19 #1562 695→700: convertToSeries takes the chosen window, and says why it is not the stored one // 2026-09-19 #1565 678→695: the signed-in member is READ on every call instead of captured once, so a Demo persona switch re-attributes the bookings that follow it — the constructor seam, the getter and the paragraph saying why // 2026-09-19 #1373 moved from test/helpers/fake_reservation_repository.dart
 
   // 1510→1530 (2026-08-02): #408 presence rule — the sheets moved to
   // check_in_sheets.dart; what remains is the admin-for-others gate and

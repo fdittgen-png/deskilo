@@ -19,7 +19,7 @@
 -- The happy path passing proves the function works; that one proves it
 -- is worth having.
 begin;
-select plan(9);
+select plan(12);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -79,6 +79,21 @@ begin
 end
 $seed$;
 select pg_temp.seed();
+
+-- The canonical MORNING window of the same day — the other half-day the
+-- member may pick. #1562: `convert_to_series` builds the repeat from
+-- THIS window when it is given one.
+create or replace function pg_temp.morning(offset_days int default 0)
+returns timestamptz[] language sql stable as $morning$
+  select array[
+    ((date_trunc('week', (now() at time zone 'Europe/Paris')::date
+      + interval '28 days')::date + offset_days)::timestamp
+      + interval '8 hours') at time zone 'Europe/Paris',
+    ((date_trunc('week', (now() at time zone 'Europe/Paris')::date
+      + interval '28 days')::date + offset_days)::timestamp
+      + interval '12 hours') at time zone 'Europe/Paris'
+  ];
+$morning$;
 
 -- A Monday afternoon well inside the horizon, in the workspace's clock.
 create or replace function pg_temp.slot(offset_days int default 0)
@@ -214,6 +229,52 @@ select throws_ok(
   'their OWN booking passes the caller gate and is then judged on its '
   'merits — create_series rejects the pattern, and the raise leaves the '
   'booking untouched');
+
+-- --------------------------------------------------------------- 10–12
+-- #1562 — the window the member CHOSE, not the one that is stored.
+--
+-- The detail sheet collects a new window and then a recurrence, in one
+-- gesture. Before 0256 the second half threw the first away: the
+-- function had nowhere to put a window and built the repeat from
+-- `v_res.starts_at` / `v_res.ends_at`. Every case above converts a
+-- booking without moving it, which is exactly why the defect was
+-- invisible here.
+do $be_owner_again$
+begin
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', current_setting('deskilo.t.u_owner'),
+                      'role', 'authenticated')::text, false);
+end;
+$be_owner_again$;
+
+-- A fresh afternoon booking on the Wednesday, to be repeated in the
+-- MORNING instead.
+select lives_ok(
+  $$select pg_temp.book(current_setting('deskilo.t.owner')::uuid, 2)$$,
+  'the member holds an afternoon booking on another day');
+
+select lives_ok(
+  format($$select public.convert_to_series(%L, 'weekly', %L, %L, %L)$$,
+    (select id from public.reservations
+      where member_id = current_setting('deskilo.t.owner')::uuid
+        and series_id is null and status = 'reserved'
+      order by created_at desc limit 1),
+    (pg_temp.morning(2))[1] + interval '14 days',
+    (pg_temp.morning(2))[1],
+    (pg_temp.morning(2))[2]),
+  'a conversion may carry the window the member chose');
+
+-- The first occurrence is the requested instant itself, so this compares
+-- absolute timestamps and no daylight-saving step can blur it.
+select is(
+  (select count(*)::int from public.reservations
+    where member_id = current_setting('deskilo.t.owner')::uuid
+      and series_id is not null and status = 'reserved'
+      and starts_at = (pg_temp.morning(2))[1]
+      and ends_at = (pg_temp.morning(2))[2]),
+  1,
+  'the repeat begins at the CHOSEN morning window. Before 0256 it began '
+  'at the stored afternoon one and the member was never told.');
 
 select * from finish();
 rollback;

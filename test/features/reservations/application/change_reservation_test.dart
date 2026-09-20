@@ -279,5 +279,77 @@ void main() {
       );
       expect(repo.reservations.single.status, ReservationStatus.reserved);
     });
+
+    test('the repeat is built from the CHOSEN window, not the stored one '
+        '(#1562)', () async {
+      // Every case above passes the reservation's OWN start and end, so
+      // a command that drops both arguments still passes them all. This
+      // one asks for a different window — 14:00–16:00 instead of
+      // 09:00–13:00 — which is what the sheet does when the member edits
+      // the times and picks a repeat in the same gesture.
+      final r = _mine();
+      repo.reservations.add(r);
+      final newStart = DateTime(
+          r.startsAt.year, r.startsAt.month, r.startsAt.day, 14);
+      final newEnd = newStart.add(const Duration(hours: 2));
+
+      final outcome = await rescheduleReservation(
+        repo,
+        r,
+        start: newStart,
+        end: newEnd,
+        pattern: SeriesPattern.weekly,
+        until: newStart.add(const Duration(days: 14)),
+      );
+
+      expect(outcome, isA<BecameSeries>());
+      final made = repo.reservations
+          .where((x) => x.seriesId != null)
+          .toList(growable: false);
+      expect(made, hasLength(3));
+      for (var week = 0; week < made.length; week++) {
+        expect(made[week].startsAt,
+            newStart.add(Duration(days: 7 * week)),
+            reason: 'occurrence $week starts at the chosen 14:00, not at '
+                'the stored 09:00');
+        expect(made[week].endsAt, newEnd.add(Duration(days: 7 * week)),
+            reason: 'and keeps the chosen two-hour duration');
+      }
+    });
+
+    test('the chosen window decides the conflicts, so a date busy only at '
+        'the OLD time is still booked (#1562)', () async {
+      // The other half of the defect: the skip report answered for the
+      // stored window. Somebody else holds the seat 09:00–13:00 on every
+      // date the repeat wants; 14:00–16:00 is free on all of them.
+      final r = _mine();
+      repo.reservations.add(r);
+      for (var week = 0; week < 3; week++) {
+        repo.reservations.add(Reservation(
+          id: 'theirs-$week',
+          workspaceId: 'ws-1',
+          seatId: _seat,
+          memberId: 'member-2',
+          startsAt: r.startsAt.add(Duration(days: 7 * week)),
+          endsAt: r.endsAt.add(Duration(days: 7 * week)),
+          status: ReservationStatus.reserved,
+        ));
+      }
+      final newStart = DateTime(
+          r.startsAt.year, r.startsAt.month, r.startsAt.day, 14);
+
+      final outcome = await rescheduleReservation(
+        repo,
+        r,
+        start: newStart,
+        end: newStart.add(const Duration(hours: 2)),
+        pattern: SeriesPattern.weekly,
+        until: newStart.add(const Duration(days: 14)),
+      ) as BecameSeries;
+
+      expect(outcome.result.skipped, isEmpty,
+          reason: 'nothing conflicts at the requested time');
+      expect(outcome.result.booked, hasLength(3));
+    });
   });
 }

@@ -329,6 +329,8 @@ class SupabaseReservationRepository implements ReservationRepository {
   @override
   Future<SeriesResult> convertToSeries(
     String reservationId, {
+    required DateTime start,
+    required DateTime end,
     required SeriesPattern pattern,
     required DateTime until,
   }) async {
@@ -336,13 +338,20 @@ class SupabaseReservationRepository implements ReservationRepository {
       'convert-to-series',
       {
         'reservation': reservationId,
+        'start': start.toUtc(),
+        'end': end.toUtc(),
         'pattern': pattern.name,
         'until': until.toUtc(),
       },
+      // #1562 — `p_starts_at` / `p_ends_at` (0256) carry the window the
+      // member chose. They default to the stored one server-side, so a
+      // conversion that moves nothing still reads as it always did.
       () => _client.rpc<dynamic>('convert_to_series', params: {
         'p_reservation_id': reservationId,
         'p_pattern': pattern.name,
         'p_until': until.toUtc().toIso8601String(),
+        'p_starts_at': start.toUtc().toIso8601String(),
+        'p_ends_at': end.toUtc().toIso8601String(),
       }),
     ) as Map<String, dynamic>;
     List<DateTime> dates(String key) => (result[key] as List<dynamic>)
