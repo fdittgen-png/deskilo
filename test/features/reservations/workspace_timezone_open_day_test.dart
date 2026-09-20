@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The field bug (#417): with a real workspace timezone INSTALLED, the
 // full-day window's start is a TZDateTime (workspace midnight) — and

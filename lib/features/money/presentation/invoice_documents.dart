@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1061 / #1048 task 3.2 — DOCUMENT GENERATION: which document, for whom,
 // rendered to bytes. Split out of invoice_actions.dart, which keeps the

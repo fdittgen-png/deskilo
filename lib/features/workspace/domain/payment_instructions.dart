@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/country/country_catalog.dart';
 
 /// Per-workspace payment instructions (spec §7, #155): how members are

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #726 — AUTOMATIC payment reminders. The dunning rules (0093: levels,
 -- first_after_days, between_days) were a policy the owner applied by

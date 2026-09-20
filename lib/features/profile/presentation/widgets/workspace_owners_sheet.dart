@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #937 — who owns a workspace the platform owner is not in: name and
 // e-mail, with a copy action. The read is logged server-side.

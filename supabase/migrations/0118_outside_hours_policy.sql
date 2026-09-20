@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #624 — the outside-opening-hours booking policy. One booking_rules
 -- string key, outside_hours_mode ('off' | 'free' | 'charged', absent =
 -- 'charged' — the closest to today's behavior), governing bookings and

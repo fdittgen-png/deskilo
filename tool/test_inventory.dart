@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1334 — writes docs/testing/TEST_INVENTORY.md: every test file,
 // classified by the rules in tool/test_inventory/inventory.dart.

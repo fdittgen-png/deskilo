@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #916 — importing a workspace XML previews first, applies configuration
 // before the plan, and maps each refusal to its own message.

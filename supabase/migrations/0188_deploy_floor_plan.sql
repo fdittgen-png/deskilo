@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0188 — #1004: the floor plan as a deployable entity.
 --
 -- #916 kept the plan off the transfer because a plan import wipes the

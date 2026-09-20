@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- 0219 (#1276 S1) — the configuration import gains a mode.
 --

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1308 S1 — an existing project gets a verdict before anything is
 // installed onto it, and reading it runs no SQL that writes.

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1280 S3 — publishing this workspace as a template (ADR 0024: the sheet
 // says what was chosen; this decides the request and what it makes stale).

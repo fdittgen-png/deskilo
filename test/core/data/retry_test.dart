@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1241 step 2 — the retry, and the two things it must NOT do.
 import 'dart:io';

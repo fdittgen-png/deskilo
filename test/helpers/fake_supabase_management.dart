@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/core/instance/instance_builder.dart';
 import 'package:deskilo/core/instance/management_api.dart';
 

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:firebase_core/firebase_core.dart';
 
 /// Owner-replaceable Firebase configuration seam (#426).

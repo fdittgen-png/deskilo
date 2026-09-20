@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #649 — the three numeric booking limits (`advance_horizon_days`,
 // `min_duration_minutes`, `max_duration_minutes`). The server has

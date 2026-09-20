@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1532 — the VAT regime and the mentions that go on the invoice with it
 // are one statement, so they are one write.

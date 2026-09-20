@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0166 — #937: the platform owner sees every workspace, and who owns
 -- the ones they are not in.
 --

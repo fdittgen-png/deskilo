@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #793 — the Membres list drew three identical `M` circles: Mathieu,
 // mathieu.bouchard and marion.blein.gauthier all rendered as one letter,

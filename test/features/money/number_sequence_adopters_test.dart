@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #928 — three documents that carried no number take one from the
 // framework: member numbers, VAT declaration numbers, payment

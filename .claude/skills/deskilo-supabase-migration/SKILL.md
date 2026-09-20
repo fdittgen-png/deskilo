@@ -6,7 +6,7 @@ description: Writing and applying a Supabase migration or RPC change for DesKilo
 
 Project `zwzbynivewivvjmripeb`; migrations numbered `NNNN_name.sql` in
 `supabase/migrations/` (next number: see memory "migrations through").
-Every file starts with `-- SPDX-License-Identifier: 0BSD` (lint), then
+Every file starts with `-- SPDX-License-Identifier: AGPL-3.0-or-later` (lint), then
 `-- risk: additive|transforming|destructive`, and ENDS with
 `select public.set_deskilo_schema_version(NNNN);` — its own number (#1312,
 lint `migration_version_marker_test`). Rebuild the bundle after:

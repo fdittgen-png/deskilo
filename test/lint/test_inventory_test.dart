@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1334 — the test inventory lists exactly the tests that exist.
 //
@@ -22,14 +22,14 @@ void main() {
   test('the header paragraph is the stated invariant', () {
     expect(
       statedInvariant(
-        '// SPDX-License-Identifier: 0BSD\n//\n// #1 — the rule.\n// Two lines.\n//\n// Detail.\nimport "x";',
+        '// SPDX-License-Identifier: AGPL-3.0-or-later\n//\n// #1 — the rule.\n// Two lines.\n//\n// Detail.\nimport "x";',
         sql: false,
       ),
       '#1 — the rule. Two lines.',
     );
     expect(statedInvariant('import "x";', sql: false), isEmpty);
     expect(
-      statedInvariant('-- SPDX-License-Identifier: 0BSD\n--\n-- 0216 — policies.\nbegin;',
+      statedInvariant('-- SPDX-License-Identifier: AGPL-3.0-or-later\n--\n-- 0216 — policies.\nbegin;',
           sql: true),
       '0216 — policies.',
     );

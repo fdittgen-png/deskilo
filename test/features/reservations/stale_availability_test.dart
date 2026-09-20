@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1305 S3 — offline, the Reserve hub says its availability is saved,
 // not live, and when it was saved; the banner leaves when a read succeeds.

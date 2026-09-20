@@ -1,11 +1,11 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../l10n/app_localizations.dart';
 
 /// #751 — the consent the app asks for before anything else, and shows
 /// again on demand (Settings → Privacy & data, the help §14, the wiki,
 /// privacy.html). Bump [kPrivacyPolicyVersion] whenever the TEXT
 /// changes: every account is then asked again, once.
-const kPrivacyPolicyVersion = '2026-08-30';
+const kPrivacyPolicyVersion = '2026-09-20';
 
 /// Where the same text lives outside the app.
 const kPrivacyWikiUrl =
@@ -56,7 +56,7 @@ List<PrivacySection> privacySections(AppLocalizations? l10n) => [
         l10n?.consentControllerBody ??
             'Each workspace is operated by its owner — your community — '
                 'who decides members, prices and payment providers. The '
-                'app is open source (0BSD) and published by Florian '
+                'app is free software (AGPL-3.0-or-later) and published by Florian '
                 'Dittgen (Germany); the backend is Supabase in the EU. '
                 'Online payments go through the provider the owner '
                 'enabled (PayPal, Stripe, Mollie, Wero) under that '

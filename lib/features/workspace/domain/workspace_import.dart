@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../plan/domain/desk.dart';
 import '../../plan/domain/floor_plan_rules.dart';
 import '../../plan/domain/office.dart';

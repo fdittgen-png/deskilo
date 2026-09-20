@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1235 — WCAG 2.2 AA as a build result, on every screen we can reach.
 //

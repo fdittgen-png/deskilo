@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #711 — globalization. The workspace owns the money and the clock; the
 // member owns how they read them. These pin the formatting seam, the

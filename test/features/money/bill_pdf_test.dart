@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The bill PDF renders every section, grows with its content, and covers €
 // and − in all five locales.

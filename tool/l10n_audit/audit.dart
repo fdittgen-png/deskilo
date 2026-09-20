@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1365 — every user-facing literal the app could show, found by reading
 // the source the way the rule is written.

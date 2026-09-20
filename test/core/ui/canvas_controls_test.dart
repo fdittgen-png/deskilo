@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Canvas zoom controls drive one shared transform: fit on load, clamp at
 // max scale, centre small content, glide when animated.

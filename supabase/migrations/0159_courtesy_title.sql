@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0159 — #912: the company leads, the person follows, with their title.
 --
 -- A client that is an organisation is addressed as the organisation —

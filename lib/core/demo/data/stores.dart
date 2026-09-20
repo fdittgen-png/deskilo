@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // ADR 0028 (#1373) — the in-memory stores the Demo environment runs on:
 // preferences, the active workspace, the cache, the badge, the files.

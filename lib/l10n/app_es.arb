@@ -1049,7 +1049,7 @@
       }
     }
   },
-  "aboutOpenSource": "Open source (licencia 0BSD)",
+  "aboutOpenSource": "Software libre (licencia AGPL-3.0)",
   "@aboutOpenSource": {
     "description": "About tile: licence (#560)"
   },
@@ -5642,7 +5642,7 @@
   "consentWhoTitle": "Quién puede ver qué",
   "consentWhoBody": "El acceso sigue los roles y se aplica en el servidor: las reservas las ve el espacio (el plano muestra la ocupación); los mensajes solo las personas de la conversación, sea cual sea su rol; tus finanzas y tu acuerdo comercial solo tú, los propietarios y los admins con el permiso correspondiente. Ajustes → Privacidad y datos nombra a las personas y lista quién miró realmente.",
   "consentControllerTitle": "Quién es responsable",
-  "consentControllerBody": "Cada espacio lo opera su propietario — tu comunidad —, que decide miembros, precios y proveedores de pago. La app es de código abierto (0BSD) y la publica Florian Dittgen (Alemania); el backend es Supabase en la UE. Los pagos en línea pasan por el proveedor que activó el propietario (PayPal, Stripe, Mollie, Wero) según sus condiciones.",
+  "consentControllerBody": "Cada espacio lo opera su propietario — tu comunidad —, que decide miembros, precios y proveedores de pago. La app es software libre (AGPL-3.0-or-later) y la publica Florian Dittgen (Alemania); el backend es Supabase en la UE. Los pagos en línea pasan por el proveedor que activó el propietario (PayPal, Stripe, Mollie, Wero) según sus condiciones.",
   "consentRetentionTitle": "Cuánto tiempo",
   "consentRetentionBody": "Mientras seas miembro. Cuando te vas y borras, tu perfil y tus mensajes desaparecen; los registros contables (facturas, pagos) se conservan el plazo legal, por identificador y no por nombre.",
   "consentRightsTitle": "Tus derechos",

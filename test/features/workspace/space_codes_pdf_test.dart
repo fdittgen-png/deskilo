@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The space QR sheet: badge-grid A4 pages, one card per desk, office
 // and level — chunked at ten cards per page.

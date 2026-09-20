@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #945 — the workspace's sites: each address, the levels that stand at
 // it, and the establishment's registration. The default site carries

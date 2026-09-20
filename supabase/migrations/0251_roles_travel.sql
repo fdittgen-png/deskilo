@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
 -- 0251 (#1505) — a workspace's own roles travel; who holds them does not.

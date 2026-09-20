@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #988/#990 — the deployment between the two sides of a pair: the
 // registry listed, requirements ticked along, the preview before the

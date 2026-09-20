@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1154 — the default-bands and preset ladders answer to the report-kind
 // registry. The finding of #864 had survived here: an id the ladder did

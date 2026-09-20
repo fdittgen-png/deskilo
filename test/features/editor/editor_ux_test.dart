@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1216 — the level canvas asked its user to hold six tools in their
 // head, on a row that showed four.

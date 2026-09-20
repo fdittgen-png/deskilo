@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0158 — #910: a client is not always a person.
 --
 -- `profile_full_name` returned '' for a client holding nothing but a

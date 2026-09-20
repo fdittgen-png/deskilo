@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0214 — #1241 step 3's foundation: a booking can be replayed safely.
 --
 -- A booking made with no network is lost today. The `SocketException`

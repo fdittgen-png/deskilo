@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #878 — the VAT review as code: statutory mentions per country, the
 // shape of a European VAT id, the readiness warning, and the VAT

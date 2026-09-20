@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Badge sheet (A4 revision): the one-time badge QR repeated at
 // credit-card size, 2×5 per A4 page — print once, cut, keep spares.

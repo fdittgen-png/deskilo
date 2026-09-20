@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #982 — the pending outcome: a request function's answer either
 // applied (an id) or was held (a pending event), and runGuarded turns

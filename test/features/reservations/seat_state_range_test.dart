@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // A seat's state over a window: overlap is start-inclusive and end-
 // exclusive, and inactive reservations never block.

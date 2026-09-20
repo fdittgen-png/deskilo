@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Auto check-in/out (#396, migration 0075): with the workspace's
 // autoCheckInOut flag on, a reservation nobody touched completes itself

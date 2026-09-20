@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #210: spacing tokens pinned like AppRadius — the token VALUES are part
 // of the visual contract, not free-floating magic numbers.

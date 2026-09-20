@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #711 — the surfaces of globalization: the member's Region & formats
 // section, the owner's currency and time-zone pickers, and the bank

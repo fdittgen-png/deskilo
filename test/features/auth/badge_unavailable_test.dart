@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1086 — `_invokeBadge` documents its own contract: "a missing
 // deployment (404) and a dead network are the SAME answer to the caller

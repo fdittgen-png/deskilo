@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1033 — the Actions sidebar is sorted alphabetically by workflow name,
 // so the name has to carry the grouping or fourteen workflows read as

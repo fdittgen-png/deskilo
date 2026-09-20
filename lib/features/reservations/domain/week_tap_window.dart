@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/time/workspace_time.dart';
 import '../../workspace/domain/booking_granularity.dart';
 import '../../plan/domain/half_day_windows.dart';

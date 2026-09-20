@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1232 — property-based tests, on the arithmetic that must never invent
 // or lose a cent.

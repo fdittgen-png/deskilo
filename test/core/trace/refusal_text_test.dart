@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1305 S2 — a refusal is not a fault, and every guarded action says which
 // refusal it met.

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../../core/vat/vat_treatment.dart';
 import '../../../workspace/presentation/member_labels.dart';
 import 'package:flutter/material.dart';

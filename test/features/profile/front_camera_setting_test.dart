@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The front-camera switch in Settings → Preferences: on by default,
 // toggling writes the device-local preference the badge scanner reads.

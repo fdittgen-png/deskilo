@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Screen-level quorum matrix (#134, epic #121): the #130 policy rules are
 // unit-tested in event_decider_test; these pin the events SCREEN wiring —

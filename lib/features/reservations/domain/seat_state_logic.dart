@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Pure seat-state computation (spec §4.1) — drives the live floor plan AND
 // the time scroller: pass any instant, get the plan at that moment.

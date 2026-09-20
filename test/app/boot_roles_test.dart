@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // App-start validation per role (#87): the app must reach the shell for
 // every role defined on the workspace membership (owner / admin / worker),

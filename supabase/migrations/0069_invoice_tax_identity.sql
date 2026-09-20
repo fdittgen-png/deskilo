@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- The e-invoice was structurally invalid: EN 16931 rule BR-CO-26 is
 -- FATAL and demands at least one seller identifier (BT-29 seller id,
 -- BT-30 legal registration id, BT-31 VAT id) — the app carried none, so

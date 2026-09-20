@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // SAF-T (0074) — the OECD's Standard Audit File for Tax, the industry XML
 // for handing a period of accounting data to an accountant. The invoicing

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1312 — the app refuses a server whose schema is older than it needs,
 // and ONLY that: a current or newer server boots as before, and a check

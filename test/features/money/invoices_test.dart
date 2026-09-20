@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Invoices (0060/0061/0062): an IMMUTABLE archive whose positions are
 // DERIVED — the issue form is member + month + a read-only preview of

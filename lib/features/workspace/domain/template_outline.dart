@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1303 S3 — what a template sets up, before any workspace exists, as the
 // server computed it (`template_outline`, 0239).

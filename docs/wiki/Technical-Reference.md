@@ -17,7 +17,7 @@ contribute).
 | iOS / iPadOS | **15.0** floor (`ios/Podfile`) |
 | Desktop | macOS (DMG) and Windows (MSI) |
 | Web | Flutter web, published to GitHub Pages on demand |
-| Licence | **0BSD** — the app, its assets and its migrations; the embedded Roboto faces are Apache-2.0 |
+| Licence | **AGPL-3.0-or-later** — the app, its assets and its migrations; the embedded Roboto faces are Apache-2.0. An app-store exception keeps the iOS build lawful, and a commercial licence exists for a company that would rather not publish its changes (ADR 0031) |
 | Size of the thing | 190 migrations · 98 feature flags · 59 routes · 369 test files |
 
 ## The stack, and why each piece is there
@@ -160,7 +160,7 @@ The 18 ADRs in `docs/decisions/`, newest first: system columns (0018),
 cash-basis exigibility (0017), reverse charge (0016), the VAT compliance
 review (0015), identity on the profile (0014), positioned report layouts
 (0013), F-Droid via a FOSS push package (0012), notifications first with
-FCM (0011), e-invoice transmission (0010), the 0BSD relicence (0009),
+FCM (0011), e-invoice transmission (0010), the AGPL relicence (0031), the 0BSD one it supersedes (0009),
 percentage bands for billing v2 (0008), five locales (0007),
 quota-and-overage billing (0006), the grid floor-plan model (0005), the
 first licence (0004), no Firebase or GMS (0003), Supabase as the backend

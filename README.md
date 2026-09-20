@@ -4,10 +4,10 @@
 
 DesKilo helps small coworking communities answer three everyday questions: **Where can I work? What do I owe? Who needs to approve this?** It connects a visual floor plan with membership allowances, member balances, shared expenses and approval workflows, so the people running the space can keep daily activity and its financial consequences together.
 
-Built for independent spaces, associations and member-run collectives that want control over their rules and data. Open source under the permissive **0BSD license**, with a Flutter app and a backend you can run on your own Supabase instance. Currently in **beta and active dogfooding**.
+Built for independent spaces, associations and member-run collectives that want control over their rules and data. Free software under the **AGPL-3.0-or-later**, with a Flutter app and a backend you can run on your own Supabase instance. Free for associations, collectives and individuals; a for-profit company that modifies it either publishes its changes or buys a [commercial licence](COMMERCIAL-LICENCE.md). Currently in **beta and active dogfooding**.
 
 [![Quality checks](https://github.com/fdittgen-png/deskilo/actions/workflows/quality.yml/badge.svg?branch=master)](https://github.com/fdittgen-png/deskilo/actions/workflows/quality.yml)
-[![License: 0BSD](https://img.shields.io/badge/License-0BSD-green.svg)](LICENSE)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 [![Flutter](https://img.shields.io/badge/Flutter-3.44.9-blue.svg)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.12.2-blue.svg)](https://dart.dev)
 
@@ -124,4 +124,4 @@ DesKilo is a sibling project of [Sparkilo](https://github.com/fdittgen-png/tanks
 
 ## License
 
-[0BSD](LICENSE) © 2026 Florian DITTGEN
+[AGPL-3.0-or-later](LICENSE) © 2026 Florian DITTGEN — with an [app-store exception](LICENSE-EXCEPTIONS.md), a [commercial licence](COMMERCIAL-LICENCE.md) for companies that would rather not publish their changes, and a [trademark policy](TRADEMARK.md) for the name.

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Workspace-wide developer mode (#419, migration 0081): set by
 // owner/admins, applies to EVERY member. The switch is an admin

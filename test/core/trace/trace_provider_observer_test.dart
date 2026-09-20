@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #742 — a provider that fails leaves a line in the trace, whichever
 // provider it is; and the app's root scope carries the observer.

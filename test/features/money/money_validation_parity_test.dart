@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #816 (migration 0144) — the validation framework and the role gates on
 // the money flows keep what the guide promises. The SQL half is pinned

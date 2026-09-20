@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/time/workspace_time.dart';
 
 /// #1082 — the instant a member MEANT when they picked [time] on [day].

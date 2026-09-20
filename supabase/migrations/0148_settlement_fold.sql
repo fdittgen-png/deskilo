@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0148 — #831: a settlement carries its sources' LINES, and a settled
 -- source is documentation only.
 --

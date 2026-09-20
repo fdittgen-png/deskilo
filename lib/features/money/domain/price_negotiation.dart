@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// #739 — one deal: what was negotiated (each part optional — the
 /// tariff where absent), from when, in which state.

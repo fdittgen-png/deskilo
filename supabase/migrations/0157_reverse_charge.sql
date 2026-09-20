@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0157 — #895: intra-EU B2B is the customer's tax, not the seller's.
 --
 -- A VAT-registered seller invoicing a BUSINESS in another member state

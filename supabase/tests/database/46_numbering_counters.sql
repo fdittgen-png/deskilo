@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #1338 — an issued counter only moves forward, only through the server, and an issued number is never printed twice.
 --

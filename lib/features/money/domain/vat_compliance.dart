@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #878 — the VAT rules the review pinned down as code: the mention a
 // member state expects on an exempt or out-of-scope invoice when the

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1282 — a builtin template's feature profile, written as intent and
 // expanded into every flag.

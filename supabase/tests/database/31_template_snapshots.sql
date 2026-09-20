@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #1276 S2 — a template carries configuration, published through an
 -- allow-list, applied as a merge, and it remembers being applied.

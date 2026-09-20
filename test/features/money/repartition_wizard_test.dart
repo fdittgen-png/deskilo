@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #934 — the guided repartition proposes shares by subscription
 // percentage that add up to the cost exactly, and remembers the rule.

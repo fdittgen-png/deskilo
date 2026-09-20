@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #611 — seat fill colours ANIMATE on a state change: the canvas host
 // detects the diff, runs one finite lerp and passes it to the (pure)

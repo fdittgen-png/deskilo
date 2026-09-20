@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Owner online-payments configuration (0047): enter provider credentials
 // from the app; secrets go to the deny-all table via an owner RPC and are

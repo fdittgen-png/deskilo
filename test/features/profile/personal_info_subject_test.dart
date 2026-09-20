@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1177 — the form's hints are written in the person of their SUBJECT.
 // The same widget serves my own profile and a managed member's, and

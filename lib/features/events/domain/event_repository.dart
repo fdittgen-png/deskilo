@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'event_decision.dart';
 import 'validation_policy.dart';
 import 'workspace_event.dart';

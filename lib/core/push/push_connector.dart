@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The transport seam lives in the `deskilo_push` package since #716, so
 // the F-Droid build can swap the whole transport by swapping one path

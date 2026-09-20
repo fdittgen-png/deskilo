@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #211 (epic #205): touch-target guard for the compact header controls.
 // Each audited surface (Reserve hub, Calendar tab incl. the day timeline,

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Platform-abstraction lint: `Platform.isX` belongs behind a `core/`
 // seam, never inline in feature or app code.

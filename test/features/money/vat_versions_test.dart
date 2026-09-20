@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #985 — VAT like an ERP: dated rate versions, one tax point, the
 // counterparty dimension. The Dart twins of migration 0182, the

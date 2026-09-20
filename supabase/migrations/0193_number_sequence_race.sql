@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0193 — #1081: two members joining at the same moment, one gets no number.
 --
 -- `next_document_number` seeded the sequence row and then locked it:

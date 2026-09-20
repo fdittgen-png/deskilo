@@ -1833,7 +1833,7 @@ La tua schermata personale, dall'alto in basso:
 - **La mia iscrizione** — il tuo posto in *questo* spazio: **Stato** — una riga libera (40 caratteri) mostrata nell'elenco; **Periodo di prenotazione predefinito** (la finestra su cui si aprono le schede di prenotazione, così la tua solita mezza giornata o il tuo solito da–a è già compilato); le tue **Condizioni di pagamento**; **Documenti** — la biblioteca documenti dello spazio (§11d). L'elenco è la destinazione **Membri** della barra inferiore, non una voce qui.
 - **Questo spazio**, **Amministrazione** e **Governance** — solo per chi detiene il permesso che ogni voce richiede (§8): come funziona lo spazio, la gestione dei suoi membri e dispositivi, e che cosa è lo spazio.
 - **Avanzate** — questo dispositivo: il **server** con cui parla, lo stato delle sue notifiche push, **Scansiona con la fotocamera frontale** (per i tablet a parete), l'interruttore della **Modalità sviluppatore** a livello di spazio, la schermata delle tracce **Sviluppatore** (§8 pagamenti).
-- **Aiuto e informazioni** — **Aiuto**, la guida integrata nella tua lingua; la versione dell'app, l'autore (Florian DITTGEN), la licenza open source (0BSD) con il codice su GitHub, l'informativa sulla privacy, un link per segnalare bug, e come **sostenere il progetto** (PayPal, Revolut).
+- **Aiuto e informazioni** — **Aiuto**, la guida integrata nella tua lingua; la versione dell'app, l'autore (Florian DITTGEN), la licenza di software libero (AGPL-3.0-or-later) con il codice su GitHub, l'informativa sulla privacy, un link per segnalare bug, e come **sostenere il progetto** (PayPal, Revolut).
 - **Esci**.
 
 ### Il tuo server — puntare l'app al Supabase della tua comunità

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1307 S4 — the provenance half of the Supabase repository, on its own
 // file like the template library (#1120): the repository is at its length

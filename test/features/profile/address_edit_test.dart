@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #886 — the personal-information editor on the settings surface: what
 // a person types here is what every document prints in the billed-to

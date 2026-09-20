@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Messages on WhatsApp (field request): a member who shared a WhatsApp
 -- number can OPT IN to receive their DesKilo messages there too — the
 -- text as the in-app messenger reads it (reference tokens as labels),

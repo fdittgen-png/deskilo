@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- DesKilo events + confirmation protocol (Epic #6, issue #56, spec §8).
 -- Applied to the hosted reference project on 2026-07-07.
 

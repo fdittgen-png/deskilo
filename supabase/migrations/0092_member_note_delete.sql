@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Swipe-to-delete for member notes (#467): the sender may delete what
 -- they sent; the DIRECT recipient may delete what they received. A
 -- received broadcast stays — deleting it would erase it for every

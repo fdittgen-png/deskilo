@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #869 — a printed invoice is folded into a window envelope, so the
 // recipient has to land inside the window: a field 85 × 45 mm, 45 mm

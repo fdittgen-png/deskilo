@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Auto check-in/check-out (#396). A reservation nobody touched stays
 -- 'reserved' for ever, and one nobody closed stays 'checked_in' — the
 -- spec's §4.4 auto check-out was never enforced. For communities that

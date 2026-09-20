@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- DesKilo seat blocking from the Plan screen (issue #161). NOT YET applied
 -- to the hosted reference project.
 --

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #1452 — a captured payment names the credit it posted, and one credit
 -- settles one payment.

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1455 — digests of the migrations that were applied to the reference
 // project, and the two things a baseline lets a lint say: a recorded file

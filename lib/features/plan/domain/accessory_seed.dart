@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// The amenity-key → English display-name mapping migration
 /// 0022_accessories.sql used to seed each workspace's accessory catalog

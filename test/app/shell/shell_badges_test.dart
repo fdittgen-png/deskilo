@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1306 S3 — every badge opens the content it counts, and a workspace
 // switch never leaves the shell on a destination the new workspace hides.

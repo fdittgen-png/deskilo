@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #840 — the configured rule holds, and the screen where it is set says
 // what it is. Nobody validates their own event; the single exception

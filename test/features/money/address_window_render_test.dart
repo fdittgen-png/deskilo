@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #869 — the geometry test pins the numbers; this one proves the
 // RENDERED sheet honours them. It reads the produced PDF back and

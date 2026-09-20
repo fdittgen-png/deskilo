@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0161 — #914/#915: who may administer a managed profile, and what the
 -- person sees when they take it over.
 --

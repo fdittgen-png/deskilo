@@ -1,5 +1,5 @@
 import '../../../core/data/system_columns.dart';
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #937 — what the PLATFORM owner sees of a workspace they are not in:
 // enough to recognise it and to know whom to write to, nothing of what

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Floor-plan semantics (#402, wiki 26): without a semanticsBuilder the
 // app's core surface is one unlabeled picture to TalkBack/VoiceOver.

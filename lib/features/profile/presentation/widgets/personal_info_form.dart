@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #886 — THE identity form. A person edits their own personal
 // information here (Settings → Personal information); an admin edits a

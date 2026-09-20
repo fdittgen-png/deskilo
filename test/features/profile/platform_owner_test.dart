@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #937 — the platform owner's overview: the rows the RPCs return, and
 // the SQL twin that refuses everyone else and insists on an e-mail.

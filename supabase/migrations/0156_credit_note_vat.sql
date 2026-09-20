@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0156 — #894: a reversal carries the VAT it gives back.
 --
 -- The breakdown counted CHARGES only (`amount_cents > 0`), and a credit

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- The workspace DOCUMENT LIBRARY (#500): statutes, user guides,
 -- financial statements, meeting minutes… Federated by LINK to whatever
 -- document system the workspace already uses — Google Drive, OneDrive,

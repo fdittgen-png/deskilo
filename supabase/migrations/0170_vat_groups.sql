@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0170 — #947: VAT groups. An item follows the law of its category.
 --
 -- vat_rates held a percentage and an EN 16931 category. What the law

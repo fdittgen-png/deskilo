@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The workspace's LEGAL IDENTITY (0069) — the data EN 16931 cannot do
 // without. The screen asks for the VAT regime first because the regime

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Generates the business catalogue without importing Flutter.
 import 'dart:convert';
 import 'dart:io';

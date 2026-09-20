@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0173 — #953: a draft declaration on a workspace that charges no VAT is
 -- an orphan of a gate that came later (save_vat_declaration refuses one
 -- now). A FILED declaration is never touched. One row on the pilot.

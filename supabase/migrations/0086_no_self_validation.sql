@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- No self-validation, ever (#434). Owner rule: "when validating, only
 -- another person can validate; no person can validate himself his own
 -- event." respond_to_event v-next drops the #107 solo escape hatch —

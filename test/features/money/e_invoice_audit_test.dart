@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #941 — what an audit of the e-invoice found missing, pinned:
 // the legal registrations with their scheme (BT-30 / BT-47), the

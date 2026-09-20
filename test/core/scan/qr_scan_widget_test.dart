@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The production QR scanner's decode parameters (#564): the field
 // report was a card QR clearly visible in the preview that never

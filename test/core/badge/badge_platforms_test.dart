@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The badge on every platform (#444): the pure overlay mapping for
 // Windows, and the committed .ico assets it points at — a mapping to a

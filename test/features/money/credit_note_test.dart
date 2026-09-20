@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // NEGATIVE invoices are CREDIT NOTES the WORKSPACE pays (#508): no
 // reminders, no member-payment matching — the workspace records the

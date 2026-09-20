@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The profile-photo editor on the settings surface (0038): choosing an
 // image uploads it through the repository and marks the profile; removing

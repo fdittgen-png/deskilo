@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #802 — a subscription is paid IN ADVANCE, so its invoice has to exist
 // before the month it covers; what the month actually cost cannot be

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #510 — the payment process as the MEMBER reads it: once an invoice
 // covers a month, the DOCUMENT decides settled/outstanding. The payment

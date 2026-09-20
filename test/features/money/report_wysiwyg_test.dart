@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Report WYSIWYG editor + image library (#488): the `![name]` markup,
 // the lossless visual↔markup round-trip, the visual rows editing the

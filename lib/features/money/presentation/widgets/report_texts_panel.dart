@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #880 — the owner's texts, per language: a key, a value, and nothing
 // about WHERE it prints — that is the design's business

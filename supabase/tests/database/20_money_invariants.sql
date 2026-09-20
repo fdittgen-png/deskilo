@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #1226/#1229/#1231 — the two money guards nothing had ever executed.
 --

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1061 — ReportStrings is the seam between the ARB and the document
 // builders. Two things must hold: the English defaults ARE the English

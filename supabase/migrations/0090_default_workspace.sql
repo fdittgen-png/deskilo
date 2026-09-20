@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Server-synced default workspace (#458): the #322 default-profile
 -- choice was device-local shared prefs, so it vanished on reinstall and
 -- never followed the user across platforms. It is the USER's choice —

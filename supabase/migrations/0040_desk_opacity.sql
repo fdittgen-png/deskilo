@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Configurable desk transparency: the owner can make desk fills
 -- translucent so a level's background photo shows through the drawn
 -- tables. Applied to the hosted reference project on 2026-07-20.

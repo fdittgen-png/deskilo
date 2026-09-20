@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Workspace language + translated invitation templates (#486).
 --
 -- default_locale: the workspace's own language ('' = unset → the

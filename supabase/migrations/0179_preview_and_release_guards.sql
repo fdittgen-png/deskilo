@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0179 — #979/#980: two functions any signed-in user could call.
 --
 -- release_invoice_payment (0144) is the helper respond_to_event uses to

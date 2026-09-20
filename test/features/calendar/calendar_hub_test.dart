@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // THE CALENDAR HUB (#718): the calendar is a selector; what it selects
 // is one feed of every dated fact the member may see, each row leading

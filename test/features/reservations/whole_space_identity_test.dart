@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #670 — two field reports about whole-space bookings, one visual and
 // one a dead end.

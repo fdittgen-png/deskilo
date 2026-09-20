@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #731 SUPPLIES — an expense that puts something on the shelf. A member
 -- buys vacuum bags or coffee capsules for the space, submits the expense

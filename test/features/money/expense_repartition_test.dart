@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #828 — the distribution sheet: the shares previewed to the cent for
 // every key, a reversal as credits, the booking landing as adjustment

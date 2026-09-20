@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Report-language resolution (#496): member's preferred language →
 // per-language template overlay → workspace language → country

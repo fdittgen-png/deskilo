@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #903 — the day on ONE seat. When a seat carries more than one booking
 // the plan cannot say who has it when: this sheet lays the open day out

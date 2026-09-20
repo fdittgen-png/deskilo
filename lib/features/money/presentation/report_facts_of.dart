@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1061 slice two — the ONLY place the document facts are read from the
 // providers. Each gatherer is the `ref.read` prelude its builder used to

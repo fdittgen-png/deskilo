@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Booking windows must anchor to the WORKSPACE timezone, not the
 // device's — found the hard way: a US/Pacific laptop booking a

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #161 — who may block seats: the owner always, an admin only with the
 // feature, a worker or inactive member never.

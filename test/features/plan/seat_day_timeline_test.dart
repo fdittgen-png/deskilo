@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #903 — a seat booked for PART of the day must look part-booked, and a
 // seat several people share must say who has it and when. One

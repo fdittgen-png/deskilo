@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1077 — `Currencies.selectable` offers JPY, KRW and ISK, which have NO
 // minor unit: 1 yen is 1 yen, not 100 of anything. `parseCentsInput` and

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'workspace_feature.dart';
 
 /// #1333 — the feature registry as the database reads it.

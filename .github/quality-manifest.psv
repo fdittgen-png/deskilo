@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: 0BSD
+# SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # #1446 C0 — every row the quality report must contain, and where its
 # evidence comes from. `scripts/quality_report.sh` fails when a row named

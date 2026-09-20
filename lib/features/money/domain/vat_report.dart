@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #878 — the VAT REPORT: every taxable position of a period, from the
 // invoices' frozen `vat_totals` (one entry per rate, as issued) — the

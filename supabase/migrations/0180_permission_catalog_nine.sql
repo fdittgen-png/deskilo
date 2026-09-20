@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0180 — #982: nine permissions. The matrix now guards what "is admin"
 -- and "is owner" guarded: sites, tariffs and billing rules,
 -- reservations of others, the kiosk and badges, exports, document

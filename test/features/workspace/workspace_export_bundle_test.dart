@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1310 S2 — the workspace export describes itself: one ZIP holding the
 // workbook, a manifest whose row counts equal the rows actually written,

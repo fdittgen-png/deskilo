@@ -1,5 +1,5 @@
 import '../../../core/data/system_columns.dart';
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// One online-payment attempt (migration 0045): the provider order the
 /// app started and what became of it. Admin-readable for diagnostics and

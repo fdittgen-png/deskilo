@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Booking ranges as humans read them (field report: a full-day booking
 // showed as '00:00 – 00:00') and the repetition modality (0034).

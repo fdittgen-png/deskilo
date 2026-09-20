@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The month calendar: today preselected, mine and others' markers, the
 // Everyone view, series cancellation and pull-to-refresh.

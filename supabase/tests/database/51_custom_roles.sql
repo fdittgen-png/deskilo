@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #1287 — roles a workspace defines itself. ADR 0029: a custom role is an
 -- ADDITIVE grant. It never removes a permission and never replaces the

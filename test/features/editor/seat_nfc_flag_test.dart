@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #604 — the chair-tag functionality (#585) rides the nfcSeatTags flag
 // (default ON), and QR badge issuance rides qrBadges beside nfcBadges:

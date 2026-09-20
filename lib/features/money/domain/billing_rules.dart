@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/time/calendar_days.dart';
 
 /// What an invoice CHARGES FOR (#802, migration 0142).

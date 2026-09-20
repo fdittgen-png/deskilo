@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Deleting a PAST or CHECKED-IN reservation is a REQUEST (#492): the
 // member never deletes directly — the button says so, the dialog says

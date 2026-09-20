@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0133 — the calendar hub (#718) and the access log behind it (#719).
 --
 -- ONE QUESTION, ONE ANSWER. "What happened, or is due, between these

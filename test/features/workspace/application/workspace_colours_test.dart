@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1289 S2 — the decision, without a screen.
 import 'package:deskilo/features/workspace/application/workspace_colours.dart';

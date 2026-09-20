@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Drawing on the level canvas creates offices and desks only where the
 // placement rules allow, and deleting keeps the view.

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #600 (migration 0116) — the reservation/check-in edges a live-RPC
 // test matrix surfaced. A check-out BEFORE the reserved slot's start

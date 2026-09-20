@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #552: the WhatsApp channel becomes configurable FROM THE APP — the
 -- 0106 mirror needed WHATSAPP_TOKEN + WHATSAPP_PHONE_ID as project env
 -- secrets, an operator-only step no owner could perform (the #300

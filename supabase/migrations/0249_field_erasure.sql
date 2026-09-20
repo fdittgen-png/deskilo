@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
 -- 0249 (#1288 S3) — erasure reaches the answers, and stops there.

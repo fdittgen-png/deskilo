@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #210: WCAG contrast regression guard for the seat-state palette. The
 // floor-plan painter draws occupant labels in `onSurface` over a seat

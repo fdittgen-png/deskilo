@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
 -- 0256 (#1562) — the repeat is built from the window the member CHOSE.

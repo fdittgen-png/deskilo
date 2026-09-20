@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1140 — after #1077 every amount an editor reads or shows goes through
 // `parseCentsInput` / `centsToMajor`, which know the currency's minor

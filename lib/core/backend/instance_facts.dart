@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1309 — what a device can say about its instance without holding any
 // credential. Pure Dart: derived from the host alone.

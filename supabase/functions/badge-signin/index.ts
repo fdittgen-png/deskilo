@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #662 — sign in by scanning an RFID badge. The tag IDENTIFIES, a PIN
 // CONFIRMS, and only this function can turn the pair into a session.

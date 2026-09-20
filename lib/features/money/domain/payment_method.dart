@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// How a recorded payment was made (spec §7, #154). Recording only — the
 /// app never processes payments (no PSP; F-Droid-clean). The wire name is

@@ -1,4 +1,4 @@
-<!-- SPDX-License-Identifier: 0BSD -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 # Performance budgets: what is measured, what is not, and why
 
 #1236. Before this, everything that measured anything in this repository

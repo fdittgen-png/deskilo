@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #828 — split a shared cost over the members; the shares land as
 // adjustment lines on each member's next usage invoice, a reversal

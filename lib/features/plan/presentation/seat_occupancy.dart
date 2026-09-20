@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Shared seat-occupancy derivations of the read-only plan canvases: which
 // reservation holds a seat over the browsed window, the occupant's label,

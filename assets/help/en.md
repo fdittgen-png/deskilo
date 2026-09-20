@@ -1807,7 +1807,7 @@ Your personal screen, top to bottom:
 - **My membership** — your standing in *this* workspace: **Status** — a free line (40 characters) shown in the directory; **Default booking period** (the window the booking sheets open on, so your usual half-day or from–to is already filled in); your **Payment conditions**; **Documents** — the workspace's document library (§11d). The directory itself is the **Members** destination of the bottom bar, not an entry here.
 - **This workspace**, **Administration** and **Governance** — only for whoever holds the permission each entry needs (§8): how the space works, running its people and devices, and what the space is.
 - **Advanced** — this device: the **server** it talks to, its push-notification status, **Scan with the front camera** (for wall tablets), the workspace-wide **Developer mode** switch, the **Developer** trace screen (§8 payments).
-- **Help & about** — **Help**, the built-in guide in your language; the app version, the author (Florian DITTGEN), the open-source licence (0BSD) with the source on GitHub, the privacy policy, a bug-report/feature link, and how to **support the project** (PayPal, Revolut).
+- **Help & about** — **Help**, the built-in guide in your language; the app version, the author (Florian DITTGEN), the free-software licence (AGPL-3.0-or-later) with the source on GitHub, the privacy policy, a bug-report/feature link, and how to **support the project** (PayPal, Revolut).
 - **Sign out**.
 
 ### 11k. Your own texts, per language (#880)

@@ -23,7 +23,7 @@
       }
     }
   },
-  "aboutOpenSource": "Open source (licencia 0BSD)",
+  "aboutOpenSource": "Software libre (licencia AGPL-3.0)",
   "@aboutOpenSource": {
     "description": "About tile: licence (#560)"
   },

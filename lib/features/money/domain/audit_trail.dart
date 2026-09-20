@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /// The **audit trail** (#669): every money event of the period, in the
 /// order it happened, with who did it.
 ///

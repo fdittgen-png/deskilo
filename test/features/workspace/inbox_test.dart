@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // THE INBOX (#702): conversations and alerts — two faces of one
 // destination, where they used to be a tab and an app-bar bell. (Members

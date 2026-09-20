@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0177 — #916: the exported space IS the space.
 --
 -- Schema v3 of the workspace file adds a <configuration> section. Two

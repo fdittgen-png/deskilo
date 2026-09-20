@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0127 — `my_conversations.last_at` is never null, and an empty direct
 -- thread is visible (#692).
 --

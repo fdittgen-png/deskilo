@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1327 — process state is derived, never stored: Active, Partial,
 // Available and Needs attention follow the audit's definitions over the

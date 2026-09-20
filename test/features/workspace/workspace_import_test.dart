@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #180 — the XML import maps plans and catalogues to the RPC jsonb shapes,
 // pinned to their migrations.

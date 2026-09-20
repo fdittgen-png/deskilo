@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #992 — the six system columns as one value: read tolerantly, equal by
 // value, never written by the client, and a breach of the server's

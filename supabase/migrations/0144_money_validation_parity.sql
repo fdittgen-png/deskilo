@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0144 — #816: the validation framework and the role gates on the money
 -- flows, made to keep what the guide promises: the server enforces the
 -- SAME matrix the UI shows, nobody validates their own event, and a

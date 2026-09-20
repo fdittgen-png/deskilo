@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
 -- 0254 (#1550) — a space that HAS a twin is shown as having one.

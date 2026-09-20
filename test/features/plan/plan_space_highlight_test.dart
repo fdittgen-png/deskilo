@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #576: "Show on plan" highlights WHAT was selected — a table, an
 // office or the whole floor get the same tertiary ring the seat jump

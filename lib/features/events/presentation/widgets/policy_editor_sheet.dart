@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The editor behind one validation rule. It lived inside
 // validation_settings_screen.dart until #840 added the chained-validation

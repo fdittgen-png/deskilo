@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- DesKilo #155 — per-workspace payment instructions (spec §7: "Optional
 -- per-workspace payment instructions (IBAN, reference format) are shown
 -- on unpaid statements"). One jsonb blob like feature_flags: the owner

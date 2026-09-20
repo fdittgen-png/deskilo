@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0175 — #960: detailed invoices issue again.
 --
 -- 0169 added the site name to each attendance row of a detailed invoice

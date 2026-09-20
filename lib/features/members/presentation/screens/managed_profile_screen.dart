@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #887 — a managed member's identity, created or edited by an admin
 // with THE identity form (PersonalInfoForm): the same fields, in the

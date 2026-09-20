@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1234 — the second command of the application layer. ADR 0024 named
 // this one: "`reserve_seat_actions.dart` still calls repositories for

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1147 / #1089 — booking_rules is one jsonb column and it is written ONE
 // key at a time, merged in the database (set_booking_rule, 0195). A

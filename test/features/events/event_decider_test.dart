@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Who decides a pending event: never its submitter, never a worker, and no
 // solo escape hatch (#107, #434).

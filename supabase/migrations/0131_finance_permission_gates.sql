@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0131 — who may read another member's money is a PERMISSION, not a
 -- role (#709).
 --

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #842 — a message can point at an alert, at the validation trail of
 // one, and at the financial documents people actually argue about. Every

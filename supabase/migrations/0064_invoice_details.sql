@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Detailed invoices (field request): "if requested, a list of all
 -- details (consumed services, payments and check-ins)". The annex is
 -- part of the IMMUTABLE document, so it is SNAPSHOTTED at issue time

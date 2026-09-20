@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Whether the workspace is open on a day: open weekdays minus closure
 // days, pinned to the server's refusal message.

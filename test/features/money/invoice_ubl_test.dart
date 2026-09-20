@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // EN 16931 e-invoice (0066/0069): the UBL 2.1 document maps the app's
 // SOLDE model onto the norm — charges are InvoiceLines, confirmed

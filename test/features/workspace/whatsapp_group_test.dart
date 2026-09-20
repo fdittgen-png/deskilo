@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The workspace side of #231: the whatsappGroup field and its #232
 // contract (whatsappGroupUri null when no group is configured), the

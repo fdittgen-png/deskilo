@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #1451 — the Workspace settings Save commits every field or none, never
 -- overwrites a change it did not see, and a retried Save is not a

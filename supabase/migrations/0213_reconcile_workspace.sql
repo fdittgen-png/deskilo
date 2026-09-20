@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0213 — #1230: a reconciliation that runs, instead of a note saying the
 -- figures were checked by hand.
 --

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
 -- 0230 (#1276 S3) — one change-set for a deployment and a template, and a

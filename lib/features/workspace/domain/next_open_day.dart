@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'closure_day.dart';
 
 /// The next day this workspace is open, at or after [from] (#1196).

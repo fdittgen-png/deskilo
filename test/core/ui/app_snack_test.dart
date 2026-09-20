@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #209: semantic snackbars. The three variants must float and carry their
 // severity color (error = colorScheme.error, success = the #196 status

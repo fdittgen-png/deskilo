@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Owner RFID/NFC configuration (0046): the workspace toggle + this
 // device's NFC status. Registration itself is per member (see the members

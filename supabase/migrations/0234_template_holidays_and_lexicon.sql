@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
 -- 0234 (#1282 S3) — a template can bring the country's public holidays and

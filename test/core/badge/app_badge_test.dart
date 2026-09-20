@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // App-icon badge (#426): the pending-confirmations count lands on the
 // launcher icon whenever the count changes — the same number as the

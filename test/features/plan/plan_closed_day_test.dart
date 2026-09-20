@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #186: on days the workspace is closed (weekday not open / closure day)
 // the plan must say so — banner, muted seats, gated taps — and booking

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #875 — the layout panel says which engine draws the document, and
 // offers exactly the actions that make sense for that state.

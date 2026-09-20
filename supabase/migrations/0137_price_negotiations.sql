@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #739 PRICE NEGOTIATIONS — the workspace tariff becomes the DEFAULT,
 -- and a member may have their own deal on top of it: a monthly fee, an

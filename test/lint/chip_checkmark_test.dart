@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1191/#1192 — a Chip that carries an `avatar:` must not ALSO draw the
 // selected checkmark. Material paints both, one on top of the other: the

@@ -1,7 +1,7 @@
 # DesKilo — Coworking Community App — Product Specification
 
 **Status:** v1.1 — validated by owner (2026-07-07) · **Author:** Florian DITTGEN
-**Repo:** `github.com/fdittgen-png/deskilo` · **License:** 0BSD
+**Repo:** `github.com/fdittgen-png/deskilo` · **License:** AGPL-3.0-or-later
 **Product name:** **DesKilo** (sibling of *Sparkilo*, the tankstellen fuel-price app)
 
 This specification is deliberately free of implementation detail. The framework, visual identity, and working methodology are inherited from the **tankstellen/Sparkilo** project (see §12–§15).
@@ -269,7 +269,7 @@ A dedicated editor space for drawing the physical workspace on a **grid of small
 > not notarised is refused outright and the right-click → Open bypass is
 > gone. A **browser** target was also added (opt-in GitHub Pages deploy),
 > with NFC and camera QR scanning guarded off.
-- **License**: 0BSD (BSD Zero Clause), SPDX headers in every file.
+- **License**: AGPL-3.0-or-later, SPDX headers in every file, with an app-store exception and a commercial licence (ADR 0031).
 - **No** Google Play Services, **no** Firebase, **no** third-party tracking, **no** GPL dependencies (permissive-compatibility rule).
 
 ## 13. Technical framework (level of principle only — inherited from tankstellen)

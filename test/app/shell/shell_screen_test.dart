@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The shell's destinations: localized labels, branch switching with the
 // app-bar title, the settings action and tap targets.

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // create-payment-order — starts a REAL online payment for a member's bill
 // (docs/design/payments-integration.md). Providers: PayPal (Orders v2),

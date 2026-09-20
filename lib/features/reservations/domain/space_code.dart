@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// The printable space QR codes (field request): every seat
 /// (workstation), desk, office and level carries a QR; scanning it in

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #969 — the navigation preference: persisted per device, applied to
 // the shell instantly, and never a choice on the web.

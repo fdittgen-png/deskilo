@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Mahnwesen (#472): parameterizable dunning rules per workspace. The
 -- client derives reminder SUGGESTIONS from them; nothing fires
 -- automatically — a human always sends. Keys (client-defined, defaults

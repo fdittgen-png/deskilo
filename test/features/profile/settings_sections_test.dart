@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Structural test for the sectioned settings list (#188, regrouped by
 // ownership in #1307): Profiles on top, then My account, My membership,

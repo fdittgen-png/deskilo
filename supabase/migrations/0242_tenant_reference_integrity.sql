@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
 -- 0242 (#1453) — a financial record and the record it points at belong to

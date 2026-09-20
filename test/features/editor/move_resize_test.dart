@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Moving and resizing plan elements carries their contents and reverts
 // anything that would break containment.

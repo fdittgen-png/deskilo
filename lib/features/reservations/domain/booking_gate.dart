@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/time/work_hours.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../plan/domain/seat.dart';

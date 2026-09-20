@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #562: re-requesting a deletion SUPERSEDES the pending request instead
 -- of erroring. 0097 raised 'deletion already requested' — but from the
 -- member's side a second demand means "my reason changed / nobody

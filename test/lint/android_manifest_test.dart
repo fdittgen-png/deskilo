@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Manifest pins (#436): POST_NOTIFICATIONS was silently missing and
 // Android 13+ suppressed every notification the app ever posted — no

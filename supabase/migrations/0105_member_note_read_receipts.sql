@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Read receipts for member notes (field request): the sender's message
 -- list shows a small check — grey once delivered, blue once the DIRECT
 -- recipient has read it. read_at is stamped by the recipient's app via

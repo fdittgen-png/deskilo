@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #1276 S1 — the configuration import has a mode, and the default is the
 -- old behaviour.

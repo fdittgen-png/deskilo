@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- VAT follows the DECLARED REGIME (#484): only a workspace declared
 -- vat_registered ever stamps a rate onto a charge. Before this, VAT was
 -- driven purely by whether rates existed — an exempt workspace (a

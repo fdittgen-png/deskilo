@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- E-invoice test environments (#393). Testing a transmission used to mean
 -- pointing the ONE configured endpoint at the test platform and
 -- remembering to point it back — an error-prone swap on production

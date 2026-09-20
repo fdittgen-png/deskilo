@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #864 — a report design leaves as a file that explains itself and comes
 // back the same way. The refusals matter as much as the happy path: a

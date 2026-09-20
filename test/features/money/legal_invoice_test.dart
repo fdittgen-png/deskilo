@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Legal-valid invoices (#480): the InvoiceLegal mentions, the statutory
 // defaults, the new report variables (seller identity, client address,

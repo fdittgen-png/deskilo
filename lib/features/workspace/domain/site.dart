@@ -1,5 +1,5 @@
 import '../../../core/data/system_columns.dart';
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #945 — a site: the unit of address. Levels belong to a site, a member
 // has a home site, and a document names the site it concerns (#946).

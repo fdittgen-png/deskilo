@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../plan/domain/floor_plan.dart';
 import '../../plan/domain/level.dart';
 import '../../reservations/domain/space_code.dart';

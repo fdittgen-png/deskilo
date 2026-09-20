@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The screenshot pipeline (#1017): ingest what the owner posted, merge
 // several captures of one form, cut the *Ausschnitte* that explain a

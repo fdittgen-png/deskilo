@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Per-workspace online-payment provider credentials, configurable from the
 -- owner UI (previously only Edge-Function env secrets). NOT YET applied to
 -- the hosted reference project — the orchestrator applies it after review.

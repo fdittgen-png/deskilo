@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Content pins for migration 0028 (#223): the two profile columns, the
 // wire-shape check the client normalization targets, and the self-scoped

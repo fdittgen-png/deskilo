@@ -1529,7 +1529,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get aboutOpenSource => 'Open Source (0BSD-Lizenz)';
+  String get aboutOpenSource => 'Freie Software (AGPL-3.0)';
 
   @override
   String get aboutOpenSourceDesc => 'Quellcode auf GitHub';
@@ -8836,7 +8836,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get consentControllerBody =>
-      'Jeder Workspace wird von seinem Inhaber betrieben — Ihrer Gemeinschaft —, der Mitglieder, Preise und Zahlungsanbieter bestimmt. Die App ist quelloffen (0BSD) und wird von Florian Dittgen (Deutschland) veröffentlicht; das Backend ist Supabase in der EU. Online-Zahlungen laufen über den vom Inhaber aktivierten Anbieter (PayPal, Stripe, Mollie, Wero) zu dessen Bedingungen.';
+      'Jeder Workspace wird von seinem Inhaber betrieben — Ihrer Gemeinschaft —, der Mitglieder, Preise und Zahlungsanbieter bestimmt. Die App ist freie Software (AGPL-3.0-or-later) und wird von Florian Dittgen (Deutschland) veröffentlicht; das Backend ist Supabase in der EU. Online-Zahlungen laufen über den vom Inhaber aktivierten Anbieter (PayPal, Stripe, Mollie, Wero) zu dessen Bedingungen.';
 
   @override
   String get consentRetentionTitle => 'Wie lange';

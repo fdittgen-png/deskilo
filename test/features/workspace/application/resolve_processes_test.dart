@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1326 — the eight cases the issue asks for, red-first, against the
 // real registry rather than a fixture of my own invention.

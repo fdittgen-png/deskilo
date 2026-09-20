@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #881 — payment conditions: the workspace's default, a member's own
 // keys on top; printed as the effective ones; changed only by a

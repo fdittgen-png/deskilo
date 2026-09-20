@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1390 — the time-zone search field's hint was the literal
 // `'Europe/Paris'`, while the label directly above it resolved through

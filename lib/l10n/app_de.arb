@@ -1049,7 +1049,7 @@
       }
     }
   },
-  "aboutOpenSource": "Open Source (0BSD-Lizenz)",
+  "aboutOpenSource": "Freie Software (AGPL-3.0)",
   "@aboutOpenSource": {
     "description": "About tile: licence (#560)"
   },
@@ -5642,7 +5642,7 @@
   "consentWhoTitle": "Wer was sehen kann",
   "consentWhoBody": "Der Zugriff folgt den Rollen und wird serverseitig durchgesetzt: Buchungen sieht der Workspace (der Plan zeigt die Belegung); Nachrichten nur die Personen der Unterhaltung, gleich welcher Rolle; Ihre Finanzen und Ihre Geschäftsvereinbarung nur Sie, die Inhaber und die Admins mit der passenden Berechtigung. Einstellungen → Datenschutz & Daten nennt die Personen und listet, wer tatsächlich nachgesehen hat.",
   "consentControllerTitle": "Wer verantwortlich ist",
-  "consentControllerBody": "Jeder Workspace wird von seinem Inhaber betrieben — Ihrer Gemeinschaft —, der Mitglieder, Preise und Zahlungsanbieter bestimmt. Die App ist quelloffen (0BSD) und wird von Florian Dittgen (Deutschland) veröffentlicht; das Backend ist Supabase in der EU. Online-Zahlungen laufen über den vom Inhaber aktivierten Anbieter (PayPal, Stripe, Mollie, Wero) zu dessen Bedingungen.",
+  "consentControllerBody": "Jeder Workspace wird von seinem Inhaber betrieben — Ihrer Gemeinschaft —, der Mitglieder, Preise und Zahlungsanbieter bestimmt. Die App ist freie Software (AGPL-3.0-or-later) und wird von Florian Dittgen (Deutschland) veröffentlicht; das Backend ist Supabase in der EU. Online-Zahlungen laufen über den vom Inhaber aktivierten Anbieter (PayPal, Stripe, Mollie, Wero) zu dessen Bedingungen.",
   "consentRetentionTitle": "Wie lange",
   "consentRetentionBody": "Solange Sie Mitglied sind. Wenn Sie gehen und löschen, verschwinden Profil und Nachrichten; Buchhaltungsbelege (Rechnungen, Zahlungen) bleiben für die gesetzliche Aufbewahrungsfrist, nach Kennung und nicht nach Name.",
   "consentRightsTitle": "Ihre Rechte",

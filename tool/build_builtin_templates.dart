@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1282 — expands each builtin template's `feature_profile` into its full
 // `configuration.workspace.feature_flags`.

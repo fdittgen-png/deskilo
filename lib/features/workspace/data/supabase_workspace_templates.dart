@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1120 — the workspace library half of the Supabase repository, on its
 // own file because the repository was at its length budget and the rule

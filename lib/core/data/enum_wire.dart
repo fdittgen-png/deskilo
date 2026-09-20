@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../trace/trace_logger.dart';
 
 /// #1148 — an enum read off the wire, with a floor under it.

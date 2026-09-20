@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Check-in requires PRESENCE (#408). The RPC verified ownership and
 -- workspace-open but never the clock: a member could check in to next
 -- week's reservation today, or retroactively into one that ended.

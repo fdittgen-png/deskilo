@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- VAT declarations (#534): the periodic return a VAT-registered
 -- workspace owes its tax administration — per-rate taxable base and
 -- output VAT, aggregated from the period's ISSUED invoices.

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// Per-workspace toggleable features (#146). The owner switches them
 /// on/off for the whole workspace; every member's client applies the

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1279 S4 — the carnet surfaces: Billing keeps the catalogue, a member's
 // page shows what is left and lets whoever issues invoices sell another.

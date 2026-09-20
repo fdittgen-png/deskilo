@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Start/pause/resume semantics of the foreground last-seen heartbeat
 // (#223), driven through an injected timer factory — no real clock.

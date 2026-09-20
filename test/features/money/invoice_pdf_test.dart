@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The invoice PDF (0060): one A4 page carrying only SNAPSHOT fields —
 // both addresses, issuer, date, lines, total and the SHA-256 digital

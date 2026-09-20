@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The setup questionnaire NEVER lags the app (#653). `web/setup.html` is
 // what a new owner answers BEFORE opening DesKilo, and it is published at

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Every process and subprocess has localized, business-readable copy.
 import 'dart:io';
 import '../../../tool/build_process_labels.dart';

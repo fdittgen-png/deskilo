@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
 /// A [ShapeBorder] that carves a concave half-circle notch into the top

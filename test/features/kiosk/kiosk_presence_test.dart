@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The kiosk under the presence/one-place rules (#430): the kiosk route
 // lives OUTSIDE the shell, so it must arm the realtime invalidator

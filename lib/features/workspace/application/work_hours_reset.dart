@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1307 S4 — the two ways back for the working day (ADR 0024: the row
 // says which was chosen; this file decides the request and what it makes

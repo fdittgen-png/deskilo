@@ -1,10 +1,10 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// Licence lint: every source file declares 0BSD, and nothing declares
-// anything else.
+// Licence lint: every source file declares AGPL-3.0-or-later, and
+// nothing declares anything else.
 //
-// ADR 0009 relicensed the project from MIT and said every SPDX header
-// becomes 0BSD. Ten files were missed — the Gemfile, the three fastlane
+// ADR 0031 relicensed the project from 0BSD and said every SPDX header
+// becomes AGPL-3.0-or-later; ADR 0009 had done the same from MIT. Ten files were missed — the Gemfile, the three fastlane
 // files, both store-upload scripts, the GMS audit, the icon generator, the
 // Windows installer authoring and one workflow — and stayed wrong for two
 // weeks because nothing checked. A relicence is exactly the kind of sweep
@@ -22,7 +22,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
 
 const _spdx = 'SPDX-License-Identifier';
-const _licence = '0BSD';
+const _licence = 'AGPL-3.0-or-later';
 
 /// Trees whose hand-written sources must carry the header.
 const _roots = [
@@ -92,7 +92,7 @@ void main() {
     expect(
       wrong,
       isEmpty,
-      reason: 'Declares a licence other than $_licence (ADR 0009):\n'
+      reason: 'Declares a licence other than $_licence (ADR 0031):\n'
           '${wrong.join('\n')}',
     );
     expect(

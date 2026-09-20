@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// Role an invite grants on join. There is deliberately no `owner` value:
 /// ownership is never invitable — only an owner can grant it, by editing

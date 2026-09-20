@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The reference deployment's backend defaults are pinned.
 import 'package:deskilo/core/backend/backend_config.dart';

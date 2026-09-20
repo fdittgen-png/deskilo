@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/services.dart';
 
 /// Writes [bytes] to a local file named [fileName] and returns a handle to

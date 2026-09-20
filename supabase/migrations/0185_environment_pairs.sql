@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0185 — #987/#989: environment pairs, and the permissions to deploy
 -- and to enter the production side.
 --

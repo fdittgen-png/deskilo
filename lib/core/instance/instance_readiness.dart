@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1308 S1 — nothing is installed onto an existing project without a
 // verdict on what it already holds.

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #1338 — a template applied to a running space: the preview is the apply, the second apply is nothing, and a refusal writes nothing.
 --

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #751 — the GDPR consent, recorded on the ACCOUNT. Every signed-in
 -- user passes the consent screen once; the accepted policy VERSION is

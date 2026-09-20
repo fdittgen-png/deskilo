@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Payment-LINKED matching (field decision): the user never types an
 -- amount — the match maps the invoice to a REGISTERED payment (a
 -- confirmed ledger payment credit, which is also where online payments

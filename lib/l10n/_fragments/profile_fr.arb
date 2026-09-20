@@ -100,7 +100,7 @@
   "consentWhoTitle": "Qui peut voir quoi",
   "consentWhoBody": "L'accès suit les rôles et est appliqué côté serveur : les réservations sont visibles de l'espace (le plan montre l'occupation) ; les messages seulement des personnes de la conversation, quel que soit leur rôle ; vos finances et votre accord commercial seulement de vous, des propriétaires et des admins qui détiennent la permission correspondante. Réglages → Confidentialité et données nomme les personnes et liste qui a réellement consulté.",
   "consentControllerTitle": "Qui est responsable",
-  "consentControllerBody": "Chaque espace est exploité par son propriétaire — votre communauté — qui décide des membres, des prix et des prestataires de paiement. L'app est open source (0BSD) et publiée par Florian Dittgen (Allemagne) ; le backend est Supabase dans l'UE. Les paiements en ligne passent par le prestataire activé par le propriétaire (PayPal, Stripe, Mollie, Wero) selon ses conditions.",
+  "consentControllerBody": "Chaque espace est exploité par son propriétaire — votre communauté — qui décide des membres, des prix et des prestataires de paiement. L'app est un logiciel libre (AGPL-3.0-or-later) et publiée par Florian Dittgen (Allemagne) ; le backend est Supabase dans l'UE. Les paiements en ligne passent par le prestataire activé par le propriétaire (PayPal, Stripe, Mollie, Wero) selon ses conditions.",
   "consentRetentionTitle": "Combien de temps",
   "consentRetentionBody": "Tant que vous êtes membre. Quand vous partez et effacez, votre profil et vos messages disparaissent ; les pièces comptables (factures, paiements) restent la durée légale de conservation, par identifiant et non par nom.",
   "consentRightsTitle": "Vos droits",

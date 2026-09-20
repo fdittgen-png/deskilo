@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // VAT declarations (#534/0107): the rate catalogue covers the governed
 // territories, the aggregation matches the invoices' own vatSplit, the

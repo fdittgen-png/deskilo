@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- DesKilo #154 — payment method on recorded payments (spec §7: a payment
 -- event = amount + date + METHOD + note; the method was missing from the
 -- 0008 RPC). A defaulted extra parameter would CREATE AN OVERLOAD next to

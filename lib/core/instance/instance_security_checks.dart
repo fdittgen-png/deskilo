@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1313 — the structural half of the doctor: does this live project carry
 // the security the migrations build?

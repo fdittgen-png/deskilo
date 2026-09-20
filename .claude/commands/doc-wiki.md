@@ -18,7 +18,7 @@ says, never from memory:
 - The ADR index from `docs/decisions/`, one line each.
 - Standards and references the app implements: EN 16931, the VAT
   directive, NF Z 10-011, Factur-X, FEC, SAF-T, DATEV.
-- Licences: the app's 0BSD, the fonts, the assets.
+- Licences: the app's AGPL-3.0-or-later, the fonts, the assets.
 
 ## 2. Mirror
 ```

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../domain/vat_rate.dart';
 
 /// The VAT annotation a GROSS price should carry on catalogue surfaces

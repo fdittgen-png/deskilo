@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0171 — #948: registration and exemption numbers per site.
 --
 -- In France the VAT number is the legal entity's (FR + SIREN) and an

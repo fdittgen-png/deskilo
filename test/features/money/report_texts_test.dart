@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #880 — the owner's texts: stored on the template per language,
 // merged like documents, seeded so an unknown key is EMPTY (guards stay

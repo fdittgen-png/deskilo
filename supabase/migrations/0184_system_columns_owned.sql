@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0184 — #992: the system columns are the core's — owned, never forged.
 --
 -- 0183 added the six and stamped what was missing. This makes them the

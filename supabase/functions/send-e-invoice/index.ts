@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // send-e-invoice — posts an issued invoice to the workspace's e-invoicing
 // platform, so "Envoyer" sends instead of handing the user a file.

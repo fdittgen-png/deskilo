@@ -31,6 +31,6 @@ DER PAPIERKRAM
 Dasselbe Konto auf Android, iPhone, iPad, Mac, Windows und im Browser. Ein am Handy gebuchter Platz erscheint eine Sekunde später auf dem Wandtablet.
 
 DATENSCHUTZ
-Kein Tracking, keine Analyse, keine Werbung, kein Drittanbieter-SDK. Das Backend ist Supabase in der EU und selbst hostbar. DesKilo ist quelloffen unter 0BSD — alles oben Genannte steht im Code.
+Kein Tracking, keine Analyse, keine Werbung, kein Drittanbieter-SDK. Das Backend ist Supabase in der EU und selbst hostbar. DesKilo ist quelloffen unter AGPL-3.0 — alles oben Genannte steht im Code.
 
 DSGVO: Daten in der EU, kein Tracking, keine Analytik, Zugriff nach Rolle und serverseitig durchgesetzt. Deine Rechte sind Knöpfe unter Einstellungen → Datenschutz & Daten: wer deine Daten sehen kann, wer zugegriffen hat, Export, Löschung.

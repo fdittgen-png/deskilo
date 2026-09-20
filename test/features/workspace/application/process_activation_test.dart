@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1329 — the preview says exactly what a process intent writes, what it
 // drags along, and every flag the decision rested on; a deactivation that

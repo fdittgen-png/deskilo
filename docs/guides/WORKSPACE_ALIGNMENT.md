@@ -1,4 +1,4 @@
-<!-- SPDX-License-Identifier: 0BSD -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 # Bringing one workspace to its reported configuration
 
 #1285 (T13 of #1271). **A checklist, not a script.** This is customer

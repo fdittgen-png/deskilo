@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1279 — what the carnet surfaces ask for, and what each makes stale
 // (ADR 0024: presentation says what was chosen, this decides the write).

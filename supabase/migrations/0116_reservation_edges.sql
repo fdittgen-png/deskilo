@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #600 — reservation/check-in edge fixes + the owner-configurable
 -- booking-behavior matrix, driven by a 60-case live-RPC test matrix.
 --

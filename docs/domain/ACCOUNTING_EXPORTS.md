@@ -1,4 +1,4 @@
-<!-- SPDX-License-Identifier: 0BSD -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 # The accounting exports, country by country
 
 What this app hands an accountant or an auditor, what each file claims

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Pin search_path on the four helper functions the security advisor
 -- flags as mutable (#399). All four are pure or NEW/OLD-only — none
 -- touches a table, so the practical exposure was nil — but every other

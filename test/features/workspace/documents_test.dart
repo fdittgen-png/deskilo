@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The workspace document library (#500): federated links to any DMS,
 // role-gated visibility, admin/owner curation.

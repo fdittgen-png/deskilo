@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #874 — every document sent to a person conforms to the letter
 // standard when it has no design of its own: proven on the PDF the

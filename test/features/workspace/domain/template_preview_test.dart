@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1280 S2 — the preview is the server's change-set; the client only
 // reads it. And the group vocabulary is the server's, pinned.

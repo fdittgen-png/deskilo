@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // A seat's state at an instant: reservations, check-in, whole-office
 // bookings and blocks; start inclusive, end exclusive.

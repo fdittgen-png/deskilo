@@ -1,5 +1,5 @@
 import '../../../core/data/system_columns.dart';
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// One entry of the workspace document library (#500, 0099): a LINK to
 /// a document living in whatever system the workspace already uses.

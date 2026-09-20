@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1307 — developer mode is a WORKSPACE setting, not a device one: an
 // admin flips it and every member inherits the state (#419).

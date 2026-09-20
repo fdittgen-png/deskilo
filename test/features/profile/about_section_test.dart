@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The About section (#560, the Sparkilo idiom): who builds the app,
 // under which licence, where to report — and how to support the

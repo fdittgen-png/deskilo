@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // HARD RULE #4: every locale must carry every key that exists in the
 // canonical English ARB. Fails CI when a locale is missing keys (or carries

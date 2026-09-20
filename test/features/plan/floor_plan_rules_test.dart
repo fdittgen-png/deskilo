@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Placement rules: offices never overlap, desks stay inside their office,
 // seats fit on their desk.

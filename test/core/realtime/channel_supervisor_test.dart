@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #961 — the realtime reconnect policy, driven through the exact
 // re-entrant sequence a pilot device recorded with its network down:

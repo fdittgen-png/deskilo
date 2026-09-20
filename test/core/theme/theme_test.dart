@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The design tokens and themes: radii, the spec §14 values, Material 3
 // builds, the brand ramp, dense fields and seat-state colours.

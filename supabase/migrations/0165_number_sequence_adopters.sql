@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0165 — #928: three documents that carried no number take one from the
 -- framework of 0164.
 --

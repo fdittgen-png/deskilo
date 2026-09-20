@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Member emails in the members lists (#410, migration 0078): an ADMIN
 // surface. Admin/owner viewers see each member's email under the name

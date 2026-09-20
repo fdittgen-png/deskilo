@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Self-service badges (0053): a member mints their OWN printable QR
 // badge and registers their OWN RFID/NFC card from Settings → My badge —

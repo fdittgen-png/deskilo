@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // #1093 — RealtimeInvalidator is keepAlive, so ONE instance is reused
 // across rebuilds and `_sub` is a single shared field. Tearing down
 // before the `await` means two overlapping builds both cancel the same

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1276 S2 — a template row from 0229 onwards carries what it holds and
 // which format it is in; a row from before carries neither and must still

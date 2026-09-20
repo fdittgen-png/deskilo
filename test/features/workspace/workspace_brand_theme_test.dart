@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1289 — the theme reads the workspace's seed only through the flag,
 // and a test that injects nothing sees the product palette.

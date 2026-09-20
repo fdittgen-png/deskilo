@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Social sign-in + account linking (0051): four browser-OAuth providers
 // next to e-mail+password — sign-in buttons on the auth screen, and a

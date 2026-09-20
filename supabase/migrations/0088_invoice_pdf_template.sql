@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Invoice PDF template (#454): owner-written text blocks (intro above
 -- the parties, footer under the totals) with {{placeholder}}
 -- substitution, applied ONLY to the rendered PDF — the EN 16931 XML

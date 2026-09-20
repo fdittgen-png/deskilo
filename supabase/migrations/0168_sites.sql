@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0168 — #945: sites. The unit of address.
 --
 -- A workspace had one address, and every level, booking and document

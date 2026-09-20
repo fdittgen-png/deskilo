@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// Online-payment providers the create-payment-order Edge Function can
 /// charge with (docs/design/payments-integration.md). Wire names match

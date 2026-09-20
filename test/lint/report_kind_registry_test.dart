@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #864 — a report kind added later must gain export, import, a label
 // and defaults, or fail here.

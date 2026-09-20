@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #620 — occupant profile photos on the member-facing maps: the Plan
 // tab and the Reserve hub draw the occupant's photo in the seat marker

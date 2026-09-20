@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- DesKilo workspace XML import (epic #162, issue #165). NOT YET applied
 -- to the hosted reference project — the orchestrator applies it after
 -- review.

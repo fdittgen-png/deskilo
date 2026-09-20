@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1280 S1 — one gallery for a hundred templates: built lazily, searched
 // and tag-filtered together, ordered builtin first, and one column at

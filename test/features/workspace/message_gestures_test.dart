@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #798 — the two swipes on a message everyone already knows from their
 // phone: RIGHT quotes it into the reply, LEFT takes it back while it is

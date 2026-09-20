@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui' show Locale;
 import 'package:deskilo/core/locale/device_locale.dart';
 import 'package:deskilo/features/workspace/domain/workspace_export_bundle.dart';

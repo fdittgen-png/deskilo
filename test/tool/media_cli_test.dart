@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1017 — the only judgement the screenshot pipeline makes on its own:
 // how far the second capture of a form slides up over the first.

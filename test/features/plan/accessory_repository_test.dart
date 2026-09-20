@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #166 — the accessory catalogue and seat assignment contracts: order,
 // workspace scope, soft deactivation, unique names.

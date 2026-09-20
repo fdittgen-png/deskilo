@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #864 — what each report kind is called, in one place beside the
 // registry that says which kinds exist. The editor's chips, the export

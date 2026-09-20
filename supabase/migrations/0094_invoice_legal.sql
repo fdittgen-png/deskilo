@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Legal invoice mentions (#480): the free-text lines French law (and
 -- most of the EU) wants printed on a professional invoice beyond the
 -- 0069 identity — legal form & capital, trade register, payment terms,

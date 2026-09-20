@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // FEC (0075) — Fichier des Écritures Comptables, the file French law
 // requires in an audit (art. L47 A-I du LPF, arrêté du 29 juillet 2013).

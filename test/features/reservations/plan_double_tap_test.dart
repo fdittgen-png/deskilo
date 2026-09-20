@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Double tap on the plan = whole-space intent (field request: "when
 // double tapping on table or room, it must trigger the reservation or

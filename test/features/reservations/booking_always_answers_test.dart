@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #663 — a booking attempt must END IN AN ANSWER: the reservation or
 // check-in the member asked for, named and dated, or the reason it was

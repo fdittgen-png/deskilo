@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/features/plan/providers/default_level_controller.dart';
 
 /// In-memory [DefaultLevelStore] so tests never touch SharedPreferences

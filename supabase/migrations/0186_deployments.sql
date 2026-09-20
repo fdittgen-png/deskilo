@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0186 — #988: deployable entities, the preview, the deploy, the journal.
 --
 -- An ENTITY is a named slice of the configuration transfer (#916): the

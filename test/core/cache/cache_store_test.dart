@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The tankstellen-style cache (field request): TTL envelopes, two-tier
 // retrieval (fresh primary / stale offline fallback), schema stamping,

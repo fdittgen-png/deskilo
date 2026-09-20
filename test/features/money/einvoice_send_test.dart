@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Direct submission (0073): with a platform configured, the e-invoice sheet
 // SENDS instead of handing over a file — the Factur-X document goes to the

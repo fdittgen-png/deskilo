@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0190 — #1012: the preview of the document designs counts their images.
 --
 -- A twin receives the design JSON at creation, so the preview read "no

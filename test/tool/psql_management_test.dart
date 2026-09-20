@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1337 — the psql adapter under the lifecycle check answers the way the
 // Management API does: a migration is ONE query, rows come back typed, and

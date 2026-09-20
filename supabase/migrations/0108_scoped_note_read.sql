@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Read follows the CONVERSATION, not the inbox glance (#539). 0105
 -- stamped every unread note the moment the Events screen opened —
 -- which made "unread" indistinguishable one frame later. The mark RPC

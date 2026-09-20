@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #974 — the profiles list names the home site on a multi-site
 // workspace and lets the person switch it; a single site is no line.

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// Whether this workspace can SEND an e-invoice, and what it still needs
 /// (0073). Probed from the `send-e-invoice` function so the app never

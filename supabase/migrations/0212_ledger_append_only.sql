@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0212 — #1229: the ledger stops rewriting its own history.
 --
 -- The A+ analysis proposed `Σ debits = Σ credits` as the financial

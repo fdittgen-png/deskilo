@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Front-camera scanning (field request): a wall-mounted kiosk tablet has
 // its back lens against the wall, so badge QR codes are read with the

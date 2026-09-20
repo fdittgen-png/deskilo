@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #934 — the treasurer's view reads the database's status and prints it.
 import 'package:deskilo/features/money/domain/workspace_status.dart';

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Grid geometry: the seat footprint, overlap, containment and orientation
 // rules the plan builds on.

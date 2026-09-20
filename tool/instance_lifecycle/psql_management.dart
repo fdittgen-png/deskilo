@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1337 — the database half of the Supabase Management API, answered by
 // `psql` against a real Postgres, so the REAL InstanceBuilder,

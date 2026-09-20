@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../features/workspace/presentation/screens/colours_screen.dart';
 import '../features/workspace/presentation/screens/attention_screen.dart';
 import '../features/workspace/presentation/screens/questions_screen.dart';

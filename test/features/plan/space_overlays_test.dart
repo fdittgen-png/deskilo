@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #462: whole-space reservations must mark the ROOM/TABLE itself, with
 // the occupant's name, for every user — not only the seats.

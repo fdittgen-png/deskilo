@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0174 — #956: verify an invoice's fingerprint on demand.
 --
 -- create_invoice has signed every document since 0060 (SHA-256 over the

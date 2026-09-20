@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1447 — the preflight selects the generator that owns the output a
 // change invalidates, and selects nothing for a change that invalidates

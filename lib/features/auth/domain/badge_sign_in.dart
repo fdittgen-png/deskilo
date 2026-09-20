@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// The two-step badge sign-in (#662): a scan says WHO, a PIN says
 /// it is really them.

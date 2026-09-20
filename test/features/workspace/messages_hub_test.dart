@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #821 — the Messages tab reworked: filter chips over the list, a
 // long-press menu (pin, mute, mark unread, archive) that writes a

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
 -- 0229 (#1276 S2) — a template carries configuration, published through an

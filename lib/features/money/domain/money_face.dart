@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// #720 — the four faces of the Finances tab, like the inbox's chats
 /// and alerts: the month's STATEMENT, what I PAY (and ask for), what I

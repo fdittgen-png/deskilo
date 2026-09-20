@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The accessory catalogue: listed with supplements, created, edited,
 // deactivated but never deleted; plain members get no entry.

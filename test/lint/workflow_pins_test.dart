@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #706 — every workflow that builds the app builds it with the SAME
 // Flutter, and says so in one place.

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Applied to the hosted reference project on 2026-07-18.
 -- Role-scoped invites: every join carries an explicit role, derived from
 -- WHICH secret code was used — never from a client-supplied parameter.

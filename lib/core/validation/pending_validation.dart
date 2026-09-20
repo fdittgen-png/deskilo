@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// #982 — a request that a validation policy holds: the act did not
 /// happen yet, a pending event carries it, and whoever the policy names

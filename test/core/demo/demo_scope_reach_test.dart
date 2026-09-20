@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1373 / #1375 — the Demo scope reaches the providers the SCREENS read,
 // not only the ones the overrides name.

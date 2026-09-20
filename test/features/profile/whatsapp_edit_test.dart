@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The WhatsApp editor on the settings surface (#223): entering a number
 // pins the normalization rule (+ + digits) on the exact repository call

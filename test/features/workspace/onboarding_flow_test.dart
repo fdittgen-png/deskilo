@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Onboarding: create or join leads into the shell, an invalid code stays
 // put, a member with a workspace never sees it.

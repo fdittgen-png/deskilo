@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The web shell: a hamburger drawer carries every destination and the
 // bottom bar with its raised Reserve button is gone — web only.

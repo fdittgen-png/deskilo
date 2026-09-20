@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The invoice REGISTER (0072): one line per invoice — date, name, amount,
 // status — sorted by date in either direction, with the sum at the foot.

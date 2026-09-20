@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The reservation detail sheet names the booked space, jumps to it on the
 // plan, and survives a deleted plan object (#587).

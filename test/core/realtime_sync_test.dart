@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Push-driven freshness (#413, migration 0080): a DB change event
 // invalidates the cached providers and the UI repaints WITHOUT any user

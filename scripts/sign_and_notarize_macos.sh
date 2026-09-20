@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPDX-License-Identifier: 0BSD
+# SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # Sign a Flutter macOS release build with Developer ID, package it as a
 # DMG, notarise it and staple the ticket — the difference between a

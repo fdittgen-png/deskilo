@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // ADR 0028 (#1373) — moved out of test/helpers/mock_providers.dart so the
 // Demo environment can run the real app against it. The suite reaches it

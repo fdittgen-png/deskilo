@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // A background image per level (0036): a photo/blueprint of the real
 // space behind the plan graphics, with the seat footprints acting as

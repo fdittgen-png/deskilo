@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1281 — how many seat states a space tells apart, for the legend AND
 // for the canvas.

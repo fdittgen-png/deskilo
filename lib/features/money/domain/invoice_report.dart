@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The invoice REPORTING engine (#470) — a rebuild of the classic banded
 // report model (JasperReports/Crystal Reports): a header band, a detail

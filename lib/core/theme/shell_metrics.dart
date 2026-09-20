@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// The app's toolbar height, everywhere — every `AppBar` through the
 /// theme. Material's 56 dp spent a status-bar-height gap plus a tall

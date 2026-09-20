@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1280 S3 — what publishing this workspace as a template would carry, as
 // the server's allow-list decides it (`template_publication_preview`, 0231).

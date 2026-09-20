@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0205 — #1138: the ledger never learns a currency from a webhook.
 --
 -- `open_payment_intent` stored whatever currency the edge function was

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/core/calendar/calendar_item.dart';
 import 'package:deskilo/features/calendar/domain/calendar_repository.dart';
 

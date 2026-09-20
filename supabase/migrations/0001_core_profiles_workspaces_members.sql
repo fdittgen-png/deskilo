@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- DesKilo core schema (Epic #2, issue #23).
 -- Applied to the hosted reference project on 2026-07-07 as migration
 -- "core_profiles_workspaces_members". Self-hosters apply this file.

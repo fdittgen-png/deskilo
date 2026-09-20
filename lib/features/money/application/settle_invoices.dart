@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1449 / #1234 — regrouping invoices is a rule about which ones may be
 // regrouped, and an answer that has to be looked up afterwards.

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0215 — #1316: storage reads on `floor-plans` belong to the workspace's members,
 -- and the bucket they read from is finally created by a migration.
 --

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1558 / #1566 — a backslash before a `$` that is followed by a name
 // is a string interpolation that was switched off, and the compiler

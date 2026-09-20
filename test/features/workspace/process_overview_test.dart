@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1327 — the Features screen opens on one card per business process,
 // and every card's state is the stored feature map read through the

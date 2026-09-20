@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The XLSX writer (#395) is proven by UNZIPPING its own output — the same
 // bar a spreadsheet reader applies — not by trusting the strings it was

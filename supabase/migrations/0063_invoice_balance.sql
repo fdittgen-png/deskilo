@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Invoice = the SOLDE (field decision): all of the month's consumptions
 -- AND all of its payments/credits, netting to the balance due. Credit
 -- positions (confirmed payments, expense reimbursements, crediting

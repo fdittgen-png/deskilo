@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Play will not serve a listing whose language has fewer than two phone
 // screenshots, and an unservable listing in ONE language makes the app

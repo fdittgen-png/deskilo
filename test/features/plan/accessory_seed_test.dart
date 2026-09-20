@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #166 — the amenity-key to accessory-name mapping is pinned, and
 // migration 0022 seeds with the same one.

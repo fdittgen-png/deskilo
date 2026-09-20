@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1091 — the line's quantity was chosen by whether the GROSS amount
 // divides evenly by it, and the unit price was then emitted NET. When

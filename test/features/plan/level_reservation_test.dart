@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Whole-level reservations (0050): the plan's reserve-level affordance is
 // triple-gated (feature + level bookable + personal grant or assignment

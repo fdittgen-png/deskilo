@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1446 C2 — writes the change classification the quality workflow acts
 // on: `discipline|required|not_applicable|reason|version`, one line each,

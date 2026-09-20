@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #106 — owners book a seat for another member; booking for yourself stays
 // a walk-up; workers get no picker.

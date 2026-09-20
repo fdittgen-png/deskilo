@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Seat NFC/RFID tags (#585): a chair carries a physical tag; tapping it
 -- resolves to the seat exactly like scanning its printed QR card.
 --

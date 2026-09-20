@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Forgot-password flow: a one-time code is emailed (Supabase recovery
 // OTP — no links, so no Site-URL/deep-link dependency); entering the

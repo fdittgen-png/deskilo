@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The Play availability tool and the workflow that drives it live in two
 // files that nothing else keeps in step, and both were written to answer

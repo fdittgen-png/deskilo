@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0129 — the messaging centre gets its live wire (#702).
 --
 -- `member_notes` has been published since 0089, but the CONVERSATION

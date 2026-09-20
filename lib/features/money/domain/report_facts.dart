@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1061 slice two — what a document builder used to READ from a
 // `WidgetRef`, as a value. The builders take these and a

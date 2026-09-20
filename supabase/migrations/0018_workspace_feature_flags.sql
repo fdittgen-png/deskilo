@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- DesKilo per-workspace feature management (issue #146). The owner turns
 -- features on/off for the whole workspace; every member's client applies
 -- the flags on connect. Keys are the Dart WorkspaceFeature enum names;

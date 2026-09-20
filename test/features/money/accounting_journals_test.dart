@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #936 — the exports carry the purchases side, book credit notes, and
 // mark a development workspace's books.

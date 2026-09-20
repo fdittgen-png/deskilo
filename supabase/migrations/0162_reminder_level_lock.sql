@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0162 — #926: two reminders cannot take the same level.
 --
 -- Both places that write a reminder derived its level the same way:

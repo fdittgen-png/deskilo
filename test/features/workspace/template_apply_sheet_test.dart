@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1330 — the apply preview shows a group's feature flips under their
 // business process, from the server's own change-set.

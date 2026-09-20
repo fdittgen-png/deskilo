@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // #711 — latest_ALL, links included. The trimmed database dropped every
 // zone tzdata 2022b turned into a link — Europe/Amsterdam, Luxembourg,
 // Copenhagen, Stockholm, Oslo among them — so a workspace in any of

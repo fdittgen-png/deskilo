@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #606 — contextual help hints: the dismissible card renders at the top
 // of its surface, the X persists the dismissal across rebuilds, "Learn

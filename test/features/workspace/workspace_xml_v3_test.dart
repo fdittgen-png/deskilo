@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #916 — schema v3: the plan attributes v2 dropped and the configuration
 // section, on the way out and on the way back in; v2 files still parse.
