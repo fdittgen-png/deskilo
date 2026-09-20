@@ -18,40 +18,22 @@
 //   labeledTapTargetGuideline  every tappable thing has a name a screen
 //                              reader can say
 //   textContrastGuideline      4.5:1 for body text, as rendered
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../features/editor/level_canvas_test.dart' show pumpCanvas;
-import '../features/events/events_screen_test.dart' show pumpEvents;
-import '../features/events/validation_settings_screen_test.dart'
-    show pumpValidationSettings;
-import '../features/money/invoices_test.dart' show pumpInvoices;
-import '../features/money/money_faces_test.dart' show pumpFaces;
-import '../features/plan/accessories_screen_test.dart' show pumpAccessories;
-import '../features/reservations/reserve_hub_test.dart' show pumpHub;
-import '../features/workspace/features_screen_test.dart' show pumpFeatures;
+import 'matrix.dart';
 
-typedef ScreenPump = Future<void> Function(WidgetTester tester);
-
-/// The screens this runs over. Adding one is a line.
-final Map<String, ScreenPump> _screens = {
-  'Reserve hub': (t) => pumpHub(t),
-  'Money faces': (t) => pumpFaces(t),
-  'Invoices': (t) => pumpInvoices(t),
-  'Alerts': (t) => pumpEvents(t),
-  'Validation rules': (t) => pumpValidationSettings(t),
-  'Features': (t) => pumpFeatures(t),
-  // #1327 — the view the screen opens on.
-  'Process overview': (t) => pumpFeatures(t, switches: false),
-  'Accessories': (t) => pumpAccessories(t),
-  'Level canvas': (t) => pumpCanvas(t),
-};
+/// #1582 — the table lives in `matrix.dart` now, with the screens that
+/// are NOT measured named beside the ones that are. A generous surface
+/// keeps this file measuring the guidelines rather than the fold.
+const _roomy = Size(1200, 3400);
 
 void main() {
-  for (final entry in _screens.entries) {
-    testWidgets('${entry.key} meets the accessibility guidelines',
+  for (final row in matrixRowsFor(MatrixAxis.semantics)) {
+    testWidgets('${row.screen} meets the accessibility guidelines',
         (tester) async {
       final handle = tester.ensureSemantics();
-      await entry.value(tester);
+      await row.pump!(tester, _roomy);
 
       // Tap targets, on both platforms' floors.
       await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
