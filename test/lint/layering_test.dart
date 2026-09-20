@@ -252,7 +252,10 @@ const Map<String, int> _pairBudget = {
   // `domain/space_act.dart` both need `BookingGranularity`: the
   // check-in window rule widens with the grid step, so the decision
   // cannot be made without it. Two imports, both load-bearing.
-  'reservations -> workspace': 53,
+  // 2026-09-20 #1580 53→51: `booking_gate_scope.dart` stopped importing
+  // `booking_policies` and `booking_granularity` — they were there only
+  // to supply the invented defaults it no longer substitutes.
+  'reservations -> workspace': 51,
   'workspace -> auth': 3,
   // 11→13 and 34→35 (2026-09-19): #1247 — the decision surface answers
   // *does anything need me?* by ASSEMBLING signals that already exist:
