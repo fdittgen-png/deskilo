@@ -147,7 +147,8 @@ class SupabaseWorkspaceRepository
       // The server takes the object rather than knowing the catalogue:
       // a second copy of it in SQL would disagree with this one within a
       // release.
-      'p_feature_flags': defaultFeatureFlagsForNewWorkspace(),
+      // #1550 — created WITH a twin means created showing the couple.
+      'p_feature_flags': defaultFeatureFlagsForNewWorkspace(withTwin: withTwin),
     });
     return result as String;
   }
