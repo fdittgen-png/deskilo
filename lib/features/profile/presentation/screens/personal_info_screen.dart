@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/privacy/recording_banner.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -38,6 +39,8 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
   }
 
   Future<void> _save(PersonalInfo info) async {
+    // #1514 — this form was prefilled from the recording seam.
+    if (refusedWhileRecording(context, ref)) return;
     final l10n = AppLocalizations.of(context);
     setState(() => _saving = true);
     final ok = await runGuarded(

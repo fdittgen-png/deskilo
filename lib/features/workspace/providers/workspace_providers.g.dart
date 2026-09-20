@@ -425,7 +425,7 @@ final class WorkspaceMembersProvider
   }
 }
 
-String _$workspaceMembersHash() => r'd66338ceb70fdb41535c2213db6ea163f943ce98';
+String _$workspaceMembersHash() => r'f78db28b0125042299f8e84ea7933796eaf4865b';
 
 /// All my membership rows across workspaces — one per profile (#89).
 
@@ -1892,7 +1892,7 @@ final class ManagedIdentityProvider
   }
 }
 
-String _$managedIdentityHash() => r'92174af1f7f7eb27c8d96316b1eccedd591f9cf6';
+String _$managedIdentityHash() => r'7fd4b43dc1a7d90b0d9e14fbc2d09092f28be37a';
 
 /// #915 — one managed profile's identity, from behind the access rule.
 ///

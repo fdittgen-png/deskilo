@@ -7,6 +7,7 @@ import '../application/start_conversation.dart';
 import '../application/start_workspace.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/privacy/recording_privacy.dart';
 import '../../../core/storage/active_workspace_store.dart';
 import '../../../core/storage/note_seen_store.dart';
 import '../../../core/trace/refusal_text.dart';
@@ -162,10 +163,24 @@ Future<List<Member>> workspaceMembers(Ref ref) async {
   // provider was disposed while the future was in flight, and it is
   // a dependency registration in any case.
   final repository = ref.watch(workspaceRepositoryProvider);
+  final recording = _recordingOn(ref);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return repository.fetchMembers(workspace.id);
+  final members = await repository.fetchMembers(workspace.id);
+  // #1514 — the seam: the members list, the member page and every sheet
+  // built from a Member show an invented person while filming mode is on.
+  if (!recording) return members;
+  return [for (final member in members) recordingMember(member)];
 }
+
+/// #1514 — whether the active workspace is showing invented people.
+///
+/// Read inline rather than through `recordingPrivacyProvider`: that
+/// provider is built ON this file, and a file cannot import the library
+/// that imports it without a cycle. The condition is the same one.
+bool _recordingOn(Ref ref) => ref
+    .watch(enabledFeaturesSyncProvider)
+    .contains(WorkspaceFeature.recordingPrivacy);
 
 /// All my membership rows across workspaces — one per profile (#89).
 @Riverpod(keepAlive: true)
@@ -516,9 +531,13 @@ Future<Map<String, String>> memberEmails(Ref ref) async {
 Future<Member?> myMember(Ref ref) async {
   // #1218 — the repository is watched BEFORE the gap.
   final repository = ref.watch(workspaceRepositoryProvider);
+  final recording = _recordingOn(ref);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return null;
-  return repository.fetchMyMember(workspace.id);
+  final mine = await repository.fetchMyMember(workspace.id);
+  // #1514 — the seam. My own row carries my addressee line like anybody
+  // else's, and my own profile is what a support video films first.
+  return mine == null || !recording ? mine : recordingMember(mine);
 }
 
 /// #915 — one managed profile's identity, from behind the access rule.
@@ -534,11 +553,17 @@ Future<Member?> myMember(Ref ref) async {
 @riverpod
 Future<ManagedIdentityRead> managedIdentity(Ref ref, String memberId) async {
   if (memberId.isEmpty) return const ManagedIdentityRead.refused();
+  final recording = _recordingOn(ref);
   try {
-    // #970 — demo mode blurs these details wherever they are printed.
-    return ManagedIdentityRead.loaded(await ref
-        .watch(workspaceRepositoryProvider)
-        .managedIdentityOf(memberId));
+    final identity =
+        await ref.watch(workspaceRepositoryProvider).managedIdentityOf(memberId);
+    // #1514 — the seam. This is the one identity a recording is most
+    // likely to open, because it is the whole contact block on one
+    // screen. The form that edits it refuses to save while filming mode
+    // is on, or it would write the invented person back.
+    return ManagedIdentityRead.loaded(
+      recording ? recordingIdentity(memberId, identity) : identity,
+    );
   } catch (e, st) {
     // Refused is a legitimate answer, not a failure to report: an admin
     // the rule does not name simply does not see the contact details.

@@ -120,7 +120,11 @@ void main() {
     // alerts face rather than replacing it, and which of the two ranks
     // the requests is a question an owner answers, not one the default
     // answers for them.
-    expect(onCount, featureManifest.length - 27);
+    // #1514 — recordingPrivacy is the twenty-eighth: filming mode is
+    // switched on for the length of a shoot and off after, so a space
+    // that started with it on would show its members names none of them
+    // recognise.
+    expect(onCount, featureManifest.length - 28);
   });
 
   testWidgets(

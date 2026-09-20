@@ -140,7 +140,13 @@ import 'package:flutter_test/flutter_test.dart';
 //   itself, additive on top of the built-in four (ADR 0029). Settings,
 //   Platform, default OFF: four roles is the product's answer and needs
 //   no switch.
-const int _expectedFeatureCount = 109; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
+// 109→110 (2026-09-20): #1514 recordingPrivacy — filming the app without
+//   filming the members: invented people substituted at the data seam,
+//   so a screenshot or a screen recording of a LIVE workspace carries no
+//   personal data. Everywhere, because the substitution reaches every
+//   screen that shows a person at once. Platform, default OFF: it is
+//   switched on for the length of a shoot and off after.
+const int _expectedFeatureCount = 110; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
 
 void main() {
   _tierPins();

@@ -137,6 +137,7 @@
         "publicHolidays": false,
         "pushNotifications": true,
         "qrBadges": false,
+        "recordingPrivacy": false,
         "regionalFormats": true,
         "reportDesignExchange": false,
         "reportDesigner": false,

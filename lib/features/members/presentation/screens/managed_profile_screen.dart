@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/privacy/recording_banner.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/refusal_text.dart';
@@ -37,6 +38,8 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
   bool _saving = false;
 
   Future<void> _save(PersonalInfo info) async {
+    // #1514 — this form was prefilled from the recording seam.
+    if (refusedWhileRecording(context, ref)) return;
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;

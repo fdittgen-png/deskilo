@@ -232,7 +232,15 @@ enum WorkspaceFeature {
   /// #1247 — one place that answers *does anything need me?*, ranked by
   /// what the delay costs. Platform and default OFF: a space with two
   /// members and no invoicing does not want a decision surface.
-  decisionSurface;
+  decisionSurface,
+
+  /// #1514 — filming the app without filming the members: while it is
+  /// on, every name, e-mail, telephone number, address and photograph
+  /// belongs to an invented person, so a screenshot or a screen
+  /// recording of THIS workspace — its real plan, its real bookings,
+  /// its real figures — carries no personal data. Platform, default
+  /// OFF: it is switched on for the length of a shoot and off after.
+  recordingPrivacy;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1212,6 +1220,17 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.decisionSurface: FeatureManifestEntry(
     feature: WorkspaceFeature.decisionSurface,
     surface: FeatureSurface.settings,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+  ),
+  // #1514 — `requires` is deliberately empty and the surface is
+  // `everywhere`: the substitution happens at the data seam, so it
+  // reaches every screen that shows a person at once, and there is no
+  // parent feature whose absence would make it meaningless. A space
+  // with nothing but a floor plan still has members to protect.
+  WorkspaceFeature.recordingPrivacy: FeatureManifestEntry(
+    feature: WorkspaceFeature.recordingPrivacy,
+    surface: FeatureSurface.everywhere,
     tier: FeatureTier.platform,
     defaultOn: false,
   ),

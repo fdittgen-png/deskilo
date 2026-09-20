@@ -9416,6 +9416,24 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get featureRecordingPrivacyTitle => 'Modalità ripresa';
+
+  @override
+  String get featureRecordingPrivacyDesc =>
+      'Per filmare o fotografare questo spazio. Ogni nome, indirizzo e-mail, numero di telefono, indirizzo postale e fotografia viene sostituito da una persona inventata prima di arrivare sullo schermo, mentre la piantina, le prenotazioni e gli importi restano quelli veri. Un avviso lo segnala su ogni schermata, e i moduli di identità rifiutano di salvare finché è attiva.';
+
+  @override
+  String get recordingPrivacyBadge => 'Modalità ripresa — persone inventate';
+
+  @override
+  String get recordingPrivacyBadgeHint =>
+      'La modalità ripresa è attiva: ogni nome, indirizzo e-mail, numero di telefono, indirizzo e fotografia sullo schermo appartiene a una persona inventata. La piantina, le prenotazioni e gli importi sono davvero quelli di questo spazio. Disattivala nelle Impostazioni quando hai finito di riprendere.';
+
+  @override
+  String get recordingPrivacyWriteRefused =>
+      'Non mentre la modalità ripresa è attiva: questo modulo mostra una persona inventata, e salvarlo sovrascriverebbe i dati reali di qualcuno. Disattiva prima la modalità ripresa.';
+
+  @override
   String get refusalPermission =>
       'Non hai il permesso per farlo. Un proprietario dello spazio può concederlo in Gestione dei ruoli.';
 

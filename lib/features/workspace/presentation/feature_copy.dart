@@ -482,4 +482,12 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'somebody waiting on an answer. A line appears only when '
                   'a person must decide or act; a number nobody can act on '
                   'stays on the screen that owns it.',
+        WorkspaceFeature.recordingPrivacy =>
+          l10n?.featureRecordingPrivacyDesc ??
+              'For filming or photographing this workspace. Every name, '
+                  'e-mail, telephone number, address and photograph is '
+                  'replaced by an invented person before it reaches the '
+                  'screen, while the plan, the bookings and the figures '
+                  'stay the real ones. A banner says so on every screen, '
+                  'and the identity forms refuse to save until it is off.',
       };

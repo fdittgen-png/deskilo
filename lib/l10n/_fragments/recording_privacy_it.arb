@@ -1,0 +1,23 @@
+{
+  "@@locale": "it",
+  "featureRecordingPrivacyTitle": "Modalità ripresa",
+  "@featureRecordingPrivacyTitle": {
+    "description": "#1514 recording privacy: featureRecordingPrivacyTitle"
+  },
+  "featureRecordingPrivacyDesc": "Per filmare o fotografare questo spazio. Ogni nome, indirizzo e-mail, numero di telefono, indirizzo postale e fotografia viene sostituito da una persona inventata prima di arrivare sullo schermo, mentre la piantina, le prenotazioni e gli importi restano quelli veri. Un avviso lo segnala su ogni schermata, e i moduli di identità rifiutano di salvare finché è attiva.",
+  "@featureRecordingPrivacyDesc": {
+    "description": "#1514 recording privacy: featureRecordingPrivacyDesc"
+  },
+  "recordingPrivacyBadge": "Modalità ripresa — persone inventate",
+  "@recordingPrivacyBadge": {
+    "description": "#1514 recording privacy: recordingPrivacyBadge"
+  },
+  "recordingPrivacyBadgeHint": "La modalità ripresa è attiva: ogni nome, indirizzo e-mail, numero di telefono, indirizzo e fotografia sullo schermo appartiene a una persona inventata. La piantina, le prenotazioni e gli importi sono davvero quelli di questo spazio. Disattivala nelle Impostazioni quando hai finito di riprendere.",
+  "@recordingPrivacyBadgeHint": {
+    "description": "#1514 recording privacy: recordingPrivacyBadgeHint"
+  },
+  "recordingPrivacyWriteRefused": "Non mentre la modalità ripresa è attiva: questo modulo mostra una persona inventata, e salvarlo sovrascriverebbe i dati reali di qualcuno. Disattiva prima la modalità ripresa.",
+  "@recordingPrivacyWriteRefused": {
+    "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
+  }
+}

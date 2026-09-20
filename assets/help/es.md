@@ -1941,7 +1941,38 @@ siguiente visita parte del mismo espacio inventado.
 No es una forma de mostrar un espacio **real** sin mostrar a sus
 miembros. Todo lo que hay en él es inventado, así que no hay nada que
 ocultar; un espacio real en pantalla sigue mostrando a las personas
-reales que están en él.
+reales que están en él, salvo que el **modo grabación** esté activo, que
+es la sección siguiente.
+
+### Modo grabación (#1514)
+
+Para las veces en que hay que mostrar el espacio **real**: un vídeo de
+ayuda, una captura en una guía, una imagen para la tienda, una
+diapositiva en una conferencia. Active el **modo grabación** y cada
+nombre, correo electrónico, número de teléfono, dirección postal y
+fotografía de perfil en pantalla pertenece a una persona inventada. El
+plano, las reservas, los puestos y los importes siguen siendo
+exactamente los de este espacio.
+
+La sustitución ocurre antes de dibujar nada, no por encima, así que no
+hay nada que se pueda olvidar: una pantalla no puede mostrar un nombre
+real porque ningún nombre real llega hasta ella. El mismo miembro es
+siempre la misma persona inventada — en el plano, en el directorio y en
+una factura —, de modo que una grabación se sigue entendiendo.
+
+Mientras está activo, un aviso encabeza todas las pantallas, para que
+nadie grabe diez minutos creyendo que lo estaba — ni trabaje un día con
+nombres inventados creyéndolos reales. Desactívelo en *Ajustes →
+Funcionalidades* en cuanto termine la grabación.
+
+Dos cosas. Mientras está activo, los formularios de identidad se niegan
+a guardar: lo que muestran es inventado, y guardarlo sobrescribiría los
+datos reales de alguien. Y nada puede ocultar lo que una persona ha
+escrito — un mensaje, una nota, el nombre de un puesto: lea la pantalla
+antes de filmarla.
+
+Si la imagen no tiene que ser de *este* espacio, use mejor el espacio de
+demostración: allí todo es inventado desde el principio.
 
 ### Cámara frontal para escanear
 

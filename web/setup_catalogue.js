@@ -220,7 +220,8 @@ window.SETUP_PROCESSES=[
     "features": [
      "dataAccessLog",
      "memberDataExport",
-     "dataExport"
+     "dataExport",
+     "recordingPrivacy"
     ]
    }
   ]

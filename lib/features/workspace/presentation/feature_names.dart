@@ -227,4 +227,6 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureCustomFieldsTitle ?? 'Questions this space asks',
       WorkspaceFeature.decisionSurface =>
         l10n?.featureDecisionSurfaceTitle ?? 'What needs you',
+      WorkspaceFeature.recordingPrivacy =>
+        l10n?.featureRecordingPrivacyTitle ?? 'Filming mode',
     };

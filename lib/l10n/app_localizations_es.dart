@@ -9399,6 +9399,24 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get featureRecordingPrivacyTitle => 'Modo grabación';
+
+  @override
+  String get featureRecordingPrivacyDesc =>
+      'Para filmar o fotografiar este espacio. Cada nombre, correo electrónico, número de teléfono, dirección postal y fotografía se sustituye por una persona inventada antes de llegar a la pantalla, mientras que el plano, las reservas y los importes siguen siendo los reales. Un aviso lo indica en cada pantalla, y los formularios de identidad se niegan a guardar mientras esté activo.';
+
+  @override
+  String get recordingPrivacyBadge => 'Modo grabación — personas inventadas';
+
+  @override
+  String get recordingPrivacyBadgeHint =>
+      'El modo grabación está activo: cada nombre, correo electrónico, número de teléfono, dirección y fotografía en pantalla pertenece a una persona inventada. El plano, las reservas y los importes sí son los de este espacio. Desactívelo en los Ajustes cuando termine de grabar.';
+
+  @override
+  String get recordingPrivacyWriteRefused =>
+      'No mientras el modo grabación esté activo: este formulario muestra una persona inventada, y guardarlo sobrescribiría los datos reales de alguien. Desactive antes el modo grabación.';
+
+  @override
   String get refusalPermission =>
       'No tiene permiso para esto. Un propietario del espacio puede concederlo en Gestión de roles.';
 

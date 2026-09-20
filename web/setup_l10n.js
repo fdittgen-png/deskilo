@@ -1019,6 +1019,10 @@ window.SETUP_L10N={
    "decisionSurface": [
     "What needs you",
     "One place that answers \"does anything need me?\", ranked by what the delay costs — money that leaves first, then somebody waiting on an answer. A line appears only when a person must decide or act; a number nobody can act on stays on the screen that owns it."
+   ],
+   "recordingPrivacy": [
+    "Filming mode",
+    "For filming or photographing this workspace. Every name, e-mail, telephone number, address and photograph is replaced by an invented person before it reaches the screen, while the plan, the bookings and the figures stay the real ones. A banner says so on every screen, and the identity forms refuse to save until it is off."
    ]
   },
   "process": {
@@ -2247,6 +2251,10 @@ window.SETUP_L10N={
    "decisionSurface": [
     "Ce qui vous attend",
     "Un seul endroit qui répond à « est-ce que quelque chose m'attend ? », classé par ce que coûte le retard — l'argent qui part d'abord, puis quelqu'un qui attend une réponse. Une ligne n'apparaît que si une personne doit décider ou agir ; un chiffre sur lequel personne ne peut agir reste sur l'écran qui le porte."
+   ],
+   "recordingPrivacy": [
+    "Mode tournage",
+    "Pour filmer ou photographier cet espace. Chaque nom, adresse électronique, numéro de téléphone, adresse postale et photo est remplacé par une personne inventée avant d'arriver à l'écran, tandis que le plan, les réservations et les montants restent les vrais. Un bandeau l'indique sur chaque écran, et les formulaires d'identité refusent d'enregistrer tant qu'il est actif."
    ]
   },
   "process": {
@@ -3475,6 +3483,10 @@ window.SETUP_L10N={
    "decisionSurface": [
     "Was auf Sie wartet",
     "Ein Ort, der beantwortet: „Wartet etwas auf mich?“ — sortiert danach, was die Verzögerung kostet: zuerst Geld, das abfließt, dann jemand, der auf eine Antwort wartet. Eine Zeile erscheint nur, wenn jemand entscheiden oder handeln muss; eine Zahl, mit der niemand etwas anfangen kann, bleibt auf ihrem eigenen Bildschirm."
+   ],
+   "recordingPrivacy": [
+    "Aufnahmemodus",
+    "Zum Filmen oder Fotografieren dieses Arbeitsraums. Jeder Name, jede E-Mail-Adresse, Telefonnummer, Anschrift und jedes Foto wird durch eine erfundene Person ersetzt, bevor es auf den Bildschirm gelangt; der Plan, die Buchungen und die Beträge bleiben die echten. Ein Banner weist auf jedem Bildschirm darauf hin, und die Identitätsformulare verweigern das Speichern, solange er aktiv ist."
    ]
   },
   "process": {
@@ -4703,6 +4715,10 @@ window.SETUP_L10N={
    "decisionSurface": [
     "Lo que te espera",
     "Un único lugar que responde «¿hay algo que me espere?», ordenado por lo que cuesta la demora: primero el dinero que se va, luego alguien que espera una respuesta. Una línea aparece solo si alguien debe decidir o actuar; una cifra sobre la que nadie puede actuar se queda en la pantalla que la tiene."
+   ],
+   "recordingPrivacy": [
+    "Modo grabación",
+    "Para filmar o fotografiar este espacio. Cada nombre, correo electrónico, número de teléfono, dirección postal y fotografía se sustituye por una persona inventada antes de llegar a la pantalla, mientras que el plano, las reservas y los importes siguen siendo los reales. Un aviso lo indica en cada pantalla, y los formularios de identidad se niegan a guardar mientras esté activo."
    ]
   },
   "process": {
@@ -5931,6 +5947,10 @@ window.SETUP_L10N={
    "decisionSurface": [
     "Cosa ti aspetta",
     "Un solo posto che risponde a «c’è qualcosa che mi aspetta?», ordinato per quanto costa il ritardo: prima il denaro che se ne va, poi qualcuno che aspetta una risposta. Una riga appare solo se una persona deve decidere o agire; un numero su cui nessuno può agire resta sullo schermo che lo possiede."
+   ],
+   "recordingPrivacy": [
+    "Modalità ripresa",
+    "Per filmare o fotografare questo spazio. Ogni nome, indirizzo e-mail, numero di telefono, indirizzo postale e fotografia viene sostituito da una persona inventata prima di arrivare sullo schermo, mentre la piantina, le prenotazioni e gli importi restano quelli veri. Un avviso lo segnala su ogni schermata, e i moduli di identità rifiutano di salvare finché è attiva."
    ]
   },
   "process": {

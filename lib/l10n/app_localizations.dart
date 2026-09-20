@@ -16289,6 +16289,36 @@ abstract class AppLocalizations {
   /// **'{n} at once'**
   String memberSimultaneousLimitChip(int n);
 
+  /// #1514 recording privacy: featureRecordingPrivacyTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Filming mode'**
+  String get featureRecordingPrivacyTitle;
+
+  /// #1514 recording privacy: featureRecordingPrivacyDesc
+  ///
+  /// In en, this message translates to:
+  /// **'For filming or photographing this workspace. Every name, e-mail, telephone number, address and photograph is replaced by an invented person before it reaches the screen, while the plan, the bookings and the figures stay the real ones. A banner says so on every screen, and the identity forms refuse to save until it is off.'**
+  String get featureRecordingPrivacyDesc;
+
+  /// #1514 recording privacy: recordingPrivacyBadge
+  ///
+  /// In en, this message translates to:
+  /// **'Filming mode — invented people'**
+  String get recordingPrivacyBadge;
+
+  /// #1514 recording privacy: recordingPrivacyBadgeHint
+  ///
+  /// In en, this message translates to:
+  /// **'Filming mode is on: every name, e-mail, telephone number, address and photograph on screen belongs to an invented person. The plan, the bookings and the figures are this workspace\'s own. Switch it off in Settings when you have finished filming.'**
+  String get recordingPrivacyBadgeHint;
+
+  /// #1514 recording privacy: recordingPrivacyWriteRefused
+  ///
+  /// In en, this message translates to:
+  /// **'Not while filming mode is on: this form is showing an invented person, and saving it would write that over somebody\'s real details. Switch filming mode off first.'**
+  String get recordingPrivacyWriteRefused;
+
   /// #1305 Shown when the server refuses an action for lack of a permission
   ///
   /// In en, this message translates to:

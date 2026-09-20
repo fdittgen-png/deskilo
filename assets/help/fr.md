@@ -1977,7 +1977,38 @@ la visite suivante repart du même espace inventé.
 Ce n'est pas un moyen de montrer un espace **réel** sans montrer ses
 membres. Tout y est inventé, donc il n'y a rien à masquer ; un espace
 réel affiché à l'écran montre toujours les vraies personnes qui s'y
-trouvent.
+trouvent, sauf si le **mode tournage** est actif — c'est la section
+suivante.
+
+### Mode tournage (#1514)
+
+Pour les fois où il faut montrer l'espace **réel** — une vidéo
+d'assistance, une copie d'écran dans un guide, une image pour la
+boutique, une diapositive en conférence. Activez le **mode tournage** et
+chaque nom, adresse électronique, numéro de téléphone, adresse postale
+et photo de profil affiché appartient à une personne inventée. Le plan,
+les réservations, les places et les montants restent exactement ceux de
+cet espace.
+
+Le remplacement a lieu avant l'affichage, et non par-dessus : il n'y a
+donc rien à oublier, un écran ne peut pas montrer un vrai nom puisque
+aucun vrai nom ne lui parvient. Un même adhérent est toujours la même
+personne inventée, sur le plan, dans l'annuaire et sur une facture : un
+enregistrement reste compréhensible.
+
+Un bandeau reste en haut de chaque écran tant que c'est actif, pour que
+personne ne filme dix minutes en croyant que ça l'était — ni ne
+travaille une journée sur des noms inventés en les croyant vrais.
+Désactivez-le dans *Réglages → Fonctionnalités* dès la fin du tournage.
+
+Deux points. Tant que c'est actif, les formulaires d'identité refusent
+d'enregistrer : ce qu'ils affichent est inventé, et l'enregistrer
+écraserait les vraies coordonnées de quelqu'un. Et rien ne peut
+masquer ce qu'une personne a écrit — un message, une note, le nom
+d'une place : relisez l'écran avant de le filmer.
+
+Si l'image n'a pas besoin d'être celle de *cet* espace, utilisez plutôt
+l'espace de démonstration : tout y est inventé dès le départ.
 
 ### Caméra frontale pour scanner
 

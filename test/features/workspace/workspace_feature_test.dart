@@ -23,6 +23,11 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   // #1287 — four roles is the product's answer; a fifth is asked for.
   WorkspaceFeature.customRoles,
   WorkspaceFeature.customFields,
+  // #1514 — filming mode replaces every person on screen with an
+  // invented one. It is switched on for the length of a shoot and off
+  // after; a space that starts with it on would show its own members
+  // names none of them recognise.
+  WorkspaceFeature.recordingPrivacy,
   // #1277 — renaming the product's words is asked for, never assumed:
   // a space that keeps the product's vocabulary is not shown a control
   // for changing it.
@@ -137,6 +142,7 @@ void main() {
       'customRoles': true,
       'customFields': true,
       'decisionSurface': true,
+      'recordingPrivacy': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);
