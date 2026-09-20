@@ -145,10 +145,20 @@ scripts/branch_protection.sh apply-checks
 which PATCHes the `required_status_checks` sub-resource only, leaving
 reviews, restrictions, linear history and the force-push and deletion
 settings untouched — unlike `apply`, which PUTs the whole protection
-object and resets every field it does not name. It prints the live
-context list afterwards and then runs `verify`; that read-back is the
-evidence. A token that cannot read protection reports *unverified*,
-never *enforced*.
+object and resets every field it does not name. #1446 R1a made it
+additive — it reads the live list and sends live ∪ committed at the live
+strictness, so an extra context, its app binding and the current `strict`
+survive — and made `apply` refuse over protection it has read
+(`apply --reset` to mean it) or could not read.
+
+**Three results, never two.** Every command ends on one `result=` line,
+and the exit status says the same: `verified-match` (0), `verified-drift`
+(1, a branch read as unprotected included), `unverified-access` (2,
+nothing was looked at: 403 or no answer). Only the first is settings
+proof, and the CI step runs `verify --advisory`, which exits 0 whatever
+happens but prints and summarises that line.
+`test/tool/branch_protection_test.dart` drives the real script against a
+stub API for each answer.
 
 ## Reproduce
 

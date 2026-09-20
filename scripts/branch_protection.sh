@@ -22,12 +22,23 @@
 # `apply` commands mutate the repository and are a deliberate, manual
 # act; prefer `apply-checks`, which changes the required-check list and
 # leaves every other protection setting alone.
+#
+# #1446 — THREE OUTCOMES, never two: `show` printed "(none — the branch
+# is unprotected)" for any answer it could not parse, and `verify` warned
+# and exited 0 when the token could not READ protection, so a green step
+# was citable as proof the settings were right. Every command now ends on
+# one `result=` line — verified-match (0), verified-drift (1, a branch
+# read as unprotected included), unverified-access (2, 403 or no answer)
+# — and `verify --advisory` prints it while still exiting 0.
 
 set -euo pipefail
 
 REPO="${REPO:-fdittgen-png/deskilo}"
 BRANCH="${BRANCH:-master}"
 API="repos/${REPO}/branches/${BRANCH}/protection"
+# The API client, as a seam: the tests drive this real script with a
+# stub answering 200/404/403/no-answer, touching no setting.
+GH="${GH:-gh}"
 
 # ---------------------------------------------------------------------
 # The source of truth.
@@ -92,66 +103,132 @@ Branch protection as data.
   scripts/branch_protection.sh apply         # PUT the whole protection object
   scripts/branch_protection.sh show          # print the live configuration
 
-verify is safe anywhere and is what CI calls (advisory). The apply
-commands are a deliberate, manual act; apply-checks changes the
-required-check list and nothing else, apply resets every unlisted
-setting. REPO/BRANCH env vars override the defaults.
+verify is safe anywhere and is what CI calls; `verify --advisory` always
+exits 0 but still reports its result. The apply commands are a
+deliberate, manual act; apply-checks ADDS the committed contexts to the
+live ones, apply replaces the whole object and refuses to run over
+protection it has not read. Exit: 0 verified-match, 1 verified-drift,
+2 unverified-access, 64 usage. REPO/BRANCH/GH override the defaults.
 EOF
   exit 64
 }
 
+# 404 means verifiably unprotected; 403 means THIS TOKEN cannot read
+# protection at all (that needs repo admin, which the Actions token does
+# not have); anything else is no answer. Conflating them is how a checker
+# reports a guarantee it never inspected.
+PROT_STATE=''  # readable | absent | forbidden | unreachable
+PROT_BODY=''
+PROT_DETAIL=''
+
+read_protection() {
+  local resp rc=0
+  resp=$("$GH" api "${1:-$API}" 2>&1) || rc=$?
+  PROT_BODY='' PROT_DETAIL=''
+  if [ "$rc" -eq 0 ]; then PROT_STATE=readable PROT_BODY="$resp"; return 0; fi
+  PROT_DETAIL=$(printf '%s' "$resp" | tr '\n' ' ' | cut -c1-200)
+  PROT_STATE=unreachable
+  if grep -qiE "HTTP 404|not protected|not found" <<< "$resp"; then PROT_STATE=absent; fi
+  if grep -qiE "HTTP 40[13]|not accessible|must have admin" <<< "$resp"; then PROT_STATE=forbidden; fi
+  return 0
+}
+
+# The single line every command ends on, and the exit status that carries
+# the same fact to a caller that reads statuses rather than output.
+outcome() {
+  local result="$1"; shift
+  echo "branch_protection: result=${result} — $*"
+  [ -z "${GITHUB_OUTPUT:-}" ] || echo "result=${result}" >> "$GITHUB_OUTPUT"
+  [ -z "${GITHUB_STEP_SUMMARY:-}" ] ||
+    echo "\`${REPO}@${BRANCH}\`: **${result}** — $*" >> "$GITHUB_STEP_SUMMARY"
+  case "$result" in
+    verified-match) return 0 ;;
+    verified-drift) return 1 ;;
+    *) return 2 ;;
+  esac
+}
+
 show() {
   echo "Live protection on ${REPO}@${BRANCH}:"
-  if ! gh api "$API" > /dev/null 2>&1; then
-    echo "  (none — the branch is unprotected)"
-    echo
-    echo "Contexts most recently reported on ${BRANCH}, for reference:"
-    gh api "repos/${REPO}/commits/${BRANCH}/check-runs" \
-      --jq '.check_runs[].name' 2>/dev/null | sort -u | sed 's/^/  /'
-    return 0
-  fi
-  gh api "$API" --jq '{
-    strict: .required_status_checks.strict,
-    contexts: .required_status_checks.contexts,
-    enforce_admins: .enforce_admins.enabled,
-    required_reviews: .required_pull_request_reviews,
-    allow_force_pushes: .allow_force_pushes.enabled,
-    allow_deletions: .allow_deletions.enabled
-  }'
+  read_protection
+  case "$PROT_STATE" in
+    absent)
+      echo "  (none — I READ the branch and it is unprotected)"
+      echo
+      echo "Contexts most recently reported on ${BRANCH}, for reference:"
+      "$GH" api "repos/${REPO}/commits/${BRANCH}/check-runs" 2>/dev/null |
+        jq -r '.check_runs[].name' 2>/dev/null | sort -u | sed 's/^/  /' || true
+      ;;
+    readable)
+      jq '.required_status_checks as $c | {
+        strict: $c.strict,
+        contexts: ([$c.checks[]?.context, $c.contexts[]?] | unique),
+        apps: [$c.checks[]? | select(.app_id) | {context, app_id}],
+        enforce_admins: .enforce_admins.enabled,
+        required_reviews: .required_pull_request_reviews,
+        allow_force_pushes: .allow_force_pushes.enabled,
+        allow_deletions: .allow_deletions.enabled
+      }' <<< "$PROT_BODY" ;;
+    *)
+      echo "  (UNREADABLE — ${PROT_DETAIL})"
+      echo "  This is NOT 'unprotected': the settings here are unknown."
+      outcome unverified-access "the protection object could not be read" ||
+        return $? ;;
+  esac
 }
 
 verify() {
-  # 404 means unprotected; 403 means THIS TOKEN cannot read protection at
-  # all (reading it needs repo admin, which the default Actions token does
-  # not have). Conflating the two makes CI shout "NO protection" the day
-  # after protection was applied — the exact false alarm this script
-  # exists to prevent.
-  local resp
-  if ! resp=$(gh api "$API" 2>&1); then
-    if grep -qiE "HTTP 404|not protected|not found" <<< "$resp"; then
-      echo "::error::${REPO}@${BRANCH} has NO branch protection." >&2
-      echo "Expected required checks:" >&2
-      printf '  %s\n' "${TARGET_CHECKS[@]}" >&2
-      echo "Run: $0 apply" >&2
-      return 1
-    fi
-    echo "::warning::cannot READ branch protection with this token" \
-      "(needs repo admin) — run '$0 verify' locally to check for drift." >&2
+  local advisory=0 rc=0
+  [ "${1:-}" != '--advisory' ] || advisory=1
+  verify_once || rc=$?
+  if [ "$advisory" -eq 1 ] && [ "$rc" -ne 0 ]; then
+    echo "::warning::this step is advisory and exits 0; the result= line" \
+      "above is the fact, and only 'verified-match' is settings proof." >&2
     return 0
   fi
-  # $resp already holds the whole protection JSON — parse it locally
+  return "$rc"
+}
+
+verify_once() {
+  read_protection
+  case "$PROT_STATE" in
+    absent)
+      echo "::error::${REPO}@${BRANCH} has NO branch protection. Expected:" >&2
+      printf '  %s\n' "${TARGET_CHECKS[@]}" >&2
+      echo "Run: $0 apply" >&2
+      outcome verified-drift "the branch was read and is unprotected"
+      return $? ;;
+    forbidden)
+      echo "::warning::cannot READ branch protection with this token" \
+        "(needs repo admin) — run '$0 verify' locally to check for drift." >&2
+      outcome unverified-access "HTTP 403: nothing was checked — ${PROT_DETAIL}"
+      return $? ;;
+    unreachable)
+      echo "::warning::the protection API did not answer — ${PROT_DETAIL}" >&2
+      outcome unverified-access "no answer: nothing was checked"
+      return $? ;;
+  esac
+  # $PROT_BODY already holds the whole protection JSON — parse it locally
   # instead of two more authenticated round-trips (this runs on every PR
   # push via the advisory CI step).
-  local drift=0 drift_diff
-  if ! drift_diff=$(diff -u \
-      <(printf '%s\n' "${TARGET_CHECKS[@]}" | sort) \
-      <(jq -r '.required_status_checks.contexts[]?' <<< "$resp" | sort)); then
-    echo "::error::required-check drift (-committed +live):" >&2
-    echo "$drift_diff" >&2
-    drift=1
-  fi
+  # Every context the live object requires, however it spells them:
+  # modern `checks[]` binds each to an app, legacy `contexts[]` does not,
+  # and a real response carries both.
+  local drift=0 ctx live
+  live=$(jq -r '.required_status_checks
+    | [.checks[]?.context, .contexts[]?] | unique | .[]' <<< "$PROT_BODY")
+  for ctx in "${TARGET_CHECKS[@]}"; do
+    if ! grep -qxF "$ctx" <<< "$live"; then
+      echo "::error::required check MISSING from live protection: ${ctx}" >&2
+      drift=1
+    fi
+  done
+  # A context the live object requires and this file does not name is
+  # deliberately NOT drift: `apply-checks` keeps it, and `show` lists it.
+  # Calling it drift invites somebody to "fix" it by deleting a
+  # protection nobody here owns.
   local live_strict
-  live_strict=$(jq -r '.required_status_checks.strict' <<< "$resp")
+  live_strict=$(jq -r '.required_status_checks.strict' <<< "$PROT_BODY")
   if [ "$live_strict" != "$STRICT" ]; then
     echo "::error::strict mode is '$live_strict', committed target is '$STRICT'." >&2
     drift=1
@@ -174,8 +251,12 @@ verify() {
     done
   fi
 
-  [ "$drift" -eq 0 ] && echo "branch_protection: live configuration matches the committed target"
-  return "$drift"
+  if [ "$drift" -eq 0 ]; then
+    outcome verified-match "read it: every committed check is required"
+  else
+    outcome verified-drift "read it: it does not match the committed target"
+  fi
+  return $?
 }
 
 # The surgical half of `apply`: the required-check LIST, and nothing
@@ -189,21 +270,74 @@ verify() {
 # This PATCHes the dedicated required_status_checks sub-resource, so
 # reviews, restrictions, linear history, force-push and deletion settings
 # are untouched by construction rather than by remembering to list them.
+#
+# It is also ADDITIVE (#1446): sending this file's list as THE list would
+# drop a context somebody required in the console, drop the app binding
+# that says which app may report it, and reset strictness. So it reads
+# the live sub-resource and sends live ∪ committed, live entries winning,
+# at the live strictness.
 apply_checks() {
-  local contexts
-  contexts=$(printf '%s\n' "${TARGET_CHECKS[@]}" | jq -R . | jq -s .)
-  gh api -X PATCH "${API}/required_status_checks" --input - > /dev/null <<JSON
-{ "strict": ${STRICT}, "contexts": ${contexts} }
-JSON
+  read_protection "${API}/required_status_checks"
+  local live='[]' strict="$STRICT" targets body
+  case "$PROT_STATE" in
+    readable)
+      live=$(jq -c '[(.checks[]? | {context, app_id}),
+                     (.contexts[]? | {context: ., app_id: null})]
+                    | unique_by(.context)' <<< "$PROT_BODY")
+      strict=$(jq -r '.strict' <<< "$PROT_BODY") ;;
+    absent)
+      echo "::error::no protection object to patch — run '$0 apply' first." >&2
+      outcome verified-drift "the branch was read and is unprotected"
+      return $? ;;
+    *)
+      echo "::error::cannot read the current required checks — ${PROT_DETAIL}" >&2
+      echo "Refusing to PATCH a list built from a response I could not read." >&2
+      outcome unverified-access "nothing was read, so nothing was written"
+      return $? ;;
+  esac
+  targets=$(printf '%s\n' "${TARGET_CHECKS[@]}" |
+    jq -R '{context: ., app_id: null}' | jq -sc .)
+  # unique_by keeps the first of each group and jq's sort is stable, so a
+  # live entry (with its app binding) survives its committed twin.
+  body=$(jq -nc --argjson live "$live" --argjson targets "$targets" \
+    --argjson strict "$strict" \
+    '{strict: $strict, checks: ($live + $targets | unique_by(.context))}')
+  "$GH" api -X PATCH "${API}/required_status_checks" --input - > /dev/null \
+    <<< "$body"
+  [ "$strict" = "$STRICT" ] || echo "::warning::kept live strict=${strict};" \
+    "the committed target is ${STRICT}. Changing it is a separate act." >&2
   echo "branch_protection: required checks set on ${REPO}@${BRANCH}:"
-  gh api "${API}/required_status_checks" --jq '.contexts[]' | sed 's/^/  /'
+  jq -r '.checks[] | "  \(.context)\(if .app_id then " (app \(.app_id))" else "" end)"' \
+    <<< "$body"
   verify
 }
 
+# The blunt command: a PUT of the WHOLE protection object, which resets
+# every field it does not name. #1446: it therefore never runs over a
+# configuration it has not read — not over a 403, not over settings
+# somebody expanded. It reads first and refuses, naming `apply-checks`;
+# `apply --reset` is the deliberate override.
 apply() {
+  read_protection
+  case "$PROT_STATE" in
+    readable)
+      if [ "${1:-}" != '--reset' ]; then
+        echo "::error::${REPO}@${BRANCH} is already protected, and a PUT" \
+          "sends null for every field this file does not name: reviews," \
+          "restrictions and any context '$0 show' lists would be RESET." >&2
+        echo "Use '$0 apply-checks' (additive), or '$0 apply --reset'." >&2
+        outcome verified-drift "refused: the live object would be replaced"
+        return $?
+      fi ;;
+    forbidden | unreachable)
+      echo "::error::cannot read the current protection — ${PROT_DETAIL};" \
+        "refusing to overwrite settings I could not see." >&2
+      outcome unverified-access "nothing was read, so nothing was written"
+      return $? ;;
+  esac
   local contexts
   contexts=$(printf '%s\n' "${TARGET_CHECKS[@]}" | jq -R . | jq -s .)
-  gh api -X PUT "$API" --input - <<JSON
+  "$GH" api -X PUT "$API" --input - <<JSON
 {
   "required_status_checks": { "strict": ${STRICT}, "contexts": ${contexts} },
   "enforce_admins": false,
@@ -219,9 +353,11 @@ JSON
   verify
 }
 
-case "${1:-}" in
-  verify)       verify ;;
-  apply)        apply ;;
+cmd="${1:-}"
+shift || true
+case "$cmd" in
+  verify)       verify "$@" ;;
+  apply)        apply "$@" ;;
   apply-checks) apply_checks ;;
   show)         show ;;
   *)            usage ;;
