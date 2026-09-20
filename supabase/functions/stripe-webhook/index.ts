@@ -112,7 +112,31 @@ Deno.serve(async (req: Request): Promise<Response> => {
     return new Response("verification_failed", { status: 400 });
   }
 
-  if (event.type === "checkout.session.completed") {
+  // #1554 — `completed` means the checkout finished, NOT that the money
+  // arrived. A delayed method — SEPA direct debit, Bacs, konbini — ends
+  // the session with `payment_status: "unpaid"` and settles days later,
+  // or fails. Crediting on `completed` alone posts a ledger entry for
+  // money that may never come, and `settle_online_payment` takes no
+  // provider status, so nothing underneath catches it.
+  //
+  // Stripe's own word for "the money is there" is `payment_status`, and
+  // for the delayed case it says so afterwards with
+  // `async_payment_succeeded` / `async_payment_failed`. Both were being
+  // logged and dropped, which is why a SEPA payment that DID arrive was
+  // never credited either — the bug cut both ways.
+  const paid = object.payment_status === "paid" ||
+    object.payment_status === "no_payment_required";
+  const settles = (event.type === "checkout.session.completed" && paid) ||
+    event.type === "checkout.session.async_payment_succeeded";
+
+  if (event.type === "checkout.session.completed" && !paid) {
+    console.log("stripe session completed but not paid — waiting", {
+      session: sessionId,
+      payment_status: object.payment_status,
+    });
+  }
+
+  if (settles) {
     const { error } = await admin.rpc("settle_online_payment", {
       p_provider: "stripe",
       p_order_id: sessionId,
@@ -124,12 +148,15 @@ Deno.serve(async (req: Request): Promise<Response> => {
       return new Response("settle_failed", { status: 500 });
     }
     console.log("stripe session settled", { session: sessionId });
-  } else if (event.type === "checkout.session.expired") {
+  } else if (
+    event.type === "checkout.session.expired" ||
+    event.type === "checkout.session.async_payment_failed"
+  ) {
     await admin.rpc("mark_payment_failed", {
       p_provider: "stripe",
       p_order_id: sessionId,
     });
-    console.log("stripe session marked failed", sessionId);
+    console.log("stripe session marked failed", sessionId, event.type);
   } else {
     console.log("stripe webhook ignored event", event.type);
   }

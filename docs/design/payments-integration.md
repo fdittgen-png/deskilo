@@ -92,9 +92,14 @@ capture.
    Return the `rel: "approve"` HATEOAS link as `approve_url`. Persist a
    `payment_intents` row `(order_id, workspace_id, member_id, period,
    amount_cents, status='created')`.
-3. **Member approves** in the browser; PayPal captures (intent CAPTURE
-   auto-captures on approval, or capture explicitly via
-   `POST /v2/checkout/orders/{id}/capture`).
+3. **Member approves** in the browser. Approval moves no money: an order
+   created with `intent: "CAPTURE"` must still be captured by us, with
+   `POST /v2/checkout/orders/{id}/capture`. This paragraph used to say
+   the intent "auto-captures on approval"; it does not, and believing it
+   is why nothing ever called capture (#1555). `CHECKOUT.ORDER.APPROVED`
+   is the signal to capture, carrying `PayPal-Request-Id` so a
+   redelivered event returns the first capture instead of taking the
+   money twice.
 4. **Webhook** `PAYMENT.CAPTURE.COMPLETED` → verify → `custom_id` gives the
    member/period, `resource.id` is the capture id, `resource.amount` the
    money → `settle_online_payment`.
