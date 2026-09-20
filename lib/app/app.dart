@@ -9,6 +9,7 @@ import '../core/demo/presentation/demo_workspace.dart';
 import '../core/locale/locale_controller.dart';
 import '../core/motion/motion.dart';
 import '../core/presence/presence_providers.dart';
+import '../core/privacy/recording_banner.dart';
 import '../core/theme/theme_controller.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/providers/workspace_providers.dart';
@@ -87,9 +88,16 @@ class DeskiloApp extends ConsumerWidget {
         // #1379 — the demonstration bar renders INSIDE the app, where a
         // theme and five languages exist. In live mode there is no
         // DemoEnvironment above it and it returns its child untouched.
+        // #1514 — and the filming strip below it, for the same reason:
+        // above the navigator so it is on every route there is, and
+        // permanent, so nobody records for ten minutes believing the
+        // mode was on — or works for a day on invented names believing
+        // they were real.
         child: DemoControls(
-          child: DevelopmentBanner(
-            child: BootSplash(child: SystemInsetsGuard(child: child)),
+          child: RecordingBanner(
+            child: DevelopmentBanner(
+              child: BootSplash(child: SystemInsetsGuard(child: child)),
+            ),
           ),
         ),
       ),

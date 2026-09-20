@@ -9416,6 +9416,24 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get featureRecordingPrivacyTitle => 'Aufnahmemodus';
+
+  @override
+  String get featureRecordingPrivacyDesc =>
+      'Zum Filmen oder Fotografieren dieses Arbeitsraums. Jeder Name, jede E-Mail-Adresse, Telefonnummer, Anschrift und jedes Foto wird durch eine erfundene Person ersetzt, bevor es auf den Bildschirm gelangt; der Plan, die Buchungen und die Beträge bleiben die echten. Ein Banner weist auf jedem Bildschirm darauf hin, und die Identitätsformulare verweigern das Speichern, solange er aktiv ist.';
+
+  @override
+  String get recordingPrivacyBadge => 'Aufnahmemodus — erfundene Personen';
+
+  @override
+  String get recordingPrivacyBadgeHint =>
+      'Der Aufnahmemodus ist aktiv: Jeder angezeigte Name, jede E-Mail-Adresse, Telefonnummer, Anschrift und jedes Foto gehört einer erfundenen Person. Plan, Buchungen und Beträge sind die dieses Arbeitsraums. Schalten Sie ihn nach den Aufnahmen in den Einstellungen wieder aus.';
+
+  @override
+  String get recordingPrivacyWriteRefused =>
+      'Nicht, solange der Aufnahmemodus aktiv ist: Dieses Formular zeigt eine erfundene Person, und Speichern würde damit die echten Angaben einer Person überschreiben. Schalten Sie den Aufnahmemodus zuerst aus.';
+
+  @override
   String get refusalPermission =>
       'Dafür haben Sie keine Berechtigung. Eine Inhaberin oder ein Inhaber des Space kann sie in der Rollenverwaltung erteilen.';
 

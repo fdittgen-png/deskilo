@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/privacy/recording_privacy.dart';
+import '../../../core/privacy/recording_providers.dart';
 import '../../profile/domain/profile.dart';
 import '../../profile/providers/profile_providers.dart';
 import '../../reservations/domain/reservation.dart';
@@ -18,6 +20,10 @@ part 'directory_providers.g.dart';
 /// sharing a workspace with the caller (#223).
 @riverpod
 Future<Map<String, Profile>> memberProfiles(Ref ref) async {
+  // #1514 — the seam. The directory is the densest personal page in the
+  // app: names, status lines, WhatsApp numbers and photographs, all at
+  // once. Watched BEFORE the gap (#1218).
+  final recording = ref.watch(recordingPrivacyProvider);
   final members = await ref.watch(workspaceMembersProvider.future);
   // A managed member (#962) has no account and therefore no profile;
   // its empty user id must never reach the query, where PostgREST
@@ -26,7 +32,10 @@ Future<Map<String, Profile>> memberProfiles(Ref ref) async {
   if (ids.isEmpty) return const {};
   final profiles =
       await ref.watch(profileRepositoryProvider).fetchProfiles(ids);
-  return {for (final p in profiles) p.id: p};
+  // Filming mode replaces the people and keeps the page.
+  return {
+    for (final p in profiles) p.id: recording ? recordingProfile(p) : p,
+  };
 }
 
 /// All reservations feeding the directory's reservation chips (#237):

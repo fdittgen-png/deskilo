@@ -4,6 +4,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/cache/cache_store.dart';
+import '../../../core/privacy/recording_privacy.dart';
+import '../../../core/privacy/recording_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_reservation_repository.dart';
 import '../domain/reservation.dart';
@@ -58,12 +60,19 @@ Future<List<Reservation>> myUpcomingReservations(Ref ref) async {
 /// member id → display name for the active workspace.
 @Riverpod(keepAlive: true)
 Future<Map<String, String>> memberNames(Ref ref) async {
+  // #1514 — the seam. Every name the plan, the calendar, the week grid
+  // and the kiosk print comes through here, so while filming mode is on
+  // none of them can print a real one. Watched BEFORE the gap (#1218).
+  final recording = ref.watch(recordingPrivacyProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const {};
   final names =
       await ref.watch(workspaceRepositoryProvider).fetchMemberNames(workspace.id);
-  // #970 — demo mode blurs these names wherever they are printed.
-  return names;
+  if (!recording) return names;
+  return {
+    for (final entry in names.entries)
+      entry.key: recordingName(entry.key, entry.value),
+  };
 }
 
 /// Reservations of the active workspace intersecting the given LOCAL

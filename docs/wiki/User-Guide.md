@@ -1991,7 +1991,37 @@ next visit starts from the same invented space.
 
 It is not a way to show a **real** space without showing its members.
 Everything in the demo is invented, so there is nothing to hide; a real
-workspace on screen still shows the real people in it.
+workspace on screen still shows the real people in it, unless
+**Filming mode** is on — which is the next section.
+
+### Filming mode (#1514)
+
+For the times you have to show the **real** workspace — a support video,
+a screenshot in a guide, a picture for the shop, a slide at a
+conference. Switch **Filming mode** on and every name, e-mail address,
+telephone number, postal address and profile photograph on screen
+belongs to an invented person. The floor plan, the bookings, the seats
+and the amounts stay exactly the ones this space really has.
+
+The substitution happens before anything is drawn, not on top of it, so
+there is nothing that can be forgotten: a screen cannot show a real name
+because no real name ever reaches it. The same member is always the same
+invented person, on the plan, in the directory and on an invoice, so a
+recording still makes sense to follow.
+
+A banner sits at the top of every screen while it is on, so nobody films
+for ten minutes thinking it was active — and nobody works for a day on
+invented names thinking they were real. Switch it off in *Settings →
+Features* as soon as the filming is done.
+
+Two things to know. While it is on, the identity forms refuse to save:
+what they are showing is invented, and saving it would write that over
+somebody's real details. And nothing can hide what a person typed
+— a message, a note, a seat label — so read what is on the screen before
+you film it.
+
+If the picture does not have to be of *this* space, use the demo
+workspace instead: everything in it is invented from the start.
 
 <!-- anchor: user.profile.settings.front-camera -->
 ### Front camera for scanning

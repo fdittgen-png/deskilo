@@ -9425,6 +9425,24 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get featureRecordingPrivacyTitle => 'Mode tournage';
+
+  @override
+  String get featureRecordingPrivacyDesc =>
+      'Pour filmer ou photographier cet espace. Chaque nom, adresse électronique, numéro de téléphone, adresse postale et photo est remplacé par une personne inventée avant d\'arriver à l\'écran, tandis que le plan, les réservations et les montants restent les vrais. Un bandeau l\'indique sur chaque écran, et les formulaires d\'identité refusent d\'enregistrer tant qu\'il est actif.';
+
+  @override
+  String get recordingPrivacyBadge => 'Mode tournage — personnes inventées';
+
+  @override
+  String get recordingPrivacyBadgeHint =>
+      'Le mode tournage est actif : chaque nom, adresse électronique, numéro de téléphone, adresse postale et photo affiché appartient à une personne inventée. Le plan, les réservations et les montants sont bien ceux de cet espace. Désactivez-le dans les Réglages une fois le tournage terminé.';
+
+  @override
+  String get recordingPrivacyWriteRefused =>
+      'Impossible tant que le mode tournage est actif : ce formulaire affiche une personne inventée, et l\'enregistrer écraserait les vraies coordonnées de quelqu\'un. Désactivez d\'abord le mode tournage.';
+
+  @override
   String get refusalPermission =>
       'Vous n\'avez pas l\'autorisation pour cela. Un propriétaire de l\'espace peut l\'accorder dans Gestion des rôles.';
 

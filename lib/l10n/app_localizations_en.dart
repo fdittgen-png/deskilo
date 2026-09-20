@@ -9339,6 +9339,24 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get featureRecordingPrivacyTitle => 'Filming mode';
+
+  @override
+  String get featureRecordingPrivacyDesc =>
+      'For filming or photographing this workspace. Every name, e-mail, telephone number, address and photograph is replaced by an invented person before it reaches the screen, while the plan, the bookings and the figures stay the real ones. A banner says so on every screen, and the identity forms refuse to save until it is off.';
+
+  @override
+  String get recordingPrivacyBadge => 'Filming mode — invented people';
+
+  @override
+  String get recordingPrivacyBadgeHint =>
+      'Filming mode is on: every name, e-mail, telephone number, address and photograph on screen belongs to an invented person. The plan, the bookings and the figures are this workspace\'s own. Switch it off in Settings when you have finished filming.';
+
+  @override
+  String get recordingPrivacyWriteRefused =>
+      'Not while filming mode is on: this form is showing an invented person, and saving it would write that over somebody\'s real details. Switch filming mode off first.';
+
+  @override
   String get refusalPermission =>
       'You do not have the permission for this. An owner of the space can grant it in Role management.';
 

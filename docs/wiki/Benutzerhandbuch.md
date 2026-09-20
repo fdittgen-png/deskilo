@@ -2000,7 +2000,40 @@ ebenso: der nächste Besuch beginnt wieder im selben erfundenen Bereich.
 Er ist kein Weg, einen **echten** Bereich zu zeigen, ohne dessen
 Mitglieder zu zeigen. Alles darin ist erfunden, es gibt also nichts zu
 verbergen; ein echter Bereich auf dem Bildschirm zeigt weiterhin die
-echten Personen darin.
+echten Personen darin — es sei denn, der **Aufnahmemodus** ist an, was
+der nächste Abschnitt ist.
+
+### Aufnahmemodus (#1514)
+
+Für die Fälle, in denen der **echte** Arbeitsraum gezeigt werden muss —
+ein Hilfevideo, ein Bildschirmfoto in einer Anleitung, ein Bild für den
+Store, eine Folie auf einer Konferenz. Schalten Sie den
+**Aufnahmemodus** ein, und jeder Name, jede E-Mail-Adresse,
+Telefonnummer, Anschrift und jedes Profilfoto auf dem Bildschirm gehört
+einer erfundenen Person. Plan, Buchungen, Plätze und Beträge bleiben
+genau die dieses Raums.
+
+Die Ersetzung geschieht vor der Darstellung und nicht darüber; es gibt
+also nichts zu vergessen: Ein Bildschirm kann keinen echten Namen
+zeigen, weil ihn nie ein echter Name erreicht. Dasselbe Mitglied ist
+immer dieselbe erfundene Person — auf dem Plan, im Verzeichnis und auf
+einer Rechnung —, sodass eine Aufnahme nachvollziehbar bleibt.
+
+Solange er aktiv ist, steht auf jedem Bildschirm ein Banner, damit
+niemand zehn Minuten lang filmt und glaubt, er sei an — und niemand
+einen Tag lang mit erfundenen Namen arbeitet und sie für echt hält.
+Schalten Sie ihn in *Einstellungen → Funktionen* aus, sobald die
+Aufnahmen fertig sind.
+
+Zweierlei ist zu wissen. Solange er aktiv ist, verweigern die
+Identitätsformulare das Speichern: Was sie zeigen, ist erfunden, und
+Speichern würde damit die echten Angaben einer Person überschreiben. Und
+nichts kann verbergen, was jemand selbst geschrieben hat — eine
+Nachricht, eine Notiz, die Bezeichnung eines Platzes. Lesen Sie den
+Bildschirm, bevor Sie ihn filmen.
+
+Muss das Bild nicht von *diesem* Raum sein, nehmen Sie den
+Demo-Arbeitsraum: Dort ist von Anfang an alles erfunden.
 
 <!-- anchor: user.profile.settings.front-camera -->
 ### Frontkamera zum Scannen

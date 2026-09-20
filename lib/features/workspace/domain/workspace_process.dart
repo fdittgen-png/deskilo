@@ -171,6 +171,10 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.dataAccessLog,
       WorkspaceFeature.memberDataExport,
       WorkspaceFeature.dataExport,
+      // #1514 — filming mode belongs with the privacy obligations and
+      // not with the look-and-feel switches: what it decides is whether
+      // a picture of this space may carry a member's personal data.
+      WorkspaceFeature.recordingPrivacy,
     ]),
   ]),
   WorkspaceProcess('operations', [

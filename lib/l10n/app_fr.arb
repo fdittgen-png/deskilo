@@ -6029,6 +6029,26 @@
   "memberSimultaneousLimitExplainer": "Combien de réservations ce membre peut détenir sur une même période. Non défini : le réglage de l'espace s'applique.",
   "memberSimultaneousLimitDefault": "Réglage de l'espace",
   "memberSimultaneousLimitChip": "{n} à la fois",
+  "featureRecordingPrivacyTitle": "Mode tournage",
+  "@featureRecordingPrivacyTitle": {
+    "description": "#1514 recording privacy: featureRecordingPrivacyTitle"
+  },
+  "featureRecordingPrivacyDesc": "Pour filmer ou photographier cet espace. Chaque nom, adresse électronique, numéro de téléphone, adresse postale et photo est remplacé par une personne inventée avant d'arriver à l'écran, tandis que le plan, les réservations et les montants restent les vrais. Un bandeau l'indique sur chaque écran, et les formulaires d'identité refusent d'enregistrer tant qu'il est actif.",
+  "@featureRecordingPrivacyDesc": {
+    "description": "#1514 recording privacy: featureRecordingPrivacyDesc"
+  },
+  "recordingPrivacyBadge": "Mode tournage — personnes inventées",
+  "@recordingPrivacyBadge": {
+    "description": "#1514 recording privacy: recordingPrivacyBadge"
+  },
+  "recordingPrivacyBadgeHint": "Le mode tournage est actif : chaque nom, adresse électronique, numéro de téléphone, adresse postale et photo affiché appartient à une personne inventée. Le plan, les réservations et les montants sont bien ceux de cet espace. Désactivez-le dans les Réglages une fois le tournage terminé.",
+  "@recordingPrivacyBadgeHint": {
+    "description": "#1514 recording privacy: recordingPrivacyBadgeHint"
+  },
+  "recordingPrivacyWriteRefused": "Impossible tant que le mode tournage est actif : ce formulaire affiche une personne inventée, et l'enregistrer écraserait les vraies coordonnées de quelqu'un. Désactivez d'abord le mode tournage.",
+  "@recordingPrivacyWriteRefused": {
+    "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
+  },
   "refusalPermission": "Vous n'avez pas l'autorisation pour cela. Un propriétaire de l'espace peut l'accorder dans Gestion des rôles.",
   "refusalSession": "Votre session a expiré. Reconnectez-vous, puis réessayez.",
   "refusalAlreadyDecided": "Quelqu'un a déjà décidé. La liste affiche le résultat.",

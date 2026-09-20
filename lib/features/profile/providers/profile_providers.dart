@@ -4,6 +4,8 @@ import 'dart:typed_data';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/privacy/recording_privacy.dart';
+import '../../../core/privacy/recording_providers.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../../reservations/providers/reservation_providers.dart';
 import '../../workspace/domain/member.dart';
@@ -26,9 +28,14 @@ ProfileRepository profileRepository(Ref ref) =>
 Future<Profile?> myProfile(Ref ref) async {
   final signedIn = ref.watch(authStateProvider).value != null;
   if (!signedIn) return null;
+  // #1514 — the seam. My own name, address, telephone number and
+  // identity are personal data like anybody else's, and the settings
+  // screens that print them are exactly what a support video films.
+  // Watched BEFORE the gap (#1218).
+  final recording = ref.watch(recordingPrivacyProvider);
   final profile = await ref.watch(profileRepositoryProvider).fetchMyProfile();
-  // #970 — demo mode blurs my own details wherever they are printed.
-  return profile;
+  if (profile == null || !recording) return profile;
+  return recordingProfile(profile);
 }
 
 /// Bytes of [userId]'s profile photo (0038), or null when they have none.
@@ -37,6 +44,12 @@ Future<Profile?> myProfile(Ref ref) async {
 /// before watching this so the download only runs for members who set one.
 @Riverpod(keepAlive: true)
 Future<Uint8List?> memberAvatar(Ref ref, String userId) async {
+  // #1514 — a face identifies a person at least as well as the name
+  // beside it. Filming mode shows the monogram every member without a
+  // photograph already shows, so the plan, the directory and the kiosk
+  // receipt carry nobody's likeness. The photograph is never fetched at
+  // all, so it is not merely hidden.
+  if (ref.watch(recordingPrivacyProvider)) return null;
   return ref.watch(profileRepositoryProvider).fetchAvatarBytes(userId);
 }
 

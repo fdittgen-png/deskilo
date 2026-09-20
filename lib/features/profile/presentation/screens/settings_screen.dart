@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/help/help_anchors.dart';
+import '../../../../core/privacy/recording_banner.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint_providers.dart';
 import '../../../../core/locale/locale_controller.dart';
@@ -729,6 +730,8 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
   }
 
   Future<void> _save() async {
+    // #1514 — this form was prefilled from the recording seam.
+    if (refusedWhileRecording(context, ref)) return;
     final l10n = AppLocalizations.of(context);
     setState(() => _saving = true);
     if (!await runGuarded(

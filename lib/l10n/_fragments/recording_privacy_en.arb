@@ -1,0 +1,23 @@
+{
+  "@@locale": "en",
+  "featureRecordingPrivacyTitle": "Filming mode",
+  "@featureRecordingPrivacyTitle": {
+    "description": "#1514 recording privacy: featureRecordingPrivacyTitle"
+  },
+  "featureRecordingPrivacyDesc": "For filming or photographing this workspace. Every name, e-mail, telephone number, address and photograph is replaced by an invented person before it reaches the screen, while the plan, the bookings and the figures stay the real ones. A banner says so on every screen, and the identity forms refuse to save until it is off.",
+  "@featureRecordingPrivacyDesc": {
+    "description": "#1514 recording privacy: featureRecordingPrivacyDesc"
+  },
+  "recordingPrivacyBadge": "Filming mode — invented people",
+  "@recordingPrivacyBadge": {
+    "description": "#1514 recording privacy: recordingPrivacyBadge"
+  },
+  "recordingPrivacyBadgeHint": "Filming mode is on: every name, e-mail, telephone number, address and photograph on screen belongs to an invented person. The plan, the bookings and the figures are this workspace's own. Switch it off in Settings when you have finished filming.",
+  "@recordingPrivacyBadgeHint": {
+    "description": "#1514 recording privacy: recordingPrivacyBadgeHint"
+  },
+  "recordingPrivacyWriteRefused": "Not while filming mode is on: this form is showing an invented person, and saving it would write that over somebody's real details. Switch filming mode off first.",
+  "@recordingPrivacyWriteRefused": {
+    "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
+  }
+}

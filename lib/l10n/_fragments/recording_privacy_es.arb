@@ -1,0 +1,23 @@
+{
+  "@@locale": "es",
+  "featureRecordingPrivacyTitle": "Modo grabación",
+  "@featureRecordingPrivacyTitle": {
+    "description": "#1514 recording privacy: featureRecordingPrivacyTitle"
+  },
+  "featureRecordingPrivacyDesc": "Para filmar o fotografiar este espacio. Cada nombre, correo electrónico, número de teléfono, dirección postal y fotografía se sustituye por una persona inventada antes de llegar a la pantalla, mientras que el plano, las reservas y los importes siguen siendo los reales. Un aviso lo indica en cada pantalla, y los formularios de identidad se niegan a guardar mientras esté activo.",
+  "@featureRecordingPrivacyDesc": {
+    "description": "#1514 recording privacy: featureRecordingPrivacyDesc"
+  },
+  "recordingPrivacyBadge": "Modo grabación — personas inventadas",
+  "@recordingPrivacyBadge": {
+    "description": "#1514 recording privacy: recordingPrivacyBadge"
+  },
+  "recordingPrivacyBadgeHint": "El modo grabación está activo: cada nombre, correo electrónico, número de teléfono, dirección y fotografía en pantalla pertenece a una persona inventada. El plano, las reservas y los importes sí son los de este espacio. Desactívelo en los Ajustes cuando termine de grabar.",
+  "@recordingPrivacyBadgeHint": {
+    "description": "#1514 recording privacy: recordingPrivacyBadgeHint"
+  },
+  "recordingPrivacyWriteRefused": "No mientras el modo grabación esté activo: este formulario muestra una persona inventada, y guardarlo sobrescribiría los datos reales de alguien. Desactive antes el modo grabación.",
+  "@recordingPrivacyWriteRefused": {
+    "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
+  }
+}

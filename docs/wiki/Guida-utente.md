@@ -2015,7 +2015,38 @@ pure: la visita successiva riparte dallo stesso spazio inventato.
 Non è un modo per mostrare uno spazio **reale** senza mostrarne i
 membri. Tutto ciò che contiene è inventato, quindi non c'è nulla da
 nascondere; uno spazio reale sullo schermo continua a mostrare le
-persone reali che vi si trovano.
+persone reali che vi si trovano, a meno che la **modalità ripresa** non
+sia attiva: è la sezione seguente.
+
+### Modalità ripresa (#1514)
+
+Per le volte in cui va mostrato lo spazio **vero**: un video di
+assistenza, una schermata in una guida, un'immagine per lo store, una
+slide a una conferenza. Attiva la **modalità ripresa** e ogni nome,
+indirizzo e-mail, numero di telefono, indirizzo postale e fotografia di
+profilo sullo schermo appartiene a una persona inventata. La piantina,
+le prenotazioni, i posti e gli importi restano esattamente quelli di
+questo spazio.
+
+La sostituzione avviene prima di disegnare, non sopra: non c'è quindi
+nulla da dimenticare, una schermata non può mostrare un nome vero perché
+nessun nome vero le arriva. Lo stesso socio è sempre la stessa persona
+inventata — sulla piantina, nell'elenco e su una fattura —, così una
+registrazione resta comprensibile.
+
+Finché è attiva, un avviso sta in cima a ogni schermata, perché nessuno
+riprenda dieci minuti credendo che lo fosse — né lavori un giorno su
+nomi inventati credendoli veri. Disattivala in *Impostazioni →
+Funzionalità* appena finite le riprese.
+
+Due cose da sapere. Finché è attiva, i moduli di identità rifiutano di
+salvare: quello che mostrano è inventato, e salvarlo sovrascriverebbe i
+dati reali di qualcuno. E nulla può nascondere ciò che una persona ha
+scritto — un messaggio, una nota, il nome di un posto: rileggi lo
+schermo prima di riprenderlo.
+
+Se l'immagine non deve essere di *questo* spazio, usa piuttosto lo
+spazio dimostrativo: lì è tutto inventato fin dall'inizio.
 
 <!-- anchor: user.profile.settings.front-camera -->
 ### Fotocamera frontale per scansionare

@@ -96,7 +96,7 @@ final class MyProfileProvider
   }
 }
 
-String _$myProfileHash() => r'e51fc9a8ce2aa61a48bfe25babbeb102235354b0';
+String _$myProfileHash() => r'ca2642f7b736bb77fd5491e83fe3985d9fc2baca';
 
 /// Bytes of [userId]'s profile photo (0038), or null when they have none.
 /// Kept alive so a member's avatar is fetched once and reused across the
@@ -166,7 +166,7 @@ final class MemberAvatarProvider
   }
 }
 
-String _$memberAvatarHash() => r'd5ced693d6d3583cf5ecd7fd61c724042b8027ab';
+String _$memberAvatarHash() => r'06464f3d85a99036adaa4e50f40682d5779f9260';
 
 /// Bytes of [userId]'s profile photo (0038), or null when they have none.
 /// Kept alive so a member's avatar is fetched once and reused across the
