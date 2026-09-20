@@ -102,7 +102,20 @@ class ReserveViewMenu extends StatelessWidget {
             children: [
               Icon(iconOf(current)),
               const SizedBox(width: AppSpacing.xs),
-              Text(currentName),
+              // #1583 — the two icons say what this is and that it
+              // opens; the NAME is the part that can give ground when
+              // the header strip hands the control less than its
+              // natural width (a long lexicon word, twice the text
+              // size). Flexible + ellipsis shortens the label rather
+              // than pushing the caret off the right edge, and the
+              // 48 dp box above keeps the target whole.
+              Flexible(
+                child: Text(
+                  currentName,
+                  softWrap: false,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
               const Icon(Icons.arrow_drop_down),
             ],
           ),

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../l10n/app_localizations.dart';
@@ -240,8 +242,15 @@ class _CanvasControlsState extends State<CanvasControls>
             final windowW = viewport.width / scale;
             final windowH = viewport.height / scale;
 
-            final hTrack = viewport.width - _thickness - 8;
-            final vTrack = viewport.height - _thickness - 8;
+            // #1583 — a track is the viewport minus the other bar and
+            // the gutter, and a canvas can be handed LESS room than
+            // those two take: a panel mid-collapse, the frame before a
+            // sheet settles, a zero-height slot. The subtraction then
+            // goes negative and `_Scrollbar` asserts on a SizedBox of
+            // minus sixteen. A track with no room is zero long, which
+            // is also the length at which `_thumb` stops drawing.
+            final hTrack = math.max(0.0, viewport.width - _thickness - 8);
+            final vTrack = math.max(0.0, viewport.height - _thickness - 8);
 
             final hThumb = _thumb(
               track: hTrack,

@@ -22,11 +22,12 @@ const _screenFloor = 15;
 
 /// Screen × axis cells actually asserted. RATCHET: up only.
 ///
-/// 62 of 90 on 2026-09-20. The 28 missing are four screens whose pump
-/// helper hard-codes its own viewport (24), the level canvas's keyboard
-/// cell, and the three narrow-surface cells #1583 holds open — each
-/// named in `matrix.dart` with its reason and date.
-const _cellFloor = 62;
+/// 65 of 90 on 2026-09-20 — #1583 brought the calendar hub's narrow,
+/// largeText and reducedMotion cells in. The 25 missing are four
+/// screens whose pump helper hard-codes its own viewport (24) and the
+/// level canvas's keyboard cell, each named in `matrix.dart` with its
+/// reason and date.
+const _cellFloor = 65;
 
 /// Every gap reason carries the issue that owns it and the date it was
 /// written, so a reason cannot rot unnoticed into a permanent excuse.
