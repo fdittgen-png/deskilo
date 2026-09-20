@@ -744,7 +744,7 @@ routine public.deskilo_schema_version() -> integer | function | invoker | stable
 routine public.direct_conversation(p_workspace_id uuid, p_other_member_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:317959433a98
 routine public.distribute_expense(p_workspace_id uuid, p_title text, p_amount_cents integer, p_method text, p_period text, p_shares jsonb, p_source_event_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:3010ff33462d
 routine public.document_site_for_member(p_member_id uuid) -> sites | function | definer | stable | exec:authenticated,service_role | body:f9884a94d124
-routine public.effective_payment_terms(p_member_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:632d98e8bf04
+routine public.effective_payment_terms(p_member_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7541cf6a1fbe
 routine public.einvoice_config_is_secret(p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:b974edd7fe78
 routine public.einvoice_status(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:be9cedf2cfb6
 routine public.enforce_booking_rules(p_workspace_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_walk_up boolean) -> void | function | definer | stable | exec:service_role | body:11826ad6d77b
