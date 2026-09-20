@@ -1352,9 +1352,18 @@ List<WorkspaceFeature> alsoEnabledWith({
 /// "nobody has chosen yet" and "chosen off" stay distinguishable, and so
 /// that a later change to a registry default cannot quietly switch
 /// something on in a space that never asked for it.
-Map<String, bool> defaultFeatureFlagsForNewWorkspace() => {
+///
+/// #1550 — [withTwin] is the one exception: `environmentPairs` is the
+/// feature that SHOWS a pair, so creating the couple and switching off
+/// the only place it appears as one is the product contradicting
+/// itself. A space created alone still gets it off.
+Map<String, bool> defaultFeatureFlagsForNewWorkspace({
+  bool withTwin = false,
+}) =>
+    {
       for (final entry in featureManifest.values)
         entry.feature.dbKey: entry.tier == FeatureTier.core && entry.defaultOn,
+      if (withTwin) WorkspaceFeature.environmentPairs.dbKey: true,
     };
 
 /// The features of one tier, in registry order — the Features screen

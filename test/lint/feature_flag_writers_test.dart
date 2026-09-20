@@ -76,7 +76,9 @@ void main() {
   test('a new workspace is created with the explicit tier map (#1063)', () {
     expect(
       sources[_repository],
-      contains("'p_feature_flags': defaultFeatureFlagsForNewWorkspace()"),
+      contains(
+          "'p_feature_flags': defaultFeatureFlagsForNewWorkspace(withTwin: "
+          "withTwin)"),
       reason: 'an empty map would let every registry default — platform '
           'features included — switch on in a space that never chose them',
     );

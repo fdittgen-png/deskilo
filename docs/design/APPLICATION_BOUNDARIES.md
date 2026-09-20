@@ -99,8 +99,8 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/core/demo/data/money_repository.dart` | 1800 |
 | `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1656 |
 | `lib/features/money/data/supabase_money_repository.dart` | 1420 |
-| `lib/features/workspace/domain/workspace_feature.dart` | 1365 |
-| `lib/features/workspace/data/supabase_workspace_repository.dart` | 1281 |
+| `lib/features/workspace/domain/workspace_feature.dart` | 1374 |
+| `lib/features/workspace/data/supabase_workspace_repository.dart` | 1282 |
 | `lib/features/money/presentation/screens/money_screen.dart` | 1277 |
 | `lib/features/reservations/presentation/screens/reserve_screen.dart` | 1145 |
 | `lib/features/money/presentation/widgets/invoice_template_sheet.dart` | 1113 |
