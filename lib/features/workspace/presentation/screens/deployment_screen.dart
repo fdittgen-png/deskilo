@@ -10,6 +10,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../application/deploy_configuration.dart';
 import '../../domain/deployment.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_permission.dart';
@@ -38,13 +39,11 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
   bool _loaded = false;
 
   Future<void> _load(Workspace workspace) async {
-    final repo = ref.read(deploymentRepositoryProvider);
-    final registry = await repo.entities();
-    final journal = await repo.journal(workspace.pairId);
+    final board = await ref.read(deploymentsProvider).board(workspace.pairId);
     if (!mounted) return;
     setState(() {
-      _registry = registry;
-      _journal = journal;
+      _registry = board.registry;
+      _journal = board.journal;
     });
   }
 
@@ -56,26 +55,30 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
       .firstOrNull;
 
   void _toggle(String key, bool on) {
+    // #1449 — the tick rule is application/deploy_configuration.dart's:
+    // ticking one ticks what it requires, unticking one unticks
+    // everything that required it, transitively.
+    final next = selectionAfter(
+      selected: _selected,
+      registry: _registry ?? const [],
+      key: key,
+      on: on,
+    );
     setState(() {
-      if (on) {
-        _selected.addAll(withRequirements([key], _registry ?? const []));
-      } else {
-        _selected.remove(key);
-        // Nothing may stay selected that required what just left.
-        _selected.removeWhere((k) => (_registry ?? const [])
-            .firstWhere((e) => e.key == k)
-            .requires
-            .contains(key));
-      }
+      _selected
+        ..clear()
+        ..addAll(next);
     });
   }
 
   Future<void> _previewAndDeploy(Workspace from, Workspace to) async {
     final l10n = AppLocalizations.of(context);
-    final repo = ref.read(deploymentRepositoryProvider);
-    final entities = _selected.toList()..sort();
+    final deployments = ref.read(deploymentsProvider);
     setState(() => _busy = true);
-    DeploymentPreview? preview;
+    // #1449 — the previewed deployment carries the entities it was
+    // computed for, so the deploy below writes what was SHOWN and not
+    // whatever the ticks became meanwhile.
+    PreviewedDeployment? previewed;
     final ok = await runGuarded(
       context,
       domain: 'workspace',
@@ -83,12 +86,18 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
       action: () async {
-        preview = await repo.preview(from.id, to.id, entities);
+        previewed = await deployments.examine(
+          fromWorkspaceId: from.id,
+          toWorkspaceId: to.id,
+          selection: _selected,
+          registry: _registry ?? const [],
+        );
       },
     );
     if (!mounted) return;
     setState(() => _busy = false);
-    if (!ok || preview == null) return;
+    if (!ok || previewed == null) return;
+    final entities = previewed!.entities;
     final confirmed = await showModalBottomSheet<bool>(
       context: context,
       showDragHandle: true,
@@ -98,7 +107,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
       constraints: BoxConstraints(
           maxHeight: MediaQuery.sizeOf(context).height * 0.85),
       builder: (context) => _PreviewSheet(
-        preview: preview!,
+        preview: previewed!.preview,
         target: to,
       ),
     );
@@ -136,7 +145,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
       message: 'deployment failed',
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
-      action: () => repo.deploy(from.id, to.id, entities),
+      action: () => deployments.apply(previewed!),
     );
     if (!mounted) return;
     setState(() => _busy = false);
@@ -155,8 +164,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
       message: 'deployment rollback failed',
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
-      action: () =>
-          ref.read(deploymentRepositoryProvider).rollback(deployment.id),
+      action: () => ref.read(deploymentsProvider).rollBack(deployment.id),
     );
     if (!ok || !mounted) return;
     AppSnack.success(

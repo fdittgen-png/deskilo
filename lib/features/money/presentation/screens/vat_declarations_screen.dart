@@ -22,12 +22,12 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/einvoice_gateway.dart';
 import '../../domain/vat_declaration.dart';
 import '../../domain/vat_declaration_pdf.dart';
 import '../../domain/vat_regime.dart';
 import '../../domain/accounting_view.dart';
 import '../../domain/invoice_legal.dart';
+import '../../application/declare_vat.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/vat_declaration_providers.dart';
 import '../report_actions.dart';
@@ -90,47 +90,19 @@ class _VatDeclarationsScreenState
           await ref.read(invoicesProvider.future),
           await ref.read(invoiceMatchesProvider.future),
         );
-        final invoices = view.invoices;
-        // #896 — on the cash basis a period holds what was PAID inside
-        // it, not what was issued: both the lines and the count of
-        // documents behind them follow the payments.
-        final matches = view.matches;
-        final onPayment =
-            InvoiceLegal.fromJson(workspace.invoiceLegal).onPaymentBasis;
-        final lines = onPayment
-            ? computeVatDeclarationLinesOnPayment(
-                invoices: invoices,
-                matches: matches,
-                periodStart: period.start,
-                periodEnd: period.end,
-              )
-            : computeVatDeclarationLines(invoices, period.start, period.end);
-        var net = 0;
-        var vat = 0;
-        final ids = <String>{};
-        for (final line in lines) {
-          net += line.netCents;
-          vat += line.vatCents;
-        }
-        final last = period.end.add(const Duration(days: 1));
-        for (final invoice in invoices) {
-          if (invoice.voidedAt != null) continue;
-          final on = onPayment
-              ? matches[invoice.id]?.matchedAt
-              : invoice.issuedAt;
-          if (on != null && !on.isBefore(period.start) && on.isBefore(last)) {
-            ids.add(invoice.id);
-          }
-        }
-        await ref.read(moneyRepositoryProvider).saveVatDeclaration(
+        // #896/#1449 — on the cash basis a period holds what was PAID
+        // inside it, not what was issued; the lines and the count of
+        // documents behind them follow the same date, and that rule
+        // lives in application/declare_vat.dart.
+        await ref.read(vatDeclarationCommandProvider).declare(
               workspaceId: workspace.id,
+              currency: workspace.currencyCode,
               periodStart: period.start,
               periodEnd: period.end,
-              lines: lines,
-              totalNetCents: net,
-              totalVatCents: vat,
-              currency: workspace.currencyCode,
-              invoiceCount: ids.length,
+              invoices: view.invoices,
+              matches: view.matches,
+              onPaymentBasis:
+                  InvoiceLegal.fromJson(workspace.invoiceLegal).onPaymentBasis,
             );
       },
     );
@@ -242,28 +214,27 @@ class _VatDeclarationsScreenState
           'Something went wrong. Please try again.',
       action: () async {
         final pdf = await _buildPdf(declaration);
-        final submission =
-            await ref.read(moneyRepositoryProvider).sendVatDeclaration(
-                  workspaceId: workspace.id,
-                  declarationId: declaration.id,
-                  fileName: pdf.fileName,
-                  mimeType: 'application/pdf',
-                  bytes: pdf.bytes,
-                );
+        final outcome = await ref.read(vatDeclarationCommandProvider).transmit(
+              workspaceId: workspace.id,
+              declarationId: declaration.id,
+              fileName: pdf.fileName,
+              bytes: pdf.bytes,
+            );
         if (!mounted) return;
-        if (submission.status == EInvoiceSubmissionStatus.accepted) {
-          AppSnack.success(
-            context,
-            l10n?.vatDeclSent ?? 'Declaration transmitted.',
-            replace: true,
-          );
-        } else {
-          AppSnack.error(
-            context,
-            '${l10n?.vatDeclRejected ?? 'The platform refused the declaration.'} '
-            '${submission.detail}',
-            replace: true,
-          );
+        switch (outcome) {
+          case VatDeclarationFiled():
+            AppSnack.success(
+              context,
+              l10n?.vatDeclSent ?? 'Declaration transmitted.',
+              replace: true,
+            );
+          case VatDeclarationRefused(:final detail):
+            AppSnack.error(
+              context,
+              '${l10n?.vatDeclRejected ?? 'The platform refused the declaration.'} '
+              '$detail',
+              replace: true,
+            );
         }
       },
     );
@@ -299,10 +270,8 @@ class _VatDeclarationsScreenState
       message: 'vat declaration mark filed failed',
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
-      action: () => ref
-          .read(moneyRepositoryProvider)
-          .markVatDeclarationSubmitted(
-              declarationId: declaration.id, channel: 'manual'),
+      action: () =>
+          ref.read(vatDeclarationCommandProvider).fileByHand(declaration.id),
     );
     ref.invalidate(vatDeclarationsProvider);
   }

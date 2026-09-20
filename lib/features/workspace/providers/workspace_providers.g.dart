@@ -1762,10 +1762,8 @@ String _$myMemberHash() => r'894055bd99d73ca6c7d30a82ed343f8f484fb725';
 /// call and not a field on the member row — the row carries only the
 /// name a co-member legitimately sees.
 ///
-/// #1561 — the answer says WHICH answer it is. A refusal is legitimate
-/// and reads as refused; anything else — a dropped connection, a broken
-/// gateway — is no answer at all and stays an error, so a form cannot
-/// open blank on it and save the blanks over the stored identity.
+/// #1561 — a refusal reads as refused; any other failure stays an error,
+/// so no form opens blank on a dropped connection and saves the blanks.
 
 @ProviderFor(managedIdentity)
 final managedIdentityProvider = ManagedIdentityFamily._();
@@ -1778,10 +1776,8 @@ final managedIdentityProvider = ManagedIdentityFamily._();
 /// call and not a field on the member row — the row carries only the
 /// name a co-member legitimately sees.
 ///
-/// #1561 — the answer says WHICH answer it is. A refusal is legitimate
-/// and reads as refused; anything else — a dropped connection, a broken
-/// gateway — is no answer at all and stays an error, so a form cannot
-/// open blank on it and save the blanks over the stored identity.
+/// #1561 — a refusal reads as refused; any other failure stays an error,
+/// so no form opens blank on a dropped connection and saves the blanks.
 
 final class ManagedIdentityProvider
     extends
@@ -1801,10 +1797,8 @@ final class ManagedIdentityProvider
   /// call and not a field on the member row — the row carries only the
   /// name a co-member legitimately sees.
   ///
-  /// #1561 — the answer says WHICH answer it is. A refusal is legitimate
-  /// and reads as refused; anything else — a dropped connection, a broken
-  /// gateway — is no answer at all and stays an error, so a form cannot
-  /// open blank on it and save the blanks over the stored identity.
+  /// #1561 — a refusal reads as refused; any other failure stays an error,
+  /// so no form opens blank on a dropped connection and saves the blanks.
   ManagedIdentityProvider._({
     required ManagedIdentityFamily super.from,
     required String super.argument,
@@ -1859,10 +1853,8 @@ String _$managedIdentityHash() => r'92174af1f7f7eb27c8d96316b1eccedd591f9cf6';
 /// call and not a field on the member row — the row carries only the
 /// name a co-member legitimately sees.
 ///
-/// #1561 — the answer says WHICH answer it is. A refusal is legitimate
-/// and reads as refused; anything else — a dropped connection, a broken
-/// gateway — is no answer at all and stays an error, so a form cannot
-/// open blank on it and save the blanks over the stored identity.
+/// #1561 — a refusal reads as refused; any other failure stays an error,
+/// so no form opens blank on a dropped connection and saves the blanks.
 
 final class ManagedIdentityFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<ManagedIdentityRead>, String> {
@@ -1883,10 +1875,8 @@ final class ManagedIdentityFamily extends $Family
   /// call and not a field on the member row — the row carries only the
   /// name a co-member legitimately sees.
   ///
-  /// #1561 — the answer says WHICH answer it is. A refusal is legitimate
-  /// and reads as refused; anything else — a dropped connection, a broken
-  /// gateway — is no answer at all and stays an error, so a form cannot
-  /// open blank on it and save the blanks over the stored identity.
+  /// #1561 — a refusal reads as refused; any other failure stays an error,
+  /// so no form opens blank on a dropped connection and saves the blanks.
 
   ManagedIdentityProvider call(String memberId) =>
       ManagedIdentityProvider._(argument: memberId, from: this);

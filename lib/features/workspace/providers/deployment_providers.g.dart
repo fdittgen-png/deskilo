@@ -63,3 +63,52 @@ final class DeploymentRepositoryProvider
 
 String _$deploymentRepositoryHash() =>
     r'1481d14e5696b8eeeed8910ebf3e2b352261f087';
+
+/// #1449 — the deployment's own decisions: the closed selection, and a
+/// deploy that can only write what a preview described.
+
+@ProviderFor(deployments)
+final deploymentsProvider = DeploymentsProvider._();
+
+/// #1449 — the deployment's own decisions: the closed selection, and a
+/// deploy that can only write what a preview described.
+
+final class DeploymentsProvider
+    extends $FunctionalProvider<Deployments, Deployments, Deployments>
+    with $Provider<Deployments> {
+  /// #1449 — the deployment's own decisions: the closed selection, and a
+  /// deploy that can only write what a preview described.
+  DeploymentsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'deploymentsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$deploymentsHash();
+
+  @$internal
+  @override
+  $ProviderElement<Deployments> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  Deployments create(Ref ref) {
+    return deployments(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Deployments value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Deployments>(value),
+    );
+  }
+}
+
+String _$deploymentsHash() => r'5d5e2536568d6a585b0dc71d05f72d90639a1941';

@@ -2,6 +2,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../application/deploy_configuration.dart';
 import '../data/supabase_deployment_repository.dart';
 import '../domain/deployment.dart';
 
@@ -12,3 +13,9 @@ part 'deployment_providers.g.dart';
 @Riverpod(keepAlive: true)
 DeploymentRepository deploymentRepository(Ref ref) =>
     SupabaseDeploymentRepository(Supabase.instance.client);
+
+/// #1449 — the deployment's own decisions: the closed selection, and a
+/// deploy that can only write what a preview described.
+@riverpod
+Deployments deployments(Ref ref) =>
+    Deployments(ref.watch(deploymentRepositoryProvider));

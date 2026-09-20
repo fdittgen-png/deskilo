@@ -5,9 +5,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../core/trace/traced.dart';
 
 import '../application/book_repartition.dart';
+import '../application/declare_vat.dart';
 import '../application/record_payment.dart';
 import '../application/settle_invoices.dart';
 import '../application/save_legal_identity.dart';
+import '../application/schedule_expense.dart';
 import '../domain/invoice.dart';
 import '../domain/billing_rules.dart';
 import '../domain/dunning.dart';
@@ -64,6 +66,18 @@ Settlements settlements(Ref ref) =>
 @riverpod
 Repartitions repartitions(Ref ref) =>
     Repartitions(ref.watch(moneyRepositoryProvider));
+
+/// #1449 — what a VAT period declares on the basis the workspace
+/// declares on, and whether the platform took it.
+@riverpod
+VatDeclarations vatDeclarationCommand(Ref ref) =>
+    VatDeclarations(ref.watch(moneyRepositoryProvider));
+
+/// #1449 — a recurring expense: what may still be ended, and what
+/// answering an occurrence at a different amount means.
+@riverpod
+ExpenseSchedules expenseScheduleCommand(Ref ref) =>
+    ExpenseSchedules(ref.watch(moneyRepositoryProvider));
 
 @riverpod
 LegalIdentity legalIdentity(Ref ref) => LegalIdentity(
