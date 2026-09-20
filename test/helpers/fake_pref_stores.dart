@@ -1,34 +1,13 @@
 // SPDX-License-Identifier: 0BSD
-import 'package:deskilo/app/shell/shell_bar_visibility.dart';
-import 'package:deskilo/core/navigation/navigation_style.dart';
-
-/// In-memory stores for the per-device preferences (#969, #970), so no
-/// widget test touches SharedPreferences and every provider that watches
-/// them resolves at once.
-class InMemoryNavigationStyleStore implements NavigationStyleStore {
-  InMemoryNavigationStyleStore({this.style});
-  String? style;
-  @override
-  Future<String?> read() async => style;
-  @override
-  Future<void> write(String? style) async => this.style = style;
-}
-
-/// #1173 — the two shell flags (bar swiped away, swipe hint seen).
-class InMemoryShellFlagStore implements ShellFlagStore {
-  InMemoryShellFlagStore([this.value = false]);
-
-  bool value;
-
-  /// How many times the flag was written — the proof a choice persists.
-  int writes = 0;
-
-  @override
-  Future<bool> read() async => value;
-
-  @override
-  Future<void> write(bool next) async {
-    value = next;
-    writes++;
-  }
-}
+//
+// In-memory stores for the per-device preferences (#969, #970, #1173),
+// so no widget test touches SharedPreferences and every provider that
+// watches them resolves at once.
+//
+// #1564 moved the classes themselves into `lib/core/demo/data/`, beside
+// the other in-memory stores, because the Demo environment has to mount
+// them in production code: a preference written from inside a
+// demonstration was reaching the real app. The suite reaches them
+// through this import exactly as before.
+export 'package:deskilo/core/demo/data/device_prefs.dart'
+    show InMemoryNavigationStyleStore, InMemoryShellFlagStore;

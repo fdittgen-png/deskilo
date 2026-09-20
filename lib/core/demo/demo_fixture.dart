@@ -17,6 +17,7 @@ import 'data/accessory_repository.dart';
 import 'data/auth_repository.dart';
 import 'data/calendar_repository.dart';
 import 'data/credit_repository.dart';
+import 'data/device_prefs.dart';
 import 'data/event_repository.dart';
 import 'data/fixture_clock.dart';
 import 'data/floor_plan_repository.dart';
@@ -34,11 +35,27 @@ import 'demo_dataset.dart';
 import 'demo_outward_edges.dart';
 import 'demo_persona.dart';
 
+/// #1565 — who the visitor is acting AS, for the repositories whose
+/// subject is implicit.
+///
+/// One mutable cell rather than a field on each fake: the booking
+/// repository and the event repository both have to stamp the same
+/// person, and two copies of "the active member" is exactly how they
+/// came apart — a persona switch moved the displayed identity and left
+/// every booking attributed to the owner.
+class DemoActor {
+  DemoActor(this.memberId);
+
+  String memberId;
+}
+
 /// Everything one Demo session runs on. Built once per session and
 /// thrown away when it ends: a reset is a new [DemoFixture], never a
 /// cleanup of the old one.
 class DemoFixture {
   DemoFixture._({
+    required this.actor,
+    required this.prefs,
     required this.auth,
     required this.workspaces,
     required this.floorPlan,
@@ -68,9 +85,13 @@ class DemoFixture {
     final workspaces = FakeWorkspaceRepository.withWorkspace();
     final floorPlan = FakeFloorPlanRepository();
     seedDemoPlan(floorPlan);
-    final reservations = FakeReservationRepository();
+    // #1565 — the ONE actor the implicit-subject repositories read. They
+    // are built with a reader rather than a captured id, so a persona
+    // switch moves both of them at once and neither can drift.
+    final actor = DemoActor(initialDemoPersona.memberId);
+    final reservations = FakeReservationRepository(actor: () => actor.memberId);
     final money = FakeMoneyRepository();
-    final events = FakeEventRepository();
+    final events = FakeEventRepository(actor: () => actor.memberId);
     // The cast first: everything below points at it (#1374).
     seedDemoPeople(workspaces);
     seedDemoReservations(reservations, floorPlan, today);
@@ -90,6 +111,8 @@ class DemoFixture {
           '${problems.join('; ')}');
     }
     return DemoFixture._(
+      actor: actor,
+      prefs: DemoDevicePrefs(),
       auth: FakeAuthRepository(userId: initialDemoPersona.userId),
       workspaces: workspaces,
       floorPlan: floorPlan,
@@ -112,6 +135,13 @@ class DemoFixture {
       seededAt: today,
     );
   }
+
+  /// #1565 — the member every implicit-subject write is attributed to.
+  final DemoActor actor;
+
+  /// #1564 — the per-device preferences this session owns, so nothing a
+  /// visitor changes reaches the real app's.
+  final DemoDevicePrefs prefs;
 
   final FakeAuthRepository auth;
   final FakeWorkspaceRepository workspaces;
@@ -142,6 +172,9 @@ class DemoFixture {
   /// The instant this session believes it is.
   final DateTime seededAt;
 
+  /// Who the session is currently acting as (#1565).
+  String get activeMemberId => actor.memberId;
+
   /// Looks at the same space through [persona] (#1376).
   ///
   /// The DATA is untouched: only who the fixture answers `fetchMyMember`
@@ -149,8 +182,16 @@ class DemoFixture {
   /// reads permissions the way it does in live mode, so a member sees a
   /// member's product because `effectivePermissions` says so and not
   /// because a Demo branch hid anything.
+  ///
+  /// #1565 made both halves of that promise true. The viewpoint MOVES
+  /// over the cast the session has — it no longer reseeds it, which used
+  /// to throw away an edited subscription, a changed status and any
+  /// member created during the session — and the actor moves with it, so
+  /// a booking made as Bruno belongs to Bruno rather than to the owner
+  /// whose id the repositories had captured at build time.
   void becomePersona(DemoPersona persona) {
-    seedDemoPeopleAs(workspaces, persona.person);
+    viewDemoPeopleAs(workspaces, persona.person);
+    actor.memberId = persona.memberId;
     // The profile rows stay; the "mine" pointer moves with the persona,
     // so Settings shows that person's own name and contact block
     // instead of the first member's (#1514).
