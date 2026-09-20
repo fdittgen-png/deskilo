@@ -30,6 +30,8 @@ const List<String> permissionRefusalSubstrings = [
   'only admins may',
   'only workspace settings managers may',
   'not allowed to manage this profile',
+  // #1561 — the READ behind the same rule (0161's managed_identity_of).
+  'not allowed to read this profile',
   'violates row-level security policy',
 ];
 

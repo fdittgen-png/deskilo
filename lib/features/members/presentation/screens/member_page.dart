@@ -239,16 +239,14 @@ class _MemberPageBody extends ConsumerWidget {
           // #915 — the address comes from BEHIND the rule, and asking
           // for it is written down. An admin the rule does not name sees
           // the name on the tile and nothing under it.
-          subtitle: (ref.watch(managedIdentityProvider(member.id)).value ??
-                  PersonalInfo.empty)
+          subtitle: (ref.watch(managedIdentityProvider(member.id)).value?.identity ?? PersonalInfo.empty)
               .postalBlock(
                 workspaceCountry: workspace?.countryCode ?? '',
                 // #912 — the title the person asked for, in the reader's
                 // language, exactly as the document will print it.
                 courtesyWord: courtesyWord(
                     l10n,
-                    (ref.watch(managedIdentityProvider(member.id)).value ??
-                            PersonalInfo.empty)
+                    (ref.watch(managedIdentityProvider(member.id)).value?.identity ?? PersonalInfo.empty)
                         .courtesy),
               )
               .replaceAll('\n', ', '),

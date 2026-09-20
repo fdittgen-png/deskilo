@@ -36,7 +36,14 @@ class WorkspaceSettingsSave {
 
   /// Language → template; blank entries mean "built-in message".
   final Map<String, String> invitationTemplates;
-  final NewMemberDefaults newMemberDefaults;
+
+  /// #1563 — null when the form never LOADED them: the defaults live in
+  /// `billing_rules`, read separately from the workspace row, and a form
+  /// that renders before that read lands holds the product fallback
+  /// (100 %, blocked). Sending it would save a value nobody chose over
+  /// the configured one. Absent, `save_workspace_settings` (0241) leaves
+  /// the stored rule alone.
+  final NewMemberDefaults? newMemberDefaults;
 
   /// The `p_settings` payload. Values are sent as typed; the server trims
   /// and drops blank templates, so a retry compares like with like.
@@ -49,7 +56,8 @@ class WorkspaceSettingsSave {
         'default_locale': defaultLocale,
         'desk_opacity': deskOpacity,
         'invitation_templates': invitationTemplates,
-        newMemberDefaultsKey: newMemberDefaults.toValue(),
+        if (newMemberDefaults case final defaults?)
+          newMemberDefaultsKey: defaults.toValue(),
       };
 }
 

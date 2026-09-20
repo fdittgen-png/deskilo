@@ -1638,7 +1638,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     await setInvitationTemplate(workspaceId, '');
     await setWorkspaceLanguage(workspaceId, save.defaultLocale);
     await setDeskOpacity(workspaceId, save.deskOpacity);
-    await setNewMemberDefaults(workspaceId, save.newMemberDefaults);
+    if (save.newMemberDefaults case final d?) await setNewMemberDefaults(workspaceId, d); // #1563 — absent means "never loaded": the server leaves the key alone
     return workspaces.firstWhere((w) => w.id == workspaceId);
   }
 

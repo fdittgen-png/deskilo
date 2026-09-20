@@ -6624,6 +6624,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Person hat noch kein Konto. Sie buchen, fakturieren und verwalten für sie; übergeben Sie das Profil, wenn sie beitritt.';
 
   @override
+  String get managedProfileIdentityUnavailable =>
+      'Diese Angaben konnten nicht gelesen werden, es gibt also noch nichts zu bearbeiten. Es wurde nichts geändert.';
+
+  @override
   String get membersTitle => 'Mitglieder & Tarife';
 
   @override
@@ -7715,6 +7719,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get newMemberOveragePackage => 'Muss ein Paket kaufen';
+
+  @override
+  String get newMemberDefaultsUnavailable =>
+      'Diese konnten gerade nicht gelesen werden. Das Speichern lässt sie unverändert.';
 
   @override
   String get featureNumberSequences => 'Nummernkreise';

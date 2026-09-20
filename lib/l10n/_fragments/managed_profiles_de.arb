@@ -51,5 +51,9 @@
   "managedProfileIntro": "Diese Person hat noch kein Konto. Sie buchen, fakturieren und verwalten für sie; übergeben Sie das Profil, wenn sie beitritt.",
   "@managedProfileIntro": {
     "description": "#887 managed profiles: managedProfileIntro"
+  },
+  "managedProfileIdentityUnavailable": "Diese Angaben konnten nicht gelesen werden, es gibt also noch nichts zu bearbeiten. Es wurde nichts geändert.",
+  "@managedProfileIdentityUnavailable": {
+    "description": "#1561 shown when the managed identity could not be read, so the form is not offered"
   }
 }

@@ -6630,6 +6630,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette personne n\'a pas encore de compte. Vous réservez, facturez et gérez pour elle ; remettez-lui le profil quand elle rejoint l\'espace.';
 
   @override
+  String get managedProfileIdentityUnavailable =>
+      'Ces informations n\'ont pas pu être lues : il n\'y a donc rien à modifier pour l\'instant. Rien n\'a été changé.';
+
+  @override
   String get membersTitle => 'Membres et forfaits';
 
   @override
@@ -7722,6 +7726,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get newMemberOveragePackage => 'Doit acheter un forfait';
+
+  @override
+  String get newMemberDefaultsUnavailable =>
+      'Impossible de les lire pour l\'instant. L\'enregistrement les laisse telles quelles.';
 
   @override
   String get featureNumberSequences => 'Séquences de numérotation';

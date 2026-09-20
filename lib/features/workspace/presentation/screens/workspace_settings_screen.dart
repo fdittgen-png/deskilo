@@ -100,7 +100,8 @@ class _WorkspaceSettingsScreenState
   // 0040 — desk fill opacity percentage (20..100); rides the Save button.
   int _deskOpacity = 100;
   // #1294 — what a newly joining member starts with; rides the Save too.
-  NewMemberDefaults _newMemberDefaults = const NewMemberDefaults();
+  // #1563 — null until the separate read lands: never send a fallback.
+  NewMemberDefaults? _newMemberDefaults;
   String? _countryCode;
   // #486 — the workspace's own language ('' = sender's app language)
   // and the per-language invitation drafts the chips page through.
@@ -1019,7 +1020,8 @@ class _WorkspaceSettingsScreenState
       _openedAt = workspace.system.modifiedAt;
     }
     // #1294 — read separately: it lives in billing_rules, not on the
-    // workspace row the screen already holds. Seeded once, like the rest.
+    // workspace row the screen already holds. Seeded once, like the rest —
+    // and #1563: until it lands there is nothing to save, so Save omits it.
     final loadedDefaults = ref.watch(newMemberDefaultsProvider).value;
     if (loadedDefaults != null && !_seededDefaults) {
       _seededDefaults = true;
@@ -1373,12 +1375,12 @@ class _WorkspaceSettingsScreenState
                   NewMemberDefaultsTiles(
                     defaults: _newMemberDefaults,
                     enabled: !_busy,
+                    failed: ref.watch(newMemberDefaultsProvider).hasError,
+                    onRetry: () => ref.invalidate(newMemberDefaultsProvider),
                     onSubscriptionChanged: (pct) => setState(() =>
-                        _newMemberDefaults = _newMemberDefaults
-                            .copyWith(subscriptionPct: pct)),
+                        _newMemberDefaults = _newMemberDefaults?.copyWith(subscriptionPct: pct)),
                     onOveragePolicyChanged: (policy) => setState(() =>
-                        _newMemberDefaults = _newMemberDefaults
-                            .copyWith(overagePolicy: policy)),
+                        _newMemberDefaults = _newMemberDefaults?.copyWith(overagePolicy: policy)),
                   ),
                   const SizedBox(height: 24),
                   FilledButton(

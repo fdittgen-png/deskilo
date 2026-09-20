@@ -11423,6 +11423,12 @@ abstract class AppLocalizations {
   /// **'This person has no account yet. You book, invoice and manage for them; hand the profile over when they join.'**
   String get managedProfileIntro;
 
+  /// #1561 shown when the managed identity could not be read, so the form is not offered
+  ///
+  /// In en, this message translates to:
+  /// **'These details could not be read, so there is nothing to edit yet. Nothing has been changed.'**
+  String get managedProfileIdentityUnavailable;
+
   /// Title of the owner-only member management screen + its settings entry
   ///
   /// In en, this message translates to:
@@ -13378,6 +13384,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Must buy a package'**
   String get newMemberOveragePackage;
+
+  /// #1563 shown when the new-member defaults could not be read, so Save omits them
+  ///
+  /// In en, this message translates to:
+  /// **'These could not be read just now. Saving leaves them exactly as they are.'**
+  String get newMemberDefaultsUnavailable;
 
   /// #925 number sequences: featureNumberSequences
   ///

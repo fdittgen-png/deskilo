@@ -51,5 +51,9 @@
   "managedProfileIntro": "Esta persona aún no tiene cuenta. Reservas, facturas y gestionas por ella; entrégale el perfil cuando se una.",
   "@managedProfileIntro": {
     "description": "#887 managed profiles: managedProfileIntro"
+  },
+  "managedProfileIdentityUnavailable": "No se han podido leer estos datos, así que todavía no hay nada que editar. No se ha cambiado nada.",
+  "@managedProfileIdentityUnavailable": {
+    "description": "#1561 shown when the managed identity could not be read, so the form is not offered"
   }
 }

@@ -8,6 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/storage/active_workspace_store.dart';
 import '../../../core/storage/note_seen_store.dart';
+import '../../../core/trace/refusal_text.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/time/work_hours.dart';
 import '../../../app/theme.dart';
@@ -27,10 +28,10 @@ import '../domain/workspace_feature.dart';
 import '../domain/workspace_permission.dart';
 import '../domain/work_hours_provenance.dart';
 import '../domain/workspace_repository.dart';
+import '../domain/managed_identity_read.dart';
 import '../application/set_wording_term.dart';
 import '../domain/new_member_defaults.dart';
 import '../domain/workspace_document.dart';
-import '../../profile/domain/personal_info.dart';
 import '../domain/workspace_overview.dart';
 import '../domain/site.dart';
 import '../domain/workspace_template.dart';
@@ -529,25 +530,24 @@ Future<Member?> myMember(Ref ref) async {
 /// sees who looked once they claim the profile. That is why this is a
 /// call and not a field on the member row — the row carries only the
 /// name a co-member legitimately sees.
+///
+/// #1561 — a refusal reads as refused; any other failure stays an error,
+/// so no form opens blank on a dropped connection and saves the blanks.
 @riverpod
-Future<PersonalInfo> managedIdentity(Ref ref, String memberId) async {
-  if (memberId.isEmpty) return PersonalInfo.empty;
+Future<ManagedIdentityRead> managedIdentity(Ref ref, String memberId) async {
+  if (memberId.isEmpty) return const ManagedIdentityRead.refused();
   try {
-    final identity = await ref
-        .watch(workspaceRepositoryProvider)
-        .managedIdentityOf(memberId);
     // #970 — demo mode blurs these details wherever they are printed.
-    return identity;
+    return ManagedIdentityRead.loaded(await ref
+        .watch(workspaceRepositoryProvider)
+        .managedIdentityOf(memberId));
   } catch (e, st) {
     // Refused is a legitimate answer, not a failure to report: an admin
     // the rule does not name simply does not see the contact details.
-    TraceLogger.instance.warn(
-      'workspace',
-      'managed identity not readable',
-      error: e,
-      stackTrace: st,
-    );
-    return PersonalInfo.empty;
+    if (knownRefusalOf(e) != KnownRefusal.permission) rethrow;
+    TraceLogger.instance.warn('workspace', 'managed identity refused',
+        error: e, stackTrace: st);
+    return const ManagedIdentityRead.refused();
   }
 }
 

@@ -1761,6 +1761,11 @@ String _$myMemberHash() => r'894055bd99d73ca6c7d30a82ed343f8f484fb725';
 /// sees who looked once they claim the profile. That is why this is a
 /// call and not a field on the member row — the row carries only the
 /// name a co-member legitimately sees.
+///
+/// #1561 — the answer says WHICH answer it is. A refusal is legitimate
+/// and reads as refused; anything else — a dropped connection, a broken
+/// gateway — is no answer at all and stays an error, so a form cannot
+/// open blank on it and save the blanks over the stored identity.
 
 @ProviderFor(managedIdentity)
 final managedIdentityProvider = ManagedIdentityFamily._();
@@ -1772,15 +1777,22 @@ final managedIdentityProvider = ManagedIdentityFamily._();
 /// sees who looked once they claim the profile. That is why this is a
 /// call and not a field on the member row — the row carries only the
 /// name a co-member legitimately sees.
+///
+/// #1561 — the answer says WHICH answer it is. A refusal is legitimate
+/// and reads as refused; anything else — a dropped connection, a broken
+/// gateway — is no answer at all and stays an error, so a form cannot
+/// open blank on it and save the blanks over the stored identity.
 
 final class ManagedIdentityProvider
     extends
         $FunctionalProvider<
-          AsyncValue<PersonalInfo>,
-          PersonalInfo,
-          FutureOr<PersonalInfo>
+          AsyncValue<ManagedIdentityRead>,
+          ManagedIdentityRead,
+          FutureOr<ManagedIdentityRead>
         >
-    with $FutureModifier<PersonalInfo>, $FutureProvider<PersonalInfo> {
+    with
+        $FutureModifier<ManagedIdentityRead>,
+        $FutureProvider<ManagedIdentityRead> {
   /// #915 — one managed profile's identity, from behind the access rule.
   ///
   /// Reading it is an ACCESS: the server refuses when the rule does not
@@ -1788,6 +1800,11 @@ final class ManagedIdentityProvider
   /// sees who looked once they claim the profile. That is why this is a
   /// call and not a field on the member row — the row carries only the
   /// name a co-member legitimately sees.
+  ///
+  /// #1561 — the answer says WHICH answer it is. A refusal is legitimate
+  /// and reads as refused; anything else — a dropped connection, a broken
+  /// gateway — is no answer at all and stays an error, so a form cannot
+  /// open blank on it and save the blanks over the stored identity.
   ManagedIdentityProvider._({
     required ManagedIdentityFamily super.from,
     required String super.argument,
@@ -1811,12 +1828,12 @@ final class ManagedIdentityProvider
 
   @$internal
   @override
-  $FutureProviderElement<PersonalInfo> $createElement(
+  $FutureProviderElement<ManagedIdentityRead> $createElement(
     $ProviderPointer pointer,
   ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<PersonalInfo> create(Ref ref) {
+  FutureOr<ManagedIdentityRead> create(Ref ref) {
     final argument = this.argument as String;
     return managedIdentity(ref, argument);
   }
@@ -1832,7 +1849,7 @@ final class ManagedIdentityProvider
   }
 }
 
-String _$managedIdentityHash() => r'5daa79c780ffc72dd602c08cb5d506a7aa2a1ca5';
+String _$managedIdentityHash() => r'92174af1f7f7eb27c8d96316b1eccedd591f9cf6';
 
 /// #915 — one managed profile's identity, from behind the access rule.
 ///
@@ -1841,9 +1858,14 @@ String _$managedIdentityHash() => r'5daa79c780ffc72dd602c08cb5d506a7aa2a1ca5';
 /// sees who looked once they claim the profile. That is why this is a
 /// call and not a field on the member row — the row carries only the
 /// name a co-member legitimately sees.
+///
+/// #1561 — the answer says WHICH answer it is. A refusal is legitimate
+/// and reads as refused; anything else — a dropped connection, a broken
+/// gateway — is no answer at all and stays an error, so a form cannot
+/// open blank on it and save the blanks over the stored identity.
 
 final class ManagedIdentityFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<PersonalInfo>, String> {
+    with $FunctionalFamilyOverride<FutureOr<ManagedIdentityRead>, String> {
   ManagedIdentityFamily._()
     : super(
         retry: null,
@@ -1860,6 +1882,11 @@ final class ManagedIdentityFamily extends $Family
   /// sees who looked once they claim the profile. That is why this is a
   /// call and not a field on the member row — the row carries only the
   /// name a co-member legitimately sees.
+  ///
+  /// #1561 — the answer says WHICH answer it is. A refusal is legitimate
+  /// and reads as refused; anything else — a dropped connection, a broken
+  /// gateway — is no answer at all and stays an error, so a form cannot
+  /// open blank on it and save the blanks over the stored identity.
 
   ManagedIdentityProvider call(String memberId) =>
       ManagedIdentityProvider._(argument: memberId, from: this);
