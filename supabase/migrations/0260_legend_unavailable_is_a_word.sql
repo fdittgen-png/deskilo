@@ -35,14 +35,25 @@
 --
 -- ## Harnessed before applying (rolled back)
 --
---   allowed_before=33 allowed_after=34 lost=[] added=[legendUnavailable]
---   import_merge={"fr": {"legendFree": "Place libre",
---                        "legendUnavailable": "Place non disponible"}}
---   import_keeps_existing={"fr": {"legendFree": "Place libre",
---                                 "legendMine": "Ma place",
---                                 "legendUnavailable": "Place non disponible"}}
---   import_rejects_junk={"fr": {"legendUnavailable": "Place non disponible"}}
---   placeholders={} declared_empty=true
+--   before=33 after=34 lost=[] added=[legendUnavailable]
+--   repro={"fr": {"legendFree": "Place libre",
+--                 "legendUnavailable": "Place non disponible"}}
+--   keeps={"de": {"legendFree": "Frei"},
+--          "fr": {"legendFree": "Place libre", "legendMine": "Ma place",
+--                 "legendUnavailable": "Place non disponible"}}
+--   twice= identical to keeps
+--   junk={"fr": {"legendUnavailable": "Place non disponible"}}
+--
+-- `repro` is the issue's own query. `lost=[]` is what makes `after=34`
+-- mean anything: the body is replaced wholesale, so the harness proves
+-- the other 33 keys survived rather than assuming it. `keeps` merges
+-- onto a workspace that had already written French and German words;
+-- `twice` merges the same template again and changes nothing. `junk`
+-- offered `invoiceLegalMention` and a blank `legendFree` beside the new
+-- term: the boundary still drops both.
+--
+-- The rollback was verified before applying — the live function was back
+-- to 33 keys and still lost the term.
 
 create or replace function public.lexicon_allowed_keys()
 returns table(key text, placeholders text[])
