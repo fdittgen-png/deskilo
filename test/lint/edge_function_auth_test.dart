@@ -114,6 +114,36 @@ void main() {
         _assertGuarded(name, _bundled(name), 'assets/instance/bundle.json');
       });
 
+      // #1553 — these two are called from the app with
+      // `functions.invoke`, which on the web is a cross-origin fetch.
+      // The browser asks with OPTIONS first and refuses to read the
+      // answer unless both the preflight and the POST carry the
+      // headers. Neither did, so on the web the call failed before the
+      // server ran — and it fails as a network error, which reads like
+      // a flaky connection rather than a missing header.
+      //
+      // Both copies, for the same reason the guard above checks both: a
+      // branch cut before the fix regenerates the bundle from stale
+      // source and reverts it for every self-hosted instance.
+      for (final where in const ['supabase/functions', 'the bundle']) {
+        test('a browser can reach it — $where', () {
+          final text =
+              where == 'the bundle' ? _bundled(name) : source;
+          expect(text, contains('_shared/cors.ts'),
+              reason: '$name answers a browser, so it carries the shared '
+                  'CORS headers rather than a copy of them');
+          expect(text, contains('req.method === "OPTIONS"'),
+              reason: '$name never answers the preflight, so the browser '
+                  'never sends the POST');
+          final preflight = text.indexOf('req.method === "OPTIONS"');
+          final auth = text.indexOf('auth.getUser(');
+          expect(preflight, lessThan(auth),
+              reason: 'the preflight carries no JWT: answering it after '
+                  'the caller is resolved refuses the browser\'s '
+                  'question instead of answering it');
+        });
+      }
+
       test('every members lookup is scoped to the calling user', () {
         // Each `.from("members")` chain up to its terminator.
         final chains = RegExp(

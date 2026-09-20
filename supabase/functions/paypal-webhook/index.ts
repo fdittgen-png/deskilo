@@ -133,6 +133,51 @@ Deno.serve(async (req: Request): Promise<Response> => {
       return new Response("settle_failed", { status: 500 });
     }
     console.log("paypal capture settled", { orderId, capture: resource.id });
+  } else if (type === "CHECKOUT.ORDER.APPROVED") {
+    // #1555 — approval is the buyer saying yes; it moves no money. An
+    // order created with `intent: "CAPTURE"` still has to be CAPTURED by
+    // us, and nothing in this project ever called capture — so the flow
+    // stopped at "approved" and waited for a
+    // `PAYMENT.CAPTURE.COMPLETED` that could not arrive. The member saw
+    // PayPal confirm, and the account was never credited.
+    //
+    // Settlement stays where it is: we capture here and credit when
+    // PayPal reports the capture, so there is ONE place that writes a
+    // ledger entry whether the capture came from us or from a retry.
+    //
+    // `PayPal-Request-Id` makes the capture idempotent on PayPal's side:
+    // a redelivered APPROVED — which PayPal does send — returns the
+    // first capture rather than taking the money twice.
+    try {
+      const token = await accessToken(cfg);
+      const res = await fetch(
+        `${paypalApi(cfg.env)}/v2/checkout/orders/${orderId}/capture`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "PayPal-Request-Id": `deskilo-capture-${orderId}`,
+          },
+        },
+      );
+      if (!res.ok) {
+        const detail = await res.text();
+        // 422 ORDER_ALREADY_CAPTURED is the idempotent case, not a
+        // failure: the capture exists, and its COMPLETED event settles.
+        if (res.status === 422 && detail.includes("ORDER_ALREADY_CAPTURED")) {
+          console.log("paypal order already captured", orderId);
+        } else {
+          console.error("paypal capture failed", res.status, detail);
+          return new Response("capture_failed", { status: 500 });
+        }
+      } else {
+        console.log("paypal order captured", orderId);
+      }
+    } catch (e) {
+      console.error("paypal capture error", String(e));
+      return new Response("capture_error", { status: 500 });
+    }
   } else if (
     type === "PAYMENT.CAPTURE.DENIED" || type === "CHECKOUT.ORDER.VOIDED"
   ) {

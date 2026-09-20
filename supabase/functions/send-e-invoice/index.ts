@@ -18,11 +18,12 @@
 // document that may or may not have left is worse than one that failed.
 
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
+import { CORS, preflight } from "../_shared/cors.ts";
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
     status,
-    headers: { "Content-Type": "application/json" },
+    headers: { ...CORS, "Content-Type": "application/json" },
   });
 
 /** Fields the generic adapter needs before it can send anything. */
@@ -137,6 +138,10 @@ async function submitGeneric(
 }
 
 Deno.serve(async (req) => {
+  // #1553 — the preflight is answered before anything else: it
+  // carries no JWT, so any auth or body work would refuse the
+  // browser's question instead of answering it.
+  if (req.method === "OPTIONS") return preflight();
   if (req.method !== "POST") return json({ error: "method not allowed" }, 405);
 
   const url = Deno.env.get("SUPABASE_URL")!;

@@ -11,6 +11,7 @@
 // configured providers and, per provider, the missing config fields.
 
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
+import { CORS, preflight } from "../_shared/cors.ts";
 import { toMajor } from "../_shared/money.ts";
 
 type Provider = "paypal" | "stripe" | "mollie" | "wero";
@@ -42,7 +43,11 @@ const FIELD_ENV: Record<Provider, Record<string, string>> = {
 
 /** Fields a provider must have before it can be offered. */
 const REQUIRED: Record<Provider, string[]> = {
-  paypal: ["client_id", "secret", "return_url"],
+  // #1555 — `webhook_id` belongs here: `paypal-webhook` refuses every
+  // event without it, so an instance configured without one advertises
+  // PayPal, takes the member to PayPal, and can never be told the money
+  // arrived. "Configured" has to mean the whole round trip.
+  paypal: ["client_id", "secret", "return_url", "webhook_id"],
   stripe: ["secret_key", "return_url"],
   mollie: ["api_key", "return_url"],
   wero: ["api_key", "return_url"],
@@ -51,7 +56,7 @@ const REQUIRED: Record<Provider, string[]> = {
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
     status,
-    headers: { "Content-Type": "application/json" },
+    headers: { ...CORS, "Content-Type": "application/json" },
   });
 
 /** Minor digits per ISO 4217 code (#711). The app stores every amount
@@ -196,6 +201,20 @@ async function createMolliePayment(
       amount: { currency, value: major(amountCents, currency) },
       description: `DesKilo ${reference}`,
       redirectUrl: cfg.return_url,
+      // #1556 — where Mollie reports the outcome. Without it the
+      // payment is created, the member pays, and nothing ever tells us:
+      // `mollie-webhook` is the ONLY settlement path for Mollie and for
+      // Wero, and there is no polling behind it. The redirect proves the
+      // browser came back, never that the money moved.
+      //
+      // Derived from this deployment's own backend, never compiled in,
+      // so a self-hosted instance's callbacks land on its own project
+      // and not on somebody else's. `webhook_url` overrides it for an
+      // instance behind a custom domain — Mollie refuses a URL it
+      // cannot reach, localhost included, which is why the override
+      // exists at all.
+      webhookUrl: cfg.webhook_url ??
+        `${Deno.env.get("SUPABASE_URL")}/functions/v1/mollie-webhook`,
       metadata: { reference },
       ...(method ? { method } : {}),
     }),
@@ -210,6 +229,10 @@ async function createMolliePayment(
 // ── handler ───────────────────────────────────────────────────────────
 
 Deno.serve(async (req: Request): Promise<Response> => {
+  // #1553 — the preflight is answered before anything else: it
+  // carries no JWT, so any auth or body work would refuse the
+  // browser's question instead of answering it.
+  if (req.method === "OPTIONS") return preflight();
   if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
   let body: Record<string, unknown>;
   try {
