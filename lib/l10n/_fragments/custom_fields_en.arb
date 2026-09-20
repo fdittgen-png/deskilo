@@ -1,5 +1,21 @@
 {
   "@@locale": "en",
+  "featureDecisionSurfaceTitle": "What needs you",
+  "@featureDecisionSurfaceTitle": {
+    "description": "#1247: featureDecisionSurfaceTitle"
+  },
+  "featureDecisionSurfaceDesc": "One place that answers \"does anything need me?\", ranked by what the delay costs — money that leaves first, then somebody waiting on an answer. A line appears only when a person must decide or act; a number nobody can act on stays on the screen that owns it.",
+  "@featureDecisionSurfaceDesc": {
+    "description": "#1247: featureDecisionSurfaceDesc"
+  },
+  "decisionSurfaceEmpty": "Nothing needs you",
+  "@decisionSurfaceEmpty": {
+    "description": "#1247: decisionSurfaceEmpty"
+  },
+  "decisionSurfaceEmptyDetail": "Everything is answered.",
+  "@decisionSurfaceEmptyDetail": {
+    "description": "#1247: decisionSurfaceEmptyDetail"
+  },
   "featureCustomFieldsTitle": "Questions this space asks",
   "@featureCustomFieldsTitle": {
     "description": "#1288 custom fields: featureCustomFieldsTitle"

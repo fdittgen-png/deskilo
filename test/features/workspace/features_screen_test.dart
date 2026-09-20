@@ -116,7 +116,11 @@ void main() {
     // #1279 — carnets is the twenty-second: selling prepaid half-days.
     // #1289 — workspaceBranding is the twenty-third: colours are chosen.
     // #1287 — customRoles is the twenty-fourth: a bureau asks for it.
-    expect(onCount, featureManifest.length - 26);
+    // #1247 — decisionSurface is the twenty-seventh: it sits beside the
+    // alerts face rather than replacing it, and which of the two ranks
+    // the requests is a question an owner answers, not one the default
+    // answers for them.
+    expect(onCount, featureManifest.length - 27);
   });
 
   testWidgets(

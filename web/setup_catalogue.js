@@ -242,6 +242,7 @@ window.SETUP_PROCESSES=[
    {
     "key": "experience",
     "features": [
+     "decisionSurface",
      "formHelpHints",
      "uiAnimations",
      "regionalFormats",

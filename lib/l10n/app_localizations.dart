@@ -2946,6 +2946,30 @@ abstract class AppLocalizations {
   /// **'Printed before their name on documents. \"None\" prints the name alone.'**
   String get courtesyHintManaged;
 
+  /// #1247: featureDecisionSurfaceTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What needs you'**
+  String get featureDecisionSurfaceTitle;
+
+  /// #1247: featureDecisionSurfaceDesc
+  ///
+  /// In en, this message translates to:
+  /// **'One place that answers \"does anything need me?\", ranked by what the delay costs — money that leaves first, then somebody waiting on an answer. A line appears only when a person must decide or act; a number nobody can act on stays on the screen that owns it.'**
+  String get featureDecisionSurfaceDesc;
+
+  /// #1247: decisionSurfaceEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing needs you'**
+  String get decisionSurfaceEmpty;
+
+  /// #1247: decisionSurfaceEmptyDetail
+  ///
+  /// In en, this message translates to:
+  /// **'Everything is answered.'**
+  String get decisionSurfaceEmptyDetail;
+
   /// #1288 custom fields: featureCustomFieldsTitle
   ///
   /// In en, this message translates to:

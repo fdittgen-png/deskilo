@@ -2150,6 +2150,16 @@ Le catalogue des pays nomme le **groupe** de chaque taux proposé (normal, inter
 
 *Exports comptables → Archive de l'exercice* télécharge un seul zip nommé d'après le SIREN et l'année : chaque facture en PDF/A-3 avec sa facture électronique intégrée, le **registre des factures** (numéro, date, montant, statut et le mot d'intégrité de chacune), le FEC sur les comptes par défaut et la piste d'audit. Un espace de développement produit un fichier marqué DEV.
 
+### Ce qui vous attend (#1247)
+
+*Ce qui vous attend* est un écran qui répond à une seule question : **est-ce que quelque chose m'attend ?** Activez la fonctionnalité **Surface de décision** et il apparaît sur `/attention`. Chaque ligne est une décision — les événements qui attendent votre réponse, les personnes qui attendent d'entrer, le mois dont des membres ont de quoi facturer sans facture — avec ce dont il s'agit, la décision à prendre et depuis quand elle attend. Plusieurs membres qui attendent la même décision font **une ligne**, pas une chacun : *facturer pour 7 membres*.
+
+L'ordre n'est pas celui des arrivées : c'est **ce que le retard coûte**. L'argent d'abord (un paiement que personne ne confirme, c'est de la trésorerie à l'arrêt), puis une personne qui est bloquée sur vous, puis un mois qui doit se clôturer, puis l'instance elle-même, puis une configuration qui ne fait pas ce qu'elle annonce.
+
+Ce qui **n'y est pas** est tout aussi voulu. L'occupation, les soldes et les messages non lus sont des nombres, pas des décisions : personne ne peut agir sur un nombre, et chacun appartient à l'écran qui le porte. Une surface qui classe tout ne classe rien. Quand rien n'attend, l'écran le dit — *Rien ne vous attend* — plutôt que d'afficher une liste vide à interpréter.
+
+La fonctionnalité reste éteinte tant que vous ne la demandez pas, et elle se place **à côté** de la cloche des alertes, sans la remplacer.
+
 # Guide administrateur — configurer l'espace
 
 Pour la personne qui installe l'espace : ce que décide chaque paramètre,

@@ -1665,6 +1665,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'Printed before their name on documents. \"None\" prints the name alone.';
 
   @override
+  String get featureDecisionSurfaceTitle => 'What needs you';
+
+  @override
+  String get featureDecisionSurfaceDesc =>
+      'One place that answers \"does anything need me?\", ranked by what the delay costs — money that leaves first, then somebody waiting on an answer. A line appears only when a person must decide or act; a number nobody can act on stays on the screen that owns it.';
+
+  @override
+  String get decisionSurfaceEmpty => 'Nothing needs you';
+
+  @override
+  String get decisionSurfaceEmptyDetail => 'Everything is answered.';
+
+  @override
   String get featureCustomFieldsTitle => 'Questions this space asks';
 
   @override

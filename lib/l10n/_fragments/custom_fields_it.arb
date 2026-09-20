@@ -1,5 +1,21 @@
 {
   "@@locale": "it",
+  "featureDecisionSurfaceTitle": "Cosa ti aspetta",
+  "@featureDecisionSurfaceTitle": {
+    "description": "#1247: featureDecisionSurfaceTitle"
+  },
+  "featureDecisionSurfaceDesc": "Un solo posto che risponde a «c’è qualcosa che mi aspetta?», ordinato per quanto costa il ritardo: prima il denaro che se ne va, poi qualcuno che aspetta una risposta. Una riga appare solo se una persona deve decidere o agire; un numero su cui nessuno può agire resta sullo schermo che lo possiede.",
+  "@featureDecisionSurfaceDesc": {
+    "description": "#1247: featureDecisionSurfaceDesc"
+  },
+  "decisionSurfaceEmpty": "Niente ti aspetta",
+  "@decisionSurfaceEmpty": {
+    "description": "#1247: decisionSurfaceEmpty"
+  },
+  "decisionSurfaceEmptyDetail": "È tutto sistemato.",
+  "@decisionSurfaceEmptyDetail": {
+    "description": "#1247: decisionSurfaceEmptyDetail"
+  },
   "featureCustomFieldsTitle": "Le domande di questo spazio",
   "@featureCustomFieldsTitle": {
     "description": "#1288 custom fields: featureCustomFieldsTitle"

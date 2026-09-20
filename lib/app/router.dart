@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import '../features/workspace/presentation/screens/colours_screen.dart';
+import '../features/workspace/presentation/screens/attention_screen.dart';
 import '../features/workspace/presentation/screens/questions_screen.dart';
 import '../features/workspace/presentation/screens/roles_of_space_screen.dart';
 import '../features/workspace/presentation/screens/deployment_screen.dart';
@@ -625,6 +626,14 @@ GoRouter router(Ref ref) {
         redirect: (context, state) =>
             featureEnabled(WorkspaceFeature.customFields) ? null : '/settings',
         builder: (context, state) => const QuestionsScreen(),
+      ),
+      // #1247 — one place that answers "does anything need me?".
+      // Appended last: route pins are positional.
+      GoRoute(
+        path: '/attention',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.decisionSurface) ? null : '/',
+        builder: (context, state) => const AttentionScreen(),
       ),
       // #925 — how every journal numbers its documents, one screen.
       GoRoute(

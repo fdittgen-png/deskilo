@@ -1676,6 +1676,19 @@ class AppLocalizationsFr extends AppLocalizations {
       'Imprimée devant leur nom sur les documents. « Aucune » n\'imprime que le nom.';
 
   @override
+  String get featureDecisionSurfaceTitle => 'Ce qui vous attend';
+
+  @override
+  String get featureDecisionSurfaceDesc =>
+      'Un seul endroit qui répond à « est-ce que quelque chose m\'attend ? », classé par ce que coûte le retard — l\'argent qui part d\'abord, puis quelqu\'un qui attend une réponse. Une ligne n\'apparaît que si une personne doit décider ou agir ; un chiffre sur lequel personne ne peut agir reste sur l\'écran qui le porte.';
+
+  @override
+  String get decisionSurfaceEmpty => 'Rien ne vous attend';
+
+  @override
+  String get decisionSurfaceEmptyDetail => 'Tout est traité.';
+
+  @override
   String get featureCustomFieldsTitle => 'Les questions de cet espace';
 
   @override

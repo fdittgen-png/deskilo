@@ -83,6 +83,7 @@
         "customRoles": false,
         "dataAccessLog": false,
         "dataExport": true,
+        "decisionSurface": false,
         "deletionRequests": true,
         "demoMode": false,
         "deployments": false,

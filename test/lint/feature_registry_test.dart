@@ -140,7 +140,7 @@ import 'package:flutter_test/flutter_test.dart';
 //   itself, additive on top of the built-in four (ADR 0029). Settings,
 //   Platform, default OFF: four roles is the product's answer and needs
 //   no switch.
-const int _expectedFeatureCount = 108;
+const int _expectedFeatureCount = 109; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
 
 void main() {
   _tierPins();

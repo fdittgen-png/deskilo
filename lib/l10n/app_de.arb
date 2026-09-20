@@ -1147,6 +1147,22 @@
     "description": "#912 courtesy title: courtesyMrs"
   },
   "courtesyHintManaged": "Wird auf Dokumenten vor ihrem Namen gedruckt. „Keine“ druckt nur den Namen.",
+  "featureDecisionSurfaceTitle": "Was auf Sie wartet",
+  "@featureDecisionSurfaceTitle": {
+    "description": "#1247: featureDecisionSurfaceTitle"
+  },
+  "featureDecisionSurfaceDesc": "Ein Ort, der beantwortet: „Wartet etwas auf mich?“ — sortiert danach, was die Verzögerung kostet: zuerst Geld, das abfließt, dann jemand, der auf eine Antwort wartet. Eine Zeile erscheint nur, wenn jemand entscheiden oder handeln muss; eine Zahl, mit der niemand etwas anfangen kann, bleibt auf ihrem eigenen Bildschirm.",
+  "@featureDecisionSurfaceDesc": {
+    "description": "#1247: featureDecisionSurfaceDesc"
+  },
+  "decisionSurfaceEmpty": "Nichts wartet auf Sie",
+  "@decisionSurfaceEmpty": {
+    "description": "#1247: decisionSurfaceEmpty"
+  },
+  "decisionSurfaceEmptyDetail": "Alles ist erledigt.",
+  "@decisionSurfaceEmptyDetail": {
+    "description": "#1247: decisionSurfaceEmptyDetail"
+  },
   "featureCustomFieldsTitle": "Fragen dieses Bereichs",
   "@featureCustomFieldsTitle": {
     "description": "#1288 custom fields: featureCustomFieldsTitle"
