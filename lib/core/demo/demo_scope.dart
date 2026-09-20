@@ -15,6 +15,14 @@
 // Everything a member could change in Demo lives in the fixture, so
 // leaving the scope disposes it and a reset is a new fixture rather than
 // a cleanup of the old one (#1375).
+//
+// #1564 finished the list. "The repositories" was not the whole of what
+// a Demo scope has to own: the per-device preferences, the backend
+// endpoint, the schema probe and the push pair are none of them
+// repositories, and every one of them resolved to its real
+// implementation inside the scope. A separate root container replaces
+// providers, not SharedPreferences and not `Supabase.instance`, so the
+// only thing that made them isolated was that nobody had noticed.
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../../features/auth/providers/auth_providers.dart';
@@ -32,13 +40,28 @@ import '../../features/workspace/providers/workspace_fields_providers.dart';
 import '../../features/workspace/providers/workspace_import_providers.dart';
 import '../../features/workspace/providers/workspace_roles_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import '../../app/shell/shell_bar_visibility.dart';
+import '../../features/plan/providers/default_level_controller.dart';
+import '../../features/reservations/providers/default_period_controller.dart';
+import '../backend/backend_settings.dart';
+import '../backend/schema_version.dart';
 import '../badge/app_badge.dart';
+import '../cache/cache_store.dart';
 import '../files/file_saver.dart';
+import '../locale/locale_controller.dart';
+import '../navigation/navigation_style.dart';
 import '../notifications/notification_providers.dart';
+import '../push/push_providers.dart';
 import '../realtime/realtime_providers.dart';
+import '../scan/front_camera.dart';
+import '../storage/active_workspace_store.dart';
+import '../storage/help_hint_store.dart';
+import '../storage/note_seen_store.dart';
+import '../storage/notification_filter_store.dart';
 import '../links/link_launcher.dart';
 import '../share/file_sharer.dart';
 import '../share/text_sharer.dart';
+import '../theme/theme_controller.dart';
 import '../time/clock.dart';
 import 'demo_fixture.dart';
 
@@ -81,6 +104,54 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       fileSharerProvider.overrideWithValue(fixture.outward.shareFile),
       textSharerProvider.overrideWithValue(fixture.outward.shareText),
       linkLauncherProvider.overrideWithValue(fixture.outward.openLink),
+
+      // #1564 — the two edges that are neither a repository nor the
+      // app's own doing, and so stayed live: the push transport and the
+      // registry it writes to. The exemption that covered them claimed
+      // the bootstrap never runs; `pushBootstrap` gates on
+      // `enabledFeatures`, which in Demo is the fixture's, with
+      // `pushNotifications` on.
+      pushConnectorProvider.overrideWithValue(fixture.outward.push),
+      pushEndpointRepositoryProvider
+          .overrideWithValue(fixture.outward.pushEndpoints),
+
+      // #1564 — the schema probe the ROUTER watches. Left live, an old
+      // configured backend could send an independent demonstration to
+      // the server-update screen.
+      schemaVersionSourceProvider.overrideWithValue(fixture.outward.schema),
+
+      // #1564 — every per-device preference, owned by the session.
+      //
+      // A separate root container does not replace SharedPreferences:
+      // each of these resolved to its `Prefs…Store` and wrote to the real
+      // app's memory. `DefaultWorkspaceId` was the sharpest — it reads
+      // "signed in" from the overridden auth repository, asks the fixture
+      // for a server default, gets null and writes it through, and a null
+      // write is `prefs.remove`. Entering Demo deleted the member's real
+      // default profile.
+      localeStoreProvider.overrideWithValue(fixture.prefs.locale),
+      themeStoreProvider.overrideWithValue(fixture.prefs.theme),
+      navigationStyleStoreProvider
+          .overrideWithValue(fixture.prefs.navigationStyle),
+      shellBarHiddenStoreProvider
+          .overrideWithValue(fixture.prefs.shellBarHidden),
+      shellSwipeCoachStoreProvider
+          .overrideWithValue(fixture.prefs.shellSwipeCoach),
+      frontCameraStoreProvider.overrideWithValue(fixture.prefs.frontCamera),
+      activeWorkspaceStoreProvider
+          .overrideWithValue(fixture.prefs.activeWorkspace),
+      defaultWorkspaceStoreProvider
+          .overrideWithValue(fixture.prefs.defaultWorkspace),
+      defaultLevelStoreProvider.overrideWithValue(fixture.prefs.defaultLevel),
+      defaultPeriodStoreProvider.overrideWithValue(fixture.prefs.defaultPeriod),
+      notificationFilterStoreProvider
+          .overrideWithValue(fixture.prefs.notificationFilters),
+      helpHintStoreProvider.overrideWithValue(fixture.prefs.helpHints),
+      noteSeenStoreProvider.overrideWithValue(fixture.prefs.noteSeen),
+      backendSettingsStoreProvider.overrideWithValue(fixture.prefs.backend),
+      // The file cache is device state too: the real one writes the
+      // demonstration's synthetic rows to the device filesystem.
+      cacheStoreProvider.overrideWithValue(fixture.prefs.cache),
     ];
 
 /// The providers a Demo scope must override, by name.
@@ -112,6 +183,26 @@ const Set<String> demoOverriddenProviders = {
   'fileSharerProvider',
   'textSharerProvider',
   'linkLauncherProvider',
+  // #1564 — the backend services that are not repositories, and every
+  // per-device preference.
+  'pushConnectorProvider',
+  'pushEndpointRepositoryProvider',
+  'schemaVersionSourceProvider',
+  'localeStoreProvider',
+  'themeStoreProvider',
+  'navigationStyleStoreProvider',
+  'shellBarHiddenStoreProvider',
+  'shellSwipeCoachStoreProvider',
+  'frontCameraStoreProvider',
+  'activeWorkspaceStoreProvider',
+  'defaultWorkspaceStoreProvider',
+  'defaultLevelStoreProvider',
+  'defaultPeriodStoreProvider',
+  'notificationFilterStoreProvider',
+  'helpHintStoreProvider',
+  'noteSeenStoreProvider',
+  'backendSettingsStoreProvider',
+  'cacheStoreProvider',
 };
 
 /// The app's outward edges: the providers through which something could
@@ -127,4 +218,6 @@ const Set<String> outwardEdgeProviders = {
   'linkLauncherProvider',
   'pushConnectorProvider',
   'pushEndpointRepositoryProvider',
+  // #1564 — a schema probe is a request that leaves the device too.
+  'schemaVersionSourceProvider',
 };

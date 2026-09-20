@@ -14,9 +14,22 @@ import 'fixture_clock.dart';
 /// In-memory [ReservationRepository] mimicking the DB exclusion constraint
 /// and the RPC state checks (fakes over mocks).
 class FakeReservationRepository implements ReservationRepository {
-  FakeReservationRepository({this.myMemberId = 'member-1'});
+  /// [actor] — #1565: the signed-in member, READ on every call instead
+  /// of captured once. Demo passes its fixture's active member, so a
+  /// persona switch re-attributes the bookings that follow it; the
+  /// suite's own tests keep the fixed [myMemberId].
+  FakeReservationRepository({
+    String myMemberId = 'member-1',
+    String Function()? actor,
+  })  : _fixedMemberId = myMemberId,
+        _actor = actor;
 
-  final String myMemberId;
+  final String _fixedMemberId;
+  final String Function()? _actor;
+
+  /// Whose booking [create] stamps, and whose conflicts it checks.
+  String get myMemberId => _actor?.call() ?? _fixedMemberId;
+
   final reservations = <Reservation>[];
 
   /// #1135 — how many times [create] was ENTERED, refused or not.

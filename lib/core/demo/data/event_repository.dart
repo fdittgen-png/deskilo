@@ -10,12 +10,31 @@ import 'fixture_clock.dart';
 /// In-memory [EventRepository] mimicking respond_to_event semantics
 /// (incl. the #130 quorum: an accept below required_count stays pending).
 class FakeEventRepository implements EventRepository {
+  /// [actor] — #1565: the signed-in member, READ on every call instead
+  /// of held in a field. Demo passes its fixture's active member, so a
+  /// decision taken as Chiara is recorded as Chiara's; the suite's own
+  /// tests keep assigning [respondingMemberId].
+  FakeEventRepository({String Function()? actor}) : _actor = actor;
+
+  final String Function()? _actor;
+
   final events = <WorkspaceEvent>[];
   final decisions = <EventDecision>[];
   final policies = <ValidationPolicy>[];
 
+  String _responding = 'member-1';
+
   /// Whose decision [respond] records — the signed-in viewer's member id.
-  String respondingMemberId = 'member-1';
+  String get respondingMemberId => _actor?.call() ?? _responding;
+
+  set respondingMemberId(String memberId) {
+    assert(
+      _actor == null,
+      'this repository follows the session actor (#1565); setting the '
+      'responder by hand would be ignored. Move the persona instead.',
+    );
+    _responding = memberId;
+  }
 
   var _nextDecisionId = 1;
 

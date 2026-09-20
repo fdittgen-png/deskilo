@@ -127,29 +127,61 @@ const demoCast = <DemoPerson>[
 void seedDemoPeople(FakeWorkspaceRepository workspaces) =>
     seedDemoPeopleAs(workspaces, demoCast.first);
 
+/// Moves the "mine" pointer to [me] over the cast the session ALREADY
+/// has (#1565).
+///
+/// [seedDemoPeopleAs] rebuilds the membership rows from [demoCast], which
+/// is right at session creation and on Reset and wrong everywhere else:
+/// a persona switch went through it, so an owner who had just changed
+/// Bruno's subscription percentage, paused somebody, or added a managed
+/// member watched all of it disappear the moment they looked at the
+/// space through another pair of eyes. A viewpoint change must not be a
+/// reseed.
+///
+/// The membership row for [me] normally exists already — the personas
+/// are people in the dataset — so this only swaps which row is
+/// `myMember`. It is synthesised from the canonical person only when the
+/// session no longer has one, which keeps the switch from failing closed
+/// on a cast a visitor edited.
+void viewDemoPeopleAs(FakeWorkspaceRepository workspaces, DemoPerson me) {
+  final everybody = [workspaces.myMember, ...workspaces.otherMembers];
+  final mine = everybody.where((m) => m.id == me.memberId).firstOrNull ??
+      _memberOf(me);
+  workspaces.myMember = mine;
+  workspaces.otherMembers
+    ..clear()
+    ..addAll(everybody.where((m) => m.id != mine.id));
+  // The names and e-mails are NOT rebuilt: they are session data too, and
+  // a member added during the session has a row in them.
+}
+
+Member _memberOf(DemoPerson person) => Member(
+      id: person.memberId,
+      workspaceId: 'ws-1',
+      userId: person.userId,
+      isAdmin: person.isAdmin,
+      isOwner: person.isOwner,
+      status: person.status,
+      subscriptionPct: person.subscriptionPct,
+    );
+
 /// Seeds the cast with [me] as the signed-in member (#1376).
 ///
 /// The visitor is one of the cast rather than a sixth invisible person,
 /// so a persona has real bookings, real bills and a place on the plan.
 /// Everybody else is in `otherMembers`, which is what the directory,
 /// the plan and the money screens read.
+///
+/// CANONICAL seeding, so session creation and Reset only (#1565): it
+/// clears and rebuilds the membership rows, which discards whatever the
+/// session did to them. A persona switch calls [viewDemoPeopleAs].
 void seedDemoPeopleAs(FakeWorkspaceRepository workspaces, DemoPerson me) {
-  Member memberOf(DemoPerson person) => Member(
-        id: person.memberId,
-        workspaceId: 'ws-1',
-        userId: person.userId,
-        isAdmin: person.isAdmin,
-        isOwner: person.isOwner,
-        status: person.status,
-        subscriptionPct: person.subscriptionPct,
-      );
-
-  workspaces.myMember = memberOf(me);
+  workspaces.myMember = _memberOf(me);
   workspaces.otherMembers
     ..clear()
     ..addAll([
       for (final person in demoCast)
-        if (person.memberId != me.memberId) memberOf(person),
+        if (person.memberId != me.memberId) _memberOf(person),
     ]);
 
   // #1514 — the names and e-mails the screens actually read. `Member`
