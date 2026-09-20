@@ -15,7 +15,7 @@
 -- step — it is that a role arriving in another space holds nobody, and
 -- grants nothing until somebody there gives it to somebody.
 begin;
-select plan(28);
+select plan(34);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -288,6 +288,85 @@ select is(
   'keyed_update roles_access true',
   'and the entity is registered the way the matrix says: keyed on the '
   'role''s own key, in the roles group, publishable in a template');
+
+
+-- ── #1560: the import is a door to the same rows, and it locks ───────
+--
+-- Everything above asks the owner. This asks somebody else, because the
+-- configuration import had its own guard and that guard had been
+-- rewritten four times since it said `owner` — 0177 owner, 0186
+-- `manageConfiguration OR deploying`, 0197 `manageConfiguration`, 0206
+-- `+ deployToProd/deployToDev`. Each step was right about hours and
+-- tariffs and none was about roles, because roles did not travel until
+-- 0251.
+--
+-- The test that existed called `workspace_roles_import` DIRECTLY, which
+-- is exactly why it proved nothing: the helper is revoked from every
+-- client, and the way in is the wrapper. These call the wrapper.
+
+-- `plain` becomes an admin: `deployToDev` is an admin default, so the
+-- import's own guard lets them in. No custom role, no delegation — the
+-- ordinary second-in-command of a development workspace.
+update public.members set is_admin = true where id = pg_temp.member('plain');
+
+-- The WHOLE row, the way `workspace_roles_export` writes it. A payload
+-- that names only the permissions is a payload that also blanks the
+-- names, and the guard reads it as the change it is — so the no-op case
+-- below has to be a real no-op, not a partial one.
+create or replace function pg_temp.config_with(p_key text, p_permissions jsonb)
+returns jsonb language sql as $$
+  select jsonb_build_object('tables', jsonb_build_object('workspace_roles',
+    jsonb_build_array(jsonb_build_object(
+      'key', p_key, 'permissions', p_permissions,
+      'names', '{"en": "Treasurer", "fr": "Trésorier"}'::jsonb,
+      'sort_order', 3, 'active', true))));
+$$;
+
+select pg_temp.act_as('plain');
+
+select throws_matching(
+  format($$ select public.import_workspace_configuration(%L, %L::jsonb, 'merge') $$,
+         pg_temp.ws(), pg_temp.config_with('treasurer', '["issueInvoices","manageRoles"]'::jsonb)),
+  'only an owner defines the roles',
+  'an admin cannot widen a role through the configuration import: the '
+  'import reaches the same rows the editor guards, so it asks the same '
+  'question and refuses in the same words');
+
+select is(
+  (select array_to_string(r.permissions, ',') from public.workspace_roles r
+    where r.workspace_id = pg_temp.ws() and r.key = 'treasurer'),
+  'issueInvoices',
+  'and the refusal is atomic: the role still grants what it granted. This '
+  'is the escalation that was open — the caller HOLDS treasurer, so '
+  'rewriting its permissions rewrites their own authority');
+
+select lives_ok(
+  format($$ select public.import_workspace_configuration(%L, %L::jsonb, 'merge') $$,
+         pg_temp.ws(), pg_temp.config_with('treasurer', '["issueInvoices"]'::jsonb)),
+  'but a configuration that carries the roles a space already has still '
+  'imports. Refusing that would teach people to strip the section by '
+  'hand, which is how a guard gets worked around rather than obeyed');
+
+select throws_matching(
+  format($$ select public.import_workspace_configuration(%L,
+    jsonb_build_object('workspace', jsonb_build_object('role_permissions',
+      jsonb_build_object('admin', jsonb_build_array('exportData', 'manageRoles')))),
+    'merge') $$, pg_temp.ws()),
+  'changes what a role may do',
+  'the BUILT-IN matrix is the same door and was never filed: '
+  '`set_role_permissions` asks for manageRoles, and the import wrote the '
+  'column with no question at all');
+
+select is(public.has_permission(pg_temp.ws(), 'manageRoles'), false,
+  'and the caller still cannot manage the roles — which is the only form '
+  'of "the matrix did not move" that matters, because the matrix exists '
+  'to answer exactly this question');
+
+select pg_temp.act_as('owner');
+select lives_ok(
+  format($$ select public.import_workspace_configuration(%L, %L::jsonb, 'merge') $$,
+         pg_temp.ws(), pg_temp.config_with('treasurer', '["issueInvoices","manageRoles"]'::jsonb)),
+  'the owner, meeting the same door, walks through it');
 
 select * from finish();
 rollback;
