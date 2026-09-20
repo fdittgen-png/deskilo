@@ -2094,6 +2094,16 @@ The country catalogue names the **group** of every rate it proposes (standard, i
 
 *Accounting exports → Year archive* downloads one zip named after the registration number and the year: every invoice as PDF/A-3 with its embedded e-invoice, the **invoice register** (number, date, amount, status and each document's integrity word), the FEC on the default accounts and the audit trail. A development workspace produces a file marked DEV.
 
+### What needs you (#1247)
+
+*What needs you* is one screen that answers a single question: **does anything need me?** Switch the **Decision surface** feature on and it appears at `/attention`. Each line is one decision — the events waiting on your answer, the people waiting to join, the month whose members have billable data and no invoice yet — with what it is about, what the decision is, and how long it has been waiting. Several members waiting for the same decision are **one line**, not one line each: *issue for 7 members*.
+
+The order is not the order things happened: it is **what the delay costs**. Money first (a payment nobody confirmed is cash standing still), then a person who is blocked on you, then a month that has to close, then the instance itself, then configuration that is not doing what it says.
+
+What is **not** there is as deliberate. Occupancy, balances and unread counts are numbers, not decisions: nobody can act on a number, and each of them belongs to the screen that owns it. A surface that ranked everything would rank nothing. When nothing is waiting the screen says so — *Nothing needs you* — rather than showing an empty list you have to interpret.
+
+The feature is off until you ask for it, and it sits **beside** the alerts bell rather than replacing it.
+
 # Admin guide — configuring the space
 
 For the owner who sets the space up: what every parameter decides, in the

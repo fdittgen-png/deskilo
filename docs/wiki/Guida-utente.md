@@ -2199,3 +2199,13 @@ Il catalogo dei paesi nomina il **gruppo** di ogni aliquota proposta (ordinaria,
 ### Archivio dell'esercizio (#957)
 
 *Esportazioni contabili → Archivio dell'esercizio* scarica un unico zip con il numero di registrazione e l'anno: ogni fattura in PDF/A-3 con la fattura elettronica incorporata, il **registro delle fatture** (numero, data, importo, stato e la parola di integrità di ogni documento), il FEC sui conti predefiniti e la traccia di audit. Uno spazio di sviluppo produce un file contrassegnato DEV.
+
+### Che cosa vi attende (#1247)
+
+*Che cosa vi attende* è una schermata che risponde a una sola domanda: **qualcosa mi attende?** Attivate la funzionalità **Superficie di decisione** e compare su `/attention`. Ogni riga è una decisione — gli eventi che attendono la vostra risposta, le persone che attendono di entrare, il mese i cui membri hanno qualcosa da fatturare e nessuna fattura — con l'oggetto, la decisione e da quando attende. Più membri che attendono la stessa decisione fanno **una riga**, non una ciascuno: *fatturare per 7 membri*.
+
+L'ordine non è quello degli arrivi: è **quanto costa il ritardo**. Prima il denaro (un pagamento che nessuno conferma è liquidità ferma), poi una persona bloccata da voi, poi un mese che deve chiudersi, poi l'istanza stessa, poi una configurazione che non fa quello che dichiara.
+
+Ciò che **non** c'è è altrettanto voluto. Occupazione, saldi e messaggi non letti sono numeri, non decisioni: su un numero nessuno può agire, e ciascuno appartiene alla schermata che lo tiene. Una superficie che ordina tutto non ordina nulla. Quando nulla attende, la schermata lo dice — *Nulla vi attende* — invece di mostrare un elenco vuoto da interpretare.
+
+La funzionalità resta spenta finché non la chiedete, e si colloca **accanto** alla campanella degli avvisi, senza sostituirla.

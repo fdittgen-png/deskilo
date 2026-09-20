@@ -227,7 +227,12 @@ enum WorkspaceFeature {
   /// contact. The definitions travel with a template; the answers are
   /// keyed to the MEMBERSHIP, so one space's question never follows
   /// somebody into another. Off, the identity form is what it was.
-  customFields;
+  customFields,
+
+  /// #1247 — one place that answers *does anything need me?*, ranked by
+  /// what the delay costs. Platform and default OFF: a space with two
+  /// members and no invoicing does not want a decision surface.
+  decisionSurface;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1196,6 +1201,16 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // decides whether the section can exist at all.
   WorkspaceFeature.customFields: FeatureManifestEntry(
     feature: WorkspaceFeature.customFields,
+    surface: FeatureSurface.settings,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+  ),
+  // #1247 — `requires` is deliberately empty. Each row's own capability
+  // already gates its data, and a surface that needs every feature
+  // switched on to be useful is the wrong surface: a space with only
+  // membership still has join requests to answer.
+  WorkspaceFeature.decisionSurface: FeatureManifestEntry(
+    feature: WorkspaceFeature.decisionSurface,
     surface: FeatureSurface.settings,
     tier: FeatureTier.platform,
     defaultOn: false,

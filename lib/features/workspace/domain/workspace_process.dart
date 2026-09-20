@@ -183,6 +183,9 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.instanceWizard,
     ]),
     WorkspaceSubprocess('experience', [
+      // #1247 — what needs a person, ranked. Under operations because
+      // it is how an administrator starts their day, not a setting.
+      WorkspaceFeature.decisionSurface,
       WorkspaceFeature.formHelpHints,
       WorkspaceFeature.uiAnimations,
       WorkspaceFeature.regionalFormats,

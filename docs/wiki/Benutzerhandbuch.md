@@ -2182,3 +2182,13 @@ Der Länderkatalog benennt die **Gruppe** jedes vorgeschlagenen Satzes (normal, 
 ### Jahresarchiv (#957)
 
 *Buchhaltungsexporte → Jahresarchiv* lädt ein einziges Zip herunter, benannt nach Registernummer und Jahr: jede Rechnung als PDF/A-3 mit eingebetteter E-Rechnung, das **Rechnungsregister** (Nummer, Datum, Betrag, Status und das Integritätswort jedes Belegs), den FEC mit den Standardkonten und die Prüfspur. Ein Entwicklungs-Arbeitsbereich erzeugt eine mit DEV markierte Datei.
+
+### Was Sie erwartet (#1247)
+
+*Was Sie erwartet* ist ein Bildschirm, der eine einzige Frage beantwortet: **Wartet etwas auf mich?** Schalten Sie die Funktion **Entscheidungsfläche** ein, und er erscheint unter `/attention`. Jede Zeile ist eine Entscheidung — die Ereignisse, die auf Ihre Antwort warten, die Personen, die auf Aufnahme warten, der Monat, in dem Mitglieder Abrechenbares und noch keine Rechnung haben — mit dem Gegenstand, der Entscheidung und der Wartezeit. Mehrere Mitglieder, die auf dieselbe Entscheidung warten, sind **eine Zeile**, nicht je eine: *für 7 Mitglieder abrechnen*.
+
+Die Reihenfolge ist nicht die des Eintreffens, sondern das, **was die Verzögerung kostet**. Zuerst das Geld (eine Zahlung, die niemand bestätigt, ist stehende Liquidität), dann eine Person, die auf Sie wartet, dann ein Monat, der abgeschlossen werden muss, dann die Instanz selbst, dann eine Konfiguration, die nicht tut, was sie ankündigt.
+
+Was **nicht** darauf steht, ist ebenso gewollt. Belegung, Salden und ungelesene Nachrichten sind Zahlen, keine Entscheidungen: auf eine Zahl kann niemand handeln, und jede gehört dem Bildschirm, der sie führt. Eine Fläche, die alles ordnet, ordnet nichts. Wartet nichts, sagt der Bildschirm es — *Nichts wartet auf Sie* — statt eine leere Liste zu zeigen, die Sie deuten müssen.
+
+Die Funktion bleibt aus, bis Sie sie verlangen, und sie steht **neben** der Glocke, nicht an ihrer Stelle.

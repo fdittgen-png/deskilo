@@ -1674,6 +1674,19 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wird auf Dokumenten vor ihrem Namen gedruckt. „Keine“ druckt nur den Namen.';
 
   @override
+  String get featureDecisionSurfaceTitle => 'Was auf Sie wartet';
+
+  @override
+  String get featureDecisionSurfaceDesc =>
+      'Ein Ort, der beantwortet: „Wartet etwas auf mich?“ — sortiert danach, was die Verzögerung kostet: zuerst Geld, das abfließt, dann jemand, der auf eine Antwort wartet. Eine Zeile erscheint nur, wenn jemand entscheiden oder handeln muss; eine Zahl, mit der niemand etwas anfangen kann, bleibt auf ihrem eigenen Bildschirm.';
+
+  @override
+  String get decisionSurfaceEmpty => 'Nichts wartet auf Sie';
+
+  @override
+  String get decisionSurfaceEmptyDetail => 'Alles ist erledigt.';
+
+  @override
   String get featureCustomFieldsTitle => 'Fragen dieses Bereichs';
 
   @override

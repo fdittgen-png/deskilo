@@ -1015,6 +1015,10 @@ window.SETUP_L10N={
    "customFields": [
     "Questions this space asks",
     "The workspace may ask its own questions inside the identity form — a committee role, a joining date, an emergency contact. The answers belong to the membership, so a question asked here never follows somebody elsewhere."
+   ],
+   "decisionSurface": [
+    "What needs you",
+    "One place that answers \"does anything need me?\", ranked by what the delay costs — money that leaves first, then somebody waiting on an answer. A line appears only when a person must decide or act; a number nobody can act on stays on the screen that owns it."
    ]
   },
   "process": {
@@ -2239,6 +2243,10 @@ window.SETUP_L10N={
    "customFields": [
     "Les questions de cet espace",
     "L'espace peut poser ses propres questions dans le formulaire d'identité : une fonction au bureau, une date d'adhésion, un contact d'urgence. Les réponses appartiennent à l'adhésion : une question posée ici ne suit personne ailleurs."
+   ],
+   "decisionSurface": [
+    "Ce qui vous attend",
+    "Un seul endroit qui répond à « est-ce que quelque chose m'attend ? », classé par ce que coûte le retard — l'argent qui part d'abord, puis quelqu'un qui attend une réponse. Une ligne n'apparaît que si une personne doit décider ou agir ; un chiffre sur lequel personne ne peut agir reste sur l'écran qui le porte."
    ]
   },
   "process": {
@@ -3463,6 +3471,10 @@ window.SETUP_L10N={
    "customFields": [
     "Fragen dieses Bereichs",
     "Der Bereich kann im Identitätsformular eigene Fragen stellen — eine Funktion im Vorstand, ein Eintrittsdatum, ein Notfallkontakt. Die Antworten gehören zur Mitgliedschaft, eine hier gestellte Frage folgt also niemandem anderswohin."
+   ],
+   "decisionSurface": [
+    "Was auf Sie wartet",
+    "Ein Ort, der beantwortet: „Wartet etwas auf mich?“ — sortiert danach, was die Verzögerung kostet: zuerst Geld, das abfließt, dann jemand, der auf eine Antwort wartet. Eine Zeile erscheint nur, wenn jemand entscheiden oder handeln muss; eine Zahl, mit der niemand etwas anfangen kann, bleibt auf ihrem eigenen Bildschirm."
    ]
   },
   "process": {
@@ -4687,6 +4699,10 @@ window.SETUP_L10N={
    "customFields": [
     "Las preguntas de este espacio",
     "El espacio puede hacer sus propias preguntas dentro del formulario de identidad: un cargo en la junta, una fecha de alta, un contacto de emergencia. Las respuestas pertenecen a la membresía, así que una pregunta hecha aquí no sigue a nadie a otro sitio."
+   ],
+   "decisionSurface": [
+    "Lo que te espera",
+    "Un único lugar que responde «¿hay algo que me espere?», ordenado por lo que cuesta la demora: primero el dinero que se va, luego alguien que espera una respuesta. Una línea aparece solo si alguien debe decidir o actuar; una cifra sobre la que nadie puede actuar se queda en la pantalla que la tiene."
    ]
   },
   "process": {
@@ -5911,6 +5927,10 @@ window.SETUP_L10N={
    "customFields": [
     "Le domande di questo spazio",
     "Lo spazio può porre le proprie domande dentro il modulo d'identità: un incarico nel direttivo, una data di adesione, un contatto d'emergenza. Le risposte appartengono all'iscrizione, quindi una domanda posta qui non segue nessuno altrove."
+   ],
+   "decisionSurface": [
+    "Cosa ti aspetta",
+    "Un solo posto che risponde a «c’è qualcosa che mi aspetta?», ordinato per quanto costa il ritardo: prima il denaro che se ne va, poi qualcuno che aspetta una risposta. Una riga appare solo se una persona deve decidere o agire; un numero su cui nessuno può agire resta sullo schermo che lo possiede."
    ]
   },
   "process": {

@@ -1,5 +1,21 @@
 {
   "@@locale": "fr",
+  "featureDecisionSurfaceTitle": "Ce qui vous attend",
+  "@featureDecisionSurfaceTitle": {
+    "description": "#1247: featureDecisionSurfaceTitle"
+  },
+  "featureDecisionSurfaceDesc": "Un seul endroit qui répond à « est-ce que quelque chose m'attend ? », classé par ce que coûte le retard — l'argent qui part d'abord, puis quelqu'un qui attend une réponse. Une ligne n'apparaît que si une personne doit décider ou agir ; un chiffre sur lequel personne ne peut agir reste sur l'écran qui le porte.",
+  "@featureDecisionSurfaceDesc": {
+    "description": "#1247: featureDecisionSurfaceDesc"
+  },
+  "decisionSurfaceEmpty": "Rien ne vous attend",
+  "@decisionSurfaceEmpty": {
+    "description": "#1247: decisionSurfaceEmpty"
+  },
+  "decisionSurfaceEmptyDetail": "Tout est traité.",
+  "@decisionSurfaceEmptyDetail": {
+    "description": "#1247: decisionSurfaceEmptyDetail"
+  },
   "featureCustomFieldsTitle": "Les questions de cet espace",
   "@featureCustomFieldsTitle": {
     "description": "#1288 custom fields: featureCustomFieldsTitle"

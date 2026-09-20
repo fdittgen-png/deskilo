@@ -475,4 +475,11 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'form — a committee role, a joining date, an emergency '
                   'contact. The answers belong to the membership, so a '
                   'question asked here never follows somebody elsewhere.',
+        WorkspaceFeature.decisionSurface =>
+          l10n?.featureDecisionSurfaceDesc ??
+              'One place that answers "does anything need me?", ranked by '
+                  'what the delay costs — money that leaves first, then '
+                  'somebody waiting on an answer. A line appears only when '
+                  'a person must decide or act; a number nobody can act on '
+                  'stays on the screen that owns it.',
       };

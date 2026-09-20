@@ -34,8 +34,8 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> plan` | 68 |
 | `reservations -> workspace` | 53 |
 | `profile -> workspace` | 37 |
+| `workspace -> money` | 35 |
 | `members -> workspace` | 34 |
-| `workspace -> money` | 34 |
 | `money -> events` | 30 |
 | `workspace -> plan` | 25 |
 | `editor -> plan` | 20 |
@@ -45,8 +45,8 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `members -> reservations` | 14 |
 | `money -> plan` | 14 |
 | `money -> reservations` | 13 |
+| `workspace -> events` | 13 |
 | `plan -> workspace` | 11 |
-| `workspace -> events` | 11 |
 | `kiosk -> reservations` | 10 |
 | `workspace -> profile` | 10 |
 | `members -> money` | 9 |
@@ -85,7 +85,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**54 directed relationships, 688 imports.**
+**54 directed relationships, 691 imports.**
 
 Reciprocal (19): `calendar <-> money`, `calendar <-> reservations`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
@@ -99,7 +99,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/core/demo/data/money_repository.dart` | 1800 |
 | `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1656 |
 | `lib/features/money/data/supabase_money_repository.dart` | 1420 |
-| `lib/features/workspace/domain/workspace_feature.dart` | 1350 |
+| `lib/features/workspace/domain/workspace_feature.dart` | 1365 |
 | `lib/features/workspace/data/supabase_workspace_repository.dart` | 1281 |
 | `lib/features/money/presentation/screens/money_screen.dart` | 1277 |
 | `lib/features/reservations/presentation/screens/reserve_screen.dart` | 1145 |
@@ -118,7 +118,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/workspace/presentation/screens/availability_screen.dart` | 856 |
 | `lib/features/money/presentation/widgets/invoicing_dashboard.dart` | 850 |
 | `lib/features/reservations/presentation/widgets/week_grid.dart` | 807 |
-| `lib/app/router.dart` | 788 |
+| `lib/app/router.dart` | 797 |
 | `lib/features/plan/presentation/widgets/floor_plan_painter.dart` | 785 |
 | `lib/features/calendar/presentation/widgets/day_timeline.dart` | 776 |
 | `lib/features/money/presentation/screens/billing_screen.dart` | 767 |

@@ -2192,3 +2192,13 @@ El catálogo de países nombra el **grupo** de cada tipo propuesto (general, int
 ### Archivo del ejercicio (#957)
 
 *Exportaciones contables → Archivo del ejercicio* descarga un solo zip con el número de registro y el año: cada factura en PDF/A-3 con su factura electrónica incrustada, el **registro de facturas** (número, fecha, importe, estado y la palabra de integridad de cada documento), el FEC con las cuentas por defecto y la pista de auditoría. Un espacio de desarrollo produce un archivo marcado DEV.
+
+### Lo que le espera (#1247)
+
+*Lo que le espera* es una pantalla que responde a una sola pregunta: **¿algo me espera?** Active la funcionalidad **Superficie de decisión** y aparece en `/attention`. Cada línea es una decisión — los eventos que esperan su respuesta, las personas que esperan entrar, el mes cuyos miembros tienen algo que facturar y ninguna factura — con de qué se trata, cuál es la decisión y desde cuándo espera. Varios miembros que esperan la misma decisión son **una línea**, no una cada uno: *facturar para 7 miembros*.
+
+El orden no es el de llegada: es **lo que cuesta el retraso**. Primero el dinero (un pago que nadie confirma es tesorería parada), luego una persona bloqueada por usted, luego un mes que debe cerrarse, luego la propia instancia, luego una configuración que no hace lo que dice.
+
+Lo que **no** está es igual de deliberado. La ocupación, los saldos y los mensajes sin leer son números, no decisiones: nadie puede actuar sobre un número, y cada uno pertenece a la pantalla que lo lleva. Una superficie que lo ordena todo no ordena nada. Cuando nada espera, la pantalla lo dice — *Nada le espera* — en vez de mostrar una lista vacía que interpretar.
+
+La funcionalidad está apagada hasta que usted la pida, y se sitúa **junto** a la campana de alertas, sin reemplazarla.

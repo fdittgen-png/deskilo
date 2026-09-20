@@ -1,5 +1,21 @@
 {
   "@@locale": "es",
+  "featureDecisionSurfaceTitle": "Lo que te espera",
+  "@featureDecisionSurfaceTitle": {
+    "description": "#1247: featureDecisionSurfaceTitle"
+  },
+  "featureDecisionSurfaceDesc": "Un único lugar que responde «¿hay algo que me espere?», ordenado por lo que cuesta la demora: primero el dinero que se va, luego alguien que espera una respuesta. Una línea aparece solo si alguien debe decidir o actuar; una cifra sobre la que nadie puede actuar se queda en la pantalla que la tiene.",
+  "@featureDecisionSurfaceDesc": {
+    "description": "#1247: featureDecisionSurfaceDesc"
+  },
+  "decisionSurfaceEmpty": "Nada te espera",
+  "@decisionSurfaceEmpty": {
+    "description": "#1247: decisionSurfaceEmpty"
+  },
+  "decisionSurfaceEmptyDetail": "Todo está resuelto.",
+  "@decisionSurfaceEmptyDetail": {
+    "description": "#1247: decisionSurfaceEmptyDetail"
+  },
   "featureCustomFieldsTitle": "Las preguntas de este espacio",
   "@featureCustomFieldsTitle": {
     "description": "#1288 custom fields: featureCustomFieldsTitle"

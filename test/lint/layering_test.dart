@@ -254,9 +254,17 @@ const Map<String, int> _pairBudget = {
   // cannot be made without it. Two imports, both load-bearing.
   'reservations -> workspace': 53,
   'workspace -> auth': 3,
-  'workspace -> events': 11,
+  // 11→13 and 34→35 (2026-09-19): #1247 — the decision surface answers
+  // *does anything need me?* by ASSEMBLING signals that already exist:
+  // the events awaiting my decision (the type, to tell money from a
+  // person, and the provider that applies the validation policy) and
+  // the month's members with billable data and no invoice. Reading them
+  // where they are computed is the whole point — a second copy of
+  // "which events are pending" is the coupling worth refusing, not
+  // three imports in one provider file.
+  'workspace -> events': 13,
   'workspace -> members': 4,
-  'workspace -> money': 34,
+  'workspace -> money': 35,
   'workspace -> plan': 25,
   'workspace -> profile': 10,
   'workspace -> reservations': 17,

@@ -63,6 +63,12 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.memberEnvironments,
   // #1120 — sharing a floor plan is asked for, never assumed.
   WorkspaceFeature.workspaceLibrary,
+  // #1247 — the decision surface sits BESIDE the alerts face rather
+  // than replacing it, and two places that rank the same requests will
+  // disagree the week somebody adds a row to one of them. Shipping it
+  // ON would settle that by implication; off, the question stays a
+  // question until an owner answers it.
+  WorkspaceFeature.decisionSurface,
 };
 
 /// Every other feature ships ON.
@@ -130,6 +136,7 @@ void main() {
       'workspaceBranding': true,
       'customRoles': true,
       'customFields': true,
+      'decisionSurface': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);
