@@ -12,6 +12,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../application/start_workspace.dart';
 import '../../domain/invite_uri.dart';
 import '../../domain/template_outline.dart';
 import '../../domain/template_preview.dart';
@@ -78,8 +79,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       _outlineFor = templateId;
       _outlineValue = null;
       _outline = ref
-          .read(workspaceRepositoryProvider)
-          .workspaceTemplateOutline(templateId)
+          .read(workspaceStartProvider)
+          .outlineOf(templateId)
           .then((outline) {
         if (mounted && _outlineFor == templateId) {
           setState(() => _outlineValue = outline);
@@ -95,7 +96,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   bool get _templateRefused =>
       _templateId != null &&
       _outlineFor == _templateId &&
-      (_outlineValue?.refused ?? false);
+      !templateUsable(_outlineValue);
 
   static const _nameStep = 0;
   static const _whereStep = 1;
@@ -119,7 +120,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     super.dispose();
   }
 
-  Future<void> _run(Future<void> Function() action) async {
+  /// Runs [action]; false from it means the command REFUSED and nothing
+  /// was written, so there is nothing to refresh and nowhere to go.
+  Future<void> _run(Future<bool> Function() action) async {
     setState(() => _busy = true);
     final l10n = AppLocalizations.of(context);
     if (!await runGuarded(
@@ -129,7 +132,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
       action: () async {
-          await action();
+          if (!await action()) return;
           ref.invalidate(myWorkspacesProvider);
           // First-run visits are bounced to /plan by the router redirect; when
           // opened from Profiles (#89) we pop back to the profile list instead.
@@ -147,9 +150,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     if (mounted) setState(() => _busy = false);
   }
 
-  bool get _nameValid => _name.text.trim().isNotEmpty;
-  bool get _whereValid =>
-      _currency.text.trim().length == 3 && _timezone.text.trim().isNotEmpty;
+  // #1449 — the same sentences the command refuses on, read once: the
+  // wizard uses them to hold a step, the command to hold the write.
+  bool get _nameValid => isNameable(_name.text);
+  bool get _whereValid => isPlaceable(
+        currencyCode: _currency.text,
+        timezone: _timezone.text,
+      );
 
   /// Next from [_step]; a step that is not filled in shows why and stays.
   void _next() {
@@ -165,36 +172,36 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     setState(() => _step = (_step + 1).clamp(0, _confirmStep));
   }
 
+  /// #1449 — application/start_workspace.dart holds the rules: a name, a
+  /// currency and a timezone, a template the server has not refused, and
+  /// the request id that makes a retry ONE creation. The screen says
+  /// what was chosen.
   Future<void> _create() async {
-    if (!_nameValid || !_whereValid) return;
     await _run(() async {
-      final repo = ref.read(workspaceRepositoryProvider);
-      await repo.createWorkspace(
-        name: _name.text.trim(),
-        countryCode: _countryCode,
-        currencyCode: _currency.text.trim().toUpperCase(),
-        timezone: _timezone.text.trim(),
-        environment: _environment,
-        withTwin: _withTwin,
-        requestId: _requestId,
-        // #1120 — a new space starts with a room. #1303 — applied in the
-        // same transaction as the creation; the twin receives it through
-        // the deployment refresh, like every other piece of configuration.
-        templateId: _templateId,
-      );
+      final result = await ref.read(workspaceStartProvider).create(
+            name: _name.text,
+            countryCode: _countryCode,
+            currencyCode: _currency.text,
+            timezone: _timezone.text,
+            requestId: _requestId,
+            environment: _environment,
+            withTwin: _withTwin,
+            // #1120 — a new space starts with a room. #1303 — applied in
+            // the same transaction as the creation; the twin receives it
+            // through the deployment refresh, like every other piece of
+            // configuration.
+            templateId: _templateId,
+            outline: _outlineFor == _templateId ? _outlineValue : null,
+          );
+      return result.outcome == StartOutcome.created;
     });
   }
 
   Future<void> _join() async {
     if (!(_joinFormKey.currentState?.validate() ?? false)) return;
-    // Smart paste (0049): the field accepts a bare code, an invite URL,
-    // or a WHOLE pasted invitation message — WhatsApp only copies the
-    // full message, so the app digs the code out itself.
-    final code = InviteUriCodec.extractCode(_inviteCode.text);
-    if (code.isEmpty) return;
-    await _run(
-      () => ref.read(workspaceRepositoryProvider).joinWorkspace(code),
-    );
+    await _run(() async =>
+        await ref.read(workspaceStartProvider).join(_inviteCode.text) ==
+        JoinOutcome.joined);
   }
 
   @override
