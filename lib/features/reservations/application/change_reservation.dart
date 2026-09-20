@@ -150,8 +150,15 @@ Future<RescheduleOutcome> rescheduleReservation(
     if (until == null) {
       throw ArgumentError('a repeat needs an end date');
     }
+    // #1562 — the chosen window travels into the conversion. It used to
+    // stop here, so editing the times and adding a repeat in one gesture
+    // built the repeat from the STORED window: the member asked for
+    // 14:00–16:00 and received 09:00–10:00, and the per-date conflict
+    // checks answered for the wrong hours too.
     return BecameSeries(await reservations.convertToSeries(
       reservation.id,
+      start: start,
+      end: end,
       pattern: pattern,
       until: until,
     ));

@@ -137,8 +137,17 @@ abstract class ReservationRepository {
   /// back with it. A partial result still comes back whole: skipping
   /// some dates is a real outcome the caller reports, losing the
   /// original is not.
+  ///
+  /// [start] and [end] are the window the member asked for, which is not
+  /// necessarily the one that is stored: the detail sheet collects a new
+  /// window and a pattern in the same gesture (#1562). The repeat — and
+  /// every conflict, closure and quota check it runs per date — is built
+  /// from THIS window. Pass the reservation's own start and end to
+  /// convert without moving it.
   Future<SeriesResult> convertToSeries(
     String reservationId, {
+    required DateTime start,
+    required DateTime end,
     required SeriesPattern pattern,
     required DateTime until,
   });
