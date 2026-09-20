@@ -1,185 +1,238 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 # Bringing one workspace to its reported configuration
 
-#1285 (T13 of #1271). **A checklist, not a script.** This is customer
-data: one association's real members, bookings and invoices. Nothing here
-runs itself, every step says what it changes and how to see that it
-worked, and the whole thing stops on the first surprise.
+#1285. **A procedure, not a script that runs itself.** It operates on one
+association's real members, bookings and invoices, so every target is
+named explicitly, every step says what it changes and how to read the
+change back, and the whole thing stops on the first surprise.
 
-It is deliberately separate from every product issue: one-off customer
-cleanup is not product architecture.
+Two stages, and only the first is an engineering task:
 
-## What the workspace looks like today
+- **S1** — this document, its preflight
+  (`workspace_alignment_preflight.sql`) and a synthetic rehearsal.
+- **S2** — running it against the association. That needs the owner's
+  authorisation and a date. **Nothing below is executed against a live
+  workspace without it.**
 
-Read on the dev project, **2026-09-19**, read-only. Re-read it before
-executing: these numbers are the "before" the last step compares against.
+The target workspace id, its twin and the backend are in #1285's
+implementation brief. They are never written into this file, and never
+inferred from whichever connection happens to be open.
 
-| | COWORKONTI `5ffea179` | its twin `32b79123` |
-|---|---|---|
-| members | 11, all `active` | 11 |
-| reservations | 270 | 7 |
-| invoices | 72 | 1 |
-| ledger entries | 18 | 0 |
-| plans | 3 (`Full`, `Half`, `Flex`) | 3 |
-| packages | 3 (`test`, `toto`, `titi`) | 3 |
-| fee bands | 2 — 50 € / 100 € — **already correct** | 2 |
-| closure days | 0 | 0 |
-| feature flags on | 90 | 90 |
-| working hours | unset: `booking_rules` carries no `work_start_minutes`, `work_end_minutes` or `half_boundary_minutes`, so the product defaults apply | same |
-| default locale | empty | empty |
-| levels | `1er étage`, `2e étage` — one office each, both bookable as a whole | same |
+## Before anything: the preflight
 
-**There are two.** The pair is the environment twin (#987): the one with
-270 reservations is the real one. Every statement below names an id;
-a step without one is a bug.
+`docs/guides/workspace_alignment_preflight.sql` reads, reports and
+aborts. It takes ten parameters — backend, environment, workspace id,
+twin id, template key, groups, the plan / package / level ids that may
+change, and the holiday decision — and **stops when one is missing or
+disagrees with the database**:
 
-**One member points at the `Half` plan.** `members.plan_id` is
-`on delete set null`, so deleting that row would silently unassign them —
-which is why nothing here deletes a plan.
-
-## The order, and why
-
-Each step is reversible on its own, and each is verified before the next
-one starts. Stop on anything unexpected; a surprise here is data nobody
-can reconstruct.
-
-### 0 — Capture the before
-
-```sql
-select public.export_workspace_configuration('5ffea179-71ed-4f1e-801f-5106b5ac0dc5');
+```
+begin;
+set local alignment.backend_system_id = '...';  -- from pg_control_system()
+set local alignment.environment = 'prod';       -- … and the eight others,
+set local alignment.workspace_id = '...';       -- all listed at the head
+\i docs/guides/workspace_alignment_preflight.sql   -- of the file itself
+rollback;
 ```
 
-Store the output **outside the repository**, with the date. Also record
-the five counts above; step 6 compares against them.
+It ends in `PREFLIGHT CLEAR` or `PREFLIGHT STOP` with the reasons. Run it
+**as the owner who will apply** — the change preview reads the
+configuration through the export gate, and a packet without a preview is
+not reviewable, so an unreadable preview is itself a stop.
 
-### 1 — Apply the association template
+Its report is the review packet: the target and its twin, the number of
+workspaces sharing that name, the change preview per group, the levels
+the template would *add*, every plan with the number of members pointing
+at it, every package, every level, and the holiday months split into
+eligible and locked. Keep it **outside the repository**.
 
-`association_fr` (#1282) carries the hours (07:00 / 13:00 / 19:00), the
-tariffs, the identity defaults, the lexicon and the feature profile. Use
-the app's own preview: *Library → Association de coworking (France) →
-Preview changes*, and tick only what the preview says is **new** or a
-**change** you intend.
+### Stop and recovery
 
-Applying the template is the point of having built it, and this is its
-first real test on a workspace with data. The merge never deletes
-(#1276): fee bands and closure days that already exist are kept.
+- `STOP` on the environment, the twin, the backend or a parameter: fix
+  the packet, never the check. The twins carry the same name, and the
+  half that holds the bookings is not necessarily the half labelled
+  `prod` — that is exactly why the id and the environment are declared
+  and compared.
+- `STOP` on a plan id: a member still points at it. Deactivating it is
+  out of scope here (see *What this does not touch*).
+- After each step below, read it back. A read-back that disagrees means
+  stop and undo **that step** — that is why they are separate.
+- Recovery: the before-snapshot (step 0) restores configuration through
+  `import_workspace_configuration`. It does not restore protected rows,
+  which is why no step touches them.
 
-**Verify:** the hours read 07:00 / 13:00 / 19:00 on *Availability*; the
-fee bands still read 50 € and 100 €; the reservation and invoice counts
-are unchanged.
+## Step 0 — the before
 
-### 2 — The default language
+```sql
+select public.export_workspace_configuration(:'workspace_id');
+```
 
-The template sets `default_locale = 'fr'`. If it did not, set it from
-*Workspace settings → Language*. Empty means invitations and documents
-follow the sender's app language rather than the association's.
+Needs `exportData`. Store the output outside the repository with its
+date, and store the preflight report beside it. Both are inputs to
+step 7.
 
-**Verify:** an invitation preview reads French.
+## Step 1 — apply the template, by group
 
-### 3 — Feature flags: 90 → the association profile
+`association_fr` carries the hours (07:00 / 13:00 / 19:00), the identity
+defaults, the lexicon, the roles and the feature profile.
 
-The template's feature map is explicit for every flag (#1282's contract),
-so this happens with step 1. What it leaves is the honest question: the
-flags the association actually wants are the ones the template names, and
-the rest are off.
+- **Always pass an explicit group list.** With `p_groups => null` the
+  server refuses the whole template if it carries one entity this server
+  does not deploy (`template_compatibility` → `not_supported`), and a
+  `partial` verdict is a compatibility finding to read, not to dismiss.
+- **Never select `space`.** It carries `floor_plan`, and
+  `merge_floor_plan` matches levels **by name**: the template's own
+  example levels — which are not this workspace's levels — would be
+  *added* beside the real ones. The preflight refuses the group and
+  lists the names it would add.
+- **`roles_access` replaces the feature map outright.** That is the
+  intent here (an all-flags-on workspace becomes the association
+  profile), but it is a replacement, so read the preview per flag before
+  ticking it. It is also what decides the holiday control in step 5.
+- **`pricing_credits` deletes and re-inserts every fee band.** Select it
+  only when the preview reports the group `matching`, or when the change
+  it shows is the one intended; the reported bands are already correct,
+  so it is normally left out.
 
-**Verify:** the Features screen's process cards show only what the
-association uses; nothing a member relied on disappeared — ask the
-responsable before switching off anything the template does not mention.
+The reviewed default is `wording,hours_booking,roles_access` — identity
+and lexicon, the working hours, the roles and the feature profile.
 
-### 4 — The obsolete pricing rows
+**Read back:** hours 07:00 / 13:00 / 19:00 on *Availability*; the fee
+bands unchanged; `default_locale` = `fr`; the level list unchanged in
+length and in names.
 
-Three `plans` (`Full`, `Half`, `Flex`) are the older per-plan model,
-superseded by the fee bands, which are populated and correct. One member
-still points at `Half`.
+## Step 2 — the obsolete plans, by id, unreferenced only
 
-**Deactivate, never delete:**
+The older per-plan model is superseded by the fee bands. Deactivate,
+never delete: `members.plan_id references plans(id) on delete set null`,
+so a delete silently unassigns whoever points at it.
 
 ```sql
 update public.plans set active = false
- where workspace_id = '5ffea179-71ed-4f1e-801f-5106b5ac0dc5';
+ where workspace_id = :'workspace_id'
+   and id = any (:'plan_ids'::uuid[])
+   and not exists (select 1 from public.members m where m.plan_id = plans.id);
 ```
 
-Then move the one member off it in the app (*Members → the member →
-plan*), so nothing points at an inactive row.
+The predicate is not decoration: it is the same condition the preflight
+stops on, restated where the write happens. A plan a member still points
+at **stays active** until a separately authorised member migration
+exists. This procedure does not create one.
 
-**Verify:** `select count(*) from public.members where plan_id is not null
-and workspace_id = '5ffea179…'` returns 0, and the member's subscription
-percentage is unchanged.
+**Read back:** the listed ids read `active = false`; every other plan is
+untouched; the number of members carrying a `plan_id` is what it was.
 
-That two pricing models can both be populated is a real design wart. It
-is **not** fixed here: it deserves its own issue.
-
-### 5 — The junk packages
-
-`test`, `toto` and `titi` are leftovers from trying the product.
+## Step 3 — the junk packages, by id
 
 ```sql
 update public.packages set active = false
- where workspace_id = '5ffea179-71ed-4f1e-801f-5106b5ac0dc5'
-   and name in ('test', 'toto', 'titi');
+ where workspace_id = :'workspace_id' and id = any (:'package_ids'::uuid[]);
 ```
 
-Deactivate rather than delete: a package a member once bought is
-referenced by what they bought.
+Ids, not names: a package someone once bought is referenced by what they
+bought, so it is deactivated and never deleted.
 
-**Verify:** the Billing screen offers no packages; no invoice changed.
+**Read back:** the listed ids read `active = false`; no invoice changed.
 
-### 6 — Closure days
+## Step 4 — whole-level booking on the second floor
 
-Generate the public holidays for the relevant years (#1274, *Availability
-→ Public holidays*).
+The report's *« supprimer la possibilité de réserver toute une table »*
+is the **whole-level** booking on floor 2.
 
-**The rule that bites here:** a closure day is never created inside a
-month that already carries an issued invoice — the generator skips it and
-names it. This workspace has 72 invoices, so expect skips, and read the
-list rather than dismissing it.
-
-**Verify:** the entitlement table for a 50 % member matches the fifteen
-months of the report. That comparison is the whole point of the exercise;
-if it does not match, stop and find out why before touching anything
-else.
-
-### 7 — Nothing was lost
+*Preconditions*, all three, checked by the preflight and restated in the
+statement: the id belongs to this workspace, it currently reads
+`bookable_as_whole = true`, and floor 1's id is **not** in the list.
 
 ```sql
-select (select count(*) from public.members where workspace_id = '5ffea179-71ed-4f1e-801f-5106b5ac0dc5') as members,
-       (select count(*) from public.reservations where workspace_id = '5ffea179-71ed-4f1e-801f-5106b5ac0dc5') as reservations,
-       (select count(*) from public.invoices where workspace_id = '5ffea179-71ed-4f1e-801f-5106b5ac0dc5') as invoices,
-       (select count(*) from public.ledger_entries where workspace_id = '5ffea179-71ed-4f1e-801f-5106b5ac0dc5') as ledger;
+update public.levels set bookable_as_whole = false
+ where workspace_id = :'workspace_id'
+   and id = any (:'level_ids'::uuid[])
+   and bookable_as_whole;
+
+select id, name, bookable_as_whole from public.levels
+ where workspace_id = :'workspace_id' order by sort_order;
 ```
 
-Every number equals step 0's. If one moved, the change that moved it is
-the one to undo — that is why each step is verified as it happens rather
-than all at the end.
+Floor 1 keeps whole-level booking unless the responsable says otherwise,
+in writing, as a separate instruction. Existing reservations on either
+level are unaffected: `reservations.level_id` is `on delete restrict`
+and nothing here deletes a level.
 
-Also run the reconciliation, as its owner:
+## Step 5 — the holidays: three paths, and no silent one
+
+The control lives on *Availability → Public holidays* behind the
+`publicHolidays` feature, and **the association profile turns that
+feature off**. So the runbook cannot say "generate the holidays" and
+leave it there: the preflight prints `control_enabled_now`,
+`control_after_the_feature_map` and whether `calendar_navigation` was
+selected, and refuses to continue until `alignment.holiday_plan` names
+one of:
+
+- `skip` — no closure day is created. The entitlement table keeps the
+  shape it has today. This is the default.
+- `enable_control` — the responsable wants the control: turn
+  `publicHolidays` on **after** the feature map is applied, and generate
+  from the screen. The preflight stops if the same run would switch it
+  off again.
+- `apply_group` — let the template's `calendar_navigation` group create
+  them. The server resolves the days for this workspace's country and
+  **omits every month that already carries an invoice**. This must be
+  ticked deliberately, never as a side effect of "apply everything".
+
+## Step 6 — historical months: eligible, or deliberately left
+
+Closure days are never created inside a month that already carries an
+issued invoice (#1274). The consequence must be reported, not hidden:
+
+- **eligible months** — no invoice for that period: the holidays are
+  created and the entitlements reconcile.
+- **locked months** — an invoice exists: nothing is created, and the
+  entitlement for that month stays as issued.
+
+The preflight prints both lists. The outcome recorded in #1285 names the
+locked months one by one. *"All historical entitlements reconciled"* is
+false whenever that list is non-empty — the honest sentence is "the
+eligible months reconciled; these months were left as invoiced."
+
+## Step 7 — prove that nothing protected moved
+
+Run the preflight again, with the same parameters and empty id lists,
+and compare it with step 0's report:
+
+- `members`, `reservations`, `invoices`, `ledger_entries` — each carries
+  a row count **and a digest over the full contents of every row**.
+  Equal counts prove nothing; equal digests prove the rows are
+  byte-identical.
+- `members_on_a_plan`, `reservations_per_level` and
+  `invoices_per_member` — the relationships, so a re-pointed foreign key
+  is visible even when every row still exists.
+- the level list, unchanged in length and in names — the template added
+  none.
+
+Then, as the owner:
 
 ```sql
-select * from public.reconcile_workspace('5ffea179-71ed-4f1e-801f-5106b5ac0dc5');
+select * from public.reconcile_workspace(:'workspace_id');
 ```
 
 No rows means the invoices, the ledger and the matches still agree.
 
-## The rules this procedure may not break
+## What this does not touch
 
-- **Nothing destructive is automated.** Deactivate before deleting;
-  prefer `active = false` for anything an invoice or a ledger entry could
-  reference.
-- **Never delete a `plans` row a member still points at.**
-- **Never create a closure day in a month that already carries an issued
-  invoice** without deciding what happens to that invoice (#1274).
-- **Nothing from this workspace enters the builtin template** — no
-  member, no name, no address, no price beyond the published tariff.
-- **Every statement carries its `workspace_id`.** One without it is a bug,
-  not a shortcut.
-- **The twin is not this workspace.** Deploy to it deliberately (#988) or
-  leave it alone; do not run these statements against both because the
-  name matches.
-
-## What is deliberately not here
-
+Members, reservations, invoices and the ledger. No member is moved
+between plans, no subscription percentage is edited, nothing is deleted.
 The floor-plan naming (`Bureau 1` twice) is handled in code by #1273 and
-needs no data change. Whether floor 1 keeps whole-level booking is a
-question for the responsable, not a step: floor 2's
-`bookable_as_whole = false` is the report's request, floor 1's is not.
+needs no data change. That `plans` and `fee_bands` can both be populated
+is a real design wart with its own issue; it is not fixed here.
+
+## The rehearsal
+
+The procedure is proven on disposable fixtures before it is proposed for
+a real workspace. One aborting transaction creates a `REHEARSAL …` twin
+pair sharing a name, seeds plans (one referenced by a member, one not),
+packages, two whole-bookable levels, a reservation, an invoice in a past
+period and a ledger entry; fingerprints them; runs the preflight
+verbatim through its stop and clear paths; runs steps 1–4; fingerprints
+again; and asserts the four protected tables, their relationships, the
+level names, the fee bands and the untouched configuration identical —
+then raises, so nothing persists. The results are in #1285.
