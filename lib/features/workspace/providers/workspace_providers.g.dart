@@ -339,6 +339,55 @@ final class StartConversationCommandProvider
 String _$startConversationCommandHash() =>
     r'942ce4132b6a5f45e51a1913773daa96b0ed5467';
 
+/// #1449 — starting a workspace: what a creation needs before it is
+/// one, and the request id that makes a retry the SAME creation.
+
+@ProviderFor(workspaceStart)
+final workspaceStartProvider = WorkspaceStartProvider._();
+
+/// #1449 — starting a workspace: what a creation needs before it is
+/// one, and the request id that makes a retry the SAME creation.
+
+final class WorkspaceStartProvider
+    extends $FunctionalProvider<WorkspaceStart, WorkspaceStart, WorkspaceStart>
+    with $Provider<WorkspaceStart> {
+  /// #1449 — starting a workspace: what a creation needs before it is
+  /// one, and the request id that makes a retry the SAME creation.
+  WorkspaceStartProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'workspaceStartProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceStartHash();
+
+  @$internal
+  @override
+  $ProviderElement<WorkspaceStart> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  WorkspaceStart create(Ref ref) {
+    return workspaceStart(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(WorkspaceStart value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<WorkspaceStart>(value),
+    );
+  }
+}
+
+String _$workspaceStartHash() => r'f2e03f5b0054327d8a2e39eff27edaf972c37fe1';
+
 @ProviderFor(workspaceMembers)
 final workspaceMembersProvider = WorkspaceMembersProvider._();
 
