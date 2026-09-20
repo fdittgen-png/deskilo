@@ -11,6 +11,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/record_consumption.dart';
 import '../../domain/service_item.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -99,7 +100,7 @@ Future<void> showConsumptionSheet(
                   DropdownMenuItem(
                     value: item,
                     // #731 — an empty shelf cannot be consumed.
-                    enabled: item.stock != 0,
+                    enabled: servesQuantity(item, 1),
                     child: Text(
                       '${item.name} — '
                       '${currency.formatMinor(negotiated?.itemPrice('services', item.id) ?? item.priceCents)}'
@@ -139,6 +140,11 @@ Future<void> showConsumptionSheet(
             const SizedBox(height: 12),
             TextField(
               controller: period,
+              // #1449 — the button below reads this field, so it has to
+              // be rebuilt when the field changes. Typing a period that
+              // is not a month used to close the sheet and then write
+              // nothing, silently.
+              onChanged: (_) => setSheetState(() {}),
               decoration: InputDecoration(
                 labelText: l10n?.consumptionPeriodLabel ??
                     'Billing period (YYYY-MM)',
@@ -147,9 +153,14 @@ Future<void> showConsumptionSheet(
             const SizedBox(height: 16),
             FilledButton(
               key: const ValueKey('consumption-submit'),
-              onPressed: service.stock != null && service.stock! < quantity
-                  ? null
-                  : () => Navigator.of(context).pop(true),
+              onPressed: consumptionOutcome(
+                        service: service,
+                        quantity: quantity,
+                        period: period.text,
+                      ) ==
+                      ConsumptionOutcome.filed
+                  ? () => Navigator.of(context).pop(true)
+                  : null,
               child: Text(
                 l10n?.moneySubmitPayment ?? 'Submit for confirmation',
               ),
@@ -161,26 +172,27 @@ Future<void> showConsumptionSheet(
   );
   if (submitted != true) return;
 
-  final chosenPeriod = period.text.trim();
-  if (!RegExp(r'^\d{4}-\d{2}$').hasMatch(chosenPeriod)) return;
   if (!context.mounted) return;
+  // #1449 — application/record_consumption.dart holds the rules: the
+  // shelf, the range and the month. The sheet says what was chosen.
+  var outcome = ConsumptionOutcome.filed;
   if (!await runGuarded(
     context,
     domain: 'money',
     message: 'record service charge failed',
     errorText: l10n?.workspaceGenericError ??
         'Something went wrong. Please try again.',
-    action: () => ref.read(moneyRepositoryProvider).recordServiceCharge(
+    action: () async => outcome = await ref.read(consumptionsProvider).record(
           workspaceId: workspace.id,
           subjectMemberId: subjectMemberId,
-          serviceId: service.id,
+          service: service,
           quantity: quantity,
-          period: chosenPeriod,
+          period: period.text,
         ),
   )) {
     return;
   }
-  if (!context.mounted) return;
+  if (outcome != ConsumptionOutcome.filed || !context.mounted) return;
   AppSnack.success(
     context,
     l10n?.consumptionRecorded ??

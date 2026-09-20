@@ -317,6 +317,55 @@ final class ExpenseScheduleCommandProvider
 String _$expenseScheduleCommandHash() =>
     r'4fa149d5b6e81a089d8ef6c7633fd04d8fdd0733';
 
+/// #1449 — a consumed service: whether the shelf holds that many, and
+/// which month's bill it lands on.
+
+@ProviderFor(consumptions)
+final consumptionsProvider = ConsumptionsProvider._();
+
+/// #1449 — a consumed service: whether the shelf holds that many, and
+/// which month's bill it lands on.
+
+final class ConsumptionsProvider
+    extends $FunctionalProvider<Consumptions, Consumptions, Consumptions>
+    with $Provider<Consumptions> {
+  /// #1449 — a consumed service: whether the shelf holds that many, and
+  /// which month's bill it lands on.
+  ConsumptionsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'consumptionsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$consumptionsHash();
+
+  @$internal
+  @override
+  $ProviderElement<Consumptions> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  Consumptions create(Ref ref) {
+    return consumptions(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Consumptions value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Consumptions>(value),
+    );
+  }
+}
+
+String _$consumptionsHash() => r'32231b1df8048f66ffe107772aef50ff8bdb02b5';
+
 @ProviderFor(legalIdentity)
 final legalIdentityProvider = LegalIdentityProvider._();
 

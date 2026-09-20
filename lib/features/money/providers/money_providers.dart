@@ -6,6 +6,7 @@ import '../../../core/trace/traced.dart';
 
 import '../application/book_repartition.dart';
 import '../application/declare_vat.dart';
+import '../application/record_consumption.dart';
 import '../application/record_payment.dart';
 import '../application/settle_invoices.dart';
 import '../application/save_legal_identity.dart';
@@ -78,6 +79,12 @@ VatDeclarations vatDeclarationCommand(Ref ref) =>
 @riverpod
 ExpenseSchedules expenseScheduleCommand(Ref ref) =>
     ExpenseSchedules(ref.watch(moneyRepositoryProvider));
+
+/// #1449 — a consumed service: whether the shelf holds that many, and
+/// which month's bill it lands on.
+@riverpod
+Consumptions consumptions(Ref ref) =>
+    Consumptions(ref.watch(moneyRepositoryProvider));
 
 @riverpod
 LegalIdentity legalIdentity(Ref ref) => LegalIdentity(
