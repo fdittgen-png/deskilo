@@ -1,0 +1,60 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: Nightly · Journey latency benchmark
+
+# #1456 — the journey benchmark and its gate, OFF the pull-request path.
+#
+# A pull-request run already costs 1 466 s p50, 1 377 s of it the coverage
+# suite (docs/ci/CI_BASELINE.md). These numbers are a trend and a
+# regression alarm, not a merge decision, so they run nightly and on
+# demand — and by hand, with exactly the two commands below.
+#
+# What it produces is evidence about a HEADLESS RUNNER: round trips,
+# elements, frames, and a wall clock that is reported and gated by
+# nothing. Cold start on a real device, frame timing, transition
+# milliseconds and API p95 are NOT measured here and the record says so;
+# the gate fails if that declaration is ever dropped.
+
+on:
+  schedule:
+    - cron: '20 3 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: perf-bench-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: "3.44.9"
+
+jobs:
+  journeys:
+    name: journeys · shape budgets · wall clock
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - run: flutter pub get
+
+      - name: Benchmark the journeys
+        run: flutter test tool/bench
+
+      # The record is the artifact; the gate is the verdict. A missing
+      # measurement fails here exactly as loudly as one over budget —
+      # that is the whole property (#1446 R2).
+      - name: Gate
+        run: bash scripts/perf_gate.sh report/perf.psv
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: perf-journeys
+          path: report/perf.psv
+          if-no-files-found: error
+          retention-days: 30

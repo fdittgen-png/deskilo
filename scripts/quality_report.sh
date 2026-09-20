@@ -61,8 +61,12 @@ job_of() { grep -vE '^[[:space:]]*(#|$)' "$MANIFEST" | awk -F'|' -v n="$1" '$1 =
     printf '| %s | %s | %s |\n' "$name" "$mark" "$detail"
   done
   echo
-  echo '> Performance budgets are not a row yet. One exists — a 12-second'
-  echo '> Android boot — and the rest are tracked in #1236.'
+  echo '> Performance is not a row here, and the guards that exist prove'
+  echo '> different things: a draw-call budget is algorithmic, a query'
+  echo '> budget is a clock against a real planner, the 12-second Android'
+  echo '> boot is an EMULATOR deadlock alarm, and the nightly journey'
+  echo '> benchmark counts round trips and frames. None of them is a'
+  echo '> millisecond measured on a device — see docs/domain/PERFORMANCE.md.'
 } | tee "$OUT"
 
 if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
