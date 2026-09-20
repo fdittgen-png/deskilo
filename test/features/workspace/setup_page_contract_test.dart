@@ -5,8 +5,16 @@
 // This test pins the CONTRACT: the app's parser accepts exactly what
 // the page emits — settings, accessory catalog and auto-laid-out floor
 // plan parse; the <setup> block is ignored, never fatal.
+//
+// #1559 — and the second group below pins what the page puts INSIDE
+// `<configuration>`, by running the real page and interpreting its
+// export with the app's own readers. A hand-written fixture cannot do
+// that: it says what someone believed the page emitted, and it stays
+// green while the page emits something else.
 import 'dart:io';
 
+import 'package:deskilo/core/time/work_hours.dart';
+import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 import 'package:deskilo/features/workspace/domain/workspace_xml.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -102,5 +110,108 @@ void main() {
       expect(page, contains("'$key'"),
           reason: '$key must be offered by the questionnaire');
     }
+  });
+
+  // #1559 — the eight answers that went nowhere.
+  //
+  // The page asked for the working day, the hour equivalents and three
+  // booking policies, and wrote them ONLY into `<setup>`, which the
+  // parser above ignores by design. The import replaces `booking_rules`
+  // wholesale with what `<configuration>` carries, so each missing key
+  // read as the app's fallback — and a workspace that already had
+  // 07:30–19:00 configured got 08:00–17:00 back from a successful
+  // import.
+  //
+  // Nothing caught it, because nothing asked the only question that
+  // matters: what does the app END UP WITH. So these tests run the real
+  // page (tool/setup/step_harness.mjs --export-xml), parse its real
+  // document, and hand `booking_rules` to the very readers the app uses
+  // — WorkHours.fromRules and BookingPolicies.fromRules.
+  group('the page export carries the working day and the policies', () {
+    Map<String, dynamic>? bookingRules(String mode) {
+      final node = Process.runSync('node', ['--version']);
+      if (node.exitCode != 0) {
+        // Node is on every GitHub runner; a developer without it still
+        // gets the rest of the suite. Same bargain as setup_runs_test.
+        markTestSkipped('node is not on PATH');
+        return null;
+      }
+      final r = Process.runSync(
+          'node', ['tool/setup/step_harness.mjs', '--export-xml=$mode']);
+      expect(r.exitCode, 0, reason: 'the page failed to export:\n${r.stderr}');
+      final data = parseWorkspaceXml(r.stdout as String);
+      final configuration = data.configuration;
+      expect(configuration, isNotNull,
+          reason: 'the questionnaire exported no <configuration> at all');
+      final workspace = configuration!['workspace']! as Map<String, Object?>;
+      return workspace['booking_rules'] as Map<String, dynamic>?;
+    }
+
+    test('the answers arrive — hours, equivalents and policies', () {
+      final rules = bookingRules('answered');
+      if (rules == null) return;
+      // The harness answers 07:30 / 12:30 / 19:00, 4h and 9h.
+      final hours = WorkHours.fromRules(rules);
+      expect(hours.startMinutes, 7 * 60 + 30);
+      expect(hours.halfBoundaryMinutes, 12 * 60 + 30);
+      expect(hours.endMinutes, 19 * 60);
+      expect(hours.halfDayHours, 4);
+      expect(hours.fullDayHours, 9);
+      // Not the fallback wearing the answers' clothes.
+      expect(hours.startMinutes, isNot(WorkHours.defaults.startMinutes));
+
+      // ...and past bookings on, admin check-out on, two at a time.
+      final policies = BookingPolicies.fromRules(rules);
+      expect(policies.allowPastBookings, isTrue);
+      expect(policies.adminCheckOut, isTrue);
+      expect(policies.simultaneousReservations, 2);
+      expect(policies.outsideHoursMode, OutsideHoursMode.walkupOnly);
+    });
+
+    test('a first visit exports the defaults as values, not as omissions',
+        () {
+      final rules = bookingRules('defaults');
+      if (rules == null) return;
+      // The same numbers the app falls back to — but PRESENT, so an
+      // import onto a workspace configured otherwise resets it on
+      // purpose instead of by accident.
+      for (final key in [
+        WorkHours.keyStart,
+        WorkHours.keyBoundary,
+        WorkHours.keyEnd,
+        WorkHours.keyHalfDayHours,
+        WorkHours.keyFullDayHours,
+        BookingPolicies.allowPastBookingsKey,
+        BookingPolicies.adminCheckOutKey,
+        BookingPolicies.simultaneousReservationsKey,
+      ]) {
+        expect(rules, contains(key),
+            reason: '"$key" is absent, so the import leaves whatever the '
+                'target workspace had — an answered question that does '
+                'nothing');
+      }
+      expect(WorkHours.fromRules(rules), WorkHours.defaults);
+      final policies = BookingPolicies.fromRules(rules);
+      expect(policies.allowPastBookings, isFalse);
+      expect(policies.adminCheckOut, isFalse);
+      expect(policies.simultaneousReservations,
+          BookingPolicies.defaultSimultaneous);
+    });
+
+    test('bookingPolicies off exports the off-values, not the answers', () {
+      final rules = bookingRules('policies-off');
+      if (rules == null) return;
+      // Same answers as the first case (past bookings, admin check-out,
+      // two at a time) with the feature switched OFF: the export must
+      // carry the feature's documented off-behaviour...
+      final policies = BookingPolicies.fromRules(rules);
+      expect(policies.allowPastBookings, isFalse);
+      expect(policies.adminCheckOut, isFalse);
+      expect(policies.simultaneousReservations, 1);
+      expect(policies.outsideHoursMode, OutsideHoursMode.charged);
+      // ...while the working day, which is not that feature's to gate,
+      // still travels.
+      expect(WorkHours.fromRules(rules).startMinutes, 7 * 60 + 30);
+    });
   });
 }

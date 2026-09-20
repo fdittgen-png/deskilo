@@ -122,6 +122,19 @@ void main() {
     // Wire keys, not labels: the questionnaire's XML is what carries an
     // answer into the app, so the key is the contract. Labels are prose
     // and may be worded freely.
+    //
+    // #1559 — and this test is a PRESENCE check, not a behaviour one. It
+    // greps the kebab-case spelling ANYWHERE in the HTML, and the page
+    // writes every one of these names into `<setup>`, the extension the
+    // app ignores on purpose. So it stayed green the whole time
+    // `work_start_minutes`, `half_boundary_minutes`, `work_end_minutes`,
+    // `half_day_hours`, `full_day_hours`, `allow_past_bookings`,
+    // `admin_check_out` and `simultaneous_reservations` reached the app
+    // as nothing at all. A name found in the file proves the question is
+    // asked; it cannot prove the answer arrives. What the app ends up
+    // with is pinned where it can be: setup_page_contract_test.dart runs
+    // the real page, parses its real export and reads `booking_rules`
+    // with WorkHours.fromRules and BookingPolicies.fromRules.
     test('every booking_rules key the client writes is carried by the XML',
         () {
       const keys = <String>[
