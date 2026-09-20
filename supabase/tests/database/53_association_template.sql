@@ -20,7 +20,7 @@
 -- closure day. A generator that produced nothing would still pass every
 -- other number in the list.
 begin;
-select plan(11);
+select plan(15);
 
 create or replace function pg_temp.groups() returns text[] language sql as $$
   select array_agg(distinct e->>'group')
@@ -244,6 +244,45 @@ select is(
   10,
   'and books exactly ten half-days across two months — the eleventh is '
   'refused, which is what a carnet without a subscription means');
+
+
+-- ── #1282 S4: the bureau arrives, and holds nobody ───────────────────
+--
+-- The slice that never landed with the rest. #1287 made a workspace
+-- able to define its own roles; the template carried none, so a space
+-- applying it still had to invent the bureau by hand.
+
+select is(
+  (select string_agg(r.key, ',' order by r.sort_order)
+     from public.workspace_roles r where r.workspace_id = pg_temp.ws()),
+  'tresorier,secretaire,referent_salle',
+  'the template brings the three roles a French association elects, in '
+  'the order the bureau is usually listed');
+
+select is(
+  (select array_to_string(r.permissions, '+') from public.workspace_roles r
+    where r.workspace_id = pg_temp.ws() and r.key = 'secretaire'),
+  'manageMembers+manageDocuments+viewPersonalData',
+  'and each holds the narrowest set that makes its job possible — the '
+  'secretary keeps the members and the documents, and cannot issue an '
+  'invoice');
+
+select is(
+  (select count(*)::int from public.workspace_roles r
+    where r.workspace_id = pg_temp.ws()
+      and 'manageRoles' = any(r.permissions)),
+  0,
+  'no role the template brings may redefine a role. That authority stays '
+  'with the owner (0255), so a template cannot hand out the power to '
+  'rewrite what a template handed out');
+
+select is(
+  (select count(*)::int from public.workspace_role_members rm
+     join public.workspace_roles r on r.id = rm.role_id
+    where r.workspace_id = pg_temp.ws()),
+  0,
+  'and NOBODY holds them (#1505): applying a template grants nothing '
+  'until an owner gives a role to somebody');
 
 select * from finish();
 rollback;
