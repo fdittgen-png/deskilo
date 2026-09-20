@@ -121,27 +121,16 @@ final List<MatrixRow> kMatrix = [
   // take a size; nothing but the list was missing.
   MatrixRow('Sign in',
       pump: (t, size) => pumpSignIn(t, size: size), axes: _all),
-  // The calendar hub is the first row whose helper honours 360 dp AND
-  // drives the shell, and it fails there — on three SHARED surfaces the
-  // route passes through, not on the calendar. Filed as #1583 rather
-  // than papered over: weakening the assertion so a real defect reads
-  // green is the failure this matrix exists to stop. The three gap
-  // lines come out in the pull request that fixes them.
+  // The calendar hub drives the shell, so its row exercises SHARED
+  // surfaces the route passes through rather than the calendar. It
+  // opened with three gaps, and #1583 closed them: two of the three
+  // named surfaces could be handed less width than they need (the help
+  // hint's tip chevrons, the reserve view menu's label) and the canvas
+  // scrollbar asserted on a negative track, all three now fixed — and
+  // `pumpHub` was reading `size` as PHYSICAL pixels at a ratio of 3,
+  // so this row had been measuring 120 dp, not the 360 it names.
   MatrixRow('Calendar hub',
-      pump: (t, size) => calendar.pumpHub(t, size: size),
-      axes: const {
-        MatrixAxis.wide,
-        MatrixAxis.keyboard,
-        MatrixAxis.semantics,
-      },
-      gaps: const {
-        MatrixAxis.narrow: 'help_hint Row overflows 123 px, reserve_view_menu '
-            '21 px, canvas_controls scrollbar h=-16 — #1583 (2026-09-20)',
-        MatrixAxis.largeText: 'the same three, for the same reason — #1583 '
-            '(2026-09-20)',
-        MatrixAxis.reducedMotion: 'measured at 360 dp, so it fails on the '
-            'overflows before it can compare states — #1583 (2026-09-20)',
-      }),
+      pump: (t, size) => calendar.pumpHub(t, size: size), axes: _all),
   MatrixRow('Level canvas',
       pump: _sized(pumpCanvas),
       axes: const {

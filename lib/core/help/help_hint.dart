@@ -213,9 +213,18 @@ class _HelpHintState extends ConsumerState<HelpHint> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
+                      // #1583 — a Wrap inside the Wrap, for the reason
+                      // the outer one exists. A Wrap hands its child
+                      // the run's FULL width as a maximum, so this nav
+                      // group was a Row that could be given less than
+                      // two 48 dp targets and a counter and had no
+                      // answer but to overflow. Wrapping, the counter
+                      // drops below the chevrons instead; at any width
+                      // that fits them it lays out as the Row did.
                       if (tips.length > 1)
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
+                        Wrap(
+                          alignment: WrapAlignment.end,
+                          crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
                             IconButton(
                               key: ValueKey('help-hint-prev-${id.name}'),

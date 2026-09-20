@@ -39,7 +39,13 @@ Future<({FakeCalendarRepository calendar, FakeWorkspaceRepository workspace})>
   // #1183 — a test that is ABOUT the sideways layout has to start
   // there: turning the phone after the fact leaves one transient frame
   // whose overflow belongs to a widget already gone.
-  Size size = const Size(1080, 2400),
+  //
+  // #1583 — LOGICAL dp, at a ratio of 1, like every other pump helper
+  // the matrix drives. The viewport is the same phone it always was;
+  // what changed is that `size: Size(360, 800)` now means 360 dp
+  // instead of 120, so the row measured a screen nobody holds and
+  // blamed seven shared surfaces for it.
+  Size size = const Size(360, 800),
 }) async {
   final today = kTestNow;
   final calendar = FakeCalendarRepository()
@@ -72,7 +78,7 @@ Future<({FakeCalendarRepository calendar, FakeWorkspaceRepository workspace})>
   // A phone-sized viewport: the filter row scrolls horizontally and the
   // feed vertically, and taps must land on what is on screen.
   tester.view.physicalSize = size;
-  tester.view.devicePixelRatio = 3;
+  tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   await tester.pumpWidget(ProviderScope(
     overrides: standardTestOverrides(
