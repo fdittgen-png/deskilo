@@ -130,6 +130,37 @@ function load(locale, stored, { browser = 'fr-FR', remembered = null } = {}) {
   return { byId, chrome, exportXml: () => { globalThis.__exportXml(); return xml; } };
 }
 
+// `--export-xml=<mode>` prints ONE real page export on stdout and stops.
+// It is how a Dart test reads what the page ACTUALLY produces (#1559):
+// the old contract test asserted against a hand-written fixture, which
+// could not notice that the page had stopped putting the working day and
+// the booking policies into the <configuration> the app consumes.
+//
+//   answered     every question answered, every feature on
+//   policies-off the same answers with bookingPolicies OFF — the export
+//                must then carry the feature's documented off-values,
+//                not the owner's answers
+//   defaults     a first visit that only names the space and turns the
+//                configuration transfer on
+const EXPORT_MODES = {
+  answered: (features) => answers(features),
+  'policies-off': (features) => {
+    const a = answers(features);
+    return { ...a, features: { ...a.features, bookingPolicies: false } };
+  },
+  defaults: () => ({ name: 'Defaults Space', features: { configurationTransfer: true } }),
+};
+const exportFlag = process.argv.find((a) => a.startsWith('--export-xml'));
+if (exportFlag) {
+  const mode = exportFlag.split('=')[1] || 'answered';
+  const build = EXPORT_MODES[mode];
+  if (!build) { console.error(`unknown --export-xml mode "${mode}"`); process.exit(2); }
+  load('en', null); // one plain load, only to learn FEATURES
+  const page = load('en', build(globalThis.__FEATURES));
+  process.stdout.write(page.exportXml());
+  process.exit(0);
+}
+
 // Every string the page put on screen: text children, text set directly,
 // trusted markup, and the title/placeholder attributes.
 function renderedText() {
