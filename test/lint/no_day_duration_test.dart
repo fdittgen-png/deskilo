@@ -24,7 +24,10 @@ import 'lint_sources.dart';
 const Map<String, String> _exempt = {
   'lib/features/workspace/domain/next_open_day.dart':
       'a search horizon — how far to look, not a date to print',
-  'lib/features/money/presentation/screens/vat_declarations_screen.dart':
+  // 2026-09-20 #1449 — moved from the screen with the derivation it
+  // belongs to (application/declare_vat.dart); the screen names no
+  // day-Duration any more.
+  'lib/features/money/application/declare_vat.dart':
       'the half-open end of a period query',
   'lib/features/money/presentation/widgets/expense_schedule_sheet.dart':
       'date-picker bounds — how far the picker may scroll',

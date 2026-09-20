@@ -15,6 +15,7 @@ import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/schedule_expense.dart';
 import '../../domain/expense_schedule.dart';
 import '../../providers/expense_schedule_providers.dart';
 import '../../providers/money_providers.dart';
@@ -122,8 +123,7 @@ Future<void> showExpenseSchedulesSheet(
                   '${s.nextDue != null ? ' · ${l10n?.scheduleNextDue(dates.format(s.nextDue!)) ?? 'next: ${dates.format(s.nextDue!)}'}' : ''}',
                 ),
                 isThreeLine: true,
-                trailing: s.status == ScheduleStatus.pending ||
-                        s.status == ScheduleStatus.active
+                trailing: canEndSchedule(s.status)
                     ? IconButton(
                         key: ValueKey('schedule-cancel-${s.id}'),
                         tooltip: l10n?.scheduleCancel ?? 'End this schedule',
@@ -135,9 +135,8 @@ Future<void> showExpenseSchedulesSheet(
                             message: 'cancel expense schedule failed',
                             errorText: l10n?.workspaceGenericError ??
                                 'Something went wrong. Please try again.',
-                            action: () => ref
-                                .read(moneyRepositoryProvider)
-                                .cancelExpenseSchedule(s.id),
+                            action: () =>
+                                ref.read(expenseScheduleCommandProvider).end(s),
                           );
                           if (ok) {
                             ref.invalidate(
@@ -388,7 +387,8 @@ Future<bool> showCreateExpenseScheduleSheet(
   );
   if (submitted != true || !context.mounted) return false;
   final cents = parseCentsInput(amount.text);
-  if (cents == null || cents <= 0 || title.text.trim().isEmpty) {
+  // #1449 — the command refuses it and writes nothing; the sheet says so.
+  if (!isSchedulable(title: title.text, amountCents: cents)) {
     AppSnack.error(
         context, l10n?.scheduleMissingFields ?? 'Name and amount are needed.');
     return false;
@@ -399,9 +399,9 @@ Future<bool> showCreateExpenseScheduleSheet(
     message: 'create expense schedule failed',
     errorText:
         l10n?.workspaceGenericError ?? 'Something went wrong. Please try again.',
-    action: () => ref.read(moneyRepositoryProvider).createExpenseSchedule(
+    action: () => ref.read(expenseScheduleCommandProvider).schedule(
           workspaceId: workspace.id,
-          title: title.text.trim(),
+          title: title.text,
           amountCents: cents,
           startsOn: startsOn,
           unit: unit,
@@ -462,8 +462,9 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
     final o = widget.occurrence;
     final scheduled = o.scheduledAmountCents;
     final cents = parseCentsInput(_amount.text);
-    final differs = scheduled != null && cents != null && cents != scheduled;
     final rejected = o.status == OccurrenceStatus.rejected;
+    // #1449 — the rule the command applies, read here to show the field.
+    final explain = needsExplanation(o, cents);
     final dates = DateFormat.yMMMd();
     final scheme = Theme.of(context).colorScheme;
     return Card(
@@ -523,7 +524,7 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
                   const TextInputType.numberWithOptions(decimal: true),
               onChanged: (_) => setState(() {}),
             ),
-            if (differs || rejected) ...[
+            if (explain) ...[
               const SizedBox(height: 8),
               TextField(
                 key: ValueKey('occurrence-reason-${o.id}'),
@@ -539,7 +540,7 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
               alignment: Alignment.centerRight,
               child: FilledButton(
                 key: ValueKey('occurrence-confirm-${o.id}'),
-                onPressed: () => _confirm(differs || rejected),
+                onPressed: _confirm,
                 child: Text(rejected
                     ? (l10n?.occurrenceResend ?? 'Resend for validation')
                     : (l10n?.occurrenceConfirm ?? 'Confirm this expense')),
@@ -551,39 +552,43 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
     );
   }
 
-  Future<void> _confirm(bool needsReason) async {
+  /// #1449 — the command decides what this amount means and refuses the
+  /// write the rule forbids; the sheet says which answer it was.
+  Future<void> _confirm() async {
     final l10n = AppLocalizations.of(context);
-    final cents = parseCentsInput(_amount.text);
-    if (cents == null || cents <= 0) return;
-    if (needsReason && _reason.text.trim().isEmpty) {
-      AppSnack.error(
-        context,
-        l10n?.occurrenceReasonMissing ??
-            'A different amount needs an explanation.',
-      );
-      return;
-    }
     final workspaceId = widget.occurrence.workspaceId;
+    OccurrenceAnswer? answer;
     final ok = await runGuarded(
       context,
       domain: 'money',
       message: 'confirm expense occurrence failed',
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
-      action: () => ref.read(moneyRepositoryProvider).confirmExpenseOccurrence(
-            occurrenceId: widget.occurrence.id,
-            amountCents: cents,
-            reason: _reason.text.trim(),
-          ),
+      action: () async {
+        answer = await ref.read(expenseScheduleCommandProvider).answer(
+              occurrence: widget.occurrence,
+              amountCents: parseCentsInput(_amount.text),
+              reason: _reason.text,
+            );
+      },
     );
     if (!ok || !mounted) return;
-    AppSnack.success(
-      context,
-      needsReason
-          ? (l10n?.occurrenceSentForValidation ??
-              'Sent to the validators — it counts once they confirm.')
-          : (l10n?.occurrenceAdded ?? 'Added to your expenses.'),
-    );
+    switch (answer) {
+      case OccurrenceAnswer.noAmount || null:
+        return;
+      case OccurrenceAnswer.explanationMissing:
+        AppSnack.error(context,
+            l10n?.occurrenceReasonMissing ??
+                'A different amount needs an explanation.');
+        return;
+      case OccurrenceAnswer.forValidation:
+        AppSnack.success(context,
+            l10n?.occurrenceSentForValidation ??
+                'Sent to the validators — it counts once they confirm.');
+      case OccurrenceAnswer.settled:
+        AppSnack.success(
+            context, l10n?.occurrenceAdded ?? 'Added to your expenses.');
+    }
     ref
       ..invalidate(expenseOccurrencesProvider(workspaceId))
       ..invalidate(eventsProvider);

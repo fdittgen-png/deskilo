@@ -211,6 +211,112 @@ final class RepartitionsProvider
 
 String _$repartitionsHash() => r'c71888e14b6f28a005e593090293cff440157b47';
 
+/// #1449 — what a VAT period declares on the basis the workspace
+/// declares on, and whether the platform took it.
+
+@ProviderFor(vatDeclarationCommand)
+final vatDeclarationCommandProvider = VatDeclarationCommandProvider._();
+
+/// #1449 — what a VAT period declares on the basis the workspace
+/// declares on, and whether the platform took it.
+
+final class VatDeclarationCommandProvider
+    extends
+        $FunctionalProvider<VatDeclarations, VatDeclarations, VatDeclarations>
+    with $Provider<VatDeclarations> {
+  /// #1449 — what a VAT period declares on the basis the workspace
+  /// declares on, and whether the platform took it.
+  VatDeclarationCommandProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'vatDeclarationCommandProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$vatDeclarationCommandHash();
+
+  @$internal
+  @override
+  $ProviderElement<VatDeclarations> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  VatDeclarations create(Ref ref) {
+    return vatDeclarationCommand(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(VatDeclarations value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<VatDeclarations>(value),
+    );
+  }
+}
+
+String _$vatDeclarationCommandHash() =>
+    r'bba1e0dd08206b7dac42778bd96e02ebb01e7e59';
+
+/// #1449 — a recurring expense: what may still be ended, and what
+/// answering an occurrence at a different amount means.
+
+@ProviderFor(expenseScheduleCommand)
+final expenseScheduleCommandProvider = ExpenseScheduleCommandProvider._();
+
+/// #1449 — a recurring expense: what may still be ended, and what
+/// answering an occurrence at a different amount means.
+
+final class ExpenseScheduleCommandProvider
+    extends
+        $FunctionalProvider<
+          ExpenseSchedules,
+          ExpenseSchedules,
+          ExpenseSchedules
+        >
+    with $Provider<ExpenseSchedules> {
+  /// #1449 — a recurring expense: what may still be ended, and what
+  /// answering an occurrence at a different amount means.
+  ExpenseScheduleCommandProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'expenseScheduleCommandProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$expenseScheduleCommandHash();
+
+  @$internal
+  @override
+  $ProviderElement<ExpenseSchedules> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  ExpenseSchedules create(Ref ref) {
+    return expenseScheduleCommand(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ExpenseSchedules value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ExpenseSchedules>(value),
+    );
+  }
+}
+
+String _$expenseScheduleCommandHash() =>
+    r'4fa149d5b6e81a089d8ef6c7633fd04d8fdd0733';
+
 @ProviderFor(legalIdentity)
 final legalIdentityProvider = LegalIdentityProvider._();
 
