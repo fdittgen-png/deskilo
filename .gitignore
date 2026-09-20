@@ -6,6 +6,9 @@ build/
 .flutter-plugins-dependencies
 .fvm/
 coverage/
+# The quality report's rows and the journey benchmark's record (#1456):
+# evidence of ONE run, uploaded as a CI artifact, never committed.
+report/
 # #1558 — the push packages resolve their own dev dependencies when
 # their suite runs; only the app's lockfile is pinned.
 packages/*/pubspec.lock
