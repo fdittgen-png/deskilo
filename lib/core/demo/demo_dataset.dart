@@ -210,10 +210,10 @@ void seedDemoPlan(FakeFloorPlanRepository plan) {
   for (var i = 1; i < 4; i++) {
     plan.seats.add(
       Seat(
-        id: 'demo-seat-\$i',
+        id: 'demo-seat-$i',
         workspaceId: first.workspaceId,
         deskId: first.deskId,
-        name: 'A\${i + 1}',
+        name: 'A${i + 1}',
         x: first.x + i * 3,
         y: first.y,
         orientation: first.orientation,
@@ -371,6 +371,20 @@ List<String> validateDemoFixture({
     for (final m in workspaces.otherMembers) m.id,
   };
   final seatIds = {for (final s in plan.seats) s.id};
+  // #1566 — the set above is what a duplicate hides behind: two seats
+  // with one id read as one seat here and as one seat everywhere else
+  // (the occupancy map, the conflict predicate), so a booking on either
+  // fills both. Count before the set, and NAME the ids that collided.
+  if (seatIds.length != plan.seats.length) {
+    final seen = <String>{};
+    final duplicates = <String>{
+      for (final s in plan.seats)
+        if (!seen.add(s.id)) s.id,
+    };
+    problems.add('the plan has ${plan.seats.length} seats but '
+        '${seatIds.length} distinct ids — ${duplicates.join(', ')} '
+        'name more than one seat');
+  }
 
   for (final reservation in reservations.reservations) {
     if (!memberIds.contains(reservation.memberId)) {
