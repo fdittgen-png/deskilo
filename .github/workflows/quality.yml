@@ -171,11 +171,15 @@ jobs:
       # names the two the database half should add. Applying that is a
       # repository-settings change and belongs to whoever owns the
       # repository, so this reports the drift rather than failing over it.
+      #
+      # #1446: `--advisory` still exits 0, but prints and summarises
+      # `result=`. This token cannot read protection, so the honest answer
+      # is `unverified-access`: a green step is NOT settings evidence.
       - name: Branch protection drift (advisory)
         continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
-        run: bash scripts/branch_protection.sh verify
+        run: bash scripts/branch_protection.sh verify --advisory
 
       - name: Rows
         if: always()
