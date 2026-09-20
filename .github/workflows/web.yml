@@ -51,6 +51,10 @@ on:
       # build just as well; they were never a trigger.
       - pubspec.lock
       - assets/**
+      # #1446 R3 — and so can a path dependency. `packages/deskilo_push`
+      # is imported by lib/core/push/push_providers.dart: it is runtime
+      # code that `lib/**` does not cover.
+      - packages/**
 
 env:
   FLUTTER_VERSION: "3.44.9"

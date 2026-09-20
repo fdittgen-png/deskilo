@@ -13,12 +13,15 @@
 # So the required-check set lives HERE, in a file that gets reviewed in a
 # pull request, instead of in a console nobody can diff.
 #
-#   scripts/branch_protection.sh verify   # report drift, exit 1 if any
-#   scripts/branch_protection.sh apply    # idempotent PATCH
-#   scripts/branch_protection.sh show     # print the live configuration
+#   scripts/branch_protection.sh verify        # report drift, exit 1 if any
+#   scripts/branch_protection.sh apply-checks  # required checks only
+#   scripts/branch_protection.sh apply         # the whole protection object
+#   scripts/branch_protection.sh show          # print the live configuration
 #
-# `verify` is safe to run anywhere and is what CI should call. `apply`
-# mutates the repository and is a deliberate, manual act.
+# `verify` is safe to run anywhere and is what CI should call. The two
+# `apply` commands mutate the repository and are a deliberate, manual
+# act; prefer `apply-checks`, which changes the required-check list and
+# leaves every other protection setting alone.
 
 set -euo pipefail
 
@@ -42,11 +45,19 @@ TARGET_CHECKS=(
   # because the name IS the required context and a rename makes every
   # pull request unmergeable until protection is updated in lockstep.
   "analyze · l10n gate · test · coverage"
-  # The database half of the same workflow. NOT required on master yet:
-  # adding a context is a settings change, and `apply` is the command
-  # that makes it. Until somebody runs it, a red pgTAP run is visible
-  # and does not block — which is worth fixing and is not this script's
-  # decision to make.
+  # The database half of the same workflow, and the report that carries
+  # the complete result. #1446: these sat here unapplied, and on
+  # 2026-09-20 four pull requests — #1569, #1571, #1573, #1574 — merged
+  # into master with `quality · database` AND `quality · report` red (a
+  # stale `assets/instance/contract.txt` after migration 0255). A gate
+  # nobody has to pass reports; it does not protect.
+  #
+  # They are safe to require because `quality.yml` triggers on
+  # `pull_request:` with NO path filter, so both contexts report on every
+  # pull request — including one the classifier stands the database job
+  # down for, which reports `not_applicable` rather than staying silent.
+  # A required context that is sometimes not reported would wedge every
+  # such PR forever.
   "quality · database"
   "quality · report"
 )
@@ -76,12 +87,15 @@ usage() {
   cat <<'EOF'
 Branch protection as data.
 
-  scripts/branch_protection.sh verify   # report drift, exit 1 if any
-  scripts/branch_protection.sh apply    # idempotent PUT (mutates the repo)
-  scripts/branch_protection.sh show     # print the live configuration
+  scripts/branch_protection.sh verify        # report drift, exit 1 if any
+  scripts/branch_protection.sh apply-checks  # PATCH the required checks only
+  scripts/branch_protection.sh apply         # PUT the whole protection object
+  scripts/branch_protection.sh show          # print the live configuration
 
-verify is safe anywhere and is what CI calls (advisory). apply is a
-deliberate, manual act. REPO/BRANCH env vars override the defaults.
+verify is safe anywhere and is what CI calls (advisory). The apply
+commands are a deliberate, manual act; apply-checks changes the
+required-check list and nothing else, apply resets every unlisted
+setting. REPO/BRANCH env vars override the defaults.
 EOF
   exit 64
 }
@@ -164,6 +178,28 @@ verify() {
   return "$drift"
 }
 
+# The surgical half of `apply`: the required-check LIST, and nothing
+# else. `apply` below PUTs the whole protection object, which means every
+# field it does not name is reset — including `required_pull_request_reviews`
+# and `restrictions`, which it sends as null. That is correct for a
+# branch whose protection this file owns entirely, and wrong the moment
+# somebody adds a review rule in the console (#1446: "do not use it
+# blindly where existing protections must be retained").
+#
+# This PATCHes the dedicated required_status_checks sub-resource, so
+# reviews, restrictions, linear history, force-push and deletion settings
+# are untouched by construction rather than by remembering to list them.
+apply_checks() {
+  local contexts
+  contexts=$(printf '%s\n' "${TARGET_CHECKS[@]}" | jq -R . | jq -s .)
+  gh api -X PATCH "${API}/required_status_checks" --input - > /dev/null <<JSON
+{ "strict": ${STRICT}, "contexts": ${contexts} }
+JSON
+  echo "branch_protection: required checks set on ${REPO}@${BRANCH}:"
+  gh api "${API}/required_status_checks" --jq '.contexts[]' | sed 's/^/  /'
+  verify
+}
+
 apply() {
   local contexts
   contexts=$(printf '%s\n' "${TARGET_CHECKS[@]}" | jq -R . | jq -s .)
@@ -184,8 +220,9 @@ JSON
 }
 
 case "${1:-}" in
-  verify) verify ;;
-  apply)  apply ;;
-  show)   show ;;
-  *)      usage ;;
+  verify)       verify ;;
+  apply)        apply ;;
+  apply-checks) apply_checks ;;
+  show)         show ;;
+  *)            usage ;;
 esac

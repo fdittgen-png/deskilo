@@ -22,10 +22,21 @@
 # calls, and testing it against a fake proves the fake works. What tests
 # that layer is `supabase/tests/database/` (#1226), which runs the real
 # queries against a real database.
+#
+# #1446 R2 — a layer with no measured lines used to print a warning and
+# return, so an LCOV missing `domain/` and `presentation/` entirely
+# scored 100% and exited 0. A gate that passes when the evidence is
+# absent is not a gate: the absence IS the failure, because the run that
+# produced it was partial, the reporter truncated, or the layer moved.
 set -uo pipefail
 
 LCOV=${1:-coverage/lcov.info}
 [ -f "$LCOV" ] || { echo "::error::$LCOV not found — run flutter test --coverage first"; exit 1; }
+[ -s "$LCOV" ] || { echo "::error::$LCOV is empty — the coverage run produced no evidence"; exit 1; }
+if ! grep -q '^SF:' "$LCOV"; then
+  echo "::error::$LCOV has no SF: record — it is not an LCOV report, or it was truncated"
+  exit 1
+fi
 
 mkdir -p report
 fail=0
@@ -43,7 +54,10 @@ gate() {
   local name="$1" want="$2" floor="$3"
   read -r hit found <<< "$(read_group "$want")"
   if [ "${found:-0}" -eq 0 ]; then
-    echo "::warning::no lines matched $want — the layer moved or the run was partial"
+    echo "::error::no lines matched $want — $name has NO coverage evidence." \
+      "The layer moved, the run was partial, or the LCOV was truncated;" \
+      "either way its ${floor}% floor was not measured, so it is not met."
+    fail=1
     return
   fi
   local tenths=$(( hit * 1000 / found ))
@@ -71,6 +85,11 @@ gate core         'lib/core/'      75
 # number itself has not changed meaning — it is simply no longer the only
 # thing anyone looks at.
 read -r hit found <<< "$(read_group 'lib/')"
+if [ "${found:-0}" -eq 0 ]; then
+  echo "::error::no lines matched lib/ at all — the report measures nothing." \
+    "That is a reporting failure, not a 0% score."
+  exit 1
+fi
 tenths=$(( hit * 1000 / found ))
 line="total $(( tenths / 10 )).$(( tenths % 10 ))% ($hit/$found lines); domain $(awk '$1=="domain"{print $2"%"}' report/coverage-layers.txt)"
 echo "  $line"

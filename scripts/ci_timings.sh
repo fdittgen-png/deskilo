@@ -12,10 +12,16 @@ set -euo pipefail
 REPO="${REPO:-fdittgen-png/deskilo}"
 N=${1:-20}
 
-runs=$(gh api "repos/${REPO}/actions/workflows/quality.yml/runs?event=pull_request&status=completed&per_page=${N}" \
-  --jq '.workflow_runs[].id')
+sample=$(gh api "repos/${REPO}/actions/workflows/quality.yml/runs?event=pull_request&status=completed&per_page=${N}" \
+  --jq '.workflow_runs[] | "\(.id) \(.head_sha[0:9]) \(.conclusion) attempt \(.run_attempt)"')
+runs=$(printf '%s\n' "$sample" | cut -d' ' -f1)
 count=$(printf '%s\n' "$runs" | grep -c . || true)
 echo "sample: ${count} completed pull-request runs of quality.yml"
+# The run ids, so every number below can be re-derived rather than
+# believed (#1446 C0). Without them a table is a claim.
+echo
+echo "runs sampled (id, head, conclusion):"
+printf '%s\n' "$sample" | sed 's/^/  /'
 
 all=$(for id in $runs; do
   gh api "repos/${REPO}/actions/runs/${id}/jobs?per_page=10" --jq '
