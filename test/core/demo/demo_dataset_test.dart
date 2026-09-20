@@ -71,6 +71,57 @@ void main() {
         reason: 'two people with the same name is a confusing demo');
   });
 
+  // #1566 — the demo desk seats four, and four means four.
+  //
+  // `id: 'demo-seat-\$i'` gave the three added seats one literal id
+  // between them, so the checked-in booking seeded on the last seat
+  // covered all three: the plan drew four chairs over two resources,
+  // and no visitor could show that one seat is free while another is
+  // taken.
+  test('every seat on the demo plan is its own seat', () {
+    final fixture = DemoFixture.build();
+    final seats = fixture.floorPlan.seats;
+
+    expect(seats, hasLength(4));
+    expect(seats.map((s) => s.id).toSet(), hasLength(4),
+        reason: 'two seats with one id are one seat everywhere it counts');
+    expect(seats.map((s) => s.name).toSet(), hasLength(4),
+        reason: 'four chairs a visitor cannot tell apart');
+    for (final seat in seats) {
+      expect(seat.id, isNot(contains(r'$')));
+      expect(seat.name, isNot(contains(r'$')));
+    }
+    expect(seats.map((s) => s.name), containsAll(<String>['A1', 'A2']));
+  });
+
+  test('the checked-in booking occupies exactly one of them', () {
+    final fixture = DemoFixture.build();
+    final taken = fixture.reservations.reservations
+        .where((r) => r.status == ReservationStatus.checkedIn)
+        .map((r) => r.seatId)
+        .toSet();
+
+    expect(taken, hasLength(1));
+    final free = fixture.floorPlan.seats.where((s) => !taken.contains(s.id));
+    expect(free, hasLength(3), reason: 'somewhere left to sit');
+  });
+
+  test('a seat id used twice is named by the validator', () {
+    final workspaces = FakeWorkspaceRepository.withWorkspace();
+    final plan = FakeFloorPlanRepository()..seedSmallPlan();
+    seedDemoPeople(workspaces);
+    plan.seats.add(plan.seats.single.copyWith(name: 'A2'));
+
+    final problems = validateDemoFixture(
+      workspaces: workspaces,
+      plan: plan,
+      reservations: FakeReservationRepository(),
+      money: FakeMoneyRepository(),
+    );
+    expect(problems.join(' '), contains('distinct ids'));
+    expect(problems.join(' '), contains(plan.seats.first.id));
+  });
+
   test('a broken reference is caught before a visitor can open it', () {
     final workspaces = FakeWorkspaceRepository.withWorkspace();
     final plan = FakeFloorPlanRepository()..seedSmallPlan();

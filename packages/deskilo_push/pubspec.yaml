@@ -16,3 +16,10 @@ dependencies:
   # (docs/guides/push-setup.md).
   firebase_core: ^4.1.0
   firebase_messaging: ^16.0.1
+
+dev_dependencies:
+  # #1558 — this package has its own suite: the app's `test/` cannot
+  # import Firebase, because the F-Droid build swaps this package out
+  # before running it (#716).
+  flutter_test:
+    sdk: flutter

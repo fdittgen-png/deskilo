@@ -6,6 +6,9 @@ build/
 .flutter-plugins-dependencies
 .fvm/
 coverage/
+# #1558 — the push packages resolve their own dev dependencies when
+# their suite runs; only the app's lockfile is pinned.
+packages/*/pubspec.lock
 
 # IDE
 .idea/

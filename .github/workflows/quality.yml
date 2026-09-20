@@ -114,6 +114,15 @@ jobs:
           git diff --exit-code -- lib/l10n \
             || { echo "::error::lib/l10n drift — run 'dart run tool/build_arb.dart && flutter gen-l10n' and commit (HARD RULE #4)"; exit 1; }
 
+      # #1558 — the push transport's own suite. It cannot live in the
+      # app's test/ because the F-Droid job swaps this package for the
+      # Google-free twin before running that suite (#716), so a root
+      # test importing Firebase would not compile there. One step, or
+      # the connector's endpoint regression never runs.
+      - name: Tests of the push transport package
+        run: flutter test
+        working-directory: packages/deskilo_push
+
       - name: Analyze (lib + test)
         run: flutter analyze
 
