@@ -37,22 +37,31 @@ Future<T> cachedFetch<T>({
   required T Function(Object? payload) parse,
   bool Function(Object? payload)? cacheable,
 }) async {
+  // #1557 — every cache action of THIS read is bound to the session it
+  // starts in. `fetchRaw` is an await long enough for the person to sign
+  // out and somebody else to sign in; the scoped store resolves the
+  // principal when it is called, so the late answer would be written,
+  // invalidated or read back under whoever is signed in by then. The
+  // fence compares the session at write time and drops the operation
+  // when it has moved on. The caller still gets its own answer — only
+  // the cache is fenced.
+  final fenced = fenceRead(cache);
   if (mode == CacheReadMode.cacheFirst) {
-    final hit = await cache.get(key);
+    final hit = await fenced.get(key);
     if (hit != null && !hit.isExpired) return parse(hit.payload);
   }
   try {
     final raw = await fetchRaw();
     // The write must never delay the answer.
     if (cacheable == null || cacheable(raw)) {
-      unawaited(cache.put(key, raw, ttl: ttl));
+      unawaited(fenced.put(key, raw, ttl: ttl));
     } else {
-      unawaited(cache.invalidatePrefix(key));
+      unawaited(fenced.invalidatePrefix(key));
     }
     StaleReads.instance.fresh(key);
     return parse(raw);
   } catch (e, st) {
-    final stale = await cache.get(key);
+    final stale = await fenced.get(key);
     if (stale != null) {
       TraceLogger.instance.warn('cache', 'stale served for $key',
           error: e, stackTrace: st);

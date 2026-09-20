@@ -70,6 +70,25 @@ void main() {
     );
   });
 
+  test('signOutAndForget ends the cache session before it wipes', () {
+    // Textual, like the guard above, and worth exactly as much: it holds
+    // the ORDER of three lines in place and cannot see a runtime race.
+    // What proves the fence works is
+    // test/core/cache/cache_scope_test.dart, which runs it (#1557).
+    final source =
+        File('lib/features/auth/providers/sign_out.dart').readAsStringSync();
+    final fence = source.indexOf('CacheSession.instance.invalidate()');
+    final wipe = source.indexOf('wipeScope()');
+    expect(fence, greaterThan(-1), reason: 'the session fence is gone');
+    expect(
+      fence,
+      lessThan(wipe),
+      reason: 'a read already waiting on the server must be fenced BEFORE '
+          'the sweep, or its answer writes a new entry into the cache the '
+          'sweep has just emptied (#1557)',
+    );
+  });
+
   test('no repository builds a cache key by hand', () {
     // The scoping is a decorator so that a call site CANNOT forget it.
     // A repository that constructs a `FileCacheStore` of its own would

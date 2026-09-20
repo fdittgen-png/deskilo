@@ -259,6 +259,23 @@ class ScopedCacheStore implements CacheStore {
   @override
   Future<int> evictExpired() => _inner.evictExpired();
 
+  /// The scope as it stands RIGHT NOW — what a fence compares itself
+  /// against. Reading it is the same call as every other one makes.
+  String? get currentScope => _scope();
+
+  /// This store, pinned to the principal of this instant (#1557).
+  ///
+  /// Resolving the scope at every call is right for a SEQUENCE of calls
+  /// and wrong for one asynchronous read: a request that starts as A and
+  /// lands after B has signed in would be filed under B. A fence takes
+  /// the scope and the session generation as VALUES when the read
+  /// starts, and re-reads them at write time to compare — a mismatch
+  /// drops the operation instead of misfiling it. Nothing is captured at
+  /// construction: the fence still asks this store for the current scope
+  /// every time.
+  CacheStore fenced() =>
+      _FencedCacheStore(this, _scope(), CacheSession.instance.generation);
+
   /// Drops everything this principal cached, on this backend. The empty
   /// prefix is every key in the scope and no key outside it — which is
   /// why sign-out can call it without disturbing a second account whose
@@ -268,6 +285,78 @@ class ScopedCacheStore implements CacheStore {
   /// principal, the scope is null, and this becomes a no-op that looks
   /// like it worked.
   Future<void> wipeScope() => invalidatePrefix('');
+}
+
+/// A [ScopedCacheStore] bound to the session a read STARTED under
+/// (#1557). Outside that session every operation is dropped: no write
+/// lands in the next principal's scope, no `cacheable == false`
+/// invalidation reaches its entries, and none of its entries is served
+/// as the old read's stale fallback.
+class _FencedCacheStore implements CacheStore {
+  _FencedCacheStore(this._store, this._scope, this._generation);
+
+  final ScopedCacheStore _store;
+  final String? _scope;
+  final int _generation;
+
+  /// Signed out at the start is never current: that read had no scope to
+  /// come back to, and the scope it would find now belongs to somebody
+  /// else.
+  bool get _stillCurrent =>
+      _scope != null &&
+      _scope == _store.currentScope &&
+      _generation == CacheSession.instance.generation;
+
+  @override
+  Future<CacheEntry?> get(String key) async =>
+      _stillCurrent ? _store.get(key) : null;
+
+  @override
+  Future<void> put(String key, Object? payload,
+      {required Duration ttl}) async {
+    if (_stillCurrent) await _store.put(key, payload, ttl: ttl);
+  }
+
+  @override
+  Future<void> invalidatePrefix(String prefix) async {
+    if (_stillCurrent) await _store.invalidatePrefix(prefix);
+  }
+
+  /// Eviction is by age and names no scope, so it is never fenced.
+  @override
+  Future<int> evictExpired() => _store.evictExpired();
+}
+
+/// The store one asynchronous read should work through: fenced when the
+/// cache is scoped, itself otherwise — a store with no principal has no
+/// principal to change under it.
+CacheStore fenceRead(CacheStore cache) =>
+    cache is ScopedCacheStore ? cache.fenced() : cache;
+
+/// Which sign-in this is, counted (#1557).
+///
+/// A scope names a (backend, principal) pair, so A → signed out → A
+/// resolves to the very same scope: a read started before the sweep
+/// would compare equal and write its rows back into the cache the sweep
+/// had just emptied. The generation is what tells two sessions of the
+/// same person apart. `signOutAndForget` bumps it BEFORE the sweep, so
+/// everything already in flight is stale by the time the files go.
+///
+/// It only counts up, and nothing reads the number but a fence comparing
+/// it with its own.
+class CacheSession {
+  CacheSession();
+
+  static final CacheSession instance = CacheSession();
+
+  int _generation = 0;
+
+  int get generation => _generation;
+
+  /// Ends the current session as far as the cache is concerned: every
+  /// fence opened before this call is now stale, whatever the scope
+  /// resolves to afterwards.
+  void invalidate() => _generation++;
 }
 
 @Riverpod(keepAlive: true)
