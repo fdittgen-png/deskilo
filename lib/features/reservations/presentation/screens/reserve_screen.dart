@@ -120,10 +120,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
   @override
   bool isWorkspaceOpenAt(DateTime at) => _isWorkspaceOpenAt(at);
 
+  // #1301 S4, widened by #1580: waiting on two of the five reads a
+  // window is judged against let one be measured against invented hours.
   @override
-  bool get availabilityKnown =>
-      ref.read(openWeekdaysProvider).hasValue &&
-      ref.read(closureDaysProvider).hasValue;
+  bool get availabilityKnown => !bookingDataPending(ref);
 
   @override
   DateTime defaultEndFor(DateTime from) => _defaultEndFor(from);
