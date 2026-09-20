@@ -11,8 +11,11 @@
 // These tests are written against the behaviour, not the key format:
 // what matters is that B cannot read what A wrote, whatever the prefix
 // turns out to look like.
+import 'dart:async';
+
 import 'package:deskilo/core/cache/cache_scope.dart';
 import 'package:deskilo/core/cache/cache_store.dart';
+import 'package:deskilo/core/cache/cached_fetch.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
@@ -179,6 +182,230 @@ void main() {
           reason: 'a wipe with no principal cannot have wiped anything — '
               'the entry is still there, which is the bug the ordering '
               'in signOutAndForget avoids');
+    });
+  });
+
+  // #1557 — the account can change WHILE a read is waiting.
+  //
+  // Everything here is production code: the real `cachedFetch`, the real
+  // `ScopedCacheStore`, the real in-memory disk. A fake of any of them
+  // would only prove something about the fake.
+  //
+  // `test/lint/sign_out_test.dart` proves nothing about this: it compares
+  // the POSITION of two strings inside sign_out.dart, so it is green
+  // whatever the code does at runtime — it stayed green while this bug
+  // existed, and it stays green if the fence below is deleted again.
+  group('a read that outlives its session', () {
+    // A barrier for the write `cachedFetch` deliberately does not await,
+    // not a sleep: one turn of the event loop is everything an in-memory
+    // write needs, and every assertion below fails loudly if it were not
+    // enough.
+    Future<void> writeSettled() => Future<void>.delayed(Duration.zero);
+
+    test("A's late answer is not written under B", () async {
+      final disk = InMemoryCacheStore();
+      String? user = 'user-a';
+      final store = ScopedCacheStore(
+        disk,
+        () => cacheScope(backendUrl: backend, userId: user),
+      );
+
+      final started = Completer<void>();
+      final answer = Completer<Object?>();
+      final readAsA = cachedFetch<List<Object?>>(
+        cache: store,
+        key: 'levels:w1',
+        ttl: const Duration(minutes: 10),
+        mode: CacheReadMode.networkFirst,
+        fetchRaw: () {
+          started.complete();
+          return answer.future;
+        },
+        parse: (payload) => (payload! as List).cast<Object?>(),
+      );
+      await started.future;
+
+      // A signs out and B signs in while the server is still thinking —
+      // the order signOutAndForget uses.
+      CacheSession.instance.invalidate();
+      await store.wipeScope();
+      user = null;
+      user = 'user-b';
+
+      // The server answers A's question, with rows only A may see.
+      answer.complete([
+        {'id': 'a-only'},
+      ]);
+      expect(await readAsA, hasLength(1),
+          reason: 'the caller still gets the answer it asked for — only '
+              'the cache is fenced');
+      await writeSettled();
+
+      expect(disk.entries, isEmpty,
+          reason: "A's rows reached the disk after the sweep had emptied "
+              'it');
+      expect(await store.get('levels:w1'), isNull,
+          reason: "B must not be served A's rows");
+
+      // And B's own cache-first read still has to ask the server.
+      var asked = false;
+      final readAsB = await cachedFetch<List<Object?>>(
+        cache: store,
+        key: 'levels:w1',
+        ttl: const Duration(minutes: 10),
+        mode: CacheReadMode.cacheFirst,
+        fetchRaw: () async {
+          asked = true;
+          return <Object?>[];
+        },
+        parse: (payload) => (payload! as List).cast<Object?>(),
+      );
+      expect(asked, isTrue,
+          reason: 'a contaminated entry would have answered B without a '
+              'round trip');
+      expect(readAsB, isEmpty);
+    });
+
+    test('signing back in as the same person revives nothing', () async {
+      final disk = InMemoryCacheStore();
+      String? user = 'user-a';
+      final store = ScopedCacheStore(
+        disk,
+        () => cacheScope(backendUrl: backend, userId: user),
+      );
+
+      final started = Completer<void>();
+      final answer = Completer<Object?>();
+      final readAsA = cachedFetch<List<Object?>>(
+        cache: store,
+        key: 'levels:w1',
+        ttl: const Duration(minutes: 10),
+        mode: CacheReadMode.networkFirst,
+        fetchRaw: () {
+          started.complete();
+          return answer.future;
+        },
+        parse: (payload) => (payload! as List).cast<Object?>(),
+      );
+      await started.future;
+
+      CacheSession.instance.invalidate();
+      await store.wipeScope();
+      user = null;
+      user = 'user-a';
+
+      answer.complete([
+        {'id': 'l1'},
+      ]);
+      await readAsA;
+      await writeSettled();
+
+      expect(disk.entries, isEmpty,
+          reason: 'A → signed out → A resolves to the same scope string, '
+              'so only the session generation can tell the ended session '
+              'from the new one; the sweep asked for an empty cache and '
+              'must get one');
+    });
+
+    test("an expired read's refusal to cache spares B's entry", () async {
+      final disk = InMemoryCacheStore();
+      String? user = 'user-a';
+      final store = ScopedCacheStore(
+        disk,
+        () => cacheScope(backendUrl: backend, userId: user),
+      );
+
+      final started = Completer<void>();
+      final answer = Completer<Object?>();
+      final readAsA = cachedFetch<List<Object?>>(
+        cache: store,
+        key: 'levels:w1',
+        ttl: const Duration(minutes: 10),
+        mode: CacheReadMode.networkFirst,
+        fetchRaw: () {
+          started.complete();
+          return answer.future;
+        },
+        parse: (payload) => (payload! as List).cast<Object?>(),
+        // The #572 rule: an RLS-empty answer is never cached, and drops
+        // whatever is stored under the key.
+        cacheable: (payload) => (payload! as List).isNotEmpty,
+      );
+      await started.future;
+
+      CacheSession.instance.invalidate();
+      await store.wipeScope();
+      user = 'user-b';
+      await store.put('levels:w1', [
+        {'id': 'b-only'},
+      ], ttl: const Duration(minutes: 10));
+
+      answer.complete(<Object?>[]);
+      await readAsA;
+      await writeSettled();
+
+      expect(await store.get('levels:w1'), isNotNull,
+          reason: "a read that belonged to A must not delete B's entry "
+              'through the cacheable == false path');
+    });
+
+    test("a failed read of A's is not answered out of B's cache", () async {
+      final disk = InMemoryCacheStore();
+      String? user = 'user-a';
+      final store = ScopedCacheStore(
+        disk,
+        () => cacheScope(backendUrl: backend, userId: user),
+      );
+
+      final started = Completer<void>();
+      final answer = Completer<Object?>();
+      final readAsA = cachedFetch<List<Object?>>(
+        cache: store,
+        key: 'levels:w1',
+        ttl: const Duration(minutes: 10),
+        mode: CacheReadMode.networkFirst,
+        fetchRaw: () {
+          started.complete();
+          return answer.future;
+        },
+        parse: (payload) => (payload! as List).cast<Object?>(),
+      );
+      await started.future;
+
+      CacheSession.instance.invalidate();
+      await store.wipeScope();
+      user = 'user-b';
+      await store.put('levels:w1', [
+        {'id': 'b-only'},
+      ], ttl: const Duration(minutes: 10));
+
+      answer.completeError(StateError('offline'));
+      await expectLater(readAsA, throwsA(isA<StateError>()),
+          reason: "B's entry is not A's offline fallback: the read fails, "
+              "which is the truth — A's session is over");
+    });
+
+    test('the ordinary same-session read still caches', () async {
+      final disk = InMemoryCacheStore();
+      final store = ScopedCacheStore(
+        disk,
+        () => cacheScope(backendUrl: backend, userId: 'user-a'),
+      );
+
+      await cachedFetch<List<Object?>>(
+        cache: store,
+        key: 'levels:w1',
+        ttl: const Duration(minutes: 10),
+        mode: CacheReadMode.networkFirst,
+        fetchRaw: () async => [
+          {'id': 'l1'},
+        ],
+        parse: (payload) => (payload! as List).cast<Object?>(),
+      );
+      await writeSettled();
+
+      expect(await store.get('levels:w1'), isNotNull,
+          reason: 'the fence may only drop writes whose session ENDED');
     });
   });
 }

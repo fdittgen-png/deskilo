@@ -27,7 +27,15 @@ import 'auth_providers.dart';
 ///
 /// Every sign-out in the app goes through here, and
 /// `test/lint/sign_out_test.dart` is what keeps it that way.
+/// #1557 — the sweep deletes the files that exist NOW, and a read that
+/// started before it can still be waiting on the server. Ending the
+/// session generation first is what stops that answer from writing
+/// itself back afterwards: wiping harder cannot, because the entry it
+/// would create does not exist yet. It runs before the sweep, and the
+/// sweep before the sign-out, for the same reason in two steps — each
+/// fences what the next one can no longer reach.
 Future<void> signOutAndForget(WidgetRef ref) async {
+  CacheSession.instance.invalidate();
   final cache = ref.read(cacheStoreProvider);
   if (cache is ScopedCacheStore) {
     try {
