@@ -216,7 +216,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     // #1303 — the server's replay rule: one workspace per request id.
     final replayed = requestId == null ? null : createdByRequest[requestId];
     if (replayed != null) return replayed;
-    createRequests.add((requestId: requestId, templateId: templateId));
+    createRequests.add((requestId: requestId, templateId: templateId, withTwin: withTwin));
     final failure = createFailure;
     if (failure != null) {
       createFailure = null;
@@ -238,7 +238,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   }
 
   /// #1303 — every creation asked for, and the request ids it answered.
-  final createRequests = <({String? requestId, String? templateId})>[];
+  final createRequests = <({String? requestId, String? templateId, bool withTwin})>[];
   final createdByRequest = <String, String>{};
 
   /// #1303 — the next creation throws this once (a lost response, say).

@@ -261,9 +261,12 @@ void main() {
             '$onboardingBudget (#1247).');
   });
 
-  testWidgets('and the budgets are not vacuous — a path that completes in '
-      'ZERO taps would mean the test never exercised it', (tester) async {
-    expect(bookingBudget, greaterThan(0));
-    expect(decisionBudget, greaterThan(0));
-  });
+  // #1339 — a test asserting `bookingBudget > 0` against a constant
+  // declared eleven lines above it used to close this file. It could
+  // not fail for any change to the product, and it could not fail for a
+  // vacuous budget either: a budget of zero fails the real measurements
+  // above, which count two taps and one. What keeps those honest is
+  // that each asserts the journey ARRIVED — a reservation in the
+  // repository, an event that changed status — and they are the
+  // assertions that would go red if the path stopped completing.
 }
