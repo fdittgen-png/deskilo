@@ -14,7 +14,7 @@
 -- every assertion below would pass while proving nothing — which is
 -- exactly the trap a first RLS test falls into.
 begin;
-select plan(12);
+select plan(15);
 
 -- ---------------------------------------------------------------- seed
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
@@ -166,6 +166,44 @@ select is(
   (select count(*) from public.invoices
     where workspace_id = current_setting('deskilo.test.ws_a')::uuid)::int,
   0, 'and B cannot read A either — the isolation is symmetric');
+
+
+-- ── #1589: a definer function that answers without asking ────────────
+--
+-- Assertion 3 in `00_schema_guarantees.sql` proves no definer function
+-- is callable by `anon`. `effective_payment_terms` never was — a
+-- blanket sweep had taken that grant away without naming the function,
+-- which is why grepping the migrations for a `revoke` naming it found
+-- nothing and concluded the opposite.
+--
+-- The hole was one layer in: `authenticated` could call it with ANY
+-- member id, and the body asked nothing. A member of one workspace read
+-- another's negotiated terms — the discount, the late penalty, the
+-- recovery indemnity. Reproduced on the dev project before 0259 was
+-- written, and that is the shape this pins: not who may execute it, but
+-- what it says when the wrong person does.
+
+select pg_temp.be('u_a');
+
+select throws_matching(
+  format($$ select public.effective_payment_terms(%L) $$,
+         current_setting('deskilo.test.m_b')::uuid),
+  'payment conditions belong to the workspace',
+  'a member of one workspace cannot read another workspace''s payment '
+  'terms: the commercial terms of a space they have nothing to do with');
+
+select lives_ok(
+  format($$ select public.effective_payment_terms(%L) $$,
+         current_setting('deskilo.test.m_a')::uuid),
+  'while their own workspace still answers — the guard is tenancy, not '
+  'a new permission, so nothing an invoice surface renders changed');
+
+select throws_matching(
+  $$ select public.effective_payment_terms('00000000-0000-4000-8000-00000000dead') $$,
+  'payment conditions belong to the workspace',
+  'and an id that exists nowhere gets the SAME sentence: a different '
+  'answer for "no such member" would let a caller learn which member '
+  'ids are real');
 
 reset role;
 select * from finish();

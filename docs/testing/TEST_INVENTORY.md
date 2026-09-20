@@ -26,7 +26,7 @@ Nothing named and uncovered. The eleven gaps this table tracked are closed, and 
 | test/file | layer | invariant | tests | deterministic? | integration dependency | failure value | duplicate? | action | replacement |
 |---|---|---|---:|---|---|---|---|---|---|
 | `supabase/tests/database/00_schema_guarantees.sql` | database | #1226 — the first test that has ever executed this database. | 6 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1226, #992 | no | KEEP |  |
-| `supabase/tests/database/10_tenancy_isolation.sql` | database | #1226/#1227 — two workspaces, and neither can see the other. | 12 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1226, #1227 | no | KEEP |  |
+| `supabase/tests/database/10_tenancy_isolation.sql` | database | #1226/#1227 — two workspaces, and neither can see the other. | 15 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1226, #1227, #1589 | no | KEEP |  |
 | `supabase/tests/database/11_tenancy_matrix.sql` | database | #1227 — the matrix, generated from the table list. | 7 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1227, #1335 | no | KEEP |  |
 | `supabase/tests/database/12_storage_tenancy.sql` | database | 0215 — #1316: two workspaces, and neither can read the other's files. | 9 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1316, #1313 | no | KEEP |  |
 | `supabase/tests/database/13_matrix_policies.sql` | database | 0216 — #1321: a narrowed admin row narrows the rows. | 15 | yes | local Supabase (pgTAP) | a data-layer regression (RLS, invariant, idempotency) — #1321 | no | KEEP |  |
