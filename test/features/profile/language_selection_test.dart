@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Choosing a language in Settings switches the app immediately and
 // persists; System default clears it.

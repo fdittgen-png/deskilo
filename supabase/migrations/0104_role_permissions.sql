@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #513 — CENTRALIZED role management. One permission catalog, one
 -- matrix per workspace (role → granted permissions), one helper every
 -- gate consults:

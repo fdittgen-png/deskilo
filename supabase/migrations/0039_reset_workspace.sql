@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Owner-initiated workspace reset: wipe all transactions and the entire
 -- floor plan, keeping only the workspace configuration and its members.
 -- Applied to the hosted reference project on 2026-07-20.

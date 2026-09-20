@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1196 — the closed-day banner has to have somewhere to point.
 import 'package:deskilo/features/workspace/domain/closure_day.dart';

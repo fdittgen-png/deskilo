@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1137 — ONE conversion between a provider's major-unit decimal string
 // and the app's minor units, shared by the order and the webhooks.

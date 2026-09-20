@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1083 — the scan sheet's Check-out branch filtered the day's
 // reservations by member, status and end time, but NOT by seat, then

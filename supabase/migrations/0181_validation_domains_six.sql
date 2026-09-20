@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0181 — #982: six validation domains and an amount threshold.
 --
 -- Issuing an invoice, cancelling one, a refund, pausing or ending a

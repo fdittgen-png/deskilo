@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Partially paid is NOT closed (#504). A partial payment used to
 -- archive the invoice; the field rule is the opposite: the invoice
 -- STAYS OPEN — the remainder is still owed — until the outstanding

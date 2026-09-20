@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The WEB shell's navigation: a hamburger drawer instead of the bottom
 // bar and its raised Reserve button. A browser window has the width a

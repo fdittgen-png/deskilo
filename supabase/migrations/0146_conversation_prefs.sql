@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0146 — #821: a conversation the reader can PIN, MUTE, ARCHIVE and mark
 -- UNREAD again. Per participant, because they are one person's view of a
 -- shared thread: my pin is not your pin.

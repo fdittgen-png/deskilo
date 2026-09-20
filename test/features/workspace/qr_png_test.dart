@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // buildQrPng returns a decodable PNG of the requested size.
 import 'dart:ui' as ui;

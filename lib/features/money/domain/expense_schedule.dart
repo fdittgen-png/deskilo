@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// #767 — a scheduled (recurring) expense: internet, phone, electricity…
 /// Any member schedules it; the SCHEDULE goes through the validation

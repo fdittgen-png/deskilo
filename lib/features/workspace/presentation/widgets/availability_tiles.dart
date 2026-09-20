@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The reusable rows of the Availability screen, lifted out when that
 // screen outgrew its length budget (#649). Each one is a presentation

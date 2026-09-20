@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #947 — VAT groups: the group implies the EN 16931 category and the
 // outside-base rule; a bare percentage maps to a group by the same rule

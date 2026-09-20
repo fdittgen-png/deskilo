@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The Excel data export (#395): the workbook builder is pure — seed the
 // domain objects, assert the tabs and the rows. Headers are STABLE

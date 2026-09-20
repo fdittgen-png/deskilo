@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPDX-License-Identifier: 0BSD
+# SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # #1446 C0 — what a pull-request run of the quality workflow costs, from
 # the last N completed runs, by job and by step. Sample size and p50/p95

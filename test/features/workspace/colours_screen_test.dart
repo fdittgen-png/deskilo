@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1289 S2 — the screen where a space chooses its colour.
 import 'package:deskilo/features/workspace/presentation/screens/colours_screen.dart';

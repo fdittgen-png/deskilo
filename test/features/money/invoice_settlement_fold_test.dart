@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #831 — settled sources fold under their settlement: the settlement
 // carries the sources' lines tagged with their number; the sources

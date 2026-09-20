@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0187 — #998: the deployment started from either side.
 --
 -- The permission is the DIRECTION's, and the actor holds it on the side

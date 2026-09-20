@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #843 — the calendar carried eleven kinds and none of them was a
 // validation. A decision that released or refused an invoice, a refund

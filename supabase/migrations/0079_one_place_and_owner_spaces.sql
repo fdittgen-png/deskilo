@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- One place at a time, and whole-space booking the owner can use (#412).
 --
 -- Field evidence (2026-08-03, hosted): a member walked up and checked in

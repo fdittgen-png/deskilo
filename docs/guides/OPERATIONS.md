@@ -1,4 +1,4 @@
-<!-- SPDX-License-Identifier: 0BSD -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 # Running a DesKilo instance: backup, restore, rollback
 
 #1245. `RELEASING.md` covers shipping the app. This covers the thing an

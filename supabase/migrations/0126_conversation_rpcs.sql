@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0126 — the conversation write path and the list query (#687).
 --
 -- Every mutation is an RPC because the rules are not expressible as row

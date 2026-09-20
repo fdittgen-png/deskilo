@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- SPDX-License-Identifier: 0BSD
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later
 
   DesKilo Windows installer (WiX v5 authoring, built by the windows-msi
   workflow with the `wix` dotnet tool):

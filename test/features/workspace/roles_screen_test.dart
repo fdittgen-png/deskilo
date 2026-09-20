@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #513 — CENTRALIZED role management: one permission catalog, one
 // matrix per workspace. The owner always holds everything (locked

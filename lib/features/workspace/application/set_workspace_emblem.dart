@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1289 / #1449 — choosing an emblem is a decision: what the file is
 // allowed to become, and what to say when it may not.

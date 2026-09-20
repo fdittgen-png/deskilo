@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1002 — a design references the period's month and composes the
 // recurring position's wording itself: « Septembre 100 % ».

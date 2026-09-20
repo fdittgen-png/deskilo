@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #957 — one download per fiscal year: every invoice as PDF/A-3 with its
 // embedded e-invoice, the invoice register, the FEC and the audit trail.

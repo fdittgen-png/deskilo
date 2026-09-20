@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1182 — the trailing chevron means "this opens something". The rule is
 // in docs/AGENT_RULES.md; this pins the two rows the 2026-09-13 review

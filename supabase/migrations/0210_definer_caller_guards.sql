@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #1228 — three client-reachable SECURITY DEFINER functions never
 -- checked their caller.
 --

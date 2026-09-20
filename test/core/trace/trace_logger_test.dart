@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The trace log: a 500-entry newest-first buffer, one line per entry, a
 // rotating file, and an export that prefers the file.

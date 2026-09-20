@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #822 — the report editor as a full-screen designer: the page with
 // undo / redo, in-place editing in the element's own typography, the

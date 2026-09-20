@@ -229,7 +229,10 @@ ESP32 access point. Years of battery, tags for a few euro each: exactly
 this problem, already solved.
 
 **Its licence is CC BY-NC-SA 4.0 — non-commercial use only.** DesKilo is
-0BSD and runs a commercial coworking space. That is a legal blocker, not
+AGPL-3.0-or-later, and a non-commercial clause is incompatible with any
+free-software licence — it is not merely stricter, it is a different kind
+of term, and it would also put the spaces our users run on the wrong side
+of it. That is a legal blocker, not
 a technical one, and it is the kind that surfaces after fifty tags are
 already on the wall. For an association or private use, look hard at it;
 commercially, clear it with the authors first or stay away.

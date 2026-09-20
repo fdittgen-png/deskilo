@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Two advisor findings from applying 0071/0072 to the hosted project, both
 -- the same class of slip: a function that skipped the repo's own
 -- conventions. Neither is exploitable on its own — they are closed because

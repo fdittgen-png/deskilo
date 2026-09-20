@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1124 — a sign-out that does not drop the cache leaves the last
 // principal's rows on the disk for the next one.

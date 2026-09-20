@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'backend_settings.dart';
 
 /// #780 — `deskilo://server?url=…&key=…`, the one-scan way to hand a

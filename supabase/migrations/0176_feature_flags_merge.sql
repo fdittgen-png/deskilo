@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0176 — #963: a feature toggle writes ONE key, never a snapshot.
 --
 -- Three screens rewrote workspaces.feature_flags wholesale from their

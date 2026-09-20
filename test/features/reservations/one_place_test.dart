@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // One place at a time (#412, migration 0079): a member cannot hold two
 // ACTIVE reservations overlapping in time — the field bug was a walk-up

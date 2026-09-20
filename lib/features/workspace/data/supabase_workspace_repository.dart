@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 import '../../../core/validation/pending_validation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

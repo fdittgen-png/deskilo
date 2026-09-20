@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #873 — the CONSUMPTION REPORT's data: since #802 the participation is
 // billed ahead of its month and consumed during it (#833); at month end

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Statement.fromRpc reads every payload generation, defaulting the fields
 // older servers never sent (#170, 0041).

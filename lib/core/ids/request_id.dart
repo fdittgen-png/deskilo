@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:math';
 
 /// A fresh idempotency key, as a RFC 4122 version-4 UUID string.

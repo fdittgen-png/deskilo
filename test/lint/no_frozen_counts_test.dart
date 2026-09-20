@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1334 — the orientation documents may not carry a count of the
 // repository, because a count in prose is wrong by the next merge.

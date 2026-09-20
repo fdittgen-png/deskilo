@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1231 — a date that is printed, invoiced or chased is never computed
 // with `Duration(days: n)`.

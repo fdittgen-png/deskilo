@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #634 — ONE outside-hours policy with four mutually exclusive answers
 -- to ONE question: what may happen outside the configured working day?
 -- NOT YET applied to the hosted reference project — the orchestrator

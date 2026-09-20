@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #873 — the consumption report: a registered letter kind with default
 // bands that print what was paid ahead, what was consumed and the

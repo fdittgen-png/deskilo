@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #628 configurable SIMULTANEOUS reservations + #629 auto-validated
 -- delete requests for admins/owners. APPLIED to the hosted reference
 -- project and live-verified there.

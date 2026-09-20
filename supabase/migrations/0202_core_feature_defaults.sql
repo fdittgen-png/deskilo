@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0202 — #1063: a new workspace starts Core, not Everything.
 --
 -- The registry has a hundred flags. Every one of them is behind a

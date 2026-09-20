@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0183 — #992: system columns on every table.
 --
 -- Six technical columns the core relies on, on every table of the public

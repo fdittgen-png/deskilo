@@ -31,7 +31,7 @@ EVERYWHERE
 The same account on Android, iPhone, iPad, Mac, Windows and in a browser. A desk booked on a phone shows up on the wall tablet a second later.
 
 PRIVACY
-No tracking, no analytics, no advertising, no third-party SDK. The backend is Supabase in the EU, and you can host it yourself. DesKilo is open source under the 0BSD licence — everything above can be read in the code.
+No tracking, no analytics, no advertising, no third-party SDK. The backend is Supabase in the EU, and you can host it yourself. DesKilo is open source under the AGPL-3.0 licence — everything above can be read in the code.
 
 
 GDPR: EU-hosted data, no tracking or analytics, access limited by role and enforced on the server. Your rights are buttons in Settings → Privacy & data: who can see your data, who accessed it, export, erasure.

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Invoice positions are DERIVED, never typed (field decision): the app
 -- already tracks the subscription, consumption, supplements, services
 -- and packages — the invoice is the payable summary of exactly that

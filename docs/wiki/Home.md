@@ -47,4 +47,4 @@ All five user guides are illustrated with real app screenshots (French UI — ev
 
 ## License
 
-0BSD (BSD Zero Clause) © 2026 Florian DITTGEN. Sibling project of [Sparkilo / tankstellen](https://github.com/fdittgen-png/tankstellen).
+AGPL-3.0-or-later © 2026 Florian DITTGEN — free for associations, collectives and individuals; a company that modifies it publishes its changes or buys a commercial licence (ADR 0031). Sibling project of [Sparkilo / tankstellen](https://github.com/fdittgen-png/tankstellen).

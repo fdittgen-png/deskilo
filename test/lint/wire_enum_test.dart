@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1148 — `Enum.values.byName` throws on a value it does not know, and a
 // throw inside a row mapper empties the whole list on an older client.

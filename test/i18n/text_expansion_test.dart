@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Text-expansion survival: the main surfaces render in every launch
 // locale at phone width without a RenderFlex overflow.

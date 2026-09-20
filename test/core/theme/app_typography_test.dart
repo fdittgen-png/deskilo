@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1304 S2 — each role IS a TextTheme style, so it inherits the theme's
 // tuning and the reader's text scale; no role invents a size.

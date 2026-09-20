@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- New-member validation. Applied to the hosted reference project on
 -- 2026-07-22 (an interim draft named 0051_single_use_invites_member_
 -- validation carried parts of this earlier the same day and was

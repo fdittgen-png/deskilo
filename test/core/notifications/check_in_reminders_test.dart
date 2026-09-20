@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Check-in reminders fire 15 minutes before my own upcoming reserved
 // bookings only, sorted by time.

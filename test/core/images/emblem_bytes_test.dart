@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1289 — what happens to a file before it becomes a space's emblem.
 import 'dart:typed_data';

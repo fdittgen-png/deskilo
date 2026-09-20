@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // #587 — owner-only delete of plan objects despite past reservations:
 // the confirm warning announces the audit substitution while the
 // planObjectDelete flag is on, degrades to the historic wording off;

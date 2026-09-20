@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/features/plan/domain/accessory.dart';
 import 'package:deskilo/features/plan/domain/accessory_repository.dart';
 

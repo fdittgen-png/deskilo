@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0172 — #954: one representation of the VAT rate on every invoice line.
 --
 -- Older snapshots carried the rate three ways — a number, a string, or

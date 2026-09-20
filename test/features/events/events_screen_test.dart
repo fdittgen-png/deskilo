@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The events feed narrates activity and offers a pending decision only to
 // someone allowed to take it (#107, #434).

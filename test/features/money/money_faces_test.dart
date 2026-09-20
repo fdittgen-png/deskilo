@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #720 — the Finances tab as four faces: Statement, Payments, Invoices,
 // Documents. Each face shows ITS cards and ITS actions and nothing of

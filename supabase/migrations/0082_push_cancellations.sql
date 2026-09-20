@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Push for cancellations/overrules (#424). The 0012 pipeline pushes only
 -- PENDING confirmations; an admin overruling a reservation (0079) left
 -- the displaced member unnotified-by-push. Two obstacles fixed here:

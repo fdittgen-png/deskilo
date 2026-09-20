@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #104 — the time scroller: a future window books a reservation, Now
 // returns to live, invalid ranges are rejected.

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// The workspace's LEGAL INVOICE MENTIONS (#480) — the free-text lines a
 /// compliant professional invoice must (or may) print beyond the 0069

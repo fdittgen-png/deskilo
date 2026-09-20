@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// #985 — the counterparty dimension of VAT: who the buyer is for tax.
 /// The ERP "business posting group". Stored on `members.vat_treatment`

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Bundles everything a NEW instance needs into one asset the app (and
 // the CLI) can install through the Supabase Management API (#977):

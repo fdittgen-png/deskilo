@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Deleting a PAST or CHECKED-IN reservation is a REQUEST, not an action
 -- (#492): the member asks, an owner/admin decides — was the check-in
 -- forgotten (keep it, it was attended) or was the booking simply unused

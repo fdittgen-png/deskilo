@@ -30,4 +30,6 @@ Feature-first: `lib/features/<name>/{data,domain,presentation,providers}` with a
 
 ## License
 
-By contributing you agree your contributions are licensed under the [0BSD License](LICENSE). Add the SPDX header `// SPDX-License-Identifier: 0BSD` to new source files.
+By contributing you agree your contributions are licensed under the [GNU AGPL-3.0-or-later](LICENSE), and you sign off each commit with a [Developer Certificate of Origin](https://developercertificate.org/) line — `Signed-off-by: Your Name <you@example.com>`, which `git commit -s` adds. Add the SPDX header `// SPDX-License-Identifier: AGPL-3.0-or-later` to new source files.
+
+The sign-off matters because of the dual licence: a commercial exception can only be sold by the holder of the copyright, so a contribution whose provenance is unrecorded cannot be included in one. See [ADR 0031](docs/decisions/0031-agpl-with-a-commercial-exception.md).

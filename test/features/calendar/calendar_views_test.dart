@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #818 — the Calendar tab as three views over the hub's feed: the
 // AGENDA (from today, thirty days), the WEEK (a strip of pills) and the

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/widgets.dart';
 
 /// Where a term shows up, so the editor can browse by surface rather

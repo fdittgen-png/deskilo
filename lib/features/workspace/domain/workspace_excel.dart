@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/files/xlsx.dart';
 import '../../events/domain/workspace_event.dart';
 import '../../money/domain/invoice.dart';

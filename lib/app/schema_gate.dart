@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../core/instance/schema_compatibility.dart';
 
 /// #1312 — where a server older than this app sends every route.

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #713 — the format picker speaks the reader's language, not BCP-47.
 import 'package:deskilo/core/i18n/app_format.dart';

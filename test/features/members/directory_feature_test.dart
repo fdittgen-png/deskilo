@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Hierarchy pass: the member directory is feature-gated (default ON) —
 // off removes the tab; whatsappIntegration strips every WhatsApp

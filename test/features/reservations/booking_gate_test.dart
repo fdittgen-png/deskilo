@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #814 — ONE booking gate on the client: the availability parameters
 // asked BEFORE a window is offered, on every surface — the plan tap,

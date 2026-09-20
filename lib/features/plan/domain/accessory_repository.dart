@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'accessory.dart';
 
 /// Pure-Dart accessory-catalog boundary (#166, epic #163). Writes are

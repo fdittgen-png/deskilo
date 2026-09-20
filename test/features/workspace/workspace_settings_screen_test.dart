@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Workspace settings seed from the workspace and save identity, languages,
 // invitation templates and currency (#486, #711).

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1137 / #1144 — the payment functions convert money ONE way and verify
 // a Stripe signature the way Stripe does. Deno is not in the Flutter CI,

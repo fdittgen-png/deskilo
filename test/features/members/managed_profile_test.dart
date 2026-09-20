@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #887 — a managed profile from the admin's side: created with THE
 // identity form, shown as managed on its page, handed over through a

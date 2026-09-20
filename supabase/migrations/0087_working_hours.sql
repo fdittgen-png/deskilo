@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Configurable working hours + the 'hours' booking granularity (#446).
 --
 -- booking_rules learns five owner-set keys (WorkHours on the client):

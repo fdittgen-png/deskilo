@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #925 — one number series of a workspace: how a journal's documents are
 // numbered. The NUMBERS are drawn in the database (`next_document_number`,

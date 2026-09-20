@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1061 slice two — the statement builder's golden, written by the
 // PRE-seam `statementReportData(context, …)` from this fixture. See

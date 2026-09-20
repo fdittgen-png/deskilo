@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // VAT management (0072). The whole feature rests on ONE decision: prices
 // in DesKilo are VAT-inclusive, so turning VAT on never changes what a

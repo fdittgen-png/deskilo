@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPDX-License-Identifier: 0BSD
+# SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # #1244 — renders the quality table from the rows each discipline job
 # wrote, and IS the gate: a red row fails the run, and the summary above

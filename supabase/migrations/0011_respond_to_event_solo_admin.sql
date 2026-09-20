@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- DesKilo #107: solo-admin escape hatch, applied 2026-07-08. Expenses /
 -- self-recorded payments are decided by ANOTHER admin (spec §9
 -- no-self-approval) — but when the actor is the only active admin in the

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0203 — the platform-owner list shows a twin pair as two workspaces.
 --
 -- #987 taught the Profiles screen that a dev and a prod with the same

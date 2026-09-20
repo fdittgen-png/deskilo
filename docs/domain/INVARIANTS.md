@@ -1,4 +1,4 @@
-<!-- SPDX-License-Identifier: 0BSD -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 # The business invariants, and where each one is executed
 
 #1248 asked for the invariants to be written down and executed rather

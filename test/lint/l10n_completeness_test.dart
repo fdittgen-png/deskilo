@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Every label exists in every language (#412 follow-up, owner rule):
 // the aggregated ARBs must carry IDENTICAL key sets across all five

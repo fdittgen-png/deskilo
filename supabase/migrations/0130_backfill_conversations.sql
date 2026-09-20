@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0130 — every message that predates 0125 gets the conversation it
 -- always belonged to (#702).
 --

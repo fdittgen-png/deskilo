@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Members & plans. Since the UX pass, every per-member action lives in
 // the row's MANAGEMENT SHEET (tap the row → labeled tiles) instead of a

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #925 — one number-sequence framework, per workspace, generated in the
 // database. The Dart side is the owner's view of a series; the numbers

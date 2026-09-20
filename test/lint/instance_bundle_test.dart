@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #977 — the instance bundle the wizard installs must never lag the
 // migrations or the functions: a new migration without a rebuilt bundle

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0128 — a group name is unique within its workspace (#694).
 --
 -- Two groups called "test" in one list are two rows nobody can tell

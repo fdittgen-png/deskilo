@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #767 — scheduled (recurring) expenses. The schedule is created from
 // the Payments face and goes to the validators; a presented occurrence

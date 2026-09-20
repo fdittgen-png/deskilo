@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1016/#1018 — the anchor is one identity for the help symbol, the guide
 // heading and the screenshot. This is what keeps the three in step, and

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #841 — the trail says who decided, in what order, and when. It is the
 // same widget on an alert and on the document that raised it, so the two

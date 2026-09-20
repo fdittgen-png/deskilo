@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0194 — #1079: three definer helpers stop answering strangers.
 --
 -- `export_floor_plan`, `report_image_names` and `document_site_for_member`

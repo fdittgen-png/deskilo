@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1339 — the screens hold at a narrow phone, at twice the text size,
 // and with animation switched off.

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPDX-License-Identifier: 0BSD
+# SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # #1244 — coverage, by layer, because the repository-wide percentage was
 # the weakest measure in the quality report and the only one gated.

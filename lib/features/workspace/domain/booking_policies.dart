@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/theme/seat_legend_profile.dart';
 
 export '../../../core/theme/seat_legend_profile.dart'

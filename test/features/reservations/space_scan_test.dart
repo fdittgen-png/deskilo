@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Space QR codes (field request): every desk, office and level carries a
 // printable QR; scanning it (camera or typed) opens the space sheet with

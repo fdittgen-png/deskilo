@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #872 — the one wizard chrome every guided invoicing flow runs in:
 // numbered steps, Back disabled on the first, Next until the last, then

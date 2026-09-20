@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'invoice_ubl.dart' show isEuCountry;
 
 /// How a structured invoice TRAVELS — the question an XML export leaves

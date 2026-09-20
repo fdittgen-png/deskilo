@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The hub's filter row: "All", one chip per kind, and the member the
 // timeline is about. It lived inside calendar_hub_screen.dart until #843

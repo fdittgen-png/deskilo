@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #164 — the workspace XML codec round-trips without ids or invite codes,
 // and rejects what it cannot read (#180).

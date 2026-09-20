@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- FCM-only push (#426/#428, ADR 0011 — the F-Droid-era UnifiedPush leg
 -- is fully removed). Three pieces:
 --

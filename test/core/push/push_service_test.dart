@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Push registration follows the transport's availability, and each message
 // kind raises its own localized notification.

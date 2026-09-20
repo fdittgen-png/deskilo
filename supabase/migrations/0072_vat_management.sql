@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- VAT. Until now the app could only say "no VAT charged" — an EN 16931
 -- export from a VAT-registered workspace was refused outright, because
 -- declaring a zero a seller does owe is a false statement.

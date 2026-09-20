@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #957 — the per-year archive bundle: its name, its register, its zip.
 import 'dart:convert';

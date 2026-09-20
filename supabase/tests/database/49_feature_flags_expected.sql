@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #1329 — a feature change is written against the state it was decided
 -- on. `set_feature_flags` (0245) takes the preview's read-set and refuses,

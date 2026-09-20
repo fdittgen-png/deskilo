@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// Report-language resolution (#496): which language a DOCUMENT is
 /// printed in for a given reader.

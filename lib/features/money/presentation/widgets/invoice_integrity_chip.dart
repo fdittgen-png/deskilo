@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #956 — one word on an invoice: whether its fingerprint still matches
 // the document. 'unverifiable' is a row signed before the formula was

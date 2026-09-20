@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0207 — #1154: `deploying_touches()` has had no reader since 0197.
 --
 -- 0186 introduced it so the deployment's definer functions could reach

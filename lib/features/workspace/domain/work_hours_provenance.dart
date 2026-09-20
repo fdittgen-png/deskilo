@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1307 S4 — where the working day came from (`work_hours_provenance`,
 // 0244): the product's defaults, a template, or this workspace.

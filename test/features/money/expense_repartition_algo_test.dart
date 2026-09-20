@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #828 — the repartition arithmetic: every method's weights, the exact
 // sum, the leftover cents, zero weights, negative amounts.

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../reservations/domain/space_code.dart';
 
 /// Reference tokens inside a member note's body (field request): a

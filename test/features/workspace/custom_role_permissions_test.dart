@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1287 — the client's half of the union that 0247 added to
 // `has_permission_raw`. The rule is the same on both sides and stated

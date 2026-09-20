@@ -1,5 +1,5 @@
 import '../data/system_columns.dart';
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// The kinds of dated fact the calendar hub shows (#718). Wire names
 /// match `calendar_items()` (0133) one for one.

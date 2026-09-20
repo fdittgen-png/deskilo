@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Invoice payment reminders (field request). The invoice document
 -- stays IMMUTABLE — reminders are collection metadata beside it, one
 -- row per reminder sent, so the archive can show "reminded ×N · date".

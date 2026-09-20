@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #812 — the journey of an invoice: Issued → Payment → Confirmation →
 // Closed, ONE derivation behind the issuers' hub, the member's Invoices

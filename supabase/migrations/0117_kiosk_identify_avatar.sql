@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #616 — the kiosk receipt shows the member's own photo: kiosk_identify
 -- v2 returns the subject's user_id and whether their profile carries an
 -- avatar. The photo itself downloads through the 0038 avatars bucket,

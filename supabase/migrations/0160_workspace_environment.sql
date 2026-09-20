@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0160 — #917: a workspace says whether it is real.
 --
 -- Nothing distinguished a space used for trying things out from a space

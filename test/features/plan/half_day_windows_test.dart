@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #201/#446: the canonical half-day windows the plan header offers
 // under half-day granularity are the configured WORKING DAY (WorkHours,

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 // #667 — CupertinoPageTransitionsBuilder is no longer re-exported by
 // material.dart as of Flutter 3.44; it lives in the cupertino library.

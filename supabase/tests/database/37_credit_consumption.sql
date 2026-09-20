@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #1279 S3 — beyond the month's entitlement a booking spends carnets;
 -- cancelling gives them back; nothing is charged twice.

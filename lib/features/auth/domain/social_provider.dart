@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// The social sign-in providers DesKilo offers next to e-mail+password.
 /// Browser-based Supabase OAuth, no vendor SDK — the F-Droid flavor stays

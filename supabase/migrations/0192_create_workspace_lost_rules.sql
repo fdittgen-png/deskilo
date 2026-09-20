@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0192 — #1092: create_workspace regains the two rules 0185 dropped.
 --
 -- 0185 re-created create_workspace FROM SCRATCH to add p_environment and

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0145 — #818: two more dated facts for the calendar hub.
 --
 --  * 'due'       — the payment term of an OPEN invoice: issued_at plus the

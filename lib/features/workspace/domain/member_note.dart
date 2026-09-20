@@ -1,5 +1,5 @@
 import '../../../core/data/system_columns.dart';
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// A short member-to-member notification (#456, migration 0089).
 /// [toMemberId] null = broadcast to all admins incl. the owner.

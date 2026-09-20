@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0182 — #985: VAT like an ERP — dated rate versions, one tax point per
 -- line, and a counterparty dimension.
 --

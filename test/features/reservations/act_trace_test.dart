@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #791 — two field reports arrived with an EMPTY developer trace: a map
 // check-in that "failed" while the seat QR worked, and an invite QR the

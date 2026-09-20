@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Invoice correction (field request): a wrong invoice can be tagged
 -- ERRONEOUS (voided) and re-issued as a REPLACEMENT that references the
 -- invoice it replaces. Content stays immutable: the trigger now permits

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #573/#574 (migration 0113): a check-in RIDES a reservation. Day-based
 // walk-up check-ins book the canonical SLOT (arrive at 10:00, "morning"

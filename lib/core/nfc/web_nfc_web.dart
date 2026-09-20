@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Web NFC (#604): Chrome/Edge on ANDROID expose NDEFReader over HTTPS —
 // the one browser family that can read an RFID/NFC tag, which is enough

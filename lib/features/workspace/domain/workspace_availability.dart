@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Pure closed-day derivation (#186) — the client-side twin of the
 // `assert_workspace_open` guard (migration 0013): a day is open when its

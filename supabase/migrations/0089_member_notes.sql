@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Member-to-member notifications (#456): any active member can send a
 -- short note to another member; admins (and the owner) can broadcast to
 -- ALL admins including the owner. Delivery: the trigger pings the

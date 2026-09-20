@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #871 — Finances → Invoices hands off to invoice MANAGEMENT the way
 // every other tab does: a management row (icon, verb, chevron), not a

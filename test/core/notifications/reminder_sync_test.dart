@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // #1094 — the shell schedules check-in reminders best-effort, and
 // best-effort still has to be OBSERVABLE. The call was unawaited with no
 // catch, so a failure completed into nothing: the member simply never

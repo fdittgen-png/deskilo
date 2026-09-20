@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Route transitions of the motion pass (#611): the theme carries
 // fade-forwards transitions for Android/desktop and keeps iOS's native

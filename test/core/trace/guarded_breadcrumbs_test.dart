@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1012 — every guarded action leaves its start and its end in the
 // trace: a button that "does nothing" shows a start with no end.

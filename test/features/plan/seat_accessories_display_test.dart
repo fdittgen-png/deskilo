@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The booking sheet lists a seat's active accessories with their
 // supplements, and nothing when there are none.

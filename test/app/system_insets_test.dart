@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1008 — with a system navigation bar at the bottom, nothing of the app
 // sits under it: not the shell's own bar, not a sheet's buttons.

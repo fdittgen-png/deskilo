@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
 -- 0255 (#1560) — defining a role is the owner's, through every door.

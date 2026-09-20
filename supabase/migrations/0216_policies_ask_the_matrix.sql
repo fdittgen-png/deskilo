@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #1321 — ten row-level policies stop asking "admin or owner" and ask
 -- the role matrix (#513, #982).

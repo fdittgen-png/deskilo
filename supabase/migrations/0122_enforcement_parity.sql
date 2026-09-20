@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #637 — ONE booking contract: the past-day and walk-up-today guards
 -- reach the kiosk. NOT YET applied to the hosted reference project —
 -- the orchestrator applies it after review.

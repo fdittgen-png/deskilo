@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #662 — sign in by scanning an RFID badge: the tag IDENTIFIES, a PIN
 -- CONFIRMS. Two steps behind one form; the sequencing is what lets the
 -- PIN belong to the user rather than to a workspace, because sign-in

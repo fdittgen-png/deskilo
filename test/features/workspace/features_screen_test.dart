@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The Features screen: a switch per manifest feature; a toggle writes only
 // its key and, switching on, its parent chain (#963).

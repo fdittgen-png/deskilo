@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/calendar/calendar_item.dart';
 import '../../../core/data/system_columns.dart';
 

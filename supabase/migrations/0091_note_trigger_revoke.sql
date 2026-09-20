@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Advisor follow-up to 0089 (#456): notify_member_note is a TRIGGER
 -- function — nothing but the member_notes insert trigger may run it.
 -- 0089 forgot the revoke the other trigger functions carry.

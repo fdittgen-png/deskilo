@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1305 S3 — a read answered from the stale tier is remembered until the
 // network answers again, so a screen can tell live data from saved data.

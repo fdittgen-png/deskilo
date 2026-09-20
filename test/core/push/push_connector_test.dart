@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The push transport this build ships (#716) answers "unavailable" under
 // flutter_test in BOTH flavours: the store package because the committed

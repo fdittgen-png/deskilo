@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// How the workspace stands towards VAT — the one fact EN 16931 cannot
 /// guess and cannot omit (BT-151, the invoice's tax category).

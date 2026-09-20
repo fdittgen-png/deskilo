@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #934 — the workspace status as the database returns it, the net the
 // screen and the report agree on, and the repartition rule's round trip.

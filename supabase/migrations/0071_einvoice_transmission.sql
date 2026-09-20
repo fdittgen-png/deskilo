@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Direct submission: the app stops handing out a file and SENDS it.
 --
 -- France has no free public channel any more (the PPF was cut back to a

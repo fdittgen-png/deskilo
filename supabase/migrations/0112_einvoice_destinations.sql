@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #568 — an e-invoice has TWO destinations, not one: the government
 -- platform (clearance / plateforme agréée — what 0071 configured) and the
 -- customer's own delivery service (a Peppol access point, the customer's

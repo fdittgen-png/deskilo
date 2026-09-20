@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The app boots: a signed-in user lands in the shell on Messages, a
 // signed-out one on the auth screen.

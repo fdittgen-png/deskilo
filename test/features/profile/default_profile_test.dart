@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Default profile (#322): with several profiles the user checks ONE as
 // the start-up default — the app opens on it at every start, while

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0198 — #1089: a held matrix change carries the DELTA, not a snapshot.
 --
 -- 0195 gave the role matrix a single-permission writer, which fixes the

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0189 — #1010: the payment instructions travel, and so do the report
 -- images.
 --

@@ -1,4 +1,4 @@
-<!-- SPDX-License-Identifier: 0BSD -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 
 # DesKilo — complete project reference
 
@@ -36,7 +36,7 @@ A free, privacy-first coworking community app: **visual desk booking plus the co
 
 **Repository:** `github.com/fdittgen-png/deskilo` (public, created 2026-07-07)
 **Application ID / bundle ID:** `de.deskilo.app`
-**License:** 0BSD (BSD Zero Clause) © 2026 Florian DITTGEN — ADR 0009, superseding MIT (ADR 0004)
+**License:** AGPL-3.0-or-later © 2026 Florian DITTGEN — ADR 0031, superseding 0BSD (ADR 0009) and MIT (ADR 0004). An app-store exception keeps the iOS build lawful; a commercial licence exists for a company that would rather not publish its changes; the name is a trademark.
 **Version:** `0.1.0+1` in `pubspec.yaml` (CI overrides the build number at publish time)
 
 ### The leitmotiv
@@ -632,7 +632,7 @@ The methodology is inherited 1:1 from tankstellen/Sparkilo. `docs/AGENT_RULES.md
 - Dates, numbers, currency: locale-aware formatting only (`intl`).
 - All timestamps stored UTC; recurring series recur in workspace-local time.
 - No GMS, no Firebase, no third-party tracking, no GPL dependencies.
-- **SPDX header** `// SPDX-License-Identifier: 0BSD` in every new source file.
+- **SPDX header** `// SPDX-License-Identifier: AGPL-3.0-or-later` in every new source file.
 
 **Lint configuration** (`analysis_options.yaml`): `package:flutter_lints/flutter.yaml` + the `riverpod_lint` analyzer plugin, plus `prefer_const_constructors`, `prefer_const_declarations`, `avoid_print`, `require_trailing_commas`. `flutter analyze` runs over `lib` **and** `test` with **zero tolerance**.
 

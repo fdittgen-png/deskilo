@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #825 — one page per member: identity and presence spelled out, the
 // "right now" sentence and the upcoming list, quick actions by right,

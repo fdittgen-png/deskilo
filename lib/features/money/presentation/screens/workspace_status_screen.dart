@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #934 — the treasurer's view: what the workspace invoiced, collected,
 // reimbursed and shared out over a range of months, then member by

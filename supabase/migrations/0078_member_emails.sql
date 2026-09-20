@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Member emails for the members lists (#410). Emails live only in
 -- auth.users; profiles deliberately exposes NO contact data to
 -- co-members (WhatsApp is opt-in). So emails are an ADMIN surface: a

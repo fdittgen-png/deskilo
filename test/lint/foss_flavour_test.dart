@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #716 — the F-Droid flavour stays buildable and Google-free, and the
 // store flavour stays exactly what it was.

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Seat avatars show whether the occupant is checked in (a check badge) and
 // online (a green presence dot) — a glance answers "who's actually here".

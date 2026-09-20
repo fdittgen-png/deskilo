@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0196 — #1120: a new workspace no longer starts empty.
 --
 -- A workspace created through onboarding had 0 levels, 0 offices, 0

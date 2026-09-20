@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #802 — the subscription is invoiced BEFORE the month it pays for, and
 -- what the month actually cost is invoiced after it.
 --

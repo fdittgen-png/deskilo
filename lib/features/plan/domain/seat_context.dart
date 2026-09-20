@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// Where a reservation target lives on the floor plan (#182): the level,
 /// office, desk and seat display names of one seat — or level + office only

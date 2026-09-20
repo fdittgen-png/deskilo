@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #1405 — member_statement initialized its reservation cache from
 -- itself, so every accessory, whole-space and hour charge read zero.

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The VAT rate editor (0072) — owner-only. A rate is a fact about the
 // business, so the screen offers the country's usual ones as a starting

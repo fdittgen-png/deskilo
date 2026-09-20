@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Push-driven freshness (#413). The supabase_realtime publication was
 -- EMPTY — no table was ever published, so no change was ever pushed to
 -- any client: adding a member needed an app restart, and a settings

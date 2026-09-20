@@ -135,7 +135,7 @@ review comment:
 defaults (`lib/core/backend/backend_config.dart`) point at the author's
 hosted deployment, so a user who installs and signs in does reach the
 developer's instance. The server is free software in this repository
-(0BSD: SQL migrations, RLS policies and edge functions under `supabase/`),
+(AGPL-3.0-or-later: SQL migrations, RLS policies and edge functions under `supabase/`),
 and since #780 a community points the *installed* build at its own
 Supabase from Settings → Advanced → Server — but the default endpoint is
 what F-Droid ships, hence the disclosure. It can be revisited if a build

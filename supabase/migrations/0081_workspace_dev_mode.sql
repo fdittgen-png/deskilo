@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Workspace-wide developer mode (#419, owner directive): "the developer
 -- mode is applicable on the entire workspace for all users; it can be
 -- set by the owner or admins." Until now it was a device-local prefs

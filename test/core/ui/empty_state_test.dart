@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #209: shared empty-state block — muted icon over a titleMedium title
 // and an optional bodySmall subtitle, centered with the pinned metrics.

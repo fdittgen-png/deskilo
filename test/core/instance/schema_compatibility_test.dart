@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1312 — a server's schema marker against what this build needs: lower or
 // absent blocks, equal and higher do not. A server predating the marker is

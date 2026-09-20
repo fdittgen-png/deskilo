@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The fixture the report editor's quick preview renders against when no
 // real invoice exists yet (#474). Split out of report_defaults.dart:

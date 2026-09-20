@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0178 — #974: a member picks their own home site.
 --
 -- set_member_home_site (0168) was admins-only. The home site decides

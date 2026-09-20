@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'expense_repartition.dart';
 import 'invoice.dart';
 import 'ledger_entry.dart';

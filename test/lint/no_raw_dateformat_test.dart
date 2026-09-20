@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1150 — `AppFormat.time()` is the one place that honours the member's
 // clock (12/24h) and time-zone mode. A raw `DateFormat.Hm()` in a widget

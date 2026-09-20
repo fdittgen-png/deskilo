@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- A recorded payment had no date and no target month: the ledger stamped
 -- it the moment it was typed in and booked it to `to_char(now())`. A
 -- transfer made on the 3rd and entered on the 26th therefore landed on the

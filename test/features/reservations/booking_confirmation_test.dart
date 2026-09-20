@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1301 S3 — the booking sheet answers "place · date · time · confirm"
 // without scrolling past what a member rarely needs, and a booking ends

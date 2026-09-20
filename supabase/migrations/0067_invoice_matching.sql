@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Invoice LIFECYCLE (field decision):
 --  * one ACTIVE invoice per member+month — a period becomes invoiceable
 --    again only when its invoice was voided (erronée);

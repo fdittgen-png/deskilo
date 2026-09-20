@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #992 — six system columns on every table: created_datetime,
 // modified_datetime, company_id, site_id, created_by_user,

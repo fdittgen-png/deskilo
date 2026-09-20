@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #739 — price negotiations. The tariff is the default; a member may
 // have their own deal. The member reads it beside the tariff on the

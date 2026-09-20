@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Member preferred language (#496): the language DOCUMENTS are printed
 -- in for this member (reports, reminder letters, the financial
 -- agreement). Written by the member themself when they pick an app

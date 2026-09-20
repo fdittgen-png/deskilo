@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Play turns a PERMISSION into a hardware REQUIREMENT unless the
 // manifest says otherwise, and a required feature is not an error

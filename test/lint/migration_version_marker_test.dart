@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1312 — every migration after the marker's introduction says which
 // version it makes the schema, and what kind of change it is.
@@ -130,7 +130,7 @@ void main() {
   });
 
   group('the rule is capable of failing', () {
-    const good = '-- SPDX-License-Identifier: 0BSD\n'
+    const good = '-- SPDX-License-Identifier: AGPL-3.0-or-later\n'
         '-- risk: additive\n'
         'create table t (id int);\n'
         'select public.set_deskilo_schema_version(230);\n';

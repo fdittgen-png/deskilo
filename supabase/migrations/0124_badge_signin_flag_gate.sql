@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0124 — badge sign-in obeys the workspace's own feature flag (#662).
 --
 -- THE PROBLEM THE CLIENT CANNOT SOLVE. Every other feature flag is

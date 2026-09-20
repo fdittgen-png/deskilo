@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // New-member validation (0052): a join lands PENDING — the member waits
 // on the approval screen (workspace name only) until owner/admins

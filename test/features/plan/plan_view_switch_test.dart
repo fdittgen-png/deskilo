@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #209: the plan's list/canvas toggle cross-fades via AnimatedSwitcher —
 // mid-transition both branch subtrees are in the tree; after settling

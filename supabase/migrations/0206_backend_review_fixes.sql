@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0206 — four backend findings from the 2026-09-11 review.
 --
 -- ── #1141 / #1145 — stale overloads ───────────────────────────────

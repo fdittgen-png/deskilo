@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
 -- 0240 (#1452) — a captured payment names the ledger credit it posted.

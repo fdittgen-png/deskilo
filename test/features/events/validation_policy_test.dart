@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #629 (migration 0119) adds auto_validate_admin / auto_validate_owner:
 // a DELIBERATE, owner-configured exception to the 0086 "nobody

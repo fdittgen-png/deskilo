@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1288 S2 — the questions and answers of 0248, read through its own
 // policies and written through its own definer.

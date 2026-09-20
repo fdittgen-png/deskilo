@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The shared booking controls (space refactor): the Plan tab and the
 // Reserve hub offer the same functions — pick a window, pick a level —

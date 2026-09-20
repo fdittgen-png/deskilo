@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1016 — a help symbol names ONE object. The anchor resolves to that
 // object's heading and the guide opens there; the topic can only find

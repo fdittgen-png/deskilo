@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0199 — #1120: the template library, written so that a grant can never
 -- be the thing that proves access.
 --

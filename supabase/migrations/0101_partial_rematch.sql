@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Additional payments onto a PARTIALLY PAID invoice (#506). A partial
 -- invoice stays open (#504); new payments keep coming in and must be
 -- matchable against the REMAINING amount — maybe until fully paid,

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #614 — two reminder resyncs can overlap (realtime bursts): iterating
 // the live reminder-id set across awaits threw

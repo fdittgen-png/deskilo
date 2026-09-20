@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The member's bill: month, subscription, entitlement, packages and online
 // payment, each shown only when it applies (0041, 0042).

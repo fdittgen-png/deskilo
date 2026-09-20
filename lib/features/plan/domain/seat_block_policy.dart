@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace_feature.dart';
 

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:io';
 
 import 'package:app_badge_plus/app_badge_plus.dart';

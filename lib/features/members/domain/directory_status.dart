@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Pure status derivation for the member directory. Since #237 a member
 // row carries TWO independent indicators instead of one merged status

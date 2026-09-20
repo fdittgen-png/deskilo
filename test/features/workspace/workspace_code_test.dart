@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The workspace code screen: member and single-use admin invites, and a
 // validated new workspace ID.

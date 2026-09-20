@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Presence rule on the plan (#408): check-in means "I am standing here
 // NOW". Browsing a future window must not offer a live check-in on my

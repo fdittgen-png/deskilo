@@ -1,4 +1,4 @@
-<!-- SPDX-License-Identifier: 0BSD -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 # What protects the Demo workspace
 
 #1381 asks for a small, high-value suite rather than broad brittle

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // #1090 — a CurvedAnimation registers a status listener on its parent in
 // its constructor and removes it only in dispose(). One built per frame
 // (the glide listener) or per rebuild (FadeInOnChange.build) therefore

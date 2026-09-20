@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'vat_rate.dart';
 
 /// The rates a country actually charges, so a workspace can start from its

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // REGRESSION (field report): tapping a reservation link in the full-
 // message sheet did nothing. The links were TextSpan recognizers whose

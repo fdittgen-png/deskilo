@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../events/domain/workspace_event.dart';
 import 'billing_rules.dart';
 import 'dunning.dart';

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The three documents #671 added to report management, split out of
 // report_defaults.dart when that file reached its length budget.

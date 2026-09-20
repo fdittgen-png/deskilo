@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #744 PRICE NEGOTIATIONS v2 — the deal reaches the two things #739 left
 -- at the catalogue: the OCCUPATION (the member's subscription percentage,

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #624 (migration 0118) + #634 (migration 0120) — THE outside-opening-
 // hours policy: one booking_rules string key, outside_hours_mode, with

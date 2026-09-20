@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #987/#989 — a workspace and its twin as one couple: the pair card in
 // Profiles switches sides, the twin is created on demand from the

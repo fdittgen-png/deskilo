@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The floor plan's decoration primitives, lifted out of the painter when
 // it outgrew its length budget (#670). Every one of these is PURE — a

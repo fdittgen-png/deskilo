@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #574: minute-grid workspaces pick the duration with a SLIDER stepped
 // by the workspace's own grid — a 10:00 walk-up under a 5-minute grid

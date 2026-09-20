@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #946 — a document names the site it concerns: the seller party and
 // the attendance rows read the site from the frozen snapshot, the

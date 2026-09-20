@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1449 — which invoices may be regrouped, as a rule rather than five
 // conditions inside a builder.

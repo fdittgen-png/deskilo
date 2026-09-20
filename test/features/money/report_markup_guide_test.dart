@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #966 — the markup guide: every placeholder has a meaning and a topic,
 // the guide is collapsed until asked for, and everything it offers

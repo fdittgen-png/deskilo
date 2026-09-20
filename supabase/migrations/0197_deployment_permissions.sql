@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0197 — #1080: a deployment stops being a way around the permissions.
 --
 -- 0186 widened two guards so a deployment could reach through them:

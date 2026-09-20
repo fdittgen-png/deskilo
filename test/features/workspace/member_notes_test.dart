@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Member notes (#456): a member notifies another member from the member
 // sheet; admins broadcast to all admins incl. the owner. The server

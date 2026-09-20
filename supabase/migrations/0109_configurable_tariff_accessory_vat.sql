@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #542: the VAT rate becomes CONFIGURABLE where it was hard-wired to
 -- the workspace default — the subscription tariff (fee bands: monthly
 -- fee + overage) gets one workspace-level rate, and each accessory gets

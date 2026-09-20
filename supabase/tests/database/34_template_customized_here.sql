@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #1280 S4 — updating from a template marks what this workspace changed
 -- since it last applied the same template, so one tick cannot undo it.

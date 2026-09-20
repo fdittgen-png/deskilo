@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Invitation messages (0049): a new member is invited over WhatsApp, SMS,
 // or any share target with a text that explains — in the chosen language —

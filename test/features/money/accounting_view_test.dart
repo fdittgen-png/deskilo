@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #831 — the accounting view: the settlement leaves, its payment is
 // allocated to the sources it regroups — exact, partial oldest-first,

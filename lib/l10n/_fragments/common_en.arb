@@ -70,7 +70,7 @@
       }
     }
   },
-  "aboutOpenSource": "Open source (0BSD)",
+  "aboutOpenSource": "Free software (AGPL-3.0)",
   "@aboutOpenSource": {
     "description": "About tile: licence (#560)"
   },

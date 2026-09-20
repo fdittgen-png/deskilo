@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The Excel export surface (#395): the tile exists only while the
 // dataExport feature is on (its ONLY surface, so the flag gate is the

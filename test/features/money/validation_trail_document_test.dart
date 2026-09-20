@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #841 — the trail is not only in the alerts feed. The document that
 // raised the event carries it too, so a member looking at an invoice can

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1273 — a level whose only room is the office is named by the level on
 // member surfaces, and a second room brings both names back.

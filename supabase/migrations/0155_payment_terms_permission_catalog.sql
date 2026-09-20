@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0155 — #881: the paymentTermsEdit permission joins the catalog
 -- set_role_permissions accepts (0144 refused every payload that named
 -- a permission outside its array — #816). Full body, so the catalog

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // #1088 — the events.type constraint has been widened six times. A client
 // that has not been updated yet must still read the rest of the feed: one
 // wire word it does not know may cost that row its label, never the feed.

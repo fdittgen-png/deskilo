@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Where an EN 16931 export has to GO. The XML alone answered nothing: the
 // routing table names the channel and the syntax per country, and says

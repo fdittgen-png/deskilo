@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Owner-initiated role changes, routed through the validation quorum.
 -- Applied to the hosted reference project on 2026-07-19.
 --

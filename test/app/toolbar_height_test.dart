@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The compact toolbar: 48 dp on every AppBar through the theme (the
 // Sparkilo shell idiom — its #4082). Material's 56 spent eight dp on

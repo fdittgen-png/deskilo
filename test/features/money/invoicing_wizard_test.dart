@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #827 — the invoicing wizard: the run the date calls for, the period
 // and kind of a run, the plans derived from what the workspace holds,

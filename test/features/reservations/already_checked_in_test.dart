@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1135 — a member already sitting at a seat, who opens that seat's
 // sheet, was one tap from a request that could not succeed.

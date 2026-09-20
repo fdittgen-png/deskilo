@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Boot splash (field request): from the very first frame the user sees
 // the brand splash, the data warm-up runs behind it, and the finished

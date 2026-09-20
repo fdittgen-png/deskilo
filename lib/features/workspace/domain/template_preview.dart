@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1280 S2 — what applying a template to THIS workspace would change, as
 // the server computed it (`preview_workspace_template`, 0230).

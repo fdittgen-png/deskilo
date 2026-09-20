@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Presence rule (#408, migration 0077): check-in means "I am standing
 // here NOW". The window is [starts_at − 15 min, ends_at) — never ahead

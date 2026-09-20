@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #732 — a validation rule names WHO validates: the admins (as before),
 // listed persons of any role, or every member. The editor offers the

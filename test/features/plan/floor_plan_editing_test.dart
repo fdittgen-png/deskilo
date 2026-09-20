@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Drag geometry for plan editing: moves clamp at the origin, resizes keep
 // at least one cell and validate containment.

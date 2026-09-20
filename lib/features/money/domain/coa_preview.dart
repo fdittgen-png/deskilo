@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'vat_regime.dart';
 
 /// A **preview** of the chart of accounts a bookkeeper would likely use

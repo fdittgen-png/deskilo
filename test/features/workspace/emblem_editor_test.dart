@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1289 — the emblem on screen: absent changes nothing, chosen is
 // stored re-drawn, removed is gone.

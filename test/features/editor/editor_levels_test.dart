@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Owners, and only owners, add, rename, reorder, delete and price levels
 // in the editor.

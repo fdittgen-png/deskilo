@@ -1527,7 +1527,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get aboutOpenSource => 'Open source (licencia 0BSD)';
+  String get aboutOpenSource => 'Software libre (licencia AGPL-3.0)';
 
   @override
   String get aboutOpenSourceDesc => 'Código fuente en GitHub';
@@ -8817,7 +8817,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get consentControllerBody =>
-      'Cada espacio lo opera su propietario — tu comunidad —, que decide miembros, precios y proveedores de pago. La app es de código abierto (0BSD) y la publica Florian Dittgen (Alemania); el backend es Supabase en la UE. Los pagos en línea pasan por el proveedor que activó el propietario (PayPal, Stripe, Mollie, Wero) según sus condiciones.';
+      'Cada espacio lo opera su propietario — tu comunidad —, que decide miembros, precios y proveedores de pago. La app es software libre (AGPL-3.0-or-later) y la publica Florian Dittgen (Alemania); el backend es Supabase en la UE. Los pagos en línea pasan por el proveedor que activó el propietario (PayPal, Stripe, Mollie, Wero) según sus condiciones.';
 
   @override
   String get consentRetentionTitle => 'Cuánto tiempo';

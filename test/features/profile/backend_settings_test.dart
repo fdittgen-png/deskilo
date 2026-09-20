@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #780 — the device chooses its Supabase instance. The app's own server
 // stays the default; a community that runs its own project points the

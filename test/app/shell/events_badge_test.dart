@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Where the pending-confirmation count lives (#230, moved again by
 // #702). The feed left the bottom bar for an app-bar bell, and left the

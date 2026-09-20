@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #749 — two permissions of their own for the commercial agreements:
 --   viewNegotiations   — read a member's deal (the sheet, the access list);

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // paypal-webhook — verify_jwt OFF; authenticity from PayPal's own
 // webhook-signature verification. Credentials are PER WORKSPACE: the

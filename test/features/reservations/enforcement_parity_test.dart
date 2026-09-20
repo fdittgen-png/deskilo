@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #637 (migration 0122) — ONE booking contract. The past-day guard
 // ('lies entirely in the past') and the walk-up-today guard ('must

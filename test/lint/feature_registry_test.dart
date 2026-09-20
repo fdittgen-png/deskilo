@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // 2026-09-16: #1325 process_registry_test also requires every flag to have
 // one business home or an explicit internal reason; enum count unchanged.
 //

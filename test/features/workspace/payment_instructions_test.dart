@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #192 — the payment instructions jsonb shape is a contract: pinned keys,
 // a round trip, tolerant of older blobs.

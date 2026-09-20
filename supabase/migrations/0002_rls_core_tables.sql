@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- DesKilo RLS (Epic #2, issue #24). Applied to the hosted reference project
 -- on 2026-07-07 as migration "rls_core_tables".
 --

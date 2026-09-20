@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1289 — a colour chosen elsewhere is measured before it is stored.
 import 'package:deskilo/app/theme.dart';

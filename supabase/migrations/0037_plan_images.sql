@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Resizable illustration images placed on a level's plan — photos of
 -- the real space (a plant, a couch, a whiteboard) positioned and sized
 -- over the grid, distinct from the whole-level background (0036).

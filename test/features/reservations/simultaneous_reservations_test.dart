@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #628 (migration 0119) — "one place at a time" (#412) becomes a
 // configurable allowance. Three server call sites used to hard-code 1:

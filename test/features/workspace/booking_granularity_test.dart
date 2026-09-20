@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #200 — booking granularity wire values are append-only, and each mode's
 // step and day-window behaviour is pinned (#446).

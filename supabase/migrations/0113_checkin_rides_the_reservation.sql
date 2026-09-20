@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #573 — a check-in RIDES a reservation, and the reservation is the
 -- workspace's own slot, not the arrival instant.
 --

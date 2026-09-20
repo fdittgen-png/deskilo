@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The member directory (#224, epic #222): every member reaches it from
 // settings; each ACTIVE member renders up to TWO chips side by side

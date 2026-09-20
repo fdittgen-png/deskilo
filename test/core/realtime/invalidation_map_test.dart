@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #577 — the ONE table → providers map both freshness paths share.
 // These tests pin the contract that used to drift when realtime and

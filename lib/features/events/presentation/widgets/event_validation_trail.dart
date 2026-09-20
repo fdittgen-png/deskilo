@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #841 — the trail, fetched for one event and shown on the document that
 // raised it: an invoice, a booking, a pending position on the bill.

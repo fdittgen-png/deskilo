@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Every capability has one business home, or an explicit internal reason.
 import 'dart:io';
 import '../../tool/build_process_catalogue.dart';

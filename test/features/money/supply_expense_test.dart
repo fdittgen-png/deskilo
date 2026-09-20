@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #731 — an expense can be a SUPPLY for the space: the sheet asks what
 // it is, how many and what a consumption will cost, and sends it with

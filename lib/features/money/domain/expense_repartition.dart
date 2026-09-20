@@ -1,5 +1,5 @@
 import '../../../core/data/system_columns.dart';
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // #828 — distributing ONE shared amount over the members: the key that
 // weighs each member, and the split itself. Pure arithmetic; the booking

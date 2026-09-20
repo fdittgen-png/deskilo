@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Personal invitations (#319): an invitation code is usable ONLY once,
 -- only until it expires, and only for the role it was minted with — a
 -- forwarded admin code must not mint admins forever. Replaces the static

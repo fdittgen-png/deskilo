@@ -2711,7 +2711,7 @@ abstract class AppLocalizations {
   /// About tile: licence (#560)
   ///
   /// In en, this message translates to:
-  /// **'Open source (0BSD)'**
+  /// **'Free software (AGPL-3.0)'**
   String get aboutOpenSource;
 
   /// About tile subtitle: source on GitHub (#560)
@@ -15290,7 +15290,7 @@ abstract class AppLocalizations {
   /// No description provided for @consentControllerBody.
   ///
   /// In en, this message translates to:
-  /// **'Each workspace is operated by its owner — your community — who decides members, prices and payment providers. The app is open source (0BSD) and published by Florian Dittgen (Germany); the backend is Supabase in the EU. Online payments go through the provider the owner enabled (PayPal, Stripe, Mollie, Wero) under that provider\'s terms.'**
+  /// **'Each workspace is operated by its owner — your community — who decides members, prices and payment providers. The app is free software (AGPL-3.0-or-later) and published by Florian Dittgen (Germany); the backend is Supabase in the EU. Online payments go through the provider the owner enabled (PayPal, Stripe, Mollie, Wero) under that provider\'s terms.'**
   String get consentControllerBody;
 
   /// No description provided for @consentRetentionTitle.

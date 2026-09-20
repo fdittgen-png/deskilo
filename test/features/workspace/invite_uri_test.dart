@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Invite URLs carry role and code, and decoding accepts both URLs and
 // legacy raw codes.

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0201 — #1119: whoever invites somebody chooses whether that person
 -- reaches production.
 --

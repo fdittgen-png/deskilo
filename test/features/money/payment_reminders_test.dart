@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #726 — automatic payment reminders. The rules carry the owner's
 // switch; the dialog edits it; a reminder the sweep produced lands in

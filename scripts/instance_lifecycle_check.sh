@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPDX-License-Identifier: 0BSD
+# SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # #1337 — install, resume and upgrade a real schema, and let the doctor
 # read it, with the code the wizard and `tool/instance.dart` run.

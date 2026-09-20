@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #1280 S3 — a template publishes the groups its owner chose, and the
 -- owner is shown what never travels and which names go with the plan.

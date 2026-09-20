@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Grant hygiene (#412 follow-up): enforce_one_place (0079) missed the
 -- revoke every other trigger function carries — a trigger function is
 -- not PostgREST-callable, but the advisor baseline stays exact.

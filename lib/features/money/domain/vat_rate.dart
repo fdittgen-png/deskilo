@@ -1,5 +1,5 @@
 import '../../../core/data/system_columns.dart';
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// One VAT rate a workspace charges (0072). A "reduced" rate is not a
 /// different EN 16931 category — it is still `S` with its own percentage.

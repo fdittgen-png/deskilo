@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // mollie-webhook — verify_jwt OFF; authenticity from FETCHING the payment
 // back from Mollie with the workspace's API key (the body is untrusted).

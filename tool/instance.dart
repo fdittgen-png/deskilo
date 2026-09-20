@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The instance builder from a terminal (#977) — the same steps the
 // in-app wizard runs, for people who prefer a shell:

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// Workspace booking-granularity rule (#200) — stored inside the
 /// `booking_rules` jsonb under [BookingRulesKeys.granularity] and

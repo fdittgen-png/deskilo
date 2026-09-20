@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #606 — the help-hint dismissal store and its provider: dismiss hides
 // (and persists eagerly), restore brings everything back, and unknown

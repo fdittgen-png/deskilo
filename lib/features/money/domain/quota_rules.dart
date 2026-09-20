@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// Server-side error text raised by `assert_member_quota` (migration
 /// 0031) when a booking would exceed the member's monthly half-day

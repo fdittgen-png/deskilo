@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1078 — an edge function must know WHO is asking before it answers,
 // and it must resolve that caller to ONE member row.

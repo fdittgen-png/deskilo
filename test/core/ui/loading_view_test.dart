@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #209: LoadingView masks quick loads — the spinner renders at opacity 0
 // on the first frame and fades in over AppMotion.loadingFadeIn, so a load

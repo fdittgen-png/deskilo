@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Reduce motion (#402, wiki 26): when the platform asks for reduced
 // motion, every animation collapses to zero — decided once in the token

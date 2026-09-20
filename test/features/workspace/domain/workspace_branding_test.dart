@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1289 — the one reader of `workspaces.branding`.
 import 'package:deskilo/features/workspace/domain/workspace_branding.dart';

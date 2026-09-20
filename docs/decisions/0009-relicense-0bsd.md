@@ -15,7 +15,7 @@ the project acceptable for F-Droid.
 
 Relicense to **0BSD** (BSD Zero Clause License, SPDX `0BSD`), © 2026
 Florian DITTGEN. Every source file's SPDX header becomes
-`// SPDX-License-Identifier: 0BSD`.
+`// SPDX-License-Identifier: AGPL-3.0-or-later`.
 
 0BSD is MIT minus the attribution clause: "Permission to use, copy,
 modify, and/or distribute this software for any purpose with or without

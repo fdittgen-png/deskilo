@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #751 — a change of the consent TEXT must ask every account again:
 // the text of record (the English fallback in privacy_policy.dart) is
@@ -23,6 +23,13 @@ int _fnv1a(String s) {
 /// bump; the current version's row must match the current text.
 const _pins = <String, int>{
   '2026-08-30': 2136118761,
+  // 2026-09-20 (#1552) — the controller paragraph names the licence, and
+  // the licence changed: 0BSD became AGPL-3.0-or-later (ADR 0031). The
+  // processing did not change by one field, so this bump asks everybody
+  // again for a sentence about terms rather than about data. It is still
+  // the right call: a privacy policy that misstates the licence it tells
+  // people to verify the code under is a policy that cannot be verified.
+  '2026-09-20': 592690133,
 };
 
 void main() {

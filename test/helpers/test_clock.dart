@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Moved to lib/core/demo/data by ADR 0028: the fixture's clock is the
 // Demo environment's clock too — a 'today' booking must not expire out

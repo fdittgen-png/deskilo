@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #657 — an iPhone reads NFC tags, and the tag-configuration forms must
 // let it. The reader used to answer `unsupported` for every non-Android

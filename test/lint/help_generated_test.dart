@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1386 — `assets/help/` is generated from `docs/wiki/` and committed,
 // and until this test nothing compared the two.

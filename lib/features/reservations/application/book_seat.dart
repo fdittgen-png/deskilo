@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1234 — the first command of the application layer, and the shape the
 // rest is meant to copy. ADR 0024 is the argument; this is the proof.

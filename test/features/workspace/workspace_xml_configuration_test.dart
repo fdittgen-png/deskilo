@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #916 — the <configuration> section: a typed, name-sorted tree that
 // survives XML unchanged, so export → import → export is byte-identical.

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #873 — the invoice must conform to the French window-envelope spec,
 // measured on the GENERATED PDF rather than asserted about the code

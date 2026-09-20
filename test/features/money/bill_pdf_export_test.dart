@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Exporting the visible bill saves a PDF, and a failed save says so.
 import 'dart:typed_data';

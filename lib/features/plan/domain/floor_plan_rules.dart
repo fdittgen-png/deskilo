@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Pure placement rules for the workspace editor (spec §10). All functions
 // are side-effect-free and unit-tested — the editor UI only relays results.

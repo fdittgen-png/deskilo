@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #512 — the account becomes REAL. Three rules and one view:
 --   1. A month fully before the membership begins owes nothing.
 --   2. An account credit (avoir excess) settles any outstanding

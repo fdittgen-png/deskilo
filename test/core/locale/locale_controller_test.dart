@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The language override: an empty store follows the system, a stored code
 // applies and persists, null clears it.

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #1303 S3 — before a workspace exists, a template says what it sets up,
 -- and a template this server cannot apply says so before anyone presses

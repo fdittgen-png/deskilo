@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #934 — the guided repartition: a shared cost proposed over the
 // members by subscription share, each member excludable and — under the

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- DesKilo floor-plan schema (Epic #3, issue #31). Applied to the hosted
 -- reference project on 2026-07-07 as "floor_plan_levels_offices_desks_seats".
 -- Grid-cell geometry per ADR 0005; workspace_id denormalized for cheap RLS.

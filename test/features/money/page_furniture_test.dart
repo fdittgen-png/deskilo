@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #872 — the header and footer are FIXED page furniture, the body is
 // the only thing that flows. A reader holding page 3 of an invoice must

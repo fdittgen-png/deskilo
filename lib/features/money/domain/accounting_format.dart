@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// The accounting exports the app offers, and — the part that matters —
 /// **what each one claims about itself** (#669).

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #962 — the directory asks for the profiles of members WITH an account.
 // A managed member's user id is the empty string; sent along, PostgREST

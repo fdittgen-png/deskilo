@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Pure reminder derivation (spec §4.3): my reserved (not yet checked-in)
 // bookings starting within the lookahead get a reminder [before] their start.

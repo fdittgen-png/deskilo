@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #575: the plan answers "did/does/will anything happen on this seat
 // TODAY" at a glance — the canvas painter rings the seat (grey served /

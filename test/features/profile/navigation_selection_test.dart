@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #969 — the Navigation tile beside the theme: choosing the menu swaps
 // the bottom bar for the drawer at once; the web never sees the tile.

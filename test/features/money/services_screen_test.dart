@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #123 — the service catalogue: listed with prices and VAT, created,
 // edited, deactivated but never deleted.

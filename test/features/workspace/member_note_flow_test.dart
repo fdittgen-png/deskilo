@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Messenger extension (#523): the Events list shows only the first 64
 // characters of a message; tapping the row opens the full message with

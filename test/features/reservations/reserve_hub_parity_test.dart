@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #685 — the Réserver hub draws the same canvas as the Plan tab, so it
 // should carry the same affordances.

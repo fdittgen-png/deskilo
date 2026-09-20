@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- DesKilo accessory catalog + seat assignment (epic #163, issue #166).
 -- NOT YET applied to the hosted reference project — the orchestrator
 -- applies it after review.

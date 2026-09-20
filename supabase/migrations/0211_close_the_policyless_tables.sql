@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0211 — #1226: a table with no policy grants nothing either.
 --
 -- Found by the first pgTAP test that ever ran against this database.

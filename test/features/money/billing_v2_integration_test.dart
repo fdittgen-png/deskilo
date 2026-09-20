@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Billing v2 integration coverage (#134, epic #121): edge matrices and
 // end-to-end-through-fakes flows that tie the money and events surfaces

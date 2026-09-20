@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1030 — a pilot tapped a free seat and read "Réservation impossible —
 // la place vient peut-être d'être prise." The seat was free. The server

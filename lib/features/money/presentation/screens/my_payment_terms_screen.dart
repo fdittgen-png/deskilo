@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #902 — Settings → Payment conditions: what THIS member's documents
 // print, and who set them. Read-only by design: the workspace sets the

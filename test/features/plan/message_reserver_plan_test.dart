@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #622 — message the reserver from the Plan tab: tapping a seat held by
 // ANOTHER member offers opening the conversation with them, the

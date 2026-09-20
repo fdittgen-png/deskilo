@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #902 — a Finances tab label NEVER wraps: "Documents" was breaking into
 // "Document" + "s". It shrinks to the width its tab is given and, at the

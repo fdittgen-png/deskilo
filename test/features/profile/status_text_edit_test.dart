@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The status editor on the settings surface (#231): saving pins the
 // trim + hard-cap normalization on the exact repository call the UI

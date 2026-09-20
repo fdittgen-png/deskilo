@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #977 — the instance wizard over a fake Management API: token → the
 // organisation, the project comes up, the schema and the functions run

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #581 — ONE mixed, date-sorted notification feed. Messages (member
 // notes) and workspace events used to live in two separate blocks; now

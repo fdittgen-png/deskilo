@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0147 — #828: a shared expense DISTRIBUTED over the members, and the
 -- reverse — charges given back as credit notes.
 --

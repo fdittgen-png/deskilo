@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The theme override: empty or unknown follows the system, a stored mode
 // applies and persists, system normalizes to no override.

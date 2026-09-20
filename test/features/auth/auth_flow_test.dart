@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Sign-in, sign-up and sign-out move between the auth screen and the
 // shell; a failure stays put with an error.

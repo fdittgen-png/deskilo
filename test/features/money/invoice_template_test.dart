@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #454/#470: the banded invoice reporting tool — Liquid bands (header /
 // body with the lines / footer), the line markup, the fallback contract

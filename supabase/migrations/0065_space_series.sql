@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- Whole-space SERIES (field request): tables and rooms/levels must
 -- offer the same repetition as seats. create_series v2 accepts exactly
 -- one of seat/desk/office/level. Whole-space targets pass the same

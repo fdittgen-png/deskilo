@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Personal invitations (0049): a ready-made download → account → join
 // message sent over WhatsApp, SMS, or the share sheet, in the invitee's

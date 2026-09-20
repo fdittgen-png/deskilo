@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:timezone/timezone.dart' as tz;
 
 /// The IANA zones an owner may pick for a workspace (#711).

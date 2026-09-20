@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1012 — exporting the workspace XML saves a file, leaves a trace, offers
 // Share, and reports a failed save.

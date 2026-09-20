@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #804/#831 — regroup a member's open invoices into ONE settlement
 // document. #872 — runs as an assistant: choose, then a summary, then

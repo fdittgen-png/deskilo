@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -66,7 +66,7 @@ List<Widget> aboutSettingsTiles(
           ListTile(
             key: const ValueKey('about-source'),
             leading: const Icon(Icons.code),
-            title: Text(l10n?.aboutOpenSource ?? 'Open source (0BSD)'),
+            title: Text(l10n?.aboutOpenSource ?? 'Free software (AGPL-3.0)'),
             subtitle: Text(
               l10n?.aboutOpenSourceDesc ?? 'Source code on GitHub',
             ),

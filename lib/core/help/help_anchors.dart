@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// #1016 — the identity a help symbol, a guide heading, a screenshot and
 /// its crops all share.

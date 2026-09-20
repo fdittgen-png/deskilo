@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Fee bands edit as one ordered, gap-free set: boundaries stay increasing,
 // adding splits a band, removing merges it (#194).

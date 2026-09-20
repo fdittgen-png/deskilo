@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// A scheduled local reminder (spec §4.3 check-in reminder).
 class ReminderRequest {

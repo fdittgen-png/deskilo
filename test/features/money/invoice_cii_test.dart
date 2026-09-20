@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // EN 16931 as CII (0073) — the syntax Factur-X embeds in the PDF. Same
 // semantics as the UBL builder, different grammar, and every group is an

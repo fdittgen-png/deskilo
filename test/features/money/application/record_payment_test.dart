@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1449 — the rules the Register payment sheet used to own.
 import 'package:deskilo/features/money/application/record_payment.dart';

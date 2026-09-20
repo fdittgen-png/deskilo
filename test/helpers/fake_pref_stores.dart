@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // In-memory stores for the per-device preferences (#969, #970, #1173),
 // so no widget test touches SharedPreferences and every provider that

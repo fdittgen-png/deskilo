@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #977 — the instance builder over a fake Management API: the project
 // comes up after a few polls, the schema runs in order and names the

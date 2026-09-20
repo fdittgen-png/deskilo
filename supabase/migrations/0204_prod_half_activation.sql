@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0204 — the prod half of a dev+prod invitation was never activated.
 --
 -- 0201 (#1119) lets an invitation say "also production". On redemption

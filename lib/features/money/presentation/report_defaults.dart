@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The SHIPPED report templates (#470/#472/#480) — every document in the
 // template language, localized, and LEGALLY COMPLETE: the invoice

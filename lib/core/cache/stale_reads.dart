@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/foundation.dart';
 
 /// #1305 S3 — which reads are being answered from the cache's STALE tier

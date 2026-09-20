@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0154 — #881: payment conditions — the workspace's default, a member's
 -- own, changed only through validation with a permission.
 --

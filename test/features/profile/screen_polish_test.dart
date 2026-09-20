@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The three screen-polish findings of the 2026-09-13 screenshot review.
 // Each one is the same kind of defect: the screen said a true thing in

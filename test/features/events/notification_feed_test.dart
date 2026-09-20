@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #581 — the mixed notification feed: messages and events interleave
 // date-sorted, filtered by category × read state, and the filter

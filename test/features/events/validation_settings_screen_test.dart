@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Card counts: default + 17 domains (#828 added shared expenses; #767 added price
 // negotiation and scheduled expense; #833 added the early-departure correction and

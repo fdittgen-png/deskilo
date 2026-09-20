@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // `web/setup.html` is ~900 lines of dense JavaScript with no build step,
 // and nothing in CI ever executed it. So a plain `ReferenceError` in one

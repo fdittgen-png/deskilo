@@ -1,4 +1,4 @@
-<!-- SPDX-License-Identifier: 0BSD -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 # Settings, by whose setting it is
 
 #1307 S1. **Every tile the Settings screen shows today, classified by who

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Pure resolver rules of the member directory's two indicators (#237):
 // the presence resolver (online > relative last-seen, #223/#224) and the

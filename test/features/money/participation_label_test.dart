@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #870 — what the recurring position is CALLED is a tax question, not a
 // wording preference. On a French association's invoice "abonnement"

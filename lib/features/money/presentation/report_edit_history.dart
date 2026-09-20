@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import '../domain/invoice_pdf_template.dart';
 
 /// #822 — undo / redo over ONE document's bands: a linear history of

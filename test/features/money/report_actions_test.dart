@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #514 — every report exit offers the same triad: QUICK VIEW on screen
 // before any PDF exists, save locally, share with any app. One shared

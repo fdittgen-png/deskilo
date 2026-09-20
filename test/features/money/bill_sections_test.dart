@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // A bill's sections: the period's charges, open positions and credits,
 // each in the period it belongs to.

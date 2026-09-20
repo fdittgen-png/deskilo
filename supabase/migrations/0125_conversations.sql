@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- 0125 — CONVERSATIONS (#687): the messaging centre grows groups.
 --
 -- Until now a message was a `member_notes` row addressed to one member,

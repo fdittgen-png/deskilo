@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// Mahnwesen (#472): the parameterizable dunning policy of a workspace,
 /// stored in `workspaces.dunning_rules` (migration 0093) — and the pure

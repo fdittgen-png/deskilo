@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Co-owners (0058): the owner appoints active/passive co-owners from
 // the member sheet; an ACTIVE co-owner acts with owner permissions

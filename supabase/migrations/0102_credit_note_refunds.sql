@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 -- NEGATIVE invoices are CREDIT NOTES the WORKSPACE pays (#508). A month
 -- where credits exceed charges derives a negative document — an avoir:
 -- the workspace owes the member. Such a document cannot be settled by

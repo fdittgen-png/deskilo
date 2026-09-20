@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #1289 — a workspace's own colours: the keyed write, the validator, the
 -- entity, and what an import keeps. The contrast rule is the client's

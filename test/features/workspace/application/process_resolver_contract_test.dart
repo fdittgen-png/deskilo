@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1336 — the contract between the process resolver (#1326) and the
 // manual switch semantics that shipped years before it.

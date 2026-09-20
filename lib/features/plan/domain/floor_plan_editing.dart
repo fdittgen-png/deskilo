@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Pure move/resize transformations for the editor (#101). All functions
 // return a NEW plan; the canvas keeps a draft during the drag and either

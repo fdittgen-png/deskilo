@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #835 — F-Droid ships OUR signed binary only while its rebuild of the
 // pinned commit matches it byte for byte. Two invariants carry that, and

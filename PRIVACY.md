@@ -5,7 +5,7 @@
 DesKilo is a booking and community-ledger app for small self-organized
 coworking spaces, published by Florian Dittgen (Germany). This policy
 describes what the app processes and why. DesKilo is open source
-(0BSD): everything below can be verified in the code at
+(AGPL-3.0-or-later): everything below can be verified in the code at
 <https://github.com/fdittgen-png/deskilo>.
 
 ## Data we process

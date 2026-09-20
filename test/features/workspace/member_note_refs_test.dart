@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Note reference grammar (#523): `[res:<id>|<label>]` and
 // `[space:<kind>:<id>|<label>]` tokens inside a member note's body.

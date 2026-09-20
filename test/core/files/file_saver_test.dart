@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Downloads pass (field report): every export (bill/badge/config PDF,
 // XML backup) lands in the USER-VISIBLE Downloads — on Android via the

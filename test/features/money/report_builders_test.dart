@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1061 slice two — the five remaining builders are pure functions of a
 // ReportStrings and their facts: no widget pump, no ProviderScope, no

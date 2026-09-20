@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: 0BSD
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 --
 -- #1453 — a financial row cannot point into another workspace, whoever
 -- writes it. Every write here runs as the privileged role the file runs

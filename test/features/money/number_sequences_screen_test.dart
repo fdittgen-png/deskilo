@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #925 — the one screen for every number series: reached from Settings
 // by the owner, live preview while typing, save through the repository.

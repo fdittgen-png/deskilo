@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: 0BSD
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The setup questionnaire (web/setup.html) generates a schema-v2
 // deskilo-workspace document with an extra `<setup>` extension block.
