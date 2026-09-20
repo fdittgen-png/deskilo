@@ -17,6 +17,7 @@
     "booking_rules",
     "closure_days",
     "lexicon",
+    "workspace_roles",
     "features"
   ],
   "feature_profile": {
@@ -194,6 +195,61 @@
           "to_pct": 100,
           "fee_cents": 10000,
           "overage_fee_cents": 0
+        }
+      ],
+      "workspace_roles": [
+        {
+          "key": "tresorier",
+          "names": {
+            "fr": "Trésorier·ère",
+            "en": "Treasurer",
+            "de": "Kassenwart",
+            "es": "Tesorero/a",
+            "it": "Tesoriere"
+          },
+          "permissions": [
+            "viewFinances",
+            "issueInvoices",
+            "manageBilling",
+            "approveExpenses",
+            "exportData"
+          ],
+          "sort_order": 1,
+          "active": true
+        },
+        {
+          "key": "secretaire",
+          "names": {
+            "fr": "Secrétaire",
+            "en": "Secretary",
+            "de": "Schriftführer",
+            "es": "Secretario/a",
+            "it": "Segretario"
+          },
+          "permissions": [
+            "manageMembers",
+            "manageDocuments",
+            "viewPersonalData"
+          ],
+          "sort_order": 2,
+          "active": true
+        },
+        {
+          "key": "referent_salle",
+          "names": {
+            "fr": "Référent·e de salle",
+            "en": "Room steward",
+            "de": "Raumverantwortlicher",
+            "es": "Responsable de sala",
+            "it": "Referente di sala"
+          },
+          "permissions": [
+            "manageReservations",
+            "manageValidation",
+            "operateKiosk"
+          ],
+          "sort_order": 3,
+          "active": true
         }
       ]
     },
