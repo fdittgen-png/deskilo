@@ -92,6 +92,34 @@ void main() {
     );
   });
 
+  test('the complete quality result is targeted, not just the code half',
+      () {
+    // #1446: the code job passing is not the run passing. On 2026-09-20
+    // four pull requests merged with `quality · database` and
+    // `quality · report` red, because only the first of the three was
+    // ever applied. Dropping either from the target would make the gap
+    // permanent by making it invisible.
+    expect(
+      _targetChecks(),
+      containsAll(const ['quality · database', 'quality · report']),
+      reason: 'the database replay and the report that carries the '
+          'complete table must be required, or a red one merges',
+    );
+  });
+
+  test('the required-check list can be applied without resetting the rest',
+      () {
+    // A PUT of the whole protection object sends null reviews and null
+    // restrictions, so applying the check list would silently drop any
+    // other protection. There has to be a command that changes only the
+    // list, or nobody will dare run one.
+    final sh = File('scripts/branch_protection.sh').readAsStringSync();
+    expect(sh, contains('apply-checks'));
+    expect(sh, contains(r'-X PATCH "${API}/required_status_checks"'),
+        reason: 'apply-checks must PATCH the sub-resource; a PUT on the '
+            'protection object is the blunt command it exists to avoid');
+  });
+
   test('the check can fail — a context nothing emits is caught', () {
     // The guard on the guard: if the job-name parse silently returned
     // nothing, the test above would pass on an empty set and prove the
