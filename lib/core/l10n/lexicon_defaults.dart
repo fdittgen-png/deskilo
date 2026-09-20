@@ -21,6 +21,7 @@ String lexiconDefault(AppLocalizations? l10n, String key) => switch (key) {
       'legendMine' => l10n?.legendMine ?? 'Mine',
       'legendBlocked' => l10n?.legendBlocked ?? 'Blocked',
       'legendClosed' => l10n?.legendClosed ?? 'Closed day',
+      'legendUnavailable' => l10n?.legendUnavailable ?? 'Unavailable',
       'reserveClosedShort' => l10n?.reserveClosedShort ?? 'Closed',
       'spaceKindSeat' => l10n?.spaceKindSeat ?? 'Seat',
       'spaceKindDesk' => l10n?.spaceKindDesk ?? 'Desk',

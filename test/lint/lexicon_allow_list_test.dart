@@ -44,6 +44,52 @@ Set<String> _serverKeys() {
       .toSet();
 }
 
+/// Every lexicon key something in `lib/` actually RENDERS.
+///
+/// #1597 — the list-consistency test above compares two lists with each
+/// other and a third with the ARB. All three agreed, and `SeatLegend`
+/// still rendered `legendUnavailable`, which none of them carried: the
+/// wording editor could not offer the word, `set_workspace_lexicon_term`
+/// refused it, and `imported_lexicon` dropped it from a template without
+/// saying so. Two matching incomplete lists are what this reads.
+///
+/// Two shapes reach `lexiconText`, and both must be seen:
+///
+/// ```dart
+/// lexiconText(context, key: 'legendFree', fallback: l10n?.legendFree ?? 'Free')
+/// word('legendUnavailable', l10n?.legendUnavailable ?? 'Unavailable')
+/// ```
+///
+/// The second is a file-local helper forwarding to `lexiconText` with a
+/// non-literal key — exactly how #1597 hid. It is recognised by the pair
+/// it cannot be written without: the key's literal beside the `l10n`
+/// getter of the SAME name, which is the product default it overrides.
+Set<String> _renderedKeys() {
+  // `lexiconText(context, key: 'x'` — the direct call, however wrapped.
+  final direct =
+      RegExp(r"lexiconText\(\s*[A-Za-z_][\w.]*\s*,\s*key:\s*'(\w+)'");
+  // `word('x', l10n?.x` — a forwarding helper's call site.
+  final forwarded = RegExp(r"'([A-Za-z]\w*)'\s*,\s*l10n[?!]?\.\1\b");
+  final keys = <String>{};
+  for (final file in Directory('lib')
+      .listSync(recursive: true)
+      .whereType<File>()
+      .where((f) => f.path.endsWith('.dart'))
+      // The mechanism itself: its doc comments spell both shapes out.
+      .where((f) => !f.path.startsWith('lib/l10n/') &&
+          !f.path.startsWith('lib/core/l10n/'))) {
+    final source = file.readAsStringSync();
+    if (!source.contains('lexicon')) continue;
+    for (final m in direct.allMatches(source)) {
+      keys.add(m.group(1)!);
+    }
+    for (final m in forwarded.allMatches(source)) {
+      keys.add(m.group(1)!);
+    }
+  }
+  return keys;
+}
+
 /// Every key the English ARB defines, so the allow-list cannot name one
 /// that does not exist.
 Set<String> _arbKeys() {
@@ -122,6 +168,33 @@ void main() {
         reason: 'these allow-listed terms have no arm in lexiconDefault, so '
             'the wording editor would show the key instead of the word:\n  '
             '${unresolved.join('\n  ')}');
+  });
+
+  test('every key rendered in lib/ is registered on all three sides', () {
+    // #1597 — the direction the other tests never asked. They walk the
+    // allow-list outwards; a word the app RENDERS and no list carries is
+    // invisible to every one of them, because two incomplete lists agree
+    // with each other perfectly.
+    final rendered = _renderedKeys();
+    expect(rendered, contains('legendFree'),
+        reason: 'the scanner found no known call site at all — the call '
+            'shape changed and this test is now measuring its own regexes');
+
+    final server = _serverKeys();
+    final offenders = <String>[];
+    for (final key in rendered.toList()..sort()) {
+      final where = [
+        if (!lexiconAllowList.containsKey(key)) 'lexiconAllowList',
+        if (lexiconDefault(null, key) == key) 'lexiconDefault',
+        if (!server.contains(key)) 'lexicon_allowed_keys()',
+      ];
+      if (where.isNotEmpty) offenders.add('$key — missing from ${where.join(', ')}');
+    }
+    expect(offenders, isEmpty,
+        reason: 'these terms are rendered by the app and cannot be renamed: '
+            'the editor does not offer them, the write RPC refuses them, and '
+            '`imported_lexicon` drops them from a template SILENTLY.\n  '
+            '${offenders.join('\n  ')}');
   });
 
   test('a term declaring placeholders names them exactly', () {
