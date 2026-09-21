@@ -2029,6 +2029,31 @@ Si l'application navigue par une barre en bas ou un rail latéral. Sur
 grand écran le rail laisse plus de place au plan ; sur téléphone la barre
 est plus facile à atteindre.
 
+### Mon compte à la place de Réglages (#1598)
+
+Un espace peut décider qu'un adhérent qui n'administre rien rencontre
+**Mon compte** là où se trouve la roue dentée **Réglages** — dans la
+barre du haut, et dans le menu sur grand écran. C'est le même écran
+derrière le même appui : votre profil et votre photo, votre adhésion,
+votre langue et vos formats régionaux, vos droits sur vos données,
+l'aide, le changement de profil et la déconnexion sont exactement là où
+ils étaient. Seuls le nom et l'icône changent, pour que personne n'aille
+chercher son propre compte derrière un mot qui sonne comme les réglages
+de quelqu'un d'autre.
+
+Toute personne à qui un rôle confie quelque chose — propriétaire,
+copropriétaire, administrateur, ou adhérent à qui l'un des rôles propres
+à cet espace délègue une permission — garde **Réglages** et tout ce qui
+s'y ouvre. L'entrée suit les permissions et non le titre : une
+délégation faite ce matin apparaît sans redémarrer l'application.
+
+C'est un nom, pas un verrou. Rien n'est retiré et rien n'est accordé :
+les écrans d'administration refusent exactement les mêmes personnes
+qu'avant, qu'on y arrive par un menu ou qu'on en tape l'adresse.
+
+Les propriétaires l'activent dans *Réglages → Fonctionnalités*. Un
+espace qui le laisse désactivé garde la roue dentée telle quelle.
+
 ### L'espace de démonstration
 
 Un espace inventé que chacun peut ouvrir depuis l'écran de connexion,

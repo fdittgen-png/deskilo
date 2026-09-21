@@ -4227,6 +4227,18 @@
   "@managedProfileIdentityUnavailable": {
     "description": "#1561 shown when the managed identity could not be read, so the form is not offered"
   },
+  "featureMemberAccountMenuTitle": "Les membres voient Mon compte",
+  "@featureMemberAccountMenuTitle": {
+    "description": "#1598 member account menu: featureMemberAccountMenuTitle"
+  },
+  "featureMemberAccountMenuDesc": "Un membre qui n'administre rien rencontre Mon compte au lieu de Réglages — le même écran, qui ne lui montre déjà que son compte, son adhésion et ses préférences, sous le nom qui le dit. Toute personne dont le rôle accorde une administration garde Réglages et tout ce qu'il ouvre. Ceci renomme une entrée ; cela n'accorde et ne retire rien.",
+  "@featureMemberAccountMenuDesc": {
+    "description": "#1598 member account menu: featureMemberAccountMenuDesc"
+  },
+  "memberAccountTitle": "Mon compte",
+  "@memberAccountTitle": {
+    "description": "#1598 member account menu: memberAccountTitle"
+  },
   "membersTitle": "Membres et forfaits",
   "membersPlanNone": "Aucun forfait",
   "memberRoleOwner": "Propriétaire",

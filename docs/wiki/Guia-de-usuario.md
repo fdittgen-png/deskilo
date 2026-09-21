@@ -1992,6 +1992,30 @@ Si la app navega con una barra inferior o un raíl lateral. En pantalla
 ancha el raíl da más sitio al plano; en el teléfono la barra queda más a
 mano.
 
+### Mi cuenta en lugar de Ajustes (#1598)
+
+Un espacio puede decidir que un miembro que no administra nada encuentre
+**Mi cuenta** donde está la rueda dentada **Ajustes** — en la barra
+superior y en el menú de pantalla ancha. Detrás del mismo toque está la
+misma pantalla: su perfil y su foto, su membresía, su idioma y sus
+formatos regionales, sus derechos sobre sus datos, la ayuda, el cambio
+de perfil y el cierre de sesión siguen exactamente donde estaban. Solo
+cambian el nombre y el icono, para que nadie busque su propia cuenta
+detrás de una palabra que suena a ajustes de otra persona.
+
+Quien tenga algo confiado por un rol — propietaria, copropietario,
+administrador, o un miembro al que uno de los roles propios de este
+espacio delegue algo — conserva **Ajustes** y todo lo que abre. La
+entrada sigue a los permisos y no al título: una delegación hecha esta
+mañana aparece sin reiniciar la app.
+
+Es un nombre, no un candado. No se quita ni se concede nada: las
+pantallas de administración rechazan exactamente a las mismas personas
+que antes, se llegue desde un menú o se escriba la dirección.
+
+Los propietarios lo activan en *Ajustes → Funciones*. Un espacio que lo
+deja desactivado conserva la rueda dentada tal cual.
+
 ### El espacio de demostración
 
 Un espacio inventado que cualquiera puede abrir desde la pantalla de

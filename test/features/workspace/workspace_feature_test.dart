@@ -28,6 +28,10 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   // after; a space that starts with it on would show its own members
   // names none of them recognise.
   WorkspaceFeature.recordingPrivacy,
+  // #1598 — renaming the gear a member sees is asked for, never
+  // assumed: a space that is happy with Réglages is not changed under
+  // its members' feet.
+  WorkspaceFeature.memberAccountMenu,
   // #1277 — renaming the product's words is asked for, never assumed:
   // a space that keeps the product's vocabulary is not shown a control
   // for changing it.
@@ -143,6 +147,7 @@ void main() {
       'customFields': true,
       'decisionSurface': true,
       'recordingPrivacy': true,
+      'memberAccountMenu': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

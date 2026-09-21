@@ -240,7 +240,14 @@ enum WorkspaceFeature {
   /// recording of THIS workspace — its real plan, its real bookings,
   /// its real figures — carries no personal data. Platform, default
   /// OFF: it is switched on for the length of a shoot and off after.
-  recordingPrivacy;
+  recordingPrivacy,
+
+  /// #1598 — a member who administers nothing meets no Réglages. The
+  /// gear becomes **My account**: the same screen, which already shows
+  /// a member only their own account, membership and preferences,
+  /// under the name that says so. Platform, default OFF: a space that
+  /// never asked keeps the gear it has always had.
+  memberAccountMenu;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1231,6 +1238,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.recordingPrivacy: FeatureManifestEntry(
     feature: WorkspaceFeature.recordingPrivacy,
     surface: FeatureSurface.everywhere,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+  ),
+  // #1598 — `requires` is deliberately empty: the gear it renames is
+  // unconditional, so there is no parent whose absence would make the
+  // choice meaningless. Settings, because Settings is what it renames.
+  WorkspaceFeature.memberAccountMenu: FeatureManifestEntry(
+    feature: WorkspaceFeature.memberAccountMenu,
+    surface: FeatureSurface.settings,
     tier: FeatureTier.platform,
     defaultOn: false,
   ),

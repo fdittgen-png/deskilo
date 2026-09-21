@@ -27,6 +27,7 @@ import '../../../reservations/providers/default_period_controller.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/member.dart';
+import '../../../workspace/domain/workspace_permission.dart';
 import '../../../auth/presentation/widgets/badge_pin_tile.dart';
 import '../../../workspace/presentation/widgets/my_badge_tile.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -248,7 +249,17 @@ class SettingsScreen extends ConsumerWidget {
     final features = ref.watch(enabledFeaturesSyncProvider);
     final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.settingsTitle ?? 'Settings')),
+      // #1598 — the screen answers to the name the entry used. It is the
+      // same screen and the same route either way: the sections below
+      // have asked the permission matrix since #1307, so a member who
+      // administers nothing was always shown their account alone — this
+      // stops calling that page Settings.
+      appBar: AppBar(
+        title: Text(showsMemberAccountMenu(
+                features: features, permissions: perms)
+            ? (l10n?.memberAccountTitle ?? 'My account')
+            : (l10n?.settingsTitle ?? 'Settings')),
+      ),
       body: ListView(
         children: [
           ..._accountTiles(context, ref, l10n: l10n, myProfile: myProfile, features: features, localeOverride: localeOverride, themeOverride: themeOverride),

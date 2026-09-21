@@ -27,6 +27,7 @@ import '../../features/reservations/domain/check_in_reminders.dart';
 import '../../features/reservations/presentation/widgets/space_scan.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
+import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/domain/member_note_refs.dart';
 import '../../features/workspace/providers/conversation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
@@ -272,6 +273,14 @@ class ShellScreen extends ConsumerWidget {
     // a workspace with no messaging surface has no way to reach a
     // conversation someone already sent it.
     final features = ref.watch(enabledFeaturesSyncProvider);
+    // #1598 — a member who administers nothing meets My account where the
+    // gear was. WATCHED, not read: a delegation or a workspace switch
+    // must rename the entry on the same frame the permissions change,
+    // never leave a stale one behind.
+    final accountMenu = showsMemberAccountMenu(
+      features: features,
+      permissions: ref.watch(myPermissionsProvider),
+    );
     // #707 — the two counts SEPARATE again. The Messages badge counts
     // unread conversations; the bell counts pending confirmations. #702
     // had summed them onto one destination, and one number for two
@@ -401,9 +410,20 @@ class ShellScreen extends ConsumerWidget {
               // The /events path already lands on the alerts face.
               onPressed: () => context.go('/events'),
             ),
+          // #1598 — the SAME destination under two names. Hiding an
+          // entry is not access control: /settings already shows a
+          // member only what their permissions earn, and every
+          // administrative route behind it keeps its own guard, so what
+          // changes here is the word and the icon on the door.
           IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            tooltip: l10n?.settingsTitle ?? 'Settings',
+            key: ValueKey(
+                accountMenu ? 'shell-account-button' : 'shell-settings-button'),
+            icon: Icon(accountMenu
+                ? Icons.account_circle_outlined
+                : Icons.settings_outlined),
+            tooltip: accountMenu
+                ? (l10n?.memberAccountTitle ?? 'My account')
+                : (l10n?.settingsTitle ?? 'Settings'),
             onPressed: () => context.push('/settings'),
           ),
         ],

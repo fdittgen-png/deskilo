@@ -199,3 +199,24 @@ Set<WorkspacePermission> effectivePermissions(
   if (!features.contains(WorkspaceFeature.customRoles)) return base;
   return {...base, ...custom};
 }
+
+/// #1598 — whether this member meets **My account** where the workspace
+/// gear used to be.
+///
+/// The question is asked of the EFFECTIVE permission set and of nothing
+/// else: every administration a role can hold is a [WorkspacePermission],
+/// custom roles grant theirs additively into that same set, and an owner
+/// holds all of them — so an empty set is the one honest definition of a
+/// member who administers nothing. An `isOwner` shortcut would keep the
+/// gear from a co-owner who was delegated nothing and take it from a
+/// custom role that was delegated everything.
+///
+/// It decides a NAME and an ICON, never an access: the entry opens the
+/// same `/settings`, which has always shown a member only the tiles their
+/// permissions earn, and every administrative route keeps its own guard.
+bool showsMemberAccountMenu({
+  required Set<WorkspaceFeature> features,
+  required Set<WorkspacePermission> permissions,
+}) =>
+    features.contains(WorkspaceFeature.memberAccountMenu) &&
+    permissions.isEmpty;

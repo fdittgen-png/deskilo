@@ -490,4 +490,12 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'screen, while the plan, the bookings and the figures '
                   'stay the real ones. A banner says so on every screen, '
                   'and the identity forms refuse to save until it is off.',
+        WorkspaceFeature.memberAccountMenu =>
+          l10n?.featureMemberAccountMenuDesc ??
+              'A member who administers nothing meets My account instead '
+                  'of Settings — the same screen, which already shows them '
+                  'only their own account, membership and preferences, '
+                  'under the name that says so. Anyone whose role grants '
+                  'administration keeps Settings and everything it opens. '
+                  'This renames an entry; it grants and withdraws nothing.',
       };

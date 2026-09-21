@@ -6628,6 +6628,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Angaben konnten nicht gelesen werden, es gibt also noch nichts zu bearbeiten. Es wurde nichts geändert.';
 
   @override
+  String get featureMemberAccountMenuTitle => 'Mitglieder sehen Mein Konto';
+
+  @override
+  String get featureMemberAccountMenuDesc =>
+      'Ein Mitglied, das nichts verwaltet, findet Mein Konto statt Einstellungen — denselben Bildschirm, der ihm ohnehin nur sein Konto, seine Mitgliedschaft und seine Einstellungen zeigt, unter dem Namen, der das sagt. Wer durch seine Rolle etwas verwalten darf, behält Einstellungen und alles, was sich darin öffnet. Dies benennt einen Eintrag um; es gewährt und entzieht nichts.';
+
+  @override
+  String get memberAccountTitle => 'Mein Konto';
+
+  @override
   String get membersTitle => 'Mitglieder & Tarife';
 
   @override

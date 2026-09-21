@@ -1,0 +1,15 @@
+{
+  "@@locale": "es",
+  "featureMemberAccountMenuTitle": "Los miembros ven Mi cuenta",
+  "@featureMemberAccountMenuTitle": {
+    "description": "#1598 member account menu: featureMemberAccountMenuTitle"
+  },
+  "featureMemberAccountMenuDesc": "Un miembro que no administra nada encuentra Mi cuenta en lugar de Ajustes — la misma pantalla, que ya solo le muestra su cuenta, su membresía y sus preferencias, con el nombre que lo dice. Quien tenga administración por su rol conserva Ajustes y todo lo que abre. Esto renombra una entrada; no concede ni retira nada.",
+  "@featureMemberAccountMenuDesc": {
+    "description": "#1598 member account menu: featureMemberAccountMenuDesc"
+  },
+  "memberAccountTitle": "Mi cuenta",
+  "@memberAccountTitle": {
+    "description": "#1598 member account menu: memberAccountTitle"
+  }
+}

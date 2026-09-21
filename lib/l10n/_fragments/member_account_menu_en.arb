@@ -1,0 +1,15 @@
+{
+  "@@locale": "en",
+  "featureMemberAccountMenuTitle": "Members see My account",
+  "@featureMemberAccountMenuTitle": {
+    "description": "#1598 member account menu: featureMemberAccountMenuTitle"
+  },
+  "featureMemberAccountMenuDesc": "A member who administers nothing meets My account instead of Settings — the same screen, which already shows them only their own account, membership and preferences, under the name that says so. Anyone whose role grants administration keeps Settings and everything it opens. This renames an entry; it grants and withdraws nothing.",
+  "@featureMemberAccountMenuDesc": {
+    "description": "#1598 member account menu: featureMemberAccountMenuDesc"
+  },
+  "memberAccountTitle": "My account",
+  "@memberAccountTitle": {
+    "description": "#1598 member account menu: memberAccountTitle"
+  }
+}

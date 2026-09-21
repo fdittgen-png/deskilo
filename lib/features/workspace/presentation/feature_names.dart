@@ -229,4 +229,6 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureDecisionSurfaceTitle ?? 'What needs you',
       WorkspaceFeature.recordingPrivacy =>
         l10n?.featureRecordingPrivacyTitle ?? 'Filming mode',
+      WorkspaceFeature.memberAccountMenu =>
+        l10n?.featureMemberAccountMenuTitle ?? 'Members see My account',
     };

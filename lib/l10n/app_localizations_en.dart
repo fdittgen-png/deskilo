@@ -6570,6 +6570,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'These details could not be read, so there is nothing to edit yet. Nothing has been changed.';
 
   @override
+  String get featureMemberAccountMenuTitle => 'Members see My account';
+
+  @override
+  String get featureMemberAccountMenuDesc =>
+      'A member who administers nothing meets My account instead of Settings — the same screen, which already shows them only their own account, membership and preferences, under the name that says so. Anyone whose role grants administration keeps Settings and everything it opens. This renames an entry; it grants and withdraws nothing.';
+
+  @override
+  String get memberAccountTitle => 'My account';
+
+  @override
   String get membersTitle => 'Members & plans';
 
   @override
