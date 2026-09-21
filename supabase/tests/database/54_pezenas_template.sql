@@ -28,7 +28,7 @@
 --     so none is invented. The tables below are fixtures, named
 --     `REHEARSAL 1599 …` so that nobody mistakes them for Pézenas.
 begin;
-select plan(19);
+select plan(20);
 
 create or replace function pg_temp.groups() returns text[] language sql as $$
   select array_agg(distinct e->>'group')
@@ -378,6 +378,22 @@ end
 $seed$;
 
 select pg_temp.seed();
+
+-- ── previewed before it is applied ───────────────────────────────────
+--
+-- The variant is `private`, so this is also the proof that the
+-- publication flow #1600 will use can read it at all: a template whose
+-- visibility hides it from everyone would fail here rather than in a
+-- person's workspace.
+
+select is(
+  (select format('%s %s %s', p->>'compatibility',
+                 jsonb_array_length(p->'entities'), jsonb_array_length(p->'groups'))
+     from (select public.preview_workspace_template(pg_temp.ws(), pg_temp.tpl()) as p) q),
+  'supported 9 6',
+  'this server supports the variant, and offers its nine entities as the '
+  'six groups an owner chooses between — before anything is written');
+
 select public.apply_workspace_template(pg_temp.ws(), pg_temp.tpl(), pg_temp.groups());
 
 -- ── what the report asked for, in so many words ──────────────────────
