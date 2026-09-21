@@ -784,7 +784,7 @@ routine public.holds_template_grant(p_template_id uuid) -> boolean | function | 
 routine public.import_floor_plan(p_workspace_id uuid, p_plan jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:00d64c021417
 routine public.import_floor_plan_v2(p_workspace_id uuid, p_plan jsonb, p_accessories jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:39b7cff8ccf8
 routine public.import_floor_plan_v3(p_workspace_id uuid, p_plan jsonb, p_accessories jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:f22d8d613ba5
-routine public.import_workspace_configuration(p_workspace_id uuid, p_configuration jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7232b8a02754
+routine public.import_workspace_configuration(p_workspace_id uuid, p_configuration jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:15c49d89ceef
 routine public.imported_branding(p_current jsonb, p_incoming jsonb, p_mode text) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:fa95d80a7677
 routine public.imported_feature_flags(p_flags jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:39acec231f00
 routine public.imported_lexicon(p_current jsonb, p_incoming jsonb, p_mode text) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:8b21e6a016db

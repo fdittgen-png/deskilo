@@ -231,6 +231,7 @@ values (
       "levelBooking": false,
       "managedProfileAccess": false,
       "managedProfiles": false,
+      "memberAccountMenu": false,
       "memberDataExport": true,
       "memberEnvironments": false,
       "memberNotifications": true,
