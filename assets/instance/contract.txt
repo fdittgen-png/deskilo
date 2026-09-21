@@ -738,7 +738,7 @@ routine public.delete_revoked_badge(p_badge_id uuid) -> void | function | define
 routine public.delete_site(p_site_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:d008e6636d8a
 routine public.delete_workspace_template(p_template_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:9df2586e6a5e
 routine public.deploy_entities(p_from uuid, p_to uuid, p_entities text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7ad66808509d
-routine public.deployable_entities() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:14f2719b5409
+routine public.deployable_entities() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:3ad2ea0a58ab
 routine public.deployment_direction(p_from uuid, p_to uuid) -> text | function | definer | stable | exec:authenticated,service_role | body:cb650fe1e2aa
 routine public.deskilo_schema_version() -> integer | function | invoker | stable | exec:anon,authenticated,service_role | body:f2f88751992a
 routine public.direct_conversation(p_workspace_id uuid, p_other_member_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:317959433a98
@@ -759,7 +759,7 @@ routine public.event_types_in_view() -> TABLE(ws_id uuid, event_type text) | fun
 routine public.export_entities(p_workspace_id uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:918db3b450bc
 routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:50db203e93fa
 routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9f29855f8d96
-routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:92aa4591542c
+routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bedcf33d2ea0
 routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:99a275c44fd9
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f195c36ad44b
@@ -784,7 +784,7 @@ routine public.holds_template_grant(p_template_id uuid) -> boolean | function | 
 routine public.import_floor_plan(p_workspace_id uuid, p_plan jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:00d64c021417
 routine public.import_floor_plan_v2(p_workspace_id uuid, p_plan jsonb, p_accessories jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:39b7cff8ccf8
 routine public.import_floor_plan_v3(p_workspace_id uuid, p_plan jsonb, p_accessories jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:f22d8d613ba5
-routine public.import_workspace_configuration(p_workspace_id uuid, p_configuration jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7232b8a02754
+routine public.import_workspace_configuration(p_workspace_id uuid, p_configuration jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:15c49d89ceef
 routine public.imported_branding(p_current jsonb, p_incoming jsonb, p_mode text) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:fa95d80a7677
 routine public.imported_feature_flags(p_flags jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:39acec231f00
 routine public.imported_lexicon(p_current jsonb, p_incoming jsonb, p_mode text) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:8b21e6a016db
@@ -981,7 +981,7 @@ routine public.template_compatibility(p_template workspace_templates, p_groups t
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
 routine public.template_publication_preview(p_workspace_id uuid, p_groups text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:923d1fcaa4a8
-routine public.template_publication_rules() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:35de1775d2c0
+routine public.template_publication_rules() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:bf33cd0c6a98
 routine public.template_snapshot(p_template workspace_templates, p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:2faa633b79c5
 routine public.template_supported_schema_versions() -> integer[] | function | invoker | immutable | exec:authenticated,service_role | body:53e229c024d6
 routine public.touch_conversation() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1a8384fd9011

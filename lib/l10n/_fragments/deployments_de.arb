@@ -181,5 +181,9 @@
   "deployEntityWorkspaceRoles": "Eigene Rollen des Bereichs",
   "@deployEntityWorkspaceRoles": {
     "description": "#1505: deployEntityWorkspaceRoles"
+  },
+  "deployEntityCreditProducts": "Verkaufte Guthabenkarten",
+  "@deployEntityCreditProducts": {
+    "description": "#1271 T1: deployEntityCreditProducts"
   }
 }

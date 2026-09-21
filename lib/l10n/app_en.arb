@@ -2416,6 +2416,10 @@
   "@deployEntityWorkspaceRoles": {
     "description": "#1505: deployEntityWorkspaceRoles"
   },
+  "deployEntityCreditProducts": "Prepaid carnets on sale",
+  "@deployEntityCreditProducts": {
+    "description": "#1271 T1: deployEntityCreditProducts"
+  },
   "developerMode": "Developer mode",
   "@developerMode": {
     "description": "Settings toggle enabling the local diagnostics screen"

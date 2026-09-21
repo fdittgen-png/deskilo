@@ -2010,6 +2010,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get deployEntityWorkspaceRoles => 'Les rôles propres à l\'espace';
 
   @override
+  String get deployEntityCreditProducts => 'Les carnets prépayés en vente';
+
+  @override
   String get developerMode => 'Mode développeur';
 
   @override

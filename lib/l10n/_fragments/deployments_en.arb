@@ -187,5 +187,9 @@
   "deployEntityWorkspaceRoles": "Roles the space defines",
   "@deployEntityWorkspaceRoles": {
     "description": "#1505: deployEntityWorkspaceRoles"
+  },
+  "deployEntityCreditProducts": "Prepaid carnets on sale",
+  "@deployEntityCreditProducts": {
+    "description": "#1271 T1: deployEntityCreditProducts"
   }
 }

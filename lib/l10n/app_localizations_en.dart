@@ -1999,6 +1999,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deployEntityWorkspaceRoles => 'Roles the space defines';
 
   @override
+  String get deployEntityCreditProducts => 'Prepaid carnets on sale';
+
+  @override
   String get developerMode => 'Developer mode';
 
   @override

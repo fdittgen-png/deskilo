@@ -2010,6 +2010,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get deployEntityWorkspaceRoles => 'Eigene Rollen des Bereichs';
 
   @override
+  String get deployEntityCreditProducts => 'Verkaufte Guthabenkarten';
+
+  @override
   String get developerMode => 'Entwicklermodus';
 
   @override

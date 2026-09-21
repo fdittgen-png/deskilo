@@ -1580,6 +1580,10 @@
   "@deployEntityWorkspaceRoles": {
     "description": "#1505: deployEntityWorkspaceRoles"
   },
+  "deployEntityCreditProducts": "Les carnets prépayés en vente",
+  "@deployEntityCreditProducts": {
+    "description": "#1271 T1: deployEntityCreditProducts"
+  },
   "developerMode": "Mode développeur",
   "developerModeWorkspaceHint": "S'applique à tous les membres de cet espace.",
   "developerTitle": "Développeur",

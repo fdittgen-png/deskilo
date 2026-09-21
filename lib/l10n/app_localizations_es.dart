@@ -2009,6 +2009,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get deployEntityWorkspaceRoles => 'Los roles propios del espacio';
 
   @override
+  String get deployEntityCreditProducts => 'Los bonos prepago en venta';
+
+  @override
   String get developerMode => 'Modo desarrollador';
 
   @override
