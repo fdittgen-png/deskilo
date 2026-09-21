@@ -60,7 +60,7 @@ const List<({String command, String owns})> _order = [
   ),
   (
     command: 'dart run tool/build_builtin_templates.dart',
-    owns: 'supabase/templates/*.json',
+    owns: 'supabase/templates/*.json and variants/*.{json,md}',
   ),
   (command: 'dart run tool/build_setup_l10n.dart', owns: 'web/setup_*.js'),
   (command: 'dart run tool/build_help.dart', owns: 'assets/help/*.md'),

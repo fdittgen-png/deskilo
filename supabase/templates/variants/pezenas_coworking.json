@@ -1,0 +1,528 @@
+{
+  "key": "pezenas_coworking",
+  "name": "Coworking Pézenas",
+  "description": "Variante privée préparée d'après le rapport du 20 septembre 2026 : demi-journées de 7 h à 13 h et de 13 h à 19 h du lundi au vendredi, jours fériés de France métropolitaine, cotisations à 50 % et 100 %, deux carnets prépayés, la légende simple, les mots de l'association et deux étages — Étage 1 et Étage 2 — dont l'inventaire reste à relever.",
+  "sort_order": 1,
+  "visibility": "private",
+  "schema_version": 1,
+  "tags": [
+    "association",
+    "coworking",
+    "france",
+    "pezenas"
+  ],
+  "entities": [
+    "identity",
+    "tariffs",
+    "credit_products",
+    "floor_plan",
+    "booking_rules",
+    "closure_days",
+    "lexicon",
+    "workspace_roles",
+    "features"
+  ],
+  "feature_profile": {
+    "base": "core",
+    "on": [
+      "calendarHub",
+      "calendarValidations",
+      "calendarViews",
+      "carnets",
+      "customRoles",
+      "memberAccountMenu",
+      "publicHolidays",
+      "workspaceVocabulary"
+    ],
+    "off": [
+      "eventsTab",
+      "memberPage",
+      "membersDirectory",
+      "notificationGrouping"
+    ]
+  },
+  "configuration": {
+    "workspace": {
+      "default_locale": "fr",
+      "vat_regime": "not_subject",
+      "booking_rules": {
+        "granularity": "half_day",
+        "open_weekdays": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "work_start_minutes": 420,
+        "half_boundary_minutes": 780,
+        "work_end_minutes": 1140,
+        "legend_profile": "simple",
+        "max_series_days": 180,
+        "advance_horizon_days": 90,
+        "max_duration_minutes": 1440,
+        "min_duration_minutes": 30
+      },
+      "subscription_levels": {
+        "allow_custom": false,
+        "extra_levels": [],
+        "enabled_presets": [
+          50,
+          100
+        ]
+      },
+      "lexicon": {
+        "fr": {
+          "spaceKindSeat": "Place",
+          "spaceKindLevel": "Étage",
+          "shellReserveButton": "Réservations",
+          "legendFree": "Place libre",
+          "legendReserved": "Place réservée",
+          "legendMine": "Ma place",
+          "legendUnavailable": "Place non disponible"
+        }
+      },
+      "feature_flags": {
+        "accessorySupplements": false,
+        "adminInvoicing": false,
+        "adminLevelAssign": false,
+        "adminSeatBlocking": false,
+        "autoCheckInOut": false,
+        "badgeSignIn": false,
+        "bookForOthers": true,
+        "bookingGate": true,
+        "bookingPolicies": true,
+        "calendarHub": true,
+        "calendarTab": true,
+        "calendarValidations": true,
+        "calendarViews": true,
+        "carnets": true,
+        "coOwner": false,
+        "configurationTransfer": false,
+        "customFields": false,
+        "customRoles": true,
+        "dataAccessLog": false,
+        "dataExport": true,
+        "decisionSurface": false,
+        "deletionRequests": true,
+        "demoMode": false,
+        "deployments": false,
+        "documents": true,
+        "dunning": false,
+        "einvoiceCustomerDelivery": false,
+        "environmentPairs": false,
+        "eventsTab": false,
+        "expenseRepartition": false,
+        "expenseRepartitionWizard": false,
+        "financeFaces": true,
+        "formHelpHints": true,
+        "instanceWizard": false,
+        "invoiceAddressWindow": false,
+        "invoiceJourney": false,
+        "invoicePdfTemplate": false,
+        "invoiceSettlement": false,
+        "invoicing": true,
+        "invoicingWizard": false,
+        "kioskMemberPhotos": false,
+        "kioskMode": false,
+        "letterStandard": false,
+        "levelBooking": false,
+        "managedProfileAccess": false,
+        "managedProfiles": false,
+        "memberAccountMenu": true,
+        "memberDataExport": true,
+        "memberEnvironments": false,
+        "memberNotifications": true,
+        "memberOrigin": false,
+        "memberPage": false,
+        "memberPaymentTerms": false,
+        "memberReports": false,
+        "membersDirectory": false,
+        "messageGestures": true,
+        "messagesHub": true,
+        "moneyTab": true,
+        "multiSite": false,
+        "navigationStyle": true,
+        "nfcBadges": false,
+        "nfcSeatTags": false,
+        "notificationGrouping": false,
+        "numberSequences": false,
+        "onlinePayments": false,
+        "paymentReminders": false,
+        "pdfExport": true,
+        "personalInfo": true,
+        "planMemberPhotos": false,
+        "planObjectDelete": true,
+        "priceNegotiations": false,
+        "publicHolidays": true,
+        "pushNotifications": true,
+        "qrBadges": false,
+        "recordingPrivacy": false,
+        "regionalFormats": true,
+        "reportDesignExchange": false,
+        "reportDesigner": false,
+        "reportLayouts": false,
+        "reportTexts": false,
+        "richMessageRefs": true,
+        "roleManagement": true,
+        "scheduledExpenses": false,
+        "seatDayTimeline": true,
+        "seriesBooking": true,
+        "services": true,
+        "settlementFold": false,
+        "singleRoomLevelNames": true,
+        "siteDocuments": false,
+        "spaceQrCodes": true,
+        "subscriptionInvoices": false,
+        "supplyExpenses": false,
+        "uiAnimations": true,
+        "uniqueMonograms": true,
+        "usageInvoices": false,
+        "usageRecords": false,
+        "usageReport": false,
+        "validationChain": false,
+        "validationScopes": false,
+        "vatCounterparty": false,
+        "vatDeclarations": false,
+        "vatGroups": false,
+        "vatManagement": false,
+        "vatRateHistory": false,
+        "vatReport": false,
+        "whatsappIntegration": false,
+        "workingHours": true,
+        "workspaceBranding": false,
+        "workspaceLibrary": false,
+        "workspaceStatus": false,
+        "workspaceVocabulary": true
+      }
+    },
+    "tables": {
+      "fee_bands": [
+        {
+          "from_pct": 0,
+          "to_pct": 50,
+          "fee_cents": 5000,
+          "overage_fee_cents": 0
+        },
+        {
+          "from_pct": 50,
+          "to_pct": 100,
+          "fee_cents": 10000,
+          "overage_fee_cents": 0
+        }
+      ],
+      "workspace_roles": [
+        {
+          "key": "tresorier",
+          "names": {
+            "fr": "Trésorier·ère",
+            "en": "Treasurer",
+            "de": "Kassenwart",
+            "es": "Tesorero/a",
+            "it": "Tesoriere"
+          },
+          "permissions": [
+            "viewFinances",
+            "issueInvoices",
+            "manageBilling",
+            "approveExpenses",
+            "exportData"
+          ],
+          "sort_order": 1,
+          "active": true
+        },
+        {
+          "key": "secretaire",
+          "names": {
+            "fr": "Secrétaire",
+            "en": "Secretary",
+            "de": "Schriftführer",
+            "es": "Secretario/a",
+            "it": "Segretario"
+          },
+          "permissions": [
+            "manageMembers",
+            "manageDocuments",
+            "viewPersonalData"
+          ],
+          "sort_order": 2,
+          "active": true
+        },
+        {
+          "key": "referent_salle",
+          "names": {
+            "fr": "Référent·e de salle",
+            "en": "Room steward",
+            "de": "Raumverantwortlicher",
+            "es": "Responsable de sala",
+            "it": "Referente di sala"
+          },
+          "permissions": [
+            "manageReservations",
+            "manageValidation",
+            "operateKiosk"
+          ],
+          "sort_order": 3,
+          "active": true
+        }
+      ],
+      "credit_products": [
+        {
+          "name": "Carnet 10 demi-journées",
+          "half_days": 10,
+          "price_cents": 5000,
+          "validity_months": null,
+          "active": true,
+          "sort_order": 1
+        },
+        {
+          "name": "Carnet 20 demi-journées",
+          "half_days": 20,
+          "price_cents": 8000,
+          "validity_months": null,
+          "active": true,
+          "sort_order": 2
+        }
+      ]
+    },
+    "holidays": {
+      "years": 2,
+      "country": "FR"
+    }
+  },
+  "floor_plan": [
+    {
+      "name": "Étage 1",
+      "sort_order": 0,
+      "bookable_as_whole": false,
+      "price_cents": 0,
+      "background_path": "",
+      "site": null,
+      "images": [],
+      "offices": []
+    },
+    {
+      "name": "Étage 2",
+      "sort_order": 1,
+      "bookable_as_whole": false,
+      "price_cents": 0,
+      "background_path": "",
+      "site": null,
+      "images": [],
+      "offices": []
+    }
+  ],
+  "acceptance": {
+    "formula": "ceil(open_days × 2 × percentage / 100), open_days = weekdays − mainland French public holidays that fall on a weekday",
+    "half_days": {
+      "2026-10": [
+        22,
+        44
+      ],
+      "2026-11": [
+        20,
+        40
+      ],
+      "2026-12": [
+        22,
+        44
+      ],
+      "2027-01": [
+        20,
+        40
+      ],
+      "2027-02": [
+        20,
+        40
+      ],
+      "2027-03": [
+        22,
+        44
+      ],
+      "2027-04": [
+        22,
+        44
+      ],
+      "2027-05": [
+        19,
+        38
+      ],
+      "2027-06": [
+        22,
+        44
+      ],
+      "2027-07": [
+        21,
+        42
+      ],
+      "2027-08": [
+        22,
+        44
+      ],
+      "2027-09": [
+        22,
+        44
+      ],
+      "2027-10": [
+        21,
+        42
+      ],
+      "2027-11": [
+        20,
+        40
+      ],
+      "2027-12": [
+        23,
+        46
+      ]
+    }
+  },
+  "provenance": {
+    "source_document": "coworking_appli_MB.PDF — 4 pages, supplied 20 September 2026",
+    "rows": [
+      {
+        "area": "Template identity",
+        "value": "key pezenas_coworking · «Coworking Pézenas» · visibility private",
+        "source": "explicit",
+        "where": "#1599",
+        "note": "Owner-private through the existing publication workflow. The generic association_fr builtin is left untouched; #1600 records the published identifier."
+      },
+      {
+        "area": "Onboarding identity",
+        "value": "FR · EUR · Europe/Paris · default_locale fr",
+        "source": "inherited",
+        "where": "onboarding",
+        "note": "Country, currency and time zone are onboarding fields and never travel in a template. Only default_locale is carried."
+      },
+      {
+        "area": "Time periods",
+        "value": "morning 07:00–13:00 · afternoon 13:00–19:00",
+        "source": "explicit",
+        "where": "PDF p.1",
+        "note": "Written as work_start_minutes 420 / half_boundary_minutes 780 / work_end_minutes 1140."
+      },
+      {
+        "area": "Booking granularity",
+        "value": "half_day",
+        "source": "explicit",
+        "where": "PDF p.1",
+        "note": "The existing representation of the two requested periods."
+      },
+      {
+        "area": "Offered subscriptions",
+        "value": "enabled_presets [50, 100] · extra_levels [] · allow_custom false",
+        "source": "explicit",
+        "where": "PDF p.1"
+      },
+      {
+        "area": "Monthly fees",
+        "value": "(0,50] → 50,00 € · (50,100] → 100,00 €",
+        "source": "explicit",
+        "where": "PDF p.1"
+      },
+      {
+        "area": "Carnet 10 demi-journées",
+        "value": "10 half-days · 50,00 € · no expiry",
+        "source": "explicit",
+        "where": "PDF p.1",
+        "note": "validity_months null: the report states no expiry, so none is invented."
+      },
+      {
+        "area": "Carnet 20 demi-journées",
+        "value": "20 half-days · 80,00 € · no expiry",
+        "source": "explicit",
+        "where": "PDF p.1"
+      },
+      {
+        "area": "Working weekdays and holidays",
+        "value": "Monday–Friday · mainland French public holidays for two years, generated per target",
+        "source": "inherited",
+        "where": "inferred policy",
+        "note": "Not an explicit statement of physical opening days: it is the policy that reproduces all fifteen monthly rows of the report. Weekend holidays are not deducted twice."
+      },
+      {
+        "area": "November 2026 and November 2027",
+        "value": "40 half-days at 100 % (20 at 50 %)",
+        "source": "correction",
+        "where": "PDF p.1",
+        "note": "Both rows literally read «40 journées». Read as 40 DEMI-journées, inferred from every other row and from the 2:1 relation between the two subscription levels. 40 whole days would be 80 half-days and is NOT granted. Confirm with the association before #1600 publishes."
+      },
+      {
+        "area": "Level labels",
+        "value": "Étage 1 · Étage 2 (singleRoomLevelNames on)",
+        "source": "explicit",
+        "where": "PDF p.2"
+      },
+      {
+        "area": "Legend",
+        "value": "booking_rules.legend_profile «simple»",
+        "source": "explicit",
+        "where": "PDF p.3",
+        "note": "Four entries: Place libre · Place réservée · Ma place · Place non disponible."
+      },
+      {
+        "area": "Visible vocabulary",
+        "value": "Place · Étage · Réservations · Place libre · Place réservée · Ma place · Place non disponible",
+        "source": "explicit",
+        "where": "PDF pp.2–4",
+        "note": "legendUnavailable became an overridable key with #1597."
+      },
+      {
+        "area": "Whole-table reservations on Étage 2",
+        "value": "each Étage 2 table bookable_as_whole false · individual places still bookable",
+        "source": "unresolved",
+        "where": "PDF p.3",
+        "note": "The demand is per DESK, and a level flag alone does not fulfil it: the rehearsal refuses the Étage 2 table with «desk not bookable as a whole» while the Étage 2 LEVEL flag refuses separately and a place on the same table still books. No table exists in this template to carry the flag, because the inventory below is unresolved; #1600 sets it on each real Étage 2 table once the inventory is relevé. «Journée entière» is a time period and is not touched. Étage 1 keeps whole-table booking."
+      },
+      {
+        "area": "Physical inventory",
+        "value": "two levels, no tables, no places",
+        "source": "unresolved",
+        "where": "PDF p.3",
+        "note": "The floor-plan crops show Table 1 and places 21/22 only; that establishes neither a table count nor a 22-place space. The generic eight-seat example is deliberately NOT carried: it is not Pézenas inventory. Obtain the verified layout before #1600."
+      },
+      {
+        "area": "Navigation",
+        "value": "combined Calendar destination · events tab off · members directory off · member account menu on",
+        "source": "explicit",
+        "where": "PDF p.4",
+        "note": "calendarHub, calendarViews and calendarValidations on; eventsTab, membersDirectory and memberPage off; memberAccountMenu from #1598 keeps the account controls without Réglages."
+      },
+      {
+        "area": "Bureau roles",
+        "value": "Trésorier·ère · Secrétaire · Référent·e de salle, defined and unassigned",
+        "source": "inherited",
+        "where": "association_fr",
+        "note": "Definitions only. Applying grants nothing until an owner gives a role to somebody; no officer is invented."
+      },
+      {
+        "area": "VAT regime",
+        "value": "not_subject",
+        "source": "inherited",
+        "where": "association_fr",
+        "note": "An inherited association default, NOT a verified tax status for Pézenas."
+      },
+      {
+        "area": "Whole-space booking at all (levelBooking)",
+        "value": "off",
+        "source": "inherited",
+        "where": "core default",
+        "note": "With it off — which is what applying this template leaves — NO whole level, room or table can be booked anywhere, so the Étage 2 demand is already met a fortiori and Étage 1 loses nothing the report gave it. The per-table flag above is what keeps the demand true if Pézenas ever switches whole-space booking on. The rehearsal proves both states."
+      },
+      {
+        "area": "Booking horizon and quota protections",
+        "value": "advance_horizon_days 90 · max_series_days 180 · quota and overage rules unchanged",
+        "source": "inherited",
+        "where": "association_fr",
+        "note": "The report imposes neither a horizon nor a one-half-day-per-day limit, so the existing defaults stand."
+      },
+      {
+        "area": "Members, branding, questions, addresses",
+        "value": "none carried",
+        "source": "inherited",
+        "where": "publication allow-list",
+        "note": "A template travels definitions only: no member, assignment, purchased credit, reservation, invoice or ledger entry. No default subscription is imposed on a new member."
+      }
+    ]
+  }
+}
