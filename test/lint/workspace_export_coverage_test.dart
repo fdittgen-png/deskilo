@@ -180,7 +180,10 @@ const Map<String, String> _notExported = {
   'invoice_reminders': 'dunning state, regenerated from the invoices',
   'price_negotiations': 'a per-member agreed price; part of membership',
   'quota_extensions': 'a granted exception, part of membership',
-  'credit_products': 'configuration: the carnet catalogue (#1279)',
+  'credit_products':
+      'configuration: the carnet catalogue (#1279). It travels with a '
+          'template and a deployment as its own entity (0262, #1271) — '
+          'the offer only, never a sale',
   'member_credits':
       '#1279 — a carnet sale; its charge is in ledger_entries, exported, and '
           'the member\'s own copy is the subject-access export',

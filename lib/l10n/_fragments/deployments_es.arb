@@ -181,5 +181,9 @@
   "deployEntityWorkspaceRoles": "Los roles propios del espacio",
   "@deployEntityWorkspaceRoles": {
     "description": "#1505: deployEntityWorkspaceRoles"
+  },
+  "deployEntityCreditProducts": "Los bonos prepago en venta",
+  "@deployEntityCreditProducts": {
+    "description": "#1271 T1: deployEntityCreditProducts"
   }
 }

@@ -20,7 +20,7 @@
 -- closure day. A generator that produced nothing would still pass every
 -- other number in the list.
 begin;
-select plan(15);
+select plan(19);
 
 create or replace function pg_temp.groups() returns text[] language sql as $$
   select array_agg(distinct e->>'group')
@@ -123,6 +123,28 @@ select is(
   'the space books in half-days, 07:00 to 13:00 and 13:00 to 19:00 — the '
   'whole point of the template, and four keys an import could quietly drop');
 
+select is(
+  (select string_agg(format('%s %s %s %s', c.name, c.half_days, c.price_cents,
+                            coalesce(c.validity_months::text, 'never')),
+                     ' / ' order by c.sort_order)
+     from public.credit_products c where c.workspace_id = pg_temp.ws()),
+  'Carnet 10 demi-journées 10 5000 never / '
+  'Carnet 20 demi-journées 20 8000 never',
+  'the two carnets the association sells arrive WITH the template — ten '
+  'half-days for 50 €, twenty for 80 €, neither expiring. Until 0262 '
+  'the catalogue was not in the configuration payload at all, so a '
+  'template could promise prepaid half-days and deliver nothing to buy');
+
+select is(
+  (select format('%s %s %s', w.feature_flags->>'carnets',
+                 w.feature_flags->>'workspaceVocabulary',
+                 w.feature_flags->>'customRoles')
+     from public.workspaces w where w.id = pg_temp.ws()),
+  'true true true',
+  'and the three features that make them usable are on: a template that '
+  'carries a lexicon while the vocabulary is off, or role definitions '
+  'while custom roles are off, carries what nobody can see');
+
 select lives_ok(
   format($$ select public.enforce_booking_rules(%L,
     '2026-10-05 07:00:00+02'::timestamptz, '2026-10-05 13:00:00+02'::timestamptz, false) $$,
@@ -199,30 +221,47 @@ select cmp_ok(
   '>', 0,
   'and the closure days the first apply brought are still there');
 
--- ── a member with no subscription, and a carnet ──────────────────────
+select is(
+  (select format('%s of %s', count(*) filter (where c.active), count(*))
+     from public.credit_products c where c.workspace_id = pg_temp.ws()),
+  '2 of 2',
+  'and the carnets merge by name rather than being sold twice: still '
+  'two products, both still on sale');
 
-update public.workspaces
-   set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{"carnets": true}'::jsonb
- where id = pg_temp.ws();
-
-insert into public.credit_products (workspace_id, name, half_days, price_cents,
-                                    validity_months, active)
-values (pg_temp.ws(), 'Carnet 10', 10, 15000, 12, true);
+-- ── a member with no subscription, and a carnet the TEMPLATE brought ─
+--
+-- This section used to switch `carnets` on by hand and insert a
+-- ten-half-day, 150 € , twelve-month product of its own before selling
+-- it. That proved the carnet machinery and nothing whatever about the
+-- template — the numbers were not even the ones the association
+-- advertises. Both repairs are gone: the flag and the product below are
+-- what `apply_workspace_template` left behind.
 
 select public.sell_credit(
   pg_temp.ws(), pg_temp.member('none'),
-  (select id from public.credit_products where workspace_id = pg_temp.ws()));
+  (select c.id from public.credit_products c
+    where c.workspace_id = pg_temp.ws()
+      and c.name = 'Carnet 10 demi-journées'));
 
 select is(
   public.member_credit_balance(pg_temp.member('none'), now()),
   10,
-  'a member with no subscription buys ten half-days');
+  'a member with no subscription buys the ten half-days the template '
+  'priced');
 
-create or replace function pg_temp.book_ten_then_one_more() returns int
+-- Returns the eleven attempts as one row, because running them twice
+-- would book the same seat twice. A refusal among the FIRST ten raises
+-- rather than being counted as a refused eleventh: the old version
+-- swallowed every exception, so ten bookings failing for some unrelated
+-- reason would have read as the carnet working.
+create or replace function pg_temp.book_ten_then_one_more()
+returns table (made int, refusal text)
 language plpgsql as $book$
 declare
-  v_seat uuid; d date; i int; v_made int := 0;
+  v_seat uuid; d date; i int;
 begin
+  made := 0;
+  refusal := '';
   select s.id into v_seat from public.seats s where s.workspace_id = pg_temp.ws() limit 1;
   for i in 0..10 loop
     d := date '2026-10-05' + (i * 7);
@@ -230,20 +269,32 @@ begin
       perform public.create_reservation(pg_temp.ws(), v_seat, null,
         (d + time '07:00') at time zone 'Europe/Paris',
         (d + time '13:00') at time zone 'Europe/Paris', false, null, null);
-      v_made := v_made + 1;
-    exception when others then null;
+      made := made + 1;
+    exception when others then
+      if i < 10 then
+        raise exception 'booking % of the carnet was refused: %', i + 1, sqlerrm;
+      end if;
+      refusal := sqlerrm;
     end;
   end loop;
-  return v_made;
+  return next;
 end
 $book$;
 
 select pg_temp.act_as('none');
+create temp table carnet_run as select * from pg_temp.book_ten_then_one_more();
+
 select is(
-  pg_temp.book_ten_then_one_more(),
+  (select made from carnet_run),
   10,
-  'and books exactly ten half-days across two months — the eleventh is '
-  'refused, which is what a carnet without a subscription means');
+  'and books exactly ten half-days across two months — which is what a '
+  'carnet without a subscription means');
+
+select is(
+  (select refusal from carnet_run),
+  'half-day quota exceeded — request additional half-days',
+  'and the eleventh is refused for the reason it should be, named in '
+  'full: a test that only counted ten would pass on any refusal at all');
 
 
 -- ── #1282 S4: the bureau arrives, and holds nobody ───────────────────

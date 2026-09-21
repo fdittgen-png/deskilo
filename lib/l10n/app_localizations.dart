@@ -3552,6 +3552,12 @@ abstract class AppLocalizations {
   /// **'Roles the space defines'**
   String get deployEntityWorkspaceRoles;
 
+  /// #1271 T1: deployEntityCreditProducts
+  ///
+  /// In en, this message translates to:
+  /// **'Prepaid carnets on sale'**
+  String get deployEntityCreditProducts;
+
   /// Settings toggle enabling the local diagnostics screen
   ///
   /// In en, this message translates to:

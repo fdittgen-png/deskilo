@@ -184,7 +184,13 @@ List<String> checkTemplate(
       if (!covered) fail('subscription level $pct % falls in no fee band');
     }
   }
-  for (final t in ['packages', 'services', 'plans', 'accessories']) {
+  for (final t in [
+    'packages',
+    'services',
+    'plans',
+    'accessories',
+    'credit_products',
+  ]) {
     for (final row in tables[t] as List? ?? const []) {
       final r = row as Map;
       for (final f in ['price_cents', 'base_fee_cents', 'supplement_cents']) {
@@ -211,7 +217,7 @@ List<String> checkTemplate(
   final vatLabels = {
     for (final r in tables['vat_rates'] as List? ?? const []) '${(r as Map)['label']}',
   };
-  for (final t in ['packages', 'services', 'accessories']) {
+  for (final t in ['packages', 'services', 'accessories', 'credit_products']) {
     for (final row in tables[t] as List? ?? const []) {
       final label = (row as Map)['vat_rate'];
       if (label != null && !vatLabels.contains('$label')) {

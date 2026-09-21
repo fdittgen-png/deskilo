@@ -1,7 +1,7 @@
 {
   "key": "association_fr",
   "name": "Association de coworking (France)",
-  "description": "Pour une association de coworking en France : demi-journées de 7 h à 13 h et de 13 h à 19 h du lundi au vendredi, jours fériés de l'année et de la suivante, cotisations à 50 % et 100 %, un calendrier où se prennent les validations, les mots de l'association, et deux étages prêts à réserver.",
+  "description": "Pour une association de coworking en France : demi-journées de 7 h à 13 h et de 13 h à 19 h du lundi au vendredi, jours fériés de l'année et de la suivante, cotisations à 50 % et 100 %, deux carnets prépayés pour qui ne cotise pas, les rôles du bureau, un calendrier où se prennent les validations, les mots de l'association, et deux étages prêts à réserver.",
   "sort_order": 1,
   "visibility": "builtin",
   "schema_version": 1,
@@ -13,6 +13,7 @@
   "entities": [
     "identity",
     "tariffs",
+    "credit_products",
     "floor_plan",
     "booking_rules",
     "closure_days",
@@ -25,7 +26,10 @@
     "on": [
       "calendarHub",
       "calendarViews",
-      "calendarValidations"
+      "calendarValidations",
+      "carnets",
+      "customRoles",
+      "workspaceVocabulary"
     ],
     "off": [
       "eventsTab",
@@ -77,11 +81,11 @@
         "calendarTab": true,
         "calendarValidations": true,
         "calendarViews": true,
-        "carnets": false,
+        "carnets": true,
         "coOwner": false,
         "configurationTransfer": false,
         "customFields": false,
-        "customRoles": false,
+        "customRoles": true,
         "dataAccessLog": false,
         "dataExport": true,
         "decisionSurface": false,
@@ -174,7 +178,7 @@
         "workspaceBranding": false,
         "workspaceLibrary": false,
         "workspaceStatus": false,
-        "workspaceVocabulary": false
+        "workspaceVocabulary": true
       },
       "lexicon": {
         "fr": {
@@ -252,6 +256,24 @@
           ],
           "sort_order": 3,
           "active": true
+        }
+      ],
+      "credit_products": [
+        {
+          "name": "Carnet 10 demi-journées",
+          "half_days": 10,
+          "price_cents": 5000,
+          "validity_months": null,
+          "active": true,
+          "sort_order": 1
+        },
+        {
+          "name": "Carnet 20 demi-journées",
+          "half_days": 20,
+          "price_cents": 8000,
+          "validity_months": null,
+          "active": true,
+          "sort_order": 2
         }
       ]
     },

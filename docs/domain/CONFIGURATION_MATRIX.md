@@ -85,6 +85,7 @@ actually moves.
 | tariffs | master_data | fee_bands, plans, subscription_levels, billing_rules | B | |
 | services | master_data | services | B | |
 | packages | master_data | packages | B | |
+| credit_products | master_data | credit_products | B | the carnets the space SELLS — name, half-days, price, optional expiry, VAT rate — group `pricing_credits`, `keyed_update` by name (0262). Never `member_credits` or `member_credit_uses`: what somebody bought is a charge on their account and a fact about a person, and a mirror import deactivates a product it does not name rather than deleting it, because the sales point at it (#1271) |
 | accessories | master_data | accessories | B | |
 | floor_plan | master_data | floor_plan | B | requires accessories, sites |
 | sites | master_data | sites | B | |

@@ -452,5 +452,7 @@ String deploymentEntityName(AppLocalizations? l10n, String key) =>
         l10n?.deployEntityFieldDefinitions ?? 'Questions the space asks',
       'workspace_roles' =>
         l10n?.deployEntityWorkspaceRoles ?? 'Roles the space defines',
+      'credit_products' =>
+        l10n?.deployEntityCreditProducts ?? 'Prepaid carnets on sale',
       _ => key,
     };
