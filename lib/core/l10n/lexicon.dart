@@ -32,6 +32,9 @@ const Map<String, LexiconTerm> lexiconAllowList = {
   'legendMine': LexiconTerm(LexiconSurface.legend),
   'legendBlocked': LexiconTerm(LexiconSurface.legend),
   'legendClosed': LexiconTerm(LexiconSurface.legend),
+  // #1281's simple profile says one word for blocked AND closed; #1597
+  // registered it, because the legend rendered it before any list knew.
+  'legendUnavailable': LexiconTerm(LexiconSurface.legend),
   'reserveClosedShort': LexiconTerm(LexiconSurface.legend),
   // what a space is made of
   'spaceKindSeat': LexiconTerm(LexiconSurface.plan),

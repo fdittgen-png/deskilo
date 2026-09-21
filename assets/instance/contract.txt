@@ -810,7 +810,7 @@ routine public.leave_workspace(p_workspace_id uuid) -> void | function | definer
 routine public.ledger_entries_append_only() -> trigger | function | definer | volatile | exec:service_role | body:4da440e10a09
 routine public.level_booking_enabled(p_workspace_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:dbd83400eca2
 routine public.level_has_conflict(p_level_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone) -> boolean | function | definer | stable | exec:authenticated,service_role | body:c1d86154d1aa
-routine public.lexicon_allowed_keys() -> TABLE(key text, placeholders text[]) | function | invoker | stable | exec:authenticated,service_role | body:39a7e7d5aaf1
+routine public.lexicon_allowed_keys() -> TABLE(key text, placeholders text[]) | function | invoker | stable | exec:authenticated,service_role | body:6e0e0cd306e4
 routine public.list_all_workspaces() -> TABLE(id uuid, name text, environment text, pair_id uuid, member_count bigint, owner_count bigint, is_member boolean) | function | definer | stable | exec:authenticated,service_role | body:7f4f5a4f9647
 routine public.log_reservation_event() -> trigger | function | definer | volatile | exec:service_role | body:264bceeba808
 routine public.managed_identity_clean(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:91130291dfdf

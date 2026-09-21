@@ -13,7 +13,7 @@
 -- was the one that called `create_workspace()` instead, and that made it
 -- the only file whose setup nothing else exercised.
 begin;
-select plan(12);
+select plan(14);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -96,11 +96,34 @@ select is(
 -- ------------------------------------------------ the allow-list holds
 select is(
   (select count(*)::int from public.lexicon_allowed_keys()),
-  33,
-  'the allow-list is the 33 product terms, each verified against '
+  34,
+  'the allow-list is the 34 product terms, each verified against '
   'app_en.arb as a simple message with no ICU plural or select — and '
   'each one actually rendered by a widget, so renaming it changes '
   'something a member can see');
+
+-- ------------------------------------------- #1597, both halves of it
+-- `legendUnavailable` is the simple legend profile's one word for
+-- blocked AND closed. It was rendered by `SeatLegend` and carried by no
+-- list, so the editor could not offer it AND a template lost it in
+-- silence. Both paths are asserted, because fixing the writer alone
+-- would have left the import dropping the word.
+select is(
+  public.set_workspace_lexicon_term(
+    pg_temp.ws(), 'fr', 'legendUnavailable', 'Place non disponible')
+    ->'fr'->>'legendUnavailable',
+  'Place non disponible',
+  'a settings manager can save the simple legend''s unavailable word — '
+  'the term `SeatLegend` renders and no list carried (#1597)');
+
+select is(
+  public.imported_lexicon('{"fr":{"legendMine":"Ma place"}}'::jsonb,
+    '{"fr":{"legendFree":"Place libre","legendUnavailable":"Place non disponible"}}'::jsonb,
+    'merge'),
+  '{"fr":{"legendMine":"Ma place","legendFree":"Place libre","legendUnavailable":"Place non disponible"}}'::jsonb,
+  'and a template carrying it arrives with it: the import filters '
+  'against this same list, so an unregistered term was dropped without '
+  'a word — the space applied the template and read the old label');
 
 select throws_matching(
   format($$ select public.set_workspace_lexicon_term(%L, 'fr', 'bookingPastError', 'Nope') $$,
