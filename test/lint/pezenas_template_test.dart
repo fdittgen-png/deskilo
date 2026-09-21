@@ -4,9 +4,9 @@
 // to what `coworking_appli_MB.PDF` actually said.
 //
 // The variant is owner-private: no migration inserts it and #1600
-// publishes it. That leaves it with no builtin drift gate, so the two
-// places it is written — the payload and the review a person reads —
-// are held equal here instead.
+// publishes it. That leaves it with no builtin drift gate, so the three
+// places it is written — the payload, the review a person reads, and
+// the rehearsal that executes it — are held equal here instead.
 //
 // The test that matters most is the dullest: every value in the payload
 // must appear in the review under one of four provenance headings. A
@@ -24,6 +24,7 @@ import 'template_contract_test.dart' show TemplateContractRules, checkTemplate;
 
 const _dir = 'supabase/templates/variants';
 const _key = 'pezenas_coworking';
+const _rehearsal = 'supabase/tests/database/54_pezenas_template.sql';
 
 Map<String, dynamic> _variant() => Map<String, dynamic>.from(
     jsonDecode(File('$_dir/$_key.json').readAsStringSync()) as Map);
@@ -37,6 +38,12 @@ const _report = <String, List<int>>{
   '2027-07': [21, 42], '2027-08': [22, 44], '2027-09': [22, 44],
   '2027-10': [21, 42], '2027-11': [20, 40], '2027-12': [23, 46],
 };
+
+/// The body of the single `$tag$…$tag$` literal in [sql], decoded.
+Object? _dollarQuoted(String sql, String tag) => jsonDecode(
+    RegExp('\\\$$tag\\\$(.*?)\\\$$tag\\\$', dotAll: true)
+        .firstMatch(sql)!
+        .group(1)!);
 
 void main() {
   test('the variant passes the same contract every builtin does', () {
@@ -153,6 +160,22 @@ void main() {
           reason: '${e.key}: a half-day is half a day whatever the '
               'subscription');
     }
+  });
+
+  test('and the rehearsal asserts exactly those numbers, from the applied '
+      'payload rather than from this file', () {
+    final sql = File(_rehearsal).readAsStringSync();
+    for (final pct in [0, 1]) {
+      expect(sql, contains('array[${_report.values.map((v) => v[pct]).join(',')}]'),
+          reason: 'the ${pct == 0 ? '50' : '100'} % column of the report');
+    }
+  });
+
+  test('the rehearsal applies the very payload the variant carries', () {
+    final sql = File(_rehearsal).readAsStringSync();
+    final v = _variant();
+    expect(_dollarQuoted(sql, 'cfg'), v['configuration']);
+    expect(_dollarQuoted(sql, 'tpl'), v['floor_plan']);
   });
 
   test('the floor plan is two named levels and no invented inventory', () {
