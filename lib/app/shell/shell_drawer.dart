@@ -16,6 +16,7 @@ import '../../core/navigation/navigation_style.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../features/workspace/presentation/widgets/workspace_emblem.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
+import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import 'shell_destinations.dart';
@@ -70,6 +71,12 @@ class ShellDrawer extends ConsumerWidget {
     final isOwner = me?.actsAsOwner ?? false;
     final canAdminister = me?.canAdminister ?? false;
     final showAdminSection = isOwner || canAdminister;
+    // #1598 — the effective permission set, watched, decides the account
+    // entry's name in the drawer exactly as it does in the app bar.
+    final accountMenu = showsMemberAccountMenu(
+      features: features,
+      permissions: ref.watch(myPermissionsProvider),
+    );
 
     void go(String route, {bool push = true}) {
       Navigator.of(context).pop();
@@ -149,8 +156,17 @@ class ShellDrawer extends ConsumerWidget {
             l10n?.documentsTitle ?? 'Documents', () => go('/documents')),
       _Entry('drawer-privacy', Icons.shield_outlined,
           l10n?.privacyTitle ?? 'Privacy & data', () => go('/privacy')),
-      _Entry('drawer-settings', Icons.settings_outlined,
-          l10n?.settingsTitle ?? 'Settings', () => go('/settings')),
+      // #1598 — the wide shell says the same word as the narrow one: the
+      // entry keeps its key and its destination and changes only its
+      // name and icon, so a member who administers nothing reads
+      // My account here too.
+      _Entry(
+          'drawer-settings',
+          accountMenu ? Icons.account_circle_outlined : Icons.settings_outlined,
+          accountMenu
+              ? (l10n?.memberAccountTitle ?? 'My account')
+              : (l10n?.settingsTitle ?? 'Settings'),
+          () => go('/settings')),
     ];
 
     Widget tile(_Entry e) => ListTile(

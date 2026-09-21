@@ -1,0 +1,15 @@
+{
+  "@@locale": "de",
+  "featureMemberAccountMenuTitle": "Mitglieder sehen Mein Konto",
+  "@featureMemberAccountMenuTitle": {
+    "description": "#1598 member account menu: featureMemberAccountMenuTitle"
+  },
+  "featureMemberAccountMenuDesc": "Ein Mitglied, das nichts verwaltet, findet Mein Konto statt Einstellungen — denselben Bildschirm, der ihm ohnehin nur sein Konto, seine Mitgliedschaft und seine Einstellungen zeigt, unter dem Namen, der das sagt. Wer durch seine Rolle etwas verwalten darf, behält Einstellungen und alles, was sich darin öffnet. Dies benennt einen Eintrag um; es gewährt und entzieht nichts.",
+  "@featureMemberAccountMenuDesc": {
+    "description": "#1598 member account menu: featureMemberAccountMenuDesc"
+  },
+  "memberAccountTitle": "Mein Konto",
+  "@memberAccountTitle": {
+    "description": "#1598 member account menu: memberAccountTitle"
+  }
+}

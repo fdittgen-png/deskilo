@@ -1,0 +1,15 @@
+{
+  "@@locale": "it",
+  "featureMemberAccountMenuTitle": "I membri vedono Il mio account",
+  "@featureMemberAccountMenuTitle": {
+    "description": "#1598 member account menu: featureMemberAccountMenuTitle"
+  },
+  "featureMemberAccountMenuDesc": "Un membro che non amministra nulla incontra Il mio account invece di Impostazioni — la stessa schermata, che già gli mostra solo il suo account, la sua adesione e le sue preferenze, con il nome che lo dice. Chi ha un ruolo che concede amministrazione conserva Impostazioni e tutto ciò che apre. Questo rinomina una voce; non concede e non toglie nulla.",
+  "@featureMemberAccountMenuDesc": {
+    "description": "#1598 member account menu: featureMemberAccountMenuDesc"
+  },
+  "memberAccountTitle": "Il mio account",
+  "@memberAccountTitle": {
+    "description": "#1598 member account menu: memberAccountTitle"
+  }
+}

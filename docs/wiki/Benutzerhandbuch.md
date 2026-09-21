@@ -1985,6 +1985,30 @@ Ob die App über eine untere Leiste oder eine seitliche Schiene
 navigiert. Auf breitem Bildschirm gibt die Schiene dem Plan mehr Raum;
 auf dem Telefon ist die Leiste leichter zu erreichen.
 
+### Mein Konto statt Einstellungen (#1598)
+
+Ein Raum kann festlegen, dass ein Mitglied, das nichts verwaltet, dort
+**Mein Konto** findet, wo das Zahnrad **Einstellungen** steht — in der
+Leiste oben und im Menü auf breitem Bildschirm. Dahinter liegt derselbe
+Bildschirm nach demselben Tippen: Profil und Foto, die Mitgliedschaft,
+Sprache und regionale Formate, die Rechte an den eigenen Daten, die
+Hilfe, der Profilwechsel und das Abmelden sind genau dort, wo sie waren.
+Nur Name und Symbol ändern sich, damit niemand sein eigenes Konto hinter
+einem Wort suchen muss, das nach fremden Einstellungen klingt.
+
+Wem eine Rolle etwas anvertraut — Eigentümerin, Mit-Eigentümer,
+Verwalter oder ein Mitglied, dem eine der eigenen Rollen dieses Raums
+etwas überträgt — behält **Einstellungen** und alles, was sich darin
+öffnet. Der Eintrag folgt den Berechtigungen, nicht dem Titel: eine
+Übertragung von heute Morgen erscheint ohne Neustart.
+
+Es ist ein Name, kein Schloss. Nichts wird entzogen und nichts gewährt:
+die Verwaltungsbildschirme weisen genau dieselben Personen ab wie
+vorher, ob man sie über ein Menü erreicht oder ihre Adresse eintippt.
+
+Eigentümer schalten es unter *Einstellungen → Funktionen* ein. Ein Raum,
+der es aus lässt, behält das Zahnrad genau so, wie es ist.
+
 ### Der Demobereich
 
 Ein erfundener Bereich, den jede Person vom Anmeldebildschirm aus öffnen

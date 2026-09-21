@@ -146,7 +146,12 @@ import 'package:flutter_test/flutter_test.dart';
 //   personal data. Everywhere, because the substitution reaches every
 //   screen that shows a person at once. Platform, default OFF: it is
 //   switched on for the length of a shoot and off after.
-const int _expectedFeatureCount = 110; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
+// 110→111 (2026-09-20): #1598 memberAccountMenu — a member who
+//   administers nothing meets My account where the workspace gear was:
+//   the same screen and the same route, under the name that says whose
+//   it is. Settings, Platform, default OFF: a space that never asked
+//   keeps the gear it has always had.
+const int _expectedFeatureCount = 111; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
 
 void main() {
   _tierPins();

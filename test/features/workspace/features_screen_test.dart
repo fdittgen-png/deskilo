@@ -124,7 +124,10 @@ void main() {
     // switched on for the length of a shoot and off after, so a space
     // that started with it on would show its members names none of them
     // recognise.
-    expect(onCount, featureManifest.length - 28);
+    // #1598 — memberAccountMenu is the twenty-ninth: renaming the entry
+    // a member meets is a decision a space makes, not one a default
+    // makes for it.
+    expect(onCount, featureManifest.length - 29);
   });
 
   testWidgets(

@@ -2000,6 +2000,30 @@ Se l'app naviga con una barra in basso o una guida laterale. Su schermo
 largo la guida lascia più spazio alla piantina; sul telefono la barra è
 più facile da raggiungere.
 
+### Il mio account al posto di Impostazioni (#1598)
+
+Uno spazio può decidere che un membro che non amministra nulla trovi
+**Il mio account** dove si trova la rotella **Impostazioni** — nella
+barra in alto e nel menu su schermo largo. Dietro lo stesso tocco c'è la
+stessa schermata: il profilo e la foto, l'adesione, la lingua e i
+formati regionali, i diritti sui propri dati, la guida, il cambio di
+profilo e la disconnessione sono esattamente dove erano. Cambiano solo
+il nome e l'icona, perché nessuno debba cercare il proprio account
+dietro una parola che suona come le impostazioni di qualcun altro.
+
+Chiunque abbia qualcosa affidato da un ruolo — proprietaria,
+comproprietario, amministratore, o un membro a cui uno dei ruoli propri
+di questo spazio delega qualcosa — conserva **Impostazioni** e tutto ciò
+che apre. La voce segue i permessi e non il titolo: una delega fatta
+stamattina compare senza riavviare l'app.
+
+È un nome, non un lucchetto. Nulla viene tolto e nulla concesso: le
+schermate di amministrazione rifiutano esattamente le stesse persone di
+prima, che ci si arrivi da un menu o digitandone l'indirizzo.
+
+I proprietari lo attivano in *Impostazioni → Funzionalità*. Uno spazio
+che lo lascia disattivato conserva la rotella così com'è.
+
 ### Lo spazio dimostrativo
 
 Uno spazio inventato che chiunque può aprire dalla schermata di accesso,

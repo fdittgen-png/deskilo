@@ -763,7 +763,7 @@ routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | fu
 routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:99a275c44fd9
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f195c36ad44b
-routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:791b65bb8821
+routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:6027a3ce83a2
 routine public.field_answer_problem(p_definition_id uuid, p_answer jsonb) -> text | function | definer | stable | exec:authenticated,service_role | body:dfc73d4d2ec2
 routine public.field_contexts() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:233e963064a5
 routine public.field_definition_conflicts(p_workspace_id uuid, p_definitions jsonb) -> jsonb | function | definer | stable | exec:service_role | body:d62e757be99b

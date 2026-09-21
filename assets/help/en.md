@@ -1910,6 +1910,30 @@ Whether the app navigates by a bottom bar or a side rail. On a wide
 screen the rail gives the plan more room; on a phone the bar is easier
 to reach.
 
+### My account instead of Settings (#1598)
+
+A space can decide that a member who administers nothing meets **My
+account** where the **Settings** gear is — in the bar at the top, and in
+the menu on a wide screen. It is the same screen behind the same tap:
+your profile and your photo, your membership, your language and regional
+preferences, your privacy and data rights, Help, switching profiles and
+signing out are all exactly where they were. Only the name and the icon
+change, so nobody has to look for their own account behind a word that
+sounds like somebody else's settings.
+
+Anyone a role entrusts with something — an owner, a co-owner, an
+administrator, or a member one of this space's own roles delegates to —
+keeps **Settings** and everything it opens. The entry follows the
+permissions rather than the title, so a delegation made this morning
+shows up without restarting the app.
+
+It is a name, not a lock. Nothing is taken away and nothing is given:
+the administration screens refuse exactly the people they always
+refused, whether they are reached from a menu or typed in as an address.
+
+Owners switch it on under *Settings → Features*. A space that leaves it
+off keeps the gear precisely as it is today.
+
 ### The demo workspace
 
 An invented workspace anybody can open from the sign-in screen, without

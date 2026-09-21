@@ -1023,6 +1023,10 @@ window.SETUP_L10N={
    "recordingPrivacy": [
     "Filming mode",
     "For filming or photographing this workspace. Every name, e-mail, telephone number, address and photograph is replaced by an invented person before it reaches the screen, while the plan, the bookings and the figures stay the real ones. A banner says so on every screen, and the identity forms refuse to save until it is off."
+   ],
+   "memberAccountMenu": [
+    "Members see My account",
+    "A member who administers nothing meets My account instead of Settings — the same screen, which already shows them only their own account, membership and preferences, under the name that says so. Anyone whose role grants administration keeps Settings and everything it opens. This renames an entry; it grants and withdraws nothing."
    ]
   },
   "process": {
@@ -2255,6 +2259,10 @@ window.SETUP_L10N={
    "recordingPrivacy": [
     "Mode tournage",
     "Pour filmer ou photographier cet espace. Chaque nom, adresse électronique, numéro de téléphone, adresse postale et photo est remplacé par une personne inventée avant d'arriver à l'écran, tandis que le plan, les réservations et les montants restent les vrais. Un bandeau l'indique sur chaque écran, et les formulaires d'identité refusent d'enregistrer tant qu'il est actif."
+   ],
+   "memberAccountMenu": [
+    "Les membres voient Mon compte",
+    "Un membre qui n'administre rien rencontre Mon compte au lieu de Réglages — le même écran, qui ne lui montre déjà que son compte, son adhésion et ses préférences, sous le nom qui le dit. Toute personne dont le rôle accorde une administration garde Réglages et tout ce qu'il ouvre. Ceci renomme une entrée ; cela n'accorde et ne retire rien."
    ]
   },
   "process": {
@@ -3487,6 +3495,10 @@ window.SETUP_L10N={
    "recordingPrivacy": [
     "Aufnahmemodus",
     "Zum Filmen oder Fotografieren dieses Arbeitsraums. Jeder Name, jede E-Mail-Adresse, Telefonnummer, Anschrift und jedes Foto wird durch eine erfundene Person ersetzt, bevor es auf den Bildschirm gelangt; der Plan, die Buchungen und die Beträge bleiben die echten. Ein Banner weist auf jedem Bildschirm darauf hin, und die Identitätsformulare verweigern das Speichern, solange er aktiv ist."
+   ],
+   "memberAccountMenu": [
+    "Mitglieder sehen Mein Konto",
+    "Ein Mitglied, das nichts verwaltet, findet Mein Konto statt Einstellungen — denselben Bildschirm, der ihm ohnehin nur sein Konto, seine Mitgliedschaft und seine Einstellungen zeigt, unter dem Namen, der das sagt. Wer durch seine Rolle etwas verwalten darf, behält Einstellungen und alles, was sich darin öffnet. Dies benennt einen Eintrag um; es gewährt und entzieht nichts."
    ]
   },
   "process": {
@@ -4719,6 +4731,10 @@ window.SETUP_L10N={
    "recordingPrivacy": [
     "Modo grabación",
     "Para filmar o fotografiar este espacio. Cada nombre, correo electrónico, número de teléfono, dirección postal y fotografía se sustituye por una persona inventada antes de llegar a la pantalla, mientras que el plano, las reservas y los importes siguen siendo los reales. Un aviso lo indica en cada pantalla, y los formularios de identidad se niegan a guardar mientras esté activo."
+   ],
+   "memberAccountMenu": [
+    "Los miembros ven Mi cuenta",
+    "Un miembro que no administra nada encuentra Mi cuenta en lugar de Ajustes — la misma pantalla, que ya solo le muestra su cuenta, su membresía y sus preferencias, con el nombre que lo dice. Quien tenga administración por su rol conserva Ajustes y todo lo que abre. Esto renombra una entrada; no concede ni retira nada."
    ]
   },
   "process": {
@@ -5951,6 +5967,10 @@ window.SETUP_L10N={
    "recordingPrivacy": [
     "Modalità ripresa",
     "Per filmare o fotografare questo spazio. Ogni nome, indirizzo e-mail, numero di telefono, indirizzo postale e fotografia viene sostituito da una persona inventata prima di arrivare sullo schermo, mentre la piantina, le prenotazioni e gli importi restano quelli veri. Un avviso lo segnala su ogni schermata, e i moduli di identità rifiutano di salvare finché è attiva."
+   ],
+   "memberAccountMenu": [
+    "I membri vedono Il mio account",
+    "Un membro che non amministra nulla incontra Il mio account invece di Impostazioni — la stessa schermata, che già gli mostra solo il suo account, la sua adesione e le sue preferenze, con il nome che lo dice. Chi ha un ruolo che concede amministrazione conserva Impostazioni e tutto ciò che apre. Questo rinomina una voce; non concede e non toglie nulla."
    ]
   },
   "process": {

@@ -6634,6 +6634,16 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ces informations n\'ont pas pu être lues : il n\'y a donc rien à modifier pour l\'instant. Rien n\'a été changé.';
 
   @override
+  String get featureMemberAccountMenuTitle => 'Les membres voient Mon compte';
+
+  @override
+  String get featureMemberAccountMenuDesc =>
+      'Un membre qui n\'administre rien rencontre Mon compte au lieu de Réglages — le même écran, qui ne lui montre déjà que son compte, son adhésion et ses préférences, sous le nom qui le dit. Toute personne dont le rôle accorde une administration garde Réglages et tout ce qu\'il ouvre. Ceci renomme une entrée ; cela n\'accorde et ne retire rien.';
+
+  @override
+  String get memberAccountTitle => 'Mon compte';
+
+  @override
   String get membersTitle => 'Membres et forfaits';
 
   @override

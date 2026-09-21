@@ -33,7 +33,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `money -> workspace` | 117 |
 | `reservations -> plan` | 68 |
 | `reservations -> workspace` | 51 |
-| `profile -> workspace` | 37 |
+| `profile -> workspace` | 38 |
 | `workspace -> money` | 35 |
 | `members -> workspace` | 34 |
 | `money -> events` | 30 |
@@ -85,7 +85,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**54 directed relationships, 689 imports.**
+**54 directed relationships, 690 imports.**
 
 Reciprocal (19): `calendar <-> money`, `calendar <-> reservations`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
@@ -99,14 +99,14 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/core/demo/data/money_repository.dart` | 1800 |
 | `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1658 |
 | `lib/features/money/data/supabase_money_repository.dart` | 1420 |
-| `lib/features/workspace/domain/workspace_feature.dart` | 1393 |
+| `lib/features/workspace/domain/workspace_feature.dart` | 1409 |
 | `lib/features/workspace/data/supabase_workspace_repository.dart` | 1282 |
 | `lib/features/money/presentation/screens/money_screen.dart` | 1277 |
 | `lib/features/reservations/presentation/screens/reserve_screen.dart` | 1145 |
 | `lib/features/money/presentation/widgets/invoice_template_sheet.dart` | 1113 |
+| `lib/features/profile/presentation/screens/settings_screen.dart` | 1053 |
 | `lib/features/money/domain/invoice_pdf.dart` | 1050 |
 | `lib/features/editor/presentation/screens/level_canvas_screen.dart` | 1044 |
-| `lib/features/profile/presentation/screens/settings_screen.dart` | 1042 |
 | `lib/features/money/presentation/invoice_actions.dart` | 1027 |
 | `lib/features/money/presentation/widgets/report_visual_editor.dart` | 981 |
 | `lib/features/workspace/domain/workspace_xml.dart` | 964 |

@@ -248,6 +248,7 @@ window.SETUP_PROCESSES=[
      "uiAnimations",
      "regionalFormats",
      "navigationStyle",
+     "memberAccountMenu",
      "demoMode"
     ]
    }

@@ -11429,6 +11429,24 @@ abstract class AppLocalizations {
   /// **'These details could not be read, so there is nothing to edit yet. Nothing has been changed.'**
   String get managedProfileIdentityUnavailable;
 
+  /// #1598 member account menu: featureMemberAccountMenuTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Members see My account'**
+  String get featureMemberAccountMenuTitle;
+
+  /// #1598 member account menu: featureMemberAccountMenuDesc
+  ///
+  /// In en, this message translates to:
+  /// **'A member who administers nothing meets My account instead of Settings — the same screen, which already shows them only their own account, membership and preferences, under the name that says so. Anyone whose role grants administration keeps Settings and everything it opens. This renames an entry; it grants and withdraws nothing.'**
+  String get featureMemberAccountMenuDesc;
+
+  /// #1598 member account menu: memberAccountTitle
+  ///
+  /// In en, this message translates to:
+  /// **'My account'**
+  String get memberAccountTitle;
+
   /// Title of the owner-only member management screen + its settings entry
   ///
   /// In en, this message translates to:
