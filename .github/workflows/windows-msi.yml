@@ -31,10 +31,16 @@ on:
   # #570 — the release train reuses this workflow verbatim.
   workflow_call:
     inputs:
+      source_sha:
+        description: The full commit SHA to build — resolved once by the caller (#1446 C4)
+        required: false
+        type: string
+        default: ''
       ref:
         required: false
         type: string
         default: master
+
 
 env:
   FLUTTER_VERSION: "3.44.9"
@@ -44,9 +50,32 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 45
     steps:
+      # #1446 C4 — one full SHA fixed BEFORE the checkout (the caller's, the
+      # dispatch ref resolved here, or this event's); no other HEAD builds.
+      - name: Pin the source
+        id: source
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          REF: ${{ inputs.ref }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          sha="$SOURCE_SHA"
+          [ -n "$sha" ] || [ -z "$REF" ] || sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/$(jq -rn --arg r "$REF" '$r|@uri')" --jq .sha)
+          sha="${sha:-$GITHUB_SHA}"
+          [[ "$sha" =~ ^[0-9a-f]{40}$ ]] || { echo "::error::the source did not resolve to a commit (got '$sha')"; exit 1; }
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "Candidate: $sha"
+
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.ref || github.ref }}
+          ref: ${{ steps.source.outputs.sha }}
+
+      - uses: ./.github/actions/source-identity
+        with:
+          sha: ${{ steps.source.outputs.sha }}
+          leg: windows
 
       - uses: subosito/flutter-action@v2
         with:

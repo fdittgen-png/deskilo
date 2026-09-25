@@ -1,0 +1,79 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# #1446 C4 — a leg proves it built the candidate, and says which one.
+#
+# Runs right after the checkout of the pinned SHA (the caller's, or the
+# leg's own `Pin the source` step) and does what no build step may do for
+# itself: refuses to go on unless HEAD IS that SHA — a branch that moved
+# between dispatch and checkout, a rerun on a newer tip, a `ref: master`
+# that ignored the request, all end here, red, before a byte is built —
+# and records SHA, flavor, dart-defines and base href in the summary and
+# in a `source-identity-<leg>` artifact, so an artifact traces to its
+# exact source and configuration, not to a branch name that moved on.
+name: source identity
+description: Fail unless HEAD is the pinned candidate; record SHA, flavor, defines and base href
+
+inputs:
+  sha:
+    description: The full commit SHA this leg was told to build
+    required: true
+  leg:
+    description: android | apple | macos | windows | web
+    required: true
+  flavor:
+    description: The Flutter flavor built (`default` when none is passed)
+    default: default
+  defines:
+    description: The --dart-define values of the build (`(none)` when none)
+    default: '(none)'
+  base_href:
+    description: The web base href (`n/a` for a native leg)
+    default: n/a
+
+runs:
+  using: composite
+  steps:
+    - name: Verify the checkout is the candidate
+      shell: bash
+      env:
+        SHA: ${{ inputs.sha }}
+      run: |
+        set -euo pipefail
+        [[ "$SHA" =~ ^[0-9a-f]{40}$ ]] || { echo "::error::the candidate must be a full commit SHA, got '$SHA'"; exit 1; }
+        head=$(git rev-parse HEAD)
+        [ "$head" = "$SHA" ] || { echo "::error::checkout HEAD is $head, not the candidate $SHA — this leg builds nothing but what was resolved"; exit 1; }
+        echo "HEAD is the candidate: $SHA"
+
+    - name: Record the build identity
+      shell: bash
+      env:
+        SHA: ${{ inputs.sha }}
+        LEG: ${{ inputs.leg }}
+        FLAVOR: ${{ inputs.flavor }}
+        DEFINES: ${{ inputs.defines }}
+        BASE_HREF: ${{ inputs.base_href }}
+      run: |
+        set -euo pipefail
+        mkdir -p "$RUNNER_TEMP/source-identity"
+        file="$RUNNER_TEMP/source-identity/source-identity.txt"
+        {
+          echo "leg=$LEG"
+          echo "sha=$SHA"
+          echo "flavor=$FLAVOR"
+          echo "defines=$DEFINES"
+          echo "base_href=$BASE_HREF"
+          echo "flutter=${FLUTTER_VERSION:-unset}"
+          echo "event=$GITHUB_EVENT_NAME"
+          echo "run=$GITHUB_RUN_ID/$GITHUB_RUN_ATTEMPT"
+        } > "$file"
+        { echo "### Source identity · $LEG"; echo '```'; cat "$file"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: source-identity-${{ inputs.leg }}
+        path: ${{ runner.temp }}/source-identity/source-identity.txt
+        # A rerun of this leg re-verifies the SAME candidate and replaces
+        # the record; it can never add a second, different one.
+        overwrite: true
+        retention-days: 90

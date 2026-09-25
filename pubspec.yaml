@@ -114,6 +114,9 @@ dev_dependencies:
     sdk: flutter
   flutter_launcher_icons: ^0.14.4
   visibility_detector: ^0.4.0+2
+  # #1446 C4 — the workflow lint reads .github/workflows/*.yml as YAML,
+  # not by regex. Already transitive; naming it lets a test import it.
+  yaml: ^3.1.3
 
 flutter:
   uses-material-design: true
