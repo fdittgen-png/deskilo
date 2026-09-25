@@ -247,7 +247,17 @@ enum WorkspaceFeature {
   /// a member only their own account, membership and preferences,
   /// under the name that says so. Platform, default OFF: a space that
   /// never asked keeps the gear it has always had.
-  memberAccountMenu;
+  memberAccountMenu,
+
+  /// #1607 — the MCP interface is AVAILABLE to this workspace: an AI
+  /// assistant may be connected to DesKilo through it. Availability,
+  /// never authorization — switching it on enrols nobody, approves no
+  /// request, grants no role and registers no client. Each person
+  /// still needs an owner-configured grant approved by the instance
+  /// administrator, and every call keeps answering to the permissions
+  /// the app already applies. Platform, default OFF: no workspace is
+  /// reachable by a machine it never asked to be reachable by.
+  mcpAccess;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1246,6 +1256,17 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // choice meaningless. Settings, because Settings is what it renames.
   WorkspaceFeature.memberAccountMenu: FeatureManifestEntry(
     feature: WorkspaceFeature.memberAccountMenu,
+    surface: FeatureSurface.settings,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+  ),
+  // #1607 — `requires` is deliberately empty: availability of the MCP
+  // interface depends on no other functionality, and what a connected
+  // assistant may DO is decided per call by the feature and permission
+  // it touches, never by this flag. Settings, because the owner's
+  // grant configuration is a setting.
+  WorkspaceFeature.mcpAccess: FeatureManifestEntry(
+    feature: WorkspaceFeature.mcpAccess,
     surface: FeatureSurface.settings,
     tier: FeatureTier.platform,
     defaultOn: false,

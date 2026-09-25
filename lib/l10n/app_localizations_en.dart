@@ -6573,6 +6573,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'These details could not be read, so there is nothing to edit yet. Nothing has been changed.';
 
   @override
+  String get featureMcpAccessTitle => 'MCP interface';
+
+  @override
+  String get featureMcpAccessDesc =>
+      'Makes the MCP interface available to this workspace, so an AI assistant can be connected to DesKilo. Availability only: switching it on grants nobody anything. Each person still needs a grant the owner configures and the instance administrator approves, and every operation keeps answering to the permissions and rules the app already applies. Off hides the MCP entry points and refuses calls; existing grants stay visible and revocable.';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Members see My account';
 
   @override

@@ -151,7 +151,12 @@ import 'package:flutter_test/flutter_test.dart';
 //   the same screen and the same route, under the name that says whose
 //   it is. Settings, Platform, default OFF: a space that never asked
 //   keeps the gear it has always had.
-const int _expectedFeatureCount = 111; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
+// 111→112 (2026-09-25): #1607 mcpAccess — the MCP interface is AVAILABLE
+//   to this workspace, so an AI assistant may be connected to DesKilo.
+//   Availability, never authorization: switching it on enrols nobody,
+//   approves nothing and grants no role. Settings, Platform, default
+//   OFF: no workspace is reachable by a machine it never asked for.
+const int _expectedFeatureCount = 112; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
 
 void main() {
   _tierPins();

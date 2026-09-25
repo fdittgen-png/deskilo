@@ -11435,6 +11435,18 @@ abstract class AppLocalizations {
   /// **'These details could not be read, so there is nothing to edit yet. Nothing has been changed.'**
   String get managedProfileIdentityUnavailable;
 
+  /// #1607 MCP access: featureMcpAccessTitle
+  ///
+  /// In en, this message translates to:
+  /// **'MCP interface'**
+  String get featureMcpAccessTitle;
+
+  /// #1607 MCP access: featureMcpAccessDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Makes the MCP interface available to this workspace, so an AI assistant can be connected to DesKilo. Availability only: switching it on grants nobody anything. Each person still needs a grant the owner configures and the instance administrator approves, and every operation keeps answering to the permissions and rules the app already applies. Off hides the MCP entry points and refuses calls; existing grants stay visible and revocable.'**
+  String get featureMcpAccessDesc;
+
   /// #1598 member account menu: featureMemberAccountMenuTitle
   ///
   /// In en, this message translates to:

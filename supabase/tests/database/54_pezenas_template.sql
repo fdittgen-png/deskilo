@@ -183,6 +183,7 @@ begin
       "levelBooking": false,
       "managedProfileAccess": false,
       "managedProfiles": false,
+      "mcpAccess": false,
       "memberAccountMenu": true,
       "memberDataExport": true,
       "memberEnvironments": false,

@@ -127,7 +127,10 @@ void main() {
     // #1598 — memberAccountMenu is the twenty-ninth: renaming the entry
     // a member meets is a decision a space makes, not one a default
     // makes for it.
-    expect(onCount, featureManifest.length - 29);
+    // #1607 — mcpAccess is the thirtieth: a workspace is never reachable
+    // by a machine it did not ask to be reachable by, and asking is only
+    // the first of the steps that lead to one being allowed in.
+    expect(onCount, featureManifest.length - 30);
   });
 
   testWidgets(

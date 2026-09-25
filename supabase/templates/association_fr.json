@@ -114,6 +114,7 @@
         "levelBooking": false,
         "managedProfileAccess": false,
         "managedProfiles": false,
+        "mcpAccess": false,
         "memberAccountMenu": false,
         "memberDataExport": true,
         "memberEnvironments": false,

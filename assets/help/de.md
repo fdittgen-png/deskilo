@@ -1946,6 +1946,24 @@ vorher, ob man sie über ein Menü erreicht oder ihre Adresse eintippt.
 Eigentümer schalten es unter *Einstellungen → Funktionen* ein. Ein Raum,
 der es aus lässt, behält das Zahnrad genau so, wie es ist.
 
+### MCP-Schnittstelle (#1607)
+
+Ein Arbeitsbereich kann die **MCP-Schnittstelle** bereitstellen, damit
+ein KI-Assistent mit DesKilo verbunden werden kann. Der Schalter sagt
+nur die Verfügbarkeit: das Einschalten trägt niemanden ein, genehmigt
+keine Anfrage, vergibt keine Rolle und registriert keinen Client. Wer
+sie nutzen möchte, braucht weiterhin eine Freigabe, die der Eigentümer
+konfiguriert **und** der Instanzadministrator genehmigt — zwei getrennte
+Schritte, auch wenn eine Person beide Rollen innehat —, und jeder Vorgang
+des Assistenten unterliegt weiterhin den Berechtigungen, Funktionen und
+Regeln, die die App ohnehin anwendet. Ausgeschaltet verbirgt die
+Schnittstelle ihre Einstiegspunkte und weist Aufrufe ab; bestehende
+Freigaben bleiben sichtbar und widerrufbar. Der Schalter reist wie jede
+andere Funktion mit einer Vorlage; Freigaben, Genehmigungen und
+Einwilligungen reisen nie, sodass das Einschalten auf einer Kopie eines
+Arbeitsbereichs nichts öffnet. Eigentümer schalten sie unter
+*Einstellungen → Funktionen* ein; standardmäßig ist sie aus.
+
 ### Der Demobereich
 
 Ein erfundener Bereich, den jede Person vom Anmeldebildschirm aus öffnen

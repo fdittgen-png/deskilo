@@ -1938,6 +1938,22 @@ refused, whether they are reached from a menu or typed in as an address.
 Owners switch it on under *Settings → Features*. A space that leaves it
 off keeps the gear precisely as it is today.
 
+### MCP interface (#1607)
+
+A space can make the **MCP interface** available, so that an AI
+assistant can be connected to DesKilo. The switch is availability and
+nothing more: turning it on enrols nobody, approves no request, grants
+no role and registers no client. A person who wants to use it still
+needs a grant the owner configures **and** the instance administrator
+approves — two distinct steps, even when one person holds both hats —
+and every operation the assistant performs keeps answering to the
+permissions, features and rules the app already applies. While it is
+off, the MCP entry points are hidden and calls are refused; existing
+grants stay visible and can be revoked. The switch travels with a
+template like any other feature; grants, approvals and consents never do,
+so enabling it on a copy of a space opens nothing. Owners switch it on
+under *Settings → Features*; it is off by default.
+
 ### The demo workspace
 
 An invented workspace anybody can open from the sign-in screen, without
