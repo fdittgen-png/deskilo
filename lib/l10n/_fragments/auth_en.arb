@@ -164,5 +164,13 @@
   "authVerifyBackToSignIn": "Back to sign in",
   "@authVerifyBackToSignIn": {
     "description": "Link leaving the check-e-mail state for the sign-in form"
+  },
+  "authRecoveryRetryUpdate": "Save the new password again",
+  "@authRecoveryRetryUpdate": {
+    "description": "Primary button of the recovery sheet after a code was accepted but the update failed"
+  },
+  "authRecoverySessionLost": "That code is no longer valid here. Request a new one.",
+  "@authRecoverySessionLost": {
+    "description": "Inline notice when the recovery session is gone before the password was saved"
   }
 }

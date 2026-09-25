@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'dart:async';
+
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -14,15 +16,45 @@ class SupabaseAuthRepository implements AuthRepository {
 
   final SupabaseClient _client;
 
-  @override
-  Stream<String?> authStateChanges() async* {
-    yield _client.auth.currentUser?.id;
-    yield* _client.auth.onAuthStateChange
-        .map((event) => event.session?.user.id);
+  /// #1649 — a redeemed recovery code opens a session BEFORE the new
+  /// password is set. Until it is, that session is for one purpose, so
+  /// it is held back from [authStateChanges] and [currentUserId]: the
+  /// router does not leave the sign-in screen on a password that was
+  /// never updated. Released when the update lands or the session is
+  /// found gone, or ended by [cancelPasswordRecovery].
+  bool _recoveryPending = false;
+  final _recoveryChanges = StreamController<void>.broadcast();
+
+  String? _visible(String? id) => _recoveryPending ? null : id;
+
+  void _endRecovery() {
+    _recoveryPending = false;
+    _recoveryChanges.add(null);
   }
 
   @override
-  String? get currentUserId => _client.auth.currentUser?.id;
+  Stream<String?> authStateChanges() {
+    StreamSubscription<void>? events;
+    StreamSubscription<void>? gate;
+    late final StreamController<String?> out;
+    out = StreamController<String?>(
+      onListen: () {
+        out.add(_visible(_client.auth.currentUser?.id));
+        events = _client.auth.onAuthStateChange
+            .listen((e) => out.add(_visible(e.session?.user.id)));
+        gate = _recoveryChanges.stream
+            .listen((_) => out.add(_visible(_client.auth.currentUser?.id)));
+      },
+      onCancel: () async {
+        await events?.cancel();
+        await gate?.cancel();
+      },
+    );
+    return out.stream;
+  }
+
+  @override
+  String? get currentUserId => _visible(_client.auth.currentUser?.id);
 
   @override
   Future<AuthResult> signInWithPassword({
@@ -81,39 +113,107 @@ class SupabaseAuthRepository implements AuthRepository {
   Future<void> signOut() => _client.auth.signOut();
 
   @override
-  Future<void> requestPasswordReset(String email) =>
-      _client.auth.resetPasswordForEmail(email);
+  Future<AuthResult> requestPasswordReset(String email) =>
+      _outcome('recovery request', () async {
+        await _client.auth.resetPasswordForEmail(email);
+        return const AuthResult.recoveryVerificationRequired();
+      });
 
   @override
-  Future<void> confirmPasswordReset({
+  Future<AuthResult> confirmPasswordReset({
     required String email,
     required String code,
     required String newPassword,
   }) async {
     // The code substitutes the password exactly once (recovery OTP);
-    // redeeming it yields a session, which immediately sets the new one.
-    await _client.auth.verifyOTP(
-      type: OtpType.recovery,
-      email: email,
-      token: code.trim(),
+    // redeeming it yields a session, which then sets the new one. The
+    // session stays out of sight until it has.
+    _recoveryPending = true;
+    final verified = await _outcome(
+      'recovery verify',
+      () async {
+        await _client.auth.verifyOTP(
+          type: OtpType.recovery,
+          email: email,
+          token: code.trim(),
+        );
+        return const AuthResult.completed();
+      },
+      unnamedRefusal: AuthRefusal.codeInvalid,
     );
-    await _client.auth.updateUser(UserAttributes(password: newPassword));
+    if (verified.outcome != AuthOutcome.completed) {
+      _endRecovery();
+      return verified;
+    }
+    return updateRecoveredPassword(newPassword);
+  }
+
+  @override
+  Future<AuthResult> updateRecoveredPassword(String newPassword) async {
+    final result = await _outcome(
+      'recovery update',
+      () async {
+        await _client.auth.updateUser(UserAttributes(password: newPassword));
+        return const AuthResult.completed();
+      },
+      afterSpentCode: true,
+    );
+    // Landed: the session may be seen. Gone: nothing left to hide. Not
+    // updated, or deferred: still held back, for the retry.
+    if (result.outcome == AuthOutcome.completed ||
+        result.outcome == AuthOutcome.recoveryVerificationRequired) {
+      _endRecovery();
+    }
+    return result;
+  }
+
+  @override
+  Future<void> cancelPasswordRecovery() async {
+    if (!_recoveryPending) return;
+    _recoveryPending = false;
+    try {
+      // Local scope: this device's recovery session and nothing else —
+      // the person's other sessions were never part of this.
+      await _client.auth.signOut(scope: SignOutScope.local);
+    } catch (e, st) {
+      // The local session is already dropped before the server is told;
+      // a server that could not be told is a trace line, not a state.
+      TraceLogger.instance.warn(
+        'auth',
+        'recovery session cleanup did not reach the server',
+        error: e,
+        stackTrace: st,
+      );
+    }
+    _recoveryChanges.add(null);
   }
 
   /// Runs one auth call and turns whatever it threw into an [AuthResult].
   ///
   /// [unnamedRefusal] is what a refusal the server left uncoded means in
   /// this operation: wrong credentials on a sign-in, a bad code on a
-  /// verify.
+  /// verify. [afterSpentCode] marks the password update that follows a
+  /// redeemed recovery code: a failure there is NOT a bad code — the
+  /// code is gone and the session is live — so it answers
+  /// [AuthOutcome.recoverySessionReadyButPasswordNotUpdated] for anything
+  /// but a lost session or a rate limit.
   Future<AuthResult> _outcome(
     String what,
     Future<AuthResult> Function() call, {
     AuthRefusal unnamedRefusal = AuthRefusal.credentials,
+    bool afterSpentCode = false,
   }) async {
     try {
       return await call();
     } catch (e, st) {
-      final result = _resultOf(e, unnamedRefusal);
+      var result = _resultOf(e, unnamedRefusal);
+      if (afterSpentCode &&
+          e is! AuthSessionMissingException &&
+          result.outcome != AuthOutcome.rateLimited) {
+        result = AuthResult.recoverySessionReadyButPasswordNotUpdated(
+          trace: result.trace,
+        );
+      }
       // The code, never the message: gotrue's wording can quote the
       // address or the token that was typed.
       TraceLogger.instance.warn(
@@ -154,6 +254,10 @@ class SupabaseAuthRepository implements AuthRepository {
     }
     if (e is AuthRetryableFetchException) {
       return AuthResult.unavailable(trace: e.statusCode ?? 'network');
+    }
+    if (e is AuthSessionMissingException) {
+      // The recovery session is gone; only a new code opens another.
+      return const AuthResult.recoveryVerificationRequired();
     }
     if (e is AuthApiException) {
       final code = e.code;

@@ -42,15 +42,34 @@ abstract class AuthRepository {
   /// the reset email template must render {{ .Token }}). Deliberately
   /// code-based, not link-based: nothing depends on Site URL or deep
   /// links.
-  Future<void> requestPasswordReset(String email);
+  ///
+  /// [AuthOutcome.recoveryVerificationRequired] when the code went out.
+  Future<AuthResult> requestPasswordReset(String email);
 
   /// Redeems the emailed [code] as the temporary credential and sets
-  /// [newPassword]; on success the user is signed in with it.
-  Future<void> confirmPasswordReset({
+  /// [newPassword]. [AuthOutcome.completed] only once the update itself
+  /// succeeded. A code accepted before an update that failed is
+  /// [AuthOutcome.recoverySessionReadyButPasswordNotUpdated]: the code is
+  /// spent, the session it opened is held back from [authStateChanges]
+  /// until the update lands, and the way forward is
+  /// [updateRecoveredPassword], never the code again.
+  Future<AuthResult> confirmPasswordReset({
     required String email,
     required String code,
     required String newPassword,
   });
+
+  /// Retries the password update on the session a redeemed recovery
+  /// code opened. [AuthOutcome.completed] releases the session to
+  /// [authStateChanges]; [AuthOutcome.recoveryVerificationRequired] means
+  /// that session is gone and a new code is the only way.
+  Future<AuthResult> updateRecoveredPassword(String newPassword);
+
+  /// Ends a recovery session whose password was never updated — this
+  /// device's session only, never the person's other sessions. A no-op
+  /// when no such session exists, so a sheet may always call it on the
+  /// way out.
+  Future<void> cancelPasswordRecovery();
 
   /// Starts the browser-based OAuth sign-in (or sign-up) with [provider].
   /// The result arrives asynchronously through [authStateChanges] once the
