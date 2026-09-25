@@ -79,7 +79,7 @@
         {"scope": "unit", "ref": "test/features/money/payment_config_screen_test.dart"},
         {"scope": "local_integration", "ref": "scripts/edge_payment_check.sh"},
         {"scope": "local_integration", "ref": "scripts/payment_scenarios/stripe.sh"},
-        {"scope": "provider_sandbox", "ref": "docs/product/evidence/payments.stripe-sandbox-2026-09-25.md", "sha": "136f7a70f518", "date": "2026-09-25", "outcome": "skipped", "fingerprint": "38ddbebce0f4"},
+        {"scope": "provider_sandbox", "ref": "docs/product/evidence/payments.stripe-sandbox-2026-09-25.md", "sha": "232efc0a8175", "date": "2026-09-25", "outcome": "skipped", "fingerprint": "38ddbebce0f4"},
         {"scope": "local_integration", "ref": "supabase/tests/database/40_payment_ledger_association.sql"},
         {"scope": "local_integration", "ref": "supabase/tests/database/22_reconciliation.sql"}
       ]

@@ -5,7 +5,7 @@ the provider's TEST environment and a disposable backend, never a stub.
 
 scope: provider_sandbox
 capability: payments.stripe
-sha: 136f7a70f5189d127aa248b8048503e1e3bf1a80
+sha: 232efc0a817596dfb69ed8b79e3064370d2fe10e
 date: 2026-09-25
 outcome: skipped
 result: not_run

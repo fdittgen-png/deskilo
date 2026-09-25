@@ -29,7 +29,7 @@ Manifest `2026-09-25.2`. Four things are kept apart: whether the code is **shipp
 
 A member finds a free place on the plan and holds it for a period; the database refuses a second booking of the same place at the same time, whoever asks and however many clients race.
 
-- **Code:** shipped · component `b3b7896ca7c1`
+- **Code:** shipped · component `d7bdf8e6a232`
 - **Needs:** A workspace with a published plan and opening hours; booking rules in Settings.
 - **Limits:** Single-workspace timezone per booking; recovery of a booking made against a stale plan is manual.
 - **Feature flags:** `bookingGate`, `bookingPolicies`, `seriesBooking`, `autoCheckInOut`
@@ -92,7 +92,7 @@ A member pays a bill through Stripe hosted checkout; the webhook settles the pay
 - `unit` · **gated** · [`test/features/money/payment_config_screen_test.dart`](../../test/features/money/payment_config_screen_test.dart)
 - `local_integration` · **gated** · [`scripts/edge_payment_check.sh`](../../scripts/edge_payment_check.sh)
 - `local_integration` · **gated** · [`scripts/payment_scenarios/stripe.sh`](../../scripts/payment_scenarios/stripe.sh)
-- `provider_sandbox` · **unverified** · [`docs/product/evidence/payments.stripe-sandbox-2026-09-25.md`](../../docs/product/evidence/payments.stripe-sandbox-2026-09-25.md) · sha `136f7a70f518` · 2026-09-25 · skipped
+- `provider_sandbox` · **unverified** · [`docs/product/evidence/payments.stripe-sandbox-2026-09-25.md`](../../docs/product/evidence/payments.stripe-sandbox-2026-09-25.md) · sha `232efc0a8175` · 2026-09-25 · skipped
 - `local_integration` · **gated** · [`supabase/tests/database/40_payment_ledger_association.sql`](../../supabase/tests/database/40_payment_ledger_association.sql)
 - `local_integration` · **gated** · [`supabase/tests/database/22_reconciliation.sql`](../../supabase/tests/database/22_reconciliation.sql)
 
@@ -189,7 +189,7 @@ Storage objects, Auth configuration and the running application recover to a kno
 
 A self-contained workspace with invented people, bookings and money, and no backend behind it, so a visitor can try every module without reaching a real space.
 
-- **Code:** shipped · component `e406bbf5af9e`
+- **Code:** shipped · component `3d0c24edd8bf`
 - **Needs:** None: the Demo is built into every client.
 - **Limits:** The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.
 - **Feature flags:** `demoMode`
