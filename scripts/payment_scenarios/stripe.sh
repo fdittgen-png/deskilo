@@ -164,6 +164,15 @@ check_state "concurrent delivery" "$RACE" captured 4
 check_state "lost webhook" "$LOST" created 4
 
 # The books agree with themselves: no captured intent without its posting.
-findings=$(sql "select count(*) from public.reconcile_workspace('$WS')")
-[ "$findings" = "0" ] || fail "reconcile_workspace reports $findings finding(s): $(sql "select string_agg(\"check\", '; ') from public.reconcile_workspace('$WS')")"
+# reconcile_workspace answers whoever may see the finances, so it is asked
+# AS THE OWNER — the impersonation phase 1 already uses — and a query that
+# errors is a failure in its own words, never an empty count read as one.
+as_owner() {
+  sql "select set_config('request.jwt.claims', json_build_object('sub', '$PAYER', 'role', 'authenticated')::text, true);
+       $1" | tail -1
+}
+findings=$(as_owner "select count(*) from public.reconcile_workspace('$WS')") \
+  || fail "reconcile_workspace could not be asked (see psql's error above)"
+[ -n "$findings" ] || fail "reconcile_workspace answered nothing"
+[ "$findings" = "0" ] || fail "reconcile_workspace reports $findings finding(s): $(as_owner "select string_agg(\"check\", '; ') from public.reconcile_workspace('$WS')")"
 echo "reconciliation: clean; 9 sessions, 4 captured, 2 failed, 3 pending, 4 credits"
