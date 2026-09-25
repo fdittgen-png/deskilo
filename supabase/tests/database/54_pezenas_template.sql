@@ -146,6 +146,7 @@ begin
       "bookForOthers": true,
       "bookingGate": true,
       "bookingPolicies": true,
+      "calendarFileExport": true,
       "calendarHub": true,
       "calendarTab": true,
       "calendarValidations": true,

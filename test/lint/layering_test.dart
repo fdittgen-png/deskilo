@@ -259,7 +259,10 @@ const Map<String, int> _pairBudget = {
   // 2026-09-20 #1580 53→51: `booking_gate_scope.dart` stopped importing
   // `booking_policies` and `booking_granularity` — they were there only
   // to supply the invented defaults it no longer substitutes.
-  'reservations -> workspace': 51,
+  // 2026-09-25 #1643 51→52: `widgets/calendar_file_button.dart` reads
+  // `myMemberProvider` to say WHOSE file is being asked for, the same
+  // import the detail sheet it sits in already makes.
+  'reservations -> workspace': 52,
   'workspace -> auth': 3,
   // 11→13 and 34→35 (2026-09-19): #1247 — the decision surface answers
   // *does anything need me?* by ASSEMBLING signals that already exist:

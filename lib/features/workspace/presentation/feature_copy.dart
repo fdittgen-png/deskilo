@@ -508,4 +508,14 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'answering to the permissions and rules the app already '
                   'applies. Off hides the MCP entry points and refuses '
                   'calls; existing grants stay visible and revocable.',
+        WorkspaceFeature.calendarFileExport =>
+          l10n?.featureCalendarFileExportDesc ??
+              'Lets a member save one of their own bookings as a standard '
+                  'calendar file (.ics) for the calendar they already use. '
+                  'The file carries the time, the booked space and the '
+                  'workspace name only — no amount, no name, no note, no '
+                  'link — and it is a snapshot: a later change to the '
+                  'booking does not update a file already saved. Nothing '
+                  'is written to any calendar and nothing syncs. Off hides '
+                  'the button.',
       };

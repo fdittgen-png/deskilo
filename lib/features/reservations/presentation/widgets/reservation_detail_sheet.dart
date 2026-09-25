@@ -29,6 +29,7 @@ import '../../domain/picked_time.dart';
 import '../../domain/reservation.dart';
 import '../../domain/reservation_repository.dart';
 import 'booking_range_text.dart';
+import 'calendar_file_button.dart';
 import 'series_result_dialog.dart';
 import '../../providers/reservation_providers.dart';
 import '../../../../core/trace/guarded.dart';
@@ -99,6 +100,12 @@ class ReservationDetailSheet extends ConsumerWidget {
         (r.status == ReservationStatus.checkedIn ||
             r.status == ReservationStatus.completed ||
             (r.status == ReservationStatus.reserved && started));
+    // #1643 — MY booking, in my own calendar: any state, since a
+    // cancelled one exports as cancelled rather than being hidden.
+    final calendarFile = mine &&
+        ref
+            .read(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.calendarFileExport);
 
     return SafeArea(
       // Scrollable: with the action row the sheet can outgrow small
@@ -269,6 +276,10 @@ class ReservationDetailSheet extends ConsumerWidget {
                 label: Text(l10n?.reservationDeleteRequestButton ??
                     'Request deletion'),
               ),
+            ],
+            if (calendarFile) ...[
+              const SizedBox(height: 8),
+              CalendarFileButton(reservation: r),
             ],
             // #841 — the booking says who decided about it. A deletion
             // request travels in the payload, not on events.reservation_id
