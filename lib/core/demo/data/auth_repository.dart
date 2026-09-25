@@ -5,6 +5,7 @@
 // through the same import as before.
 
 import 'dart:async';
+import 'package:deskilo/features/auth/domain/auth_outcome.dart';
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/domain/badge_sign_in.dart';
 import 'package:deskilo/features/auth/domain/social_provider.dart';
@@ -141,27 +142,47 @@ class FakeAuthRepository implements AuthRepository {
     _controller.add(id);
   }
 
-  @override
-  Future<void> signInWithPassword({
-    required String email,
-    required String password,
-  }) async {
-    if (failingEmails.contains(email)) {
-      throw const AuthException('invalid credentials');
+  // ── typed outcomes (#1649) ──────────────────────────────────────────
+
+  /// Scripted answers. When set, the operation answers with it instead of
+  /// consulting [failingEmails] / [failingCodes]; an `authenticated` or
+  /// `completed` script still signs the fake in, like the server would.
+  AuthResult? signInResult;
+  AuthResult? signUpResult;
+
+  /// Every sign-up, in call order — two entries where one was pressed is
+  /// the duplicate-submission bug.
+  final signUps = <String>[];
+
+  Future<AuthResult> _answer(AuthResult result) async {
+    if (result.outcome == AuthOutcome.authenticated ||
+        result.outcome == AuthOutcome.completed) {
+      _setUser('user-1');
     }
-    _setUser('user-1');
+    return result;
   }
 
   @override
-  Future<void> signUp({
+  Future<AuthResult> signInWithPassword({
+    required String email,
+    required String password,
+  }) =>
+      _answer(signInResult ??
+          (failingEmails.contains(email)
+              ? const AuthResult.refused(AuthRefusal.credentials)
+              : const AuthResult.authenticated()));
+
+  @override
+  Future<AuthResult> signUp({
     required String email,
     required String password,
     required String displayName,
-  }) async {
-    if (failingEmails.contains(email)) {
-      throw const AuthException('sign up failed');
-    }
-    _setUser('user-1');
+  }) {
+    signUps.add(email);
+    return _answer(signUpResult ??
+        (failingEmails.contains(email)
+            ? const AuthResult.refused(AuthRefusal.credentials)
+            : const AuthResult.authenticated()));
   }
 
   @override

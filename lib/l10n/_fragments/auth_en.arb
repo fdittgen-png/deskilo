@@ -103,5 +103,33 @@
   "authNetworkError": "Could not reach the server. Check your connection and try again.",
   "@authNetworkError": {
     "description": "Snackbar when the auth call fails before reaching the server (connectivity)"
+  },
+  "authEmailNotConfirmed": "Confirm your e-mail address first: open the message we sent you, then sign in.",
+  "@authEmailNotConfirmed": {
+    "description": "Inline refusal when the account exists but its address was never confirmed"
+  },
+  "authRateLimited": "Too many attempts. Wait a moment, then try again.",
+  "@authRateLimited": {
+    "description": "Inline notice when the server refuses to judge the request yet (rate limit)"
+  },
+  "authProviderDisabled": "This sign-in method is switched off on this server.",
+  "@authProviderDisabled": {
+    "description": "Inline refusal when e-mail sign-in, sign-ups or codes are disabled server-side"
+  },
+  "authWeakPassword": "Choose a stronger password.",
+  "@authWeakPassword": {
+    "description": "Inline refusal when the server's password policy rejects the new password"
+  },
+  "authAlreadyRegistered": "This address cannot be used to create an account. Sign in or reset your password instead.",
+  "@authAlreadyRegistered": {
+    "description": "Inline refusal when the server itself discloses that the address is taken"
+  },
+  "authRecoveryNotSaved": "Your code was accepted, but the new password was not saved. Try saving it again.",
+  "@authRecoveryNotSaved": {
+    "description": "Inline notice when the recovery code was redeemed but the password update failed"
+  },
+  "authVerifyTitle": "Check your e-mail",
+  "@authVerifyTitle": {
+    "description": "Heading of the state shown after a sign-up that sent a confirmation e-mail"
   }
 }

@@ -214,6 +214,32 @@ class AppLocalizationsDe extends AppLocalizations {
       'Server nicht erreichbar. Prüfe deine Verbindung und versuche es erneut.';
 
   @override
+  String get authEmailNotConfirmed =>
+      'Bestätige zuerst deine E-Mail-Adresse: Öffne die Nachricht, die wir dir geschickt haben, und melde dich dann an.';
+
+  @override
+  String get authRateLimited =>
+      'Zu viele Versuche. Warte einen Moment und versuche es dann erneut.';
+
+  @override
+  String get authProviderDisabled =>
+      'Diese Anmeldemethode ist auf diesem Server abgeschaltet.';
+
+  @override
+  String get authWeakPassword => 'Wähle ein stärkeres Passwort.';
+
+  @override
+  String get authAlreadyRegistered =>
+      'Mit dieser Adresse kann kein Konto erstellt werden. Melde dich an oder setze dein Passwort zurück.';
+
+  @override
+  String get authRecoveryNotSaved =>
+      'Dein Code wurde angenommen, aber das neue Passwort wurde nicht gespeichert. Versuche das Speichern erneut.';
+
+  @override
+  String get authVerifyTitle => 'Sieh in dein E-Mail-Postfach';
+
+  @override
   String get availabilityTitle => 'Verfügbarkeit';
 
   @override

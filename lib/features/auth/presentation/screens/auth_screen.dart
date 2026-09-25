@@ -9,9 +9,12 @@ import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/auth_outcome.dart';
 import '../../domain/social_provider.dart';
 import '../../providers/auth_providers.dart';
+import '../auth_outcome_text.dart';
 import '../widgets/badge_sign_in_sheet.dart';
 
 /// Email + password sign-in / sign-up. Navigation after success is handled
@@ -36,6 +39,11 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   bool _busy = false;
   bool _obscurePassword = true;
 
+  /// What the last submission came back with, kept ON the form until the
+  /// next one: a refusal, a rate limit or a dead network is something to
+  /// act on, and a snackbar that has slid away is not a record of it.
+  AuthResult? _lastResult;
+
   @override
   void dispose() {
     _displayName.dispose();
@@ -46,53 +54,39 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
 
   Future<void> _submit() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
-    setState(() => _busy = true);
-    final l10n = AppLocalizations.of(context);
+    setState(() {
+      _busy = true;
+      _lastResult = null;
+    });
     final repo = ref.read(authRepositoryProvider);
+    AuthResult result;
     try {
-      if (_isSignUp) {
-        await repo.signUp(
-          email: _email.text.trim(),
-          password: _password.text,
-          displayName: _displayName.text.trim(),
-        );
-      } else {
-        await repo.signInWithPassword(
-          email: _email.text.trim(),
-          password: _password.text,
-        );
-      }
-    } on AuthException catch (e, st) {
-      // Real server answer (wrong password, signups disabled, …) — show
-      // the server's message rather than a blanket failure (#99).
-      debugPrint('auth rejected: $e\n$st');
-      // Expected user errors (wrong password, …) — warn, not error; the
-      // server message is surfaced in the snackbar below.
-      TraceLogger.instance.warn('auth', 'auth rejected by server',
-          error: e, stackTrace: st);
-      if (!mounted) return;
-      AppSnack.error(
-        context,
-        '${l10n?.authGenericError ?? 'Authentication failed.'}'
-        '\n${e.message}',
-      );
+      result = _isSignUp
+          ? await repo.signUp(
+              email: _email.text.trim(),
+              password: _password.text,
+              displayName: _displayName.text.trim(),
+            )
+          : await repo.signInWithPassword(
+              email: _email.text.trim(),
+              password: _password.text,
+            );
     } catch (e, st) {
-      // No server involved: connectivity, DNS, TLS … (#99 was a missing
-      // INTERNET permission surfacing as this generic path).
-      debugPrint('auth failed before reaching the server: $e\n$st');
+      // The repository answers refusals as values; anything that still
+      // throws is a bug or a fake, and nothing was judged.
       TraceLogger.instance.error(
-          'auth', 'auth failed before reaching the server',
-          error: e, stackTrace: st);
-      if (!mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.authNetworkError ??
-            'Could not reach the server. Check your connection and '
-                'try again.',
+        'auth',
+        'auth operation threw past the repository',
+        error: e,
+        stackTrace: st,
       );
-    } finally {
-      if (mounted) setState(() => _busy = false);
+      result = const AuthResult.unavailable();
     }
+    if (!mounted) return;
+    setState(() {
+      _busy = false;
+      _lastResult = result;
+    });
   }
 
   /// Forgot-password flow: a one-time recovery code is emailed and,
@@ -362,6 +356,24 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                       ),
                     ),
                   const SizedBox(height: 24),
+                  // The last answer stays in the form (#1649): six
+                  // different sentences for six different outcomes, and
+                  // never the server's own words.
+                  if (_lastResult case final result?
+                      when authOutcomeText(result, l10n) != null) ...[
+                    InlineBanner(
+                      key: const ValueKey('auth-outcome'),
+                      icon: result.outcome == AuthOutcome.verificationRequired
+                          ? Icons.mark_email_unread_outlined
+                          : Icons.error_outline,
+                      severity:
+                          result.outcome == AuthOutcome.verificationRequired
+                              ? InlineBannerSeverity.info
+                              : InlineBannerSeverity.error,
+                      text: authOutcomeText(result, l10n)!,
+                    ),
+                    const SizedBox(height: 12),
+                  ],
                   FilledButton(
                     onPressed: _busy ? null : _submit,
                     child: _busy
