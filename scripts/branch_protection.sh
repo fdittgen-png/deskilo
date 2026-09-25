@@ -30,6 +30,13 @@
 # one `result=` line — verified-match (0), verified-drift (1, a branch
 # read as unprotected included), unverified-access (2, 403 or no answer)
 # — and `verify --advisory` prints it while still exiting 0.
+#
+# #1446 C3 — an answer that is not a protection object is not a read.
+# A 200 carrying HTML from a proxy, an empty body or a JSON array went
+# through the parser and came out as `verified-drift` ("strict mode is
+# ''"), and `apply-checks` built its PATCH from a `null` live list — the
+# very list it exists to preserve. Such an answer is `malformed`: it ends
+# on unverified-access, and nothing is written from it.
 
 set -euo pipefail
 
@@ -108,7 +115,8 @@ exits 0 but still reports its result. The apply commands are a
 deliberate, manual act; apply-checks ADDS the committed contexts to the
 live ones, apply replaces the whole object and refuses to run over
 protection it has not read. Exit: 0 verified-match, 1 verified-drift,
-2 unverified-access, 64 usage. REPO/BRANCH/GH override the defaults.
+2 unverified-access (403, no answer, or an answer that is not a
+protection object), 64 usage. REPO/BRANCH/GH override the defaults.
 EOF
   exit 64
 }
@@ -117,7 +125,7 @@ EOF
 # protection at all (that needs repo admin, which the Actions token does
 # not have); anything else is no answer. Conflating them is how a checker
 # reports a guarantee it never inspected.
-PROT_STATE=''  # readable | absent | forbidden | unreachable
+PROT_STATE=''  # readable | absent | forbidden | unreachable | malformed
 PROT_BODY=''
 PROT_DETAIL=''
 
@@ -125,7 +133,17 @@ read_protection() {
   local resp rc=0
   resp=$("$GH" api "${1:-$API}" 2>&1) || rc=$?
   PROT_BODY='' PROT_DETAIL=''
-  if [ "$rc" -eq 0 ]; then PROT_STATE=readable PROT_BODY="$resp"; return 0; fi
+  if [ "$rc" -eq 0 ]; then
+    # A read is a JSON object, or it is not a read: `jq` over HTML or an
+    # empty body yields "" for every field, and "" is not a setting.
+    if printf '%s' "$resp" | jq -e 'type == "object"' > /dev/null 2>&1; then
+      PROT_STATE=readable PROT_BODY="$resp"; return 0
+    fi
+    PROT_STATE=malformed
+    PROT_DETAIL="the API answered, but not with a JSON object: $(
+      printf '%s' "$resp" | tr '\n' ' ' | cut -c1-120)"
+    return 0
+  fi
   PROT_DETAIL=$(printf '%s' "$resp" | tr '\n' ' ' | cut -c1-200)
   PROT_STATE=unreachable
   if grep -qiE "HTTP 404|not protected|not found" <<< "$resp"; then PROT_STATE=absent; fi
@@ -207,6 +225,10 @@ verify_once() {
       echo "::warning::the protection API did not answer — ${PROT_DETAIL}" >&2
       outcome unverified-access "no answer: nothing was checked"
       return $? ;;
+    malformed)
+      echo "::warning::${PROT_DETAIL}" >&2
+      outcome unverified-access "malformed answer: nothing was checked"
+      return $? ;;
   esac
   # $PROT_BODY already holds the whole protection JSON — parse it locally
   # instead of two more authenticated round-trips (this runs on every PR
@@ -279,6 +301,16 @@ verify_once() {
 apply_checks() {
   read_protection "${API}/required_status_checks"
   local live='[]' strict="$STRICT" targets body
+  # The sub-resource is `{strict, contexts, checks}`; a body without a
+  # boolean `strict` is not it, and a list built from one would send
+  # `strict: null` over a real setting.
+  if [ "$PROT_STATE" = readable ] &&
+     ! jq -e '(.strict | type) == "boolean"' <<< "$PROT_BODY" > /dev/null 2>&1
+  then
+    PROT_STATE=malformed
+    PROT_DETAIL="the answer is not a required_status_checks object: $(
+      printf '%s' "$PROT_BODY" | tr '\n' ' ' | cut -c1-120)"
+  fi
   case "$PROT_STATE" in
     readable)
       live=$(jq -c '[(.checks[]? | {context, app_id}),
@@ -329,7 +361,7 @@ apply() {
         outcome verified-drift "refused: the live object would be replaced"
         return $?
       fi ;;
-    forbidden | unreachable)
+    forbidden | unreachable | malformed)
       echo "::error::cannot read the current protection — ${PROT_DETAIL};" \
         "refusing to overwrite settings I could not see." >&2
       outcome unverified-access "nothing was read, so nothing was written"
