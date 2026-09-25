@@ -21,6 +21,9 @@ String mimeTypeFor(String fileName) {
   // octet-stream fallback, which also made migrateLegacyExports skip it.
   if (lower.endsWith('.json')) return 'application/json';
   if (lower.endsWith('.png')) return 'image/png';
+  // #1643 — a reservation's calendar file; the type is what makes a
+  // browser or a phone offer the calendar rather than a text editor.
+  if (lower.endsWith('.ics')) return 'text/calendar';
   if (lower.endsWith('.log') || lower.endsWith('.txt')) return 'text/plain';
   return 'application/octet-stream';
 }

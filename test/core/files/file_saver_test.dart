@@ -15,6 +15,8 @@ void main() {
     expect(mimeTypeFor('bill-2026-07.PDF'), 'application/pdf');
     expect(mimeTypeFor('workspace.xml'), 'text/xml');
     expect(mimeTypeFor('qr.png'), 'image/png');
+    // #1643 — a calendar file opens in the calendar, not a text editor.
+    expect(mimeTypeFor('deskilo-20260513-1a2b3c4d.ics'), 'text/calendar');
     expect(mimeTypeFor('deskilo-trace.log'), 'text/plain');
     expect(mimeTypeFor('unknown.bin'), 'application/octet-stream');
   });

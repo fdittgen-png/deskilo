@@ -248,7 +248,7 @@ final class MemberNamesProvider
   }
 }
 
-String _$memberNamesHash() => r'621fdabe5b95e1a26026da513b40bcf7dca90a25';
+String _$memberNamesHash() => r'004c24caf27181af8978ae9eade5c76d7b3a50e3';
 
 /// Reservations of the active workspace intersecting the given LOCAL
 /// month (keyed 'yyyy-MM'). See [reservationsForDay] for why local (#119):
@@ -346,3 +346,74 @@ final class ReservationsForMonthFamily extends $Family
   @override
   String toString() => r'reservationsForMonthProvider';
 }
+
+/// #1643 — the calendar-file command, wired to the seams it needs so the
+/// button that asks for a file resolves no repository of its own.
+///
+/// The installation is the backend HOST: a reservation id is unique to a
+/// backend, so the two together identify the booking wherever the file
+/// is imported — and only a digest of them ever leaves the device.
+///
+/// Kept alive: the command holds closures that read providers through
+/// this `ref` when the member taps Save, long after the preview future
+/// completed — an auto-disposed provider would have thrown by then.
+
+@ProviderFor(calendarFiles)
+final calendarFilesProvider = CalendarFilesProvider._();
+
+/// #1643 — the calendar-file command, wired to the seams it needs so the
+/// button that asks for a file resolves no repository of its own.
+///
+/// The installation is the backend HOST: a reservation id is unique to a
+/// backend, so the two together identify the booking wherever the file
+/// is imported — and only a digest of them ever leaves the device.
+///
+/// Kept alive: the command holds closures that read providers through
+/// this `ref` when the member taps Save, long after the preview future
+/// completed — an auto-disposed provider would have thrown by then.
+
+final class CalendarFilesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<CalendarFiles>,
+          CalendarFiles,
+          FutureOr<CalendarFiles>
+        >
+    with $FutureModifier<CalendarFiles>, $FutureProvider<CalendarFiles> {
+  /// #1643 — the calendar-file command, wired to the seams it needs so the
+  /// button that asks for a file resolves no repository of its own.
+  ///
+  /// The installation is the backend HOST: a reservation id is unique to a
+  /// backend, so the two together identify the booking wherever the file
+  /// is imported — and only a digest of them ever leaves the device.
+  ///
+  /// Kept alive: the command holds closures that read providers through
+  /// this `ref` when the member taps Save, long after the preview future
+  /// completed — an auto-disposed provider would have thrown by then.
+  CalendarFilesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'calendarFilesProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$calendarFilesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<CalendarFiles> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<CalendarFiles> create(Ref ref) {
+    return calendarFiles(ref);
+  }
+}
+
+String _$calendarFilesHash() => r'66b2fb2f3b1826792bbf40a8a2ef71ef0899edff';
