@@ -10969,6 +10969,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get repartitionStepExpense => 'La dépense';
 
   @override
+  String get wizardStepCompleted => 'Terminée';
+
+  @override
+  String get wizardStepSkipped => 'Ignorée — réglages proposés';
+
+  @override
+  String get wizardStepUnavailable => 'Pas encore disponible';
+
+  @override
   String get wordingTitle => 'Vocabulaire';
 
   @override

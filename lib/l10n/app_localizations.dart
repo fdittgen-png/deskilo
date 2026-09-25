@@ -19013,6 +19013,24 @@ abstract class AppLocalizations {
   /// **'The expense'**
   String get repartitionStepExpense;
 
+  /// No description provided for @wizardStepCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get wizardStepCompleted;
+
+  /// No description provided for @wizardStepSkipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped — suggested settings'**
+  String get wizardStepSkipped;
+
+  /// No description provided for @wizardStepUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Not available yet'**
+  String get wizardStepUnavailable;
+
   /// #1277 the wording editor: screen title
   ///
   /// In en, this message translates to:

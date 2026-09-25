@@ -12,6 +12,9 @@ import '../theme/app_spacing.dart';
 import '../../l10n/app_localizations.dart';
 import 'edge_fade_scroll.dart';
 import 'wizard_form_layout.dart';
+import 'wizard_progress.dart';
+import '../motion/motion.dart';
+import 'motion.dart';
 
 /// One step: a stable [name] (keys `wizard-step-<name>`) and its label.
 typedef WizardStepSpec = ({String name, String label});
@@ -34,6 +37,8 @@ class WizardScaffold extends StatelessWidget {
     this.actions = const [],
     this.leading,
     this.scrollForm = false,
+    this.stepStates,
+    this.animateStep = false,
     this.formMaxWidth = WizardFormLayout.shortFormWidth,
   });
 
@@ -59,6 +64,8 @@ class WizardScaffold extends StatelessWidget {
 
   /// Opt-in: the frame owns scrolling/insets for a non-scrollable form.
   final bool scrollForm;
+  final List<WizardStepState>? stepStates;
+  final bool animateStep;
   final double formMaxWidth;
 
   @override
@@ -66,7 +73,13 @@ class WizardScaffold extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final last = index >= steps.length - 1;
-    final header = LayoutBuilder(builder: (context, box) {
+    final content = animateStep
+        ? FadeInOnChange(changeKey: steps[index].name,
+            duration: AppMotion.viewSwitch, child: body) : body;
+    final header = stepStates != null
+        ? WizardProgress(steps: steps, states: stepStates!, index: index,
+            onStepTap: onStepTap)
+        : LayoutBuilder(builder: (context, box) {
       if (scrollForm && (box.maxWidth < WizardFormLayout.shortFormWidth ||
           MediaQuery.textScalerOf(context).scale(1) > 1.3)) {
         return Padding(padding: AppSpacing.lgAll,
@@ -157,12 +170,12 @@ class WizardScaffold extends StatelessWidget {
       appBar: AppBar(title: Text(title), actions: actions, leading: leading),
       body: scrollForm
           ? WizardFormLayout(header: header, footer: footer,
-              maxWidth: formMaxWidth, child: body)
+              maxWidth: formMaxWidth, child: content)
           : Column(children: [
               header,
               Expanded(child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-                child: body,
+                child: content,
               )),
               footer,
             ]),

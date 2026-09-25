@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #1653: real create fields and actions stay reachable with constrained space.
+import 'package:deskilo/core/motion/motion.dart';
 import 'package:deskilo/features/workspace/presentation/screens/onboarding_screen.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ import '../../helpers/mock_providers.dart';
 
 Future<void> pumpOnboardingLayout(WidgetTester tester, {
   Size size = const Size(360, 740), double scale = 1,
-  String locale = 'en', double keyboard = 0,
+  String locale = 'en', double keyboard = 0, bool animations = true,
 }) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
@@ -27,7 +28,8 @@ Future<void> pumpOnboardingLayout(WidgetTester tester, {
           viewInsets: EdgeInsets.only(bottom: keyboard),
           padding: const EdgeInsets.only(bottom: 24)),
         child: child!),
-      home: const OnboardingScreen(),
+      home: MotionSettings(animationsEnabled: animations,
+        child: const OnboardingScreen()),
     ),
   ));
   await tester.pump();

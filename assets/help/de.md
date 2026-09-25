@@ -376,6 +376,8 @@ Die Administration wohnt in drei Abschnitten der **Einstellungen**, und jeder Ei
 
 Auf kleinen Bildschirmen, bei großer Schrift oder geöffneter Tastatur scrollen das Erstellungsformular und seine Aktionen bei Bedarf gemeinsam. Der aktuelle Schritt bleibt lesbar und Zurück bewahrt die Eingaben (#1653).
 
+Vorgeschlagene Schritte gelten als übersprungen, nicht als abgeschlossen. Auf kleinen Bildschirmen öffnet die Schrittüberschrift die Übersicht. Zurück bewahrt die Eingaben; Übergänge beachten reduzierte Bewegung (#1653).
+
 **Land, Währung, Zeitzone (#711).** Die Länderauswahl deckt jetzt die 32 Länder ab, für die die App Steuern erklären kann (EU-27, Schweiz, Norwegen, Vereinigtes Königreich, USA, Kanada). Die Währung ist eine **Auswahl** der Codes, die die App formatieren kann — jede mit Symbol und der richtigen Zahl Nachkommastellen: der Yen hat keine, der Dinar drei, und jeder Betrag, jede Rechnung und jede Online-Zahlung hält sich daran. Die Zeitzone ist eine **durchsuchbare Liste** der IANA-Zonen, die die Uhr installieren kann; ein Tippfehler lässt sich nicht mehr speichern. **Ein neuer Space beginnt im Land deines Geräts (#1303):** Währung und Zeitzone folgen, alle drei vor dem Anlegen änderbar — `fr_CH` schlägt die Schweiz vor, ein auf Deutsch gestelltes Telefon Deutschland, und was der Katalog nicht kennt, Frankreich.
 
 ### Der Space-Editor
