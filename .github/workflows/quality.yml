@@ -353,6 +353,17 @@ jobs:
         continue-on-error: true
         run: bash scripts/edge_payment_check.sh
 
+      # #1637 — the money must actually arrive, and only when it did. The
+      # same real handlers, a stateful local Stripe boundary, locally
+      # signed events: paid, unpaid-then-async, async failure, duplicate,
+      # expiry, bad signature, wrong amount, unknown session, two
+      # deliveries at once, and the webhook that never comes.
+      - name: A Stripe payment settles
+        id: settlement
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        run: bash scripts/edge_payment_check.sh --settle stripe
+
       # #1337 — the install, the resume, the readiness verdict and the
       # doctor were proven against a fake Management API only. This runs
       # the real Dart code on databases that start as an empty Supabase
@@ -429,6 +440,8 @@ jobs:
               "${{ steps.restore.outcome }}"
             printf 'Payments|%s|the real payment handler opens the caller'"'"'s intent; strangers and no token refused\n' \
               "${{ steps.payments.outcome }}"
+            printf 'Payment settlement|%s|Stripe: paid credits once, unpaid does not, async success once, failure and expiry mark failed, bad signature and wrong amount refused, duplicate and concurrent delivery credit once, a lost webhook stays pending, reconciliation clean\n' \
+              "${{ steps.settlement.outcome }}"
             printf 'Instance lifecycle|%s|empty install, interrupted resume, upgrade from N, foreign table blocks, marker per migration, doctor probe isolation\n' \
               "${{ steps.lifecycle.outcome }}"
             printf 'Archive preservation|%s|a populated 0226 instance upgraded to the tip: signed fields, hashes and postings byte-equal, legacy stays unverifiable, a destructive control is caught\n' \
@@ -466,6 +479,7 @@ jobs:
                       "Two owners, one decision=${{ steps.flags.outcome }}" \
                       "Restore drill=${{ steps.restore.outcome }}" \
                       "A member can start a payment=${{ steps.payments.outcome }}" \
+                      "A Stripe payment settles=${{ steps.settlement.outcome }}" \
                       "Install, resume and upgrade a real schema=${{ steps.lifecycle.outcome }}" \
                       "A populated instance upgrades and keeps its archives=${{ steps.archive.outcome }}"; do
             echo "$step"

@@ -24,9 +24,23 @@
 #
 # The provider is a local stub on 127.0.0.1 (`STRIPE_API_BASE`): no
 # request leaves the runner and no key is real.
+#
+# #1637 — `--settle <provider>` goes on from here: the same fixtures, the
+# stateful stub in scripts/payment_scenarios/, the REAL webhook handler
+# and a matrix of locally signed events, sourced from
+# scripts/payment_scenarios/<provider>.sh. Only `stripe` exists; Q-018
+# and Q-019 add theirs, and no file speaks for another provider.
 set -uo pipefail
 
 fail() { echo "::error::payment edge check: $*"; exit 1; }
+
+SETTLE=""
+case "${1:-}" in
+  --settle) SETTLE="${2:?--settle needs a provider}"
+            [ -f "scripts/payment_scenarios/$SETTLE.sh" ] || fail "no settlement scenarios for $SETTLE" ;;
+  "") ;;
+  *) fail "usage: $0 [--settle <provider>]" ;;
+esac
 
 env_of() { supabase status -o env | sed -n "s/^$1=\"\(.*\)\"$/\1/p"; }
 API_URL="$(env_of API_URL)"
@@ -44,25 +58,8 @@ json() { python3 -c "import json,sys; print(json.load(sys.stdin)$1)"; }
 sql() { psql "$DB_URL" -v ON_ERROR_STOP=1 -At -c "$1"; }
 
 # ── the provider stub ────────────────────────────────────────────────
-cat > "$WORK/stub.py" <<'PY'
-import http.server, json, sys
-hits = sys.argv[2]
-class H(http.server.BaseHTTPRequestHandler):
-    def do_POST(self):
-        self.rfile.read(int(self.headers.get('Content-Length') or 0))
-        with open(hits, 'a') as f:
-            f.write(self.path + '\n')
-        body = json.dumps({'id': 'cs_test_stub', 'url': 'https://checkout.example.test/cs_test_stub'}).encode()
-        self.send_response(200)
-        self.send_header('Content-Type', 'application/json')
-        self.end_headers()
-        self.wfile.write(body)
-    def log_message(self, *a):
-        pass
-http.server.HTTPServer(('127.0.0.1', int(sys.argv[1])), H).serve_forever()
-PY
 : > "$WORK/hits"
-python3 "$WORK/stub.py" "$STUB_PORT" "$WORK/hits" &
+python3 scripts/payment_scenarios/stripe_stub.py "$STUB_PORT" "$WORK/hits" &
 STUB_PID=$!
 
 # ── the real handler ─────────────────────────────────────────────────
@@ -94,10 +91,13 @@ token() {
     -H "apikey: $ANON_KEY" -H 'Content-Type: application/json' \
     -d "{\"email\":\"$1\",\"password\":\"Pay-check-2026!\"}" | json "['access_token']"
 }
-PAYER=$(user payer@deskilo.test) || fail "could not create the payer"
-STRANGER=$(user stranger@deskilo.test) || fail "could not create the stranger"
-PAYER_JWT=$(token payer@deskilo.test) || fail "the payer could not sign in"
-STRANGER_JWT=$(token stranger@deskilo.test) || fail "the stranger could not sign in"
+# Unique per invocation, so the settlement pass can follow this one on the
+# same stack without colliding on the e-mail addresses.
+RUN="$$"
+PAYER=$(user "payer-$RUN@deskilo.test") || fail "could not create the payer"
+STRANGER=$(user "stranger-$RUN@deskilo.test") || fail "could not create the stranger"
+PAYER_JWT=$(token "payer-$RUN@deskilo.test") || fail "the payer could not sign in"
+STRANGER_JWT=$(token "stranger-$RUN@deskilo.test") || fail "the stranger could not sign in"
 
 # A production workspace the payer owns, with Stripe configured.
 WS=$(sql "select set_config('request.jwt.claims', json_build_object('sub', '$PAYER', 'role', 'authenticated')::text, false);
@@ -136,9 +136,13 @@ echo "no token: 401; someone else's bill: 403; no intent, no provider call"
 code=$(call -H "Authorization: Bearer $PAYER_JWT")
 out="$(cat "$WORK/out")"
 [ "$code" = "200" ] || { cat "$WORK/fn.log"; fail "the payer answered $code: $out"; }
-case "$out" in *'"status":"created"'*cs_test_stub*) ;; *) fail "unexpected answer: $out";; esac
+case "$out" in *'"status":"created"'*cs_test_stub_1*) ;; *) fail "unexpected answer: $out";; esac
 [ "$(intents)" = "1" ] || fail "expected one intent, found $(intents)"
-[ "$(sql "select order_id from public.payment_intents where workspace_id = '$WS'")" = "cs_test_stub" ] \
+[ "$(sql "select order_id from public.payment_intents where workspace_id = '$WS'")" = "cs_test_stub_1" ] \
   || fail "the intent does not carry the provider's order id"
 [ "$(wc -l < "$WORK/hits" | tr -d ' ')" = "1" ] || fail "expected exactly one provider request"
-echo "the payer's own bill: created, one intent (cs_test_stub), one provider request"
+echo "the payer's own bill: created, one intent (cs_test_stub_1), one provider request"
+
+[ -n "$SETTLE" ] || exit 0
+# shellcheck source=scripts/payment_scenarios/stripe.sh
+. "scripts/payment_scenarios/$SETTLE.sh"
