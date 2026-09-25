@@ -78,6 +78,9 @@ jobs:
         with:
           ref: ${{ inputs.ref || github.ref }}
           fetch-depth: 0
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
       - id: verdict
         uses: ./.github/actions/classify-change
         with:
