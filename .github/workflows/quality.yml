@@ -39,7 +39,8 @@ jobs:
   # renames counted twice). It selects work, never whether a run may
   # report: every required context below still reports. Anything the
   # classifier cannot prove independent runs everything; so does every
-  # push to master, the nightly run and a manual dispatch.
+  # push to master, the nightly run, a manual dispatch, and a diff it
+  # could not read completely.
   classify:
     name: classify the change
     runs-on: ubuntu-latest
@@ -54,23 +55,15 @@ jobs:
       - uses: dart-lang/setup-dart@v1
         with:
           sdk: stable
+      # The one invocation, fail-closed: a base git cannot resolve, a diff
+      # it cannot write, a change list cut short, a classifier that dies
+      # or a verdict with a line missing all end in `required` or in a red
+      # step with no verdict — never in `not_applicable`.
       - id: verdict
         env:
           EVENT: ${{ github.event_name }}
           BASE: ${{ github.event.pull_request.base.sha }}
-        run: |
-          mkdir -p report
-          nobase=""
-          if [ "$EVENT" = "pull_request" ]; then
-            if [ -n "$BASE" ] && git cat-file -e "$BASE^{commit}" 2>/dev/null; then
-              git diff --name-status -z "$BASE" HEAD > report/changes.nul
-            else
-              nobase="--no-base"
-            fi
-          fi
-          dart run tool/ci_classify.dart --event "$EVENT" \
-            --changes report/changes.nul $nobase \
-            --out report/classification.txt
+        run: bash scripts/ci_classify.sh --event "$EVENT" --base "$BASE" --out report
       - uses: actions/upload-artifact@v4
         with:
           name: quality-classification
