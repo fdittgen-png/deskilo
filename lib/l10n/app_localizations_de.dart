@@ -240,6 +240,31 @@ class AppLocalizationsDe extends AppLocalizations {
   String get authVerifyTitle => 'Sieh in dein E-Mail-Postfach';
 
   @override
+  String authVerifyBody(String email) {
+    return 'Wir haben einen Bestätigungslink an $email geschickt. Öffne ihn auf diesem Gerät, um dein Konto fertig einzurichten.';
+  }
+
+  @override
+  String get authVerifyHint =>
+      'Noch nichts da? Sieh im Spam-Ordner nach oder schicke die E-Mail erneut.';
+
+  @override
+  String get authVerifyResend => 'E-Mail erneut senden';
+
+  @override
+  String get authVerifyResent => 'Erneut gesendet.';
+
+  @override
+  String get authVerifyResendWait =>
+      'In einer Minute kannst du sie erneut senden.';
+
+  @override
+  String get authVerifyChangeEmail => 'Andere Adresse verwenden';
+
+  @override
+  String get authVerifyBackToSignIn => 'Zurück zur Anmeldung';
+
+  @override
   String get availabilityTitle => 'Verfügbarkeit';
 
   @override

@@ -2,6 +2,8 @@
 //
 // Sign-in, sign-up and sign-out move between the auth screen and the
 // shell; a failure stays put with an error.
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -78,6 +80,38 @@ void main() {
     await tester.tap(find.widgetWithText(FilledButton, 'Create account'));
     await tester.pumpAndSettle();
 
+    expect(find.byType(ShellBottomBar), findsOneWidget);
+  });
+
+  testWidgets(
+      'Enter pressed twice while the first sign-up is in flight sends ONE',
+      (tester) async {
+    final auth = await pumpSignedOut(tester);
+    auth.gate = Completer<void>();
+    await tester.tap(find.text('New here? Create an account'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextFormField).at(0), 'Flo');
+    await tester.enterText(
+      find.byType(TextFormField).at(1),
+      'flo@example.com',
+    );
+    await tester.enterText(find.byType(TextFormField).at(2), 'secret123');
+
+    // #1649 — the keyboard's Done bypasses the disabled button, so the
+    // guard has to live in the submit path itself. Done also drops the
+    // focus, so the second press needs the field focused again — or it
+    // reaches nobody and the test proves nothing.
+    final password = find.byType(TextFormField).at(2);
+    await tester.showKeyboard(password);
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pump();
+    await tester.showKeyboard(password);
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pump();
+    expect(auth.signUps, ['flo@example.com']);
+
+    auth.gate!.complete();
+    await tester.pumpAndSettle();
     expect(find.byType(ShellBottomBar), findsOneWidget);
   });
 

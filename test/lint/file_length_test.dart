@@ -26,6 +26,10 @@ const int _budget = 600;
 /// Grandfathered files at their size when this ratchet landed
 /// (2026-08-01), rounded up to the next 10 for edit headroom.
 const Map<String, int> _baseline = {
+  // 600→630 (2026-09-25): #1649 part 2 — the check-e-mail state beside
+  // the form. The 150-line recovery sheet still lives here and leaves for
+  // widgets/ in part 3, which deletes this entry.
+  'lib/features/auth/presentation/screens/auth_screen.dart': 630,
   // 600→630 (2026-09-20): #1514 — the recording seam. Three of the six
   // providers that answer with a person live here, and each pays four
   // lines: the flag read hoisted above the await (#1218), the

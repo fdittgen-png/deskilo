@@ -131,5 +131,38 @@
   "authVerifyTitle": "Check your e-mail",
   "@authVerifyTitle": {
     "description": "Heading of the state shown after a sign-up that sent a confirmation e-mail"
+  },
+  "authVerifyBody": "We sent a confirmation link to {email}. Open it on this device to finish creating your account.",
+  "@authVerifyBody": {
+    "description": "Body of the check-e-mail state; names the address the link went to",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "authVerifyHint": "Nothing yet? Look in the spam folder, or send it again.",
+  "@authVerifyHint": {
+    "description": "Small hint under the check-e-mail body"
+  },
+  "authVerifyResend": "Send the e-mail again",
+  "@authVerifyResend": {
+    "description": "Button resending the confirmation e-mail"
+  },
+  "authVerifyResent": "Sent again.",
+  "@authVerifyResent": {
+    "description": "Inline notice after the confirmation e-mail was resent"
+  },
+  "authVerifyResendWait": "You can send it again in a minute.",
+  "@authVerifyResendWait": {
+    "description": "Label of the resend button while its cooldown runs"
+  },
+  "authVerifyChangeEmail": "Use another address",
+  "@authVerifyChangeEmail": {
+    "description": "Button returning to the sign-up form with the address editable"
+  },
+  "authVerifyBackToSignIn": "Back to sign in",
+  "@authVerifyBackToSignIn": {
+    "description": "Link leaving the check-e-mail state for the sign-in form"
   }
 }

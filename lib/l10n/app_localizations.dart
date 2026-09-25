@@ -530,6 +530,48 @@ abstract class AppLocalizations {
   /// **'Check your e-mail'**
   String get authVerifyTitle;
 
+  /// Body of the check-e-mail state; names the address the link went to
+  ///
+  /// In en, this message translates to:
+  /// **'We sent a confirmation link to {email}. Open it on this device to finish creating your account.'**
+  String authVerifyBody(String email);
+
+  /// Small hint under the check-e-mail body
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing yet? Look in the spam folder, or send it again.'**
+  String get authVerifyHint;
+
+  /// Button resending the confirmation e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'Send the e-mail again'**
+  String get authVerifyResend;
+
+  /// Inline notice after the confirmation e-mail was resent
+  ///
+  /// In en, this message translates to:
+  /// **'Sent again.'**
+  String get authVerifyResent;
+
+  /// Label of the resend button while its cooldown runs
+  ///
+  /// In en, this message translates to:
+  /// **'You can send it again in a minute.'**
+  String get authVerifyResendWait;
+
+  /// Button returning to the sign-up form with the address editable
+  ///
+  /// In en, this message translates to:
+  /// **'Use another address'**
+  String get authVerifyChangeEmail;
+
+  /// Link leaving the check-e-mail state for the sign-in form
+  ///
+  /// In en, this message translates to:
+  /// **'Back to sign in'**
+  String get authVerifyBackToSignIn;
+
   /// App-bar title of the owner availability editor and its settings tile
   ///
   /// In en, this message translates to:

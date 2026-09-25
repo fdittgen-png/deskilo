@@ -133,6 +133,20 @@
   "authAlreadyRegistered": "Mit dieser Adresse kann kein Konto erstellt werden. Melde dich an oder setze dein Passwort zurück.",
   "authRecoveryNotSaved": "Dein Code wurde angenommen, aber das neue Passwort wurde nicht gespeichert. Versuche das Speichern erneut.",
   "authVerifyTitle": "Sieh in dein E-Mail-Postfach",
+  "authVerifyBody": "Wir haben einen Bestätigungslink an {email} geschickt. Öffne ihn auf diesem Gerät, um dein Konto fertig einzurichten.",
+  "@authVerifyBody": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "authVerifyHint": "Noch nichts da? Sieh im Spam-Ordner nach oder schicke die E-Mail erneut.",
+  "authVerifyResend": "E-Mail erneut senden",
+  "authVerifyResent": "Erneut gesendet.",
+  "authVerifyResendWait": "In einer Minute kannst du sie erneut senden.",
+  "authVerifyChangeEmail": "Andere Adresse verwenden",
+  "authVerifyBackToSignIn": "Zurück zur Anmeldung",
   "availabilityTitle": "Verfügbarkeit",
   "availabilityOpenWeekdays": "Geöffnete Wochentage",
   "availabilityClosureDays": "Schließtage",

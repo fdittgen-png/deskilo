@@ -30,6 +30,12 @@ abstract class AuthRepository {
     required String displayName,
   });
 
+  /// Sends the sign-up confirmation e-mail again through the resend
+  /// endpoint — never a second sign-up. [AuthOutcome.verificationRequired]
+  /// when it went out; [AuthOutcome.rateLimited] with the server's wait
+  /// when it was too soon.
+  Future<AuthResult> resendSignUpVerification(String email);
+
   Future<void> signOut();
 
   /// Emails a one-time recovery code to [email] (Supabase recovery OTP —

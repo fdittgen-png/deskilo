@@ -133,6 +133,20 @@
   "authAlreadyRegistered": "Questo indirizzo non può essere usato per creare un account. Accedi o reimposta la password.",
   "authRecoveryNotSaved": "Il codice è stato accettato, ma la nuova password non è stata salvata. Riprova a salvarla.",
   "authVerifyTitle": "Controlla la tua e-mail",
+  "authVerifyBody": "Abbiamo inviato un link di conferma a {email}. Aprilo su questo dispositivo per completare la creazione dell'account.",
+  "@authVerifyBody": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "authVerifyHint": "Ancora nulla? Controlla la cartella spam o invialo di nuovo.",
+  "authVerifyResend": "Invia di nuovo l'e-mail",
+  "authVerifyResent": "Inviata di nuovo.",
+  "authVerifyResendWait": "Potrai inviarla di nuovo tra un minuto.",
+  "authVerifyChangeEmail": "Usa un altro indirizzo",
+  "authVerifyBackToSignIn": "Torna all'accesso",
   "availabilityTitle": "Disponibilità",
   "availabilityOpenWeekdays": "Giorni di apertura",
   "availabilityClosureDays": "Giorni di chiusura",
