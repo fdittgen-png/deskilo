@@ -120,6 +120,29 @@ void main() {
             'protection object is the blunt command it exists to avoid');
   });
 
+  test('a required context that waits on another job is always evaluated '
+      '(#1446 C2)', () {
+    // A job with `needs:` and no `if: always()` is SKIPPED when a job it
+    // waits on fails — and a skipped required context counts as passing.
+    // So a classify job that died would have skipped the database job,
+    // and a database job that died would have skipped the report: the
+    // two contexts meant to catch a failure would have vanished from
+    // the pull request instead of going red.
+    final source = File('.github/workflows/quality.yml').readAsStringSync();
+    for (final context in _targetChecks()) {
+      final job = RegExp(
+        '^  [a-z_]+:\n(?:    .*\n)*?    name: ${RegExp.escape(context)}\n((?:    .*\n)*?)    steps:',
+        multiLine: true,
+      ).firstMatch(source);
+      expect(job, isNotNull, reason: '$context is not a job of quality.yml');
+      final header = job!.group(1)!;
+      if (!header.contains('needs:')) continue;
+      expect(header, contains('if: always()'),
+          reason: '`$context` has `needs:` but no `if: always()` — a '
+              'failed dependency would skip it, and skipped is green');
+    }
+  });
+
   test('the check can fail — a context nothing emits is caught', () {
     // The guard on the guard: if the job-name parse silently returned
     // nothing, the test above would pass on an empty set and prove the

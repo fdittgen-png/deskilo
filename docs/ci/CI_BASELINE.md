@@ -111,9 +111,11 @@ repository — a rename, a deletion, names with a space and a newline,
 over 300 files — with a docs-only change as the green control.
 
 When the database job is stood down it still reports: every database
-row says `not_applicable` with the reason, and `scripts/quality_report.sh`
-accepts that only because `report/classification.txt`, the classifier's
-own verdict, says so.
+row says `not_applicable` with the reason, and BOTH the job and
+`scripts/quality_report.sh` accept that only after reading the verdict
+back from the `quality-classification` artifact. Every other outcome of
+the classifier — `required`, an empty output from a classify job that
+died, a word nobody expected — runs the database work.
 
 ## The gate
 
@@ -123,6 +125,16 @@ is missing, duplicated, unknown, or `skipped` where the manifest does
 not allow it. The code job ends in a `Gate` step that fails on the test
 run, the row derivation or the coverage gate, so the one required
 context carries the complete code result rather than a subset of it.
+
+Every gate is `scripts/job_gate.sh` (#1446 C2): green only when each
+outcome it is handed is exactly `success` — `skipped`, `cancelled`, an
+empty outcome and a gate given nothing are red, where the inline loops
+before it failed only on `failure`. The database and report jobs are
+`if: always()`, because a job skipped by a failed dependency counts as a
+passing required context; the report is the always-evaluated final
+word, red unless the table is complete and every job it waited on —
+the classifier included — succeeded. `test/tool/job_gate_test.dart`
+and `test/lint/required_contexts_test.dart` hold that shape.
 
 `scripts/coverage_gate.sh` refuses a layer with no measured lines as
 well as one below its floor (#1446 R2): an LCOV that lost `domain/` and
