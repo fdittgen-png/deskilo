@@ -16,6 +16,7 @@ import '../../domain/social_provider.dart';
 import '../../providers/auth_providers.dart';
 import '../auth_outcome_text.dart';
 import '../widgets/badge_sign_in_sheet.dart';
+import '../widgets/password_recovery_sheet.dart';
 import '../widgets/verification_pending_view.dart';
 
 /// Email + password sign-in / sign-up. Navigation after success is handled
@@ -117,154 +118,20 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
         _password.clear();
       });
 
-  /// Forgot-password flow: a one-time recovery code is emailed and,
-  /// entered here, is the temporary credential that sets a brand-new
-  /// password (code-based on purpose — no Site-URL/deep-link fragility).
+  /// Forgot-password flow, in its own sheet. "Password updated" is said
+  /// only when the sheet reports the update itself landed — a dismissal
+  /// at any step, and a session a redeemed code opened, say nothing.
   Future<void> _resetPasswordSheet() async {
     final l10n = AppLocalizations.of(context);
-    final email = TextEditingController(text: _email.text.trim());
-    final code = TextEditingController();
-    final newPassword = TextEditingController();
-    var sent = false;
-    String? fieldError;
-    final repo = ref.read(authRepositoryProvider);
-    await showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      builder: (sheetContext) => StatefulBuilder(
-        builder: (sheetContext, setSheetState) => Padding(
-          padding: EdgeInsets.only(
-            left: AppSpacing.xl,
-            right: AppSpacing.xl,
-            top: AppSpacing.xl,
-            bottom:
-                MediaQuery.of(sheetContext).viewInsets.bottom + AppSpacing.xl,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                l10n?.authResetTitle ?? 'Reset password',
-                style: Theme.of(sheetContext).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                sent
-                    ? (l10n?.authResetCodeSent ??
-                        'Code sent — check your email.')
-                    : (l10n?.authResetExplainer ??
-                        "We'll email you a one-time code. Use it here to "
-                            'set a new password.'),
-                style: Theme.of(sheetContext).textTheme.bodySmall,
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                key: const ValueKey('reset-email'),
-                controller: email,
-                enabled: !sent,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: l10n?.authEmailLabel ?? 'Email',
-                ),
-              ),
-              if (sent) ...[
-                const SizedBox(height: 12),
-                TextField(
-                  key: const ValueKey('reset-code'),
-                  controller: code,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText:
-                        l10n?.authResetCodeLabel ?? 'Code from the email',
-                  ),
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  key: const ValueKey('reset-password'),
-                  controller: newPassword,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText:
-                        l10n?.authResetNewPasswordLabel ?? 'New password',
-                  ),
-                ),
-              ],
-              if (fieldError != null) ...[
-                const SizedBox(height: 8),
-                Text(
-                  fieldError!,
-                  style: TextStyle(
-                    color: Theme.of(sheetContext).colorScheme.error,
-                  ),
-                ),
-              ],
-              const SizedBox(height: 16),
-              FilledButton(
-                onPressed: () async {
-                  if (!sent) {
-                    try {
-                      await repo.requestPasswordReset(email.text.trim());
-                    } catch (e, st) {
-                      debugPrint('password reset request failed: $e\n$st');
-                      TraceLogger.instance.error(
-                          'auth', 'password reset request failed',
-                          error: e, stackTrace: st);
-                      if (!sheetContext.mounted) return;
-                      AppSnack.error(
-                        sheetContext,
-                        l10n?.authNetworkError ??
-                            'Could not reach the server. Check your '
-                                'connection and try again.',
-                      );
-                      return;
-                    }
-                    setSheetState(() => sent = true);
-                    return;
-                  }
-                  if (newPassword.text.length < 8) {
-                    setSheetState(() => fieldError =
-                        l10n?.authPasswordTooShort ?? 'At least 8 characters');
-                    return;
-                  }
-                  try {
-                    await repo.confirmPasswordReset(
-                      email: email.text.trim(),
-                      code: code.text.trim(),
-                      newPassword: newPassword.text,
-                    );
-                  } catch (e, st) {
-                    // Expected user error (wrong/expired code) — warn.
-                    debugPrint('password reset rejected: $e\n$st');
-                    TraceLogger.instance.warn(
-                        'auth', 'password reset rejected',
-                        error: e, stackTrace: st);
-                    setSheetState(() => fieldError =
-                        l10n?.authResetInvalidCode ??
-                            'That code is invalid or expired.');
-                    return;
-                  }
-                  if (!sheetContext.mounted) return;
-                  Navigator.of(sheetContext).pop();
-                },
-                child: Text(
-                  sent
-                      ? (l10n?.authResetSubmit ?? 'Set new password')
-                      : (l10n?.authResetSendCode ?? 'Send code'),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    final completed = await showPasswordRecoverySheet(
+      context,
+      email: _email.text.trim(),
     );
-    if (!mounted) return;
-    if (ref.read(authRepositoryProvider).currentUserId != null) {
-      AppSnack.success(
-        context,
-        l10n?.authResetDone ?? 'Password updated — you are signed in.',
-      );
-    }
+    if (!mounted || !completed) return;
+    AppSnack.success(
+      context,
+      l10n?.authResetDone ?? 'Password updated — you are signed in.',
+    );
   }
 
   /// Browser OAuth (0051): the flow finishes out-of-app; the router

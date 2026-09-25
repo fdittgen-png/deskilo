@@ -46,5 +46,7 @@
   "authVerifyResent": "Inviata di nuovo.",
   "authVerifyResendWait": "Potrai inviarla di nuovo tra un minuto.",
   "authVerifyChangeEmail": "Usa un altro indirizzo",
-  "authVerifyBackToSignIn": "Torna all'accesso"
+  "authVerifyBackToSignIn": "Torna all'accesso",
+  "authRecoveryRetryUpdate": "Salva di nuovo la nuova password",
+  "authRecoverySessionLost": "Quel codice non è più valido qui. Richiedine uno nuovo."
 }

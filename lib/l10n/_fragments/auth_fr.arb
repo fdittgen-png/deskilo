@@ -46,5 +46,7 @@
   "authVerifyResent": "Renvoyé.",
   "authVerifyResendWait": "Vous pourrez le renvoyer dans une minute.",
   "authVerifyChangeEmail": "Utiliser une autre adresse",
-  "authVerifyBackToSignIn": "Retour à la connexion"
+  "authVerifyBackToSignIn": "Retour à la connexion",
+  "authRecoveryRetryUpdate": "Réenregistrer le nouveau mot de passe",
+  "authRecoverySessionLost": "Ce code n'est plus valable ici. Demandez-en un nouveau."
 }

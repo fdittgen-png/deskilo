@@ -7,8 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../application/sign_up_verification.dart';
 import '../../domain/auth_outcome.dart';
-import '../../providers/auth_providers.dart';
 import '../auth_outcome_text.dart';
 
 /// Where a sign-up lands when the server sent an e-mail instead of a
@@ -83,21 +83,15 @@ class _VerificationPendingViewState
       _busy = true;
       _lastResult = null;
     });
-    final result = await ref
-        .read(authRepositoryProvider)
-        .resendSignUpVerification(widget.email);
+    final turn =
+        await ref.read(signUpVerificationProvider).resend(widget.email);
     // The person may have gone to change the address meanwhile; a late
     // answer then has no view to land in.
     if (!mounted) return;
     setState(() {
       _busy = false;
-      _lastResult = result;
-      // A send that went out and a send the server deferred both mean
-      // "not again yet" — for the server's own wait when it named one.
-      if (result.outcome == AuthOutcome.verificationRequired ||
-          result.outcome == AuthOutcome.rateLimited) {
-        _arm(result.retryAfter ?? AuthCooldowns.resend);
-      }
+      _lastResult = turn.result;
+      if (turn.holdFor case final wait?) _arm(wait);
     });
   }
 
