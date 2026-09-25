@@ -54,6 +54,7 @@ import '../features/profile/presentation/screens/profiles_screen.dart';
 import '../features/profile/presentation/screens/schema_update_screen.dart';
 import '../core/backend/schema_version.dart';
 import '../core/instance/schema_compatibility.dart';
+import 'route_policy.dart';
 import 'schema_gate.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
 import '../features/reservations/presentation/screens/reserve_screen.dart';
@@ -139,106 +140,61 @@ GoRouter router(Ref ref) {
     // is what opens on start, after sign-in and after onboarding.
     initialLocation: '/reserve',
     refreshListenable: refresh,
+    // #1650 — the rules live in route_policy.dart as a pure function over
+    // facts; this closure only collects the facts and asks. Building them
+    // reads; nothing here writes.
     redirect: (context, state) {
-      // #1312 — a server older than this app gates every route but the
-      // way out, and is then the ONLY rule: the way out must not bounce to
-      // sign-in. An unanswered check changes nothing.
-      final schema = ref.read(schemaCompatibilityProvider).value;
-      final schemaGate = schemaGateRedirect(schema, state.matchedLocation);
-      if (schema == SchemaCompatibility.behind || schemaGate != null) {
-        return schemaGate;
-      }
       final auth = ref.read(authStateProvider);
+      // Nothing else is read until the session is known: a read flushes a
+      // provider the scheduler is about to rebuild, and while a scope is
+      // being updated that is a rebuild twice in one frame. The policy
+      // knows AuthFact.loading for its table; the router never sends it.
       if (auth.isLoading) return null;
-      final signedIn = auth.value != null;
-      final atAuth = state.matchedLocation == '/auth';
-      if (!signedIn) return atAuth ? null : '/auth';
-      if (atAuth) return '/reserve';
-
-      // #751 — the GDPR consent gates everything but itself, the help
-      // and the privacy screen. Fails CLOSED: once the profile query has
-      // settled, anything but a recorded acceptance of the CURRENT
-      // version (no row, an error, an older version) is the consent.
-      // #771 — EXCEPT the kiosk: a wall device's account has no personal
-      // consent to give, and its lockdown made the screen unanswerable —
-      // the pad froze over the dialog. The kiosk gate below keeps
-      // owning the device's route.
-      final kioskMember = ref.read(myMemberProvider).value?.isKiosk ?? false;
-      final profileAsync = ref.read(myProfileProvider);
-      final accepted =
-          profileAsync.value?.privacyAcceptedVersion == kPrivacyPolicyVersion;
-      final atConsent = state.matchedLocation == '/consent';
-      final consentFree =
-          atConsent ||
-          state.matchedLocation == '/help' ||
-          state.matchedLocation == '/privacy';
-      if (!profileAsync.isLoading &&
-          !accepted &&
-          !consentFree &&
-          !kioskMember) {
-        return '/consent';
-      }
-      if (atConsent && state.uri.queryParameters['review'] != '1' && accepted) {
-        return '/reserve';
-      }
-
-      // Signed in: a user without any workspace lands on onboarding. The
-      // `first` flag marks the forced first-run visit — only that visit is
-      // bounced to /plan once a workspace exists, so deliberately opening
-      // onboarding from Profiles (#89 add-a-profile) is never hijacked.
+      final profile = ref.read(myProfileProvider);
       final workspaces = ref.read(myWorkspacesProvider);
-      final atOnboarding = state.matchedLocation == '/onboarding';
-      // The join-QR camera is PART of onboarding (#572): the redirect
-      // used to evict it back to the join form the instant it was
-      // pushed, because the scanner's only audience is exactly the user
-      // with zero workspaces.
-      final atScanJoin = state.matchedLocation == '/scan-join';
-      final firstRun = state.uri.queryParameters['first'] == '1';
-      final list = workspaces.value;
-      if (list != null) {
-        if (list.isEmpty && !atOnboarding && !atScanJoin) {
-          return '/onboarding?first=1';
-        }
-        if (list.isNotEmpty && atOnboarding && firstRun) return '/reserve';
-      }
-
-      // Kiosk lock (0043) behind the kiosk gate (field request): kiosk
-      // mode never auto-loads. A kiosk account first CONFIRMS it on the
-      // gate — accepted collapses every route to the kiosk plan view
-      // until the pad restarts; rejected lets this run of the app behave
-      // normally. Regular members can never land on either screen.
-      final me = ref.read(myMemberProvider).value;
-      final atKiosk = state.matchedLocation == '/kiosk';
-      final atGate = state.matchedLocation == '/kiosk-gate';
-      // The kioskMode feature (hierarchy pass) turns the whole module
-      // off: flagged accounts just behave as regular members.
-      if (me != null &&
+      final member = ref.read(myMemberProvider);
+      final me = member.value;
+      final kioskAccount = me != null &&
           me.isKiosk &&
-          featureEnabled(WorkspaceFeature.kioskMode)) {
-        switch (ref.read(kioskModeProvider)) {
-          case KioskModeDecision.pending:
-            if (!atGate) return '/kiosk-gate';
-          case KioskModeDecision.accepted:
-            if (!atKiosk) return '/kiosk';
-          case KioskModeDecision.rejected:
-            if (atKiosk || atGate) return '/reserve';
-        }
-      } else if (atKiosk || atGate) {
-        return '/reserve';
-      }
-
-      // Pending membership (0052): the waiting room until the validators
-      // approve. Profiles stays reachable — the user may be active in
-      // another workspace and switch to it.
-      final atPending = state.matchedLocation == '/pending';
-      final pendingSafe = atPending || state.matchedLocation == '/profiles';
-      if (me != null && me.status == MemberStatus.pending && !pendingSafe) {
-        return '/pending';
-      }
-      if ((me == null || me.status != MemberStatus.pending) && atPending) {
-        return '/reserve';
-      }
-      return null;
+          featureEnabled(WorkspaceFeature.kioskMode);
+      final facts = RouteFacts(
+        schema: ref.read(schemaCompatibilityProvider).value ??
+            SchemaCompatibility.unknown,
+        auth: auth.value == null ? AuthFact.signedOut : AuthFact.signedIn,
+        privacy: profile.isLoading
+            ? PrivacyFact.loading
+            : profile.hasError
+                ? PrivacyFact.unavailable
+                : profile.value?.privacyAcceptedVersion == kPrivacyPolicyVersion
+                    ? PrivacyFact.accepted
+                    : PrivacyFact.notAccepted,
+        workspaces: workspaces.hasValue
+            ? (workspaces.value!.isEmpty
+                ? WorkspacesFact.none
+                : WorkspacesFact.some)
+            : workspaces.hasError
+                ? WorkspacesFact.unavailable
+                : WorkspacesFact.loading,
+        membership: member.isLoading && !member.hasValue
+            ? MembershipFact.loading
+            : switch (me?.status) {
+                null => MembershipFact.none,
+                MemberStatus.active => MembershipFact.active,
+                MemberStatus.pending => MembershipFact.pending,
+                _ => MembershipFact.inactive,
+              },
+        kiosk: !kioskAccount
+            ? KioskFact.notKiosk
+            : switch (ref.read(kioskModeProvider)) {
+                KioskModeDecision.pending => KioskFact.gatePending,
+                KioskModeDecision.accepted => KioskFact.locked,
+                KioskModeDecision.rejected => KioskFact.released,
+              },
+        featureEnabled: featureEnabled,
+      );
+      final request =
+          RouteRequest(state.uri.path, query: state.uri.queryParameters);
+      return settleDestination(request, facts).redirect;
     },
     routes: [
       GoRoute(path: '/auth', builder: (context, state) => const AuthScreen()),
@@ -342,9 +298,9 @@ GoRouter router(Ref ref) {
       // workspace can be loaded, which is exactly when it is needed.
       // #977 — the instance wizard, beside the server screen it serves.
       GoRoute(
+        // #1650 — its instanceWizard boundary is the policy's: a
+        // workspace's flag, applied only when there is a workspace.
         path: '/server/new-instance',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.instanceWizard) ? null : '/server',
         builder: (context, state) => const NewInstanceScreen(),
       ),
       GoRoute(

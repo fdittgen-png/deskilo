@@ -63,6 +63,29 @@ void main() {
     );
   });
 
+  test('the router asks the policy and keeps no rule of its own', () {
+    final source = File('lib/app/router.dart').readAsStringSync();
+    expect(source, contains('settleDestination('));
+    // The top-level redirect decides nothing the policy decides: these
+    // were the literals of the closure it replaced (#1650 C3).
+    final closure = source.substring(
+      source.indexOf('redirect: (context, state) {'),
+      source.indexOf('routes: ['),
+    );
+    for (final literal in [
+      "'/auth'",
+      "'/consent'",
+      "'/onboarding",
+      "'/pending'",
+      "'/kiosk",
+      "'/reserve'",
+    ]) {
+      expect(closure, isNot(contains(literal)),
+          reason: 'the top-level redirect names $literal — that rule '
+              'belongs in route_policy.dart, where the table can test it');
+    }
+  });
+
   test('a parameter matches one non-empty segment, never more', () {
     expect(classifyRoute('/member/abc'), RouteClass.workspace);
     expect(classifyRoute('/member'), RouteClass.unknown);
