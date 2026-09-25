@@ -10953,6 +10953,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get repartitionStepExpense => 'Die Ausgabe';
 
   @override
+  String get wizardStepCompleted => 'Abgeschlossen';
+
+  @override
+  String get wizardStepSkipped => 'Übersprungen — vorgeschlagene Einstellungen';
+
+  @override
+  String get wizardStepUnavailable => 'Noch nicht verfügbar';
+
+  @override
   String get wordingTitle => 'Wortwahl';
 
   @override

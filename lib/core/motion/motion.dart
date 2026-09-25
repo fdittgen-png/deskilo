@@ -104,8 +104,11 @@ class FadeInOnChange extends StatefulWidget {
   const FadeInOnChange({
     required this.changeKey,
     required this.child,
+    this.duration = MotionTokens.standard,
     super.key,
   });
+
+  final Duration duration;
 
   /// Identity of the shown content (e.g. the branch index) — a change
   /// triggers one fade-in.
@@ -129,7 +132,7 @@ class _FadeInOnChangeState extends State<FadeInOnChange>
   void didUpdateWidget(FadeInOnChange oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.changeKey == oldWidget.changeKey) return;
-    final duration = motionDuration(context, MotionTokens.standard);
+    final duration = motionDuration(context, widget.duration);
     if (duration == Duration.zero) {
       _controller.value = 1;
     } else {

@@ -23,6 +23,7 @@ import '../widgets/template_group_label.dart';
 import '../widgets/template_picker.dart';
 import '../../../../core/ui/wizard_scaffold.dart';
 import '../../../../core/ui/wizard_form_layout.dart';
+import '../../../../core/ui/wizard_progress.dart';
 
 /// First-run screen for a signed-in user without a workspace: create one
 /// (become owner) or join via invite code (spec §11 onboarding).
@@ -37,23 +38,18 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _createFormKey = GlobalKey<FormState>();
   final _joinFormKey = GlobalKey<FormState>();
   final _name = TextEditingController();
-  // #1303 — seeded from the device country.
+  final _nameFocus = FocusNode();
+  final _currencyFocus = FocusNode();
   final _currency = TextEditingController();
   final _timezone = TextEditingController();
   // #917 — development until its owner declares otherwise.
   WorkspaceEnvironment _environment = WorkspaceEnvironment.development;
-  // #987 — the other side of the pair, created at the same time.
   bool _withTwin = true;
 
-  /// #1120 — the template the new space starts from; null = empty canvas.
-  /// Defaults to the builtin 'tiny' template once the list arrives.
   String? _templateId;
   bool _templateResolved = false;
 
-  /// #1303 — the id this creation is known by, generated ONCE for the
-  /// session: a retry after a failure or a lost response sends the same id,
-  /// so the server returns the workspace it already made instead of
-  /// making a second one (and a second dev/prod pair).
+  /// A retry retains the request id, so creation stays idempotent.
   final String _requestId = newRequestId();
   final _inviteCode = TextEditingController();
   late String _countryCode;
@@ -61,12 +57,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   bool _busy = false;
 
   int _step = 0;
+  final _completed = <int>{};
+  final _skipped = <int>{};
 
-  /// A creation carrying a template failed: the confirm step offers to
-  /// create without one, so nobody is stuck on a template that cannot apply.
+  /// Offer a template-free retry after a failed creation.
   bool _failedWithTemplate = false;
 
-  /// #1303 S3 — what the chosen template sets up, asked once per choice.
   String? _outlineFor;
   Future<TemplateOutline>? _outline;
   TemplateOutline? _outlineValue;
@@ -88,8 +84,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     return _outline!;
   }
 
-  /// The server already said this template cannot be applied: Create is
-  /// held back and "Create without a template" is offered instead.
   bool get _templateRefused =>
       _templateId != null &&
       _outlineFor == _templateId &&
@@ -110,6 +104,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   @override
   void dispose() {
+    _nameFocus.dispose();
+    _currencyFocus.dispose();
     _name.dispose();
     _currency.dispose();
     _timezone.dispose();
@@ -117,8 +113,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     super.dispose();
   }
 
-  /// Runs [action]; false from it means the command REFUSED and nothing
-  /// was written, so there is nothing to refresh and nowhere to go.
   Future<void> _run(Future<bool> Function() action) async {
     setState(() => _busy = true);
     final l10n = AppLocalizations.of(context);
@@ -147,15 +141,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     if (mounted) setState(() => _busy = false);
   }
 
-  // #1449 — the same sentences the command refuses on, read once: the
-  // wizard uses them to hold a step, the command to hold the write.
   bool get _nameValid => isNameable(_name.text);
   bool get _whereValid => isPlaceable(
         currencyCode: _currency.text,
         timezone: _timezone.text,
       );
 
-  /// Next from [_step]; a step that is not filled in shows why and stays.
   void _next() {
     final valid = switch (_step) {
       _nameStep => _nameValid,
@@ -166,13 +157,30 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       _createFormKey.currentState?.validate();
       return;
     }
-    setState(() => _step = (_step + 1).clamp(0, _confirmStep));
+    _completed.add(_step);
+    _skipped.remove(_step);
+    _goTo((_step + 1).clamp(0, _confirmStep));
   }
 
-  /// #1449 — application/start_workspace.dart holds the rules: a name, a
-  /// currency and a timezone, a template the server has not refused, and
-  /// the request id that makes a retry ONE creation. The screen says
-  /// what was chosen.
+  void _goTo(int step) {
+    if (_busy || step == _step) return;
+    FocusManager.instance.primaryFocus?.unfocus();
+    setState(() => _step = step);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || _step != step || _busy) return;
+      if (step == _nameStep) _nameFocus.requestFocus();
+      if (step == _whereStep) _currencyFocus.requestFocus();
+    });
+  }
+
+  WizardStepState _stateOf(int step) {
+    if (_skipped.contains(step)) return WizardStepState.skipped;
+    if (_completed.contains(step) && (step != 0 || _nameValid) &&
+        (step != 1 || _whereValid)) { return WizardStepState.completed; }
+    return step > _step && (!_nameValid || !_whereValid)
+        ? WizardStepState.unavailable : WizardStepState.available;
+  }
+
   Future<void> _create() async {
     await _run(() async {
       final result = await ref.read(workspaceStartProvider).create(
@@ -183,10 +191,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             requestId: _requestId,
             environment: _environment,
             withTwin: _withTwin,
-            // #1120 — a new space starts with a room. #1303 — applied in
-            // the same transaction as the creation; the twin receives it
-            // through the deployment refresh, like every other piece of
-            // configuration.
             templateId: _templateId,
             outline: _outlineFor == _templateId ? _outlineValue : null,
           );
@@ -238,10 +242,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         )),
       );
     }
-    // #1303 S2 — creating is a staged flow: a person sees what will be
-    // created before it is, and Back keeps everything they typed.
     return WizardScaffold(
       scrollForm: true,
+      animateStep: true,
+      stepStates: [for (var i = 0; i <= _confirmStep; i++) _stateOf(i)],
       formMaxWidth: _step == 2 ? double.infinity : WizardFormLayout.shortFormWidth,
       title: l10n?.onboardingTitle ?? 'Welcome to DesKilo',
       actions: [signOut],
@@ -256,10 +260,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ? null
           : (i) {
               if (i <= _step || (_nameValid && _whereValid)) {
-                setState(() => _step = i);
+                _goTo(i);
               }
             },
-      onBack: _step == 0 || _busy ? null : () => setState(() => _step--),
+      onBack: _step == 0 || _busy ? null : () => _goTo(_step - 1),
       onNext: _busy ? null : _next,
       onFinish: _busy ? null : _create,
       finishEnabled: !_templateRefused,
@@ -295,6 +299,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           TextFormField(
             key: const ValueKey('onboarding-name'),
             controller: _name,
+            focusNode: _nameFocus,
             decoration: InputDecoration(
               labelText: l10n?.workspaceNameLabel ?? 'Workspace name',
             ),
@@ -304,14 +309,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 : null,
           ),
           const SizedBox(height: AppSpacing.md),
-          // The suggested settings are the device's country and the builtin
-          // template: most people need nothing else, and still see the
-          // confirm step before anything is created.
           TextButton.icon(
             key: const ValueKey('onboarding-use-suggested'),
             onPressed: _busy || !_nameValid
                 ? null
-                : () => setState(() => _step = _confirmStep),
+                : () {
+                    _completed.add(_nameStep);
+                    _skipped.addAll([1, 2]);
+                    _goTo(_confirmStep);
+                  },
             icon: const Icon(Icons.fast_forward_outlined),
             label: Text(
                 l10n?.onboardingUseSuggested ?? 'Use the suggested settings'),
@@ -350,6 +356,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           TextFormField(
             key: const ValueKey('onboarding-currency'),
             controller: _currency,
+            focusNode: _currencyFocus,
             decoration: InputDecoration(
               labelText: l10n?.workspaceCurrencyLabel ?? 'Currency',
             ),
@@ -372,8 +379,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           DropdownButtonFormField<WorkspaceEnvironment>(
             key: const ValueKey('onboarding-environment'),
             initialValue: _environment,
-            // The labels carry a dash and a clause; without this the row
-            // sizes to its natural width and overflows a narrow form.
             isExpanded: true,
             itemHeight: null,
             decoration: InputDecoration(
@@ -399,8 +404,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 ? null
                 : (v) => setState(() => _environment = v ?? _environment),
           ),
-          // #987 — the pair: one to try things out, one that is real, both
-          // yours from the start.
           CheckboxListTile(
             key: const ValueKey('onboarding-with-twin'),
             value: _withTwin,
@@ -429,8 +432,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         );
       });
 
-  /// 'tiny' is the builtin and the default, resolved by key once the list
-  /// arrives — whichever step first reads it.
   void _resolveDefaultTemplate(WidgetRef ref) {
     final list = ref.watch(workspaceTemplatesProvider).value;
     if (!_templateResolved && list != null) {
@@ -518,8 +519,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         );
       });
 
-  /// Nothing while the outline loads or when it could not be read: the
-  /// creation checks the template again either way.
   Widget _outlineView(AppLocalizations? l10n, TemplateOutline? outline) {
     if (outline == null) return const SizedBox.shrink();
     if (outline.refused) {

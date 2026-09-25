@@ -7392,6 +7392,9 @@
   "@repartitionStepExpense": {
     "description": "#872 one wizard idiom: repartitionStepExpense"
   },
+  "wizardStepCompleted": "Completado",
+  "wizardStepSkipped": "Omitido — ajustes sugeridos",
+  "wizardStepUnavailable": "Aún no disponible",
   "wordingTitle": "Vocabulario",
   "@wordingTitle": {
     "description": "#1277 the wording editor: screen title"

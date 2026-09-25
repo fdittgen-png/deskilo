@@ -378,6 +378,8 @@ L'administration vit dans trois sections des **Réglages**, chaque entrée n'app
 
 Sur un petit écran, avec du texte agrandi ou le clavier ouvert, le formulaire de création et ses actions défilent ensemble si nécessaire. L’étape actuelle reste lisible et Retour conserve votre saisie (#1653).
 
+Les étapes proposées sont indiquées comme ignorées, et non terminées. Sur petit écran, ouvrez le titre de l’étape pour consulter la progression. Retour conserve la saisie ; les transitions respectent la réduction des animations (#1653).
+
 **Pays, devise, fuseau (#711).** Le choix du pays couvre désormais les 32 pays pour lesquels l'app sait déclarer la TVA (UE-27, Suisse, Norvège, Royaume-Uni, États-Unis, Canada). La devise est un **sélecteur** des codes que l'app sait formater — chacun avec son symbole et son bon nombre de décimales : le yen n'en a pas, le dinar en a trois, et chaque montant, facture et paiement en ligne le respecte. Le fuseau est une **liste avec recherche** des zones IANA que l'horloge sait installer ; une faute de frappe ne peut plus être enregistrée. **Un nouvel espace part du pays de votre appareil (#1303) :** sa devise et son fuseau suivent, tous trois modifiables avant la création — `fr_CH` propose la Suisse, un téléphone réglé en allemand propose l'Allemagne, et ce que le catalogue ne connaît pas propose la France.
 
 ### L'éditeur d'espace
