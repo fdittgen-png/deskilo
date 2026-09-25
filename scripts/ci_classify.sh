@@ -53,10 +53,17 @@ dart run "$TOOL" --event "$EVENT" --changes "$OUT/changes.nul" \
   ${flags[@]+"${flags[@]}"} --out "$OUT/classification.txt"
 
 # The verdict file is what every consumer reads: one line per discipline,
-# each verdict one of the two words the workflows compare against.
+# each verdict one of the two words the workflows compare against. A
+# classifier that exited 0 without writing it is caught here — the first
+# run of this script on a broken classifier passed, because `grep -c` on
+# a missing file printed nothing and `[ "" -ne 1 ]` is not true.
+if [ ! -s "$OUT/classification.txt" ]; then
+  echo "::error::the classifier exited 0 but wrote no $OUT/classification.txt"
+  exit 1
+fi
 for discipline in database web; do
   n=$(grep -cE "^$discipline\|(required|not_applicable)\|" "$OUT/classification.txt" || true)
-  if [ "$n" -ne 1 ]; then
+  if [ "${n:-0}" -ne 1 ]; then
     echo "::error::classification.txt carries $n verdict lines for '$discipline', expected exactly one"
     exit 1
   fi

@@ -151,6 +151,24 @@ void main() {
         reason: 'no output line means every consumer runs its work');
   });
 
+  test('a classifier that exits 0 and writes nothing is refused — the '
+      'first CI run of a dying classifier passed exactly this way', () {
+    final repo = Directory('${_tmp.path}/repo')..createSync();
+    final base = _repo(repo, wide: false);
+    final silent = File('${_tmp.path}/silent.dart')
+      ..writeAsStringSync('void main() {}\n');
+    final r = _run(repo, base, env: {'CI_CLASSIFY_TOOL': silent.path});
+    expect(r.code, 1, reason: r.out);
+    expect(r.out, contains('wrote no'));
+    expect(r.outputs, isEmpty);
+  });
+
+  test('a usage error is an exit code, not a verdict — Dart ignores what '
+      '`int main` returns', () {
+    final r = Process.runSync('dart', ['run', 'tool/ci_classify.dart']);
+    expect(r.exitCode, 2, reason: '${r.stdout}${r.stderr}');
+  });
+
   test('a verdict file with a discipline missing is refused, so a partial '
       'classification cannot stand anything down', () {
     final repo = Directory('${_tmp.path}/repo')..createSync();

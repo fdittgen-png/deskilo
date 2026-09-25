@@ -19,7 +19,11 @@ import 'dart:io';
 
 import 'ci_classify/classify.dart';
 
-int main(List<String> args) {
+// Dart ignores the value `main` returns: `int main() => 2` exits 0. The
+// exit code is set explicitly, or a usage error reads as a verdict.
+void main(List<String> args) => exitCode = run(args);
+
+int run(List<String> args) {
   String? option(String name) {
     final i = args.indexOf('--$name');
     return i < 0 || i + 1 >= args.length ? null : args[i + 1];
