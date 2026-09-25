@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_spacing.dart';
 import '../../l10n/app_localizations.dart';
 import 'edge_fade_scroll.dart';
+import 'wizard_form_layout.dart';
 
 /// One step: a stable [name] (keys `wizard-step-<name>`) and its label.
 typedef WizardStepSpec = ({String name, String label});
@@ -32,6 +33,8 @@ class WizardScaffold extends StatelessWidget {
     this.finishEnabled = true,
     this.actions = const [],
     this.leading,
+    this.scrollForm = false,
+    this.formMaxWidth = WizardFormLayout.shortFormWidth,
   });
 
   final String title;
@@ -54,16 +57,23 @@ class WizardScaffold extends StatelessWidget {
   final List<Widget> actions;
   final Widget? leading;
 
+  /// Opt-in: the frame owns scrolling/insets for a non-scrollable form.
+  final bool scrollForm;
+  final double formMaxWidth;
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final last = index >= steps.length - 1;
-    return Scaffold(
-      appBar: AppBar(title: Text(title), actions: actions, leading: leading),
-      body: Column(
-        children: [
-          SizedBox(
+    final header = LayoutBuilder(builder: (context, box) {
+      if (scrollForm && (box.maxWidth < WizardFormLayout.shortFormWidth ||
+          MediaQuery.textScalerOf(context).scale(1) > 1.3)) {
+        return Padding(padding: AppSpacing.lgAll,
+          child: Semantics(header: true, child: Text(steps[index].label,
+            style: theme.textTheme.titleMedium)));
+      }
+      return SizedBox(
             height: 56,
             child: EdgeFadeScroll(
               padding: const EdgeInsets.symmetric(
@@ -102,29 +112,27 @@ class WizardScaffold extends StatelessWidget {
                   ),
               ]),
             ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-              child: body,
-            ),
-          ),
-          SafeArea(
+          );
+    });
+    final footer = SafeArea(
             top: false,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(
                   AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, AppSpacing.md),
-              child: Row(children: [
+              child: Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: AppSpacing.md,
+                runSpacing: AppSpacing.sm,
+                children: [
                 TextButton.icon(
                   key: const ValueKey('wizard-back'),
                   icon: const Icon(Icons.chevron_left),
                   label: Text(l10n?.wizardBack ?? 'Back'),
                   onPressed: index == 0 ? null : onBack,
                 ),
-                const Spacer(),
                 Text([index + 1, steps.length].join(' / '),
                     style: theme.textTheme.labelMedium),
-                const Spacer(),
                 if (!last)
                   FilledButton.icon(
                     key: const ValueKey('wizard-next'),
@@ -144,9 +152,20 @@ class WizardScaffold extends StatelessWidget {
                   ),
               ]),
             ),
-          ),
-        ],
-      ),
+          );
+    return Scaffold(
+      appBar: AppBar(title: Text(title), actions: actions, leading: leading),
+      body: scrollForm
+          ? WizardFormLayout(header: header, footer: footer,
+              maxWidth: formMaxWidth, child: body)
+          : Column(children: [
+              header,
+              Expanded(child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+                child: body,
+              )),
+              footer,
+            ]),
     );
   }
 }

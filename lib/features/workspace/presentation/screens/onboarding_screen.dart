@@ -22,6 +22,7 @@ import '../../domain/workspace.dart';
 import '../widgets/template_group_label.dart';
 import '../widgets/template_picker.dart';
 import '../../../../core/ui/wizard_scaffold.dart';
+import '../../../../core/ui/wizard_form_layout.dart';
 
 /// First-run screen for a signed-in user without a workspace: create one
 /// (become owner) or join via invite code (spec §11 onboarding).
@@ -36,19 +37,16 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _createFormKey = GlobalKey<FormState>();
   final _joinFormKey = GlobalKey<FormState>();
   final _name = TextEditingController();
-  // #1303 S1 — seeded from the device's country in initState; never a
-  // hardcoded Germany.
+  // #1303 — seeded from the device country.
   final _currency = TextEditingController();
   final _timezone = TextEditingController();
-  // #917 — a new space is for trying things out until its owner
-  // says otherwise. The safe answer to "is this real?" is no.
+  // #917 — development until its owner declares otherwise.
   WorkspaceEnvironment _environment = WorkspaceEnvironment.development;
   // #987 — the other side of the pair, created at the same time.
   bool _withTwin = true;
 
   /// #1120 — the template the new space starts from; null = empty canvas.
-  /// 'tiny' is the builtin and the default, resolved by key once the list
-  /// arrives.
+  /// Defaults to the builtin 'tiny' template once the list arrives.
   String? _templateId;
   bool _templateResolved = false;
 
@@ -62,7 +60,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   bool _joinMode = false;
   bool _busy = false;
 
-  /// #1303 S2 — the create flow's step: name, where, start from, confirm.
   int _step = 0;
 
   /// A creation carrying a template failed: the confirm step offers to
@@ -213,6 +210,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       onPressed: () async => signOutAndForget(ref),
     );
     final modeSwitch = SegmentedButton<bool>(
+      direction: MediaQuery.textScalerOf(context).scale(1) > 1.3
+          ? Axis.vertical : Axis.horizontal,
       segments: [
         ButtonSegment(
           value: false,
@@ -242,6 +241,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     // #1303 S2 — creating is a staged flow: a person sees what will be
     // created before it is, and Back keeps everything they typed.
     return WizardScaffold(
+      scrollForm: true,
+      formMaxWidth: _step == 2 ? double.infinity : WizardFormLayout.shortFormWidth,
       title: l10n?.onboardingTitle ?? 'Welcome to DesKilo',
       actions: [signOut],
       steps: [
@@ -264,7 +265,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       finishEnabled: !_templateRefused,
       finishKey: const ValueKey('onboarding-create'),
       finishLabel: l10n?.onboardingCreateButton ?? 'Create workspace',
-      body: _centered(Form(
+      body: Form(
         key: _createFormKey,
         child: switch (_step) {
           _nameStep => _nameStepBody(l10n, modeSwitch),
@@ -272,7 +273,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           _confirmStep => _confirmStepBody(l10n),
           _ => _startFromStepBody(),
         },
-      )),
+      ),
     );
   }
 
@@ -322,6 +323,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           DropdownButtonFormField<String>(
+            isExpanded: true,
+            itemHeight: null,
             initialValue: _countryCode,
             decoration: InputDecoration(
               labelText: l10n?.workspaceCountryLabel ?? 'Country',
@@ -372,6 +375,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             // The labels carry a dash and a clause; without this the row
             // sizes to its natural width and overflows a narrow form.
             isExpanded: true,
+            itemHeight: null,
             decoration: InputDecoration(
               labelText: l10n?.environmentLabel ?? 'Workspace type',
               helperMaxLines: 4,
