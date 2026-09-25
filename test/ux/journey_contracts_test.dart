@@ -37,6 +37,7 @@ import '../features/workspace/onboarding_flow_test.dart'
 /// Jumps the create wizard to a named step, the way its stepper header
 /// lets a member jump once the first two steps are filled in.
 Future<void> goToStep(WidgetTester tester, String label) async {
+  await tester.pump(); // Rebuild enabled progress after the field edit.
   await tester.tap(find.text(label));
   await tester.pumpAndSettle();
 }
