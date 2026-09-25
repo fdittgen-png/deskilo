@@ -246,7 +246,11 @@ const Map<String, int> _pairBudget = {
   // the at-cap reserve_screen.dart and imports the plan and workspace types
   // the screen still needs for its list view and controls — one file split
   // in two, no new dependency.
-  'reservations -> plan': 68,
+  // 2026-09-25 #1643 68→69: `providers/reservation_providers.dart` reads
+  // the plan's `targetNamesProvider` so the calendar-file command can name
+  // the booked space — the widget that asks for the file imports no plan
+  // provider of its own, which is the point of the command.
+  'reservations -> plan': 69,
   'reservations -> profile': 1,
   // 48→50 (2026-09-16): #1234 — `application/act_on_space.dart` and
   // `domain/space_act.dart` both need `BookingGranularity`: the

@@ -3,10 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart' show WidgetRef;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/backend/backend_settings.dart';
 import '../../../core/cache/cache_store.dart';
+import '../../../core/files/file_saver.dart';
 import '../../../core/privacy/recording_privacy.dart';
 import '../../../core/privacy/recording_providers.dart';
+import '../../plan/providers/floor_plan_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../application/save_calendar_file.dart';
 import '../data/supabase_reservation_repository.dart';
 import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
@@ -136,4 +140,33 @@ List<Reservation> reservationsAcrossWindow(
     }
   }
   return byId.values.toList();
+}
+
+/// #1643 — the calendar-file command, wired to the seams it needs so the
+/// button that asks for a file resolves no repository of its own.
+///
+/// The installation is the backend HOST: a reservation id is unique to a
+/// backend, so the two together identify the booking wherever the file
+/// is imported — and only a digest of them ever leaves the device.
+///
+/// Kept alive: the command holds closures that read providers through
+/// this `ref` when the member taps Save, long after the preview future
+/// completed — an auto-disposed provider would have thrown by then.
+@Riverpod(keepAlive: true)
+Future<CalendarFiles> calendarFiles(Ref ref) async {
+  // Every watch before the first await, so a rebuild follows all of them.
+  final reservations = ref.watch(reservationRepositoryProvider);
+  final clock = ref.watch(clockProvider);
+  final write = ref.watch(fileSaverProvider);
+  final endpoint = await ref.watch(activeBackendProvider.future);
+  final host = endpoint.host.trim();
+  return CalendarFiles(
+    reservations: reservations,
+    clock: clock,
+    installation: host.isEmpty ? 'deskilo' : host,
+    targetNames: () => ref.read(targetNamesProvider.future),
+    workspaceName: () async =>
+        (await ref.read(currentWorkspaceProvider.future))?.name ?? '',
+    write: write,
+  );
 }
