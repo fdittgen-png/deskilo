@@ -11095,6 +11095,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo confirmar el resultado. Sus datos se conservan. Vuelva a intentarlo para comprobar la misma solicitud.';
 
   @override
+  String get onboardingDiscardDraft =>
+      'Se perderán los datos introducidos. Esto no cancela una solicitud ya enviada.';
+
+  @override
   String get wordingTitle => 'Vocabulario';
 
   @override

@@ -51,11 +51,13 @@ void main() {
     final repo = HeldCreation();
     await ready(tester, repo);
     final create = find.byKey(const ValueKey('onboarding-create'));
+    final size = tester.getSize(create);
     final action = tester.widget<FilledButton>(create).onPressed!;
     action(); action();
     await tester.pump();
     expect(repo.requests, hasLength(1));
     expect(find.text('Create workspace'), findsOneWidget);
+    expect(tester.getSize(create), size);
     expect(tester.widget<FilledButton>(create).onPressed, isNull);
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
     await tester.sendKeyEvent(LogicalKeyboardKey.escape);
@@ -67,6 +69,26 @@ void main() {
     await tester.pump();
     expect(repo.workspaces.single.name, 'Kept draft');
     expect(find.byKey(const ValueKey('onboarding-error')), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('Enter submits once and remains disabled while pending', (tester) async {
+    final repo = HeldCreation();
+    await ready(tester, repo);
+    final create = find.byKey(const ValueKey('onboarding-create'));
+    final ink = find.descendant(of: create, matching: find.byType(InkWell));
+    final target = find.descendant(of: ink, matching: find.byType(GestureDetector)).first;
+    Focus.of(tester.element(target)).requestFocus();
+    await tester.pump();
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+    await tester.pump();
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+    await tester.pump();
+    expect(repo.requests, hasLength(1));
+    repo.gate.complete();
+    await tester.pump();
+    await tester.pump();
+    expect(repo.workspaces, hasLength(1));
     expect(tester.takeException(), isNull);
   });
 

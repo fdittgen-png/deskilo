@@ -11974,6 +11974,7 @@
   "wizardStepUnavailable": "Not available yet",
   "wizardSubmitting": "Submitting",
   "onboardingUnconfirmed": "The result could not be confirmed. Your entries are kept. Retry to check the same request.",
+  "onboardingDiscardDraft": "Your entries will be lost. This does not cancel a request already sent.",
   "wordingTitle": "Wording",
   "@wordingTitle": {
     "description": "#1277 the wording editor: screen title"

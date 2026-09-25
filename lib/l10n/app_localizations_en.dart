@@ -11016,6 +11016,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The result could not be confirmed. Your entries are kept. Retry to check the same request.';
 
   @override
+  String get onboardingDiscardDraft =>
+      'Your entries will be lost. This does not cancel a request already sent.';
+
+  @override
   String get wordingTitle => 'Wording';
 
   @override

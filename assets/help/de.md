@@ -411,6 +411,8 @@ Die Administration wohnt in drei Abschnitten der **Einstellungen**, und jeder Ei
 
 Auf kleinen Bildschirmen, bei großer Schrift oder geöffneter Tastatur scrollen das Erstellungsformular und seine Aktionen bei Bedarf gemeinsam. Der aktuelle Schritt bleibt lesbar und Zurück bewahrt die Eingaben (#1653).
 
+Zurück und Escape führen zum vorherigen Schritt. Beim Verlassen eines ausgefüllten Entwurfs können Sie weiterbearbeiten oder verwerfen; ein unberührtes Formular wird direkt geschlossen. Vorlagenfilter scrollen horizontal und lassen Platz für Ergebnisse (#1653).
+
 Workspace erstellen behält beim Senden seine Beschriftung und nimmt nur eine Anfrage gleichzeitig an. Bleibt das Ergebnis unbestätigt, erhält eine Meldung im Formular die Eingaben für denselben erneuten Versuch; das Verlassen der Ansicht storniert keine Serveränderung (#1653).
 
 Vorgeschlagene Schritte gelten als übersprungen, nicht als abgeschlossen. Auf kleinen Bildschirmen öffnet die Schrittüberschrift die Übersicht. Zurück bewahrt die Eingaben; Übergänge beachten reduzierte Bewegung (#1653).

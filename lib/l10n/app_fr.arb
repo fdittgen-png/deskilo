@@ -7492,6 +7492,7 @@
   "wizardStepUnavailable": "Pas encore disponible",
   "wizardSubmitting": "Envoi en cours",
   "onboardingUnconfirmed": "Le résultat n’a pas pu être confirmé. Votre saisie est conservée. Réessayez pour vérifier la même demande.",
+  "onboardingDiscardDraft": "Votre saisie sera perdue. Cela n’annule pas une demande déjà envoyée.",
   "wordingTitle": "Vocabulaire",
   "@wordingTitle": {
     "description": "#1277 the wording editor: screen title"

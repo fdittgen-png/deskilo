@@ -68,6 +68,8 @@ void main() {
       await tester.pump();
       expect(find.text('Required'), findsOneWidget);
       final name = find.byKey(const ValueKey('onboarding-name'));
+      expect(tester.widget<EditableText>(find.descendant(of: name,
+        matching: find.byType(EditableText))).focusNode.hasFocus, isTrue);
       await tester.ensureVisible(name);
       await tester.enterText(name, 'My space');
       await tester.ensureVisible(next);

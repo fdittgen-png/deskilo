@@ -11111,6 +11111,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Impossibile confermare il risultato. I dati inseriti sono conservati. Riprova per verificare la stessa richiesta.';
 
   @override
+  String get onboardingDiscardDraft =>
+      'I dati inseriti andranno persi. Questo non annulla una richiesta già inviata.';
+
+  @override
   String get wordingTitle => 'Lessico';
 
   @override

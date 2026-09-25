@@ -414,6 +414,8 @@ L'administration vit dans trois sections des **Réglages**, chaque entrée n'app
 
 Sur un petit écran, avec du texte agrandi ou le clavier ouvert, le formulaire de création et ses actions défilent ensemble si nécessaire. L’étape actuelle reste lisible et Retour conserve votre saisie (#1653).
 
+Retour et Échap reviennent à l’étape précédente. Quitter une saisie demande de continuer ou de l’abandonner ; un formulaire vierge se ferme directement. Les filtres des modèles défilent horizontalement pour laisser de la place aux résultats (#1653).
+
 Créer l’espace garde son libellé pendant l’envoi et n’accepte qu’une demande à la fois. Si le résultat ne peut pas être confirmé, un message dans le formulaire conserve la saisie pour réessayer la même demande ; quitter une vue n’annule jamais une écriture serveur (#1653).
 
 Les étapes proposées sont indiquées comme ignorées, et non terminées. Sur petit écran, ouvrez le titre de l’étape pour consulter la progression. Retour conserve la saisie ; les transitions respectent la réduction des animations (#1653).

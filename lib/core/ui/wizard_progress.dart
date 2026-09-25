@@ -19,11 +19,11 @@ class WizardProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     String status(int i) => switch (states[i]) {
-      WizardStepState.completed => l10n.wizardStepCompleted,
-      WizardStepState.skipped => l10n.wizardStepSkipped,
-      WizardStepState.unavailable => l10n.wizardStepUnavailable,
+      WizardStepState.completed => l10n?.wizardStepCompleted ?? 'Completed',
+      WizardStepState.skipped => l10n?.wizardStepSkipped ?? 'Skipped — suggested settings',
+      WizardStepState.unavailable => l10n?.wizardStepUnavailable ?? 'Not available yet',
       WizardStepState.available => '',
     };
     IconData icon(int i) => switch (states[i]) {
@@ -40,13 +40,18 @@ class WizardProgress extends StatelessWidget {
           selected: i == index, value: status(i), child: TextButton.icon(
           onPressed: onStepTap == null || states[i] == WizardStepState.unavailable
               ? null : () => onStepTap!(i),
-          icon: Icon(icon(i)), label: Text(step.label))),
+          icon: Icon(i == index ? Icons.radio_button_checked : icon(i)),
+          style: i == index ? TextButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+            foregroundColor: Theme.of(context).colorScheme.onSecondaryContainer) : null,
+          label: Text(step.label))),
       ];
       if (compact) {
         return ExpansionTile(
           key: const ValueKey('wizard-progress-overview'),
           title: Semantics(header: true, liveRegion: true,
             child: Text(steps[index].label)),
+          subtitle: Text('${index + 1} / ${steps.length}'),
           children: items,
         );
       }

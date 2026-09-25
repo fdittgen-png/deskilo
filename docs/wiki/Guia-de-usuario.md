@@ -418,6 +418,8 @@ La administración vive en tres secciones de **Ajustes**, y cada entrada solo ap
 
 En pantallas pequeñas, con texto ampliado o el teclado abierto, el formulario de creación y sus acciones se desplazan juntos cuando es necesario. El paso actual sigue siendo legible y Atrás conserva los datos introducidos (#1653).
 
+Atrás y Escape vuelven al paso anterior. Al salir de un borrador con datos, puede seguir editando o descartarlo; un formulario sin cambios se cierra directamente. Los filtros de plantillas se desplazan horizontalmente y dejan espacio para los resultados (#1653).
+
 Crear espacio conserva su etiqueta durante el envío y acepta una solicitud a la vez. Si no se puede confirmar el resultado, un mensaje en el formulario conserva los datos para reintentar la misma solicitud; salir de la vista no cancela una escritura del servidor (#1653).
 
 Los pasos sugeridos se indican como omitidos, no completados. En pantallas pequeñas, abra el título del paso para consultar el progreso. Atrás conserva los datos; las transiciones respetan el movimiento reducido (#1653).

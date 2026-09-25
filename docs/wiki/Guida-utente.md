@@ -419,6 +419,8 @@ L'amministrazione vive in tre sezioni delle **Impostazioni**, e ogni voce appare
 
 Su schermi piccoli, con testo ingrandito o tastiera aperta, il modulo di creazione e le sue azioni scorrono insieme quando necessario. Il passaggio attuale resta leggibile e Indietro conserva i dati inseriti (#1653).
 
+Indietro ed Esc tornano al passaggio precedente. Uscendo da una bozza compilata si può continuare a modificarla o scartarla; un modulo intatto si chiude direttamente. I filtri dei modelli scorrono in orizzontale e lasciano spazio ai risultati (#1653).
+
 Crea spazio mantiene la propria etichetta durante l’invio e accetta una richiesta alla volta. Se il risultato non è confermato, un messaggio nel modulo conserva i dati per riprovare la stessa richiesta; uscire dalla vista non annulla una scrittura sul server (#1653).
 
 I passaggi suggeriti sono indicati come saltati, non completati. Su schermi piccoli, apri il titolo del passaggio per consultare l’avanzamento. Indietro conserva i dati; le transizioni rispettano il movimento ridotto (#1653).

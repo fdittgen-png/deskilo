@@ -14,7 +14,7 @@ import '../../../auth/providers/sign_out.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../application/start_workspace.dart';
 import '../widgets/onboarding_join_form.dart';
-import 'package:flutter/services.dart';
+import '../../../../core/ui/wizard_navigation.dart';
 import '../../domain/template_outline.dart';
 import '../../domain/template_preview.dart';
 import '../../providers/workspace_providers.dart';
@@ -41,6 +41,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _name = TextEditingController();
   final _nameFocus = FocusNode();
   final _currencyFocus = FocusNode();
+  final _timezoneFocus = FocusNode();
   final _currency = TextEditingController();
   final _timezone = TextEditingController();
   // #917 — development until its owner declares otherwise.
@@ -109,6 +110,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   void dispose() {
     _nameFocus.dispose();
     _currencyFocus.dispose();
+    _timezoneFocus.dispose();
     _name.dispose();
     _currency.dispose();
     _timezone.dispose();
@@ -129,6 +131,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           accepted = await action();
           if (!accepted || !mounted) return;
           ref.invalidate(myWorkspacesProvider);
+          await ref.read(myWorkspacesProvider.future);
+          if (!mounted) return;
           // First-run visits are bounced to /plan by the router redirect; when
           // opened from Profiles (#89) we pop back to the profile list instead.
           if (mounted && context.canPop()) context.pop();
@@ -140,7 +144,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           _busy = false;
           _failure = _joinMode
               ? l10n?.workspaceGenericError ?? 'Something went wrong. Please try again.'
-              : l10n!.onboardingUnconfirmed;
+              : l10n?.onboardingUnconfirmed ??
+                  'The result could not be confirmed. Your entries are kept. Retry to check the same request.';
           _failedWithTemplate = _templateId != null;
         });
         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -167,6 +172,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     };
     if (!valid) {
       _createFormKey.currentState?.validate();
+      (_step == _nameStep ? _nameFocus : _currency.text.trim().length != 3
+          ? _currencyFocus : _timezoneFocus).requestFocus();
       return;
     }
     _completed.add(_step);
@@ -176,6 +183,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   void _goTo(int step) {
     if (_busy || step == _step) return;
+    _skipped.remove(step);
     FocusManager.instance.primaryFocus?.unfocus();
     setState(() => _step = step);
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -255,16 +263,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         )),
       );
     }
-    return PopScope<Object?>(
-      canPop: !_busy && _step == 0,
-      onPopInvokedWithResult: (didPop, _) {
-        if (!didPop && !_busy && _step > 0) _goTo(_step - 1);
-      },
-      child: CallbackShortcuts(bindings: {
-        const SingleActivator(LogicalKeyboardKey.escape): () {
-          if (!_busy && _step > 0) _goTo(_step - 1);
-        },
-      }, child: WizardScaffold(
+    return WizardNavigation(
+      busy: _busy, hasDraft: _name.text.isNotEmpty || _completed.isNotEmpty,
+      discardMessage: l10n?.onboardingDiscardDraft ??
+          'Your entries will be lost. This does not cancel a request already sent.',
+      onStepBack: _step == 0 ? null : () => _goTo(_step - 1),
+      builder: (back) => WizardScaffold(
+      leading: Navigator.of(context).canPop() ? BackButton(onPressed: back) : null,
       scrollForm: true,
       busy: _busy,
       status: _failure == null ? null : _feedback,
@@ -287,7 +292,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 _goTo(i);
               }
             },
-      onBack: _step == 0 || _busy ? null : () => _goTo(_step - 1),
+      onBack: _step == 0 || _busy ? null : back,
       onNext: _busy ? null : _next,
       onFinish: _create,
       finishEnabled: !_busy && !_templateRefused,
@@ -302,7 +307,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           _ => _startFromStepBody(),
         },
       ),
-    )));
+    ));
   }
 
   Widget get _feedback => Semantics(key: _feedbackKey, liveRegion: true,
@@ -396,6 +401,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           TextFormField(
             key: const ValueKey('onboarding-timezone'),
             controller: _timezone,
+            focusNode: _timezoneFocus,
             decoration: InputDecoration(
               labelText: l10n?.workspaceTimezoneLabel ?? 'Time zone',
             ),
