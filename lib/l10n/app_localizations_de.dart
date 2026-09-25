@@ -9209,6 +9209,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get backendCopyLink => 'Kopieren';
 
   @override
+  String get profilesUnavailable =>
+      'Ihre Arbeitsbereiche konnten nicht geladen werden.';
+
+  @override
+  String get consentUnavailable =>
+      'Ihr Konto konnte nicht geladen werden, daher gibt es noch nichts zu akzeptieren.';
+
+  @override
   String get profilesDefault => 'Standard beim Start';
 
   @override

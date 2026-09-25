@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../../../workspace/presentation/member_labels.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -28,7 +31,12 @@ class ProfilesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final workspaces = ref.watch(myWorkspacesProvider).value ?? const [];
+    final workspacesAsync = ref.watch(myWorkspacesProvider);
+    final workspaces = workspacesAsync.value ?? const <Workspace>[];
+    // #1650 — a list that could not be fetched is not an empty list: the
+    // router sends a member here rather than to onboarding, and the
+    // screen says so and offers the retry instead of "Add a profile".
+    final unavailable = workspacesAsync.hasError && !workspacesAsync.hasValue;
     final memberships = ref.watch(myMembershipsProvider).value ?? const [];
     final active = ref.watch(currentWorkspaceProvider).value;
     final defaultId = ref.watch(defaultWorkspaceIdProvider).value;
@@ -43,11 +51,13 @@ class ProfilesScreen extends ConsumerWidget {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => context.push('/onboarding'),
-        icon: const Icon(Icons.add),
-        label: Text(l10n?.profilesAdd ?? 'Add a profile'),
-      ),
+      floatingActionButton: unavailable
+          ? null
+          : FloatingActionButton.extended(
+              onPressed: () => context.push('/onboarding'),
+              icon: const Icon(Icons.add),
+              label: Text(l10n?.profilesAdd ?? 'Add a profile'),
+            ),
       body: ListView(
         // #1181 — "Add a profile" floats over the list; the last row has
         // to be reachable clear of it.
@@ -55,6 +65,20 @@ class ProfilesScreen extends ConsumerWidget {
           const EdgeInsets.only(bottom: kFabSafeBottom),
         ),
         children: [
+          if (unavailable)
+            InlineBanner(
+              key: const ValueKey('profiles-unavailable'),
+              icon: Icons.cloud_off_outlined,
+              text: l10n?.profilesUnavailable ??
+                  'Your workspaces could not be loaded.',
+              actionLabel: l10n?.commonRetry ?? 'Try again',
+              // `refresh`, not `invalidate`: invalidate defers the rebuild
+              // to the next frame, and with the router listening to this
+              // keepAlive provider a deferred rebuild out of an error left
+              // a notification unflushed at dispose (Riverpod 3.3.1 asserts
+              // `_skippedNotification == null`); refresh rebuilds on the spot.
+              onAction: () => unawaited(ref.refresh(myWorkspacesProvider.future)),
+            ),
           // #987 — a paired workspace renders once, as the couple, at
           // the dev's place; the prod row steps aside.
           for (final workspace in workspaces)

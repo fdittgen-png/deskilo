@@ -7,6 +7,7 @@ import '../../../../core/links/link_launcher.dart';
 import '../../../../core/privacy/privacy_policy.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../providers/profile_providers.dart';
 
@@ -31,8 +32,14 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final profile = ref.watch(myProfileProvider).value;
+    final profileAsync = ref.watch(myProfileProvider);
+    final profile = profileAsync.value;
     final acceptedAt = profile?.privacyAcceptedAt;
+    // #1650 — a profile that could not be FETCHED is not a profile that
+    // never accepted: the form would record a fresh acceptance over an
+    // unknown state. The router sends here for both; only this screen
+    // can tell them apart, and it answers the failure with a retry.
+    final unavailable = profileAsync.hasError && !profileAsync.isLoading;
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n?.consentTitle ?? 'Your data, your rights'),
@@ -95,7 +102,17 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
               ],
             ),
           ),
-          if (!widget.review)
+          if (unavailable)
+            InlineBanner(
+              key: const ValueKey('consent-unavailable'),
+              icon: Icons.cloud_off_outlined,
+              text: l10n?.consentUnavailable ??
+                  'Your account could not be loaded, so there is nothing '
+                      'to accept yet.',
+              actionLabel: l10n?.commonRetry ?? 'Try again',
+              onAction: () => ref.invalidate(myProfileProvider),
+            )
+          else if (!widget.review)
             Material(
               elevation: 4,
               color: theme.colorScheme.surface,

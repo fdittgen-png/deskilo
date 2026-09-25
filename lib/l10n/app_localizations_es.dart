@@ -9191,6 +9191,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get backendCopyLink => 'Copiar';
 
   @override
+  String get profilesUnavailable =>
+      'No se pudieron cargar tus espacios de trabajo.';
+
+  @override
+  String get consentUnavailable =>
+      'No se pudo cargar tu cuenta, así que todavía no hay nada que aceptar.';
+
+  @override
   String get profilesDefault => 'Predeterminado al iniciar';
 
   @override

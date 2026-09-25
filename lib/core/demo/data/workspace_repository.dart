@@ -141,8 +141,15 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   var _nextId = 1;
 
+  /// #1650 — when set, [fetchMyWorkspaces] throws it: a server that could
+  /// not answer, as opposed to one that answered "none".
+  Object? fetchFailure;
+
   @override
-  Future<List<Workspace>> fetchMyWorkspaces() async => List.of(workspaces);
+  Future<List<Workspace>> fetchMyWorkspaces() async {
+    if (fetchFailure case final failure?) throw failure;
+    return List.of(workspaces);
+  }
 
   /// #937 — the platform-owner view as the fake holds it.
   bool platformOwner = false;

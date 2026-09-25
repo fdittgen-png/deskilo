@@ -160,5 +160,7 @@
   "backendTestUnreachable": "Impossible de joindre cette adresse. Vérifiez l'URL et votre réseau.",
   "backendTestBadKey": "Contacté, mais la clé a été refusée. Recopiez la clé publiable depuis Project Settings → API keys.",
   "backendTestSchemaMissing": "Contacté, mais les tables DesKilo manquent — exécutez d'abord les migrations de supabase/migrations sur ce projet.",
-  "backendCopyLink": "Copier"
+  "backendCopyLink": "Copier",
+  "profilesUnavailable": "Vos espaces n'ont pas pu être chargés.",
+  "consentUnavailable": "Votre compte n'a pas pu être chargé ; il n'y a donc rien à accepter pour l'instant."
 }
