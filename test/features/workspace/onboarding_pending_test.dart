@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #1653: one creation stays visible while pending; timeout/disposal never cancel it.
 import 'dart:async';
+import 'package:deskilo/core/ui/wizard_navigation.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/presentation/screens/onboarding_screen.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -27,9 +28,12 @@ class HeldCreation extends FakeWorkspaceRepository {
   }
 }
 
-Future<void> ready(WidgetTester tester, HeldCreation repo) async {
+Future<GoRouter> ready(WidgetTester tester, HeldCreation repo) async {
+  final navigation = WizardNavigationController();
   final router = GoRouter(routes: [GoRoute(path: '/',
-    builder: (_, _) => const OnboardingScreen())]);
+    onExit: (_, _) => navigation.requestExit(),
+    builder: (_, _) => OnboardingScreen(navigation: navigation)),
+    GoRoute(path: '/done', builder: (_, _) => const SizedBox())]);
   addTearDown(router.dispose);
   await tester.pumpWidget(ProviderScope(
     overrides: standardTestOverrides(workspace: repo),
@@ -44,12 +48,13 @@ Future<void> ready(WidgetTester tester, HeldCreation repo) async {
   await tester.tap(find.byKey(const ValueKey('onboarding-use-suggested')));
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 200));
+  return router;
 }
 
 void main() {
   testWidgets('double submit and back while pending keep one labelled request', (tester) async {
     final repo = HeldCreation();
-    await ready(tester, repo);
+    final router = await ready(tester, repo);
     final create = find.byKey(const ValueKey('onboarding-create'));
     final size = tester.getSize(create);
     final action = tester.widget<FilledButton>(create).onPressed!;
@@ -62,6 +67,7 @@ void main() {
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
     await tester.sendKeyEvent(LogicalKeyboardKey.escape);
     await tester.binding.handlePopRoute();
+    await router.routeInformationProvider.didPushRouteInformation(RouteInformation(uri: Uri.parse('/done')));
     await tester.pump();
     expect(find.byKey(const ValueKey('onboarding-confirm')), findsOneWidget);
     repo.gate.complete();
@@ -69,6 +75,12 @@ void main() {
     await tester.pump();
     expect(repo.workspaces.single.name, 'Kept draft');
     expect(find.byKey(const ValueKey('onboarding-error')), findsNothing);
+    router.go('/done');
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(router.routerDelegate.currentConfiguration.uri.path, '/done');
+    expect(find.byType(OnboardingScreen), findsNothing);
     expect(tester.takeException(), isNull);
   });
 

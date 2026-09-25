@@ -29,7 +29,8 @@ import '../../../../core/ui/wizard_progress.dart';
 /// First-run screen for a signed-in user without a workspace: create one
 /// (become owner) or join via invite code (spec §11 onboarding).
 class OnboardingScreen extends ConsumerStatefulWidget {
-  const OnboardingScreen({super.key});
+  const OnboardingScreen({super.key, this.navigation});
+  final WizardNavigationController? navigation;
 
   @override
   ConsumerState<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -64,7 +65,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _completed = <int>{};
   final _skipped = <int>{};
 
-  /// Offer a template-free retry after a failed creation.
   bool _failedWithTemplate = false;
 
   String? _outlineFor;
@@ -130,6 +130,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       action: () async {
           accepted = await action();
           if (!accepted || !mounted) return;
+          widget.navigation?.completed = true;
           ref.invalidate(myWorkspacesProvider);
           await ref.read(myWorkspacesProvider.future);
           if (!mounted) return;
@@ -263,7 +264,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         )),
       );
     }
-    return WizardNavigation(
+    return WizardNavigation(controller: widget.navigation,
       busy: _busy, hasDraft: _name.text.isNotEmpty || _completed.isNotEmpty,
       discardMessage: l10n?.onboardingDiscardDraft ??
           'Your entries will be lost. This does not cancel a request already sent.',

@@ -51,7 +51,7 @@ class WizardProgress extends StatelessWidget {
           key: const ValueKey('wizard-progress-overview'),
           title: Semantics(header: true, liveRegion: true,
             child: Text(steps[index].label)),
-          subtitle: Text('${index + 1} / ${steps.length}'),
+          subtitle: Text([index + 1, steps.length].join(' / ')),
           children: items,
         );
       }
