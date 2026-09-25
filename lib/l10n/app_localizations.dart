@@ -572,6 +572,18 @@ abstract class AppLocalizations {
   /// **'Back to sign in'**
   String get authVerifyBackToSignIn;
 
+  /// Primary button of the recovery sheet after a code was accepted but the update failed
+  ///
+  /// In en, this message translates to:
+  /// **'Save the new password again'**
+  String get authRecoveryRetryUpdate;
+
+  /// Inline notice when the recovery session is gone before the password was saved
+  ///
+  /// In en, this message translates to:
+  /// **'That code is no longer valid here. Request a new one.'**
+  String get authRecoverySessionLost;
+
   /// App-bar title of the owner availability editor and its settings tile
   ///
   /// In en, this message translates to:

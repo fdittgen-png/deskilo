@@ -263,6 +263,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get authVerifyBackToSignIn => 'Torna all\'accesso';
 
   @override
+  String get authRecoveryRetryUpdate => 'Salva di nuovo la nuova password';
+
+  @override
+  String get authRecoverySessionLost =>
+      'Quel codice non è più valido qui. Richiedine uno nuovo.';
+
+  @override
   String get availabilityTitle => 'Disponibilità';
 
   @override

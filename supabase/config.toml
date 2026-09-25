@@ -30,6 +30,19 @@ enabled = true
 site_url = "http://127.0.0.1:3000"
 enable_signup = true
 
+# #1649 — the local stack behaves like a wizard-built instance
+# (`mailer_autoconfirm: false`): a sign-up sends a confirmation LINK and
+# issues no session, and the recovery e-mail carries the one-time code
+# the app asks for. test/features/auth/local_auth_fixture_test.dart
+# drives both against Mailpit below.
+[auth.email]
+enable_signup = true
+enable_confirmations = true
+
+[auth.email.template.recovery]
+subject = "Your DesKilo recovery code"
+content_path = "./supabase/templates/auth/recovery.html"
+
 [storage]
 enabled = true
 
@@ -42,8 +55,10 @@ extra_search_path = ["public", "extensions"]
 [studio]
 enabled = false
 
+# Mailpit, on the CLI's default port; the auth fixture reads its API.
 [inbucket]
-enabled = false
+enabled = true
+port = 54324
 
 [analytics]
 enabled = false

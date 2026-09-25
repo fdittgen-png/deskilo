@@ -264,6 +264,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get authVerifyBackToSignIn => 'Retour à la connexion';
 
   @override
+  String get authRecoveryRetryUpdate => 'Réenregistrer le nouveau mot de passe';
+
+  @override
+  String get authRecoverySessionLost =>
+      'Ce code n\'est plus valable ici. Demandez-en un nouveau.';
+
+  @override
   String get availabilityTitle => 'Disponibilité';
 
   @override

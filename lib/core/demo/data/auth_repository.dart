@@ -9,7 +9,6 @@ import 'package:deskilo/features/auth/domain/auth_outcome.dart';
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/domain/badge_sign_in.dart';
 import 'package:deskilo/features/auth/domain/social_provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
 /// In-memory [AuthRepository] for widget/unit tests (fakes over mocks).
 class FakeAuthRepository implements AuthRepository {
@@ -208,24 +207,49 @@ class FakeAuthRepository implements AuthRepository {
   /// (email, code, newPassword) tuples of successful confirmations.
   final confirmedResets = <(String, String, String)>[];
 
-  /// Codes for which [confirmPasswordReset] throws (invalid/expired).
+  /// Codes for which [confirmPasswordReset] answers `codeInvalid`.
   final Set<String> failingCodes = {};
 
+  /// Scripted recovery answers (#1649). A `completed` still signs the
+  /// fake in; a `recoverySessionReadyButPasswordNotUpdated` does NOT,
+  /// like the real adapter's held-back session.
+  AuthResult? resetRequestResult;
+  AuthResult? confirmResetResult;
+  AuthResult? updatePasswordResult;
+
+  /// Every [updateRecoveredPassword], in call order.
+  final passwordUpdates = <String>[];
+  bool recoveryCancelled = false;
+
   @override
-  Future<void> requestPasswordReset(String email) async {
+  Future<AuthResult> requestPasswordReset(String email) {
     resetRequests.add(email);
+    return _answer(
+        resetRequestResult ?? const AuthResult.recoveryVerificationRequired());
   }
 
   @override
-  Future<void> confirmPasswordReset({
+  Future<AuthResult> confirmPasswordReset({
     required String email,
     required String code,
     required String newPassword,
   }) async {
-    if (failingCodes.contains(code)) {
-      throw const AuthException('otp_expired');
+    final result = await _answer(confirmResetResult ??
+        (failingCodes.contains(code)
+            ? const AuthResult.refused(AuthRefusal.codeInvalid)
+            : const AuthResult.completed()));
+    if (result.outcome == AuthOutcome.completed) {
+      confirmedResets.add((email, code, newPassword));
     }
-    confirmedResets.add((email, code, newPassword));
-    _setUser('user-1');
+    return result;
   }
+
+  @override
+  Future<AuthResult> updateRecoveredPassword(String newPassword) {
+    passwordUpdates.add(newPassword);
+    return _answer(updatePasswordResult ?? const AuthResult.completed());
+  }
+
+  @override
+  Future<void> cancelPasswordRecovery() async => recoveryCancelled = true;
 }

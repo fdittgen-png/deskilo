@@ -147,6 +147,8 @@
   "authVerifyResendWait": "Potrai inviarla di nuovo tra un minuto.",
   "authVerifyChangeEmail": "Usa un altro indirizzo",
   "authVerifyBackToSignIn": "Torna all'accesso",
+  "authRecoveryRetryUpdate": "Salva di nuovo la nuova password",
+  "authRecoverySessionLost": "Quel codice non è più valido qui. Richiedine uno nuovo.",
   "availabilityTitle": "Disponibilità",
   "availabilityOpenWeekdays": "Giorni di apertura",
   "availabilityClosureDays": "Giorni di chiusura",
