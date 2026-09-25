@@ -233,7 +233,15 @@ jobs:
       - uses: supabase/setup-cli@v1
         if: env.DB_REQUIRED == 'true'
         with:
-          version: latest
+          # Pinned, not `latest`: resolving the newest release at run time
+          # asks the GitHub API unauthenticated on every job, and on
+          # 2026-09-25 that lookup was rate-limited across several pull
+          # requests at once — "Failed to resolve latest Supabase CLI
+          # release: rate limit exceeded" reddened a job that touched no
+          # SQL. A floating version is also not reproducible: the replay
+          # that decides `contract.txt` should not change because a
+          # release was published between two runs. Bump deliberately.
+          version: 2.118.0
       - uses: denoland/setup-deno@v2
         if: env.DB_REQUIRED == 'true'
         with:
