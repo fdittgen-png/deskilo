@@ -789,6 +789,7 @@ routine public.imported_branding(p_current jsonb, p_incoming jsonb, p_mode text)
 routine public.imported_feature_flags(p_flags jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:39acec231f00
 routine public.imported_lexicon(p_current jsonb, p_incoming jsonb, p_mode text) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:8b21e6a016db
 routine public.in_conversation(p_conversation_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:c271785e5044
+routine public.inspect_workspace_template(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5dd5106a7ff9
 routine public.invoice_lines_for(p_member_id uuid, p_period text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:64a802ca3339
 routine public.invoice_lines_for(p_member_id uuid, p_period text, p_kind text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4ab86eeb0aaa
 routine public.invoices_immutable() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:a675f0d72a42
@@ -979,11 +980,13 @@ routine public.system_column_names() -> text[] | function | invoker | immutable 
 routine public.system_columns_stamp() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:300c2d072fc0
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:7fd870e10606
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
 routine public.template_publication_preview(p_workspace_id uuid, p_groups text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:923d1fcaa4a8
 routine public.template_publication_rules() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:bf33cd0c6a98
 routine public.template_snapshot(p_template workspace_templates, p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:2faa633b79c5
 routine public.template_supported_schema_versions() -> integer[] | function | invoker | immutable | exec:authenticated,service_role | body:53e229c024d6
+routine public.template_walk_payload(p_configuration jsonb, p_floor_plan jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:fb9a295f1ab3
 routine public.touch_conversation() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1a8384fd9011
 routine public.touch_last_seen() -> void | function | definer | volatile | exec:authenticated,service_role | body:1ad738483c79
 routine public.unarchive_conversation_on_message() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1ef58a6f7319
