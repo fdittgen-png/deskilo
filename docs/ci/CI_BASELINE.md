@@ -100,6 +100,16 @@ dependency that `lib/core/push/push_providers.dart` imports, so a
 else. `web.yml`'s `pull_request` filter carries the same list, and
 `test/tool/ci_classify_test.dart` fails when the two drift.
 
+The workflow calls the classifier through `scripts/ci_classify.sh`,
+which is fail-closed by construction: a base git cannot resolve, a diff
+git cannot write, a change list whose records are cut short or carry a
+status git does not emit, all classify as `required`; a classifier that
+exits nonzero, or a verdict file with a discipline missing, ends the
+step red and leaves no verdict. `test/tool/ci_classify_script_test.dart`
+drives each of those through the real script over a real temporary
+repository — a rename, a deletion, names with a space and a newline,
+over 300 files — with a docs-only change as the green control.
+
 When the database job is stood down it still reports: every database
 row says `not_applicable` with the reason, and `scripts/quality_report.sh`
 accepts that only because `report/classification.txt`, the classifier's
