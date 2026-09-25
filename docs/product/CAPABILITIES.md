@@ -2,7 +2,7 @@
 
 # Capabilities and their evidence
 
-Manifest `2026-09-25.1`. Four things are kept apart: whether the code is **shipped** or still **roadmap**; whether a test **gated** at every commit covers it; whether a dated record was **recorded** against the component as it is now; and whether that record has gone **stale** because the component moved on. A dash is `unverified`. A local stub or a replayed database is a local integration, never a provider sandbox, and one provider's record says nothing about another (#1634).
+Manifest `2026-09-25.2`. Four things are kept apart: whether the code is **shipped** or still **roadmap**; whether a test **gated** at every commit covers it; whether a dated record was **recorded** against the component as it is now; and whether that record has gone **stale** because the component moved on. A dash is `unverified`. A local stub or a replayed database is a local integration, never a provider sandbox, and one provider's record says nothing about another (#1634).
 
 | Capability | Code | `unit` | `local_integration` | `provider_sandbox` | `named_runtime` | `operator_pilot` |
 |---|---|---|---|---|---|---|
@@ -87,10 +87,12 @@ A member pays a bill through Stripe hosted checkout; the webhook settles the pay
 
 - **Code:** shipped · component `38ddbebce0f4` · provider `stripe`
 - **Needs:** Stripe credentials in Settings; the webhook endpoint reachable from Stripe.
-- **Limits:** CI runs the real order handler against a local stub: no Stripe sandbox has been exercised from this repository; refunds are recorded by hand.
+- **Limits:** CI runs the real order and webhook handlers against a stateful local stub through ten settlement scenarios; no Stripe sandbox has been exercised from this repository: scripts/payment_sandbox_check.sh is the opt-in test-mode runner, and without test keys it records not_run, never a pass. Refunds are recorded by hand.
 - **Feature flags:** `onlinePayments`
 - `unit` · **gated** · [`test/features/money/payment_config_screen_test.dart`](../../test/features/money/payment_config_screen_test.dart)
 - `local_integration` · **gated** · [`scripts/edge_payment_check.sh`](../../scripts/edge_payment_check.sh)
+- `local_integration` · **gated** · [`scripts/payment_scenarios/stripe.sh`](../../scripts/payment_scenarios/stripe.sh)
+- `provider_sandbox` · **unverified** · [`docs/product/evidence/payments.stripe-sandbox-2026-09-25.md`](../../docs/product/evidence/payments.stripe-sandbox-2026-09-25.md) · sha `232efc0a8175` · 2026-09-25 · skipped
 - `local_integration` · **gated** · [`supabase/tests/database/40_payment_ledger_association.sql`](../../supabase/tests/database/40_payment_ledger_association.sql)
 - `local_integration` · **gated** · [`supabase/tests/database/22_reconciliation.sql`](../../supabase/tests/database/22_reconciliation.sql)
 

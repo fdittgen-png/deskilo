@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "manifest_version": "2026-09-25.1",
+  "manifest_version": "2026-09-25.2",
   "scopes": [
     "unit",
     "local_integration",
@@ -205,7 +205,7 @@
         "onlinePayments"
       ],
       "prerequisites": "Stripe credentials in Settings; the webhook endpoint reachable from Stripe.",
-      "limitations": "CI runs the real order handler against a local stub: no Stripe sandbox has been exercised from this repository; refunds are recorded by hand.",
+      "limitations": "CI runs the real order and webhook handlers against a stateful local stub through ten settlement scenarios; no Stripe sandbox has been exercised from this repository: scripts/payment_sandbox_check.sh is the opt-in test-mode runner, and without test keys it records not_run, never a pass. Refunds are recorded by hand.",
       "provider": "stripe",
       "fingerprint": "38ddbebce0f4",
       "scopes": {
@@ -225,6 +225,19 @@
           "scope": "local_integration",
           "ref": "scripts/edge_payment_check.sh",
           "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "scripts/payment_scenarios/stripe.sh",
+          "standing": "gated"
+        },
+        {
+          "scope": "provider_sandbox",
+          "ref": "docs/product/evidence/payments.stripe-sandbox-2026-09-25.md",
+          "standing": "unverified",
+          "sha": "232efc0a8175",
+          "date": "2026-09-25",
+          "outcome": "skipped"
         },
         {
           "scope": "local_integration",
