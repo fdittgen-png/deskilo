@@ -21,9 +21,11 @@ on:
     - cron: '20 3 * * *'
   workflow_dispatch:
 
+# #1446 C4 — a benchmark someone dispatched on purpose, or the nightly
+# one, is never cancelled by a later one; it queues behind it.
 concurrency:
   group: perf-bench-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   FLUTTER_VERSION: "3.44.9"

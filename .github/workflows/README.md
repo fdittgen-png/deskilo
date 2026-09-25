@@ -40,12 +40,12 @@ changes.
 | CI · Android boot check | `android-boot.yml` | installs the shrunk release APK on an emulator and proves it stays alive |
 | CI · F-Droid no-GMS audit | `fdroid-foss.yml` | proves the libre flavour carries no Google dependency |
 | Nightly · Journey latency benchmark | `perf-bench.yml` | runs `tool/bench` on the large workload and gates its SHAPE — round trips, elements, frames, the retry budget. The wall clock is reported, never gated, and the record declares what is not measured at all |
-| Release · Train (all platforms) | `release-train.yml` | one dispatch, every store, one commit |
-| Release · Play track upload | `play-internal.yml` | builds the signed AAB and uploads it to the chosen Play track |
-| Release · iOS TestFlight build | `ios-testflight.yml` | builds, uploads, and optionally distributes to the external group |
-| Release · macOS DMG | `macos-app.yml` | the desktop disk image |
-| Release · Windows MSI | `windows-msi.yml` | the desktop installer |
-| Publish · Web app (GitHub Pages) | `web.yml` | the browser build on every PR the classifier calls browser-relevant, and on request the Pages deploy |
+| Release · Train (all platforms) | `release-train.yml` | one dispatch, every store, one commit: the ref is resolved **once** to a SHA and every leg builds that SHA or fails (#1446 C4) |
+| Release · Play track upload | `play-internal.yml` | builds the signed AAB from the pinned SHA and uploads it to the chosen Play track |
+| Release · iOS TestFlight build | `ios-testflight.yml` | builds the pinned SHA, uploads, and optionally distributes to the external group |
+| Release · macOS DMG | `macos-app.yml` | the desktop disk image, from the pinned SHA |
+| Release · Windows MSI | `windows-msi.yml` | the desktop installer, from the pinned SHA |
+| Publish · Web app (GitHub Pages) | `web.yml` | the browser build on every PR the classifier calls browser-relevant, and on request the Pages deploy; records SHA and base href beside the artifact |
 | Publish · F-Droid release APKs | `fdroid-release.yml` | the libre APKs F-Droid reproduces against |
 | Publish · Play Store listing | `play-listing.yml` | store texts and graphics |
 | Status · Play track availability | `play-availability.yml` | what Play actually serves, per track |
@@ -67,6 +67,14 @@ changes.
 
 Both rules that can be checked mechanically are enforced by
 `test/lint/workflow_naming_test.dart`.
+
+Every release leg runs `.github/actions/source-identity` right after its
+checkout: red unless HEAD is the SHA it was given, and a
+`source-identity-<leg>` artifact naming SHA, flavor, defines and base
+href. Concurrency groups start with the workflow's own file name and
+cancel only a superseded pull request; caches hold dependencies keyed on
+a lockfile. `test/lint/workflow_source_identity_test.dart` reads the YAML
+and holds that shape (#1446 C4, `docs/ci/CI_BASELINE.md`).
 
 ## What this convention does *not* touch
 

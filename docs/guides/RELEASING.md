@@ -203,7 +203,11 @@ gh workflow run release-train.yml -f track=alpha \
 ```
 
 Same notes reach both stores; empty notes fall back to the per-version
-changelog files (Play) and 'Beta build.' (TestFlight). The train also
+changelog files (Play) and 'Beta build.' (TestFlight). Add `-f ref=<branch,
+tag or SHA>` to ship something other than the dispatch branch: whatever
+you name is resolved **once** to a commit, every leg builds that commit
+and refuses any other, and each leg's `source-identity-<leg>` artifact
+says which one (#1446 C4). The train also
 builds the macOS DMG and Windows MSI and checks the web build; a leg that
 fails never stops the others, and the report job files an issue naming
 what broke. Per-platform build NUMBERS differ by design (each store gets

@@ -15,6 +15,12 @@ on:
         type: boolean
         default: false
 
+# #1446 C4 — a publish someone dispatched is never cancelled by a later
+# one; it queues behind it.
+concurrency:
+  group: play-listing
+  cancel-in-progress: false
+
 permissions:
   contents: read
 

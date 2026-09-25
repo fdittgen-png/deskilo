@@ -27,6 +27,12 @@ on:
   workflow_dispatch:
 
 
+# #1446 C4 — a superseded pull-request push cancels its predecessor in
+# THIS workflow only; a push to master or a dispatch queues.
+concurrency:
+  group: fdroid-foss-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   foss-apk:
     runs-on: ubuntu-latest
