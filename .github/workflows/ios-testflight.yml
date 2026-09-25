@@ -65,6 +65,11 @@ on:
   # (an undeclared input reads as empty/false under workflow_call).
   workflow_call:
     inputs:
+      source_sha:
+        description: The full commit SHA to build — resolved once by the caller (#1446 C4)
+        required: false
+        type: string
+        default: ''
       release_notes:
         required: false
         type: string
@@ -93,7 +98,32 @@ jobs:
     permissions:
       contents: write
     steps:
+      # #1446 C4 — one full SHA fixed BEFORE the checkout (the caller's, the
+      # dispatch ref resolved here, or this event's); no other HEAD builds.
+      - name: Pin the source
+        id: source
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          REF: ${{ inputs.ref }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          sha="$SOURCE_SHA"
+          [ -n "$sha" ] || [ -z "$REF" ] || sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/$(jq -rn --arg r "$REF" '$r|@uri')" --jq .sha)
+          sha="${sha:-$GITHUB_SHA}"
+          [[ "$sha" =~ ^[0-9a-f]{40}$ ]] || { echo "::error::the source did not resolve to a commit (got '$sha')"; exit 1; }
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "Candidate: $sha"
+
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.source.outputs.sha }}
+
+      - uses: ./.github/actions/source-identity
+        with:
+          sha: ${{ steps.source.outputs.sha }}
+          leg: apple
 
       - name: Compute monotonic build number
         id: bn
@@ -218,12 +248,12 @@ jobs:
           # shipped build reported as a FAILED run is a lie that sends
           # someone hunting a release that actually went out. Warn loudly,
           # record it in the summary, keep the run honest — green.
-          git tag -a "$TAG" -m "TestFlight build ${{ steps.bn.outputs.build_number }} — $GITHUB_SHA"
+          git tag -a "$TAG" -m "TestFlight build ${{ steps.bn.outputs.build_number }} — ${{ steps.source.outputs.sha }}"
           if git push origin "$TAG"; then
             echo "Tagged $TAG"
             echo "- **Tagged:** \`$TAG\`" >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "::warning::The TestFlight upload SUCCEEDED; only the audit tag $TAG could not be pushed. Create it by hand: git tag -a $TAG $GITHUB_SHA -m 'TestFlight build ${{ steps.bn.outputs.build_number }}' && git push origin $TAG"
+            echo "::warning::The TestFlight upload SUCCEEDED; only the audit tag $TAG could not be pushed. Create it by hand: git tag -a $TAG ${{ steps.source.outputs.sha }} -m 'TestFlight build ${{ steps.bn.outputs.build_number }}' && git push origin $TAG"
             echo "- **Tag NOT pushed:** \`$TAG\` — the build shipped; create the tag by hand." >> "$GITHUB_STEP_SUMMARY"
           fi
 

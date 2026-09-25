@@ -3,9 +3,11 @@
 
 name: Release · Play track upload
 
-# Automatic Play publishing (tankstellen daily-beta pattern): builds master
-# daily and on demand, uploads the signed AAB to the chosen Play track via
-# tools/upload_to_play.py, and tags the shipped versionCode.
+# Automatic Play publishing (tankstellen daily-beta pattern): builds the
+# commit the run was pinned to — master's tip for the nightly, the
+# dispatched ref, or the train's resolved candidate (#1446 C4) — uploads
+# the signed AAB to the chosen Play track via tools/upload_to_play.py,
+# and tags the shipped versionCode.
 #
 # The versionCode is wall-clock monotonic (minutes since 2025-07-06 UTC on a
 # 1_000_000 base — one shared scheme for every release workflow, so parallel
@@ -42,6 +44,11 @@ on:
   # path for Android whether the leg runs alone or in the train.
   workflow_call:
     inputs:
+      source_sha:
+        description: The full commit SHA to build — resolved once by the caller (#1446 C4)
+        required: false
+        type: string
+        default: ''
       track:
         required: true
         type: string
@@ -68,9 +75,32 @@ jobs:
     env:
       HAS_PLAY_SA: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON != '' }}
     steps:
+      # #1446 C4 — one full SHA fixed BEFORE the checkout (the caller's, the
+      # dispatch ref resolved here, or this event's); no other HEAD builds.
+      - name: Pin the source
+        id: source
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          REF: ${{ inputs.ref }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          sha="$SOURCE_SHA"
+          [ -n "$sha" ] || [ -z "$REF" ] || sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/$(jq -rn --arg r "$REF" '$r|@uri')" --jq .sha)
+          sha="${sha:-$GITHUB_SHA}"
+          [[ "$sha" =~ ^[0-9a-f]{40}$ ]] || { echo "::error::the source did not resolve to a commit (got '$sha')"; exit 1; }
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "Candidate: $sha"
+
       - uses: actions/checkout@v4
         with:
-          ref: master
+          ref: ${{ steps.source.outputs.sha }}
+
+      - uses: ./.github/actions/source-identity
+        with:
+          sha: ${{ steps.source.outputs.sha }}
+          leg: android
 
       - name: Compute build number
         id: bn
@@ -202,12 +232,12 @@ jobs:
           # shipped build reported as a FAILED run is a lie that sends
           # someone hunting a release that actually went out. Warn loudly,
           # record it in the summary, keep the run honest — green.
-          git tag -a "$TAG" -m "Play build ${{ steps.bn.outputs.build_number }} (track: ${{ inputs.track || 'internal' }}) — $GITHUB_SHA"
+          git tag -a "$TAG" -m "Play build ${{ steps.bn.outputs.build_number }} (track: ${{ inputs.track || 'internal' }}) — ${{ steps.source.outputs.sha }}"
           if git push origin "$TAG"; then
             echo "Tagged $TAG"
             echo "- **Tagged:** \`$TAG\`" >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "::warning::The Play upload SUCCEEDED; only the audit tag $TAG could not be pushed. Create it by hand: git tag -a $TAG $GITHUB_SHA -m 'Play build ${{ steps.bn.outputs.build_number }}' && git push origin $TAG"
+            echo "::warning::The Play upload SUCCEEDED; only the audit tag $TAG could not be pushed. Create it by hand: git tag -a $TAG ${{ steps.source.outputs.sha }} -m 'Play build ${{ steps.bn.outputs.build_number }}' && git push origin $TAG"
             echo "- **Tag NOT pushed:** \`$TAG\` — the build shipped; create the tag by hand." >> "$GITHUB_STEP_SUMMARY"
           fi
 

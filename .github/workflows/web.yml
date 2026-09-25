@@ -38,6 +38,11 @@ on:
   # #570 — the release train reuses this workflow verbatim.
   workflow_call:
     inputs:
+      source_sha:
+        description: The full commit SHA to build — resolved once by the caller (#1446 C4)
+        required: false
+        type: string
+        default: ''
       ref:
         required: false
         type: string
@@ -76,7 +81,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.ref || github.ref }}
+          ref: ${{ inputs.source_sha || inputs.ref || github.ref }}
           fetch-depth: 0
       - uses: dart-lang/setup-dart@v1
         with:
@@ -108,10 +113,50 @@ jobs:
           grep -E '^web\|not_applicable\|' report/classification.txt
           echo "the browser build is not required for this change: $(sed -n 's/^web|not_applicable|\([^|]*\)|.*/\1/p' report/classification.txt)"
 
+      # #1446 C4 — one full SHA fixed BEFORE the checkout (the caller's, the
+      # dispatch ref resolved here, or this event's); no other HEAD builds.
+      - name: Pin the source
+        id: source
+        if: env.WEB_REQUIRED == 'true'
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          REF: ${{ inputs.ref }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          sha="$SOURCE_SHA"
+          [ -n "$sha" ] || [ -z "$REF" ] || sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/$(jq -rn --arg r "$REF" '$r|@uri')" --jq .sha)
+          sha="${sha:-$GITHUB_SHA}"
+          [[ "$sha" =~ ^[0-9a-f]{40}$ ]] || { echo "::error::the source did not resolve to a commit (got '$sha')"; exit 1; }
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "Candidate: $sha"
+
       - uses: actions/checkout@v4
         if: env.WEB_REQUIRED == 'true'
         with:
-          ref: ${{ inputs.ref || github.ref }}
+          ref: ${{ steps.source.outputs.sha }}
+
+      - name: Base href
+        id: base
+        if: env.WEB_REQUIRED == 'true'
+        # Pages serves the site under /<repo>/, so the base href has to
+        # match or every asset 404s. A plain artifact build stays at '/'.
+        run: |
+          if [ "${{ inputs.deploy }}" = "true" ]; then
+            BASE="/${GITHUB_REPOSITORY#*/}/"
+          else
+            BASE="/"
+          fi
+          echo "Base href: $BASE"
+          echo "base_href=$BASE" >> "$GITHUB_OUTPUT"
+
+      - uses: ./.github/actions/source-identity
+        if: env.WEB_REQUIRED == 'true'
+        with:
+          sha: ${{ steps.source.outputs.sha }}
+          leg: web
+          base_href: ${{ steps.base.outputs.base_href }}
 
       - uses: subosito/flutter-action@v2
         if: env.WEB_REQUIRED == 'true'
@@ -122,17 +167,9 @@ jobs:
 
       - name: Build
         if: env.WEB_REQUIRED == 'true'
-        # Pages serves the site under /<repo>/, so the base href has to
-        # match or every asset 404s. A plain artifact build stays at '/'.
         run: |
           flutter pub get
-          if [ "${{ inputs.deploy }}" = "true" ]; then
-            BASE="/${GITHUB_REPOSITORY#*/}/"
-          else
-            BASE="/"
-          fi
-          echo "Base href: $BASE"
-          flutter build web --release --base-href "$BASE"
+          flutter build web --release --base-href "${{ steps.base.outputs.base_href }}"
 
       - name: SPA fallback for deep links
         # go_router uses real paths; a reload of /money must not 404 on a
@@ -144,7 +181,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: env.WEB_REQUIRED == 'true'
         with:
-          name: deskilo-web-${{ github.sha }}
+          name: deskilo-web-${{ steps.source.outputs.sha }}
           path: build/web
           retention-days: 14
 
