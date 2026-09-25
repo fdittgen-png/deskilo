@@ -36,11 +36,14 @@ env:
 jobs:
   # #1446 C2 — which work this change REQUIRES, decided by the checked-in
   # classifier from the complete diff (full git data, NUL-delimited names,
-  # renames counted twice). It selects work, never whether a run may
+  # renames counted twice) through .github/actions/classify-change — the
+  # same invocation web.yml makes, so there is one decision and no path
+  # list to drift from it. It selects work, never whether a run may
   # report: every required context below still reports. Anything the
   # classifier cannot prove independent runs everything; so does every
-  # push to master, the nightly run, a manual dispatch, and a diff it
-  # could not read completely.
+  # push to master, the nightly run, a manual dispatch, a diff it could
+  # not read completely, and a classifier that died — a missing verdict
+  # is `required`, never `not_applicable`.
   classify:
     name: classify the change
     runs-on: ubuntu-latest
@@ -55,19 +58,10 @@ jobs:
       - uses: dart-lang/setup-dart@v1
         with:
           sdk: stable
-      # The one invocation, fail-closed: a base git cannot resolve, a diff
-      # it cannot write, a change list cut short, a classifier that dies
-      # or a verdict with a line missing all end in `required` or in a red
-      # step with no verdict — never in `not_applicable`.
       - id: verdict
-        env:
-          EVENT: ${{ github.event_name }}
-          BASE: ${{ github.event.pull_request.base.sha }}
-        run: bash scripts/ci_classify.sh --event "$EVENT" --base "$BASE" --out report
-      - uses: actions/upload-artifact@v4
+        uses: ./.github/actions/classify-change
         with:
-          name: quality-classification
-          path: report/classification.txt
+          artifact: quality-classification
 
   code:
     # The name is the REQUIRED STATUS CHECK on master, and this job is

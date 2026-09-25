@@ -113,23 +113,26 @@ void main() {
     expect(v['web']!.reason, contains('packages/deskilo_push'));
   });
 
-  test('the web workflow triggers on everything the classifier calls '
-      'browser-relevant', () {
-    // Two lists that must not drift: the classifier decides, but the
-    // `pull_request` path filter is what actually starts the build.
+  test('the web workflow asks the same classifier instead of carrying a '
+      'path list of its own', () {
+    // One decision, two consumers: web.yml starts on every pull request,
+    // calls the composite action quality.yml calls, and the action runs
+    // the one script — no second list to drift from the classifier.
     final web = File('.github/workflows/web.yml').readAsStringSync();
-    for (final trigger in const [
-      'web/**',
-      'lib/**',
-      'assets/**',
-      'packages/**',
-      'pubspec.yaml',
-      'pubspec.lock',
-    ]) {
-      expect(web, contains('- $trigger'),
-          reason: 'the classifier calls $trigger browser-relevant, so the '
-              'workflow must start on it');
-    }
+    final quality = File('.github/workflows/quality.yml').readAsStringSync();
+    final action = File('.github/actions/classify-change/action.yml')
+        .readAsStringSync();
+    expect(RegExp(r'pull_request:\n\s+paths:').hasMatch(web), isFalse,
+        reason: 'a `paths:` filter under pull_request is a second '
+            'classifier, and it drifted once (#1446 R3)');
+    expect(web, contains('uses: ./.github/actions/classify-change'));
+    expect(quality, contains('uses: ./.github/actions/classify-change'));
+    expect(action, contains('bash scripts/ci_classify.sh'));
+    expect(web, contains(r"needs.classify.outputs.web != 'not_applicable'"),
+        reason: 'only an explicit not_applicable stands the build down; '
+            'a classifier that died builds');
+    expect(quality,
+        contains(r"needs.classify.outputs.database != 'not_applicable'"));
   });
 
   test('prose outside the app selects neither heavy job', () {

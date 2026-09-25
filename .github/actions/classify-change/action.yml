@@ -1,0 +1,46 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# #1446 C2 — the one place a workflow asks what a change requires.
+#
+# Runs `scripts/ci_classify.sh` on the complete pull-request diff and
+# publishes the verdict twice: as outputs the calling workflow compares
+# against, and as an artifact the final gate reads back — a job may stand
+# down only when that file says so. The caller checks the repository out
+# first, with full history (`fetch-depth: 0`), or the base cannot be
+# resolved and everything runs — and sets Dart up before calling: a
+# `uses: dart-lang/setup-dart` INSIDE a composite resolves its problem
+# matcher against the composite's own path and fails the step.
+#
+# It is a composite action, not a workflow: the decision is a pure
+# function of the diff, and two workflows calling one function is not an
+# orchestration service.
+name: classify the change
+description: Which validation this change requires, decided by tool/ci_classify.dart from the complete diff
+
+inputs:
+  artifact:
+    description: Name of the artifact that carries classification.txt
+    required: true
+
+outputs:
+  database:
+    description: required | not_applicable — the database job
+    value: ${{ steps.verdict.outputs.database }}
+  web:
+    description: required | not_applicable — the browser build
+    value: ${{ steps.verdict.outputs.web }}
+
+runs:
+  using: composite
+  steps:
+    - id: verdict
+      shell: bash
+      env:
+        EVENT: ${{ github.event_name }}
+        BASE: ${{ github.event.pull_request.base.sha }}
+      run: bash scripts/ci_classify.sh --event "$EVENT" --base "$BASE" --out report
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.artifact }}
+        path: report/classification.txt
