@@ -15,7 +15,7 @@
 # payment_intent and amount_total off the Checkout Session, which is the
 # shape these fixtures carry. Q-018 (PayPal) and Q-019 (Mollie/Wero) add a
 # sibling file each; this one says nothing about them.
-STRIPE_API_VERSION="2025-08-27.basil"
+export STRIPE_API_VERSION="2025-08-27.basil"   # read by the event builder below
 
 WEBHOOK_SECRET="whsec_local_$RUN"
 sql "update public.payment_credentials
