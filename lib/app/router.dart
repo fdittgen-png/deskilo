@@ -54,6 +54,9 @@ import '../features/profile/presentation/screens/profiles_screen.dart';
 import '../features/profile/presentation/screens/schema_update_screen.dart';
 import '../core/backend/schema_version.dart';
 import '../core/instance/schema_compatibility.dart';
+import 'entry_intents.dart';
+import 'entry_resumption.dart';
+import 'route_classes.dart';
 import 'route_policy.dart';
 import 'schema_gate.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
@@ -92,24 +95,35 @@ part 'router.g.dart';
 @Riverpod(keepAlive: true)
 GoRouter router(Ref ref) {
   final refresh = ValueNotifier(0);
+  late final GoRouter router;
+  // #1650 — a refresh re-asks the redirect about where the person IS
+  // (entry_resumption.dart says why the reported location is not that).
+  void reask() {
+    reportCurrentLocation(router);
+    refresh.value++;
+  }
+
   ref
     ..onDispose(refresh.dispose)
-    ..listen(authStateProvider, (_, _) => refresh.value++)
-    ..listen(myWorkspacesProvider, (_, _) => refresh.value++)
+    ..listen(authStateProvider, (_, _) => reask())
+    ..listen(myWorkspacesProvider, (_, _) => reask())
     // Feature flags follow the ACTIVE workspace (#146): switching
     // profiles must re-evaluate the redirects even when the workspace
     // list itself did not change.
-    ..listen(enabledFeaturesProvider, (_, _) => refresh.value++)
+    ..listen(enabledFeaturesProvider, (_, _) => reask())
     // Kiosk lock (0043): the active membership decides whether the app is
     // a wall tablet — re-evaluate when it resolves or changes.
-    ..listen(myMemberProvider, (_, _) => refresh.value++)
+    ..listen(myMemberProvider, (_, _) => reask())
     // Kiosk gate: the accept/reject decision moves the pad between the
     // gate, the locked kiosk view, and the normal app.
-    ..listen(kioskModeProvider, (_, _) => refresh.value++)
+    ..listen(kioskModeProvider, (_, _) => reask())
     // #751 — the consent gate reads the profile's accepted policy version:
     // re-evaluate when the profile resolves, and after an acceptance.
-    ..listen(myProfileProvider, (_, _) => refresh.value++)
-    ..listen(schemaCompatibilityProvider, (_, _) => refresh.value++); // #1312
+    ..listen(myProfileProvider, (_, _) => reask())
+    ..listen(schemaCompatibilityProvider, (_, _) => reask()) // #1312
+    // #1650 — the continuation restored from the device, or captured on
+    // the way to sign-in: its destination is where sign-in returns to.
+    ..listen(entryIntentsProvider, (_, _) => reask());
 
   /// Whether [feature] is enabled for the active workspace (#146).
   /// Defaults (everything ON) while the workspace is still loading, so
@@ -135,7 +149,7 @@ GoRouter router(Ref ref) {
               : to;
 
   final onboardingNavigation = WizardNavigationController();
-  final router = GoRouter(
+  router = GoRouter(
     // The Reserve hub is the app's home (the centre button's form): it
     // is what opens on start, after sign-in and after onboarding.
     initialLocation: '/reserve',
@@ -144,6 +158,7 @@ GoRouter router(Ref ref) {
     // facts; this closure only collects the facts and asks. Building them
     // reads; nothing here writes.
     redirect: (context, state) {
+      final intent = ref.read(entryIntentsProvider);
       final auth = ref.read(authStateProvider);
       // Nothing else is read until the session is known: a read flushes a
       // provider the scheduler is about to rebuild, and while a scope is
@@ -168,13 +183,18 @@ GoRouter router(Ref ref) {
                 : profile.value?.privacyAcceptedVersion == kPrivacyPolicyVersion
                     ? PrivacyFact.accepted
                     : PrivacyFact.notAccepted,
-        workspaces: workspaces.hasValue
-            ? (workspaces.value!.isEmpty
-                ? WorkspacesFact.none
-                : WorkspacesFact.some)
-            : workspaces.hasError
-                ? WorkspacesFact.unavailable
-                : WorkspacesFact.loading,
+        // A list being REFRESHED is loading, whatever it held before: the
+        // signed-out answer is an empty list, and reading it as "none"
+        // in the frame after sign-in sent everybody through onboarding.
+        workspaces: workspaces.isLoading
+            ? WorkspacesFact.loading
+            : workspaces.hasValue
+                ? (workspaces.value!.isEmpty
+                    ? WorkspacesFact.none
+                    : WorkspacesFact.some)
+                : workspaces.hasError
+                    ? WorkspacesFact.unavailable
+                    : WorkspacesFact.loading,
         membership: member.isLoading && !member.hasValue
             ? MembershipFact.loading
             : switch (me?.status) {
@@ -191,10 +211,18 @@ GoRouter router(Ref ref) {
                 KioskModeDecision.rejected => KioskFact.released,
               },
         featureEnabled: featureEnabled,
+        home: intent?.destination ?? kDefaultHome,
       );
       final request =
           RouteRequest(state.uri.path, query: state.uri.queryParameters);
-      return settleDestination(request, facts).redirect;
+      final decision = settleDestination(request, facts);
+      // #1650 — the one write the redirect asks for: a signed-out
+      // person's request, kept as the place to come back to. Spending
+      // happens on arrival (entry_resumption.dart), never here.
+      if (decision.reason == RouteReason.signInRequired) {
+        captureRequest(ref, state.uri, intent);
+      }
+      return decision.redirect;
     },
     routes: [
       GoRoute(path: '/auth', builder: (context, state) => const AuthScreen()),
@@ -753,5 +781,9 @@ GoRouter router(Ref ref) {
     ],
   );
   ref.onDispose(router.dispose);
+  // #1650 — the continuation is spent where the person arrives.
+  void arrived() => spendOnArrival(router, ref);
+  router.routerDelegate.addListener(arrived);
+  ref.onDispose(() => router.routerDelegate.removeListener(arrived));
   return router;
 }

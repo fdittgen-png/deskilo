@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../app/entry_intents.dart';
+import '../../../../app/route_classes.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/privacy/privacy_policy.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -158,10 +160,16 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
           .acceptPrivacyPolicy(kPrivacyPolicyVersion),
     );
     if (!ok) return;
+    // #1650 — where the person was going, read BEFORE the refresh: the
+    // router usually moves them there itself as the profile lands, and
+    // spends the continuation on arrival — read afterwards it is gone.
+    final next = ref.read(entryIntentsProvider)?.destination ?? kDefaultHome;
     ref.invalidate(myProfileProvider);
     // The router's redirect reads the refreshed profile and lets the
-    // app through; the explicit go covers a refresh that lands late.
+    // app through; the explicit go covers a refresh that lands late —
+    // and only then: once the router has moved, this screen is history.
     await ref.read(myProfileProvider.future);
-    if (mounted) context.go('/reserve');
+    if (!mounted || GoRouter.of(context).state.uri.path != '/consent') return;
+    context.go(next);
   }
 }
