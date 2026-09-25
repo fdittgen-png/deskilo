@@ -123,6 +123,44 @@
   "@payOnlineNotConfigured": {
     "description": "Shown when the member taps Pay online but the deployment has no payment provider configured"
   },
+  "payOnlinePendingTitle": "Online payment pending",
+  "@payOnlinePendingTitle": {
+      "description": "#1637 card title on the bill: an online payment the provider has not confirmed yet"
+  },
+  "payOnlineFailedTitle": "Online payment failed",
+  "@payOnlineFailedTitle": {
+      "description": "#1637 card title on the bill: an online payment the provider refused or let expire"
+  },
+  "payOnlinePendingDetail": "Payment {reference} ({amount} via {provider}) has not been confirmed by the provider yet, so the balance still shows what is owed. Quote this reference if it does not settle.",
+  "@payOnlinePendingDetail": {
+      "description": "#1637 pending line: reference is the PAY-… number, amount pre-formatted, provider the localized provider label",
+      "placeholders": {
+          "reference": {
+              "type": "String"
+          },
+          "amount": {
+              "type": "String"
+          },
+          "provider": {
+              "type": "String"
+          }
+      }
+  },
+  "payOnlineFailedDetail": "Payment {reference} ({amount} via {provider}) was not completed — nothing was credited; the balance is still owed.",
+  "@payOnlineFailedDetail": {
+      "description": "#1637 failed line: same placeholders as payOnlinePendingDetail",
+      "placeholders": {
+          "reference": {
+              "type": "String"
+          },
+          "amount": {
+              "type": "String"
+          },
+          "provider": {
+              "type": "String"
+          }
+      }
+  },
   "payOnlineChooseTitle": "Pay online",
   "@payOnlineChooseTitle": {
     "description": "Title of the provider chooser sheet"

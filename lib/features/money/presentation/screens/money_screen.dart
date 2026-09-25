@@ -55,6 +55,7 @@ import '../../providers/usage_providers.dart';
 import '../../providers/expense_schedule_providers.dart';
 import '../payment_method_labels.dart';
 import '../widgets/account_card.dart';
+import '../widgets/online_payment_status_card.dart';
 import '../widgets/bill_view.dart';
 import '../widgets/usage_face.dart';
 import '../widgets/documents_face.dart';
@@ -889,6 +890,20 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     );
     final ledger = ref.watch(myLedgerProvider).value ?? const <LedgerEntry>[];
     final pendingEvents = ref.watch(eventsProvider).value ?? const [];
+    // #1637 — the month's online attempts the provider has not confirmed.
+    final onlineAttempts = OnlinePaymentStatusCard.shown(
+      ref.watch(myPaymentIntentsProvider).value ?? const [],
+      _period,
+    );
+    final attemptsCard = <Widget>[
+      if (onlineAttempts.isNotEmpty) ...[
+        OnlinePaymentStatusCard(
+          intents: onlineAttempts,
+          currencyCode: workspace?.currencyCode ?? 'EUR',
+        ),
+        const SizedBox(height: 8),
+      ],
+    ];
     final currencyCode = workspace?.currencyCode ?? 'EUR';
     final currency = moneyFormat(currencyCode);
     final monthLabel = DateFormat.yMMMM(
@@ -957,6 +972,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
         AccountCard(account: account, currencyCode: currencyCode),
         const SizedBox(height: 8),
       ],
+      ...attemptsCard,
       if (visibleStatement != null) bill(null),
     ];
     // #486 UX — actions grouped by MEANING: what pays, what asks, what
@@ -1141,10 +1157,12 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
           NegotiationCard(memberId: member.id, currency: currency),
           const SizedBox(height: 8),
         ],
+        ...attemptsCard,
         if (visibleStatement != null) bill(MoneyFace.statement),
       ],
       MoneyFace.payments: [
         if (overdueBanner != null) ...[overdueBanner, const SizedBox(height: 8)],
+        ...attemptsCard,
         ...occurrenceCards,
         if (visibleStatement != null) bill(MoneyFace.payments),
       ],

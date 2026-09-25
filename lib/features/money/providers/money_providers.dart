@@ -32,6 +32,7 @@ import '../domain/ledger_entry.dart';
 import '../domain/member_account.dart';
 import '../domain/money_repository.dart';
 import '../domain/package.dart';
+import '../domain/payment_intent.dart';
 import '../domain/service_item.dart';
 import '../domain/statement.dart';
 import '../domain/subscription_levels.dart';
@@ -115,6 +116,22 @@ Future<List<LedgerEntry>> myLedger(Ref ref) async {
   final member = await ref.watch(myMemberProvider.future);
   if (member == null) return const [];
   return repository.fetchLedger(member.id);
+}
+
+/// #1637 — the signed-in member's own online-payment attempts, newest
+/// first. A session the provider never confirmed is PENDING and a
+/// refused one FAILED; neither is paid, which only the ledger credit the
+/// webhook posts can say. Keyed on the workspace and the member, so a
+/// switch of either drops the previous account's rows instead of
+/// showing them under the next one.
+@riverpod
+Future<List<PaymentIntent>> myPaymentIntents(Ref ref) async {
+  final repository = ref.watch(moneyRepositoryProvider);
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  final member = await ref.watch(myMemberProvider.future);
+  if (workspace == null || member == null) return const [];
+  final intents = await repository.fetchPaymentIntents(workspace.id);
+  return [for (final i in intents) if (i.memberId == member.id) i];
 }
 
 /// ONE MEMBER's money, for the dossier on their profile (#704).
