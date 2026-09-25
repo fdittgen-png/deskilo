@@ -37,7 +37,7 @@ void main() {
     expect(find.byType(ShellBottomBar), findsOneWidget);
   });
 
-  testWidgets('failed sign-in shows the error snackbar and stays put',
+  testWidgets('failed sign-in keeps the refusal on the form and stays put',
       (tester) async {
     final auth = await pumpSignedOut(tester);
     auth.failingEmails.add('flo@example.com');
@@ -50,11 +50,15 @@ void main() {
     await tester.tap(find.widgetWithText(FilledButton, 'Sign in'));
     await tester.pumpAndSettle();
 
+    // #1649 — the refusal is a banner IN the form, not a snackbar that
+    // slides away, and it is our sentence: the server's own wording
+    // ("invalid credentials" in the fake) is never shown.
+    expect(find.byKey(const ValueKey('auth-outcome')), findsOneWidget);
     expect(
       find.textContaining('Authentication failed.'),
       findsOneWidget,
     );
-    expect(find.textContaining('invalid credentials'), findsOneWidget);
+    expect(find.textContaining('invalid credentials'), findsNothing);
     expect(find.byType(ShellBottomBar), findsNothing);
   });
 

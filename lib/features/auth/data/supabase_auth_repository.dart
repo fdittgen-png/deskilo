@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/trace/trace_logger.dart';
+import '../domain/auth_outcome.dart';
 import '../domain/auth_repository.dart';
 import '../domain/badge_sign_in.dart';
 import '../domain/social_provider.dart';
@@ -24,29 +25,46 @@ class SupabaseAuthRepository implements AuthRepository {
   String? get currentUserId => _client.auth.currentUser?.id;
 
   @override
-  Future<void> signInWithPassword({
+  Future<AuthResult> signInWithPassword({
     required String email,
     required String password,
-  }) async {
-    await _client.auth.signInWithPassword(email: email, password: password);
-  }
+  }) =>
+      _outcome('sign-in', () async {
+        final response = await _client.auth
+            .signInWithPassword(email: email, password: password);
+        return response.session == null
+            // Not a shape gotrue produces for a password sign-in; if it
+            // ever does, nothing was granted, and saying so is safer than
+            // reading a missing session as a refusal of the credentials.
+            ? const AuthResult.unavailable(trace: 'no_session')
+            : const AuthResult.authenticated();
+      });
 
   @override
-  Future<void> signUp({
+  Future<AuthResult> signUp({
     required String email,
     required String password,
     required String displayName,
-  }) async {
-    await _client.auth.signUp(
-      email: email,
-      password: password,
-      data: {'display_name': displayName},
-      // Without this the confirmation link carries the project's Site
-      // URL, which on an instance predating the wizard is still
-      // `http://localhost:3000` — nobody's server. #1050.
-      emailRedirectTo: _redirect,
-    );
-  }
+  }) =>
+      _outcome('sign-up', () async {
+        final response = await _client.auth.signUp(
+          email: email,
+          password: password,
+          data: {'display_name': displayName},
+          // Without this the confirmation link carries the project's Site
+          // URL, which on an instance predating the wizard is still
+          // `http://localhost:3000` — nobody's server. #1050.
+          emailRedirectTo: _redirect,
+        );
+        // A session means the server auto-confirmed. No session means an
+        // e-mail went out — to a new account, or to an existing one the
+        // server is protecting by answering exactly the same way (an
+        // obfuscated user with no identities). Both are the same next
+        // step for the person, so both are the same outcome here.
+        return response.session == null
+            ? const AuthResult.verificationRequired()
+            : const AuthResult.authenticated();
+      });
 
   @override
   Future<void> signOut() => _client.auth.signOut();
@@ -69,6 +87,79 @@ class SupabaseAuthRepository implements AuthRepository {
       token: code.trim(),
     );
     await _client.auth.updateUser(UserAttributes(password: newPassword));
+  }
+
+  /// Runs one auth call and turns whatever it threw into an [AuthResult].
+  ///
+  /// [unnamedRefusal] is what a refusal the server left uncoded means in
+  /// this operation: wrong credentials on a sign-in, a bad code on a
+  /// verify.
+  Future<AuthResult> _outcome(
+    String what,
+    Future<AuthResult> Function() call, {
+    AuthRefusal unnamedRefusal = AuthRefusal.credentials,
+  }) async {
+    try {
+      return await call();
+    } catch (e, st) {
+      final result = _resultOf(e, unnamedRefusal);
+      // The code, never the message: gotrue's wording can quote the
+      // address or the token that was typed.
+      TraceLogger.instance.warn(
+        'auth',
+        '$what → ${result.outcome.name} (${result.trace ?? '-'})',
+        stackTrace: st,
+      );
+      return result;
+    }
+  }
+
+  /// gotrue's coded refusals → ours, pinned to the SDK's own [ErrorCode]
+  /// constants. A code absent here reads as the operation's unnamed
+  /// refusal: it must never pass for success, and must not invent a
+  /// distinction the server did not make.
+  static final Map<String, AuthRefusal> _refusalByCode = {
+    ErrorCode.emailNotConfirmed.code: AuthRefusal.emailNotConfirmed,
+    ErrorCode.signupDisabled.code: AuthRefusal.providerDisabled,
+    ErrorCode.emailProviderDisabled.code: AuthRefusal.providerDisabled,
+    ErrorCode.providerDisabled.code: AuthRefusal.providerDisabled,
+    ErrorCode.otpDisabled.code: AuthRefusal.providerDisabled,
+    ErrorCode.userAlreadyExists.code: AuthRefusal.alreadyRegistered,
+    ErrorCode.emailExists.code: AuthRefusal.alreadyRegistered,
+    ErrorCode.otpExpired.code: AuthRefusal.codeInvalid,
+    ErrorCode.badCodeVerifier.code: AuthRefusal.codeInvalid,
+    ErrorCode.flowStateNotFound.code: AuthRefusal.codeInvalid,
+    ErrorCode.flowStateExpired.code: AuthRefusal.codeInvalid,
+    ErrorCode.weakPassword.code: AuthRefusal.weakPassword,
+  };
+
+  /// The outcome an SDK exception stands for.
+  static AuthResult _resultOf(Object e, AuthRefusal unnamed) {
+    if (e is AuthWeakPasswordException) {
+      return AuthResult.refused(
+        AuthRefusal.weakPassword,
+        trace: ErrorCode.weakPassword.code,
+      );
+    }
+    if (e is AuthRetryableFetchException) {
+      return AuthResult.unavailable(trace: e.statusCode ?? 'network');
+    }
+    if (e is AuthApiException) {
+      final code = e.code;
+      if (e.statusCode == '429' ||
+          code == ErrorCode.overEmailSendRateLimit.code ||
+          code == ErrorCode.overRequestRateLimit.code) {
+        return AuthResult.rateLimited(trace: code ?? '429');
+      }
+      return AuthResult.refused(
+        _refusalByCode[code] ?? unnamed,
+        trace: code ?? e.statusCode,
+      );
+    }
+    if (e is AuthException) {
+      return AuthResult.refused(unnamed, trace: e.statusCode ?? 'auth');
+    }
+    return AuthResult.unavailable(trace: e.runtimeType.toString());
   }
 
   /// Brand → Supabase provider.

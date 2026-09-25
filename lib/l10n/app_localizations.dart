@@ -488,6 +488,48 @@ abstract class AppLocalizations {
   /// **'Could not reach the server. Check your connection and try again.'**
   String get authNetworkError;
 
+  /// Inline refusal when the account exists but its address was never confirmed
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your e-mail address first: open the message we sent you, then sign in.'**
+  String get authEmailNotConfirmed;
+
+  /// Inline notice when the server refuses to judge the request yet (rate limit)
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Wait a moment, then try again.'**
+  String get authRateLimited;
+
+  /// Inline refusal when e-mail sign-in, sign-ups or codes are disabled server-side
+  ///
+  /// In en, this message translates to:
+  /// **'This sign-in method is switched off on this server.'**
+  String get authProviderDisabled;
+
+  /// Inline refusal when the server's password policy rejects the new password
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a stronger password.'**
+  String get authWeakPassword;
+
+  /// Inline refusal when the server itself discloses that the address is taken
+  ///
+  /// In en, this message translates to:
+  /// **'This address cannot be used to create an account. Sign in or reset your password instead.'**
+  String get authAlreadyRegistered;
+
+  /// Inline notice when the recovery code was redeemed but the password update failed
+  ///
+  /// In en, this message translates to:
+  /// **'Your code was accepted, but the new password was not saved. Try saving it again.'**
+  String get authRecoveryNotSaved;
+
+  /// Heading of the state shown after a sign-up that sent a confirmation e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'Check your e-mail'**
+  String get authVerifyTitle;
+
   /// App-bar title of the owner availability editor and its settings tile
   ///
   /// In en, this message translates to:

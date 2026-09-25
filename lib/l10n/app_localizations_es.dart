@@ -213,6 +213,32 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo contactar con el servidor. Comprueba tu conexión e inténtalo de nuevo.';
 
   @override
+  String get authEmailNotConfirmed =>
+      'Confirma primero tu dirección de correo: abre el mensaje que te enviamos y luego inicia sesión.';
+
+  @override
+  String get authRateLimited =>
+      'Demasiados intentos. Espera un momento y vuelve a intentarlo.';
+
+  @override
+  String get authProviderDisabled =>
+      'Este método de acceso está desactivado en este servidor.';
+
+  @override
+  String get authWeakPassword => 'Elige una contraseña más segura.';
+
+  @override
+  String get authAlreadyRegistered =>
+      'Esta dirección no puede usarse para crear una cuenta. Inicia sesión o restablece tu contraseña.';
+
+  @override
+  String get authRecoveryNotSaved =>
+      'Tu código fue aceptado, pero la nueva contraseña no se guardó. Intenta guardarla de nuevo.';
+
+  @override
+  String get authVerifyTitle => 'Revisa tu correo';
+
+  @override
   String get availabilityTitle => 'Disponibilidad';
 
   @override

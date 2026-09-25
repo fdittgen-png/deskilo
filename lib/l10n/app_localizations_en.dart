@@ -212,6 +212,32 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not reach the server. Check your connection and try again.';
 
   @override
+  String get authEmailNotConfirmed =>
+      'Confirm your e-mail address first: open the message we sent you, then sign in.';
+
+  @override
+  String get authRateLimited =>
+      'Too many attempts. Wait a moment, then try again.';
+
+  @override
+  String get authProviderDisabled =>
+      'This sign-in method is switched off on this server.';
+
+  @override
+  String get authWeakPassword => 'Choose a stronger password.';
+
+  @override
+  String get authAlreadyRegistered =>
+      'This address cannot be used to create an account. Sign in or reset your password instead.';
+
+  @override
+  String get authRecoveryNotSaved =>
+      'Your code was accepted, but the new password was not saved. Try saving it again.';
+
+  @override
+  String get authVerifyTitle => 'Check your e-mail';
+
+  @override
   String get availabilityTitle => 'Availability';
 
   @override
