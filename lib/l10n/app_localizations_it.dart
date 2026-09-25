@@ -239,6 +239,30 @@ class AppLocalizationsIt extends AppLocalizations {
   String get authVerifyTitle => 'Controlla la tua e-mail';
 
   @override
+  String authVerifyBody(String email) {
+    return 'Abbiamo inviato un link di conferma a $email. Aprilo su questo dispositivo per completare la creazione dell\'account.';
+  }
+
+  @override
+  String get authVerifyHint =>
+      'Ancora nulla? Controlla la cartella spam o invialo di nuovo.';
+
+  @override
+  String get authVerifyResend => 'Invia di nuovo l\'e-mail';
+
+  @override
+  String get authVerifyResent => 'Inviata di nuovo.';
+
+  @override
+  String get authVerifyResendWait => 'Potrai inviarla di nuovo tra un minuto.';
+
+  @override
+  String get authVerifyChangeEmail => 'Usa un altro indirizzo';
+
+  @override
+  String get authVerifyBackToSignIn => 'Torna all\'accesso';
+
+  @override
   String get availabilityTitle => 'Disponibilità';
 
   @override

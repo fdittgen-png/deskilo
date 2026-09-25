@@ -149,12 +149,20 @@ class FakeAuthRepository implements AuthRepository {
   /// `completed` script still signs the fake in, like the server would.
   AuthResult? signInResult;
   AuthResult? signUpResult;
+  AuthResult? resendResult;
 
-  /// Every sign-up, in call order — two entries where one was pressed is
-  /// the duplicate-submission bug.
+  /// When set, every operation waits for it before answering — a test
+  /// holds the screen mid-flight, closes or changes it, and only then
+  /// lets the answer land.
+  Completer<void>? gate;
+
+  /// Every sign-up and every resend, in call order — two entries where
+  /// one was pressed is the duplicate-submission bug.
   final signUps = <String>[];
+  final resends = <String>[];
 
   Future<AuthResult> _answer(AuthResult result) async {
+    if (gate != null) await gate!.future;
     if (result.outcome == AuthOutcome.authenticated ||
         result.outcome == AuthOutcome.completed) {
       _setUser('user-1');
@@ -183,6 +191,12 @@ class FakeAuthRepository implements AuthRepository {
         (failingEmails.contains(email)
             ? const AuthResult.refused(AuthRefusal.credentials)
             : const AuthResult.authenticated()));
+  }
+
+  @override
+  Future<AuthResult> resendSignUpVerification(String email) {
+    resends.add(email);
+    return _answer(resendResult ?? const AuthResult.verificationRequired());
   }
 
   @override

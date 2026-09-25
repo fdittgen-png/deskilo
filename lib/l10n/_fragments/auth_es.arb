@@ -32,5 +32,19 @@
   "authWeakPassword": "Elige una contraseña más segura.",
   "authAlreadyRegistered": "Esta dirección no puede usarse para crear una cuenta. Inicia sesión o restablece tu contraseña.",
   "authRecoveryNotSaved": "Tu código fue aceptado, pero la nueva contraseña no se guardó. Intenta guardarla de nuevo.",
-  "authVerifyTitle": "Revisa tu correo"
+  "authVerifyTitle": "Revisa tu correo",
+  "authVerifyBody": "Hemos enviado un enlace de confirmación a {email}. Ábrelo en este dispositivo para terminar de crear tu cuenta.",
+  "@authVerifyBody": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "authVerifyHint": "¿Nada todavía? Mira en la carpeta de spam o vuelve a enviarlo.",
+  "authVerifyResend": "Volver a enviar el correo",
+  "authVerifyResent": "Enviado de nuevo.",
+  "authVerifyResendWait": "Podrás volver a enviarlo dentro de un minuto.",
+  "authVerifyChangeEmail": "Usar otra dirección",
+  "authVerifyBackToSignIn": "Volver al inicio de sesión"
 }

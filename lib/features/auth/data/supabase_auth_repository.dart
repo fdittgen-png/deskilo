@@ -67,6 +67,17 @@ class SupabaseAuthRepository implements AuthRepository {
       });
 
   @override
+  Future<AuthResult> resendSignUpVerification(String email) =>
+      _outcome('resend', () async {
+        await _client.auth.resend(
+          type: OtpType.signup,
+          email: email,
+          emailRedirectTo: _redirect,
+        );
+        return const AuthResult.verificationRequired();
+      });
+
+  @override
   Future<void> signOut() => _client.auth.signOut();
 
   @override
@@ -149,7 +160,10 @@ class SupabaseAuthRepository implements AuthRepository {
       if (e.statusCode == '429' ||
           code == ErrorCode.overEmailSendRateLimit.code ||
           code == ErrorCode.overRequestRateLimit.code) {
-        return AuthResult.rateLimited(trace: code ?? '429');
+        return AuthResult.rateLimited(
+          retryAfter: _retryAfterIn(e.message),
+          trace: code ?? '429',
+        );
       }
       return AuthResult.refused(
         _refusalByCode[code] ?? unnamed,
@@ -160,6 +174,14 @@ class SupabaseAuthRepository implements AuthRepository {
       return AuthResult.refused(unnamed, trace: e.statusCode ?? 'auth');
     }
     return AuthResult.unavailable(trace: e.runtimeType.toString());
+  }
+
+  /// gotrue names its e-mail cooldown only in prose — "For security
+  /// purposes, you can only request this after 47 seconds." A number
+  /// found there is the server's own wait; none found is no claim.
+  static Duration? _retryAfterIn(String message) {
+    final seconds = RegExp(r'after (\d+) seconds').firstMatch(message);
+    return seconds == null ? null : Duration(seconds: int.parse(seconds[1]!));
   }
 
   /// Brand → Supabase provider.

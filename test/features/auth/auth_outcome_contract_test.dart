@@ -5,12 +5,13 @@
 // session is `authenticated`, one that sent an e-mail is
 // `verificationRequired` (new account or obfuscated existing one alike),
 // every coded refusal is its own `AuthRefusal`, a 429 is `rateLimited`
-// and a 5xx or a dead socket is `unavailable`. (Resend and the recovery
-// outcomes join here with the screen and recovery PRs.)
+// with the server's own wait, and a 5xx or a dead socket is `unavailable`.
+// (The recovery outcomes join here with the recovery PR.)
 //
 // The fake never speaks to gotrue, so this drives the REAL
 // SupabaseAuthRepository over a MockClient, the way signup_redirect_test
-// does.
+// does, and reads the request that went out where the contract is about
+// the request (resend hits /resend, not /signup).
 import 'dart:convert';
 
 import 'package:deskilo/features/auth/data/supabase_auth_repository.dart';
@@ -164,6 +165,30 @@ void main() {
     final result = await signUp(repo);
     expect(result.outcome, AuthOutcome.rateLimited);
     expect(result.refusal, isNull);
+    expect(result.retryAfter, isNull, reason: 'the server named no wait');
+  });
+
+  test('resend goes to /resend as a signup OTP, never to /signup again',
+      () async {
+    final repo = repositoryAnswering((_) => _json(<String, Object?>{}));
+    final result = await repo.resendSignUpVerification(_email);
+    expect(result.outcome, AuthOutcome.verificationRequired);
+    final sent = requests.single;
+    expect(sent.url.path, endsWith('/auth/v1/resend'));
+    final body = jsonDecode(sent.body) as Map;
+    expect(body['type'], 'signup');
+    expect(body['email'], _email);
+  });
+
+  test('a resend too soon is rateLimited with the wait the server named',
+      () async {
+    final repo = repositoryAnswering((_) => _error(
+        'over_email_send_rate_limit',
+        'For security purposes, you can only request this after 42 seconds.',
+        429));
+    final result = await repo.resendSignUpVerification(_email);
+    expect(result.outcome, AuthOutcome.rateLimited);
+    expect(result.retryAfter, const Duration(seconds: 42));
   });
 
   test('a 5xx and a dead socket are unavailable — nothing was judged',

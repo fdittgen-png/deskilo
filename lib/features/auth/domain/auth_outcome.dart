@@ -106,3 +106,11 @@ class AuthResult {
       '${retryAfter == null ? '' : ', retry after $retryAfter'}'
       '${trace == null ? '' : ', trace $trace'})';
 }
+
+/// How long the app waits before offering an e-mail again when the
+/// server did not name a wait itself — gotrue's own minimum between two
+/// e-mails to one address, so the button comes back when a send can
+/// succeed rather than a second before a 429.
+abstract final class AuthCooldowns {
+  static const Duration resend = Duration(seconds: 60);
+}

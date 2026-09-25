@@ -16,6 +16,7 @@ import '../../domain/social_provider.dart';
 import '../../providers/auth_providers.dart';
 import '../auth_outcome_text.dart';
 import '../widgets/badge_sign_in_sheet.dart';
+import '../widgets/verification_pending_view.dart';
 
 /// Email + password sign-in / sign-up. Navigation after success is handled
 /// by the router's auth redirect, not by this screen.
@@ -44,6 +45,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   /// act on, and a snackbar that has slid away is not a record of it.
   AuthResult? _lastResult;
 
+  /// The address a confirmation e-mail went to, while the form gives way
+  /// to the check-e-mail state. Null on the form.
+  String? _pendingEmail;
+
   @override
   void dispose() {
     _displayName.dispose();
@@ -53,22 +58,27 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   }
 
   Future<void> _submit() async {
+    // Enter in the password field and the button share this path, and a
+    // second press while the first is in flight would be a second
+    // sign-up: one intent, one call.
+    if (_busy) return;
     if (!(_formKey.currentState?.validate() ?? false)) return;
     setState(() {
       _busy = true;
       _lastResult = null;
     });
     final repo = ref.read(authRepositoryProvider);
+    final email = _email.text.trim();
     AuthResult result;
     try {
       result = _isSignUp
           ? await repo.signUp(
-              email: _email.text.trim(),
+              email: email,
               password: _password.text,
               displayName: _displayName.text.trim(),
             )
           : await repo.signInWithPassword(
-              email: _email.text.trim(),
+              email: email,
               password: _password.text,
             );
     } catch (e, st) {
@@ -86,8 +96,26 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     setState(() {
       _busy = false;
       _lastResult = result;
+      // An e-mail went out — or, on sign-in, one went out earlier and was
+      // never acted on. Both continue in the check-e-mail state, with
+      // the resend right there; the password does not follow.
+      if (result.outcome == AuthOutcome.verificationRequired ||
+          result.refusal == AuthRefusal.emailNotConfirmed) {
+        _pendingEmail = email;
+        _password.clear();
+      }
     });
   }
+
+  /// Leaves the check-e-mail state for the form. The address and the
+  /// name stay — they are the person's, not the server's — the password
+  /// never carries over, and the abandoned sign-up deletes nothing.
+  void _leavePending({required bool signUp}) => setState(() {
+        _pendingEmail = null;
+        _lastResult = null;
+        _isSignUp = signUp;
+        _password.clear();
+      });
 
   /// Forgot-password flow: a one-time recovery code is emailed and,
   /// entered here, is the temporary credential that sets a brand-new
@@ -276,215 +304,259 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
           padding: AppSpacing.xlAll,
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 420),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const _Wordmark(),
-                  const SizedBox(height: 8),
-                  Text(
-                    _isSignUp
-                        ? (l10n?.authSignUpTitle ?? 'Create account')
-                        : (l10n?.authSignInTitle ?? 'Sign in'),
-                    style: Theme.of(context).textTheme.titleMedium,
+            child: _pendingEmail == null ? _form(l10n) : _pending(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// The check-e-mail state, in the form's place and under the same
+  /// wordmark: the form is gone from the tree, not hidden under it.
+  Widget _pending() => Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const _Wordmark(),
+          const SizedBox(height: 24),
+          VerificationPendingView(
+            key: const ValueKey('auth-pending'),
+            email: _pendingEmail!,
+            onChangeEmail: () => _leavePending(signUp: true),
+            onBackToSignIn: () => _leavePending(signUp: false),
+          ),
+        ],
+      );
+
+  Widget _form(AppLocalizations? l10n) {
+    return Form(
+      key: _formKey,
+      child: AutofillGroup(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const _Wordmark(),
+            const SizedBox(height: 8),
+            Text(
+              _isSignUp
+                  ? (l10n?.authSignUpTitle ?? 'Create account')
+                  : (l10n?.authSignInTitle ?? 'Sign in'),
+              style: Theme.of(context).textTheme.titleMedium,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            if (_isSignUp) ...[
+              TextFormField(
+                controller: _displayName,
+                decoration: InputDecoration(
+                  labelText:
+                      l10n?.authDisplayNameLabel ?? 'Display name',
+                ),
+                textInputAction: TextInputAction.next,
+                validator: (v) => (v == null || v.trim().isEmpty)
+                    ? (l10n?.authFieldRequired ?? 'Required')
+                    : null,
+              ),
+              const SizedBox(height: 12),
+            ],
+            TextFormField(
+              controller: _email,
+              decoration: InputDecoration(
+                labelText: l10n?.authEmailLabel ?? 'Email',
+              ),
+              keyboardType: TextInputType.emailAddress,
+              autofillHints: const [AutofillHints.email],
+              textInputAction: TextInputAction.next,
+              validator: (v) => (v == null || !v.contains('@'))
+                  ? (l10n?.authFieldRequired ?? 'Required')
+                  : null,
+            ),
+            const SizedBox(height: 12),
+            TextFormField(
+              controller: _password,
+              decoration: InputDecoration(
+                labelText: l10n?.authPasswordLabel ?? 'Password',
+                suffixIcon: IconButton(
+                  tooltip: _obscurePassword
+                      ? (l10n?.authShowPassword ?? 'Show password')
+                      : (l10n?.authHidePassword ?? 'Hide password'),
+                  icon: Icon(
+                    _obscurePassword
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                  ),
+                  onPressed: () => setState(
+                    () => _obscurePassword = !_obscurePassword,
+                  ),
+                ),
+              ),
+              obscureText: _obscurePassword,
+              // A password manager saves a NEW password and fills
+              // an existing one; telling it which is which is the
+              // hint.
+              autofillHints: [
+                _isSignUp
+                    ? AutofillHints.newPassword
+                    : AutofillHints.password,
+              ],
+              onFieldSubmitted: (_) => _submit(),
+              // The eight characters are a CREATION policy. An
+              // account made under an older one signs in with the
+              // password it has; refusing it here, before the
+              // server ever sees it, would lock that person out.
+              validator: (v) => _isSignUp
+                  ? (v == null || v.length < 8)
+                      ? (l10n?.authPasswordTooShort ??
+                          'At least 8 characters')
+                      : null
+                  : (v == null || v.isEmpty)
+                      ? (l10n?.authFieldRequired ?? 'Required')
+                      : null,
+            ),
+            if (!_isSignUp)
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: _busy ? null : _resetPasswordSheet,
+                  child: Text(
+                    l10n?.authForgotPassword ?? 'Forgot password?',
+                  ),
+                ),
+              ),
+            const SizedBox(height: 24),
+            // The last answer stays in the form (#1649): six
+            // different sentences for six different outcomes, and
+            // never the server's own words.
+            if (_lastResult case final result?
+                when authOutcomeText(result, l10n) != null) ...[
+              InlineBanner(
+                key: const ValueKey('auth-outcome'),
+                icon: result.outcome == AuthOutcome.verificationRequired
+                    ? Icons.mark_email_unread_outlined
+                    : Icons.error_outline,
+                severity:
+                    result.outcome == AuthOutcome.verificationRequired
+                        ? InlineBannerSeverity.info
+                        : InlineBannerSeverity.error,
+                text: authOutcomeText(result, l10n)!,
+              ),
+              const SizedBox(height: 12),
+            ],
+            FilledButton(
+              onPressed: _busy ? null : _submit,
+              child: _busy
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : Text(
+                      _isSignUp
+                          ? (l10n?.authSignUpButton ?? 'Create account')
+                          : (l10n?.authSignInButton ?? 'Sign in'),
+                    ),
+            ),
+            const SizedBox(height: 12),
+            // Social sign-in (0051): browser-based Supabase OAuth —
+            // no vendor SDKs. The session lands via
+            // the deskilo:// callback; errors (provider not enabled
+            // on the server) surface as a snack.
+            Row(children: [
+              const Expanded(child: Divider()),
+              // #1205 — Flexible, not a bare Padding: at a large
+              // text scale "or continue with" is wider than the
+              // rules leave it, and a fixed child in a Row answers
+              // that by overflowing off the right of a phone.
+              // Flexible lets the sentence wrap to two lines
+              // instead, which is what the rest of this form does.
+              Flexible(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    l10n?.authContinueWith ?? 'or continue with',
+                    style: Theme.of(context).textTheme.bodySmall,
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 24),
-                  if (_isSignUp) ...[
-                    TextFormField(
-                      controller: _displayName,
-                      decoration: InputDecoration(
-                        labelText:
-                            l10n?.authDisplayNameLabel ?? 'Display name',
-                      ),
-                      textInputAction: TextInputAction.next,
-                      validator: (v) => (v == null || v.trim().isEmpty)
-                          ? (l10n?.authFieldRequired ?? 'Required')
-                          : null,
-                    ),
-                    const SizedBox(height: 12),
-                  ],
-                  TextFormField(
-                    controller: _email,
-                    decoration: InputDecoration(
-                      labelText: l10n?.authEmailLabel ?? 'Email',
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    autofillHints: const [AutofillHints.email],
-                    textInputAction: TextInputAction.next,
-                    validator: (v) => (v == null || !v.contains('@'))
-                        ? (l10n?.authFieldRequired ?? 'Required')
-                        : null,
+                ),
+              ),
+              const Expanded(child: Divider()),
+            ]),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              alignment: WrapAlignment.center,
+              children: [
+                for (final provider in SocialProvider.values)
+                  OutlinedButton(
+                    key: ValueKey('auth-social-${provider.name}'),
+                    onPressed:
+                        _busy ? null : () => _social(provider),
+                    child: Text(provider.label),
                   ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    controller: _password,
-                    decoration: InputDecoration(
-                      labelText: l10n?.authPasswordLabel ?? 'Password',
-                      suffixIcon: IconButton(
-                        tooltip: _obscurePassword
-                            ? (l10n?.authShowPassword ?? 'Show password')
-                            : (l10n?.authHidePassword ?? 'Hide password'),
-                        icon: Icon(
-                          _obscurePassword
-                              ? Icons.visibility_outlined
-                              : Icons.visibility_off_outlined,
-                        ),
-                        onPressed: () => setState(
-                          () => _obscurePassword = !_obscurePassword,
-                        ),
-                      ),
-                    ),
-                    obscureText: _obscurePassword,
-                    autofillHints: const [AutofillHints.password],
-                    onFieldSubmitted: (_) => _submit(),
-                    validator: (v) => (v == null || v.length < 8)
-                        ? (l10n?.authPasswordTooShort ??
-                            'At least 8 characters')
-                        : null,
-                  ),
-                  if (!_isSignUp)
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: _busy ? null : _resetPasswordSheet,
-                        child: Text(
-                          l10n?.authForgotPassword ?? 'Forgot password?',
-                        ),
-                      ),
-                    ),
-                  const SizedBox(height: 24),
-                  // The last answer stays in the form (#1649): six
-                  // different sentences for six different outcomes, and
-                  // never the server's own words.
-                  if (_lastResult case final result?
-                      when authOutcomeText(result, l10n) != null) ...[
-                    InlineBanner(
-                      key: const ValueKey('auth-outcome'),
-                      icon: result.outcome == AuthOutcome.verificationRequired
-                          ? Icons.mark_email_unread_outlined
-                          : Icons.error_outline,
-                      severity:
-                          result.outcome == AuthOutcome.verificationRequired
-                              ? InlineBannerSeverity.info
-                              : InlineBannerSeverity.error,
-                      text: authOutcomeText(result, l10n)!,
-                    ),
-                    const SizedBox(height: 12),
-                  ],
-                  FilledButton(
-                    onPressed: _busy ? null : _submit,
-                    child: _busy
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(strokeWidth: 2),
+              ],
+            ),
+            // #662 — badge sign-in, offered only when this device
+            // can actually read one, and never while creating an
+            // account (a brand-new member holds no badge).
+            //
+            // Deliberately NOT gated on the workspace flag: before
+            // sign-in the app has no workspace, so it has no flags,
+            // and `enabledFeatures` would decide on behalf of a
+            // workspace it never read. The badge names the
+            // workspace, so the flag is enforced server-side
+            // (0124) and a workspace that has not opted in refuses
+            // at the scan — with the same words a stranger's card
+            // gets.
+            if (!_isSignUp)
+              FutureBuilder<bool>(
+                future: _badgeReader,
+                builder: (context, snapshot) =>
+                    snapshot.data == true
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: OutlinedButton.icon(
+                              key: const ValueKey('auth-badge'),
+                              onPressed: _busy
+                                  ? null
+                                  : () =>
+                                      showBadgeSignInSheet(context),
+                              icon: const Icon(
+                                Icons.contactless_outlined,
+                              ),
+                              label: Text(
+                                l10n?.badgeSignInEntry ??
+                                    'Sign in with a badge',
+                              ),
+                            ),
                           )
-                        : Text(
-                            _isSignUp
-                                ? (l10n?.authSignUpButton ?? 'Create account')
-                                : (l10n?.authSignInButton ?? 'Sign in'),
-                          ),
-                  ),
-                  const SizedBox(height: 12),
-                  // Social sign-in (0051): browser-based Supabase OAuth —
-                  // no vendor SDKs. The session lands via
-                  // the deskilo:// callback; errors (provider not enabled
-                  // on the server) surface as a snack.
-                  Row(children: [
-                    const Expanded(child: Divider()),
-                    // #1205 — Flexible, not a bare Padding: at a large
-                    // text scale "or continue with" is wider than the
-                    // rules leave it, and a fixed child in a Row answers
-                    // that by overflowing off the right of a phone.
-                    // Flexible lets the sentence wrap to two lines
-                    // instead, which is what the rest of this form does.
-                    Flexible(
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(
-                          l10n?.authContinueWith ?? 'or continue with',
-                          style: Theme.of(context).textTheme.bodySmall,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    const Expanded(child: Divider()),
-                  ]),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    alignment: WrapAlignment.center,
-                    children: [
-                      for (final provider in SocialProvider.values)
-                        OutlinedButton(
-                          key: ValueKey('auth-social-${provider.name}'),
-                          onPressed:
-                              _busy ? null : () => _social(provider),
-                          child: Text(provider.label),
-                        ),
-                    ],
-                  ),
-                  // #662 — badge sign-in, offered only when this device
-                  // can actually read one, and never while creating an
-                  // account (a brand-new member holds no badge).
-                  //
-                  // Deliberately NOT gated on the workspace flag: before
-                  // sign-in the app has no workspace, so it has no flags,
-                  // and `enabledFeatures` would decide on behalf of a
-                  // workspace it never read. The badge names the
-                  // workspace, so the flag is enforced server-side
-                  // (0124) and a workspace that has not opted in refuses
-                  // at the scan — with the same words a stranger's card
-                  // gets.
-                  if (!_isSignUp)
-                    FutureBuilder<bool>(
-                      future: _badgeReader,
-                      builder: (context, snapshot) =>
-                          snapshot.data == true
-                              ? Padding(
-                                  padding: const EdgeInsets.only(top: 12),
-                                  child: OutlinedButton.icon(
-                                    key: const ValueKey('auth-badge'),
-                                    onPressed: _busy
-                                        ? null
-                                        : () =>
-                                            showBadgeSignInSheet(context),
-                                    icon: const Icon(
-                                      Icons.contactless_outlined,
-                                    ),
-                                    label: Text(
-                                      l10n?.badgeSignInEntry ??
-                                          'Sign in with a badge',
-                                    ),
-                                  ),
-                                )
-                              : const SizedBox.shrink(),
-                    ),
-                  const SizedBox(height: 12),
-                  // #1379 — no account is needed to look around, so the
-                  // offer sits beside the two that do need one.
-                  const DemoEntryButton(),
-                  TextButton(
-                    onPressed: _busy
-                        ? null
-                        : () => setState(() => _isSignUp = !_isSignUp),
-                    child: Text(
-                      _isSignUp
-                          ? (l10n?.authToggleToSignIn ??
-                              'Already have an account? Sign in')
-                          : (l10n?.authToggleToSignUp ??
-                              'New here? Create an account'),
-                    ),
-                  ),
-                ],
+                        : const SizedBox.shrink(),
+              ),
+            const SizedBox(height: 12),
+            // #1379 — no account is needed to look around, so the
+            // offer sits beside the two that do need one.
+            const DemoEntryButton(),
+            TextButton(
+              // The e-mail and the name follow across the switch;
+              // the password and the last answer do not.
+              onPressed: _busy
+                  ? null
+                  : () => setState(() {
+                        _isSignUp = !_isSignUp;
+                        _lastResult = null;
+                        _password.clear();
+                      }),
+              child: Text(
+                _isSignUp
+                    ? (l10n?.authToggleToSignIn ??
+                        'Already have an account? Sign in')
+                    : (l10n?.authToggleToSignUp ??
+                        'New here? Create an account'),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
